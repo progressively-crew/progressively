@@ -1,0 +1,29 @@
+{
+  "name": "@rollout/react",
+  "author": "mfrachet",
+  "version": "0.1.0",
+  "license": "MIT",
+  "main": "./lib/index.js",
+  "scripts": {
+    "build": "webpack",
+    "test": "jest"
+  },
+  "peerDependencies": {
+    "react": ">= 17"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.0.2",
+    "@types/jscodeshift": "^0.11.3",
+    "@types/react": "^17.0.27",
+    "jest": "^27.4.4",
+    "ts-jest": "^27.1.1",
+    "ts-loader": "^9.2.6",
+    "typescript": "^4.4.3",
+    "webpack-cli": "^4.9.1"
+  },
+  "dependencies": {
+    "@rollout/sdk-js": "^0.1.0",
+    "jscodeshift": "^0.13.0",
+    "prettier": "^2.5.1"
+  }
+}

@@ -1,0 +1,13 @@
+html,
+body {
+  height: 100%;
+}
+
+a.custom-nav-link {
+  border-bottom: 3px solid transparent;
+}
+a.custom-nav-link.active {
+  border-bottom: 3px solid var(--chakra-colors-brand-900);
+  color: var(--chakra-colors-brand-900);
+  font-weight: var(--chakra-fontWeights-bold);
+}

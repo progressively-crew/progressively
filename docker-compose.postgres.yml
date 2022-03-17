@@ -1,0 +1,27 @@
+version: "3.9"
+services:
+  rollout-frontend:
+    build: ./packages/@rollout/frontend
+    ports:
+      - "3000:3000"
+    environment:
+      BACKEND_URL: http://rollout-backend:4000
+    depends_on:
+      - rollout-backend
+  rollout-backend:
+    build: ./packages/@rollout/backend
+    ports:
+      - "4000:4000"
+      - "4001:4001"
+    environment:
+      DATABASE_URL: postgresql://admin:admin@db/rollout
+      DATABASE: postgres
+    depends_on:
+      - db
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: admin
+      POSTGRES_DB: rollout

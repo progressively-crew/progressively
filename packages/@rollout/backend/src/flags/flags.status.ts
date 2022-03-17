@@ -1,0 +1,5 @@
+export enum FlagStatus {
+  ACTIVATED = 'ACTIVATED',
+  NOT_ACTIVATED = 'NOT_ACTIVATED',
+  INACTIVE = 'INACTIVE',
+}

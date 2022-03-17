@@ -1,0 +1,14 @@
+{
+  "name": "@rollout/sdk-js",
+  "author": "mfrachet",
+  "version": "0.1.0",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.4.0",
+    "typescript": "^4.4.3"
+  }
+}
