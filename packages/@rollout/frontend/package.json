@@ -9,7 +9,7 @@
     "lint": "eslint app --fix",
     "postinstall": "remix setup node",
     "start": "remix-serve build",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "test:e2e": "cypress open",
     "test:e2e:ci": "cypress run --browser chrome"
   },

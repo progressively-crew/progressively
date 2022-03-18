@@ -1,0 +1,39 @@
+name: Frontend
+on:
+  pull_request:
+    branches: ["master"]
+  workflow_dispatch:
+
+jobs:
+  static:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+          cache: "npm"
+          cache-dependency-path: packages/@rollout/frontend/package-lock.json
+
+      - name: Install dependencies
+        working-directory: ./packages/@rollout/frontend
+        run: npm install
+
+      - name: Preparation
+        working-directory: ./packages/@rollout/frontend
+        run: mv .env.example .env
+
+      - name: Lint
+        working-directory: ./packages/@rollout/frontend
+        run: npm run lint
+
+      - name: Tests
+        working-directory: ./packages/@rollout/frontend
+        run: npm run test
+
+      - name: Build
+        working-directory: ./packages/@rollout/frontend
+        run: npm run build
