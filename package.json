@@ -2,17 +2,19 @@
   "name": "root",
   "private": true,
   "devDependencies": {
-    "lerna": "^4.0.0"
+    "lerna": "^4.0.0",
+    "wait-on": "^6.0.1"
   },
   "scripts": {
-    "setup": "npm i && lerna bootstrap",
     "build": "lerna run build",
-    "start": "lerna run start --stream",
-    "start:dev": "lerna run dev --stream",
     "db:prepare:sqlite": "lerna run db:gen:sqlite-schema && npm run db:prepare:schemas",
     "db:prepare:postgres": "lerna run db:gen:postgres-schema && npm run db:prepare:schemas",
     "db:prepare:schemas": "lerna run db:migrate:dev && lerna run db:generate:schema",
-    "db:seed": "lerna run --scope @rollout/backend db:seed",
-    "db:cleanup": "lerna run --scope @rollout/backend db:cleanup"
+    "db:seed": "lerna run db:seed",
+    "db:cleanup": "lerna run db:cleanup",
+    "setup": "npm i && lerna bootstrap",
+    "start": "lerna run start --stream",
+    "start:dev": "lerna run dev --stream",
+    "test:e2e:ci": "lerna run test:e2e:ci --stream"
   }
 }

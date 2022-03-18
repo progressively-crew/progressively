@@ -11,7 +11,7 @@
     "start": "remix-serve build",
     "test": "jest",
     "test:e2e": "cypress open",
-    "test:e2e:ci": "cypress run --browser chrome && cypress run --browser firefox"
+    "test:e2e:ci": "cypress run --browser chrome"
   },
   "dependencies": {
     "@chakra-ui/react": "^1.8.3",
