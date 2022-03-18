@@ -9,7 +9,6 @@ import { AuthModule } from './auth/auth.module';
 import { WebsocketModule } from './websocket/websocket.module';
 import { MailService } from './mail/mail.service';
 import { TokensModule } from './tokens/tokens.module';
-import { StrategyService } from './strategy/strategy.service';
 
 @Module({
   imports: [

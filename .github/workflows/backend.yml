@@ -1,0 +1,43 @@
+name: Backend
+on:
+  pull_request:
+    branches: ["master"]
+  workflow_dispatch:
+
+jobs:
+  static:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+          cache: "npm"
+          cache-dependency-path: packages/@rollout/backend/package-lock.json
+
+      - name: Install dependencies
+        working-directory: ./packages/@rollout/backend
+        run: npm install
+
+      - name: Preparation
+        working-directory: ./packages/@rollout/backend
+        run: mv .env.example .env && npm run db:gen:sqlite-schema && npm run db:migrate:dev && npm run db:generate:schema
+
+      - name: Build
+        working-directory: ./packages/@rollout/backend
+        run: npm run build
+
+      - name: Lint
+        working-directory: ./packages/@rollout/backend
+        run: npm run lint
+
+      - name: Tests
+        working-directory: ./packages/@rollout/backend
+        run: npm run test
+
+      - name: API tests
+        working-directory: ./packages/@rollout/backend
+        run: npm run test:e2e

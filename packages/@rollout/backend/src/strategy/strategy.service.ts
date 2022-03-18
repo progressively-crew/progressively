@@ -109,9 +109,9 @@ export class StrategyService {
             },
           },
         },
-        name: strategy.name!,
-        strategyRuleType: strategy.strategyRuleType!,
-        activationType: strategy.activationType!,
+        name: strategy.name,
+        strategyRuleType: strategy.strategyRuleType,
+        activationType: strategy.activationType,
 
         // only for strategy rule type being "field"
         fieldName: strategy.fieldName,

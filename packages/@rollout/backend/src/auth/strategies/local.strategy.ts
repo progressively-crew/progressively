@@ -1,7 +1,6 @@
 import { Strategy } from 'passport-local';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { TokensService } from '../../tokens/tokens.service';
 import { UserRetrieveDTO } from '../../users/users.dto';
 import { UserStatus } from '../../users/status';
 import { UsersService } from '../../users/users.service';

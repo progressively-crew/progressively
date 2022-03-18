@@ -17,7 +17,7 @@ export class TokensService {
   }
 
   async createRefreshToken(payload: any) {
-    const {RefreshTokenExpire, RefreshTokenSecret} = jwtConstants();
+    const { RefreshTokenExpire, RefreshTokenSecret } = jwtConstants();
     const expiration = new Date();
 
     expiration.setTime(expiration.getTime() + RefreshTokenExpire);

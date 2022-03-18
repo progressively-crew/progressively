@@ -18,7 +18,7 @@ export const prepareApp = async () => {
           `/users/activate/${activationToken}`,
         );
       },
-      sendResetPasswordMail: async () => {},
+      sendResetPasswordMail: () => Promise.resolve(),
     })
     .compile();
 

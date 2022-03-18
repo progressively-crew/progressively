@@ -63,7 +63,7 @@ describe('ProjectsController (e2e)', () => {
       verifyAuthGuard(app, '/projects', 'get'));
 
     it('lists all of the users projects', async () => {
-      const [_, access_token] = await createProject(
+      const [, access_token] = await createProject(
         app,
         'New project of the street',
       );
@@ -925,17 +925,15 @@ describe('ProjectsController (e2e)', () => {
       const newStrat = response.body[0];
 
       expect(response.status).toBe(200);
-      expect(newStrat.activationType).toEqual('percentage');
-      expect(newStrat.fieldComparator).toEqual('eq');
-      expect(newStrat.fieldName).toEqual('email');
-      expect(newStrat.fieldValue).toEqual(
-        'marvin.frachet@gmail.com\njohn.doe@gmail.com',
-      );
+      expect(newStrat.activationType).toEqual('boolean');
+      expect(newStrat.fieldComparator).toEqual(null);
+      expect(newStrat.fieldName).toEqual(null);
+      expect(newStrat.fieldValue).toEqual(null);
       expect(newStrat.flagEnvironmentEnvironmentId).toEqual('1');
       expect(newStrat.flagEnvironmentFlagId).toEqual('1');
       expect(newStrat.name).toEqual('Super strategy');
-      expect(newStrat.rolloutPercentage).toEqual(99);
-      expect(newStrat.strategyRuleType).toEqual('field');
+      expect(newStrat.rolloutPercentage).toEqual(null);
+      expect(newStrat.strategyRuleType).toEqual('default');
       expect(newStrat.uuid).toBeDefined();
     });
   });
@@ -976,14 +974,14 @@ describe('ProjectsController (e2e)', () => {
       expect(response.status).toBe(200);
       expect(response.body).toEqual({
         activationType: 'boolean',
-        fieldComparator: 'eq',
-        fieldName: 'email',
-        fieldValue: 'marvin.frachet@gmail.com\njohn.doe@gmail.com',
+        fieldComparator: null,
+        fieldName: null,
+        fieldValue: null,
         flagEnvironmentEnvironmentId: '1',
         flagEnvironmentFlagId: '1',
         name: 'Super strategy',
-        rolloutPercentage: 99,
-        strategyRuleType: 'field',
+        rolloutPercentage: null,
+        strategyRuleType: 'default',
         uuid: '1',
       });
     });
@@ -1019,10 +1017,10 @@ describe('ProjectsController (e2e)', () => {
         .set('Authorization', `Bearer ${access_token}`)
         .expect(200)
         .expect([
-          { date: '1992-01-01T00:00:00.000Z', _count: { id: 10 } },
-          { date: '1992-01-02T00:00:00.000Z', _count: { id: 40 } },
-          { date: '1992-01-03T00:00:00.000Z', _count: { id: 20 } },
-          { date: '1992-01-06T00:00:00.000Z', _count: { id: 10 } },
+          { date: '1992-01-01T01:00:00.000Z', _count: { id: 10 } },
+          { date: '1992-01-02T01:00:00.000Z', _count: { id: 40 } },
+          { date: '1992-01-03T01:00:00.000Z', _count: { id: 20 } },
+          { date: '1992-01-06T01:00:00.000Z', _count: { id: 10 } },
         ]);
     });
   });

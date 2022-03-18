@@ -1,5 +1,3 @@
-import { RolloutStrategy, FlagEnvironment, Flag } from '@prisma/client';
-
 export interface FlagDict {
   [key: string]: boolean;
 }
