@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import * as helmet from 'helmet';
+import helmet from 'helmet';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as cookieParser from 'cookie-parser';
 import { WsAdapter } from '@nestjs/platform-ws';
