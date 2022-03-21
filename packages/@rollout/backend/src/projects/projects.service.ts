@@ -143,6 +143,14 @@ export class ProjectsService {
         await this.prisma.flagHit.deleteMany({
           where: {
             flagEnvironmentFlagId: flagEnv.flagId,
+            flagEnvironmentEnvironmentId: flagEnv.environmentId,
+          },
+        });
+
+        await this.prisma.rolloutStrategy.deleteMany({
+          where: {
+            flagEnvironmentFlagId: flagEnv.flagId,
+            flagEnvironmentEnvironmentId: flagEnv.environmentId,
           },
         });
       }

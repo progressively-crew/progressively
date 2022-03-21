@@ -205,6 +205,16 @@ export class ProjectsController {
     return updatedFlagEnv;
   }
 
+  @Delete(':id/environments/:envId/flags/:flagId')
+  @UseGuards(HasProjectAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  async deleteFlag(
+    @Param('envId') envId: string,
+    @Param('flagId') flagId: string,
+  ) {
+    return this.flagService.deleteFlag(envId, flagId);
+  }
+
   // Strategies
   @Post(':id/environments/:envId/flags/:flagId/strategies')
   @UseGuards(HasProjectAccessGuard)

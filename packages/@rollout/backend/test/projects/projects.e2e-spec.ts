@@ -1024,4 +1024,64 @@ describe('ProjectsController (e2e)', () => {
         ]);
     });
   });
+
+  describe('/projects/1/environments/1/flags/1 (DELETE)', () => {
+    it('gives a 401 when the user is not authenticated', () =>
+      verifyAuthGuard(app, '/projects/1/environments/1/flags/1', 'delete'));
+
+    it('gives a 403 when the user requests a forbidden project', async () => {
+      const access_token = await authenticate(
+        app,
+        'jane.doe@gmail.com',
+        'password',
+      );
+
+      return request(app.getHttpServer())
+        .delete('/projects/1/environments/1/flags/1')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('gives a 200 when the flag has been deleted', async () => {
+      const access_token = await authenticate(app);
+
+      const prevResponse = await request(app.getHttpServer())
+        .get('/projects/1/environments/1/flags')
+        .set('Authorization', `Bearer ${access_token}`);
+
+      expect(prevResponse.body[0]).toMatchObject({
+        environment: {
+          clientKey: 'valid-sdk-key',
+          name: 'Production',
+          projectId: '1',
+          uuid: '1',
+        },
+        environmentId: '1',
+        flag: {
+          description: 'Switch the new homepage design',
+          key: 'newHomepage',
+          name: 'New homepage',
+          uuid: '1',
+        },
+        flagId: '1',
+        status: 'NOT_ACTIVATED',
+      });
+
+      const response = await request(app.getHttpServer())
+        .delete('/projects/1/environments/1/flags/1')
+        .set('Authorization', `Bearer ${access_token}`);
+      expect(response.status).toBe(200);
+
+      const afterResponse = await request(app.getHttpServer())
+        .get('/projects/1/environments/1/flags')
+        .set('Authorization', `Bearer ${access_token}`);
+
+      expect(afterResponse.body).toEqual([]);
+    });
+  });
 });

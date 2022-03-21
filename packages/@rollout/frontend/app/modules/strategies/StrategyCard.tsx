@@ -83,9 +83,8 @@ export const StrategyCard = ({
       p={4}
       as="article"
       aria-labelledby={strat.uuid}
-      borderWidth={1}
+      borderTopWidth={1}
       borderColor="background"
-      borderRadius={6}
     >
       <Flex alignItems={"flex-start"} mb={2} justifyContent="space-between">
         <Box mr={4}>

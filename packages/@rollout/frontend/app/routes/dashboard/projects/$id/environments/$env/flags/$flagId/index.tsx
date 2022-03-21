@@ -33,7 +33,7 @@ import { WarningBox } from "~/components/WarningBox";
 import { Header } from "~/components/Header";
 import { Section, SectionHeader } from "~/components/Section";
 import { EmptyState } from "~/components/EmptyState";
-import { AiOutlineBarChart } from "react-icons/ai";
+import { AiOutlineBarChart, AiOutlineSetting } from "react-icons/ai";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { FaPowerOff } from "react-icons/fa";
 
@@ -195,6 +195,13 @@ export default function FlagById() {
               icon={<AiOutlineBarChart />}
             >
               Insights
+            </NavItem>
+
+            <NavItem
+              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/settings`}
+              icon={<AiOutlineSetting />}
+            >
+              Settings
             </NavItem>
           </HorizontalNav>
         </Box>

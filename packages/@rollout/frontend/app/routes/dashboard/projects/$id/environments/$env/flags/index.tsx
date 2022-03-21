@@ -109,6 +109,7 @@ export default function FlagsByEnvPage() {
   const transition = useTransition();
   const [searchParams] = useSearchParams();
   const newFlagId = searchParams.get("newFlagId") || undefined;
+  const isFlagRemoved = searchParams.get("flagRemoved") || undefined;
 
   const crumbs: Crumbs = [
     {
@@ -192,43 +193,51 @@ export default function FlagsByEnvPage() {
             }
           />
 
-          {flagsByEnv.length > 0 ? (
-            <Stack spacing={2}>
-              {newFlagId ? (
-                <SuccessBox id="flag-added">
-                  The flag has been successfully created.
-                </SuccessBox>
-              ) : null}
+          <Stack spacing={2}>
+            {isFlagRemoved ? (
+              <SuccessBox id="flag-removed">
+                The flag has been successfully deleted.
+              </SuccessBox>
+            ) : null}
 
-              <Box>
-                {flagsByEnv.map((flagEnv) => (
-                  <FlagCard
-                    key={flagEnv.flagId}
-                    id={flagEnv.flagId}
-                    linkTo={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${flagEnv.flagId}`}
-                    title={flagEnv.flag.name}
-                    flagStatus={flagEnv.status}
-                    flagKey={flagEnv.flag.key}
-                    description={flagEnv.flag.description}
-                    optimistic={
-                      transition.state === "submitting" &&
-                      transition.submission?.formData.get("flagId") ===
-                        flagEnv.flagId
-                    }
-                  />
-                ))}
-              </Box>
-            </Stack>
-          ) : null}
+            {flagsByEnv.length > 0 ? (
+              <>
+                {newFlagId ? (
+                  <SuccessBox id="flag-added">
+                    The flag has been successfully created.
+                  </SuccessBox>
+                ) : null}
 
-          {flagsByEnv.length === 0 ? (
-            <EmptyState
-              title="No flags found"
-              description={
-                <Text>There are no flags yet on this environment.</Text>
-              }
-            />
-          ) : null}
+                <Box>
+                  {flagsByEnv.map((flagEnv) => (
+                    <FlagCard
+                      key={flagEnv.flagId}
+                      id={flagEnv.flagId}
+                      linkTo={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${flagEnv.flagId}`}
+                      title={flagEnv.flag.name}
+                      flagStatus={flagEnv.status}
+                      flagKey={flagEnv.flag.key}
+                      description={flagEnv.flag.description}
+                      optimistic={
+                        transition.state === "submitting" &&
+                        transition.submission?.formData.get("flagId") ===
+                          flagEnv.flagId
+                      }
+                    />
+                  ))}
+                </Box>
+              </>
+            ) : null}
+
+            {flagsByEnv.length === 0 ? (
+              <EmptyState
+                title="No flags found"
+                description={
+                  <Text>There are no flags yet on this environment.</Text>
+                }
+              />
+            ) : null}
+          </Stack>
         </Section>
       </Main>
     </DashboardLayout>
