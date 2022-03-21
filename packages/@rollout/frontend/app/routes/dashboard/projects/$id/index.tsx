@@ -104,7 +104,6 @@ export default function ProjectDetailPage() {
         >
           <SectionHeader
             title="Environments"
-            titleHidden
             endAction={
               <Button
                 as={Link}
@@ -130,16 +129,18 @@ export default function ProjectDetailPage() {
               </SuccessBox>
             ) : null}
 
-            {project.environments.map((env) => (
-              <EnvCard
-                key={env.uuid}
-                id={env.uuid}
-                linkTo={`/dashboard/projects/${project.uuid}/environments/${env.uuid}/flags`}
-                title={env.name}
-                clientKey={env.clientKey}
-                description="Put something here and check afterwards"
-              />
-            ))}
+            <Box>
+              {project.environments.map((env) => (
+                <EnvCard
+                  key={env.uuid}
+                  id={env.uuid}
+                  linkTo={`/dashboard/projects/${project.uuid}/environments/${env.uuid}/flags`}
+                  title={env.name}
+                  clientKey={env.clientKey}
+                  description="Put something here and check afterwards"
+                />
+              ))}
+            </Box>
           </Stack>
         </Section>
       </Main>

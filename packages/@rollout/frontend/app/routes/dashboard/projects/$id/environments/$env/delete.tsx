@@ -1,10 +1,11 @@
 import {
   Box,
   Button,
-  HStack,
   ListItem,
   UnorderedList,
   Text,
+  Flex,
+  VisuallyHidden,
 } from "@chakra-ui/react";
 import { MdOutlineEmail } from "react-icons/md";
 import {
@@ -224,7 +225,11 @@ export default function DeleteEnvPage() {
             }
           />
 
-          <HStack spacing={4} mt={4}>
+          <Flex
+            justifyContent="space-between"
+            mt={4}
+            direction={["column", "row"]}
+          >
             <Form method="post">
               <Button
                 type="submit"
@@ -233,6 +238,7 @@ export default function DeleteEnvPage() {
                 isLoading={transition.state === "submitting"}
                 loadingText="Deleting the environment, please wait..."
                 disabled={false}
+                width={["100%", "auto"]}
               >
                 Yes, delete the environment
               </Button>
@@ -242,12 +248,18 @@ export default function DeleteEnvPage() {
               to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/settings`}
               variant="outline"
               colorScheme="error"
+              mt={[4, 0]}
+              width={["100%", "auto"]}
             >
               <span>
-                No, {`don't`} delete <strong>{environment.name}</strong>
+                No, {`don't`} delete{" "}
+                <Box as="strong" display={["none", "inline"]} aria-hidden>
+                  {environment.name}
+                </Box>
+                <VisuallyHidden>{environment.name}</VisuallyHidden>
               </span>
             </Button>
-          </HStack>
+          </Flex>
         </Section>
       </Main>
     </DashboardLayout>

@@ -25,9 +25,8 @@ export const EnvCard = ({
 
   return (
     <Box
-      borderWidth={1}
+      borderTopWidth={1}
       borderColor="background"
-      borderRadius={6}
       p={4}
       as="article"
       aria-labelledby={`article-${id}`}
@@ -62,12 +61,14 @@ export const EnvCard = ({
               </CLink>
             </Heading>
 
-            <ButtonCopy
-              toCopy={clientKey}
-              icon={<Icon as={BiKey} aria-hidden />}
-            >
-              {clientKey}
-            </ButtonCopy>
+            <Box display={["none", "block"]}>
+              <ButtonCopy
+                toCopy={clientKey}
+                icon={<Icon as={BiKey} aria-hidden />}
+              >
+                {clientKey}
+              </ButtonCopy>
+            </Box>
           </Flex>
 
           <Text>{description}</Text>
@@ -82,6 +83,7 @@ export const EnvCard = ({
           w={6}
           h={6}
           aria-hidden
+          display={["none", "inline"]}
         />
       </Flex>
     </Box>

@@ -9,6 +9,7 @@ export interface ProjectCardProps {
   linkTo: string;
   description: React.ReactNode;
   title: string;
+  noBorder?: boolean;
 }
 
 export const ProjectCard = ({
@@ -16,14 +17,14 @@ export const ProjectCard = ({
   linkTo,
   description,
   title,
+  noBorder,
 }: ProjectCardProps) => {
   const linkRef = useRef<HTMLAnchorElement>(null);
 
   return (
     <Box
-      borderWidth={1}
+      borderTopWidth={noBorder ? 0 : 1}
       borderColor="background"
-      borderRadius={6}
       p={4}
       as="article"
       aria-labelledby={`article-${id}`}
@@ -69,6 +70,7 @@ export const ProjectCard = ({
           w={6}
           h={6}
           aria-hidden
+          display={["none", "inline"]}
         />
       </Flex>
     </Box>

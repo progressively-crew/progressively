@@ -1,4 +1,4 @@
-import { Box, Button, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Text, VisuallyHidden } from "@chakra-ui/react";
 import { AiOutlineKey, AiOutlineSetting } from "react-icons/ai";
 import { FaTrash } from "react-icons/fa";
 import { FiFlag } from "react-icons/fi";
@@ -138,17 +138,24 @@ export default function EnvSettingsPage() {
               }
             />
 
-            <Box px={4} pb={4}>
+            <Flex px={4} pb={4} justifyContent={["center", "unset"]}>
               <Button
                 as={Link}
                 colorScheme="error"
                 to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/delete`}
                 leftIcon={<FaTrash aria-hidden />}
                 variant="outline"
+                width={["100%", "auto"]}
               >
-                Delete {`"${environment.name}"`} forever
+                Delete{" "}
+                <Box as="span" aria-hidden display={["none", "inline"]}>
+                  {`"${environment.name}"`} forever
+                </Box>
+                <VisuallyHidden>
+                  {`"${environment.name}"`} forever
+                </VisuallyHidden>
               </Button>
-            </Box>
+            </Flex>
           </Section>
         )}
       </Main>

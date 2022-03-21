@@ -29,7 +29,7 @@ import { AiOutlineSetting, AiOutlineKey } from "react-icons/ai";
 import { Header } from "~/components/Header";
 import { Section, SectionHeader } from "~/components/Section";
 import { EmptyState } from "~/components/EmptyState";
-import { FiFlag, FiLayers } from "react-icons/fi";
+import { FiFlag } from "react-icons/fi";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 
 interface MetaArgs {
@@ -199,22 +199,25 @@ export default function FlagsByEnvPage() {
                   The flag has been successfully created.
                 </SuccessBox>
               ) : null}
-              {flagsByEnv.map((flagEnv) => (
-                <FlagCard
-                  key={flagEnv.flagId}
-                  id={flagEnv.flagId}
-                  linkTo={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${flagEnv.flagId}`}
-                  title={flagEnv.flag.name}
-                  flagStatus={flagEnv.status}
-                  flagKey={flagEnv.flag.key}
-                  description={flagEnv.flag.description}
-                  optimistic={
-                    transition.state === "submitting" &&
-                    transition.submission?.formData.get("flagId") ===
-                      flagEnv.flagId
-                  }
-                />
-              ))}
+
+              <Box>
+                {flagsByEnv.map((flagEnv) => (
+                  <FlagCard
+                    key={flagEnv.flagId}
+                    id={flagEnv.flagId}
+                    linkTo={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${flagEnv.flagId}`}
+                    title={flagEnv.flag.name}
+                    flagStatus={flagEnv.status}
+                    flagKey={flagEnv.flag.key}
+                    description={flagEnv.flag.description}
+                    optimistic={
+                      transition.state === "submitting" &&
+                      transition.submission?.formData.get("flagId") ===
+                        flagEnv.flagId
+                    }
+                  />
+                ))}
+              </Box>
             </Stack>
           ) : null}
 

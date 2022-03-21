@@ -36,6 +36,7 @@ export const Switch = ({ checked, optimistic, ...props }: SwitchProps) => {
       aria-checked={checked}
       variant="ghost"
       onClick={() => setInternalChecked((s) => !s)}
+      h={16}
       {...props}
     >
       <HStack>

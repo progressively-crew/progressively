@@ -30,9 +30,8 @@ export const FlagCard = ({
 
   return (
     <Box
-      borderWidth={1}
+      borderTopWidth={1}
       borderColor="background"
-      borderRadius={6}
       p={4}
       as="article"
       aria-labelledby={`article-${id}`}
@@ -48,7 +47,7 @@ export const FlagCard = ({
         background: "background",
       }}
     >
-      <Flex justifyContent="space-between">
+      <Flex justifyContent={"space-between"} direction={["column", "row"]}>
         <div>
           <Flex>
             <Heading as="h3" id={`article-${id}`} size="md" mr={2}>
@@ -62,9 +61,14 @@ export const FlagCard = ({
                 {title}
               </CLink>
             </Heading>
-            <ButtonCopy toCopy={flagKey} icon={<Icon as={BiKey} aria-hidden />}>
-              {flagKey}
-            </ButtonCopy>
+            <Box display={["none", " block"]}>
+              <ButtonCopy
+                toCopy={flagKey}
+                icon={<Icon as={BiKey} aria-hidden />}
+              >
+                {flagKey}
+              </ButtonCopy>
+            </Box>
           </Flex>
 
           <Text>{description}</Text>

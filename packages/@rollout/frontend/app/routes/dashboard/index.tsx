@@ -87,19 +87,23 @@ export default function DashboardRoot() {
                 The project has been successfully removed.
               </SuccessBox>
             ) : null}
-            {projects.map((project) => (
-              <ProjectCard
-                key={project.projectId}
-                id={project.projectId}
-                linkTo={`/dashboard/projects/${project.projectId}`}
-                title={project.project.name}
-                description={
-                  <>
-                    You are an <em>{project.role}</em> of the project.
-                  </>
-                }
-              />
-            ))}
+
+            <Box>
+              {projects.map((project, index: number) => (
+                <ProjectCard
+                  key={project.projectId}
+                  id={project.projectId}
+                  linkTo={`/dashboard/projects/${project.projectId}`}
+                  title={project.project.name}
+                  noBorder={index === 0}
+                  description={
+                    <>
+                      You are an <em>{project.role}</em> of the project.
+                    </>
+                  }
+                />
+              ))}
+            </Box>
           </Stack>
         </Section>
       </Main>

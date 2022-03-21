@@ -38,15 +38,15 @@ export const UserTable = ({
       <input type="hidden" name="_method" value="delete-member" />
 
       {canEdit && (
-        <Flex justifyContent={"flex-end"}>
+        <Flex justifyContent={["center", "flex-end"]}>
           <Button
             colorScheme="error"
             type={canDelete || !isHydrated ? "submit" : "button"}
             aria-disabled={isHydrated && !canDelete}
             leftIcon={<FaTrash aria-hidden />}
             variant="outline"
-            mb={2}
-            size="sm"
+            mb={[6, 2]}
+            size="md"
             isLoading={transition.state === "submitting"}
             loadingText="Deleting the member(s), please wait..."
             disabled={false}

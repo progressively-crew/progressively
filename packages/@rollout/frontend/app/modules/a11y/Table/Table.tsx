@@ -155,6 +155,9 @@ export const Table = ({
         aria-colcount={colCount}
         aria-labelledby={labelledBy}
         onKeyDown={handleKeyDown}
+        overflowX={["scroll", "unset"]}
+        display={["block", "revert"]}
+        maxWidth={"100%"}
       >
         {children}
       </CTAble>

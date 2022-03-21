@@ -51,7 +51,7 @@ export const ButtonCopy = ({
     return (
       <CopyToClipboard text={toCopy}>
         <Button
-          size="xs"
+          size={"sm"}
           variant="outline"
           leftIcon={icon}
           onClick={handleClick}
@@ -70,7 +70,7 @@ export const ButtonCopy = ({
   return (
     <Button
       as="span"
-      size="xs"
+      size="sm"
       variant="outline"
       leftIcon={icon}
       onClick={undefined}
