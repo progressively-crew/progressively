@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import camelcase from 'camelcase';
 import { PrismaService } from '../prisma.service';
 import { FlagAlreadyExists } from './errors';
@@ -6,8 +6,6 @@ import { FlagStatus } from './flags.status';
 
 @Injectable()
 export class FlagsService {
-  private readonly logger = new Logger(FlagsService.name);
-
   constructor(private prisma: PrismaService) {}
 
   flagsByEnv(environmentId: string) {
@@ -58,6 +56,7 @@ export class FlagsService {
 
     const existingFlag = await this.prisma.flagEnvironment.findFirst({
       where: {
+        environmentId: envId,
         flag: {
           key: flagKey,
         },
