@@ -1,7 +1,7 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { UserRetrieveDTO } from '../../users/users.dto';
 import { ProjectsService } from '../projects.service';
+import { UserRetrieveDTO } from '../../users/users.dto';
 
 @Injectable()
 export class HasProjectAccessGuard implements CanActivate {

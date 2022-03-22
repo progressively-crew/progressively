@@ -1,4 +1,4 @@
-import { FlagStatus } from '../flags/flags.status';
+import { FlagStatus } from './flags.status';
 
 export const strToFlagStatus = (strStatus: string): FlagStatus | undefined => {
   let status: FlagStatus;

@@ -5,14 +5,17 @@ import { FlagsController } from './flags.controller';
 import { EnvironmentsService } from '../environments/environments.service';
 import { WebsocketGateway } from '../websocket/websocket.gateway';
 import { StrategyService } from '../strategy/strategy.service';
+import { ProjectsService } from '../projects/projects.service';
 
 @Module({
   providers: [
     PrismaService,
+    WebsocketGateway,
     FlagsService,
     EnvironmentsService,
     WebsocketGateway,
     StrategyService,
+    ProjectsService,
   ],
   controllers: [FlagsController],
 })
