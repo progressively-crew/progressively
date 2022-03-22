@@ -16,6 +16,10 @@ export default class Sdk {
   static init(clientKey: string, options?: SDKOptions) {
     const resolvedOptions: SDKOptions = options || { fields: {} };
 
+    if (!resolvedOptions.apiUrl) {
+      resolvedOptions.apiUrl = EndPoints.Socket(clientKey);
+    }
+
     return new Sdk(clientKey, resolvedOptions);
   }
 
@@ -24,7 +28,7 @@ export default class Sdk {
    * that have a polyfill for HTML5 WebSocket
    */
   initSocket() {
-    this.socket = new WebSocket(EndPoints.Socket(this.clientKey));
+    this.socket = new WebSocket(this.options.apiUrl!);
   }
 
   async loadFlags() {

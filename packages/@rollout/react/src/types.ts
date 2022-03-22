@@ -5,4 +5,5 @@ export interface RolloutProviderProps {
   onlyRenderWhenReady?: boolean;
   initialFlags?: FlagDict;
   fields?: Record<string, string | number | boolean>;
+  apiUrl?: string;
 }
