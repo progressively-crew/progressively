@@ -125,10 +125,6 @@ export default function DeleteProjectPage() {
       label: project.name,
     },
     {
-      link: `/dashboard/projects/${project.uuid}/settings`,
-      label: "Settings",
-    },
-    {
       link: `/dashboard/projects/${project.uuid}/delete`,
       label: "Delete the project",
     },

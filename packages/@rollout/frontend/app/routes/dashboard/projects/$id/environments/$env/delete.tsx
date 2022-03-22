@@ -144,10 +144,6 @@ export default function DeleteEnvPage() {
       label: environment.name,
     },
     {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/settings`,
-      label: "Settings",
-    },
-    {
       link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/delete`,
       label: "Delete the environment",
     },
