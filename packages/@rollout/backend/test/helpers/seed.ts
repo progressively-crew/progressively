@@ -7,22 +7,16 @@ import { FlagStatus } from '../../src/flags/flags.status';
 const prismaClient = new PrismaClient();
 
 const seedHits = async (flagEnv, date, count = 10) => {
-  const allHitsPromises = [];
-
   for (let i = 0; i < count; i++) {
-    allHitsPromises.push(
-      prismaClient.flagHit.create({
-        data: {
-          flagEnvironmentFlagId: flagEnv.flagId,
-          flagEnvironmentEnvironmentId: flagEnv.environmentId,
-          status: FlagStatus.ACTIVATED,
-          date,
-        },
-      }),
-    );
+    await prismaClient.flagHit.create({
+      data: {
+        flagEnvironmentFlagId: flagEnv.flagId,
+        flagEnvironmentEnvironmentId: flagEnv.environmentId,
+        status: FlagStatus.ACTIVATED,
+        date,
+      },
+    });
   }
-
-  return Promise.all(allHitsPromises);
 };
 
 export const seedDb = async () => {

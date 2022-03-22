@@ -15,7 +15,7 @@ export class Rooms {
   }
 
   public leave(socket) {
-    const rooms = socket.__ROLLOUT_ROOMS;
+    const rooms = socket.__ROLLOUT_ROOMS || [];
 
     for (const room of rooms) {
       this._rooms[room] = this._rooms[room].filter((sock) => sock !== socket);
