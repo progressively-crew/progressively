@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -50,5 +51,12 @@ export class StrategyController {
   @UseGuards(JwtAuthGuard)
   async getStrategy(@Param('stratId') stratId: string): Promise<any> {
     return this.strategyService.getStrategy(stratId);
+  }
+
+  @Delete('projects/:id/environments/:envId/flags/:flagId/strategies/:stratId')
+  @UseGuards(HasProjectAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  async deleteStrategy(@Param('stratId') stratId: string): Promise<any> {
+    return this.strategyService.deleteStrategy(stratId);
   }
 }

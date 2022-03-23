@@ -4,15 +4,10 @@ import {
   Flex,
   Heading,
   ListItem,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
   Text,
   UnorderedList,
   VisuallyHidden,
 } from "@chakra-ui/react";
-import { MdOutlineMoreVert } from "react-icons/md";
 import { Link } from "remix";
 import { StrategyRetrieveDTO } from "./types";
 
@@ -95,29 +90,12 @@ export const StrategyCard = ({
           <StrategyAudience strat={strat} />
         </Box>
 
-        <Menu>
-          <MenuButton
-            as={Button}
-            size="sm"
-            rightIcon={<MdOutlineMoreVert aria-hidden />}
-          >
-            Actions
-          </MenuButton>
-          <MenuList>
-            <MenuItem
-              as={Link}
-              to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/strategies/1/edit`}
-            >
-              Edit<VisuallyHidden> {strat.name}</VisuallyHidden>
-            </MenuItem>
-            <MenuItem
-              as={Link}
-              to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/strategies`}
-            >
-              Remove<VisuallyHidden> {strat.name}</VisuallyHidden>
-            </MenuItem>
-          </MenuList>
-        </Menu>
+        <Button
+          as={Link}
+          to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/strategies/${strat.uuid}/delete`}
+        >
+          Remove<VisuallyHidden> {strat.name}</VisuallyHidden>
+        </Button>
       </Flex>
 
       <StrategyTargetConstraints strat={strat} />

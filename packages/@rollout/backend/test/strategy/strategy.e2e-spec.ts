@@ -359,4 +359,77 @@ describe('Strategy (e2e)', () => {
       });
     });
   });
+
+  describe.only('/projects/1/environments/1/flags/1/strategies/1 (DELETE)', () => {
+    it('gives a 401 when the user is not authenticated', () =>
+      verifyAuthGuard(
+        app,
+        '/projects/1/environments/1/flags/1/strategies/1',
+        'delete',
+      ));
+
+    it('gives a 403 when the user requests a forbidden project', async () => {
+      const access_token = await authenticate(
+        app,
+        'jane.doe@gmail.com',
+        'password',
+      );
+
+      return request(app.getHttpServer())
+        .delete('/projects/1/environments/1/flags/1/strategies/1')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('gives a 200 when a user of the project deletes a strategy', async () => {
+      const access_token = await authenticate(app);
+
+      const prev = await request(app.getHttpServer())
+        .get('/projects/1/environments/1/flags/1/strategies/1')
+        .set('Authorization', `Bearer ${access_token}`);
+
+      expect(prev.body).toMatchInlineSnapshot(`
+        Object {
+          "activationType": "boolean",
+          "fieldComparator": null,
+          "fieldName": null,
+          "fieldValue": null,
+          "flagEnvironmentEnvironmentId": "1",
+          "flagEnvironmentFlagId": "1",
+          "name": "Super strategy",
+          "rolloutPercentage": null,
+          "strategyRuleType": "default",
+          "uuid": "1",
+        }
+      `);
+
+      await request(app.getHttpServer())
+        .delete('/projects/1/environments/1/flags/1/strategies/1')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(200)
+        .expect({
+          uuid: '1',
+          name: 'Super strategy',
+          strategyRuleType: 'default',
+          fieldName: null,
+          fieldComparator: null,
+          fieldValue: null,
+          activationType: 'boolean',
+          rolloutPercentage: null,
+          flagEnvironmentFlagId: '1',
+          flagEnvironmentEnvironmentId: '1',
+        });
+
+      const after = await request(app.getHttpServer())
+        .get('/projects/1/environments/1/flags/1/strategies/1')
+        .set('Authorization', `Bearer ${access_token}`);
+
+      expect(after.body).toMatchInlineSnapshot(`Object {}`);
+    });
+  });
 });

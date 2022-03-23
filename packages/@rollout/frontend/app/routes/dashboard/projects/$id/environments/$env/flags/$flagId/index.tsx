@@ -136,6 +136,7 @@ export default function FlagById() {
     useLoaderData<LoaderData>();
 
   const isStrategyAdded = searchParams.get("newStrategy") || undefined;
+  const isStrategyRemoved = searchParams.get("stratRemoved") || undefined;
 
   const currentFlag = currentFlagEnv.flag;
 
@@ -274,6 +275,12 @@ export default function FlagById() {
               {isStrategyAdded ? (
                 <SuccessBox id="strategy-added">
                   The strategy has been successfully created.
+                </SuccessBox>
+              ) : null}
+
+              {isStrategyRemoved ? (
+                <SuccessBox id="strategy-removed">
+                  The strategy has been successfully removed.
                 </SuccessBox>
               ) : null}
 

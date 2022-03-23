@@ -140,4 +140,12 @@ export class StrategyService {
       },
     });
   }
+
+  deleteStrategy(stratId: string) {
+    return this.prisma.rolloutStrategy.delete({
+      where: {
+        uuid: stratId,
+      },
+    });
+  }
 }
