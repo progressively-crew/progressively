@@ -160,6 +160,8 @@ export class FlagsController {
     @Param('envId') envId: string,
     @Param('flagId') flagId: string,
   ): Promise<any> {
-    return this.flagService.listFlagHits(envId, flagId);
+    const rawHits = await this.flagService.listFlagHits(envId, flagId);
+
+    return rawHits.map(({ _count, date }) => ({ count: _count.id, date }));
   }
 }

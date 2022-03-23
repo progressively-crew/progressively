@@ -21,12 +21,19 @@ export class FlagsService {
   }
 
   async hitFlag(environmentId: string, flagId: string, status: FlagStatus) {
+    // Make it easier to group by date, 2 is arbitrary
+    const date = new Date();
+    date.setHours(2);
+    date.setMinutes(2);
+    date.setSeconds(2);
+    date.setMilliseconds(2);
+
     const hit = await this.prisma.flagHit.create({
       data: {
         flagEnvironmentFlagId: flagId,
         flagEnvironmentEnvironmentId: environmentId,
-
         status,
+        date,
       },
     });
 
