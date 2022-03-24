@@ -200,7 +200,7 @@ export default function DeleteFlagPage() {
             </Form>
             <Button
               as={Link}
-              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`}
+              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/settings`}
               variant="outline"
               colorScheme="error"
               mt={[4, 0]}

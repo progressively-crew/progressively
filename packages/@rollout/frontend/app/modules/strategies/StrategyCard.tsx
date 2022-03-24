@@ -89,7 +89,7 @@ export const StrategyCard = ({
         direction={["column", "row"]}
       >
         <Box mr={4}>
-          <Heading as="h3" id={strat.uuid} size="md" color="brand.600">
+          <Heading as="h3" id={strat.uuid} size="md">
             {strat.name}
           </Heading>
 

@@ -20,9 +20,9 @@ export const Section = ({
     <SectionContext.Provider value={id}>
       <Box
         bg="backgroundContent"
-        borderRadius={8}
+        borderRadius={16}
         p={size === "S" ? 4 : 8}
-        boxShadow="lg"
+        boxShadow="md"
         aria-labelledby={id}
         {...props}
       >
@@ -57,7 +57,7 @@ export const SectionHeader = ({
       {...props}
     >
       <Box p={4}>
-        <Heading as={titleAs} id={id} size="lg">
+        <Heading as={titleAs} id={id} size="lg" fontSize="2xl" pb={1}>
           {title}
         </Heading>
         {description}
