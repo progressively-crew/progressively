@@ -12,6 +12,7 @@ export const HorizontalNav = ({ children, label }: HorizontalNavProps) => {
       aria-label={label}
       borderBottomWidth={1}
       borderBottomColor="background300"
+      overflowX="scroll"
     >
       <HStack as="ul" listStyleType={"none"} spacing={3}>
         {children}
@@ -28,7 +29,7 @@ export interface NavItemProps {
 
 export const NavItem = ({ children, to, icon }: NavItemProps) => {
   return (
-    <Box as="li">
+    <Box as="li" flexShrink={0}>
       <Box
         as={NavLink}
         px={2}

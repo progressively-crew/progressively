@@ -8,6 +8,7 @@ import {
   UnorderedList,
   VisuallyHidden,
 } from "@chakra-ui/react";
+import { FaTrash } from "react-icons/fa";
 import { Link } from "remix";
 import { StrategyRetrieveDTO } from "./types";
 
@@ -81,7 +82,12 @@ export const StrategyCard = ({
       borderTopWidth={1}
       borderColor="background"
     >
-      <Flex alignItems={"flex-start"} mb={2} justifyContent="space-between">
+      <Flex
+        alignItems={"flex-start"}
+        mb={2}
+        justifyContent="space-between"
+        direction={["column", "row"]}
+      >
         <Box mr={4}>
           <Heading as="h3" id={strat.uuid} size="md" color="brand.600">
             {strat.name}
@@ -91,6 +97,8 @@ export const StrategyCard = ({
         </Box>
 
         <Button
+          leftIcon={<FaTrash aria-hidden />}
+          mt={[2, 0]}
           as={Link}
           to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/strategies/${strat.uuid}/delete`}
         >
