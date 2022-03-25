@@ -50,11 +50,27 @@ describe('StrategyService', () => {
     it('returns true when the activation rule is Boolean', () => {
       strategy.activationType = ActivationRuleType.Boolean;
 
-      const shouldActivate = service.checkActivationType(
-        strategy,
-        flagEnv,
-        'user-id-123',
-      );
+      const shouldActivate = service.checkActivationType(strategy, flagEnv, {
+        id: 'user-id-123',
+      });
+
+      expect(shouldActivate).toBe(true);
+    });
+
+    it('returns false when the activation rule is Percentage but the userId is falsy', () => {
+      strategy.rolloutPercentage = 99;
+      strategy.activationType = ActivationRuleType.Percentage;
+
+      const shouldActivate = service.checkActivationType(strategy, flagEnv, {});
+
+      expect(shouldActivate).toBe(false);
+    });
+
+    it('returns true when the activation rule is Percentage, the userId is falsy BUT the percentage is 100', () => {
+      strategy.rolloutPercentage = 100;
+      strategy.activationType = ActivationRuleType.Percentage;
+
+      const shouldActivate = service.checkActivationType(strategy, flagEnv, {});
 
       expect(shouldActivate).toBe(true);
     });
@@ -63,11 +79,9 @@ describe('StrategyService', () => {
       strategy.activationType = ActivationRuleType.Percentage;
       strategy.rolloutPercentage = 70;
 
-      const shouldActivate = service.checkActivationType(
-        strategy,
-        flagEnv,
-        'user-id-123',
-      );
+      const shouldActivate = service.checkActivationType(strategy, flagEnv, {
+        id: 'user-id-123',
+      });
 
       expect(shouldActivate).toBe(true);
     });
@@ -76,11 +90,20 @@ describe('StrategyService', () => {
       strategy.activationType = ActivationRuleType.Percentage;
       strategy.rolloutPercentage = 5;
 
-      const shouldActivate = service.checkActivationType(
-        strategy,
-        flagEnv,
-        'user-id-123',
-      );
+      const shouldActivate = service.checkActivationType(strategy, flagEnv, {
+        id: 'user-id-123',
+      });
+
+      expect(shouldActivate).toBe(false);
+    });
+
+    it('returns false when the ActivationRuleType does not match any known one', () => {
+      strategy.activationType = 'unknown';
+      strategy.rolloutPercentage = 5;
+
+      const shouldActivate = service.checkActivationType(strategy, flagEnv, {
+        id: 'user-id-123',
+      });
 
       expect(shouldActivate).toBe(false);
     });
@@ -90,13 +113,13 @@ describe('StrategyService', () => {
     it('returns true when the StrategyRuleType is default', () => {
       strategy.strategyRuleType = StrategyRuleType.Default;
 
-      const shouldActivate = service.checkStrategyRule(strategy);
+      const shouldActivate = service.checkStrategyRule(strategy, {});
 
       expect(shouldActivate).toBe(true);
     });
 
     it('returns true when the StrategyRuleType is field and that the field value matches', () => {
-      strategy.strategyRuleType = StrategyRuleType.Default;
+      strategy.strategyRuleType = StrategyRuleType.Field;
       strategy.fieldName = 'email';
       strategy.fieldValue = 'marvin.frachet@gmail.com';
 
@@ -108,7 +131,7 @@ describe('StrategyService', () => {
     });
 
     it('returns false when the StrategyRuleType is field and that the field value DOES NOT match', () => {
-      strategy.strategyRuleType = StrategyRuleType.Default;
+      strategy.strategyRuleType = StrategyRuleType.Field;
       strategy.fieldName = 'email';
       strategy.fieldValue = 'marvin.frachet@gmail.com';
 
@@ -116,11 +139,11 @@ describe('StrategyService', () => {
 
       const shouldActivate = service.checkStrategyRule(strategy, fields);
 
-      expect(shouldActivate).toBe(true);
+      expect(shouldActivate).toBe(false);
     });
 
     it('returns false when the StrategyRuleType is field and that the field name DOES NOT match', () => {
-      strategy.strategyRuleType = StrategyRuleType.Default;
+      strategy.strategyRuleType = StrategyRuleType.Field;
       strategy.fieldName = 'email';
       strategy.fieldValue = 'marvin.frachet@gmail.com';
 
@@ -128,7 +151,7 @@ describe('StrategyService', () => {
 
       const shouldActivate = service.checkStrategyRule(strategy, fields);
 
-      expect(shouldActivate).toBe(true);
+      expect(shouldActivate).toBe(false);
     });
   });
 });

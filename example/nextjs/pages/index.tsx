@@ -36,6 +36,7 @@ export async function getServerSideProps() {
   const ssrProps = await getSSRProps("valid-sdk-key", {
     fields: {
       email: "marvin.frachet@gmail.com",
+      id: "1",
     },
   });
 

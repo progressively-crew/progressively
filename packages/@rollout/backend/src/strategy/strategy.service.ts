@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Flag, FlagEnvironment, RolloutStrategy } from '@prisma/client';
 import { PrismaService } from '../prisma.service';
 import { x86 as murmur } from 'murmurhash3js';
-import { ActivationRuleType, StrategyRuleType } from './types';
+import { ActivationRuleType, FieldRecord, StrategyRuleType } from './types';
 
 const BUCKET_COUNT = 10000; // number of buckets
 const MAX_INT_32 = Math.pow(2, 32);
@@ -26,14 +26,21 @@ export class StrategyService {
   checkActivationType(
     strategy: RolloutStrategy,
     flagEnv: ExtendedFlagEnv,
-    userId: string,
+    fields: FieldRecord,
   ) {
     if (strategy.activationType === ActivationRuleType.Boolean) {
       return true;
     }
 
     if (strategy.activationType === ActivationRuleType.Percentage) {
-      const bucket = this.getBucket(flagEnv.flag.key, userId);
+      // Return the flag to everyone, even people with no ID fields when the percentage is 100%
+      if (strategy.rolloutPercentage === 100) return true;
+
+      // Early break when the field is is not defined, except when the rollout is 100%
+      if (!fields?.id) return false;
+
+      const bucket = this.getBucket(flagEnv.flag.key, fields.id as string);
+
       // Example: 10000 * (70% / 100) = 7000
       // If the bucket is 5000, it receives the variant
       const higherBoundActivationThreshold =
@@ -45,10 +52,7 @@ export class StrategyService {
     return false;
   }
 
-  checkStrategyRule(
-    strategy: RolloutStrategy,
-    fields: Record<string, string | number | boolean> = {},
-  ) {
+  checkStrategyRule(strategy: RolloutStrategy, fields: FieldRecord) {
     if (strategy.strategyRuleType === StrategyRuleType.Default) {
       return true;
     }
@@ -66,7 +70,7 @@ export class StrategyService {
     return false;
   }
 
-  async resolveStrategies(flagEnv: ExtendedFlagEnv, userId: string) {
+  async resolveStrategies(flagEnv: ExtendedFlagEnv, fields: FieldRecord = {}) {
     const strategies = await this.prisma.rolloutStrategy.findMany({
       where: {
         flagEnvironmentFlagId: flagEnv.flagId,
@@ -75,7 +79,7 @@ export class StrategyService {
     });
 
     for (const strategy of strategies) {
-      const isValidStrategyRule = this.checkStrategyRule(strategy);
+      const isValidStrategyRule = this.checkStrategyRule(strategy, fields);
 
       // Already break when not matching the strat rule
       if (!isValidStrategyRule) return false;
@@ -83,7 +87,7 @@ export class StrategyService {
       const isValidActivationType = this.checkActivationType(
         strategy,
         flagEnv,
-        userId,
+        fields,
       );
 
       if (isValidActivationType) {

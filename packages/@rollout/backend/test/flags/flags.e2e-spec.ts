@@ -139,14 +139,31 @@ describe('FlagsController (e2e)', () => {
           'password',
         );
 
-        return request(app.getHttpServer())
+        const response = await request(app.getHttpServer())
           .put('/projects/1/environments/1/flags/1')
           .set('Authorization', `Bearer ${access_token}`)
           .send({
             status,
-          })
-          .expect(200)
-          .expect({ flagId: '1', environmentId: '1', status });
+          });
+
+        expect(response.status).toBe(200);
+        expect(response.body).toMatchObject({
+          flagId: '1',
+          environmentId: '1',
+          status,
+          environment: {
+            uuid: '1',
+            name: 'Production',
+            projectId: '1',
+            clientKey: 'valid-sdk-key',
+          },
+          flag: {
+            uuid: '1',
+            name: 'New homepage',
+            key: 'newHomepage',
+            description: 'Switch the new homepage design',
+          },
+        });
       });
     });
   });

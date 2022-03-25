@@ -12,3 +12,5 @@ export enum ActivationRuleType {
   Boolean = 'boolean',
   Percentage = 'percentage',
 }
+
+export type FieldRecord = Record<string, string | number | boolean>;

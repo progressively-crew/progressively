@@ -6,9 +6,10 @@ export * from "./types";
 export default class Sdk {
   private flags: FlagDict;
   private socket?: WebSocket;
+
   constructor(
-    private readonly clientKey: string,
-    private readonly options: SDKOptions
+    private readonly flagEndpoint: string,
+    private readonly websocketEndpoint: string
   ) {
     this.flags = {};
   }
@@ -16,11 +17,17 @@ export default class Sdk {
   static init(clientKey: string, options?: SDKOptions) {
     const resolvedOptions: SDKOptions = options || { fields: {} };
 
-    if (!resolvedOptions.apiUrl) {
-      resolvedOptions.apiUrl = EndPoints.Socket(clientKey);
-    }
+    const apiUrl = resolvedOptions.apiUrl || "http://localhost:4000";
+    const flagEndpoint = EndPoints.Flags(apiUrl, clientKey, resolvedOptions);
 
-    return new Sdk(clientKey, resolvedOptions);
+    const websocketUrl = resolvedOptions.websocketUrl || "ws://localhost:4001";
+    const websocketEndpoint = EndPoints.Socket(
+      websocketUrl,
+      clientKey,
+      resolvedOptions
+    );
+
+    return new Sdk(flagEndpoint, websocketEndpoint);
   }
 
   /**
@@ -28,11 +35,11 @@ export default class Sdk {
    * that have a polyfill for HTML5 WebSocket
    */
   initSocket() {
-    this.socket = new WebSocket(this.options.apiUrl!);
+    this.socket = new WebSocket(this.websocketEndpoint);
   }
 
   async loadFlags() {
-    const response = await fetch(EndPoints.Flags(this.clientKey, this.options));
+    const response = await fetch(this.flagEndpoint);
     const data = (await response.json()) as FlagDict;
 
     this.flags = { ...this.flags, ...data };

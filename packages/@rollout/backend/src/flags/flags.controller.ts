@@ -7,14 +7,13 @@ import {
   Param,
   Post,
   Put,
-  Request,
+  Query,
   UseGuards,
   UsePipes,
 } from '@nestjs/common';
 import { EnvironmentsService } from '../environments/environments.service';
 import { FlagStatus } from './flags.status';
 import { StrategyService } from '../strategy/strategy.service';
-import { UserRetrieveDTO } from '../users/users.dto';
 import { FlagsService } from './flags.service';
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
 import { HasProjectAccessGuard } from '../projects/guards/hasProjectAccess';
@@ -94,15 +93,11 @@ export class FlagsController {
       status,
     );
 
-    const environment = updatedFlagEnv.environment;
-    const flag = updatedFlagEnv.flag;
-    const updatedFlag = { [flag.key]: status === FlagStatus.ACTIVATED };
+    const updatedFlag = {
+      [updatedFlagEnv.flag.key]: status === FlagStatus.ACTIVATED,
+    };
 
-    this.wsGateway.notify(environment.clientKey, updatedFlag);
-
-    // Removing the populated environment since it owns a clientKey that we don't want to leak out
-    delete updatedFlagEnv.environment;
-    delete updatedFlagEnv.flag;
+    this.wsGateway.notify(updatedFlagEnv.environment.clientKey, updatedFlag);
 
     return updatedFlagEnv;
   }
@@ -124,8 +119,10 @@ export class FlagsController {
    * Get the flag values by client sdk key
    */
   @Get('flags/sdk/:clientKey')
-  async getByClientKey(@Request() req, @Param('clientKey') clientKey: string) {
-    const user: UserRetrieveDTO = req.user;
+  async getByClientKey(
+    @Param('clientKey') clientKey: string,
+    @Query() queryParams,
+  ) {
     const flagEnvs = await this.envService.getEnvironmentByClientKey(clientKey);
 
     const dictOfFlags = {};
@@ -134,10 +131,7 @@ export class FlagsController {
     for (const flagEnv of flagEnvs) {
       dictOfFlags[flagEnv.flag.key] =
         flagEnv.status === FlagStatus.ACTIVATED
-          ? await this.strategyService.resolveStrategies(
-              flagEnv,
-              user?.uuid || '',
-            )
+          ? await this.strategyService.resolveStrategies(flagEnv, queryParams)
           : false;
 
       await this.flagService.hitFlag(

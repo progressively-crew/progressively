@@ -22,6 +22,7 @@ export class Rooms {
     }
 
     socket.__ROLLOUT_ROOMS = undefined;
+    socket.__ROLLOUT_FIELDS = undefined;
   }
 
   public emit(room, data) {

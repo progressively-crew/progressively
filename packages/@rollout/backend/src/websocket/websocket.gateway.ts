@@ -3,6 +3,7 @@ import {
   OnGatewayDisconnect,
   WebSocketGateway,
 } from '@nestjs/websockets';
+import { URL } from 'url';
 import { Rooms } from './rooms';
 
 @WebSocketGateway(4001)
@@ -21,12 +22,14 @@ export class WebsocketGateway
 
   handleConnection(socket: any, req: any) {
     const useLessPrefix = `http://localhost`; // just to be able to rely on the URL class
-    const url = new URL(`${useLessPrefix}${req.url}`);
-    const clientKey = url.searchParams.get('client_key');
+    const searchParams = new URL(`${useLessPrefix}${req.url}`).searchParams;
+    const queryParams = Object.fromEntries(searchParams);
 
-    if (clientKey) {
+    if (queryParams.client_key) {
+      const { queryClient, ...fields } = queryParams;
       socket.__ROLLOUT_ROOMS = [];
-      this.rooms.join(clientKey, socket);
+      socket.__ROLLOUT_FIELDS = fields;
+      this.rooms.join(queryParams.client_key, socket);
     }
   }
 

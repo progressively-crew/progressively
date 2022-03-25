@@ -11,6 +11,7 @@ export const getSSRProps = async (
     initialFlags: await sdk.loadFlags(),
     clientKey,
     onlyRenderWhenReady: false,
+    ...options,
   };
 
   return ssrProps;
