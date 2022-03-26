@@ -20,6 +20,7 @@ export const Section = ({
     <SectionContext.Provider value={id}>
       <Box
         bg="backgroundContent"
+        as="section"
         borderRadius={16}
         p={size === "S" ? 4 : 8}
         boxShadow="md"
@@ -34,7 +35,7 @@ export const Section = ({
 
 export interface SectionHeaderProps extends React.HTMLAttributes<HTMLElement> {
   title: string;
-  titleAs?: any;
+  titleAs?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
   endAction?: React.ReactNode;
   description?: React.ReactNode;
 }

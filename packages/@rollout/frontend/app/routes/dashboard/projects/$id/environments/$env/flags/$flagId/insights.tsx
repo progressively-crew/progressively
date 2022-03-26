@@ -81,7 +81,7 @@ interface LoaderData {
   environment: Environment;
   currentFlagEnv: FlagEnv;
   user: User;
-  hits: any;
+  hits: Array<{ date: Date; count: number }>;
 }
 
 export const loader: LoaderFunction = async ({
@@ -149,7 +149,8 @@ export default function FlagById() {
     },
   ];
 
-  const formatX = (item: any) => new Intl.DateTimeFormat().format(item.date);
+  const formatX = (item: { date: Date }) =>
+    new Intl.DateTimeFormat().format(item.date);
 
   return (
     <DashboardLayout user={user}>
@@ -198,7 +199,7 @@ export default function FlagById() {
         </Box>
 
         <Stack spacing={4}>
-          <Section as="section" id="flag-status">
+          <Section id="flag-status">
             <SectionHeader
               title="Insights"
               description="Number of hits per date"

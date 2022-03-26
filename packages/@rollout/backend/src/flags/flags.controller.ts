@@ -93,11 +93,7 @@ export class FlagsController {
       status,
     );
 
-    const updatedFlag = {
-      [updatedFlagEnv.flag.key]: status === FlagStatus.ACTIVATED,
-    };
-
-    this.wsGateway.notify(updatedFlagEnv.environment.clientKey, updatedFlag);
+    this.wsGateway.notifyFlagChanging(updatedFlagEnv);
 
     return updatedFlagEnv;
   }

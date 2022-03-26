@@ -97,11 +97,7 @@ export default function ProjectDetailPage() {
           </HorizontalNav>
         </Box>
 
-        <Section
-          as="section"
-          aria-labelledby="list-env-title"
-          id="list-env-title"
-        >
+        <Section aria-labelledby="list-env-title" id="list-env-title">
           <SectionHeader
             title="Environments"
             endAction={

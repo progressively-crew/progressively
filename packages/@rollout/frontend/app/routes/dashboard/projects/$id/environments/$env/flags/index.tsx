@@ -164,7 +164,7 @@ export default function FlagsByEnvPage() {
           </HorizontalNav>
         </Box>
 
-        <Section as="section" id="list-flags-title">
+        <Section id="list-flags-title">
           <SectionHeader
             title="Feature flags"
             description={

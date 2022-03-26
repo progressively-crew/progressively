@@ -3,8 +3,11 @@ import {
   OnGatewayDisconnect,
   WebSocketGateway,
 } from '@nestjs/websockets';
+import { StrategyService } from '../strategy/strategy.service';
 import { URL } from 'url';
 import { Rooms } from './rooms';
+import { Environment, Flag, FlagEnvironment } from '@prisma/client';
+import { FlagStatus } from '../flags/flags.status';
 
 @WebSocketGateway(4001)
 export class WebsocketGateway
@@ -12,7 +15,7 @@ export class WebsocketGateway
 {
   private rooms: Rooms;
 
-  constructor() {
+  constructor(private readonly strategyService: StrategyService) {
     this.rooms = new Rooms();
   }
 
@@ -26,14 +29,37 @@ export class WebsocketGateway
     const queryParams = Object.fromEntries(searchParams);
 
     if (queryParams.client_key) {
-      const { queryClient, ...fields } = queryParams;
+      const { client_key, ...fields } = queryParams;
       socket.__ROLLOUT_ROOMS = [];
-      socket.__ROLLOUT_FIELDS = fields;
-      this.rooms.join(queryParams.client_key, socket);
+      socket.__ROLLOUT_FIELDS = fields || {};
+      this.rooms.join(client_key, socket);
     }
   }
 
-  notify(room: string, data: any) {
-    this.rooms.emit(room, data);
+  /**
+   * TODO: if there is one thing to improve in terms of performances,
+   * it's this function
+   * it iterates of every socket available for the given client key
+   * and get + computes every strategies available
+   */
+  async notifyFlagChanging(
+    flagEnv: FlagEnvironment & { environment: Environment; flag: Flag },
+  ) {
+    const room = flagEnv.environment.clientKey;
+    const sockets = this.rooms.getSockets(room);
+
+    for (const socket of sockets) {
+      const updatedFlag = {
+        [flagEnv.flag.key]:
+          flagEnv.status === FlagStatus.ACTIVATED
+            ? await this.strategyService.resolveStrategies(
+                flagEnv,
+                socket.__ROLLOUT_FIELDS,
+              )
+            : false,
+      };
+
+      this.rooms.emit(socket, updatedFlag);
+    }
   }
 }

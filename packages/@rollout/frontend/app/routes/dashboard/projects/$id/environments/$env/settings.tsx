@@ -125,7 +125,7 @@ export default function EnvSettingsPage() {
         </Box>
 
         {userRole === UserRoles.Admin && (
-          <Section as="section" id="danger">
+          <Section id="danger">
             <SectionHeader
               title="Danger zone"
               description={

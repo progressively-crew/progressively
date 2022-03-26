@@ -161,13 +161,13 @@ export default function SettingsPage() {
         </Box>
 
         <Stack spacing={4}>
-          <Section as="section" id="details">
+          <Section id="details">
             <SectionHeader title="Project details" />
 
             <Box px={4}>{project.name}</Box>
           </Section>
 
-          <Section as="section" id="members">
+          <Section id="members">
             <SectionHeader
               title="Project members"
               description={
@@ -206,7 +206,7 @@ export default function SettingsPage() {
           </Section>
 
           {userRole === UserRoles.Admin && (
-            <Section as="section" id="danger">
+            <Section id="danger">
               <SectionHeader
                 title="Danger zone"
                 description={

@@ -1,5 +1,12 @@
+import { FieldRecord } from '../strategy/types';
+
 export class Rooms {
-  private _rooms: { [key: string]: Array<{ send: (args: any) => void }> };
+  private _rooms: {
+    [key: string]: Array<{
+      send: (args: any) => void;
+      __ROLLOUT_FIELDS: FieldRecord;
+    }>;
+  };
 
   constructor() {
     this._rooms = {};
@@ -25,11 +32,11 @@ export class Rooms {
     socket.__ROLLOUT_FIELDS = undefined;
   }
 
-  public emit(room, data) {
-    const sockets = this._rooms[room] || [];
+  public emit(socket, data) {
+    socket.send(JSON.stringify({ data }));
+  }
 
-    for (const socket of sockets) {
-      socket.send(JSON.stringify({ data }));
-    }
+  public getSockets(room) {
+    return this._rooms[room] || [];
   }
 }

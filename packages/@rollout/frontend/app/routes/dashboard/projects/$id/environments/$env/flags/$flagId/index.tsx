@@ -208,7 +208,7 @@ export default function FlagById() {
         </Box>
 
         <Stack spacing={4}>
-          <Section as="section" id="flag-status">
+          <Section id="flag-status">
             <SectionHeader
               title="Flag status"
               description={
@@ -251,7 +251,7 @@ export default function FlagById() {
             />
           </Section>
 
-          <Section as="section" id="concerned-audience">
+          <Section id="concerned-audience">
             <SectionHeader
               title="Rollout strategies"
               description={
