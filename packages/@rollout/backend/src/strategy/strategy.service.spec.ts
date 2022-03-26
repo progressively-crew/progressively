@@ -46,112 +46,154 @@ describe('StrategyService', () => {
     };
   });
 
-  describe('checkActivationType', () => {
-    it('returns true when the activation rule is Boolean', () => {
-      strategy.activationType = ActivationRuleType.Boolean;
+  describe('resolveStrategies', () => {
+    describe('ActivationRuleType', () => {
+      it('returns true when the activation rule is Boolean', async () => {
+        strategy.activationType = ActivationRuleType.Boolean;
 
-      const shouldActivate = service.checkActivationType(strategy, flagEnv, {
-        id: 'user-id-123',
+        const shouldActivate = await service.resolveStrategies(
+          flagEnv,
+          [strategy],
+          {
+            id: 'user-id-123',
+          },
+        );
+
+        expect(shouldActivate).toBe(true);
       });
 
-      expect(shouldActivate).toBe(true);
-    });
+      it('returns false when the activation rule is Percentage but the userId is falsy', async () => {
+        strategy.rolloutPercentage = 99;
+        strategy.activationType = ActivationRuleType.Percentage;
 
-    it('returns false when the activation rule is Percentage but the userId is falsy', () => {
-      strategy.rolloutPercentage = 99;
-      strategy.activationType = ActivationRuleType.Percentage;
+        const shouldActivate = await service.resolveStrategies(
+          flagEnv,
+          [strategy],
+          {},
+        );
 
-      const shouldActivate = service.checkActivationType(strategy, flagEnv, {});
-
-      expect(shouldActivate).toBe(false);
-    });
-
-    it('returns true when the activation rule is Percentage, the userId is falsy BUT the percentage is 100', () => {
-      strategy.rolloutPercentage = 100;
-      strategy.activationType = ActivationRuleType.Percentage;
-
-      const shouldActivate = service.checkActivationType(strategy, flagEnv, {});
-
-      expect(shouldActivate).toBe(true);
-    });
-
-    it('returns true when the ActivationRuleType is Percentage (70%) and that the user/flag combination is in the percentage range', () => {
-      strategy.activationType = ActivationRuleType.Percentage;
-      strategy.rolloutPercentage = 70;
-
-      const shouldActivate = service.checkActivationType(strategy, flagEnv, {
-        id: 'user-id-123',
+        expect(shouldActivate).toBe(false);
       });
 
-      expect(shouldActivate).toBe(true);
-    });
+      it('returns true when the activation rule is Percentage, the userId is falsy BUT the percentage is 100', async () => {
+        strategy.rolloutPercentage = 100;
+        strategy.activationType = ActivationRuleType.Percentage;
 
-    it('returns false when the ActivationRuleType is Percentage (5%) and that the user/flag combination is NOT in the percentage range', () => {
-      strategy.activationType = ActivationRuleType.Percentage;
-      strategy.rolloutPercentage = 5;
+        const shouldActivate = await service.resolveStrategies(
+          flagEnv,
+          [strategy],
+          {},
+        );
 
-      const shouldActivate = service.checkActivationType(strategy, flagEnv, {
-        id: 'user-id-123',
+        expect(shouldActivate).toBe(true);
       });
 
-      expect(shouldActivate).toBe(false);
-    });
+      it('returns true when the ActivationRuleType is Percentage (70%) and that the user/flag combination is in the percentage range', async () => {
+        strategy.activationType = ActivationRuleType.Percentage;
+        strategy.rolloutPercentage = 70;
 
-    it('returns false when the ActivationRuleType does not match any known one', () => {
-      strategy.activationType = 'unknown';
-      strategy.rolloutPercentage = 5;
+        const shouldActivate = await service.resolveStrategies(
+          flagEnv,
+          [strategy],
+          {
+            id: 'user-id-123',
+          },
+        );
 
-      const shouldActivate = service.checkActivationType(strategy, flagEnv, {
-        id: 'user-id-123',
+        expect(shouldActivate).toBe(true);
       });
 
-      expect(shouldActivate).toBe(false);
-    });
-  });
+      it('returns false when the ActivationRuleType is Percentage (5%) and that the user/flag combination is NOT in the percentage range', async () => {
+        strategy.activationType = ActivationRuleType.Percentage;
+        strategy.rolloutPercentage = 5;
 
-  describe('checkStrategyRule', () => {
-    it('returns true when the StrategyRuleType is default', () => {
-      strategy.strategyRuleType = StrategyRuleType.Default;
+        const shouldActivate = await service.resolveStrategies(
+          flagEnv,
+          [strategy],
+          {
+            id: 'user-id-123',
+          },
+        );
 
-      const shouldActivate = service.checkStrategyRule(strategy, {});
+        expect(shouldActivate).toBe(false);
+      });
 
-      expect(shouldActivate).toBe(true);
-    });
+      it('returns false when the ActivationRuleType does not match any known one', async () => {
+        strategy.activationType = 'unknown';
+        strategy.rolloutPercentage = 5;
 
-    it('returns true when the StrategyRuleType is field and that the field value matches', () => {
-      strategy.strategyRuleType = StrategyRuleType.Field;
-      strategy.fieldName = 'email';
-      strategy.fieldValue = 'marvin.frachet@gmail.com';
+        const shouldActivate = await service.resolveStrategies(
+          flagEnv,
+          [strategy],
+          {
+            id: 'user-id-123',
+          },
+        );
 
-      const fields = { email: 'marvin.frachet@gmail.com', uuid: '1234' };
-
-      const shouldActivate = service.checkStrategyRule(strategy, fields);
-
-      expect(shouldActivate).toBe(true);
-    });
-
-    it('returns false when the StrategyRuleType is field and that the field value DOES NOT match', () => {
-      strategy.strategyRuleType = StrategyRuleType.Field;
-      strategy.fieldName = 'email';
-      strategy.fieldValue = 'marvin.frachet@gmail.com';
-
-      const fields = { email: 'not.working@gmail.com' };
-
-      const shouldActivate = service.checkStrategyRule(strategy, fields);
-
-      expect(shouldActivate).toBe(false);
+        expect(shouldActivate).toBe(false);
+      });
     });
 
-    it('returns false when the StrategyRuleType is field and that the field name DOES NOT match', () => {
-      strategy.strategyRuleType = StrategyRuleType.Field;
-      strategy.fieldName = 'email';
-      strategy.fieldValue = 'marvin.frachet@gmail.com';
+    describe('StrategyRuleType', () => {
+      it('returns true when the StrategyRuleType is default', async () => {
+        strategy.strategyRuleType = StrategyRuleType.Default;
 
-      const fields = { uuid: 'not.working@gmail.com' };
+        const shouldActivate = await service.resolveStrategies(
+          flagEnv,
+          [strategy],
+          {},
+        );
 
-      const shouldActivate = service.checkStrategyRule(strategy, fields);
+        expect(shouldActivate).toBe(true);
+      });
 
-      expect(shouldActivate).toBe(false);
+      it('returns true when the StrategyRuleType is field and that the field value matches', async () => {
+        strategy.strategyRuleType = StrategyRuleType.Field;
+        strategy.fieldName = 'email';
+        strategy.fieldValue = 'marvin.frachet@gmail.com';
+
+        const fields = { email: 'marvin.frachet@gmail.com', uuid: '1234' };
+
+        const shouldActivate = await service.resolveStrategies(
+          flagEnv,
+          [strategy],
+          fields,
+        );
+
+        expect(shouldActivate).toBe(true);
+      });
+
+      it('returns false when the StrategyRuleType is field and that the field value DOES NOT match', async () => {
+        strategy.strategyRuleType = StrategyRuleType.Field;
+        strategy.fieldName = 'email';
+        strategy.fieldValue = 'marvin.frachet@gmail.com';
+
+        const fields = { email: 'not.working@gmail.com' };
+
+        const shouldActivate = await service.resolveStrategies(
+          flagEnv,
+          [strategy],
+          fields,
+        );
+
+        expect(shouldActivate).toBe(false);
+      });
+
+      it('returns false when the StrategyRuleType is field and that the field name DOES NOT match', async () => {
+        strategy.strategyRuleType = StrategyRuleType.Field;
+        strategy.fieldName = 'email';
+        strategy.fieldValue = 'marvin.frachet@gmail.com';
+
+        const fields = { uuid: 'not.working@gmail.com' };
+
+        const shouldActivate = await service.resolveStrategies(
+          flagEnv,
+          [strategy],
+          fields,
+        );
+
+        expect(shouldActivate).toBe(false);
+      });
     });
   });
 });

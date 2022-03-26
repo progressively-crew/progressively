@@ -23,7 +23,7 @@ export class StrategyService {
     return bucket;
   }
 
-  checkActivationType(
+  private _checkActivationType(
     strategy: RolloutStrategy,
     flagEnv: ExtendedFlagEnv,
     fields: FieldRecord,
@@ -52,7 +52,7 @@ export class StrategyService {
     return false;
   }
 
-  checkStrategyRule(strategy: RolloutStrategy, fields: FieldRecord) {
+  private _checkStrategyRule(strategy: RolloutStrategy, fields: FieldRecord) {
     if (strategy.strategyRuleType === StrategyRuleType.Default) {
       return true;
     }
@@ -76,12 +76,12 @@ export class StrategyService {
     fields: FieldRecord = {},
   ) {
     for (const strategy of strategies) {
-      const isValidStrategyRule = this.checkStrategyRule(strategy, fields);
+      const isValidStrategyRule = this._checkStrategyRule(strategy, fields);
 
       // Already break when not matching the strat rule
       if (!isValidStrategyRule) return false;
 
-      const isValidActivationType = this.checkActivationType(
+      const isValidActivationType = this._checkActivationType(
         strategy,
         flagEnv,
         fields,
