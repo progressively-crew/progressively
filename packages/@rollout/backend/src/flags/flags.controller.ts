@@ -120,17 +120,25 @@ export class FlagsController {
     @Query() queryParams,
   ) {
     const flagEnvs = await this.envService.getEnvironmentByClientKey(clientKey);
-
     const dictOfFlags = {};
 
     // TODO: make sure to run these with Promise.all when confident enough
     for (const flagEnv of flagEnvs) {
-      dictOfFlags[flagEnv.flag.key] =
-        flagEnv.status === FlagStatus.ACTIVATED
-          ? await this.strategyService.resolveStrategies(flagEnv, queryParams)
-          : false;
+      let flagStatus: boolean;
 
-      await this.flagService.hitFlag(
+      if (flagEnv.status === FlagStatus.ACTIVATED) {
+        flagStatus = await this.strategyService.resolveStrategies(
+          flagEnv,
+          flagEnv.strategies,
+          queryParams,
+        );
+      } else {
+        flagStatus = false;
+      }
+
+      dictOfFlags[flagEnv.flag.key] = flagStatus;
+
+      this.flagService.hitFlag(
         flagEnv.environmentId,
         flagEnv.flagId,
         flagEnv.status as FlagStatus,

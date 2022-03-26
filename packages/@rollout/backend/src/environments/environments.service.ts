@@ -57,6 +57,7 @@ export class EnvironmentsService {
       include: {
         environment: true,
         flag: true,
+        strategies: true,
       },
     });
   }

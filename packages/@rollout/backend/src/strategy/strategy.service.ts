@@ -70,14 +70,11 @@ export class StrategyService {
     return false;
   }
 
-  async resolveStrategies(flagEnv: ExtendedFlagEnv, fields: FieldRecord = {}) {
-    const strategies = await this.prisma.rolloutStrategy.findMany({
-      where: {
-        flagEnvironmentFlagId: flagEnv.flagId,
-        flagEnvironmentEnvironmentId: flagEnv.environmentId,
-      },
-    });
-
+  async resolveStrategies(
+    flagEnv: ExtendedFlagEnv,
+    strategies: Array<RolloutStrategy>,
+    fields: FieldRecord = {},
+  ) {
     for (const strategy of strategies) {
       const isValidStrategyRule = this.checkStrategyRule(strategy, fields);
 
