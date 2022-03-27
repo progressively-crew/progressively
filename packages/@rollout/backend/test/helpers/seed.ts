@@ -1,92 +1,43 @@
-import { UserRoles } from '../../src/users/roles';
-import { UserStatus } from '../../src/users/status';
-import { CryptoService } from '../../src/crypto/crypto.service';
 import { PrismaClient } from '@prisma/client';
-import { FlagStatus } from '../../src/flags/flags.status';
+import { UserRoles } from '../../src/users/roles';
+import { seedPasswordReset, seedUsers } from './seeds/users';
+import { seedProjects } from './seeds/projects';
+import { seedFlags, seedHits } from './seeds/flags';
 
 const prismaClient = new PrismaClient();
-
-const seedHits = async (flagEnv, date, count = 10) => {
-  for (let i = 0; i < count; i++) {
-    await prismaClient.flagHit.create({
-      data: {
-        flagEnvironmentFlagId: flagEnv.flagId,
-        flagEnvironmentEnvironmentId: flagEnv.environmentId,
-        status: FlagStatus.ACTIVATED,
-        date,
-      },
-    });
-  }
-};
 
 export const seedDb = async () => {
   await prismaClient.$connect();
 
   try {
-    const marvin = await prismaClient.user.create({
+    // Initial seeding
+    const [marvin, john, jane, gina] = await seedUsers(prismaClient);
+    const [projectFromSeeding] = await seedProjects(prismaClient);
+    const [homePageFlag] = await seedFlags(prismaClient);
+    await seedPasswordReset(prismaClient, john); // Necessary to e2e test password reset
+
+    //  Contextual seeding
+    const production = await prismaClient.environment.create({
       data: {
         uuid: '1',
-        fullname: 'Marvin Frachet',
-        email: 'marvin.frachet@gmail.com',
-        password: await CryptoService.hash('password'),
-        activationToken: '1',
-        status: UserStatus.Active,
+        name: 'Production',
+        projectId: projectFromSeeding.uuid,
+        clientKey: 'valid-sdk-key',
       },
     });
 
-    await prismaClient.user.create({
-      data: {
-        fullname: 'Jane Doe',
-        email: 'jane.doe@gmail.com',
-        password: await CryptoService.hash('password'),
-        activationToken: '2',
-        status: UserStatus.Active,
-      },
-    });
-
-    const john = await prismaClient.user.create({
+    const developer = await prismaClient.environment.create({
       data: {
         uuid: '2',
-        fullname: 'John Doe',
-        email: 'john.doe@gmail.com',
-        password: await CryptoService.hash('password'),
-        activationToken: '3',
-        status: UserStatus.Active,
-      },
-    });
-
-    const dateEnd = new Date();
-    // In case tests take time...
-    dateEnd.setMinutes(dateEnd.getMinutes() + 1000);
-    await prismaClient.passwordResetTokens.create({
-      data: {
-        dateEnd,
-        token: CryptoService.sha256('1'),
-        userUuid: john.uuid,
-      },
-    });
-
-    await prismaClient.user.create({
-      data: {
-        uuid: '4',
-        fullname: 'Gina Doe',
-        email: 'gina.doe@gmail.com',
-        password: await CryptoService.hash('password'),
-        activationToken: '4',
-        status: UserStatus.Pending,
-      },
-    });
-
-    const newProject = await prismaClient.project.create({
-      data: {
-        uuid: '1',
-        name: 'Project from seeding',
+        name: 'Developer',
+        projectId: projectFromSeeding.uuid,
+        clientKey: 'valid-sdk-key-2',
       },
     });
 
     await prismaClient.userProject.create({
       data: {
-        projectId: newProject.uuid,
+        projectId: projectFromSeeding.uuid,
         userId: marvin.uuid,
         role: UserRoles.Admin,
       },
@@ -94,42 +45,15 @@ export const seedDb = async () => {
 
     await prismaClient.userProject.create({
       data: {
-        projectId: newProject.uuid,
+        projectId: projectFromSeeding.uuid,
         userId: john.uuid,
         role: UserRoles.User,
       },
     });
 
-    const productionEnv = await prismaClient.environment.create({
-      data: {
-        uuid: '1',
-        name: 'Production',
-        projectId: newProject.uuid,
-        clientKey: 'valid-sdk-key',
-      },
-    });
-
-    await prismaClient.environment.create({
-      data: {
-        uuid: '2',
-        name: 'Developer',
-        projectId: newProject.uuid,
-        clientKey: 'valid-sdk-key-2',
-      },
-    });
-
-    const homePageFlag = await prismaClient.flag.create({
-      data: {
-        uuid: '1',
-        name: 'New homepage',
-        description: 'Switch the new homepage design',
-        key: 'newHomepage',
-      },
-    });
-
     const flagEnv = await prismaClient.flagEnvironment.create({
       data: {
-        environmentId: productionEnv.uuid,
+        environmentId: production.uuid,
         flagId: homePageFlag.uuid,
       },
     });
@@ -145,10 +69,10 @@ export const seedDb = async () => {
       },
     });
 
-    await seedHits(flagEnv, new Date(1992, 0, 1, 1), 10);
-    await seedHits(flagEnv, new Date(1992, 0, 3, 1), 20);
-    await seedHits(flagEnv, new Date(1992, 0, 2, 1), 40);
-    await seedHits(flagEnv, new Date(1992, 0, 6, 1), 10);
+    await seedHits(prismaClient, flagEnv, new Date(1992, 0, 1, 1), 10);
+    await seedHits(prismaClient, flagEnv, new Date(1992, 0, 3, 1), 20);
+    await seedHits(prismaClient, flagEnv, new Date(1992, 0, 2, 1), 40);
+    await seedHits(prismaClient, flagEnv, new Date(1992, 0, 6, 1), 10);
   } catch (e) {
     console.error(e);
   }

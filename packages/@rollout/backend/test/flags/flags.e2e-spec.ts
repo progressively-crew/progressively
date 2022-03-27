@@ -298,10 +298,10 @@ describe('FlagsController (e2e)', () => {
         .set('Authorization', `Bearer ${access_token}`)
         .expect(200)
         .expect([
-          { date: '1992-01-01T01:00:00.000Z', count: 10 },
-          { date: '1992-01-02T01:00:00.000Z', count: 40 },
-          { date: '1992-01-03T01:00:00.000Z', count: 20 },
-          { date: '1992-01-06T01:00:00.000Z', count: 10 },
+          { count: 10, date: '1992-01-01T02:02:02.002Z' },
+          { count: 40, date: '1992-01-02T02:02:02.002Z' },
+          { count: 20, date: '1992-01-03T02:02:02.002Z' },
+          { count: 10, date: '1992-01-06T02:02:02.002Z' },
         ]);
     });
   });

@@ -14,7 +14,7 @@ export interface ExtendedFlagEnv extends FlagEnvironment {
 export class StrategyService {
   constructor(private prisma: PrismaService) {}
 
-  getBucket(flagKey: string, userId: string) {
+  private _generateBucket(flagKey: string, userId: string) {
     const bucketKey = `${userId}-${flagKey}`;
     const bucketHash: number = murmur.hash32(bucketKey, 1);
     const bucketHashRatio = bucketHash / MAX_INT_32; // int 32 hash divided by the max number of int 32
@@ -39,7 +39,10 @@ export class StrategyService {
       // Early break when the field is is not defined, except when the rollout is 100%
       if (!fields?.id) return false;
 
-      const bucket = this.getBucket(flagEnv.flag.key, fields.id as string);
+      const bucket = this._generateBucket(
+        flagEnv.flag.key,
+        fields.id as string,
+      );
 
       // Example: 10000 * (70% / 100) = 7000
       // If the bucket is 5000, it receives the variant
