@@ -149,8 +149,9 @@ export default function FlagById() {
     },
   ];
 
-  const formatX = (item: { date: Date }) =>
-    new Intl.DateTimeFormat().format(item.date);
+  const formatX = (item: string) => {
+    return new Intl.DateTimeFormat().format(new Date(item));
+  };
 
   return (
     <DashboardLayout user={user}>
