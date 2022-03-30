@@ -10,7 +10,6 @@ import {
   useLoaderData,
   useTransition,
 } from "remix";
-import { Main } from "~/components/Main";
 import { getFlagsByProjectEnv } from "~/modules/flags/getFlagsByProjectEnv";
 import { Flag, FlagEnv } from "~/modules/flags/types";
 import { getProject } from "~/modules/projects/getProject";
@@ -198,79 +197,76 @@ export default function StrategyCreatePage() {
   const errors = actionData?.errors || {};
 
   return (
-    <DashboardLayout user={user}>
-      <BreadCrumbs crumbs={crumbs} />
-      <Main>
-        <Box pb={8}>
-          <Header
-            title="Add a strategy"
-            description={
-              <Text>
-                {`You're`} about to add a strategy to{" "}
-                <strong>{currentFlag.name}</strong> in{" "}
-                <strong>{project.name}</strong> on{" "}
-                <strong>{environment.name}</strong>.
-              </Text>
-            }
+    <DashboardLayout
+      user={user}
+      breadcrumb={<BreadCrumbs crumbs={crumbs} />}
+      header={
+        <Header
+          title="Add a strategy"
+          description={
+            <Text>
+              {`You're`} about to add a strategy to{" "}
+              <strong>{currentFlag.name}</strong> in{" "}
+              <strong>{project.name}</strong> on{" "}
+              <strong>{environment.name}</strong>.
+            </Text>
+          }
+        />
+      }
+    >
+      <Form method="post">
+        {actionData?.errors && (
+          <Box pb={4}>
+            <ErrorBox list={actionData.errors} />
+          </Box>
+        )}
+
+        <Stack spacing={4}>
+          <Section id="general-information">
+            <SectionHeader title="General information" />
+
+            <Box px={4} pb={4}>
+              <FormControl isInvalid={Boolean(errors["strategy-name"])}>
+                <FormLabel htmlFor="strategy-name">Strategy name</FormLabel>
+                <Input
+                  type="text"
+                  placeholder="e.g: Strategy 1"
+                  id="strategy-name"
+                  name="strategy-name"
+                  aria-describedby={
+                    errors["strategy-name"] ? "error-strategy-name" : undefined
+                  }
+                />
+              </FormControl>
+            </Box>
+          </Section>
+
+          <StrategyAudience
+            strategyType={strategyType}
+            onStrategyChange={setStrategyType}
+            errors={errors}
           />
-        </Box>
 
-        <Form method="post">
-          {actionData?.errors && (
-            <Box pb={4}>
-              <ErrorBox list={actionData.errors} />
-            </Box>
-          )}
+          <ActivationStrategy
+            activationStrategy={activationStrategy}
+            onActivationChange={setActivationStrategy}
+            errors={errors}
+          />
 
-          <Stack spacing={4}>
-            <Section id="general-information">
-              <SectionHeader title="General information" />
-
-              <Box px={4} pb={4}>
-                <FormControl isInvalid={Boolean(errors["strategy-name"])}>
-                  <FormLabel htmlFor="strategy-name">Strategy name</FormLabel>
-                  <Input
-                    type="text"
-                    placeholder="e.g: Strategy 1"
-                    id="strategy-name"
-                    name="strategy-name"
-                    aria-describedby={
-                      errors["strategy-name"]
-                        ? "error-strategy-name"
-                        : undefined
-                    }
-                  />
-                </FormControl>
-              </Box>
-            </Section>
-
-            <StrategyAudience
-              strategyType={strategyType}
-              onStrategyChange={setStrategyType}
-              errors={errors}
-            />
-
-            <ActivationStrategy
-              activationStrategy={activationStrategy}
-              onActivationChange={setActivationStrategy}
-              errors={errors}
-            />
-
-            <Box mt={8}>
-              <Button
-                colorScheme={"brand"}
-                type="submit"
-                leftIcon={<IoIosCreate aria-hidden />}
-                isLoading={transition.state === "submitting"}
-                loadingText="Saving the strategy, please wait..."
-                disabled={false}
-              >
-                Save the strategy
-              </Button>
-            </Box>
-          </Stack>
-        </Form>
-      </Main>
+          <Box mt={8}>
+            <Button
+              colorScheme={"brand"}
+              type="submit"
+              leftIcon={<IoIosCreate aria-hidden />}
+              isLoading={transition.state === "submitting"}
+              loadingText="Saving the strategy, please wait..."
+              disabled={false}
+            >
+              Save the strategy
+            </Button>
+          </Box>
+        </Stack>
+      </Form>
     </DashboardLayout>
   );
 }

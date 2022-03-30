@@ -6,7 +6,6 @@ import {
   useSearchParams,
 } from "remix";
 import { Crumbs, BreadCrumbs } from "~/components/AppBreadcrumbs";
-import { Main } from "~/components/Main";
 import { SuccessBox } from "~/components/SuccessBox";
 import { getProject } from "~/modules/projects/getProject";
 import { Project } from "~/modules/projects/types";
@@ -71,73 +70,68 @@ export default function ProjectDetailPage() {
   ];
 
   return (
-    <DashboardLayout user={user}>
-      <BreadCrumbs crumbs={crumbs} />
+    <DashboardLayout
+      user={user}
+      breadcrumb={<BreadCrumbs crumbs={crumbs} />}
+      header={<Header title={project.name} />}
+      subNav={
+        <HorizontalNav label={`Project related navigation`}>
+          <NavItem
+            to={`/dashboard/projects/${project.uuid}`}
+            icon={<FiLayers />}
+          >
+            Environments
+          </NavItem>
 
-      <Main>
-        <Box pb={[0, 8]}>
-          <Header title={project.name} />
-        </Box>
-
-        <Box pb={6}>
-          <HorizontalNav label={`Project related navigation`}>
-            <NavItem
-              to={`/dashboard/projects/${project.uuid}`}
-              icon={<FiLayers />}
+          <NavItem
+            to={`/dashboard/projects/${project.uuid}/settings`}
+            icon={<AiOutlineSetting />}
+          >
+            Settings
+          </NavItem>
+        </HorizontalNav>
+      }
+    >
+      <Section aria-labelledby="list-env-title" id="list-env-title">
+        <SectionHeader
+          title="Environments"
+          endAction={
+            <Button
+              to={`/dashboard/projects/${project.uuid}/environments/create`}
+              leftIcon={<IoIosCreate aria-hidden />}
+              colorScheme="brand"
             >
-              Environments
-            </NavItem>
+              Create an environment
+            </Button>
+          }
+        />
 
-            <NavItem
-              to={`/dashboard/projects/${project.uuid}/settings`}
-              icon={<AiOutlineSetting />}
-            >
-              Settings
-            </NavItem>
-          </HorizontalNav>
-        </Box>
+        <Stack spacing={2}>
+          <Box px={4}>
+            {newEnvId ? (
+              <SuccessBox id="env-added" mb={4}>
+                The environment has been successfully created.
+              </SuccessBox>
+            ) : null}
 
-        <Section aria-labelledby="list-env-title" id="list-env-title">
-          <SectionHeader
-            title="Environments"
-            endAction={
-              <Button
-                to={`/dashboard/projects/${project.uuid}/environments/create`}
-                leftIcon={<IoIosCreate aria-hidden />}
-                colorScheme="brand"
-              >
-                Create an environment
-              </Button>
-            }
-          />
+            {envRemoved ? (
+              <SuccessBox id="env-removed" mb={4}>
+                The environment has been successfully deleted.
+              </SuccessBox>
+            ) : null}
 
-          <Stack spacing={2}>
-            <Box px={4}>
-              {newEnvId ? (
-                <SuccessBox id="env-added" mb={4}>
-                  The environment has been successfully created.
-                </SuccessBox>
-              ) : null}
-
-              {envRemoved ? (
-                <SuccessBox id="env-removed" mb={4}>
-                  The environment has been successfully deleted.
-                </SuccessBox>
-              ) : null}
-
-              {project.environments.map((env) => (
-                <EnvCard
-                  key={env.uuid}
-                  id={env.uuid}
-                  linkTo={`/dashboard/projects/${project.uuid}/environments/${env.uuid}/flags`}
-                  title={env.name}
-                  clientKey={env.clientKey}
-                />
-              ))}
-            </Box>
-          </Stack>
-        </Section>
-      </Main>
+            {project.environments.map((env) => (
+              <EnvCard
+                key={env.uuid}
+                id={env.uuid}
+                linkTo={`/dashboard/projects/${project.uuid}/environments/${env.uuid}/flags`}
+                title={env.name}
+                clientKey={env.clientKey}
+              />
+            ))}
+          </Box>
+        </Stack>
+      </Section>
     </DashboardLayout>
   );
 }

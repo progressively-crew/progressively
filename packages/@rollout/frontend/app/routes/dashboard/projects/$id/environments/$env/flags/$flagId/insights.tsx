@@ -7,7 +7,6 @@ import {
 } from "remix";
 import { Crumbs, BreadCrumbs } from "~/components/AppBreadcrumbs";
 import { ButtonCopy } from "~/components/ButtonCopy";
-import { Main } from "~/components/Main";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { authGuard } from "~/modules/auth/auth-guard";
 import { Environment } from "~/modules/environments/types";
@@ -154,76 +153,73 @@ export default function FlagById() {
   };
 
   return (
-    <DashboardLayout user={user}>
-      <BreadCrumbs crumbs={crumbs} />
+    <DashboardLayout
+      user={user}
+      breadcrumb={<BreadCrumbs crumbs={crumbs} />}
+      header={
+        <Header
+          title={currentFlag.name}
+          startAction={
+            <ButtonCopy
+              toCopy={currentFlag.key}
+              icon={<IoIosFlag aria-hidden />}
+              variant="outline"
+              colorScheme={"brand"}
+            >
+              {currentFlag.key}
+            </ButtonCopy>
+          }
+        />
+      }
+      subNav={
+        <HorizontalNav label={`Flag related navigation`}>
+          <NavItem
+            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`}
+            icon={<FaPowerOff />}
+          >
+            Rollout status
+          </NavItem>
 
-      <Main>
-        <Box pb={[0, 8]}>
-          <Header
-            title={currentFlag.name}
-            startAction={
-              <ButtonCopy
-                toCopy={currentFlag.key}
-                icon={<IoIosFlag aria-hidden />}
-                variant="outline"
-                colorScheme={"brand"}
-              >
-                {currentFlag.key}
-              </ButtonCopy>
-            }
+          <NavItem
+            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/insights`}
+            icon={<AiOutlineBarChart />}
+          >
+            Insights
+          </NavItem>
+
+          <NavItem
+            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/settings`}
+            icon={<AiOutlineSetting />}
+          >
+            Settings
+          </NavItem>
+        </HorizontalNav>
+      }
+    >
+      <Stack spacing={4}>
+        <Section id="flag-status">
+          <SectionHeader
+            title="Insights"
+            description="Number of hits per date"
           />
-        </Box>
 
-        <Box pb={6}>
-          <HorizontalNav label={`Flag related navigation`}>
-            <NavItem
-              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`}
-              icon={<FaPowerOff />}
-            >
-              Rollout status
-            </NavItem>
-
-            <NavItem
-              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/insights`}
-              icon={<AiOutlineBarChart />}
-            >
-              Insights
-            </NavItem>
-
-            <NavItem
-              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/settings`}
-              icon={<AiOutlineSetting />}
-            >
-              Settings
-            </NavItem>
-          </HorizontalNav>
-        </Box>
-
-        <Stack spacing={4}>
-          <Section id="flag-status">
-            <SectionHeader
-              title="Insights"
-              description="Number of hits per date"
-            />
-
-            <Box ml={-4}>
-              <ResponsiveContainer width="100%" aspect={16.0 / 9.0}>
-                <LineChart data={hits}>
-                  <Line
-                    isAnimationActive={false}
-                    type="monotone"
-                    dataKey="count"
-                    stroke="#8884d8"
-                  />
-                  <CartesianGrid stroke="#ccc" />
-                  <XAxis dataKey="date" tickFormatter={formatX} />
-                  <YAxis />
-                </LineChart>
-              </ResponsiveContainer>
-            </Box>
-          </Section>
-        </Stack>
-      </Main>
+          <Box ml={-4}>
+            <ResponsiveContainer width="100%" aspect={16.0 / 9.0}>
+              <LineChart data={hits}>
+                <Line
+                  isAnimationActive={false}
+                  type="monotone"
+                  dataKey="count"
+                  stroke="#8884d8"
+                />
+                <CartesianGrid stroke="#ccc" />
+                <XAxis dataKey="date" tickFormatter={formatX} />
+                <YAxis />
+              </LineChart>
+            </ResponsiveContainer>
+          </Box>
+        </Section>
+      </Stack>
     </DashboardLayout>
   );
 }

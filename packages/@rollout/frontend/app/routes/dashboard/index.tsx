@@ -7,7 +7,6 @@ import {
   useSearchParams,
 } from "remix";
 import { IoIosCreate } from "react-icons/io";
-import { Main } from "~/components/Main";
 import { SuccessBox } from "~/components/SuccessBox";
 import { getProjects } from "~/modules/projects/getProjects";
 import { UserProject } from "~/modules/projects/types";
@@ -56,56 +55,55 @@ export default function DashboardRoot() {
   const hasRemovedProject = searchParams.get("projectRemoved") || undefined;
 
   return (
-    <DashboardLayout user={user}>
-      <Main>
-        <Box pb={8} mt={[16, 0]}>
-          <Header
-            title="Projects"
-            startAction={
-              <Button
-                leftIcon={<IoIosCreate aria-hidden />}
-                to="/dashboard/projects/create"
-                colorScheme="brand"
-              >
-                Create a project
-              </Button>
-            }
-          />
-        </Box>
+    <DashboardLayout
+      user={user}
+      header={
+        <Header
+          title="Projects"
+          startAction={
+            <Button
+              leftIcon={<IoIosCreate aria-hidden />}
+              to="/dashboard/projects/create"
+              colorScheme="brand"
+            >
+              Create a project
+            </Button>
+          }
+        />
+      }
+    >
+      <Section>
+        <Stack spacing={2}>
+          {newProjectId ? (
+            <SuccessBox id="project-added">
+              The project has been successfully created.
+            </SuccessBox>
+          ) : null}
 
-        <Section>
-          <Stack spacing={2}>
-            {newProjectId ? (
-              <SuccessBox id="project-added">
-                The project has been successfully created.
-              </SuccessBox>
-            ) : null}
+          {hasRemovedProject ? (
+            <SuccessBox id="project-removed">
+              The project has been successfully removed.
+            </SuccessBox>
+          ) : null}
 
-            {hasRemovedProject ? (
-              <SuccessBox id="project-removed">
-                The project has been successfully removed.
-              </SuccessBox>
-            ) : null}
-
-            <Box>
-              {projects.map((project, index: number) => (
-                <ProjectCard
-                  key={project.projectId}
-                  id={project.projectId}
-                  linkTo={`/dashboard/projects/${project.projectId}`}
-                  title={project.project.name}
-                  noBorder={index === 0}
-                  description={
-                    <>
-                      You are an <em>{project.role}</em> of the project.
-                    </>
-                  }
-                />
-              ))}
-            </Box>
-          </Stack>
-        </Section>
-      </Main>
+          <Box>
+            {projects.map((project, index: number) => (
+              <ProjectCard
+                key={project.projectId}
+                id={project.projectId}
+                linkTo={`/dashboard/projects/${project.projectId}`}
+                title={project.project.name}
+                noBorder={index === 0}
+                description={
+                  <>
+                    You are an <em>{project.role}</em> of the project.
+                  </>
+                }
+              />
+            ))}
+          </Box>
+        </Stack>
+      </Section>
     </DashboardLayout>
   );
 }

@@ -12,7 +12,6 @@ import {
 } from "remix";
 import { Crumbs, BreadCrumbs } from "~/components/AppBreadcrumbs";
 import { ErrorBox } from "~/components/ErrorBox";
-import { Main } from "~/components/Main";
 import { authGuard } from "~/modules/auth/auth-guard";
 import { createProject } from "~/modules/projects/createProject";
 import { CreateProjectDTO, UserProject } from "~/modules/projects/types";
@@ -88,55 +87,53 @@ export default function CreateProjectPage() {
   ];
 
   return (
-    <DashboardLayout user={user}>
-      <BreadCrumbs crumbs={crumbs} />
+    <DashboardLayout
+      user={user}
+      breadcrumb={<BreadCrumbs crumbs={crumbs} />}
+      header={
+        <Header
+          title="Create a project"
+          description={
+            <Text>
+              When creating a project, {`you'll`} become the administrator of it
+              and will have full control over it.
+            </Text>
+          }
+        />
+      }
+    >
+      <Section>
+        {errors?.name && (
+          <Box pb={4}>
+            <ErrorBox list={errors} />
+          </Box>
+        )}
+        <Form method="post">
+          <FormControl isInvalid={Boolean(errors?.name)}>
+            <FormLabel htmlFor="project-name">Project name</FormLabel>
+            <Input
+              type="text"
+              name="project-name"
+              id="project-name"
+              placeholder="e.g: My super project"
+              aria-describedby={errors?.name ? `error-name` : undefined}
+            />
+          </FormControl>
 
-      <Main>
-        <Box pb={8}>
-          <Header
-            title="Create a project"
-            description={
-              <Text>
-                When creating a project, {`you'll`} become the administrator of
-                it and will have full control over it.
-              </Text>
-            }
-          />
-        </Box>
-
-        <Section>
-          {errors?.name && (
-            <Box pb={4}>
-              <ErrorBox list={errors} />
-            </Box>
-          )}
-          <Form method="post">
-            <FormControl isInvalid={Boolean(errors?.name)}>
-              <FormLabel htmlFor="project-name">Project name</FormLabel>
-              <Input
-                type="text"
-                name="project-name"
-                id="project-name"
-                placeholder="e.g: My super project"
-                aria-describedby={errors?.name ? `error-name` : undefined}
-              />
-            </FormControl>
-
-            <Box mt={4}>
-              <Button
-                type="submit"
-                leftIcon={<IoIosCreate aria-hidden />}
-                colorScheme="brand"
-                isLoading={transition.state === "submitting"}
-                loadingText="Creating the project, please wait..."
-                disabled={false}
-              >
-                Create the project
-              </Button>
-            </Box>
-          </Form>
-        </Section>
-      </Main>
+          <Box mt={4}>
+            <Button
+              type="submit"
+              leftIcon={<IoIosCreate aria-hidden />}
+              colorScheme="brand"
+              isLoading={transition.state === "submitting"}
+              loadingText="Creating the project, please wait..."
+              disabled={false}
+            >
+              Create the project
+            </Button>
+          </Box>
+        </Form>
+      </Section>
     </DashboardLayout>
   );
 }

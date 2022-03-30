@@ -11,7 +11,7 @@ export interface RowProps extends HTMLAttributes<HTMLTableRowElement> {
   disabled?: boolean;
 }
 export const Row = ({ children, selection, disabled, ...props }: RowProps) => {
-  const checkboxRef = useRef<HTMLElement>(null);
+  const checkboxRef = useRef<HTMLInputElement>(null);
   const { onSelect, selections } = useSelections();
 
   const handleClick = (e: React.MouseEvent<HTMLTableRowElement>) => {

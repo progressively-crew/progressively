@@ -11,7 +11,6 @@ import {
 } from "remix";
 import { Crumbs, BreadCrumbs } from "~/components/AppBreadcrumbs";
 import { ButtonCopy } from "~/components/ButtonCopy";
-import { Main } from "~/components/Main";
 import { Switch } from "~/components/Switch";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { authGuard } from "~/modules/auth/auth-guard";
@@ -162,163 +161,157 @@ export default function FlagById() {
   ];
 
   return (
-    <DashboardLayout user={user}>
-      <BreadCrumbs crumbs={crumbs} />
+    <DashboardLayout
+      user={user}
+      breadcrumb={<BreadCrumbs crumbs={crumbs} />}
+      header={
+        <Header
+          title={currentFlag.name}
+          startAction={
+            <ButtonCopy
+              toCopy={currentFlag.key}
+              icon={<IoIosFlag aria-hidden />}
+              variant="outline"
+              colorScheme={"brand"}
+            >
+              {currentFlag.key}
+            </ButtonCopy>
+          }
+        />
+      }
+      subNav={
+        <HorizontalNav label={`Flag related navigation`}>
+          <NavItem
+            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`}
+            icon={<FaPowerOff />}
+          >
+            Rollout status
+          </NavItem>
 
-      <Main>
-        <Box pb={[0, 8]}>
-          <Header
-            title={currentFlag.name}
-            startAction={
-              <ButtonCopy
-                toCopy={currentFlag.key}
-                icon={<IoIosFlag aria-hidden />}
-                variant="outline"
-                colorScheme={"brand"}
-              >
-                {currentFlag.key}
-              </ButtonCopy>
+          <NavItem
+            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/insights`}
+            icon={<AiOutlineBarChart />}
+          >
+            Insights
+          </NavItem>
+
+          <NavItem
+            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/settings`}
+            icon={<AiOutlineSetting />}
+          >
+            Settings
+          </NavItem>
+        </HorizontalNav>
+      }
+    >
+      <Stack spacing={4}>
+        <Section id="flag-status">
+          <SectionHeader
+            title="Flag status"
+            description={
+              <div aria-live="polite">
+                {isFlagActivated ? (
+                  <Text>
+                    The feature flag is{" "}
+                    <Badge colorScheme="success">active</Badge>. People matching
+                    at least one of the following strategies will see the
+                    variant.
+                  </Text>
+                ) : (
+                  <Text>
+                    The feature flag is <Badge>not active</Badge>. Nobody will
+                    see the variant and the following strategies will NOT apply.
+                  </Text>
+                )}
+              </div>
+            }
+            endAction={
+              <Form method="post">
+                <input
+                  type="hidden"
+                  name="nextStatus"
+                  value={
+                    isFlagActivated
+                      ? FlagStatus.NOT_ACTIVATED
+                      : FlagStatus.ACTIVATED
+                  }
+                />
+
+                <Switch
+                  optimistic={transition.state === "submitting"}
+                  type="submit"
+                  checked={isFlagActivated}
+                />
+              </Form>
             }
           />
-        </Box>
+        </Section>
 
-        <Box pb={6}>
-          <HorizontalNav label={`Flag related navigation`}>
-            <NavItem
-              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`}
-              icon={<FaPowerOff />}
-            >
-              Rollout status
-            </NavItem>
+        <Section id="concerned-audience">
+          <SectionHeader
+            title="Rollout strategies"
+            description={
+              <Text>
+                When a user matches at least one of the following strategies,
+                they will see the activated variant of the flag.
+              </Text>
+            }
+            endAction={
+              <Button
+                to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
+                leftIcon={<IoIosCreate aria-hidden />}
+                colorScheme="brand"
+              >
+                Add a strategy
+              </Button>
+            }
+          />
 
-            <NavItem
-              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/insights`}
-              icon={<AiOutlineBarChart />}
-            >
-              Insights
-            </NavItem>
+          <Stack spacing={2}>
+            <Box px={4}>
+              {isStrategyAdded ? (
+                <SuccessBox id="strategy-added" mb={4}>
+                  The strategy has been successfully created.
+                </SuccessBox>
+              ) : null}
 
-            <NavItem
-              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/settings`}
-              icon={<AiOutlineSetting />}
-            >
-              Settings
-            </NavItem>
-          </HorizontalNav>
-        </Box>
+              {isStrategyRemoved ? (
+                <SuccessBox id="strategy-removed" mb={4}>
+                  The strategy has been successfully removed.
+                </SuccessBox>
+              ) : null}
 
-        <Stack spacing={4}>
-          <Section id="flag-status">
-            <SectionHeader
-              title="Flag status"
-              description={
-                <div aria-live="polite">
-                  {isFlagActivated ? (
-                    <Text>
-                      The feature flag is{" "}
-                      <Badge colorScheme="success">active</Badge>. People
-                      matching at least one of the following strategies will see
-                      the variant.
-                    </Text>
-                  ) : (
-                    <Text>
-                      The feature flag is <Badge>not active</Badge>. Nobody will
-                      see the variant and the following strategies will NOT
-                      apply.
-                    </Text>
-                  )}
-                </div>
-              }
-              endAction={
-                <Form method="post">
-                  <input
-                    type="hidden"
-                    name="nextStatus"
-                    value={
-                      isFlagActivated
-                        ? FlagStatus.NOT_ACTIVATED
-                        : FlagStatus.ACTIVATED
-                    }
-                  />
-
-                  <Switch
-                    optimistic={transition.state === "submitting"}
-                    type="submit"
-                    checked={isFlagActivated}
-                  />
-                </Form>
-              }
-            />
-          </Section>
-
-          <Section id="concerned-audience">
-            <SectionHeader
-              title="Rollout strategies"
-              description={
-                <Text>
-                  When a user matches at least one of the following strategies,
-                  they will see the activated variant of the flag.
-                </Text>
-              }
-              endAction={
-                <Button
-                  to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
-                  leftIcon={<IoIosCreate aria-hidden />}
-                  colorScheme="brand"
-                >
-                  Add a strategy
-                </Button>
-              }
-            />
-
-            <Stack spacing={2}>
-              <Box px={4}>
-                {isStrategyAdded ? (
-                  <SuccessBox id="strategy-added" mb={4}>
-                    The strategy has been successfully created.
-                  </SuccessBox>
-                ) : null}
-
-                {isStrategyRemoved ? (
-                  <SuccessBox id="strategy-removed" mb={4}>
-                    The strategy has been successfully removed.
-                  </SuccessBox>
-                ) : null}
-
-                {strategies.length > 0 ? (
-                  <>
-                    {strategies.map((strat) => (
-                      <StrategyCard
-                        key={`${strat.uuid}`}
-                        projectId={project.uuid}
-                        envId={environment.uuid}
-                        flagId={currentFlag.uuid}
-                        strat={strat}
-                      />
-                    ))}
-                  </>
-                ) : null}
-              </Box>
-
-              {strategies.length === 0 ? (
+              {strategies.length > 0 ? (
                 <>
-                  <Box mb={8}>
-                    <WarningBox title="You don't have strategies yet. When activating the flag, every user will receive the activated variant." />
-                  </Box>
-                  <EmptyState
-                    title="No strategy found"
-                    description={
-                      <Text>
-                        There are no strategies bound to this flag yet.
-                      </Text>
-                    }
-                  />
+                  {strategies.map((strat) => (
+                    <StrategyCard
+                      key={`${strat.uuid}`}
+                      projectId={project.uuid}
+                      envId={environment.uuid}
+                      flagId={currentFlag.uuid}
+                      strat={strat}
+                    />
+                  ))}
                 </>
               ) : null}
-            </Stack>
-          </Section>
-        </Stack>
-      </Main>
+            </Box>
+
+            {strategies.length === 0 ? (
+              <>
+                <Box mb={8}>
+                  <WarningBox title="You don't have strategies yet. When activating the flag, every user will receive the activated variant." />
+                </Box>
+                <EmptyState
+                  title="No strategy found"
+                  description={
+                    <Text>There are no strategies bound to this flag yet.</Text>
+                  }
+                />
+              </>
+            ) : null}
+          </Stack>
+        </Section>
+      </Stack>
     </DashboardLayout>
   );
 }

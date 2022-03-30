@@ -12,7 +12,6 @@ import {
 } from "remix";
 import { Crumbs, BreadCrumbs } from "~/components/AppBreadcrumbs";
 import { ErrorBox } from "~/components/ErrorBox";
-import { Main } from "~/components/Main";
 import { authGuard } from "~/modules/auth/auth-guard";
 import { createEnv } from "~/modules/environments/createEnv";
 import {
@@ -113,64 +112,63 @@ export default function CreateEnvironmentPage() {
   ];
 
   return (
-    <DashboardLayout user={user}>
-      <BreadCrumbs crumbs={crumbs} />
-      <Main>
-        <Box pb={8}>
-          <Header
-            title="Create an environment"
-            description={
-              <Text>
-                The new environment will appear in{" "}
-                <strong>{project.name}</strong>.
-              </Text>
-            }
-          />
-        </Box>
-
-        <Section>
-          {errors?.name && (
-            <Box pb={4}>
-              <ErrorBox list={errors} />
-            </Box>
-          )}
-
-          <Form method="post">
-            <FormControl isInvalid={Boolean(errors?.name)}>
-              <FormLabel htmlFor="env-name">Environment name</FormLabel>
-              <Input
-                type="text"
-                name="env-name"
-                id="env-name"
-                placeholder="e.g: Staging"
-                aria-describedby={
-                  data?.errors?.name
-                    ? "error-name env-name-hint"
-                    : "env-name-hint"
-                }
-              />
-            </FormControl>
-
-            <Text id="env-name-hint" fontSize="sm">
-              After the creation of an environment, you will be able to get its
-              SDK key for application usage.
+    <DashboardLayout
+      user={user}
+      breadcrumb={<BreadCrumbs crumbs={crumbs} />}
+      header={
+        <Header
+          title="Create an environment"
+          description={
+            <Text>
+              The new environment will appear in <strong>{project.name}</strong>
+              .
             </Text>
+          }
+        />
+      }
+    >
+      <Section>
+        {errors?.name && (
+          <Box pb={4}>
+            <ErrorBox list={errors} />
+          </Box>
+        )}
 
-            <Box mt={4}>
-              <Button
-                type="submit"
-                leftIcon={<IoIosCreate aria-hidden />}
-                colorScheme="brand"
-                isLoading={transition.state === "submitting"}
-                loadingText="Creating the environment, please wait..."
-                disabled={false}
-              >
-                Create the environment
-              </Button>
-            </Box>
-          </Form>
-        </Section>
-      </Main>
+        <Form method="post">
+          <FormControl isInvalid={Boolean(errors?.name)}>
+            <FormLabel htmlFor="env-name">Environment name</FormLabel>
+            <Input
+              type="text"
+              name="env-name"
+              id="env-name"
+              placeholder="e.g: Staging"
+              aria-describedby={
+                data?.errors?.name
+                  ? "error-name env-name-hint"
+                  : "env-name-hint"
+              }
+            />
+          </FormControl>
+
+          <Text id="env-name-hint" fontSize="sm">
+            After the creation of an environment, you will be able to get its
+            SDK key for application usage.
+          </Text>
+
+          <Box mt={4}>
+            <Button
+              type="submit"
+              leftIcon={<IoIosCreate aria-hidden />}
+              colorScheme="brand"
+              isLoading={transition.state === "submitting"}
+              loadingText="Creating the environment, please wait..."
+              disabled={false}
+            >
+              Create the environment
+            </Button>
+          </Box>
+        </Form>
+      </Section>
     </DashboardLayout>
   );
 }

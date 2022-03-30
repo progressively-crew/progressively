@@ -12,7 +12,6 @@ import { Button } from "~/components/Button";
 import { ErrorBox } from "~/components/ErrorBox";
 import { FormLabel } from "~/components/FormLabel";
 import { Header } from "~/components/Header";
-import { Main } from "~/components/Main";
 import { Section } from "~/components/Section";
 import { authGuard } from "~/modules/auth/auth-guard";
 import { createProject } from "~/modules/projects/createProject";
@@ -75,51 +74,50 @@ export default function OnboardingPage() {
   const errors = data?.errors;
 
   return (
-    <DashboardLayout user={user}>
-      <Main>
-        <Box pb={8} mt={[16, 0]}>
-          <Header
-            title="Welcome aboard"
-            description={
-              <Text>
-                Before being fully operational, you will need to create{" "}
-                <strong>a project</strong>.
-              </Text>
-            }
-          />
-        </Box>
+    <DashboardLayout
+      user={user}
+      header={
+        <Header
+          title="Welcome aboard"
+          description={
+            <Text>
+              Before being fully operational, you will need to create{" "}
+              <strong>a project</strong>.
+            </Text>
+          }
+        />
+      }
+    >
+      <Section>
+        {errors?.name && (
+          <Box pb={4}>
+            <ErrorBox list={errors} />
+          </Box>
+        )}
 
-        <Section>
-          {errors?.name && (
-            <Box pb={4}>
-              <ErrorBox list={errors} />
-            </Box>
-          )}
+        <Form method="post">
+          <FormControl isInvalid={Boolean(errors?.name)}>
+            <FormLabel htmlFor="project-name">Project name</FormLabel>
+            <Input
+              type="text"
+              name="project-name"
+              id="project-name"
+              placeholder="e.g: My super project"
+              aria-describedby={errors?.name ? `error-name` : undefined}
+            />
+          </FormControl>
 
-          <Form method="post">
-            <FormControl isInvalid={Boolean(errors?.name)}>
-              <FormLabel htmlFor="project-name">Project name</FormLabel>
-              <Input
-                type="text"
-                name="project-name"
-                id="project-name"
-                placeholder="e.g: My super project"
-                aria-describedby={errors?.name ? `error-name` : undefined}
-              />
-            </FormControl>
-
-            <Box mt={4}>
-              <Button
-                type="submit"
-                leftIcon={<IoIosCreate aria-hidden />}
-                colorScheme="brand"
-              >
-                Create the project
-              </Button>
-            </Box>
-          </Form>
-        </Section>
-      </Main>
+          <Box mt={4}>
+            <Button
+              type="submit"
+              leftIcon={<IoIosCreate aria-hidden />}
+              colorScheme="brand"
+            >
+              Create the project
+            </Button>
+          </Box>
+        </Form>
+      </Section>
     </DashboardLayout>
   );
 }

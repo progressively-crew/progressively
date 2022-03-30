@@ -15,7 +15,6 @@ import { Button } from "~/components/Button";
 import { ErrorBox } from "~/components/ErrorBox";
 import { Header } from "~/components/Header";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
-import { Main } from "~/components/Main";
 import { Section, SectionHeader } from "~/components/Section";
 import { SuccessBox } from "~/components/SuccessBox";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
@@ -120,119 +119,116 @@ export default function SettingsPage() {
   ];
 
   return (
-    <DashboardLayout user={user}>
-      <BreadCrumbs crumbs={crumbs} />
+    <DashboardLayout
+      user={user}
+      breadcrumb={<BreadCrumbs crumbs={crumbs} />}
+      header={
+        <Header
+          title={
+            <span>
+              {project.name}
+              <VisuallyHidden> settings</VisuallyHidden>
+            </span>
+          }
+        />
+      }
+      subNav={
+        <HorizontalNav label={`Project related navigation`}>
+          <NavItem
+            to={`/dashboard/projects/${project.uuid}`}
+            icon={<FiLayers />}
+          >
+            Environments
+          </NavItem>
 
-      <Main>
-        <Box pb={[0, 8]}>
-          <Header
-            title={
-              <span>
-                {project.name}
-                <VisuallyHidden> settings</VisuallyHidden>
-              </span>
+          <NavItem
+            to={`/dashboard/projects/${project.uuid}/settings`}
+            icon={<AiOutlineSetting />}
+          >
+            Settings
+          </NavItem>
+        </HorizontalNav>
+      }
+    >
+      <Stack spacing={4}>
+        <Section id="details">
+          <SectionHeader title="Project details" />
+
+          <Box px={4} pb={4}>
+            {project.name}
+          </Box>
+        </Section>
+
+        <Section id="members">
+          <SectionHeader
+            title="Project members"
+            description={
+              <Text>
+                Remember that users with the role <em>Admin</em> {`can't`} be
+                removed.
+              </Text>
             }
           />
-        </Box>
 
-        <Box pb={6}>
-          <HorizontalNav label={`Project related navigation`}>
-            <NavItem
-              to={`/dashboard/projects/${project.uuid}`}
-              icon={<FiLayers />}
-            >
-              Environments
-            </NavItem>
-
-            <NavItem
-              to={`/dashboard/projects/${project.uuid}/settings`}
-              icon={<AiOutlineSetting />}
-            >
-              Settings
-            </NavItem>
-          </HorizontalNav>
-        </Box>
-
-        <Stack spacing={4}>
-          <Section id="details">
-            <SectionHeader title="Project details" />
-
-            <Box px={4} pb={4}>
-              {project.name}
+          {data?.errors.unauthorized && (
+            <Box mb={2}>
+              <ErrorBox list={data.errors} />
             </Box>
-          </Section>
+          )}
+          {data?.success && (
+            <Box mb={2}>
+              <SuccessBox id="member-deleted">
+                {data?.removedCount} user have been successfully removed from
+                the project.
+              </SuccessBox>
+            </Box>
+          )}
 
-          <Section id="members">
+          <Box mt={4}>
+            <UserTable
+              userProjects={project.userProject || []}
+              labelledBy="members"
+              canEdit={userRole === UserRoles.Admin}
+            />
+          </Box>
+
+          <Text aria-live="polite" mt={4}>
+            {transition.state === "submitting" ? "Removing the users..." : ""}
+          </Text>
+        </Section>
+
+        {userRole === UserRoles.Admin && (
+          <Section id="danger">
             <SectionHeader
-              title="Project members"
+              title="Danger zone"
               description={
                 <Text>
-                  Remember that users with the role <em>Admin</em> {`can't`} be
-                  removed.
+                  You can delete a project at any time, but you {`won’t`} be
+                  able to access its environments and all the related flags will
+                  be removed and be falsy in your applications. Be sure to know
+                  what {`you're`} doing before removing a project.
                 </Text>
               }
             />
 
-            {data?.errors.unauthorized && (
-              <Box mb={2}>
-                <ErrorBox list={data.errors} />
-              </Box>
-            )}
-            {data?.success && (
-              <Box mb={2}>
-                <SuccessBox id="member-deleted">
-                  {data?.removedCount} user have been successfully removed from
-                  the project.
-                </SuccessBox>
-              </Box>
-            )}
-
-            <Box mt={4}>
-              <UserTable
-                userProjects={project.userProject || []}
-                labelledBy="members"
-                canEdit={userRole === UserRoles.Admin}
-              />
-            </Box>
-
-            <Text aria-live="polite" mt={4}>
-              {transition.state === "submitting" ? "Removing the users..." : ""}
-            </Text>
+            <Flex px={4} pb={4} justifyContent={["center", "flex-start"]}>
+              <Button
+                colorScheme="error"
+                to={`/dashboard/projects/${project.uuid}/delete`}
+                leftIcon={<FaTrash aria-hidden />}
+                variant="outline"
+                width={["100%", "auto"]}
+              >
+                Delete{" "}
+                <Box as="span" aria-hidden display={["none", "inline"]}>
+                  {`"${project.name}"`} forever
+                </Box>
+                <VisuallyHidden>{`"${project.name}"`} forever</VisuallyHidden>
+              </Button>
+            </Flex>
           </Section>
-
-          {userRole === UserRoles.Admin && (
-            <Section id="danger">
-              <SectionHeader
-                title="Danger zone"
-                description={
-                  <Text>
-                    You can delete a project at any time, but you {`won’t`} be
-                    able to access its environments and all the related flags
-                    will be removed and be falsy in your applications. Be sure
-                    to know what {`you're`} doing before removing a project.
-                  </Text>
-                }
-              />
-
-              <Flex px={4} pb={4} justifyContent={["center", "flex-start"]}>
-                <Button
-                  colorScheme="error"
-                  to={`/dashboard/projects/${project.uuid}/delete`}
-                  leftIcon={<FaTrash aria-hidden />}
-                  variant="outline"
-                  width={["100%", "auto"]}
-                >
-                  Delete{" "}
-                  <Box as="span" aria-hidden display={["none", "inline"]}>
-                    {`"${project.name}"`} forever
-                  </Box>
-                  <VisuallyHidden>{`"${project.name}"`} forever</VisuallyHidden>
-                </Button>
-              </Flex>
-            </Section>
-          )}
-        </Stack>
-      </Main>
+        )}
+      </Stack>
     </DashboardLayout>
   );
 }

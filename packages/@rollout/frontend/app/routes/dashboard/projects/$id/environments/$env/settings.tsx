@@ -8,7 +8,6 @@ import { Button } from "~/components/Button";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { Header } from "~/components/Header";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
-import { Main } from "~/components/Main";
 import { Section, SectionHeader } from "~/components/Section";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { authGuard } from "~/modules/auth/auth-guard";
@@ -89,76 +88,72 @@ export default function EnvSettingsPage() {
   ];
 
   return (
-    <DashboardLayout user={user}>
-      <BreadCrumbs crumbs={crumbs} />
-      <Main>
-        <Box pb={[0, 8]}>
-          <Header
-            title={environment.name}
-            startAction={
-              <ButtonCopy
-                toCopy={environment.clientKey}
-                icon={<FiKey aria-hidden />}
-                colorScheme="brand"
-              >
-                {environment.clientKey}
-              </ButtonCopy>
+    <DashboardLayout
+      user={user}
+      breadcrumb={<BreadCrumbs crumbs={crumbs} />}
+      header={
+        <Header
+          title={environment.name}
+          startAction={
+            <ButtonCopy
+              toCopy={environment.clientKey}
+              icon={<FiKey aria-hidden />}
+              colorScheme="brand"
+            >
+              {environment.clientKey}
+            </ButtonCopy>
+          }
+        />
+      }
+      subNav={
+        <HorizontalNav label={`Environment related navigation`}>
+          <NavItem
+            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags`}
+            icon={<FiFlag />}
+          >
+            Feature flags
+          </NavItem>
+
+          <NavItem
+            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/settings`}
+            icon={<AiOutlineSetting />}
+          >
+            Settings
+          </NavItem>
+        </HorizontalNav>
+      }
+    >
+      {userRole === UserRoles.Admin && (
+        <Section id="danger">
+          <SectionHeader
+            title="Danger zone"
+            description={
+              <Text>
+                You can delete an environment at any time, but you {`won’t`} be
+                able to access its flags will be removed and be falsy in your
+                applications. Be sure to know what {`you're`} doing before
+                removing an environment.
+              </Text>
             }
           />
-        </Box>
 
-        <Box pb={6}>
-          <HorizontalNav label={`Environment related navigation`}>
-            <NavItem
-              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags`}
-              icon={<FiFlag />}
+          <Flex px={4} pb={4} justifyContent={["center", "flex-start"]}>
+            <Button
+              colorScheme="error"
+              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/delete`}
+              leftIcon={<FaTrash aria-hidden />}
+              variant="outline"
+              width={["100%", "auto"]}
             >
-              Feature flags
-            </NavItem>
-
-            <NavItem
-              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/settings`}
-              icon={<AiOutlineSetting />}
-            >
-              Settings
-            </NavItem>
-          </HorizontalNav>
-        </Box>
-
-        {userRole === UserRoles.Admin && (
-          <Section id="danger">
-            <SectionHeader
-              title="Danger zone"
-              description={
-                <Text>
-                  You can delete an environment at any time, but you {`won’t`}{" "}
-                  be able to access its flags will be removed and be falsy in
-                  your applications. Be sure to know what {`you're`} doing
-                  before removing an environment.
-                </Text>
-              }
-            />
-
-            <Flex px={4} pb={4} justifyContent={["center", "flex-start"]}>
-              <Button
-                colorScheme="error"
-                to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/delete`}
-                leftIcon={<FaTrash aria-hidden />}
-                variant="outline"
-                width={["100%", "auto"]}
-              >
-                Delete{" "}
-                <Box as="span" aria-hidden display={["none", "inline"]}>
-                  {`"${environment.name}"`} forever
-                </Box>
-                <VisuallyHidden>
-                  {`"${environment.name}"`} forever
-                </VisuallyHidden>
-              </Button>
-            </Flex>
-          </Section>
-        )}
-      </Main>
+              Delete{" "}
+              <Box as="span" aria-hidden display={["none", "inline"]}>
+                {`"${environment.name}"`} forever
+              </Box>
+              <VisuallyHidden>{`"${environment.name}"`} forever</VisuallyHidden>
+            </Button>
+          </Flex>
+        </Section>
+      )}
     </DashboardLayout>
   );
 }

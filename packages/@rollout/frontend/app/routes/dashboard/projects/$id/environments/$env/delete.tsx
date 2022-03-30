@@ -21,7 +21,6 @@ import { Crumbs, BreadCrumbs } from "~/components/AppBreadcrumbs";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { ErrorBox } from "~/components/ErrorBox";
 import { FaTrash } from "react-icons/fa";
-import { Main } from "~/components/Main";
 import { WarningBox } from "~/components/WarningBox";
 import { authGuard } from "~/modules/auth/auth-guard";
 import { deleteEnvironment } from "~/modules/environments/deleteEnvironment";
@@ -150,39 +149,35 @@ export default function DeleteEnvPage() {
 
   if (userRole !== UserRoles.Admin) {
     return (
-      <DashboardLayout user={user}>
-        <BreadCrumbs crumbs={crumbs} />
+      <DashboardLayout
+        user={user}
+        breadcrumb={<BreadCrumbs crumbs={crumbs} />}
+        header={<Header title="You are not allowed to delete environments." />}
+      >
+        <Section>
+          <figure>
+            <Text as="figcaption">
+              If you think this is an error, make sure to contact one of the
+              project administrators:
+            </Text>
 
-        <Main>
-          <Box pb={8}>
-            <Header title="You are not allowed to delete environments." />
-          </Box>
-
-          <Section>
-            <figure>
-              <Text as="figcaption">
-                If you think this is an error, make sure to contact one of the
-                project administrators:
-              </Text>
-
-              <UnorderedList pl={2} mt={2}>
-                {adminOfProject.map((user) => (
-                  <ListItem key={user.uuid}>
-                    <Text as="span" mr={2}>
-                      {user.fullname}
-                    </Text>
-                    <ButtonCopy
-                      toCopy={user.email}
-                      icon={<MdOutlineEmail aria-hidden />}
-                    >
-                      {user.email}
-                    </ButtonCopy>
-                  </ListItem>
-                ))}
-              </UnorderedList>
-            </figure>
-          </Section>
-        </Main>
+            <UnorderedList pl={2} mt={2}>
+              {adminOfProject.map((user) => (
+                <ListItem key={user.uuid}>
+                  <Text as="span" mr={2}>
+                    {user.fullname}
+                  </Text>
+                  <ButtonCopy
+                    toCopy={user.email}
+                    icon={<MdOutlineEmail aria-hidden />}
+                  >
+                    {user.email}
+                  </ButtonCopy>
+                </ListItem>
+              ))}
+            </UnorderedList>
+          </figure>
+        </Section>
       </DashboardLayout>
     );
   }
@@ -193,70 +188,66 @@ export default function DeleteEnvPage() {
   };
 
   return (
-    <DashboardLayout user={user}>
-      <BreadCrumbs crumbs={crumbs} />
+    <DashboardLayout
+      user={user}
+      breadcrumb={<BreadCrumbs crumbs={crumbs} />}
+      header={<Header title="You are about to delete the environment." />}
+    >
+      <Section>
+        {data?.errors && data.errors.backendError && (
+          <Box pb={4}>
+            <ErrorBox list={data.errors} />
+          </Box>
+        )}
 
-      <Main>
-        <Box pb={8}>
-          <Header title="You are about to delete the environment." />
-        </Box>
+        <WarningBox
+          list={warnings}
+          title={
+            <Text>
+              We really want to warn you: if you validate the environment
+              suppression, you {`won't`} be able to access the{" "}
+              <strong>{environment.name}</strong> environment anymore. It
+              includes:
+            </Text>
+          }
+        />
 
-        <Section>
-          {data?.errors && data.errors.backendError && (
-            <Box pb={4}>
-              <ErrorBox list={data.errors} />
-            </Box>
-          )}
-
-          <WarningBox
-            list={warnings}
-            title={
-              <Text>
-                We really want to warn you: if you validate the environment
-                suppression, you {`won't`} be able to access the{" "}
-                <strong>{environment.name}</strong> environment anymore. It
-                includes:
-              </Text>
-            }
-          />
-
-          <Flex
-            justifyContent="space-between"
-            mt={4}
-            direction={["column", "row"]}
+        <Flex
+          justifyContent="space-between"
+          mt={4}
+          direction={["column", "row"]}
+        >
+          <Button
+            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/settings`}
+            variant="outline"
+            colorScheme="error"
+            mt={[4, 0]}
+            width={["100%", "auto"]}
           >
+            <span>
+              No, {`don't`} delete{" "}
+              <Box as="strong" display={["none", "inline"]} aria-hidden>
+                {environment.name}
+              </Box>
+              <VisuallyHidden>{environment.name}</VisuallyHidden>
+            </span>
+          </Button>
+
+          <Form method="post">
             <Button
-              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/settings`}
-              variant="outline"
+              type="submit"
               colorScheme="error"
-              mt={[4, 0]}
+              leftIcon={<FaTrash aria-hidden />}
+              isLoading={transition.state === "submitting"}
+              loadingText="Deleting the environment, please wait..."
+              disabled={false}
               width={["100%", "auto"]}
             >
-              <span>
-                No, {`don't`} delete{" "}
-                <Box as="strong" display={["none", "inline"]} aria-hidden>
-                  {environment.name}
-                </Box>
-                <VisuallyHidden>{environment.name}</VisuallyHidden>
-              </span>
+              Yes, delete the environment
             </Button>
-
-            <Form method="post">
-              <Button
-                type="submit"
-                colorScheme="error"
-                leftIcon={<FaTrash aria-hidden />}
-                isLoading={transition.state === "submitting"}
-                loadingText="Deleting the environment, please wait..."
-                disabled={false}
-                width={["100%", "auto"]}
-              >
-                Yes, delete the environment
-              </Button>
-            </Form>
-          </Flex>
-        </Section>
-      </Main>
+          </Form>
+        </Flex>
+      </Section>
     </DashboardLayout>
   );
 }

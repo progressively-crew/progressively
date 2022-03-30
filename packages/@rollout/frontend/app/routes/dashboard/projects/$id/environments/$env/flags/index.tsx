@@ -11,7 +11,6 @@ import {
 import { Link as CLink } from "@chakra-ui/react";
 import { Crumbs, BreadCrumbs } from "~/components/AppBreadcrumbs";
 import { ButtonCopy } from "~/components/ButtonCopy";
-import { Main } from "~/components/Main";
 import { Environment } from "~/modules/environments/types";
 import { activateFlag } from "~/modules/flags/activateFlag";
 import { getFlagsByProjectEnv } from "~/modules/flags/getFlagsByProjectEnv";
@@ -128,118 +127,115 @@ export default function FlagsByEnvPage() {
   ];
 
   return (
-    <DashboardLayout user={user}>
-      <BreadCrumbs crumbs={crumbs} />
-
-      <Main>
-        <Box pb={[0, 8]}>
-          <Header
-            title={environment.name}
-            startAction={
-              <ButtonCopy
-                toCopy={environment.clientKey}
-                icon={<FiKey aria-hidden />}
-                colorScheme="brand"
-              >
-                {environment.clientKey}
-              </ButtonCopy>
-            }
-          />
-        </Box>
-
-        <Box pb={6}>
-          <HorizontalNav label={`Environment related navigation`}>
-            <NavItem
-              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags`}
-              icon={<FiFlag />}
+    <DashboardLayout
+      user={user}
+      breadcrumb={<BreadCrumbs crumbs={crumbs} />}
+      header={
+        <Header
+          title={environment.name}
+          startAction={
+            <ButtonCopy
+              toCopy={environment.clientKey}
+              icon={<FiKey aria-hidden />}
+              colorScheme="brand"
             >
-              Feature flags
-            </NavItem>
+              {environment.clientKey}
+            </ButtonCopy>
+          }
+        />
+      }
+      subNav={
+        <HorizontalNav label={`Environment related navigation`}>
+          <NavItem
+            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags`}
+            icon={<FiFlag />}
+          >
+            Feature flags
+          </NavItem>
 
-            <NavItem
-              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/settings`}
-              icon={<AiOutlineSetting />}
-            >
-              Settings
-            </NavItem>
-          </HorizontalNav>
-        </Box>
-
-        <Section id="list-flags-title">
-          <SectionHeader
-            title="Feature flags"
-            description={
-              <Text>
-                To setup your feature flags in your app, make sure to follow{" "}
-                <CLink
-                  textDecoration={"underline"}
-                  as={Link}
-                  to={`/guides/sdks/react/ssr?sdk-key=${environment.clientKey}`}
-                >
-                  this guide
-                </CLink>
-                .
-              </Text>
-            }
-            endAction={
-              <Button
-                to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/create`}
-                leftIcon={<IoIosCreate aria-hidden />}
-                colorScheme="brand"
-                flexShrink={0}
+          <NavItem
+            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/settings`}
+            icon={<AiOutlineSetting />}
+          >
+            Settings
+          </NavItem>
+        </HorizontalNav>
+      }
+    >
+      <Section id="list-flags-title">
+        <SectionHeader
+          title="Feature flags"
+          description={
+            <Text>
+              To setup your feature flags in your app, make sure to follow{" "}
+              <CLink
+                textDecoration={"underline"}
+                as={Link}
+                to={`/guides/sdks/react/ssr?sdk-key=${environment.clientKey}`}
               >
-                Create a feature flag
-              </Button>
-            }
-          />
+                this guide
+              </CLink>
+              .
+            </Text>
+          }
+          endAction={
+            <Button
+              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/create`}
+              leftIcon={<IoIosCreate aria-hidden />}
+              colorScheme="brand"
+              flexShrink={0}
+            >
+              Create a feature flag
+            </Button>
+          }
+        />
 
-          <Stack spacing={2}>
-            <Box px={4}>
-              {isFlagRemoved ? (
-                <SuccessBox id="flag-removed" mb={4}>
-                  The flag has been successfully deleted.
-                </SuccessBox>
-              ) : null}
-
-              {newFlagId ? (
-                <SuccessBox id="flag-added" mb={4}>
-                  The flag has been successfully created.
-                </SuccessBox>
-              ) : null}
-
-              {flagsByEnv.length > 0 ? (
-                <>
-                  {flagsByEnv.map((flagEnv) => (
-                    <FlagCard
-                      key={flagEnv.flagId}
-                      id={flagEnv.flagId}
-                      linkTo={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${flagEnv.flagId}`}
-                      title={flagEnv.flag.name}
-                      flagStatus={flagEnv.status}
-                      flagKey={flagEnv.flag.key}
-                      description={flagEnv.flag.description}
-                      optimistic={
-                        transition.state === "submitting" &&
-                        transition.submission?.formData.get("flagId") ===
-                          flagEnv.flagId
-                      }
-                    />
-                  ))}
-                </>
-              ) : null}
-            </Box>
-
-            {flagsByEnv.length === 0 ? (
-              <EmptyState
-                title="No flags found"
-                description={
-                  <Text>There are no flags yet on this environment.</Text>
-                }
-              />
+        <Stack spacing={2}>
+          <Box px={4}>
+            {isFlagRemoved ? (
+              <SuccessBox id="flag-removed" mb={4}>
+                The flag has been successfully deleted.
+              </SuccessBox>
             ) : null}
-          </Stack>
-        </Section>
-      </Main>
+
+            {newFlagId ? (
+              <SuccessBox id="flag-added" mb={4}>
+                The flag has been successfully created.
+              </SuccessBox>
+            ) : null}
+
+            {flagsByEnv.length > 0 ? (
+              <>
+                {flagsByEnv.map((flagEnv) => (
+                  <FlagCard
+                    key={flagEnv.flagId}
+                    id={flagEnv.flagId}
+                    linkTo={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${flagEnv.flagId}`}
+                    title={flagEnv.flag.name}
+                    flagStatus={flagEnv.status}
+                    flagKey={flagEnv.flag.key}
+                    description={flagEnv.flag.description}
+                    optimistic={
+                      transition.state === "submitting" &&
+                      transition.submission?.formData.get("flagId") ===
+                        flagEnv.flagId
+                    }
+                  />
+                ))}
+              </>
+            ) : null}
+          </Box>
+
+          {flagsByEnv.length === 0 ? (
+            <EmptyState
+              title="No flags found"
+              description={
+                <Text>There are no flags yet on this environment.</Text>
+              }
+            />
+          ) : null}
+        </Stack>
+      </Section>
     </DashboardLayout>
   );
 }

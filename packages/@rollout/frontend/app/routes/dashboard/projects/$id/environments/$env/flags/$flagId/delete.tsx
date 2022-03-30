@@ -12,7 +12,6 @@ import {
 import { Crumbs, BreadCrumbs } from "~/components/AppBreadcrumbs";
 import { ErrorBox } from "~/components/ErrorBox";
 import { FaTrash } from "react-icons/fa";
-import { Main } from "~/components/Main";
 import { WarningBox } from "~/components/WarningBox";
 import { authGuard } from "~/modules/auth/auth-guard";
 import { Environment } from "~/modules/environments/types";
@@ -154,69 +153,65 @@ export default function DeleteFlagPage() {
   };
 
   return (
-    <DashboardLayout user={user}>
-      <BreadCrumbs crumbs={crumbs} />
+    <DashboardLayout
+      user={user}
+      breadcrumb={<BreadCrumbs crumbs={crumbs} />}
+      header={<Header title="You are about to delete the feature flag." />}
+    >
+      <Section>
+        {data?.errors && data.errors.backendError && (
+          <Box pb={4}>
+            <ErrorBox list={data.errors} />
+          </Box>
+        )}
 
-      <Main>
-        <Box pb={8}>
-          <Header title="You are about to delete the feature flag." />
-        </Box>
+        <WarningBox
+          list={warnings}
+          title={
+            <Text>
+              We really want to warn you: if you validate the flag suppression,
+              you {`won't`} be able to access the{" "}
+              <strong>{currentFlag.name}</strong> flag anymore. It includes:
+            </Text>
+          }
+        />
 
-        <Section>
-          {data?.errors && data.errors.backendError && (
-            <Box pb={4}>
-              <ErrorBox list={data.errors} />
-            </Box>
-          )}
-
-          <WarningBox
-            list={warnings}
-            title={
-              <Text>
-                We really want to warn you: if you validate the flag
-                suppression, you {`won't`} be able to access the{" "}
-                <strong>{currentFlag.name}</strong> flag anymore. It includes:
-              </Text>
-            }
-          />
-
-          <Flex
-            justifyContent="space-between"
-            mt={4}
-            direction={["column", "row"]}
+        <Flex
+          justifyContent="space-between"
+          mt={4}
+          direction={["column", "row"]}
+        >
+          <Button
+            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/settings`}
+            variant="outline"
+            colorScheme="error"
+            mt={[4, 0]}
+            width={["100%", "auto"]}
           >
+            <span>
+              No, {`don't`} delete{" "}
+              <Box as="strong" display={["none", "inline"]} aria-hidden>
+                {currentFlag.name}
+              </Box>
+              <VisuallyHidden>{currentFlag.name}</VisuallyHidden>
+            </span>
+          </Button>
+
+          <Form method="post">
             <Button
-              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/settings`}
-              variant="outline"
+              type="submit"
               colorScheme="error"
-              mt={[4, 0]}
+              leftIcon={<FaTrash aria-hidden />}
+              isLoading={transition.state === "submitting"}
+              loadingText="Deleting the environment, please wait..."
+              disabled={false}
               width={["100%", "auto"]}
             >
-              <span>
-                No, {`don't`} delete{" "}
-                <Box as="strong" display={["none", "inline"]} aria-hidden>
-                  {currentFlag.name}
-                </Box>
-                <VisuallyHidden>{currentFlag.name}</VisuallyHidden>
-              </span>
+              Yes, delete the flag
             </Button>
-
-            <Form method="post">
-              <Button
-                type="submit"
-                colorScheme="error"
-                leftIcon={<FaTrash aria-hidden />}
-                isLoading={transition.state === "submitting"}
-                loadingText="Deleting the environment, please wait..."
-                disabled={false}
-                width={["100%", "auto"]}
-              >
-                Yes, delete the flag
-              </Button>
-            </Form>
-          </Flex>
-        </Section>
-      </Main>
+          </Form>
+        </Flex>
+      </Section>
     </DashboardLayout>
   );
 }
