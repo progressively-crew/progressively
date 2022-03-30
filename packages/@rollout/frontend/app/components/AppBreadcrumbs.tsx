@@ -13,6 +13,7 @@ import { MdChevronLeft } from "react-icons/md";
 export interface Crumb {
   link: string;
   label: string;
+  forceNotCurrent?: boolean;
 }
 
 export type Crumbs = Array<Crumb>;
@@ -44,6 +45,7 @@ export const BreadCrumbs = ({ crumbs }: BreadCrumbsProps) => {
       )}
 
       <Breadcrumb
+        aria-label="Breadcrumb"
         display={["none", "block"]}
         separator={
           <Icon display="flex" alignItems="center" as={FiChevronRight} />
@@ -51,7 +53,9 @@ export const BreadCrumbs = ({ crumbs }: BreadCrumbsProps) => {
       >
         {crumbs.map((crumb, index) => (
           <BreadcrumbItem
-            isCurrentPage={index === lastItemIndex}
+            isCurrentPage={
+              crumb.forceNotCurrent ? false : index === lastItemIndex
+            }
             key={crumb.link}
           >
             <BreadcrumbLink

@@ -13,7 +13,7 @@ export const NotAuthenticatedLayout = ({
         <Flex
           p={3}
           as={"nav"}
-          aria-label="General navigation"
+          aria-label="General"
           justifyContent={"space-between"}
           alignItems="center"
         >

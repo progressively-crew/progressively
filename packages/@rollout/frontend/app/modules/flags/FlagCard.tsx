@@ -63,7 +63,7 @@ export const FlagCard = ({
                 to={linkTo}
                 color="brand.600"
               >
-                {title}
+                {title} <VisuallyHidden>feature flag</VisuallyHidden>
               </CLink>
             </Heading>
 

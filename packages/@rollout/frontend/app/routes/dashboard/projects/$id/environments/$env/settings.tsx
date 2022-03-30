@@ -84,6 +84,7 @@ export default function EnvSettingsPage() {
     {
       link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags`,
       label: environment.name,
+      forceNotCurrent: true,
     },
   ];
 
@@ -106,7 +107,7 @@ export default function EnvSettingsPage() {
         />
       }
       subNav={
-        <HorizontalNav label={`Environment related navigation`}>
+        <HorizontalNav label={`Environment related`}>
           <NavItem
             to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags`}
             icon={<FiFlag />}

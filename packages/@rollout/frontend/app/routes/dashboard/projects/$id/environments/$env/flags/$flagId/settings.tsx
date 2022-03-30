@@ -106,6 +106,7 @@ export default function FlagSettingPage() {
     {
       link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`,
       label: currentFlag.name,
+      forceNotCurrent: true,
     },
   ];
 
@@ -129,7 +130,7 @@ export default function FlagSettingPage() {
         />
       }
       subNav={
-        <HorizontalNav label={`Environment related navigation`}>
+        <HorizontalNav label={`Environment related`}>
           <NavItem
             to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`}
             icon={<FaPowerOff />}

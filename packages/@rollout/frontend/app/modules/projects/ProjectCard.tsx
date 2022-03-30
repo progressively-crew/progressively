@@ -1,4 +1,10 @@
-import { Flex, Heading, Icon, Link as CLink } from "@chakra-ui/react";
+import {
+  Flex,
+  Heading,
+  Icon,
+  Link as CLink,
+  VisuallyHidden,
+} from "@chakra-ui/react";
 import React, { useRef } from "react";
 import { Link } from "remix";
 import { Box, Text } from "@chakra-ui/react";
@@ -54,7 +60,7 @@ export const ProjectCard = ({
               to={linkTo}
               color="brand.600"
             >
-              {title}
+              {title} <VisuallyHidden>project</VisuallyHidden>
             </CLink>
           </Heading>
 

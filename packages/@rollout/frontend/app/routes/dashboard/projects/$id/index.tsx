@@ -75,7 +75,7 @@ export default function ProjectDetailPage() {
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={<Header title={project.name} />}
       subNav={
-        <HorizontalNav label={`Project related navigation`}>
+        <HorizontalNav label={`Project related`}>
           <NavItem
             to={`/dashboard/projects/${project.uuid}`}
             icon={<FiLayers />}

@@ -180,7 +180,7 @@ export default function FlagById() {
         />
       }
       subNav={
-        <HorizontalNav label={`Flag related navigation`}>
+        <HorizontalNav label={`Flag related`}>
           <NavItem
             to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`}
             icon={<FaPowerOff />}

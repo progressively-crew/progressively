@@ -115,6 +115,7 @@ export default function SettingsPage() {
     {
       link: `/dashboard/projects/${project.uuid}`,
       label: project.name,
+      forceNotCurrent: true,
     },
   ];
 
@@ -133,7 +134,7 @@ export default function SettingsPage() {
         />
       }
       subNav={
-        <HorizontalNav label={`Project related navigation`}>
+        <HorizontalNav label={`Project related`}>
           <NavItem
             to={`/dashboard/projects/${project.uuid}`}
             icon={<FiLayers />}

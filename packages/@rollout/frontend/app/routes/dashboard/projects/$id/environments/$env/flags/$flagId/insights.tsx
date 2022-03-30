@@ -145,6 +145,7 @@ export default function FlagById() {
     {
       link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`,
       label: currentFlag.name,
+      forceNotCurrent: true,
     },
   ];
 
@@ -172,7 +173,7 @@ export default function FlagById() {
         />
       }
       subNav={
-        <HorizontalNav label={`Flag related navigation`}>
+        <HorizontalNav label={`Flag related`}>
           <NavItem
             to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`}
             icon={<FaPowerOff />}

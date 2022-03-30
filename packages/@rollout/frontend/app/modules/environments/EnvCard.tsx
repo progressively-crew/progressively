@@ -1,4 +1,10 @@
-import { Flex, Heading, Link as CLink, Tag } from "@chakra-ui/react";
+import {
+  Flex,
+  Heading,
+  Link as CLink,
+  Tag,
+  VisuallyHidden,
+} from "@chakra-ui/react";
 import { useRef } from "react";
 import { Link } from "remix";
 import { Box, Text, Icon } from "@chakra-ui/react";
@@ -47,7 +53,7 @@ export const EnvCard = ({ id, linkTo, title, clientKey }: EnvCardProps) => {
               to={linkTo}
               color="brand.600"
             >
-              {title}
+              {title} <VisuallyHidden>environment</VisuallyHidden>
             </CLink>
           </Heading>
 

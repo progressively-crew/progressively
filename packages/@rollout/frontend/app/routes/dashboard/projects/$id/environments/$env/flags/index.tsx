@@ -145,7 +145,7 @@ export default function FlagsByEnvPage() {
         />
       }
       subNav={
-        <HorizontalNav label={`Environment related navigation`}>
+        <HorizontalNav label={`Environment related`}>
           <NavItem
             to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags`}
             icon={<FiFlag />}
@@ -173,7 +173,7 @@ export default function FlagsByEnvPage() {
                 as={Link}
                 to={`/guides/sdks/react/ssr?sdk-key=${environment.clientKey}`}
               >
-                this guide
+                the guide of the SDKs usage
               </CLink>
               .
             </Text>

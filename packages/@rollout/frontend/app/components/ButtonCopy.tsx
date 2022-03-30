@@ -1,4 +1,4 @@
-import { ButtonProps } from "@chakra-ui/react";
+import { ButtonProps, VisuallyHidden } from "@chakra-ui/react";
 import { HTMLAttributes, useEffect, useRef, useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useHydrated } from "~/modules/misc/useHydrated";
@@ -59,7 +59,14 @@ export const ButtonCopy = ({
           aria-live="polite"
           {...copyToClipBoardProps}
         >
-          {isCopied ? "Copied" : children}
+          {isCopied ? (
+            "Copied"
+          ) : (
+            <span>
+              <VisuallyHidden>Copy </VisuallyHidden>
+              {children}
+            </span>
+          )}
         </Button>
       </CopyToClipboard>
     );
