@@ -39,17 +39,15 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/insights"
           "Rollout | Project from seeding | Production | New homepage | Insights"
         );
 
-        cy.findByText("Projects")
+        cy.findByRole("link", { name: "Projects" })
           .should("be.visible")
           .and("have.attr", "href", "/dashboard");
 
-        cy.findAllByText("Project from seeding")
-          .first()
+        cy.findByRole("link", { name: "Project from seeding" })
           .should("be.visible")
           .and("have.attr", "href", "/dashboard/projects/1");
 
-        cy.findAllByText("Production")
-          .first()
+        cy.findByRole("link", { name: "Production" })
           .should("be.visible")
           .and(
             "have.attr",
@@ -57,8 +55,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/insights"
             "/dashboard/projects/1/environments/1/flags"
           );
 
-        cy.findAllByText("New homepage")
-          .first()
+        cy.findByRole("link", { name: "New homepage" })
           .should("be.visible")
           .and(
             "have.attr",
@@ -75,8 +72,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/insights"
           )
           .and("have.attr", "aria-current", "page");
 
-        cy.get("h1").should("contain", "New homepage");
-
+        cy.findByRole("heading", { name: "New homepage" }).should("be.visible");
         cy.findByRole("heading", { name: "Insights" }).should("be.visible");
         cy.findByText("Number of hits per date").should("be.visible");
 

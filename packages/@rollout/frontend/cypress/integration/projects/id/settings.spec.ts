@@ -32,8 +32,7 @@ describe("/dashboard/projects/[id]/settings", () => {
       });
 
       it("does not show actions only allowed by the admin (john is a regular user)", () => {
-        cy.findByText("Remove from project").should("not.exist");
-        cy.findByLabelText("Danger zone").should("not.exist");
+        cy.findByRole("heading", { name: "Danger zone" }).should("not.exist");
 
         cy.checkA11y();
       });
@@ -51,34 +50,38 @@ describe("/dashboard/projects/[id]/settings", () => {
       });
 
       it("show actions only allowed by the admin", () => {
-        cy.findByText("Remove from project").should("be.visible");
-        cy.findByLabelText("Danger zone").should("be.visible");
+        cy.findByRole("heading", { name: "Danger zone" }).should("be.visible");
+        cy.findByRole("button", { name: "Remove from project" }).should(
+          "be.visible"
+        );
 
         cy.checkA11y();
       });
 
       it("shows an error message when trying to remove an admin user", () => {
         cy.get("#col-1").last().click();
+        cy.findByRole("button", { name: "Remove from project" }).click();
 
-        cy.findByText("Remove from project").click();
-
-        cy.get(".error-box").should("have.focused");
-        cy.findByText(
-          "You have attempted to remove an admin user! No worries, we got your back!"
-        ).should("be.visible");
+        cy.get(".error-box")
+          .should("have.focus")
+          .and(
+            "contain.text",
+            "You have attempted to remove an admin user! No worries, we got your back!"
+          );
 
         cy.checkA11y();
       });
 
       it("shows a success message when removing a user", () => {
         cy.get("#col-2").last().click();
+        cy.findByRole("button", { name: "Remove from project" }).click();
 
-        cy.findByText("Remove from project").click();
-
-        cy.get(".success-box").should("have.focused");
-        cy.findByText(
-          "1 user have been successfully removed from the project."
-        ).should("be.visible");
+        cy.get(".success-box")
+          .should("have.focus")
+          .and(
+            "contain.text",
+            "1 user have been successfully removed from the project."
+          );
 
         cy.checkA11y();
       });

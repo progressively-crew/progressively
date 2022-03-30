@@ -13,31 +13,37 @@ describe("/signin", () => {
 
   it("gives feedbacks when the email is invalid (formatting level)", () => {
     cy.findByLabelText("Email").type("invalid@email");
-    cy.contains("Sign in").click();
+    cy.findByRole("button", { name: "Sign in" }).click();
 
-    cy.findByText(
-      'The provided email address is not valid. It should look like "jane.doe@domain.com".'
-    );
+    cy.get(".error-box")
+      .should("have.focus")
+      .and(
+        "contain.text",
+        'The provided email address is not valid. It should look like "jane.doe@domain.com".'
+      );
   });
 
   it("gives feedbacks when the password is not long enough", () => {
     cy.findByLabelText("Password").type("1");
-    cy.contains("Sign in").click();
+    cy.findByRole("button", { name: "Sign in" }).click();
 
-    cy.findByText(
-      "The provided password is too short. It should be at least 8 characters."
-    );
+    cy.get(".error-box")
+      .should("have.focus")
+      .and(
+        "contain.text",
+        "The provided password is too short. It should be at least 8 characters."
+      );
   });
 
   it("gives feedbacks when the required fields are not filled", () => {
-    cy.contains("Sign in").click();
+    cy.findByRole("button", { name: "Sign in" }).click();
 
-    cy.findByText("The email field is required.").should("be.visible");
-
-    cy.findByText("The password field is required.").should("be.visible");
+    cy.get(".error-box")
+      .should("have.focus")
+      .and("contain.text", "The email field is required.")
+      .and("contain.text", "The password field is required.");
 
     cy.findByRole("button", { name: "Sign in" }).should("be.visible");
-    // Testing the contrast of the FieldError color
     cy.checkA11y();
   });
 
@@ -45,12 +51,11 @@ describe("/signin", () => {
     cy.findByLabelText("Email").type("a-valid-email@domain.com");
     cy.findByLabelText("Password").type("12345678901112");
 
-    cy.contains("Sign in").click();
+    cy.findByRole("button", { name: "Sign in" }).click();
 
-    cy.findByText("Woops! Looks the credentials are not valid.")
-      .parent()
-      .parent()
-      .should("have.focus");
+    cy.get(".error-box")
+      .should("have.focus")
+      .and("contain.text", "Woops! Looks the credentials are not valid.");
 
     cy.findByRole("button", { name: "Sign in" })
       .should("be.visible")

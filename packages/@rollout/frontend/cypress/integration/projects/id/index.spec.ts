@@ -34,17 +34,19 @@ describe("/dashboard/projects/[id]", () => {
       it("shows the project layout", () => {
         cy.title().should("eq", "Rollout | Project from seeding");
 
-        cy.findByText("Projects")
+        cy.findByRole("link", { name: "Projects" })
           .should("be.visible")
           .and("have.attr", "href", "/dashboard");
 
-        cy.findAllByText("Project from seeding")
-          .first()
+        cy.findByRole("link", { name: "Project from seeding" })
           .should("be.visible")
           .and("have.attr", "href", "/dashboard/projects/1")
           .and("have.attr", "aria-current", "page");
 
-        cy.get("h1").should("contain", "Project from seeding");
+        cy.findByRole("heading", { name: "Project from seeding" }).should(
+          "be.visible"
+        );
+
         cy.findByRole("link", { name: "Settings" })
           .should("be.visible")
           .and("have.attr", "href", "/dashboard/projects/1/settings");
@@ -53,7 +55,7 @@ describe("/dashboard/projects/[id]", () => {
           .should("be.visible")
           .and("have.attr", "href", "/dashboard/projects/1");
 
-        cy.findByText("Create an environment")
+        cy.findByRole("link", { name: "Create an environment" })
           .should("be.visible")
           .and(
             "have.attr",
@@ -62,23 +64,29 @@ describe("/dashboard/projects/[id]", () => {
           );
 
         /* verify the env list */
-        cy.findByText("Production")
+        cy.findByRole("link", { name: "Production environment" })
           .should("be.visible")
           .and(
             "have.attr",
             "href",
             "/dashboard/projects/1/environments/1/flags"
           );
-        cy.contains("valid-sdk-key").should("be.visible");
 
-        cy.findByText("Developer")
+        cy.contains("The environment sdk key is valid-sdk-key").should(
+          "be.visible"
+        );
+
+        cy.findByRole("link", { name: "Developer environment" })
           .should("be.visible")
           .and(
             "have.attr",
             "href",
             "/dashboard/projects/1/environments/2/flags"
           );
-        cy.contains("valid-sdk-key-2").should("be.visible");
+
+        cy.contains("The environment sdk key is valid-sdk-key-2").should(
+          "be.visible"
+        );
 
         cy.checkA11y();
       });

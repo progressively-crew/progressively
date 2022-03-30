@@ -39,10 +39,11 @@ describe("/dashboard/projects/[id]/environments/[envId]/settings", () => {
           "Rollout | Project from seeding | Production | Settings"
         );
 
-        cy.findByText("Danger zone").should("be.visible");
+        cy.findByRole("heading", { name: "Danger zone" }).should("be.visible");
         cy.findByText(
           "You can delete an environment at any time, but you won’t be able to access its flags will be removed and be falsy in your applications. Be sure to know what you're doing before removing an environment."
         ).should("be.visible");
+
         cy.findByRole("link", { name: 'Delete "Production" forever' }).should(
           "be.visible"
         );

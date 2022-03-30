@@ -33,17 +33,17 @@ describe("/dashboard/projects/[id]/delete", () => {
         });
 
         it("does not show actions only allowed by the admin (john is a regular user)", () => {
-          cy.findByText("You are not allowed to delete projects.").should(
-            "be.visible"
-          );
+          cy.findByRole("heading", {
+            name: "You are not allowed to delete projects.",
+          }).should("be.visible");
 
           cy.findByText(
             "If you think this is an error, make sure to contact one of the project administrators:"
           ).should("be.visible");
 
-          cy.findByText("Marvin Frachet").should("be.visible");
-
-          cy.findByText("marvin.frachet@gmail.com").should("be.visible");
+          cy.findByRole("button", {
+            name: "Copy marvin.frachet@gmail.com",
+          }).should("be.visible");
 
           cy.checkA11y();
         });
@@ -59,9 +59,10 @@ describe("/dashboard/projects/[id]/delete", () => {
         it("shows the layout of the page", () => {
           cy.title().should("eq", "Rollout | Project from seeding | Delete");
 
-          cy.findByText("You are about to delete the project.").should(
-            "be.visible"
-          );
+          cy.findByRole("heading", {
+            name: "You are about to delete the project.",
+          }).should("be.visible");
+
           cy.contains(
             "We really want to warn you: if you validate the project suppression, you won't be able to access the Project from seeding project anymore. It includes:"
           ).should("be.visible");
@@ -82,7 +83,9 @@ describe("/dashboard/projects/[id]/delete", () => {
             name: "Yes, delete the project",
           }).should("be.visible");
 
-          cy.contains("No, don't delete Project from seeding")
+          cy.findByRole("link", {
+            name: "No, don't delete Project from seeding",
+          })
             .should("be.visible")
             .and("have.attr", "href", "/dashboard/projects/1/settings");
 
@@ -106,14 +109,15 @@ describe("/dashboard/projects/[id]/delete", () => {
       cy.findByRole("button", {
         name: "Yes, delete the project",
       }).click();
+
       cy.url().should("contain", "/dashboard/onboarding");
     });
 
     it("removes the project and get me back to the project list when I have other projects", () => {
       // Create another project as a test setup
       cy.visit("/dashboard/projects/create");
-      cy.get("input").type("My new project");
-      cy.get("button[type=submit]").click();
+      cy.findByLabelText("Project name").type("My new project");
+      cy.findByRole("button", { name: "Create the project" }).click();
       cy.get(".success-box").should("be.visible");
 
       // Delete a project and verify that the other is still here

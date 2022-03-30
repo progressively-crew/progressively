@@ -21,13 +21,15 @@ describe("/dashboard/projects/create", () => {
 
     it("shows the create page layout", () => {
       cy.title().should("eq", "Rollout | Create a project");
+      cy.findByRole("heading", { name: "Create a project" }).should(
+        "be.visible"
+      );
 
-      cy.findByText("Projects")
+      cy.findByRole("link", { name: "Projects" })
         .should("be.visible")
         .and("have.attr", "href", "/dashboard");
 
-      cy.findAllByText("Create a project")
-        .first()
+      cy.findByRole("link", { name: "Create a project" })
         .should("be.visible")
         .and("have.attr", "href", "/dashboard/projects/create")
         .and("have.attr", "aria-current", "page");
@@ -36,32 +38,37 @@ describe("/dashboard/projects/create", () => {
       cy.findByText(
         "When creating a project, you'll become the administrator of it and will have full control over it."
       ).should("be.visible");
-      cy.get("button[type=submit]").should("be.visible");
+
+      cy.findByRole("button", { name: "Create the project" }).should(
+        "be.visible"
+      );
 
       cy.checkA11y();
     });
 
     it("shows an error when submitting an empty form", () => {
-      cy.get("button[type=submit]").click();
-      cy.get(".error-box").should("have.focus");
-      cy.findByText(
-        "The name field is required, make sure to have one."
-      ).should("be.visible");
+      cy.findByRole("button", { name: "Create the project" }).click();
+
+      cy.get(".error-box")
+        .should("have.focus")
+        .and(
+          "contain.text",
+          "The name field is required, make sure to have one."
+        );
 
       cy.checkA11y();
     });
 
     it("creates a new project", () => {
-      cy.get("input").type("My new project");
-      cy.get("button[type=submit]").click();
+      cy.findByLabelText("Project name").type("My new project");
+      cy.findByRole("button", { name: "Create the project" }).click();
 
-      cy.get(".success-box").should("have.focus");
-      cy.findByText("The project has been successfully created.").should(
-        "be.visible"
-      );
+      cy.get(".success-box")
+        .should("have.focus")
+        .and("contain.text", "The project has been successfully created.");
 
+      // Verify the dashboard
       cy.findByText("My new project").should("be.visible");
-
       cy.url().should("include", "/dashboard?newProjectId");
       cy.checkA11y();
     });

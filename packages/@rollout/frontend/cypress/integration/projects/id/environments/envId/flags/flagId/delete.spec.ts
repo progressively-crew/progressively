@@ -39,9 +39,9 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/delete", 
           "Rollout | Project from seeding | Production | New homepage | Delete"
         );
 
-        cy.findByText("You are about to delete the feature flag.").should(
-          "be.visible"
-        );
+        cy.findByRole("heading", {
+          name: "You are about to delete the feature flag.",
+        }).should("be.visible");
         cy.contains(
           "We really want to warn you: if you validate the flag suppression, you won't be able to access the New homepage flag anymore. It includes:"
         ).should("be.visible");
@@ -89,11 +89,12 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/delete", 
           "/dashboard/projects/1/environments/1/flags?flagRemoved=true"
         );
 
-        cy.findByText("No flags found").should("be.visible");
-        cy.get(".success-box").should("have.focus");
-        cy.findByText("The flag has been successfully deleted.").should(
+        cy.findByRole("heading", { name: "No flags found" }).should(
           "be.visible"
         );
+        cy.get(".success-box")
+          .should("have.focus")
+          .and("contain.text", "The flag has been successfully deleted.");
       });
     });
   });

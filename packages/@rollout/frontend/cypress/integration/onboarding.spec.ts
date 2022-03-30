@@ -26,29 +26,31 @@ describe("/dashboard/onboarding", () => {
         "Before being fully operational, you will need to create a project"
       ).should("be.visible");
       cy.findByLabelText("Project name").should("be.visible");
-      cy.get("button[type=submit]").should("be.visible");
+      cy.findByRole("button", { name: "Create the project" }).should(
+        "be.visible"
+      );
 
       cy.checkA11y();
     });
 
     it("shows an error when submitting an empty form", () => {
-      cy.get("button[type=submit]").click();
-      cy.get(".error-box").should("have.focus");
-      cy.findByText(
-        "The name field is required, make sure to have one."
-      ).should("be.visible");
+      cy.findByRole("button", { name: "Create the project" }).click();
+      cy.get(".error-box")
+        .should("have.focus")
+        .and(
+          "contain.text",
+          "The name field is required, make sure to have one."
+        );
 
       cy.checkA11y();
     });
 
     it("creates a new project", () => {
       cy.get("input").type("My new project");
-      cy.get("button[type=submit]").click();
-
-      cy.get(".success-box").should("have.focus");
-      cy.findByText("The project has been successfully created.").should(
-        "be.visible"
-      );
+      cy.findByRole("button", { name: "Create the project" }).click();
+      cy.get(".success-box")
+        .should("have.focus")
+        .and("contain.text", "The project has been successfully created.");
 
       cy.findByText("My new project").should("be.visible");
 

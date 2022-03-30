@@ -39,10 +39,12 @@ describe("/dashboard/projects/[id]/environments/[envId]/settings/[flagId]/settin
           "Rollout | Project from seeding | Production | New homepage | Settings"
         );
 
-        cy.findByText("Danger zone").should("be.visible");
+        cy.findByRole("heading", { name: "Danger zone" }).should("be.visible");
+
         cy.findByText(
           "You can delete a feature flag at any time, but you won’t be able to access its insights anymore and false will be served to the application using it."
         ).should("be.visible");
+
         cy.findByRole("link", { name: 'Delete "New homepage" forever' })
           .should("be.visible")
           .and(

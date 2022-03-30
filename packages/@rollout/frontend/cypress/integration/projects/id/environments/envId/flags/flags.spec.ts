@@ -39,17 +39,15 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags", () => {
           "Rollout | Project from seeding | Developer | Flags"
         );
 
-        cy.findByText("Projects")
+        cy.findByRole("link", { name: "Projects" })
           .should("be.visible")
           .and("have.attr", "href", "/dashboard");
 
-        cy.findAllByText("Project from seeding")
-          .first()
+        cy.findByRole("link", { name: "Project from seeding" })
           .should("be.visible")
           .and("have.attr", "href", "/dashboard/projects/1");
 
-        cy.findAllByText("Developer")
-          .first()
+        cy.findByRole("link", { name: "Developer" })
           .should("be.visible")
           .and(
             "have.attr",
@@ -58,12 +56,15 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags", () => {
           )
           .and("have.attr", "aria-current", "page");
 
-        cy.get("h1").should("contain", "Developer");
+        cy.findByRole("heading", { name: "Developer" }).should("be.visible");
+        cy.findByRole("heading", { name: "No flags found" }).should(
+          "be.visible"
+        );
 
-        cy.findByText("No flags found").should("be.visible");
         cy.findByText("There are no flags yet on this environment.").should(
           "be.visible"
         );
+
         cy.findByRole("link", { name: "Create a feature flag" })
           .should("be.visible")
           .and(
@@ -87,17 +88,15 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags", () => {
           "Rollout | Project from seeding | Production | Flags"
         );
 
-        cy.findByText("Projects")
+        cy.findByRole("link", { name: "Projects" })
           .should("be.visible")
           .and("have.attr", "href", "/dashboard");
 
-        cy.findAllByText("Project from seeding")
-          .first()
+        cy.findByRole("link", { name: "Project from seeding" })
           .should("be.visible")
           .and("have.attr", "href", "/dashboard/projects/1");
 
-        cy.findAllByText("Production")
-          .first()
+        cy.findByRole("link", { name: "Production" })
           .should("be.visible")
           .and(
             "have.attr",
@@ -106,13 +105,13 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags", () => {
           )
           .and("have.attr", "aria-current", "page");
 
-        cy.get("h1").should("contain", "Production");
-
-        cy.get("h2").should("contain", "Feature flags");
+        cy.findByRole("heading", { name: "Production" }).should("be.visible");
+        cy.findByRole("heading", { name: "Feature flags" }).should(
+          "be.visible"
+        );
 
         cy.findByRole("link", { name: "Feature flags" }).should("be.visible");
-
-        cy.findByText("Create a feature flag")
+        cy.findByRole("link", { name: "Create a feature flag" })
           .should("be.visible")
           .and(
             "have.attr",
@@ -121,7 +120,9 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags", () => {
           );
 
         /* verify the flag list */
-        cy.findByText("New homepage").should("be.visible");
+        cy.findByRole("heading", { name: "New homepage feature flag" }).should(
+          "be.visible"
+        );
         cy.findByText("newHomepage").should("be.visible");
         cy.findByText("Switch the new homepage design").should("be.visible");
         cy.findByRole("switch")

@@ -39,12 +39,11 @@ describe("/dashboard/projects/[id]/environments/create", () => {
           "Rollout | Project from seeding | Create an environment"
         );
 
-        cy.findByText("Projects")
+        cy.findByRole("link", { name: "Projects" })
           .should("be.visible")
           .and("have.attr", "href", "/dashboard");
 
-        cy.findAllByText("Project from seeding")
-          .first()
+        cy.findByRole("link", { name: "Project from seeding" })
           .should("be.visible")
           .and("have.attr", "href", "/dashboard/projects/1");
 
@@ -53,7 +52,9 @@ describe("/dashboard/projects/[id]/environments/create", () => {
           .and("have.attr", "href", "/dashboard/projects/1/environments/create")
           .and("have.attr", "aria-current", "page");
 
-        cy.get("h1").should("contain", "Create an environment");
+        cy.findByRole("heading", { name: "Create an environment" }).should(
+          "be.visible"
+        );
 
         cy.contains(
           "The new environment will appear in Project from seeding."
@@ -64,34 +65,41 @@ describe("/dashboard/projects/[id]/environments/create", () => {
           "After the creation of an environment, you will be able to get its SDK key for application usage."
         ).should("be.visible");
 
-        cy.get("button[type=submit]").should("be.visible");
+        cy.findByRole("button", { name: "Create the environment" }).should(
+          "be.visible"
+        );
 
         cy.checkA11y();
       });
 
       it("shows an error when submitting an empty form", () => {
-        cy.get("button[type=submit]").click();
-        cy.get(".error-box").should("have.focus");
-        cy.findByText(
-          "The name field is required, make sure to have one."
-        ).should("be.visible");
+        cy.findByRole("button", { name: "Create the environment" }).click();
+        cy.get(".error-box")
+          .should("have.focus")
+          .and(
+            "contain.text",
+            "The name field is required, make sure to have one."
+          );
 
         cy.checkA11y();
       });
 
       it("creates an environment", () => {
-        cy.get("input").type("My new env");
-        cy.get("button[type=submit]").click();
+        cy.findByLabelText("Environment name").type("My new env");
+        cy.findByRole("button", { name: "Create the environment" }).click();
 
-        cy.get(".success-box").should("have.focus");
-        cy.findByText("The environment has been successfully created.").should(
+        cy.get(".success-box")
+          .should("have.focus")
+          .and(
+            "contain.text",
+            "The environment has been successfully created."
+          );
+
+        cy.findByRole("heading", { name: "My new env environment" }).should(
           "be.visible"
         );
 
-        cy.findByText("My new env").should("be.visible");
-
         cy.url().should("include", "/dashboard/projects/1?newEnvId");
-
         cy.checkA11y();
       });
     });

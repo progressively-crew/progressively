@@ -61,7 +61,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
           name: "Yes, delete the strategy",
         }).should("be.visible");
 
-        cy.contains("No, don't delete Super strategy")
+        cy.findByRole("link", { name: "No, don't delete Super strategy" })
           .should("be.visible")
           .and(
             "have.attr",
@@ -94,11 +94,13 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
           "/dashboard/projects/1/environments/1/flags/1?stratRemoved=true"
         );
 
-        cy.findByText("No strategy found").should("be.visible");
-        cy.get(".success-box").should("have.focus");
-        cy.findByText("The strategy has been successfully removed.").should(
+        cy.findByRole("heading", { name: "No strategy found" }).should(
           "be.visible"
         );
+
+        cy.get(".success-box")
+          .should("have.focus")
+          .and("contain.text", "The strategy has been successfully removed.");
       });
     });
   });

@@ -39,17 +39,15 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/create", () => {
           "Rollout | Project from seeding | Production | Flags | Create"
         );
 
-        cy.findByText("Projects")
+        cy.findByRole("link", { name: "Projects" })
           .should("be.visible")
           .and("have.attr", "href", "/dashboard");
 
-        cy.findAllByText("Project from seeding")
-          .first()
+        cy.findByRole("link", { name: "Project from seeding" })
           .should("be.visible")
           .and("have.attr", "href", "/dashboard/projects/1");
 
-        cy.findAllByText("Production")
-          .first()
+        cy.findByRole("link", { name: "Production" })
           .should("be.visible")
           .and(
             "have.attr",
@@ -57,8 +55,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/create", () => {
             "/dashboard/projects/1/environments/1/flags"
           );
 
-        cy.findAllByText("Create a feature flag")
-          .first()
+        cy.findByRole("link", { name: "Create a feature flag" })
           .should("be.visible")
           .and(
             "have.attr",
@@ -67,7 +64,9 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/create", () => {
           )
           .and("have.attr", "aria-current", "page");
 
-        cy.get("h1").should("contain", "Create a feature flag");
+        cy.findByRole("heading", { name: "Create a feature flag" }).should(
+          "be.visible"
+        );
 
         cy.contains(
           "The new feature flag will appear in Project from seeding / Production."
@@ -86,15 +85,18 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/create", () => {
       });
 
       it("shows an error when submitting an empty form", () => {
-        cy.get("button[type=submit]").click();
-        cy.get(".error-box").should("have.focus");
-        cy.findByText(
-          "The name field is required, make sure to have one."
-        ).should("be.visible");
+        cy.findByRole("button", { name: "Create the feature flag" }).click();
 
-        cy.findByText(
-          "The description field is required, make sure to have one."
-        ).should("be.visible");
+        cy.get(".error-box")
+          .should("have.focus")
+          .and(
+            "contain.text",
+            "The name field is required, make sure to have one."
+          )
+          .and(
+            "contain.text",
+            "The description field is required, make sure to have one."
+          );
 
         cy.checkA11y();
       });
@@ -102,14 +104,15 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/create", () => {
       it("creates an environment", () => {
         cy.findByLabelText("Flag name").type("My new flag");
         cy.findByLabelText("Flag description").type("My new flag description");
-        cy.get("button[type=submit]").click();
+        cy.findByRole("button", { name: "Create the feature flag" }).click();
 
-        cy.get(".success-box").should("have.focus");
-        cy.findByText("The flag has been successfully created.").should(
+        cy.get(".success-box")
+          .should("have.focus")
+          .and("contain.text", "The flag has been successfully created.");
+
+        cy.findByRole("heading", { name: "My new flag feature flag" }).should(
           "be.visible"
         );
-
-        cy.findByText("My new flag").should("be.visible");
         cy.findByText("My new flag description").should("be.visible");
 
         cy.url().should(
@@ -124,16 +127,17 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/create", () => {
         // Initial flag creation
         cy.findByLabelText("Flag name").type("My new flag");
         cy.findByLabelText("Flag description").type("My new flag description");
-        cy.get("button[type=submit]").click();
+        cy.findByRole("button", { name: "Create the feature flag" }).click();
 
         // New flag creation
         cy.visit("/dashboard/projects/1/environments/1/flags/create");
         cy.findByLabelText("Flag name").type("My new flag");
         cy.findByLabelText("Flag description").type("My new flag description");
-        cy.get("button[type=submit]").click();
+        cy.findByRole("button", { name: "Create the feature flag" }).click();
 
-        cy.get(".error-box").should("have.focus");
-        cy.findByText("The flag name is already used.").should("be.visible");
+        cy.get(".error-box")
+          .should("have.focus")
+          .and("contain.text", "The flag name is already used.");
       });
     });
   });

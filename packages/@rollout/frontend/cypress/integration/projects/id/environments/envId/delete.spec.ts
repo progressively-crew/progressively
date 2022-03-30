@@ -34,17 +34,17 @@ describe("/dashboard/projects/[id]/environments/[envId]/delete", () => {
       });
 
       it("does not show actions only allowed by the admin (john is a regular user)", () => {
-        cy.findByText("You are not allowed to delete environments.").should(
-          "be.visible"
-        );
+        cy.findByRole("heading", {
+          name: "You are not allowed to delete environments.",
+        }).should("be.visible");
 
         cy.findByText(
           "If you think this is an error, make sure to contact one of the project administrators:"
         ).should("be.visible");
 
-        cy.findByText("Marvin Frachet").should("be.visible");
-
-        cy.findByText("marvin.frachet@gmail.com").should("be.visible");
+        cy.findByRole("button", {
+          name: "Copy marvin.frachet@gmail.com",
+        }).should("be.visible");
 
         cy.checkA11y();
       });
@@ -63,9 +63,9 @@ describe("/dashboard/projects/[id]/environments/[envId]/delete", () => {
           "Rollout | Project from seeding | Production | Settings | Delete"
         );
 
-        cy.findByText("You are about to delete the environment.").should(
-          "be.visible"
-        );
+        cy.findByRole("heading", {
+          name: "You are about to delete the environment.",
+        }).should("be.visible");
         cy.contains(
           "We really want to warn you: if you validate the environment suppression, you won't be able to access the Production environment anymore. It includes:"
         ).should("be.visible");
@@ -82,7 +82,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/delete", () => {
           name: "Yes, delete the environment",
         }).should("be.visible");
 
-        cy.contains("No, don't delete Production")
+        cy.findByRole("link", { name: "No, don't delete Production" })
           .should("be.visible")
           .and(
             "have.attr",
@@ -110,12 +110,18 @@ describe("/dashboard/projects/[id]/environments/[envId]/delete", () => {
 
         cy.url().should("contain", "/dashboard/projects/1?envRemoved=true");
 
-        cy.findByText("Developer").should("be.visible");
-        cy.findByText("Production").should("not.exist");
-        cy.get(".success-box").should("have.focus");
-        cy.findByText("The environment has been successfully deleted.").should(
+        cy.findByRole("heading", { name: "Developer environment" }).should(
           "be.visible"
         );
+        cy.findByRole("heading", { name: "Production environment" }).should(
+          "not.exist"
+        );
+        cy.get(".success-box")
+          .should("have.focus")
+          .and(
+            "contain.text",
+            "The environment has been successfully deleted."
+          );
       });
     });
   });

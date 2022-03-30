@@ -47,17 +47,15 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
           "Rollout | Project from seeding | Production | Flags | New homepage | Strategies | Create"
         );
 
-        cy.findByText("Projects")
+        cy.findByRole("link", { name: "Projects" })
           .should("be.visible")
           .and("have.attr", "href", "/dashboard");
 
-        cy.findAllByText("Project from seeding")
-          .first()
+        cy.findByRole("link", { name: "Project from seeding" })
           .should("be.visible")
           .and("have.attr", "href", "/dashboard/projects/1");
 
-        cy.findAllByText("Production")
-          .first()
+        cy.findByRole("link", { name: "Production" })
           .should("be.visible")
           .and(
             "have.attr",
@@ -65,8 +63,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
             "/dashboard/projects/1/environments/1/flags"
           );
 
-        cy.findAllByText("New homepage")
-          .first()
+        cy.findByRole("link", { name: "New homepage" })
           .should("be.visible")
           .and(
             "have.attr",
@@ -74,8 +71,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
             "/dashboard/projects/1/environments/1/flags/1"
           );
 
-        cy.findAllByText("Add a strategy")
-          .first()
+        cy.findByRole("link", { name: "Add a strategy" })
           .should("be.visible")
           .and(
             "have.attr",
@@ -84,7 +80,9 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
           )
           .and("have.attr", "aria-current", "page");
 
-        cy.get("h1").should("contain", "Add a strategy");
+        cy.findByRole("heading", { name: "Add a strategy" }).should(
+          "be.visible"
+        );
 
         cy.contains(
           "You're about to add a strategy to New homepage in Project from seeding on Production."
@@ -94,11 +92,16 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
       });
 
       it("shows the form layout", () => {
-        cy.findByText("General information").should("be.visible");
+        cy.findByRole("heading", { name: "General information" }).should(
+          "be.visible"
+        );
         cy.findByLabelText("Strategy name").should("be.visible");
 
         // Strategy audience
-        cy.findByText("Strategy audience").should("be.visible");
+        cy.findByRole("heading", { name: "Strategy audience" }).should(
+          "be.visible"
+        );
+
         cy.findByLabelText("Everybody is concerned").should("be.visible");
         cy.findByLabelText("People with a specific field").should("be.visible");
         // TODO: implement the strategy first before making the test on it
@@ -107,7 +110,9 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
         // );
 
         // Strategy activation
-        cy.findByText("Activation strategy").should("be.visible");
+        cy.findByRole("heading", { name: "Activation strategy" }).should(
+          "be.visible"
+        );
         cy.findByLabelText("Everyone will see the variants").should(
           "be.visible"
         );
@@ -127,11 +132,12 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
         });
         cy.findByRole("button", { name: "Save the strategy" }).click();
 
-        cy.get(".error-box").should("have.focus");
-        cy.findByText("The following 3 errors have been found:");
-        cy.findByText("The strategy name is required.");
-        cy.findByText("The field name is required.");
-        cy.findByText("The field values are required.");
+        cy.get(".error-box")
+          .should("have.focus")
+          .and("contain.text", "The following 3 errors have been found:")
+          .and("contain.text", "The strategy name is required.")
+          .and("contain.text", "The field name is required.")
+          .and("contain.text", "The field values are required.");
 
         cy.checkA11y();
       });
@@ -145,10 +151,11 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
           "include",
           "/dashboard/projects/1/environments/1/flags/1?newStrategy=true"
         );
-        cy.get(".success-box").should("have.focus");
-        cy.findByText("The strategy has been successfully created.").should(
-          "be.visible"
-        );
+
+        cy.get(".success-box")
+          .should("have.focus")
+          .and("contain.text", "The strategy has been successfully created.");
+
         cy.findByRole("heading", { name: "New strategy" }).should("be.visible");
 
         cy.checkA11y();
