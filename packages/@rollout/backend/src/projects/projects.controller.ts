@@ -11,10 +11,15 @@ import {
   Query,
   UnauthorizedException,
   NotFoundException,
+  ConflictException,
 } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
-import { ProjectCreationDTO, ProjectCreationSchema } from './projects.dto';
+import {
+  MemberProjectDTO,
+  ProjectCreationDTO,
+  ProjectCreationSchema,
+} from './projects.dto';
 import { ProjectsService } from './projects.service';
 import { UserRetrieveDTO } from 'src/users/users.dto';
 import { UserProject } from '@prisma/client';
@@ -22,10 +27,14 @@ import { Roles } from '../shared/decorators/Roles';
 import { UserRoles } from '../users/roles';
 import { HasProjectAccessGuard } from './guards/hasProjectAccess';
 import { ValidationPipe } from '../shared/pipes/ValidationPipe';
+import { UsersService } from '../users/users.service';
 @ApiBearerAuth()
 @Controller()
 export class ProjectsController {
-  constructor(private readonly projectService: ProjectsService) {}
+  constructor(
+    private readonly projectService: ProjectsService,
+    private readonly userService: UsersService,
+  ) {}
 
   @Get('projects/:id')
   @UseGuards(HasProjectAccessGuard)
@@ -76,6 +85,33 @@ export class ProjectsController {
     }
 
     return this.projectService.removeMember(id, memberId);
+  }
+
+  @Post('projects/:id/members')
+  @Roles(UserRoles.Admin)
+  @UseGuards(HasProjectAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  async addMember(
+    @Param('id') id: string,
+    @Body() memberProjectDto: MemberProjectDTO,
+  ) {
+    const user = await this.userService.findByEmail(memberProjectDto.email);
+
+    if (!user) {
+      throw new NotFoundException(
+        'The user does not exist. They must have to create an account before being able to join the project.',
+      );
+    }
+
+    const userProject = await this.projectService.userProject(id, user.uuid);
+
+    if (userProject) {
+      throw new ConflictException(
+        'The user is already a member of the project.',
+      );
+    }
+
+    return this.projectService.addMember(id, user.uuid);
   }
 
   @Delete('projects/:id')

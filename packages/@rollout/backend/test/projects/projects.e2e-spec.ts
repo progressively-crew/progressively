@@ -222,7 +222,7 @@ describe('ProjectsController (e2e)', () => {
     });
   });
 
-  describe('/projects/1/members/2 (POST)', () => {
+  describe('/projects/1/members/2 (DELETE)', () => {
     it('gives a 401 when the user is not authenticated', () =>
       verifyAuthGuard(app, '/projects/1/members/2', 'delete'));
 
@@ -286,6 +286,89 @@ describe('ProjectsController (e2e)', () => {
         .set('Authorization', `Bearer ${access_token}`)
         .expect(200)
         .expect({ projectId: '1', role: 'user', userId: '2' });
+    });
+  });
+
+  describe('/projects/1/members (POST)', () => {
+    it('gives a 401 when the user is not authenticated', () =>
+      verifyAuthGuard(app, '/projects/1/members', 'post'));
+
+    it('gives 403 when the user does not have the role to remove a member', async () => {
+      const access_token = await authenticate(
+        app,
+        'john.doe@gmail.com',
+        'password',
+      );
+
+      await request(app.getHttpServer())
+        .post('/projects/1/members')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('gives 404 when the user does not exist', async () => {
+      const access_token = await authenticate(app);
+
+      await request(app.getHttpServer())
+        .post('/projects/1/members')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send({ email: 'blah.blah@gmail.com' })
+        .expect(404)
+        .expect({
+          statusCode: 404,
+          message:
+            'The user does not exist. They must have to create an account before being able to join the project.',
+          error: 'Not Found',
+        });
+    });
+
+    it('gives 403 when the project does not exist', async () => {
+      const access_token = await authenticate(app);
+
+      await request(app.getHttpServer())
+        .post('/projects/1245/members')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('gives 409 when the user is already a member of the project', async () => {
+      const access_token = await authenticate(app);
+
+      await request(app.getHttpServer())
+        .post('/projects/1/members')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send({ email: 'john.doe@gmail.com' })
+        .expect(409)
+        .expect({
+          statusCode: 409,
+          message: 'The user is already a member of the project.',
+          error: 'Conflict',
+        });
+    });
+
+    it('adds the user to the project', async () => {
+      const access_token = await authenticate(app);
+
+      const response = await request(app.getHttpServer())
+        .post('/projects/1/members')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send({ email: 'jane.doe@gmail.com' })
+        .expect(201);
+
+      expect(response.body).toMatchObject({
+        projectId: '1',
+        role: 'user',
+      });
     });
   });
 });

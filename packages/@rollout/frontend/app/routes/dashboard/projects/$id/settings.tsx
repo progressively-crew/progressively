@@ -187,6 +187,7 @@ export default function SettingsPage() {
 
           <Box mt={4}>
             <UserTable
+              projectId={project.uuid}
               userProjects={project.userProject || []}
               labelledBy="members"
               canEdit={userRole === UserRoles.Admin}

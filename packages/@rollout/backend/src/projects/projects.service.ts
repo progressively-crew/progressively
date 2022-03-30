@@ -122,6 +122,12 @@ export class ProjectsService {
     });
   }
 
+  addMember(projectId: string, userId: string) {
+    return this.prisma.userProject.create({
+      data: { userId, projectId, role: UserRoles.User },
+    });
+  }
+
   async deleteProject(projectId: string) {
     // Deep resolve the project
     const fullyResolvedProject = await this.prisma.project.findFirst({

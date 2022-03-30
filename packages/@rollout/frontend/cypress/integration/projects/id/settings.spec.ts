@@ -33,6 +33,10 @@ describe("/dashboard/projects/[id]/settings", () => {
 
       it("does not show actions only allowed by the admin (john is a regular user)", () => {
         cy.findByRole("heading", { name: "Danger zone" }).should("not.exist");
+        cy.findByRole("button", { name: "Remove from project" }).should(
+          "not.exist"
+        );
+        cy.findByRole("button", { name: "Add member" }).should("not.exist");
 
         cy.checkA11y();
       });
@@ -54,6 +58,8 @@ describe("/dashboard/projects/[id]/settings", () => {
         cy.findByRole("button", { name: "Remove from project" }).should(
           "be.visible"
         );
+
+        cy.findByRole("link", { name: "Add member" }).should("be.visible");
 
         cy.checkA11y();
       });

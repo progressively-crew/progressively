@@ -5,6 +5,7 @@ import { PrismaService } from '../prisma.service';
 import { ProjectsController } from './projects.controller';
 import { ProjectsService } from './projects.service';
 import { StrategyService } from '../strategy/strategy.service';
+import { UsersService } from '../users/users.service';
 
 @Module({
   controllers: [ProjectsController],
@@ -14,6 +15,7 @@ import { StrategyService } from '../strategy/strategy.service';
     PrismaService,
     EnvironmentsService,
     StrategyService,
+    UsersService,
   ],
   exports: [ProjectsService],
 })

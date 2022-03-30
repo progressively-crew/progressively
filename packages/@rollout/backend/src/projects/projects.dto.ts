@@ -10,6 +10,10 @@ export interface ProjectRetrieveDTO {
   createdAt: Date;
 }
 
+export interface MemberProjectDTO {
+  email: string;
+}
+
 export const ProjectCreationSchema = Joi.object({
   name: Joi.string().required(),
 });

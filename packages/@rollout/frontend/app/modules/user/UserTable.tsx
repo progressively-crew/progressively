@@ -1,13 +1,15 @@
-import { Badge, Flex } from "@chakra-ui/react";
+import { Badge, HStack } from "@chakra-ui/react";
 import { useState } from "react";
-import { Form, useTransition } from "remix";
+import { Form, Link, useTransition } from "remix";
 import { Cell, Col, Row, Table, Tbody, Thead } from "../a11y/Table";
 import { useHydrated } from "../misc/useHydrated";
 import { UserProject, UserRoles } from "../projects/types";
 import { FaTrash } from "react-icons/fa";
 import { Button } from "~/components/Button";
+import { IoIosCreate } from "react-icons/io";
 
 export interface UserTableProps {
+  projectId: string;
   userProjects: Array<UserProject>;
   labelledBy: string;
   canEdit: boolean;
@@ -25,6 +27,7 @@ const RoleBadge = ({ role }: { role: UserRoles }) => {
 
 export const UserTable = ({
   userProjects,
+  projectId,
   labelledBy,
   canEdit,
 }: UserTableProps) => {
@@ -39,21 +42,33 @@ export const UserTable = ({
       <input type="hidden" name="_method" value="delete-member" />
 
       {canEdit && (
-        <Flex justifyContent={["center", "flex-end"]}>
+        <HStack mb={[6, 2]} spacing={[0, 4]} flexDirection={["column", "row"]}>
+          <Button
+            colorScheme="brand"
+            as={Link}
+            to={`/dashboard/projects/${projectId}/add-member`}
+            leftIcon={<IoIosCreate aria-hidden />}
+            variant="outline"
+            width={["100%", "auto"]}
+            mb={[2, 0]}
+          >
+            Add member
+          </Button>
+
           <Button
             colorScheme="error"
             type={canDelete || !isHydrated ? "submit" : "button"}
             aria-disabled={isHydrated && !canDelete}
             leftIcon={<FaTrash aria-hidden />}
             variant="outline"
-            mb={[6, 2]}
             isLoading={transition.state === "submitting"}
             loadingText="Deleting the member(s), please wait..."
             disabled={false}
+            width={["100%", "auto"]}
           >
             Remove from project
           </Button>
-        </Flex>
+        </HStack>
       )}
 
       <Table labelledBy={labelledBy} onSelect={setSelected} selected={selected}>
