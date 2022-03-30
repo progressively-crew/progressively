@@ -22,7 +22,7 @@ describe("/profile", () => {
     it("shows the create page layout", () => {
       cy.title().should("eq", "Rollout | Profile");
 
-      cy.findByText("Back to dashboard")
+      cy.findByRole("link", { name: "Back to dashboard" })
         .should("be.visible")
         .and("have.attr", "href", "/dashboard");
 

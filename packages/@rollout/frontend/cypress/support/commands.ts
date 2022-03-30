@@ -55,3 +55,8 @@ Cypress.Commands.add("checkProtectedRoute", () => {
     "To access this content, make sure to fill the authentication page form."
   );
 });
+
+Cypress.on(
+  "uncaught:exception",
+  (err) => !err.message.includes("ResizeObserver loop limit exceeded")
+);

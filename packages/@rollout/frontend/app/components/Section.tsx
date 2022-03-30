@@ -5,24 +5,18 @@ const SectionContext = createContext<string | undefined>(undefined);
 
 export interface SectionProps extends React.HTMLAttributes<HTMLElement> {
   children: React.ReactNode;
-  size?: "S" | "M";
   as?: any;
   id?: string;
 }
 
-export const Section = ({
-  children,
-  size = "S",
-  id,
-  ...props
-}: SectionProps) => {
+export const Section = ({ children, id, ...props }: SectionProps) => {
   return (
     <SectionContext.Provider value={id}>
       <Box
         bg="backgroundContent"
         as="section"
         borderRadius={16}
-        p={size === "S" ? 4 : 8}
+        p={[2, 8]}
         boxShadow="md"
         aria-labelledby={id}
         {...props}
@@ -53,19 +47,21 @@ export const SectionHeader = ({
     <Flex
       justifyContent={"space-between"}
       alignItems={["flex-start", "center"]}
-      pb={8}
       direction={["column", "row"]}
+      p={4}
       {...props}
     >
-      <Box p={4}>
-        <Heading as={titleAs} id={id} size="lg" fontSize="2xl" pb={1}>
+      <Box maxW={endAction ? "xl" : undefined}>
+        <Heading as={titleAs} id={id} size="lg" pb={1}>
           {title}
         </Heading>
-        {description}
+        <Box fontSize="xl" color="textlight">
+          {description}
+        </Box>
       </Box>
 
       {endAction ? (
-        <Box flexShrink={0} ml={[4, description ? 2 : 0]}>
+        <Box flexShrink={0} ml={[0, description ? 2 : 0]} mt={[4, 0]}>
           {endAction}
         </Box>
       ) : null}

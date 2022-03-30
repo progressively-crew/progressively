@@ -1,9 +1,8 @@
-import { Box, Button, Stack } from "@chakra-ui/react";
+import { Box, Stack } from "@chakra-ui/react";
 import {
   LoaderFunction,
   useLoaderData,
   MetaFunction,
-  Link,
   useSearchParams,
 } from "remix";
 import { Crumbs, BreadCrumbs } from "~/components/AppBreadcrumbs";
@@ -22,6 +21,7 @@ import { Section, SectionHeader } from "~/components/Section";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { AiOutlineSetting } from "react-icons/ai";
 import { FiLayers } from "react-icons/fi";
+import { Button } from "~/components/Button";
 
 interface MetaArgs {
   data: {
@@ -75,7 +75,7 @@ export default function ProjectDetailPage() {
       <BreadCrumbs crumbs={crumbs} />
 
       <Main>
-        <Box pb={8}>
+        <Box pb={[0, 8]}>
           <Header title={project.name} />
         </Box>
 
@@ -102,7 +102,6 @@ export default function ProjectDetailPage() {
             title="Environments"
             endAction={
               <Button
-                as={Link}
                 to={`/dashboard/projects/${project.uuid}/environments/create`}
                 leftIcon={<IoIosCreate aria-hidden />}
                 colorScheme="brand"
@@ -113,19 +112,19 @@ export default function ProjectDetailPage() {
           />
 
           <Stack spacing={2}>
-            {newEnvId ? (
-              <SuccessBox id="env-added">
-                The environment has been successfully created.
-              </SuccessBox>
-            ) : null}
+            <Box px={4}>
+              {newEnvId ? (
+                <SuccessBox id="env-added" mb={4}>
+                  The environment has been successfully created.
+                </SuccessBox>
+              ) : null}
 
-            {envRemoved ? (
-              <SuccessBox id="env-removed">
-                The environment has been successfully deleted.
-              </SuccessBox>
-            ) : null}
+              {envRemoved ? (
+                <SuccessBox id="env-removed" mb={4}>
+                  The environment has been successfully deleted.
+                </SuccessBox>
+              ) : null}
 
-            <Box>
               {project.environments.map((env) => (
                 <EnvCard
                   key={env.uuid}
@@ -133,7 +132,6 @@ export default function ProjectDetailPage() {
                   linkTo={`/dashboard/projects/${project.uuid}/environments/${env.uuid}/flags`}
                   title={env.name}
                   clientKey={env.clientKey}
-                  description="Put something here and check afterwards"
                 />
               ))}
             </Box>

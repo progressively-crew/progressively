@@ -15,9 +15,7 @@ import { User } from "~/modules/user/types";
 import { SuccessBox } from "~/components/SuccessBox";
 import {
   Box,
-  Button,
   FormControl,
-  FormLabel,
   Input,
   Stack,
   Link as CLink,
@@ -27,6 +25,8 @@ import { MdAccountCircle, MdChevronLeft } from "react-icons/md";
 import { H1 } from "~/components/H1";
 import { Section } from "~/components/Section";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
+import { Button } from "~/components/Button";
+import { FormLabel } from "~/components/FormLabel";
 
 export const meta: MetaFunction = () => {
   return {
@@ -97,7 +97,7 @@ export default function CreateAccountPage() {
           </CLink>
         </HStack>
 
-        <Section size="M">
+        <Section>
           <Box>
             <H1>Create an account</H1>
           </Box>

@@ -1,26 +1,17 @@
-import { Flex, Heading, Link as CLink } from "@chakra-ui/react";
-import React, { useRef } from "react";
+import { Flex, Heading, Link as CLink, Tag } from "@chakra-ui/react";
+import { useRef } from "react";
 import { Link } from "remix";
 import { Box, Text, Icon } from "@chakra-ui/react";
-import { ButtonCopy } from "~/components/ButtonCopy";
-import { BiKey } from "react-icons/bi";
 import { AiOutlineArrowRight } from "react-icons/ai";
 
 export interface EnvCardProps {
   id: string;
   linkTo: string;
-  description: React.ReactNode;
   title: string;
   clientKey: string;
 }
 
-export const EnvCard = ({
-  id,
-  linkTo,
-  description,
-  title,
-  clientKey,
-}: EnvCardProps) => {
+export const EnvCard = ({ id, linkTo, title, clientKey }: EnvCardProps) => {
   const linkRef = useRef<HTMLAnchorElement>(null);
 
   return (
@@ -48,30 +39,21 @@ export const EnvCard = ({
     >
       <Flex justifyContent="space-between">
         <div>
-          <Flex alignItems={"center"}>
-            <Heading as="h3" id={`article-${id}`} size="md" mr={2}>
-              <CLink
-                as={Link}
-                textDecoration="underline"
-                ref={linkRef}
-                to={linkTo}
-                color="brand.600"
-              >
-                {title}
-              </CLink>
-            </Heading>
+          <Heading as="h3" id={`article-${id}`} size="md" mr={2} mb={1}>
+            <CLink
+              as={Link}
+              textDecoration="underline"
+              ref={linkRef}
+              to={linkTo}
+              color="brand.600"
+            >
+              {title}
+            </CLink>
+          </Heading>
 
-            <Box display={["none", "block"]}>
-              <ButtonCopy
-                toCopy={clientKey}
-                icon={<Icon as={BiKey} aria-hidden />}
-              >
-                {clientKey}
-              </ButtonCopy>
-            </Box>
-          </Flex>
-
-          <Text>{description}</Text>
+          <Text color="textlight" display={["none", "inline"]}>
+            The environment sdk key is <Tag>{clientKey}</Tag>
+          </Text>
         </div>
 
         <Icon

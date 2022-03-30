@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  Flex,
-  FormControl,
-  FormLabel,
-  Input,
-  Text,
-} from "@chakra-ui/react";
+import { Box, FormControl, Input, Text } from "@chakra-ui/react";
 import { IoIosCreate } from "react-icons/io";
 import {
   Form,
@@ -16,7 +8,9 @@ import {
   LoaderFunction,
   useLoaderData,
 } from "remix";
+import { Button } from "~/components/Button";
 import { ErrorBox } from "~/components/ErrorBox";
+import { FormLabel } from "~/components/FormLabel";
 import { Header } from "~/components/Header";
 import { Main } from "~/components/Main";
 import { Section } from "~/components/Section";
@@ -83,7 +77,7 @@ export default function OnboardingPage() {
   return (
     <DashboardLayout user={user}>
       <Main>
-        <Box pb={8}>
+        <Box pb={8} mt={[16, 0]}>
           <Header
             title="Welcome aboard"
             description={
@@ -95,7 +89,7 @@ export default function OnboardingPage() {
           />
         </Box>
 
-        <Section size="M">
+        <Section>
           {errors?.name && (
             <Box pb={4}>
               <ErrorBox list={errors} />
@@ -114,7 +108,7 @@ export default function OnboardingPage() {
               />
             </FormControl>
 
-            <Flex justifyContent="flex-end" mt={4}>
+            <Box mt={4}>
               <Button
                 type="submit"
                 leftIcon={<IoIosCreate aria-hidden />}
@@ -122,7 +116,7 @@ export default function OnboardingPage() {
               >
                 Create the project
               </Button>
-            </Flex>
+            </Box>
           </Form>
         </Section>
       </Main>

@@ -1,8 +1,7 @@
-import { Box, Button, Text, Flex, VisuallyHidden } from "@chakra-ui/react";
+import { Box, Text, Flex, VisuallyHidden } from "@chakra-ui/react";
 import {
   ActionFunction,
   Form,
-  Link,
   LoaderFunction,
   MetaFunction,
   redirect,
@@ -29,6 +28,7 @@ import { getFlagsByProjectEnv } from "~/modules/flags/getFlagsByProjectEnv";
 import { getStrategy } from "~/modules/strategies/getStrategy";
 import { StrategyRetrieveDTO } from "~/modules/strategies/types";
 import { deleteStrategy } from "~/modules/strategies/deleteStrategy";
+import { Button } from "~/components/Button";
 
 interface MetaArgs {
   data: {
@@ -189,7 +189,7 @@ export default function DeleteStrategyPage() {
           />
         </Box>
 
-        <Section size="M">
+        <Section>
           {data?.errors && data.errors.backendError && (
             <Box pb={4}>
               <ErrorBox list={data.errors} />
@@ -212,21 +212,7 @@ export default function DeleteStrategyPage() {
             mt={4}
             direction={["column", "row"]}
           >
-            <Form method="post">
-              <Button
-                type="submit"
-                colorScheme="error"
-                leftIcon={<FaTrash aria-hidden />}
-                isLoading={transition.state === "submitting"}
-                loadingText="Deleting the environment, please wait..."
-                disabled={false}
-                width={["100%", "auto"]}
-              >
-                Yes, delete the strategy
-              </Button>
-            </Form>
             <Button
-              as={Link}
               to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`}
               variant="outline"
               colorScheme="error"
@@ -241,6 +227,20 @@ export default function DeleteStrategyPage() {
                 <VisuallyHidden>{strategy.name}</VisuallyHidden>
               </span>
             </Button>
+
+            <Form method="post">
+              <Button
+                type="submit"
+                colorScheme="error"
+                leftIcon={<FaTrash aria-hidden />}
+                isLoading={transition.state === "submitting"}
+                loadingText="Deleting the environment, please wait..."
+                disabled={false}
+                width={["100%", "auto"]}
+              >
+                Yes, delete the strategy
+              </Button>
+            </Form>
           </Flex>
         </Section>
       </Main>

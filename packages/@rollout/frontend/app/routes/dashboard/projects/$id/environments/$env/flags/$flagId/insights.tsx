@@ -158,7 +158,7 @@ export default function FlagById() {
       <BreadCrumbs crumbs={crumbs} />
 
       <Main>
-        <Box pb={8}>
+        <Box pb={[0, 8]}>
           <Header
             title={currentFlag.name}
             startAction={

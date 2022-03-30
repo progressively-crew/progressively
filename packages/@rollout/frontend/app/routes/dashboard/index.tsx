@@ -1,8 +1,7 @@
-import { Box, Button, Stack } from "@chakra-ui/react";
+import { Box, Stack } from "@chakra-ui/react";
 import {
   useLoaderData,
   LoaderFunction,
-  Link,
   MetaFunction,
   redirect,
   useSearchParams,
@@ -19,6 +18,7 @@ import { authGuard } from "~/modules/auth/auth-guard";
 import { User } from "~/modules/user/types";
 import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
+import { Button } from "~/components/Button";
 
 export const meta: MetaFunction = () => {
   return {
@@ -58,12 +58,11 @@ export default function DashboardRoot() {
   return (
     <DashboardLayout user={user}>
       <Main>
-        <Box pb={8}>
+        <Box pb={8} mt={[16, 0]}>
           <Header
             title="Projects"
-            endAction={
+            startAction={
               <Button
-                as={Link}
                 leftIcon={<IoIosCreate aria-hidden />}
                 to="/dashboard/projects/create"
                 colorScheme="brand"

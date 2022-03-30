@@ -12,6 +12,7 @@ export const Logo = ({ to }: LogoProps) => (
     display="flex"
     alignItems="center"
     fontWeight={"bold"}
+    h={12}
   >
     <Icon as={GiSailboat} aria-hidden mr={2} w={6} h={6} />
     Rollout

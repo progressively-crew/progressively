@@ -46,7 +46,7 @@ export const ProjectCard = ({
     >
       <Flex justifyContent="space-between">
         <div>
-          <Heading as="h2" id={`article-${id}`} size="md">
+          <Heading as="h2" id={`article-${id}`} size="md" mb={2}>
             <CLink
               as={Link}
               textDecoration="underline"
@@ -58,7 +58,7 @@ export const ProjectCard = ({
             </CLink>
           </Heading>
 
-          <Text>{description}</Text>
+          <Text color="textlight">{description}</Text>
         </div>
 
         <Icon

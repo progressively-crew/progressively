@@ -1,9 +1,7 @@
 import {
   Stack,
   FormControl,
-  FormLabel,
   Input,
-  Button,
   Box,
   Text,
   HStack,
@@ -19,7 +17,9 @@ import {
   useSearchParams,
   useTransition,
 } from "remix";
+import { Button } from "~/components/Button";
 import { ErrorBox } from "~/components/ErrorBox";
+import { FormLabel } from "~/components/FormLabel";
 import { H1 } from "~/components/H1";
 import { Main } from "~/components/Main";
 import { Section } from "~/components/Section";
@@ -118,7 +118,7 @@ export default function ResetPasswordPage() {
             Back to signin
           </CLink>
         </HStack>
-        <Section size="M">
+        <Section>
           <Box>
             <H1>Reset password</H1>
             <Text>Set your new password.</Text>

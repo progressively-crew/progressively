@@ -1,7 +1,6 @@
 import {
   Box,
   FormControl,
-  FormLabel,
   Radio,
   RadioGroup,
   Slider,
@@ -10,6 +9,7 @@ import {
   SliderTrack,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { FormLabel } from "~/components/FormLabel";
 import { Section, SectionHeader } from "~/components/Section";
 import { ActivationType } from "../types/activation";
 
@@ -38,20 +38,39 @@ export const ActivationStrategy = ({
         pb={4}
       >
         <Box>
-          <Radio id="boolean" name="strategy-activation" value="boolean">
+          <Radio
+            id="boolean"
+            name="strategy-activation"
+            value="boolean"
+            size="lg"
+            h={12}
+          >
             Everyone will see the variants
           </Radio>
         </Box>
 
         <Box>
-          <Radio id="percentage" name="strategy-activation" value="percentage">
+          <Radio
+            id="percentage"
+            name="strategy-activation"
+            value="percentage"
+            size="lg"
+            h={12}
+          >
             A percentage of the people will see the variants
           </Radio>
         </Box>
       </RadioGroup>
 
       {activationStrategy === "percentage" && (
-        <Box mt={4}>
+        <Box
+          ml={[4, 4, 12]}
+          mr={[4, 4, 12]}
+          borderColor="background100"
+          borderWidth={1}
+          p={[4, 4, 8]}
+          borderRadius={6}
+        >
           <FormControl>
             <FormLabel id="percentage-value">
               Percentage of the people concerned ({percentageValue}

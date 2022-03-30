@@ -3,12 +3,8 @@ import {
   Link as CLink,
   HStack,
   FormControl,
-  FormLabel,
   Input,
-  Button,
   Stack,
-  transition,
-  Flex,
 } from "@chakra-ui/react";
 import { MdChevronLeft, MdPassword } from "react-icons/md";
 import {
@@ -19,8 +15,11 @@ import {
   MetaFunction,
   useActionData,
   useLoaderData,
+  useTransition,
 } from "remix";
+import { Button } from "~/components/Button";
 import { ErrorBox } from "~/components/ErrorBox";
+import { FormLabel } from "~/components/FormLabel";
 import { Header } from "~/components/Header";
 import { Main } from "~/components/Main";
 import { Section, SectionHeader } from "~/components/Section";
@@ -99,6 +98,7 @@ export const loader: LoaderFunction = async ({
 };
 
 export default function ProfilePage() {
+  const transition = useTransition();
   const data = useActionData<ActionData>();
   const { user } = useLoaderData<LoaderData>();
   const passwordUpdated = data?.passwordUpdated;
@@ -107,13 +107,14 @@ export default function ProfilePage() {
   return (
     <DashboardLayout user={user}>
       <Main>
-        <HStack mb={4}>
-          <MdChevronLeft aria-hidden />
-          <CLink as={Link} to="/dashboard">
-            Back to dashboard
-          </CLink>
-        </HStack>
-        <Box pb={8}>
+        <CLink as={Link} to="/dashboard" display="inline-block">
+          <HStack alignItems={"center"} height={"44px"} fontSize="xl">
+            <MdChevronLeft aria-hidden />
+            <span>Back to dashboard</span>
+          </HStack>
+        </CLink>
+
+        <Box pb={8} mt={[16, 0]}>
           <Header title="My profile" />
         </Box>
 
@@ -163,7 +164,7 @@ export default function ProfilePage() {
                   />
                 </FormControl>
 
-                <Flex justifyContent="flex-end">
+                <Box>
                   <Button
                     type="submit"
                     colorScheme={"brand"}
@@ -174,7 +175,7 @@ export default function ProfilePage() {
                   >
                     Change password
                   </Button>
-                </Flex>
+                </Box>
               </Stack>
             </Form>
           </Box>

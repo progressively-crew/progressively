@@ -1,8 +1,6 @@
 import {
   Box,
-  Button,
   FormControl,
-  FormLabel,
   Input,
   Stack,
   Text,
@@ -21,7 +19,9 @@ import {
   Link,
   useSearchParams,
 } from "remix";
+import { Button } from "~/components/Button";
 import { ErrorBox } from "~/components/ErrorBox";
+import { FormLabel } from "~/components/FormLabel";
 import { H1 } from "~/components/H1";
 import { Main } from "~/components/Main";
 import { Section } from "~/components/Section";
@@ -87,7 +87,7 @@ export default function Signin() {
   return (
     <NotAuthenticatedLayout>
       <Main>
-        <Section size="M">
+        <Section>
           <Box>
             <H1>Signin</H1>
             <Text>Welcome</Text>

@@ -1,7 +1,8 @@
-import { Button, ButtonProps } from "@chakra-ui/react";
+import { ButtonProps } from "@chakra-ui/react";
 import { HTMLAttributes, useEffect, useRef, useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useHydrated } from "~/modules/misc/useHydrated";
+import { Button } from "./Button";
 
 export interface ButtonCopyProps extends ButtonProps {
   toCopy: string;
@@ -51,7 +52,6 @@ export const ButtonCopy = ({
     return (
       <CopyToClipboard text={toCopy}>
         <Button
-          size={"sm"}
           variant="outline"
           leftIcon={icon}
           onClick={handleClick}
@@ -70,7 +70,7 @@ export const ButtonCopy = ({
   return (
     <Button
       as="span"
-      size="sm"
+      size={"lg"}
       variant="outline"
       leftIcon={icon}
       onClick={undefined}

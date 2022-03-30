@@ -1,10 +1,11 @@
-import { Badge, Button, Flex } from "@chakra-ui/react";
+import { Badge, Flex } from "@chakra-ui/react";
 import { useState } from "react";
 import { Form, useTransition } from "remix";
 import { Cell, Col, Row, Table, Tbody, Thead } from "../a11y/Table";
 import { useHydrated } from "../misc/useHydrated";
 import { UserProject, UserRoles } from "../projects/types";
 import { FaTrash } from "react-icons/fa";
+import { Button } from "~/components/Button";
 
 export interface UserTableProps {
   userProjects: Array<UserProject>;
@@ -46,7 +47,6 @@ export const UserTable = ({
             leftIcon={<FaTrash aria-hidden />}
             variant="outline"
             mb={[6, 2]}
-            size="md"
             isLoading={transition.state === "submitting"}
             loadingText="Deleting the member(s), please wait..."
             disabled={false}

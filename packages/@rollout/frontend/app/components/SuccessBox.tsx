@@ -1,13 +1,13 @@
-import { Flex, Icon } from "@chakra-ui/react";
+import { Flex, FlexProps, Icon } from "@chakra-ui/react";
 import { useEffect, useRef } from "react";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 
-export interface SuccessBoxProps {
+export interface SuccessBoxProps extends FlexProps {
   children: React.ReactNode;
   id: string;
 }
 
-export const SuccessBox = ({ children, id }: SuccessBoxProps) => {
+export const SuccessBox = ({ children, id, ...props }: SuccessBoxProps) => {
   const boxRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -27,6 +27,7 @@ export const SuccessBox = ({ children, id }: SuccessBoxProps) => {
       borderRadius={4}
       borderWidth={1}
       borderColor="success.200"
+      {...props}
     >
       <Icon as={AiOutlineCheckCircle} w={6} h={6} aria-hidden mr={2} />
       {children}

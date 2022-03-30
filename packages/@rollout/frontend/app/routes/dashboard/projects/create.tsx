@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  Flex,
-  FormControl,
-  FormLabel,
-  Input,
-  Text,
-} from "@chakra-ui/react";
+import { Box, FormControl, Input, Text } from "@chakra-ui/react";
 import { IoIosCreate } from "react-icons/io";
 import {
   Form,
@@ -30,6 +22,8 @@ import { getSession } from "~/sessions";
 import { User } from "~/modules/user/types";
 import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
+import { Button } from "~/components/Button";
+import { FormLabel } from "~/components/FormLabel";
 
 export const meta: MetaFunction = () => {
   return {
@@ -110,7 +104,7 @@ export default function CreateProjectPage() {
           />
         </Box>
 
-        <Section size="M">
+        <Section>
           {errors?.name && (
             <Box pb={4}>
               <ErrorBox list={errors} />
@@ -128,7 +122,7 @@ export default function CreateProjectPage() {
               />
             </FormControl>
 
-            <Flex justifyContent="flex-end" mt={4}>
+            <Box mt={4}>
               <Button
                 type="submit"
                 leftIcon={<IoIosCreate aria-hidden />}
@@ -139,7 +133,7 @@ export default function CreateProjectPage() {
               >
                 Create the project
               </Button>
-            </Flex>
+            </Box>
           </Form>
         </Section>
       </Main>

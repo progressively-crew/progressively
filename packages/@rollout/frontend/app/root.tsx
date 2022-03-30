@@ -15,7 +15,6 @@ import { withEmotionCache } from "@emotion/react";
 import ClientStyleContext from "./_chakra-setup/context.client";
 import ServerStyleContext from "./_chakra-setup/context.server";
 import { lightTheme } from "./modules/themes/light";
-import { SkipNavLink } from "@chakra-ui/skip-nav";
 import ForbiddenPage from "./routes/403";
 import styles from "./styles/index.css";
 import UnauthorizedPage from "./routes/401";
@@ -40,8 +39,6 @@ export const links: LinksFunction = () => {
 export default function App() {
   return (
     <Document>
-      <SkipNavLink>Skip to content</SkipNavLink>
-
       <Outlet />
     </Document>
   );

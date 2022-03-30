@@ -101,9 +101,10 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
         cy.findByText("Strategy audience").should("be.visible");
         cy.findByLabelText("Everybody is concerned").should("be.visible");
         cy.findByLabelText("People with a specific field").should("be.visible");
-        cy.findByLabelText("People belonging to a given group").should(
-          "be.visible"
-        );
+        // TODO: implement the strategy first before making the test on it
+        // cy.findByLabelText("People belonging to a given group").should(
+        //   "be.visible"
+        // );
 
         // Strategy activation
         cy.findByText("Activation strategy").should("be.visible");

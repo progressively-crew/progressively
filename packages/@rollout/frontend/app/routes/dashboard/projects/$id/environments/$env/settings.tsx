@@ -1,9 +1,10 @@
-import { Box, Button, Flex, Text, VisuallyHidden } from "@chakra-ui/react";
-import { AiOutlineKey, AiOutlineSetting } from "react-icons/ai";
+import { Box, Flex, Text, VisuallyHidden } from "@chakra-ui/react";
+import { AiOutlineSetting } from "react-icons/ai";
 import { FaTrash } from "react-icons/fa";
-import { FiFlag } from "react-icons/fi";
-import { Link, LoaderFunction, MetaFunction, useLoaderData } from "remix";
+import { FiFlag, FiKey } from "react-icons/fi";
+import { LoaderFunction, MetaFunction, useLoaderData } from "remix";
 import { Crumbs, BreadCrumbs } from "~/components/AppBreadcrumbs";
+import { Button } from "~/components/Button";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { Header } from "~/components/Header";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
@@ -91,13 +92,13 @@ export default function EnvSettingsPage() {
     <DashboardLayout user={user}>
       <BreadCrumbs crumbs={crumbs} />
       <Main>
-        <Box pb={8}>
+        <Box pb={[0, 8]}>
           <Header
             title={environment.name}
             startAction={
               <ButtonCopy
                 toCopy={environment.clientKey}
-                icon={<AiOutlineKey aria-hidden />}
+                icon={<FiKey aria-hidden />}
                 colorScheme="brand"
               >
                 {environment.clientKey}
@@ -138,9 +139,8 @@ export default function EnvSettingsPage() {
               }
             />
 
-            <Flex px={4} pb={4} justifyContent={["center", "unset"]}>
+            <Flex px={4} pb={4} justifyContent={["center", "flex-start"]}>
               <Button
-                as={Link}
                 colorScheme="error"
                 to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/delete`}
                 leftIcon={<FaTrash aria-hidden />}

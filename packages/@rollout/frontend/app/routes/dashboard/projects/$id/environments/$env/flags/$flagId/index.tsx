@@ -1,11 +1,10 @@
-import { Box, Button, Text, Badge, Stack } from "@chakra-ui/react";
+import { Box, Text, Badge, Stack } from "@chakra-ui/react";
 import { IoIosCreate } from "react-icons/io";
 import {
   useLoaderData,
   LoaderFunction,
   MetaFunction,
   ActionFunction,
-  Link,
   Form,
   useSearchParams,
   useTransition,
@@ -36,6 +35,7 @@ import { EmptyState } from "~/components/EmptyState";
 import { AiOutlineBarChart, AiOutlineSetting } from "react-icons/ai";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { FaPowerOff } from "react-icons/fa";
+import { Button } from "~/components/Button";
 
 interface MetaArgs {
   data: {
@@ -166,7 +166,7 @@ export default function FlagById() {
       <BreadCrumbs crumbs={crumbs} />
 
       <Main>
-        <Box pb={8}>
+        <Box pb={[0, 8]}>
           <Header
             title={currentFlag.name}
             startAction={
@@ -262,7 +262,6 @@ export default function FlagById() {
               }
               endAction={
                 <Button
-                  as={Link}
                   to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
                   leftIcon={<IoIosCreate aria-hidden />}
                   colorScheme="brand"
@@ -271,32 +270,35 @@ export default function FlagById() {
                 </Button>
               }
             />
+
             <Stack spacing={2}>
-              {isStrategyAdded ? (
-                <SuccessBox id="strategy-added">
-                  The strategy has been successfully created.
-                </SuccessBox>
-              ) : null}
+              <Box px={4}>
+                {isStrategyAdded ? (
+                  <SuccessBox id="strategy-added" mb={4}>
+                    The strategy has been successfully created.
+                  </SuccessBox>
+                ) : null}
 
-              {isStrategyRemoved ? (
-                <SuccessBox id="strategy-removed">
-                  The strategy has been successfully removed.
-                </SuccessBox>
-              ) : null}
+                {isStrategyRemoved ? (
+                  <SuccessBox id="strategy-removed" mb={4}>
+                    The strategy has been successfully removed.
+                  </SuccessBox>
+                ) : null}
 
-              {strategies.length > 0 ? (
-                <>
-                  {strategies.map((strat) => (
-                    <StrategyCard
-                      key={`${strat.uuid}`}
-                      projectId={project.uuid}
-                      envId={environment.uuid}
-                      flagId={currentFlag.uuid}
-                      strat={strat}
-                    />
-                  ))}
-                </>
-              ) : null}
+                {strategies.length > 0 ? (
+                  <>
+                    {strategies.map((strat) => (
+                      <StrategyCard
+                        key={`${strat.uuid}`}
+                        projectId={project.uuid}
+                        envId={environment.uuid}
+                        flagId={currentFlag.uuid}
+                        strat={strat}
+                      />
+                    ))}
+                  </>
+                ) : null}
+              </Box>
 
               {strategies.length === 0 ? (
                 <>

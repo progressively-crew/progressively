@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   ListItem,
   UnorderedList,
   Text,
@@ -11,7 +10,6 @@ import { MdOutlineEmail } from "react-icons/md";
 import {
   ActionFunction,
   Form,
-  Link,
   LoaderFunction,
   MetaFunction,
   redirect,
@@ -35,6 +33,7 @@ import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { getSession } from "~/sessions";
 import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
+import { Button } from "~/components/Button";
 
 interface MetaArgs {
   data: {
@@ -159,7 +158,7 @@ export default function DeleteEnvPage() {
             <Header title="You are not allowed to delete environments." />
           </Box>
 
-          <Section size="M">
+          <Section>
             <figure>
               <Text as="figcaption">
                 If you think this is an error, make sure to contact one of the
@@ -202,7 +201,7 @@ export default function DeleteEnvPage() {
           <Header title="You are about to delete the environment." />
         </Box>
 
-        <Section size="M">
+        <Section>
           {data?.errors && data.errors.backendError && (
             <Box pb={4}>
               <ErrorBox list={data.errors} />
@@ -226,21 +225,7 @@ export default function DeleteEnvPage() {
             mt={4}
             direction={["column", "row"]}
           >
-            <Form method="post">
-              <Button
-                type="submit"
-                colorScheme="error"
-                leftIcon={<FaTrash aria-hidden />}
-                isLoading={transition.state === "submitting"}
-                loadingText="Deleting the environment, please wait..."
-                disabled={false}
-                width={["100%", "auto"]}
-              >
-                Yes, delete the environment
-              </Button>
-            </Form>
             <Button
-              as={Link}
               to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/settings`}
               variant="outline"
               colorScheme="error"
@@ -255,6 +240,20 @@ export default function DeleteEnvPage() {
                 <VisuallyHidden>{environment.name}</VisuallyHidden>
               </span>
             </Button>
+
+            <Form method="post">
+              <Button
+                type="submit"
+                colorScheme="error"
+                leftIcon={<FaTrash aria-hidden />}
+                isLoading={transition.state === "submitting"}
+                loadingText="Deleting the environment, please wait..."
+                disabled={false}
+                width={["100%", "auto"]}
+              >
+                Yes, delete the environment
+              </Button>
+            </Form>
           </Flex>
         </Section>
       </Main>

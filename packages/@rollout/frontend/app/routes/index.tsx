@@ -1,12 +1,18 @@
-import type { MetaFunction } from "remix";
+import { LoaderFunction, redirect } from "remix";
+import { getSession } from "~/sessions";
 
-export const meta: MetaFunction = () => {
-  return {
-    title: "Remix Starter",
-    description: "Welcome to remix!",
-  };
+export const loader: LoaderFunction = async ({ request }) => {
+  const session = await getSession(request.headers.get("Cookie"));
+
+  const authCookie = session.get("auth-cookie");
+
+  if (!authCookie) {
+    return redirect(`/signin`);
+  }
+
+  return redirect("/dashboard");
 };
 
 export default function Index() {
-  return <div>Lol</div>;
+  return <div>Home page</div>;
 }

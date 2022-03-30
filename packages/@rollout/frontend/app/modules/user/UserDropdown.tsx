@@ -24,6 +24,7 @@ export const UseDropdown = ({ user }: UserDropdownProps) => {
   if (!isHydrated) {
     return (
       <Button
+        size="lg"
         as={Link}
         to="/profile"
         variant="ghost"
@@ -58,6 +59,7 @@ export const UseDropdown = ({ user }: UserDropdownProps) => {
   return (
     <Menu>
       <MenuButton
+        size="lg"
         as={Button}
         variant="ghost"
         paddingInlineEnd={[0, 4]}
@@ -86,10 +88,10 @@ export const UseDropdown = ({ user }: UserDropdownProps) => {
         </Flex>
       </MenuButton>
       <MenuList>
-        <MenuItem as={Link} to="/profile">
+        <MenuItem as={Link} to="/profile" fontSize="xl" px={6}>
           Profile
         </MenuItem>
-        <MenuItem as={Link} to="/signout">
+        <MenuItem as={Link} to="/signout" fontSize="xl" px={6}>
           Sign out
         </MenuItem>
       </MenuList>

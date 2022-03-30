@@ -3,11 +3,12 @@ import {
   RadioGroup,
   Radio,
   FormControl,
-  FormLabel,
   Input,
   Select,
   Textarea,
+  Stack,
 } from "@chakra-ui/react";
+import { FormLabel } from "~/components/FormLabel";
 import { Section, SectionHeader } from "~/components/Section";
 import { StrategyCreateDTO } from "../types";
 import { StrategyRuleType } from "../types/StrategyRule";
@@ -40,26 +41,46 @@ export const StrategyAudience = ({
         pb={4}
       >
         <Box>
-          <Radio id="everybody" name="strategy-type" value="default">
+          <Radio
+            id="everybody"
+            name="strategy-type"
+            value="default"
+            size="lg"
+            h={12}
+          >
             Everybody is concerned
           </Radio>
         </Box>
 
         <Box>
-          <Radio id="field-name-radio" name="strategy-type" value="field">
+          <Radio
+            id="field-name-radio"
+            name="strategy-type"
+            value="field"
+            size="lg"
+            h={12}
+          >
             People with a specific field
           </Radio>
         </Box>
 
-        <Box>
-          <Radio name="strategy-type" value="pool">
+        {/* <Box>
+          <Radio name="strategy-type" value="pool" size="lg" h={12}>
             People belonging to a given group
           </Radio>
-        </Box>
+        </Box> */}
       </RadioGroup>
 
       {strategyType === "field" && (
-        <Box mt={4}>
+        <Stack
+          ml={[4, 4, 12]}
+          mr={[4, 4, 12]}
+          borderColor="background100"
+          borderWidth={1}
+          p={[4, 4, 8]}
+          borderRadius={6}
+          spacing={6}
+        >
           <FormControl isInvalid={Boolean(errors["field-name"])}>
             <FormLabel htmlFor="field-name">Field name:</FormLabel>
             <Input
@@ -105,7 +126,7 @@ export const StrategyAudience = ({
               }
             />
           </FormControl>
-        </Box>
+        </Stack>
       )}
     </Section>
   );

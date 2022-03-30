@@ -1,11 +1,16 @@
-import { Flex, Heading, Icon, Link as CLink } from "@chakra-ui/react";
+import {
+  Flex,
+  Heading,
+  HStack,
+  Link as CLink,
+  Tag,
+  VisuallyHidden,
+} from "@chakra-ui/react";
 import React, { useRef } from "react";
 import { Form, Link } from "remix";
 import { Box, Text } from "@chakra-ui/react";
 import { FlagStatus } from "./types";
 import { Switch } from "~/components/Switch";
-import { ButtonCopy } from "~/components/ButtonCopy";
-import { BiKey } from "react-icons/bi";
 
 export interface FlagCardProps {
   id: string;
@@ -49,8 +54,8 @@ export const FlagCard = ({
     >
       <Flex justifyContent={"space-between"} direction={["column", "row"]}>
         <div>
-          <Flex>
-            <Heading as="h3" id={`article-${id}`} size="md" mr={2}>
+          <HStack spacing={[0, 2]} display={["block", "flex"]}>
+            <Heading as="h3" id={`article-${id}`} size="md" mr={2} mb={[2, 1]}>
               <CLink
                 as={Link}
                 textDecoration="underline"
@@ -61,17 +66,15 @@ export const FlagCard = ({
                 {title}
               </CLink>
             </Heading>
-            <Box display={["none", " block"]}>
-              <ButtonCopy
-                toCopy={flagKey}
-                icon={<Icon as={BiKey} aria-hidden />}
-              >
-                {flagKey}
-              </ButtonCopy>
-            </Box>
-          </Flex>
 
-          <Text>{description}</Text>
+            <Tag aria-hidden>{flagKey}</Tag>
+
+            <VisuallyHidden>
+              <p>The flag key is {flagKey}</p>
+            </VisuallyHidden>
+          </HStack>
+
+          <Text color="textlight">{description}</Text>
         </div>
 
         <Form method="post">

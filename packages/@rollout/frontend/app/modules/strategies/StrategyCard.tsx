@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Flex,
   Heading,
   ListItem,
@@ -9,7 +8,7 @@ import {
   VisuallyHidden,
 } from "@chakra-ui/react";
 import { FaTrash } from "react-icons/fa";
-import { Link } from "remix";
+import { Button } from "~/components/Button";
 import { StrategyRetrieveDTO } from "./types";
 
 export interface StrategyCardProps {
@@ -32,7 +31,7 @@ const StrategyAudience = ({ strat }: { strat: StrategyRetrieveDTO }) => {
   }
 
   return (
-    <Text>
+    <Text color="textlight">
       Serve the flag to <strong>{targetedUsers}</strong>{" "}
       {fieldName ? (
         <span>
@@ -59,7 +58,9 @@ const StrategyTargetConstraints = ({
     return (
       <UnorderedList pl={2}>
         {targets?.map((target) => (
-          <ListItem key={target}>{target}</ListItem>
+          <ListItem key={target} color="textlight">
+            {target}
+          </ListItem>
         ))}
       </UnorderedList>
     );
@@ -76,7 +77,9 @@ export const StrategyCard = ({
 }: StrategyCardProps) => {
   return (
     <Box
-      p={4}
+      pt={4}
+      pb={4}
+      pl={4}
       as="article"
       aria-labelledby={strat.uuid}
       borderTopWidth={1}
@@ -84,12 +87,11 @@ export const StrategyCard = ({
     >
       <Flex
         alignItems={"flex-start"}
-        mb={2}
         justifyContent="space-between"
         direction={["column", "row"]}
       >
         <Box mr={4}>
-          <Heading as="h3" id={strat.uuid} size="md">
+          <Heading as="h3" id={strat.uuid} size="md" mb={1}>
             {strat.name}
           </Heading>
 
@@ -97,9 +99,10 @@ export const StrategyCard = ({
         </Box>
 
         <Button
+          colorScheme="error"
+          variant="outline"
           leftIcon={<FaTrash aria-hidden />}
           mt={[2, 0]}
-          as={Link}
           to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/strategies/${strat.uuid}/delete`}
         >
           Remove<VisuallyHidden> {strat.name}</VisuallyHidden>

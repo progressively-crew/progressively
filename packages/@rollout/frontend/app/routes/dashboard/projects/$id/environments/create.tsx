@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  Flex,
-  FormControl,
-  FormLabel,
-  Input,
-  Text,
-} from "@chakra-ui/react";
+import { Box, FormControl, Input, Text } from "@chakra-ui/react";
 import { IoIosCreate } from "react-icons/io";
 import {
   Form,
@@ -35,6 +27,8 @@ import { getSession } from "~/sessions";
 import { User } from "~/modules/user/types";
 import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
+import { Button } from "~/components/Button";
+import { FormLabel } from "~/components/FormLabel";
 
 interface MetaArgs {
   data: {
@@ -134,7 +128,7 @@ export default function CreateEnvironmentPage() {
           />
         </Box>
 
-        <Section size="M">
+        <Section>
           {errors?.name && (
             <Box pb={4}>
               <ErrorBox list={errors} />
@@ -162,7 +156,7 @@ export default function CreateEnvironmentPage() {
               SDK key for application usage.
             </Text>
 
-            <Flex justifyContent="flex-end" mt={4}>
+            <Box mt={4}>
               <Button
                 type="submit"
                 leftIcon={<IoIosCreate aria-hidden />}
@@ -173,7 +167,7 @@ export default function CreateEnvironmentPage() {
               >
                 Create the environment
               </Button>
-            </Flex>
+            </Box>
           </Form>
         </Section>
       </Main>

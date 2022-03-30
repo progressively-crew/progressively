@@ -1,30 +1,31 @@
-import { Flex, Box, Stack } from "@chakra-ui/react";
+import { Box, Stack, HStack } from "@chakra-ui/react";
 import { H1 } from "./H1";
 
 export interface HeaderProps {
   title: string | React.ReactNode;
   description?: React.ReactNode;
   startAction?: React.ReactNode;
-  endAction?: React.ReactNode;
+
+  icon?: React.ReactNode;
 }
 
 export const Header = ({
   title,
   description,
   startAction,
-  endAction,
+  icon,
 }: HeaderProps) => {
   return (
-    <Flex justifyContent="space-between">
-      <Stack>
-        <Box>
+    <Stack>
+      <Box>
+        <HStack spacing={2}>
+          {icon}
           <H1>{title}</H1>
-          {description}
-        </Box>
-        <Box>{startAction}</Box>
-      </Stack>
+        </HStack>
 
-      {endAction}
-    </Flex>
+        {description}
+      </Box>
+      <Box>{startAction}</Box>
+    </Stack>
   );
 };
