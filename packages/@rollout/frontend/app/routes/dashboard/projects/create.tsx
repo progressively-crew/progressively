@@ -103,36 +103,38 @@ export default function CreateProjectPage() {
       }
     >
       <Section>
-        {errors?.name && (
-          <Box pb={4}>
-            <ErrorBox list={errors} />
-          </Box>
-        )}
-        <Form method="post">
-          <FormControl isInvalid={Boolean(errors?.name)}>
-            <FormLabel htmlFor="project-name">Project name</FormLabel>
-            <Input
-              type="text"
-              name="project-name"
-              id="project-name"
-              placeholder="e.g: My super project"
-              aria-describedby={errors?.name ? `error-name` : undefined}
-            />
-          </FormControl>
+        <Box p={[4, 0]}>
+          {errors?.name && (
+            <Box pb={4}>
+              <ErrorBox list={errors} />
+            </Box>
+          )}
+          <Form method="post">
+            <FormControl isInvalid={Boolean(errors?.name)}>
+              <FormLabel htmlFor="project-name">Project name</FormLabel>
+              <Input
+                type="text"
+                name="project-name"
+                id="project-name"
+                placeholder="e.g: My super project"
+                aria-describedby={errors?.name ? `error-name` : undefined}
+              />
+            </FormControl>
 
-          <Box mt={4}>
-            <Button
-              type="submit"
-              leftIcon={<IoIosCreate aria-hidden />}
-              colorScheme="brand"
-              isLoading={transition.state === "submitting"}
-              loadingText="Creating the project, please wait..."
-              disabled={false}
-            >
-              Create the project
-            </Button>
-          </Box>
-        </Form>
+            <Box mt={4}>
+              <Button
+                type="submit"
+                leftIcon={<IoIosCreate aria-hidden />}
+                colorScheme="brand"
+                isLoading={transition.state === "submitting"}
+                loadingText="Creating the project, please wait..."
+                disabled={false}
+              >
+                Create the project
+              </Button>
+            </Box>
+          </Form>
+        </Box>
       </Section>
     </DashboardLayout>
   );

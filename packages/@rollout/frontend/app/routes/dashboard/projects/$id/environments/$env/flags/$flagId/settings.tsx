@@ -173,7 +173,6 @@ export default function FlagSettingPage() {
               to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/delete`}
               leftIcon={<FaTrash aria-hidden />}
               variant="outline"
-              width={["100%", "auto"]}
             >
               Delete{" "}
               <Box as="span" aria-hidden display={["none", "inline"]}>

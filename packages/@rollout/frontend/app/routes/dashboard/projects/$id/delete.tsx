@@ -136,28 +136,30 @@ export default function DeleteProjectPage() {
         header={<Header title="You are not allowed to delete projects." />}
       >
         <Section>
-          <figure>
-            <Text as="figcaption">
-              If you think this is an error, make sure to contact one of the
-              project administrators:
-            </Text>
+          <Box p={[4, 0]}>
+            <figure>
+              <Text as="figcaption">
+                If you think this is an error, make sure to contact one of the
+                project administrators:
+              </Text>
 
-            <UnorderedList pl={2} mt={2}>
-              {adminOfProject.map((user) => (
-                <ListItem key={user.uuid}>
-                  <Text as="span" mr={2}>
-                    {user.fullname}
-                  </Text>
-                  <ButtonCopy
-                    toCopy={user.email}
-                    icon={<MdOutlineEmail aria-hidden />}
-                  >
-                    {user.email}
-                  </ButtonCopy>
-                </ListItem>
-              ))}
-            </UnorderedList>
-          </figure>
+              <UnorderedList pl={2} mt={2}>
+                {adminOfProject.map((user) => (
+                  <ListItem key={user.uuid}>
+                    <Text as="span" mr={2}>
+                      {user.fullname}
+                    </Text>
+                    <ButtonCopy
+                      toCopy={user.email}
+                      icon={<MdOutlineEmail aria-hidden />}
+                    >
+                      {user.email}
+                    </ButtonCopy>
+                  </ListItem>
+                ))}
+              </UnorderedList>
+            </figure>
+          </Box>
         </Section>
       </DashboardLayout>
     );
@@ -176,57 +178,57 @@ export default function DeleteProjectPage() {
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
     >
       <Section>
-        {data?.errors && data.errors.backendError && (
-          <Box pb={4}>
-            <ErrorBox list={data.errors} />
-          </Box>
-        )}
+        <Box p={[4, 0]}>
+          {data?.errors && data.errors.backendError && (
+            <Box pb={4}>
+              <ErrorBox list={data.errors} />
+            </Box>
+          )}
 
-        <WarningBox
-          list={warnings}
-          title={
-            <Text>
-              We really want to warn you: if you validate the project
-              suppression, you {`won't`} be able to access the{" "}
-              <strong>{project.name}</strong> project anymore. It includes:
-            </Text>
-          }
-        />
+          <WarningBox
+            list={warnings}
+            title={
+              <Text>
+                We really want to warn you: if you validate the project
+                suppression, you {`won't`} be able to access the{" "}
+                <strong>{project.name}</strong> project anymore. It includes:
+              </Text>
+            }
+          />
 
-        <Flex
-          justifyContent="space-between"
-          mt={4}
-          direction={["column", "row"]}
-        >
-          <Button
-            to={`/dashboard/projects/${project.uuid}/settings`}
-            variant="outline"
-            colorScheme="error"
-            mt={[4, 0]}
-            width={["100%", "auto"]}
+          <Flex
+            justifyContent="space-between"
+            mt={4}
+            direction={["column", "row"]}
           >
-            <span>
-              No, {`don't`} delete{" "}
-              <Box as="strong" display={["none", "inline"]} aria-hidden>
-                {project.name}
-              </Box>
-              <VisuallyHidden>{project.name}</VisuallyHidden>
-            </span>
-          </Button>
-          <Form method="post">
             <Button
-              type="submit"
+              to={`/dashboard/projects/${project.uuid}/settings`}
+              variant="outline"
               colorScheme="error"
-              leftIcon={<FaTrash aria-hidden />}
-              isLoading={transition.state === "submitting"}
-              loadingText="Deleting the project, please wait..."
-              disabled={false}
-              width={["100%", "auto"]}
             >
-              Yes, delete the project
+              <span>
+                No, {`don't`} delete{" "}
+                <Box as="strong" display={["none", "inline"]} aria-hidden>
+                  {project.name}
+                </Box>
+                <VisuallyHidden>{project.name}</VisuallyHidden>
+              </span>
             </Button>
-          </Form>
-        </Flex>
+            <Form method="post">
+              <Button
+                type="submit"
+                colorScheme="error"
+                leftIcon={<FaTrash aria-hidden />}
+                isLoading={transition.state === "submitting"}
+                loadingText="Deleting the project, please wait..."
+                disabled={false}
+                mt={[4, 0]}
+              >
+                Yes, delete the project
+              </Button>
+            </Form>
+          </Flex>
+        </Box>
       </Section>
     </DashboardLayout>
   );

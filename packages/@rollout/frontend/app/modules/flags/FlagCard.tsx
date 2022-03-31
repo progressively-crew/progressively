@@ -67,7 +67,9 @@ export const FlagCard = ({
               </CLink>
             </Heading>
 
-            <Tag aria-hidden>{flagKey}</Tag>
+            <Tag aria-hidden display={["none", "inline-flex"]}>
+              {flagKey}
+            </Tag>
 
             <VisuallyHidden>
               <p>The flag key is {flagKey}</p>

@@ -49,7 +49,6 @@ export const UserTable = ({
             to={`/dashboard/projects/${projectId}/add-member`}
             leftIcon={<IoIosCreate aria-hidden />}
             variant="outline"
-            width={["100%", "auto"]}
             mb={[2, 0]}
           >
             Add member
@@ -64,7 +63,6 @@ export const UserTable = ({
             isLoading={transition.state === "submitting"}
             loadingText="Deleting the member(s), please wait..."
             disabled={false}
-            width={["100%", "auto"]}
           >
             Remove from project
           </Button>

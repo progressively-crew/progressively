@@ -9,5 +9,12 @@ export interface ButtonProps extends CButtonProps {
 }
 
 export const Button = (props: ButtonProps) => {
-  return <CButton as={props?.to ? Link : undefined} size={"lg"} {...props} />;
+  return (
+    <CButton
+      as={props?.to ? Link : undefined}
+      size={"lg"}
+      width={["100%", "auto"]}
+      {...props}
+    />
+  );
 };

@@ -61,7 +61,12 @@ export const SectionHeader = ({
       </Box>
 
       {endAction ? (
-        <Box flexShrink={0} ml={[0, description ? 2 : 0]} mt={[4, 0]}>
+        <Box
+          flexShrink={0}
+          ml={[0, description ? 2 : 0]}
+          mt={[4, 0]}
+          width={["100%", "auto"]}
+        >
           {endAction}
         </Box>
       ) : null}

@@ -33,7 +33,7 @@ export const BreadCrumbs = ({ crumbs }: BreadCrumbsProps) => {
       {beforeLastCrumb && (
         <CLink
           as={Link}
-          to="/dashboard"
+          to={beforeLastCrumb.link}
           display={["inline-block", "none"]}
           mb={12}
         >

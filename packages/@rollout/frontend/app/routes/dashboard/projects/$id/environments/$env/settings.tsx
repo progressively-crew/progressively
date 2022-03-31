@@ -144,7 +144,6 @@ export default function EnvSettingsPage() {
               to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/delete`}
               leftIcon={<FaTrash aria-hidden />}
               variant="outline"
-              width={["100%", "auto"]}
             >
               Delete{" "}
               <Box as="span" aria-hidden display={["none", "inline"]}>

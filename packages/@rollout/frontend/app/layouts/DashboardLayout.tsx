@@ -41,7 +41,7 @@ export const DashboardLayout = ({
         {breadcrumb}
 
         <Main>
-          <Box pb={[0, 8]}>{header}</Box>
+          <Box pb={8}>{header}</Box>
           <Box pb={6}>{subNav}</Box>
 
           {children}

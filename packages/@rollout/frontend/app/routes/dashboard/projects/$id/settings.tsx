@@ -185,7 +185,7 @@ export default function SettingsPage() {
             </Box>
           )}
 
-          <Box mt={4}>
+          <Box mt={4} p={4}>
             <UserTable
               projectId={project.uuid}
               userProjects={project.userProject || []}
@@ -219,7 +219,6 @@ export default function SettingsPage() {
                 to={`/dashboard/projects/${project.uuid}/delete`}
                 leftIcon={<FaTrash aria-hidden />}
                 variant="outline"
-                width={["100%", "auto"]}
               >
                 Delete{" "}
                 <Box as="span" aria-hidden display={["none", "inline"]}>

@@ -128,46 +128,48 @@ export default function CreateEnvironmentPage() {
       }
     >
       <Section>
-        {errors?.name && (
-          <Box pb={4}>
-            <ErrorBox list={errors} />
-          </Box>
-        )}
+        <Box p={[4, 0]}>
+          {errors?.name && (
+            <Box pb={4}>
+              <ErrorBox list={errors} />
+            </Box>
+          )}
 
-        <Form method="post">
-          <FormControl isInvalid={Boolean(errors?.name)}>
-            <FormLabel htmlFor="env-name">Environment name</FormLabel>
-            <Input
-              type="text"
-              name="env-name"
-              id="env-name"
-              placeholder="e.g: Staging"
-              aria-describedby={
-                data?.errors?.name
-                  ? "error-name env-name-hint"
-                  : "env-name-hint"
-              }
-            />
-          </FormControl>
+          <Form method="post">
+            <FormControl isInvalid={Boolean(errors?.name)}>
+              <FormLabel htmlFor="env-name">Environment name</FormLabel>
+              <Input
+                type="text"
+                name="env-name"
+                id="env-name"
+                placeholder="e.g: Staging"
+                aria-describedby={
+                  data?.errors?.name
+                    ? "error-name env-name-hint"
+                    : "env-name-hint"
+                }
+              />
+            </FormControl>
 
-          <Text id="env-name-hint" fontSize="sm">
-            After the creation of an environment, you will be able to get its
-            SDK key for application usage.
-          </Text>
+            <Text id="env-name-hint" fontSize="sm">
+              After the creation of an environment, you will be able to get its
+              SDK key for application usage.
+            </Text>
 
-          <Box mt={4}>
-            <Button
-              type="submit"
-              leftIcon={<IoIosCreate aria-hidden />}
-              colorScheme="brand"
-              isLoading={transition.state === "submitting"}
-              loadingText="Creating the environment, please wait..."
-              disabled={false}
-            >
-              Create the environment
-            </Button>
-          </Box>
-        </Form>
+            <Box mt={4}>
+              <Button
+                type="submit"
+                leftIcon={<IoIosCreate aria-hidden />}
+                colorScheme="brand"
+                isLoading={transition.state === "submitting"}
+                loadingText="Creating the environment, please wait..."
+                disabled={false}
+              >
+                Create the environment
+              </Button>
+            </Box>
+          </Form>
+        </Box>
       </Section>
     </DashboardLayout>
   );

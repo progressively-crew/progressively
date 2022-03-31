@@ -153,57 +153,63 @@ export default function CreateFlagPage() {
       }
     >
       <Section>
-        {(errors?.name || errors?.description) && (
-          <Box pb={4}>
-            <ErrorBox list={errors} />
-          </Box>
-        )}
+        <Box p={[4, 0]}>
+          {(errors?.name || errors?.description) && (
+            <Box pb={4}>
+              <ErrorBox list={errors} />
+            </Box>
+          )}
 
-        <Form method="post">
-          <Box mb={4}>
-            <FormControl isInvalid={Boolean(errors?.name)}>
-              <FormLabel htmlFor="flag-name">Flag name</FormLabel>
-              <Input
-                type="text"
-                name="flag-name"
-                id="flag-name"
-                placeholder="e.g: New Homepage"
-                aria-describedby={data?.errors?.name ? "error-name" : undefined}
-              />
-            </FormControl>
-          </Box>
+          <Form method="post">
+            <Box mb={4}>
+              <FormControl isInvalid={Boolean(errors?.name)}>
+                <FormLabel htmlFor="flag-name">Flag name</FormLabel>
+                <Input
+                  type="text"
+                  name="flag-name"
+                  id="flag-name"
+                  placeholder="e.g: New Homepage"
+                  aria-describedby={
+                    data?.errors?.name ? "error-name" : undefined
+                  }
+                />
+              </FormControl>
+            </Box>
 
-          <Box>
-            <FormControl isInvalid={Boolean(errors?.name)}>
-              <FormLabel htmlFor="flag-desc">Flag description</FormLabel>
-              <Input
-                type="text"
-                name="flag-desc"
-                id="flag-desc"
-                placeholder="e.g: The new homepage"
-                aria-describedby={data?.errors?.name ? "error-name" : undefined}
-              />
-            </FormControl>
-          </Box>
+            <Box>
+              <FormControl isInvalid={Boolean(errors?.name)}>
+                <FormLabel htmlFor="flag-desc">Flag description</FormLabel>
+                <Input
+                  type="text"
+                  name="flag-desc"
+                  id="flag-desc"
+                  placeholder="e.g: The new homepage"
+                  aria-describedby={
+                    data?.errors?.name ? "error-name" : undefined
+                  }
+                />
+              </FormControl>
+            </Box>
 
-          <Text fontSize="sm">
-            After the creation of a feature flag, you will be able to get its
-            SDK key for application usage.
-          </Text>
+            <Text fontSize="sm">
+              After the creation of a feature flag, you will be able to get its
+              SDK key for application usage.
+            </Text>
 
-          <Box mt={4}>
-            <Button
-              type="submit"
-              leftIcon={<IoIosCreate aria-hidden />}
-              colorScheme="brand"
-              isLoading={transition.state === "submitting"}
-              loadingText="Creating the feature flag, please wait..."
-              disabled={false}
-            >
-              Create the feature flag
-            </Button>
-          </Box>
-        </Form>
+            <Box mt={4}>
+              <Button
+                type="submit"
+                leftIcon={<IoIosCreate aria-hidden />}
+                colorScheme="brand"
+                isLoading={transition.state === "submitting"}
+                loadingText="Creating the feature flag, please wait..."
+                disabled={false}
+              >
+                Create the feature flag
+              </Button>
+            </Box>
+          </Form>
+        </Box>
       </Section>
     </DashboardLayout>
   );
