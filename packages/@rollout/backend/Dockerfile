@@ -1,24 +1,20 @@
-FROM node:16-alpine3.14
-WORKDIR /usr/local/src/app
+FROM node:16-alpine3.14 AS builder
+WORKDIR /app
 
-ENV BACKEND_URL="http://localhost:4000"
-ENV FRONTEND_URL="http://localhost:3000"
-ENV DATABASE_URL="file:dev.db"
-ENV ACCESS_TOKEN_SECRET="abcd"
-ENV REFRESH_TOKEN_SECRET="abcd"
-ENV REFRESH_TOKEN_EXPIRES="84600"
-ENV SMTP_HOST="smtp.ethereal.email"
-ENV SMTP_PORT=587
-ENV SMTP_SECURE=""
-ENV SMTP_USER=""
-ENV SMTP_PASSWORD=""
+COPY package*.json ./
+COPY prisma ./prisma/
+RUN npm install
 
 COPY . .
-RUN \
-  npm i \
-  && npm run build \
+RUN npm run build
+
+FROM node:16-alpine3.14
+
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/dist ./dist
 
 EXPOSE 4000
 EXPOSE 4001
 
-CMD ["node", "./scripts/docker-run.js"]
+CMD [ "npm", "run", "start:prod" ]

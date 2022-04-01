@@ -2,7 +2,7 @@
 // If you need enums, use a string and define the enum in a TS file
 // Make the check at the code level, not at the DB level
 
-datasource db {
+datasource POSTGRES_DATASOURCE {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
