@@ -2,6 +2,7 @@ version: "3.9"
 services:
   rollout-frontend:
     build: ./packages/@rollout/frontend
+    env_file: ./packages/@rollout/frontend/.env
     ports:
       - "3000:3000"
     environment:
@@ -10,6 +11,7 @@ services:
       - rollout-backend
   rollout-backend:
     build: ./packages/@rollout/backend
+    env_file: ./packages/@rollout/backend/.env
     ports:
       - "4000:4000"
       - "4001:4001"
@@ -17,6 +19,7 @@ services:
       DATABASE_URL: postgresql://admin:admin@db/rollout
     depends_on:
       - db
+    command: scripts/docker-compose-init.sh
   db:
     image: postgres
     restart: always
