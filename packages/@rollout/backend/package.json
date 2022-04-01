@@ -8,8 +8,6 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
-    "db:gen:sqlite-schema": "cat ./prisma/sqlite.prisma ./prisma/shared-schema.prisma > ./prisma/schema.prisma",
-    "db:gen:postgres-schema": "cat ./prisma/postgres.prisma ./prisma/shared-schema.prisma > ./prisma/schema.prisma",
     "db:migrate:dev": "prisma migrate dev --name init",
     "db:generate:schema": "prisma generate",
     "db:seed": "ts-node ./test/helpers/seed-run.ts",

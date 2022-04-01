@@ -6,10 +6,25 @@ on:
 
 jobs:
   static:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [macos-latest]
+    runs-on: ubuntu-latest
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_DB: rollout
+          POSTGRES_USER: admin
+          POSTGRES_PASSWORD: admin
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -24,7 +39,7 @@ jobs:
 
       - name: Preparation
         working-directory: ./packages/@rollout/backend
-        run: mv .env.example .env && npm run db:gen:sqlite-schema && npm run db:migrate:dev && npm run db:generate:schema
+        run: mv .env.example .env && npm run db:migrate:dev && npm run db:generate:schema
 
       - name: Build
         working-directory: ./packages/@rollout/backend

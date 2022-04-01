@@ -7,12 +7,11 @@
   },
   "scripts": {
     "build": "lerna run build",
-    "db:prepare:sqlite": "lerna run db:gen:sqlite-schema && npm run db:prepare:schemas",
-    "db:prepare:postgres": "lerna run db:gen:postgres-schema && npm run db:prepare:schemas",
-    "db:prepare:schemas": "lerna run db:migrate:dev && lerna run db:generate:schema",
+    "db:prepare": "lerna run db:migrate:dev && lerna run db:generate:schema",
     "db:seed": "lerna run db:seed",
     "db:cleanup": "lerna run db:cleanup",
     "setup": "npm i && lerna bootstrap",
+    "setup:ci": "npm ci && lerna bootstrap",
     "start": "lerna run start --stream",
     "start:dev": "lerna run dev --stream",
     "test:e2e:ci": "lerna run test:e2e:ci --stream"

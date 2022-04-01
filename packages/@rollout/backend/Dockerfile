@@ -4,7 +4,6 @@ WORKDIR /usr/local/src/app
 ENV BACKEND_URL="http://localhost:4000"
 ENV FRONTEND_URL="http://localhost:3000"
 ENV DATABASE_URL="file:dev.db"
-ENV DATABASE="sqlite"
 ENV ACCESS_TOKEN_SECRET="abcd"
 ENV REFRESH_TOKEN_SECRET="abcd"
 ENV REFRESH_TOKEN_EXPIRES="84600"

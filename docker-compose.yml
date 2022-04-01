@@ -15,7 +15,6 @@ services:
       - "4001:4001"
     environment:
       DATABASE_URL: postgresql://admin:admin@db/rollout
-      DATABASE: postgres
     depends_on:
       - db
   db:
