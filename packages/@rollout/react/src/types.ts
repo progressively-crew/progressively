@@ -6,4 +6,5 @@ export interface RolloutProviderProps {
   initialFlags?: FlagDict;
   fields?: Record<string, string | number | boolean>;
   apiUrl?: string;
+  websocketUrl?: string;
 }

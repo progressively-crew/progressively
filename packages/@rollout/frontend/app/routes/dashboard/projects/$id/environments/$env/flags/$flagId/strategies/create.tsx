@@ -1,4 +1,3 @@
-import { Environment } from "prismjs";
 import { useState } from "react";
 import {
   ActionFunction,
@@ -33,6 +32,7 @@ import { Header } from "~/components/Header";
 import { Section, SectionHeader } from "~/components/Section";
 import { Button } from "~/components/Button";
 import { FormLabel } from "~/components/FormLabel";
+import { Environment } from "~/modules/environments/types";
 
 interface MetaArgs {
   data: {

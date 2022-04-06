@@ -10,13 +10,14 @@ export const RolloutProvider: React.FC<RolloutProviderProps> = ({
   initialFlags,
   onlyRenderWhenReady = true,
   apiUrl,
+  websocketUrl,
   fields = {},
 }) => {
   const [isLoading, setIsLoading] = useState(initialFlags ? false : true);
   const [error, setError] = useState<any>(undefined);
   const [flags, setFlags] = useState<FlagDict>(initialFlags || {});
   const sdkRef = useRef<RolloutSdk>(
-    RolloutSdk.init(clientKey, { fields, apiUrl })
+    RolloutSdk.init(clientKey, { fields, apiUrl, websocketUrl })
   );
 
   useEffect(() => {
