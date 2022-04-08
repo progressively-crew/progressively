@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { FaTrash } from "react-icons/fa";
 import { Button } from "~/components/Button";
-import { StrategyRetrieveDTO } from "./types";
+import { ComparatorEnum, StrategyRetrieveDTO } from "./types";
 
 export interface StrategyCardProps {
   flagId: string;
@@ -17,6 +17,19 @@ export interface StrategyCardProps {
   envId: string;
   strat: StrategyRetrieveDTO;
 }
+
+const mapStrategyComparator = (comparatorEnum: ComparatorEnum) => {
+  switch (comparatorEnum) {
+    default:
+    case ComparatorEnum.Equals: {
+      return "equals";
+    }
+
+    case ComparatorEnum.NotEquals: {
+      return "does not equal";
+    }
+  }
+};
 
 const StrategyAudience = ({ strat }: { strat: StrategyRetrieveDTO }) => {
   let targetedUsers = "all the people";
@@ -35,7 +48,10 @@ const StrategyAudience = ({ strat }: { strat: StrategyRetrieveDTO }) => {
       Serve the flag to <strong>{targetedUsers}</strong>{" "}
       {fieldName ? (
         <span>
-          with <strong>email</strong> <strong>equals</strong>{" "}
+          with <strong>email</strong>{" "}
+          <strong>
+            {mapStrategyComparator(strat.fieldComparator as ComparatorEnum)}
+          </strong>{" "}
           <span>to one of:</span>
         </span>
       ) : null}

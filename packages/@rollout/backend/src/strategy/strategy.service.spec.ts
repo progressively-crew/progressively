@@ -194,6 +194,24 @@ describe('StrategyService', () => {
 
         expect(shouldActivate).toBe(false);
       });
+
+      describe('comparators', () => {
+        it('returns true when the StrategyRuleType is field and that the field name DOES NOT match with  the neq comparator', async () => {
+          strategy.strategyRuleType = StrategyRuleType.Field;
+          strategy.fieldName = 'email';
+          strategy.fieldValue = 'marvin.frachet@gmail.com';
+          strategy.fieldComparator = 'neq';
+
+          const fields = { uuid: 'should.workg@gmail.com' };
+          const shouldActivate = await service.resolveStrategies(
+            flagEnv,
+            [strategy],
+            fields,
+          );
+
+          expect(shouldActivate).toBe(true);
+        });
+      });
     });
   });
 });

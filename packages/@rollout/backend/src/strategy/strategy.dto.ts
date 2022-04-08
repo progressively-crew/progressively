@@ -1,4 +1,5 @@
 import * as Joi from 'joi';
+import { ComparatorEnum } from './types';
 
 export interface StrategyCreateDTO {
   name: string;
@@ -6,7 +7,7 @@ export interface StrategyCreateDTO {
 
   // only exists for the type of "field"
   fieldName?: string;
-  fieldComparator?: 'eq';
+  fieldComparator?: ComparatorEnum;
   fieldValue?: string;
 
   activationType?: 'boolean' | 'percentage';
@@ -24,7 +25,7 @@ export const StrategySchema = Joi.object({
     switch: [{ is: 'field', then: Joi.required() }],
   }),
   fieldComparator: Joi.string()
-    .valid('eq')
+    .valid(ComparatorEnum.Equals, ComparatorEnum.NotEquals)
     .when('strategyRuleType', {
       switch: [{ is: 'field', then: Joi.required() }],
     }),

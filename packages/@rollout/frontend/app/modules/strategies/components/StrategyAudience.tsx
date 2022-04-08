@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { FormLabel } from "~/components/FormLabel";
 import { Section, SectionHeader } from "~/components/Section";
-import { StrategyCreateDTO } from "../types";
+import { ComparatorEnum, StrategyCreateDTO } from "../types";
 import { StrategyRuleType } from "../types/StrategyRule";
 
 export interface StrategyAudienceProps {
@@ -104,11 +104,12 @@ export const StrategyAudience = ({
               defaultValue={initialFieldComparator}
               aria-describedby={
                 errors["field-comparator"]
-                  ? "error- field-comparator"
+                  ? "error-field-comparator"
                   : undefined
               }
             >
-              <option value="eq">Equals</option>
+              <option value={ComparatorEnum.Equals}>Equals</option>
+              <option value={ComparatorEnum.NotEquals}>Not equals</option>
             </Select>
           </FormControl>
 
