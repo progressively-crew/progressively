@@ -1,70 +1,62 @@
 import { EndPoints } from "./endpoints";
-import { FlagDict, SDKOptions } from "./types";
+import { FlagDict, RolloutSdkType, SDKOptions } from "./types";
 
 export * from "./types";
 
-export default class Sdk {
-  private flags: FlagDict;
-  private socket?: WebSocket;
+function init(clientKey: string, options?: SDKOptions): RolloutSdkType {
+  const resolvedOptions: SDKOptions = options || { fields: {} };
 
-  constructor(
-    private readonly flagEndpoint: string,
-    private readonly websocketEndpoint: string
-  ) {
-    this.flags = {};
+  const apiUrl = resolvedOptions.apiUrl || "http://localhost:4000";
+  const flagEndpoint = EndPoints.Flags(apiUrl, clientKey, resolvedOptions);
+
+  const websocketUrl = resolvedOptions.websocketUrl || "ws://localhost:4001";
+  const websocketEndpoint = EndPoints.Socket(
+    websocketUrl,
+    clientKey,
+    resolvedOptions
+  );
+
+  return Sdk(flagEndpoint, websocketEndpoint);
+}
+
+function Sdk(flagEndpoint: string, websocketEndpoint: string): RolloutSdkType {
+  let flags: FlagDict = {};
+  let socket: WebSocket;
+
+  function initSocket() {
+    socket = new WebSocket(websocketEndpoint);
   }
 
-  static init(clientKey: string, options?: SDKOptions) {
-    const resolvedOptions: SDKOptions = options || { fields: {} };
-
-    const apiUrl = resolvedOptions.apiUrl || "http://localhost:4000";
-    const flagEndpoint = EndPoints.Flags(apiUrl, clientKey, resolvedOptions);
-
-    const websocketUrl = resolvedOptions.websocketUrl || "ws://localhost:4001";
-    const websocketEndpoint = EndPoints.Socket(
-      websocketUrl,
-      clientKey,
-      resolvedOptions
-    );
-
-    return new Sdk(flagEndpoint, websocketEndpoint);
-  }
-
-  /**
-   * This method should only be called on client side or on server
-   * that have a polyfill for HTML5 WebSocket
-   */
-  initSocket() {
-    this.socket = new WebSocket(this.websocketEndpoint);
-  }
-
-  async loadFlags() {
-    const response = await fetch(this.flagEndpoint);
+  async function loadFlags() {
+    const response = await fetch(flagEndpoint);
     const data = (await response.json()) as FlagDict;
 
-    this.flags = { ...this.flags, ...data };
+    flags = { ...flags, ...data };
 
     return data;
   }
 
-  onFlagUpdate(callback: (data: FlagDict) => void) {
-    if (!this.socket) {
+  function onFlagUpdate(callback: (data: FlagDict) => void) {
+    if (!socket) {
       console.error(
         "You ve not called the initSocket method before using this one, early breaking."
       );
       return;
     }
-
-    this.socket.onmessage = (event) => {
+    socket.onmessage = (event) => {
       const serverMsg = JSON.parse(event.data || {});
       const { data } = serverMsg;
 
-      this.flags = { ...this.flags, ...data };
-      callback(this.flags);
+      flags = { ...flags, ...data };
+      callback(flags);
     };
   }
 
-  disconnect() {
-    this.socket?.close();
+  function disconnect() {
+    socket?.close();
   }
+
+  return { initSocket, loadFlags, disconnect, onFlagUpdate };
 }
+
+export default { init };

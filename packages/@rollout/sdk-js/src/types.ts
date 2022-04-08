@@ -4,3 +4,10 @@ export interface SDKOptions {
   apiUrl?: string;
   websocketUrl?: string;
 }
+
+export interface RolloutSdkType {
+  initSocket: () => void;
+  loadFlags: () => Promise<FlagDict>;
+  disconnect: () => void;
+  onFlagUpdate: (callback: (data: FlagDict) => void) => void;
+}
