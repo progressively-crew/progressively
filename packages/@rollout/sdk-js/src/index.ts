@@ -1,16 +1,28 @@
-import { EndPoints } from "./endpoints";
 import { Fields, FlagDict, RolloutSdkType, SDKOptions } from "./types";
 
 export * from "./types";
 
+function appendFieldToUrl(url: URL, fields: Fields) {
+  for (const field in fields) {
+    url.searchParams.set(field, String(fields[field]));
+  }
+
+  return url.toString();
+}
+
 function init(clientKey: string, options?: SDKOptions): RolloutSdkType {
   const fields: Fields = options?.fields || {};
 
-  const apiUrl = options?.apiUrl || "http://localhost:4000";
-  const flagEndpoint = EndPoints.Flags(apiUrl, clientKey, fields);
+  const apiRoot = options?.apiUrl || "http://localhost:4000";
+  const flagEndpoint = appendFieldToUrl(
+    new URL(`${apiRoot}/flags/sdk/${clientKey}`),
+    fields
+  );
 
-  const websocketUrl = options?.websocketUrl || "ws://localhost:4001";
-  const websocketEndpoint = EndPoints.Socket(websocketUrl, clientKey, fields);
+  const websocketRoot = options?.websocketUrl || "ws://localhost:4001";
+  const websocketUrl = new URL(websocketRoot);
+  websocketUrl.searchParams.set("client_key", clientKey);
+  const websocketEndpoint = appendFieldToUrl(websocketUrl, fields);
 
   return Sdk(flagEndpoint, websocketEndpoint);
 }
