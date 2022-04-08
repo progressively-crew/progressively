@@ -202,7 +202,23 @@ describe('StrategyService', () => {
           strategy.fieldValue = 'marvin.frachet@gmail.com';
           strategy.fieldComparator = 'neq';
 
-          const fields = { uuid: 'should.workg@gmail.com' };
+          const fields = { email: 'should.workg@gmail.com' };
+          const shouldActivate = await service.resolveStrategies(
+            flagEnv,
+            [strategy],
+            fields,
+          );
+
+          expect(shouldActivate).toBe(true);
+        });
+
+        it('returns true when the StrategyRuleType is field and that the field email contains @gmail', async () => {
+          strategy.strategyRuleType = StrategyRuleType.Field;
+          strategy.fieldName = 'email';
+          strategy.fieldValue = '@gmail';
+          strategy.fieldComparator = 'contains';
+
+          const fields = { email: 'should.workg@gmail.com' };
           const shouldActivate = await service.resolveStrategies(
             flagEnv,
             [strategy],

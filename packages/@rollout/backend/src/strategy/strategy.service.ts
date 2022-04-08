@@ -67,15 +67,15 @@ export class StrategyService {
     }
 
     if (strategy.strategyRuleType === StrategyRuleType.Field) {
-      const comparatorPredicate = ComparatorFactory.create(
-        strategy.fieldComparator as ComparatorEnum,
-      );
-      const splittedFieldValues = strategy.fieldValue.split('\n');
+      const fieldComparator = strategy.fieldComparator as ComparatorEnum;
+      const isValid = ComparatorFactory.create(fieldComparator);
 
-      for (const fieldValue of splittedFieldValues) {
+      const strategyFieldValues = strategy.fieldValue.split('\n');
+
+      for (const fieldValue of strategyFieldValues) {
         const clientFieldValue = fields[strategy.fieldName];
 
-        if (comparatorPredicate(fieldValue, clientFieldValue)) {
+        if (isValid(fieldValue, clientFieldValue)) {
           return true;
         }
       }
