@@ -1,24 +1,23 @@
-import { SDKOptions } from "./types";
+import { Fields } from "./types";
+
+function appendFieldToUrl(url: URL, fields: Fields) {
+  for (const field in fields) {
+    url.searchParams.set(field, String(fields[field]));
+  }
+
+  return url.toString();
+}
 
 export const EndPoints = {
-  Socket: (websocketUrl: string, clientKey: string, options: SDKOptions) => {
+  Socket: (websocketUrl: string, clientKey: string, fields: Fields) => {
     const url = new URL(websocketUrl);
-
     url.searchParams.set("client_key", clientKey);
 
-    for (const field in options.fields) {
-      url.searchParams.set(field, String(options.fields[field]));
-    }
-
-    return url.toString();
+    return appendFieldToUrl(url, fields);
   },
-  Flags: (apiUrl: string, clientKey: string, options: SDKOptions) => {
+  Flags: (apiUrl: string, clientKey: string, fields: Fields) => {
     const url = new URL(`${apiUrl}/flags/sdk/${clientKey}`);
 
-    for (const field in options.fields) {
-      url.searchParams.set(field, String(options.fields[field]));
-    }
-
-    return url.toString();
+    return appendFieldToUrl(url, fields);
   },
 };

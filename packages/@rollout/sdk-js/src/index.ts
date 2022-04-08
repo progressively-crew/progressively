@@ -1,20 +1,16 @@
 import { EndPoints } from "./endpoints";
-import { FlagDict, RolloutSdkType, SDKOptions } from "./types";
+import { Fields, FlagDict, RolloutSdkType, SDKOptions } from "./types";
 
 export * from "./types";
 
 function init(clientKey: string, options?: SDKOptions): RolloutSdkType {
-  const resolvedOptions: SDKOptions = options || { fields: {} };
+  const fields: Fields = options?.fields || {};
 
-  const apiUrl = resolvedOptions.apiUrl || "http://localhost:4000";
-  const flagEndpoint = EndPoints.Flags(apiUrl, clientKey, resolvedOptions);
+  const apiUrl = options?.apiUrl || "http://localhost:4000";
+  const flagEndpoint = EndPoints.Flags(apiUrl, clientKey, fields);
 
-  const websocketUrl = resolvedOptions.websocketUrl || "ws://localhost:4001";
-  const websocketEndpoint = EndPoints.Socket(
-    websocketUrl,
-    clientKey,
-    resolvedOptions
-  );
+  const websocketUrl = options?.websocketUrl || "ws://localhost:4001";
+  const websocketEndpoint = EndPoints.Socket(websocketUrl, clientKey, fields);
 
   return Sdk(flagEndpoint, websocketEndpoint);
 }
@@ -22,10 +18,6 @@ function init(clientKey: string, options?: SDKOptions): RolloutSdkType {
 function Sdk(flagEndpoint: string, websocketEndpoint: string): RolloutSdkType {
   let flags: FlagDict = {};
   let socket: WebSocket;
-
-  function initSocket() {
-    socket = new WebSocket(websocketEndpoint);
-  }
 
   async function loadFlags() {
     const response = await fetch(flagEndpoint);
@@ -37,12 +29,8 @@ function Sdk(flagEndpoint: string, websocketEndpoint: string): RolloutSdkType {
   }
 
   function onFlagUpdate(callback: (data: FlagDict) => void) {
-    if (!socket) {
-      console.error(
-        "You ve not called the initSocket method before using this one, early breaking."
-      );
-      return;
-    }
+    socket = new WebSocket(websocketEndpoint);
+
     socket.onmessage = (event) => {
       const serverMsg = JSON.parse(event.data || {});
       const { data } = serverMsg;
@@ -56,7 +44,7 @@ function Sdk(flagEndpoint: string, websocketEndpoint: string): RolloutSdkType {
     socket?.close();
   }
 
-  return { initSocket, loadFlags, disconnect, onFlagUpdate };
+  return { loadFlags, disconnect, onFlagUpdate };
 }
 
 export default { init };

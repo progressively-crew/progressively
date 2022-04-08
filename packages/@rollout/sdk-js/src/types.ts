@@ -1,12 +1,13 @@
 export type FlagDict = { [key: string]: boolean };
+
+export type Fields = Record<string, string | number | boolean>;
 export interface SDKOptions {
-  fields: Record<string, string | number | boolean>;
+  fields?: Fields;
   apiUrl?: string;
   websocketUrl?: string;
 }
 
 export interface RolloutSdkType {
-  initSocket: () => void;
   loadFlags: () => Promise<FlagDict>;
   disconnect: () => void;
   onFlagUpdate: (callback: (data: FlagDict) => void) => void;
