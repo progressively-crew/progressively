@@ -54,6 +54,7 @@ export default class Sdk {
       );
       return;
     }
+
     this.socket.onmessage = (event) => {
       const serverMsg = JSON.parse(event.data || {});
       const { data } = serverMsg;

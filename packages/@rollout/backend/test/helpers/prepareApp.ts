@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
+import { WsAdapter } from '@nestjs/platform-ws';
 import { MailService } from '../../src/mail/mail.service';
 import { AppModule } from '../../src/app.module';
 
@@ -23,6 +24,7 @@ export const prepareApp = async () => {
     .compile();
 
   const app = moduleFixture.createNestApplication();
+  app.useWebSocketAdapter(new WsAdapter(app));
   await app.init();
 
   return app;

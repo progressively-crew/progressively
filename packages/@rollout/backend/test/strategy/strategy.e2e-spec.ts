@@ -360,7 +360,7 @@ describe('Strategy (e2e)', () => {
     });
   });
 
-  describe.only('/projects/1/environments/1/flags/1/strategies/1 (DELETE)', () => {
+  describe('/projects/1/environments/1/flags/1/strategies/1 (DELETE)', () => {
     it('gives a 401 when the user is not authenticated', () =>
       verifyAuthGuard(
         app,

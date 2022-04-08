@@ -1,8 +1,11 @@
 import {
   OnGatewayConnection,
   OnGatewayDisconnect,
+  OnGatewayInit,
+  SubscribeMessage,
   WebSocketGateway,
 } from '@nestjs/websockets';
+import { WebSocketServer as WSServer } from 'ws';
 import { StrategyService } from '../strategy/strategy.service';
 import { URL } from 'url';
 import { Rooms } from './rooms';
@@ -13,22 +16,50 @@ import {
   RolloutStrategy,
 } from '@prisma/client';
 import { FlagStatus } from '../flags/flags.status';
+import { LocalWebsocket } from './types';
 
 @WebSocketGateway(4001)
 export class WebsocketGateway
-  implements OnGatewayConnection, OnGatewayDisconnect
+  implements OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit
 {
   private rooms: Rooms;
+
+  private heartBeatIntervalId: NodeJS.Timer;
 
   constructor(private readonly strategyService: StrategyService) {
     this.rooms = new Rooms();
   }
 
-  handleDisconnect(socket: any) {
+  afterInit(server: WSServer) {
+    server.on('close', () => {
+      clearInterval(this.heartBeatIntervalId);
+    });
+
+    const timeout = Number(process.env.SOCKET_TIMEOUT || 10000);
+
+    this.heartBeatIntervalId = setInterval(function ping() {
+      server.clients.forEach(function each(ws: LocalWebsocket) {
+        if (!ws.isAlive) return ws.terminate();
+
+        ws.isAlive = false;
+        ws.ping();
+      });
+    }, timeout);
+  }
+
+  handleDisconnect(socket: LocalWebsocket) {
     this.rooms.leave(socket);
   }
 
-  handleConnection(socket: any, req: any) {
+  handleConnection(socket: LocalWebsocket, req: any) {
+    // Heart-beating
+    socket.isAlive = true;
+
+    socket.on('pong', () => {
+      socket.isAlive = true;
+    });
+    // End of heart-beating
+
     const useLessPrefix = `http://localhost`; // just to be able to rely on the URL class
     const searchParams = new URL(`${useLessPrefix}${req.url}`).searchParams;
     const queryParams = Object.fromEntries(searchParams);

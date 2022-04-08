@@ -1,18 +1,15 @@
-import { FieldRecord } from '../strategy/types';
+import { LocalWebsocket } from './types';
 
 export class Rooms {
   private _rooms: {
-    [key: string]: Array<{
-      send: (args: any) => void;
-      __ROLLOUT_FIELDS: FieldRecord;
-    }>;
+    [key: string]: Array<LocalWebsocket>;
   };
 
   constructor() {
     this._rooms = {};
   }
 
-  public join(room: string, socket: any) {
+  public join(room: string, socket: LocalWebsocket) {
     if (!this._rooms[room]) {
       this._rooms[room] = [];
     }
@@ -21,7 +18,7 @@ export class Rooms {
     this._rooms[room].push(socket);
   }
 
-  public leave(socket) {
+  public leave(socket: LocalWebsocket) {
     const rooms = socket.__ROLLOUT_ROOMS || [];
 
     for (const room of rooms) {
@@ -32,7 +29,7 @@ export class Rooms {
     socket.__ROLLOUT_FIELDS = undefined;
   }
 
-  public emit(socket, data) {
+  public emit(socket: LocalWebsocket, data: any) {
     socket.send(JSON.stringify({ data }));
   }
 

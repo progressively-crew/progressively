@@ -13,7 +13,6 @@ import { ProjectsService } from '../projects/projects.service';
     WebsocketGateway,
     FlagsService,
     EnvironmentsService,
-    WebsocketGateway,
     StrategyService,
     ProjectsService,
   ],
