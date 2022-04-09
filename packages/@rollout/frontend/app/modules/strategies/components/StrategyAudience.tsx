@@ -110,6 +110,7 @@ export const StrategyAudience = ({
             >
               <option value={ComparatorEnum.Equals}>Equals</option>
               <option value={ComparatorEnum.NotEquals}>Not equals</option>
+              <option value={ComparatorEnum.Contains}>Contains</option>
             </Select>
           </FormControl>
 

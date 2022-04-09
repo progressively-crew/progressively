@@ -3,6 +3,7 @@ import { ActivationType } from "./types/activation";
 export enum ComparatorEnum {
   Equals = "eq",
   NotEquals = "neq",
+  Contains = "contains",
 }
 
 export interface StrategyCreateDTO {
@@ -11,7 +12,7 @@ export interface StrategyCreateDTO {
 
   // only exists for the type of "field"
   fieldName?: string;
-  fieldComparator?: "eq";
+  fieldComparator?: ComparatorEnum;
   fieldValue?: string;
 
   activationType?: ActivationType;
