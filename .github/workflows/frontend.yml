@@ -16,24 +16,24 @@ jobs:
         with:
           node-version: "16"
           cache: "npm"
-          cache-dependency-path: packages/@rollout/frontend/package-lock.json
+          cache-dependency-path: packages/frontend/package-lock.json
 
       - name: Install dependencies
-        working-directory: ./packages/@rollout/frontend
+        working-directory: ./packages/frontend
         run: npm install
 
       - name: Preparation
-        working-directory: ./packages/@rollout/frontend
+        working-directory: ./packages/frontend
         run: mv .env.example .env
 
       - name: Lint
-        working-directory: ./packages/@rollout/frontend
+        working-directory: ./packages/frontend
         run: npm run lint
 
       - name: Tests
-        working-directory: ./packages/@rollout/frontend
+        working-directory: ./packages/frontend
         run: npm run test
 
       - name: Build
-        working-directory: ./packages/@rollout/frontend
+        working-directory: ./packages/frontend
         run: npm run build

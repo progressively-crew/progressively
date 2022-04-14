@@ -1,4 +1,4 @@
-import { FlagStatus } from "../../../../packages/@rollout/backend/src/flags/flags.status";
+import { FlagStatus } from "../../../../packages/backend/src/flags/flags.status";
 
 describe("/", () => {
   beforeEach(cy.seed);

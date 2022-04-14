@@ -18,8 +18,8 @@
 import {
   cleanupDb,
   seedDb,
-} from "../../../../packages/@rollout/backend/test/helpers/seed";
-import { authenticate } from "../../../../packages/@rollout/backend/test/helpers/authenticate";
+} from "../../../../packages/backend/test/helpers/seed";
+import { authenticate } from "../../../../packages/backend/test/helpers/authenticate";
 
 module.exports = (on: any, config: any) => {
   on("task", {

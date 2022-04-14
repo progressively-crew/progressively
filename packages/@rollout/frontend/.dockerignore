@@ -1,6 +1,0 @@
-./packages/@rollout/react
-./packages/@rollout/sdk-js
-./example
-node_modules
-.cache
-**/build

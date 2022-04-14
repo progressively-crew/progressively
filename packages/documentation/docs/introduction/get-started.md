@@ -12,15 +12,15 @@ $ git clone https://github.com/mfrachet/rollout
 
 > ℹ️ This step is required for both usage — with and without Docker
 
-The next thing to do is to make sure you have a `.env` file in both the `./packages/@rollout/frontend` and `./packages/@rollout/backend` packages.
+The next thing to do is to make sure you have a `.env` file in both the `./packages/frontend` and `./packages/backend` packages.
 
 When cloning the repository, a `.env.example` file is created as an example in these packages. Make sure to modify them (there are secrets inside) and rename them from `.env.example` to `.env`.
 
 For instance, you can run the following commands at the root of the project to move the `.env.example` to `.env` files:
 
 ```sh
-$ mv ./packages/@rollout/frontend/.env.example ./packages/@rollout/frontend/.env
-$ mv ./packages/@rollout/backend/.env.example ./packages/@rollout/backend/.env
+$ mv ./packages/frontend/.env.example ./packages/frontend/.env
+$ mv ./packages/backend/.env.example ./packages/backend/.env
 ```
 
 ## Usage with Docker
@@ -52,7 +52,7 @@ $ npm run setup         # prepares the mono-repo
 $ npm run db:prepare    # creates the tables
 ```
 
-You can build and run the backend container using the following command inside `./packages/@rollout/backend`:
+You can build and run the backend container using the following command inside `./packages/backend`:
 
 ```sh
 $ docker build -t rollout-backend .
@@ -60,7 +60,7 @@ $ docker build -t rollout-backend .
 $ docker run --env-file .env -p 4000:4000 -p 4001:4001 rollout-backend
 ```
 
-You can finally build and run the frontend container using the following command inside: `./packages/@rollout/frontend`:
+You can finally build and run the frontend container using the following command inside: `./packages/frontend`:
 
 ```sh
 $ docker build -t rollout-frontend .

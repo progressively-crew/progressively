@@ -10,7 +10,7 @@
     "test:e2e:ci": "cypress run --browser chrome"
   },
   "dependencies": {
-    "@rollout/react": "file:../../packages/@rollout/react",
+    "@rollout/react": "file:../../packages/react",
     "next": "12.0.7",
     "react": "17.0.2",
     "react-dom": "17.0.2"

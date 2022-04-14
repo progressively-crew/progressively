@@ -33,11 +33,11 @@ jobs:
           cache: "npm"
           cache-dependency-path: |
             package-lock.json
-            packages/@rollout/frontend/package-lock.json
-            packages/@rollout/backend/package-lock.json
+            packages/frontend/package-lock.json
+            packages/backend/package-lock.json
 
       - name: Creating .env files
-        run: mv ./packages/@rollout/frontend/.env.example ./packages/@rollout/frontend/.env && mv ./packages/@rollout/backend/.env.example ./packages/@rollout/backend/.env
+        run: mv ./packages/frontend/.env.example ./packages/frontend/.env && mv ./packages/backend/.env.example ./packages/backend/.env
 
       - name: Bootstrap projects
         run: npm run setup:ci
@@ -49,11 +49,11 @@ jobs:
         run: npm run build
 
       - name: Start the backend project
-        working-directory: ./packages/@rollout/backend
+        working-directory: ./packages/backend
         run: npm start &
 
       - name: Start the frontend project
-        working-directory: ./packages/@rollout/frontend
+        working-directory: ./packages/frontend
         run: npm start &
 
       - name: E2E tests

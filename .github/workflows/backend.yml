@@ -31,28 +31,28 @@ jobs:
         with:
           node-version: "16"
           cache: "npm"
-          cache-dependency-path: packages/@rollout/backend/package-lock.json
+          cache-dependency-path: packages/backend/package-lock.json
 
       - name: Install dependencies
-        working-directory: ./packages/@rollout/backend
+        working-directory: ./packages/backend
         run: npm install
 
       - name: Preparation
-        working-directory: ./packages/@rollout/backend
+        working-directory: ./packages/backend
         run: mv .env.example .env && npm run db:migrate:dev && npm run db:generate:schema
 
       - name: Build
-        working-directory: ./packages/@rollout/backend
+        working-directory: ./packages/backend
         run: npm run build
 
       - name: Lint
-        working-directory: ./packages/@rollout/backend
+        working-directory: ./packages/backend
         run: npm run lint
 
       - name: Tests
-        working-directory: ./packages/@rollout/backend
+        working-directory: ./packages/backend
         run: npm run test
 
       - name: API tests
-        working-directory: ./packages/@rollout/backend
+        working-directory: ./packages/backend
         run: npm run test:e2e

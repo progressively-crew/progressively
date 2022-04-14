@@ -1,8 +1,8 @@
 version: "3.9"
 services:
   rollout-frontend:
-    build: ./packages/@rollout/frontend
-    env_file: ./packages/@rollout/frontend/.env
+    build: ./packages/frontend
+    env_file: ./packages/frontend/.env
     ports:
       - "3000:3000"
     environment:
@@ -10,8 +10,8 @@ services:
     depends_on:
       - rollout-backend
   rollout-backend:
-    build: ./packages/@rollout/backend
-    env_file: ./packages/@rollout/backend/.env
+    build: ./packages/backend
+    env_file: ./packages/backend/.env
     ports:
       - "4000:4000"
       - "4001:4001"

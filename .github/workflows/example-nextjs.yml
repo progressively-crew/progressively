@@ -34,10 +34,10 @@ jobs:
           cache-dependency-path: |
             package-lock.json
             example/nextjs/package-lock.json
-            packages/@rollout/backend/package-lock.json
+            packages/backend/package-lock.json
 
       - name: Creating .env files
-        run: mv ./packages/@rollout/backend/.env.example ./packages/@rollout/backend/.env
+        run: mv ./packages/backend/.env.example ./packages/backend/.env
 
       - name: Install dependencies
         run: npm install
@@ -56,7 +56,7 @@ jobs:
         run: npm run build
 
       - name: Start the backend project
-        working-directory: ./packages/@rollout/backend
+        working-directory: ./packages/backend
         run: npm start &
 
       - name: Start the Example Nextjs project

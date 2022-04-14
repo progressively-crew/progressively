@@ -16,20 +16,20 @@ jobs:
         with:
           node-version: "16"
           cache: "npm"
-          cache-dependency-path: packages/@rollout/sdk-js/package-lock.json
+          cache-dependency-path: packages/sdk-js/package-lock.json
 
       - name: Install dependencies
-        working-directory: ./packages/@rollout/sdk-js
+        working-directory: ./packages/sdk-js
         run: npm install
 
       - name: Tests
-        working-directory: ./packages/@rollout/sdk-js
+        working-directory: ./packages/sdk-js
         run: npm run test
 
       - name: Build
-        working-directory: ./packages/@rollout/sdk-js
+        working-directory: ./packages/sdk-js
         run: npm run build
 
       - name: Bundlesize
-        working-directory: ./packages/@rollout/sdk-js
+        working-directory: ./packages/sdk-js
         run: npm run bundlesize
