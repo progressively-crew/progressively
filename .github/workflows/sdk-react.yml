@@ -1,0 +1,33 @@
+name: Sdk React
+on:
+  pull_request:
+    branches: ["master"]
+  workflow_dispatch:
+
+jobs:
+  static:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+          cache: "npm"
+          cache-dependency-path: packages/react/package-lock.json
+
+      - name: Bootstrap projects
+        run: npm run setup:ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Tests
+        working-directory: ./packages/react
+        run: npm run test
+
+      - name: Bundlesize
+        working-directory: ./packages/react
+        run: npm run bundlesize

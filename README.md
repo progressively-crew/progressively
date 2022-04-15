@@ -1,4 +1,4 @@
-![Backend](https://github.com/mfrachet/rollout/actions/workflows/backend.yml/badge.svg) ![Frontend](https://github.com/mfrachet/rollout/actions/workflows/frontend.yml/badge.svg) ![E2E](https://github.com/mfrachet/rollout/actions/workflows/e2e.yml/badge.svg) ![Example NextJs](https://github.com/mfrachet/rollout/actions/workflows/example-nextjs.yml/badge.svg) ![Sdk-js](https://github.com/mfrachet/rollout/actions/workflows/sdk.yml/badge.svg)
+![Backend](https://github.com/mfrachet/rollout/actions/workflows/backend.yml/badge.svg) ![Frontend](https://github.com/mfrachet/rollout/actions/workflows/frontend.yml/badge.svg) ![E2E](https://github.com/mfrachet/rollout/actions/workflows/e2e.yml/badge.svg) ![Example NextJs](https://github.com/mfrachet/rollout/actions/workflows/example-nextjs.yml/badge.svg) ![Sdk-js](https://github.com/mfrachet/rollout/actions/workflows/sdk.yml/badge.svg) ![Sdk-react](https://github.com/mfrachet/rollout/actions/workflows/sdk-react.yml/badge.svg)
 
 # Welcome to Rollout :blush:
 

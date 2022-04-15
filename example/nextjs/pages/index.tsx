@@ -2,7 +2,8 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import React from "react";
 import styles from "../styles/Home.module.css";
-import { RolloutProvider, getSSRProps, useFlags } from "@rollout/react";
+import { RolloutProvider, useFlags } from "@rollout/react";
+import { getSSRProps } from "@rollout/react/lib/ssr";
 
 const FlaggedComponent = () => {
   const { flags } = useFlags();

@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "module": "ESNext",
+    "target": "ES2017",
     "outDir": "lib",
     "declaration": true,
     "allowJs": true,
@@ -9,9 +10,8 @@
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "module": "commonjs",
+    "jsx": "react",
     "moduleResolution": "node",
-    "jsx": "react"
   },
   "include": ["src"],
   "exclude": ["node_modules", "lib"]
