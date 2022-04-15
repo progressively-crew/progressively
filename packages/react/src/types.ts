@@ -1,4 +1,4 @@
-import { FlagDict } from "@rollout/sdk-js/dist/types";
+import { FlagDict } from "@rollout/sdk-js";
 
 export interface RolloutProviderProps {
   clientKey: string;

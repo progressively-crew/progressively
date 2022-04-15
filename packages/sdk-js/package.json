@@ -3,9 +3,10 @@
   "author": "mfrachet",
   "version": "0.1.0",
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "dist/legacy/index.js",
+  "exports": "dist/modern/index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && tsc --target ES2017 --outDir ./dist/modern --module 'ESNext'",
     "test": "jest",
     "bundlesize": "bundlesize --enable-github-checks"
   },
@@ -23,8 +24,12 @@
   },
   "bundlesize": [
     {
-      "path": "./dist/index.js",
+      "path": "./dist/legacy/index.js",
       "maxSize": "1 kB"
+    },
+    {
+      "path": "./dist/modern/index.js",
+      "maxSize": "800 B"
     }
   ]
 }

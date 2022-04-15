@@ -1,4 +1,6 @@
 const path = require("path");
+const BundleAnalyzerPlugin =
+  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 module.exports = {
   entry: "./src/index.tsx",
@@ -27,4 +29,8 @@ module.exports = {
   externals: {
     react: "react",
   },
+  plugins:
+    process.env.NODE_ENV === "development"
+      ? [new BundleAnalyzerPlugin()]
+      : undefined,
 };
