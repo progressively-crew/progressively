@@ -89,6 +89,9 @@ export class StrategyService {
     strategies: Array<RolloutStrategy>,
     fields: FieldRecord = {},
   ) {
+    // Always return true when no strategies are passed
+    if (strategies.length === 0) return true;
+
     for (const strategy of strategies) {
       const isValidStrategyRule = this._checkStrategyRule(strategy, fields);
 

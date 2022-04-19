@@ -47,6 +47,16 @@ describe('StrategyService', () => {
   });
 
   describe('resolveStrategies', () => {
+    describe('no strategies', () => {
+      it('always returns true when no strategies are found', async () => {
+        const shouldActivate = await service.resolveStrategies(flagEnv, [], {
+          id: 'user-id-123',
+        });
+
+        expect(shouldActivate).toBe(true);
+      });
+    });
+
     describe('ActivationRuleType', () => {
       it('returns true when the activation rule is Boolean', async () => {
         strategy.activationType = ActivationRuleType.Boolean;
