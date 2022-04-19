@@ -7,7 +7,8 @@ Rollout comes with a first class support for React and its major frameworks leve
 The following snippet shows how to use Rollout with [Nextjs](https://nextjs.org/).
 
 ```js
-import { RolloutProvider, getSSRProps, useFlags } from "@rollout/react";
+import { RolloutProvider, useFlags } from "@rollout/react";
+import { getSSRProps } from "@rollout/react/lib/ssr";
 
 const FlaggedComponent = () => {
   // Get the flags from the component
