@@ -5,7 +5,7 @@ export const useWebsocketInit = (
   sdkRef: React.MutableRefObject<RolloutSdkType>,
   onFlagUpdate: (flags: FlagDict) => void
 ) => {
-  useEffect(function listenFlagChanges() {
+  useEffect(() => {
     if (!sdkRef.current) return;
 
     const sdk = sdkRef.current;

@@ -11,25 +11,19 @@ export const useFlagInit = (
   const [error, setError] = useState<any>(undefined);
   const [flags, setFlags] = useState<FlagDict>(initialFlags || {});
 
-  useEffect(
-    function loadFlags() {
-      // Early return the client side fetch when they are resolved on the server
-      if (initialFlags) return;
+  // Only run the effect on mount, NEVER later
+  useEffect(() => {
+    // Early return the client side fetch when they are resolved on the server
+    if (initialFlags) return;
 
-      const loadFlags = async () => {
-        try {
-          const clientFlags = await sdkRef.current!.loadFlags();
-          setFlags(clientFlags);
-          setIsLoading(false);
-        } catch (e) {
-          setError(e);
-        }
-      };
-
-      loadFlags();
-    },
-    [initialFlags]
-  );
+    sdkRef
+      .current!.loadFlags()
+      .then((clientFlags: FlagDict) => {
+        setFlags(clientFlags);
+        setIsLoading(false);
+      })
+      .catch(setError);
+  }, []);
 
   return { flags, error, isLoading, setFlags };
 };

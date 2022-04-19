@@ -5,7 +5,7 @@ import { RolloutProviderProps } from "./types";
 import { useWebsocketInit } from "./useWebsocketInit";
 import { useFlagInit } from "./useFlagInit";
 
-export const RolloutProvider: React.FC<RolloutProviderProps> = ({
+export const RolloutProvider = ({
   children,
   clientKey,
   initialFlags,
@@ -13,7 +13,7 @@ export const RolloutProvider: React.FC<RolloutProviderProps> = ({
   apiUrl,
   websocketUrl,
   fields = {},
-}) => {
+}: RolloutProviderProps) => {
   const sdkRef = useRef(
     RolloutSdk.init(clientKey, { fields, apiUrl, websocketUrl })
   );

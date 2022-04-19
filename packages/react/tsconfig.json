@@ -1,7 +1,5 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "outDir": "lib",
     "declaration": true,
     "allowJs": true,
     "skipLibCheck": true,
@@ -9,10 +7,6 @@
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "module": "commonjs",
-    "moduleResolution": "node",
     "jsx": "react"
-  },
-  "include": ["src"],
-  "exclude": ["node_modules", "lib"]
+  }
 }

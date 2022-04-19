@@ -1,18 +1,16 @@
 import RolloutSdk, { SDKOptions } from "@rollout/sdk-js";
 import { RolloutProviderProps } from "./types";
 
-export const getSSRProps = async (
+export function getSSRProps(
   clientKey: string,
   options?: SDKOptions | undefined
-) => {
+) {
   const sdk = RolloutSdk.init(clientKey, options);
 
-  const ssrProps: RolloutProviderProps = {
-    initialFlags: await sdk.loadFlags(),
+  return sdk.loadFlags().then((initialFlags) => ({
+    initialFlags,
     clientKey,
     onlyRenderWhenReady: false,
     ...options,
-  };
-
-  return ssrProps;
-};
+  }));
+}

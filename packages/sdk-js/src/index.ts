@@ -31,13 +31,13 @@ function Sdk(flagEndpoint: string, websocketEndpoint: string): RolloutSdkType {
   let flags: FlagDict = {};
   let socket: WebSocket;
 
-  async function loadFlags() {
-    const response = await fetch(flagEndpoint);
-    const data = (await response.json()) as FlagDict;
-
-    flags = { ...flags, ...data };
-
-    return data;
+  function loadFlags() {
+    return fetch(flagEndpoint)
+      .then((response) => response.json())
+      .then((data) => {
+        flags = { ...flags, ...data };
+        return flags;
+      });
   }
 
   function onFlagUpdate(callback: (data: FlagDict) => void) {
