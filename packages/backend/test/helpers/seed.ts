@@ -11,7 +11,7 @@ export const seedDb = async () => {
 
   try {
     // Initial seeding
-    const [marvin, john, jane, gina] = await seedUsers(prismaClient);
+    const [marvin, john] = await seedUsers(prismaClient);
     const [projectFromSeeding] = await seedProjects(prismaClient);
     const [homePageFlag] = await seedFlags(prismaClient);
     await seedPasswordReset(prismaClient, john); // Necessary to e2e test password reset
@@ -26,7 +26,7 @@ export const seedDb = async () => {
       },
     });
 
-    const developer = await prismaClient.environment.create({
+    await prismaClient.environment.create({
       data: {
         uuid: '2',
         name: 'Developer',

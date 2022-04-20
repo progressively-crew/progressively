@@ -2,7 +2,6 @@ import {
   OnGatewayConnection,
   OnGatewayDisconnect,
   OnGatewayInit,
-  SubscribeMessage,
   WebSocketGateway,
 } from '@nestjs/websockets';
 import { WebSocketServer as WSServer } from 'ws';
