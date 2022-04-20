@@ -6,6 +6,13 @@
 
 ![Example NextJs](https://github.com/mfrachet/progressively/actions/workflows/example-nextjs.yml/badge.svg) ![Example create-react-app](https://github.com/mfrachet/progressively/actions/workflows/example-cra.yml/badge.svg)
 
+**Bundle sizes**
+
+- `@progressively/sdk-js`: ![JS SDK minified and gzipped size](https://img.shields.io/bundlephobia/minzip/@progressively/sdk-js)
+- `@progressively/react`: ![React SDK minified and gzipped size](https://img.shields.io/bundlephobia/minzip/@progressively/react)
+
+---
+
 # Welcome to Progressively :blush:
 
 Progressively is my personal feature flag solution focusing on accessibility, simplicity and providing lightweight client side SDKs.
