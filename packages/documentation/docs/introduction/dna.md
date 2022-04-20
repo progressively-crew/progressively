@@ -4,7 +4,7 @@ This project is built with strong opinions concerning what the web could and sho
 
 As part of this vision of a better web, I'm committing to strictly follow these statements as much as I can. Every contribution and contributors should also agree and make sure not to overcomes these.
 
-If, at any points, you feel the product has issues regarding these statements, make sure to raise the point and [open an issue](https://github.com/mfrachet/rollout/issues) so that we can work on it.
+If, at any points, you feel the product has issues regarding these statements, make sure to raise the point and [open an issue](https://github.com/mfrachet/progressively/issues) so that we can work on it.
 
 ## The dashboard
 

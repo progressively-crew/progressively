@@ -14,19 +14,19 @@ export class Rooms {
       this._rooms[room] = [];
     }
 
-    socket.__ROLLOUT_ROOMS.push(room);
+    socket.__ROOMS.push(room);
     this._rooms[room].push(socket);
   }
 
   public leave(socket: LocalWebsocket) {
-    const rooms = socket.__ROLLOUT_ROOMS || [];
+    const rooms = socket.__ROOMS || [];
 
     for (const room of rooms) {
       this._rooms[room] = this._rooms[room].filter((sock) => sock !== socket);
     }
 
-    socket.__ROLLOUT_ROOMS = undefined;
-    socket.__ROLLOUT_FIELDS = undefined;
+    socket.__ROOMS = undefined;
+    socket.__FIELDS = undefined;
   }
 
   public emit(socket: LocalWebsocket, data: any) {

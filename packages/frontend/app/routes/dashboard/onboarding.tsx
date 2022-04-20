@@ -23,7 +23,7 @@ import { DashboardLayout } from "../../layouts/DashboardLayout";
 
 export const meta = () => {
   return {
-    title: "Rollout | Onboarding",
+    title: "Progressively | Onboarding",
   };
 };
 

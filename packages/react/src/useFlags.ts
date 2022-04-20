@@ -1,4 +1,4 @@
-import { useContext } from 'react';
-import { RolloutContext } from './RolloutContext';
+import { useContext } from "react";
+import { ProgressivelyContext } from "./ProgressivelyContext";
 
-export const useFlags = () => useContext(RolloutContext);
+export const useFlags = () => useContext(ProgressivelyContext);

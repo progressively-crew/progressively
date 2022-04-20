@@ -43,7 +43,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
       it("shows the layout of the page", () => {
         cy.title().should(
           "eq",
-          "Rollout | Project from seeding | Production | New homepage | Super strategy | Delete"
+          "Progressively | Project from seeding | Production | New homepage | Super strategy | Delete"
         );
 
         cy.findByText(

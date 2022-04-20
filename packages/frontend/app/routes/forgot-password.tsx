@@ -29,7 +29,7 @@ import { forgotPassword } from "~/modules/user/forgotPassword";
 
 export const meta: MetaFunction = () => {
   return {
-    title: "Rollout | Password forgotten",
+    title: "Progressively | Password forgotten",
   };
 };
 

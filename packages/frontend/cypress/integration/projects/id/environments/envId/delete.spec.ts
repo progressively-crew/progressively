@@ -60,7 +60,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/delete", () => {
       it("shows the layout of the page", () => {
         cy.title().should(
           "eq",
-          "Rollout | Project from seeding | Production | Settings | Delete"
+          "Progressively | Project from seeding | Production | Settings | Delete"
         );
 
         cy.findByRole("heading", {

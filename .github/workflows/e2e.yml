@@ -14,7 +14,7 @@ jobs:
         image: postgres
         # Provide the password for postgres
         env:
-          POSTGRES_DB: rollout
+          POSTGRES_DB: progressively
           POSTGRES_USER: admin
           POSTGRES_PASSWORD: admin
         # Set health checks to wait until postgres has started

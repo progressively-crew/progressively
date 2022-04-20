@@ -8,7 +8,7 @@ describe("/signin", () => {
   });
 
   it("checks the page title", () => {
-    cy.title().should("eq", "Rollout | Sign in");
+    cy.title().should("eq", "Progressively | Sign in");
   });
 
   it("gives feedbacks when the email is invalid (formatting level)", () => {

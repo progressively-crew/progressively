@@ -30,7 +30,7 @@ export const meta: MetaFunction = ({ data }) => {
   const { project }: { project: Project } = data;
 
   return {
-    title: `Rollout | ${project.name} | Settings`,
+    title: `Progressively | ${project.name} | Settings`,
   };
 };
 

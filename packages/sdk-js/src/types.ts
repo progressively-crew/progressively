@@ -7,7 +7,7 @@ export interface SDKOptions {
   websocketUrl?: string;
 }
 
-export interface RolloutSdkType {
+export interface ProgressivelySdkType {
   loadFlags: () => Promise<FlagDict>;
   disconnect: () => void;
   onFlagUpdate: (callback: (data: FlagDict) => void) => void;

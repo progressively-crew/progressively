@@ -1,7 +1,7 @@
 module.exports = {
-  title: "Rollout Documentation",
+  title: "Progressively Documentation",
   description: "The feature flag solution guides and docs",
-  base: "/rollout/",
+  base: "/progressively/",
   themeConfig: {
     search: false,
     sidebar: [

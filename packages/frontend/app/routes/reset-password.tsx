@@ -33,7 +33,7 @@ import { resetPassword } from "~/modules/user/resetPassword";
 
 export const meta: MetaFunction = () => {
   return {
-    title: "Rollout | Reset password",
+    title: "Progressively | Reset password",
   };
 };
 

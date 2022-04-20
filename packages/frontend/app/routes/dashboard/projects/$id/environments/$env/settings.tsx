@@ -29,7 +29,7 @@ export const meta: MetaFunction = ({ data }: MetaArgs) => {
   const environment = data.environment;
 
   return {
-    title: `Rollout | ${project.name} | ${environment.name} | Settings`,
+    title: `Progressively | ${project.name} | ${environment.name} | Settings`,
   };
 };
 

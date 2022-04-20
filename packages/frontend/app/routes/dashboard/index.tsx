@@ -21,7 +21,7 @@ import { Button } from "~/components/Button";
 
 export const meta: MetaFunction = () => {
   return {
-    title: "Rollout | Projects list",
+    title: "Progressively | Projects list",
   };
 };
 

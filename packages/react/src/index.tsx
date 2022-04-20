@@ -1,3 +1,3 @@
 export * from "./useFlags";
-export * from "./RolloutProvider";
+export * from "./ProgressivelyProvider";
 export * from "./types";

@@ -36,7 +36,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]", () => {
       it("shows the layout", () => {
         cy.title().should(
           "eq",
-          "Rollout | Project from seeding | Production | Flags | New homepage"
+          "Progressively | Project from seeding | Production | Flags | New homepage"
         );
 
         cy.findByRole("link", { name: "Projects" })

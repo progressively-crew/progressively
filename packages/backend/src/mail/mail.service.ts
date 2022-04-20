@@ -24,12 +24,12 @@ export class MailService {
     activationToken: string,
   ) {
     await this.transporter.sendMail({
-      from: '"👻" <no-reply@rollout.io>', // sender address
+      from: '"👻" <no-reply@progressively.io>', // sender address
       to,
-      subject: '[Rollout] Activate your new user', // Subject line
+      subject: '[Progressively] Activate your new user', // Subject line
       html: `<div>
         <h1>Hello ${fullname}</h1>
-        <p>You've recently created a new user on Rollout.</p>
+        <p>You've recently created a new user on Progressively.</p>
         <p>
           In order for it to be activated, you would need to follow this link:
           <a
@@ -50,9 +50,9 @@ export class MailService {
     resetPasswordToken: string,
   ) {
     await this.transporter.sendMail({
-      from: '"👻" <no-reply@rollout.io>', // sender address
+      from: '"👻" <no-reply@Progressively.io>', // sender address
       to,
-      subject: '[Rollout] Reset your password', // Subject line
+      subject: '[Progressively] Reset your password', // Subject line
       html: `<div>
         <h1>Hello ${fullname}</h1>
         <p>You've recently asked to reset your password.</p>

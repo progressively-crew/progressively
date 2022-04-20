@@ -2,8 +2,8 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import React from "react";
 import styles from "../styles/Home.module.css";
-import { RolloutProvider, useFlags } from "@rollout/react";
-import { getSSRProps } from "@rollout/react/lib/ssr";
+import { ProgressivelyProvider, useFlags } from "@progressively/react";
+import { getSSRProps } from "@progressively/react/lib/ssr";
 
 const FlaggedComponent = () => {
   const { flags } = useFlags();
@@ -15,9 +15,9 @@ const FlaggedComponent = () => {
   return <div style={{ background: "lightblue" }}>Old variant</div>;
 };
 
-const Home: NextPage = ({ rolloutProps }: any) => {
+const Home: NextPage = ({ progressivelyProps }: any) => {
   return (
-    <RolloutProvider {...rolloutProps}>
+    <ProgressivelyProvider {...progressivelyProps}>
       <div className={styles.container}>
         <Head>
           <title>Create Next App</title>
@@ -29,7 +29,7 @@ const Home: NextPage = ({ rolloutProps }: any) => {
           <FlaggedComponent />
         </main>
       </div>
-    </RolloutProvider>
+    </ProgressivelyProvider>
   );
 };
 
@@ -43,7 +43,7 @@ export async function getServerSideProps() {
 
   return {
     props: {
-      rolloutProps: ssrProps,
+      progressivelyProps: ssrProps,
     },
   };
 }

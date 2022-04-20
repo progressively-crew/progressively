@@ -36,7 +36,7 @@ describe("/dashboard/projects/[id]/environments/create", () => {
       it("shows the create environment layout", () => {
         cy.title().should(
           "eq",
-          "Rollout | Project from seeding | Create an environment"
+          "Progressively | Project from seeding | Create an environment"
         );
 
         cy.findByRole("link", { name: "Projects" })

@@ -36,7 +36,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/settings", () => {
       it("shows a page layout", () => {
         cy.title().should(
           "eq",
-          "Rollout | Project from seeding | Production | Settings"
+          "Progressively | Project from seeding | Production | Settings"
         );
 
         cy.findByRole("heading", { name: "Danger zone" }).should("be.visible");

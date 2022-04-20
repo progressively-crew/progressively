@@ -1,14 +1,14 @@
-# Rollout with React on the server
+# Progressively with React on the server
 
-Rollout comes with a first class support for React and its major frameworks leveraging Server Side Rendering, at runtime. By following this guide, you should be able to start an application that initialize the flags on the server but also to make them available on the client with a websocket subscription.
+Progressively comes with a first class support for React and its major frameworks leveraging Server Side Rendering, at runtime. By following this guide, you should be able to start an application that initialize the flags on the server but also to make them available on the client with a websocket subscription.
 
 ## Ready to go snippet (Nextjs)
 
-The following snippet shows how to use Rollout with [Nextjs](https://nextjs.org/).
+The following snippet shows how to use Progressively with [Nextjs](https://nextjs.org/).
 
 ```js
-import { RolloutProvider, useFlags } from "@rollout/react";
-import { getSSRProps } from "@rollout/react/lib/ssr";
+import { ProgressivelyProvider, useFlags } from "@progressively/react";
+import { getSSRProps } from "@progressively/react/lib/ssr";
 
 const FlaggedComponent = () => {
   // Get the flags from the component
@@ -22,12 +22,12 @@ const FlaggedComponent = () => {
   return <div>Old variant</div>;
 };
 
-export default function MyPage({ rolloutProps }) {
-  // Get the rolloutProps from the getServerSideProps and pass it to the provider
+export default function MyPage({ progressivelyProps }) {
+  // Get the progressivelyProps from the getServerSideProps and pass it to the provider
   return (
-    <RolloutProvider {...rolloutProps}>
+    <ProgressivelyProvider {...progressivelyProps}>
       <FlaggedComponent />
-    </RolloutProvider>
+    </ProgressivelyProvider>
   );
 }
 
@@ -37,7 +37,7 @@ export async function getServerSideProps() {
 
   return {
     props: {
-      rolloutProps: ssrProps,
+      progressivelyProps: ssrProps,
     },
   };
 }
@@ -45,7 +45,7 @@ export async function getServerSideProps() {
 
 ## Usage on your own server
 
-You may (probably) want to host Rollout on your own server and make sure your client application hits the good apis. In order to do so, you can specify the API and Websocket URL by passing `apiUrl` and `websocketUrl` to the `getSSRProps`:
+You may (probably) want to host Progressively on your own server and make sure your client application hits the good apis. In order to do so, you can specify the API and Websocket URL by passing `apiUrl` and `websocketUrl` to the `getSSRProps`:
 
 ```jsx
 const ssrProps = await getSSRProps(CLIENT_KEY, {
@@ -56,7 +56,7 @@ const ssrProps = await getSSRProps(CLIENT_KEY, {
 
 ## Passing custom fields
 
-With Rollout, you can pass extra fields to the server in order to create customized strategies. For instance, you can create a strategy that targets a specific email, let's say: `john.doe@gmail.com`:
+With Progressively, you can pass extra fields to the server in order to create customized strategies. For instance, you can create a strategy that targets a specific email, let's say: `john.doe@gmail.com`:
 
 ```jsx
 const ssrProps = await getSSRProps(CLIENT_KEY, {

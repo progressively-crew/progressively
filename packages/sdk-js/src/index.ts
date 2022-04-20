@@ -1,4 +1,4 @@
-import { Fields, FlagDict, RolloutSdkType, SDKOptions } from "./types";
+import { Fields, FlagDict, ProgressivelySdkType, SDKOptions } from "./types";
 
 export * from "./types";
 
@@ -10,7 +10,7 @@ function appendFieldToUrl(url: URL, fields: Fields) {
   return url.toString();
 }
 
-function init(clientKey: string, options?: SDKOptions): RolloutSdkType {
+function init(clientKey: string, options?: SDKOptions): ProgressivelySdkType {
   const fields: Fields = options?.fields || {};
 
   const apiRoot = options?.apiUrl || "http://localhost:4000";
@@ -27,7 +27,10 @@ function init(clientKey: string, options?: SDKOptions): RolloutSdkType {
   return Sdk(flagEndpoint, websocketEndpoint);
 }
 
-function Sdk(flagEndpoint: string, websocketEndpoint: string): RolloutSdkType {
+function Sdk(
+  flagEndpoint: string,
+  websocketEndpoint: string
+): ProgressivelySdkType {
   let flags: FlagDict = {};
   let socket: WebSocket;
 

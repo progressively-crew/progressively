@@ -14,8 +14,8 @@ async function bootstrap() {
   app.useWebSocketAdapter(new WsAdapter(app));
 
   const config = new DocumentBuilder()
-    .setTitle('Rollout example')
-    .setDescription('The rollout API description')
+    .setTitle('Progressively API')
+    .setDescription('The Progressively API description')
     .setVersion('1.0')
     .addBearerAuth()
     .build();

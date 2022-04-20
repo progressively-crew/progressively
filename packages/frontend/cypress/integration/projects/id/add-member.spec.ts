@@ -61,7 +61,7 @@ describe("/dashboard/projects/[id]/add-member", () => {
         it("shows the layout of the page", () => {
           cy.title().should(
             "eq",
-            "Rollout | Project from seeding | Add member"
+            "Progressively | Project from seeding | Add member"
           );
 
           cy.findByRole("heading", {

@@ -39,7 +39,7 @@ export const meta: MetaFunction = ({ data }: MetaArgs) => {
   const environment = data.environment;
 
   return {
-    title: `Rollout | ${project.name} | ${environment.name} | Flags | Create`,
+    title: `Progressively | ${project.name} | ${environment.name} | Flags | Create`,
   };
 };
 

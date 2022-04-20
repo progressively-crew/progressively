@@ -1,11 +1,11 @@
 import React, { useRef } from "react";
-import { RolloutContext } from "./RolloutContext";
-import RolloutSdk from "@rollout/sdk-js";
-import { RolloutProviderProps } from "./types";
+import { ProgressivelyContext } from "./ProgressivelyContext";
+import ProgressivelySdk from "@progressively/sdk-js";
+import { ProgressivelyProviderProps } from "./types";
 import { useWebsocketInit } from "./useWebsocketInit";
 import { useFlagInit } from "./useFlagInit";
 
-export const RolloutProvider = ({
+export const ProgressivelyProvider = ({
   children,
   clientKey,
   initialFlags,
@@ -13,9 +13,9 @@ export const RolloutProvider = ({
   apiUrl,
   websocketUrl,
   fields = {},
-}: RolloutProviderProps) => {
+}: ProgressivelyProviderProps) => {
   const sdkRef = useRef(
-    RolloutSdk.init(clientKey, { fields, apiUrl, websocketUrl })
+    ProgressivelySdk.init(clientKey, { fields, apiUrl, websocketUrl })
   );
 
   const { flags, error, isLoading, setFlags } = useFlagInit(
@@ -32,8 +32,8 @@ export const RolloutProvider = ({
   const providerValue = { flags, isLoading, error };
 
   return (
-    <RolloutContext.Provider value={providerValue}>
+    <ProgressivelyContext.Provider value={providerValue}>
       {children}
-    </RolloutContext.Provider>
+    </ProgressivelyContext.Provider>
   );
 };

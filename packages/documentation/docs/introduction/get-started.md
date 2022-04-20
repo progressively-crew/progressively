@@ -5,7 +5,7 @@
 In your favorite terminal with git installed, run the following command:
 
 ```sh
-$ git clone https://github.com/mfrachet/rollout
+$ git clone https://github.com/mfrachet/progressively
 ```
 
 ## Creating `.env` files
@@ -41,7 +41,7 @@ You can run the postgres container using the following command:
 
 ```sh
 # Make sure to modify the user and password ;)
-$ docker run --name rollout-db -e POSTGRES_PASSWORD=admin -e POSTGRES_USER=admin -e POSTGRES_DB=rollout -p 5432:5432 -d postgres
+$ docker run --name progressively-db -e POSTGRES_PASSWORD=admin -e POSTGRES_USER=admin -e POSTGRES_DB=progressively -p 5432:5432 -d postgres
 ```
 
 And make sure the `postgres` database has tables in it:
@@ -55,17 +55,17 @@ $ npm run db:prepare    # creates the tables
 You can build and run the backend container using the following command inside `./packages/backend`:
 
 ```sh
-$ docker build -t rollout-backend .
+$ docker build -t progressively-backend .
 # Make sure to have a .env file the user/password defined for postgres
-$ docker run --env-file .env -p 4000:4000 -p 4001:4001 rollout-backend
+$ docker run --env-file .env -p 4000:4000 -p 4001:4001 progressively-backend
 ```
 
 You can finally build and run the frontend container using the following command inside: `./packages/frontend`:
 
 ```sh
-$ docker build -t rollout-frontend .
+$ docker build -t progressively-frontend .
 # Make sure to have the .env file with the good variables
-$ docker run --env-file .env -p 3000:3000 rollout-frontend
+$ docker run --env-file .env -p 3000:3000 progressively-frontend
 ```
 
 The dashboard is now available on [http://localhost:3000](http://localhost:3000), the backend APIs are available on [http://localhost:4000/api](http://localhost:4000/api)
@@ -74,7 +74,7 @@ The dashboard is now available on [http://localhost:3000](http://localhost:3000)
 
 This setup aims to provide a raw installation of the project and can also be used **for contributions**.
 
-Before going further, you need to have a running [Postgres](https://www.postgresql.org/) instance (Docker or locally) with a `rollout` database.
+Before going further, you need to have a running [Postgres](https://www.postgresql.org/) instance (Docker or locally) with a `progressively` database.
 
 Then, at the root of the project, make sure to run the following commands:
 

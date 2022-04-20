@@ -75,7 +75,7 @@ describe("/register", () => {
 
   it("checks the page title", () => {
     cy.title().then((el) => {
-      expect(el).to.eq("Rollout | Create an account");
+      expect(el).to.eq("Progressively| Create an account");
     });
   });
 });

@@ -48,7 +48,7 @@ export const meta: MetaFunction = ({ data }: MetaArgs) => {
   const currentFlag = data.currentFlag;
 
   return {
-    title: `Rollout | ${project.name} | ${environment.name} | Flags | ${currentFlag.name} | Strategies | Create`,
+    title: `Progressively | ${project.name} | ${environment.name} | Flags | ${currentFlag.name} | Strategies | Create`,
   };
 };
 

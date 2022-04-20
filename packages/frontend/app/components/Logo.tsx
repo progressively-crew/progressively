@@ -15,6 +15,6 @@ export const Logo = ({ to }: LogoProps) => (
     h={12}
   >
     <Icon as={GiSailboat} aria-hidden mr={2} w={6} h={6} />
-    Rollout
+    Progressively
   </CLink>
 );

@@ -32,7 +32,7 @@ export const meta: MetaFunction = ({ data }: MetaArgs) => {
   const { project } = data;
 
   return {
-    title: `Rollout | ${project.name}`,
+    title: `Progressively | ${project.name}`,
   };
 };
 

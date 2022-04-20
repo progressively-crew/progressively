@@ -20,7 +20,7 @@ describe("/profile", () => {
     });
 
     it("shows the create page layout", () => {
-      cy.title().should("eq", "Rollout | Profile");
+      cy.title().should("eq", "Progressively | Profile");
 
       cy.findByRole("link", { name: "Back to dashboard" })
         .should("be.visible")

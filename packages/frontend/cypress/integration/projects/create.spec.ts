@@ -20,7 +20,7 @@ describe("/dashboard/projects/create", () => {
     });
 
     it("shows the create page layout", () => {
-      cy.title().should("eq", "Rollout | Create a project");
+      cy.title().should("eq", "Progressively | Create a project");
       cy.findByRole("heading", { name: "Create a project" }).should(
         "be.visible"
       );

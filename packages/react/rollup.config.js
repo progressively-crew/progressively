@@ -20,7 +20,7 @@ export default () => {
   const legacy = {
     input: "src/index.tsx",
     output: {
-      name: "rollout-react",
+      name: "progressively-react",
       dir: "lib/legacy",
       format: "umd",
       globals,
@@ -36,7 +36,7 @@ export default () => {
   const modern = {
     input: "src/index.tsx",
     output: {
-      name: "rollout-react",
+      name: "progressively-react",
       dir: "lib/modern",
       format: "umd",
       globals,

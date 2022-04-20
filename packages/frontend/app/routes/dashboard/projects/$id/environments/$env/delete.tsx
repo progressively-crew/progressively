@@ -46,7 +46,7 @@ export const meta: MetaFunction = ({ data }: MetaArgs) => {
   const environment = data.environment;
 
   return {
-    title: `Rollout | ${project.name} | ${environment.name} | Settings | Delete`,
+    title: `Progressively | ${project.name} | ${environment.name} | Settings | Delete`,
   };
 };
 

@@ -50,7 +50,10 @@ describe("/dashboard/projects/[id]/settings", () => {
       });
 
       it("has a valid title", () => {
-        cy.title().should("eq", "Rollout | Project from seeding | Settings");
+        cy.title().should(
+          "eq",
+          "Progressively | Project from seeding | Settings"
+        );
       });
 
       it("show actions only allowed by the admin", () => {

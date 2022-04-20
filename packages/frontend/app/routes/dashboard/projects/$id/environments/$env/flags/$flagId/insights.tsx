@@ -47,7 +47,7 @@ export const meta: MetaFunction = ({ data }: MetaArgs) => {
   const currentFlag = data.currentFlagEnv.flag;
 
   return {
-    title: `Rollout | ${project.name} | ${environment.name} | ${currentFlag.name} | Insights`,
+    title: `Progressively | ${project.name} | ${environment.name} | ${currentFlag.name} | Insights`,
   };
 };
 
@@ -178,7 +178,7 @@ export default function FlagById() {
             to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`}
             icon={<FaPowerOff />}
           >
-            Rollout status
+            Progressively status
           </NavItem>
 
           <NavItem

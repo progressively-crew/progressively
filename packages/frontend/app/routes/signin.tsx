@@ -34,7 +34,7 @@ import { validateSigninForm } from "../modules/auth/validate-signin-form";
 
 export const meta: MetaFunction = () => {
   return {
-    title: "Rollout | Sign in",
+    title: "Progressively | Sign in",
   };
 };
 

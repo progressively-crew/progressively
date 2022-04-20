@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import { FlagDict, RolloutSdkType } from "@rollout/sdk-js";
+import { FlagDict, ProgressivelySdkType } from "@progressively/sdk-js";
 
 export const useWebsocketInit = (
-  sdkRef: React.MutableRefObject<RolloutSdkType>,
+  sdkRef: React.MutableRefObject<ProgressivelySdkType>,
   onFlagUpdate: (flags: FlagDict) => void
 ) => {
   useEffect(() => {

@@ -30,7 +30,7 @@ import { FormLabel } from "~/components/FormLabel";
 
 export const meta: MetaFunction = () => {
   return {
-    title: "Rollout | Create an account",
+    title: "Progressively| Create an account",
   };
 };
 

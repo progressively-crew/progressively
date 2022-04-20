@@ -57,7 +57,10 @@ describe("/dashboard/projects/[id]/delete", () => {
         });
 
         it("shows the layout of the page", () => {
-          cy.title().should("eq", "Rollout | Project from seeding | Delete");
+          cy.title().should(
+            "eq",
+            "Progressively | Project from seeding | Delete"
+          );
 
           cy.findByRole("heading", {
             name: "You are about to delete the project.",

@@ -7,9 +7,6 @@ module.exports = {
     config.resolve.alias["react"] = path.dirname(
       require.resolve("./node_modules/react")
     );
-    // config.resolve.alias["@rollout/react"] = path.dirname(
-    //   require.resolve("../../packages/@rollout/react")
-    // );
 
     return config;
   },

@@ -1,5 +1,5 @@
 {
-  "name": "@rollout/react",
+  "name": "@progressively/react",
   "author": "mfrachet",
   "version": "0.1.0",
   "license": "MIT",
@@ -31,7 +31,7 @@
     "typescript": "^4.4.3"
   },
   "dependencies": {
-    "@rollout/sdk-js": "^0.1.0"
+    "@progressively/sdk-js": "^0.1.0"
   },
   "bundlesize": [
     {

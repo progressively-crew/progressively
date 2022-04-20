@@ -36,7 +36,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags", () => {
       it("should show the empty state when there are no flags", () => {
         cy.title().should(
           "eq",
-          "Rollout | Project from seeding | Developer | Flags"
+          "Progressively | Project from seeding | Developer | Flags"
         );
 
         cy.findByRole("link", { name: "Projects" })
@@ -85,7 +85,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags", () => {
       it("shows the layout", () => {
         cy.title().should(
           "eq",
-          "Rollout | Project from seeding | Production | Flags"
+          "Progressively | Project from seeding | Production | Flags"
         );
 
         cy.findByRole("link", { name: "Projects" })

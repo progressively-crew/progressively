@@ -44,7 +44,7 @@ export const meta: MetaFunction = ({ data }: MetaArgs) => {
   const project = data.project;
 
   return {
-    title: `Rollout | ${project.name} | Add member`,
+    title: `Progressively | ${project.name} | Add member`,
   };
 };
 

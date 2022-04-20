@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { RolloutProvider, useFlags } from "@rollout/react";
+import { ProgressivelyProvider, useFlags } from "@progressively/react";
 
 const FlaggedComponent = () => {
   const { flags } = useFlags();
@@ -14,11 +14,11 @@ const FlaggedComponent = () => {
 
 const Home = () => {
   return (
-    <RolloutProvider clientKey="valid-sdk-key">
+    <ProgressivelyProvider clientKey="valid-sdk-key">
       <main>
         <FlaggedComponent />
       </main>
-    </RolloutProvider>
+    </ProgressivelyProvider>
   );
 };
 

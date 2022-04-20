@@ -1,7 +1,7 @@
-import { FlagDict } from "@rollout/sdk-js";
+import { FlagDict } from "@progressively/sdk-js";
 import React from "react";
 
-export interface RolloutProviderProps {
+export interface ProgressivelyProviderProps {
   clientKey: string;
   onlyRenderWhenReady?: boolean;
   initialFlags?: FlagDict;

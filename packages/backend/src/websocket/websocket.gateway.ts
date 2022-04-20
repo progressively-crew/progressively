@@ -66,8 +66,8 @@ export class WebsocketGateway
 
     if (queryParams.client_key) {
       const { client_key, ...fields } = queryParams;
-      socket.__ROLLOUT_ROOMS = [];
-      socket.__ROLLOUT_FIELDS = fields || {};
+      socket.__ROOMS = [];
+      socket.__FIELDS = fields || {};
       this.rooms.join(client_key, socket);
     }
   }
@@ -95,7 +95,7 @@ export class WebsocketGateway
         status = await this.strategyService.resolveStrategies(
           flagEnv,
           flagEnv.strategies,
-          socket.__ROLLOUT_FIELDS,
+          socket.__FIELDS,
         );
       } else {
         status = false;

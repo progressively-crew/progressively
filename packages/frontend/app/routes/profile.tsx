@@ -35,7 +35,7 @@ import { getSession } from "~/sessions";
 
 export const meta: MetaFunction = () => {
   return {
-    title: "Rollout | Profile",
+    title: "Progressively | Profile",
   };
 };
 

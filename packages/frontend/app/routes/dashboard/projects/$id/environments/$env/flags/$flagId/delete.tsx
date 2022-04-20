@@ -42,7 +42,7 @@ export const meta: MetaFunction = ({ data }: MetaArgs) => {
   const { flag } = currentFlagEnv;
 
   return {
-    title: `Rollout | ${project.name} | ${environment.name} | ${flag.name} | Delete`,
+    title: `Progressively | ${project.name} | ${environment.name} | ${flag.name} | Delete`,
   };
 };
 

@@ -20,7 +20,7 @@ describe("/dashboard/onboarding", () => {
     });
 
     it("shows an onboarding layout", () => {
-      cy.title().should("eq", "Rollout | Onboarding");
+      cy.title().should("eq", "Progressively | Onboarding");
       cy.findByText("Welcome aboard").should("be.visible");
       cy.contains(
         "Before being fully operational, you will need to create a project"
