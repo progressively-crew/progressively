@@ -15,6 +15,7 @@
     "start": "lerna run start --stream",
     "start:dev": "lerna run dev --stream",
     "test:e2e:ci": "lerna run test:e2e:ci --stream",
-    "deploy:lib": "lerna publish"
+    "deploy:lib": "lerna publish",
+    "deploy:images": "./scripts/docker-build-deploy.sh"
   }
 }

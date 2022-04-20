@@ -1,3 +1,4 @@
+import { Link } from "remix";
 import { H1 } from "~/components/H1";
 import { Main } from "~/components/Main";
 
@@ -12,6 +13,8 @@ export default function ForbiddenPage() {
       <p>
         To access this content, make sure to fill the authentication page form.
       </p>
+
+      <Link to="/signin">Go back to the signin page</Link>
     </Main>
   );
 }

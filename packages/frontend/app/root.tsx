@@ -1,5 +1,6 @@
 import * as React from "react";
 import {
+  Link,
   Links,
   LiveReload,
   Meta,
@@ -138,24 +139,22 @@ export function CatchBoundary() {
           {caught.status}: {caught.statusText}
         </h1>
         {message}
+
+        <Link to="/signin">Go back to the signin page</Link>
       </Layout>
     </Document>
   );
 }
 
 export function ErrorBoundary({ error }: { error: Error }) {
-  console.error(error);
   return (
     <Document title="Error!">
       <Layout>
         <div>
           <h1>There was an error</h1>
           <p>{error.message}</p>
-          <hr />
-          <p>
-            Hey, developer, you should replace this with what you want your
-            users to see.
-          </p>
+
+          <Link to="/signin">Go back to the signin page</Link>
         </div>
       </Layout>
     </Document>

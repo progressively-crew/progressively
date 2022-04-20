@@ -170,8 +170,8 @@ export default function FlagsByEnvPage() {
               To setup your feature flags in your app, make sure to follow{" "}
               <CLink
                 textDecoration={"underline"}
-                as={Link}
-                to={`/guides/sdks/react/ssr?sdk-key=${environment.clientKey}`}
+                target="_blank"
+                href={`https://mfrachet.github.io/progressively/`}
               >
                 the guide of the SDKs usage
               </CLink>
