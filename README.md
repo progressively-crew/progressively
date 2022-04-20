@@ -10,7 +10,7 @@ For documentation, make sure to check [the documentation website](https://mfrach
 
 **Core**
 
-![Backend](https://github.com/mfrachet/progressively/actions/workflows/backend.yml/badge.svg) ![Frontend](https://github.com/mfrachet/progressively/actions/workflows/frontend.yml/badge.svg) ![E2E](https://github.com/mfrachet/progressively/actions/workflows/e2e.yml/badge.svg) ![Sdk-js](https://github.com/mfrachet/progressively/actions/workflows/sdk.yml/badge.svg) ![Sdk-react](https://github.com/mfrachet/progressively/actions/workflows/sdk-react.yml/badge.svg)
+![Backend](https://github.com/mfrachet/progressively/actions/workflows/backend.yml/badge.svg) ![Frontend](https://github.com/mfrachet/progressively/actions/workflows/frontend.yml/badge.svg) ![E2E](https://github.com/mfrachet/progressively/actions/workflows/e2e.yml/badge.svg) ![Sdk-js](https://github.com/mfrachet/progressively/actions/workflows/sdk.yml/badge.svg) ![Sdk-react](https://github.com/mfrachet/progressively/actions/workflows/sdk-react.yml/badge.svg) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 **Examples**
 
