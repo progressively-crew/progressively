@@ -52,20 +52,18 @@ $ npm run setup         # prepares the mono-repo
 $ npm run db:prepare    # creates the tables
 ```
 
-You can build and run the backend container using the following command inside `./packages/backend`:
+You can and run a backend container using the following command in `./packages/backend` (because .env files):
 
 ```sh
-$ docker build -t progressively-backend .
 # Make sure to have a .env file the user/password defined for postgres
-$ docker run --env-file .env -p 4000:4000 -p 4001:4001 progressively-backend
+$ docker run --env-file .env -p 4000:4000 -p 4001:4001 mfrachet/progressively-backend
 ```
 
-You can finally build and run the frontend container using the following command inside: `./packages/frontend`:
+You can and run a frontend container using the following command in `./packages/frontend` (because .env files):
 
 ```sh
-$ docker build -t progressively-frontend .
 # Make sure to have the .env file with the good variables
-$ docker run --env-file .env -p 3000:3000 progressively-frontend
+$ docker run --env-file .env -p 3000:3000 mfrachet/progressively-frontend
 ```
 
 The dashboard is now available on [http://localhost:3000](http://localhost:3000), the backend APIs are available on [http://localhost:4000/api](http://localhost:4000/api)
