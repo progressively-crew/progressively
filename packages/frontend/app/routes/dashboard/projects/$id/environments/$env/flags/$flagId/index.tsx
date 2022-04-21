@@ -1,21 +1,16 @@
-import { Box, Text, Badge, Stack } from "@chakra-ui/react";
+import { Box, Text, Stack } from "@chakra-ui/react";
 import { IoIosCreate } from "react-icons/io";
 import {
   useLoaderData,
   LoaderFunction,
   MetaFunction,
   ActionFunction,
-  Form,
   useSearchParams,
-  useTransition,
 } from "remix";
 import { Crumbs, BreadCrumbs } from "~/components/AppBreadcrumbs";
-import { ButtonCopy } from "~/components/ButtonCopy";
-import { Switch } from "~/components/Switch";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { authGuard } from "~/modules/auth/auth-guard";
 import { Environment } from "~/modules/environments/types";
-import { activateFlag } from "~/modules/flags/activateFlag";
 import { getFlagsByProjectEnv } from "~/modules/flags/getFlagsByProjectEnv";
 import { FlagEnv, FlagStatus } from "~/modules/flags/types";
 import { getProject } from "~/modules/projects/getProject";
@@ -24,7 +19,6 @@ import { getStrategies } from "~/modules/strategies/getStrategies";
 import { StrategyCard } from "~/modules/strategies/StrategyCard";
 import { User } from "~/modules/user/types";
 import { getSession } from "~/sessions";
-import { IoIosFlag } from "react-icons/io";
 import { SuccessBox } from "~/components/SuccessBox";
 import { StrategyRetrieveDTO } from "~/modules/strategies/types";
 import { WarningBox } from "~/components/WarningBox";
@@ -35,6 +29,7 @@ import { AiOutlineBarChart, AiOutlineSetting } from "react-icons/ai";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { FaPowerOff } from "react-icons/fa";
 import { Button } from "~/components/Button";
+import { toggleAction, ToggleFlag } from "~/modules/flags/ToggleFlag";
 
 interface MetaArgs {
   data: {
@@ -54,28 +49,8 @@ export const meta: MetaFunction = ({ data }: MetaArgs) => {
   };
 };
 
-export const action: ActionFunction = async ({
-  request,
-  params,
-}): Promise<null> => {
-  const session = await getSession(request.headers.get("Cookie"));
-  const authCookie = session.get("auth-cookie");
-
-  const formData = await request.formData();
-  const nextStatus = formData.get("nextStatus");
-  const flagId = params.flagId;
-
-  if (nextStatus && flagId) {
-    await activateFlag(
-      params.id!,
-      params.env!,
-      flagId as string,
-      nextStatus as FlagStatus,
-      authCookie
-    );
-  }
-
-  return null;
+export const action: ActionFunction = ({ request, params }): Promise<null> => {
+  return toggleAction({ request, params });
 };
 
 interface LoaderData {
@@ -129,7 +104,6 @@ export const loader: LoaderFunction = async ({
 
 export default function FlagById() {
   const [searchParams] = useSearchParams();
-  const transition = useTransition();
 
   const { project, environment, currentFlagEnv, user, strategies } =
     useLoaderData<LoaderData>();
@@ -167,16 +141,7 @@ export default function FlagById() {
       header={
         <Header
           title={currentFlag.name}
-          startAction={
-            <ButtonCopy
-              toCopy={currentFlag.key}
-              icon={<IoIosFlag aria-hidden />}
-              variant="outline"
-              colorScheme={"brand"}
-            >
-              {currentFlag.key}
-            </ButtonCopy>
-          }
+          startAction={<ToggleFlag isFlagActivated={isFlagActivated} />}
         />
       }
       subNav={
@@ -185,7 +150,7 @@ export default function FlagById() {
             to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`}
             icon={<FaPowerOff />}
           >
-            Progressively status
+            Strategies
           </NavItem>
 
           <NavItem
@@ -204,58 +169,11 @@ export default function FlagById() {
         </HorizontalNav>
       }
     >
-      <Stack spacing={4}>
-        <Section id="flag-status">
-          <SectionHeader
-            title="Flag status"
-            description={
-              <div aria-live="polite">
-                {isFlagActivated ? (
-                  <Text>
-                    The feature flag is{" "}
-                    <Badge colorScheme="success">active</Badge>. People matching
-                    at least one of the following strategies will see the
-                    variant.
-                  </Text>
-                ) : (
-                  <Text>
-                    The feature flag is <Badge>not active</Badge>. Nobody will
-                    see the variant and the following strategies will NOT apply.
-                  </Text>
-                )}
-              </div>
-            }
-            endAction={
-              <Form method="post">
-                <input
-                  type="hidden"
-                  name="nextStatus"
-                  value={
-                    isFlagActivated
-                      ? FlagStatus.NOT_ACTIVATED
-                      : FlagStatus.ACTIVATED
-                  }
-                />
-
-                <Switch
-                  optimistic={transition.state === "submitting"}
-                  type="submit"
-                  checked={isFlagActivated}
-                />
-              </Form>
-            }
-          />
-        </Section>
-
+      <Stack spacing={8}>
         <Section id="concerned-audience">
           <SectionHeader
-            title="Progressively strategies"
-            description={
-              <Text>
-                When a user matches at least one of the following strategies,
-                they will see the activated variant of the flag.
-              </Text>
-            }
+            title="Strategies"
+            hiddenTitle
             endAction={
               <Button
                 to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
@@ -268,33 +186,32 @@ export default function FlagById() {
           />
 
           <Stack spacing={2}>
-            <Box px={4}>
-              {isStrategyAdded ? (
-                <SuccessBox id="strategy-added" mb={4}>
-                  The strategy has been successfully created.
-                </SuccessBox>
-              ) : null}
+            {isStrategyAdded ? (
+              <SuccessBox id="strategy-added" mb={4}>
+                The strategy has been successfully created.
+              </SuccessBox>
+            ) : null}
 
-              {isStrategyRemoved ? (
-                <SuccessBox id="strategy-removed" mb={4}>
-                  The strategy has been successfully removed.
-                </SuccessBox>
-              ) : null}
+            {isStrategyRemoved ? (
+              <SuccessBox id="strategy-removed" mb={4}>
+                The strategy has been successfully removed.
+              </SuccessBox>
+            ) : null}
 
-              {strategies.length > 0 ? (
-                <>
-                  {strategies.map((strat) => (
-                    <StrategyCard
-                      key={`${strat.uuid}`}
-                      projectId={project.uuid}
-                      envId={environment.uuid}
-                      flagId={currentFlag.uuid}
-                      strat={strat}
-                    />
-                  ))}
-                </>
-              ) : null}
-            </Box>
+            {strategies.length > 0 ? (
+              <Box>
+                {strategies.map((strat, index) => (
+                  <StrategyCard
+                    noBorder={index === 0}
+                    key={`${strat.uuid}`}
+                    projectId={project.uuid}
+                    envId={environment.uuid}
+                    flagId={currentFlag.uuid}
+                    strat={strat}
+                  />
+                ))}
+              </Box>
+            ) : null}
 
             {strategies.length === 0 ? (
               <>

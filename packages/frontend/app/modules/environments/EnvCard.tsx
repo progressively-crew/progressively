@@ -15,16 +15,23 @@ export interface EnvCardProps {
   linkTo: string;
   title: string;
   clientKey: string;
+  noBorder?: boolean;
 }
 
-export const EnvCard = ({ id, linkTo, title, clientKey }: EnvCardProps) => {
+export const EnvCard = ({
+  id,
+  linkTo,
+  title,
+  clientKey,
+  noBorder,
+}: EnvCardProps) => {
   const linkRef = useRef<HTMLAnchorElement>(null);
 
   return (
     <Box
-      borderTopWidth={1}
+      borderTopWidth={noBorder ? 0 : 1}
       borderColor="background"
-      p={4}
+      p={6}
       as="article"
       aria-labelledby={`article-${id}`}
       cursor="pointer"

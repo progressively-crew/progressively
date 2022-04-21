@@ -1,4 +1,11 @@
-import { Box, Stack, Text, VisuallyHidden, Flex } from "@chakra-ui/react";
+import {
+  Box,
+  Stack,
+  Text,
+  VisuallyHidden,
+  Flex,
+  Divider,
+} from "@chakra-ui/react";
 import { AiOutlineSetting } from "react-icons/ai";
 import { FaTrash } from "react-icons/fa";
 import { FiLayers } from "react-icons/fi";
@@ -151,14 +158,15 @@ export default function SettingsPage() {
         </HorizontalNav>
       }
     >
-      <Stack spacing={4}>
+      <Stack spacing={8}>
         <Section id="details">
-          <SectionHeader title="Project details" />
-
-          <Box px={4} pb={4}>
-            {project.name}
-          </Box>
+          <SectionHeader
+            title="Project details"
+            description={<Text>{project.name}</Text>}
+          />
         </Section>
+
+        <Divider />
 
         <Section id="members">
           <SectionHeader
@@ -200,34 +208,37 @@ export default function SettingsPage() {
         </Section>
 
         {userRole === UserRoles.Admin && (
-          <Section id="danger">
-            <SectionHeader
-              title="Danger zone"
-              description={
-                <Text>
-                  You can delete a project at any time, but you {`won’t`} be
-                  able to access its environments and all the related flags will
-                  be removed and be falsy in your applications. Be sure to know
-                  what {`you're`} doing before removing a project.
-                </Text>
-              }
-            />
+          <>
+            <Divider />
+            <Section id="danger">
+              <SectionHeader
+                title="Danger zone"
+                description={
+                  <Text>
+                    You can delete a project at any time, but you {`won’t`} be
+                    able to access its environments and all the related flags
+                    will be removed and be falsy in your applications. Be sure
+                    to know what {`you're`} doing before removing a project.
+                  </Text>
+                }
+              />
 
-            <Flex px={4} pb={4} justifyContent={["center", "flex-start"]}>
-              <Button
-                colorScheme="error"
-                to={`/dashboard/projects/${project.uuid}/delete`}
-                leftIcon={<FaTrash aria-hidden />}
-                variant="outline"
-              >
-                Delete{" "}
-                <Box as="span" aria-hidden display={["none", "inline"]}>
-                  {`"${project.name}"`} forever
-                </Box>
-                <VisuallyHidden>{`"${project.name}"`} forever</VisuallyHidden>
-              </Button>
-            </Flex>
-          </Section>
+              <Flex px={4} pb={4} justifyContent={["center", "flex-start"]}>
+                <Button
+                  colorScheme="error"
+                  to={`/dashboard/projects/${project.uuid}/delete`}
+                  leftIcon={<FaTrash aria-hidden />}
+                  variant="outline"
+                >
+                  Delete{" "}
+                  <Box as="span" aria-hidden display={["none", "inline"]}>
+                    {`"${project.name}"`} forever
+                  </Box>
+                  <VisuallyHidden>{`"${project.name}"`} forever</VisuallyHidden>
+                </Button>
+              </Flex>
+            </Section>
+          </>
         )}
       </Stack>
     </DashboardLayout>

@@ -1,4 +1,4 @@
-import { Box, Flex, Heading } from "@chakra-ui/react";
+import { Box, Flex, Heading, VisuallyHidden } from "@chakra-ui/react";
 import { createContext, useContext } from "react";
 
 const SectionContext = createContext<string | undefined>(undefined);
@@ -12,15 +12,7 @@ export interface SectionProps extends React.HTMLAttributes<HTMLElement> {
 export const Section = ({ children, id, ...props }: SectionProps) => {
   return (
     <SectionContext.Provider value={id}>
-      <Box
-        bg="backgroundContent"
-        as="section"
-        borderRadius={16}
-        p={[2, 8]}
-        boxShadow="md"
-        aria-labelledby={id}
-        {...props}
-      >
+      <Box as="section" aria-labelledby={id} {...props}>
         {children}
       </Box>
     </SectionContext.Provider>
@@ -32,6 +24,7 @@ export interface SectionHeaderProps extends React.HTMLAttributes<HTMLElement> {
   titleAs?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
   endAction?: React.ReactNode;
   description?: React.ReactNode;
+  hiddenTitle?: boolean;
 }
 
 export const SectionHeader = ({
@@ -39,34 +32,39 @@ export const SectionHeader = ({
   titleAs = "h2",
   endAction,
   description,
+  hiddenTitle,
   ...props
 }: SectionHeaderProps) => {
   const id = useContext(SectionContext);
 
   return (
     <Flex
-      justifyContent={"space-between"}
       alignItems={["flex-start", "center"]}
+      justifyContent={hiddenTitle ? "center" : "space-between"}
       direction={["column", "row"]}
       p={4}
       {...props}
     >
       <Box maxW={endAction ? "xl" : undefined}>
-        <Heading as={titleAs} id={id} size="lg" pb={1}>
-          {title}
-        </Heading>
+        {hiddenTitle ? (
+          <VisuallyHidden>
+            <Heading as={titleAs} id={id} size="xl" pb={1}>
+              {title}
+            </Heading>
+          </VisuallyHidden>
+        ) : (
+          <Heading as={titleAs} id={id} size="xl" pb={1}>
+            {title}
+          </Heading>
+        )}
+
         <Box fontSize="xl" color="textlight">
           {description}
         </Box>
       </Box>
 
       {endAction ? (
-        <Box
-          flexShrink={0}
-          ml={[0, description ? 2 : 0]}
-          mt={[4, 0]}
-          width={["100%", "auto"]}
-        >
+        <Box flexShrink={0} ml={[0, 4]} mt={[4, 0]} width={["100%", "auto"]}>
           {endAction}
         </Box>
       ) : null}

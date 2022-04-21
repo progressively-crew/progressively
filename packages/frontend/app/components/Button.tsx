@@ -14,6 +14,7 @@ export const Button = (props: ButtonProps) => {
       as={props?.to ? Link : undefined}
       size={"lg"}
       width={["100%", "auto"]}
+      borderRadius={24}
       {...props}
     />
   );

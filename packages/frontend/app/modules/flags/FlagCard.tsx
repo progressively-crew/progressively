@@ -20,6 +20,7 @@ export interface FlagCardProps {
   flagStatus: FlagStatus;
   flagKey: string;
   optimistic: boolean;
+  noBorder?: boolean;
 }
 
 export const FlagCard = ({
@@ -30,14 +31,15 @@ export const FlagCard = ({
   flagStatus,
   flagKey,
   optimistic,
+  noBorder,
 }: FlagCardProps) => {
   const linkRef = useRef<HTMLAnchorElement>(null);
 
   return (
     <Box
-      borderTopWidth={1}
+      borderTopWidth={noBorder ? 0 : 1}
       borderColor="background"
-      p={4}
+      p={6}
       as="article"
       aria-labelledby={`article-${id}`}
       cursor="pointer"

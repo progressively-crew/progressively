@@ -1,23 +1,27 @@
 import { Box, Flex, Text, VisuallyHidden } from "@chakra-ui/react";
-import { useLoaderData, LoaderFunction, MetaFunction } from "remix";
+import {
+  useLoaderData,
+  LoaderFunction,
+  MetaFunction,
+  ActionFunction,
+} from "remix";
 import { Crumbs, BreadCrumbs } from "~/components/AppBreadcrumbs";
-import { ButtonCopy } from "~/components/ButtonCopy";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { authGuard } from "~/modules/auth/auth-guard";
 import { Environment } from "~/modules/environments/types";
 import { getFlagsByProjectEnv } from "~/modules/flags/getFlagsByProjectEnv";
-import { FlagEnv } from "~/modules/flags/types";
+import { FlagEnv, FlagStatus } from "~/modules/flags/types";
 import { getProject } from "~/modules/projects/getProject";
 import { Project, UserProject, UserRoles } from "~/modules/projects/types";
 import { User } from "~/modules/user/types";
 import { getSession } from "~/sessions";
-import { IoIosFlag } from "react-icons/io";
 import { Header } from "~/components/Header";
 import { Section, SectionHeader } from "~/components/Section";
 import { AiOutlineBarChart, AiOutlineSetting } from "react-icons/ai";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { FaPowerOff, FaTrash } from "react-icons/fa";
 import { Button } from "~/components/Button";
+import { toggleAction, ToggleFlag } from "~/modules/flags/ToggleFlag";
 
 interface MetaArgs {
   data: {
@@ -84,11 +88,16 @@ export const loader: LoaderFunction = async ({
   };
 };
 
+export const action: ActionFunction = ({ request, params }): Promise<null> => {
+  return toggleAction({ request, params });
+};
+
 export default function FlagSettingPage() {
   const { project, environment, currentFlagEnv, user, userRole } =
     useLoaderData<LoaderData>();
 
   const currentFlag = currentFlagEnv.flag;
+  const isFlagActivated = currentFlagEnv.status === FlagStatus.ACTIVATED;
 
   const crumbs: Crumbs = [
     {
@@ -117,16 +126,7 @@ export default function FlagSettingPage() {
       header={
         <Header
           title={currentFlag.name}
-          startAction={
-            <ButtonCopy
-              toCopy={currentFlag.key}
-              icon={<IoIosFlag aria-hidden />}
-              variant="outline"
-              colorScheme={"brand"}
-            >
-              {currentFlag.key}
-            </ButtonCopy>
-          }
+          startAction={<ToggleFlag isFlagActivated={isFlagActivated} />}
         />
       }
       subNav={
@@ -135,7 +135,7 @@ export default function FlagSettingPage() {
             to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`}
             icon={<FaPowerOff />}
           >
-            Progressively status
+            Strategies
           </NavItem>
 
           <NavItem

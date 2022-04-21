@@ -37,12 +37,12 @@ export const DashboardLayout = ({
         </Flex>
       </Container>
 
-      <Container maxW="5xl" pt={[0, 16]} pb={4}>
-        {breadcrumb}
+      <Container maxW="5xl" pt={[0, 6]} pb={4}>
+        <Flex justifyContent={"center"}>{breadcrumb}</Flex>
 
         <Main>
-          <Box pb={8}>{header}</Box>
-          <Box pb={6}>{subNav}</Box>
+          <Box p={[4, 20]}>{header}</Box>
+          {subNav && <Box pb={12}>{subNav}</Box>}
 
           {children}
         </Main>

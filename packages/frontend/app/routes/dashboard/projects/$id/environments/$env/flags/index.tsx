@@ -165,19 +165,7 @@ export default function FlagsByEnvPage() {
       <Section id="list-flags-title">
         <SectionHeader
           title="Feature flags"
-          description={
-            <Text>
-              To setup your feature flags in your app, make sure to follow{" "}
-              <CLink
-                textDecoration={"underline"}
-                target="_blank"
-                href={`https://mfrachet.github.io/progressively/`}
-              >
-                the guide of the SDKs usage
-              </CLink>
-              .
-            </Text>
-          }
+          hiddenTitle
           endAction={
             <Button
               to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/create`}
@@ -191,40 +179,39 @@ export default function FlagsByEnvPage() {
         />
 
         <Stack spacing={2}>
-          <Box px={4}>
-            {isFlagRemoved ? (
-              <SuccessBox id="flag-removed" mb={4}>
-                The flag has been successfully deleted.
-              </SuccessBox>
-            ) : null}
+          {isFlagRemoved ? (
+            <SuccessBox id="flag-removed" mb={4}>
+              The flag has been successfully deleted.
+            </SuccessBox>
+          ) : null}
 
-            {newFlagId ? (
-              <SuccessBox id="flag-added" mb={4}>
-                The flag has been successfully created.
-              </SuccessBox>
-            ) : null}
+          {newFlagId ? (
+            <SuccessBox id="flag-added" mb={4}>
+              The flag has been successfully created.
+            </SuccessBox>
+          ) : null}
 
-            {flagsByEnv.length > 0 ? (
-              <>
-                {flagsByEnv.map((flagEnv) => (
-                  <FlagCard
-                    key={flagEnv.flagId}
-                    id={flagEnv.flagId}
-                    linkTo={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${flagEnv.flagId}`}
-                    title={flagEnv.flag.name}
-                    flagStatus={flagEnv.status}
-                    flagKey={flagEnv.flag.key}
-                    description={flagEnv.flag.description}
-                    optimistic={
-                      transition.state === "submitting" &&
-                      transition.submission?.formData.get("flagId") ===
-                        flagEnv.flagId
-                    }
-                  />
-                ))}
-              </>
-            ) : null}
-          </Box>
+          {flagsByEnv.length > 0 ? (
+            <Box>
+              {flagsByEnv.map((flagEnv, index) => (
+                <FlagCard
+                  noBorder={index === 0}
+                  key={flagEnv.flagId}
+                  id={flagEnv.flagId}
+                  linkTo={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${flagEnv.flagId}`}
+                  title={flagEnv.flag.name}
+                  flagStatus={flagEnv.status}
+                  flagKey={flagEnv.flag.key}
+                  description={flagEnv.flag.description}
+                  optimistic={
+                    transition.state === "submitting" &&
+                    transition.submission?.formData.get("flagId") ===
+                      flagEnv.flagId
+                  }
+                />
+              ))}
+            </Box>
+          ) : null}
 
           {flagsByEnv.length === 0 ? (
             <EmptyState

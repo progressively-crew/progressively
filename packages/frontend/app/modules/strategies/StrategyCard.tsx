@@ -16,6 +16,7 @@ export interface StrategyCardProps {
   projectId: string;
   envId: string;
   strat: StrategyRetrieveDTO;
+  noBorder?: boolean;
 }
 
 const mapStrategyComparator = (comparatorEnum: ComparatorEnum) => {
@@ -90,6 +91,7 @@ export const StrategyCard = ({
   projectId,
   envId,
   strat,
+  noBorder,
 }: StrategyCardProps) => {
   return (
     <Box
@@ -97,7 +99,7 @@ export const StrategyCard = ({
       pb={4}
       as="article"
       aria-labelledby={strat.uuid}
-      borderTopWidth={1}
+      borderTopWidth={noBorder ? 0 : 1}
       borderColor="background"
     >
       <Flex

@@ -10,11 +10,19 @@ export const HorizontalNav = ({ children, label }: HorizontalNavProps) => {
     <Box
       as="nav"
       aria-label={label}
-      borderBottomWidth={1}
-      borderBottomColor="background300"
+      borderRadius={32}
       overflowX="scroll"
+      bg="background100"
     >
-      <HStack as="ul" listStyleType={"none"} spacing={3} pl={1} pt={1} pr={1}>
+      <HStack
+        as="ul"
+        listStyleType={"none"}
+        spacing={3}
+        pl={6}
+        pr={6}
+        pt={1}
+        pb={1}
+      >
         {children}
       </HStack>
     </Box>

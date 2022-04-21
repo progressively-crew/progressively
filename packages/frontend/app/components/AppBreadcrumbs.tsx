@@ -37,7 +37,7 @@ export const BreadCrumbs = ({ crumbs }: BreadCrumbsProps) => {
           display={["inline-block", "none"]}
           mb={12}
         >
-          <HStack alignItems={"center"} height={"44px"} fontSize="xl">
+          <HStack alignItems={"center"} height={"44px"} fontSize="xl" mt={8}>
             <MdChevronLeft aria-hidden />
             <span> Back to {beforeLastCrumb.label}</span>
           </HStack>

@@ -98,7 +98,7 @@ const Document = withEmotionCache(
         </head>
         <body>
           <ChakraProvider theme={lightTheme}>
-            <Box minH="100%" bg="background" paddingBottom={8}>
+            <Box minH="100%" paddingBottom={8}>
               {children}
             </Box>
           </ChakraProvider>

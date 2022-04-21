@@ -95,6 +95,7 @@ export default function ProjectDetailPage() {
       <Section aria-labelledby="list-env-title" id="list-env-title">
         <SectionHeader
           title="Environments"
+          hiddenTitle
           endAction={
             <Button
               to={`/dashboard/projects/${project.uuid}/environments/create`}
@@ -107,21 +108,22 @@ export default function ProjectDetailPage() {
         />
 
         <Stack spacing={2}>
-          <Box px={4}>
-            {newEnvId ? (
-              <SuccessBox id="env-added" mb={4}>
-                The environment has been successfully created.
-              </SuccessBox>
-            ) : null}
+          {newEnvId ? (
+            <SuccessBox id="env-added" mb={4}>
+              The environment has been successfully created.
+            </SuccessBox>
+          ) : null}
 
-            {envRemoved ? (
-              <SuccessBox id="env-removed" mb={4}>
-                The environment has been successfully deleted.
-              </SuccessBox>
-            ) : null}
+          {envRemoved ? (
+            <SuccessBox id="env-removed" mb={4}>
+              The environment has been successfully deleted.
+            </SuccessBox>
+          ) : null}
 
-            {project.environments.map((env) => (
+          <Box>
+            {project.environments.map((env, index) => (
               <EnvCard
+                noBorder={index === 0}
                 key={env.uuid}
                 id={env.uuid}
                 linkTo={`/dashboard/projects/${project.uuid}/environments/${env.uuid}/flags`}
