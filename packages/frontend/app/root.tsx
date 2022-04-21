@@ -11,7 +11,7 @@ import {
   useLocation,
 } from "remix";
 import type { LinksFunction } from "remix";
-import { Box, ChakraProvider } from "@chakra-ui/react";
+import { Box, ChakraProvider, Button } from "@chakra-ui/react";
 import { withEmotionCache } from "@emotion/react";
 import ClientStyleContext from "./_chakra-setup/context.client";
 import ServerStyleContext from "./_chakra-setup/context.server";
@@ -19,6 +19,10 @@ import { lightTheme } from "./modules/themes/light";
 import ForbiddenPage from "./routes/403";
 import styles from "./styles/index.css";
 import UnauthorizedPage from "./routes/401";
+import { NotAuthenticatedLayout } from "./layouts/NotAuthenticatedLayout";
+import { H1 } from "./components/H1";
+import { Main } from "./components/Main";
+import { AiOutlineLogin } from "react-icons/ai";
 
 /**
  * The `links` export is a function that returns an array of objects that map to
@@ -135,12 +139,32 @@ export function CatchBoundary() {
   return (
     <Document title={`${caught.status} ${caught.statusText}`}>
       <Layout>
-        <h1>
-          {caught.status}: {caught.statusText}
-        </h1>
-        {message}
+        <NotAuthenticatedLayout>
+          <Main>
+            <H1>Outch, a wild error appeared!</H1>
 
-        <Link to="/signin">Go back to the signin page</Link>
+            <Box my={6}>
+              <p>
+                <strong>
+                  {caught.status}: {caught.statusText}
+                </strong>
+              </p>
+            </Box>
+
+            <Box my={6}>
+              <p>{message}</p>
+            </Box>
+
+            <Button
+              as={Link}
+              to="/signin"
+              colorScheme={"brand"}
+              leftIcon={<AiOutlineLogin aria-hidden />}
+            >
+              Signin page
+            </Button>
+          </Main>
+        </NotAuthenticatedLayout>
       </Layout>
     </Document>
   );
@@ -150,12 +174,24 @@ export function ErrorBoundary({ error }: { error: Error }) {
   return (
     <Document title="Error!">
       <Layout>
-        <div>
-          <h1>There was an error</h1>
-          <p>{error.message}</p>
+        <NotAuthenticatedLayout>
+          <Main>
+            <H1>Outch, a wild error appeared!</H1>
 
-          <Link to="/signin">Go back to the signin page</Link>
-        </div>
+            <Box my={6}>
+              <p>{error.message}</p>
+            </Box>
+
+            <Button
+              as={Link}
+              to="/signin"
+              colorScheme={"brand"}
+              leftIcon={<AiOutlineLogin aria-hidden />}
+            >
+              Signin page
+            </Button>
+          </Main>
+        </NotAuthenticatedLayout>
       </Layout>
     </Document>
   );

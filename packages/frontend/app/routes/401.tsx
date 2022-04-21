@@ -1,20 +1,39 @@
+import { Box, Button } from "@chakra-ui/react";
+import { AiOutlineLogin } from "react-icons/ai";
 import { Link } from "remix";
 import { H1 } from "~/components/H1";
 import { Main } from "~/components/Main";
+import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 
 export default function UnauthorizedPage() {
   return (
-    <Main>
-      <H1>{`Woops! You're not authorized to see this content`}</H1>
-      <p>
-        {`It looks you're trying to access this page while not being
-          authenticated.`}
-      </p>
-      <p>
-        To access this content, make sure to fill the authentication page form.
-      </p>
+    <NotAuthenticatedLayout>
+      <Main>
+        <H1>{`Woops! You're not authorized to see this content`}</H1>
 
-      <Link to="/signin">Go back to the signin page</Link>
-    </Main>
+        <Box my={6}>
+          <p>
+            {`It looks you're trying to access this page while not being
+          authenticated.`}
+          </p>
+        </Box>
+
+        <Box my={6}>
+          <p>
+            To access this content, make sure to fill the authentication page
+            form.
+          </p>
+        </Box>
+
+        <Button
+          as={Link}
+          to="/signin"
+          colorScheme={"brand"}
+          leftIcon={<AiOutlineLogin aria-hidden />}
+        >
+          Signin page
+        </Button>
+      </Main>
+    </NotAuthenticatedLayout>
   );
 }
