@@ -1,4 +1,4 @@
-import { Box, Stack } from "@chakra-ui/react";
+import { Box, HStack, Stack } from "@chakra-ui/react";
 import {
   useLoaderData,
   LoaderFunction,
@@ -30,6 +30,8 @@ import {
 } from "recharts";
 import { getFlagHits } from "~/modules/flags/getFlagHits";
 import { toggleAction, ToggleFlag } from "~/modules/flags/ToggleFlag";
+import { FiFlag } from "react-icons/fi";
+import { ButtonCopy } from "~/components/ButtonCopy";
 
 interface MetaArgs {
   data: {
@@ -139,7 +141,14 @@ export default function FlagById() {
       header={
         <Header
           title={currentFlag.name}
-          startAction={<ToggleFlag isFlagActivated={isFlagActivated} />}
+          startAction={
+            <HStack spacing={4}>
+              <ButtonCopy icon={<FiFlag />} toCopy={currentFlag.key}>
+                {currentFlag.key}
+              </ButtonCopy>
+              <ToggleFlag isFlagActivated={isFlagActivated} />
+            </HStack>
+          }
         />
       }
       subNav={

@@ -19,9 +19,11 @@ export const lightTheme = extendTheme({
     success: theme.colors.green,
     error: lightError,
     warning: theme.colors.orange,
+    text: theme.colors.gray,
   },
   semanticTokens: {
     colors: {
+      background50: "gray.50",
       background100: "gray.100",
       background: "gray.200",
       background300: "gray.300",

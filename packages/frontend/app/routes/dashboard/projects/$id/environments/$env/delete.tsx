@@ -196,59 +196,57 @@ export default function DeleteEnvPage() {
       header={<Header title="You are about to delete the environment." />}
     >
       <Section>
-        <Box p={[4, 0]}>
-          {data?.errors && data.errors.backendError && (
-            <Box pb={4}>
-              <ErrorBox list={data.errors} />
-            </Box>
-          )}
+        {data?.errors && data.errors.backendError && (
+          <Box pb={4}>
+            <ErrorBox list={data.errors} />
+          </Box>
+        )}
 
-          <WarningBox
-            list={warnings}
-            title={
-              <Text>
-                We really want to warn you: if you validate the environment
-                suppression, you {`won't`} be able to access the{" "}
-                <strong>{environment.name}</strong> environment anymore. It
-                includes:
-              </Text>
-            }
-          />
+        <WarningBox
+          list={warnings}
+          title={
+            <Text>
+              We really want to warn you: if you validate the environment
+              suppression, you {`won't`} be able to access the{" "}
+              <strong>{environment.name}</strong> environment anymore. It
+              includes:
+            </Text>
+          }
+        />
 
-          <Flex
-            justifyContent="space-between"
-            mt={4}
-            direction={["column", "row"]}
+        <Flex
+          justifyContent="space-between"
+          mt={4}
+          direction={["column", "row"]}
+        >
+          <Button
+            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/settings`}
+            variant="outline"
+            colorScheme="error"
           >
-            <Button
-              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/settings`}
-              variant="outline"
-              colorScheme="error"
-            >
-              <span>
-                No, {`don't`} delete{" "}
-                <Box as="strong" display={["none", "inline"]} aria-hidden>
-                  {environment.name}
-                </Box>
-                <VisuallyHidden>{environment.name}</VisuallyHidden>
-              </span>
-            </Button>
+            <span>
+              No, {`don't`} delete{" "}
+              <Box as="strong" display={["none", "inline"]} aria-hidden>
+                {environment.name}
+              </Box>
+              <VisuallyHidden>{environment.name}</VisuallyHidden>
+            </span>
+          </Button>
 
-            <Form method="post">
-              <Button
-                type="submit"
-                colorScheme="error"
-                leftIcon={<FaTrash aria-hidden />}
-                isLoading={transition.state === "submitting"}
-                loadingText="Deleting the environment, please wait..."
-                disabled={false}
-                mt={[4, 0]}
-              >
-                Yes, delete the environment
-              </Button>
-            </Form>
-          </Flex>
-        </Box>
+          <Form method="post">
+            <Button
+              type="submit"
+              colorScheme="error"
+              leftIcon={<FaTrash aria-hidden />}
+              isLoading={transition.state === "submitting"}
+              loadingText="Deleting the environment, please wait..."
+              disabled={false}
+              mt={[4, 0]}
+            >
+              Yes, delete the environment
+            </Button>
+          </Form>
+        </Flex>
       </Section>
     </DashboardLayout>
   );

@@ -182,44 +182,46 @@ export default function CreateProjectPage() {
       header={<Header title="Add member" />}
     >
       <Section>
-        {data?.success && (
-          <Box pb={4}>
-            <SuccessBox id="member-added">
-              The user has been invited invited to join the project.
-            </SuccessBox>
-          </Box>
-        )}
+        <Box px={[0, 24]}>
+          {data?.success && (
+            <Box pb={4}>
+              <SuccessBox id="member-added">
+                The user has been invited invited to join the project.
+              </SuccessBox>
+            </Box>
+          )}
 
-        {Object.keys(errorsToDisplay).length > 0 && (
-          <Box pb={4}>
-            <ErrorBox list={errorsToDisplay} />
-          </Box>
-        )}
-        <Form method="post">
-          <FormControl isInvalid={Boolean(errors?.email)}>
-            <FormLabel htmlFor="member-email">Member email</FormLabel>
-            <Input
-              type="text"
-              name="member-email"
-              id="member-email"
-              placeholder="e.g: john.doe@gmail.com"
-              aria-describedby={errors?.email ? `error-email` : undefined}
-            />
-          </FormControl>
+          {Object.keys(errorsToDisplay).length > 0 && (
+            <Box pb={4}>
+              <ErrorBox list={errorsToDisplay} />
+            </Box>
+          )}
+          <Form method="post">
+            <FormControl isInvalid={Boolean(errors?.email)}>
+              <FormLabel htmlFor="member-email">Member email</FormLabel>
+              <Input
+                type="text"
+                name="member-email"
+                id="member-email"
+                placeholder="e.g: john.doe@gmail.com"
+                aria-describedby={errors?.email ? `error-email` : undefined}
+              />
+            </FormControl>
 
-          <Box mt={4}>
-            <Button
-              type="submit"
-              leftIcon={<IoIosCreate aria-hidden />}
-              colorScheme="brand"
-              isLoading={transition.state === "submitting"}
-              loadingText="Adding the member, please wait..."
-              disabled={false}
-            >
-              Add the member
-            </Button>
-          </Box>
-        </Form>
+            <Box mt={4}>
+              <Button
+                type="submit"
+                leftIcon={<IoIosCreate aria-hidden />}
+                colorScheme="brand"
+                isLoading={transition.state === "submitting"}
+                loadingText="Adding the member, please wait..."
+                disabled={false}
+              >
+                Add the member
+              </Button>
+            </Box>
+          </Form>
+        </Box>
       </Section>
     </DashboardLayout>
   );

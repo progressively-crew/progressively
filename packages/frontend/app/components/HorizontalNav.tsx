@@ -14,15 +14,7 @@ export const HorizontalNav = ({ children, label }: HorizontalNavProps) => {
       overflowX="scroll"
       bg="background100"
     >
-      <HStack
-        as="ul"
-        listStyleType={"none"}
-        spacing={3}
-        pl={6}
-        pr={6}
-        pt={1}
-        pb={1}
-      >
+      <HStack as="ul" listStyleType={"none"} spacing={3} p={1}>
         {children}
       </HStack>
     </Box>
@@ -40,13 +32,14 @@ export const NavItem = ({ children, to, icon }: NavItemProps) => {
     <Box as="li" flexShrink={0}>
       <CLink
         as={NavLink}
-        px={2}
-        py={4}
+        px={6}
+        py={3}
         to={to}
         end
         display={"inline-block"}
         className="custom-nav-link"
         fontSize="lg"
+        borderRadius={32}
       >
         <HStack as="span" spacing={2}>
           <span aria-hidden>{icon}</span>

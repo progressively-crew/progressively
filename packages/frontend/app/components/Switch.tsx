@@ -34,9 +34,10 @@ export const Switch = ({ checked, optimistic, ...props }: SwitchProps) => {
       role="switch"
       aria-label="Feature flag activation"
       aria-checked={checked}
-      variant="ghost"
+      variant="outline"
+      borderRadius={32}
       onClick={() => setInternalChecked((s) => !s)}
-      h={16}
+      h={[16, 12]}
       {...props}
     >
       <HStack>

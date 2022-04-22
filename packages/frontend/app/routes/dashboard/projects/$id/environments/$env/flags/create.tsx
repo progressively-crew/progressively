@@ -143,7 +143,7 @@ export default function CreateFlagPage() {
         <Header
           title="Create a feature flag"
           description={
-            <Text>
+            <Text fontSize="xl" color="textlight" textAlign="center">
               The new feature flag will appear in{" "}
               <strong>{project.name}</strong> /{" "}
               <strong>{environment.name}</strong>.
@@ -153,7 +153,7 @@ export default function CreateFlagPage() {
       }
     >
       <Section>
-        <Box p={[4, 0]}>
+        <Box px={[0, 24]}>
           {(errors?.name || errors?.description) && (
             <Box pb={4}>
               <ErrorBox list={errors} />

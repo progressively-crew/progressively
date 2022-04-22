@@ -4,9 +4,10 @@ body {
 }
 
 a.custom-nav-link {
+
 }
 a.custom-nav-link.active {
+  border: 2px dashed var(--chakra-colors-text-500);
   text-decoration: underline;
-  color: var(--chakra-colors-brand-900);
   font-weight: var(--chakra-fontWeights-bold);
 }

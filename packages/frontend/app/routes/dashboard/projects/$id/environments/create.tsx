@@ -119,7 +119,7 @@ export default function CreateEnvironmentPage() {
         <Header
           title="Create an environment"
           description={
-            <Text>
+            <Text fontSize="xl" color="textlight" textAlign="center">
               The new environment will appear in <strong>{project.name}</strong>
               .
             </Text>
@@ -128,7 +128,7 @@ export default function CreateEnvironmentPage() {
       }
     >
       <Section>
-        <Box p={[4, 0]}>
+        <Box px={[0, 24]}>
           {errors?.name && (
             <Box pb={4}>
               <ErrorBox list={errors} />

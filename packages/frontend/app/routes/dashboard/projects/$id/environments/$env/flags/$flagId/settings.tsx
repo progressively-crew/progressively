@@ -1,4 +1,4 @@
-import { Box, Flex, Text, VisuallyHidden } from "@chakra-ui/react";
+import { Box, Flex, HStack, Text, VisuallyHidden } from "@chakra-ui/react";
 import {
   useLoaderData,
   LoaderFunction,
@@ -22,6 +22,8 @@ import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { FaPowerOff, FaTrash } from "react-icons/fa";
 import { Button } from "~/components/Button";
 import { toggleAction, ToggleFlag } from "~/modules/flags/ToggleFlag";
+import { FiFlag } from "react-icons/fi";
+import { ButtonCopy } from "~/components/ButtonCopy";
 
 interface MetaArgs {
   data: {
@@ -126,7 +128,14 @@ export default function FlagSettingPage() {
       header={
         <Header
           title={currentFlag.name}
-          startAction={<ToggleFlag isFlagActivated={isFlagActivated} />}
+          startAction={
+            <HStack spacing={4}>
+              <ButtonCopy icon={<FiFlag />} toCopy={currentFlag.key}>
+                {currentFlag.key}
+              </ButtonCopy>
+              <ToggleFlag isFlagActivated={isFlagActivated} />
+            </HStack>
+          }
         />
       }
       subNav={

@@ -37,7 +37,7 @@ export const DashboardLayout = ({
         </Flex>
       </Container>
 
-      <Container maxW="5xl" pt={[0, 6]} pb={4}>
+      <Container maxW="4xl" pt={[0, 6]} pb={4}>
         <Flex justifyContent={"center"}>{breadcrumb}</Flex>
 
         <Main>

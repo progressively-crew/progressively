@@ -94,7 +94,7 @@ export default function CreateProjectPage() {
         <Header
           title="Create a project"
           description={
-            <Text>
+            <Text fontSize="xl" color="textlight" textAlign="center">
               When creating a project, {`you'll`} become the administrator of it
               and will have full control over it.
             </Text>
@@ -103,7 +103,7 @@ export default function CreateProjectPage() {
       }
     >
       <Section>
-        <Box p={[4, 0]}>
+        <Box px={[0, 24]}>
           {errors?.name && (
             <Box pb={4}>
               <ErrorBox list={errors} />
