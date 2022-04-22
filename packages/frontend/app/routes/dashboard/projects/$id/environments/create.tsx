@@ -151,7 +151,7 @@ export default function CreateEnvironmentPage() {
               />
             </FormControl>
 
-            <Text id="env-name-hint" fontSize="sm">
+            <Text id="env-name-hint" fontSize="sm" color="textlight" mt={2}>
               After the creation of an environment, you will be able to get its
               SDK key for application usage.
             </Text>

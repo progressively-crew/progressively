@@ -191,7 +191,7 @@ export default function CreateFlagPage() {
               </FormControl>
             </Box>
 
-            <Text fontSize="sm">
+            <Text fontSize="sm" color="textlight" mt={2}>
               After the creation of a feature flag, you will be able to get its
               SDK key for application usage.
             </Text>

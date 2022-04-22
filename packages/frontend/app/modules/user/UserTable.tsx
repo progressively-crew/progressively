@@ -42,7 +42,7 @@ export const UserTable = ({
       <input type="hidden" name="_method" value="delete-member" />
 
       {canEdit && (
-        <HStack mb={[6, 2]} spacing={[0, 4]} flexDirection={["column", "row"]}>
+        <HStack mb={6} spacing={[0, 4]} flexDirection={["column", "row"]}>
           <Button
             colorScheme="brand"
             as={Link}

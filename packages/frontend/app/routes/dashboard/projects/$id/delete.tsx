@@ -199,7 +199,7 @@ export default function DeleteProjectPage() {
           <Flex
             justifyContent="space-between"
             mt={4}
-            direction={["column", "row"]}
+            direction={["column", "column", "row"]}
           >
             <Button
               to={`/dashboard/projects/${project.uuid}/settings`}
@@ -222,7 +222,8 @@ export default function DeleteProjectPage() {
                 isLoading={transition.state === "submitting"}
                 loadingText="Deleting the project, please wait..."
                 disabled={false}
-                mt={[4, 0]}
+                mt={[4, 4, 0]}
+                width={["100%", "100%", "auto"]}
               >
                 Yes, delete the project
               </Button>

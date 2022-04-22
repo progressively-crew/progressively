@@ -217,7 +217,7 @@ export default function DeleteEnvPage() {
         <Flex
           justifyContent="space-between"
           mt={4}
-          direction={["column", "row"]}
+          direction={["column", "column", "row"]}
         >
           <Button
             to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/settings`}
@@ -241,7 +241,8 @@ export default function DeleteEnvPage() {
               isLoading={transition.state === "submitting"}
               loadingText="Deleting the environment, please wait..."
               disabled={false}
-              mt={[4, 0]}
+              mt={[4, 4, 0]}
+              width={["100%", "100%", "auto"]}
             >
               Yes, delete the environment
             </Button>
