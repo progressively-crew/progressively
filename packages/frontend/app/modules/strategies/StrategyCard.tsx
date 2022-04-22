@@ -100,7 +100,7 @@ export const StrategyCard = ({
       as="article"
       aria-labelledby={strat.uuid}
       borderTopWidth={noBorder ? 0 : 1}
-      borderColor="background"
+      borderColor="background200"
     >
       <Flex
         alignItems={"flex-start"}

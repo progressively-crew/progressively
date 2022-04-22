@@ -21,9 +21,9 @@ export const EmptyState = ({
         as={GiSailboat}
         w={40}
         h={40}
-        color="backgroundContent"
+        color="background"
         p={12}
-        background={"background"}
+        background={"background200"}
         borderRadius="50%"
       />
 

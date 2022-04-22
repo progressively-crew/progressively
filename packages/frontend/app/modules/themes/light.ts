@@ -23,15 +23,10 @@ export const lightTheme = extendTheme({
   },
   semanticTokens: {
     colors: {
-      background50: "gray.50",
       background100: "gray.100",
-      background: "gray.200",
-      background300: "gray.300",
-      backgroundContent: "white",
+      background200: "gray.200",
+      background: "white",
       error: "red.500",
-      text: {
-        default: "gray.900",
-      },
       textlight: {
         default: "gray.600",
       },

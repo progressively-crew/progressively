@@ -30,7 +30,7 @@ export const ProjectCard = ({
   return (
     <Box
       borderTopWidth={noBorder ? 0 : 1}
-      borderColor="background"
+      borderColor="background200"
       p={6}
       as="article"
       aria-labelledby={`article-${id}`}
@@ -47,7 +47,7 @@ export const ProjectCard = ({
         },
       }}
       _active={{
-        background: "background",
+        background: "background200",
       }}
     >
       <Flex justifyContent="space-between">

@@ -47,7 +47,7 @@ export const Switch = ({ checked, optimistic, ...props }: SwitchProps) => {
           position="relative"
           data-is-checked={internalChecked}
           width={12}
-          background={internalChecked ? "success.500" : "background"}
+          background={internalChecked ? "success.500" : "background200"}
           height={6}
           borderRadius={14}
           p={"2px"}
