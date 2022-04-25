@@ -87,7 +87,7 @@ export class StrategyService {
   async resolveStrategies(
     flagEnv: ExtendedFlagEnv,
     strategies: Array<RolloutStrategy>,
-    fields: FieldRecord = {},
+    fields: FieldRecord,
   ) {
     // Always return true when no strategies are passed
     if (strategies.length === 0) return true;

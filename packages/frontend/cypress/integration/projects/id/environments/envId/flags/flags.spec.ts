@@ -125,17 +125,25 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags", () => {
         );
         cy.findByText("newHomepage").should("be.visible");
         cy.findByText("Switch the new homepage design").should("be.visible");
-        cy.findByRole("switch")
+
+        cy.findAllByRole("switch")
+          .eq(0)
           .should("be.visible")
           .and("have.attr", "aria-checked", "false");
+
+        cy.findAllByRole("switch")
+          .eq(1)
+          .should("be.visible")
+          .and("have.attr", "aria-checked", "true");
 
         cy.checkA11y();
       });
 
       it("activates the flag when pressing the switch button", () => {
-        cy.findByRole("switch").click();
+        cy.findAllByRole("switch").eq(0).click();
 
-        cy.findByRole("switch")
+        cy.findAllByRole("switch")
+          .eq(0)
           .should("be.visible")
           .and("have.attr", "aria-checked", "false");
 

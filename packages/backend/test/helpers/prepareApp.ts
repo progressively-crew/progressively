@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
+import * as cookieParser from 'cookie-parser';
 import { WsAdapter } from '@nestjs/platform-ws';
 import { MailService } from '../../src/mail/mail.service';
 import { AppModule } from '../../src/app.module';
@@ -24,6 +25,7 @@ export const prepareApp = async () => {
     .compile();
 
   const app = moduleFixture.createNestApplication();
+  app.use(cookieParser());
   app.useWebSocketAdapter(new WsAdapter(app));
   await app.init();
 

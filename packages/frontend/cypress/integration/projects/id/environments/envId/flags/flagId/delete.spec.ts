@@ -76,10 +76,11 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/delete", 
 
       beforeEach(() => {
         cy.signIn("Marvin");
-        cy.visit("/dashboard/projects/1/environments/1/flags/1/delete");
       });
 
-      it("removes the environment and get me back to the flags page", () => {
+      it("removes the environment and get me back to the flags page (empty state)", () => {
+        // Delete the first flag
+        cy.visit("/dashboard/projects/1/environments/1/flags/1/delete");
         cy.findByRole("button", {
           name: "Yes, delete the flag",
         }).click();
@@ -89,6 +90,18 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/delete", 
           "/dashboard/projects/1/environments/1/flags?flagRemoved=true"
         );
 
+        // Delete the second flag
+        cy.visit("/dashboard/projects/1/environments/1/flags/2/delete");
+        cy.findByRole("button", {
+          name: "Yes, delete the flag",
+        }).click();
+
+        cy.url().should(
+          "contain",
+          "/dashboard/projects/1/environments/1/flags?flagRemoved=true"
+        );
+
+        // Assert empty state
         cy.findByRole("heading", { name: "No flags found" }).should(
           "be.visible"
         );

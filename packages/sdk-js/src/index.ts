@@ -35,7 +35,7 @@ function Sdk(
   let socket: WebSocket;
 
   function loadFlags() {
-    return fetch(flagEndpoint)
+    return fetch(flagEndpoint, { credentials: "include" })
       .then((response) => response.json())
       .then((data) => {
         flags = { ...flags, ...data };

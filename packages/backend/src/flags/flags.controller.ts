@@ -8,9 +8,12 @@ import {
   Post,
   Put,
   Query,
+  Req,
+  Res,
   UseGuards,
   UsePipes,
 } from '@nestjs/common';
+import { nanoid } from 'nanoid';
 import { EnvironmentsService } from '../environments/environments.service';
 import { FlagStatus } from './flags.status';
 import { StrategyService } from '../strategy/strategy.service';
@@ -22,6 +25,8 @@ import { FlagCreationSchema } from './flags.dto';
 import { ValidationPipe } from '../shared/pipes/ValidationPipe';
 import { strToFlagStatus } from './utils';
 import { WebsocketGateway } from '../websocket/websocket.gateway';
+import { FieldRecord } from '../strategy/types';
+import { Response, Request } from 'express';
 
 @Controller()
 export class FlagsController {
@@ -117,10 +122,34 @@ export class FlagsController {
   @Get('flags/sdk/:clientKey')
   async getByClientKey(
     @Param('clientKey') clientKey: string,
-    @Query() queryParams,
+    @Query() fields: FieldRecord = {},
+    @Res({ passthrough: true }) response: Response,
+    @Req() request: Request,
   ) {
+    const COOKIE_KEY = 'progressively-id';
+    const userId = request?.cookies?.[COOKIE_KEY];
     const flagEnvs = await this.envService.getEnvironmentByClientKey(clientKey);
     const dictOfFlags = {};
+
+    let realUserId;
+
+    if (fields?.id) {
+      // User exists, but initial request
+      realUserId = fields.id;
+    } else if (userId) {
+      // User exists, subsequent requests
+      realUserId = userId;
+    } else {
+      // first visit but anonymous
+      realUserId = nanoid();
+    }
+
+    fields.id = realUserId;
+    response.cookie(COOKIE_KEY, fields.id, {
+      httpOnly: true,
+      sameSite: 'lax',
+      secure: true,
+    });
 
     // TODO: make sure to run these with Promise.all when confident enough
     for (const flagEnv of flagEnvs) {
@@ -130,7 +159,7 @@ export class FlagsController {
         flagStatus = await this.strategyService.resolveStrategies(
           flagEnv,
           flagEnv.strategies,
-          queryParams,
+          fields,
         );
       } else {
         flagStatus = false;
