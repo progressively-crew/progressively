@@ -64,7 +64,7 @@ describe("SDK", () => {
 
     const sdk = Sdk.init("client-key");
 
-    const flags = await sdk.loadFlags();
+    const { flags } = await sdk.loadFlags();
 
     expect(flags).toEqual({ flag: true, flag2: false });
   });

@@ -44,7 +44,7 @@
     },
     {
       "path": "./lib/ssr.js",
-      "maxSize": "1.07 kB"
+      "maxSize": "1.15 kB"
     }
   ]
 }

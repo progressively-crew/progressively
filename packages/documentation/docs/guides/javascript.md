@@ -13,7 +13,7 @@ const sdk = ProgressivelySdk.init(clientKey);
 With an instance of the SDK, you can now do:
 
 ```javascript
-const flags = await sdk.loadFlags();
+const { flags, response } = await sdk.loadFlags();
 ```
 
 ## Listening for flag updates

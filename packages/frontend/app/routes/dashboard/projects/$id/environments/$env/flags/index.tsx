@@ -4,11 +4,9 @@ import {
   LoaderFunction,
   MetaFunction,
   ActionFunction,
-  Link,
   useSearchParams,
   useTransition,
 } from "remix";
-import { Link as CLink } from "@chakra-ui/react";
 import { Crumbs, BreadCrumbs } from "~/components/AppBreadcrumbs";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { Environment } from "~/modules/environments/types";
