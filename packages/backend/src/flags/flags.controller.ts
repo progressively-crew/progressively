@@ -146,7 +146,6 @@ export class FlagsController {
 
     fields.id = realUserId;
     response.cookie(COOKIE_KEY, fields.id, {
-      httpOnly: true,
       sameSite: 'lax',
       secure: true,
     });

@@ -99,4 +99,33 @@ describe("SDK", () => {
       sendMessage({ hello: true });
     });
   });
+
+  describe("checking cookies", () => {
+    it("calls the websocket constructor without the cookie value when not set previously by the server", () => {
+      (global as any).WebSocket = jest.fn() as any;
+
+      const sdk = Sdk.init("client-key", {
+        websocketUrl: "ws://localhost:1234",
+      });
+
+      sdk.onFlagUpdate(() => {});
+      expect((global as any).WebSocket).toHaveBeenCalledWith(
+        "ws://localhost:1234/?client_key=client-key"
+      );
+    });
+
+    it("calls the websocket constructor without the cookie value when ALREADY set by the server", () => {
+      document.cookie = "progressively-id=super-cool";
+      (global as any).WebSocket = jest.fn() as any;
+
+      const sdk = Sdk.init("client-key", {
+        websocketUrl: "ws://localhost:1234",
+      });
+
+      sdk.onFlagUpdate(() => {});
+      expect((global as any).WebSocket).toHaveBeenCalledWith(
+        "ws://localhost:1234/?client_key=client-key&id=super-cool"
+      );
+    });
+  });
 });

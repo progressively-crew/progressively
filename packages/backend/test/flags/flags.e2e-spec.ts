@@ -49,7 +49,7 @@ describe('FlagsController (e2e)', () => {
       expect(response.body).toEqual({ newHomepage: false, newFooter: false });
       expect(response.headers['set-cookie']).toMatchInlineSnapshot(`
         Array [
-          "progressively-id=12345-marvin; Path=/; HttpOnly; Secure; SameSite=Lax",
+          "progressively-id=12345-marvin; Path=/; Secure; SameSite=Lax",
         ]
       `);
     });
@@ -63,7 +63,7 @@ describe('FlagsController (e2e)', () => {
       expect(response.body).toEqual({ newHomepage: false, newFooter: true });
       expect(response.headers['set-cookie']).toMatchInlineSnapshot(`
         Array [
-          "progressively-id=1; Path=/; HttpOnly; Secure; SameSite=Lax",
+          "progressively-id=1; Path=/; Secure; SameSite=Lax",
         ]
       `);
     });
@@ -77,7 +77,7 @@ describe('FlagsController (e2e)', () => {
       expect(response.body).toEqual({ newHomepage: false, newFooter: false });
       expect(response.headers['set-cookie']).toMatchInlineSnapshot(`
         Array [
-          "progressively-id=2; Path=/; HttpOnly; Secure; SameSite=Lax",
+          "progressively-id=2; Path=/; Secure; SameSite=Lax",
         ]
       `);
     });
@@ -85,15 +85,13 @@ describe('FlagsController (e2e)', () => {
     it('gives a list of flags when the key is valid for an authenticated user (field is passed as cookie and match a strategy)', async () => {
       const response = await request(app.getHttpServer())
         .get('/flags/sdk/valid-sdk-key')
-        .set('Cookie', [
-          'progressively-id=1; Path=/; HttpOnly; Secure; SameSite=Lax',
-        ]);
+        .set('Cookie', ['progressively-id=1; Path=/; Secure; SameSite=Lax']);
 
       expect(response.status).toBe(200);
       expect(response.body).toEqual({ newHomepage: false, newFooter: true });
       expect(response.headers['set-cookie']).toMatchInlineSnapshot(`
         Array [
-          "progressively-id=1; Path=/; HttpOnly; Secure; SameSite=Lax",
+          "progressively-id=1; Path=/; Secure; SameSite=Lax",
         ]
       `);
     });
@@ -101,15 +99,13 @@ describe('FlagsController (e2e)', () => {
     it('gives a list of flags when the key is valid for an authenticated user (field is passed as cookie and does NOT match a strategy)', async () => {
       const response = await request(app.getHttpServer())
         .get('/flags/sdk/valid-sdk-key')
-        .set('Cookie', [
-          'progressively-id=2; Path=/; HttpOnly; Secure; SameSite=Lax',
-        ]);
+        .set('Cookie', ['progressively-id=2; Path=/; Secure; SameSite=Lax']);
 
       expect(response.status).toBe(200);
       expect(response.body).toEqual({ newHomepage: false, newFooter: false });
       expect(response.headers['set-cookie']).toMatchInlineSnapshot(`
         Array [
-          "progressively-id=2; Path=/; HttpOnly; Secure; SameSite=Lax",
+          "progressively-id=2; Path=/; Secure; SameSite=Lax",
         ]
       `);
     });
