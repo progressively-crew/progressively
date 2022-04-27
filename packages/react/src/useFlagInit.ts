@@ -1,5 +1,4 @@
 /** For internal usage only, don't export it. For usage in application, make sure to use useFlags */
-
 import { FlagDict, ProgressivelySdkType } from "@progressively/sdk-js";
 import { useEffect, useState } from "react";
 
@@ -13,16 +12,26 @@ export const useFlagInit = (
 
   // Only run the effect on mount, NEVER later
   useEffect(() => {
-    // Early return the client side fetch when they are resolved on the server
-    if (initialFlags) return;
+    if (!sdkRef.current) return;
 
-    sdkRef
-      .current!.loadFlags()
+    const sdk = sdkRef.current;
+
+    // Early return the client side fetch when they are resolved on the server
+    if (initialFlags) {
+      sdk.onFlagUpdate(setFlags);
+      return () => sdk.disconnect();
+    }
+
+    sdk
+      .loadFlags()
       .then(({ flags: clientFlags }) => {
+        sdk.onFlagUpdate(setFlags);
         setFlags(clientFlags);
         setIsLoading(false);
       })
       .catch(setError);
+
+    return () => sdk?.disconnect();
   }, []);
 
   return { flags, error, isLoading, setFlags };
