@@ -6,22 +6,8 @@ module.exports = {
     search: false,
     sidebar: [
       {
-        title: "Introduction",
-        collapsable: false,
-        children: [
-          {
-            title: "Project overview",
-            path: "/introduction/overview",
-          },
-          {
-            title: "Starting the service",
-            path: "/introduction/get-started",
-          },
-          {
-            title: "The DNA",
-            path: "/introduction/dna",
-          },
-        ],
+        title: "Get started",
+        path: "/introduction/get-started",
       },
       {
         title: "Guides",
@@ -40,6 +26,10 @@ module.exports = {
             path: "/guides/javascript",
           },
         ],
+      },
+      {
+        title: "The DNA",
+        path: "/introduction/dna",
       },
     ],
     displayAllHeaders: true,

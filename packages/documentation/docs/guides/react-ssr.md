@@ -33,7 +33,16 @@ export default function MyPage({ progressivelyProps }) {
 
 export async function getServerSideProps() {
   // Initialize the flags on the server and pass it to the client
-  const ssrProps = await getSSRProps(CLIENT_KEY);
+  const { ssrProps, cookies } = await getSSRProps("valid-sdk-key", {
+    fields: {
+      email: "marvin.frachet@gmail.com",
+      id: "1",
+    },
+  });
+
+  // This is mandatory in order to keep track of anonymous users.
+  // In the future, it might disappear
+  res.setHeader("set-cookie", cookies);
 
   return {
     props: {
@@ -48,7 +57,7 @@ export async function getServerSideProps() {
 You may (probably) want to host Progressively on your own server and make sure your client application hits the good apis. In order to do so, you can specify the API and Websocket URL by passing `apiUrl` and `websocketUrl` to the `getSSRProps`:
 
 ```jsx
-const ssrProps = await getSSRProps(CLIENT_KEY, {
+const { ssrProps, cookies } = await getSSRProps(CLIENT_KEY, {
   apiUrl: "https://your-hosting-server",
   websocketUrl: "wss://your-hosting-server",
 });
@@ -59,7 +68,7 @@ const ssrProps = await getSSRProps(CLIENT_KEY, {
 With Progressively, you can pass extra fields to the server in order to create customized strategies. For instance, you can create a strategy that targets a specific email, let's say: `john.doe@gmail.com`:
 
 ```jsx
-const ssrProps = await getSSRProps(CLIENT_KEY, {
+const { ssrProps, cookies } = await getSSRProps(CLIENT_KEY, {
   fields: { email: "john.doe@gmail.com" },
 });
 ```
