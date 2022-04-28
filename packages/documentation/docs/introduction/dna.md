@@ -9,7 +9,7 @@ If, at any points, you feel the product has issues regarding these statements, m
 ## The dashboard
 
 - Built using progressive enhancement, and will always be
-- The service should work without JavaScript for less powerful devices
+- The service should work without JavaScript for less powerful devices (the "add a strategy" page does not right now and should)
 - Accessibility is not a feature, it's the UX of the product. No compromises.
 - Be explicit about everything, every button, every text copy. **No icon without explicit labels.**
 - Writing automated tests is not an option — it's mandatory
