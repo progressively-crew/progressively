@@ -115,6 +115,20 @@ describe('Environments (e2e)', () => {
     it('gives a 401 when the user is not authenticated', () =>
       verifyAuthGuard(app, '/projects/1/environments/1', 'delete'));
 
+    it('gives a 403 when trying to access a valid project but an invalid env', async () => {
+      const access_token = await authenticate(app);
+
+      return request(app.getHttpServer())
+        .delete('/projects/1/environments/3')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
     it('gives a 403 when the user requests a forbidden project', async () => {
       const access_token = await authenticate(
         app,

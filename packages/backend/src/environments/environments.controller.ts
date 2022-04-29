@@ -17,6 +17,7 @@ import { EnvironmentsService } from './environments.service';
 import { ValidationPipe } from '../shared/pipes/ValidationPipe';
 import { Roles } from '../shared/decorators/Roles';
 import { UserRoles } from '../users/roles';
+import { HasEnvironmentAccessGuard } from './guards/hasEnvAccess';
 @ApiBearerAuth()
 @Controller()
 export class EnvironmentsController {
@@ -51,7 +52,7 @@ export class EnvironmentsController {
    */
   @Delete('projects/:id/environments/:envId')
   @Roles(UserRoles.Admin)
-  @UseGuards(HasProjectAccessGuard)
+  @UseGuards(HasEnvironmentAccessGuard)
   @UseGuards(JwtAuthGuard)
   deleteEnv(@Param('envId') envId: string) {
     return this.envService.deleteEnv(envId);
