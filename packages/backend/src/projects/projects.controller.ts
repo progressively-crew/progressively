@@ -34,7 +34,7 @@ import {
   EnvironmentDTO,
 } from '../environments/environments.dto';
 @ApiBearerAuth()
-@Controller()
+@Controller('projects')
 export class ProjectsController {
   constructor(
     private readonly projectService: ProjectsService,
@@ -42,7 +42,7 @@ export class ProjectsController {
     private readonly envService: EnvironmentsService,
   ) {}
 
-  @Get('projects/:id')
+  @Get(':id')
   @UseGuards(HasProjectAccessGuard)
   @UseGuards(JwtAuthGuard)
   getById(
@@ -52,7 +52,7 @@ export class ProjectsController {
     return this.projectService.getById(id, populateMember);
   }
 
-  @Get('projects')
+  @Get()
   @UseGuards(JwtAuthGuard)
   getAllProjects(@Request() req) {
     const user: UserRetrieveDTO = req.user;
@@ -60,7 +60,7 @@ export class ProjectsController {
     return this.projectService.getAll(user.uuid);
   }
 
-  @Post('projects')
+  @Post()
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(ProjectCreationSchema))
   async createProject(
@@ -72,7 +72,7 @@ export class ProjectsController {
     return this.projectService.createProject(projectDto.name, user.uuid);
   }
 
-  @Delete('projects/:id/members/:memberId')
+  @Delete(':id/members/:memberId')
   @Roles(UserRoles.Admin)
   @UseGuards(HasProjectAccessGuard)
   @UseGuards(JwtAuthGuard)
@@ -93,7 +93,7 @@ export class ProjectsController {
     return this.projectService.removeMember(id, memberId);
   }
 
-  @Post('projects/:id/members')
+  @Post(':id/members')
   @Roles(UserRoles.Admin)
   @UseGuards(HasProjectAccessGuard)
   @UseGuards(JwtAuthGuard)
@@ -120,7 +120,7 @@ export class ProjectsController {
     return this.projectService.addMember(id, user.uuid);
   }
 
-  @Delete('projects/:id')
+  @Delete(':id')
   @Roles(UserRoles.Admin)
   @UseGuards(HasProjectAccessGuard)
   @UseGuards(JwtAuthGuard)
@@ -131,7 +131,7 @@ export class ProjectsController {
   /**
    * Get all the environments of a given project (by id)
    */
-  @Get('projects/:id/environments')
+  @Get(':id/environments')
   @UseGuards(HasProjectAccessGuard)
   @UseGuards(JwtAuthGuard)
   getProjectEnvironments(@Param('id') id: string) {
@@ -141,7 +141,7 @@ export class ProjectsController {
   /**
    * Create an environment on a given project (by id)
    */
-  @Post('projects/:id/environments')
+  @Post(':id/environments')
   @UseGuards(HasProjectAccessGuard)
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(EnvironmentCreationSchema))
