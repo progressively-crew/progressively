@@ -102,4 +102,33 @@ export class EnvironmentsService {
       },
     });
   }
+
+  async hasPermissionOnEnv(
+    envId: string,
+    userId: string,
+    roles?: Array<string>,
+  ) {
+    const environmentOfProject = await this.prisma.userProject.findFirst({
+      where: {
+        userId,
+        project: {
+          environments: {
+            some: {
+              uuid: envId,
+            },
+          },
+        },
+      },
+    });
+
+    if (!environmentOfProject) {
+      return false;
+    }
+
+    if (!roles || roles.length === 0) {
+      return true;
+    }
+
+    return roles.includes(environmentOfProject.role);
+  }
 }

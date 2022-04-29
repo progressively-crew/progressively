@@ -8,5 +8,12 @@ export const seedProjects = async (prismaClient: PrismaClient) => {
     },
   });
 
-  return [projectFromSeeding] as const;
+  const otherFromSeeding = await prismaClient.project.create({
+    data: {
+      uuid: '2',
+      name: 'Other from seeding',
+    },
+  });
+
+  return [projectFromSeeding, otherFromSeeding] as const;
 };

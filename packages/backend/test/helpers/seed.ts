@@ -12,7 +12,9 @@ export const seedDb = async () => {
   try {
     // Initial seeding
     const [marvin, john] = await seedUsers(prismaClient);
-    const [projectFromSeeding] = await seedProjects(prismaClient);
+    const [projectFromSeeding, otherFromSeeding] = await seedProjects(
+      prismaClient,
+    );
     const [homePageFlag, footerFlag] = await seedFlags(prismaClient);
     await seedPasswordReset(prismaClient, john); // Necessary to e2e test password reset
 
@@ -32,6 +34,15 @@ export const seedDb = async () => {
         name: 'Developer',
         projectId: projectFromSeeding.uuid,
         clientKey: 'valid-sdk-key-2',
+      },
+    });
+
+    await prismaClient.environment.create({
+      data: {
+        uuid: '3',
+        name: 'Staging',
+        projectId: otherFromSeeding.uuid,
+        clientKey: 'valid-sdk-key-3',
       },
     });
 

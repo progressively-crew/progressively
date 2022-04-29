@@ -115,6 +115,20 @@ describe('FlagsController (e2e)', () => {
     it('gives a 401 when the user is not authenticated', () =>
       verifyAuthGuard(app, '/projects/1/environments/1/flags', 'get'));
 
+    it('gives a 403 when trying to access a valid project but an invalid env', async () => {
+      const access_token = await authenticate(app);
+
+      return request(app.getHttpServer())
+        .get('/projects/1/environments/3/flags')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
     it('gives a 403 when the user is not allowed to access these information', async () => {
       const access_token = await authenticate(
         app,
@@ -156,6 +170,23 @@ describe('FlagsController (e2e)', () => {
   describe('/projects/1/environments/1/flags/1 (PUT)', () => {
     it('gives a 401 when the user is not authenticated', () =>
       verifyAuthGuard(app, '/projects/1/environments/1/flags/1', 'put'));
+
+    it('gives a 403 when trying to access a valid project but an invalid env', async () => {
+      const access_token = await authenticate(app);
+
+      return request(app.getHttpServer())
+        .put('/projects/1/environments/3/flags/1')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send({
+          status: 'ACTIVATED',
+        })
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
 
     it('gives a 403 when the user requests a forbidden project', async () => {
       const access_token = await authenticate(
@@ -236,6 +267,24 @@ describe('FlagsController (e2e)', () => {
   describe('/projects/1/environments/1/flags (POST)', () => {
     it('gives a 401 when the user is not authenticated', () =>
       verifyAuthGuard(app, '/projects/1/environments/1/flags', 'post'));
+
+    it('gives a 403 when trying to access a valid project but an invalid env', async () => {
+      const access_token = await authenticate(app);
+
+      return request(app.getHttpServer())
+        .post('/projects/1/environments/3/flags')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send({
+          name: 'New flag',
+          description: 'The new flag aims to xxx',
+        })
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
 
     it('gives a 403 when the user requests a forbidden project', async () => {
       const access_token = await authenticate(
@@ -337,6 +386,20 @@ describe('FlagsController (e2e)', () => {
     it('gives a 401 when the user is not authenticated', () =>
       verifyAuthGuard(app, '/projects/1/environments/1/flags/1/hits', 'get'));
 
+    it('gives a 403 when trying to access a valid project but an invalid env', async () => {
+      const access_token = await authenticate(app);
+
+      return request(app.getHttpServer())
+        .get('/projects/1/environments/3/flags/1/hits')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
     it('gives a 403 when the user requests a forbidden project', async () => {
       const access_token = await authenticate(
         app,
@@ -374,6 +437,20 @@ describe('FlagsController (e2e)', () => {
   describe('/projects/1/environments/1/flags/1 (DELETE)', () => {
     it('gives a 401 when the user is not authenticated', () =>
       verifyAuthGuard(app, '/projects/1/environments/1/flags/1', 'delete'));
+
+    it('gives a 403 when trying to access a valid project but an invalid env', async () => {
+      const access_token = await authenticate(app);
+
+      return request(app.getHttpServer())
+        .delete('/projects/1/environments/3/flags/1')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
 
     it('gives a 403 when the user requests a forbidden project', async () => {
       const access_token = await authenticate(
