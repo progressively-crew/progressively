@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -9,42 +10,59 @@ import {
   UsePipes,
 } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
-import { Environment } from '@prisma/client';
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
-import { HasProjectAccessGuard } from '../projects/guards/hasProjectAccess';
-import { EnvironmentCreationSchema, EnvironmentDTO } from './environments.dto';
 import { EnvironmentsService } from './environments.service';
-import { ValidationPipe } from '../shared/pipes/ValidationPipe';
 import { Roles } from '../shared/decorators/Roles';
 import { UserRoles } from '../users/roles';
 import { HasEnvironmentAccessGuard } from './guards/hasEnvAccess';
+import { ValidationPipe } from '../shared/pipes/ValidationPipe';
+import { FlagsService } from '../flags/flags.service';
+import { FlagAlreadyExists } from '../flags/errors';
+import { FlagCreationSchema } from '../flags/flags.dto';
 @ApiBearerAuth()
 @Controller()
 export class EnvironmentsController {
-  constructor(private readonly envService: EnvironmentsService) {}
+  constructor(
+    private readonly envService: EnvironmentsService,
+    private readonly flagService: FlagsService,
+  ) {}
 
   /**
-   * Get all the environments of a given project (by id)
+   * Get all the flag of a given project/env (by projectId and envId)
    */
-  @Get('projects/:id/environments')
-  @UseGuards(HasProjectAccessGuard)
+  @Get('projects/:id/environments/:envId/flags')
+  @UseGuards(HasEnvironmentAccessGuard)
   @UseGuards(JwtAuthGuard)
-  getProjectEnvironments(@Param('id') id: string) {
-    return this.envService.getProjectEnvironments(id);
+  getFlagsByProjectAndEnv(@Param('envId') envId: string) {
+    return this.flagService.flagsByEnv(envId);
   }
 
   /**
-   * Create an environment on a given project (by id)
+   * Create a flag on a given project/env (by projectId and envId)
    */
-  @Post('projects/:id/environments')
-  @UseGuards(HasProjectAccessGuard)
+  @Post('projects/:id/environments/:envId/flags')
+  @UseGuards(HasEnvironmentAccessGuard)
   @UseGuards(JwtAuthGuard)
-  @UsePipes(new ValidationPipe(EnvironmentCreationSchema))
-  createEnvironment(
-    @Param('id') id: string,
-    @Body() envDto: EnvironmentDTO,
-  ): Promise<Environment> {
-    return this.envService.createEnvironment(id, envDto.name);
+  @UsePipes(new ValidationPipe(FlagCreationSchema))
+  async createFlag(
+    @Param('envId') envId,
+    @Body() body: { name: string; description: string },
+  ) {
+    try {
+      const flag = await this.flagService.createFlag(
+        envId,
+        body.name,
+        body.description,
+      );
+
+      return flag;
+    } catch (e) {
+      if (e instanceof FlagAlreadyExists) {
+        throw new BadRequestException('Flag already exists');
+      }
+
+      throw e;
+    }
   }
 
   /**

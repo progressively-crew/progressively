@@ -2,11 +2,11 @@ import { Module } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { EnvironmentsService } from './environments.service';
 import { EnvironmentsController } from './environments.controller';
-import { ProjectsService } from '../projects/projects.service';
+import { FlagsService } from '../flags/flags.service';
 
 @Module({
   controllers: [EnvironmentsController],
-  providers: [PrismaService, EnvironmentsService, ProjectsService],
+  providers: [PrismaService, EnvironmentsService, FlagsService],
   exports: [EnvironmentsService],
 })
 export class EnvironmentsModule {}

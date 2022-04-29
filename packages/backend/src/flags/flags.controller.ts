@@ -19,14 +19,14 @@ import { FlagStatus } from './flags.status';
 import { StrategyService } from '../strategy/strategy.service';
 import { FlagsService } from './flags.service';
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
-import { FlagAlreadyExists } from './errors';
-import { FlagCreationSchema } from './flags.dto';
-import { ValidationPipe } from '../shared/pipes/ValidationPipe';
 import { strToFlagStatus } from './utils';
 import { WebsocketGateway } from '../websocket/websocket.gateway';
 import { FieldRecord } from '../strategy/types';
 import { Response, Request } from 'express';
 import { HasEnvironmentAccessGuard } from '../environments/guards/hasEnvAccess';
+import { StrategySchema, StrategyCreateDTO } from '../strategy/strategy.dto';
+import { HasFlagAccessGuard } from './guards/hasFlagAccess';
+import { ValidationPipe } from '../shared/pipes/ValidationPipe';
 
 @Controller()
 export class FlagsController {
@@ -36,44 +36,6 @@ export class FlagsController {
     private readonly flagService: FlagsService,
     private readonly wsGateway: WebsocketGateway,
   ) {}
-
-  /**
-   * Get all the flag of a given project/env (by projectId and envId)
-   */
-  @Get('projects/:id/environments/:envId/flags')
-  @UseGuards(HasEnvironmentAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  getFlagsByProjectAndEnv(@Param('envId') envId: string) {
-    return this.flagService.flagsByEnv(envId);
-  }
-
-  /**
-   * Create a flag on a given project/env (by projectId and envId)
-   */
-  @Post('projects/:id/environments/:envId/flags')
-  @UseGuards(HasEnvironmentAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  @UsePipes(new ValidationPipe(FlagCreationSchema))
-  async createFlag(
-    @Param('envId') envId,
-    @Body() body: { name: string; description: string },
-  ) {
-    try {
-      const flag = await this.flagService.createFlag(
-        envId,
-        body.name,
-        body.description,
-      );
-
-      return flag;
-    } catch (e) {
-      if (e instanceof FlagAlreadyExists) {
-        throw new BadRequestException('Flag already exists');
-      }
-
-      throw e;
-    }
-  }
 
   /**
    * Update a flag on a given project/env (by project id AND env id AND flagId)
@@ -189,5 +151,31 @@ export class FlagsController {
     const rawHits = await this.flagService.listFlagHits(envId, flagId);
 
     return rawHits.map(({ _count, date }) => ({ count: _count.id, date }));
+  }
+
+  @Post('projects/:id/environments/:envId/flags/:flagId/strategies')
+  @UseGuards(HasFlagAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(new ValidationPipe(StrategySchema))
+  async addStrategyToProject(
+    @Param('envId') envId: string,
+    @Param('flagId') flagId: string,
+    @Body() strategyDto: StrategyCreateDTO,
+  ): Promise<any> {
+    return this.strategyService.addStrategyToFlagEnv(
+      envId,
+      flagId,
+      strategyDto,
+    );
+  }
+
+  @Get('projects/:id/environments/:envId/flags/:flagId/strategies')
+  @UseGuards(HasFlagAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  async getStrategies(
+    @Param('envId') envId: string,
+    @Param('flagId') flagId: string,
+  ): Promise<any> {
+    return this.strategyService.listStrategies(envId, flagId);
   }
 }

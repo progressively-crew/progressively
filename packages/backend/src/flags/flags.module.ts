@@ -15,5 +15,6 @@ import { StrategyService } from '../strategy/strategy.service';
     StrategyService,
   ],
   controllers: [FlagsController],
+  exports: [FlagsService],
 })
 export class FlagsModule {}
