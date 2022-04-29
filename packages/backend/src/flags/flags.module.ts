@@ -5,7 +5,6 @@ import { FlagsController } from './flags.controller';
 import { EnvironmentsService } from '../environments/environments.service';
 import { WebsocketGateway } from '../websocket/websocket.gateway';
 import { StrategyService } from '../strategy/strategy.service';
-import { ProjectsService } from '../projects/projects.service';
 
 @Module({
   providers: [
@@ -14,7 +13,6 @@ import { ProjectsService } from '../projects/projects.service';
     FlagsService,
     EnvironmentsService,
     StrategyService,
-    ProjectsService,
   ],
   controllers: [FlagsController],
 })

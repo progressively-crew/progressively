@@ -20,7 +20,16 @@ export const seedFlags = async (prismaClient: PrismaClient) => {
     },
   });
 
-  return [homePageFlag, footerFlag] as const;
+  const asideFlag = await prismaClient.flag.create({
+    data: {
+      uuid: '3',
+      name: 'New aside',
+      description: 'Switch the new aside design',
+      key: 'newAside',
+    },
+  });
+
+  return [homePageFlag, footerFlag, asideFlag] as const;
 };
 
 export const seedHits = async (

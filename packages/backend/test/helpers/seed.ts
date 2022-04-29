@@ -15,7 +15,7 @@ export const seedDb = async () => {
     const [projectFromSeeding, otherFromSeeding] = await seedProjects(
       prismaClient,
     );
-    const [homePageFlag, footerFlag] = await seedFlags(prismaClient);
+    const [homePageFlag, footerFlag, asideFlag] = await seedFlags(prismaClient);
     await seedPasswordReset(prismaClient, john); // Necessary to e2e test password reset
 
     //  Contextual seeding
@@ -37,7 +37,7 @@ export const seedDb = async () => {
       },
     });
 
-    await prismaClient.environment.create({
+    const otherEnv = await prismaClient.environment.create({
       data: {
         uuid: '3',
         name: 'Staging',
@@ -77,6 +77,13 @@ export const seedDb = async () => {
       },
     });
 
+    const otherFlagEnv = await prismaClient.flagEnvironment.create({
+      data: {
+        environmentId: otherEnv.uuid,
+        flagId: asideFlag.uuid,
+      },
+    });
+
     await prismaClient.rolloutStrategy.create({
       data: {
         uuid: '1',
@@ -99,6 +106,17 @@ export const seedDb = async () => {
         fieldName: 'id',
         fieldComparator: 'eq',
         fieldValue: '1',
+      },
+    });
+
+    await prismaClient.rolloutStrategy.create({
+      data: {
+        uuid: '3',
+        flagEnvironmentFlagId: otherFlagEnv.flagId,
+        flagEnvironmentEnvironmentId: otherFlagEnv.environmentId,
+        name: 'Super strategy',
+        strategyRuleType: 'default',
+        activationType: 'boolean',
       },
     });
 
