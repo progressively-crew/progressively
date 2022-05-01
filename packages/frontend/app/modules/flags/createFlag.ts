@@ -7,17 +7,14 @@ export const createFlag = (
   description: string,
   accessToken: string
 ) =>
-  fetch(
-    `${Constants.BackendUrl}/projects/${projectId}/environments/${envId}/flags`,
-    {
-      method: "POST",
-      body: JSON.stringify({ name, description }),
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-      },
-    }
-  ).then((res) => {
+  fetch(`${Constants.BackendUrl}/environments/${envId}/flags`, {
+    method: "POST",
+    body: JSON.stringify({ name, description }),
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+  }).then((res) => {
     if (!res.ok) {
       throw new Error("The flag name is already used.");
     }

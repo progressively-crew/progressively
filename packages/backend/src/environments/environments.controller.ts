@@ -20,7 +20,7 @@ import { FlagsService } from '../flags/flags.service';
 import { FlagAlreadyExists } from '../flags/errors';
 import { FlagCreationSchema } from '../flags/flags.dto';
 @ApiBearerAuth()
-@Controller()
+@Controller('environments')
 export class EnvironmentsController {
   constructor(
     private readonly envService: EnvironmentsService,
@@ -30,7 +30,7 @@ export class EnvironmentsController {
   /**
    * Get all the flag of a given project/env (by projectId and envId)
    */
-  @Get('projects/:id/environments/:envId/flags')
+  @Get(':envId/flags')
   @UseGuards(HasEnvironmentAccessGuard)
   @UseGuards(JwtAuthGuard)
   getFlagsByProjectAndEnv(@Param('envId') envId: string) {
@@ -40,7 +40,7 @@ export class EnvironmentsController {
   /**
    * Create a flag on a given project/env (by projectId and envId)
    */
-  @Post('projects/:id/environments/:envId/flags')
+  @Post(':envId/flags')
   @UseGuards(HasEnvironmentAccessGuard)
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(FlagCreationSchema))
@@ -68,7 +68,7 @@ export class EnvironmentsController {
   /**
    * Delete an environment on a given project (by project id AND env id)
    */
-  @Delete('projects/:id/environments/:envId')
+  @Delete(':envId')
   @Roles(UserRoles.Admin)
   @UseGuards(HasEnvironmentAccessGuard)
   @UseGuards(JwtAuthGuard)

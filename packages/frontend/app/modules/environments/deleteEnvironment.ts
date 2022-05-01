@@ -5,7 +5,7 @@ export const deleteEnvironment = (
   envId: string,
   accessToken: string
 ) =>
-  fetch(`${Constants.BackendUrl}/projects/${projectId}/environments/${envId}`, {
+  fetch(`${Constants.BackendUrl}/environments/${envId}`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${accessToken}`,

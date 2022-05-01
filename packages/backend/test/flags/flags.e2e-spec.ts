@@ -300,7 +300,7 @@ describe('FlagsController (e2e)', () => {
       const access_token = await authenticate(app);
 
       const prevResponse = await request(app.getHttpServer())
-        .get('/projects/1/environments/1/flags')
+        .get('/environments/1/flags')
         .set('Authorization', `Bearer ${access_token}`);
 
       expect(prevResponse.body[0]).toMatchObject({
@@ -327,7 +327,7 @@ describe('FlagsController (e2e)', () => {
       expect(response.status).toBe(200);
 
       const afterResponse = await request(app.getHttpServer())
-        .get('/projects/1/environments/1/flags')
+        .get('/environments/1/flags')
         .set('Authorization', `Bearer ${access_token}`);
 
       expect(afterResponse.body.length).toBe(1);
