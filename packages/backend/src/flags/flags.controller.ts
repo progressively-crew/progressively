@@ -27,7 +27,9 @@ import { HasEnvironmentAccessGuard } from '../environments/guards/hasEnvAccess';
 import { StrategySchema, StrategyCreateDTO } from '../strategy/strategy.dto';
 import { HasFlagAccessGuard } from './guards/hasFlagAccess';
 import { ValidationPipe } from '../shared/pipes/ValidationPipe';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
+@ApiBearerAuth()
 @Controller()
 export class FlagsController {
   constructor(
