@@ -24,19 +24,15 @@ describe('Strategy (e2e)', () => {
     await cleanupDb();
   });
 
-  describe('/projects/1/environments/1/flags/1/strategies/1 (GET)', () => {
+  describe('/strategies/1 (GET)', () => {
     it('gives a 401 when the user is not authenticated', () =>
-      verifyAuthGuard(
-        app,
-        '/projects/1/environments/1/flags/1/strategies/1',
-        'get',
-      ));
+      verifyAuthGuard(app, '/strategies/1', 'get'));
 
     it('gives a 403 when trying to access a valid project but an invalid env', async () => {
       const access_token = await authenticate(app);
 
       return request(app.getHttpServer())
-        .get('/projects/1/environments/1/flags/3/strategies/1')
+        .get('/strategies/3')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(403)
         .expect({
@@ -54,7 +50,7 @@ describe('Strategy (e2e)', () => {
       );
 
       return request(app.getHttpServer())
-        .get('/projects/1/environments/1/flags/1/strategies/1')
+        .get('/strategies/1')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(403)
         .expect({
@@ -68,7 +64,7 @@ describe('Strategy (e2e)', () => {
       const access_token = await authenticate(app);
 
       const response = await request(app.getHttpServer())
-        .get('/projects/1/environments/1/flags/1/strategies/1')
+        .get('/strategies/1')
         .set('Authorization', `Bearer ${access_token}`);
 
       expect(response.status).toBe(200);
@@ -87,19 +83,15 @@ describe('Strategy (e2e)', () => {
     });
   });
 
-  describe('/projects/1/environments/1/flags/1/strategies/1 (DELETE)', () => {
+  describe('/strategies/1 (DELETE)', () => {
     it('gives a 401 when the user is not authenticated', () =>
-      verifyAuthGuard(
-        app,
-        '/projects/1/environments/1/flags/1/strategies/1',
-        'delete',
-      ));
+      verifyAuthGuard(app, '/strategies/1', 'delete'));
 
     it('gives a 403 when trying to access a valid project but an invalid env', async () => {
       const access_token = await authenticate(app);
 
       return request(app.getHttpServer())
-        .delete('/projects/1/environments/1/flags/3/strategies/1')
+        .delete('/strategies/3')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(403)
         .expect({
@@ -117,7 +109,7 @@ describe('Strategy (e2e)', () => {
       );
 
       return request(app.getHttpServer())
-        .delete('/projects/1/environments/1/flags/1/strategies/1')
+        .delete('/strategies/1')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(403)
         .expect({
@@ -131,7 +123,7 @@ describe('Strategy (e2e)', () => {
       const access_token = await authenticate(app);
 
       const prev = await request(app.getHttpServer())
-        .get('/projects/1/environments/1/flags/1/strategies/1')
+        .get('/strategies/1')
         .set('Authorization', `Bearer ${access_token}`);
 
       expect(prev.body).toMatchInlineSnapshot(`
@@ -150,7 +142,7 @@ describe('Strategy (e2e)', () => {
       `);
 
       await request(app.getHttpServer())
-        .delete('/projects/1/environments/1/flags/1/strategies/1')
+        .delete('/strategies/1')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(200)
         .expect({
@@ -167,10 +159,16 @@ describe('Strategy (e2e)', () => {
         });
 
       const after = await request(app.getHttpServer())
-        .get('/projects/1/environments/1/flags/1/strategies/1')
+        .get('/strategies/1')
         .set('Authorization', `Bearer ${access_token}`);
 
-      expect(after.body).toMatchInlineSnapshot(`Object {}`);
+      expect(after.body).toMatchInlineSnapshot(`
+        Object {
+          "error": "Forbidden",
+          "message": "Forbidden resource",
+          "statusCode": 403,
+        }
+      `);
     });
   });
 });

@@ -166,4 +166,35 @@ export class StrategyService {
       },
     });
   }
+
+  async hasPermissionOnStrategy(
+    stratId: string,
+    userId: string,
+    roles?: Array<string>,
+  ) {
+    const flagOfProject = await this.prisma.userProject.findFirst({
+      where: {
+        userId,
+        project: {
+          environments: {
+            some: {
+              flagEnvironment: {
+                some: { strategies: { some: { uuid: stratId } } },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!flagOfProject) {
+      return false;
+    }
+
+    if (!roles || roles.length === 0) {
+      return true;
+    }
+
+    return roles.includes(flagOfProject.role);
+  }
 }
