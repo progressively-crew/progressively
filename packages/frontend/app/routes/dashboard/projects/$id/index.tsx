@@ -1,4 +1,4 @@
-import { Box, Stack } from "@chakra-ui/react";
+import { Box, Stack, Text } from "@chakra-ui/react";
 import {
   LoaderFunction,
   useLoaderData,
@@ -21,6 +21,7 @@ import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { AiOutlineSetting } from "react-icons/ai";
 import { FiLayers } from "react-icons/fi";
 import { Button } from "~/components/Button";
+import { EmptyState } from "~/components/EmptyState";
 
 interface MetaArgs {
   data: {
@@ -97,13 +98,15 @@ export default function ProjectDetailPage() {
           title="Environments"
           hiddenTitle
           endAction={
-            <Button
-              to={`/dashboard/projects/${project.uuid}/environments/create`}
-              leftIcon={<IoIosCreate aria-hidden />}
-              colorScheme="brand"
-            >
-              Create an environment
-            </Button>
+            project.environments.length > 0 && (
+              <Button
+                to={`/dashboard/projects/${project.uuid}/environments/create`}
+                leftIcon={<IoIosCreate aria-hidden />}
+                colorScheme="brand"
+              >
+                Create an environment
+              </Button>
+            )
           }
         />
 
@@ -132,6 +135,24 @@ export default function ProjectDetailPage() {
               />
             ))}
           </Box>
+
+          {project.environments.length === 0 ? (
+            <EmptyState
+              title="No environments found"
+              description={
+                <Text>There are no environments yet on this project.</Text>
+              }
+              action={
+                <Button
+                  to={`/dashboard/projects/${project.uuid}/environments/create`}
+                  leftIcon={<IoIosCreate aria-hidden />}
+                  colorScheme="brand"
+                >
+                  Create an environment
+                </Button>
+              }
+            />
+          ) : null}
         </Stack>
       </Section>
     </DashboardLayout>

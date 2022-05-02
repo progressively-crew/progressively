@@ -6,6 +6,7 @@ export interface EmptyStateProps {
   description: React.ReactNode;
   titleAs?: any;
   id?: string;
+  action?: React.ReactNode;
 }
 
 export const EmptyState = ({
@@ -13,6 +14,7 @@ export const EmptyState = ({
   description,
   titleAs = "h3",
   id,
+  action,
 }: EmptyStateProps) => {
   return (
     <Stack alignItems="center" pb={8} spacing={2}>
@@ -32,6 +34,8 @@ export const EmptyState = ({
       </Heading>
 
       {description}
+
+      {action}
     </Stack>
   );
 };

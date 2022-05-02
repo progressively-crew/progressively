@@ -162,14 +162,16 @@ export default function FlagsByEnvPage() {
           title="Feature flags"
           hiddenTitle
           endAction={
-            <Button
-              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/create`}
-              leftIcon={<IoIosCreate aria-hidden />}
-              colorScheme="brand"
-              flexShrink={0}
-            >
-              Create a feature flag
-            </Button>
+            flagsByEnv.length > 0 && (
+              <Button
+                to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/create`}
+                leftIcon={<IoIosCreate aria-hidden />}
+                colorScheme="brand"
+                flexShrink={0}
+              >
+                Create a feature flag
+              </Button>
+            )
           }
         />
 
@@ -213,6 +215,16 @@ export default function FlagsByEnvPage() {
               title="No flags found"
               description={
                 <Text>There are no flags yet on this environment.</Text>
+              }
+              action={
+                <Button
+                  to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/create`}
+                  leftIcon={<IoIosCreate aria-hidden />}
+                  colorScheme="brand"
+                  flexShrink={0}
+                >
+                  Create a feature flag
+                </Button>
               }
             />
           ) : null}

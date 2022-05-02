@@ -105,6 +105,7 @@ export default function OnboardingPage() {
                 id="project-name"
                 placeholder="e.g: My super project"
                 aria-describedby={errors?.name ? `error-name` : undefined}
+                maxW="34ch"
               />
             </FormControl>
 

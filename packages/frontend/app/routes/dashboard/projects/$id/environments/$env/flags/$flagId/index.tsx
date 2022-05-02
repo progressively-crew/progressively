@@ -182,13 +182,15 @@ export default function FlagById() {
             title="Strategies"
             hiddenTitle
             endAction={
-              <Button
-                to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
-                leftIcon={<IoIosCreate aria-hidden />}
-                colorScheme="brand"
-              >
-                Add a strategy
-              </Button>
+              strategies.length > 0 && (
+                <Button
+                  to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
+                  leftIcon={<IoIosCreate aria-hidden />}
+                  colorScheme="brand"
+                >
+                  Add a strategy
+                </Button>
+              )
             }
           />
 
@@ -229,6 +231,15 @@ export default function FlagById() {
                   title="No strategy found"
                   description={
                     <Text>There are no strategies bound to this flag yet.</Text>
+                  }
+                  action={
+                    <Button
+                      to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
+                      leftIcon={<IoIosCreate aria-hidden />}
+                      colorScheme="brand"
+                    >
+                      Add a strategy
+                    </Button>
                   }
                 />
               </>
