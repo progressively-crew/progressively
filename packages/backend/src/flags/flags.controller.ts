@@ -40,7 +40,7 @@ export class FlagsController {
   /**
    * Update a flag on a given project/env (by project id AND env id AND flagId)
    */
-  @Put('projects/:id/environments/:envId/flags/:flagId')
+  @Put('environments/:envId/flags/:flagId')
   @UseGuards(HasEnvironmentAccessGuard)
   @UseGuards(JwtAuthGuard)
   async changeFlagForEnvStatus(
@@ -68,7 +68,7 @@ export class FlagsController {
   /**
    * Delete a project by project/env/flag
    */
-  @Delete('projects/:id/environments/:envId/flags/:flagId')
+  @Delete('environments/:envId/flags/:flagId')
   @UseGuards(HasEnvironmentAccessGuard)
   @UseGuards(JwtAuthGuard)
   async deleteFlag(
@@ -141,7 +141,7 @@ export class FlagsController {
   /**
    * Get the flag hits grouped by date
    */
-  @Get('projects/:id/environments/:envId/flags/:flagId/hits')
+  @Get('environments/:envId/flags/:flagId/hits')
   @UseGuards(HasEnvironmentAccessGuard)
   @UseGuards(JwtAuthGuard)
   async getFlagHits(
@@ -153,7 +153,7 @@ export class FlagsController {
     return rawHits.map(({ _count, date }) => ({ count: _count.id, date }));
   }
 
-  @Post('projects/:id/environments/:envId/flags/:flagId/strategies')
+  @Post('environments/:envId/flags/:flagId/strategies')
   @UseGuards(HasFlagAccessGuard)
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(StrategySchema))
@@ -169,7 +169,7 @@ export class FlagsController {
     );
   }
 
-  @Get('projects/:id/environments/:envId/flags/:flagId/strategies')
+  @Get('environments/:envId/flags/:flagId/strategies')
   @UseGuards(HasFlagAccessGuard)
   @UseGuards(JwtAuthGuard)
   async getStrategies(

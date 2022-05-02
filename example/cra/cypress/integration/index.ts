@@ -14,7 +14,7 @@ describe("/", () => {
   });
 
   it("shows the new variant when the flag is activated", () => {
-    cy.changeFlagStatus("1", "1", "1", FlagStatus.ACTIVATED);
+    cy.changeFlagStatus("1", "1", FlagStatus.ACTIVATED);
 
     // Verify the activation using sockets
     cy.findByText("Old variant").should("not.exist");

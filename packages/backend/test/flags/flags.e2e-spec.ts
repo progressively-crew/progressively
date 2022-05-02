@@ -111,15 +111,15 @@ describe('FlagsController (e2e)', () => {
     });
   });
 
-  describe('/projects/1/environments/1/flags/1 (PUT)', () => {
+  describe('/environments/1/flags/1 (PUT)', () => {
     it('gives a 401 when the user is not authenticated', () =>
-      verifyAuthGuard(app, '/projects/1/environments/1/flags/1', 'put'));
+      verifyAuthGuard(app, '/environments/1/flags/1', 'put'));
 
     it('gives a 403 when trying to access a valid project but an invalid env', async () => {
       const access_token = await authenticate(app);
 
       return request(app.getHttpServer())
-        .put('/projects/1/environments/3/flags/1')
+        .put('/environments/3/flags/1')
         .set('Authorization', `Bearer ${access_token}`)
         .send({
           status: 'ACTIVATED',
@@ -140,7 +140,7 @@ describe('FlagsController (e2e)', () => {
       );
 
       return request(app.getHttpServer())
-        .put('/projects/1/environments/1/flags/1')
+        .put('/environments/1/flags/1')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(403)
         .expect({
@@ -158,7 +158,7 @@ describe('FlagsController (e2e)', () => {
       );
 
       return request(app.getHttpServer())
-        .put('/projects/1/environments/1/flags/1')
+        .put('/environments/1/flags/1')
         .set('Authorization', `Bearer ${access_token}`)
         .send({
           status: 'invalid status',
@@ -180,7 +180,7 @@ describe('FlagsController (e2e)', () => {
         );
 
         const response = await request(app.getHttpServer())
-          .put('/projects/1/environments/1/flags/1')
+          .put('/environments/1/flags/1')
           .set('Authorization', `Bearer ${access_token}`)
           .send({
             status,
@@ -208,15 +208,15 @@ describe('FlagsController (e2e)', () => {
     });
   });
 
-  describe('/projects/1/environments/1/flags/1/hits (GET)', () => {
+  describe('environments/1/flags/1/hits (GET)', () => {
     it('gives a 401 when the user is not authenticated', () =>
-      verifyAuthGuard(app, '/projects/1/environments/1/flags/1/hits', 'get'));
+      verifyAuthGuard(app, '/environments/1/flags/1/hits', 'get'));
 
     it('gives a 403 when trying to access a valid project but an invalid env', async () => {
       const access_token = await authenticate(app);
 
       return request(app.getHttpServer())
-        .get('/projects/1/environments/3/flags/1/hits')
+        .get('/environments/3/flags/1/hits')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(403)
         .expect({
@@ -234,7 +234,7 @@ describe('FlagsController (e2e)', () => {
       );
 
       return request(app.getHttpServer())
-        .get('/projects/1/environments/1/flags/1/hits')
+        .get('/environments/1/flags/1/hits')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(403)
         .expect({
@@ -248,7 +248,7 @@ describe('FlagsController (e2e)', () => {
       const access_token = await authenticate(app);
 
       return request(app.getHttpServer())
-        .get('/projects/1/environments/1/flags/1/hits')
+        .get('/environments/1/flags/1/hits')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(200)
         .expect([
@@ -260,15 +260,15 @@ describe('FlagsController (e2e)', () => {
     });
   });
 
-  describe('/projects/1/environments/1/flags/1 (DELETE)', () => {
+  describe('environments/1/flags/1 (DELETE)', () => {
     it('gives a 401 when the user is not authenticated', () =>
-      verifyAuthGuard(app, '/projects/1/environments/1/flags/1', 'delete'));
+      verifyAuthGuard(app, '/environments/1/flags/1', 'delete'));
 
     it('gives a 403 when trying to access a valid project but an invalid env', async () => {
       const access_token = await authenticate(app);
 
       return request(app.getHttpServer())
-        .delete('/projects/1/environments/3/flags/1')
+        .delete('/environments/3/flags/1')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(403)
         .expect({
@@ -286,7 +286,7 @@ describe('FlagsController (e2e)', () => {
       );
 
       return request(app.getHttpServer())
-        .delete('/projects/1/environments/1/flags/1')
+        .delete('/environments/1/flags/1')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(403)
         .expect({
@@ -322,7 +322,7 @@ describe('FlagsController (e2e)', () => {
       });
 
       const response = await request(app.getHttpServer())
-        .delete('/projects/1/environments/1/flags/1')
+        .delete('/environments/1/flags/1')
         .set('Authorization', `Bearer ${access_token}`);
       expect(response.status).toBe(200);
 
@@ -334,13 +334,9 @@ describe('FlagsController (e2e)', () => {
     });
   });
 
-  describe('/projects/:id/environments/:envId/flags/:flagId/strategies (POST)', () => {
+  describe('/environments/:envId/flags/:flagId/strategies (POST)', () => {
     it('gives a 401 when the user is not authenticated', () =>
-      verifyAuthGuard(
-        app,
-        '/projects/1/environments/1/flags/1/strategies',
-        'post',
-      ));
+      verifyAuthGuard(app, '/environments/1/flags/1/strategies', 'post'));
 
     it('gives a 403 when trying to access a valid project but an invalid env', async () => {
       const access_token = await authenticate(app);
@@ -352,7 +348,7 @@ describe('FlagsController (e2e)', () => {
       };
 
       return request(app.getHttpServer())
-        .post('/projects/1/environments/1/flags/3/strategies')
+        .post('/environments/1/flags/3/strategies')
         .set('Authorization', `Bearer ${access_token}`)
         .send(validStrategy)
         .expect(403)
@@ -371,7 +367,7 @@ describe('FlagsController (e2e)', () => {
       );
 
       return request(app.getHttpServer())
-        .post('/projects/1/environments/1/flags/1/strategies')
+        .post('/environments/1/flags/1/strategies')
         .set('Authorization', `Bearer ${access_token}`)
         .send({
           name: 'Super strategy',
@@ -399,7 +395,7 @@ describe('FlagsController (e2e)', () => {
       };
 
       await request(app.getHttpServer())
-        .post('/projects/1/environments/1/flags/1/strategies')
+        .post('/environments/1/flags/1/strategies')
         .set('Authorization', `Bearer ${access_token}`)
         .send(invalidStrategy)
         .expect(400)
@@ -420,7 +416,7 @@ describe('FlagsController (e2e)', () => {
       };
 
       await request(app.getHttpServer())
-        .post('/projects/1/environments/1/flags/1/strategies')
+        .post('/environments/1/flags/1/strategies')
         .set('Authorization', `Bearer ${access_token}`)
         .send(invalidStrategy)
         .expect(400)
@@ -441,7 +437,7 @@ describe('FlagsController (e2e)', () => {
       };
 
       await request(app.getHttpServer())
-        .post('/projects/1/environments/1/flags/1/strategies')
+        .post('/environments/1/flags/1/strategies')
         .set('Authorization', `Bearer ${access_token}`)
         .send(invalidStrategy)
         .expect(400)
@@ -464,7 +460,7 @@ describe('FlagsController (e2e)', () => {
         };
 
         await request(app.getHttpServer())
-          .post('/projects/1/environments/1/flags/1/strategies')
+          .post('/environments/1/flags/1/strategies')
           .set('Authorization', `Bearer ${access_token}`)
           .send(invalidStrategy)
           .expect(400)
@@ -486,7 +482,7 @@ describe('FlagsController (e2e)', () => {
       };
 
       const response = await request(app.getHttpServer())
-        .post('/projects/1/environments/1/flags/1/strategies')
+        .post('/environments/1/flags/1/strategies')
         .set('Authorization', `Bearer ${access_token}`)
         .send(validStrategy)
         .expect(201);
@@ -520,7 +516,7 @@ describe('FlagsController (e2e)', () => {
       };
 
       const response = await request(app.getHttpServer())
-        .post('/projects/1/environments/1/flags/1/strategies')
+        .post('/environments/1/flags/1/strategies')
         .set('Authorization', `Bearer ${access_token}`)
         .send(validStrategy)
         .expect(201);
@@ -555,7 +551,7 @@ describe('FlagsController (e2e)', () => {
       };
 
       const response = await request(app.getHttpServer())
-        .post('/projects/1/environments/1/flags/1/strategies')
+        .post('/environments/1/flags/1/strategies')
         .set('Authorization', `Bearer ${access_token}`)
         .send(validStrategy)
         .expect(201);
@@ -577,19 +573,15 @@ describe('FlagsController (e2e)', () => {
     });
   });
 
-  describe('/projects/:1/environments/1/flags/1/strategies (GET)', () => {
+  describe('/environments/1/flags/1/strategies (GET)', () => {
     it('gives a 401 when the user is not authenticated', () =>
-      verifyAuthGuard(
-        app,
-        '/projects/1/environments/1/flags/1/strategies',
-        'get',
-      ));
+      verifyAuthGuard(app, '/environments/1/flags/1/strategies', 'get'));
 
     it('gives a 403 when trying to access a valid project but an invalid env', async () => {
       const access_token = await authenticate(app);
 
       return request(app.getHttpServer())
-        .get('/projects/1/environments/1/flags/3/strategies')
+        .get('/environments/1/flags/3/strategies')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(403)
         .expect({
@@ -607,7 +599,7 @@ describe('FlagsController (e2e)', () => {
       );
 
       return request(app.getHttpServer())
-        .get('/projects/1/environments/1/flags/1/strategies')
+        .get('/environments/1/flags/1/strategies')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(403)
         .expect({
@@ -632,12 +624,12 @@ describe('FlagsController (e2e)', () => {
 
       // Create a strategy to check it works
       await request(app.getHttpServer())
-        .post('/projects/1/environments/1/flags/1/strategies')
+        .post('/environments/1/flags/1/strategies')
         .set('Authorization', `Bearer ${access_token}`)
         .send(validStrategy);
 
       const response = await request(app.getHttpServer())
-        .get('/projects/1/environments/1/flags/1/strategies')
+        .get('/environments/1/flags/1/strategies')
         .set('Authorization', `Bearer ${access_token}`);
 
       const newStrat = response.body[0];

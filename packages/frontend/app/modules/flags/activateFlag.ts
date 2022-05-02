@@ -8,14 +8,11 @@ export const activateFlag = (
   status: FlagStatus,
   accessToken: string
 ) =>
-  fetch(
-    `${Constants.BackendUrl}/projects/${projectId}/environments/${envId}/flags/${flagId}`,
-    {
-      method: "PUT",
-      body: JSON.stringify({ status }),
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-      },
-    }
-  ).then((res) => res.json());
+  fetch(`${Constants.BackendUrl}/environments/${envId}/flags/${flagId}`, {
+    method: "PUT",
+    body: JSON.stringify({ status }),
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+  }).then((res) => res.json());

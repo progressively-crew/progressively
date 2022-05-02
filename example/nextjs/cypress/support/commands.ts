@@ -28,7 +28,7 @@ import "@testing-library/cypress/add-commands";
 
 Cypress.Commands.add("seed", () => cy.task("seed"));
 Cypress.Commands.add("cleanup", () => cy.task("cleanup"));
-Cypress.Commands.add("changeFlagStatus", (projectId, envId, flagId, status) => {
+Cypress.Commands.add("changeFlagStatus", (envId, flagId, status) => {
   // Auth with the admin
   cy.request("POST", "http://localhost:4000/auth/login", {
     username: "marvin.frachet@gmail.com",
@@ -37,7 +37,7 @@ Cypress.Commands.add("changeFlagStatus", (projectId, envId, flagId, status) => {
     const { access_token } = res.body;
 
     return cy.request({
-      url: `http://localhost:4000/projects/${projectId}/environments/${envId}/flags/${flagId}`,
+      url: `http://localhost:4000/environments/${envId}/flags/${flagId}`,
       method: "PUT",
       body: {
         status,

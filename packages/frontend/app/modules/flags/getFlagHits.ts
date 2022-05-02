@@ -6,11 +6,8 @@ export const getFlagHits = async (
   flagId: string,
   accessToken: string
 ) =>
-  fetch(
-    `${Constants.BackendUrl}/projects/${project}/environments/${envId}/flags/${flagId}/hits`,
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    }
-  ).then((res) => res.json());
+  fetch(`${Constants.BackendUrl}/environments/${envId}/flags/${flagId}/hits`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  }).then((res) => res.json());

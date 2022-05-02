@@ -7,7 +7,7 @@ export const getStrategies = (
   accessToken: string
 ) => {
   return fetch(
-    `${Constants.BackendUrl}/projects/${projectId}/environments/${envId}/flags/${flagId}/strategies`,
+    `${Constants.BackendUrl}/environments/${envId}/flags/${flagId}/strategies`,
     {
       headers: {
         Authorization: `Bearer ${accessToken}`,

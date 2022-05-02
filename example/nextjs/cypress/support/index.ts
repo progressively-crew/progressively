@@ -35,12 +35,7 @@ declare global {
       /**
        * Change the flag status
        */
-      changeFlagStatus(
-        projectId: string,
-        envId: string,
-        flagId: string,
-        status: string
-      ): void;
+      changeFlagStatus(envId: string, flagId: string, status: string): void;
     }
   }
 }

@@ -22,7 +22,7 @@ describe("/", () => {
   });
 
   it("shows the new variant when the flag is activated for homepage", () => {
-    cy.changeFlagStatus("1", "1", "1", FlagStatus.ACTIVATED);
+    cy.changeFlagStatus("1", "1", FlagStatus.ACTIVATED);
 
     // Verify the activation using sockets
     cy.findByText("Old variant").should("not.exist");
@@ -35,7 +35,7 @@ describe("/", () => {
   });
 
   it("shows the old variant when the flag is activated for footer (by default activated)", () => {
-    cy.changeFlagStatus("1", "1", "2", FlagStatus.NOT_ACTIVATED);
+    cy.changeFlagStatus("1", "2", FlagStatus.NOT_ACTIVATED);
 
     // Verify the activation using sockets
     cy.findByText("New variant").should("not.exist");

@@ -9,7 +9,7 @@ export const createStrategy = (
   accessToken: string
 ) =>
   fetch(
-    `${Constants.BackendUrl}/projects/${projectId}/environments/${envId}/flags/${flagId}/strategies`,
+    `${Constants.BackendUrl}/environments/${envId}/flags/${flagId}/strategies`,
     {
       method: "POST",
       body: JSON.stringify(strategy),
