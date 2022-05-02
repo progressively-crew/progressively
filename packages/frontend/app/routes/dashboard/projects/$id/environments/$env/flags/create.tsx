@@ -90,7 +90,6 @@ export const action: ActionFunction = async ({
 
   try {
     const newFlag: Flag = await createFlag(
-      projectId,
       envId,
       name!,
       description!,

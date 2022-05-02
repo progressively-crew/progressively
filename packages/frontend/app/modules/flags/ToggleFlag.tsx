@@ -17,7 +17,6 @@ export const toggleAction: ActionFunction = async ({
 
   if (nextStatus && flagId) {
     await activateFlag(
-      params.id!,
       params.env!,
       flagId as string,
       nextStatus as FlagStatus,

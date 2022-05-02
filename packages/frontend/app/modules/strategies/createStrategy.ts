@@ -2,7 +2,6 @@ import { Constants } from "~/constants";
 import { StrategyCreateDTO } from "./types";
 
 export const createStrategy = (
-  projectId: string,
   envId: string,
   flagId: string,
   strategy: StrategyCreateDTO,

@@ -68,7 +68,6 @@ export const loader: LoaderFunction = async ({
   );
 
   const flagsByEnv: Array<FlagEnv> = await getFlagsByProjectEnv(
-    params.id!,
     params.env!,
     authCookie
   );
@@ -105,7 +104,7 @@ export const action: ActionFunction = async ({
   const flagId = params.flagId!;
 
   try {
-    await deleteFlag(projectId, envId, flagId, session.get("auth-cookie"));
+    await deleteFlag(envId, flagId, session.get("auth-cookie"));
   } catch (e: unknown) {
     if (e instanceof Error) {
       return { errors: { backendError: e.message } };

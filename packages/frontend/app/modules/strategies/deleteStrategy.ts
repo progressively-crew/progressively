@@ -1,12 +1,6 @@
 import { Constants } from "~/constants";
 
-export const deleteStrategy = (
-  projectId: string,
-  envId: string,
-  flagId: string,
-  stratId: string,
-  accessToken: string
-) =>
+export const deleteStrategy = (stratId: string, accessToken: string) =>
   fetch(`${Constants.BackendUrl}/strategies/${stratId}`, {
     method: "DELETE",
     headers: {

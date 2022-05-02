@@ -1,12 +1,6 @@
 import { Constants } from "~/constants";
 
-export const getStrategy = (
-  projectId: string,
-  envId: string,
-  flagId: string,
-  stratId: string,
-  accessToken: string
-) => {
+export const getStrategy = (stratId: string, accessToken: string) => {
   return fetch(`${Constants.BackendUrl}/strategies/${stratId}`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,

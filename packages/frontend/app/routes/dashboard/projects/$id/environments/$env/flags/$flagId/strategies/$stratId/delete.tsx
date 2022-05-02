@@ -73,7 +73,6 @@ export const loader: LoaderFunction = async ({
   );
 
   const flagsByEnv: Array<FlagEnv> = await getFlagsByProjectEnv(
-    params.id!,
     params.env!,
     authCookie
   );
@@ -87,9 +86,6 @@ export const loader: LoaderFunction = async ({
   )!;
 
   const strategy: StrategyRetrieveDTO = await getStrategy(
-    params.id!,
-    params.env!,
-    params.flagId!,
     params.stratId!,
     authCookie
   );
@@ -120,13 +116,7 @@ export const action: ActionFunction = async ({
   const stratId = params.stratId!;
 
   try {
-    await deleteStrategy(
-      projectId,
-      envId,
-      flagId,
-      stratId,
-      session.get("auth-cookie")
-    );
+    await deleteStrategy(stratId, session.get("auth-cookie"));
   } catch (e: unknown) {
     if (e instanceof Error) {
       return { errors: { backendError: e.message } };

@@ -1,7 +1,6 @@
 import { Constants } from "~/constants";
 
 export const deleteFlag = (
-  projectId: string,
   envId: string,
   flagId: string,
   accessToken: string

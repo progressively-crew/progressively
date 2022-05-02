@@ -107,7 +107,7 @@ export const action: ActionFunction = async ({
   const envId = params.env!;
 
   try {
-    await deleteEnvironment(projectId, envId, session.get("auth-cookie"));
+    await deleteEnvironment(envId, session.get("auth-cookie"));
   } catch (e: unknown) {
     if (e instanceof Error) {
       return { errors: { backendError: e.message } };

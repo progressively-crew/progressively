@@ -1,7 +1,6 @@
 import { Constants } from "~/constants";
 
 export const createFlag = (
-  projectId: string,
   envId: string,
   name: string,
   description: string,

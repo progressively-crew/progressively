@@ -108,7 +108,6 @@ export const action: ActionFunction = async ({
 
   try {
     await createStrategy(
-      params.id!,
       params.env!,
       params.flagId!,
       strategy,
@@ -145,7 +144,6 @@ export const loader: LoaderFunction = async ({
   const project: Project = await getProject(params.id!, authCookie);
 
   const flagsByEnv: Array<FlagEnv> = await getFlagsByProjectEnv(
-    params.id!,
     params.env!,
     authCookie
   );

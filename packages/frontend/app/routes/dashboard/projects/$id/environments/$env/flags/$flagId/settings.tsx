@@ -64,7 +64,6 @@ export const loader: LoaderFunction = async ({
   const project: Project = await getProject(params.id!, authCookie, true);
 
   const flagsByEnv: Array<FlagEnv> = await getFlagsByProjectEnv(
-    params.id!,
     params.env!,
     authCookie
   );

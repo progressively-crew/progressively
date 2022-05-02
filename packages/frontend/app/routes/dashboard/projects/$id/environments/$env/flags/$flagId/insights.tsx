@@ -73,15 +73,9 @@ export const loader: LoaderFunction = async ({
   const authCookie = session.get("auth-cookie");
 
   const project: Project = await getProject(params.id!, authCookie);
-  const hits = await getFlagHits(
-    params.id!,
-    params.env!,
-    params.flagId!,
-    authCookie
-  );
+  const hits = await getFlagHits(params.env!, params.flagId!, authCookie);
 
   const flagsByEnv: Array<FlagEnv> = await getFlagsByProjectEnv(
-    params.id!,
     params.env!,
     authCookie
   );

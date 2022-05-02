@@ -1,10 +1,6 @@
 import { Constants } from "~/constants";
 
-export const deleteEnvironment = (
-  projectId: string,
-  envId: string,
-  accessToken: string
-) =>
+export const deleteEnvironment = (envId: string, accessToken: string) =>
   fetch(`${Constants.BackendUrl}/environments/${envId}`, {
     method: "DELETE",
     headers: {

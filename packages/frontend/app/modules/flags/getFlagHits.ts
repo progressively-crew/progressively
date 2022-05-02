@@ -1,7 +1,6 @@
 import { Constants } from "~/constants";
 
 export const getFlagHits = async (
-  project: string,
   envId: string,
   flagId: string,
   accessToken: string

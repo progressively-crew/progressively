@@ -2,7 +2,6 @@ import { Constants } from "~/constants";
 import { FlagStatus } from "./types";
 
 export const activateFlag = (
-  projectId: string,
   envId: string,
   flagId: string,
   status: FlagStatus,

@@ -59,7 +59,6 @@ export const action: ActionFunction = async ({
 
   if (nextStatus && flagId) {
     await activateFlag(
-      params.id!,
       params.env!,
       flagId as string,
       nextStatus as FlagStatus,
@@ -88,7 +87,6 @@ export const loader: LoaderFunction = async ({
   const project: Project = await getProject(params.id!, authCookie);
 
   const flagsByEnv: Array<FlagEnv> = await getFlagsByProjectEnv(
-    params.id!,
     params.env!,
     authCookie
   );

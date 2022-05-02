@@ -1,7 +1,6 @@
 import { Constants } from "~/constants";
 
 export const getFlagsByProjectEnv = async (
-  projectId: string,
   envId: string,
   accessToken: string
 ) =>

@@ -75,14 +75,12 @@ export const loader: LoaderFunction = async ({
   const project: Project = await getProject(params.id!, authCookie);
 
   const strategies = await getStrategies(
-    params.id!,
     params.env!,
     params.flagId!,
     authCookie
   );
 
   const flagsByEnv: Array<FlagEnv> = await getFlagsByProjectEnv(
-    params.id!,
     params.env!,
     authCookie
   );
