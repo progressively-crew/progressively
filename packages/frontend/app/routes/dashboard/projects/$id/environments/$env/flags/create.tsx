@@ -142,7 +142,7 @@ export default function CreateFlagPage() {
         <Header
           title="Create a feature flag"
           description={
-            <Text fontSize="xl" color="textlight" textAlign="center">
+            <Text fontSize="xl" color="textlight">
               The new feature flag will appear in{" "}
               <strong>{project.name}</strong> /{" "}
               <strong>{environment.name}</strong>.
@@ -152,7 +152,7 @@ export default function CreateFlagPage() {
       }
     >
       <Section>
-        <Box px={[0, 24]}>
+        <Box>
           {(errors?.name || errors?.description) && (
             <Box pb={4}>
               <ErrorBox list={errors} />
@@ -171,6 +171,7 @@ export default function CreateFlagPage() {
                   aria-describedby={
                     data?.errors?.name ? "error-name" : undefined
                   }
+                  width="34ch"
                 />
               </FormControl>
             </Box>
@@ -186,6 +187,7 @@ export default function CreateFlagPage() {
                   aria-describedby={
                     data?.errors?.name ? "error-name" : undefined
                   }
+                  width="65ch"
                 />
               </FormControl>
             </Box>

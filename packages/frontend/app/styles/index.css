@@ -7,7 +7,7 @@ a.custom-nav-link {
 
 }
 a.custom-nav-link.active {
-  border: 2px dashed var(--chakra-colors-text-500);
-  text-decoration: underline;
   font-weight: var(--chakra-fontWeights-bold);
+  color: var(--chakra-colors-brand-500);
+  border-bottom: 3px solid var(--chakra-colors-brand-500);
 }

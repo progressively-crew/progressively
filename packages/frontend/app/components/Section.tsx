@@ -40,9 +40,9 @@ export const SectionHeader = ({
   return (
     <Flex
       alignItems={["flex-start", "center"]}
-      justifyContent={hiddenTitle ? "center" : "space-between"}
+      justifyContent={hiddenTitle ? "flex-start" : "space-between"}
       direction={["column", "row"]}
-      p={4}
+      py={4}
       {...props}
     >
       <Box maxW={endAction ? "xl" : undefined}>

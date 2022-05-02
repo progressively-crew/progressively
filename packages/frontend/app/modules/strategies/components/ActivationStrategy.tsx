@@ -31,12 +31,7 @@ export const ActivationStrategy = ({
     <Section id="activation-strategy">
       <SectionHeader title="Activation strategy" />
 
-      <RadioGroup
-        value={activationStrategy}
-        onChange={onActivationChange}
-        px={4}
-        pb={4}
-      >
+      <RadioGroup value={activationStrategy} onChange={onActivationChange}>
         <Box>
           <Radio
             id="boolean"
@@ -57,15 +52,13 @@ export const ActivationStrategy = ({
             size="lg"
             h={12}
           >
-            A percentage of the people will see the variants
+            A percentage of the audience
           </Radio>
         </Box>
       </RadioGroup>
 
       {activationStrategy === "percentage" && (
         <Box
-          ml={[4, 4, 12]}
-          mr={[4, 4, 12]}
           borderColor="background100"
           borderWidth={1}
           p={[4, 4, 8]}

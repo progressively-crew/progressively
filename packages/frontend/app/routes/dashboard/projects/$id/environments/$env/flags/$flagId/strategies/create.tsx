@@ -23,10 +23,10 @@ import { createStrategy } from "~/modules/strategies/createStrategy";
 import { BreadCrumbs, Crumbs } from "~/components/AppBreadcrumbs";
 import {
   Box,
-  Divider,
+  Container,
+  Flex,
   FormControl,
   Input,
-  Stack,
   Text,
 } from "@chakra-ui/react";
 import { StrategyAudience } from "~/modules/strategies/components/StrategyAudience";
@@ -205,11 +205,12 @@ export default function StrategyCreatePage() {
     <DashboardLayout
       user={user}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
+      noContainer
       header={
         <Header
           title="Add a strategy"
           description={
-            <Text fontSize="xl" color="textlight" textAlign="center">
+            <Text fontSize="xl" color="textlight">
               {`You're`} about to add a strategy to{" "}
               <strong>{currentFlag.name}</strong> in{" "}
               <strong>{project.name}</strong> on{" "}
@@ -221,60 +222,90 @@ export default function StrategyCreatePage() {
     >
       <Form method="post">
         {actionData?.errors && (
-          <Box pb={4}>
+          <Container maxW="5xl" pb={4}>
             <ErrorBox list={actionData.errors} />
-          </Box>
+          </Container>
         )}
 
-        <Stack spacing={8}>
-          <Section id="general-information">
-            <SectionHeader title="General information" />
-
-            <Box px={4} pb={4}>
-              <FormControl isInvalid={Boolean(errors["strategy-name"])}>
-                <FormLabel htmlFor="strategy-name">Strategy name</FormLabel>
-                <Input
-                  type="text"
-                  placeholder="e.g: Strategy 1"
-                  id="strategy-name"
-                  name="strategy-name"
-                  aria-describedby={
-                    errors["strategy-name"] ? "error-strategy-name" : undefined
-                  }
-                />
-              </FormControl>
-            </Box>
-          </Section>
-
-          <Divider />
-
-          <StrategyAudience
-            strategyType={strategyType}
-            onStrategyChange={setStrategyType}
-            errors={errors}
-          />
-
-          <Divider />
-
-          <ActivationStrategy
-            activationStrategy={activationStrategy}
-            onActivationChange={setActivationStrategy}
-            errors={errors}
-          />
-
-          <Box mt={8}>
-            <Button
-              colorScheme={"brand"}
-              type="submit"
-              leftIcon={<IoIosCreate aria-hidden />}
-              isLoading={transition.state === "submitting"}
-              loadingText="Saving the strategy, please wait..."
-              disabled={false}
+        <Container maxW="8xl">
+          <Flex
+            gap={4}
+            alignItems="flex-start"
+            flexDirection={["column", "column", "column", "row"]}
+          >
+            <Box
+              flex={1}
+              shadow="md"
+              borderRadius={8}
+              p={8}
+              minHeight={[0, 0, 300]}
+              width="100%"
             >
-              Save the strategy
-            </Button>
-          </Box>
-        </Stack>
+              <Section id="general-information">
+                <SectionHeader title="General information" />
+
+                <FormControl isInvalid={Boolean(errors["strategy-name"])}>
+                  <FormLabel htmlFor="strategy-name">Strategy name</FormLabel>
+                  <Input
+                    type="text"
+                    placeholder="e.g: Strategy 1"
+                    id="strategy-name"
+                    name="strategy-name"
+                    aria-describedby={
+                      errors["strategy-name"]
+                        ? "error-strategy-name"
+                        : undefined
+                    }
+                    width="34ch"
+                  />
+                </FormControl>
+              </Section>
+            </Box>
+
+            <Box
+              flex={1}
+              shadow="md"
+              borderRadius={8}
+              p={8}
+              minHeight={[0, 0, 300]}
+              width="100%"
+            >
+              <StrategyAudience
+                strategyType={strategyType}
+                onStrategyChange={setStrategyType}
+                errors={errors}
+              />
+            </Box>
+
+            <Box
+              flex={1}
+              shadow="md"
+              borderRadius={8}
+              p={8}
+              minHeight={[0, 0, 300]}
+              width="100%"
+            >
+              <ActivationStrategy
+                activationStrategy={activationStrategy}
+                onActivationChange={setActivationStrategy}
+                errors={errors}
+              />
+            </Box>
+          </Flex>
+        </Container>
+
+        <Container maxWidth="5xl" mt={8}>
+          <Button
+            colorScheme={"brand"}
+            type="submit"
+            leftIcon={<IoIosCreate aria-hidden />}
+            isLoading={transition.state === "submitting"}
+            loadingText="Saving the strategy, please wait..."
+            disabled={false}
+          >
+            Save the strategy
+          </Button>
+        </Container>
       </Form>
     </DashboardLayout>
   );

@@ -34,12 +34,7 @@ export const StrategyAudience = ({
     <Section id="strategy-audience">
       <SectionHeader title="Strategy audience" />
 
-      <RadioGroup
-        value={strategyType}
-        onChange={onStrategyChange}
-        px={4}
-        pb={4}
-      >
+      <RadioGroup value={strategyType} onChange={onStrategyChange}>
         <Box>
           <Radio
             id="everybody"
@@ -73,8 +68,6 @@ export const StrategyAudience = ({
 
       {strategyType === "field" && (
         <Stack
-          ml={[4, 4, 12]}
-          mr={[4, 4, 12]}
           borderColor="background100"
           borderWidth={1}
           p={[4, 4, 8]}

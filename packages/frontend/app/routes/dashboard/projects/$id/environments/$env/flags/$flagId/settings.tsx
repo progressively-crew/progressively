@@ -175,7 +175,7 @@ export default function FlagSettingPage() {
             }
           />
 
-          <Flex px={4} pb={4} justifyContent={["center", "flex-start"]}>
+          <Flex pb={4} justifyContent={["center", "flex-start"]}>
             <Button
               colorScheme="error"
               to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/delete`}

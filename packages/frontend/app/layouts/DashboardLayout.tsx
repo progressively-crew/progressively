@@ -11,6 +11,7 @@ export interface DashboardLayoutProps {
   breadcrumb?: React.ReactNode;
   header: React.ReactNode;
   subNav?: React.ReactNode;
+  noContainer?: boolean;
 }
 
 export const DashboardLayout = ({
@@ -19,6 +20,7 @@ export const DashboardLayout = ({
   breadcrumb,
   header,
   subNav,
+  noContainer,
 }: DashboardLayoutProps) => {
   return (
     <div>
@@ -37,16 +39,22 @@ export const DashboardLayout = ({
         </Flex>
       </Container>
 
-      <Container maxW="4xl" pt={[0, 6]} pb={4}>
-        <Flex justifyContent={"center"}>{breadcrumb}</Flex>
-
-        <Main>
-          <Box p={[4, 20]}>{header}</Box>
-          {subNav && <Box pb={12}>{subNav}</Box>}
-
-          {children}
-        </Main>
+      <Container maxW="5xl" pt={[0, 6]}>
+        {breadcrumb}
       </Container>
+
+      <Main>
+        <Container maxW="5xl" pt={4} pb={8}>
+          {header}
+        </Container>
+        {subNav && <Box pb={12}>{subNav}</Box>}
+
+        {noContainer ? (
+          <Box>{children}</Box>
+        ) : (
+          <Container maxW="5xl">{children}</Container>
+        )}
+      </Main>
     </div>
   );
 };

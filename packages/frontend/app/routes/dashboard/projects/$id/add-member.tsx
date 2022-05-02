@@ -182,7 +182,7 @@ export default function CreateProjectPage() {
       header={<Header title="Add member" />}
     >
       <Section>
-        <Box px={[0, 24]}>
+        <Box>
           {data?.success && (
             <Box pb={4}>
               <SuccessBox id="member-added">

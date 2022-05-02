@@ -94,7 +94,7 @@ export default function CreateProjectPage() {
         <Header
           title="Create a project"
           description={
-            <Text fontSize="xl" color="textlight" textAlign="center">
+            <Text fontSize="xl" color="textlight">
               When creating a project, {`you'll`} become the administrator of it
               and will have full control over it.
             </Text>
@@ -103,7 +103,7 @@ export default function CreateProjectPage() {
       }
     >
       <Section>
-        <Box px={[0, 24]}>
+        <Box>
           {errors?.name && (
             <Box pb={4}>
               <ErrorBox list={errors} />
@@ -118,6 +118,7 @@ export default function CreateProjectPage() {
                 id="project-name"
                 placeholder="e.g: My super project"
                 aria-describedby={errors?.name ? `error-name` : undefined}
+                width="34ch"
               />
             </FormControl>
 

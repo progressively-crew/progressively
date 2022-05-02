@@ -116,9 +116,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
         cy.findByLabelText("Everyone will see the variants").should(
           "be.visible"
         );
-        cy.findByLabelText(
-          "A percentage of the people will see the variants"
-        ).should("be.visible");
+        cy.findByLabelText("A percentage of the audience").should("be.visible");
         cy.findByRole("button", { name: "Save the strategy" }).should(
           "be.visible"
         );

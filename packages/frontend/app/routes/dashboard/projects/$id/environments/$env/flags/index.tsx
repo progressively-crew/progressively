@@ -133,7 +133,6 @@ export default function FlagsByEnvPage() {
             <ButtonCopy
               toCopy={environment.clientKey}
               icon={<FiKey aria-hidden />}
-              colorScheme="brand"
             >
               {environment.clientKey}
             </ButtonCopy>

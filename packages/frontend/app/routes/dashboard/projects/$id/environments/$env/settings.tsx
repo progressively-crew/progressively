@@ -99,7 +99,6 @@ export default function EnvSettingsPage() {
             <ButtonCopy
               toCopy={environment.clientKey}
               icon={<FiKey aria-hidden />}
-              colorScheme="brand"
             >
               {environment.clientKey}
             </ButtonCopy>
@@ -138,7 +137,7 @@ export default function EnvSettingsPage() {
             }
           />
 
-          <Flex px={4} pb={4} justifyContent={["center", "flex-start"]}>
+          <Flex pb={4} justifyContent={["center", "flex-start"]}>
             <Button
               colorScheme="error"
               to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/delete`}
