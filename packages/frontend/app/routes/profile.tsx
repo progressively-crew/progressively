@@ -113,7 +113,8 @@ export default function ProfilePage() {
             as={Link}
             to="/dashboard"
             display="inline-block"
-            color="textlight"
+            fontSize="xl"
+            textColor="textlight"
           >
             <HStack alignItems={"center"} height={"44px"} fontSize="xl">
               <MdChevronLeft aria-hidden />

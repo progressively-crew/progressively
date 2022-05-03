@@ -113,7 +113,7 @@ export default function ResetPasswordPage() {
       <Main>
         <HStack mb={4}>
           <MdChevronLeft aria-hidden />
-          <CLink as={Link} to="/signin">
+          <CLink as={Link} to="/signin" fontSize="xl" textColor="textlight">
             Back to signin
           </CLink>
         </HStack>
