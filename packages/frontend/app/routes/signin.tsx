@@ -17,6 +17,8 @@ import {
   MetaFunction,
   Link,
   useSearchParams,
+  LoaderFunction,
+  useLoaderData,
 } from "remix";
 import { Button } from "~/components/Button";
 import { ErrorBox } from "~/components/ErrorBox";
@@ -75,7 +77,15 @@ export const action: ActionFunction = async ({
   });
 };
 
+export interface LoaderData {
+  showRegister: boolean;
+}
+export const loader: LoaderFunction = (): LoaderData => {
+  return { showRegister: process.env.ALLOW_REGISTRATION === "true" };
+};
+
 export default function Signin() {
+  const { showRegister } = useLoaderData<LoaderData>();
   const transition = useTransition();
   const [searchParams] = useSearchParams();
   const userActivated = searchParams.get("userActivated");
@@ -147,11 +157,13 @@ export default function Signin() {
           as={UnorderedList}
           aria-label="Account related"
         >
-          <ListItem>
-            <CLink as={Link} to="/register" textDecoration={"underline"}>
-              {`Create an account`}
-            </CLink>
-          </ListItem>
+          {showRegister ? (
+            <ListItem>
+              <CLink as={Link} to="/register" textDecoration={"underline"}>
+                {`Create an account`}
+              </CLink>
+            </ListItem>
+          ) : null}
 
           <ListItem>
             <CLink as={Link} to="/forgot-password" textDecoration={"underline"}>

@@ -1,4 +1,10 @@
-import { ActionFunction, MetaFunction, Link } from "remix";
+import {
+  ActionFunction,
+  MetaFunction,
+  Link,
+  LoaderFunction,
+  redirect,
+} from "remix";
 import { Main } from "~/components/Main";
 import { Link as CLink, HStack, Box } from "@chakra-ui/react";
 import { MdChevronLeft } from "react-icons/md";
@@ -20,6 +26,14 @@ export const action: ActionFunction = ({
   request,
 }): Promise<RegisterActionData> => {
   return registerAction({ request });
+};
+
+export const loader: LoaderFunction = () => {
+  if (process.env.ALLOW_REGISTRATION === "true") {
+    return null;
+  }
+
+  return redirect("/signin");
 };
 
 export default function CreateAccountPage() {

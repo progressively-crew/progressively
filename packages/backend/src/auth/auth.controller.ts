@@ -13,6 +13,7 @@ import {
   Res,
   Response,
   Req,
+  NotFoundException,
 } from '@nestjs/common';
 import {
   Response as ExpressResponse,
@@ -72,10 +73,21 @@ export class AuthController {
   @Post('/register')
   @UsePipes(new ValidationPipe(RegistrationSchema))
   async register(@Body() userDto: UserCreationDTO): Promise<UserRetrieveDTO> {
-    const existingUser = await this.userService.findByEmail(userDto.email);
+    /**
+     * When ALLOW_REGISTRATION is not activated, we still have to create an admin account.
+     * Thus, we'll accept the only first user to be created that way
+     */
+    if (process.env.ALLOW_REGISTRATION !== 'true') {
+      const alreadyHasUsers = await this.userService.hasUsers();
+      if (alreadyHasUsers) {
+        throw new NotFoundException();
+      }
+    } else {
+      const existingUser = await this.userService.findByEmail(userDto.email);
 
-    if (existingUser) {
-      throw new BadRequestException('This email is already used.');
+      if (existingUser) {
+        throw new BadRequestException('This email is already used.');
+      }
     }
 
     const activationToken = uuidv4();

@@ -67,14 +67,10 @@ export class UsersService {
     });
   }
 
-  getAll() {
-    return this.prisma.user.findMany({
-      select: {
-        uuid: true,
-        fullname: true,
-        email: true,
-      },
-    });
+  async hasUsers() {
+    const users = await this.prisma.user.findMany({});
+
+    return users.length > 0;
   }
 
   async checkPasswordToken(rawToken: string) {
