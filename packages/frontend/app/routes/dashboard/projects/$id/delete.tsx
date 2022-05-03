@@ -1,6 +1,5 @@
 import {
   Box,
-  Flex,
   ListItem,
   Text,
   UnorderedList,
@@ -22,7 +21,6 @@ import { ButtonCopy } from "~/components/ButtonCopy";
 import { ErrorBox } from "~/components/ErrorBox";
 import { FaTrash } from "react-icons/fa";
 import { WarningBox } from "~/components/WarningBox";
-import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { authGuard } from "~/modules/auth/services/auth-guard";
 import { deleteProject } from "~/modules/projects/services/deleteProject";
 import { getProject } from "~/modules/projects/services/getProject";
@@ -30,8 +28,8 @@ import { Project, UserProject, UserRoles } from "~/modules/projects/types";
 import { User } from "~/modules/user/types";
 import { getSession } from "~/sessions";
 import { Header } from "~/components/Header";
-import { Section } from "~/components/Section";
 import { Button } from "~/components/Button";
+import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
 
 interface MetaArgs {
   data: {
@@ -130,38 +128,34 @@ export default function DeleteProjectPage() {
 
   if (userRole !== UserRoles.Admin) {
     return (
-      <DashboardLayout
+      <DeleteEntityLayout
         user={user}
         breadcrumb={<BreadCrumbs crumbs={crumbs} />}
         header={<Header title="You are not allowed to delete projects." />}
       >
-        <Section>
-          <Box p={[4, 0]}>
-            <figure>
-              <Text as="figcaption">
-                If you think this is an error, make sure to contact one of the
-                project administrators:
-              </Text>
+        <figure>
+          <Text as="figcaption">
+            If you think this is an error, make sure to contact one of the
+            project administrators:
+          </Text>
 
-              <UnorderedList pl={2} mt={2}>
-                {adminOfProject.map((user) => (
-                  <ListItem key={user.uuid}>
-                    <Text as="span" mr={2}>
-                      {user.fullname}
-                    </Text>
-                    <ButtonCopy
-                      toCopy={user.email}
-                      icon={<MdOutlineEmail aria-hidden />}
-                    >
-                      {user.email}
-                    </ButtonCopy>
-                  </ListItem>
-                ))}
-              </UnorderedList>
-            </figure>
-          </Box>
-        </Section>
-      </DashboardLayout>
+          <UnorderedList pl={2} mt={2}>
+            {adminOfProject.map((user) => (
+              <ListItem key={user.uuid}>
+                <Text as="span" mr={2}>
+                  {user.fullname}
+                </Text>
+                <ButtonCopy
+                  toCopy={user.email}
+                  icon={<MdOutlineEmail aria-hidden />}
+                >
+                  {user.email}
+                </ButtonCopy>
+              </ListItem>
+            ))}
+          </UnorderedList>
+        </figure>
+      </DeleteEntityLayout>
     );
   }
 
@@ -172,65 +166,58 @@ export default function DeleteProjectPage() {
   };
 
   return (
-    <DashboardLayout
+    <DeleteEntityLayout
       user={user}
-      header={<Header title="You are about to delete the project." />}
+      header={<Header title="Deleting a project" />}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
-    >
-      <Section>
-        <Box p={[4, 0]}>
-          {data?.errors && data.errors.backendError && (
-            <Box pb={4}>
-              <ErrorBox list={data.errors} />
+      error={
+        data?.errors &&
+        data.errors.backendError && (
+          <Box pb={4}>
+            <ErrorBox list={data.errors} />
+          </Box>
+        )
+      }
+      cancelAction={
+        <Button
+          to={`/dashboard/projects/${project.uuid}/settings`}
+          variant="outline"
+          colorScheme="error"
+        >
+          <span>
+            No, {`don't`} delete{" "}
+            <Box as="strong" display={["none", "inline"]} aria-hidden>
+              {project.name}
             </Box>
-          )}
-
-          <WarningBox
-            list={warnings}
-            title={
-              <Text>
-                We really want to warn you: if you validate the project
-                suppression, you {`won't`} be able to access the{" "}
-                <strong>{project.name}</strong> project anymore. It includes:
-              </Text>
-            }
-          />
-
-          <Flex
-            justifyContent="space-between"
-            mt={4}
-            direction={["column", "column", "row"]}
+            <VisuallyHidden>{project.name}</VisuallyHidden>
+          </span>
+        </Button>
+      }
+      confirmAction={
+        <Form method="post">
+          <Button
+            type="submit"
+            colorScheme="error"
+            leftIcon={<FaTrash aria-hidden />}
+            isLoading={transition.state === "submitting"}
+            loadingText="Deleting the project, please wait..."
+            disabled={false}
           >
-            <Button
-              to={`/dashboard/projects/${project.uuid}/settings`}
-              variant="outline"
-              colorScheme="error"
-            >
-              <span>
-                No, {`don't`} delete{" "}
-                <Box as="strong" display={["none", "inline"]} aria-hidden>
-                  {project.name}
-                </Box>
-                <VisuallyHidden>{project.name}</VisuallyHidden>
-              </span>
-            </Button>
-            <Form method="post">
-              <Button
-                type="submit"
-                colorScheme="error"
-                leftIcon={<FaTrash aria-hidden />}
-                isLoading={transition.state === "submitting"}
-                loadingText="Deleting the project, please wait..."
-                disabled={false}
-                mt={[4, 4, 0]}
-                width={["100%", "100%", "auto"]}
-              >
-                Yes, delete the project
-              </Button>
-            </Form>
-          </Flex>
-        </Box>
-      </Section>
-    </DashboardLayout>
+            Yes, delete the project
+          </Button>
+        </Form>
+      }
+    >
+      <WarningBox
+        list={warnings}
+        title={
+          <Text>
+            We really want to warn you: if you validate the project suppression,
+            you {`won't`} be able to access the <strong>{project.name}</strong>{" "}
+            project anymore. It includes:
+          </Text>
+        }
+      />
+    </DeleteEntityLayout>
   );
 }

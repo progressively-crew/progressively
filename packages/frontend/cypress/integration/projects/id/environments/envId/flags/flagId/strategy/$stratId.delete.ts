@@ -46,9 +46,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
           "Progressively | Project from seeding | Production | New homepage | Super strategy | Delete"
         );
 
-        cy.findByText(
-          "You are about to delete the strategy Super strategy."
-        ).should("be.visible");
+        cy.findByText("Deleting a strategy").should("be.visible");
         cy.contains(
           "We really want to warn you: if you validate the strategy suppression, you won't be able to access the Super strategy strategy anymore. It includes:"
         ).should("be.visible");

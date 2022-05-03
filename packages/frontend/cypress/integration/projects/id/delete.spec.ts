@@ -63,7 +63,7 @@ describe("/dashboard/projects/[id]/delete", () => {
           );
 
           cy.findByRole("heading", {
-            name: "You are about to delete the project.",
+            name: "Deleting a project",
           }).should("be.visible");
 
           cy.contains(

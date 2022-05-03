@@ -1,4 +1,4 @@
-import { Box, Text, Flex, VisuallyHidden } from "@chakra-ui/react";
+import { Box, Text, VisuallyHidden } from "@chakra-ui/react";
 import {
   ActionFunction,
   Form,
@@ -18,14 +18,13 @@ import { Environment } from "~/modules/environments/types";
 import { getProject } from "~/modules/projects/services/getProject";
 import { Project } from "~/modules/projects/types";
 import { User } from "~/modules/user/types";
-import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { getSession } from "~/sessions";
 import { Header } from "~/components/Header";
-import { Section } from "~/components/Section";
 import { FlagEnv } from "~/modules/flags/types";
 import { getFlagsByProjectEnv } from "~/modules/flags/services/getFlagsByProjectEnv";
 import { deleteFlag } from "~/modules/flags/services/deleteFlag";
 import { Button } from "~/components/Button";
+import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
 
 interface MetaArgs {
   data: {
@@ -152,66 +151,60 @@ export default function DeleteFlagPage() {
   };
 
   return (
-    <DashboardLayout
+    <DeleteEntityLayout
       user={user}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
-      header={<Header title="You are about to delete the feature flag." />}
-    >
-      <Section>
-        <Box p={[4, 0]}>
-          {data?.errors && data.errors.backendError && (
-            <Box pb={4}>
-              <ErrorBox list={data.errors} />
+      header={<Header title="Deleting a feature flag" />}
+      error={
+        data?.errors &&
+        data.errors.backendError && (
+          <Box pb={4}>
+            <ErrorBox list={data.errors} />
+          </Box>
+        )
+      }
+      cancelAction={
+        <Button
+          to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/settings`}
+          variant="outline"
+          colorScheme="error"
+        >
+          <span>
+            No, {`don't`} delete{" "}
+            <Box as="strong" display={["none", "inline"]} aria-hidden>
+              {currentFlag.name}
             </Box>
-          )}
-
-          <WarningBox
-            list={warnings}
-            title={
-              <Text>
-                We really want to warn you: if you validate the flag
-                suppression, you {`won't`} be able to access the{" "}
-                <strong>{currentFlag.name}</strong> flag anymore. It includes:
-              </Text>
-            }
-          />
-
-          <Flex
-            justifyContent="space-between"
-            mt={4}
-            direction={["column", "column", "row"]}
+            <VisuallyHidden>{currentFlag.name}</VisuallyHidden>
+          </span>
+        </Button>
+      }
+      confirmAction={
+        <Form method="post">
+          <Button
+            type="submit"
+            colorScheme="error"
+            leftIcon={<FaTrash aria-hidden />}
+            isLoading={transition.state === "submitting"}
+            loadingText="Deleting the environment, please wait..."
+            disabled={false}
+            mt={[4, 4, 0]}
+            width={["100%", "100%", "auto"]}
           >
-            <Button
-              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/settings`}
-              variant="outline"
-              colorScheme="error"
-            >
-              <span>
-                No, {`don't`} delete{" "}
-                <Box as="strong" display={["none", "inline"]} aria-hidden>
-                  {currentFlag.name}
-                </Box>
-                <VisuallyHidden>{currentFlag.name}</VisuallyHidden>
-              </span>
-            </Button>
-
-            <Form method="post">
-              <Button
-                type="submit"
-                colorScheme="error"
-                leftIcon={<FaTrash aria-hidden />}
-                isLoading={transition.state === "submitting"}
-                loadingText="Deleting the environment, please wait..."
-                disabled={false}
-                mt={[4, 4, 0]}
-                width={["100%", "100%", "auto"]}
-              >
-                Yes, delete the flag
-              </Button>
-            </Form>
-          </Flex>
-        </Box>
-      </Section>
-    </DashboardLayout>
+            Yes, delete the flag
+          </Button>
+        </Form>
+      }
+    >
+      <WarningBox
+        list={warnings}
+        title={
+          <Text>
+            We really want to warn you: if you validate the flag suppression,
+            you {`won't`} be able to access the{" "}
+            <strong>{currentFlag.name}</strong> flag anymore. It includes:
+          </Text>
+        }
+      />
+    </DeleteEntityLayout>
   );
 }
