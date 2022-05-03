@@ -205,6 +205,7 @@ export default function CreateProjectPage() {
                 id="member-email"
                 placeholder="e.g: john.doe@gmail.com"
                 aria-describedby={errors?.email ? `error-email` : undefined}
+                width={["100%", "34ch"]}
               />
             </FormControl>
 
