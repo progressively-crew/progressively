@@ -118,7 +118,7 @@ export default function CreateProjectPage() {
                 id="project-name"
                 placeholder="e.g: My super project"
                 aria-describedby={errors?.name ? `error-name` : undefined}
-                width="34ch"
+                width={["100%", "34ch"]}
               />
             </FormControl>
 

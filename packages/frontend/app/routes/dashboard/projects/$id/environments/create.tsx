@@ -148,7 +148,7 @@ export default function CreateEnvironmentPage() {
                     ? "error-name env-name-hint"
                     : "env-name-hint"
                 }
-                width="34ch"
+                width={["100%", "34ch"]}
               />
             </FormControl>
 

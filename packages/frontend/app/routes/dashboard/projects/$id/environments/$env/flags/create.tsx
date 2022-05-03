@@ -171,7 +171,7 @@ export default function CreateFlagPage() {
                   aria-describedby={
                     data?.errors?.name ? "error-name" : undefined
                   }
-                  width="34ch"
+                  width={["100%", "34ch"]}
                 />
               </FormControl>
             </Box>
@@ -187,7 +187,7 @@ export default function CreateFlagPage() {
                   aria-describedby={
                     data?.errors?.name ? "error-name" : undefined
                   }
-                  width="65ch"
+                  width={["100%", "100%", "65ch"]}
                 />
               </FormControl>
             </Box>
