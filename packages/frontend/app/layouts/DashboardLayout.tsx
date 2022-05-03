@@ -25,19 +25,21 @@ export const DashboardLayout = ({
   return (
     <div>
       <SkipNavLink>Skip to content</SkipNavLink>
-      <Container maxW="5xl">
-        <Flex
-          py={3}
-          as={"nav"}
-          aria-label="General"
-          justifyContent={"space-between"}
-          alignItems="center"
-        >
-          <Logo />
+      <Box borderBottomWidth={1} borderBottomColor="text.100">
+        <Container maxW="5xl">
+          <Flex
+            py={3}
+            as={"nav"}
+            aria-label="General"
+            justifyContent={"space-between"}
+            alignItems="center"
+          >
+            <Logo />
 
-          <UseDropdown user={user} />
-        </Flex>
-      </Container>
+            <UseDropdown user={user} />
+          </Flex>
+        </Container>
+      </Box>
 
       <Container maxW="5xl" pt={[0, 6]}>
         {breadcrumb}

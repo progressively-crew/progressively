@@ -16,9 +16,10 @@ import { withEmotionCache } from "@emotion/react";
 import ClientStyleContext from "./_chakra-setup/context.client";
 import ServerStyleContext from "./_chakra-setup/context.server";
 import { lightTheme } from "./modules/themes/light";
-import ForbiddenPage from "./routes/403";
-import styles from "./styles/index.css";
 import UnauthorizedPage from "./routes/401";
+import ForbiddenPage from "./routes/403";
+import NotFoundPage from "./routes/404";
+import styles from "./styles/index.css";
 import { NotAuthenticatedLayout } from "./layouts/NotAuthenticatedLayout";
 import { H1 } from "./components/H1";
 import { Main } from "./components/Main";
@@ -119,53 +120,27 @@ function Layout({ children }: React.PropsWithChildren<unknown>) {
 export function CatchBoundary() {
   const caught = useCatch();
 
-  let message;
+  let page;
   switch (caught.status) {
     case 403: {
-      return <ForbiddenPage />;
+      page = <ForbiddenPage />;
+      break;
     }
     case 401:
-      return <UnauthorizedPage />;
+      page = <UnauthorizedPage />;
+      break;
     case 404:
-      message = (
-        <p>Oops! Looks like you tried to visit a page that does not exist.</p>
-      );
+      page = <NotFoundPage />;
       break;
 
-    default:
+    default: {
       throw new Error(caught.data || caught.statusText);
+    }
   }
 
   return (
     <Document title={`${caught.status} ${caught.statusText}`}>
-      <Layout>
-        <NotAuthenticatedLayout>
-          <Main>
-            <H1>Outch, a wild error appeared!</H1>
-
-            <Box my={6}>
-              <p>
-                <strong>
-                  {caught.status}: {caught.statusText}
-                </strong>
-              </p>
-            </Box>
-
-            <Box my={6}>
-              <p>{message}</p>
-            </Box>
-
-            <Button
-              as={Link}
-              to="/signin"
-              colorScheme={"brand"}
-              leftIcon={<AiOutlineLogin aria-hidden />}
-            >
-              Signin page
-            </Button>
-          </Main>
-        </NotAuthenticatedLayout>
-      </Layout>
+      <Layout>{page}</Layout>
     </Document>
   );
 }

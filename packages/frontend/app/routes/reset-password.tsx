@@ -2,10 +2,10 @@ import {
   Stack,
   FormControl,
   Input,
-  Box,
   Text,
   HStack,
   Link as CLink,
+  Box,
 } from "@chakra-ui/react";
 import { MdChevronLeft, MdPassword } from "react-icons/md";
 import {
@@ -20,9 +20,8 @@ import {
 import { Button } from "~/components/Button";
 import { ErrorBox } from "~/components/ErrorBox";
 import { FormLabel } from "~/components/FormLabel";
-import { H1 } from "~/components/H1";
+import { Header } from "~/components/Header";
 import { Main } from "~/components/Main";
-import { Section } from "~/components/Section";
 import { SuccessBox } from "~/components/SuccessBox";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import {
@@ -118,74 +117,77 @@ export default function ResetPasswordPage() {
             Back to signin
           </CLink>
         </HStack>
-        <Section>
-          <Box>
-            <H1>Reset password</H1>
-            <Text>Set your new password.</Text>
-          </Box>
 
-          <Form method="post">
-            <Stack spacing={4} mt={4}>
-              {errors && Object.keys(errors).length > 0 && (
-                <ErrorBox list={errors} />
-              )}
+        <Box pb={4}>
+          <Header
+            title="Reset password"
+            description={
+              <Text textColor="textlight">Set your new password.</Text>
+            }
+          />
+        </Box>
 
-              {success && (
-                <SuccessBox id="password-reset">
-                  The password has been successfully reset. You can now connect.
-                </SuccessBox>
-              )}
+        <Form method="post">
+          <Stack spacing={4} mt={4}>
+            {errors && Object.keys(errors).length > 0 && (
+              <ErrorBox list={errors} />
+            )}
 
-              <input
-                type="hidden"
-                name="token"
-                id="token"
-                value={urlToken || ""}
+            {success && (
+              <SuccessBox id="password-reset">
+                The password has been successfully reset. You can now connect.
+              </SuccessBox>
+            )}
+
+            <input
+              type="hidden"
+              name="token"
+              id="token"
+              value={urlToken || ""}
+            />
+
+            <FormControl isInvalid={Boolean(errors?.password)}>
+              <FormLabel htmlFor="password">New password</FormLabel>
+              <Input
+                id="password"
+                name="password"
+                type="password"
+                placeholder="**********"
+                aria-describedby={
+                  errors?.password ? "error-password" : undefined
+                }
               />
+            </FormControl>
 
-              <FormControl isInvalid={Boolean(errors?.password)}>
-                <FormLabel htmlFor="password">New password</FormLabel>
-                <Input
-                  id="password"
-                  name="password"
-                  type="password"
-                  placeholder="**********"
-                  aria-describedby={
-                    errors?.password ? "error-password" : undefined
-                  }
-                />
-              </FormControl>
+            <FormControl isInvalid={Boolean(errors?.confirmationPassword)}>
+              <FormLabel htmlFor="confirmationPassword">
+                Confirmation password
+              </FormLabel>
+              <Input
+                id="confirmationPassword"
+                name="confirmationPassword"
+                type="password"
+                placeholder="**********"
+                aria-describedby={
+                  errors?.confirmationPassword
+                    ? "error-confirmationPassword"
+                    : undefined
+                }
+              />
+            </FormControl>
 
-              <FormControl isInvalid={Boolean(errors?.confirmationPassword)}>
-                <FormLabel htmlFor="confirmationPassword">
-                  Confirmation password
-                </FormLabel>
-                <Input
-                  id="confirmationPassword"
-                  name="confirmationPassword"
-                  type="password"
-                  placeholder="**********"
-                  aria-describedby={
-                    errors?.confirmationPassword
-                      ? "error-confirmationPassword"
-                      : undefined
-                  }
-                />
-              </FormControl>
-
-              <Button
-                type="submit"
-                colorScheme={"brand"}
-                leftIcon={<MdPassword aria-hidden />}
-                isLoading={transition.state === "submitting"}
-                loadingText="Password changing in progress, please wait..."
-                disabled={false}
-              >
-                Change password
-              </Button>
-            </Stack>
-          </Form>
-        </Section>
+            <Button
+              type="submit"
+              colorScheme={"brand"}
+              leftIcon={<MdPassword aria-hidden />}
+              isLoading={transition.state === "submitting"}
+              loadingText="Password changing in progress, please wait..."
+              disabled={false}
+            >
+              Change password
+            </Button>
+          </Stack>
+        </Form>
       </Main>
     </NotAuthenticatedLayout>
   );

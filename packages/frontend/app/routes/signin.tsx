@@ -3,7 +3,6 @@ import {
   FormControl,
   Input,
   Stack,
-  Text,
   Link as CLink,
   UnorderedList,
   ListItem,
@@ -22,9 +21,8 @@ import {
 import { Button } from "~/components/Button";
 import { ErrorBox } from "~/components/ErrorBox";
 import { FormLabel } from "~/components/FormLabel";
-import { H1 } from "~/components/H1";
+import { Header } from "~/components/Header";
 import { Main } from "~/components/Main";
-import { Section } from "~/components/Section";
 import { SuccessBox } from "~/components/SuccessBox";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import { AuthCredentials } from "~/modules/auth/types";
@@ -87,49 +85,49 @@ export default function Signin() {
   return (
     <NotAuthenticatedLayout>
       <Main>
-        <Section>
-          <Box>
-            <H1>Signin</H1>
-            <Text>Welcome</Text>
-          </Box>
+        <Box pb={4}>
+          <Header title="Signin" />
+        </Box>
 
-          <Form method="post">
-            <Stack spacing={4} mt={4}>
-              {(errors?.password || errors?.email || errors?.badUser) && (
-                <ErrorBox list={errors} />
-              )}
+        <Form method="post">
+          <Stack spacing={4} mt={4}>
+            {(errors?.password || errors?.email || errors?.badUser) && (
+              <ErrorBox list={errors} />
+            )}
 
-              {Boolean(userActivated) && (
-                <SuccessBox id="user-activated">
-                  The account has been activated, you can now log in
-                </SuccessBox>
-              )}
+            {Boolean(userActivated) && (
+              <SuccessBox id="user-activated">
+                The account has been activated, you can now log in
+              </SuccessBox>
+            )}
 
-              <FormControl isInvalid={Boolean(errors?.email)}>
-                <FormLabel htmlFor="email">Email</FormLabel>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="e.g: james.bond@mi6.com"
-                  aria-describedby={errors?.email ? "error-email" : undefined}
-                />
-              </FormControl>
+            <FormControl isInvalid={Boolean(errors?.email)}>
+              <FormLabel htmlFor="email">Email</FormLabel>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="e.g: james.bond@mi6.com"
+                aria-describedby={errors?.email ? "error-email" : undefined}
+              />
+            </FormControl>
 
-              <FormControl isInvalid={Boolean(errors?.password)}>
-                <FormLabel htmlFor="password">Password</FormLabel>
-                <Input
-                  id="password"
-                  name="password"
-                  type="password"
-                  placeholder="************"
-                  aria-describedby={
-                    errors?.password ? "error-password" : undefined
-                  }
-                />
-              </FormControl>
+            <FormControl isInvalid={Boolean(errors?.password)}>
+              <FormLabel htmlFor="password">Password</FormLabel>
+              <Input
+                id="password"
+                name="password"
+                type="password"
+                placeholder="************"
+                aria-describedby={
+                  errors?.password ? "error-password" : undefined
+                }
+              />
+            </FormControl>
 
+            <Box>
               <Button
+                minW="20ch"
                 type="submit"
                 colorScheme={"brand"}
                 leftIcon={<AiOutlineLogin aria-hidden />}
@@ -139,32 +137,28 @@ export default function Signin() {
               >
                 Sign in
               </Button>
-            </Stack>
-          </Form>
-
-          <Stack
-            mt={6}
-            spacing={2}
-            as={UnorderedList}
-            aria-label="Account related"
-          >
-            <ListItem>
-              <CLink as={Link} to="/register" textDecoration={"underline"}>
-                {`Create an account`}
-              </CLink>
-            </ListItem>
-
-            <ListItem>
-              <CLink
-                as={Link}
-                to="/forgot-password"
-                textDecoration={"underline"}
-              >
-                {`I forgot my password`}
-              </CLink>
-            </ListItem>
+            </Box>
           </Stack>
-        </Section>
+        </Form>
+
+        <Stack
+          mt={6}
+          spacing={2}
+          as={UnorderedList}
+          aria-label="Account related"
+        >
+          <ListItem>
+            <CLink as={Link} to="/register" textDecoration={"underline"}>
+              {`Create an account`}
+            </CLink>
+          </ListItem>
+
+          <ListItem>
+            <CLink as={Link} to="/forgot-password" textDecoration={"underline"}>
+              {`I forgot my password`}
+            </CLink>
+          </ListItem>
+        </Stack>
       </Main>
     </NotAuthenticatedLayout>
   );

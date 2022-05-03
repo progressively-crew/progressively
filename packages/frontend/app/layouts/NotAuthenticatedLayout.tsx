@@ -1,4 +1,4 @@
-import { Container, Flex } from "@chakra-ui/react";
+import { Box, Container, Flex } from "@chakra-ui/react";
 import { Logo } from "~/components/Logo";
 
 export interface NotAuthenticatedLayoutProps {
@@ -9,20 +9,25 @@ export const NotAuthenticatedLayout = ({
 }: NotAuthenticatedLayoutProps) => {
   return (
     <div>
-      <Container maxW="md">
-        <Flex
-          p={3}
-          as={"nav"}
-          aria-label="General"
-          justifyContent={"space-between"}
-          alignItems="center"
-        >
-          <Logo to="/" />
-        </Flex>
-      </Container>
+      <Box borderBottomWidth={1} borderBottomColor="text.100">
+        <Container maxW="5xl">
+          <Flex
+            py={3}
+            as={"nav"}
+            aria-label="General"
+            justifyContent={"space-between"}
+            alignItems="center"
+            h={"72px"}
+          >
+            <Logo to="/" />
+          </Flex>
+        </Container>
+      </Box>
 
-      <Container maxW="md" pt={16} pb={4}>
-        {children}
+      <Container maxW="5xl">
+        <Box maxW="65ch" pt={16} pb={4}>
+          {children}
+        </Box>
       </Container>
     </div>
   );

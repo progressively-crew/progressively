@@ -24,16 +24,16 @@ import { Button } from "~/components/Button";
 import { EmptyState } from "~/components/EmptyState";
 
 interface MetaArgs {
-  data: {
-    project: Project;
+  data?: {
+    project?: Project;
   };
 }
 
 export const meta: MetaFunction = ({ data }: MetaArgs) => {
-  const { project } = data;
+  const title = data?.project?.name || "An error ocurred";
 
   return {
-    title: `Progressively | ${project.name}`,
+    title: `Progressively | ${title}`,
   };
 };
 

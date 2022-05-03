@@ -37,20 +37,19 @@ import { FiFlag } from "react-icons/fi";
 import { ButtonCopy } from "~/components/ButtonCopy";
 
 interface MetaArgs {
-  data: {
-    project: Project;
-    environment: Environment;
-    currentFlagEnv: FlagEnv;
+  data?: {
+    project?: Project;
+    environment?: Environment;
+    currentFlagEnv?: FlagEnv;
   };
 }
-
 export const meta: MetaFunction = ({ data }: MetaArgs) => {
-  const project = data.project;
-  const environment = data.environment;
-  const currentFlag = data.currentFlagEnv.flag;
+  const projectName = data?.project?.name || "An error ocurred";
+  const envName = data?.environment?.name || "An error ocurred";
+  const flagName = data?.currentFlagEnv?.flag?.name || "An error ocurred";
 
   return {
-    title: `Progressively | ${project.name} | ${environment.name} | ${currentFlag.name} | Insights`,
+    title: `Progressively | ${projectName} | ${envName} | ${flagName} | Insights`,
   };
 };
 

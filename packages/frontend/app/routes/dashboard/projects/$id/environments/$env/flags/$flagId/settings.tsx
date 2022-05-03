@@ -29,21 +29,20 @@ import { FiFlag } from "react-icons/fi";
 import { ButtonCopy } from "~/components/ButtonCopy";
 
 interface MetaArgs {
-  data: {
-    project: Project;
-    environment: Environment;
-    currentFlagEnv: FlagEnv;
+  data?: {
+    project?: Project;
+    environment?: Environment;
+    currentFlagEnv?: FlagEnv;
   };
 }
 
 export const meta: MetaFunction = ({ data }: MetaArgs) => {
-  const project = data.project;
-  const environment = data.environment;
-  const currentFlagEnv = data.currentFlagEnv;
-  const { flag } = currentFlagEnv;
+  const projectName = data?.project?.name || "An error ocurred";
+  const envName = data?.environment?.name || "An error ocurred";
+  const flagName = data?.currentFlagEnv?.flag?.name || "An error ocurred";
 
   return {
-    title: `Progressively | ${project.name} | ${environment.name} | ${flag.name} | Settings`,
+    title: `Progressively | ${projectName} | ${envName} | ${flagName} | Settings`,
   };
 };
 

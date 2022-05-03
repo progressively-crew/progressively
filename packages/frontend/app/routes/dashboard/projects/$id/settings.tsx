@@ -33,11 +33,17 @@ import { User } from "~/modules/user/types";
 import { UserTable } from "~/modules/user/components/UserTable";
 import { getSession } from "~/sessions";
 
-export const meta: MetaFunction = ({ data }) => {
-  const { project }: { project: Project } = data;
+interface MetaArgs {
+  data?: {
+    project?: Project;
+  };
+}
+
+export const meta: MetaFunction = ({ data }: MetaArgs) => {
+  const title = data?.project?.name || "An error ocurred";
 
   return {
-    title: `Progressively | ${project.name} | Settings`,
+    title: `Progressively | ${title} | Settings`,
   };
 };
 

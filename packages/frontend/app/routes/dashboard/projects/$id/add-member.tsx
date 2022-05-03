@@ -35,16 +35,15 @@ import { addMemberToProject } from "~/modules/projects/services/addMemberToProje
 import { SuccessBox } from "~/components/SuccessBox";
 
 interface MetaArgs {
-  data: {
-    project: Project;
+  data?: {
+    project?: Project;
   };
 }
-
 export const meta: MetaFunction = ({ data }: MetaArgs) => {
-  const project = data.project;
+  const title = data?.project?.name || "An error ocurred";
 
   return {
-    title: `Progressively | ${project.name} | Add member`,
+    title: `Progressively | ${title} | Add member`,
   };
 };
 

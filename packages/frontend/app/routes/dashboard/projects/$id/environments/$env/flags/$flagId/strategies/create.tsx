@@ -42,20 +42,20 @@ import { FormLabel } from "~/components/FormLabel";
 import { Environment } from "~/modules/environments/types";
 
 interface MetaArgs {
-  data: {
-    project: Project;
-    environment: Environment;
-    currentFlag: Flag;
+  data?: {
+    project?: Project;
+    environment?: Environment;
+    currentFlag?: Flag;
   };
 }
 
 export const meta: MetaFunction = ({ data }: MetaArgs) => {
-  const project = data.project;
-  const environment = data.environment;
-  const currentFlag = data.currentFlag;
+  const projectName = data?.project?.name || "An error ocurred";
+  const envName = data?.environment?.name || "An error ocurred";
+  const flagName = data?.currentFlag?.name || "An error ocurred";
 
   return {
-    title: `Progressively | ${project.name} | ${environment.name} | Flags | ${currentFlag.name} | Strategies | Create`,
+    title: `Progressively | ${projectName} | ${envName} | Flags | ${flagName} | Strategies | Create`,
   };
 };
 

@@ -18,18 +18,18 @@ import { User } from "~/modules/user/types";
 import { getSession } from "~/sessions";
 
 interface MetaArgs {
-  data: {
-    project: Project;
-    environment: Environment;
+  data?: {
+    project?: Project;
+    environment?: Environment;
   };
 }
 
 export const meta: MetaFunction = ({ data }: MetaArgs) => {
-  const project = data.project;
-  const environment = data.environment;
+  const projectName = data?.project?.name || "An error ocurred";
+  const envName = data?.environment?.name || "An error ocurred";
 
   return {
-    title: `Progressively | ${project.name} | ${environment.name} | Settings`,
+    title: `Progressively | ${projectName} | ${envName} | Settings`,
   };
 };
 

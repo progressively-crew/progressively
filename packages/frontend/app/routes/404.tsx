@@ -6,23 +6,15 @@ import { H1 } from "~/components/H1";
 import { Main } from "~/components/Main";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 
-export default function UnauthorizedPage() {
+export default function NotFoundPage() {
   return (
     <NotAuthenticatedLayout>
       <Main>
-        <H1>{`Woops! You're not authorized to see this content`}</H1>
+        <H1>{`Woops! This page does not exist.`}</H1>
 
         <Box my={6}>
           <p>
-            {`It looks you're trying to access this page while not being
-          authenticated.`}
-          </p>
-        </Box>
-
-        <Box my={6}>
-          <p>
-            To access this content, make sure to fill the authentication page
-            form.
+            {`It looks you're trying to access a content that does not exist.`}
           </p>
         </Box>
 

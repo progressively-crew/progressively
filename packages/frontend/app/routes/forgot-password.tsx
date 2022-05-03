@@ -19,9 +19,8 @@ import {
 import { Button } from "~/components/Button";
 import { ErrorBox } from "~/components/ErrorBox";
 import { FormLabel } from "~/components/FormLabel";
-import { H1 } from "~/components/H1";
+import { Header } from "~/components/Header";
 import { Main } from "~/components/Main";
-import { Section } from "~/components/Section";
 import { SuccessBox } from "~/components/SuccessBox";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import { validateEmail } from "~/modules/forms/utils/validateEmail";
@@ -86,38 +85,43 @@ export default function ForgotPasswordPage() {
             Back to signin
           </CLink>
         </HStack>
-        <Section>
-          <Box>
-            <H1>Password forgotten</H1>
-            <Text>
-              Enter your email to get a recovery link and reset your password.
-            </Text>
-          </Box>
 
-          <Form method="post">
-            <Stack spacing={4} mt={4}>
-              {errors && Object.keys(errors).length > 0 && (
-                <ErrorBox list={errors} />
-              )}
+        <Box pb={4}>
+          <Header
+            title="Password forgotten"
+            description={
+              <Text textColor="textlight">
+                Enter your email to get a recovery link and reset your password.
+              </Text>
+            }
+          />
+        </Box>
 
-              {success && (
-                <SuccessBox id="password-reset">
-                  An email with a link to reset your password has been set. Make
-                  sure to follow the instructions.
-                </SuccessBox>
-              )}
+        <Form method="post">
+          <Stack spacing={4} mt={4}>
+            {errors && Object.keys(errors).length > 0 && (
+              <ErrorBox list={errors} />
+            )}
 
-              <FormControl isInvalid={Boolean(errors?.email)}>
-                <FormLabel htmlFor="email">Email</FormLabel>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="e.g: james.bond@mi6.com"
-                  aria-describedby={errors?.email ? "error-email" : undefined}
-                />
-              </FormControl>
+            {success && (
+              <SuccessBox id="password-reset">
+                An email with a link to reset your password has been set. Make
+                sure to follow the instructions.
+              </SuccessBox>
+            )}
 
+            <FormControl isInvalid={Boolean(errors?.email)}>
+              <FormLabel htmlFor="email">Email</FormLabel>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="e.g: james.bond@mi6.com"
+                aria-describedby={errors?.email ? "error-email" : undefined}
+              />
+            </FormControl>
+
+            <Box>
               <Button
                 type="submit"
                 colorScheme={"brand"}
@@ -128,9 +132,9 @@ export default function ForgotPasswordPage() {
               >
                 Reset password
               </Button>
-            </Stack>
-          </Form>
-        </Section>
+            </Box>
+          </Stack>
+        </Form>
       </Main>
     </NotAuthenticatedLayout>
   );

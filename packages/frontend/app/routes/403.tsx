@@ -1,6 +1,7 @@
-import { Box, Button } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { AiOutlineLogin } from "react-icons/ai";
 import { Link } from "remix";
+import { Button } from "~/components/Button";
 import { H1 } from "~/components/H1";
 import { Main } from "~/components/Main";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
