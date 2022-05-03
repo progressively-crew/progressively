@@ -1,7 +1,7 @@
 import { ButtonProps, VisuallyHidden } from "@chakra-ui/react";
 import { HTMLAttributes, useEffect, useRef, useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { useHydrated } from "~/modules/misc/useHydrated";
+import { useHydrated } from "~/modules/misc/hooks/useHydrated";
 import { Button } from "./Button";
 
 export interface ButtonCopyProps extends ButtonProps {
@@ -57,6 +57,7 @@ export const ButtonCopy = ({
           onClick={handleClick}
           colorScheme={colorScheme}
           aria-live="polite"
+          color="textlight"
           {...copyToClipBoardProps}
         >
           {isCopied ? (

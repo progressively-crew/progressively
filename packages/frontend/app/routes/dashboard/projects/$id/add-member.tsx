@@ -18,7 +18,7 @@ import {
 } from "remix";
 import { Crumbs, BreadCrumbs } from "~/components/AppBreadcrumbs";
 import { ErrorBox } from "~/components/ErrorBox";
-import { authGuard } from "~/modules/auth/auth-guard";
+import { authGuard } from "~/modules/auth/services/auth-guard";
 import { Project, UserProject, UserRoles } from "~/modules/projects/types";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { getSession } from "~/sessions";
@@ -27,11 +27,11 @@ import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
 import { Button } from "~/components/Button";
 import { FormLabel } from "~/components/FormLabel";
-import { validateEmail } from "~/modules/forms/EmailField/validateEmail";
-import { getProject } from "~/modules/projects/getProject";
+import { validateEmail } from "~/modules/forms/utils/validateEmail";
+import { getProject } from "~/modules/projects/services/getProject";
 import { MdOutlineEmail } from "react-icons/md";
 import { ButtonCopy } from "~/components/ButtonCopy";
-import { addMemberToProject } from "~/modules/projects/addMemberToProject";
+import { addMemberToProject } from "~/modules/projects/services/addMemberToProject";
 import { SuccessBox } from "~/components/SuccessBox";
 
 interface MetaArgs {

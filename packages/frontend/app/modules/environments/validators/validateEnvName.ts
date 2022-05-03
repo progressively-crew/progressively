@@ -1,4 +1,4 @@
-import { CreateEnvironmentDTO } from "./types";
+import { CreateEnvironmentDTO } from "../types";
 
 export const validateEnvName = (values: CreateEnvironmentDTO) => {
   const errors: Partial<CreateEnvironmentDTO> = {};

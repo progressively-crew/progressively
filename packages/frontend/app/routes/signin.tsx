@@ -29,8 +29,8 @@ import { SuccessBox } from "~/components/SuccessBox";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import { AuthCredentials } from "~/modules/auth/types";
 import { commitSession, getSession } from "~/sessions";
-import { authenticate } from "../modules/auth/authenticate";
-import { validateSigninForm } from "../modules/auth/validate-signin-form";
+import { authenticate } from "../modules/auth/services/authenticate";
+import { validateSigninForm } from "../modules/auth/validators/validate-signin-form";
 
 export const meta: MetaFunction = () => {
   return {

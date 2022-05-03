@@ -1,5 +1,5 @@
 import { Constants } from "~/constants";
-import { StrategyCreateDTO } from "./types";
+import { StrategyCreateDTO } from "../types";
 
 export const createStrategy = (
   envId: string,

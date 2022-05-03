@@ -303,23 +303,42 @@ describe('FlagsController (e2e)', () => {
         .get('/environments/1/flags')
         .set('Authorization', `Bearer ${access_token}`);
 
-      expect(prevResponse.body[0]).toMatchObject({
-        environment: {
-          clientKey: 'valid-sdk-key',
-          name: 'Production',
-          projectId: '1',
-          uuid: '1',
+      expect(prevResponse.body).toMatchObject([
+        {
+          environment: {
+            clientKey: 'valid-sdk-key',
+            name: 'Production',
+            projectId: '1',
+            uuid: '1',
+          },
+          environmentId: '1',
+          flag: {
+            description: 'Switch the new footer design',
+            key: 'newFooter',
+            name: 'New footer',
+            uuid: '2',
+          },
+          flagId: '2',
+          status: 'ACTIVATED',
         },
-        environmentId: '1',
-        flag: {
-          description: 'Switch the new homepage design',
-          key: 'newHomepage',
-          name: 'New homepage',
-          uuid: '1',
+        {
+          environment: {
+            clientKey: 'valid-sdk-key',
+            name: 'Production',
+            projectId: '1',
+            uuid: '1',
+          },
+          environmentId: '1',
+          flag: {
+            description: 'Switch the new homepage design',
+            key: 'newHomepage',
+            name: 'New homepage',
+            uuid: '1',
+          },
+          flagId: '1',
+          status: 'NOT_ACTIVATED',
         },
-        flagId: '1',
-        status: 'NOT_ACTIVATED',
-      });
+      ]);
 
       const response = await request(app.getHttpServer())
         .delete('/environments/1/flags/1')

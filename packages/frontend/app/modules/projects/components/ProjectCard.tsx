@@ -46,6 +46,13 @@ export const ProjectCard = ({
           color: "brand.400",
         },
       }}
+      _focusWithin={{
+        background: "background100",
+        "& .arrow-forward": {
+          transform: "translateX(30%)",
+          color: "brand.400",
+        },
+      }}
       _active={{
         background: "background200",
       }}

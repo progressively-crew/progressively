@@ -1,6 +1,6 @@
-import { validateEmail } from "../forms/EmailField/validateEmail";
-import { validatePassword } from "../forms/PasswordField/validatePassword";
-import { AuthCredentials } from "./types";
+import { validateEmail } from "../../forms/utils/validateEmail";
+import { validatePassword } from "../../forms/utils/validatePassword";
+import { AuthCredentials } from "../types";
 
 export const validateSigninForm = (values: Partial<AuthCredentials>) => {
   const errors: Partial<AuthCredentials> = {};

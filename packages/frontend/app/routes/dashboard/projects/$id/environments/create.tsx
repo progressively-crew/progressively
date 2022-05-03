@@ -12,14 +12,14 @@ import {
 } from "remix";
 import { Crumbs, BreadCrumbs } from "~/components/AppBreadcrumbs";
 import { ErrorBox } from "~/components/ErrorBox";
-import { authGuard } from "~/modules/auth/auth-guard";
-import { createEnv } from "~/modules/environments/createEnv";
+import { authGuard } from "~/modules/auth/services/auth-guard";
+import { createEnv } from "~/modules/environments/services/createEnv";
 import {
   CreateEnvironmentDTO,
   Environment,
 } from "~/modules/environments/types";
-import { validateEnvName } from "~/modules/environments/validateEnvName";
-import { getProject } from "~/modules/projects/getProject";
+import { validateEnvName } from "~/modules/environments/validators/validateEnvName";
+import { getProject } from "~/modules/projects/services/getProject";
 import { Project } from "~/modules/projects/types";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { getSession } from "~/sessions";

@@ -129,12 +129,12 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags", () => {
         cy.findAllByRole("switch")
           .eq(0)
           .should("be.visible")
-          .and("have.attr", "aria-checked", "false");
+          .and("have.attr", "aria-checked", "true");
 
         cy.findAllByRole("switch")
           .eq(1)
           .should("be.visible")
-          .and("have.attr", "aria-checked", "true");
+          .and("have.attr", "aria-checked", "false");
 
         cy.checkA11y();
       });

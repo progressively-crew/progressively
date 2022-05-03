@@ -10,17 +10,17 @@ import {
 import { Crumbs, BreadCrumbs } from "~/components/AppBreadcrumbs";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { Environment } from "~/modules/environments/types";
-import { activateFlag } from "~/modules/flags/activateFlag";
-import { getFlagsByProjectEnv } from "~/modules/flags/getFlagsByProjectEnv";
+import { activateFlag } from "~/modules/flags/services/activateFlag";
+import { getFlagsByProjectEnv } from "~/modules/flags/services/getFlagsByProjectEnv";
 import { FlagEnv, FlagStatus } from "~/modules/flags/types";
-import { getProject } from "~/modules/projects/getProject";
+import { getProject } from "~/modules/projects/services/getProject";
 import { Project } from "~/modules/projects/types";
 import { getSession } from "~/sessions";
-import { FlagCard } from "~/modules/flags/FlagCard";
+import { FlagCard } from "~/modules/flags/components/FlagCard";
 import { IoIosCreate } from "react-icons/io";
 import { SuccessBox } from "~/components/SuccessBox";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { authGuard } from "~/modules/auth/auth-guard";
+import { authGuard } from "~/modules/auth/services/auth-guard";
 import { User } from "~/modules/user/types";
 import { AiOutlineSetting } from "react-icons/ai";
 import { Header } from "~/components/Header";
@@ -158,6 +158,20 @@ export default function FlagsByEnvPage() {
       }
     >
       <Section id="list-flags-title">
+        <Stack spacing={2}>
+          {isFlagRemoved ? (
+            <SuccessBox id="flag-removed" mb={4}>
+              The flag has been successfully deleted.
+            </SuccessBox>
+          ) : null}
+
+          {newFlagId ? (
+            <SuccessBox id="flag-added" mb={4}>
+              The flag has been successfully created.
+            </SuccessBox>
+          ) : null}
+        </Stack>
+
         <SectionHeader
           title="Feature flags"
           hiddenTitle
@@ -175,60 +189,46 @@ export default function FlagsByEnvPage() {
           }
         />
 
-        <Stack spacing={2}>
-          {isFlagRemoved ? (
-            <SuccessBox id="flag-removed" mb={4}>
-              The flag has been successfully deleted.
-            </SuccessBox>
-          ) : null}
+        {flagsByEnv.length > 0 ? (
+          <Box>
+            {flagsByEnv.map((flagEnv, index) => (
+              <FlagCard
+                noBorder={index === 0}
+                key={flagEnv.flagId}
+                id={flagEnv.flagId}
+                linkTo={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${flagEnv.flagId}`}
+                title={flagEnv.flag.name}
+                flagStatus={flagEnv.status}
+                flagKey={flagEnv.flag.key}
+                description={flagEnv.flag.description}
+                optimistic={
+                  transition.state === "submitting" &&
+                  transition.submission?.formData.get("flagId") ===
+                    flagEnv.flagId
+                }
+              />
+            ))}
+          </Box>
+        ) : null}
 
-          {newFlagId ? (
-            <SuccessBox id="flag-added" mb={4}>
-              The flag has been successfully created.
-            </SuccessBox>
-          ) : null}
-
-          {flagsByEnv.length > 0 ? (
-            <Box>
-              {flagsByEnv.map((flagEnv, index) => (
-                <FlagCard
-                  noBorder={index === 0}
-                  key={flagEnv.flagId}
-                  id={flagEnv.flagId}
-                  linkTo={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${flagEnv.flagId}`}
-                  title={flagEnv.flag.name}
-                  flagStatus={flagEnv.status}
-                  flagKey={flagEnv.flag.key}
-                  description={flagEnv.flag.description}
-                  optimistic={
-                    transition.state === "submitting" &&
-                    transition.submission?.formData.get("flagId") ===
-                      flagEnv.flagId
-                  }
-                />
-              ))}
-            </Box>
-          ) : null}
-
-          {flagsByEnv.length === 0 ? (
-            <EmptyState
-              title="No flags found"
-              description={
-                <Text>There are no flags yet on this environment.</Text>
-              }
-              action={
-                <Button
-                  to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/create`}
-                  leftIcon={<IoIosCreate aria-hidden />}
-                  colorScheme="brand"
-                  flexShrink={0}
-                >
-                  Create a feature flag
-                </Button>
-              }
-            />
-          ) : null}
-        </Stack>
+        {flagsByEnv.length === 0 ? (
+          <EmptyState
+            title="No flags found"
+            description={
+              <Text>There are no flags yet on this environment.</Text>
+            }
+            action={
+              <Button
+                to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/create`}
+                leftIcon={<IoIosCreate aria-hidden />}
+                colorScheme="brand"
+                flexShrink={0}
+              >
+                Create a feature flag
+              </Button>
+            }
+          />
+        ) : null}
       </Section>
     </DashboardLayout>
   );

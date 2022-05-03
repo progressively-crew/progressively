@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { KeyboardKeys } from "../keyboardKeys";
+import { KeyboardKeys } from "../utils/keyboardKeys";
 import { TableProvider } from "./TableContext";
 import { moveToCol, moveToRow } from "./utils";
 import { Table as CTAble } from "@chakra-ui/react";

@@ -8,12 +8,12 @@ import {
 } from "remix";
 import { IoIosCreate } from "react-icons/io";
 import { SuccessBox } from "~/components/SuccessBox";
-import { getProjects } from "~/modules/projects/getProjects";
+import { getProjects } from "~/modules/projects/services/getProjects";
 import { UserProject } from "~/modules/projects/types";
 import { getSession } from "~/sessions";
-import { ProjectCard } from "~/modules/projects/ProjectCard";
+import { ProjectCard } from "~/modules/projects/components/ProjectCard";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { authGuard } from "~/modules/auth/auth-guard";
+import { authGuard } from "~/modules/auth/services/auth-guard";
 import { User } from "~/modules/user/types";
 import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";

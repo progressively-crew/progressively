@@ -1,6 +1,6 @@
 import { redirect } from "remix";
 import { getSession } from "~/sessions";
-import { getMe } from "../user/getMe";
+import { getMe } from "../../user/services/getMe";
 
 export const authGuard = async (request: Request) => {
   const session = await getSession(request.headers.get("Cookie"));

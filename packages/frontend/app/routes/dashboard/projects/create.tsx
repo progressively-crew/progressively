@@ -12,10 +12,10 @@ import {
 } from "remix";
 import { Crumbs, BreadCrumbs } from "~/components/AppBreadcrumbs";
 import { ErrorBox } from "~/components/ErrorBox";
-import { authGuard } from "~/modules/auth/auth-guard";
-import { createProject } from "~/modules/projects/createProject";
+import { authGuard } from "~/modules/auth/services/auth-guard";
+import { createProject } from "~/modules/projects/services/createProject";
 import { CreateProjectDTO, UserProject } from "~/modules/projects/types";
-import { validateProjectName } from "~/modules/projects/validateProjectName";
+import { validateProjectName } from "~/modules/projects/validators/validateProjectName";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { getSession } from "~/sessions";
 import { User } from "~/modules/user/types";

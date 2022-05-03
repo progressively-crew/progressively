@@ -17,6 +17,11 @@ export class FlagsService {
         flag: true,
         environment: true,
       },
+      orderBy: {
+        flag: {
+          createdAt: 'desc',
+        },
+      },
     });
   }
 

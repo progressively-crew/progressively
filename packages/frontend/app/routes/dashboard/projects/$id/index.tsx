@@ -7,13 +7,13 @@ import {
 } from "remix";
 import { Crumbs, BreadCrumbs } from "~/components/AppBreadcrumbs";
 import { SuccessBox } from "~/components/SuccessBox";
-import { getProject } from "~/modules/projects/getProject";
+import { getProject } from "~/modules/projects/services/getProject";
 import { Project } from "~/modules/projects/types";
 import { getSession } from "~/sessions";
 import { IoIosCreate } from "react-icons/io";
-import { EnvCard } from "~/modules/environments/EnvCard";
+import { EnvCard } from "~/modules/environments/components/EnvCard";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { authGuard } from "~/modules/auth/auth-guard";
+import { authGuard } from "~/modules/auth/services/auth-guard";
 import { User } from "~/modules/user/types";
 import { Header } from "~/components/Header";
 import { Section, SectionHeader } from "~/components/Section";
@@ -94,6 +94,20 @@ export default function ProjectDetailPage() {
       }
     >
       <Section aria-labelledby="list-env-title" id="list-env-title">
+        <Stack spacing={2}>
+          {newEnvId ? (
+            <SuccessBox id="env-added" mb={4}>
+              The environment has been successfully created.
+            </SuccessBox>
+          ) : null}
+
+          {envRemoved ? (
+            <SuccessBox id="env-removed" mb={4}>
+              The environment has been successfully deleted.
+            </SuccessBox>
+          ) : null}
+        </Stack>
+
         <SectionHeader
           title="Environments"
           hiddenTitle
@@ -110,50 +124,34 @@ export default function ProjectDetailPage() {
           }
         />
 
-        <Stack spacing={2}>
-          {newEnvId ? (
-            <SuccessBox id="env-added" mb={4}>
-              The environment has been successfully created.
-            </SuccessBox>
-          ) : null}
+        {project.environments.map((env, index) => (
+          <EnvCard
+            noBorder={index === 0}
+            key={env.uuid}
+            id={env.uuid}
+            linkTo={`/dashboard/projects/${project.uuid}/environments/${env.uuid}/flags`}
+            title={env.name}
+            clientKey={env.clientKey}
+          />
+        ))}
 
-          {envRemoved ? (
-            <SuccessBox id="env-removed" mb={4}>
-              The environment has been successfully deleted.
-            </SuccessBox>
-          ) : null}
-
-          <Box>
-            {project.environments.map((env, index) => (
-              <EnvCard
-                noBorder={index === 0}
-                key={env.uuid}
-                id={env.uuid}
-                linkTo={`/dashboard/projects/${project.uuid}/environments/${env.uuid}/flags`}
-                title={env.name}
-                clientKey={env.clientKey}
-              />
-            ))}
-          </Box>
-
-          {project.environments.length === 0 ? (
-            <EmptyState
-              title="No environments found"
-              description={
-                <Text>There are no environments yet on this project.</Text>
-              }
-              action={
-                <Button
-                  to={`/dashboard/projects/${project.uuid}/environments/create`}
-                  leftIcon={<IoIosCreate aria-hidden />}
-                  colorScheme="brand"
-                >
-                  Create an environment
-                </Button>
-              }
-            />
-          ) : null}
-        </Stack>
+        {project.environments.length === 0 ? (
+          <EmptyState
+            title="No environments found"
+            description={
+              <Text>There are no environments yet on this project.</Text>
+            }
+            action={
+              <Button
+                to={`/dashboard/projects/${project.uuid}/environments/create`}
+                leftIcon={<IoIosCreate aria-hidden />}
+                colorScheme="brand"
+              >
+                Create an environment
+              </Button>
+            }
+          />
+        ) : null}
       </Section>
     </DashboardLayout>
   );

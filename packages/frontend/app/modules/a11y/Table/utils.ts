@@ -1,5 +1,5 @@
-import { closestFocusable } from "~/modules/misc/closestFocusable";
-import { closestWithAttribute } from "~/modules/misc/closestWithAttribute";
+import { closestFocusable } from "~/modules/misc/utils/closestFocusable";
+import { closestWithAttribute } from "~/modules/misc/utils/closestWithAttribute";
 
 export const moveToRow = (
   el: HTMLElement,

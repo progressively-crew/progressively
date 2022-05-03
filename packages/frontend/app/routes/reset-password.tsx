@@ -28,8 +28,8 @@ import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import {
   validateConfirmationPassword,
   validatePassword,
-} from "~/modules/forms/PasswordField/validatePassword";
-import { resetPassword } from "~/modules/user/resetPassword";
+} from "~/modules/forms/utils/validatePassword";
+import { resetPassword } from "~/modules/user/services/resetPassword";
 
 export const meta: MetaFunction = () => {
   return {

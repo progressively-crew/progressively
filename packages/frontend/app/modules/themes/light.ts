@@ -30,6 +30,9 @@ export const lightTheme = extendTheme({
       textlight: {
         default: "gray.600",
       },
+      header: {
+        default: "gray.800",
+      },
     },
   },
 });

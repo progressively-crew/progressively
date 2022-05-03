@@ -156,11 +156,11 @@ describe('Environments (e2e)', () => {
       expect(response.status).toBe(200);
       expect(flagEnv.flagId).toBeDefined();
       expect(flagEnv.environmentId).toBe('1');
-      expect(flagEnv.status).toBe('NOT_ACTIVATED');
+      expect(flagEnv.status).toBe('ACTIVATED');
       expect(flagEnv.flag.uuid).toBeDefined();
       expect(flagEnv.flag.createdAt).toBeDefined();
-      expect(flagEnv.flag.name).toBe('New homepage');
-      expect(flagEnv.flag.description).toBe('Switch the new homepage design');
+      expect(flagEnv.flag.name).toBe('New footer');
+      expect(flagEnv.flag.description).toBe('Switch the new footer design');
     });
   });
 

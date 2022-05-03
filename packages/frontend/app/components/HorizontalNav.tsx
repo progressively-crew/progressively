@@ -9,7 +9,16 @@ export const HorizontalNav = ({ children, label }: HorizontalNavProps) => {
   return (
     <Box as="nav" aria-label={label} overflowX="scroll" bg="background100">
       <Container maxW="5xl">
-        <HStack as="ul" listStyleType={"none"} spacing={3}>
+        <HStack
+          as="ul"
+          listStyleType={"none"}
+          spacing={3}
+          sx={{
+            "li:first-of-type a": {
+              paddingInlineStart: "0",
+            },
+          }}
+        >
           {children}
         </HStack>
       </Container>
@@ -29,7 +38,7 @@ export const NavItem = ({ children, to, icon }: NavItemProps) => {
       <CLink
         as={NavLink}
         px={6}
-        py={3}
+        py={4}
         to={to}
         end
         display={"inline-block"}

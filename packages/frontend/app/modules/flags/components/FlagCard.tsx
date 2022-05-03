@@ -9,7 +9,7 @@ import {
 import React, { useRef } from "react";
 import { Form, Link } from "remix";
 import { Box, Text } from "@chakra-ui/react";
-import { FlagStatus } from "./types";
+import { FlagStatus } from "../types";
 import { Switch } from "~/components/Switch";
 
 export interface FlagCardProps {
@@ -48,6 +48,9 @@ export const FlagCard = ({
       }}
       transition="background 0.3s"
       _hover={{
+        background: "background100",
+      }}
+      _focusWithin={{
         background: "background100",
       }}
       _active={{

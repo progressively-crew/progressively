@@ -4,7 +4,7 @@ body {
 }
 
 a.custom-nav-link {
-
+  border-bottom: 3px solid transparent;
 }
 a.custom-nav-link.active {
   font-weight: var(--chakra-fontWeights-bold);

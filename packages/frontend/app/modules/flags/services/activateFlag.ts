@@ -1,5 +1,5 @@
 import { Constants } from "~/constants";
-import { FlagStatus } from "./types";
+import { FlagStatus } from "../types";
 
 export const activateFlag = (
   envId: string,

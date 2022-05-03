@@ -1,4 +1,4 @@
-import { CreateFlagDTO } from "./types";
+import { CreateFlagDTO } from "../types";
 
 export const validateFlagShape = (values: CreateFlagDTO) => {
   const errors: Partial<CreateFlagDTO> = {};

@@ -1,9 +1,9 @@
 import { Badge, HStack } from "@chakra-ui/react";
 import { useState } from "react";
 import { Form, Link, useTransition } from "remix";
-import { Cell, Col, Row, Table, Tbody, Thead } from "../a11y/Table";
-import { useHydrated } from "../misc/useHydrated";
-import { UserProject, UserRoles } from "../projects/types";
+import { Cell, Col, Row, Table, Tbody, Thead } from "../../a11y/Table";
+import { useHydrated } from "../../misc/hooks/useHydrated";
+import { UserProject, UserRoles } from "../../projects/types";
 import { FaTrash } from "react-icons/fa";
 import { Button } from "~/components/Button";
 import { IoIosCreate } from "react-icons/io";

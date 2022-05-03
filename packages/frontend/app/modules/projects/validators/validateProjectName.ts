@@ -1,4 +1,4 @@
-import { CreateProjectDTO } from "./types";
+import { CreateProjectDTO } from "../types";
 
 export const validateProjectName = (values: CreateProjectDTO) => {
   const errors: Partial<CreateProjectDTO> = {};

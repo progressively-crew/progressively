@@ -8,9 +8,9 @@ import {
 } from "remix";
 import { ErrorBox } from "~/components/ErrorBox";
 import { Main } from "~/components/Main";
-import { createUser } from "~/modules/user/createUser";
+import { createUser } from "~/modules/user/services/createUser";
 import { RegisterCredentials } from "~/modules/user/types";
-import { validateRegistrationForm } from "~/modules/user/validate-registration-form";
+import { validateRegistrationForm } from "~/modules/user/validators/validate-registration-form";
 import { User } from "~/modules/user/types";
 import { SuccessBox } from "~/components/SuccessBox";
 import {

@@ -9,10 +9,10 @@ import {
   MenuList,
   MenuItem,
 } from "@chakra-ui/react";
-import { AiOutlineUser } from "react-icons/ai";
+import { BiCaretDown } from "react-icons/bi";
 import { Link } from "remix";
 import { User } from "~/modules/user/types";
-import { useHydrated } from "~/modules/misc/useHydrated";
+import { useHydrated } from "~/modules/misc/hooks/useHydrated";
 
 export interface UserDropdownProps {
   user: User;
@@ -29,8 +29,8 @@ export const UseDropdown = ({ user }: UserDropdownProps) => {
         to="/profile"
         variant="ghost"
         paddingInlineEnd={[0, 4]}
-        leftIcon={
-          <Icon display={["none", "block"]} as={AiOutlineUser} aria-hidden />
+        rightIcon={
+          <Icon display={["none", "block"]} as={BiCaretDown} aria-hidden />
         }
       >
         <Box display={["none", "block"]} as="span">
@@ -63,8 +63,8 @@ export const UseDropdown = ({ user }: UserDropdownProps) => {
         as={Button}
         variant="ghost"
         paddingInlineEnd={[0, 4]}
-        leftIcon={
-          <Icon display={["none", "block"]} as={AiOutlineUser} aria-hidden />
+        rightIcon={
+          <Icon display={["none", "block"]} as={BiCaretDown} aria-hidden />
         }
       >
         <Box display={["none", "block"]} as="span">

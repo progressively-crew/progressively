@@ -24,12 +24,12 @@ import { Header } from "~/components/Header";
 import { Section, SectionHeader } from "~/components/Section";
 import { SuccessBox } from "~/components/SuccessBox";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { authGuard } from "~/modules/auth/auth-guard";
+import { authGuard } from "~/modules/auth/services/auth-guard";
 import {
   validatePassword,
   validateConfirmationPassword,
-} from "~/modules/forms/PasswordField/validatePassword";
-import { changePassword } from "~/modules/user/changePassword";
+} from "~/modules/forms/utils/validatePassword";
+import { changePassword } from "~/modules/user/services/changePassword";
 import { User } from "~/modules/user/types";
 import { getSession } from "~/sessions";
 
@@ -109,7 +109,12 @@ export default function ProfilePage() {
       header={<Header title="My profile" />}
       breadcrumb={
         <nav>
-          <CLink as={Link} to="/dashboard" display="inline-block">
+          <CLink
+            as={Link}
+            to="/dashboard"
+            display="inline-block"
+            color="textlight"
+          >
             <HStack alignItems={"center"} height={"44px"} fontSize="xl">
               <MdChevronLeft aria-hidden />
               <span>Back to dashboard</span>
@@ -144,6 +149,7 @@ export default function ProfilePage() {
                   aria-describedby={
                     errors?.password ? "error-password" : undefined
                   }
+                  maxW="34ch"
                 />
               </FormControl>
 
@@ -161,6 +167,7 @@ export default function ProfilePage() {
                       ? "error-confirmationPassword"
                       : undefined
                   }
+                  maxW="34ch"
                 />
               </FormControl>
 

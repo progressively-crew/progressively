@@ -57,6 +57,7 @@ export const BreadCrumbs = ({ crumbs }: BreadCrumbsProps) => {
               crumb.forceNotCurrent ? false : index === lastItemIndex
             }
             key={crumb.link}
+            color={index === lastItemIndex ? "text" : "textlight"}
           >
             <BreadcrumbLink
               fontWeight={index === lastItemIndex ? "semibold" : undefined}

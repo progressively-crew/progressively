@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { FaTrash } from "react-icons/fa";
 import { Button } from "~/components/Button";
-import { ComparatorEnum, StrategyRetrieveDTO } from "./types";
+import { ComparatorEnum, StrategyRetrieveDTO } from "../types";
 
 export interface StrategyCardProps {
   flagId: string;
@@ -73,7 +73,7 @@ const StrategyTargetConstraints = ({
     const targets = strat.fieldValue?.split("\n");
 
     return (
-      <UnorderedList pl={2}>
+      <UnorderedList pl={8}>
         {targets?.map((target) => (
           <ListItem key={target} color="textlight">
             {target}
@@ -97,10 +97,15 @@ export const StrategyCard = ({
     <Box
       pt={4}
       pb={4}
+      pr={4}
       as="article"
       aria-labelledby={strat.uuid}
       borderTopWidth={noBorder ? 0 : 1}
       borderColor="background200"
+      transition="background 0.3s"
+      _focusWithin={{
+        background: "background100",
+      }}
     >
       <Flex
         alignItems={"flex-start"}

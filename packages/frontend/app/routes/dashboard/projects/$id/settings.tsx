@@ -25,12 +25,12 @@ import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { Section, SectionHeader } from "~/components/Section";
 import { SuccessBox } from "~/components/SuccessBox";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { authGuard } from "~/modules/auth/auth-guard";
-import { getProject } from "~/modules/projects/getProject";
-import { removeMember } from "~/modules/projects/removeMember";
+import { authGuard } from "~/modules/auth/services/auth-guard";
+import { getProject } from "~/modules/projects/services/getProject";
+import { removeMember } from "~/modules/projects/services/removeMember";
 import { Project, UserProject, UserRoles } from "~/modules/projects/types";
 import { User } from "~/modules/user/types";
-import { UserTable } from "~/modules/user/UserTable";
+import { UserTable } from "~/modules/user/components/UserTable";
 import { getSession } from "~/sessions";
 
 export const meta: MetaFunction = ({ data }) => {

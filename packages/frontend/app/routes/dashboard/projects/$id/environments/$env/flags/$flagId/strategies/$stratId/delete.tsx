@@ -13,9 +13,9 @@ import { Crumbs, BreadCrumbs } from "~/components/AppBreadcrumbs";
 import { ErrorBox } from "~/components/ErrorBox";
 import { FaTrash } from "react-icons/fa";
 import { WarningBox } from "~/components/WarningBox";
-import { authGuard } from "~/modules/auth/auth-guard";
+import { authGuard } from "~/modules/auth/services/auth-guard";
 import { Environment } from "~/modules/environments/types";
-import { getProject } from "~/modules/projects/getProject";
+import { getProject } from "~/modules/projects/services/getProject";
 import { Project } from "~/modules/projects/types";
 import { User } from "~/modules/user/types";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
@@ -23,10 +23,10 @@ import { getSession } from "~/sessions";
 import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
 import { FlagEnv } from "~/modules/flags/types";
-import { getFlagsByProjectEnv } from "~/modules/flags/getFlagsByProjectEnv";
-import { getStrategy } from "~/modules/strategies/getStrategy";
+import { getFlagsByProjectEnv } from "~/modules/flags/services/getFlagsByProjectEnv";
+import { getStrategy } from "~/modules/strategies/services/getStrategy";
 import { StrategyRetrieveDTO } from "~/modules/strategies/types";
-import { deleteStrategy } from "~/modules/strategies/deleteStrategy";
+import { deleteStrategy } from "~/modules/strategies/services/deleteStrategy";
 import { Button } from "~/components/Button";
 
 interface MetaArgs {

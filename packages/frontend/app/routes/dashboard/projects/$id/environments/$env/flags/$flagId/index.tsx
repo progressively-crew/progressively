@@ -9,14 +9,14 @@ import {
 } from "remix";
 import { Crumbs, BreadCrumbs } from "~/components/AppBreadcrumbs";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { authGuard } from "~/modules/auth/auth-guard";
+import { authGuard } from "~/modules/auth/services/auth-guard";
 import { Environment } from "~/modules/environments/types";
-import { getFlagsByProjectEnv } from "~/modules/flags/getFlagsByProjectEnv";
+import { getFlagsByProjectEnv } from "~/modules/flags/services/getFlagsByProjectEnv";
 import { FlagEnv, FlagStatus } from "~/modules/flags/types";
-import { getProject } from "~/modules/projects/getProject";
+import { getProject } from "~/modules/projects/services/getProject";
 import { Project } from "~/modules/projects/types";
-import { getStrategies } from "~/modules/strategies/getStrategies";
-import { StrategyCard } from "~/modules/strategies/StrategyCard";
+import { getStrategies } from "~/modules/strategies/services/getStrategies";
+import { StrategyCard } from "~/modules/strategies/components/StrategyCard";
 import { User } from "~/modules/user/types";
 import { getSession } from "~/sessions";
 import { SuccessBox } from "~/components/SuccessBox";
@@ -29,7 +29,10 @@ import { AiOutlineBarChart, AiOutlineSetting } from "react-icons/ai";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { FaPowerOff } from "react-icons/fa";
 import { Button } from "~/components/Button";
-import { toggleAction, ToggleFlag } from "~/modules/flags/ToggleFlag";
+import {
+  toggleAction,
+  ToggleFlag,
+} from "~/modules/flags/components/ToggleFlag";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { FiFlag } from "react-icons/fi";
 
@@ -178,6 +181,24 @@ export default function FlagById() {
     >
       <Stack spacing={8}>
         <Section id="concerned-audience">
+          <Stack spacing={2}>
+            {isStrategyAdded ? (
+              <SuccessBox id="strategy-added" mb={4}>
+                The strategy has been successfully created.
+              </SuccessBox>
+            ) : null}
+
+            {isStrategyRemoved ? (
+              <SuccessBox id="strategy-removed" mb={4}>
+                The strategy has been successfully removed.
+              </SuccessBox>
+            ) : null}
+
+            {strategies.length === 0 && (
+              <WarningBox title="You don't have strategies yet. When activating the flag, every user will receive the activated variant." />
+            )}
+          </Stack>
+
           <SectionHeader
             title="Strategies"
             hiddenTitle
@@ -194,57 +215,38 @@ export default function FlagById() {
             }
           />
 
-          <Stack spacing={2}>
-            {isStrategyAdded ? (
-              <SuccessBox id="strategy-added" mb={4}>
-                The strategy has been successfully created.
-              </SuccessBox>
-            ) : null}
-
-            {isStrategyRemoved ? (
-              <SuccessBox id="strategy-removed" mb={4}>
-                The strategy has been successfully removed.
-              </SuccessBox>
-            ) : null}
-
-            {strategies.length > 0 ? (
-              <Box>
-                {strategies.map((strat, index) => (
-                  <StrategyCard
-                    noBorder={index === 0}
-                    key={`${strat.uuid}`}
-                    projectId={project.uuid}
-                    envId={environment.uuid}
-                    flagId={currentFlag.uuid}
-                    strat={strat}
-                  />
-                ))}
-              </Box>
-            ) : null}
-
-            {strategies.length === 0 ? (
-              <>
-                <Box mb={8}>
-                  <WarningBox title="You don't have strategies yet. When activating the flag, every user will receive the activated variant." />
-                </Box>
-                <EmptyState
-                  title="No strategy found"
-                  description={
-                    <Text>There are no strategies bound to this flag yet.</Text>
-                  }
-                  action={
-                    <Button
-                      to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
-                      leftIcon={<IoIosCreate aria-hidden />}
-                      colorScheme="brand"
-                    >
-                      Add a strategy
-                    </Button>
-                  }
+          {strategies.length > 0 ? (
+            <Box>
+              {strategies.map((strat, index) => (
+                <StrategyCard
+                  noBorder={index === 0}
+                  key={`${strat.uuid}`}
+                  projectId={project.uuid}
+                  envId={environment.uuid}
+                  flagId={currentFlag.uuid}
+                  strat={strat}
                 />
-              </>
-            ) : null}
-          </Stack>
+              ))}
+            </Box>
+          ) : null}
+
+          {strategies.length === 0 ? (
+            <EmptyState
+              title="No strategy found"
+              description={
+                <Text>There are no strategies bound to this flag yet.</Text>
+              }
+              action={
+                <Button
+                  to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
+                  leftIcon={<IoIosCreate aria-hidden />}
+                  colorScheme="brand"
+                >
+                  Add a strategy
+                </Button>
+              }
+            />
+          ) : null}
         </Section>
       </Stack>
     </DashboardLayout>

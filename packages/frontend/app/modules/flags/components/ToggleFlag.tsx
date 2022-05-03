@@ -1,8 +1,8 @@
 import { ActionFunction, Form, useTransition } from "remix";
 import { Switch } from "~/components/Switch";
 import { getSession } from "~/sessions";
-import { activateFlag } from "./activateFlag";
-import { FlagStatus } from "./types";
+import { activateFlag } from "../services/activateFlag";
+import { FlagStatus } from "../types";
 
 export const toggleAction: ActionFunction = async ({
   request,

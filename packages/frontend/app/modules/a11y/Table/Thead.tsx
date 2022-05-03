@@ -1,6 +1,6 @@
 import React, { ReactNode, useEffect, useRef } from "react";
 import { Checkbox } from "~/components/Checkbox";
-import { useHydrated } from "~/modules/misc/useHydrated";
+import { useHydrated } from "~/modules/misc/hooks/useHydrated";
 import { useSelections } from "./TableContext";
 import { Th, Thead as CTHead, Tr, VisuallyHidden } from "@chakra-ui/react";
 
