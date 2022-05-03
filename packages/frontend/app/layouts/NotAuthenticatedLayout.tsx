@@ -19,7 +19,7 @@ export const NotAuthenticatedLayout = ({
             alignItems="center"
             h={"72px"}
           >
-            <Logo to="/" />
+            <Logo to="/signin" />
           </Flex>
         </Container>
       </Box>
