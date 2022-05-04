@@ -84,7 +84,7 @@ export class FlagsController {
   /**
    * Get the flag values by client sdk key
    */
-  @Get('flags/sdk/:clientKey')
+  @Get('sdk/:clientKey')
   async getByClientKey(
     @Param('clientKey') clientKey: string,
     @Query() fields: FieldRecord = {},

@@ -6,15 +6,14 @@ export const useFlagInit = (
   sdkRef: React.MutableRefObject<ProgressivelySdkType>,
   initialFlags?: FlagDict
 ) => {
-  const [isLoading, setIsLoading] = useState(initialFlags ? false : true);
-  const [error, setError] = useState<any>(undefined);
+  const [isLoading, setIsLoading] = useState(!initialFlags);
+  const [error, setError] = useState<any>();
   const [flags, setFlags] = useState<FlagDict>(initialFlags || {});
 
   // Only run the effect on mount, NEVER later
   useEffect(() => {
-    if (!sdkRef.current) return;
-
     const sdk = sdkRef.current;
+    if (!sdk) return;
 
     // Early return the client side fetch when they are resolved on the server
     if (initialFlags) {
@@ -24,14 +23,14 @@ export const useFlagInit = (
 
     sdk
       .loadFlags()
-      .then(({ flags: clientFlags }) => {
+      .then((res) => {
         sdk.onFlagUpdate(setFlags);
-        setFlags(clientFlags);
+        setFlags(res.flags);
         setIsLoading(false);
       })
       .catch(setError);
 
-    return () => sdk?.disconnect();
+    return () => sdk.disconnect();
   }, []);
 
   return { flags, error, isLoading, setFlags };

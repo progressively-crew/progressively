@@ -2,33 +2,37 @@ import { Fields, FlagDict, ProgressivelySdkType, SDKOptions } from "./types";
 
 export * from "./types";
 
-function appendFieldToUrl(url: URL, fields: Fields) {
-  for (const field in fields) {
-    url.searchParams.set(field, String(fields[field]));
-  }
-}
-
 function init(clientKey: string, options?: SDKOptions): ProgressivelySdkType {
   const fields: Fields = options?.fields || {};
 
+  // HTTP specific
   const apiRoot = options?.apiUrl || "http://localhost:4000";
-  const flagEndpoint = new URL(`${apiRoot}/flags/sdk/${clientKey}`);
-  appendFieldToUrl(flagEndpoint, fields);
+  const flagEndpoint = new URL(`${apiRoot}/sdk/${clientKey}`);
+  for (const field in fields) {
+    flagEndpoint.searchParams.set(field, String(fields[field]));
+  }
 
   // Websocket specific
   const websocketRoot = options?.websocketUrl || "ws://localhost:4001";
   const websocketUrl = new URL(websocketRoot);
   websocketUrl.searchParams.set("client_key", clientKey);
-  appendFieldToUrl(websocketUrl, fields);
+  for (const field in fields) {
+    websocketUrl.searchParams.set(field, String(fields[field]));
+  }
 
-  return Sdk(flagEndpoint.toString(), websocketUrl);
+  return Sdk(
+    flagEndpoint.toString(),
+    websocketUrl,
+    options?.initialFlags || {}
+  );
 }
 
 function Sdk(
   flagEndpoint: string,
-  websocketEndpoint: URL
+  websocketEndpoint: URL,
+  initialFlags: FlagDict
 ): ProgressivelySdkType {
-  let flags: FlagDict = {};
+  let flags: FlagDict = initialFlags;
   let socket: WebSocket;
 
   function loadFlags() {
@@ -51,14 +55,11 @@ function Sdk(
       .find((row) => row.startsWith("progressively-id="))
       ?.split("=")[1];
 
-    if (cookieValue) {
-      websocketEndpoint.searchParams.set("id", cookieValue);
-    }
+    if (cookieValue) websocketEndpoint.searchParams.set("id", cookieValue);
 
     socket = new WebSocket(websocketEndpoint.toString());
     socket.onmessage = (event) => {
-      const { data } = JSON.parse(event.data);
-      flags = { ...flags, ...data };
+      flags = { ...flags, ...JSON.parse(event.data).data };
 
       callback(flags);
     };

@@ -5,6 +5,7 @@ export interface SDKOptions {
   fields?: Fields;
   apiUrl?: string;
   websocketUrl?: string;
+  initialFlags?: FlagDict;
 }
 
 export interface ProgressivelySdkType {

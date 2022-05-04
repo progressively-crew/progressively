@@ -28,10 +28,10 @@ describe('FlagsController (e2e)', () => {
     await cleanupDb();
   });
 
-  describe('/flags/sdk/unknown-key (GET)', () => {
+  describe('/sdk/unknown-key (GET)', () => {
     it('gives an empty array when the key is invalid', async () => {
       const response = await request(app.getHttpServer()).get(
-        '/flags/sdk/unknown-key',
+        '/sdk/unknown-key',
       );
 
       expect(response.status).toBe(200);
@@ -39,10 +39,10 @@ describe('FlagsController (e2e)', () => {
     });
   });
 
-  describe('/flags/sdk/valid-sdk-key (GET)', () => {
+  describe('/sdk/valid-sdk-key (GET)', () => {
     it('gives a list of flags when the key is valid for anonymous user (no field id, no cookies)', async () => {
       const response = await request(app.getHttpServer()).get(
-        '/flags/sdk/valid-sdk-key',
+        '/sdk/valid-sdk-key',
       );
 
       expect(response.status).toBe(200);
@@ -56,7 +56,7 @@ describe('FlagsController (e2e)', () => {
 
     it('gives a list of flags when the key is valid for an authenticated user (field is passed as query param and match a strategy)', async () => {
       const response = await request(app.getHttpServer()).get(
-        '/flags/sdk/valid-sdk-key?id=1',
+        '/sdk/valid-sdk-key?id=1',
       );
 
       expect(response.status).toBe(200);
@@ -70,7 +70,7 @@ describe('FlagsController (e2e)', () => {
 
     it('gives a list of flags when the key is valid for an authenticated user (field is passed as query param and does NOT match a strategy)', async () => {
       const response = await request(app.getHttpServer()).get(
-        '/flags/sdk/valid-sdk-key?id=2',
+        '/sdk/valid-sdk-key?id=2',
       );
 
       expect(response.status).toBe(200);
@@ -84,7 +84,7 @@ describe('FlagsController (e2e)', () => {
 
     it('gives a list of flags when the key is valid for an authenticated user (field is passed as cookie and match a strategy)', async () => {
       const response = await request(app.getHttpServer())
-        .get('/flags/sdk/valid-sdk-key')
+        .get('/sdk/valid-sdk-key')
         .set('Cookie', ['progressively-id=1; Path=/; Secure; SameSite=Lax']);
 
       expect(response.status).toBe(200);
@@ -98,7 +98,7 @@ describe('FlagsController (e2e)', () => {
 
     it('gives a list of flags when the key is valid for an authenticated user (field is passed as cookie and does NOT match a strategy)', async () => {
       const response = await request(app.getHttpServer())
-        .get('/flags/sdk/valid-sdk-key')
+        .get('/sdk/valid-sdk-key')
         .set('Cookie', ['progressively-id=2; Path=/; Secure; SameSite=Lax']);
 
       expect(response.status).toBe(200);
