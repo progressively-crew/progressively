@@ -3,3 +3,7 @@ export interface UserRetrieveDTO {
   fullname: string;
   email: string;
 }
+
+export interface UserChangeFullnameDTO {
+  fullname: string;
+}

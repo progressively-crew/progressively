@@ -104,15 +104,18 @@ describe("/dashboard/projects/[id]/add-member", () => {
           cy.checkA11y();
         });
 
-        it("shows an error message when the user does not exist in the db", () => {
+        /**
+         * TODO: needs to send a real email, find a way to handle it properly
+         */
+        it.skip("adds the user to the project by inviting them to create an account by email", () => {
           cy.findByLabelText("Member email").type("blah.blah@gmail.com");
           cy.findByRole("button", { name: "Add the member" }).click();
 
-          cy.get(".error-box")
+          cy.get(".success-box")
             .should("have.focus")
             .and(
               "contain.text",
-              "The user does not exist. They must have to create an account before being able to join the project."
+              "The user has been invited invited to join the project."
             );
 
           cy.checkA11y();

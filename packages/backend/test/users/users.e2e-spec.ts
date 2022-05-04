@@ -77,6 +77,69 @@ describe('UsersController (e2e)', () => {
         }));
   });
 
+  describe('/users/me (Put)', () => {
+    it('gives a 401 when the token is invalid', () =>
+      verifyAuthGuard(app, '/users/change-password', 'post'));
+
+    it('gives 400 when the fullname is not set', async () => {
+      const access_token = await authenticate(
+        app,
+        'without.fullname@gmail.com',
+        'password',
+      );
+
+      return request(app.getHttpServer())
+        .put('/users/me')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(400)
+        .expect({
+          statusCode: 400,
+          message: 'Validation failed',
+          error: 'Bad Request',
+        });
+    });
+
+    it('gives 400 when the fullname is less than 1 char', async () => {
+      const access_token = await authenticate(
+        app,
+        'without.fullname@gmail.com',
+        'password',
+      );
+
+      return request(app.getHttpServer())
+        .put('/users/me')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send({ fullname: '' })
+        .expect(400)
+        .expect({
+          statusCode: 400,
+          message: 'Validation failed',
+          error: 'Bad Request',
+        });
+    });
+
+    it('gives a valid response when the user has changed their fullname', async () => {
+      const access_token = await authenticate(
+        app,
+        'without.fullname@gmail.com',
+        'password',
+      );
+
+      return request(app.getHttpServer())
+        .put('/users/me')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send({
+          fullname: 'Lola',
+        })
+        .expect(200)
+        .expect({
+          email: 'without.fullname@gmail.com',
+          fullname: 'Lola',
+          uuid: '5',
+        });
+    });
+  });
+
   describe('/users/reset-password (Post)', () => {
     it('gives 400 when the token is undefined', () =>
       request(app.getHttpServer())

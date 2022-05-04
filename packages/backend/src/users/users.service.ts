@@ -33,6 +33,13 @@ export class UsersService {
     return this.prisma.user.create({ data: user });
   }
 
+  changeFullname(userId: string, fullname: string): Promise<User> {
+    return this.prisma.user.update({
+      data: { fullname },
+      where: { uuid: userId },
+    });
+  }
+
   async createResetPasswordTokenForUser(uuid: string) {
     const rawToken = uuidv4();
     const hashedToken = CryptoService.sha256(rawToken);

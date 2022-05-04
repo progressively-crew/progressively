@@ -33,6 +33,8 @@ import {
   EnvironmentCreationSchema,
   EnvironmentDTO,
 } from '../environments/environments.dto';
+import { UserStatus } from '../users/status';
+import { MailService } from '../mail/mail.service';
 @ApiBearerAuth()
 @Controller('projects')
 export class ProjectsController {
@@ -40,6 +42,7 @@ export class ProjectsController {
     private readonly projectService: ProjectsService,
     private readonly userService: UsersService,
     private readonly envService: EnvironmentsService,
+    private readonly mailService: MailService,
   ) {}
 
   @Get(':id')
@@ -102,22 +105,39 @@ export class ProjectsController {
     @Body() memberProjectDto: MemberProjectDTO,
   ) {
     const user = await this.userService.findByEmail(memberProjectDto.email);
+    let newMember;
 
     if (!user) {
-      throw new NotFoundException(
-        'The user does not exist. They must have to create an account before being able to join the project.',
+      newMember = await this.userService.createUser({
+        email: memberProjectDto.email,
+        fullname: '',
+        password: String(Math.random()),
+        status: UserStatus.Active,
+        activationToken: '',
+      });
+
+      const rawToken = await this.userService.createResetPasswordTokenForUser(
+        newMember.uuid,
       );
+
+      await this.mailService.sendResetPasswordMail(
+        newMember.fullname,
+        newMember.email,
+        rawToken,
+      );
+    } else {
+      const userProject = await this.projectService.userProject(id, user.uuid);
+
+      if (userProject) {
+        throw new ConflictException(
+          'The user is already a member of the project.',
+        );
+      }
+
+      newMember = user;
     }
 
-    const userProject = await this.projectService.userProject(id, user.uuid);
-
-    if (userProject) {
-      throw new ConflictException(
-        'The user is already a member of the project.',
-      );
-    }
-
-    return this.projectService.addMember(id, user.uuid);
+    return this.projectService.addMember(id, newMember.uuid);
   }
 
   @Delete(':id')

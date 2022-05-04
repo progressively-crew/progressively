@@ -61,6 +61,13 @@ const users = [
     email: 'jane.doe@gmail.com',
   },
   {
+    title: 'Without fullname',
+    email: 'without.fullname@gmail.com',
+    description: 'No projects, invited by email',
+    value: 'withoutPassword',
+    password: 'password',
+  },
+  {
     title: 'Other',
     description: 'I want to fill the credentials myself',
     value: 'other',

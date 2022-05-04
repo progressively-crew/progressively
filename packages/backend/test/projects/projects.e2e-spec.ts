@@ -311,20 +311,19 @@ describe('ProjectsController (e2e)', () => {
         });
     });
 
-    it('gives 404 when the user does not exist', async () => {
+    it('gives 201 when the user does not exist in the db (sending an email and all)', async () => {
       const access_token = await authenticate(app);
 
-      await request(app.getHttpServer())
+      const response = await request(app.getHttpServer())
         .post('/projects/1/members')
         .set('Authorization', `Bearer ${access_token}`)
-        .send({ email: 'blah.blah@gmail.com' })
-        .expect(404)
-        .expect({
-          statusCode: 404,
-          message:
-            'The user does not exist. They must have to create an account before being able to join the project.',
-          error: 'Not Found',
-        });
+        .send({ email: 'blah.doe@gmail.com' })
+        .expect(201);
+
+      expect(response.body).toMatchObject({
+        projectId: '1',
+        role: 'user',
+      });
     });
 
     it('gives 403 when the project does not exist', async () => {

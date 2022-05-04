@@ -46,7 +46,18 @@ export const seedUsers = async (prismaClient: PrismaClient) => {
     },
   });
 
-  return [marvin, john, jane, gina] as const;
+  const withoutFullName = await prismaClient.user.create({
+    data: {
+      uuid: '5',
+      fullname: '',
+      email: 'without.fullname@gmail.com',
+      password: await CryptoService.hash(`password`),
+      activationToken: '',
+      status: UserStatus.Active,
+    },
+  });
+
+  return [marvin, john, jane, gina, withoutFullName] as const;
 };
 
 export const seedPasswordReset = async (

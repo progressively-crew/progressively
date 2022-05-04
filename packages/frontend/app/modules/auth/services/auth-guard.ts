@@ -17,5 +17,9 @@ export const authGuard = async (request: Request) => {
     throw redirect(`/401`);
   }
 
+  if (!request.url.includes("what-s-your-name") && user?.fullname === "") {
+    throw redirect("/dashboard/what-s-your-name");
+  }
+
   return user;
 };

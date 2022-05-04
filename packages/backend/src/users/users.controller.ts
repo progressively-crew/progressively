@@ -5,16 +5,21 @@ import {
   Get,
   NotFoundException,
   Post,
+  Put,
   Request,
   UseGuards,
   UsePipes,
 } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
-import { UserRetrieveDTO } from './users.dto';
+import { UserChangeFullnameDTO, UserRetrieveDTO } from './users.dto';
 import { UsersService } from './users.service';
 import { MailService } from '../mail/mail.service';
-import { ChangePasswordSchema, ResetPasswordSchema } from '../auth/types';
+import {
+  ChangeFullnameSchema,
+  ChangePasswordSchema,
+  ResetPasswordSchema,
+} from '../auth/types';
 import { ValidationPipe } from '../shared/pipes/ValidationPipe';
 
 @Controller('users')
@@ -38,6 +43,27 @@ export class UsersController {
       email: user.email,
       fullname: user.fullname,
       uuid: user.uuid,
+    };
+  }
+
+  @ApiBearerAuth()
+  @Put('/me')
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(new ValidationPipe(ChangeFullnameSchema))
+  async editFullname(
+    @Request() req,
+    @Body() userDto: UserChangeFullnameDTO,
+  ): Promise<UserRetrieveDTO> {
+    const userId = req.user.uuid;
+    const updatedUser = await this.userService.changeFullname(
+      userId,
+      userDto.fullname,
+    );
+
+    return {
+      email: updatedUser.email,
+      fullname: updatedUser.fullname,
+      uuid: updatedUser.uuid,
     };
   }
 

@@ -176,16 +176,18 @@ export default function ResetPasswordPage() {
               />
             </FormControl>
 
-            <Button
-              type="submit"
-              colorScheme={"brand"}
-              leftIcon={<MdPassword aria-hidden />}
-              isLoading={transition.state === "submitting"}
-              loadingText="Password changing in progress, please wait..."
-              disabled={false}
-            >
-              Change password
-            </Button>
+            <Box>
+              <Button
+                type="submit"
+                colorScheme={"brand"}
+                leftIcon={<MdPassword aria-hidden />}
+                isLoading={transition.state === "submitting"}
+                loadingText="Password changing in progress, please wait..."
+                disabled={false}
+              >
+                Change password
+              </Button>
+            </Box>
           </Stack>
         </Form>
       </Main>

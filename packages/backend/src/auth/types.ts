@@ -21,3 +21,7 @@ export const ChangePasswordSchema = Joi.object({
   confirmationPassword: Joi.string().min(8).required(),
   password: Joi.string().min(8).required(),
 });
+
+export const ChangeFullnameSchema = Joi.object({
+  fullname: Joi.string().min(1).required(),
+});
