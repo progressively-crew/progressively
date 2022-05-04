@@ -4,6 +4,20 @@ export interface UserRetrieveDTO {
   email: string;
 }
 
-export interface UserChangeFullnameDTO {
+export class UserChangeFullnameDTO {
   fullname: string;
+}
+
+export class ForgotPasswordDTO {
+  email: string;
+}
+
+export class ResetPasswordDTO {
+  token: string;
+  password: string;
+}
+
+export class ChangePasswordDTO {
+  confirmationPassword: string;
+  password: string;
 }

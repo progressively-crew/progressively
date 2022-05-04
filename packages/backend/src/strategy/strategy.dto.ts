@@ -1,7 +1,7 @@
 import * as Joi from 'joi';
 import { ComparatorEnum } from './types';
 
-export interface StrategyCreateDTO {
+export class StrategyCreationDTO {
   name: string;
   strategyRuleType: 'default' | 'field' | 'pool';
 

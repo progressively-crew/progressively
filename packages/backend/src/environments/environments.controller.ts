@@ -18,7 +18,7 @@ import { HasEnvironmentAccessGuard } from './guards/hasEnvAccess';
 import { ValidationPipe } from '../shared/pipes/ValidationPipe';
 import { FlagsService } from '../flags/flags.service';
 import { FlagAlreadyExists } from '../flags/errors';
-import { FlagCreationSchema } from '../flags/flags.dto';
+import { FlagCreationSchema, FlagCreationDTO } from '../flags/flags.dto';
 @ApiBearerAuth()
 @Controller('environments')
 export class EnvironmentsController {
@@ -44,10 +44,7 @@ export class EnvironmentsController {
   @UseGuards(HasEnvironmentAccessGuard)
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(FlagCreationSchema))
-  async createFlag(
-    @Param('envId') envId,
-    @Body() body: { name: string; description: string },
-  ) {
+  async createFlag(@Param('envId') envId, @Body() body: FlagCreationDTO) {
     try {
       const flag = await this.flagService.createFlag(
         envId,

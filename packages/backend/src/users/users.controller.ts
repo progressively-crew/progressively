@@ -12,7 +12,13 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
-import { UserChangeFullnameDTO, UserRetrieveDTO } from './users.dto';
+import {
+  UserChangeFullnameDTO,
+  UserRetrieveDTO,
+  ForgotPasswordDTO,
+  ResetPasswordDTO,
+  ChangePasswordDTO,
+} from './users.dto';
 import { UsersService } from './users.service';
 import { MailService } from '../mail/mail.service';
 import {
@@ -68,7 +74,7 @@ export class UsersController {
   }
 
   @Post('/forgot-password')
-  async forgotPassword(@Body() body: { email: string }) {
+  async forgotPassword(@Body() body: ForgotPasswordDTO) {
     if (!body.email) {
       throw new BadRequestException('Email is missing');
     }
@@ -92,7 +98,7 @@ export class UsersController {
 
   @Post('/reset-password')
   @UsePipes(new ValidationPipe(ResetPasswordSchema))
-  async resetPassword(@Body() body: { token: string; password: string }) {
+  async resetPassword(@Body() body: ResetPasswordDTO) {
     const hashedPassword = await this.userService.checkPasswordToken(
       body.token,
     );
@@ -113,10 +119,7 @@ export class UsersController {
   @Post('/change-password')
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(ChangePasswordSchema))
-  async changePassword(
-    @Body() body: { confirmationPassword: string; password: string },
-    @Request() req,
-  ) {
+  async changePassword(@Body() body: ChangePasswordDTO, @Request() req) {
     if (body.confirmationPassword !== body.password) {
       throw new BadRequestException();
     }

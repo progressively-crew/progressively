@@ -1,6 +1,6 @@
 import * as Joi from 'joi';
 
-export interface ProjectCreationDTO {
+export class ProjectCreationDTO {
   name: string;
 }
 
@@ -10,7 +10,7 @@ export interface ProjectRetrieveDTO {
   createdAt: Date;
 }
 
-export interface MemberProjectDTO {
+export class AddMemberProjectDTO {
   email: string;
 }
 

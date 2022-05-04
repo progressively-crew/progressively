@@ -6,9 +6,14 @@ export const RegistrationSchema = Joi.object({
   email: Joi.string().email().required(),
 });
 
-export interface UserCreationDTO {
+export class UserCreationDTO {
   email: string;
   fullname: string;
+  password: string;
+}
+
+export class LoginDTO {
+  email: string;
   password: string;
 }
 

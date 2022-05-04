@@ -16,7 +16,7 @@ import {
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
 import {
-  MemberProjectDTO,
+  AddMemberProjectDTO,
   ProjectCreationDTO,
   ProjectCreationSchema,
 } from './projects.dto';
@@ -31,7 +31,7 @@ import { UsersService } from '../users/users.service';
 import { EnvironmentsService } from '../environments/environments.service';
 import {
   EnvironmentCreationSchema,
-  EnvironmentDTO,
+  EnvironmentCreationDTO,
 } from '../environments/environments.dto';
 import { UserStatus } from '../users/status';
 import { MailService } from '../mail/mail.service';
@@ -102,7 +102,7 @@ export class ProjectsController {
   @UseGuards(JwtAuthGuard)
   async addMember(
     @Param('id') id: string,
-    @Body() memberProjectDto: MemberProjectDTO,
+    @Body() memberProjectDto: AddMemberProjectDTO,
   ) {
     const user = await this.userService.findByEmail(memberProjectDto.email);
     let newMember;
@@ -167,7 +167,7 @@ export class ProjectsController {
   @UsePipes(new ValidationPipe(EnvironmentCreationSchema))
   createEnvironment(
     @Param('id') id: string,
-    @Body() envDto: EnvironmentDTO,
+    @Body() envDto: EnvironmentCreationDTO,
   ): Promise<Environment> {
     return this.envService.createEnvironment(id, envDto.name);
   }

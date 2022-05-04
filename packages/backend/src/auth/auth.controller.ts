@@ -26,7 +26,7 @@ import { TokensService } from '../tokens/tokens.service';
 import { UserRetrieveDTO } from '../users/users.dto';
 import { UserStatus } from '../users/status';
 import { UsersService } from '../users/users.service';
-import { RegistrationSchema, UserCreationDTO } from './types';
+import { LoginDTO, RegistrationSchema, UserCreationDTO } from './types';
 import { MailService } from '../mail/mail.service';
 import { AuthService } from './auth.service';
 import { CryptoService } from '../crypto/crypto.service';
@@ -45,6 +45,7 @@ export class AuthController {
   async login(
     @Request() req,
     @Res({ passthrough: true }) res: ExpressResponse,
+    @Body() _: LoginDTO,
   ) {
     const user = req.user as User;
 
