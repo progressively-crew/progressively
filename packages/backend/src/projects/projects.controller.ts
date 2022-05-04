@@ -111,7 +111,7 @@ export class ProjectsController {
       newMember = await this.userService.createUser({
         email: memberProjectDto.email,
         fullname: '',
-        password: String(Math.random()),
+        password: '',
         status: UserStatus.Active,
         activationToken: '',
       });
