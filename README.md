@@ -1,22 +1,30 @@
-# Welcome to Progressively :blush:
+<div align="center">
+<img src="./packages/documentation/assets/logo.jpg" alt="Progressively" />
 
-Progressively is my personal feature flag solution focusing on accessibility, simplicity and providing lightweight client side SDKs.
+<img src="https://github.com/mfrachet/progressively/actions/workflows/backend.yml/badge.svg" alt="Backend" />
+<img src="https://github.com/mfrachet/progressively/actions/workflows/frontend.yml/badge.svg" alt="Frontend" />
+<img src="https://github.com/mfrachet/progressively/actions/workflows/e2e.yml/badge.svg" alt="E2E" />
+<img src="https://github.com/mfrachet/progressively/actions/workflows/sdk.yml/badge.svg" alt="Sdk-js" />
+<img src="https://github.com/mfrachet/progressively/actions/workflows/sdk-react.yml/badge.svg" alt="Sdk-React" />
+<img src="https://github.com/mfrachet/progressively/actions/workflows/example-nextjs.yml/badge.svg" alt="Example NextJs">
+<img src="https://github.com/mfrachet/progressively/actions/workflows/example-cra.yml/badge.svg" alt="Example create-react-app">
+<img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License MIT" />
 
-It's built on top of [Nestjs](https://nestjs.com/) and [Remix.run](https://remix.run/).
+<br/>
+<br/>
 
-For documentation, make sure to check [the documentation website](https://mfrachet.github.io/progressively/).
+<div align="center">
+React SDK: <img src="https://img.shields.io/bundlephobia/minzip/@progressively/react" alt="React SDK minified and gzipped size"> 
+JavaScript SDK: <img src="https://img.shields.io/bundlephobia/minzip/@progressively/sdk-js" alt="JS SDK minified and gzipped size">
+</div>
+</div>
 
----
+<hr />
 
-**Core**
+A feature flag solution focusing on accessibility, simplicity and providing **lightweight client side SDKs**.
 
-![Backend](https://github.com/mfrachet/progressively/actions/workflows/backend.yml/badge.svg) ![Frontend](https://github.com/mfrachet/progressively/actions/workflows/frontend.yml/badge.svg) ![E2E](https://github.com/mfrachet/progressively/actions/workflows/e2e.yml/badge.svg) ![Sdk-js](https://github.com/mfrachet/progressively/actions/workflows/sdk.yml/badge.svg) ![Sdk-react](https://github.com/mfrachet/progressively/actions/workflows/sdk-react.yml/badge.svg) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[The documentation website](https://mfrachet.github.io/progressively/) provides all the necessary information in order to get started.
 
-**Examples**
-
-![Example NextJs](https://github.com/mfrachet/progressively/actions/workflows/example-nextjs.yml/badge.svg) ![Example create-react-app](https://github.com/mfrachet/progressively/actions/workflows/example-cra.yml/badge.svg)
-
-**Bundle sizes**
-
-- `@progressively/sdk-js`: ![JS SDK minified and gzipped size](https://img.shields.io/bundlephobia/minzip/@progressively/sdk-js)
-- `@progressively/react`: ![React SDK minified and gzipped size](https://img.shields.io/bundlephobia/minzip/@progressively/react)
+<div align="center">
+<i>Built on top of <a href="https://nestjs.com/">NestJs</a> and <a href="https://remix.run/">Remix.run</i>.
+</div>
