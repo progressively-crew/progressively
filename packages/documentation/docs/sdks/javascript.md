@@ -1,18 +1,21 @@
-# Progressively with JavaScript
+# JavaScript
 
-Progressively comes with a JavaScript SDK that used under the hood of the different other framework-specific implementations. In order to instantiate an SDK, you can use the following snippet:
+![JS SDK minified and gzipped size](https://img.shields.io/bundlephobia/minzip/@progressively/sdk-js)
+
+Progressively comes with a JavaScript SDK that used under the hood of the different other framework-specific implementations.
+
+## Installation
+
+```bash
+npm install @progressively/sdk-js
+```
+
+## Loading the flags
 
 ```javascript
 import ProgressivelySdk from "@progressively/sdk-js";
 
 const sdk = ProgressivelySdk.init(clientKey);
-```
-
-## Loading the flags
-
-With an instance of the SDK, you can now do:
-
-```javascript
 const { flags, response } = await sdk.loadFlags();
 ```
 
@@ -23,7 +26,7 @@ const { flags, response } = await sdk.loadFlags();
 Progressively comes with a websocket subscription for flag changes. You can call the following method of a previously instanciated SDK in order to listen for flag changes:
 
 ```javascript
-sdk.onFlagUpdate(newFlag => /* do your things */)
+sdk.onFlagUpdate(updatedFlags => /* do your things */)
 ```
 
 ## Usage on your own server

@@ -1,8 +1,16 @@
-# Progressively with React on the client
+# React (client)
+
+![React SDK minified and gzipped size](https://img.shields.io/bundlephobia/minzip/@progressively/react)
+
+## Installation
+
+```bash
+npm install @progressively/react
+```
 
 ## Ready to go snippet
 
-The following snippet shows how to use Progressively with React **on the client**. If you want to use it with server side frameworks, make sure to follow the according guides.
+The following snippet shows how to use Progressively with React **on the client**.
 
 ```js
 import { ProgressivelyProvider, useFlags } from "@progressively/react";
@@ -30,9 +38,9 @@ export default function MyPage() {
 
 ## Alternative content when loading
 
-When resolving the feature flags on the client, an HTTP request is made during whom the component make create a "flashy" or "flickering" effect showing the old variant and then resolving the new variant.
+When resolving the feature flags **on the client**, an HTTP request is made during whom the component might create a "flashy" or "flickering" effect showing the old variant and then resolving the new variant.
 
-In order to prevent this behavior on the client, Progressively provides two mechanics:
+In order to prevent this behavior, Progressively provides two mechanics:
 
 - showing nothing (neither the old nor the new variants) during the HTTP request
 - providing a `isLoading` boolean value that indicate whether the HTTP request has been fulfilled
