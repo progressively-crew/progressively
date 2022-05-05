@@ -140,7 +140,7 @@ describe('ProjectsController (e2e)', () => {
 
       // Marvin
       expect(response.body.userProject[0].user.email).toBe(
-        'marvin.frachet@gmail.com',
+        'marvin.frachet@something.com',
       );
       expect(response.body.userProject[0].role).toBe('admin');
       expect(response.body.userProject[0].user.fullname).toBe('Marvin Frachet');
@@ -396,7 +396,7 @@ describe('ProjectsController (e2e)', () => {
     it('gives a list of project environments when the user has access to the project', async () => {
       const access_token = await authenticate(
         app,
-        'marvin.frachet@gmail.com',
+        'marvin.frachet@something.com',
         'password',
       );
 

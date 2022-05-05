@@ -4,7 +4,7 @@
 /** additional data are available in the seed script of the backend projet */
 export const AvailableUsers = {
   Marvin: {
-    email: "marvin.frachet@gmail.com",
+    email: "marvin.frachet@something.com",
     password: "password",
   },
   John: {

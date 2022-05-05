@@ -44,7 +44,7 @@ describe("/dashboard/projects/[id]/add-member", () => {
           ).should("be.visible");
 
           cy.findByRole("button", {
-            name: "Copy marvin.frachet@gmail.com",
+            name: "Copy marvin.frachet@something.com",
           }).should("be.visible");
 
           cy.checkA11y();
@@ -91,7 +91,9 @@ describe("/dashboard/projects/[id]/add-member", () => {
         });
 
         it("shows an error when the user is already in the project", () => {
-          cy.findByLabelText("Member email").type("marvin.frachet@gmail.com");
+          cy.findByLabelText("Member email").type(
+            "marvin.frachet@something.com"
+          );
           cy.findByRole("button", { name: "Add the member" }).click();
 
           cy.get(".error-box")

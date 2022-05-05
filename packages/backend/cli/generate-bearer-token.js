@@ -41,7 +41,7 @@ ${token}
 const users = [
   {
     title: 'Marvin',
-    email: 'marvin.frachet@gmail.com',
+    email: 'marvin.frachet@something.com',
     description: 'Admin of project id 1',
     value: 'marvin',
     password: 'password',

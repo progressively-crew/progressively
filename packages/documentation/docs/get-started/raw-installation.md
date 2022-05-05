@@ -40,6 +40,6 @@ The dashboard is now available on [http://localhost:3000](http://localhost:3000)
 
 _Note: this project comes with fixtures to run API and E2E automated tests. You can seed Postgres running the `npm run db:seed` and cleaning up using `npm run db:cleanup`. The following accounts are provided:_
 
-- marvin.frachet@gmail.com / password
+- marvin.frachet@something.com / password
 - john.doe@gmail.com / password
 - jane.doe@gmail.com / password

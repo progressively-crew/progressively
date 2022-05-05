@@ -3,7 +3,7 @@ import { INestApplication } from '@nestjs/common';
 
 export const authenticate = async (
   app: INestApplication,
-  username = 'marvin.frachet@gmail.com',
+  username = 'marvin.frachet@something.com',
   password = 'password',
 ) => {
   const {

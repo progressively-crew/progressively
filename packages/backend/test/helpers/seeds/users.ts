@@ -7,7 +7,7 @@ export const seedUsers = async (prismaClient: PrismaClient) => {
     data: {
       uuid: '1',
       fullname: 'Marvin Frachet',
-      email: 'marvin.frachet@gmail.com',
+      email: 'marvin.frachet@something.com',
       password: await CryptoService.hash('password'),
       activationToken: '1',
       status: UserStatus.Active,

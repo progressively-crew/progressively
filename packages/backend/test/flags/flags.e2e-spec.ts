@@ -153,7 +153,7 @@ describe('FlagsController (e2e)', () => {
     it('gives 400 when status is not activated, inactive or not activated', async () => {
       const access_token = await authenticate(
         app,
-        'marvin.frachet@gmail.com',
+        'marvin.frachet@something.com',
         'password',
       );
 
@@ -175,7 +175,7 @@ describe('FlagsController (e2e)', () => {
       it(`gives 200 when setting the status of a flag to "${status}"`, async () => {
         const access_token = await authenticate(
           app,
-          'marvin.frachet@gmail.com',
+          'marvin.frachet@something.com',
           'password',
         );
 
@@ -394,7 +394,7 @@ describe('FlagsController (e2e)', () => {
           activationType: 'boolean',
           fieldName: 'email',
           fieldComparator: 'eq',
-          fieldValue: 'marvin.frachet@gmail.com\njohn.doe@gmail.com',
+          fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
         })
         .expect(403)
         .expect({
@@ -531,7 +531,7 @@ describe('FlagsController (e2e)', () => {
         activationType: 'boolean',
         fieldName: 'email',
         fieldComparator: 'eq',
-        fieldValue: 'marvin.frachet@gmail.com\njohn.doe@gmail.com',
+        fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
       };
 
       const response = await request(app.getHttpServer())
@@ -548,7 +548,7 @@ describe('FlagsController (e2e)', () => {
         strategyRuleType: 'field',
         fieldName: 'email',
         fieldComparator: 'eq',
-        fieldValue: 'marvin.frachet@gmail.com\njohn.doe@gmail.com',
+        fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
         activationType: 'boolean',
         rolloutPercentage: null,
         flagEnvironmentFlagId: '1',
@@ -565,7 +565,7 @@ describe('FlagsController (e2e)', () => {
         activationType: 'percentage',
         fieldName: 'email',
         fieldComparator: 'eq',
-        fieldValue: 'marvin.frachet@gmail.com\njohn.doe@gmail.com',
+        fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
         rolloutPercentage: 99,
       };
 
@@ -583,7 +583,7 @@ describe('FlagsController (e2e)', () => {
         strategyRuleType: 'field',
         fieldName: 'email',
         fieldComparator: 'eq',
-        fieldValue: 'marvin.frachet@gmail.com\njohn.doe@gmail.com',
+        fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
         activationType: 'percentage',
         rolloutPercentage: 99,
         flagEnvironmentFlagId: '1',
@@ -637,7 +637,7 @@ describe('FlagsController (e2e)', () => {
         activationType: 'percentage',
         fieldName: 'email',
         fieldComparator: 'eq',
-        fieldValue: 'marvin.frachet@gmail.com\njohn.doe@gmail.com',
+        fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
         rolloutPercentage: 99,
       };
 

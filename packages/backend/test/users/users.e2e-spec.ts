@@ -33,7 +33,7 @@ describe('UsersController (e2e)', () => {
         .get('/users/me')
         .set('Authorization', `Bearer ${access_token}`);
 
-      expect(user.email).toEqual('marvin.frachet@gmail.com');
+      expect(user.email).toEqual('marvin.frachet@something.com');
       expect(user.fullname).toEqual('Marvin Frachet');
       expect(user.uuid).toBeTruthy();
       expect(user.password).toBeFalsy();
@@ -58,7 +58,7 @@ describe('UsersController (e2e)', () => {
       request(app.getHttpServer())
         .post('/users/forgot-password')
         .send({
-          email: 'marvin.frachet@gmail.com',
+          email: 'marvin.frachet@something.com',
         })
         .expect(201)
         .expect({

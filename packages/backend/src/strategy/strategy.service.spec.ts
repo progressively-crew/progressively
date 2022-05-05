@@ -160,9 +160,9 @@ describe('StrategyService', () => {
       it('returns true when the StrategyRuleType is field and that the field value matches', async () => {
         strategy.strategyRuleType = StrategyRuleType.Field;
         strategy.fieldName = 'email';
-        strategy.fieldValue = 'marvin.frachet@gmail.com';
+        strategy.fieldValue = 'marvin.frachet@something.com';
 
-        const fields = { email: 'marvin.frachet@gmail.com', uuid: '1234' };
+        const fields = { email: 'marvin.frachet@something.com', uuid: '1234' };
 
         const shouldActivate = await service.resolveStrategies(
           flagEnv,
@@ -176,7 +176,7 @@ describe('StrategyService', () => {
       it('returns false when the StrategyRuleType is field and that the field value DOES NOT match', async () => {
         strategy.strategyRuleType = StrategyRuleType.Field;
         strategy.fieldName = 'email';
-        strategy.fieldValue = 'marvin.frachet@gmail.com';
+        strategy.fieldValue = 'marvin.frachet@something.com';
 
         const fields = { email: 'not.working@gmail.com' };
 
@@ -192,7 +192,7 @@ describe('StrategyService', () => {
       it('returns false when the StrategyRuleType is field and that the field name DOES NOT match', async () => {
         strategy.strategyRuleType = StrategyRuleType.Field;
         strategy.fieldName = 'email';
-        strategy.fieldValue = 'marvin.frachet@gmail.com';
+        strategy.fieldValue = 'marvin.frachet@something.com';
 
         const fields = { uuid: 'not.working@gmail.com' };
 
@@ -209,7 +209,7 @@ describe('StrategyService', () => {
         it('returns true when the StrategyRuleType is field and that the field name DOES NOT match with  the neq comparator', async () => {
           strategy.strategyRuleType = StrategyRuleType.Field;
           strategy.fieldName = 'email';
-          strategy.fieldValue = 'marvin.frachet@gmail.com';
+          strategy.fieldValue = 'marvin.frachet@something.com';
           strategy.fieldComparator = 'neq';
 
           const fields = { email: 'should.workg@gmail.com' };

@@ -31,7 +31,7 @@ Cypress.Commands.add("cleanup", () => cy.task("cleanup"));
 Cypress.Commands.add("changeFlagStatus", (envId, flagId, status) => {
   // Auth with the admin
   cy.request("POST", "http://localhost:4000/auth/login", {
-    username: "marvin.frachet@gmail.com",
+    username: "marvin.frachet@something.com",
     password: "password",
   }).then((res) => {
     const { access_token } = res.body;

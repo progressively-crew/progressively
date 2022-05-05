@@ -115,7 +115,7 @@ export const StrategyAudience = ({
               name="field-value"
               id="field-value"
               defaultValue={initialFieldValue}
-              placeholder="e.g: marvin.frachet@gmail.com"
+              placeholder="e.g: marvin.frachet@something.com"
               aria-describedby={
                 errors["field-value"] ? "error-field-value" : undefined
               }

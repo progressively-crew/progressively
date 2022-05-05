@@ -60,7 +60,7 @@ describe("/register", () => {
 
   it("gives a visual feedback when the email is already taken", () => {
     cy.findByLabelText("Fullname").type("John Duff");
-    cy.findByLabelText("Email").type("marvin.frachet@gmail.com");
+    cy.findByLabelText("Email").type("marvin.frachet@something.com");
     cy.findByLabelText("Password").type("12345678901112");
     cy.findByLabelText("Confirm your password").type("12345678901112");
     cy.findByRole("button", { name: "Create an account" }).click();

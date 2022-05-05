@@ -53,7 +53,7 @@ describe('AuthController (e2e)', () => {
       return request(app.getHttpServer())
         .post('/auth/login')
         .send({
-          username: 'marvin.frachet@gmail.com',
+          username: 'marvin.frachet@something.com',
           password: 'password',
         })
         .expect(201)
@@ -66,7 +66,7 @@ describe('AuthController (e2e)', () => {
       return request(app.getHttpServer())
         .post('/auth/login')
         .send({
-          username: 'marvin.frachet@gmail.com',
+          username: 'marvin.frachet@something.com',
           password: 'passwordo',
         })
         .expect(401)
@@ -215,7 +215,7 @@ describe('AuthController (e2e)', () => {
         return request(app.getHttpServer())
           .post('/auth/register')
           .send({
-            email: 'marvin.frachet@gmail.com',
+            email: 'marvin.frachet@something.com',
             password: '123456789',
             fullname: 'James Bond',
           })

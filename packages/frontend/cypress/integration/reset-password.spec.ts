@@ -106,7 +106,7 @@ describe("/reset-password", () => {
 
       // Connect with a user that has NOT changed their password
       cy.visit("/signin");
-      cy.findByLabelText("Email").type("marvin.frachet@gmail.com");
+      cy.findByLabelText("Email").type("marvin.frachet@something.com");
       cy.findByLabelText("Password").type("password");
       cy.findByRole("button", { name: "Sign in" }).click();
       cy.findByText("Project from seeding").should("be.visible");

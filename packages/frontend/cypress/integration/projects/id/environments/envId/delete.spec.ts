@@ -43,7 +43,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/delete", () => {
         ).should("be.visible");
 
         cy.findByRole("button", {
-          name: "Copy marvin.frachet@gmail.com",
+          name: "Copy marvin.frachet@something.com",
         }).should("be.visible");
 
         cy.checkA11y();
