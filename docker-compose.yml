@@ -17,7 +17,7 @@ services:
       - "4001:4001"
     environment:
       DATABASE_URL: postgresql://admin:admin@db/progressively
-      REDIS_URL: REDIS_URL=redis://redis-cache
+      REDIS_URL: redis://redis-cache
     depends_on:
       - db
     command: scripts/docker-compose-init.sh
