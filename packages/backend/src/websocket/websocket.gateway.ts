@@ -16,6 +16,7 @@ import {
 } from '@prisma/client';
 import { FlagStatus } from '../flags/flags.status';
 import { LocalWebsocket } from './types';
+import { RedisService } from './redis.service';
 
 @WebSocketGateway(4001)
 export class WebsocketGateway
@@ -25,7 +26,10 @@ export class WebsocketGateway
 
   private heartBeatIntervalId: NodeJS.Timer;
 
-  constructor(private readonly strategyService: StrategyService) {
+  constructor(
+    private readonly strategyService: StrategyService,
+    private readonly redisService: RedisService,
+  ) {
     this.rooms = new Rooms();
   }
 
@@ -68,6 +72,10 @@ export class WebsocketGateway
       socket.__ROOMS = [];
       socket.__FIELDS = fields || {};
       this.rooms.join(client_key, socket);
+
+      this.redisService.subscribe(client_key, (flagEnv) =>
+        this.onFlagChangingNotification(flagEnv),
+      );
     }
   }
 
@@ -77,7 +85,8 @@ export class WebsocketGateway
    * it iterates of every socket available for the given client key
    * and get + computes every strategies available
    */
-  async notifyFlagChanging(
+
+  async onFlagChangingNotification(
     flagEnv: FlagEnvironment & {
       environment: Environment;
       flag: Flag;
@@ -106,5 +115,15 @@ export class WebsocketGateway
 
       this.rooms.emit(socket, updatedFlag);
     }
+  }
+
+  async notifyFlagChanging(
+    flagEnv: FlagEnvironment & {
+      environment: Environment;
+      flag: Flag;
+      strategies: Array<RolloutStrategy>;
+    },
+  ) {
+    this.redisService.notifyChannel(flagEnv.environment.clientKey, flagEnv);
   }
 }

@@ -23,7 +23,13 @@ You need to install Postgres by yourself. You can have a running instance in a D
 
 ```bash
 # Make sure to modify the user and password ;)
-docker run --name progressively-db -e POSTGRES_PASSWORD=admin -e POSTGRES_USER=admin -e POSTGRES_DB=progressively -p 5432:5432 -d postgres
+docker run -it --rm --name progressively-db -e POSTGRES_PASSWORD=admin -e POSTGRES_USER=admin -e POSTGRES_DB=progressively -p 5432:5432 -d postgres
+```
+
+And you will also need Redis for scaling the websocket server horizontally:
+
+```bash
+docker run -it --rm --name progressively-redis -p 6379:6379 -d redis
 ```
 
 Then, run the following commands at the root of the project:
