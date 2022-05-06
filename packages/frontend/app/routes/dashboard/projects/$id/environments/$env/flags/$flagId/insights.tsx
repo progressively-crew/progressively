@@ -1,4 +1,4 @@
-import { Box, HStack, Stack } from "@chakra-ui/react";
+import { Box, Flex, HStack, Stack, useTheme } from "@chakra-ui/react";
 import {
   useLoaderData,
   LoaderFunction,
@@ -35,6 +35,7 @@ import {
 } from "~/modules/flags/components/ToggleFlag";
 import { FiFlag } from "react-icons/fi";
 import { ButtonCopy } from "~/components/ButtonCopy";
+import { BigState } from "~/components/BigStat";
 
 interface MetaArgs {
   data?: {
@@ -57,12 +58,20 @@ export const action: ActionFunction = ({ request, params }): Promise<null> => {
   return toggleAction({ request, params });
 };
 
+interface FlagHit {
+  date: string;
+  activated: number;
+  notactivated: number;
+}
+
 interface LoaderData {
   project: Project;
   environment: Environment;
   currentFlagEnv: FlagEnv;
   user: User;
-  hits: Array<{ date: string; activated: number; notactivated: number }>;
+  hits: Array<FlagHit>;
+  activatedCount: number;
+  notActivatedCount: number;
 }
 
 export const loader: LoaderFunction = async ({
@@ -75,7 +84,19 @@ export const loader: LoaderFunction = async ({
   const authCookie = session.get("auth-cookie");
 
   const project: Project = await getProject(params.id!, authCookie);
-  const hits = await getFlagHits(params.env!, params.flagId!, authCookie);
+  const hits: Array<FlagHit> = await getFlagHits(
+    params.env!,
+    params.flagId!,
+    authCookie
+  );
+
+  let activatedCount = 0;
+  let notActivatedCount = 0;
+
+  for (const hit of hits) {
+    activatedCount += hit.activated;
+    notActivatedCount += hit.notactivated;
+  }
 
   const flagsByEnv: Array<FlagEnv> = await getFlagsByProjectEnv(
     params.env!,
@@ -96,12 +117,23 @@ export const loader: LoaderFunction = async ({
     currentFlagEnv,
     user,
     hits,
+    activatedCount,
+    notActivatedCount,
   };
 };
 
 export default function FlagById() {
-  const { project, environment, currentFlagEnv, user, hits } =
-    useLoaderData<LoaderData>();
+  const theme = useTheme();
+
+  const {
+    project,
+    environment,
+    currentFlagEnv,
+    user,
+    hits,
+    activatedCount,
+    notActivatedCount,
+  } = useLoaderData<LoaderData>();
 
   const currentFlag = currentFlagEnv.flag;
   const isFlagActivated = currentFlagEnv.status === FlagStatus.ACTIVATED;
@@ -179,23 +211,40 @@ export default function FlagById() {
             description="Number of hits per date"
           />
 
+          <Flex gap={8} flexDirection={["column", "row"]} mt={8} mb={8}>
+            <BigState
+              name="Hits on activated variant"
+              value={activatedCount}
+              color={theme.colors.brand["500"]}
+            />
+            <BigState
+              name="Hits on not activated variant"
+              value={notActivatedCount}
+              color={theme.colors.error["500"]}
+              dotted
+            />
+          </Flex>
+
           {hits.length > 0 && (
-            <Box ml={-4}>
+            <Box ml={-9}>
               <ResponsiveContainer width="100%" aspect={16.0 / 9.0}>
                 <LineChart data={hits}>
                   <Line
                     isAnimationActive={false}
                     type="monotone"
                     dataKey="activated"
-                    stroke="#8884d8"
+                    stroke={theme.colors.brand["500"]}
+                    strokeWidth={3}
                   />
                   <Line
                     isAnimationActive={false}
                     type="monotone"
                     dataKey="notactivated"
-                    stroke="red"
+                    stroke={theme.colors.error["500"]}
+                    strokeDasharray="3 3"
+                    strokeWidth={3}
                   />
-                  <CartesianGrid stroke="#ccc" />
+                  <CartesianGrid stroke="#f1f1f1" vertical={false} />
                   <XAxis dataKey="date" tickFormatter={formatX} />
                   <YAxis />
                 </LineChart>
