@@ -244,7 +244,7 @@ describe('FlagsController (e2e)', () => {
         });
     });
 
-    it('gives the strategies information when the user is authenticated and authorized', async () => {
+    it('gives the hits for the status ACTIVATED by default', async () => {
       const access_token = await authenticate(app);
 
       return request(app.getHttpServer())
@@ -252,10 +252,26 @@ describe('FlagsController (e2e)', () => {
         .set('Authorization', `Bearer ${access_token}`)
         .expect(200)
         .expect([
-          { count: 10, date: '1992-01-01T02:02:02.002Z' },
-          { count: 40, date: '1992-01-02T02:02:02.002Z' },
-          { count: 20, date: '1992-01-03T02:02:02.002Z' },
-          { count: 10, date: '1992-01-06T02:02:02.002Z' },
+          {
+            date: '1992-01-01T02:02:02.002+00:00',
+            activated: 10,
+            notactivated: 5,
+          },
+          {
+            date: '1992-01-02T02:02:02.002+00:00',
+            activated: 40,
+            notactivated: 20,
+          },
+          {
+            date: '1992-01-03T02:02:02.002+00:00',
+            activated: 20,
+            notactivated: 10,
+          },
+          {
+            date: '1992-01-06T02:02:02.002+00:00',
+            activated: 10,
+            notactivated: 5,
+          },
         ]);
     });
   });

@@ -62,7 +62,7 @@ interface LoaderData {
   environment: Environment;
   currentFlagEnv: FlagEnv;
   user: User;
-  hits: Array<{ date: Date; count: number }>;
+  hits: Array<{ date: string; activated: number; notactivated: number }>;
 }
 
 export const loader: LoaderFunction = async ({
@@ -186,8 +186,14 @@ export default function FlagById() {
                   <Line
                     isAnimationActive={false}
                     type="monotone"
-                    dataKey="count"
+                    dataKey="activated"
                     stroke="#8884d8"
+                  />
+                  <Line
+                    isAnimationActive={false}
+                    type="monotone"
+                    dataKey="notactivated"
+                    stroke="red"
                   />
                   <CartesianGrid stroke="#ccc" />
                   <XAxis dataKey="date" tickFormatter={formatX} />

@@ -3,6 +3,7 @@ import camelcase from 'camelcase';
 import { PrismaService } from '../prisma.service';
 import { FlagAlreadyExists } from './errors';
 import { FlagStatus } from './flags.status';
+import { FlagHitsRetrieveDTO } from './types';
 
 @Injectable()
 export class FlagsService {
@@ -46,19 +47,28 @@ export class FlagsService {
   }
 
   async listFlagHits(envId: string, flagId: string) {
-    const hits = await this.prisma.flagHit.groupBy({
-      by: ['date'],
-      _count: {
-        id: true,
-      },
-      where: {
-        flagEnvironmentEnvironmentId: envId,
-        flagEnvironmentFlagId: flagId,
-      },
-      orderBy: {
-        date: 'asc',
-      },
-    });
+    // Nested queries in raw, not perfect but it works :(
+    const hits = this.prisma.$queryRaw<Array<FlagHitsRetrieveDTO>>`
+      SELECT date, (
+        SELECT count(id) as activated
+        FROM "FlagHit" as fh
+        WHERE status = 'ACTIVATED'
+        AND fh.date = rfh.date
+        GROUP BY status
+      ),
+      (
+        SELECT count(id) as notActivated
+        FROM "FlagHit" as fh
+        WHERE status = 'NOT_ACTIVATED'
+        AND fh.date = rfh.date
+        GROUP BY status
+      )
+      FROM "FlagHit" as rfh
+      WHERE "flagEnvironmentEnvironmentId" = ${envId}
+      AND "flagEnvironmentFlagId" = ${flagId}
+      GROUP BY date
+      ORDER BY date ASC
+    `;
 
     return hits;
   }

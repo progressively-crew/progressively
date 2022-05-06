@@ -52,5 +52,16 @@ export const seedHits = async (
         date,
       },
     });
+
+    if (i < count / 2) {
+      await prismaClient.flagHit.create({
+        data: {
+          flagEnvironmentFlagId: flagEnv.flagId,
+          flagEnvironmentEnvironmentId: flagEnv.environmentId,
+          status: FlagStatus.NOT_ACTIVATED,
+          date,
+        },
+      });
+    }
   }
 };
