@@ -3,8 +3,8 @@ import { renderToString } from "react-dom/server";
 import type { EntryContext } from "remix";
 import { RemixServer } from "remix";
 import createEmotionServer from "@emotion/server/create-instance";
-import ServerStyleContext from "./_chakra-setup/context.server";
-import createEmotionCache from "./_chakra-setup/createMotionCache";
+import { ServerStyleContext } from "./_chakra-setup/context";
+import createEmotionCache from "./_chakra-setup/createEmotionCache";
 
 export default function handleRequest(
   request: Request,
@@ -35,7 +35,7 @@ export default function handleRequest(
 
   responseHeaders.set("Content-Type", "text/html");
 
-  return new Response("<!DOCTYPE html>" + markup, {
+  return new Response(`<!DOCTYPE html>${markup}`, {
     status: responseStatusCode,
     headers: responseHeaders,
   });

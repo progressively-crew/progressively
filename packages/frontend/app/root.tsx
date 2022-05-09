@@ -13,8 +13,6 @@ import {
 import type { LinksFunction } from "remix";
 import { Box, ChakraProvider, Button } from "@chakra-ui/react";
 import { withEmotionCache } from "@emotion/react";
-import ClientStyleContext from "./_chakra-setup/context.client";
-import ServerStyleContext from "./_chakra-setup/context.server";
 import { lightTheme } from "./modules/themes/light";
 import UnauthorizedPage from "./routes/401";
 import ForbiddenPage from "./routes/403";
@@ -24,6 +22,11 @@ import { NotAuthenticatedLayout } from "./layouts/NotAuthenticatedLayout";
 import { H1 } from "./components/H1";
 import { Main } from "./components/Main";
 import { AiOutlineLogin } from "react-icons/ai";
+import { useContext, useEffect } from "react";
+import {
+  ServerStyleContext,
+  ClientStyleContext,
+} from "./_chakra-setup/context";
 
 /**
  * The `links` export is a function that returns an array of objects that map to
@@ -45,7 +48,11 @@ export const links: LinksFunction = () => {
 export default function App() {
   return (
     <Document>
-      <Outlet />
+      <ChakraProvider theme={lightTheme}>
+        <Box minH="100%" paddingBottom={8}>
+          <Outlet />
+        </Box>
+      </ChakraProvider>
     </Document>
   );
 }
@@ -55,28 +62,23 @@ interface DocumentProps {
   title?: string;
 }
 
-interface EmotionStylsheet extends StyleSheet {
-  _insertTag: (str: HTMLStyleElement) => void;
-}
 const Document = withEmotionCache(
   ({ children, title }: DocumentProps, emotionCache) => {
-    const serverSyleData = React.useContext(ServerStyleContext);
-    const clientStyleData = React.useContext(ClientStyleContext);
+    const serverStyleData = useContext(ServerStyleContext);
+    const clientStyleData = useContext(ClientStyleContext);
 
     // Only executed on client
-    React.useEffect(() => {
+    useEffect(() => {
       // re-link sheet container
       emotionCache.sheet.container = document.head;
       // re-inject tags
       const tags = emotionCache.sheet.tags;
-
       emotionCache.sheet.flush();
-
       tags.forEach((tag) => {
-        (emotionCache.sheet as unknown as EmotionStylsheet)._insertTag(tag);
+        (emotionCache.sheet as any)._insertTag(tag);
       });
       // reset cache to reapply global styles
-      clientStyleData.reset();
+      clientStyleData?.reset();
     }, []);
 
     return (
@@ -88,21 +90,17 @@ const Document = withEmotionCache(
           <Meta />
           <Links />
 
-          {serverSyleData?.map(({ key, ids, css }) => (
+          {serverStyleData?.map(({ key, ids, css }) => (
             <style
               key={key}
               data-emotion={`${key} ${ids.join(" ")}`}
-              // eslint-disable-next-line react/no-danger
               dangerouslySetInnerHTML={{ __html: css }}
             />
           ))}
         </head>
         <body>
-          <ChakraProvider theme={lightTheme}>
-            <Box minH="100%" paddingBottom={8}>
-              {children}
-            </Box>
-          </ChakraProvider>
+          {children}
+
           <RouteChangeAnnouncement />
           <ScrollRestoration />
           <Scripts />
