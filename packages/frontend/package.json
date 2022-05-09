@@ -21,7 +21,7 @@
     "@emotion/styled": "^11.8.1",
     "@remix-run/react": "^1.4.3",
     "@remix-run/serve": "^1.4.3",
-    "framer-motion": "^6.3.2",
+    "framer-motion": "^6.3.3",
     "react": "^18.1.0",
     "react-copy-clipboard": "^2.0.1",
     "react-copy-to-clipboard": "^5.1.0",
@@ -34,20 +34,20 @@
   "devDependencies": {
     "@remix-run/dev": "^1.4.3",
     "@testing-library/cypress": "^8.0.2",
-    "@types/jest": "^27.4.1",
-    "@types/react": "^18.0.8",
+    "@types/jest": "^27.5.0",
+    "@types/react": "^18.0.9",
     "@types/react-copy-to-clipboard": "^5.0.2",
-    "@types/react-dom": "^18.0.0",
-    "@typescript-eslint/eslint-plugin": "^5.21.0",
-    "@typescript-eslint/parser": "^5.21.0",
+    "@types/react-dom": "^18.0.3",
+    "@typescript-eslint/eslint-plugin": "^5.22.0",
+    "@typescript-eslint/parser": "^5.22.0",
     "axe-core": "^4.4.1",
     "cypress": "^9.6.0",
     "cypress-axe": "^0.14.0",
-    "eslint": "^8.14.0",
+    "eslint": "^8.15.0",
     "eslint-plugin-react": "^7.29.4",
-    "jest": "^28.0.2",
-    "ts-jest": "^27.1.4",
-    "typescript": "^4.6.3"
+    "jest": "^28.1.0",
+    "ts-jest": "^28.0.2",
+    "typescript": "^4.6.4"
   },
   "engines": {
     "node": ">=14"
