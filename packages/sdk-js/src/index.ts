@@ -7,29 +7,31 @@ function init(clientKey: string, options?: SDKOptions): ProgressivelySdkType {
 
   // HTTP specific
   const apiRoot = options?.apiUrl || "http://localhost:4000";
-  const flagEndpoint = new URL(`${apiRoot}/sdk/${clientKey}`);
-  for (const field in fields) {
-    flagEndpoint.searchParams.set(field, String(fields[field]));
-  }
+  const httpOptions = Object.keys(fields)
+    .map((key) => key + "=" + fields[key])
+    .join("&");
+
+  const flagEndpoint = `${apiRoot}/sdk/${clientKey}${
+    httpOptions ? `?${httpOptions}` : ""
+  }`;
 
   // Websocket specific
   const websocketRoot = options?.websocketUrl || "ws://localhost:4001";
-  const websocketUrl = new URL(websocketRoot);
-  websocketUrl.searchParams.set("client_key", clientKey);
-  for (const field in fields) {
-    websocketUrl.searchParams.set(field, String(fields[field]));
-  }
+  const wsOptions = Object.keys(fields)
+    .filter((key) => key !== "id")
+    .map((key) => key + "=" + fields[key])
+    .join("&");
 
-  return Sdk(
-    flagEndpoint.toString(),
-    websocketUrl,
-    options?.initialFlags || {}
-  );
+  const websocketUrl = `${websocketRoot}?client_key=${clientKey}${
+    wsOptions ? `&${wsOptions}` : ""
+  }`;
+
+  return Sdk(flagEndpoint, websocketUrl, options?.initialFlags || {});
 }
 
 function Sdk(
   flagEndpoint: string,
-  websocketEndpoint: URL,
+  websocketEndpoint: string,
   initialFlags: FlagDict
 ): ProgressivelySdkType {
   let flags: FlagDict = initialFlags;
@@ -49,15 +51,14 @@ function Sdk(
       });
   }
 
-  function onFlagUpdate(callback: (data: FlagDict) => void) {
-    const cookieValue = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("progressively-id="))
-      ?.split("=")[1];
+  function onFlagUpdate(
+    callback: (data: FlagDict) => void,
+    userId?: string | null
+  ) {
+    socket = new WebSocket(
+      userId ? `${websocketEndpoint}&id=${userId}` : websocketEndpoint
+    );
 
-    if (cookieValue) websocketEndpoint.searchParams.set("id", cookieValue);
-
-    socket = new WebSocket(websocketEndpoint.toString());
     socket.onmessage = (event) => {
       flags = { ...flags, ...JSON.parse(event.data).data };
 

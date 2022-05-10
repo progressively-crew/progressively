@@ -11,5 +11,8 @@ export interface SDKOptions {
 export interface ProgressivelySdkType {
   loadFlags: () => Promise<{ flags: FlagDict; response: Response }>;
   disconnect: () => void;
-  onFlagUpdate: (callback: (data: FlagDict) => void) => void;
+  onFlagUpdate: (
+    callback: (data: FlagDict) => void,
+    userId?: string | null
+  ) => void;
 }

@@ -111,10 +111,14 @@ export class FlagsController {
     }
 
     fields.id = realUserId;
+
     response.cookie(COOKIE_KEY, fields.id, {
       sameSite: 'lax',
       secure: true,
     });
+
+    response.header('X-progressively-id', `${fields.id}`);
+    response.header('Access-Control-Expose-Headers', 'X-progressively-id');
 
     // TODO: make sure to run these with Promise.all when confident enough
     for (const flagEnv of flagEnvs) {

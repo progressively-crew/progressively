@@ -25,7 +25,7 @@ describe("SDK", () => {
   };
 
   // HTTP
-  (globalThis as any).fetch = fetch;
+  (globalThis as any).fetch = jest.fn(fetch);
   const FLAG_ENDPOINT = `http://localhost:4000*`;
   const worker = setupServer();
 
@@ -55,77 +55,132 @@ describe("SDK", () => {
     wss.close();
   });
 
-  it("loads the flag when calling loadFlags", async () => {
-    worker.use(
-      rest.get(FLAG_ENDPOINT, (_, res, ctx) => {
-        return res(ctx.json({ flag: true, flag2: false }));
-      })
-    );
+  describe("loading the flags", () => {
+    it("loads the flag when calling loadFlags", async () => {
+      worker.use(
+        rest.get(FLAG_ENDPOINT, (_, res, ctx) => {
+          return res(ctx.json({ flag: true, flag2: false }));
+        })
+      );
 
-    const sdk = Sdk.init("client-key");
+      const sdk = Sdk.init("client-key");
 
-    const { flags } = await sdk.loadFlags();
+      const { flags } = await sdk.loadFlags();
 
-    expect(flags).toEqual({ flag: true, flag2: false });
-  });
+      expect(global.fetch).toHaveBeenCalledWith(
+        "http://localhost:4000/sdk/client-key",
+        { credentials: "include" }
+      );
 
-  it("sets the flag when receiving a valid message when no flags are set", (done) => {
-    const sdk = Sdk.init("client-key", { websocketUrl: "ws://localhost:1234" });
+      expect(flags).toEqual({ flag: true, flag2: false });
+    });
 
-    sendMessage({ hello: true });
+    it("loads the flag when calling loadFlags with fields", async () => {
+      worker.use(
+        rest.get(FLAG_ENDPOINT, (_, res, ctx) => {
+          return res(ctx.json({ flag: true, flag2: false }));
+        })
+      );
 
-    sdk.onFlagUpdate((flags) => {
-      expect(flags).toEqual({ hello: true });
-      done();
+      const sdk = Sdk.init("client-key", {
+        fields: { email: "john.doe@gmail.com", id: "some-super-cool-id" },
+      });
+
+      await sdk.loadFlags();
+
+      expect(global.fetch).toHaveBeenCalledWith(
+        "http://localhost:4000/sdk/client-key?email=john.doe@gmail.com&id=some-super-cool-id",
+        { credentials: "include" }
+      );
     });
   });
 
-  it("sets the flag when receiving a valid message when some flags already exists", (done) => {
-    worker.use(
-      rest.get(FLAG_ENDPOINT, (_, res, ctx) => {
-        return res(ctx.json({ flag: true, flag2: false }));
-      })
-    );
+  describe("sending flag updates", () => {
+    it("sets the flag when receiving a valid message when no flags are set", (done) => {
+      const sdk = Sdk.init("client-key", {
+        websocketUrl: "ws://localhost:1234",
+      });
 
-    const sdk = Sdk.init("client-key", { websocketUrl: "ws://localhost:1234" });
-
-    sdk.onFlagUpdate((flags) => {
-      ws.terminate();
-      expect(flags).toEqual({ hello: true, flag: true, flag2: false });
-      done();
-    });
-
-    sdk.loadFlags().then(() => {
       sendMessage({ hello: true });
+
+      sdk.onFlagUpdate((flags) => {
+        expect(flags).toEqual({ hello: true });
+        done();
+      });
+    });
+
+    it("sets the flag when receiving a valid message when some flags already exists", (done) => {
+      worker.use(
+        rest.get(FLAG_ENDPOINT, (_, res, ctx) => {
+          return res(ctx.json({ flag: true, flag2: false }));
+        })
+      );
+
+      const sdk = Sdk.init("client-key", {
+        websocketUrl: "ws://localhost:1234",
+      });
+
+      sdk.onFlagUpdate((flags) => {
+        ws.terminate();
+        expect(flags).toEqual({ hello: true, flag: true, flag2: false });
+        done();
+      });
+
+      sdk.loadFlags().then(() => {
+        sendMessage({ hello: true });
+      });
+    });
+
+    it("calls the websocket constructor with the fields paramaters but without ID (id is set manually in onFlagUpdate)", () => {
+      (global as any).WebSocket = jest.fn() as any;
+
+      const sdk = Sdk.init("client-key", {
+        websocketUrl: "ws://localhost:1234",
+        fields: { email: "john.doe@gmail.com", id: "some-super-cool-id" },
+      });
+
+      sdk.onFlagUpdate(() => {});
+      expect((global as any).WebSocket).toHaveBeenCalledWith(
+        "ws://localhost:1234?client_key=client-key&email=john.doe@gmail.com"
+      );
+    });
+
+    it("calls the websocket constructor with the fields paramaters AND the user id (passed as second args of onFlagUpdate)", () => {
+      (global as any).WebSocket = jest.fn() as any;
+
+      const sdk = Sdk.init("client-key", {
+        websocketUrl: "ws://localhost:1234",
+        fields: { email: "john.doe@gmail.com", id: "some-super-cool-id" },
+      });
+
+      sdk.onFlagUpdate(() => {}, "real-id");
+      expect((global as any).WebSocket).toHaveBeenCalledWith(
+        "ws://localhost:1234?client_key=client-key&email=john.doe@gmail.com&id=real-id"
+      );
     });
   });
 
-  describe("checking cookies", () => {
-    it("calls the websocket constructor without the cookie value when not set previously by the server", () => {
-      (global as any).WebSocket = jest.fn() as any;
-
+  describe("disconnect", () => {
+    it("does nothing", () => {
       const sdk = Sdk.init("client-key", {
         websocketUrl: "ws://localhost:1234",
       });
 
-      sdk.onFlagUpdate(() => {});
-      expect((global as any).WebSocket).toHaveBeenCalledWith(
-        "ws://localhost:1234/?client_key=client-key"
-      );
+      sdk.disconnect();
     });
 
-    it("calls the websocket constructor without the cookie value when ALREADY set by the server", () => {
-      document.cookie = "progressively-id=super-cool";
-      (global as any).WebSocket = jest.fn() as any;
+    it("disconnects the socket when it s set", () => {
+      const socket = { close: jest.fn() };
+      (global as any).WebSocket = jest.fn(() => socket) as any;
 
       const sdk = Sdk.init("client-key", {
         websocketUrl: "ws://localhost:1234",
       });
 
       sdk.onFlagUpdate(() => {});
-      expect((global as any).WebSocket).toHaveBeenCalledWith(
-        "ws://localhost:1234/?client_key=client-key&id=super-cool"
-      );
+      sdk.disconnect();
+
+      expect(socket.close).toBeCalled();
     });
   });
 });

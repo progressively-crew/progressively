@@ -8,7 +8,6 @@ export const ProgressivelyProvider = ({
   children,
   clientKey,
   initialFlags,
-  onlyRenderWhenReady = true,
   apiUrl,
   websocketUrl,
   fields,
@@ -23,8 +22,6 @@ export const ProgressivelyProvider = ({
   );
 
   const flagData = useFlagInit(sdkRef, initialFlags);
-
-  if (onlyRenderWhenReady && flagData.isLoading) return null;
 
   return (
     <ProgressivelyContext.Provider value={flagData}>

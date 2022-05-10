@@ -47,21 +47,7 @@ In order to prevent this behavior, Progressively provides two mechanics:
 
 ### Showing nothing during the resolution
 
-If you prefer to show nothing to the client during the resolution, you can use the `onlyRenderWhenReady` boolean prop on the `ProgressivelyProvider`:
-
-```jsx
-export default function MyPage() {
-  return (
-    <ProgressivelyProvider clientKey={CLIENT_KEY} onlyRenderWhenReady>
-      <FlaggedComponent />
-    </ProgressivelyProvider>
-  );
-}
-```
-
-### Showing whatever you want during the resolution
-
-If you prefer to customize what's visible on the screen during the resolution you can rely on the `isLoading` value returned by the `useFlags` hook:
+If you want to customize what's visible on the screen during the resolution you can rely on the `isLoading` value returned by the `useFlags` hook:
 
 ```jsx
 const FlaggedComponent = () => {

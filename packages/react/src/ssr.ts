@@ -11,7 +11,7 @@ export function getSSRProps(
       ssrProps: {
         initialFlags: flags,
         clientKey,
-        onlyRenderWhenReady: false,
+
         ...options,
       },
       cookies: response.headers.get("set-cookie"),

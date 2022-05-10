@@ -17,14 +17,22 @@ export const useFlagInit = (
 
     // Early return the client side fetch when they are resolved on the server
     if (initialFlags) {
-      sdk.onFlagUpdate(setFlags);
+      const cookieValue = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("progressively-id="))
+        ?.split("=")[1];
+
+      sdk.onFlagUpdate(setFlags, cookieValue);
       return () => sdk.disconnect();
     }
 
     sdk
       .loadFlags()
       .then((res) => {
-        sdk.onFlagUpdate(setFlags);
+        sdk.onFlagUpdate(
+          setFlags,
+          res.response.headers.get("X-progressively-id")
+        );
         setFlags(res.flags);
         setIsLoading(false);
       })
