@@ -1,5 +1,7 @@
 <div align="center">
+<div align="center" style="padding: 64px;">
 <img src="./packages/documentation/static/img/logo.jpg" alt="Progressively" />
+</div>
 
 <img src="https://github.com/mfrachet/progressively/actions/workflows/backend.yml/badge.svg" alt="Backend" />
 <img src="https://github.com/mfrachet/progressively/actions/workflows/frontend.yml/badge.svg" alt="Frontend" />
