@@ -13,7 +13,6 @@ export const useFlagInit = (
   // Only run the effect on mount, NEVER later
   useEffect(() => {
     const sdk = sdkRef.current;
-    if (!sdk) return;
 
     // Early return the client side fetch when they are resolved on the server
     if (initialFlags) {

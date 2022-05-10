@@ -11,7 +11,7 @@
   "types": "./lib",
   "scripts": {
     "build": "rollup -c rollup.config.js",
-    "test": "jest --passWithNoTests",
+    "test": "jest",
     "bundlesize": "bundlesize --enable-github-checks"
   },
   "peerDependencies": {
@@ -20,11 +20,15 @@
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.3.0",
     "@rollup/plugin-typescript": "^8.3.2",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.2.0",
     "@types/jest": "^27.5.0",
+    "@types/node-fetch": "^2.6.1",
     "@types/react": "^18.0.9",
     "bundlesize2": "^0.0.31",
     "jest": "^28.1.0",
     "jest-environment-jsdom": "^28.1.0",
+    "msw": "^0.39.2",
     "rollup": "^2.72.1",
     "rollup-plugin-terser": "^7.0.2",
     "ts-jest": "^28.0.2",
