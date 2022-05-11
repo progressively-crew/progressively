@@ -68,7 +68,7 @@ describe("SDK", () => {
       const { flags } = await sdk.loadFlags();
 
       expect(global.fetch).toHaveBeenCalledWith(
-        "http://localhost:4000/sdk/client-key",
+        "http://localhost:4000/sdk/eyJjbGllbnRLZXkiOiJjbGllbnQta2V5In0=",
         { credentials: "include" }
       );
 
@@ -89,7 +89,7 @@ describe("SDK", () => {
       await sdk.loadFlags();
 
       expect(global.fetch).toHaveBeenCalledWith(
-        "http://localhost:4000/sdk/client-key?email=john.doe@gmail.com&id=some-super-cool-id",
+        "http://localhost:4000/sdk/eyJlbWFpbCI6ImpvaG4uZG9lQGdtYWlsLmNvbSIsImlkIjoic29tZS1zdXBlci1jb29sLWlkIiwiY2xpZW50S2V5IjoiY2xpZW50LWtleSJ9",
         { credentials: "include" }
       );
     });
@@ -141,7 +141,7 @@ describe("SDK", () => {
 
       sdk.onFlagUpdate(() => {});
       expect((global as any).WebSocket).toHaveBeenCalledWith(
-        "ws://localhost:1234?client_key=client-key&email=john.doe@gmail.com"
+        "ws://localhost:1234?opts=eyJlbWFpbCI6ImpvaG4uZG9lQGdtYWlsLmNvbSIsImlkIjoic29tZS1zdXBlci1jb29sLWlkIiwiY2xpZW50S2V5IjoiY2xpZW50LWtleSJ9"
       );
     });
 
@@ -155,7 +155,7 @@ describe("SDK", () => {
 
       sdk.onFlagUpdate(() => {}, "real-id");
       expect((global as any).WebSocket).toHaveBeenCalledWith(
-        "ws://localhost:1234?client_key=client-key&email=john.doe@gmail.com&id=real-id"
+        "ws://localhost:1234?opts=eyJlbWFpbCI6ImpvaG4uZG9lQGdtYWlsLmNvbSIsImlkIjoicmVhbC1pZCIsImNsaWVudEtleSI6ImNsaWVudC1rZXkifQ=="
       );
     });
   });

@@ -2,36 +2,30 @@ import { Fields, FlagDict, ProgressivelySdkType, SDKOptions } from "./types";
 
 export * from "./types";
 
+function bToA(obj: object) {
+  const value = JSON.stringify(obj);
+
+  return typeof window === "undefined"
+    ? Buffer.from(value).toString("base64")
+    : btoa(value);
+}
+
 function init(clientKey: string, options?: SDKOptions): ProgressivelySdkType {
   const fields: Fields = options?.fields || {};
+  fields.clientKey = clientKey;
 
-  // HTTP specific
-  const apiRoot = options?.apiUrl || "http://localhost:4000";
-  const httpOptions = Object.keys(fields)
-    .map((key) => key + "=" + fields[key])
-    .join("&");
-
-  const flagEndpoint = `${apiRoot}/sdk/${clientKey}${
-    httpOptions ? `?${httpOptions}` : ""
-  }`;
-
-  // Websocket specific
-  const websocketRoot = options?.websocketUrl || "ws://localhost:4001";
-  const wsOptions = Object.keys(fields)
-    .filter((key) => key !== "id")
-    .map((key) => key + "=" + fields[key])
-    .join("&");
-
-  const websocketUrl = `${websocketRoot}?client_key=${clientKey}${
-    wsOptions ? `&${wsOptions}` : ""
-  }`;
-
-  return Sdk(flagEndpoint, websocketUrl, options?.initialFlags || {});
+  return Sdk(
+    options?.apiUrl || "http://localhost:4000",
+    options?.websocketUrl || "ws://localhost:4001",
+    fields,
+    options?.initialFlags || {}
+  );
 }
 
 function Sdk(
-  flagEndpoint: string,
-  websocketEndpoint: string,
+  apiRoot: string,
+  wsRoot: string,
+  fields: Fields,
   initialFlags: FlagDict
 ): ProgressivelySdkType {
   let flags: FlagDict = initialFlags;
@@ -40,7 +34,9 @@ function Sdk(
   function loadFlags() {
     let response: Response;
 
-    return fetch(flagEndpoint, { credentials: "include" })
+    return fetch(`${apiRoot}/sdk/${bToA(fields)}`, {
+      credentials: "include",
+    })
       .then((res) => {
         response = res;
         return response.json();
@@ -55,9 +51,10 @@ function Sdk(
     callback: (data: FlagDict) => void,
     userId?: string | null
   ) {
-    socket = new WebSocket(
-      userId ? `${websocketEndpoint}&id=${userId}` : websocketEndpoint
-    );
+    // Mutating is okay, load has been done before hands
+    if (userId) fields.id = userId;
+
+    socket = new WebSocket(`${wsRoot}?opts=${bToA(fields)}`);
 
     socket.onmessage = (event) => {
       flags = { ...flags, ...JSON.parse(event.data).data };

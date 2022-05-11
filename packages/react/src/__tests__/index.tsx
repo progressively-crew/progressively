@@ -112,7 +112,7 @@ describe("React-sdk root", () => {
       );
 
       expect(global.WebSocket).toHaveBeenCalledWith(
-        "ws://localhost:4001?client_key=valid-sdk-key&id=abcd"
+        "ws://localhost:4001?opts=eyJjbGllbnRLZXkiOiJ2YWxpZC1zZGsta2V5IiwiaWQiOiJhYmNkIn0="
       );
     });
 
@@ -125,7 +125,7 @@ describe("React-sdk root", () => {
       });
 
       expect(global.WebSocket).toHaveBeenCalledWith(
-        "ws://localhost:4001?client_key=valid-sdk-key&id=super-cool"
+        "ws://localhost:4001?opts=eyJjbGllbnRLZXkiOiJ2YWxpZC1zZGsta2V5IiwiaWQiOiJzdXBlci1jb29sIn0="
       );
     });
   });

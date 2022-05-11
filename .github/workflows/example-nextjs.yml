@@ -43,15 +43,12 @@ jobs:
       - name: Creating .env files
         run: mv ./packages/backend/.env.example ./packages/backend/.env
 
-      - name: Install dependencies
-        run: npm install
-
       - name: Install dependencies on the example project
         working-directory: ./example/nextjs
         run: npm install
 
       - name: Bootstrap projects
-        run: npm run setup
+        run: npm run setup:ci
 
       - name: Prepare the DB
         run: npm run db:prepare

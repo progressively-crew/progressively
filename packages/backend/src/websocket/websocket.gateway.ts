@@ -65,15 +65,20 @@ export class WebsocketGateway
 
     const useLessPrefix = `http://localhost`; // just to be able to rely on the URL class
     const searchParams = new URL(`${useLessPrefix}${req.url}`).searchParams;
-    const queryParams = Object.fromEntries(searchParams);
 
-    if (queryParams.client_key) {
-      const { client_key, ...fields } = queryParams;
-      socket.__ROOMS = [];
+    const urlParams = JSON.parse(
+      Buffer.from(searchParams.get('opts'), 'base64').toString('ascii'),
+    );
+
+    if (urlParams.clientKey) {
+      const { clientKey, ...fields } = urlParams;
+
       socket.__FIELDS = fields || {};
-      this.rooms.join(client_key, socket);
+      socket.__ROOMS = [];
 
-      this.redisService.subscribe(client_key, (flagEnv) =>
+      this.rooms.join(clientKey, socket);
+
+      this.redisService.subscribe(clientKey, (flagEnv) =>
         this.onFlagChangingNotification(flagEnv),
       );
     }

@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "@testing-library/cypress": "^8.0.2",
-    "cypress": "^9.6.0"
+    "cypress": "^9.6.1"
   },
   "scripts": {
     "start": "rm -rf ../../packages/react/node_modules && react-scripts start",

@@ -43,15 +43,12 @@ jobs:
       - name: Creating .env files
         run: mv ./packages/backend/.env.example ./packages/backend/.env
 
-      - name: Install dependencies
-        run: npm install
-
       - name: Install dependencies on the example project
         working-directory: ./example/cra
         run: npm install
 
       - name: Bootstrap projects
-        run: npm run setup
+        run: npm run setup:ci
 
       - name: Prepare the DB
         run: npm run db:prepare
@@ -59,17 +56,13 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Avoid React duplicate
-        working-directory: ./packages/react
-        run: rm -rf node_modules
-
       - name: Start the backend project
         working-directory: ./packages/backend
         run: npm start &
 
       - name: Start the Example CRA project
         working-directory: ./example/cra
-        run: npm run build && npm start &
+        run: npm start &
 
       - name: E2E tests
         working-directory: ./example/cra

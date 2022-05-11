@@ -133,15 +133,15 @@ export const seedDb = async () => {
 
 export const cleanupDb = async () => {
   await prismaClient.$connect();
-  await prismaClient.rolloutStrategy.deleteMany({});
-  await prismaClient.refreshToken.deleteMany({});
-  await prismaClient.flagHit.deleteMany({});
-  await prismaClient.flagEnvironment.deleteMany({});
-  await prismaClient.flag.deleteMany({});
-  await prismaClient.environment.deleteMany({});
-  await prismaClient.passwordResetTokens.deleteMany({});
-  await prismaClient.userProject.deleteMany({});
-  await prismaClient.user.deleteMany({});
-  await prismaClient.project.deleteMany({});
+  await prismaClient.rolloutStrategy.deleteMany();
+  await prismaClient.refreshToken.deleteMany();
+  await prismaClient.flagHit.deleteMany();
+  await prismaClient.flagEnvironment.deleteMany();
+  await prismaClient.flag.deleteMany();
+  await prismaClient.environment.deleteMany();
+  await prismaClient.passwordResetTokens.deleteMany();
+  await prismaClient.userProject.deleteMany();
+  await prismaClient.user.deleteMany();
+  await prismaClient.project.deleteMany();
   await prismaClient.$disconnect();
 };
