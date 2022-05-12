@@ -34,8 +34,8 @@ export const seedFlags = async (prismaClient: PrismaClient) => {
 
 export const seedHits = async (
   prismaClient: PrismaClient,
-  flagEnv,
-  date,
+  flagEnv: any,
+  date: Date,
   count = 10,
 ) => {
   date.setHours(2);

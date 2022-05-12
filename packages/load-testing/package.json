@@ -1,0 +1,48 @@
+{
+  "name": "load-testing",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@progressively/react": "file:../../packages/react",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.2.0",
+    "@testing-library/user-event": "^13.5.0",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "react-scripts": "5.0.1",
+    "web-vitals": "^2.1.4"
+  },
+  "devDependencies": {
+    "@types/node-fetch": "^2.6.1",
+    "chalk": "^4.1.2",
+    "node-fetch": "^2.6.7",
+    "playwright": "^1.21.1",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build:test": "react-scripts build",
+    "test:chromium": "BROWSER_TYPE=chromium ts-node ./tests/activated-strategy.ts",
+    "test:firefox": "BROWSER_TYPE=firefox ts-node ./tests/activated-strategy.ts",
+    "test:webkit": "BROWSER_TYPE=webkit ts-node ./tests/activated-strategy.ts"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
