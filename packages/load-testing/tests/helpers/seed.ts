@@ -13,7 +13,7 @@ export const seedDb = async (userCount: number) => {
   await prismaClient.$connect();
 
   const [projectFromSeeding] = await seedProjects(prismaClient);
-  const [homePageFlag] = await seedFlags(prismaClient);
+  const [homePageFlag, footerFlag] = await seedFlags(prismaClient);
 
   const production = await prismaClient.environment.create({
     data: {
@@ -32,6 +32,14 @@ export const seedDb = async (userCount: number) => {
     },
   });
 
+  const footerFlagEnv = await prismaClient.flagEnvironment.create({
+    data: {
+      environmentId: production.uuid,
+      flagId: footerFlag.uuid,
+      status: "NOT_ACTIVATED",
+    },
+  });
+
   await prismaClient.rolloutStrategy.create({
     data: {
       uuid: "1",
@@ -40,6 +48,18 @@ export const seedDb = async (userCount: number) => {
       name: "Super strategy",
       strategyRuleType: "default",
       activationType: "boolean",
+    },
+  });
+
+  await prismaClient.rolloutStrategy.create({
+    data: {
+      uuid: "2",
+      flagEnvironmentFlagId: footerFlagEnv.flagId,
+      flagEnvironmentEnvironmentId: footerFlagEnv.environmentId,
+      name: "Percentage",
+      strategyRuleType: "default",
+      activationType: "percentage",
+      rolloutPercentage: 25,
     },
   });
 
@@ -91,7 +111,5 @@ export const seedDb = async (userCount: number) => {
   );
 
   await Promise.all(userProjectsPromises);
-  console.log(`[Seeding]: User seeded: ${userProjectsPromises.length}\n\n\n`);
-
   await prismaClient.$disconnect();
 };

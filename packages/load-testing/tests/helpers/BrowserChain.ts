@@ -34,7 +34,7 @@ export class LocalBrowser {
   }
 }
 
-const browserConfig = { headless: false };
+const browserConfig = { headless: true };
 
 export class BrowserChain {
   constructor(private browsers: Array<LocalBrowser>) {}

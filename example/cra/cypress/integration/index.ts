@@ -8,11 +8,6 @@ describe("/", () => {
     cy.visit("/");
   });
 
-  it("shows the old variant when the flag is not activated", () => {
-    cy.findByText("Old variant").should("be.visible");
-    cy.findByText("New variant").should("not.exist");
-  });
-
   it("shows the new variant when the flag is activated", () => {
     cy.changeFlagStatus("1", "1", FlagStatus.ACTIVATED);
 
@@ -24,5 +19,10 @@ describe("/", () => {
     cy.reload();
     cy.findByText("Old variant").should("not.exist");
     cy.findByText("New variant").should("be.visible");
+  });
+
+  it("shows the old variant when the flag is not activated", () => {
+    cy.findByText("Old variant").should("be.visible");
+    cy.findByText("New variant").should("not.exist");
   });
 });

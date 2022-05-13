@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ProgressivelyProvider, useFlags } from "@progressively/react";
 
-const FlaggedComponent = () => {
+const HomeFlaggedComponent = () => {
   const { flags, isLoading } = useFlags();
 
   if (isLoading) return null;
@@ -13,12 +13,29 @@ const FlaggedComponent = () => {
   return <div style={{ background: "lightblue" }}>Old variant</div>;
 };
 
+const FooterFlaggedComponent = () => {
+  const { flags, isLoading } = useFlags();
+
+  if (isLoading) return null;
+
+  if (flags.newFooter) {
+    return (
+      <div style={{ background: "red", color: "white" }}>
+        New footer variant
+      </div>
+    );
+  }
+
+  return <div style={{ background: "lightblue" }}>Old footer variant</div>;
+};
+
 const Home = ({ id }) => {
   return (
-    <ProgressivelyProvider clientKey="valid-sdk-key">
+    <ProgressivelyProvider clientKey="valid-sdk-key" fields={{ id }}>
       <main>
         <p>User {id}</p>
-        <FlaggedComponent />
+        <HomeFlaggedComponent />
+        <FooterFlaggedComponent />
       </main>
     </ProgressivelyProvider>
   );
