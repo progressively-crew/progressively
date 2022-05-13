@@ -72,10 +72,12 @@ export class BrowserChain {
     return new BrowserChain(localBrowsers);
   }
 
-  public async open(rawUrl: string) {
+  public async open(rawUrl: string, isAnonymous: boolean = false) {
     const browserPromises = this.browsers.map((browser, index) => {
       const url = new URL(rawUrl);
+
       url.searchParams.set("id", String(index));
+      url.searchParams.set("anonymous", String(isAnonymous));
 
       return browser.open(url.toString());
     });

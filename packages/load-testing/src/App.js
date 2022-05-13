@@ -29,9 +29,11 @@ const FooterFlaggedComponent = () => {
   return <div style={{ background: "lightblue" }}>Old footer variant</div>;
 };
 
-const Home = ({ id }) => {
+const Home = ({ id, anonymous }) => {
+  const fields = anonymous ? undefined : { id };
+
   return (
-    <ProgressivelyProvider clientKey="valid-sdk-key" fields={{ id }}>
+    <ProgressivelyProvider clientKey="valid-sdk-key" fields={fields}>
       <main>
         <p>User {id}</p>
         <HomeFlaggedComponent />
@@ -42,15 +44,17 @@ const Home = ({ id }) => {
 };
 function App() {
   const [id, setId] = useState();
+  const [anonymous, setAnonymous] = useState(false);
 
   useEffect(() => {
     const params = new URL(document.location.href).searchParams;
     setId(params.get("id"));
+    setAnonymous(params.get("anonymous") === "true");
   }, []);
 
   if (!id) return null;
 
-  return <Home id={id} />;
+  return <Home id={id} anonymous={anonymous} />;
 }
 
 export default App;
