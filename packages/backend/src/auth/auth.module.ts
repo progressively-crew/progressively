@@ -8,6 +8,8 @@ import { PrismaService } from '../prisma.service';
 import { TokensModule } from '../tokens/tokens.module';
 import { AuthService } from './auth.service';
 import { MailService } from '../mail/mail.service';
+import { APP_GUARD } from '@nestjs/core';
+import { ThrottlerGuard } from '@nestjs/throttler';
 
 @Module({
   imports: [UsersModule, PassportModule, TokensModule],
@@ -17,6 +19,10 @@ import { MailService } from '../mail/mail.service';
     PrismaService,
     AuthService,
     MailService,
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
   ],
   controllers: [AuthController],
 })
