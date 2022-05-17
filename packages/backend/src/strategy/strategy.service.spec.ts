@@ -4,6 +4,7 @@ import { PrismaService } from '../prisma.service';
 import { FlagStatus } from '../flags/flags.status';
 import { ExtendedFlagEnv, StrategyService } from './strategy.service';
 import { ActivationRuleType, StrategyRuleType } from './types';
+import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 
 describe('StrategyService', () => {
   let service: StrategyService;
@@ -12,7 +13,16 @@ describe('StrategyService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [StrategyService, PrismaService],
+      providers: [
+        StrategyService,
+        PrismaService,
+        {
+          provide: WINSTON_MODULE_PROVIDER,
+          useValue: {
+            log: jest.fn(),
+          },
+        },
+      ],
     }).compile();
 
     service = module.get<StrategyService>(StrategyService);
