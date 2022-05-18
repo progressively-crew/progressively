@@ -1,12 +1,4 @@
-import {
-  Stack,
-  FormControl,
-  Input,
-  Box,
-  Text,
-  HStack,
-  Link as CLink,
-} from "@chakra-ui/react";
+import { Stack, Box, Text, HStack, Link as CLink } from "@chakra-ui/react";
 import { MdChevronLeft, MdPassword } from "react-icons/md";
 import {
   ActionFunction,
@@ -18,7 +10,7 @@ import {
 } from "remix";
 import { Button } from "~/components/Button";
 import { ErrorBox } from "~/components/ErrorBox";
-import { FormLabel } from "~/components/FormLabel";
+import { TextInput } from "~/components/Fields/TextInput";
 import { Header } from "~/components/Header";
 import { Main } from "~/components/Main";
 import { SuccessBox } from "~/components/SuccessBox";
@@ -110,16 +102,13 @@ export default function ForgotPasswordPage() {
               </SuccessBox>
             )}
 
-            <FormControl isInvalid={Boolean(errors?.email)}>
-              <FormLabel htmlFor="email">Email</FormLabel>
-              <Input
-                id="email"
-                name="email"
-                type="email"
-                placeholder="e.g: james.bond@mi6.com"
-                aria-describedby={errors?.email ? "error-email" : undefined}
-              />
-            </FormControl>
+            <TextInput
+              isInvalid={Boolean(errors?.email)}
+              label="Email"
+              name="email"
+              type="email"
+              placeholder="e.g: james.bond@mi6.com"
+            />
 
             <Box>
               <Button

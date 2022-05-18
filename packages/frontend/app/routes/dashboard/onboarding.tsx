@@ -10,6 +10,7 @@ import {
 } from "remix";
 import { Button } from "~/components/Button";
 import { ErrorBox } from "~/components/ErrorBox";
+import { TextInput } from "~/components/Fields/TextInput";
 import { FormLabel } from "~/components/FormLabel";
 import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
@@ -47,7 +48,7 @@ export const action: ActionFunction = async ({
   request,
 }): Promise<ActionData | Response> => {
   const formData = await request.formData();
-  const projectName = formData.get("project-name")?.toString();
+  const projectName = formData.get("name")?.toString();
 
   const errors = validateProjectName({ name: projectName });
 
@@ -97,17 +98,12 @@ export default function OnboardingPage() {
           )}
 
           <Form method="post">
-            <FormControl isInvalid={Boolean(errors?.name)}>
-              <FormLabel htmlFor="project-name">Project name</FormLabel>
-              <Input
-                type="text"
-                name="project-name"
-                id="project-name"
-                placeholder="e.g: My super project"
-                aria-describedby={errors?.name ? `error-name` : undefined}
-                maxW="34ch"
-              />
-            </FormControl>
+            <TextInput
+              isInvalid={Boolean(errors?.name)}
+              label="Project name"
+              name="name"
+              placeholder="e.g: My super project"
+            />
 
             <Box mt={4}>
               <Button

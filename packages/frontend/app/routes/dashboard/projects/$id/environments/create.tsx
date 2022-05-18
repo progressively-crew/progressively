@@ -1,4 +1,4 @@
-import { Box, FormControl, Input, Text } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import { IoIosCreate } from "react-icons/io";
 import {
   Form,
@@ -27,7 +27,7 @@ import { User } from "~/modules/user/types";
 import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
 import { Button } from "~/components/Button";
-import { FormLabel } from "~/components/FormLabel";
+import { TextInput } from "~/components/Fields/TextInput";
 
 interface MetaArgs {
   data?: {
@@ -136,26 +136,14 @@ export default function CreateEnvironmentPage() {
           )}
 
           <Form method="post">
-            <FormControl isInvalid={Boolean(errors?.name)}>
-              <FormLabel htmlFor="env-name">Environment name</FormLabel>
-              <Input
-                type="text"
-                name="env-name"
-                id="env-name"
-                placeholder="e.g: Staging"
-                aria-describedby={
-                  data?.errors?.name
-                    ? "error-name env-name-hint"
-                    : "env-name-hint"
-                }
-                width={["100%", "34ch"]}
-              />
-            </FormControl>
-
-            <Text id="env-name-hint" fontSize="sm" color="textlight" mt={2}>
-              After the creation of an environment, you will be able to get its
-              SDK key for application usage.
-            </Text>
+            <TextInput
+              isInvalid={Boolean(errors?.name)}
+              name="env-name"
+              placeholder="e.g: Staging"
+              label="Environment name"
+              description="After the creation of an environment, you will be able to get
+              its SDK key for application usage."
+            />
 
             <Box mt={4}>
               <Button

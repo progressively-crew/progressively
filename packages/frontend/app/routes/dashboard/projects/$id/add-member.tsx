@@ -1,11 +1,4 @@
-import {
-  Box,
-  FormControl,
-  Input,
-  ListItem,
-  Text,
-  UnorderedList,
-} from "@chakra-ui/react";
+import { Box, ListItem, Text, UnorderedList } from "@chakra-ui/react";
 import { IoIosCreate } from "react-icons/io";
 import {
   Form,
@@ -26,13 +19,13 @@ import { User } from "~/modules/user/types";
 import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
 import { Button } from "~/components/Button";
-import { FormLabel } from "~/components/FormLabel";
 import { validateEmail } from "~/modules/forms/utils/validateEmail";
 import { getProject } from "~/modules/projects/services/getProject";
 import { MdOutlineEmail } from "react-icons/md";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { addMemberToProject } from "~/modules/projects/services/addMemberToProject";
 import { SuccessBox } from "~/components/SuccessBox";
+import { TextInput } from "~/components/Fields/TextInput";
 
 interface MetaArgs {
   data?: {
@@ -87,7 +80,7 @@ export const action: ActionFunction = async ({
   params,
 }): Promise<ActionData | Response> => {
   const formData = await request.formData();
-  const memberEmail = formData.get("member-email")?.toString();
+  const memberEmail = formData.get("email")?.toString();
   const emailError = validateEmail(memberEmail);
 
   if (emailError) {
@@ -196,17 +189,12 @@ export default function CreateProjectPage() {
             </Box>
           )}
           <Form method="post">
-            <FormControl isInvalid={Boolean(errors?.email)}>
-              <FormLabel htmlFor="member-email">Member email</FormLabel>
-              <Input
-                type="text"
-                name="member-email"
-                id="member-email"
-                placeholder="e.g: john.doe@gmail.com"
-                aria-describedby={errors?.email ? `error-email` : undefined}
-                width={["100%", "34ch"]}
-              />
-            </FormControl>
+            <TextInput
+              isInvalid={Boolean(errors?.email)}
+              name="email"
+              label="Member email"
+              placeholder="e.g: john.doe@gmail.com"
+            />
 
             <Box mt={4}>
               <Button

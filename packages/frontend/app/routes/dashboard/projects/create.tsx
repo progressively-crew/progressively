@@ -1,4 +1,4 @@
-import { Box, FormControl, Input, Text } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import { IoIosCreate } from "react-icons/io";
 import {
   Form,
@@ -22,7 +22,7 @@ import { User } from "~/modules/user/types";
 import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
 import { Button } from "~/components/Button";
-import { FormLabel } from "~/components/FormLabel";
+import { TextInput } from "~/components/Fields/TextInput";
 
 export const meta: MetaFunction = () => {
   return {
@@ -49,7 +49,7 @@ export const action: ActionFunction = async ({
   request,
 }): Promise<ActionData | Response> => {
   const formData = await request.formData();
-  const projectName = formData.get("project-name")?.toString();
+  const projectName = formData.get("name")?.toString();
 
   const errors = validateProjectName({ name: projectName });
 
@@ -110,17 +110,12 @@ export default function CreateProjectPage() {
             </Box>
           )}
           <Form method="post">
-            <FormControl isInvalid={Boolean(errors?.name)}>
-              <FormLabel htmlFor="project-name">Project name</FormLabel>
-              <Input
-                type="text"
-                name="project-name"
-                id="project-name"
-                placeholder="e.g: My super project"
-                aria-describedby={errors?.name ? `error-name` : undefined}
-                width={["100%", "34ch"]}
-              />
-            </FormControl>
+            <TextInput
+              isInvalid={Boolean(errors?.name)}
+              label="Project name"
+              name="name"
+              placeholder="e.g: My super project"
+            />
 
             <Box mt={4}>
               <Button

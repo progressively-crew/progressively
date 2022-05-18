@@ -1,4 +1,4 @@
-import { Box, FormControl, Input } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { IoIosCreate } from "react-icons/io";
 import {
   Form,
@@ -9,7 +9,7 @@ import {
 } from "remix";
 import { Button } from "~/components/Button";
 import { ErrorBox } from "~/components/ErrorBox";
-import { FormLabel } from "~/components/FormLabel";
+import { TextInput } from "~/components/Fields/TextInput";
 import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
 import { authGuard } from "~/modules/auth/services/auth-guard";
@@ -78,19 +78,12 @@ export default function WhatsYourNamePage() {
           )}
 
           <Form method="post">
-            <FormControl isInvalid={Boolean(errors?.fullname)}>
-              <FormLabel htmlFor="fullname">Fullname</FormLabel>
-              <Input
-                type="text"
-                name="fullname"
-                id="fullname"
-                placeholder="e.g: John Doe"
-                aria-describedby={
-                  errors?.fullname ? `error-fullname` : undefined
-                }
-                maxW="34ch"
-              />
-            </FormControl>
+            <TextInput
+              isInvalid={Boolean(errors?.fullname)}
+              label="Fullname"
+              name="fullname"
+              placeholder="e.g: John Doe"
+            />
 
             <Box mt={4}>
               <Button

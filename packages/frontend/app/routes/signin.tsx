@@ -1,7 +1,5 @@
 import {
   Box,
-  FormControl,
-  Input,
   Stack,
   Link as CLink,
   UnorderedList,
@@ -22,7 +20,7 @@ import {
 } from "remix";
 import { Button } from "~/components/Button";
 import { ErrorBox } from "~/components/ErrorBox";
-import { FormLabel } from "~/components/FormLabel";
+import { TextInput } from "~/components/Fields/TextInput";
 import { Header } from "~/components/Header";
 import { Main } from "~/components/Main";
 import { SuccessBox } from "~/components/SuccessBox";
@@ -111,29 +109,20 @@ export default function Signin() {
               </SuccessBox>
             )}
 
-            <FormControl isInvalid={Boolean(errors?.email)}>
-              <FormLabel htmlFor="email">Email</FormLabel>
-              <Input
-                id="email"
-                name="email"
-                type="email"
-                placeholder="e.g: james.bond@mi6.com"
-                aria-describedby={errors?.email ? "error-email" : undefined}
-              />
-            </FormControl>
+            <TextInput
+              isInvalid={Boolean(errors?.email)}
+              name="email"
+              label="Email"
+              placeholder="e.g: james.bond@mi6.com"
+            />
 
-            <FormControl isInvalid={Boolean(errors?.password)}>
-              <FormLabel htmlFor="password">Password</FormLabel>
-              <Input
-                id="password"
-                name="password"
-                type="password"
-                placeholder="************"
-                aria-describedby={
-                  errors?.password ? "error-password" : undefined
-                }
-              />
-            </FormControl>
+            <TextInput
+              isInvalid={Boolean(errors?.password)}
+              name="password"
+              label="Password"
+              type="password"
+              placeholder="************"
+            />
 
             <Box>
               <Button

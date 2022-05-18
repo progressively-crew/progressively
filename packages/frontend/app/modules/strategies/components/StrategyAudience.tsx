@@ -3,11 +3,12 @@ import {
   RadioGroup,
   Radio,
   FormControl,
-  Input,
   Select,
-  Textarea,
   Stack,
 } from "@chakra-ui/react";
+import { SelectField } from "~/components/Fields/SelectField";
+import { TextareaInput } from "~/components/Fields/TextareaInput";
+import { TextInput } from "~/components/Fields/TextInput";
 import { FormLabel } from "~/components/FormLabel";
 import { Section, SectionHeader } from "~/components/Section";
 import { ComparatorEnum, StrategyCreateDTO } from "../types";
@@ -74,53 +75,32 @@ export const StrategyAudience = ({
           borderRadius={6}
           spacing={6}
         >
-          <FormControl isInvalid={Boolean(errors["field-name"])}>
-            <FormLabel htmlFor="field-name">Field name:</FormLabel>
-            <Input
-              type="text"
-              name="field-name"
-              id="field-name"
-              placeholder="e.g: email"
-              defaultValue={initialFieldName}
-              aria-describedby={
-                errors["field-name"] ? "error-field-name" : undefined
-              }
-            />
-          </FormControl>
+          <TextInput
+            isInvalid={Boolean(errors["field-name"])}
+            label="Field name:"
+            placeholder="e.g: email"
+            defaultValue={initialFieldName}
+            name="field-name"
+          />
 
-          <FormControl isInvalid={Boolean(errors["field-comparator"])}>
-            <FormLabel htmlFor="field-comparator">Field comparator:</FormLabel>
+          <SelectField
+            isInvalid={Boolean(errors["field-comparator"])}
+            name="field-comparator"
+            label="Field comparator:"
+            options={[
+              { value: ComparatorEnum.Equals, label: "Equals" },
+              { value: ComparatorEnum.NotEquals, label: "Not equals" },
+              { value: ComparatorEnum.Contains, label: "Contains" },
+            ]}
+          />
 
-            <Select
-              name="field-comparator"
-              id="field-comparator"
-              defaultValue={initialFieldComparator}
-              aria-describedby={
-                errors["field-comparator"]
-                  ? "error-field-comparator"
-                  : undefined
-              }
-            >
-              <option value={ComparatorEnum.Equals}>Equals</option>
-              <option value={ComparatorEnum.NotEquals}>Not equals</option>
-              <option value={ComparatorEnum.Contains}>Contains</option>
-            </Select>
-          </FormControl>
-
-          <FormControl isInvalid={Boolean(errors["field-value"])}>
-            <FormLabel htmlFor="field-value">
-              Values matching the previous field (one per line):
-            </FormLabel>
-            <Textarea
-              name="field-value"
-              id="field-value"
-              defaultValue={initialFieldValue}
-              placeholder="e.g: marvin.frachet@something.com"
-              aria-describedby={
-                errors["field-value"] ? "error-field-value" : undefined
-              }
-            />
-          </FormControl>
+          <TextareaInput
+            isInvalid={Boolean(errors["field-value"])}
+            label="Values matching the previous field (one per line):"
+            name="field-value"
+            defaultValue={initialFieldValue}
+            placeholder="e.g: marvin.frachet@something.com"
+          />
         </Stack>
       )}
     </Section>

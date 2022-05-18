@@ -1,8 +1,9 @@
-import { Stack, FormControl, FormLabel, Input, Box } from "@chakra-ui/react";
+import { Stack, Box } from "@chakra-ui/react";
 import { MdAccountCircle } from "react-icons/md";
 import { ActionFunction, Form, useActionData, useTransition } from "remix";
 import { Button } from "~/components/Button";
 import { ErrorBox } from "~/components/ErrorBox";
+import { TextInput } from "~/components/Fields/TextInput";
 import { SuccessBox } from "~/components/SuccessBox";
 import { createUser } from "../services/createUser";
 import { RegisterCredentials, User } from "../types";
@@ -20,7 +21,7 @@ export const registerAction: ActionFunction = async ({
   const fullname = formData.get("fullname")?.toString();
   const email = formData.get("email")?.toString();
   const password = formData.get("password")?.toString();
-  const confirmPassword = formData.get("confirm-password")?.toString();
+  const confirmPassword = formData.get("confirmPassword")?.toString();
 
   const errors = validateRegistrationForm({
     email,
@@ -73,53 +74,35 @@ export const RegisterForm = () => {
           </SuccessBox>
         )}
 
-        <FormControl isInvalid={Boolean(errors?.fullname)}>
-          <FormLabel htmlFor="fullname">Fullname</FormLabel>
-          <Input
-            id="fullname"
-            name="fullname"
-            type="text"
-            placeholder="e.g: James Bond"
-            aria-describedby={errors?.fullname ? "error-fullname" : undefined}
-          />
-        </FormControl>
+        <TextInput
+          isInvalid={Boolean(errors?.fullname)}
+          label="Fullname"
+          name="fullname"
+          placeholder="e.g: James Bond"
+        />
 
-        <FormControl isInvalid={Boolean(errors?.email)}>
-          <FormLabel htmlFor="email">Email</FormLabel>
-          <Input
-            id="email"
-            name="email"
-            type="email"
-            placeholder="e.g: james.bond@mi6.com"
-            aria-describedby={errors?.email ? "error-email" : undefined}
-          />
-        </FormControl>
+        <TextInput
+          isInvalid={Boolean(errors?.email)}
+          label="Email"
+          name="email"
+          placeholder="e.g: james.bond@mi6.com"
+        />
 
-        <FormControl isInvalid={Boolean(errors?.password)}>
-          <FormLabel htmlFor="password">Password</FormLabel>
-          <Input
-            id="password"
-            name="password"
-            type="password"
-            placeholder="************"
-            aria-describedby={errors?.password ? "error-password" : undefined}
-          />
-        </FormControl>
+        <TextInput
+          isInvalid={Boolean(errors?.password)}
+          label="Password"
+          name="password"
+          type="password"
+          placeholder="************"
+        />
 
-        <FormControl isInvalid={Boolean(errors?.confirmPassword)}>
-          <FormLabel htmlFor="confirm-password">
-            Confirm your password
-          </FormLabel>
-          <Input
-            id="confirm-password"
-            name="confirm-password"
-            type="password"
-            placeholder="************"
-            aria-describedby={
-              errors?.confirmPassword ? "error-confirm-password" : undefined
-            }
-          />
-        </FormControl>
+        <TextInput
+          isInvalid={Boolean(errors?.confirmPassword)}
+          label="Confirm your password"
+          name="confirmPassword"
+          type="password"
+          placeholder="************"
+        />
 
         <Box>
           <Button

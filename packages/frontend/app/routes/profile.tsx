@@ -1,11 +1,4 @@
-import {
-  Box,
-  Link as CLink,
-  HStack,
-  FormControl,
-  Input,
-  Stack,
-} from "@chakra-ui/react";
+import { Box, Link as CLink, HStack, Stack } from "@chakra-ui/react";
 import { MdChevronLeft, MdPassword } from "react-icons/md";
 import {
   ActionFunction,
@@ -19,7 +12,7 @@ import {
 } from "remix";
 import { Button } from "~/components/Button";
 import { ErrorBox } from "~/components/ErrorBox";
-import { FormLabel } from "~/components/FormLabel";
+import { TextInput } from "~/components/Fields/TextInput";
 import { Header } from "~/components/Header";
 import { Section, SectionHeader } from "~/components/Section";
 import { SuccessBox } from "~/components/SuccessBox";
@@ -140,37 +133,21 @@ export default function ProfilePage() {
                 </SuccessBox>
               )}
 
-              <FormControl isInvalid={Boolean(errors?.password)}>
-                <FormLabel htmlFor="password">New password</FormLabel>
-                <Input
-                  id="password"
-                  name="password"
-                  type="password"
-                  placeholder="**********"
-                  aria-describedby={
-                    errors?.password ? "error-password" : undefined
-                  }
-                  maxW="34ch"
-                />
-              </FormControl>
+              <TextInput
+                label="New password"
+                name="password"
+                isInvalid={Boolean(errors?.password)}
+                placeholder="**********"
+                type="password"
+              />
 
-              <FormControl isInvalid={Boolean(errors?.confirmationPassword)}>
-                <FormLabel htmlFor="confirmationPassword">
-                  Confirmation password
-                </FormLabel>
-                <Input
-                  id="confirmationPassword"
-                  name="confirmationPassword"
-                  type="password"
-                  placeholder="**********"
-                  aria-describedby={
-                    errors?.confirmationPassword
-                      ? "error-confirmationPassword"
-                      : undefined
-                  }
-                  maxW="34ch"
-                />
-              </FormControl>
+              <TextInput
+                label="Confirmation password"
+                name="confirmationPassword"
+                isInvalid={Boolean(errors?.confirmationPassword)}
+                placeholder="**********"
+                type="password"
+              />
 
               <Box>
                 <Button

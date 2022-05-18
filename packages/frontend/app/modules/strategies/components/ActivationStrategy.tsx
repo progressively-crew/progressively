@@ -1,15 +1,6 @@
-import {
-  Box,
-  FormControl,
-  Radio,
-  RadioGroup,
-  Slider,
-  SliderFilledTrack,
-  SliderThumb,
-  SliderTrack,
-} from "@chakra-ui/react";
+import { Box, Radio, RadioGroup } from "@chakra-ui/react";
 import { useState } from "react";
-import { FormLabel } from "~/components/FormLabel";
+import { SliderInput } from "~/components/Fields/SliderInput";
 import { Section, SectionHeader } from "~/components/Section";
 import { ActivationType } from "../types/activation";
 
@@ -64,28 +55,13 @@ export const ActivationStrategy = ({
           p={[4, 4, 8]}
           borderRadius={6}
         >
-          <FormControl>
-            <FormLabel id="percentage-value">
-              Percentage of the people concerned ({percentageValue}
-              %):
-            </FormLabel>
-
-            <Slider
-              name="percentage-value"
-              id="percentage-value"
-              aria-labelledby="percentage-value"
-              min={0}
-              max={100}
-              step={1}
-              value={percentageValue}
-              onChange={setPercentageValue}
-            >
-              <SliderTrack>
-                <SliderFilledTrack />
-              </SliderTrack>
-              <SliderThumb />
-            </Slider>
-          </FormControl>
+          <SliderInput
+            name="percentage-value"
+            label={`Percentage of the people concerned (${percentageValue}
+            %):`}
+            onChange={setPercentageValue}
+            percentageValue={percentageValue}
+          />
         </Box>
       )}
     </Section>

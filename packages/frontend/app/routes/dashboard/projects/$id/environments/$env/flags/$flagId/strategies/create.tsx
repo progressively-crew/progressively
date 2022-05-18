@@ -21,14 +21,7 @@ import { ErrorBox } from "~/components/ErrorBox";
 import { StrategyCreateDTO } from "~/modules/strategies/types";
 import { createStrategy } from "~/modules/strategies/services/createStrategy";
 import { BreadCrumbs, Crumbs } from "~/components/AppBreadcrumbs";
-import {
-  Box,
-  Container,
-  Flex,
-  FormControl,
-  Input,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Container, Flex, Text } from "@chakra-ui/react";
 import { StrategyAudience } from "~/modules/strategies/components/StrategyAudience";
 import { ActivationStrategy } from "~/modules/strategies/components/ActivationStrategy";
 import { IoIosCreate } from "react-icons/io";
@@ -38,8 +31,8 @@ import { User } from "~/modules/user/types";
 import { Header } from "~/components/Header";
 import { Section, SectionHeader } from "~/components/Section";
 import { Button } from "~/components/Button";
-import { FormLabel } from "~/components/FormLabel";
 import { Environment } from "~/modules/environments/types";
+import { TextInput } from "~/components/Fields/TextInput";
 
 interface MetaArgs {
   data?: {
@@ -244,21 +237,12 @@ export default function StrategyCreatePage() {
               <Section id="general-information">
                 <SectionHeader title="General information" />
 
-                <FormControl isInvalid={Boolean(errors["strategy-name"])}>
-                  <FormLabel htmlFor="strategy-name">Strategy name</FormLabel>
-                  <Input
-                    type="text"
-                    placeholder="e.g: Strategy 1"
-                    id="strategy-name"
-                    name="strategy-name"
-                    aria-describedby={
-                      errors["strategy-name"]
-                        ? "error-strategy-name"
-                        : undefined
-                    }
-                    width="34ch"
-                  />
-                </FormControl>
+                <TextInput
+                  name="strategy-name"
+                  placeholder="e.g: Strategy 1"
+                  label="Strategy name"
+                  isInvalid={Boolean(errors["strategy-name"])}
+                />
               </Section>
             </Box>
 

@@ -1,4 +1,4 @@
-import { Box, FormControl, Input, Text } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import { IoIosCreate } from "react-icons/io";
 import {
   Form,
@@ -13,7 +13,7 @@ import {
 import { Crumbs, BreadCrumbs } from "~/components/AppBreadcrumbs";
 import { Button } from "~/components/Button";
 import { ErrorBox } from "~/components/ErrorBox";
-import { FormLabel } from "~/components/FormLabel";
+import { TextInput } from "~/components/Fields/TextInput";
 import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
@@ -161,35 +161,21 @@ export default function CreateFlagPage() {
 
           <Form method="post">
             <Box mb={4}>
-              <FormControl isInvalid={Boolean(errors?.name)}>
-                <FormLabel htmlFor="flag-name">Flag name</FormLabel>
-                <Input
-                  type="text"
-                  name="flag-name"
-                  id="flag-name"
-                  placeholder="e.g: New Homepage"
-                  aria-describedby={
-                    data?.errors?.name ? "error-name" : undefined
-                  }
-                  width={["100%", "34ch"]}
-                />
-              </FormControl>
+              <TextInput
+                name="flag-name"
+                isInvalid={Boolean(errors?.name)}
+                label="Flag name"
+                placeholder="e.g: New Homepage"
+              />
             </Box>
 
             <Box>
-              <FormControl isInvalid={Boolean(errors?.name)}>
-                <FormLabel htmlFor="flag-desc">Flag description</FormLabel>
-                <Input
-                  type="text"
-                  name="flag-desc"
-                  id="flag-desc"
-                  placeholder="e.g: The new homepage"
-                  aria-describedby={
-                    data?.errors?.name ? "error-name" : undefined
-                  }
-                  width={["100%", "100%", "65ch"]}
-                />
-              </FormControl>
+              <TextInput
+                name="flag-desc"
+                isInvalid={Boolean(errors?.description)}
+                label="Flag description"
+                placeholder="e.g: The new homepage"
+              />
             </Box>
 
             <Text fontSize="sm" color="textlight" mt={2}>
