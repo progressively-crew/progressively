@@ -1,10 +1,4 @@
-import {
-  Box,
-  ListItem,
-  Text,
-  UnorderedList,
-  VisuallyHidden,
-} from "@chakra-ui/react";
+import { Box, ListItem, UnorderedList, VisuallyHidden } from "@chakra-ui/react";
 import { MdOutlineEmail } from "react-icons/md";
 import {
   ActionFunction,
@@ -30,6 +24,7 @@ import { getSession } from "~/sessions";
 import { Header } from "~/components/Header";
 import { Button } from "~/components/Button";
 import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
+import { Typography } from "~/components/Typography";
 
 interface MetaArgs {
   data?: {
@@ -134,17 +129,18 @@ export default function DeleteProjectPage() {
         header={<Header title="You are not allowed to delete projects." />}
       >
         <figure>
-          <Text as="figcaption">
+          <Typography as="figcaption">
             If you think this is an error, make sure to contact one of the
             project administrators:
-          </Text>
+          </Typography>
 
           <UnorderedList pl={2} mt={2}>
             {adminOfProject.map((user) => (
               <ListItem key={user.uuid}>
-                <Text as="span" mr={2}>
-                  {user.fullname}
-                </Text>
+                <Box as="span" mr={2}>
+                  <Typography as="span">{user.fullname}</Typography>
+                </Box>
+
                 <ButtonCopy
                   toCopy={user.email}
                   icon={<MdOutlineEmail aria-hidden />}
@@ -211,11 +207,11 @@ export default function DeleteProjectPage() {
       <WarningBox
         list={warnings}
         title={
-          <Text>
+          <Typography>
             We really want to warn you: if you validate the project suppression,
             you {`won't`} be able to access the <strong>{project.name}</strong>{" "}
             project anymore. It includes:
-          </Text>
+          </Typography>
         }
       />
     </DeleteEntityLayout>

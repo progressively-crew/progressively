@@ -1,15 +1,7 @@
-import {
-  Box,
-  RadioGroup,
-  Radio,
-  FormControl,
-  Select,
-  Stack,
-} from "@chakra-ui/react";
+import { Box, RadioGroup, Radio, Stack } from "@chakra-ui/react";
 import { SelectField } from "~/components/Fields/SelectField";
 import { TextareaInput } from "~/components/Fields/TextareaInput";
 import { TextInput } from "~/components/Fields/TextInput";
-import { FormLabel } from "~/components/FormLabel";
 import { Section, SectionHeader } from "~/components/Section";
 import { ComparatorEnum, StrategyCreateDTO } from "../types";
 import { StrategyRuleType } from "../types/StrategyRule";
@@ -87,6 +79,7 @@ export const StrategyAudience = ({
             isInvalid={Boolean(errors["field-comparator"])}
             name="field-comparator"
             label="Field comparator:"
+            defaultValue={initialFieldComparator}
             options={[
               { value: ComparatorEnum.Equals, label: "Equals" },
               { value: ComparatorEnum.NotEquals, label: "Not equals" },

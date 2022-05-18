@@ -1,11 +1,4 @@
-import {
-  Box,
-  Stack,
-  Text,
-  VisuallyHidden,
-  Flex,
-  Divider,
-} from "@chakra-ui/react";
+import { Box, Stack, VisuallyHidden, Flex, Divider } from "@chakra-ui/react";
 import { AiOutlineSetting } from "react-icons/ai";
 import { FaTrash } from "react-icons/fa";
 import { FiLayers } from "react-icons/fi";
@@ -32,6 +25,7 @@ import { Project, UserProject, UserRoles } from "~/modules/projects/types";
 import { User } from "~/modules/user/types";
 import { UserTable } from "~/modules/user/components/UserTable";
 import { getSession } from "~/sessions";
+import { Typography } from "~/components/Typography";
 
 interface MetaArgs {
   data?: {
@@ -168,7 +162,7 @@ export default function SettingsPage() {
         <Section id="details">
           <SectionHeader
             title="Project details"
-            description={<Text>{project.name}</Text>}
+            description={<Typography>{project.name}</Typography>}
           />
         </Section>
 
@@ -178,10 +172,10 @@ export default function SettingsPage() {
           <SectionHeader
             title="Project members"
             description={
-              <Text>
+              <Typography>
                 Remember that users with the role <em>Admin</em> {`can't`} be
                 removed.
-              </Text>
+              </Typography>
             }
           />
 
@@ -208,9 +202,11 @@ export default function SettingsPage() {
             />
           </Box>
 
-          <Text aria-live="polite" mt={4}>
-            {transition.state === "submitting" ? "Removing the users..." : ""}
-          </Text>
+          <Box mt={4} aria-live="polite">
+            <Typography>
+              {transition.state === "submitting" ? "Removing the users..." : ""}
+            </Typography>
+          </Box>
         </Section>
 
         {userRole === UserRoles.Admin && (
@@ -220,12 +216,12 @@ export default function SettingsPage() {
               <SectionHeader
                 title="Danger zone"
                 description={
-                  <Text>
+                  <Typography>
                     You can delete a project at any time, but you {`won’t`} be
                     able to access its environments and all the related flags
                     will be removed and be falsy in your applications. Be sure
                     to know what {`you're`} doing before removing a project.
-                  </Text>
+                  </Typography>
                 }
               />
 

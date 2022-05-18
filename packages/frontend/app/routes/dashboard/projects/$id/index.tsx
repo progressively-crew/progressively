@@ -1,4 +1,4 @@
-import { Stack, Text } from "@chakra-ui/react";
+import { Stack } from "@chakra-ui/react";
 import {
   LoaderFunction,
   useLoaderData,
@@ -22,6 +22,7 @@ import { AiOutlineSetting } from "react-icons/ai";
 import { FiLayers } from "react-icons/fi";
 import { Button } from "~/components/Button";
 import { EmptyState } from "~/components/EmptyState";
+import { Typography } from "~/components/Typography";
 
 interface MetaArgs {
   data?: {
@@ -139,7 +140,9 @@ export default function ProjectDetailPage() {
           <EmptyState
             title="No environments found"
             description={
-              <Text>There are no environments yet on this project.</Text>
+              <Typography>
+                There are no environments yet on this project.
+              </Typography>
             }
             action={
               <Button

@@ -1,4 +1,4 @@
-import { Box, Text, VisuallyHidden } from "@chakra-ui/react";
+import { Box, VisuallyHidden } from "@chakra-ui/react";
 import {
   ActionFunction,
   Form,
@@ -25,6 +25,7 @@ import { getFlagsByProjectEnv } from "~/modules/flags/services/getFlagsByProject
 import { deleteFlag } from "~/modules/flags/services/deleteFlag";
 import { Button } from "~/components/Button";
 import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
+import { Typography } from "~/components/Typography";
 
 interface MetaArgs {
   data?: {
@@ -197,11 +198,11 @@ export default function DeleteFlagPage() {
       <WarningBox
         list={warnings}
         title={
-          <Text>
+          <Typography>
             We really want to warn you: if you validate the flag suppression,
             you {`won't`} be able to access the{" "}
             <strong>{currentFlag.name}</strong> flag anymore. It includes:
-          </Text>
+          </Typography>
         }
       />
     </DeleteEntityLayout>

@@ -3,12 +3,12 @@ import {
   Flex,
   Heading,
   ListItem,
-  Text,
   UnorderedList,
   VisuallyHidden,
 } from "@chakra-ui/react";
 import { FaTrash } from "react-icons/fa";
 import { Button } from "~/components/Button";
+import { Typography } from "~/components/Typography";
 import { ComparatorEnum, StrategyRetrieveDTO } from "../types";
 
 export interface StrategyCardProps {
@@ -45,7 +45,7 @@ const StrategyAudience = ({ strat }: { strat: StrategyRetrieveDTO }) => {
   }
 
   return (
-    <Text color="textlight">
+    <Typography color="textlight">
       Serve the flag to <strong>{targetedUsers}</strong>{" "}
       {fieldName ? (
         <span>
@@ -56,7 +56,7 @@ const StrategyAudience = ({ strat }: { strat: StrategyRetrieveDTO }) => {
           <span>to one of:</span>
         </span>
       ) : null}
-    </Text>
+    </Typography>
   );
 };
 

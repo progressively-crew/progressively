@@ -1,4 +1,4 @@
-import { Box, Flex, HStack, Text, VisuallyHidden } from "@chakra-ui/react";
+import { Box, Flex, HStack, VisuallyHidden } from "@chakra-ui/react";
 import {
   useLoaderData,
   LoaderFunction,
@@ -27,6 +27,7 @@ import {
 } from "~/modules/flags/components/ToggleFlag";
 import { FiFlag } from "react-icons/fi";
 import { ButtonCopy } from "~/components/ButtonCopy";
+import { Typography } from "~/components/Typography";
 
 interface MetaArgs {
   data?: {
@@ -169,11 +170,11 @@ export default function FlagSettingPage() {
           <SectionHeader
             title="Danger zone"
             description={
-              <Text>
+              <Typography>
                 You can delete a feature flag at any time, but you {`won’t`} be
                 able to access its insights anymore and false will be served to
                 the application using it.
-              </Text>
+              </Typography>
             }
           />
 

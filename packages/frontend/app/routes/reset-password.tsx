@@ -1,4 +1,4 @@
-import { Stack, Text, HStack, Link as CLink, Box } from "@chakra-ui/react";
+import { Stack, HStack, Link as CLink, Box } from "@chakra-ui/react";
 import { MdChevronLeft, MdPassword } from "react-icons/md";
 import {
   ActionFunction,
@@ -15,6 +15,7 @@ import { TextInput } from "~/components/Fields/TextInput";
 import { Header } from "~/components/Header";
 import { Main } from "~/components/Main";
 import { SuccessBox } from "~/components/SuccessBox";
+import { Typography } from "~/components/Typography";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import {
   validateConfirmationPassword,
@@ -114,7 +115,7 @@ export default function ResetPasswordPage() {
           <Header
             title="Reset password"
             description={
-              <Text textColor="textlight">Set your new password.</Text>
+              <Typography color="textlight">Set your new password.</Typography>
             }
           />
         </Box>

@@ -1,10 +1,4 @@
-import {
-  Box,
-  ListItem,
-  UnorderedList,
-  Text,
-  VisuallyHidden,
-} from "@chakra-ui/react";
+import { Box, ListItem, UnorderedList, VisuallyHidden } from "@chakra-ui/react";
 import { MdOutlineEmail } from "react-icons/md";
 import {
   ActionFunction,
@@ -33,6 +27,7 @@ import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
 import { Button } from "~/components/Button";
 import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
+import { Typography } from "~/components/Typography";
 
 interface MetaArgs {
   data?: {
@@ -157,17 +152,17 @@ export default function DeleteEnvPage() {
         <Section>
           <Box p={[4, 0]}>
             <figure>
-              <Text as="figcaption">
+              <Typography as="figcaption">
                 If you think this is an error, make sure to contact one of the
                 project administrators:
-              </Text>
+              </Typography>
 
               <UnorderedList pl={2} mt={2}>
                 {adminOfProject.map((user) => (
                   <ListItem key={user.uuid}>
-                    <Text as="span" mr={2}>
-                      {user.fullname}
-                    </Text>
+                    <Box as="span">
+                      <Typography>{user.fullname}</Typography>
+                    </Box>
                     <ButtonCopy
                       toCopy={user.email}
                       icon={<MdOutlineEmail aria-hidden />}
@@ -235,12 +230,12 @@ export default function DeleteEnvPage() {
       <WarningBox
         list={warnings}
         title={
-          <Text>
+          <Typography>
             We really want to warn you: if you validate the environment
             suppression, you {`won't`} be able to access the{" "}
             <strong>{environment.name}</strong> environment anymore. It
             includes:
-          </Text>
+          </Typography>
         }
       />
     </DeleteEntityLayout>

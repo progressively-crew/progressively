@@ -1,4 +1,4 @@
-import { Box, Text, Stack, HStack } from "@chakra-ui/react";
+import { Box, Stack, HStack } from "@chakra-ui/react";
 import { IoIosCreate } from "react-icons/io";
 import {
   useLoaderData,
@@ -35,6 +35,7 @@ import {
 } from "~/modules/flags/components/ToggleFlag";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { FiFlag } from "react-icons/fi";
+import { Typography } from "~/components/Typography";
 
 interface MetaArgs {
   data?: {
@@ -234,7 +235,9 @@ export default function FlagById() {
             <EmptyState
               title="No strategy found"
               description={
-                <Text>There are no strategies bound to this flag yet.</Text>
+                <Typography>
+                  There are no strategies bound to this flag yet.
+                </Typography>
               }
               action={
                 <Button

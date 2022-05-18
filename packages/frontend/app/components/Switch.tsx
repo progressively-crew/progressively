@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { HTMLAttributes, useState } from "react";
-import { Box, Button, Flex, HStack, Spinner, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, HStack, Spinner } from "@chakra-ui/react";
 import styled from "@emotion/styled";
+import { Typography } from "./Typography";
 
 const RawSwitch = styled(Box)`
   transition: all 0.3s;
@@ -41,7 +42,7 @@ export const Switch = ({ checked, optimistic, ...props }: SwitchProps) => {
       {...props}
     >
       <HStack>
-        <Text as="span">Off</Text>
+        <Typography as="span">Off</Typography>
         <RawSwitch
           aria-hidden
           position="relative"
@@ -68,7 +69,7 @@ export const Switch = ({ checked, optimistic, ...props }: SwitchProps) => {
             </Flex>
           )}
         </RawSwitch>
-        <Text as="span">On</Text>
+        <Typography as="span">On</Typography>
       </HStack>
     </Button>
   );

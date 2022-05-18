@@ -7,8 +7,9 @@ import {
 } from "@chakra-ui/react";
 import React, { useRef } from "react";
 import { Link } from "remix";
-import { Box, Text } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { AiOutlineArrowRight } from "react-icons/ai";
+import { Typography } from "~/components/Typography";
 
 export interface ProjectCardProps {
   id: string;
@@ -71,7 +72,7 @@ export const ProjectCard = ({
             </CLink>
           </Heading>
 
-          <Text color="textlight">{description}</Text>
+          <Typography color="textlight">{description}</Typography>
         </div>
 
         <Icon

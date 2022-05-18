@@ -8,9 +8,10 @@ import {
 } from "@chakra-ui/react";
 import React, { useRef } from "react";
 import { Form, Link } from "remix";
-import { Box, Text } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { FlagStatus } from "../types";
 import { Switch } from "~/components/Switch";
+import { Typography } from "~/components/Typography";
 
 export interface FlagCardProps {
   id: string;
@@ -81,7 +82,7 @@ export const FlagCard = ({
             </VisuallyHidden>
           </HStack>
 
-          <Text color="textlight">{description}</Text>
+          <Typography color="textlight">{description}</Typography>
         </div>
 
         <Form method="post">

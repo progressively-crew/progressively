@@ -1,4 +1,4 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { IoIosCreate } from "react-icons/io";
 import {
   Form,
@@ -28,6 +28,7 @@ import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
 import { Button } from "~/components/Button";
 import { TextInput } from "~/components/Fields/TextInput";
+import { Typography } from "~/components/Typography";
 
 interface MetaArgs {
   data?: {
@@ -119,10 +120,10 @@ export default function CreateEnvironmentPage() {
         <Header
           title="Create an environment"
           description={
-            <Text fontSize="xl" color="textlight">
+            <Typography fontSize="xl" color="textlight">
               The new environment will appear in <strong>{project.name}</strong>
               .
-            </Text>
+            </Typography>
           }
         />
       }

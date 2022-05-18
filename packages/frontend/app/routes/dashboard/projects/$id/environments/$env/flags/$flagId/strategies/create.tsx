@@ -21,7 +21,7 @@ import { ErrorBox } from "~/components/ErrorBox";
 import { StrategyCreateDTO } from "~/modules/strategies/types";
 import { createStrategy } from "~/modules/strategies/services/createStrategy";
 import { BreadCrumbs, Crumbs } from "~/components/AppBreadcrumbs";
-import { Box, Container, Flex, Text } from "@chakra-ui/react";
+import { Box, Container, Flex } from "@chakra-ui/react";
 import { StrategyAudience } from "~/modules/strategies/components/StrategyAudience";
 import { ActivationStrategy } from "~/modules/strategies/components/ActivationStrategy";
 import { IoIosCreate } from "react-icons/io";
@@ -33,6 +33,7 @@ import { Section, SectionHeader } from "~/components/Section";
 import { Button } from "~/components/Button";
 import { Environment } from "~/modules/environments/types";
 import { TextInput } from "~/components/Fields/TextInput";
+import { Typography } from "~/components/Typography";
 
 interface MetaArgs {
   data?: {
@@ -203,12 +204,12 @@ export default function StrategyCreatePage() {
         <Header
           title="Add a strategy"
           description={
-            <Text fontSize="xl" color="textlight">
+            <Typography fontSize="xl" color="textlight">
               {`You're`} about to add a strategy to{" "}
               <strong>{currentFlag.name}</strong> in{" "}
               <strong>{project.name}</strong> on{" "}
               <strong>{environment.name}</strong>.
-            </Text>
+            </Typography>
           }
         />
       }

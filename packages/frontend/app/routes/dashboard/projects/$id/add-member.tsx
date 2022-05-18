@@ -1,4 +1,4 @@
-import { Box, ListItem, Text, UnorderedList } from "@chakra-ui/react";
+import { Box, ListItem, UnorderedList } from "@chakra-ui/react";
 import { IoIosCreate } from "react-icons/io";
 import {
   Form,
@@ -26,6 +26,7 @@ import { ButtonCopy } from "~/components/ButtonCopy";
 import { addMemberToProject } from "~/modules/projects/services/addMemberToProject";
 import { SuccessBox } from "~/components/SuccessBox";
 import { TextInput } from "~/components/Fields/TextInput";
+import { Typography } from "~/components/Typography";
 
 interface MetaArgs {
   data?: {
@@ -139,17 +140,17 @@ export default function CreateProjectPage() {
       >
         <Section>
           <figure>
-            <Text as="figcaption">
+            <Typography as="figcaption">
               If you think this is an error, make sure to contact one of the
               project administrators:
-            </Text>
+            </Typography>
 
             <UnorderedList pl={2} mt={2}>
               {adminOfProject.map((user) => (
                 <ListItem key={user.uuid}>
-                  <Text as="span" mr={2}>
-                    {user.fullname}
-                  </Text>
+                  <Box as="span" mr={2}>
+                    <Typography>{user.fullname}</Typography>
+                  </Box>
                   <ButtonCopy
                     toCopy={user.email}
                     icon={<MdOutlineEmail aria-hidden />}

@@ -1,4 +1,4 @@
-import { Box, Stack, Text } from "@chakra-ui/react";
+import { Box, Stack } from "@chakra-ui/react";
 import {
   useLoaderData,
   LoaderFunction,
@@ -29,6 +29,7 @@ import { EmptyState } from "~/components/EmptyState";
 import { FiFlag, FiKey } from "react-icons/fi";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { Button } from "~/components/Button";
+import { Typography } from "~/components/Typography";
 
 interface MetaArgs {
   data?: {
@@ -215,7 +216,9 @@ export default function FlagsByEnvPage() {
           <EmptyState
             title="No flags found"
             description={
-              <Text>There are no flags yet on this environment.</Text>
+              <Typography>
+                There are no flags yet on this environment.
+              </Typography>
             }
             action={
               <Button

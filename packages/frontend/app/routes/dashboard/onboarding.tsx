@@ -1,4 +1,4 @@
-import { Box, FormControl, Input, Text } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { IoIosCreate } from "react-icons/io";
 import {
   Form,
@@ -11,9 +11,9 @@ import {
 import { Button } from "~/components/Button";
 import { ErrorBox } from "~/components/ErrorBox";
 import { TextInput } from "~/components/Fields/TextInput";
-import { FormLabel } from "~/components/FormLabel";
 import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
+import { Typography } from "~/components/Typography";
 import { authGuard } from "~/modules/auth/services/auth-guard";
 import { createProject } from "~/modules/projects/services/createProject";
 import { CreateProjectDTO, UserProject } from "~/modules/projects/types";
@@ -81,10 +81,10 @@ export default function OnboardingPage() {
         <Header
           title="Welcome aboard"
           description={
-            <Text>
+            <Typography>
               Before being fully operational, you will need to create{" "}
               <strong>a project</strong>.
-            </Text>
+            </Typography>
           }
         />
       }

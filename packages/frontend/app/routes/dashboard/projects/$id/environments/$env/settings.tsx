@@ -1,4 +1,4 @@
-import { Box, Flex, Text, VisuallyHidden } from "@chakra-ui/react";
+import { Box, Flex, VisuallyHidden } from "@chakra-ui/react";
 import { AiOutlineSetting } from "react-icons/ai";
 import { FaTrash } from "react-icons/fa";
 import { FiFlag, FiKey } from "react-icons/fi";
@@ -9,6 +9,7 @@ import { ButtonCopy } from "~/components/ButtonCopy";
 import { Header } from "~/components/Header";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { Section, SectionHeader } from "~/components/Section";
+import { Typography } from "~/components/Typography";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { authGuard } from "~/modules/auth/services/auth-guard";
 import { Environment } from "~/modules/environments/types";
@@ -128,12 +129,12 @@ export default function EnvSettingsPage() {
           <SectionHeader
             title="Danger zone"
             description={
-              <Text>
+              <Typography>
                 You can delete an environment at any time, but you {`won’t`} be
                 able to access its flags will be removed and be falsy in your
                 applications. Be sure to know what {`you're`} doing before
                 removing an environment.
-              </Text>
+              </Typography>
             }
           />
 

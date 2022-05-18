@@ -1,4 +1,4 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { IoIosCreate } from "react-icons/io";
 import {
   Form,
@@ -23,6 +23,7 @@ import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
 import { Button } from "~/components/Button";
 import { TextInput } from "~/components/Fields/TextInput";
+import { Typography } from "~/components/Typography";
 
 export const meta: MetaFunction = () => {
   return {
@@ -94,10 +95,10 @@ export default function CreateProjectPage() {
         <Header
           title="Create a project"
           description={
-            <Text fontSize="xl" color="textlight">
+            <Typography fontSize="xl" color="textlight">
               When creating a project, {`you'll`} become the administrator of it
               and will have full control over it.
-            </Text>
+            </Typography>
           }
         />
       }

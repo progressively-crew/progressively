@@ -1,4 +1,4 @@
-import { Stack, Box, Text, HStack, Link as CLink } from "@chakra-ui/react";
+import { Stack, Box, HStack, Link as CLink } from "@chakra-ui/react";
 import { MdChevronLeft, MdPassword } from "react-icons/md";
 import {
   ActionFunction,
@@ -14,6 +14,7 @@ import { TextInput } from "~/components/Fields/TextInput";
 import { Header } from "~/components/Header";
 import { Main } from "~/components/Main";
 import { SuccessBox } from "~/components/SuccessBox";
+import { Typography } from "~/components/Typography";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import { validateEmail } from "~/modules/forms/utils/validateEmail";
 import { forgotPassword } from "~/modules/user/services/forgotPassword";
@@ -82,9 +83,9 @@ export default function ForgotPasswordPage() {
           <Header
             title="Password forgotten"
             description={
-              <Text textColor="textlight">
+              <Typography color="textlight">
                 Enter your email to get a recovery link and reset your password.
-              </Text>
+              </Typography>
             }
           />
         </Box>

@@ -1,7 +1,8 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { ActionFunction, MetaFunction } from "remix";
 import { Header } from "~/components/Header";
 import { Main } from "~/components/Main";
+import { Typography } from "~/components/Typography";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import { AuthCredentials } from "~/modules/auth/types";
 import {
@@ -33,10 +34,10 @@ export default function WelcomePage() {
           <Header
             title="Congratulations!"
             description={
-              <Text textColor="textlight">
+              <Typography color="textlight">
                 {`You've`} successfully run your Progressively instance.{" "}
                 {`It's`} time to create <strong>your admin user.</strong>
-              </Text>
+              </Typography>
             }
           />
         </Box>

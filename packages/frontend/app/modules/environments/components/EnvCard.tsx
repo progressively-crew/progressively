@@ -7,8 +7,9 @@ import {
 } from "@chakra-ui/react";
 import { useRef } from "react";
 import { Link } from "remix";
-import { Box, Text, Icon } from "@chakra-ui/react";
+import { Box, Icon } from "@chakra-ui/react";
 import { AiOutlineArrowRight } from "react-icons/ai";
+import { Typography } from "~/components/Typography";
 
 export interface EnvCardProps {
   id: string;
@@ -71,9 +72,11 @@ export const EnvCard = ({
             </CLink>
           </Heading>
 
-          <Text color="textlight" display={["none", "inline"]}>
-            The environment sdk key is <Tag>{clientKey}</Tag>
-          </Text>
+          <Box as="span" display={["none", "inline"]}>
+            <Typography color="textlight">
+              The environment sdk key is <Tag>{clientKey}</Tag>
+            </Typography>
+          </Box>
         </div>
 
         <Icon

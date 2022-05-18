@@ -1,4 +1,4 @@
-import { Box, Text, VisuallyHidden } from "@chakra-ui/react";
+import { Box, VisuallyHidden } from "@chakra-ui/react";
 import {
   ActionFunction,
   Form,
@@ -27,6 +27,7 @@ import { StrategyRetrieveDTO } from "~/modules/strategies/types";
 import { deleteStrategy } from "~/modules/strategies/services/deleteStrategy";
 import { Button } from "~/components/Button";
 import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
+import { Typography } from "~/components/Typography";
 
 interface MetaArgs {
   data?: {
@@ -213,11 +214,11 @@ export default function DeleteStrategyPage() {
       <WarningBox
         list={warnings}
         title={
-          <Text>
+          <Typography>
             We really want to warn you: if you validate the strategy
             suppression, you {`won't`} be able to access the{" "}
             <strong>{strategy.name}</strong> strategy anymore. It includes:
-          </Text>
+          </Typography>
         }
       />
     </DeleteEntityLayout>

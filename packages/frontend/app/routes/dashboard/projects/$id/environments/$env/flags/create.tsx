@@ -1,4 +1,4 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { IoIosCreate } from "react-icons/io";
 import {
   Form,
@@ -16,6 +16,7 @@ import { ErrorBox } from "~/components/ErrorBox";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
+import { Typography } from "~/components/Typography";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { authGuard } from "~/modules/auth/services/auth-guard";
 import { Environment } from "~/modules/environments/types";
@@ -142,11 +143,11 @@ export default function CreateFlagPage() {
         <Header
           title="Create a feature flag"
           description={
-            <Text fontSize="xl" color="textlight">
+            <Typography fontSize="xl" color="textlight">
               The new feature flag will appear in{" "}
               <strong>{project.name}</strong> /{" "}
               <strong>{environment.name}</strong>.
-            </Text>
+            </Typography>
           }
         />
       }
@@ -178,10 +179,12 @@ export default function CreateFlagPage() {
               />
             </Box>
 
-            <Text fontSize="sm" color="textlight" mt={2}>
-              After the creation of a feature flag, you will be able to get its
-              SDK key for application usage.
-            </Text>
+            <Box mt={2}>
+              <Typography fontSize="sm" color="textlight">
+                After the creation of a feature flag, you will be able to get
+                its SDK key for application usage.
+              </Typography>
+            </Box>
 
             <Box mt={4}>
               <Button
