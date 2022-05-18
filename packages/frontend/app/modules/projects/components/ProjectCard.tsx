@@ -1,15 +1,10 @@
-import {
-  Flex,
-  Heading,
-  Icon,
-  Link as CLink,
-  VisuallyHidden,
-} from "@chakra-ui/react";
+import { Flex, Heading, Icon, Link as CLink } from "@chakra-ui/react";
 import React, { useRef } from "react";
 import { Link } from "remix";
 import { Box } from "@chakra-ui/react";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { Typography } from "~/components/Typography";
+import { VisuallyHidden } from "~/components/VisuallyHidden";
 
 export interface ProjectCardProps {
   id: string;

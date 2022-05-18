@@ -1,5 +1,6 @@
 import { Link } from "remix";
-import { Box, Link as CLink, VisuallyHidden } from "@chakra-ui/react";
+import { Box, Link as CLink } from "@chakra-ui/react";
+import { VisuallyHidden } from "./VisuallyHidden";
 
 export interface LogoProps {
   to?: string;

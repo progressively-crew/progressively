@@ -1,4 +1,4 @@
-import { Box, ListItem, UnorderedList, VisuallyHidden } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { MdOutlineEmail } from "react-icons/md";
 import {
   ActionFunction,
@@ -28,6 +28,8 @@ import { Section } from "~/components/Section";
 import { Button } from "~/components/Button";
 import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
 import { Typography } from "~/components/Typography";
+import { VisuallyHidden } from "~/components/VisuallyHidden";
+import { Li, Ul } from "~/components/Ul";
 
 interface MetaArgs {
   data?: {
@@ -157,21 +159,23 @@ export default function DeleteEnvPage() {
                 project administrators:
               </Typography>
 
-              <UnorderedList pl={2} mt={2}>
-                {adminOfProject.map((user) => (
-                  <ListItem key={user.uuid}>
-                    <Box as="span">
-                      <Typography>{user.fullname}</Typography>
-                    </Box>
-                    <ButtonCopy
-                      toCopy={user.email}
-                      icon={<MdOutlineEmail aria-hidden />}
-                    >
-                      {user.email}
-                    </ButtonCopy>
-                  </ListItem>
-                ))}
-              </UnorderedList>
+              <Box pl={2} mt={2}>
+                <Ul>
+                  {adminOfProject.map((user) => (
+                    <Li key={user.uuid}>
+                      <Box as="span">
+                        <Typography>{user.fullname}</Typography>
+                      </Box>
+                      <ButtonCopy
+                        toCopy={user.email}
+                        icon={<MdOutlineEmail aria-hidden />}
+                      >
+                        {user.email}
+                      </ButtonCopy>
+                    </Li>
+                  ))}
+                </Ul>
+              </Box>
             </figure>
           </Box>
         </Section>

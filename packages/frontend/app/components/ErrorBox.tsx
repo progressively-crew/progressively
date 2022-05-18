@@ -1,6 +1,7 @@
-import { Box, Flex, Icon, ListItem, UnorderedList } from "@chakra-ui/react";
+import { Box, Flex, Icon } from "@chakra-ui/react";
 import { useEffect, useRef } from "react";
 import { MdErrorOutline } from "react-icons/md";
+import { Li, Ul } from "./Ul";
 
 export interface ErrorBoxProps {
   list: {
@@ -39,13 +40,15 @@ export const ErrorBox = ({ list }: ErrorBoxProps) => {
         <Icon as={MdErrorOutline} w={6} h={6} aria-hidden mr={2} />
         <strong>{label}</strong>
       </Flex>
-      <UnorderedList pl={8} mt={2}>
-        {errors.map((errorKey) => (
-          <ListItem key={`error-${errorKey}`} id={`error-${errorKey}`}>
-            {list[errorKey]}
-          </ListItem>
-        ))}
-      </UnorderedList>
+      <Box pl={8} mt={2}>
+        <Ul>
+          {errors.map((errorKey) => (
+            <Li key={`error-${errorKey}`} id={`error-${errorKey}`}>
+              {list[errorKey]}
+            </Li>
+          ))}
+        </Ul>
+      </Box>
     </Box>
   );
 };

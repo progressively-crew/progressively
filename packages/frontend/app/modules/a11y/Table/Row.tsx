@@ -1,7 +1,8 @@
-import { Tr, Td, VisuallyHidden } from "@chakra-ui/react";
+import { Tr, Td } from "@chakra-ui/react";
 import React, { ReactNode, useRef } from "react";
 import { HTMLAttributes } from "react";
 import { Checkbox } from "~/components/Checkbox";
+import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { KeyboardKeys } from "../utils/keyboardKeys";
 import { useSelections } from "./TableContext";
 

@@ -2,13 +2,10 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
-  HStack,
   Icon,
-  Link as CLink,
 } from "@chakra-ui/react";
 import { FiChevronRight } from "react-icons/fi";
 import { Link } from "remix";
-import { MdChevronLeft } from "react-icons/md";
 
 export interface Crumb {
   link: string;
@@ -25,25 +22,8 @@ export interface BreadCrumbsProps {
 export const BreadCrumbs = ({ crumbs }: BreadCrumbsProps) => {
   const lastItemIndex = crumbs.length - 1;
 
-  const beforeLastCrumb =
-    crumbs.length > 1 ? crumbs[crumbs.length - 2] : undefined;
-
   return (
     <>
-      {beforeLastCrumb && (
-        <CLink
-          as={Link}
-          to={beforeLastCrumb.link}
-          display={["inline-block", "none"]}
-          mb={12}
-        >
-          <HStack alignItems={"center"} height={"44px"} fontSize="xl" mt={8}>
-            <MdChevronLeft aria-hidden />
-            <span> Back to {beforeLastCrumb.label}</span>
-          </HStack>
-        </CLink>
-      )}
-
       <Breadcrumb
         aria-label="Breadcrumb"
         display={["none", "block"]}

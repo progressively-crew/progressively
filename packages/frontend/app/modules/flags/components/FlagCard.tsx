@@ -1,17 +1,12 @@
-import {
-  Flex,
-  Heading,
-  HStack,
-  Link as CLink,
-  Tag,
-  VisuallyHidden,
-} from "@chakra-ui/react";
+import { Flex, Heading, HStack, Link as CLink } from "@chakra-ui/react";
 import React, { useRef } from "react";
 import { Form, Link } from "remix";
 import { Box } from "@chakra-ui/react";
 import { FlagStatus } from "../types";
 import { Switch } from "~/components/Switch";
 import { Typography } from "~/components/Typography";
+import { VisuallyHidden } from "~/components/VisuallyHidden";
+import { Tag } from "~/components/Tag";
 
 export interface FlagCardProps {
   id: string;
@@ -73,9 +68,9 @@ export const FlagCard = ({
               </CLink>
             </Heading>
 
-            <Tag aria-hidden display={["none", "inline-flex"]}>
-              {flagKey}
-            </Tag>
+            <Box as="span" aria-hidden display={["none", "inline-flex"]}>
+              <Tag>{flagKey}</Tag>
+            </Box>
 
             <VisuallyHidden>
               <p>The flag key is {flagKey}</p>

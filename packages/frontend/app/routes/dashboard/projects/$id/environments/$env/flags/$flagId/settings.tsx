@@ -1,4 +1,4 @@
-import { Box, Flex, HStack, VisuallyHidden } from "@chakra-ui/react";
+import { Box, Flex, HStack } from "@chakra-ui/react";
 import {
   useLoaderData,
   LoaderFunction,
@@ -28,6 +28,7 @@ import {
 import { FiFlag } from "react-icons/fi";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { Typography } from "~/components/Typography";
+import { VisuallyHidden } from "~/components/VisuallyHidden";
 
 interface MetaArgs {
   data?: {

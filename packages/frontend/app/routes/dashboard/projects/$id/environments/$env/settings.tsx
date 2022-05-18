@@ -1,4 +1,4 @@
-import { Box, Flex, VisuallyHidden } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import { AiOutlineSetting } from "react-icons/ai";
 import { FaTrash } from "react-icons/fa";
 import { FiFlag, FiKey } from "react-icons/fi";
@@ -10,6 +10,7 @@ import { Header } from "~/components/Header";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { Section, SectionHeader } from "~/components/Section";
 import { Typography } from "~/components/Typography";
+import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { authGuard } from "~/modules/auth/services/auth-guard";
 import { Environment } from "~/modules/environments/types";

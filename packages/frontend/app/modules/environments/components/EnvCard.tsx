@@ -1,15 +1,11 @@
-import {
-  Flex,
-  Heading,
-  Link as CLink,
-  Tag,
-  VisuallyHidden,
-} from "@chakra-ui/react";
+import { Flex, Heading, Link as CLink } from "@chakra-ui/react";
 import { useRef } from "react";
 import { Link } from "remix";
 import { Box, Icon } from "@chakra-ui/react";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { Typography } from "~/components/Typography";
+import { VisuallyHidden } from "~/components/VisuallyHidden";
+import { Tag } from "~/components/Tag";
 
 export interface EnvCardProps {
   id: string;

@@ -1,4 +1,4 @@
-import { Box, VisuallyHidden } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import {
   ActionFunction,
   Form,
@@ -28,6 +28,7 @@ import { deleteStrategy } from "~/modules/strategies/services/deleteStrategy";
 import { Button } from "~/components/Button";
 import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
 import { Typography } from "~/components/Typography";
+import { VisuallyHidden } from "~/components/VisuallyHidden";
 
 interface MetaArgs {
   data?: {

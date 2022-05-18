@@ -5,7 +5,6 @@ import {
   Icon,
   Box,
   Flex,
-  VisuallyHidden,
   MenuList,
   MenuItem,
 } from "@chakra-ui/react";
@@ -13,6 +12,7 @@ import { BiCaretDown } from "react-icons/bi";
 import { Link } from "remix";
 import { User } from "~/modules/user/types";
 import { useHydrated } from "~/modules/misc/hooks/useHydrated";
+import { VisuallyHidden } from "~/components/VisuallyHidden";
 
 export interface UserDropdownProps {
   user: User;

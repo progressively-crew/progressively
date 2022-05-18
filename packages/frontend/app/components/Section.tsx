@@ -1,5 +1,6 @@
-import { Box, Flex, Heading, VisuallyHidden } from "@chakra-ui/react";
+import { Box, Flex, Heading } from "@chakra-ui/react";
 import { createContext, useContext } from "react";
+import { VisuallyHidden } from "./VisuallyHidden";
 
 const SectionContext = createContext<string | undefined>(undefined);
 

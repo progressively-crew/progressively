@@ -11,7 +11,7 @@ import {
   useLocation,
 } from "remix";
 import type { LinksFunction } from "remix";
-import { Box, ChakraProvider, Button } from "@chakra-ui/react";
+import { Box, ChakraProvider } from "@chakra-ui/react";
 import { withEmotionCache } from "@emotion/react";
 import { lightTheme } from "./modules/themes/light";
 import UnauthorizedPage from "./routes/401";
@@ -27,6 +27,7 @@ import {
   ServerStyleContext,
   ClientStyleContext,
 } from "./_chakra-setup/context";
+import { Button } from "./components/Button";
 
 /**
  * The `links` export is a function that returns an array of objects that map to

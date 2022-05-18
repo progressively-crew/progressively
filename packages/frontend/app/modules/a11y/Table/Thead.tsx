@@ -2,7 +2,8 @@ import React, { ReactNode, useEffect, useRef } from "react";
 import { Checkbox } from "~/components/Checkbox";
 import { useHydrated } from "~/modules/misc/hooks/useHydrated";
 import { useSelections } from "./TableContext";
-import { Th, Thead as CTHead, Tr, VisuallyHidden } from "@chakra-ui/react";
+import { Th, Thead as CTHead, Tr } from "@chakra-ui/react";
+import { VisuallyHidden } from "~/components/VisuallyHidden";
 
 export interface TheadProps {
   children: React.ReactNode;

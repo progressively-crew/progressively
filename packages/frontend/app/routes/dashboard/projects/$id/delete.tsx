@@ -1,4 +1,4 @@
-import { Box, ListItem, UnorderedList, VisuallyHidden } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { MdOutlineEmail } from "react-icons/md";
 import {
   ActionFunction,
@@ -25,6 +25,8 @@ import { Header } from "~/components/Header";
 import { Button } from "~/components/Button";
 import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
 import { Typography } from "~/components/Typography";
+import { VisuallyHidden } from "~/components/VisuallyHidden";
+import { Li, Ul } from "~/components/Ul";
 
 interface MetaArgs {
   data?: {
@@ -134,22 +136,24 @@ export default function DeleteProjectPage() {
             project administrators:
           </Typography>
 
-          <UnorderedList pl={2} mt={2}>
-            {adminOfProject.map((user) => (
-              <ListItem key={user.uuid}>
-                <Box as="span" mr={2}>
-                  <Typography as="span">{user.fullname}</Typography>
-                </Box>
+          <Box pl={2} mt={2}>
+            <Ul>
+              {adminOfProject.map((user) => (
+                <Li key={user.uuid}>
+                  <Box as="span" mr={2}>
+                    <Typography as="span">{user.fullname}</Typography>
+                  </Box>
 
-                <ButtonCopy
-                  toCopy={user.email}
-                  icon={<MdOutlineEmail aria-hidden />}
-                >
-                  {user.email}
-                </ButtonCopy>
-              </ListItem>
-            ))}
-          </UnorderedList>
+                  <ButtonCopy
+                    toCopy={user.email}
+                    icon={<MdOutlineEmail aria-hidden />}
+                  >
+                    {user.email}
+                  </ButtonCopy>
+                </Li>
+              ))}
+            </Ul>
+          </Box>
         </figure>
       </DeleteEntityLayout>
     );

@@ -1,4 +1,4 @@
-import { Box, ListItem, UnorderedList } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { IoIosCreate } from "react-icons/io";
 import {
   Form,
@@ -27,6 +27,7 @@ import { addMemberToProject } from "~/modules/projects/services/addMemberToProje
 import { SuccessBox } from "~/components/SuccessBox";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Typography } from "~/components/Typography";
+import { Li, Ul } from "~/components/Ul";
 
 interface MetaArgs {
   data?: {
@@ -145,21 +146,23 @@ export default function CreateProjectPage() {
               project administrators:
             </Typography>
 
-            <UnorderedList pl={2} mt={2}>
-              {adminOfProject.map((user) => (
-                <ListItem key={user.uuid}>
-                  <Box as="span" mr={2}>
-                    <Typography>{user.fullname}</Typography>
-                  </Box>
-                  <ButtonCopy
-                    toCopy={user.email}
-                    icon={<MdOutlineEmail aria-hidden />}
-                  >
-                    {user.email}
-                  </ButtonCopy>
-                </ListItem>
-              ))}
-            </UnorderedList>
+            <Box pl={2} mt={2}>
+              <Ul>
+                {adminOfProject.map((user) => (
+                  <Li key={user.uuid}>
+                    <Box as="span" mr={2}>
+                      <Typography>{user.fullname}</Typography>
+                    </Box>
+                    <ButtonCopy
+                      toCopy={user.email}
+                      icon={<MdOutlineEmail aria-hidden />}
+                    >
+                      {user.email}
+                    </ButtonCopy>
+                  </Li>
+                ))}
+              </Ul>
+            </Box>
           </figure>
         </Section>
       </DashboardLayout>

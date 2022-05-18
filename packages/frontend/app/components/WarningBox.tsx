@@ -1,5 +1,6 @@
-import { Box, Flex, Icon, ListItem, UnorderedList } from "@chakra-ui/react";
+import { Box, Flex, Icon } from "@chakra-ui/react";
 import { AiOutlineWarning } from "react-icons/ai";
+import { Li, Ul } from "./Ul";
 
 export interface WarningBoxProps {
   title: React.ReactNode;
@@ -28,16 +29,15 @@ export const WarningBox = ({ list, title }: WarningBoxProps) => {
         <strong>{title}</strong>
       </Flex>
       {list && warnings && (
-        <UnorderedList pl={8} mt={2}>
-          {warnings.map((warningKey) => (
-            <ListItem
-              key={`warning-${warningKey}`}
-              id={`warning-${warningKey}`}
-            >
-              {list[warningKey]}
-            </ListItem>
-          ))}
-        </UnorderedList>
+        <Box pl={8} mt={2}>
+          <Ul>
+            {warnings.map((warningKey) => (
+              <Li key={`warning-${warningKey}`} id={`warning-${warningKey}`}>
+                {list[warningKey]}
+              </Li>
+            ))}
+          </Ul>
+        </Box>
       )}
     </Box>
   );
