@@ -1,9 +1,9 @@
 import { Box, Container, Flex } from "@chakra-ui/react";
-import { SkipNavLink } from "@chakra-ui/skip-nav";
 import { Logo } from "~/components/Logo";
 import { Main } from "~/components/Main";
 import { User } from "~/modules/user/types";
 import { UseDropdown } from "~/modules/user/components/UserDropdown";
+import { SkipNavLink } from "~/components/SkipNav";
 
 export interface DashboardLayoutProps {
   user?: Partial<User>;

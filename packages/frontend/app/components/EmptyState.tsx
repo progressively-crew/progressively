@@ -1,5 +1,6 @@
-import { Icon, Heading, Stack } from "@chakra-ui/react";
+import { Icon, Stack } from "@chakra-ui/react";
 import { GiSailboat } from "react-icons/gi";
+import { Heading } from "./Heading";
 
 export interface EmptyStateProps {
   title: string;

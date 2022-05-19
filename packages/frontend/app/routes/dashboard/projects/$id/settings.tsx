@@ -1,4 +1,4 @@
-import { Box, Stack, Flex, Divider } from "@chakra-ui/react";
+import { Box, Stack, Flex } from "@chakra-ui/react";
 import { AiOutlineSetting } from "react-icons/ai";
 import { FaTrash } from "react-icons/fa";
 import { FiLayers } from "react-icons/fi";
@@ -27,6 +27,7 @@ import { UserTable } from "~/modules/user/components/UserTable";
 import { getSession } from "~/sessions";
 import { Typography } from "~/components/Typography";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
+import { Divider } from "~/components/Divider";
 
 interface MetaArgs {
   data?: {

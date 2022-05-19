@@ -1,6 +1,7 @@
-import { Box, Flex, Heading } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import { FaTrash } from "react-icons/fa";
 import { Button } from "~/components/Button";
+import { Heading } from "~/components/Heading";
 import { Typography } from "~/components/Typography";
 import { Li, Ul } from "~/components/Ul";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
@@ -110,9 +111,11 @@ export const StrategyCard = ({
         direction={["column", "row"]}
       >
         <Box mr={4} pl={4}>
-          <Heading as="h3" id={strat.uuid} size="md" mb={1}>
-            {strat.name}
-          </Heading>
+          <Box mb={1}>
+            <Heading as="h3" id={strat.uuid} size="md">
+              {strat.name}
+            </Heading>
+          </Box>
 
           <StrategyAudience strat={strat} />
         </Box>

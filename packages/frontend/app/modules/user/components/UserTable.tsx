@@ -1,4 +1,4 @@
-import { Badge, HStack } from "@chakra-ui/react";
+import { HStack } from "@chakra-ui/react";
 import { useState } from "react";
 import { Form, Link, useTransition } from "remix";
 import { Cell, Col, Row, Table, Tbody, Thead } from "../../a11y/Table";
@@ -7,6 +7,7 @@ import { UserProject, UserRoles } from "../../projects/types";
 import { FaTrash } from "react-icons/fa";
 import { Button } from "~/components/Button";
 import { IoIosCreate } from "react-icons/io";
+import { Badge } from "~/components/Badge";
 
 export interface UserTableProps {
   projectId: string;
@@ -14,16 +15,6 @@ export interface UserTableProps {
   labelledBy: string;
   canEdit: boolean;
 }
-
-const RoleBadge = ({ role }: { role: UserRoles }) => {
-  switch (role) {
-    case UserRoles.Admin:
-      return <Badge colorScheme="brand">{role}</Badge>;
-
-    default:
-      return <Badge>{role}</Badge>;
-  }
-};
 
 export const UserTable = ({
   userProjects,
@@ -85,7 +76,7 @@ export const UserTable = ({
               <Cell>{userProject.user?.fullname}</Cell>
               <Cell>{userProject.user?.email}</Cell>
               <Cell>
-                <RoleBadge role={userProject.role} />
+                <Badge>{userProject.role}</Badge>
               </Cell>
             </Row>
           ))}

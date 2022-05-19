@@ -1,9 +1,8 @@
-import { Stack, Box, HStack, Link as CLink } from "@chakra-ui/react";
+import { Stack, Box, HStack } from "@chakra-ui/react";
 import { MdChevronLeft, MdPassword } from "react-icons/md";
 import {
   ActionFunction,
   Form,
-  Link,
   MetaFunction,
   useActionData,
   useTransition,
@@ -12,6 +11,7 @@ import { Button } from "~/components/Button";
 import { ErrorBox } from "~/components/ErrorBox";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Header } from "~/components/Header";
+import { Link } from "~/components/Link";
 import { Main } from "~/components/Main";
 import { SuccessBox } from "~/components/SuccessBox";
 import { Typography } from "~/components/Typography";
@@ -74,9 +74,7 @@ export default function ForgotPasswordPage() {
       <Main>
         <HStack mb={4}>
           <MdChevronLeft aria-hidden />
-          <CLink as={Link} to="/signin" fontSize="xl" textColor="textlight">
-            Back to signin
-          </CLink>
+          <Link to="/signin">Back to signin</Link>
         </HStack>
 
         <Box pb={4}>

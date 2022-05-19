@@ -1,5 +1,6 @@
-import { Box, Flex, Heading } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import { createContext, useContext } from "react";
+import { Heading } from "./Heading";
 import { VisuallyHidden } from "./VisuallyHidden";
 
 const SectionContext = createContext<string | undefined>(undefined);
@@ -49,21 +50,16 @@ export const SectionHeader = ({
       <Box maxW={endAction ? "xl" : undefined}>
         {hiddenTitle ? (
           <VisuallyHidden>
-            <Heading as={titleAs} id={id} size="xl" pb={1}>
+            <Heading as={titleAs} id={id} size="xl">
               {title}
             </Heading>
           </VisuallyHidden>
         ) : (
-          <Heading
-            as={titleAs}
-            id={id}
-            size="xl"
-            pb={1}
-            color="header"
-            fontWeight="medium"
-          >
-            {title}
-          </Heading>
+          <Box pb={1}>
+            <Heading as={titleAs} id={id} size="xl">
+              {title}
+            </Heading>
+          </Box>
         )}
 
         <Box fontSize="xl" color="textlight" maxWidth="65ch">

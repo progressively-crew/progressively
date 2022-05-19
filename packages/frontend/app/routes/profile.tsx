@@ -1,9 +1,8 @@
-import { Box, Link as CLink, HStack, Stack } from "@chakra-ui/react";
+import { Box, HStack, Stack } from "@chakra-ui/react";
 import { MdChevronLeft, MdPassword } from "react-icons/md";
 import {
   ActionFunction,
   Form,
-  Link,
   LoaderFunction,
   MetaFunction,
   useActionData,
@@ -14,6 +13,7 @@ import { Button } from "~/components/Button";
 import { ErrorBox } from "~/components/ErrorBox";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Header } from "~/components/Header";
+import { Link } from "~/components/Link";
 import { Section, SectionHeader } from "~/components/Section";
 import { SuccessBox } from "~/components/SuccessBox";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
@@ -102,18 +102,12 @@ export default function ProfilePage() {
       header={<Header title="My profile" />}
       breadcrumb={
         <nav>
-          <CLink
-            as={Link}
-            to="/dashboard"
-            display="inline-block"
-            fontSize="xl"
-            textColor="textlight"
-          >
+          <Link to="/dashboard">
             <HStack alignItems={"center"} height={"44px"} fontSize="xl">
               <MdChevronLeft aria-hidden />
               <span>Back to dashboard</span>
             </HStack>
-          </CLink>
+          </Link>
         </nav>
       }
     >

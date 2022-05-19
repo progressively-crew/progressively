@@ -1,10 +1,10 @@
-import { Flex, Heading, Icon, Link as CLink } from "@chakra-ui/react";
+import { Box, Flex, Icon } from "@chakra-ui/react";
 import React, { useRef } from "react";
-import { Link } from "remix";
-import { Box } from "@chakra-ui/react";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { Typography } from "~/components/Typography";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
+import { Heading } from "~/components/Heading";
+import { Link } from "~/components/Link";
 
 export interface ProjectCardProps {
   id: string;
@@ -55,17 +55,13 @@ export const ProjectCard = ({
     >
       <Flex justifyContent="space-between">
         <div>
-          <Heading as="h2" id={`article-${id}`} size="md" mb={2}>
-            <CLink
-              as={Link}
-              textDecoration="underline"
-              ref={linkRef}
-              to={linkTo}
-              color="brand.600"
-            >
-              {title} <VisuallyHidden>project</VisuallyHidden>
-            </CLink>
-          </Heading>
+          <Box mb={2}>
+            <Heading as="h2" id={`article-${id}`} size="md">
+              <Link ref={linkRef} to={linkTo}>
+                {title} <VisuallyHidden>project</VisuallyHidden>
+              </Link>
+            </Heading>
+          </Box>
 
           <Typography color="textlight">{description}</Typography>
         </div>

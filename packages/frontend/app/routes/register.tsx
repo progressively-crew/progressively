@@ -1,12 +1,6 @@
-import {
-  ActionFunction,
-  MetaFunction,
-  Link,
-  LoaderFunction,
-  redirect,
-} from "remix";
+import { ActionFunction, MetaFunction, LoaderFunction, redirect } from "remix";
 import { Main } from "~/components/Main";
-import { Link as CLink, HStack, Box } from "@chakra-ui/react";
+import { HStack, Box } from "@chakra-ui/react";
 import { MdChevronLeft } from "react-icons/md";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import {
@@ -15,6 +9,7 @@ import {
   RegisterActionData,
 } from "~/modules/user/components/RegisterForm";
 import { Header } from "~/components/Header";
+import { Link } from "~/components/Link";
 
 export const meta: MetaFunction = () => {
   return {
@@ -42,9 +37,7 @@ export default function CreateAccountPage() {
       <Main>
         <HStack mb={4}>
           <MdChevronLeft aria-hidden />
-          <CLink as={Link} to="/signin" fontSize="xl" textColor="textlight">
-            Back to signin
-          </CLink>
+          <Link to="/signin">Back to signin</Link>
         </HStack>
 
         <Box pb={4}>

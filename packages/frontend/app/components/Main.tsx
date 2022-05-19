@@ -1,6 +1,6 @@
 import { Box } from "@chakra-ui/react";
-import { SkipNavContent } from "@chakra-ui/skip-nav";
 import { HTMLAttributes } from "react";
+import { SkipNavContent } from "./SkipNav";
 
 export const Main = (props: HTMLAttributes<HTMLDivElement>) => (
   <SkipNavContent>
