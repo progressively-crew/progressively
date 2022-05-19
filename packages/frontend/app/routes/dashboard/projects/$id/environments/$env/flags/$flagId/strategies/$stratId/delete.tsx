@@ -1,4 +1,3 @@
-import { Box } from "@chakra-ui/react";
 import {
   ActionFunction,
   Form,
@@ -28,7 +27,6 @@ import { deleteStrategy } from "~/modules/strategies/services/deleteStrategy";
 import { Button } from "~/components/Button";
 import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
 import { Typography } from "~/components/Typography";
-import { VisuallyHidden } from "~/components/VisuallyHidden";
 
 interface MetaArgs {
   data?: {
@@ -174,11 +172,7 @@ export default function DeleteStrategyPage() {
       header={<Header title={`Deleting a strategy`} />}
       error={
         data?.errors &&
-        data.errors.backendError && (
-          <Box pb={4}>
-            <ErrorBox list={data.errors} />
-          </Box>
-        )
+        data.errors.backendError && <ErrorBox list={data.errors} />
       }
       cancelAction={
         <Button
@@ -186,13 +180,7 @@ export default function DeleteStrategyPage() {
           variant="outline"
           colorScheme="error"
         >
-          <span>
-            No, {`don't`} delete{" "}
-            <Box as="strong" display={["none", "inline"]} aria-hidden>
-              {strategy.name}
-            </Box>
-            <VisuallyHidden>{strategy.name}</VisuallyHidden>
-          </span>
+          {`No, don't delete`} {strategy.name}
         </Button>
       }
       confirmAction={

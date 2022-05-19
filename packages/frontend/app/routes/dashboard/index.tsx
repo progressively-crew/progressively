@@ -1,4 +1,4 @@
-import { Box, Stack } from "@chakra-ui/react";
+import { Stack } from "@chakra-ui/react";
 import {
   useLoaderData,
   LoaderFunction,
@@ -86,22 +86,20 @@ export default function DashboardRoot() {
             </SuccessBox>
           ) : null}
 
-          <Box>
-            {projects.map((project, index: number) => (
-              <ProjectCard
-                key={project.projectId}
-                id={project.projectId}
-                linkTo={`/dashboard/projects/${project.projectId}`}
-                title={project.project.name}
-                noBorder={index === 0}
-                description={
-                  <>
-                    You are an <em>{project.role}</em> of the project.
-                  </>
-                }
-              />
-            ))}
-          </Box>
+          {projects.map((project, index: number) => (
+            <ProjectCard
+              key={project.projectId}
+              id={project.projectId}
+              linkTo={`/dashboard/projects/${project.projectId}`}
+              title={project.project.name}
+              noBorder={index === 0}
+              description={
+                <>
+                  You are an <em>{project.role}</em> of the project.
+                </>
+              }
+            />
+          ))}
         </Stack>
       </Section>
     </DashboardLayout>

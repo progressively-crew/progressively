@@ -1,4 +1,3 @@
-import { Box } from "@chakra-ui/react";
 import { IoIosCreate } from "react-icons/io";
 import {
   Form,
@@ -153,53 +152,39 @@ export default function CreateFlagPage() {
       }
     >
       <Section>
-        <Box>
-          {(errors?.name || errors?.description) && (
-            <Box pb={4}>
-              <ErrorBox list={errors} />
-            </Box>
-          )}
+        {(errors?.name || errors?.description) && <ErrorBox list={errors} />}
 
-          <Form method="post">
-            <Box mb={4}>
-              <TextInput
-                name="flag-name"
-                isInvalid={Boolean(errors?.name)}
-                label="Flag name"
-                placeholder="e.g: New Homepage"
-              />
-            </Box>
+        <Form method="post">
+          <TextInput
+            name="flag-name"
+            isInvalid={Boolean(errors?.name)}
+            label="Flag name"
+            placeholder="e.g: New Homepage"
+          />
 
-            <Box>
-              <TextInput
-                name="flag-desc"
-                isInvalid={Boolean(errors?.description)}
-                label="Flag description"
-                placeholder="e.g: The new homepage"
-              />
-            </Box>
+          <TextInput
+            name="flag-desc"
+            isInvalid={Boolean(errors?.description)}
+            label="Flag description"
+            placeholder="e.g: The new homepage"
+          />
 
-            <Box mt={2}>
-              <Typography fontSize="sm" color="textlight">
-                After the creation of a feature flag, you will be able to get
-                its SDK key for application usage.
-              </Typography>
-            </Box>
+          <Typography fontSize="sm" color="textlight">
+            After the creation of a feature flag, you will be able to get its
+            SDK key for application usage.
+          </Typography>
 
-            <Box mt={4}>
-              <Button
-                type="submit"
-                leftIcon={<IoIosCreate aria-hidden />}
-                colorScheme="brand"
-                isLoading={transition.state === "submitting"}
-                loadingText="Creating the feature flag, please wait..."
-                disabled={false}
-              >
-                Create the feature flag
-              </Button>
-            </Box>
-          </Form>
-        </Box>
+          <Button
+            type="submit"
+            leftIcon={<IoIosCreate aria-hidden />}
+            colorScheme="brand"
+            isLoading={transition.state === "submitting"}
+            loadingText="Creating the feature flag, please wait..."
+            disabled={false}
+          >
+            Create the feature flag
+          </Button>
+        </Form>
       </Section>
     </DashboardLayout>
   );

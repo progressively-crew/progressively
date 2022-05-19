@@ -1,4 +1,4 @@
-import { Stack, Box } from "@chakra-ui/react";
+import { Stack } from "@chakra-ui/react";
 import { MdAccountCircle } from "react-icons/md";
 import { ActionFunction, Form, useActionData, useTransition } from "remix";
 import { Button } from "~/components/Button";
@@ -104,18 +104,16 @@ export const RegisterForm = () => {
           placeholder="************"
         />
 
-        <Box>
-          <Button
-            type="submit"
-            colorScheme={"brand"}
-            leftIcon={<MdAccountCircle aria-hidden />}
-            isLoading={transition.state === "submitting"}
-            loadingText="Creation in progress, please wait..."
-            disabled={false}
-          >
-            Create an account
-          </Button>
-        </Box>
+        <Button
+          type="submit"
+          colorScheme={"brand"}
+          leftIcon={<MdAccountCircle aria-hidden />}
+          isLoading={transition.state === "submitting"}
+          loadingText="Creation in progress, please wait..."
+          disabled={false}
+        >
+          Create an account
+        </Button>
       </Stack>
     </Form>
   );

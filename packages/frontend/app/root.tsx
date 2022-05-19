@@ -11,7 +11,7 @@ import {
   useLocation,
 } from "remix";
 import type { LinksFunction } from "remix";
-import { Box, ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
 import { withEmotionCache } from "@emotion/react";
 import { lightTheme } from "./modules/themes/light";
 import UnauthorizedPage from "./routes/401";
@@ -50,9 +50,7 @@ export default function App() {
   return (
     <Document>
       <ChakraProvider theme={lightTheme}>
-        <Box minH="100%" paddingBottom={8}>
-          <Outlet />
-        </Box>
+        <Outlet />
       </ChakraProvider>
     </Document>
   );
@@ -152,9 +150,7 @@ export function ErrorBoundary({ error }: { error: Error }) {
           <Main>
             <H1>Outch, a wild error appeared!</H1>
 
-            <Box my={6}>
-              <p>{error.message}</p>
-            </Box>
+            <p>{error.message}</p>
 
             <Button
               as={Link}

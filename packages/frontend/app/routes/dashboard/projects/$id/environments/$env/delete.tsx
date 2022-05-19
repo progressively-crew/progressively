@@ -1,4 +1,3 @@
-import { Box } from "@chakra-ui/react";
 import { MdOutlineEmail } from "react-icons/md";
 import {
   ActionFunction,
@@ -28,7 +27,6 @@ import { Section } from "~/components/Section";
 import { Button } from "~/components/Button";
 import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
 import { Typography } from "~/components/Typography";
-import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { Li, Ul } from "~/components/Ul";
 
 interface MetaArgs {
@@ -152,32 +150,27 @@ export default function DeleteEnvPage() {
         header={<Header title="You are not allowed to delete environments." />}
       >
         <Section>
-          <Box p={[4, 0]}>
-            <figure>
-              <Typography as="figcaption">
-                If you think this is an error, make sure to contact one of the
-                project administrators:
-              </Typography>
+          <figure>
+            <Typography as="figcaption">
+              If you think this is an error, make sure to contact one of the
+              project administrators:
+            </Typography>
 
-              <Box pl={2} mt={2}>
-                <Ul>
-                  {adminOfProject.map((user) => (
-                    <Li key={user.uuid}>
-                      <Box as="span">
-                        <Typography>{user.fullname}</Typography>
-                      </Box>
-                      <ButtonCopy
-                        toCopy={user.email}
-                        icon={<MdOutlineEmail aria-hidden />}
-                      >
-                        {user.email}
-                      </ButtonCopy>
-                    </Li>
-                  ))}
-                </Ul>
-              </Box>
-            </figure>
-          </Box>
+            <Ul>
+              {adminOfProject.map((user) => (
+                <Li key={user.uuid}>
+                  <Typography>{user.fullname}</Typography>
+
+                  <ButtonCopy
+                    toCopy={user.email}
+                    icon={<MdOutlineEmail aria-hidden />}
+                  >
+                    {user.email}
+                  </ButtonCopy>
+                </Li>
+              ))}
+            </Ul>
+          </figure>
         </Section>
       </DashboardLayout>
     );
@@ -195,11 +188,7 @@ export default function DeleteEnvPage() {
       header={<Header title="Deleting an environment" />}
       error={
         data?.errors &&
-        data.errors.backendError && (
-          <Box pb={4}>
-            <ErrorBox list={data.errors} />
-          </Box>
-        )
+        data.errors.backendError && <ErrorBox list={data.errors} />
       }
       cancelAction={
         <Button
@@ -207,13 +196,7 @@ export default function DeleteEnvPage() {
           variant="outline"
           colorScheme="error"
         >
-          <span>
-            No, {`don't`} delete{" "}
-            <Box as="strong" display={["none", "inline"]} aria-hidden>
-              {environment.name}
-            </Box>
-            <VisuallyHidden>{environment.name}</VisuallyHidden>
-          </span>
+          No, {`don't`} delete <strong>{environment.name}</strong>
         </Button>
       }
       confirmAction={

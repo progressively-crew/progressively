@@ -1,4 +1,4 @@
-import { Box, Stack, HStack } from "@chakra-ui/react";
+import { Stack, HStack } from "@chakra-ui/react";
 import { IoIosCreate } from "react-icons/io";
 import {
   useLoaderData,
@@ -217,7 +217,7 @@ export default function FlagById() {
           />
 
           {strategies.length > 0 ? (
-            <Box>
+            <>
               {strategies.map((strat, index) => (
                 <StrategyCard
                   noBorder={index === 0}
@@ -228,7 +228,7 @@ export default function FlagById() {
                   strat={strat}
                 />
               ))}
-            </Box>
+            </>
           ) : null}
 
           {strategies.length === 0 ? (

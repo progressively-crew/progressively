@@ -25,9 +25,7 @@ describe("/dashboard", () => {
       it("shows a list of project and Marvin s name in the menu", () => {
         cy.title().should("eq", "Progressively | Projects list");
         cy.findByRole("heading", { name: "Projects" }).should("be.visible");
-        cy.findByRole("button", { name: /Marvin Frachet/i }).should(
-          "be.visible"
-        );
+        cy.findByRole("link", { name: /Marvin Frachet/i }).should("be.visible");
 
         cy.findByRole("link", { name: "Project from seeding project" })
           .should("be.visible")

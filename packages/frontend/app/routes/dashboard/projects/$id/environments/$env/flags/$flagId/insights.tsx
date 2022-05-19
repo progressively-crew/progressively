@@ -1,4 +1,4 @@
-import { Box, Flex, HStack, Stack, useTheme } from "@chakra-ui/react";
+import { Flex, HStack, Stack, useTheme } from "@chakra-ui/react";
 import {
   useLoaderData,
   LoaderFunction,
@@ -227,64 +227,62 @@ export default function FlagById() {
           </Flex>
 
           {hits.length > 0 && (
-            <Box ml={-9}>
-              <ResponsiveContainer width="100%" aspect={16.0 / 9.0}>
-                <AreaChart
-                  data={hits}
-                  margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-                >
-                  <defs>
-                    <linearGradient
-                      id="colorActivated"
-                      x1="0"
-                      y1="0"
-                      x2="0"
-                      y2="1"
-                    >
-                      <stop
-                        offset="95%"
-                        stopColor={theme.colors.brand["200"]}
-                        stopOpacity={0.4}
-                      />
-                    </linearGradient>
-                    <linearGradient
-                      id="colorNotActivated"
-                      x1="0"
-                      y1="0"
-                      x2="0"
-                      y2="1"
-                    >
-                      <stop
-                        offset="95%"
-                        stopColor={theme.colors.error["200"]}
-                        stopOpacity={0.4}
-                      />
-                    </linearGradient>
-                  </defs>
-                  <XAxis dataKey="date" tickFormatter={formatX} />
-                  <YAxis />
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                  <Tooltip />
-                  <Area
-                    type="linear"
-                    dataKey="activated"
-                    fillOpacity={1}
-                    fill="url(#colorActivated)"
-                    stroke={theme.colors.brand["500"]}
-                    strokeWidth={3}
-                  />
-                  <Area
-                    type="linear"
-                    dataKey="notactivated"
-                    fillOpacity={1}
-                    fill="url(#colorNotActivated)"
-                    stroke={theme.colors.error["500"]}
-                    strokeDasharray="3 3"
-                    strokeWidth={3}
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
-            </Box>
+            <ResponsiveContainer width="100%" aspect={16.0 / 9.0}>
+              <AreaChart
+                data={hits}
+                margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+              >
+                <defs>
+                  <linearGradient
+                    id="colorActivated"
+                    x1="0"
+                    y1="0"
+                    x2="0"
+                    y2="1"
+                  >
+                    <stop
+                      offset="95%"
+                      stopColor={theme.colors.brand["200"]}
+                      stopOpacity={0.4}
+                    />
+                  </linearGradient>
+                  <linearGradient
+                    id="colorNotActivated"
+                    x1="0"
+                    y1="0"
+                    x2="0"
+                    y2="1"
+                  >
+                    <stop
+                      offset="95%"
+                      stopColor={theme.colors.error["200"]}
+                      stopOpacity={0.4}
+                    />
+                  </linearGradient>
+                </defs>
+                <XAxis dataKey="date" tickFormatter={formatX} />
+                <YAxis />
+                <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                <Tooltip />
+                <Area
+                  type="linear"
+                  dataKey="activated"
+                  fillOpacity={1}
+                  fill="url(#colorActivated)"
+                  stroke={theme.colors.brand["500"]}
+                  strokeWidth={3}
+                />
+                <Area
+                  type="linear"
+                  dataKey="notactivated"
+                  fillOpacity={1}
+                  fill="url(#colorNotActivated)"
+                  stroke={theme.colors.error["500"]}
+                  strokeDasharray="3 3"
+                  strokeWidth={3}
+                />
+              </AreaChart>
+            </ResponsiveContainer>
           )}
         </Section>
       </Stack>

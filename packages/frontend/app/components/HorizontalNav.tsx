@@ -1,4 +1,4 @@
-import { Box, Container, HStack, Link as CLink } from "@chakra-ui/react";
+import { Container, HStack, Link as CLink } from "@chakra-ui/react";
 import { NavLink } from "remix";
 
 export interface HorizontalNavProps {
@@ -7,7 +7,7 @@ export interface HorizontalNavProps {
 }
 export const HorizontalNav = ({ children, label }: HorizontalNavProps) => {
   return (
-    <Box as="nav" aria-label={label} overflowX="scroll" bg="background100">
+    <nav aria-label={label}>
       <Container maxW="5xl">
         <HStack
           as="ul"
@@ -22,7 +22,7 @@ export const HorizontalNav = ({ children, label }: HorizontalNavProps) => {
           {children}
         </HStack>
       </Container>
-    </Box>
+    </nav>
   );
 };
 
@@ -34,7 +34,7 @@ export interface NavItemProps {
 
 export const NavItem = ({ children, to, icon }: NavItemProps) => {
   return (
-    <Box as="li" flexShrink={0}>
+    <li>
       <CLink
         as={NavLink}
         px={6}
@@ -50,6 +50,6 @@ export const NavItem = ({ children, to, icon }: NavItemProps) => {
           <span>{children}</span>
         </HStack>
       </CLink>
-    </Box>
+    </li>
   );
 };

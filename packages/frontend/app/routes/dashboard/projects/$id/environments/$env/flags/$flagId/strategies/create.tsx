@@ -21,7 +21,7 @@ import { ErrorBox } from "~/components/ErrorBox";
 import { StrategyCreateDTO } from "~/modules/strategies/types";
 import { createStrategy } from "~/modules/strategies/services/createStrategy";
 import { BreadCrumbs, Crumbs } from "~/components/AppBreadcrumbs";
-import { Box, Container, Flex } from "@chakra-ui/react";
+import { Container, Flex } from "@chakra-ui/react";
 import { StrategyAudience } from "~/modules/strategies/components/StrategyAudience";
 import { ActivationStrategy } from "~/modules/strategies/components/ActivationStrategy";
 import { IoIosCreate } from "react-icons/io";
@@ -199,7 +199,6 @@ export default function StrategyCreatePage() {
     <DashboardLayout
       user={user}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
-      noContainer
       header={
         <Header
           title="Add a strategy"
@@ -227,55 +226,28 @@ export default function StrategyCreatePage() {
             alignItems="flex-start"
             flexDirection={["column", "column", "column", "row"]}
           >
-            <Box
-              flex={1}
-              shadow="md"
-              borderRadius={8}
-              p={8}
-              minHeight={[0, 0, 300]}
-              width="100%"
-            >
-              <Section id="general-information">
-                <SectionHeader title="General information" />
+            <Section id="general-information">
+              <SectionHeader title="General information" />
 
-                <TextInput
-                  name="strategy-name"
-                  placeholder="e.g: Strategy 1"
-                  label="Strategy name"
-                  isInvalid={Boolean(errors["strategy-name"])}
-                />
-              </Section>
-            </Box>
-
-            <Box
-              flex={1}
-              shadow="md"
-              borderRadius={8}
-              p={8}
-              minHeight={[0, 0, 300]}
-              width="100%"
-            >
-              <StrategyAudience
-                strategyType={strategyType}
-                onStrategyChange={setStrategyType}
-                errors={errors}
+              <TextInput
+                name="strategy-name"
+                placeholder="e.g: Strategy 1"
+                label="Strategy name"
+                isInvalid={Boolean(errors["strategy-name"])}
               />
-            </Box>
+            </Section>
 
-            <Box
-              flex={1}
-              shadow="md"
-              borderRadius={8}
-              p={8}
-              minHeight={[0, 0, 300]}
-              width="100%"
-            >
-              <ActivationStrategy
-                activationStrategy={activationStrategy}
-                onActivationChange={setActivationStrategy}
-                errors={errors}
-              />
-            </Box>
+            <StrategyAudience
+              strategyType={strategyType}
+              onStrategyChange={setStrategyType}
+              errors={errors}
+            />
+
+            <ActivationStrategy
+              activationStrategy={activationStrategy}
+              onActivationChange={setActivationStrategy}
+              errors={errors}
+            />
           </Flex>
         </Container>
 

@@ -1,8 +1,8 @@
-import { Box } from "@chakra-ui/react";
 import { AiOutlineLogin } from "react-icons/ai";
 import { Link } from "remix";
 import { Button } from "~/components/Button";
 import { H1 } from "~/components/H1";
+import { Typography } from "~/components/Typography";
 import { ErrorLayout } from "~/layouts/ErrorLayout";
 
 export default function NotFoundPage() {
@@ -10,11 +10,7 @@ export default function NotFoundPage() {
     <ErrorLayout>
       <H1>{`Woops! This page does not exist.`}</H1>
 
-      <Box my={6}>
-        <p>
-          {`It looks you're trying to access a content that does not exist.`}
-        </p>
-      </Box>
+      <Typography>{`It looks you're trying to access a content that does not exist.`}</Typography>
 
       <Button
         as={Link}

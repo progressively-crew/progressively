@@ -1,4 +1,3 @@
-import { Box } from "@chakra-ui/react";
 import { IoIosCreate } from "react-icons/io";
 import {
   Form,
@@ -129,37 +128,29 @@ export default function CreateEnvironmentPage() {
       }
     >
       <Section>
-        <Box>
-          {errors?.name && (
-            <Box pb={4}>
-              <ErrorBox list={errors} />
-            </Box>
-          )}
+        {errors?.name && <ErrorBox list={errors} />}
 
-          <Form method="post">
-            <TextInput
-              isInvalid={Boolean(errors?.name)}
-              name="env-name"
-              placeholder="e.g: Staging"
-              label="Environment name"
-              description="After the creation of an environment, you will be able to get
+        <Form method="post">
+          <TextInput
+            isInvalid={Boolean(errors?.name)}
+            name="env-name"
+            placeholder="e.g: Staging"
+            label="Environment name"
+            description="After the creation of an environment, you will be able to get
               its SDK key for application usage."
-            />
+          />
 
-            <Box mt={4}>
-              <Button
-                type="submit"
-                leftIcon={<IoIosCreate aria-hidden />}
-                colorScheme="brand"
-                isLoading={transition.state === "submitting"}
-                loadingText="Creating the environment, please wait..."
-                disabled={false}
-              >
-                Create the environment
-              </Button>
-            </Box>
-          </Form>
-        </Box>
+          <Button
+            type="submit"
+            leftIcon={<IoIosCreate aria-hidden />}
+            colorScheme="brand"
+            isLoading={transition.state === "submitting"}
+            loadingText="Creating the environment, please wait..."
+            disabled={false}
+          >
+            Create the environment
+          </Button>
+        </Form>
       </Section>
     </DashboardLayout>
   );

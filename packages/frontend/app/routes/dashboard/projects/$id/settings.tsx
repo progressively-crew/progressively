@@ -1,4 +1,4 @@
-import { Box, Stack, Flex } from "@chakra-ui/react";
+import { Stack, Flex } from "@chakra-ui/react";
 import { AiOutlineSetting } from "react-icons/ai";
 import { FaTrash } from "react-icons/fa";
 import { FiLayers } from "react-icons/fi";
@@ -181,34 +181,24 @@ export default function SettingsPage() {
             }
           />
 
-          {data?.errors.unauthorized && (
-            <Box mb={2}>
-              <ErrorBox list={data.errors} />
-            </Box>
-          )}
+          {data?.errors.unauthorized && <ErrorBox list={data.errors} />}
           {data?.success && (
-            <Box mb={2}>
-              <SuccessBox id="member-deleted">
-                {data?.removedCount} user have been successfully removed from
-                the project.
-              </SuccessBox>
-            </Box>
+            <SuccessBox id="member-deleted">
+              {data?.removedCount} user have been successfully removed from the
+              project.
+            </SuccessBox>
           )}
 
-          <Box mt={4} p={4}>
-            <UserTable
-              projectId={project.uuid}
-              userProjects={project.userProject || []}
-              labelledBy="members"
-              canEdit={userRole === UserRoles.Admin}
-            />
-          </Box>
+          <UserTable
+            projectId={project.uuid}
+            userProjects={project.userProject || []}
+            labelledBy="members"
+            canEdit={userRole === UserRoles.Admin}
+          />
 
-          <Box mt={4} aria-live="polite">
-            <Typography>
-              {transition.state === "submitting" ? "Removing the users..." : ""}
-            </Typography>
-          </Box>
+          <Typography aria-live="polite">
+            {transition.state === "submitting" ? "Removing the users..." : ""}
+          </Typography>
         </Section>
 
         {userRole === UserRoles.Admin && (
@@ -234,11 +224,7 @@ export default function SettingsPage() {
                   leftIcon={<FaTrash aria-hidden />}
                   variant="outline"
                 >
-                  Delete{" "}
-                  <Box as="span" aria-hidden display={["none", "inline"]}>
-                    {`"${project.name}"`} forever
-                  </Box>
-                  <VisuallyHidden>{`"${project.name}"`} forever</VisuallyHidden>
+                  Delete <span>{`"${project.name}"`} forever</span>
                 </Button>
               </Flex>
             </Section>

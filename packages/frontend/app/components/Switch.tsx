@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { HTMLAttributes, useState } from "react";
-import { Box, Button, Flex, HStack, Spinner } from "@chakra-ui/react";
+import { Button, Flex, HStack, Spinner } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import { Typography } from "./Typography";
 
-const RawSwitch = styled(Box)`
+const RawSwitch = styled.div`
   transition: all 0.3s;
+  position: relative;
 
   &:before {
     transition: all 0.3s;
@@ -43,17 +44,7 @@ export const Switch = ({ checked, optimistic, ...props }: SwitchProps) => {
     >
       <HStack>
         <Typography as="span">Off</Typography>
-        <RawSwitch
-          aria-hidden
-          position="relative"
-          data-is-checked={internalChecked}
-          width={12}
-          background={internalChecked ? "success.500" : "background200"}
-          height={6}
-          borderRadius={14}
-          p={"2px"}
-          boxSizing="content-box"
-        >
+        <RawSwitch aria-hidden data-is-checked={internalChecked}>
           {optimistic && (
             <Flex
               height={6}

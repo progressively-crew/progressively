@@ -1,4 +1,4 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { FaTrash } from "react-icons/fa";
 import { Button } from "~/components/Button";
 import { Heading } from "~/components/Heading";
@@ -69,15 +69,13 @@ const StrategyTargetConstraints = ({
     const targets = strat.fieldValue?.split("\n");
 
     return (
-      <Box pl={8}>
-        <Ul>
-          {targets?.map((target) => (
-            <Li key={target} color="textlight">
-              {target}
-            </Li>
-          ))}
-        </Ul>
-      </Box>
+      <Ul>
+        {targets?.map((target) => (
+          <Li key={target} color="textlight">
+            {target}
+          </Li>
+        ))}
+      </Ul>
     );
   }
 
@@ -92,33 +90,17 @@ export const StrategyCard = ({
   noBorder,
 }: StrategyCardProps) => {
   return (
-    <Box
-      pt={4}
-      pb={4}
-      pr={4}
-      as="article"
-      aria-labelledby={strat.uuid}
-      borderTopWidth={noBorder ? 0 : 1}
-      borderColor="background200"
-      transition="background 0.3s"
-      _focusWithin={{
-        background: "background100",
-      }}
-    >
+    <div>
       <Flex
         alignItems={"flex-start"}
         justifyContent="space-between"
         direction={["column", "row"]}
       >
-        <Box mr={4} pl={4}>
-          <Box mb={1}>
-            <Heading as="h3" id={strat.uuid} size="md">
-              {strat.name}
-            </Heading>
-          </Box>
+        <Heading as="h3" id={strat.uuid} size="md">
+          {strat.name}
+        </Heading>
 
-          <StrategyAudience strat={strat} />
-        </Box>
+        <StrategyAudience strat={strat} />
 
         <Button
           colorScheme="error"
@@ -132,6 +114,6 @@ export const StrategyCard = ({
       </Flex>
 
       <StrategyTargetConstraints strat={strat} />
-    </Box>
+    </div>
   );
 };

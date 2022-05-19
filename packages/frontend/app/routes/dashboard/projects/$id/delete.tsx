@@ -1,4 +1,3 @@
-import { Box } from "@chakra-ui/react";
 import { MdOutlineEmail } from "react-icons/md";
 import {
   ActionFunction,
@@ -25,7 +24,6 @@ import { Header } from "~/components/Header";
 import { Button } from "~/components/Button";
 import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
 import { Typography } from "~/components/Typography";
-import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { Li, Ul } from "~/components/Ul";
 
 interface MetaArgs {
@@ -136,24 +134,20 @@ export default function DeleteProjectPage() {
             project administrators:
           </Typography>
 
-          <Box pl={2} mt={2}>
-            <Ul>
-              {adminOfProject.map((user) => (
-                <Li key={user.uuid}>
-                  <Box as="span" mr={2}>
-                    <Typography as="span">{user.fullname}</Typography>
-                  </Box>
+          <Ul>
+            {adminOfProject.map((user) => (
+              <Li key={user.uuid}>
+                <Typography as="span">{user.fullname}</Typography>
 
-                  <ButtonCopy
-                    toCopy={user.email}
-                    icon={<MdOutlineEmail aria-hidden />}
-                  >
-                    {user.email}
-                  </ButtonCopy>
-                </Li>
-              ))}
-            </Ul>
-          </Box>
+                <ButtonCopy
+                  toCopy={user.email}
+                  icon={<MdOutlineEmail aria-hidden />}
+                >
+                  {user.email}
+                </ButtonCopy>
+              </Li>
+            ))}
+          </Ul>
         </figure>
       </DeleteEntityLayout>
     );
@@ -172,11 +166,7 @@ export default function DeleteProjectPage() {
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       error={
         data?.errors &&
-        data.errors.backendError && (
-          <Box pb={4}>
-            <ErrorBox list={data.errors} />
-          </Box>
-        )
+        data.errors.backendError && <ErrorBox list={data.errors} />
       }
       cancelAction={
         <Button
@@ -184,13 +174,7 @@ export default function DeleteProjectPage() {
           variant="outline"
           colorScheme="error"
         >
-          <span>
-            No, {`don't`} delete{" "}
-            <Box as="strong" display={["none", "inline"]} aria-hidden>
-              {project.name}
-            </Box>
-            <VisuallyHidden>{project.name}</VisuallyHidden>
-          </span>
+          No, {`don't`} delete <strong>{project.name}</strong>
         </Button>
       }
       confirmAction={

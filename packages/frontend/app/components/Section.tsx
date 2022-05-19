@@ -1,4 +1,4 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { createContext, useContext } from "react";
 import { Heading } from "./Heading";
 import { VisuallyHidden } from "./VisuallyHidden";
@@ -14,9 +14,9 @@ export interface SectionProps extends React.HTMLAttributes<HTMLElement> {
 export const Section = ({ children, id, ...props }: SectionProps) => {
   return (
     <SectionContext.Provider value={id}>
-      <Box as="section" aria-labelledby={id} {...props}>
+      <section aria-labelledby={id} {...props}>
         {children}
-      </Box>
+      </section>
     </SectionContext.Provider>
   );
 };
@@ -47,31 +47,21 @@ export const SectionHeader = ({
       py={4}
       {...props}
     >
-      <Box maxW={endAction ? "xl" : undefined}>
-        {hiddenTitle ? (
-          <VisuallyHidden>
-            <Heading as={titleAs} id={id} size="xl">
-              {title}
-            </Heading>
-          </VisuallyHidden>
-        ) : (
-          <Box pb={1}>
-            <Heading as={titleAs} id={id} size="xl">
-              {title}
-            </Heading>
-          </Box>
-        )}
+      {hiddenTitle ? (
+        <VisuallyHidden>
+          <Heading as={titleAs} id={id} size="xl">
+            {title}
+          </Heading>
+        </VisuallyHidden>
+      ) : (
+        <Heading as={titleAs} id={id} size="xl">
+          {title}
+        </Heading>
+      )}
 
-        <Box fontSize="xl" color="textlight" maxWidth="65ch">
-          {description}
-        </Box>
-      </Box>
+      {description}
 
-      {endAction ? (
-        <Box flexShrink={0} mt={[4, 0]} width={["100%", "auto"]}>
-          {endAction}
-        </Box>
-      ) : null}
+      {endAction}
     </Flex>
   );
 };

@@ -1,4 +1,4 @@
-import { Box, Radio, RadioGroup } from "@chakra-ui/react";
+import { Radio, RadioGroup } from "@chakra-ui/react";
 import { useState } from "react";
 import { SliderInput } from "~/components/Fields/SliderInput";
 import { Section, SectionHeader } from "~/components/Section";
@@ -23,46 +23,35 @@ export const ActivationStrategy = ({
       <SectionHeader title="Activation strategy" />
 
       <RadioGroup value={activationStrategy} onChange={onActivationChange}>
-        <Box>
-          <Radio
-            id="boolean"
-            name="strategy-activation"
-            value="boolean"
-            size="lg"
-            h={12}
-          >
-            Everyone will see the variants
-          </Radio>
-        </Box>
+        <Radio
+          id="boolean"
+          name="strategy-activation"
+          value="boolean"
+          size="lg"
+          h={12}
+        >
+          Everyone will see the variants
+        </Radio>
 
-        <Box>
-          <Radio
-            id="percentage"
-            name="strategy-activation"
-            value="percentage"
-            size="lg"
-            h={12}
-          >
-            A percentage of the audience
-          </Radio>
-        </Box>
+        <Radio
+          id="percentage"
+          name="strategy-activation"
+          value="percentage"
+          size="lg"
+          h={12}
+        >
+          A percentage of the audience
+        </Radio>
       </RadioGroup>
 
       {activationStrategy === "percentage" && (
-        <Box
-          borderColor="background100"
-          borderWidth={1}
-          p={[4, 4, 8]}
-          borderRadius={6}
-        >
-          <SliderInput
-            name="percentage-value"
-            label={`Percentage of the people concerned (${percentageValue}
+        <SliderInput
+          name="percentage-value"
+          label={`Percentage of the people concerned (${percentageValue}
             %):`}
-            onChange={setPercentageValue}
-            percentageValue={percentageValue}
-          />
-        </Box>
+          onChange={setPercentageValue}
+          percentageValue={percentageValue}
+        />
       )}
     </Section>
   );

@@ -1,4 +1,4 @@
-import { Flex, Box, Icon } from "@chakra-ui/react";
+import { Flex, Icon } from "@chakra-ui/react";
 import { useRef } from "react";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { Typography } from "~/components/Typography";
@@ -25,50 +25,18 @@ export const EnvCard = ({
   const linkRef = useRef<HTMLAnchorElement>(null);
 
   return (
-    <Box
-      borderTopWidth={noBorder ? 0 : 1}
-      borderColor="background200"
-      p={6}
-      as="article"
-      aria-labelledby={`article-${id}`}
-      cursor="pointer"
-      onClick={() => {
-        linkRef.current?.click();
-      }}
-      transition="background 0.3s"
-      _hover={{
-        background: "background100",
-        "& .arrow-forward": {
-          transform: "translateX(30%)",
-          color: "brand.400",
-        },
-      }}
-      _focusWithin={{
-        background: "background100",
-        "& .arrow-forward": {
-          transform: "translateX(30%)",
-          color: "brand.400",
-        },
-      }}
-      _active={{
-        background: "background200",
-      }}
-    >
+    <div>
       <Flex justifyContent="space-between">
         <div>
-          <Box mr={2} mb={1}>
-            <Heading as="h3" id={`article-${id}`} size="md">
-              <Link ref={linkRef} to={linkTo}>
-                {title} <VisuallyHidden>environment</VisuallyHidden>
-              </Link>
-            </Heading>
-          </Box>
+          <Heading as="h3" id={`article-${id}`} size="md">
+            <Link ref={linkRef} to={linkTo}>
+              {title} <VisuallyHidden>environment</VisuallyHidden>
+            </Link>
+          </Heading>
 
-          <Box as="span" display={["none", "inline"]}>
-            <Typography color="textlight">
-              The environment sdk key is <Tag>{clientKey}</Tag>
-            </Typography>
-          </Box>
+          <Typography color="textlight">
+            The environment sdk key is <Tag>{clientKey}</Tag>
+          </Typography>
         </div>
 
         <Icon
@@ -83,6 +51,6 @@ export const EnvCard = ({
           display={["none", "inline"]}
         />
       </Flex>
-    </Box>
+    </div>
   );
 };

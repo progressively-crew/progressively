@@ -1,4 +1,3 @@
-import { Box } from "@chakra-ui/react";
 import { IoIosCreate } from "react-icons/io";
 import {
   Form,
@@ -70,32 +69,24 @@ export default function WhatsYourNamePage() {
       header={<Header title="Hey, welcome around! What's your name?" />}
     >
       <Section>
-        <Box p={[4, 0]}>
-          {errors?.fullname && (
-            <Box pb={4}>
-              <ErrorBox list={errors} />
-            </Box>
-          )}
+        {errors?.fullname && <ErrorBox list={errors} />}
 
-          <Form method="post">
-            <TextInput
-              isInvalid={Boolean(errors?.fullname)}
-              label="Fullname"
-              name="fullname"
-              placeholder="e.g: John Doe"
-            />
+        <Form method="post">
+          <TextInput
+            isInvalid={Boolean(errors?.fullname)}
+            label="Fullname"
+            name="fullname"
+            placeholder="e.g: John Doe"
+          />
 
-            <Box mt={4}>
-              <Button
-                type="submit"
-                leftIcon={<IoIosCreate aria-hidden />}
-                colorScheme="brand"
-              >
-                Set my fullname
-              </Button>
-            </Box>
-          </Form>
-        </Box>
+          <Button
+            type="submit"
+            leftIcon={<IoIosCreate aria-hidden />}
+            colorScheme="brand"
+          >
+            Set my fullname
+          </Button>
+        </Form>
       </Section>
     </DashboardLayout>
   );

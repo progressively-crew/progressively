@@ -1,4 +1,3 @@
-import { Box } from "@chakra-ui/react";
 import { IoIosCreate } from "react-icons/io";
 import {
   Form,
@@ -146,23 +145,20 @@ export default function CreateProjectPage() {
               project administrators:
             </Typography>
 
-            <Box pl={2} mt={2}>
-              <Ul>
-                {adminOfProject.map((user) => (
-                  <Li key={user.uuid}>
-                    <Box as="span" mr={2}>
-                      <Typography>{user.fullname}</Typography>
-                    </Box>
-                    <ButtonCopy
-                      toCopy={user.email}
-                      icon={<MdOutlineEmail aria-hidden />}
-                    >
-                      {user.email}
-                    </ButtonCopy>
-                  </Li>
-                ))}
-              </Ul>
-            </Box>
+            <Ul>
+              {adminOfProject.map((user) => (
+                <Li key={user.uuid}>
+                  <Typography>{user.fullname}</Typography>
+
+                  <ButtonCopy
+                    toCopy={user.email}
+                    icon={<MdOutlineEmail aria-hidden />}
+                  >
+                    {user.email}
+                  </ButtonCopy>
+                </Li>
+              ))}
+            </Ul>
           </figure>
         </Section>
       </DashboardLayout>
@@ -178,42 +174,34 @@ export default function CreateProjectPage() {
       header={<Header title="Add member" />}
     >
       <Section>
-        <Box>
-          {data?.success && (
-            <Box pb={4}>
-              <SuccessBox id="member-added">
-                The user has been invited invited to join the project.
-              </SuccessBox>
-            </Box>
-          )}
+        {data?.success && (
+          <SuccessBox id="member-added">
+            The user has been invited invited to join the project.
+          </SuccessBox>
+        )}
 
-          {Object.keys(errorsToDisplay).length > 0 && (
-            <Box pb={4}>
-              <ErrorBox list={errorsToDisplay} />
-            </Box>
-          )}
-          <Form method="post">
-            <TextInput
-              isInvalid={Boolean(errors?.email)}
-              name="email"
-              label="Member email"
-              placeholder="e.g: john.doe@gmail.com"
-            />
+        {Object.keys(errorsToDisplay).length > 0 && (
+          <ErrorBox list={errorsToDisplay} />
+        )}
+        <Form method="post">
+          <TextInput
+            isInvalid={Boolean(errors?.email)}
+            name="email"
+            label="Member email"
+            placeholder="e.g: john.doe@gmail.com"
+          />
 
-            <Box mt={4}>
-              <Button
-                type="submit"
-                leftIcon={<IoIosCreate aria-hidden />}
-                colorScheme="brand"
-                isLoading={transition.state === "submitting"}
-                loadingText="Adding the member, please wait..."
-                disabled={false}
-              >
-                Add the member
-              </Button>
-            </Box>
-          </Form>
-        </Box>
+          <Button
+            type="submit"
+            leftIcon={<IoIosCreate aria-hidden />}
+            colorScheme="brand"
+            isLoading={transition.state === "submitting"}
+            loadingText="Adding the member, please wait..."
+            disabled={false}
+          >
+            Add the member
+          </Button>
+        </Form>
       </Section>
     </DashboardLayout>
   );

@@ -1,4 +1,4 @@
-import { Box, HStack, Stack } from "@chakra-ui/react";
+import { HStack, Stack } from "@chakra-ui/react";
 import { MdChevronLeft, MdPassword } from "react-icons/md";
 import {
   ActionFunction,
@@ -114,50 +114,46 @@ export default function ProfilePage() {
       <Section>
         <SectionHeader title="Change password" />
 
-        <Box px={4} pb={4}>
-          <Form method="post">
-            <Stack spacing={4} mt={4}>
-              {errors && Object.keys(errors).length > 0 && (
-                <ErrorBox list={errors} />
-              )}
+        <Form method="post">
+          <Stack spacing={4} mt={4}>
+            {errors && Object.keys(errors).length > 0 && (
+              <ErrorBox list={errors} />
+            )}
 
-              {passwordUpdated && (
-                <SuccessBox id="password-changed">
-                  The password has been successfully changed.
-                </SuccessBox>
-              )}
+            {passwordUpdated && (
+              <SuccessBox id="password-changed">
+                The password has been successfully changed.
+              </SuccessBox>
+            )}
 
-              <TextInput
-                label="New password"
-                name="password"
-                isInvalid={Boolean(errors?.password)}
-                placeholder="**********"
-                type="password"
-              />
+            <TextInput
+              label="New password"
+              name="password"
+              isInvalid={Boolean(errors?.password)}
+              placeholder="**********"
+              type="password"
+            />
 
-              <TextInput
-                label="Confirmation password"
-                name="confirmationPassword"
-                isInvalid={Boolean(errors?.confirmationPassword)}
-                placeholder="**********"
-                type="password"
-              />
+            <TextInput
+              label="Confirmation password"
+              name="confirmationPassword"
+              isInvalid={Boolean(errors?.confirmationPassword)}
+              placeholder="**********"
+              type="password"
+            />
 
-              <Box>
-                <Button
-                  type="submit"
-                  colorScheme={"brand"}
-                  leftIcon={<MdPassword aria-hidden />}
-                  isLoading={transition.state === "submitting"}
-                  loadingText="Password changing in progress, please wait..."
-                  disabled={false}
-                >
-                  Change password
-                </Button>
-              </Box>
-            </Stack>
-          </Form>
-        </Box>
+            <Button
+              type="submit"
+              colorScheme={"brand"}
+              leftIcon={<MdPassword aria-hidden />}
+              isLoading={transition.state === "submitting"}
+              loadingText="Password changing in progress, please wait..."
+              disabled={false}
+            >
+              Change password
+            </Button>
+          </Stack>
+        </Form>
       </Section>
     </DashboardLayout>
   );

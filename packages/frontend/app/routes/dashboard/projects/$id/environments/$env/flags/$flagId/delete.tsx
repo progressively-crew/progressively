@@ -1,4 +1,3 @@
-import { Box } from "@chakra-ui/react";
 import {
   ActionFunction,
   Form,
@@ -26,7 +25,6 @@ import { deleteFlag } from "~/modules/flags/services/deleteFlag";
 import { Button } from "~/components/Button";
 import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
 import { Typography } from "~/components/Typography";
-import { VisuallyHidden } from "~/components/VisuallyHidden";
 
 interface MetaArgs {
   data?: {
@@ -158,11 +156,7 @@ export default function DeleteFlagPage() {
       header={<Header title="Deleting a feature flag" />}
       error={
         data?.errors &&
-        data.errors.backendError && (
-          <Box pb={4}>
-            <ErrorBox list={data.errors} />
-          </Box>
-        )
+        data.errors.backendError && <ErrorBox list={data.errors} />
       }
       cancelAction={
         <Button
@@ -170,13 +164,7 @@ export default function DeleteFlagPage() {
           variant="outline"
           colorScheme="error"
         >
-          <span>
-            No, {`don't`} delete{" "}
-            <Box as="strong" display={["none", "inline"]} aria-hidden>
-              {currentFlag.name}
-            </Box>
-            <VisuallyHidden>{currentFlag.name}</VisuallyHidden>
-          </span>
+          No, {`don't`} delete <strong aria-hidden>{currentFlag.name}</strong>
         </Button>
       }
       confirmAction={

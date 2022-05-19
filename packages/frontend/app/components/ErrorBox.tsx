@@ -1,4 +1,4 @@
-import { Box, Flex, Icon } from "@chakra-ui/react";
+import { Flex, Icon } from "@chakra-ui/react";
 import { useEffect, useRef } from "react";
 import { MdErrorOutline } from "react-icons/md";
 import { Li, Ul } from "./Ul";
@@ -24,31 +24,19 @@ export const ErrorBox = ({ list }: ErrorBoxProps) => {
       : `The following ${errors.length} errors have been found:`;
 
   return (
-    <Box
-      as="figure"
-      ref={boxRef}
-      tabIndex={-1}
-      className="error-box"
-      bg="error.50"
-      color="error.900"
-      p={3}
-      borderRadius={4}
-      borderWidth={1}
-      borderColor="error.200"
-    >
+    <figure ref={boxRef} tabIndex={-1} className="error-box">
       <Flex as="figcaption">
         <Icon as={MdErrorOutline} w={6} h={6} aria-hidden mr={2} />
         <strong>{label}</strong>
       </Flex>
-      <Box pl={8} mt={2}>
-        <Ul>
-          {errors.map((errorKey) => (
-            <Li key={`error-${errorKey}`} id={`error-${errorKey}`}>
-              {list[errorKey]}
-            </Li>
-          ))}
-        </Ul>
-      </Box>
-    </Box>
+
+      <Ul>
+        {errors.map((errorKey) => (
+          <Li key={`error-${errorKey}`} id={`error-${errorKey}`}>
+            {list[errorKey]}
+          </Li>
+        ))}
+      </Ul>
+    </figure>
   );
 };

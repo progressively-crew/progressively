@@ -1,4 +1,4 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import React from "react";
 import { Section } from "~/components/Section";
 import { User } from "~/modules/user/types";
@@ -25,16 +25,14 @@ export const DeleteEntityLayout = ({
   return (
     <DashboardLayout user={user} header={header} breadcrumb={breadcrumb}>
       <Section>
-        <Box p={[4, 0]}>
-          {error && <Box pb={4}>{error}</Box>}
+        {error}
 
-          <Box maxW="65ch">{children}</Box>
+        {children}
 
-          <Flex mt={8} direction={["column", "column", "row"]} gap={8}>
-            {cancelAction}
-            {confirmAction}
-          </Flex>
-        </Box>
+        <Flex mt={8} direction={["column", "column", "row"]} gap={8}>
+          {cancelAction}
+          {confirmAction}
+        </Flex>
       </Section>
     </DashboardLayout>
   );

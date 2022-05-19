@@ -1,4 +1,3 @@
-import { Box } from "@chakra-ui/react";
 import { IoIosCreate } from "react-icons/io";
 import {
   Form,
@@ -104,34 +103,27 @@ export default function CreateProjectPage() {
       }
     >
       <Section>
-        <Box>
-          {errors?.name && (
-            <Box pb={4}>
-              <ErrorBox list={errors} />
-            </Box>
-          )}
-          <Form method="post">
-            <TextInput
-              isInvalid={Boolean(errors?.name)}
-              label="Project name"
-              name="name"
-              placeholder="e.g: My super project"
-            />
+        {errors?.name && <ErrorBox list={errors} />}
 
-            <Box mt={4}>
-              <Button
-                type="submit"
-                leftIcon={<IoIosCreate aria-hidden />}
-                colorScheme="brand"
-                isLoading={transition.state === "submitting"}
-                loadingText="Creating the project, please wait..."
-                disabled={false}
-              >
-                Create the project
-              </Button>
-            </Box>
-          </Form>
-        </Box>
+        <Form method="post">
+          <TextInput
+            isInvalid={Boolean(errors?.name)}
+            label="Project name"
+            name="name"
+            placeholder="e.g: My super project"
+          />
+
+          <Button
+            type="submit"
+            leftIcon={<IoIosCreate aria-hidden />}
+            colorScheme="brand"
+            isLoading={transition.state === "submitting"}
+            loadingText="Creating the project, please wait..."
+            disabled={false}
+          >
+            Create the project
+          </Button>
+        </Form>
       </Section>
     </DashboardLayout>
   );

@@ -1,4 +1,4 @@
-import { Box, Flex, HStack } from "@chakra-ui/react";
+import { Flex, HStack } from "@chakra-ui/react";
 import {
   useLoaderData,
   LoaderFunction,
@@ -186,10 +186,7 @@ export default function FlagSettingPage() {
               leftIcon={<FaTrash aria-hidden />}
               variant="outline"
             >
-              Delete{" "}
-              <Box as="span" aria-hidden display={["none", "inline"]}>
-                {`"${currentFlag.name}"`} forever
-              </Box>
+              Delete <span aria-hidden>{`"${currentFlag.name}"`} forever</span>
               <VisuallyHidden>{`"${currentFlag.name}"`} forever</VisuallyHidden>
             </Button>
           </Flex>

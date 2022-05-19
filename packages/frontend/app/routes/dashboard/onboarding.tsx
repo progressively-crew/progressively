@@ -1,4 +1,3 @@
-import { Box } from "@chakra-ui/react";
 import { IoIosCreate } from "react-icons/io";
 import {
   Form,
@@ -90,32 +89,24 @@ export default function OnboardingPage() {
       }
     >
       <Section>
-        <Box p={[4, 0]}>
-          {errors?.name && (
-            <Box pb={4}>
-              <ErrorBox list={errors} />
-            </Box>
-          )}
+        {errors?.name && <ErrorBox list={errors} />}
 
-          <Form method="post">
-            <TextInput
-              isInvalid={Boolean(errors?.name)}
-              label="Project name"
-              name="name"
-              placeholder="e.g: My super project"
-            />
+        <Form method="post">
+          <TextInput
+            isInvalid={Boolean(errors?.name)}
+            label="Project name"
+            name="name"
+            placeholder="e.g: My super project"
+          />
 
-            <Box mt={4}>
-              <Button
-                type="submit"
-                leftIcon={<IoIosCreate aria-hidden />}
-                colorScheme="brand"
-              >
-                Create the project
-              </Button>
-            </Box>
-          </Form>
-        </Box>
+          <Button
+            type="submit"
+            leftIcon={<IoIosCreate aria-hidden />}
+            colorScheme="brand"
+          >
+            Create the project
+          </Button>
+        </Form>
       </Section>
     </DashboardLayout>
   );

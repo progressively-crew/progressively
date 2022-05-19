@@ -1,4 +1,4 @@
-import { Box, Stack } from "@chakra-ui/react";
+import { Stack } from "@chakra-ui/react";
 import {
   useLoaderData,
   LoaderFunction,
@@ -191,7 +191,7 @@ export default function FlagsByEnvPage() {
         />
 
         {flagsByEnv.length > 0 ? (
-          <Box>
+          <>
             {flagsByEnv.map((flagEnv, index) => (
               <FlagCard
                 noBorder={index === 0}
@@ -209,7 +209,7 @@ export default function FlagsByEnvPage() {
                 }
               />
             ))}
-          </Box>
+          </>
         ) : null}
 
         {flagsByEnv.length === 0 ? (

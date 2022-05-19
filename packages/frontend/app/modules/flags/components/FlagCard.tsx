@@ -1,4 +1,4 @@
-import { Flex, HStack, Box } from "@chakra-ui/react";
+import { Flex, HStack } from "@chakra-ui/react";
 import React, { useRef } from "react";
 import { Form } from "remix";
 import { FlagStatus } from "../types";
@@ -33,41 +33,19 @@ export const FlagCard = ({
   const linkRef = useRef<HTMLAnchorElement>(null);
 
   return (
-    <Box
-      borderTopWidth={noBorder ? 0 : 1}
-      borderColor="background200"
-      p={6}
-      as="article"
-      aria-labelledby={`article-${id}`}
-      cursor="pointer"
-      onClick={() => {
-        linkRef.current?.click();
-      }}
-      transition="background 0.3s"
-      _hover={{
-        background: "background100",
-      }}
-      _focusWithin={{
-        background: "background100",
-      }}
-      _active={{
-        background: "background200",
-      }}
-    >
+    <div>
       <Flex justifyContent={"space-between"} direction={["column", "row"]}>
         <div>
           <HStack spacing={[0, 2]} display={["block", "flex"]}>
-            <Box as="span" mr={2} mb={[2, 1]}>
-              <Heading as="h3" id={`article-${id}`} size="md">
-                <Link ref={linkRef} to={linkTo}>
-                  {title} <VisuallyHidden>feature flag</VisuallyHidden>
-                </Link>
-              </Heading>
-            </Box>
+            <Heading as="h3" id={`article-${id}`} size="md">
+              <Link ref={linkRef} to={linkTo}>
+                {title} <VisuallyHidden>feature flag</VisuallyHidden>
+              </Link>
+            </Heading>
 
-            <Box as="span" aria-hidden display={["none", "inline-flex"]}>
+            <span aria-hidden>
               <Tag>{flagKey}</Tag>
-            </Box>
+            </span>
 
             <VisuallyHidden>
               <p>The flag key is {flagKey}</p>
@@ -96,6 +74,6 @@ export const FlagCard = ({
           />
         </Form>
       </Flex>
-    </Box>
+    </div>
   );
 };
