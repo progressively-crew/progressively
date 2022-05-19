@@ -1,14 +1,19 @@
 import { Box, Container, Flex } from "@chakra-ui/react";
 import { Logo } from "~/components/Logo";
+import { Main } from "~/components/Main";
 
 export interface NotAuthenticatedLayoutProps {
   children: React.ReactNode;
+  nav?: React.ReactNode;
+  header: React.ReactNode;
 }
 export const NotAuthenticatedLayout = ({
   children,
+  nav,
+  header,
 }: NotAuthenticatedLayoutProps) => {
   return (
-    <div>
+    <Main>
       <Box borderBottomWidth={1} borderBottomColor="text.100">
         <Container maxW="5xl">
           <Flex
@@ -26,9 +31,13 @@ export const NotAuthenticatedLayout = ({
 
       <Container maxW="5xl">
         <Box maxW="65ch" pt={16} pb={4}>
+          {nav && <Box pb={2}>{nav}</Box>}
+
+          <Box pb={4}>{header}</Box>
+
           {children}
         </Box>
       </Container>
-    </div>
+    </Main>
   );
 };

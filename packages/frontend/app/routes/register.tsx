@@ -1,7 +1,4 @@
 import { ActionFunction, MetaFunction, LoaderFunction, redirect } from "remix";
-import { Main } from "~/components/Main";
-import { HStack, Box } from "@chakra-ui/react";
-import { MdChevronLeft } from "react-icons/md";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import {
   RegisterForm,
@@ -9,7 +6,7 @@ import {
   RegisterActionData,
 } from "~/modules/user/components/RegisterForm";
 import { Header } from "~/components/Header";
-import { Link } from "~/components/Link";
+import { BackLink } from "~/components/BackLink";
 
 export const meta: MetaFunction = () => {
   return {
@@ -33,19 +30,11 @@ export const loader: LoaderFunction = () => {
 
 export default function CreateAccountPage() {
   return (
-    <NotAuthenticatedLayout>
-      <Main>
-        <HStack mb={4}>
-          <MdChevronLeft aria-hidden />
-          <Link to="/signin">Back to signin</Link>
-        </HStack>
-
-        <Box pb={4}>
-          <Header title="Create an account" />
-        </Box>
-
-        <RegisterForm />
-      </Main>
+    <NotAuthenticatedLayout
+      nav={<BackLink to="/signin">Back to signin</BackLink>}
+      header={<Header title="Create an account" />}
+    >
+      <RegisterForm />
     </NotAuthenticatedLayout>
   );
 }

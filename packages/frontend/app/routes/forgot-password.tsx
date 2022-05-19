@@ -1,5 +1,5 @@
-import { Stack, Box, HStack } from "@chakra-ui/react";
-import { MdChevronLeft, MdPassword } from "react-icons/md";
+import { Stack } from "@chakra-ui/react";
+import { MdPassword } from "react-icons/md";
 import {
   ActionFunction,
   Form,
@@ -7,12 +7,11 @@ import {
   useActionData,
   useTransition,
 } from "remix";
+import { BackLink } from "~/components/BackLink";
 import { Button } from "~/components/Button";
 import { ErrorBox } from "~/components/ErrorBox";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Header } from "~/components/Header";
-import { Link } from "~/components/Link";
-import { Main } from "~/components/Main";
 import { SuccessBox } from "~/components/SuccessBox";
 import { Typography } from "~/components/Typography";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
@@ -70,60 +69,54 @@ export default function ForgotPasswordPage() {
   const errors = data?.errors;
 
   return (
-    <NotAuthenticatedLayout>
-      <Main>
-        <HStack mb={4}>
-          <MdChevronLeft aria-hidden />
-          <Link to="/signin">Back to signin</Link>
-        </HStack>
+    <NotAuthenticatedLayout
+      nav={<BackLink to="/signin">Back to signin</BackLink>}
+      header={
+        <Header
+          title="Password forgotten"
+          description={
+            <Typography color="textlight">
+              Enter your email to get a recovery link and reset your password.
+            </Typography>
+          }
+        />
+      }
+    >
+      <Form method="post">
+        <Stack spacing={4} mt={4}>
+          {errors && Object.keys(errors).length > 0 && (
+            <ErrorBox list={errors} />
+          )}
 
-        <Box pb={4}>
-          <Header
-            title="Password forgotten"
-            description={
-              <Typography color="textlight">
-                Enter your email to get a recovery link and reset your password.
-              </Typography>
-            }
+          {success && (
+            <SuccessBox id="password-reset">
+              An email with a link to reset your password has been set. Make
+              sure to follow the instructions.
+            </SuccessBox>
+          )}
+
+          <TextInput
+            isInvalid={Boolean(errors?.email)}
+            label="Email"
+            name="email"
+            type="email"
+            placeholder="e.g: james.bond@mi6.com"
           />
-        </Box>
 
-        <Form method="post">
-          <Stack spacing={4} mt={4}>
-            {errors && Object.keys(errors).length > 0 && (
-              <ErrorBox list={errors} />
-            )}
-
-            {success && (
-              <SuccessBox id="password-reset">
-                An email with a link to reset your password has been set. Make
-                sure to follow the instructions.
-              </SuccessBox>
-            )}
-
-            <TextInput
-              isInvalid={Boolean(errors?.email)}
-              label="Email"
-              name="email"
-              type="email"
-              placeholder="e.g: james.bond@mi6.com"
-            />
-
-            <Box>
-              <Button
-                type="submit"
-                colorScheme={"brand"}
-                leftIcon={<MdPassword aria-hidden />}
-                isLoading={transition.state === "submitting"}
-                loadingText="Password resetting in progress, please wait..."
-                disabled={false}
-              >
-                Reset password
-              </Button>
-            </Box>
-          </Stack>
-        </Form>
-      </Main>
+          <div>
+            <Button
+              type="submit"
+              colorScheme={"brand"}
+              leftIcon={<MdPassword aria-hidden />}
+              isLoading={transition.state === "submitting"}
+              loadingText="Password resetting in progress, please wait..."
+              disabled={false}
+            >
+              Reset password
+            </Button>
+          </div>
+        </Stack>
+      </Form>
     </NotAuthenticatedLayout>
   );
 }

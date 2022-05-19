@@ -1,5 +1,5 @@
-import { Stack, HStack, Box } from "@chakra-ui/react";
-import { MdChevronLeft, MdPassword } from "react-icons/md";
+import { Stack } from "@chakra-ui/react";
+import { MdPassword } from "react-icons/md";
 import {
   ActionFunction,
   Form,
@@ -8,12 +8,11 @@ import {
   useSearchParams,
   useTransition,
 } from "remix";
+import { BackLink } from "~/components/BackLink";
 import { Button } from "~/components/Button";
 import { ErrorBox } from "~/components/ErrorBox";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Header } from "~/components/Header";
-import { Link } from "~/components/Link";
-import { Main } from "~/components/Main";
 import { SuccessBox } from "~/components/SuccessBox";
 import { Typography } from "~/components/Typography";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
@@ -102,70 +101,59 @@ export default function ResetPasswordPage() {
   const errors = data?.errors;
 
   return (
-    <NotAuthenticatedLayout>
-      <Main>
-        <HStack mb={4}>
-          <MdChevronLeft aria-hidden />
-          <Link to="/signin">Back to signin</Link>
-        </HStack>
+    <NotAuthenticatedLayout
+      header={
+        <Header
+          title="Reset password"
+          description={
+            <Typography color="textlight">Set your new password.</Typography>
+          }
+        />
+      }
+      nav={<BackLink to="/signin">Back to signin</BackLink>}
+    >
+      <Form method="post">
+        <Stack spacing={4} mt={4}>
+          {errors && Object.keys(errors).length > 0 && (
+            <ErrorBox list={errors} />
+          )}
 
-        <Box pb={4}>
-          <Header
-            title="Reset password"
-            description={
-              <Typography color="textlight">Set your new password.</Typography>
-            }
+          {success && (
+            <SuccessBox id="password-reset">
+              The password has been successfully reset. You can now connect.
+            </SuccessBox>
+          )}
+
+          <input type="hidden" name="token" id="token" value={urlToken || ""} />
+
+          <TextInput
+            isInvalid={Boolean(errors?.password)}
+            label="New password"
+            name="password"
+            placeholder="**********"
           />
-        </Box>
 
-        <Form method="post">
-          <Stack spacing={4} mt={4}>
-            {errors && Object.keys(errors).length > 0 && (
-              <ErrorBox list={errors} />
-            )}
+          <TextInput
+            isInvalid={Boolean(errors?.confirmationPassword)}
+            label="Confirmation password"
+            name="confirmationPassword"
+            placeholder="**********"
+          />
 
-            {success && (
-              <SuccessBox id="password-reset">
-                The password has been successfully reset. You can now connect.
-              </SuccessBox>
-            )}
-
-            <input
-              type="hidden"
-              name="token"
-              id="token"
-              value={urlToken || ""}
-            />
-
-            <TextInput
-              isInvalid={Boolean(errors?.password)}
-              label="New password"
-              name="password"
-              placeholder="**********"
-            />
-
-            <TextInput
-              isInvalid={Boolean(errors?.confirmationPassword)}
-              label="Confirmation password"
-              name="confirmationPassword"
-              placeholder="**********"
-            />
-
-            <Box>
-              <Button
-                type="submit"
-                colorScheme={"brand"}
-                leftIcon={<MdPassword aria-hidden />}
-                isLoading={transition.state === "submitting"}
-                loadingText="Password changing in progress, please wait..."
-                disabled={false}
-              >
-                Change password
-              </Button>
-            </Box>
-          </Stack>
-        </Form>
-      </Main>
+          <div>
+            <Button
+              type="submit"
+              colorScheme={"brand"}
+              leftIcon={<MdPassword aria-hidden />}
+              isLoading={transition.state === "submitting"}
+              loadingText="Password changing in progress, please wait..."
+              disabled={false}
+            >
+              Change password
+            </Button>
+          </div>
+        </Stack>
+      </Form>
     </NotAuthenticatedLayout>
   );
 }

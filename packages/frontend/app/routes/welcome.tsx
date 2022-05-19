@@ -1,7 +1,5 @@
-import { Box } from "@chakra-ui/react";
 import { ActionFunction, MetaFunction } from "remix";
 import { Header } from "~/components/Header";
-import { Main } from "~/components/Main";
 import { Typography } from "~/components/Typography";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import { AuthCredentials } from "~/modules/auth/types";
@@ -28,22 +26,20 @@ export const action: ActionFunction = ({
 
 export default function WelcomePage() {
   return (
-    <NotAuthenticatedLayout>
-      <Main>
-        <Box pb={4}>
-          <Header
-            title="Congratulations!"
-            description={
-              <Typography color="textlight">
-                {`You've`} successfully run your Progressively instance.{" "}
-                {`It's`} time to create <strong>your admin user.</strong>
-              </Typography>
-            }
-          />
-        </Box>
-
-        <RegisterForm />
-      </Main>
+    <NotAuthenticatedLayout
+      header={
+        <Header
+          title="Congratulations!"
+          description={
+            <Typography color="textlight">
+              {`You've`} successfully run your Progressively instance. {`It's`}{" "}
+              time to create <strong>your admin user.</strong>
+            </Typography>
+          }
+        />
+      }
+    >
+      <RegisterForm />
     </NotAuthenticatedLayout>
   );
 }
