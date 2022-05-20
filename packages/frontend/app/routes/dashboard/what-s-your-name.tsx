@@ -1,4 +1,3 @@
-import { IoIosCreate } from "react-icons/io";
 import {
   Form,
   useActionData,
@@ -79,13 +78,7 @@ export default function WhatsYourNamePage() {
             placeholder="e.g: John Doe"
           />
 
-          <Button
-            type="submit"
-            leftIcon={<IoIosCreate aria-hidden />}
-            colorScheme="brand"
-          >
-            Set my fullname
-          </Button>
+          <Button type="submit">Set my fullname</Button>
         </Form>
       </Section>
     </DashboardLayout>

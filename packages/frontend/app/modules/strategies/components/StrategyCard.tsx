@@ -1,4 +1,3 @@
-import { FaTrash } from "react-icons/fa";
 import { Button } from "~/components/Button";
 import { Heading } from "~/components/Heading";
 import { Typography } from "~/components/Typography";
@@ -95,10 +94,6 @@ export const StrategyCard = ({
       <StrategyAudience strat={strat} />
 
       <Button
-        colorScheme="error"
-        variant="outline"
-        leftIcon={<FaTrash aria-hidden />}
-        mt={[2, 0]}
         to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/strategies/${strat.uuid}/delete`}
       >
         Remove<VisuallyHidden> {strat.name}</VisuallyHidden>

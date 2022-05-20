@@ -1,21 +1,29 @@
-import {
-  ButtonProps as CButtonProps,
-  Button as CButton,
-} from "@chakra-ui/react";
-import { Link } from "remix";
+import { HTMLAttributes } from "react";
+import { Link } from "./Link";
 
-export interface ButtonProps extends CButtonProps {
+export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   to?: string;
+  children: React.ReactNode;
+  isLoading?: boolean;
+  loadingText?: string;
+  type?: "button" | "submit" | "reset";
 }
 
-export const Button = (props: ButtonProps) => {
+export const Button = ({
+  to,
+  children,
+  type,
+  isLoading,
+  loadingText,
+  ...props
+}: ButtonProps) => {
+  if (to) {
+    return <Link to={to}>{children}</Link>;
+  }
+
   return (
-    <CButton
-      as={props?.to ? Link : undefined}
-      size={"lg"}
-      width={["100%", "auto"]}
-      borderRadius={24}
-      {...props}
-    />
+    <button type={type} {...props}>
+      {children}
+    </button>
   );
 };

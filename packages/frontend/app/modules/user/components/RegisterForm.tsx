@@ -1,4 +1,3 @@
-import { MdAccountCircle } from "react-icons/md";
 import { ActionFunction, Form, useActionData, useTransition } from "remix";
 import { Button } from "~/components/Button";
 import { ErrorBox } from "~/components/ErrorBox";
@@ -103,12 +102,8 @@ export const RegisterForm = () => {
       />
 
       <Button
-        type="submit"
-        colorScheme={"brand"}
-        leftIcon={<MdAccountCircle aria-hidden />}
         isLoading={transition.state === "submitting"}
         loadingText="Creation in progress, please wait..."
-        disabled={false}
       >
         Create an account
       </Button>

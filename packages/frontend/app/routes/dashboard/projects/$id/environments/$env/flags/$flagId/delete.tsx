@@ -10,7 +10,6 @@ import {
 } from "remix";
 import { Crumbs, BreadCrumbs } from "~/components/AppBreadcrumbs";
 import { ErrorBox } from "~/components/ErrorBox";
-import { FaTrash } from "react-icons/fa";
 import { WarningBox } from "~/components/WarningBox";
 import { authGuard } from "~/modules/auth/services/auth-guard";
 import { Environment } from "~/modules/environments/types";
@@ -161,8 +160,6 @@ export default function DeleteFlagPage() {
       cancelAction={
         <Button
           to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/settings`}
-          variant="outline"
-          colorScheme="error"
         >
           No, {`don't`} delete <strong aria-hidden>{currentFlag.name}</strong>
         </Button>
@@ -171,13 +168,8 @@ export default function DeleteFlagPage() {
         <Form method="post">
           <Button
             type="submit"
-            colorScheme="error"
-            leftIcon={<FaTrash aria-hidden />}
             isLoading={transition.state === "submitting"}
             loadingText="Deleting the environment, please wait..."
-            disabled={false}
-            mt={[4, 4, 0]}
-            width={["100%", "100%", "auto"]}
           >
             Yes, delete the flag
           </Button>

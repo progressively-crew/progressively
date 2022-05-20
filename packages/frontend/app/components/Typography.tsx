@@ -1,4 +1,3 @@
-import { Text } from "@chakra-ui/react";
 import { HTMLAttributes } from "react";
 
 export interface TypographyProps extends HTMLAttributes<HTMLParagraphElement> {
@@ -11,13 +10,8 @@ export interface TypographyProps extends HTMLAttributes<HTMLParagraphElement> {
 export const Typography = ({
   children,
   as = "p",
-  fontSize,
-  color,
   ...props
 }: TypographyProps) => {
-  return (
-    <Text as={as} fontSize={fontSize} textColor={color} {...props}>
-      {children}
-    </Text>
-  );
+  const Compo = as;
+  return <Compo {...props}>{children}</Compo>;
 };

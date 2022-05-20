@@ -1,4 +1,3 @@
-import { useTheme } from "@chakra-ui/react";
 import {
   useLoaderData,
   LoaderFunction,
@@ -124,8 +123,6 @@ export const loader: LoaderFunction = async ({
 };
 
 export default function FlagById() {
-  const theme = useTheme();
-
   const {
     project,
     environment,
@@ -208,16 +205,10 @@ export default function FlagById() {
       <Section id="flag-status">
         <SectionHeader title="Insights" description="Number of hits per date" />
 
-        <BigState
-          name="Hits on activated variant"
-          value={activatedCount}
-          color={theme.colors.brand["500"]}
-        />
+        <BigState name="Hits on activated variant" value={activatedCount} />
         <BigState
           name="Hits on not activated variant"
           value={notActivatedCount}
-          color={theme.colors.error["500"]}
-          dotted
         />
 
         {hits.length > 0 && (
@@ -228,11 +219,7 @@ export default function FlagById() {
             >
               <defs>
                 <linearGradient id="colorActivated" x1="0" y1="0" x2="0" y2="1">
-                  <stop
-                    offset="95%"
-                    stopColor={theme.colors.brand["200"]}
-                    stopOpacity={0.4}
-                  />
+                  <stop offset="95%" stopColor={"red"} stopOpacity={0.4} />
                 </linearGradient>
                 <linearGradient
                   id="colorNotActivated"
@@ -241,11 +228,7 @@ export default function FlagById() {
                   x2="0"
                   y2="1"
                 >
-                  <stop
-                    offset="95%"
-                    stopColor={theme.colors.error["200"]}
-                    stopOpacity={0.4}
-                  />
+                  <stop offset="95%" stopColor={"red"} stopOpacity={0.4} />
                 </linearGradient>
               </defs>
               <XAxis dataKey="date" tickFormatter={formatX} />
@@ -257,7 +240,7 @@ export default function FlagById() {
                 dataKey="activated"
                 fillOpacity={1}
                 fill="url(#colorActivated)"
-                stroke={theme.colors.brand["500"]}
+                stroke={"blue"}
                 strokeWidth={3}
               />
               <Area
@@ -265,7 +248,7 @@ export default function FlagById() {
                 dataKey="notactivated"
                 fillOpacity={1}
                 fill="url(#colorNotActivated)"
-                stroke={theme.colors.error["500"]}
+                stroke={"blue"}
                 strokeDasharray="3 3"
                 strokeWidth={3}
               />

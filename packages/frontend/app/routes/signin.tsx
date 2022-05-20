@@ -1,4 +1,3 @@
-import { AiOutlineLogin } from "react-icons/ai";
 import {
   Form,
   useActionData,
@@ -113,13 +112,9 @@ export default function Signin() {
 
         <div>
           <Button
-            minW="20ch"
             type="submit"
-            colorScheme={"brand"}
-            leftIcon={<AiOutlineLogin aria-hidden />}
             isLoading={transition.state === "submitting"}
             loadingText="Signin in progress, please wait..."
-            disabled={false}
           >
             Sign in
           </Button>

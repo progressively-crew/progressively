@@ -106,9 +106,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags", () => {
           .and("have.attr", "aria-current", "page");
 
         cy.findByRole("heading", { name: "Production" }).should("be.visible");
-        cy.findByRole("heading", { name: "Feature flags" }).should(
-          "be.visible"
-        );
+        cy.findByRole("heading", { name: "Feature flags" }).should("exist");
 
         cy.findByRole("link", { name: "Feature flags" }).should("be.visible");
         cy.findByRole("link", { name: "Create a feature flag" })

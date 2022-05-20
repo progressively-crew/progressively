@@ -1,5 +1,4 @@
 import { AiOutlineSetting } from "react-icons/ai";
-import { FaTrash } from "react-icons/fa";
 import { FiFlag, FiKey } from "react-icons/fi";
 import { LoaderFunction, MetaFunction, useLoaderData } from "remix";
 import { Crumbs, BreadCrumbs } from "~/components/AppBreadcrumbs";
@@ -138,10 +137,7 @@ export default function EnvSettingsPage() {
           />
 
           <Button
-            colorScheme="error"
             to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/delete`}
-            leftIcon={<FaTrash aria-hidden />}
-            variant="outline"
           >
             Delete {`"${environment.name}"`} forever
           </Button>

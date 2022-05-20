@@ -12,7 +12,6 @@ import {
 import { BreadCrumbs, Crumbs } from "~/components/AppBreadcrumbs";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { ErrorBox } from "~/components/ErrorBox";
-import { FaTrash } from "react-icons/fa";
 import { WarningBox } from "~/components/WarningBox";
 import { authGuard } from "~/modules/auth/services/auth-guard";
 import { deleteProject } from "~/modules/projects/services/deleteProject";
@@ -169,11 +168,7 @@ export default function DeleteProjectPage() {
         data.errors.backendError && <ErrorBox list={data.errors} />
       }
       cancelAction={
-        <Button
-          to={`/dashboard/projects/${project.uuid}/settings`}
-          variant="outline"
-          colorScheme="error"
-        >
+        <Button to={`/dashboard/projects/${project.uuid}/settings`}>
           No, {`don't`} delete <strong>{project.name}</strong>
         </Button>
       }
@@ -181,11 +176,8 @@ export default function DeleteProjectPage() {
         <Form method="post">
           <Button
             type="submit"
-            colorScheme="error"
-            leftIcon={<FaTrash aria-hidden />}
             isLoading={transition.state === "submitting"}
             loadingText="Deleting the project, please wait..."
-            disabled={false}
           >
             Yes, delete the project
           </Button>

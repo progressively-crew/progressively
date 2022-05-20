@@ -1,22 +1,15 @@
-import { Link } from "remix";
-import { Link as CLink } from "@chakra-ui/react";
+import { Link } from "./Link";
 import { VisuallyHidden } from "./VisuallyHidden";
 
 export interface LogoProps {
   to?: string;
 }
 export const Logo = ({ to }: LogoProps) => (
-  <CLink
-    as={Link}
-    to={to || "/dashboard"}
-    display="flex"
-    alignItems="center"
-    _hover={{ textDecoration: "none" }}
-  >
+  <Link to={to || "/dashboard"}>
     <VisuallyHidden>Progressively</VisuallyHidden>
     <span>
       Progress
       <span>ively</span>
     </span>
-  </CLink>
+  </Link>
 );

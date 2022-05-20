@@ -1,4 +1,3 @@
-import { IoIosCreate } from "react-icons/io";
 import {
   Form,
   useActionData,
@@ -115,11 +114,8 @@ export default function CreateProjectPage() {
 
           <Button
             type="submit"
-            leftIcon={<IoIosCreate aria-hidden />}
-            colorScheme="brand"
             isLoading={transition.state === "submitting"}
             loadingText="Creating the project, please wait..."
-            disabled={false}
           >
             Create the project
           </Button>

@@ -18,7 +18,7 @@ import { Header } from "~/components/Header";
 import { Section, SectionHeader } from "~/components/Section";
 import { AiOutlineBarChart, AiOutlineSetting } from "react-icons/ai";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
-import { FaPowerOff, FaTrash } from "react-icons/fa";
+import { FaPowerOff } from "react-icons/fa";
 import { Button } from "~/components/Button";
 import {
   toggleAction,
@@ -179,10 +179,7 @@ export default function FlagSettingPage() {
           />
 
           <Button
-            colorScheme="error"
             to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/delete`}
-            leftIcon={<FaTrash aria-hidden />}
-            variant="outline"
           >
             Delete <span aria-hidden>{`"${currentFlag.name}"`} forever</span>
             <VisuallyHidden>{`"${currentFlag.name}"`} forever</VisuallyHidden>

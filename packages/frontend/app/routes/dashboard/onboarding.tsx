@@ -1,4 +1,3 @@
-import { IoIosCreate } from "react-icons/io";
 import {
   Form,
   useActionData,
@@ -99,13 +98,7 @@ export default function OnboardingPage() {
             placeholder="e.g: My super project"
           />
 
-          <Button
-            type="submit"
-            leftIcon={<IoIosCreate aria-hidden />}
-            colorScheme="brand"
-          >
-            Create the project
-          </Button>
+          <Button type="submit">Create the project</Button>
         </Form>
       </Section>
     </DashboardLayout>

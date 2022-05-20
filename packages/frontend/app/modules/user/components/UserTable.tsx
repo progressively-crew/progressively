@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { Form, Link, useTransition } from "remix";
+import { Form, useTransition } from "remix";
 import { Cell, Col, Row, Table, Tbody, Thead } from "../../a11y/Table";
 import { useHydrated } from "../../misc/hooks/useHydrated";
-import { UserProject, UserRoles } from "../../projects/types";
-import { FaTrash } from "react-icons/fa";
+import { UserProject } from "../../projects/types";
 import { Button } from "~/components/Button";
-import { IoIosCreate } from "react-icons/io";
 import { Badge } from "~/components/Badge";
 
 export interface UserTableProps {
@@ -33,26 +31,15 @@ export const UserTable = ({
 
       {canEdit && (
         <>
-          <Button
-            colorScheme="brand"
-            as={Link}
-            to={`/dashboard/projects/${projectId}/add-member`}
-            leftIcon={<IoIosCreate aria-hidden />}
-            variant="outline"
-            mb={[2, 0]}
-          >
+          <Button to={`/dashboard/projects/${projectId}/add-member`}>
             Add member
           </Button>
 
           <Button
-            colorScheme="error"
             type={canDelete || !isHydrated ? "submit" : "button"}
             aria-disabled={isHydrated && !canDelete}
-            leftIcon={<FaTrash aria-hidden />}
-            variant="outline"
             isLoading={transition.state === "submitting"}
             loadingText="Deleting the member(s), please wait..."
-            disabled={false}
           >
             Remove from project
           </Button>

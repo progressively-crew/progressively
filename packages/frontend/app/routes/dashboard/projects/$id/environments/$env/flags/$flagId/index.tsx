@@ -1,4 +1,3 @@
-import { IoIosCreate } from "react-icons/io";
 import {
   useLoaderData,
   LoaderFunction,
@@ -203,8 +202,6 @@ export default function FlagById() {
             strategies.length > 0 && (
               <Button
                 to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
-                leftIcon={<IoIosCreate aria-hidden />}
-                colorScheme="brand"
               >
                 Add a strategy
               </Button>
@@ -214,7 +211,7 @@ export default function FlagById() {
 
         {strategies.length > 0 ? (
           <>
-            {strategies.map((strat, index) => (
+            {strategies.map((strat) => (
               <StrategyCard
                 key={`${strat.uuid}`}
                 projectId={project.uuid}
@@ -237,8 +234,6 @@ export default function FlagById() {
             action={
               <Button
                 to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
-                leftIcon={<IoIosCreate aria-hidden />}
-                colorScheme="brand"
               >
                 Add a strategy
               </Button>

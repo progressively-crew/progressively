@@ -16,7 +16,6 @@ import { getProject } from "~/modules/projects/services/getProject";
 import { Project } from "~/modules/projects/types";
 import { getSession } from "~/sessions";
 import { FlagCard } from "~/modules/flags/components/FlagCard";
-import { IoIosCreate } from "react-icons/io";
 import { SuccessBox } from "~/components/SuccessBox";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { authGuard } from "~/modules/auth/services/auth-guard";
@@ -159,13 +158,13 @@ export default function FlagsByEnvPage() {
     >
       <Section id="list-flags-title">
         {isFlagRemoved ? (
-          <SuccessBox id="flag-removed" mb={4}>
+          <SuccessBox id="flag-removed">
             The flag has been successfully deleted.
           </SuccessBox>
         ) : null}
 
         {newFlagId ? (
-          <SuccessBox id="flag-added" mb={4}>
+          <SuccessBox id="flag-added">
             The flag has been successfully created.
           </SuccessBox>
         ) : null}
@@ -177,9 +176,6 @@ export default function FlagsByEnvPage() {
             flagsByEnv.length > 0 && (
               <Button
                 to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/create`}
-                leftIcon={<IoIosCreate aria-hidden />}
-                colorScheme="brand"
-                flexShrink={0}
               >
                 Create a feature flag
               </Button>
@@ -189,7 +185,7 @@ export default function FlagsByEnvPage() {
 
         {flagsByEnv.length > 0 ? (
           <>
-            {flagsByEnv.map((flagEnv, index) => (
+            {flagsByEnv.map((flagEnv) => (
               <FlagCard
                 key={flagEnv.flagId}
                 id={flagEnv.flagId}
@@ -219,9 +215,6 @@ export default function FlagsByEnvPage() {
             action={
               <Button
                 to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/create`}
-                leftIcon={<IoIosCreate aria-hidden />}
-                colorScheme="brand"
-                flexShrink={0}
               >
                 Create a feature flag
               </Button>

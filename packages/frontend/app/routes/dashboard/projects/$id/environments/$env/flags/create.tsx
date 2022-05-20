@@ -1,4 +1,3 @@
-import { IoIosCreate } from "react-icons/io";
 import {
   Form,
   useActionData,
@@ -176,11 +175,8 @@ export default function CreateFlagPage() {
 
           <Button
             type="submit"
-            leftIcon={<IoIosCreate aria-hidden />}
-            colorScheme="brand"
             isLoading={transition.state === "submitting"}
             loadingText="Creating the feature flag, please wait..."
-            disabled={false}
           >
             Create the feature flag
           </Button>

@@ -9,7 +9,6 @@ import { SuccessBox } from "~/components/SuccessBox";
 import { getProject } from "~/modules/projects/services/getProject";
 import { Project } from "~/modules/projects/types";
 import { getSession } from "~/sessions";
-import { IoIosCreate } from "react-icons/io";
 import { EnvCard } from "~/modules/environments/components/EnvCard";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { authGuard } from "~/modules/auth/services/auth-guard";
@@ -95,13 +94,13 @@ export default function ProjectDetailPage() {
     >
       <Section aria-labelledby="list-env-title" id="list-env-title">
         {newEnvId ? (
-          <SuccessBox id="env-added" mb={4}>
+          <SuccessBox id="env-added">
             The environment has been successfully created.
           </SuccessBox>
         ) : null}
 
         {envRemoved ? (
-          <SuccessBox id="env-removed" mb={4}>
+          <SuccessBox id="env-removed">
             The environment has been successfully deleted.
           </SuccessBox>
         ) : null}
@@ -113,8 +112,6 @@ export default function ProjectDetailPage() {
             project.environments.length > 0 && (
               <Button
                 to={`/dashboard/projects/${project.uuid}/environments/create`}
-                leftIcon={<IoIosCreate aria-hidden />}
-                colorScheme="brand"
               >
                 Create an environment
               </Button>
@@ -122,7 +119,7 @@ export default function ProjectDetailPage() {
           }
         />
 
-        {project.environments.map((env, index) => (
+        {project.environments.map((env) => (
           <EnvCard
             key={env.uuid}
             id={env.uuid}
@@ -143,8 +140,6 @@ export default function ProjectDetailPage() {
             action={
               <Button
                 to={`/dashboard/projects/${project.uuid}/environments/create`}
-                leftIcon={<IoIosCreate aria-hidden />}
-                colorScheme="brand"
               >
                 Create an environment
               </Button>

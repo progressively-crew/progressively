@@ -1,19 +1,13 @@
-import { Stat, StatLabel, StatNumber } from "@chakra-ui/react";
-
 export interface BigStateProps {
   value: string | number;
   name: string;
-  color: string;
-  dotted?: boolean;
 }
 
-export const BigState = ({ name, value, color, dotted }: BigStateProps) => {
+export const BigState = ({ name, value }: BigStateProps) => {
   return (
-    <Stat>
-      <StatLabel fontSize="xl" textColor="textlight" fontWeight="normal">
-        {name}
-      </StatLabel>
-      <StatNumber fontSize="3xl">{value}</StatNumber>
-    </Stat>
+    <div>
+      <p>{name}</p>
+      <p>{value}</p>
+    </div>
   );
 };

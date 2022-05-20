@@ -5,7 +5,6 @@ import {
   redirect,
   useSearchParams,
 } from "remix";
-import { IoIosCreate } from "react-icons/io";
 import { SuccessBox } from "~/components/SuccessBox";
 import { getProjects } from "~/modules/projects/services/getProjects";
 import { UserProject } from "~/modules/projects/types";
@@ -60,13 +59,7 @@ export default function DashboardRoot() {
         <Header
           title="Projects"
           startAction={
-            <Button
-              leftIcon={<IoIosCreate aria-hidden />}
-              to="/dashboard/projects/create"
-              colorScheme="brand"
-            >
-              Create a project
-            </Button>
+            <Button to="/dashboard/projects/create">Create a project</Button>
           }
         />
       }
@@ -84,7 +77,7 @@ export default function DashboardRoot() {
           </SuccessBox>
         ) : null}
 
-        {projects.map((project, index: number) => (
+        {projects.map((project) => (
           <ProjectCard
             key={project.projectId}
             id={project.projectId}

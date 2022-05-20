@@ -23,7 +23,6 @@ import { createStrategy } from "~/modules/strategies/services/createStrategy";
 import { BreadCrumbs, Crumbs } from "~/components/AppBreadcrumbs";
 import { StrategyAudience } from "~/modules/strategies/components/StrategyAudience";
 import { ActivationStrategy } from "~/modules/strategies/components/ActivationStrategy";
-import { IoIosCreate } from "react-icons/io";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { authGuard } from "~/modules/auth/services/auth-guard";
 import { User } from "~/modules/user/types";
@@ -241,12 +240,9 @@ export default function StrategyCreatePage() {
           />
 
           <Button
-            colorScheme={"brand"}
             type="submit"
-            leftIcon={<IoIosCreate aria-hidden />}
             isLoading={transition.state === "submitting"}
             loadingText="Saving the strategy, please wait..."
-            disabled={false}
           >
             Save the strategy
           </Button>

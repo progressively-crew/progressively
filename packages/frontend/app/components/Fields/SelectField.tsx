@@ -1,5 +1,3 @@
-import { FormControl, FormLabel, Select } from "@chakra-ui/react";
-
 export interface SelectOption {
   label: string;
   value: string | number;
@@ -21,10 +19,10 @@ export const SelectField = ({
   options,
 }: SelectFieldProps) => {
   return (
-    <FormControl isInvalid={isInvalid}>
-      <FormLabel htmlFor={name}>{label}</FormLabel>
+    <div>
+      <label htmlFor={name}>{label}</label>
 
-      <Select
+      <select
         name={name}
         id={name}
         defaultValue={defaultValue}
@@ -35,7 +33,7 @@ export const SelectField = ({
             {opt.label}
           </option>
         ))}
-      </Select>
-    </FormControl>
+      </select>
+    </div>
   );
 };

@@ -12,7 +12,6 @@ import {
 import { Crumbs, BreadCrumbs } from "~/components/AppBreadcrumbs";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { ErrorBox } from "~/components/ErrorBox";
-import { FaTrash } from "react-icons/fa";
 import { WarningBox } from "~/components/WarningBox";
 import { authGuard } from "~/modules/auth/services/auth-guard";
 import { deleteEnvironment } from "~/modules/environments/services/deleteEnvironment";
@@ -193,8 +192,6 @@ export default function DeleteEnvPage() {
       cancelAction={
         <Button
           to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/settings`}
-          variant="outline"
-          colorScheme="error"
         >
           No, {`don't`} delete <strong>{environment.name}</strong>
         </Button>
@@ -203,11 +200,8 @@ export default function DeleteEnvPage() {
         <Form method="post">
           <Button
             type="submit"
-            colorScheme="error"
-            leftIcon={<FaTrash aria-hidden />}
             isLoading={transition.state === "submitting"}
             loadingText="Deleting the environment, please wait..."
-            disabled={false}
           >
             Yes, delete the environment
           </Button>

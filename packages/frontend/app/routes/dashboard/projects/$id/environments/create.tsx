@@ -1,4 +1,3 @@
-import { IoIosCreate } from "react-icons/io";
 import {
   Form,
   useActionData,
@@ -142,11 +141,8 @@ export default function CreateEnvironmentPage() {
 
           <Button
             type="submit"
-            leftIcon={<IoIosCreate aria-hidden />}
-            colorScheme="brand"
             isLoading={transition.state === "submitting"}
             loadingText="Creating the environment, please wait..."
-            disabled={false}
           >
             Create the environment
           </Button>

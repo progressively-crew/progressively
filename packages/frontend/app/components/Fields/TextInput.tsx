@@ -1,4 +1,3 @@
-import { FormControl, FormLabel, Input } from "@chakra-ui/react";
 import { Typography } from "../Typography";
 
 export interface TextInputProps {
@@ -29,9 +28,9 @@ export const TextInput = ({
   }
 
   return (
-    <FormControl isInvalid={Boolean(isInvalid)}>
-      <FormLabel htmlFor={name}>{label}</FormLabel>
-      <Input
+    <div>
+      <label htmlFor={name}>{label}</label>
+      <input
         type={type}
         name={name}
         id={name}
@@ -45,6 +44,6 @@ export const TextInput = ({
           {description}
         </Typography>
       )}
-    </FormControl>
+    </div>
   );
 };

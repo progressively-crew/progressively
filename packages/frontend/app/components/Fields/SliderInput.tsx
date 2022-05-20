@@ -1,12 +1,3 @@
-import {
-  FormControl,
-  FormLabel,
-  Slider,
-  SliderTrack,
-  SliderFilledTrack,
-  SliderThumb,
-} from "@chakra-ui/react";
-
 export interface SliderInputProps {
   percentageValue: number;
   name: string;
@@ -21,24 +12,19 @@ export const SliderInput = ({
   onChange,
 }: SliderInputProps) => {
   return (
-    <FormControl>
-      <FormLabel htmlFor={`field-${name}`}>{label}</FormLabel>
+    <div>
+      <label htmlFor={`field-${name}`}>{label}</label>
 
-      <Slider
-        name={`field-${name}`}
-        id={`field-${name}`}
-        aria-labelledby="percentage-value"
+      <input
+        type="range"
         min={0}
         max={100}
         step={1}
         value={percentageValue}
-        onChange={onChange}
-      >
-        <SliderTrack>
-          <SliderFilledTrack />
-        </SliderTrack>
-        <SliderThumb />
-      </Slider>
-    </FormControl>
+        name={`field-${name}`}
+        id={`field-${name}`}
+        onChange={(e) => onChange(Number(e.target.value))}
+      />
+    </div>
   );
 };

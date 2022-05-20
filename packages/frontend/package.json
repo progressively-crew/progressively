@@ -14,11 +14,6 @@
     "test:e2e:ci": "cypress run --browser chrome --record --parallel"
   },
   "dependencies": {
-    "@chakra-ui/react": "^1.8.8",
-    "@chakra-ui/skip-nav": "^1.2.6",
-    "@emotion/react": "^11.9.0",
-    "@emotion/server": "^11.4.0",
-    "@emotion/styled": "^11.8.1",
     "@remix-run/react": "^1.4.3",
     "@remix-run/serve": "^1.4.3",
     "framer-motion": "^6.3.3",

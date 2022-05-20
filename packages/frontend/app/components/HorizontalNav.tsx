@@ -1,4 +1,3 @@
-import { Link as CLink } from "@chakra-ui/react";
 import { NavLink } from "remix";
 import { Container } from "./Container";
 
@@ -25,19 +24,10 @@ export interface NavItemProps {
 export const NavItem = ({ children, to, icon }: NavItemProps) => {
   return (
     <li>
-      <CLink
-        as={NavLink}
-        px={6}
-        py={4}
-        to={to}
-        end
-        display={"inline-block"}
-        className="custom-nav-link"
-        fontSize="lg"
-      >
+      <NavLink to={to} className="custom-nav-link">
         <span aria-hidden>{icon}</span>
         <span>{children}</span>
-      </CLink>
+      </NavLink>
     </li>
   );
 };

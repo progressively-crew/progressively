@@ -1,6 +1,5 @@
 import * as React from "react";
 import {
-  Link,
   Links,
   LiveReload,
   Meta,
@@ -11,9 +10,6 @@ import {
   useLocation,
 } from "remix";
 import type { LinksFunction } from "remix";
-import { ChakraProvider } from "@chakra-ui/react";
-import { withEmotionCache } from "@emotion/react";
-import { lightTheme } from "./modules/themes/light";
 import UnauthorizedPage from "./routes/401";
 import ForbiddenPage from "./routes/403";
 import NotFoundPage from "./routes/404";
@@ -21,12 +17,6 @@ import styles from "./styles/index.css";
 import { NotAuthenticatedLayout } from "./layouts/NotAuthenticatedLayout";
 import { H1 } from "./components/H1";
 import { Main } from "./components/Main";
-import { AiOutlineLogin } from "react-icons/ai";
-import { useContext, useEffect } from "react";
-import {
-  ServerStyleContext,
-  ClientStyleContext,
-} from "./_chakra-setup/context";
 import { Button } from "./components/Button";
 
 /**
@@ -49,9 +39,7 @@ export const links: LinksFunction = () => {
 export default function App() {
   return (
     <Document>
-      <ChakraProvider theme={lightTheme}>
-        <Outlet />
-      </ChakraProvider>
+      <Outlet />
     </Document>
   );
 }
@@ -61,54 +49,27 @@ interface DocumentProps {
   title?: string;
 }
 
-const Document = withEmotionCache(
-  ({ children, title }: DocumentProps, emotionCache) => {
-    const serverStyleData = useContext(ServerStyleContext);
-    const clientStyleData = useContext(ClientStyleContext);
+const Document = ({ children, title }: DocumentProps) => {
+  return (
+    <html lang="en">
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        {title ? <title>{title}</title> : null}
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        {children}
 
-    // Only executed on client
-    useEffect(() => {
-      // re-link sheet container
-      emotionCache.sheet.container = document.head;
-      // re-inject tags
-      const tags = emotionCache.sheet.tags;
-      emotionCache.sheet.flush();
-      tags.forEach((tag) => {
-        (emotionCache.sheet as any)._insertTag(tag);
-      });
-      // reset cache to reapply global styles
-      clientStyleData?.reset();
-    }, []);
-
-    return (
-      <html lang="en">
-        <head>
-          <meta charSet="utf-8" />
-          <meta name="viewport" content="width=device-width,initial-scale=1" />
-          {title ? <title>{title}</title> : null}
-          <Meta />
-          <Links />
-
-          {serverStyleData?.map(({ key, ids, css }) => (
-            <style
-              key={key}
-              data-emotion={`${key} ${ids.join(" ")}`}
-              dangerouslySetInnerHTML={{ __html: css }}
-            />
-          ))}
-        </head>
-        <body>
-          {children}
-
-          <RouteChangeAnnouncement />
-          <ScrollRestoration />
-          <Scripts />
-          {process.env.NODE_ENV === "development" && <LiveReload />}
-        </body>
-      </html>
-    );
-  }
-);
+        <RouteChangeAnnouncement />
+        <ScrollRestoration />
+        <Scripts />
+        {process.env.NODE_ENV === "development" && <LiveReload />}
+      </body>
+    </html>
+  );
+};
 
 function Layout({ children }: React.PropsWithChildren<unknown>) {
   return <div>{children}</div>;
@@ -152,14 +113,7 @@ export function ErrorBoundary({ error }: { error: Error }) {
 
             <p>{error.message}</p>
 
-            <Button
-              as={Link}
-              to="/signin"
-              colorScheme={"brand"}
-              leftIcon={<AiOutlineLogin aria-hidden />}
-            >
-              Signin page
-            </Button>
+            <Button to="/signin">Signin page</Button>
           </Main>
         </NotAuthenticatedLayout>
       </Layout>

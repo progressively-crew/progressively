@@ -1,5 +1,4 @@
 import { AiOutlineSetting } from "react-icons/ai";
-import { FaTrash } from "react-icons/fa";
 import { FiLayers } from "react-icons/fi";
 import {
   ActionFunction,
@@ -215,12 +214,7 @@ export default function SettingsPage() {
               }
             />
 
-            <Button
-              colorScheme="error"
-              to={`/dashboard/projects/${project.uuid}/delete`}
-              leftIcon={<FaTrash aria-hidden />}
-              variant="outline"
-            >
+            <Button to={`/dashboard/projects/${project.uuid}/delete`}>
               Delete <span>{`"${project.name}"`} forever</span>
             </Button>
           </Section>

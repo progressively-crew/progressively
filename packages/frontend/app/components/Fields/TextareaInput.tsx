@@ -1,5 +1,3 @@
-import { FormControl, FormLabel, Textarea } from "@chakra-ui/react";
-
 export interface TextareaInputProps {
   isInvalid?: boolean;
   name: string;
@@ -16,15 +14,15 @@ export const TextareaInput = ({
   placeholder,
 }: TextareaInputProps) => {
   return (
-    <FormControl isInvalid={isInvalid}>
-      <FormLabel htmlFor={name}>{label}</FormLabel>
-      <Textarea
+    <div>
+      <label htmlFor={name}>{label}</label>
+      <textarea
         name={name}
         id={name}
         defaultValue={defaultValue}
         placeholder={placeholder}
         aria-describedby={isInvalid ? `error-${name}` : undefined}
       />
-    </FormControl>
+    </div>
   );
 };

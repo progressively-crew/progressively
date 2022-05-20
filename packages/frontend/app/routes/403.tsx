@@ -1,5 +1,3 @@
-import { AiOutlineLogin } from "react-icons/ai";
-import { Link } from "remix";
 import { Button } from "~/components/Button";
 import { H1 } from "~/components/H1";
 import { Typography } from "~/components/Typography";
@@ -19,14 +17,7 @@ export default function ForbiddenPage() {
         To access this content, make sure to fill the authentication page form.
       </Typography>
 
-      <Button
-        as={Link}
-        to="/signin"
-        colorScheme={"brand"}
-        leftIcon={<AiOutlineLogin aria-hidden />}
-      >
-        Signin page
-      </Button>
+      <Button to="/signin">Signin page</Button>
     </ErrorLayout>
   );
 }

@@ -1,4 +1,3 @@
-import { MdPassword } from "react-icons/md";
 import {
   ActionFunction,
   Form,
@@ -102,11 +101,8 @@ export default function ForgotPasswordPage() {
         <div>
           <Button
             type="submit"
-            colorScheme={"brand"}
-            leftIcon={<MdPassword aria-hidden />}
             isLoading={transition.state === "submitting"}
             loadingText="Password resetting in progress, please wait..."
-            disabled={false}
           >
             Reset password
           </Button>
