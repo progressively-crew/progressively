@@ -1,4 +1,3 @@
-import { Flex, Icon } from "@chakra-ui/react";
 import { AiOutlineWarning } from "react-icons/ai";
 import { Li, Ul } from "./Ul";
 
@@ -14,10 +13,10 @@ export const WarningBox = ({ list, title }: WarningBoxProps) => {
 
   return (
     <figure tabIndex={-1}>
-      <Flex as="figcaption">
-        <Icon as={AiOutlineWarning} w={6} h={6} aria-hidden mr={2} />
+      <figcaption>
+        <AiOutlineWarning aria-hidden />
         <strong>{title}</strong>
-      </Flex>
+      </figcaption>
 
       {list && warnings && (
         <Ul>

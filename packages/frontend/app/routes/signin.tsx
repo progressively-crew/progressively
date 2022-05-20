@@ -1,4 +1,3 @@
-import { Stack } from "@chakra-ui/react";
 import { AiOutlineLogin } from "react-icons/ai";
 import {
   Form,
@@ -87,49 +86,47 @@ export default function Signin() {
   return (
     <NotAuthenticatedLayout header={<Header title="Signin" />}>
       <Form method="post">
-        <Stack spacing={4} mt={4}>
-          {(errors?.password || errors?.email || errors?.badUser) && (
-            <ErrorBox list={errors} />
-          )}
+        {(errors?.password || errors?.email || errors?.badUser) && (
+          <ErrorBox list={errors} />
+        )}
 
-          {Boolean(userActivated) && (
-            <SuccessBox id="user-activated">
-              The account has been activated, you can now log in
-            </SuccessBox>
-          )}
+        {Boolean(userActivated) && (
+          <SuccessBox id="user-activated">
+            The account has been activated, you can now log in
+          </SuccessBox>
+        )}
 
-          <TextInput
-            isInvalid={Boolean(errors?.email)}
-            name="email"
-            label="Email"
-            placeholder="e.g: james.bond@mi6.com"
-          />
+        <TextInput
+          isInvalid={Boolean(errors?.email)}
+          name="email"
+          label="Email"
+          placeholder="e.g: james.bond@mi6.com"
+        />
 
-          <TextInput
-            isInvalid={Boolean(errors?.password)}
-            name="password"
-            label="Password"
-            type="password"
-            placeholder="************"
-          />
+        <TextInput
+          isInvalid={Boolean(errors?.password)}
+          name="password"
+          label="Password"
+          type="password"
+          placeholder="************"
+        />
 
-          <div>
-            <Button
-              minW="20ch"
-              type="submit"
-              colorScheme={"brand"}
-              leftIcon={<AiOutlineLogin aria-hidden />}
-              isLoading={transition.state === "submitting"}
-              loadingText="Signin in progress, please wait..."
-              disabled={false}
-            >
-              Sign in
-            </Button>
-          </div>
-        </Stack>
+        <div>
+          <Button
+            minW="20ch"
+            type="submit"
+            colorScheme={"brand"}
+            leftIcon={<AiOutlineLogin aria-hidden />}
+            isLoading={transition.state === "submitting"}
+            loadingText="Signin in progress, please wait..."
+            disabled={false}
+          >
+            Sign in
+          </Button>
+        </div>
       </Form>
 
-      <Stack mt={6} spacing={2} as={Ul} aria-label="Account related">
+      <Ul aria-label="Account related">
         {showRegister ? (
           <Li>
             <Link to="/register">{`Create an account`}</Link>
@@ -139,7 +136,7 @@ export default function Signin() {
         <Li>
           <Link to="/forgot-password">{`I forgot my password`}</Link>
         </Li>
-      </Stack>
+      </Ul>
     </NotAuthenticatedLayout>
   );
 }

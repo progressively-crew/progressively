@@ -1,4 +1,3 @@
-import { Flex } from "@chakra-ui/react";
 import { AiOutlineSetting } from "react-icons/ai";
 import { FaTrash } from "react-icons/fa";
 import { FiFlag, FiKey } from "react-icons/fi";
@@ -138,16 +137,14 @@ export default function EnvSettingsPage() {
             }
           />
 
-          <Flex pb={4} justifyContent={["center", "flex-start"]}>
-            <Button
-              colorScheme="error"
-              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/delete`}
-              leftIcon={<FaTrash aria-hidden />}
-              variant="outline"
-            >
-              Delete {`"${environment.name}"`} forever
-            </Button>
-          </Flex>
+          <Button
+            colorScheme="error"
+            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/delete`}
+            leftIcon={<FaTrash aria-hidden />}
+            variant="outline"
+          >
+            Delete {`"${environment.name}"`} forever
+          </Button>
         </Section>
       )}
     </DashboardLayout>

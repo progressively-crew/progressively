@@ -1,4 +1,3 @@
-import { Flex } from "@chakra-ui/react";
 import { createContext, useContext } from "react";
 import { Heading } from "./Heading";
 import { VisuallyHidden } from "./VisuallyHidden";
@@ -40,13 +39,7 @@ export const SectionHeader = ({
   const id = useContext(SectionContext);
 
   return (
-    <Flex
-      alignItems={["flex-start", "center"]}
-      justifyContent={hiddenTitle ? "flex-start" : "space-between"}
-      direction={["column", "row"]}
-      py={4}
-      {...props}
-    >
+    <div {...props}>
       {hiddenTitle ? (
         <VisuallyHidden>
           <Heading as={titleAs} id={id} size="xl">
@@ -62,6 +55,6 @@ export const SectionHeader = ({
       {description}
 
       {endAction}
-    </Flex>
+    </div>
   );
 };

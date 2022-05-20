@@ -1,4 +1,4 @@
-import { Container } from "@chakra-ui/react";
+import { Container } from "~/components/Container";
 import { Main } from "~/components/Main";
 
 export interface ErrorLayoutProps {
@@ -6,7 +6,7 @@ export interface ErrorLayoutProps {
 }
 export function ErrorLayout({ children }: ErrorLayoutProps) {
   return (
-    <Container maxW="5xl">
+    <Container>
       <Main>{children}</Main>
     </Container>
   );

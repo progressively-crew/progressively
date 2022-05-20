@@ -1,4 +1,3 @@
-import { Stack, HStack } from "@chakra-ui/react";
 import { IoIosCreate } from "react-icons/io";
 import {
   useLoaderData,
@@ -146,12 +145,12 @@ export default function FlagById() {
         <Header
           title={currentFlag.name}
           startAction={
-            <HStack spacing={4}>
+            <div>
               <ButtonCopy icon={<FiFlag />} toCopy={currentFlag.key}>
                 {currentFlag.key}
               </ButtonCopy>
               <ToggleFlag isFlagActivated={isFlagActivated} />
-            </HStack>
+            </div>
           }
         />
       }
@@ -180,78 +179,73 @@ export default function FlagById() {
         </HorizontalNav>
       }
     >
-      <Stack spacing={8}>
-        <Section id="concerned-audience">
-          <Stack spacing={2}>
-            {isStrategyAdded ? (
-              <SuccessBox id="strategy-added" mb={4}>
-                The strategy has been successfully created.
-              </SuccessBox>
-            ) : null}
+      <Section id="concerned-audience">
+        {isStrategyAdded ? (
+          <SuccessBox id="strategy-added" mb={4}>
+            The strategy has been successfully created.
+          </SuccessBox>
+        ) : null}
 
-            {isStrategyRemoved ? (
-              <SuccessBox id="strategy-removed" mb={4}>
-                The strategy has been successfully removed.
-              </SuccessBox>
-            ) : null}
+        {isStrategyRemoved ? (
+          <SuccessBox id="strategy-removed" mb={4}>
+            The strategy has been successfully removed.
+          </SuccessBox>
+        ) : null}
 
-            {strategies.length === 0 && (
-              <WarningBox title="You don't have strategies yet. When activating the flag, every user will receive the activated variant." />
-            )}
-          </Stack>
+        {strategies.length === 0 && (
+          <WarningBox title="You don't have strategies yet. When activating the flag, every user will receive the activated variant." />
+        )}
 
-          <SectionHeader
-            title="Strategies"
-            hiddenTitle
-            endAction={
-              strategies.length > 0 && (
-                <Button
-                  to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
-                  leftIcon={<IoIosCreate aria-hidden />}
-                  colorScheme="brand"
-                >
-                  Add a strategy
-                </Button>
-              )
+        <SectionHeader
+          title="Strategies"
+          hiddenTitle
+          endAction={
+            strategies.length > 0 && (
+              <Button
+                to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
+                leftIcon={<IoIosCreate aria-hidden />}
+                colorScheme="brand"
+              >
+                Add a strategy
+              </Button>
+            )
+          }
+        />
+
+        {strategies.length > 0 ? (
+          <>
+            {strategies.map((strat, index) => (
+              <StrategyCard
+                key={`${strat.uuid}`}
+                projectId={project.uuid}
+                envId={environment.uuid}
+                flagId={currentFlag.uuid}
+                strat={strat}
+              />
+            ))}
+          </>
+        ) : null}
+
+        {strategies.length === 0 ? (
+          <EmptyState
+            title="No strategy found"
+            description={
+              <Typography>
+                There are no strategies bound to this flag yet.
+              </Typography>
+            }
+            action={
+              <Button
+                to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
+                leftIcon={<IoIosCreate aria-hidden />}
+                colorScheme="brand"
+              >
+                Add a strategy
+              </Button>
             }
           />
-
-          {strategies.length > 0 ? (
-            <>
-              {strategies.map((strat, index) => (
-                <StrategyCard
-                  noBorder={index === 0}
-                  key={`${strat.uuid}`}
-                  projectId={project.uuid}
-                  envId={environment.uuid}
-                  flagId={currentFlag.uuid}
-                  strat={strat}
-                />
-              ))}
-            </>
-          ) : null}
-
-          {strategies.length === 0 ? (
-            <EmptyState
-              title="No strategy found"
-              description={
-                <Typography>
-                  There are no strategies bound to this flag yet.
-                </Typography>
-              }
-              action={
-                <Button
-                  to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
-                  leftIcon={<IoIosCreate aria-hidden />}
-                  colorScheme="brand"
-                >
-                  Add a strategy
-                </Button>
-              }
-            />
-          ) : null}
-        </Section>
-      </Stack>
+        ) : null}
+      </Section>
     </DashboardLayout>
   );
 }

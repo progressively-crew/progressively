@@ -1,4 +1,3 @@
-import { HStack } from "@chakra-ui/react";
 import { useState } from "react";
 import { Form, Link, useTransition } from "remix";
 import { Cell, Col, Row, Table, Tbody, Thead } from "../../a11y/Table";
@@ -33,7 +32,7 @@ export const UserTable = ({
       <input type="hidden" name="_method" value="delete-member" />
 
       {canEdit && (
-        <HStack mb={6} spacing={[0, 4]} flexDirection={["column", "row"]}>
+        <>
           <Button
             colorScheme="brand"
             as={Link}
@@ -57,7 +56,7 @@ export const UserTable = ({
           >
             Remove from project
           </Button>
-        </HStack>
+        </>
       )}
 
       <Table labelledBy={labelledBy} onSelect={setSelected} selected={selected}>

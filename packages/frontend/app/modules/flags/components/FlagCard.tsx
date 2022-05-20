@@ -1,4 +1,3 @@
-import { Flex, HStack } from "@chakra-ui/react";
 import React, { useRef } from "react";
 import { Form } from "remix";
 import { FlagStatus } from "../types";
@@ -17,7 +16,6 @@ export interface FlagCardProps {
   flagStatus: FlagStatus;
   flagKey: string;
   optimistic: boolean;
-  noBorder?: boolean;
 }
 
 export const FlagCard = ({
@@ -28,52 +26,47 @@ export const FlagCard = ({
   flagStatus,
   flagKey,
   optimistic,
-  noBorder,
 }: FlagCardProps) => {
   const linkRef = useRef<HTMLAnchorElement>(null);
 
   return (
     <div>
-      <Flex justifyContent={"space-between"} direction={["column", "row"]}>
-        <div>
-          <HStack spacing={[0, 2]} display={["block", "flex"]}>
-            <Heading as="h3" id={`article-${id}`} size="md">
-              <Link ref={linkRef} to={linkTo}>
-                {title} <VisuallyHidden>feature flag</VisuallyHidden>
-              </Link>
-            </Heading>
+      <div>
+        <Heading as="h3" id={`article-${id}`} size="md">
+          <Link ref={linkRef} to={linkTo}>
+            {title} <VisuallyHidden>feature flag</VisuallyHidden>
+          </Link>
+        </Heading>
 
-            <span aria-hidden>
-              <Tag>{flagKey}</Tag>
-            </span>
+        <span aria-hidden>
+          <Tag>{flagKey}</Tag>
+        </span>
 
-            <VisuallyHidden>
-              <p>The flag key is {flagKey}</p>
-            </VisuallyHidden>
-          </HStack>
+        <VisuallyHidden>
+          <p>The flag key is {flagKey}</p>
+        </VisuallyHidden>
 
-          <Typography color="textlight">{description}</Typography>
-        </div>
+        <Typography color="textlight">{description}</Typography>
+      </div>
 
-        <Form method="post">
-          <input
-            type="hidden"
-            name="nextStatus"
-            value={
-              flagStatus === FlagStatus.ACTIVATED
-                ? FlagStatus.NOT_ACTIVATED
-                : FlagStatus.ACTIVATED
-            }
-          />
-          <input type="hidden" name="flagId" value={id} />
+      <Form method="post">
+        <input
+          type="hidden"
+          name="nextStatus"
+          value={
+            flagStatus === FlagStatus.ACTIVATED
+              ? FlagStatus.NOT_ACTIVATED
+              : FlagStatus.ACTIVATED
+          }
+        />
+        <input type="hidden" name="flagId" value={id} />
 
-          <Switch
-            type="submit"
-            optimistic={optimistic}
-            checked={flagStatus === FlagStatus.ACTIVATED}
-          />
-        </Form>
-      </Flex>
+        <Switch
+          type="submit"
+          optimistic={optimistic}
+          checked={flagStatus === FlagStatus.ACTIVATED}
+        />
+      </Form>
     </div>
   );
 };

@@ -1,4 +1,3 @@
-import { HStack } from "@chakra-ui/react";
 import { MdChevronLeft } from "react-icons/md";
 import { Link } from "remix";
 
@@ -9,9 +8,9 @@ export interface BackLinkProps {
 
 export const BackLink = ({ children, to }: BackLinkProps) => {
   return (
-    <HStack>
+    <div>
       <MdChevronLeft aria-hidden />
-      <Link to="/signin">Back to signin</Link>
-    </HStack>
+      <Link to={to}>{children}</Link>
+    </div>
   );
 };

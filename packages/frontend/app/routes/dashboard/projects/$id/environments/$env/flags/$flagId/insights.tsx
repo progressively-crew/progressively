@@ -1,4 +1,4 @@
-import { Flex, HStack, Stack, useTheme } from "@chakra-ui/react";
+import { useTheme } from "@chakra-ui/react";
 import {
   useLoaderData,
   LoaderFunction,
@@ -171,12 +171,12 @@ export default function FlagById() {
         <Header
           title={currentFlag.name}
           startAction={
-            <HStack spacing={4}>
+            <div>
               <ButtonCopy icon={<FiFlag />} toCopy={currentFlag.key}>
                 {currentFlag.key}
               </ButtonCopy>
               <ToggleFlag isFlagActivated={isFlagActivated} />
-            </HStack>
+            </div>
           }
         />
       }
@@ -205,87 +205,74 @@ export default function FlagById() {
         </HorizontalNav>
       }
     >
-      <Stack spacing={8}>
-        <Section id="flag-status">
-          <SectionHeader
-            title="Insights"
-            description="Number of hits per date"
-          />
+      <Section id="flag-status">
+        <SectionHeader title="Insights" description="Number of hits per date" />
 
-          <Flex gap={8} flexDirection={["column", "row"]} mt={8} mb={8}>
-            <BigState
-              name="Hits on activated variant"
-              value={activatedCount}
-              color={theme.colors.brand["500"]}
-            />
-            <BigState
-              name="Hits on not activated variant"
-              value={notActivatedCount}
-              color={theme.colors.error["500"]}
-              dotted
-            />
-          </Flex>
+        <BigState
+          name="Hits on activated variant"
+          value={activatedCount}
+          color={theme.colors.brand["500"]}
+        />
+        <BigState
+          name="Hits on not activated variant"
+          value={notActivatedCount}
+          color={theme.colors.error["500"]}
+          dotted
+        />
 
-          {hits.length > 0 && (
-            <ResponsiveContainer width="100%" aspect={16.0 / 9.0}>
-              <AreaChart
-                data={hits}
-                margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-              >
-                <defs>
-                  <linearGradient
-                    id="colorActivated"
-                    x1="0"
-                    y1="0"
-                    x2="0"
-                    y2="1"
-                  >
-                    <stop
-                      offset="95%"
-                      stopColor={theme.colors.brand["200"]}
-                      stopOpacity={0.4}
-                    />
-                  </linearGradient>
-                  <linearGradient
-                    id="colorNotActivated"
-                    x1="0"
-                    y1="0"
-                    x2="0"
-                    y2="1"
-                  >
-                    <stop
-                      offset="95%"
-                      stopColor={theme.colors.error["200"]}
-                      stopOpacity={0.4}
-                    />
-                  </linearGradient>
-                </defs>
-                <XAxis dataKey="date" tickFormatter={formatX} />
-                <YAxis />
-                <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                <Tooltip />
-                <Area
-                  type="linear"
-                  dataKey="activated"
-                  fillOpacity={1}
-                  fill="url(#colorActivated)"
-                  stroke={theme.colors.brand["500"]}
-                  strokeWidth={3}
-                />
-                <Area
-                  type="linear"
-                  dataKey="notactivated"
-                  fillOpacity={1}
-                  fill="url(#colorNotActivated)"
-                  stroke={theme.colors.error["500"]}
-                  strokeDasharray="3 3"
-                  strokeWidth={3}
-                />
-              </AreaChart>
-            </ResponsiveContainer>
-          )}
-        </Section>
-      </Stack>
+        {hits.length > 0 && (
+          <ResponsiveContainer width="100%" aspect={16.0 / 9.0}>
+            <AreaChart
+              data={hits}
+              margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+            >
+              <defs>
+                <linearGradient id="colorActivated" x1="0" y1="0" x2="0" y2="1">
+                  <stop
+                    offset="95%"
+                    stopColor={theme.colors.brand["200"]}
+                    stopOpacity={0.4}
+                  />
+                </linearGradient>
+                <linearGradient
+                  id="colorNotActivated"
+                  x1="0"
+                  y1="0"
+                  x2="0"
+                  y2="1"
+                >
+                  <stop
+                    offset="95%"
+                    stopColor={theme.colors.error["200"]}
+                    stopOpacity={0.4}
+                  />
+                </linearGradient>
+              </defs>
+              <XAxis dataKey="date" tickFormatter={formatX} />
+              <YAxis />
+              <CartesianGrid strokeDasharray="3 3" vertical={false} />
+              <Tooltip />
+              <Area
+                type="linear"
+                dataKey="activated"
+                fillOpacity={1}
+                fill="url(#colorActivated)"
+                stroke={theme.colors.brand["500"]}
+                strokeWidth={3}
+              />
+              <Area
+                type="linear"
+                dataKey="notactivated"
+                fillOpacity={1}
+                fill="url(#colorNotActivated)"
+                stroke={theme.colors.error["500"]}
+                strokeDasharray="3 3"
+                strokeWidth={3}
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+        )}
+      </Section>
     </DashboardLayout>
   );
 }

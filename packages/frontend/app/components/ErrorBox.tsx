@@ -1,4 +1,3 @@
-import { Flex, Icon } from "@chakra-ui/react";
 import { useEffect, useRef } from "react";
 import { MdErrorOutline } from "react-icons/md";
 import { Li, Ul } from "./Ul";
@@ -25,10 +24,10 @@ export const ErrorBox = ({ list }: ErrorBoxProps) => {
 
   return (
     <figure ref={boxRef} tabIndex={-1} className="error-box">
-      <Flex as="figcaption">
-        <Icon as={MdErrorOutline} w={6} h={6} aria-hidden mr={2} />
+      <figcaption>
+        <MdErrorOutline aria-hidden />
         <strong>{label}</strong>
-      </Flex>
+      </figcaption>
 
       <Ul>
         {errors.map((errorKey) => (

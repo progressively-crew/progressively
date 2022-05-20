@@ -1,4 +1,4 @@
-import { RadioGroup, Radio, Stack } from "@chakra-ui/react";
+import { RadioGroup, Radio } from "@chakra-ui/react";
 import { SelectField } from "~/components/Fields/SelectField";
 import { TextareaInput } from "~/components/Fields/TextareaInput";
 import { TextInput } from "~/components/Fields/TextInput";
@@ -56,13 +56,7 @@ export const StrategyAudience = ({
       </RadioGroup>
 
       {strategyType === "field" && (
-        <Stack
-          borderColor="background100"
-          borderWidth={1}
-          p={[4, 4, 8]}
-          borderRadius={6}
-          spacing={6}
-        >
+        <>
           <TextInput
             isInvalid={Boolean(errors["field-name"])}
             label="Field name:"
@@ -90,7 +84,7 @@ export const StrategyAudience = ({
             defaultValue={initialFieldValue}
             placeholder="e.g: marvin.frachet@something.com"
           />
-        </Stack>
+        </>
       )}
     </Section>
   );

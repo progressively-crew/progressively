@@ -1,4 +1,3 @@
-import { Stack } from "@chakra-ui/react";
 import { MdPassword } from "react-icons/md";
 import {
   ActionFunction,
@@ -83,39 +82,35 @@ export default function ForgotPasswordPage() {
       }
     >
       <Form method="post">
-        <Stack spacing={4} mt={4}>
-          {errors && Object.keys(errors).length > 0 && (
-            <ErrorBox list={errors} />
-          )}
+        {errors && Object.keys(errors).length > 0 && <ErrorBox list={errors} />}
 
-          {success && (
-            <SuccessBox id="password-reset">
-              An email with a link to reset your password has been set. Make
-              sure to follow the instructions.
-            </SuccessBox>
-          )}
+        {success && (
+          <SuccessBox id="password-reset">
+            An email with a link to reset your password has been set. Make sure
+            to follow the instructions.
+          </SuccessBox>
+        )}
 
-          <TextInput
-            isInvalid={Boolean(errors?.email)}
-            label="Email"
-            name="email"
-            type="email"
-            placeholder="e.g: james.bond@mi6.com"
-          />
+        <TextInput
+          isInvalid={Boolean(errors?.email)}
+          label="Email"
+          name="email"
+          type="email"
+          placeholder="e.g: james.bond@mi6.com"
+        />
 
-          <div>
-            <Button
-              type="submit"
-              colorScheme={"brand"}
-              leftIcon={<MdPassword aria-hidden />}
-              isLoading={transition.state === "submitting"}
-              loadingText="Password resetting in progress, please wait..."
-              disabled={false}
-            >
-              Reset password
-            </Button>
-          </div>
-        </Stack>
+        <div>
+          <Button
+            type="submit"
+            colorScheme={"brand"}
+            leftIcon={<MdPassword aria-hidden />}
+            isLoading={transition.state === "submitting"}
+            loadingText="Password resetting in progress, please wait..."
+            disabled={false}
+          >
+            Reset password
+          </Button>
+        </div>
       </Form>
     </NotAuthenticatedLayout>
   );

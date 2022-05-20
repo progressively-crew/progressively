@@ -21,7 +21,6 @@ import { ErrorBox } from "~/components/ErrorBox";
 import { StrategyCreateDTO } from "~/modules/strategies/types";
 import { createStrategy } from "~/modules/strategies/services/createStrategy";
 import { BreadCrumbs, Crumbs } from "~/components/AppBreadcrumbs";
-import { Container, Flex } from "@chakra-ui/react";
 import { StrategyAudience } from "~/modules/strategies/components/StrategyAudience";
 import { ActivationStrategy } from "~/modules/strategies/components/ActivationStrategy";
 import { IoIosCreate } from "react-icons/io";
@@ -34,6 +33,7 @@ import { Button } from "~/components/Button";
 import { Environment } from "~/modules/environments/types";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Typography } from "~/components/Typography";
+import { Container } from "~/components/Container";
 
 interface MetaArgs {
   data?: {
@@ -214,44 +214,32 @@ export default function StrategyCreatePage() {
       }
     >
       <Form method="post">
-        {actionData?.errors && (
-          <Container maxW="5xl" pb={4}>
-            <ErrorBox list={actionData.errors} />
-          </Container>
-        )}
+        <Container>
+          {actionData?.errors && <ErrorBox list={actionData.errors} />}
 
-        <Container maxW="8xl">
-          <Flex
-            gap={4}
-            alignItems="flex-start"
-            flexDirection={["column", "column", "column", "row"]}
-          >
-            <Section id="general-information">
-              <SectionHeader title="General information" />
+          <Section id="general-information">
+            <SectionHeader title="General information" />
 
-              <TextInput
-                name="strategy-name"
-                placeholder="e.g: Strategy 1"
-                label="Strategy name"
-                isInvalid={Boolean(errors["strategy-name"])}
-              />
-            </Section>
-
-            <StrategyAudience
-              strategyType={strategyType}
-              onStrategyChange={setStrategyType}
-              errors={errors}
+            <TextInput
+              name="strategy-name"
+              placeholder="e.g: Strategy 1"
+              label="Strategy name"
+              isInvalid={Boolean(errors["strategy-name"])}
             />
+          </Section>
 
-            <ActivationStrategy
-              activationStrategy={activationStrategy}
-              onActivationChange={setActivationStrategy}
-              errors={errors}
-            />
-          </Flex>
-        </Container>
+          <StrategyAudience
+            strategyType={strategyType}
+            onStrategyChange={setStrategyType}
+            errors={errors}
+          />
 
-        <Container maxWidth="5xl" mt={8}>
+          <ActivationStrategy
+            activationStrategy={activationStrategy}
+            onActivationChange={setActivationStrategy}
+            errors={errors}
+          />
+
           <Button
             colorScheme={"brand"}
             type="submit"

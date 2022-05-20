@@ -1,4 +1,3 @@
-import { Icon, Stack } from "@chakra-ui/react";
 import { GiSailboat } from "react-icons/gi";
 import { Heading } from "./Heading";
 
@@ -18,17 +17,8 @@ export const EmptyState = ({
   action,
 }: EmptyStateProps) => {
   return (
-    <Stack alignItems="center" pb={8} spacing={2}>
-      <Icon
-        aria-hidden
-        as={GiSailboat}
-        w={40}
-        h={40}
-        color="background"
-        p={12}
-        background={"background200"}
-        borderRadius="50%"
-      />
+    <div>
+      <GiSailboat aria-hidden />
 
       <Heading as={titleAs} size="lg" id={id}>
         {title}
@@ -37,6 +27,6 @@ export const EmptyState = ({
       {description}
 
       {action}
-    </Stack>
+    </div>
   );
 };

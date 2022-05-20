@@ -1,4 +1,3 @@
-import { Stack } from "@chakra-ui/react";
 import { MdAccountCircle } from "react-icons/md";
 import { ActionFunction, Form, useActionData, useTransition } from "remix";
 import { Button } from "~/components/Button";
@@ -64,57 +63,55 @@ export const RegisterForm = () => {
 
   return (
     <Form method="post">
-      <Stack spacing={4} mt={4}>
-        {errors && Object.keys(errors).length > 0 && <ErrorBox list={errors} />}
+      {errors && Object.keys(errors).length > 0 && <ErrorBox list={errors} />}
 
-        {newUser?.uuid && (
-          <SuccessBox id="user-created">
-            The user has been created! Take a look at your inbox, there should
-            be a link to activate it :).
-          </SuccessBox>
-        )}
+      {newUser?.uuid && (
+        <SuccessBox id="user-created">
+          The user has been created! Take a look at your inbox, there should be
+          a link to activate it :).
+        </SuccessBox>
+      )}
 
-        <TextInput
-          isInvalid={Boolean(errors?.fullname)}
-          label="Fullname"
-          name="fullname"
-          placeholder="e.g: James Bond"
-        />
+      <TextInput
+        isInvalid={Boolean(errors?.fullname)}
+        label="Fullname"
+        name="fullname"
+        placeholder="e.g: James Bond"
+      />
 
-        <TextInput
-          isInvalid={Boolean(errors?.email)}
-          label="Email"
-          name="email"
-          placeholder="e.g: james.bond@mi6.com"
-        />
+      <TextInput
+        isInvalid={Boolean(errors?.email)}
+        label="Email"
+        name="email"
+        placeholder="e.g: james.bond@mi6.com"
+      />
 
-        <TextInput
-          isInvalid={Boolean(errors?.password)}
-          label="Password"
-          name="password"
-          type="password"
-          placeholder="************"
-        />
+      <TextInput
+        isInvalid={Boolean(errors?.password)}
+        label="Password"
+        name="password"
+        type="password"
+        placeholder="************"
+      />
 
-        <TextInput
-          isInvalid={Boolean(errors?.confirmPassword)}
-          label="Confirm your password"
-          name="confirmPassword"
-          type="password"
-          placeholder="************"
-        />
+      <TextInput
+        isInvalid={Boolean(errors?.confirmPassword)}
+        label="Confirm your password"
+        name="confirmPassword"
+        type="password"
+        placeholder="************"
+      />
 
-        <Button
-          type="submit"
-          colorScheme={"brand"}
-          leftIcon={<MdAccountCircle aria-hidden />}
-          isLoading={transition.state === "submitting"}
-          loadingText="Creation in progress, please wait..."
-          disabled={false}
-        >
-          Create an account
-        </Button>
-      </Stack>
+      <Button
+        type="submit"
+        colorScheme={"brand"}
+        leftIcon={<MdAccountCircle aria-hidden />}
+        isLoading={transition.state === "submitting"}
+        loadingText="Creation in progress, please wait..."
+        disabled={false}
+      >
+        Create an account
+      </Button>
     </Form>
   );
 };

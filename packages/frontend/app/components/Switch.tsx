@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { HTMLAttributes, useState } from "react";
-import { Button, Flex, HStack, Spinner } from "@chakra-ui/react";
+import { Button, Spinner } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import { Typography } from "./Typography";
 
@@ -42,26 +42,11 @@ export const Switch = ({ checked, optimistic, ...props }: SwitchProps) => {
       h={[16, 12]}
       {...props}
     >
-      <HStack>
-        <Typography as="span">Off</Typography>
-        <RawSwitch aria-hidden data-is-checked={internalChecked}>
-          {optimistic && (
-            <Flex
-              height={6}
-              width={6}
-              alignItems="center"
-              justifyContent={"center"}
-              aria-hidden
-              position="absolute"
-              right={checked ? 0 : undefined}
-              left={checked ? undefined : 0}
-            >
-              <Spinner size="xs" />
-            </Flex>
-          )}
-        </RawSwitch>
-        <Typography as="span">On</Typography>
-      </HStack>
+      <Typography as="span">Off</Typography>
+      <RawSwitch aria-hidden data-is-checked={internalChecked}>
+        {optimistic && <Spinner size="xs" />}
+      </RawSwitch>
+      <Typography as="span">On</Typography>
     </Button>
   );
 };

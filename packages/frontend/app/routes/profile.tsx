@@ -1,5 +1,4 @@
-import { HStack, Stack } from "@chakra-ui/react";
-import { MdChevronLeft, MdPassword } from "react-icons/md";
+import { MdPassword } from "react-icons/md";
 import {
   ActionFunction,
   Form,
@@ -9,11 +8,11 @@ import {
   useLoaderData,
   useTransition,
 } from "remix";
+import { BackLink } from "~/components/BackLink";
 import { Button } from "~/components/Button";
 import { ErrorBox } from "~/components/ErrorBox";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Header } from "~/components/Header";
-import { Link } from "~/components/Link";
 import { Section, SectionHeader } from "~/components/Section";
 import { SuccessBox } from "~/components/SuccessBox";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
@@ -102,12 +101,7 @@ export default function ProfilePage() {
       header={<Header title="My profile" />}
       breadcrumb={
         <nav>
-          <Link to="/dashboard">
-            <HStack alignItems={"center"} height={"44px"} fontSize="xl">
-              <MdChevronLeft aria-hidden />
-              <span>Back to dashboard</span>
-            </HStack>
-          </Link>
+          <BackLink to="/dashboard">Back to dashboard</BackLink>
         </nav>
       }
     >
@@ -115,44 +109,42 @@ export default function ProfilePage() {
         <SectionHeader title="Change password" />
 
         <Form method="post">
-          <Stack spacing={4} mt={4}>
-            {errors && Object.keys(errors).length > 0 && (
-              <ErrorBox list={errors} />
-            )}
+          {errors && Object.keys(errors).length > 0 && (
+            <ErrorBox list={errors} />
+          )}
 
-            {passwordUpdated && (
-              <SuccessBox id="password-changed">
-                The password has been successfully changed.
-              </SuccessBox>
-            )}
+          {passwordUpdated && (
+            <SuccessBox id="password-changed">
+              The password has been successfully changed.
+            </SuccessBox>
+          )}
 
-            <TextInput
-              label="New password"
-              name="password"
-              isInvalid={Boolean(errors?.password)}
-              placeholder="**********"
-              type="password"
-            />
+          <TextInput
+            label="New password"
+            name="password"
+            isInvalid={Boolean(errors?.password)}
+            placeholder="**********"
+            type="password"
+          />
 
-            <TextInput
-              label="Confirmation password"
-              name="confirmationPassword"
-              isInvalid={Boolean(errors?.confirmationPassword)}
-              placeholder="**********"
-              type="password"
-            />
+          <TextInput
+            label="Confirmation password"
+            name="confirmationPassword"
+            isInvalid={Boolean(errors?.confirmationPassword)}
+            placeholder="**********"
+            type="password"
+          />
 
-            <Button
-              type="submit"
-              colorScheme={"brand"}
-              leftIcon={<MdPassword aria-hidden />}
-              isLoading={transition.state === "submitting"}
-              loadingText="Password changing in progress, please wait..."
-              disabled={false}
-            >
-              Change password
-            </Button>
-          </Stack>
+          <Button
+            type="submit"
+            colorScheme={"brand"}
+            leftIcon={<MdPassword aria-hidden />}
+            isLoading={transition.state === "submitting"}
+            loadingText="Password changing in progress, please wait..."
+            disabled={false}
+          >
+            Change password
+          </Button>
         </Form>
       </Section>
     </DashboardLayout>

@@ -1,4 +1,3 @@
-import { Stack } from "@chakra-ui/react";
 import { MdPassword } from "react-icons/md";
 import {
   ActionFunction,
@@ -113,46 +112,42 @@ export default function ResetPasswordPage() {
       nav={<BackLink to="/signin">Back to signin</BackLink>}
     >
       <Form method="post">
-        <Stack spacing={4} mt={4}>
-          {errors && Object.keys(errors).length > 0 && (
-            <ErrorBox list={errors} />
-          )}
+        {errors && Object.keys(errors).length > 0 && <ErrorBox list={errors} />}
 
-          {success && (
-            <SuccessBox id="password-reset">
-              The password has been successfully reset. You can now connect.
-            </SuccessBox>
-          )}
+        {success && (
+          <SuccessBox id="password-reset">
+            The password has been successfully reset. You can now connect.
+          </SuccessBox>
+        )}
 
-          <input type="hidden" name="token" id="token" value={urlToken || ""} />
+        <input type="hidden" name="token" id="token" value={urlToken || ""} />
 
-          <TextInput
-            isInvalid={Boolean(errors?.password)}
-            label="New password"
-            name="password"
-            placeholder="**********"
-          />
+        <TextInput
+          isInvalid={Boolean(errors?.password)}
+          label="New password"
+          name="password"
+          placeholder="**********"
+        />
 
-          <TextInput
-            isInvalid={Boolean(errors?.confirmationPassword)}
-            label="Confirmation password"
-            name="confirmationPassword"
-            placeholder="**********"
-          />
+        <TextInput
+          isInvalid={Boolean(errors?.confirmationPassword)}
+          label="Confirmation password"
+          name="confirmationPassword"
+          placeholder="**********"
+        />
 
-          <div>
-            <Button
-              type="submit"
-              colorScheme={"brand"}
-              leftIcon={<MdPassword aria-hidden />}
-              isLoading={transition.state === "submitting"}
-              loadingText="Password changing in progress, please wait..."
-              disabled={false}
-            >
-              Change password
-            </Button>
-          </div>
-        </Stack>
+        <div>
+          <Button
+            type="submit"
+            colorScheme={"brand"}
+            leftIcon={<MdPassword aria-hidden />}
+            isLoading={transition.state === "submitting"}
+            loadingText="Password changing in progress, please wait..."
+            disabled={false}
+          >
+            Change password
+          </Button>
+        </div>
       </Form>
     </NotAuthenticatedLayout>
   );

@@ -1,4 +1,3 @@
-import { Stack } from "@chakra-ui/react";
 import {
   useLoaderData,
   LoaderFunction,
@@ -73,34 +72,31 @@ export default function DashboardRoot() {
       }
     >
       <Section>
-        <Stack spacing={2}>
-          {newProjectId ? (
-            <SuccessBox id="project-added">
-              The project has been successfully created.
-            </SuccessBox>
-          ) : null}
+        {newProjectId ? (
+          <SuccessBox id="project-added">
+            The project has been successfully created.
+          </SuccessBox>
+        ) : null}
 
-          {hasRemovedProject ? (
-            <SuccessBox id="project-removed">
-              The project has been successfully removed.
-            </SuccessBox>
-          ) : null}
+        {hasRemovedProject ? (
+          <SuccessBox id="project-removed">
+            The project has been successfully removed.
+          </SuccessBox>
+        ) : null}
 
-          {projects.map((project, index: number) => (
-            <ProjectCard
-              key={project.projectId}
-              id={project.projectId}
-              linkTo={`/dashboard/projects/${project.projectId}`}
-              title={project.project.name}
-              noBorder={index === 0}
-              description={
-                <>
-                  You are an <em>{project.role}</em> of the project.
-                </>
-              }
-            />
-          ))}
-        </Stack>
+        {projects.map((project, index: number) => (
+          <ProjectCard
+            key={project.projectId}
+            id={project.projectId}
+            linkTo={`/dashboard/projects/${project.projectId}`}
+            title={project.project.name}
+            description={
+              <>
+                You are an <em>{project.role}</em> of the project.
+              </>
+            }
+          />
+        ))}
       </Section>
     </DashboardLayout>
   );

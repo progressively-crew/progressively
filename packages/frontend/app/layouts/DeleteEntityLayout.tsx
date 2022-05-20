@@ -1,4 +1,3 @@
-import { Flex } from "@chakra-ui/react";
 import React from "react";
 import { Section } from "~/components/Section";
 import { User } from "~/modules/user/types";
@@ -29,10 +28,8 @@ export const DeleteEntityLayout = ({
 
         {children}
 
-        <Flex mt={8} direction={["column", "column", "row"]} gap={8}>
-          {cancelAction}
-          {confirmAction}
-        </Flex>
+        {cancelAction}
+        {confirmAction}
       </Section>
     </DashboardLayout>
   );

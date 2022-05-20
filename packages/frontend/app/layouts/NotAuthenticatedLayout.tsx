@@ -1,4 +1,4 @@
-import { Container, Flex } from "@chakra-ui/react";
+import { Container } from "~/components/Container";
 import { Logo } from "~/components/Logo";
 import { Main } from "~/components/Main";
 
@@ -14,20 +14,11 @@ export const NotAuthenticatedLayout = ({
 }: NotAuthenticatedLayoutProps) => {
   return (
     <Main>
-      <Container maxW="5xl">
-        <Flex
-          py={3}
-          as={"nav"}
-          aria-label="General"
-          justifyContent={"space-between"}
-          alignItems="center"
-          h={"72px"}
-        >
+      <Container>
+        <nav>
           <Logo to="/signin" />
-        </Flex>
-      </Container>
+        </nav>
 
-      <Container maxW="5xl">
         {nav}
 
         {header}

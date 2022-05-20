@@ -1,4 +1,3 @@
-import { Stack } from "@chakra-ui/react";
 import {
   LoaderFunction,
   useLoaderData,
@@ -95,19 +94,17 @@ export default function ProjectDetailPage() {
       }
     >
       <Section aria-labelledby="list-env-title" id="list-env-title">
-        <Stack spacing={2}>
-          {newEnvId ? (
-            <SuccessBox id="env-added" mb={4}>
-              The environment has been successfully created.
-            </SuccessBox>
-          ) : null}
+        {newEnvId ? (
+          <SuccessBox id="env-added" mb={4}>
+            The environment has been successfully created.
+          </SuccessBox>
+        ) : null}
 
-          {envRemoved ? (
-            <SuccessBox id="env-removed" mb={4}>
-              The environment has been successfully deleted.
-            </SuccessBox>
-          ) : null}
-        </Stack>
+        {envRemoved ? (
+          <SuccessBox id="env-removed" mb={4}>
+            The environment has been successfully deleted.
+          </SuccessBox>
+        ) : null}
 
         <SectionHeader
           title="Environments"
@@ -127,7 +124,6 @@ export default function ProjectDetailPage() {
 
         {project.environments.map((env, index) => (
           <EnvCard
-            noBorder={index === 0}
             key={env.uuid}
             id={env.uuid}
             linkTo={`/dashboard/projects/${project.uuid}/environments/${env.uuid}/flags`}

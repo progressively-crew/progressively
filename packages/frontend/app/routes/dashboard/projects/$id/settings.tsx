@@ -1,4 +1,3 @@
-import { Stack, Flex } from "@chakra-ui/react";
 import { AiOutlineSetting } from "react-icons/ai";
 import { FaTrash } from "react-icons/fa";
 import { FiLayers } from "react-icons/fi";
@@ -160,77 +159,73 @@ export default function SettingsPage() {
         </HorizontalNav>
       }
     >
-      <Stack spacing={8}>
-        <Section id="details">
-          <SectionHeader
-            title="Project details"
-            description={<Typography>{project.name}</Typography>}
-          />
-        </Section>
+      <Section id="details">
+        <SectionHeader
+          title="Project details"
+          description={<Typography>{project.name}</Typography>}
+        />
+      </Section>
 
-        <Divider />
+      <Divider />
 
-        <Section id="members">
-          <SectionHeader
-            title="Project members"
-            description={
-              <Typography>
-                Remember that users with the role <em>Admin</em> {`can't`} be
-                removed.
-              </Typography>
-            }
-          />
+      <Section id="members">
+        <SectionHeader
+          title="Project members"
+          description={
+            <Typography>
+              Remember that users with the role <em>Admin</em> {`can't`} be
+              removed.
+            </Typography>
+          }
+        />
 
-          {data?.errors.unauthorized && <ErrorBox list={data.errors} />}
-          {data?.success && (
-            <SuccessBox id="member-deleted">
-              {data?.removedCount} user have been successfully removed from the
-              project.
-            </SuccessBox>
-          )}
-
-          <UserTable
-            projectId={project.uuid}
-            userProjects={project.userProject || []}
-            labelledBy="members"
-            canEdit={userRole === UserRoles.Admin}
-          />
-
-          <Typography aria-live="polite">
-            {transition.state === "submitting" ? "Removing the users..." : ""}
-          </Typography>
-        </Section>
-
-        {userRole === UserRoles.Admin && (
-          <>
-            <Divider />
-            <Section id="danger">
-              <SectionHeader
-                title="Danger zone"
-                description={
-                  <Typography>
-                    You can delete a project at any time, but you {`won’t`} be
-                    able to access its environments and all the related flags
-                    will be removed and be falsy in your applications. Be sure
-                    to know what {`you're`} doing before removing a project.
-                  </Typography>
-                }
-              />
-
-              <Flex pb={4} justifyContent={["center", "flex-start"]}>
-                <Button
-                  colorScheme="error"
-                  to={`/dashboard/projects/${project.uuid}/delete`}
-                  leftIcon={<FaTrash aria-hidden />}
-                  variant="outline"
-                >
-                  Delete <span>{`"${project.name}"`} forever</span>
-                </Button>
-              </Flex>
-            </Section>
-          </>
+        {data?.errors.unauthorized && <ErrorBox list={data.errors} />}
+        {data?.success && (
+          <SuccessBox id="member-deleted">
+            {data?.removedCount} user have been successfully removed from the
+            project.
+          </SuccessBox>
         )}
-      </Stack>
+
+        <UserTable
+          projectId={project.uuid}
+          userProjects={project.userProject || []}
+          labelledBy="members"
+          canEdit={userRole === UserRoles.Admin}
+        />
+
+        <Typography aria-live="polite">
+          {transition.state === "submitting" ? "Removing the users..." : ""}
+        </Typography>
+      </Section>
+
+      {userRole === UserRoles.Admin && (
+        <>
+          <Divider />
+          <Section id="danger">
+            <SectionHeader
+              title="Danger zone"
+              description={
+                <Typography>
+                  You can delete a project at any time, but you {`won’t`} be
+                  able to access its environments and all the related flags will
+                  be removed and be falsy in your applications. Be sure to know
+                  what {`you're`} doing before removing a project.
+                </Typography>
+              }
+            />
+
+            <Button
+              colorScheme="error"
+              to={`/dashboard/projects/${project.uuid}/delete`}
+              leftIcon={<FaTrash aria-hidden />}
+              variant="outline"
+            >
+              Delete <span>{`"${project.name}"`} forever</span>
+            </Button>
+          </Section>
+        </>
+      )}
     </DashboardLayout>
   );
 }

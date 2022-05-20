@@ -1,4 +1,3 @@
-import { Flex, HStack } from "@chakra-ui/react";
 import {
   useLoaderData,
   LoaderFunction,
@@ -132,12 +131,12 @@ export default function FlagSettingPage() {
         <Header
           title={currentFlag.name}
           startAction={
-            <HStack spacing={4}>
+            <div>
               <ButtonCopy icon={<FiFlag />} toCopy={currentFlag.key}>
                 {currentFlag.key}
               </ButtonCopy>
               <ToggleFlag isFlagActivated={isFlagActivated} />
-            </HStack>
+            </div>
           }
         />
       }
@@ -179,17 +178,15 @@ export default function FlagSettingPage() {
             }
           />
 
-          <Flex pb={4} justifyContent={["center", "flex-start"]}>
-            <Button
-              colorScheme="error"
-              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/delete`}
-              leftIcon={<FaTrash aria-hidden />}
-              variant="outline"
-            >
-              Delete <span aria-hidden>{`"${currentFlag.name}"`} forever</span>
-              <VisuallyHidden>{`"${currentFlag.name}"`} forever</VisuallyHidden>
-            </Button>
-          </Flex>
+          <Button
+            colorScheme="error"
+            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/delete`}
+            leftIcon={<FaTrash aria-hidden />}
+            variant="outline"
+          >
+            Delete <span aria-hidden>{`"${currentFlag.name}"`} forever</span>
+            <VisuallyHidden>{`"${currentFlag.name}"`} forever</VisuallyHidden>
+          </Button>
         </Section>
       )}
     </DashboardLayout>

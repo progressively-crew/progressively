@@ -1,4 +1,3 @@
-import { Flex } from "@chakra-ui/react";
 import { FaTrash } from "react-icons/fa";
 import { Button } from "~/components/Button";
 import { Heading } from "~/components/Heading";
@@ -12,7 +11,6 @@ export interface StrategyCardProps {
   projectId: string;
   envId: string;
   strat: StrategyRetrieveDTO;
-  noBorder?: boolean;
 }
 
 const mapStrategyComparator = (comparatorEnum: ComparatorEnum) => {
@@ -87,31 +85,24 @@ export const StrategyCard = ({
   projectId,
   envId,
   strat,
-  noBorder,
 }: StrategyCardProps) => {
   return (
     <div>
-      <Flex
-        alignItems={"flex-start"}
-        justifyContent="space-between"
-        direction={["column", "row"]}
+      <Heading as="h3" id={strat.uuid} size="md">
+        {strat.name}
+      </Heading>
+
+      <StrategyAudience strat={strat} />
+
+      <Button
+        colorScheme="error"
+        variant="outline"
+        leftIcon={<FaTrash aria-hidden />}
+        mt={[2, 0]}
+        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/strategies/${strat.uuid}/delete`}
       >
-        <Heading as="h3" id={strat.uuid} size="md">
-          {strat.name}
-        </Heading>
-
-        <StrategyAudience strat={strat} />
-
-        <Button
-          colorScheme="error"
-          variant="outline"
-          leftIcon={<FaTrash aria-hidden />}
-          mt={[2, 0]}
-          to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/strategies/${strat.uuid}/delete`}
-        >
-          Remove<VisuallyHidden> {strat.name}</VisuallyHidden>
-        </Button>
-      </Flex>
+        Remove<VisuallyHidden> {strat.name}</VisuallyHidden>
+      </Button>
 
       <StrategyTargetConstraints strat={strat} />
     </div>

@@ -1,4 +1,3 @@
-import { Stack } from "@chakra-ui/react";
 import {
   useLoaderData,
   LoaderFunction,
@@ -159,19 +158,17 @@ export default function FlagsByEnvPage() {
       }
     >
       <Section id="list-flags-title">
-        <Stack spacing={2}>
-          {isFlagRemoved ? (
-            <SuccessBox id="flag-removed" mb={4}>
-              The flag has been successfully deleted.
-            </SuccessBox>
-          ) : null}
+        {isFlagRemoved ? (
+          <SuccessBox id="flag-removed" mb={4}>
+            The flag has been successfully deleted.
+          </SuccessBox>
+        ) : null}
 
-          {newFlagId ? (
-            <SuccessBox id="flag-added" mb={4}>
-              The flag has been successfully created.
-            </SuccessBox>
-          ) : null}
-        </Stack>
+        {newFlagId ? (
+          <SuccessBox id="flag-added" mb={4}>
+            The flag has been successfully created.
+          </SuccessBox>
+        ) : null}
 
         <SectionHeader
           title="Feature flags"
@@ -194,7 +191,6 @@ export default function FlagsByEnvPage() {
           <>
             {flagsByEnv.map((flagEnv, index) => (
               <FlagCard
-                noBorder={index === 0}
                 key={flagEnv.flagId}
                 id={flagEnv.flagId}
                 linkTo={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${flagEnv.flagId}`}
