@@ -1,5 +1,4 @@
 import React, { HTMLAttributes } from "react";
-import { Tbody as CTbody } from "@chakra-ui/react";
 
 export interface TbodyProps extends HTMLAttributes<HTMLElement> {
   children: React.ReactNode;
@@ -14,5 +13,5 @@ export const Tbody = ({ children, ...props }: TbodyProps) => {
         : null
   );
 
-  return <CTbody {...props}>{childrenClone}</CTbody>;
+  return <tbody {...props}>{childrenClone}</tbody>;
 };

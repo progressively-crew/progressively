@@ -2,7 +2,7 @@ import React, { ReactNode, useEffect, useRef } from "react";
 import { Checkbox } from "~/components/Checkbox";
 import { useHydrated } from "~/modules/misc/hooks/useHydrated";
 import { useSelections } from "./TableContext";
-import { Th, Thead as CTHead, Tr } from "@chakra-ui/react";
+
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 
 export interface TheadProps {
@@ -34,9 +34,9 @@ export const Thead = ({ children, disabled }: TheadProps) => {
   );
 
   return (
-    <CTHead>
-      <Tr aria-rowindex={1}>
-        <Th aria-colindex={1}>
+    <thead>
+      <tr aria-rowindex={1}>
+        <th aria-colindex={1}>
           <VisuallyHidden>
             <span id="select-all">
               Select {isHydrated ? "all" : "an element"}
@@ -55,9 +55,9 @@ export const Thead = ({ children, disabled }: TheadProps) => {
               disabled={disabled}
             />
           )}
-        </Th>
+        </th>
         {childrenClone}
-      </Tr>
-    </CTHead>
+      </tr>
+    </thead>
   );
 };

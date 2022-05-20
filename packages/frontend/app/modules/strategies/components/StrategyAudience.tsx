@@ -1,4 +1,4 @@
-import { RadioGroup, Radio } from "@chakra-ui/react";
+import { RadioField } from "~/components/Fields/RadioField";
 import { SelectField } from "~/components/Fields/SelectField";
 import { TextareaInput } from "~/components/Fields/TextareaInput";
 import { TextInput } from "~/components/Fields/TextInput";
@@ -27,33 +27,15 @@ export const StrategyAudience = ({
     <Section id="strategy-audience">
       <SectionHeader title="Strategy audience" />
 
-      <RadioGroup value={strategyType} onChange={onStrategyChange}>
-        <Radio
-          id="everybody"
-          name="strategy-type"
-          value="default"
-          size="lg"
-          h={12}
-        >
-          Everybody is concerned
-        </Radio>
-
-        <Radio
-          id="field-name-radio"
-          name="strategy-type"
-          value="field"
-          size="lg"
-          h={12}
-        >
-          People with a specific field
-        </Radio>
-
-        {/* 
-          <Radio name="strategy-type" value="pool" size="lg" h={12}>
-            People belonging to a given group
-          </Radio>
-         */}
-      </RadioGroup>
+      <RadioField<StrategyRuleType>
+        value={strategyType}
+        onChange={onStrategyChange}
+        name="strategy-type"
+        options={[
+          { value: "default", label: "Everybody is concerned" },
+          { value: "field", label: "People with a specific field" },
+        ]}
+      />
 
       {strategyType === "field" && (
         <>

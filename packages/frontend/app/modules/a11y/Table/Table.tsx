@@ -2,7 +2,6 @@ import React, { useRef } from "react";
 import { KeyboardKeys } from "../utils/keyboardKeys";
 import { TableProvider } from "./TableContext";
 import { moveToCol, moveToRow } from "./utils";
-import { Table as CTAble } from "@chakra-ui/react";
 
 export interface TableProps {
   children: React.ReactNode;
@@ -148,19 +147,16 @@ export const Table = ({
       onSelectAll={handleSelectAll}
       indeterminate={selected.length > 0 && selected.length < rowCount - 1}
     >
-      <CTAble
+      <table
         ref={tableRef}
         role="grid"
         aria-rowcount={rowCount}
         aria-colcount={colCount}
         aria-labelledby={labelledBy}
         onKeyDown={handleKeyDown}
-        overflowX={["scroll", "unset"]}
-        display={["block", "revert"]}
-        maxWidth={"100%"}
       >
         {children}
-      </CTAble>
+      </table>
     </TableProvider>
   );
 };

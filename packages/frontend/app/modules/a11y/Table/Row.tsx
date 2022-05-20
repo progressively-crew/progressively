@@ -1,4 +1,3 @@
-import { Tr, Td } from "@chakra-ui/react";
 import React, { ReactNode, useRef } from "react";
 import { HTMLAttributes } from "react";
 import { Checkbox } from "~/components/Checkbox";
@@ -67,8 +66,8 @@ export const Row = ({ children, selection, disabled, ...props }: RowProps) => {
   };
 
   return (
-    <Tr onClick={handleClick} onKeyDown={handleKeyDown} {...props}>
-      <Td aria-colindex={1}>
+    <tr onClick={handleClick} onKeyDown={handleKeyDown} {...props}>
+      <td aria-colindex={1}>
         <VisuallyHidden>
           <span id={`select-col-${selection}`}>Select</span>
         </VisuallyHidden>
@@ -83,9 +82,9 @@ export const Row = ({ children, selection, disabled, ...props }: RowProps) => {
           value={selection}
           disabled={disabled}
         />
-      </Td>
+      </td>
 
       {childrenClone}
-    </Tr>
+    </tr>
   );
 };
