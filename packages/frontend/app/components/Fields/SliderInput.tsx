@@ -1,3 +1,6 @@
+import { Stack } from "../Stack";
+import { Label } from "./Label";
+
 export interface SliderInputProps {
   percentageValue: number;
   name: string;
@@ -12,8 +15,8 @@ export const SliderInput = ({
   onChange,
 }: SliderInputProps) => {
   return (
-    <div>
-      <label htmlFor={`field-${name}`}>{label}</label>
+    <Stack spacing={2}>
+      <Label htmlFor={`field-${name}`}>{label}</Label>
 
       <input
         type="range"
@@ -25,6 +28,6 @@ export const SliderInput = ({
         id={`field-${name}`}
         onChange={(e) => onChange(Number(e.target.value))}
       />
-    </div>
+    </Stack>
   );
 };

@@ -1,10 +1,9 @@
 import { useRef } from "react";
-import { AiOutlineArrowRight } from "react-icons/ai";
 import { Typography } from "~/components/Typography";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { Tag } from "~/components/Tag";
-import { Heading } from "~/components/Heading";
 import { Link } from "~/components/Link";
+import { Card, CardContent, CardHeader } from "~/components/CardGroup";
 
 export interface EnvCardProps {
   id: string;
@@ -17,20 +16,18 @@ export const EnvCard = ({ id, linkTo, title, clientKey }: EnvCardProps) => {
   const linkRef = useRef<HTMLAnchorElement>(null);
 
   return (
-    <div>
-      <div>
-        <Heading as="h3" id={`article-${id}`} size="md">
-          <Link ref={linkRef} to={linkTo}>
-            {title} <VisuallyHidden>environment</VisuallyHidden>
-          </Link>
-        </Heading>
+    <Card onClick={() => linkRef?.current?.click()}>
+      <CardHeader as="h3" id={`article-${id}`}>
+        <Link ref={linkRef} to={linkTo}>
+          {title} <VisuallyHidden>environment</VisuallyHidden>
+        </Link>
+      </CardHeader>
 
-        <Typography color="textlight">
+      <CardContent>
+        <Typography>
           The environment sdk key is <Tag>{clientKey}</Tag>
         </Typography>
-      </div>
-
-      <AiOutlineArrowRight aria-hidden />
-    </div>
+      </CardContent>
+    </Card>
   );
 };

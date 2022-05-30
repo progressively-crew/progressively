@@ -20,7 +20,7 @@ import { Project, UserProject, UserRoles } from "~/modules/projects/types";
 import { User } from "~/modules/user/types";
 import { getSession } from "~/sessions";
 import { Header } from "~/components/Header";
-import { Button } from "~/components/Button";
+import { Button } from "~/components/Buttons/Button";
 import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
 import { Typography } from "~/components/Typography";
 import { Li, Ul } from "~/components/Ul";
@@ -187,11 +187,11 @@ export default function DeleteProjectPage() {
       <WarningBox
         list={warnings}
         title={
-          <Typography>
+          <>
             We really want to warn you: if you validate the project suppression,
             you {`won't`} be able to access the <strong>{project.name}</strong>{" "}
             project anymore. It includes:
-          </Typography>
+          </>
         }
       />
     </DeleteEntityLayout>

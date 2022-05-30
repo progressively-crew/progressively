@@ -1,7 +1,12 @@
 import React, { useRef } from "react";
+import { styled } from "~/stitches.config";
 import { KeyboardKeys } from "../utils/keyboardKeys";
 import { TableProvider } from "./TableContext";
 import { moveToCol, moveToRow } from "./utils";
+
+const TableWrapper = styled("table", {
+  color: "$content",
+});
 
 export interface TableProps {
   children: React.ReactNode;
@@ -147,7 +152,7 @@ export const Table = ({
       onSelectAll={handleSelectAll}
       indeterminate={selected.length > 0 && selected.length < rowCount - 1}
     >
-      <table
+      <TableWrapper
         ref={tableRef}
         role="grid"
         aria-rowcount={rowCount}
@@ -156,7 +161,7 @@ export const Table = ({
         onKeyDown={handleKeyDown}
       >
         {children}
-      </table>
+      </TableWrapper>
     </TableProvider>
   );
 };

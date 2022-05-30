@@ -1,16 +1,27 @@
-import { MdChevronLeft } from "react-icons/md";
-import { Link } from "remix";
+import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
+import { styled } from "~/stitches.config";
+import { Link } from "./Link";
 
 export interface BackLinkProps {
   children: React.ReactNode;
   to: string;
 }
 
+const BackLinkWrapper = styled(Link, {
+  display: "inline-flex",
+  color: "$content",
+  fontSize: "$btn",
+
+  "& svg": {
+    marginRight: "$spacing$1",
+  },
+});
+
 export const BackLink = ({ children, to }: BackLinkProps) => {
   return (
-    <div>
-      <MdChevronLeft aria-hidden />
-      <Link to={to}>{children}</Link>
-    </div>
+    <BackLinkWrapper to={to}>
+      <HiOutlineArrowNarrowLeft aria-hidden />
+      {children}
+    </BackLinkWrapper>
   );
 };

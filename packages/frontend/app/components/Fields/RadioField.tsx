@@ -1,3 +1,5 @@
+import { Label } from "./Label";
+
 export interface RadioFieldOption<T> {
   label: string;
   value: T;
@@ -21,7 +23,7 @@ export const RadioField = <T extends string>({
       {/* <legend>Select a maintenance drone:</legend> */}
       {options.map((opt) => (
         <div key={opt.value}>
-          <label htmlFor={opt.value}>{opt.label}</label>
+          <Label htmlFor={opt.value}>{opt.label}</Label>
           <input
             type="radio"
             id={opt.value}

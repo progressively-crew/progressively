@@ -23,7 +23,7 @@ import { getFlagsByProjectEnv } from "~/modules/flags/services/getFlagsByProject
 import { getStrategy } from "~/modules/strategies/services/getStrategy";
 import { StrategyRetrieveDTO } from "~/modules/strategies/types";
 import { deleteStrategy } from "~/modules/strategies/services/deleteStrategy";
-import { Button } from "~/components/Button";
+import { Button } from "~/components/Buttons/Button";
 import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
 import { Typography } from "~/components/Typography";
 
@@ -195,11 +195,11 @@ export default function DeleteStrategyPage() {
       <WarningBox
         list={warnings}
         title={
-          <Typography>
+          <>
             We really want to warn you: if you validate the strategy
             suppression, you {`won't`} be able to access the{" "}
             <strong>{strategy.name}</strong> strategy anymore. It includes:
-          </Typography>
+          </>
         }
       />
     </DeleteEntityLayout>

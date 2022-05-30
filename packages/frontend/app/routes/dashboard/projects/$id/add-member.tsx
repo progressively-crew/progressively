@@ -16,7 +16,7 @@ import { getSession } from "~/sessions";
 import { User } from "~/modules/user/types";
 import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
-import { Button } from "~/components/Button";
+import { Button } from "~/components/Buttons/Button";
 import { validateEmail } from "~/modules/forms/utils/validateEmail";
 import { getProject } from "~/modules/projects/services/getProject";
 import { MdOutlineEmail } from "react-icons/md";

@@ -10,7 +10,6 @@ describe("/reset-password", () => {
 
     it("shows the page layout", () => {
       cy.findByRole("heading", { name: "Reset password" }).should("be.visible");
-      cy.findByText("Set your new password.").should("be.visible");
       cy.findByLabelText("New password").should("be.visible");
       cy.findByLabelText("Confirmation password").should("be.visible");
       cy.findByRole("button", { name: "Change password" }).should("be.visible");

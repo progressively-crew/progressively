@@ -9,11 +9,15 @@ import {
   useTransition,
 } from "remix";
 import { Crumbs, BreadCrumbs } from "~/components/AppBreadcrumbs";
-import { Button } from "~/components/Button";
+import { Button } from "~/components/Buttons/Button";
 import { ErrorBox } from "~/components/ErrorBox";
 import { Header } from "~/components/Header";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
-import { Section, SectionHeader } from "~/components/Section";
+import {
+  CardSection,
+  SectionContent,
+  SectionHeader,
+} from "~/components/Section";
 import { SuccessBox } from "~/components/SuccessBox";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { authGuard } from "~/modules/auth/services/auth-guard";
@@ -26,6 +30,7 @@ import { getSession } from "~/sessions";
 import { Typography } from "~/components/Typography";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { Divider } from "~/components/Divider";
+import { Stack } from "~/components/Stack";
 
 interface MetaArgs {
   data?: {
@@ -158,50 +163,49 @@ export default function SettingsPage() {
         </HorizontalNav>
       }
     >
-      <Section id="details">
-        <SectionHeader
-          title="Project details"
-          description={<Typography>{project.name}</Typography>}
-        />
-      </Section>
+      <Stack spacing={8}>
+        <CardSection id="details">
+          <SectionHeader
+            title="Project details"
+            description={<Typography>{project.name}</Typography>}
+          />
+        </CardSection>
 
-      <Divider />
+        <CardSection id="members">
+          <SectionHeader
+            title="Project members"
+            description={
+              <Typography>
+                Remember that users with the role <em>Admin</em> {`can't`} be
+                removed.
+              </Typography>
+            }
+          />
 
-      <Section id="members">
-        <SectionHeader
-          title="Project members"
-          description={
-            <Typography>
-              Remember that users with the role <em>Admin</em> {`can't`} be
-              removed.
+          <SectionContent>
+            {data?.errors.unauthorized && <ErrorBox list={data.errors} />}
+            {data?.success && (
+              <SuccessBox id="member-deleted">
+                {data?.removedCount} user have been successfully removed from
+                the project.
+              </SuccessBox>
+            )}
+
+            <UserTable
+              projectId={project.uuid}
+              userProjects={project.userProject || []}
+              labelledBy="members"
+              canEdit={userRole === UserRoles.Admin}
+            />
+
+            <Typography aria-live="polite">
+              {transition.state === "submitting" ? "Removing the users..." : ""}
             </Typography>
-          }
-        />
+          </SectionContent>
+        </CardSection>
 
-        {data?.errors.unauthorized && <ErrorBox list={data.errors} />}
-        {data?.success && (
-          <SuccessBox id="member-deleted">
-            {data?.removedCount} user have been successfully removed from the
-            project.
-          </SuccessBox>
-        )}
-
-        <UserTable
-          projectId={project.uuid}
-          userProjects={project.userProject || []}
-          labelledBy="members"
-          canEdit={userRole === UserRoles.Admin}
-        />
-
-        <Typography aria-live="polite">
-          {transition.state === "submitting" ? "Removing the users..." : ""}
-        </Typography>
-      </Section>
-
-      {userRole === UserRoles.Admin && (
-        <>
-          <Divider />
-          <Section id="danger">
+        {userRole === UserRoles.Admin && (
+          <CardSection id="danger">
             <SectionHeader
               title="Danger zone"
               description={
@@ -214,12 +218,14 @@ export default function SettingsPage() {
               }
             />
 
-            <Button to={`/dashboard/projects/${project.uuid}/delete`}>
-              Delete <span>{`"${project.name}"`} forever</span>
-            </Button>
-          </Section>
-        </>
-      )}
+            <SectionContent>
+              <Button to={`/dashboard/projects/${project.uuid}/delete`}>
+                Delete <span>{`"${project.name}"`} forever</span>
+              </Button>
+            </SectionContent>
+          </CardSection>
+        )}
+      </Stack>
     </DashboardLayout>
   );
 }

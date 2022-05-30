@@ -1,15 +1,11 @@
 import { Link } from "./Link";
-import { VisuallyHidden } from "./VisuallyHidden";
+import { Typography } from "./Typography";
 
 export interface LogoProps {
   to?: string;
 }
 export const Logo = ({ to }: LogoProps) => (
   <Link to={to || "/dashboard"}>
-    <VisuallyHidden>Progressively</VisuallyHidden>
-    <span>
-      Progress
-      <span>ively</span>
-    </span>
+    <Typography as="span">Progressively</Typography>
   </Link>
 );

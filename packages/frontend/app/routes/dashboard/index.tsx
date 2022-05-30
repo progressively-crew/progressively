@@ -15,7 +15,8 @@ import { authGuard } from "~/modules/auth/services/auth-guard";
 import { User } from "~/modules/user/types";
 import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
-import { Button } from "~/components/Button";
+import { CardGroup } from "~/components/CardGroup";
+import { CreationCard } from "~/components/CreationCard";
 
 export const meta: MetaFunction = () => {
   return {
@@ -55,41 +56,39 @@ export default function DashboardRoot() {
   return (
     <DashboardLayout
       user={user}
-      header={
-        <Header
-          title="Projects"
-          startAction={
-            <Button to="/dashboard/projects/create">Create a project</Button>
-          }
-        />
-      }
-    >
-      <Section>
-        {newProjectId ? (
+      header={<Header title="Projects" />}
+      status={
+        newProjectId ? (
           <SuccessBox id="project-added">
             The project has been successfully created.
           </SuccessBox>
-        ) : null}
-
-        {hasRemovedProject ? (
+        ) : hasRemovedProject ? (
           <SuccessBox id="project-removed">
             The project has been successfully removed.
           </SuccessBox>
-        ) : null}
+        ) : null
+      }
+    >
+      <Section>
+        <CardGroup>
+          <CreationCard to="/dashboard/projects/create">
+            Create a project
+          </CreationCard>
 
-        {projects.map((project) => (
-          <ProjectCard
-            key={project.projectId}
-            id={project.projectId}
-            linkTo={`/dashboard/projects/${project.projectId}`}
-            title={project.project.name}
-            description={
-              <>
-                You are an <em>{project.role}</em> of the project.
-              </>
-            }
-          />
-        ))}
+          {projects.map((project) => (
+            <ProjectCard
+              key={project.projectId}
+              id={project.projectId}
+              linkTo={`/dashboard/projects/${project.projectId}`}
+              title={project.project.name}
+              description={
+                <>
+                  You are an <em>{project.role}</em> of the project.
+                </>
+              }
+            />
+          ))}
+        </CardGroup>
       </Section>
     </DashboardLayout>
   );

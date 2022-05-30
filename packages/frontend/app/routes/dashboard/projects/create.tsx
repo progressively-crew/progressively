@@ -19,9 +19,10 @@ import { getSession } from "~/sessions";
 import { User } from "~/modules/user/types";
 import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
-import { Button } from "~/components/Button";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Typography } from "~/components/Typography";
+import { FormGroup } from "~/components/Fields/FormGroup";
+import { SubmitButton } from "~/components/Buttons/SubmitButton";
 
 export const meta: MetaFunction = () => {
   return {
@@ -93,32 +94,33 @@ export default function CreateProjectPage() {
         <Header
           title="Create a project"
           description={
-            <Typography fontSize="xl" color="textlight">
+            <Typography>
               When creating a project, {`you'll`} become the administrator of it
               and will have full control over it.
             </Typography>
           }
         />
       }
+      status={errors?.name && <ErrorBox list={errors} />}
     >
       <Section>
-        {errors?.name && <ErrorBox list={errors} />}
-
         <Form method="post">
-          <TextInput
-            isInvalid={Boolean(errors?.name)}
-            label="Project name"
-            name="name"
-            placeholder="e.g: My super project"
-          />
+          <FormGroup>
+            <TextInput
+              isInvalid={Boolean(errors?.name)}
+              label="Project name"
+              name="name"
+              placeholder="e.g: My super project"
+            />
 
-          <Button
-            type="submit"
-            isLoading={transition.state === "submitting"}
-            loadingText="Creating the project, please wait..."
-          >
-            Create the project
-          </Button>
+            <SubmitButton
+              type="submit"
+              isLoading={transition.state === "submitting"}
+              loadingText="Creating the project, please wait..."
+            >
+              Create the project
+            </SubmitButton>
+          </FormGroup>
         </Form>
       </Section>
     </DashboardLayout>

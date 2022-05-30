@@ -15,11 +15,15 @@ import { Project, UserProject, UserRoles } from "~/modules/projects/types";
 import { User } from "~/modules/user/types";
 import { getSession } from "~/sessions";
 import { Header } from "~/components/Header";
-import { Section, SectionHeader } from "~/components/Section";
+import {
+  CardSection,
+  SectionContent,
+  SectionHeader,
+} from "~/components/Section";
 import { AiOutlineBarChart, AiOutlineSetting } from "react-icons/ai";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { FaPowerOff } from "react-icons/fa";
-import { Button } from "~/components/Button";
+import { Button } from "~/components/Buttons/Button";
 import {
   toggleAction,
   ToggleFlag,
@@ -166,7 +170,7 @@ export default function FlagSettingPage() {
       }
     >
       {userRole === UserRoles.Admin && (
-        <Section id="danger">
+        <CardSection id="danger">
           <SectionHeader
             title="Danger zone"
             description={
@@ -178,13 +182,15 @@ export default function FlagSettingPage() {
             }
           />
 
-          <Button
-            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/delete`}
-          >
-            Delete <span aria-hidden>{`"${currentFlag.name}"`} forever</span>
-            <VisuallyHidden>{`"${currentFlag.name}"`} forever</VisuallyHidden>
-          </Button>
-        </Section>
+          <SectionContent>
+            <Button
+              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/delete`}
+            >
+              Delete <span aria-hidden>{`"${currentFlag.name}"`} forever</span>
+              <VisuallyHidden>{`"${currentFlag.name}"`} forever</VisuallyHidden>
+            </Button>
+          </SectionContent>
+        </CardSection>
       )}
     </DashboardLayout>
   );

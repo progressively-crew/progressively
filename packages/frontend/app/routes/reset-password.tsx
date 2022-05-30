@@ -7,8 +7,9 @@ import {
   useTransition,
 } from "remix";
 import { BackLink } from "~/components/BackLink";
-import { Button } from "~/components/Button";
+import { Button } from "~/components/Buttons/Button";
 import { ErrorBox } from "~/components/ErrorBox";
+import { FormGroup } from "~/components/Fields/FormGroup";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Header } from "~/components/Header";
 import { SuccessBox } from "~/components/SuccessBox";
@@ -100,50 +101,49 @@ export default function ResetPasswordPage() {
 
   return (
     <NotAuthenticatedLayout
-      header={
-        <Header
-          title="Reset password"
-          description={
-            <Typography color="textlight">Set your new password.</Typography>
-          }
-        />
-      }
+      header={<Header title="Reset password" />}
       nav={<BackLink to="/signin">Back to signin</BackLink>}
+      status={
+        <>
+          {errors && Object.keys(errors).length > 0 && (
+            <ErrorBox list={errors} />
+          )}
+
+          {success && (
+            <SuccessBox id="password-reset">
+              The password has been successfully reset. You can now connect.
+            </SuccessBox>
+          )}
+        </>
+      }
     >
       <Form method="post">
-        {errors && Object.keys(errors).length > 0 && <ErrorBox list={errors} />}
-
-        {success && (
-          <SuccessBox id="password-reset">
-            The password has been successfully reset. You can now connect.
-          </SuccessBox>
-        )}
-
         <input type="hidden" name="token" id="token" value={urlToken || ""} />
 
-        <TextInput
-          isInvalid={Boolean(errors?.password)}
-          label="New password"
-          name="password"
-          placeholder="**********"
-        />
+        <FormGroup>
+          <TextInput
+            isInvalid={Boolean(errors?.password)}
+            label="New password"
+            name="password"
+            placeholder="**********"
+          />
 
-        <TextInput
-          isInvalid={Boolean(errors?.confirmationPassword)}
-          label="Confirmation password"
-          name="confirmationPassword"
-          placeholder="**********"
-        />
+          <TextInput
+            isInvalid={Boolean(errors?.confirmationPassword)}
+            label="Confirmation password"
+            name="confirmationPassword"
+            placeholder="**********"
+          />
 
-        <div>
           <Button
+            fullWidth
             type="submit"
             isLoading={transition.state === "submitting"}
             loadingText="Password changing in progress, please wait..."
           >
             Change password
           </Button>
-        </div>
+        </FormGroup>
       </Form>
     </NotAuthenticatedLayout>
   );

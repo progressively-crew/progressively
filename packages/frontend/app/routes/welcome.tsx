@@ -1,4 +1,5 @@
-import { ActionFunction, MetaFunction } from "remix";
+import { ActionFunction, MetaFunction, useActionData } from "remix";
+import { ErrorBox } from "~/components/ErrorBox";
 import { Header } from "~/components/Header";
 import { Typography } from "~/components/Typography";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
@@ -25,21 +26,27 @@ export const action: ActionFunction = ({
 };
 
 export default function WelcomePage() {
+  const data = useActionData<ActionData>();
+  const errors = data?.errors;
+
   return (
     <NotAuthenticatedLayout
       header={
         <Header
           title="Congratulations!"
           description={
-            <Typography color="textlight">
+            <Typography>
               {`You've`} successfully run your Progressively instance. {`It's`}{" "}
               time to create <strong>your admin user.</strong>
             </Typography>
           }
         />
       }
+      status={
+        errors && Object.keys(errors).length > 0 && <ErrorBox list={errors} />
+      }
     >
-      <RegisterForm />
+      <RegisterForm errors={errors} />
     </NotAuthenticatedLayout>
   );
 }

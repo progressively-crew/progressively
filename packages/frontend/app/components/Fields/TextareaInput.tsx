@@ -1,3 +1,6 @@
+import { Stack } from "../Stack";
+import { Label } from "./Label";
+
 export interface TextareaInputProps {
   isInvalid?: boolean;
   name: string;
@@ -14,8 +17,9 @@ export const TextareaInput = ({
   placeholder,
 }: TextareaInputProps) => {
   return (
-    <div>
-      <label htmlFor={name}>{label}</label>
+    <Stack spacing={2}>
+      <Label htmlFor={name}>{label}</Label>
+
       <textarea
         name={name}
         id={name}
@@ -23,6 +27,6 @@ export const TextareaInput = ({
         placeholder={placeholder}
         aria-describedby={isInvalid ? `error-${name}` : undefined}
       />
-    </div>
+    </Stack>
   );
 };

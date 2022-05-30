@@ -1,3 +1,6 @@
+import { Stack } from "../Stack";
+import { Label } from "./Label";
+
 export interface SelectOption {
   label: string;
   value: string | number;
@@ -19,8 +22,8 @@ export const SelectField = ({
   options,
 }: SelectFieldProps) => {
   return (
-    <div>
-      <label htmlFor={name}>{label}</label>
+    <Stack spacing={2}>
+      <Label htmlFor={name}>{label}</Label>
 
       <select
         name={name}
@@ -34,6 +37,6 @@ export const SelectField = ({
           </option>
         ))}
       </select>
-    </div>
+    </Stack>
   );
 };

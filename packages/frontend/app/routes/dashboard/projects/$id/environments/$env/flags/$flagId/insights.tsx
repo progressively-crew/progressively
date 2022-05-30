@@ -36,6 +36,7 @@ import {
 import { FiFlag } from "react-icons/fi";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { BigState } from "~/components/BigStat";
+import { Typography } from "~/components/Typography";
 
 interface MetaArgs {
   data?: {
@@ -203,7 +204,10 @@ export default function FlagById() {
       }
     >
       <Section id="flag-status">
-        <SectionHeader title="Insights" description="Number of hits per date" />
+        <SectionHeader
+          title="Insights"
+          description={<Typography>Number of hits per date</Typography>}
+        />
 
         <BigState name="Hits on activated variant" value={activatedCount} />
         <BigState

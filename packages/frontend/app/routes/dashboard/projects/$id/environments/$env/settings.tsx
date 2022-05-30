@@ -2,11 +2,15 @@ import { AiOutlineSetting } from "react-icons/ai";
 import { FiFlag, FiKey } from "react-icons/fi";
 import { LoaderFunction, MetaFunction, useLoaderData } from "remix";
 import { Crumbs, BreadCrumbs } from "~/components/AppBreadcrumbs";
-import { Button } from "~/components/Button";
+import { Button } from "~/components/Buttons/Button";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { Header } from "~/components/Header";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
-import { Section, SectionHeader } from "~/components/Section";
+import {
+  CardSection,
+  SectionContent,
+  SectionHeader,
+} from "~/components/Section";
 import { Typography } from "~/components/Typography";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { authGuard } from "~/modules/auth/services/auth-guard";
@@ -123,7 +127,7 @@ export default function EnvSettingsPage() {
       }
     >
       {userRole === UserRoles.Admin && (
-        <Section id="danger">
+        <CardSection id="danger">
           <SectionHeader
             title="Danger zone"
             description={
@@ -136,12 +140,14 @@ export default function EnvSettingsPage() {
             }
           />
 
-          <Button
-            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/delete`}
-          >
-            Delete {`"${environment.name}"`} forever
-          </Button>
-        </Section>
+          <SectionContent>
+            <Button
+              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/delete`}
+            >
+              Delete {`"${environment.name}"`} forever
+            </Button>
+          </SectionContent>
+        </CardSection>
       )}
     </DashboardLayout>
   );

@@ -1,4 +1,5 @@
 import { H1 } from "./H1";
+import { Spacer } from "./Spacer";
 
 export interface HeaderProps {
   title: string | React.ReactNode;

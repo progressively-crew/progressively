@@ -1,3 +1,5 @@
+import { Typography } from "./Typography";
+
 export interface BigStateProps {
   value: string | number;
   name: string;
@@ -6,8 +8,8 @@ export interface BigStateProps {
 export const BigState = ({ name, value }: BigStateProps) => {
   return (
     <div>
-      <p>{name}</p>
-      <p>{value}</p>
+      <Typography>{name}</Typography>
+      <Typography>{value}</Typography>
     </div>
   );
 };

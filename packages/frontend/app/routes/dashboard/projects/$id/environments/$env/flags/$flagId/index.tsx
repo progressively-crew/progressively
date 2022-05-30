@@ -26,7 +26,6 @@ import { EmptyState } from "~/components/EmptyState";
 import { AiOutlineBarChart, AiOutlineSetting } from "react-icons/ai";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { FaPowerOff } from "react-icons/fa";
-import { Button } from "~/components/Button";
 import {
   toggleAction,
   ToggleFlag,
@@ -34,6 +33,9 @@ import {
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { FiFlag } from "react-icons/fi";
 import { Typography } from "~/components/Typography";
+import { CreateButton } from "~/components/Buttons/CreateButton";
+import { CardGroup } from "~/components/CardGroup";
+import { CreationCard } from "~/components/CreationCard";
 
 interface MetaArgs {
   data?: {
@@ -177,40 +179,31 @@ export default function FlagById() {
           </NavItem>
         </HorizontalNav>
       }
-    >
-      <Section id="concerned-audience">
-        {isStrategyAdded ? (
-          <SuccessBox id="strategy-added" mb={4}>
+      status={
+        isStrategyAdded ? (
+          <SuccessBox id="strategy-added">
             The strategy has been successfully created.
           </SuccessBox>
-        ) : null}
-
-        {isStrategyRemoved ? (
-          <SuccessBox id="strategy-removed" mb={4}>
+        ) : isStrategyRemoved ? (
+          <SuccessBox id="strategy-removed">
             The strategy has been successfully removed.
           </SuccessBox>
-        ) : null}
-
-        {strategies.length === 0 && (
+        ) : strategies.length === 0 ? (
           <WarningBox title="You don't have strategies yet. When activating the flag, every user will receive the activated variant." />
-        )}
-
-        <SectionHeader
-          title="Strategies"
-          hiddenTitle
-          endAction={
-            strategies.length > 0 && (
-              <Button
-                to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
-              >
-                Add a strategy
-              </Button>
-            )
-          }
-        />
+        ) : null
+      }
+    >
+      <Section id="concerned-audience">
+        <SectionHeader title="Strategies" hiddenTitle />
 
         {strategies.length > 0 ? (
-          <>
+          <CardGroup cols={2}>
+            <CreationCard
+              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
+            >
+              Add a strategy
+            </CreationCard>
+
             {strategies.map((strat) => (
               <StrategyCard
                 key={`${strat.uuid}`}
@@ -220,7 +213,7 @@ export default function FlagById() {
                 strat={strat}
               />
             ))}
-          </>
+          </CardGroup>
         ) : null}
 
         {strategies.length === 0 ? (
@@ -232,11 +225,11 @@ export default function FlagById() {
               </Typography>
             }
             action={
-              <Button
+              <CreateButton
                 to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
               >
                 Add a strategy
-              </Button>
+              </CreateButton>
             }
           />
         ) : null}

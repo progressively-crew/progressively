@@ -24,9 +24,10 @@ import { getSession } from "~/sessions";
 import { User } from "~/modules/user/types";
 import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
-import { Button } from "~/components/Button";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Typography } from "~/components/Typography";
+import { FormGroup } from "~/components/Fields/FormGroup";
+import { SubmitButton } from "~/components/Buttons/SubmitButton";
 
 interface MetaArgs {
   data?: {
@@ -118,34 +119,35 @@ export default function CreateEnvironmentPage() {
         <Header
           title="Create an environment"
           description={
-            <Typography fontSize="xl" color="textlight">
+            <Typography>
               The new environment will appear in <strong>{project.name}</strong>
               .
             </Typography>
           }
         />
       }
+      status={errors?.name && <ErrorBox list={errors} />}
     >
       <Section>
-        {errors?.name && <ErrorBox list={errors} />}
-
         <Form method="post">
-          <TextInput
-            isInvalid={Boolean(errors?.name)}
-            name="env-name"
-            placeholder="e.g: Staging"
-            label="Environment name"
-            description="After the creation of an environment, you will be able to get
+          <FormGroup>
+            <TextInput
+              isInvalid={Boolean(errors?.name)}
+              name="env-name"
+              placeholder="e.g: Staging"
+              label="Environment name"
+              description="After the creation of an environment, you will be able to get
               its SDK key for application usage."
-          />
+            />
 
-          <Button
-            type="submit"
-            isLoading={transition.state === "submitting"}
-            loadingText="Creating the environment, please wait..."
-          >
-            Create the environment
-          </Button>
+            <SubmitButton
+              type="submit"
+              isLoading={transition.state === "submitting"}
+              loadingText="Creating the environment, please wait..."
+            >
+              Create the environment
+            </SubmitButton>
+          </FormGroup>
         </Form>
       </Section>
     </DashboardLayout>

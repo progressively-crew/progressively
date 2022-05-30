@@ -1,4 +1,7 @@
+import { styled } from "~/stitches.config";
+import { Stack } from "../Stack";
 import { Typography } from "../Typography";
+import { Label } from "./Label";
 
 export interface TextInputProps {
   isInvalid?: boolean;
@@ -9,6 +12,21 @@ export interface TextInputProps {
   type?: string;
   description?: string;
 }
+
+const Input = styled("input", {
+  border: "4px solid $hover",
+  borderRadius: "$borderRadius$regular",
+  fontSize: "$content",
+  padding: "$spacing$2 $spacing$4",
+  display: "block",
+  width: "100%",
+  boxSizing: "border-box",
+  maxWidth: "40ch",
+});
+
+const Hint = styled(Typography, {
+  fontSize: "$btn",
+});
 
 export const TextInput = ({
   isInvalid,
@@ -28,9 +46,9 @@ export const TextInput = ({
   }
 
   return (
-    <div>
-      <label htmlFor={name}>{label}</label>
-      <input
+    <Stack spacing={2}>
+      <Label htmlFor={name}>{label}</Label>
+      <Input
         type={type}
         name={name}
         id={name}
@@ -39,11 +57,7 @@ export const TextInput = ({
         aria-describedby={ariaDescription}
       />
 
-      {description && (
-        <Typography fontSize="sm" color="textlight" id={`${name}-hint`}>
-          {description}
-        </Typography>
-      )}
-    </div>
+      {description && <Hint id={`${name}-hint`}>{description}</Hint>}
+    </Stack>
   );
 };

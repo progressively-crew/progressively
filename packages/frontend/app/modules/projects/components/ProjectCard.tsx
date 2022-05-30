@@ -2,8 +2,8 @@ import React, { useRef } from "react";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { Typography } from "~/components/Typography";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
-import { Heading } from "~/components/Heading";
 import { Link } from "~/components/Link";
+import { Card, CardContent, CardHeader } from "~/components/CardGroup";
 
 export interface ProjectCardProps {
   id: string;
@@ -21,18 +21,16 @@ export const ProjectCard = ({
   const linkRef = useRef<HTMLAnchorElement>(null);
 
   return (
-    <div>
-      <div>
-        <Heading as="h2" id={`article-${id}`} size="md">
-          <Link ref={linkRef} to={linkTo}>
-            {title} <VisuallyHidden>project</VisuallyHidden>
-          </Link>
-        </Heading>
+    <Card onClick={() => linkRef?.current?.click()}>
+      <CardHeader as="h2" id={`article-${id}`}>
+        <Link ref={linkRef} to={linkTo}>
+          {title} <VisuallyHidden>project</VisuallyHidden>
+        </Link>
+      </CardHeader>
 
-        <Typography color="textlight">{description}</Typography>
-      </div>
-
-      <AiOutlineArrowRight aria-hidden />
-    </div>
+      <CardContent>
+        <Typography>{description}</Typography>
+      </CardContent>
+    </Card>
   );
 };

@@ -1,4 +1,4 @@
-import { Button } from "~/components/Button";
+import { Button } from "~/components/Buttons/Button";
 import { H1 } from "~/components/H1";
 import { Typography } from "~/components/Typography";
 import { ErrorLayout } from "~/layouts/ErrorLayout";

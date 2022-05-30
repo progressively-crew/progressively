@@ -1,7 +1,7 @@
-export interface ContainerProps {
-  children: React.ReactNode;
-}
+import { styled } from "~/stitches.config";
 
-export const Container = ({ children }: ContainerProps) => {
-  return <div>{children}</div>;
-};
+export const Container = styled("div", {
+  maxWidth: "$sizes$container",
+  margin: "0 auto",
+  padding: "0 $spacing$8",
+});

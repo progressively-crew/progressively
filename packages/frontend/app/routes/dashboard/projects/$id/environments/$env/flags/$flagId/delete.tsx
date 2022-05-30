@@ -21,7 +21,7 @@ import { Header } from "~/components/Header";
 import { FlagEnv } from "~/modules/flags/types";
 import { getFlagsByProjectEnv } from "~/modules/flags/services/getFlagsByProjectEnv";
 import { deleteFlag } from "~/modules/flags/services/deleteFlag";
-import { Button } from "~/components/Button";
+import { Button } from "~/components/Buttons/Button";
 import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
 import { Typography } from "~/components/Typography";
 
@@ -179,11 +179,11 @@ export default function DeleteFlagPage() {
       <WarningBox
         list={warnings}
         title={
-          <Typography>
+          <>
             We really want to warn you: if you validate the flag suppression,
             you {`won't`} be able to access the{" "}
             <strong>{currentFlag.name}</strong> flag anymore. It includes:
-          </Typography>
+          </>
         }
       />
     </DeleteEntityLayout>

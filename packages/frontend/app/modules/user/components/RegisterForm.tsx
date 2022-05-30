@@ -1,15 +1,17 @@
 import { ActionFunction, Form, useActionData, useTransition } from "remix";
-import { Button } from "~/components/Button";
-import { ErrorBox } from "~/components/ErrorBox";
+import { Button } from "~/components/Buttons/Button";
+import { FormGroup } from "~/components/Fields/FormGroup";
 import { TextInput } from "~/components/Fields/TextInput";
-import { SuccessBox } from "~/components/SuccessBox";
 import { createUser } from "../services/createUser";
 import { RegisterCredentials, User } from "../types";
 import { validateRegistrationForm } from "../validators/validate-registration-form";
 
-export interface RegisterActionData {
-  newUser?: User;
+export interface RegisterFormProps {
   errors?: Partial<RegisterCredentials & { backend?: string }>;
+}
+
+export interface RegisterActionData extends RegisterFormProps {
+  newUser?: User;
 }
 
 export const registerAction: ActionFunction = async ({
@@ -54,59 +56,49 @@ export const registerAction: ActionFunction = async ({
   }
 };
 
-export const RegisterForm = () => {
+export const RegisterForm = ({ errors }: RegisterFormProps) => {
   const transition = useTransition();
-  const data = useActionData<RegisterActionData>();
-  const newUser = data?.newUser;
-  const errors = data?.errors;
 
   return (
     <Form method="post">
-      {errors && Object.keys(errors).length > 0 && <ErrorBox list={errors} />}
+      <FormGroup>
+        <TextInput
+          isInvalid={Boolean(errors?.fullname)}
+          label="Fullname"
+          name="fullname"
+          placeholder="e.g: James Bond"
+        />
 
-      {newUser?.uuid && (
-        <SuccessBox id="user-created">
-          The user has been created! Take a look at your inbox, there should be
-          a link to activate it :).
-        </SuccessBox>
-      )}
+        <TextInput
+          isInvalid={Boolean(errors?.email)}
+          label="Email"
+          name="email"
+          placeholder="e.g: james.bond@mi6.com"
+        />
 
-      <TextInput
-        isInvalid={Boolean(errors?.fullname)}
-        label="Fullname"
-        name="fullname"
-        placeholder="e.g: James Bond"
-      />
+        <TextInput
+          isInvalid={Boolean(errors?.password)}
+          label="Password"
+          name="password"
+          type="password"
+          placeholder="************"
+        />
 
-      <TextInput
-        isInvalid={Boolean(errors?.email)}
-        label="Email"
-        name="email"
-        placeholder="e.g: james.bond@mi6.com"
-      />
+        <TextInput
+          isInvalid={Boolean(errors?.confirmPassword)}
+          label="Confirm your password"
+          name="confirmPassword"
+          type="password"
+          placeholder="************"
+        />
 
-      <TextInput
-        isInvalid={Boolean(errors?.password)}
-        label="Password"
-        name="password"
-        type="password"
-        placeholder="************"
-      />
-
-      <TextInput
-        isInvalid={Boolean(errors?.confirmPassword)}
-        label="Confirm your password"
-        name="confirmPassword"
-        type="password"
-        placeholder="************"
-      />
-
-      <Button
-        isLoading={transition.state === "submitting"}
-        loadingText="Creation in progress, please wait..."
-      >
-        Create an account
-      </Button>
+        <Button
+          isLoading={transition.state === "submitting"}
+          loadingText="Creation in progress, please wait..."
+        >
+          Create an account
+        </Button>
+      </FormGroup>
     </Form>
   );
 };

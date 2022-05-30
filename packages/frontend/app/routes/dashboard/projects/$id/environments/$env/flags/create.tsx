@@ -9,8 +9,10 @@ import {
   useTransition,
 } from "remix";
 import { Crumbs, BreadCrumbs } from "~/components/AppBreadcrumbs";
-import { Button } from "~/components/Button";
+import { Button } from "~/components/Buttons/Button";
+import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/ErrorBox";
+import { FormGroup } from "~/components/Fields/FormGroup";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
@@ -141,7 +143,7 @@ export default function CreateFlagPage() {
         <Header
           title="Create a feature flag"
           description={
-            <Typography fontSize="xl" color="textlight">
+            <Typography>
               The new feature flag will appear in{" "}
               <strong>{project.name}</strong> /{" "}
               <strong>{environment.name}</strong>.
@@ -149,37 +151,40 @@ export default function CreateFlagPage() {
           }
         />
       }
+      status={
+        (errors?.name || errors?.description) && <ErrorBox list={errors} />
+      }
     >
       <Section>
-        {(errors?.name || errors?.description) && <ErrorBox list={errors} />}
-
         <Form method="post">
-          <TextInput
-            name="flag-name"
-            isInvalid={Boolean(errors?.name)}
-            label="Flag name"
-            placeholder="e.g: New Homepage"
-          />
+          <FormGroup>
+            <TextInput
+              name="flag-name"
+              isInvalid={Boolean(errors?.name)}
+              label="Flag name"
+              placeholder="e.g: New Homepage"
+            />
 
-          <TextInput
-            name="flag-desc"
-            isInvalid={Boolean(errors?.description)}
-            label="Flag description"
-            placeholder="e.g: The new homepage"
-          />
+            <TextInput
+              name="flag-desc"
+              isInvalid={Boolean(errors?.description)}
+              label="Flag description"
+              placeholder="e.g: The new homepage"
+            />
 
-          <Typography fontSize="sm" color="textlight">
-            After the creation of a feature flag, you will be able to get its
-            SDK key for application usage.
-          </Typography>
+            <Typography>
+              After the creation of a feature flag, you will be able to get its
+              SDK key for application usage.
+            </Typography>
 
-          <Button
-            type="submit"
-            isLoading={transition.state === "submitting"}
-            loadingText="Creating the feature flag, please wait..."
-          >
-            Create the feature flag
-          </Button>
+            <SubmitButton
+              type="submit"
+              isLoading={transition.state === "submitting"}
+              loadingText="Creating the feature flag, please wait..."
+            >
+              Create the feature flag
+            </SubmitButton>
+          </FormGroup>
         </Form>
       </Section>
     </DashboardLayout>

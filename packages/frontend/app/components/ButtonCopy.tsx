@@ -1,7 +1,7 @@
 import { HTMLAttributes, useEffect, useRef, useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useHydrated } from "~/modules/misc/hooks/useHydrated";
-import { Button } from "./Button";
+import { Button } from "./Buttons/Button";
 import { VisuallyHidden } from "./VisuallyHidden";
 
 export interface ButtonCopyProps extends HTMLAttributes<HTMLButtonElement> {

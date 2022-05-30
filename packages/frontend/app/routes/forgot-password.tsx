@@ -6,8 +6,9 @@ import {
   useTransition,
 } from "remix";
 import { BackLink } from "~/components/BackLink";
-import { Button } from "~/components/Button";
+import { Button } from "~/components/Buttons/Button";
 import { ErrorBox } from "~/components/ErrorBox";
+import { FormGroup } from "~/components/Fields/FormGroup";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Header } from "~/components/Header";
 import { SuccessBox } from "~/components/SuccessBox";
@@ -73,40 +74,46 @@ export default function ForgotPasswordPage() {
         <Header
           title="Password forgotten"
           description={
-            <Typography color="textlight">
+            <Typography>
               Enter your email to get a recovery link and reset your password.
             </Typography>
           }
         />
       }
+      status={
+        <>
+          {errors && Object.keys(errors).length > 0 && (
+            <ErrorBox list={errors} />
+          )}
+
+          {success && (
+            <SuccessBox id="password-reset">
+              An email with a link to reset your password has been set. Make
+              sure to follow the instructions.
+            </SuccessBox>
+          )}
+        </>
+      }
     >
       <Form method="post">
-        {errors && Object.keys(errors).length > 0 && <ErrorBox list={errors} />}
+        <FormGroup>
+          <TextInput
+            isInvalid={Boolean(errors?.email)}
+            label="Email"
+            name="email"
+            type="email"
+            placeholder="e.g: james.bond@mi6.com"
+          />
 
-        {success && (
-          <SuccessBox id="password-reset">
-            An email with a link to reset your password has been set. Make sure
-            to follow the instructions.
-          </SuccessBox>
-        )}
-
-        <TextInput
-          isInvalid={Boolean(errors?.email)}
-          label="Email"
-          name="email"
-          type="email"
-          placeholder="e.g: james.bond@mi6.com"
-        />
-
-        <div>
           <Button
+            fullWidth
             type="submit"
             isLoading={transition.state === "submitting"}
             loadingText="Password resetting in progress, please wait..."
           >
             Reset password
           </Button>
-        </div>
+        </FormGroup>
       </Form>
     </NotAuthenticatedLayout>
   );

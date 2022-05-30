@@ -17,7 +17,8 @@ import styles from "./styles/index.css";
 import { NotAuthenticatedLayout } from "./layouts/NotAuthenticatedLayout";
 import { H1 } from "./components/H1";
 import { Main } from "./components/Main";
-import { Button } from "./components/Button";
+import { Button } from "./components/Buttons/Button";
+import { Background } from "./components/Background";
 
 /**
  * The `links` export is a function that returns an array of objects that map to
@@ -39,7 +40,9 @@ export const links: LinksFunction = () => {
 export default function App() {
   return (
     <Document>
-      <Outlet />
+      <Background>
+        <Outlet />
+      </Background>
     </Document>
   );
 }

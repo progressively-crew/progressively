@@ -4,6 +4,8 @@ import { User } from "~/modules/user/types";
 import { UseDropdown } from "~/modules/user/components/UserDropdown";
 import { SkipNavLink } from "~/components/SkipNav";
 import { Container } from "~/components/Container";
+import { Nav } from "~/components/Nav";
+import { Spacer } from "~/components/Spacer";
 
 export interface DashboardLayoutProps {
   user?: Partial<User>;
@@ -11,6 +13,7 @@ export interface DashboardLayoutProps {
   breadcrumb?: React.ReactNode;
   header: React.ReactNode;
   subNav?: React.ReactNode;
+  status?: React.ReactNode;
 }
 
 export const DashboardLayout = ({
@@ -19,26 +22,40 @@ export const DashboardLayout = ({
   breadcrumb,
   header,
   subNav,
+  status,
 }: DashboardLayoutProps) => {
   return (
     <div>
       <SkipNavLink>Skip to content</SkipNavLink>
 
-      <Container>
-        <nav aria-label="General">
-          <Logo />
+      <Nav aria-label="General">
+        <Logo />
 
-          {user && user.fullname && <UseDropdown user={user as User} />}
-        </nav>
+        {user && user.fullname && <UseDropdown user={user as User} />}
+      </Nav>
 
-        {breadcrumb}
-      </Container>
+      {breadcrumb}
 
       <Main>
-        <Container>{header}</Container>
-        {subNav}
+        <Spacer size={6} />
+        <Container>
+          {header}
 
-        <Container>{children}</Container>
+          <Spacer size={10} />
+
+          {subNav}
+
+          <Spacer size={8} />
+
+          {status && (
+            <>
+              {status}
+              <Spacer size={4} />
+            </>
+          )}
+
+          {children}
+        </Container>
       </Main>
     </div>
   );

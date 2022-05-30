@@ -1,5 +1,6 @@
-import { Button } from "~/components/Button";
-import { Heading } from "~/components/Heading";
+import { Button } from "~/components/Buttons/Button";
+import { Card, CardContent, CardHeader } from "~/components/CardGroup";
+import { Spacer } from "~/components/Spacer";
 import { Typography } from "~/components/Typography";
 import { Li, Ul } from "~/components/Ul";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
@@ -38,7 +39,7 @@ const StrategyAudience = ({ strat }: { strat: StrategyRetrieveDTO }) => {
   }
 
   return (
-    <Typography color="textlight">
+    <Typography>
       Serve the flag to <strong>{targetedUsers}</strong>{" "}
       {fieldName ? (
         <span>
@@ -68,9 +69,7 @@ const StrategyTargetConstraints = ({
     return (
       <Ul>
         {targets?.map((target) => (
-          <Li key={target} color="textlight">
-            {target}
-          </Li>
+          <Li key={target}>{target}</Li>
         ))}
       </Ul>
     );
@@ -86,20 +85,24 @@ export const StrategyCard = ({
   strat,
 }: StrategyCardProps) => {
   return (
-    <div>
-      <Heading as="h3" id={strat.uuid} size="md">
+    <Card>
+      <CardHeader as="h3" id={strat.uuid}>
         {strat.name}
-      </Heading>
+      </CardHeader>
 
-      <StrategyAudience strat={strat} />
+      <CardContent>
+        <StrategyAudience strat={strat} />
 
-      <Button
-        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/strategies/${strat.uuid}/delete`}
-      >
-        Remove<VisuallyHidden> {strat.name}</VisuallyHidden>
-      </Button>
+        <StrategyTargetConstraints strat={strat} />
 
-      <StrategyTargetConstraints strat={strat} />
-    </div>
+        <Spacer size={8} />
+
+        <Button
+          to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/strategies/${strat.uuid}/delete`}
+        >
+          Remove<VisuallyHidden> {strat.name}</VisuallyHidden>
+        </Button>
+      </CardContent>
+    </Card>
   );
 };

@@ -23,7 +23,7 @@ import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { getSession } from "~/sessions";
 import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
-import { Button } from "~/components/Button";
+import { Button } from "~/components/Buttons/Button";
 import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
 import { Typography } from "~/components/Typography";
 import { Li, Ul } from "~/components/Ul";
@@ -211,12 +211,12 @@ export default function DeleteEnvPage() {
       <WarningBox
         list={warnings}
         title={
-          <Typography>
+          <>
             We really want to warn you: if you validate the environment
             suppression, you {`won't`} be able to access the{" "}
             <strong>{environment.name}</strong> environment anymore. It
             includes:
-          </Typography>
+          </>
         }
       />
     </DeleteEntityLayout>

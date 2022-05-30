@@ -1,17 +1,9 @@
-import { HTMLAttributes } from "react";
+import { styled } from "~/stitches.config";
 
-export interface TypographyProps extends HTMLAttributes<HTMLParagraphElement> {
-  children: React.ReactNode;
-  as?: any;
-  fontSize?: "xl" | "sm";
-  color?: "textlight";
-}
-
-export const Typography = ({
-  children,
-  as = "p",
-  ...props
-}: TypographyProps) => {
-  const Compo = as;
-  return <Compo {...props}>{children}</Compo>;
-};
+export const Typography = styled("p", {
+  color: "$content",
+  fontSize: "$content",
+  fontFamily: "$default",
+  lineHeight: "$content",
+  maxWidth: "60ch",
+});

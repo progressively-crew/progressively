@@ -26,8 +26,10 @@ import { Section, SectionHeader } from "~/components/Section";
 import { EmptyState } from "~/components/EmptyState";
 import { FiFlag, FiKey } from "react-icons/fi";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
-import { Button } from "~/components/Button";
 import { Typography } from "~/components/Typography";
+import { CreateButton } from "~/components/Buttons/CreateButton";
+import { CardGroup } from "~/components/CardGroup";
+import { CreationCard } from "~/components/CreationCard";
 
 interface MetaArgs {
   data?: {
@@ -155,36 +157,28 @@ export default function FlagsByEnvPage() {
           </NavItem>
         </HorizontalNav>
       }
-    >
-      <Section id="list-flags-title">
-        {isFlagRemoved ? (
+      status={
+        isFlagRemoved ? (
           <SuccessBox id="flag-removed">
             The flag has been successfully deleted.
           </SuccessBox>
-        ) : null}
-
-        {newFlagId ? (
+        ) : newFlagId ? (
           <SuccessBox id="flag-added">
             The flag has been successfully created.
           </SuccessBox>
-        ) : null}
-
-        <SectionHeader
-          title="Feature flags"
-          hiddenTitle
-          endAction={
-            flagsByEnv.length > 0 && (
-              <Button
-                to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/create`}
-              >
-                Create a feature flag
-              </Button>
-            )
-          }
-        />
+        ) : null
+      }
+    >
+      <Section id="list-flags-title">
+        <SectionHeader title="Feature flags" hiddenTitle />
 
         {flagsByEnv.length > 0 ? (
-          <>
+          <CardGroup>
+            <CreationCard
+              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/create`}
+            >
+              Create a feature flag
+            </CreationCard>
             {flagsByEnv.map((flagEnv) => (
               <FlagCard
                 key={flagEnv.flagId}
@@ -201,7 +195,7 @@ export default function FlagsByEnvPage() {
                 }
               />
             ))}
-          </>
+          </CardGroup>
         ) : null}
 
         {flagsByEnv.length === 0 ? (
@@ -213,11 +207,11 @@ export default function FlagsByEnvPage() {
               </Typography>
             }
             action={
-              <Button
+              <CreateButton
                 to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/create`}
               >
                 Create a feature flag
-              </Button>
+              </CreateButton>
             }
           />
         ) : null}

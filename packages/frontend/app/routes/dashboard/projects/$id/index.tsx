@@ -18,9 +18,11 @@ import { Section, SectionHeader } from "~/components/Section";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { AiOutlineSetting } from "react-icons/ai";
 import { FiLayers } from "react-icons/fi";
-import { Button } from "~/components/Button";
 import { EmptyState } from "~/components/EmptyState";
 import { Typography } from "~/components/Typography";
+import { CreateButton } from "~/components/Buttons/CreateButton";
+import { CardGroup } from "~/components/CardGroup";
+import { CreationCard } from "~/components/CreationCard";
 
 interface MetaArgs {
   data?: {
@@ -91,43 +93,38 @@ export default function ProjectDetailPage() {
           </NavItem>
         </HorizontalNav>
       }
-    >
-      <Section aria-labelledby="list-env-title" id="list-env-title">
-        {newEnvId ? (
+      status={
+        newEnvId ? (
           <SuccessBox id="env-added">
             The environment has been successfully created.
           </SuccessBox>
-        ) : null}
-
-        {envRemoved ? (
+        ) : envRemoved ? (
           <SuccessBox id="env-removed">
             The environment has been successfully deleted.
           </SuccessBox>
-        ) : null}
+        ) : null
+      }
+    >
+      <Section aria-labelledby="list-env-title" id="list-env-title">
+        <SectionHeader title="Environments" hiddenTitle />
 
-        <SectionHeader
-          title="Environments"
-          hiddenTitle
-          endAction={
-            project.environments.length > 0 && (
-              <Button
-                to={`/dashboard/projects/${project.uuid}/environments/create`}
-              >
-                Create an environment
-              </Button>
-            )
-          }
-        />
+        <CardGroup>
+          <CreationCard
+            to={`/dashboard/projects/${project.uuid}/environments/create`}
+          >
+            Create an environment
+          </CreationCard>
 
-        {project.environments.map((env) => (
-          <EnvCard
-            key={env.uuid}
-            id={env.uuid}
-            linkTo={`/dashboard/projects/${project.uuid}/environments/${env.uuid}/flags`}
-            title={env.name}
-            clientKey={env.clientKey}
-          />
-        ))}
+          {project.environments.map((env) => (
+            <EnvCard
+              key={env.uuid}
+              id={env.uuid}
+              linkTo={`/dashboard/projects/${project.uuid}/environments/${env.uuid}/flags`}
+              title={env.name}
+              clientKey={env.clientKey}
+            />
+          ))}
+        </CardGroup>
 
         {project.environments.length === 0 ? (
           <EmptyState
@@ -138,11 +135,11 @@ export default function ProjectDetailPage() {
               </Typography>
             }
             action={
-              <Button
+              <CreateButton
                 to={`/dashboard/projects/${project.uuid}/environments/create`}
               >
                 Create an environment
-              </Button>
+              </CreateButton>
             }
           />
         ) : null}
