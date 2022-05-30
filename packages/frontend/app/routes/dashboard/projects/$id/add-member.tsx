@@ -19,7 +19,6 @@ import { Section } from "~/components/Section";
 import { Button } from "~/components/Buttons/Button";
 import { validateEmail } from "~/modules/forms/utils/validateEmail";
 import { getProject } from "~/modules/projects/services/getProject";
-import { MdOutlineEmail } from "react-icons/md";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { addMemberToProject } from "~/modules/projects/services/addMemberToProject";
 import { SuccessBox } from "~/components/SuccessBox";
@@ -149,12 +148,7 @@ export default function CreateProjectPage() {
                 <Li key={user.uuid}>
                   <Typography>{user.fullname}</Typography>
 
-                  <ButtonCopy
-                    toCopy={user.email}
-                    icon={<MdOutlineEmail aria-hidden />}
-                  >
-                    {user.email}
-                  </ButtonCopy>
+                  <ButtonCopy toCopy={user.email}>{user.email}</ButtonCopy>
                 </Li>
               ))}
             </Ul>

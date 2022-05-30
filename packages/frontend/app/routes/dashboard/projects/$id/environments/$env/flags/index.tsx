@@ -24,7 +24,7 @@ import { AiOutlineSetting } from "react-icons/ai";
 import { Header } from "~/components/Header";
 import { Section, SectionHeader } from "~/components/Section";
 import { EmptyState } from "~/components/EmptyState";
-import { FiFlag, FiKey } from "react-icons/fi";
+import { FiFlag } from "react-icons/fi";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { Typography } from "~/components/Typography";
 import { CreateButton } from "~/components/Buttons/CreateButton";
@@ -131,10 +131,7 @@ export default function FlagsByEnvPage() {
         <Header
           title={environment.name}
           startAction={
-            <ButtonCopy
-              toCopy={environment.clientKey}
-              icon={<FiKey aria-hidden />}
-            >
+            <ButtonCopy toCopy={environment.clientKey}>
               {environment.clientKey}
             </ButtonCopy>
           }

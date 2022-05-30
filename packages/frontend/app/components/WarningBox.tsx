@@ -13,19 +13,20 @@ const WarningBoxWrapper = styled("figure", {
   background: "$warningBg",
   color: "$warningFg",
   border: "1px solid $warningBorder",
-  padding: "$spacing$3",
+  padding: "$spacing$8",
   borderRadius: "$borderRadius$regular",
   fontFamily: "$default",
+  display: "flex",
+  gap: "$spacing$3",
 
   "& svg": {
-    marginRight: "$spacing$1",
+    fontSize: "$h3",
   },
 
   "& figcaption": {
-    display: "flex",
-    alignItems: "center",
-    marginBottom: "$spacing$2",
+    marginBottom: "$spacing$4",
     fontWeight: "$bold",
+    lineHeight: "$content",
   },
 });
 
@@ -34,20 +35,23 @@ export const WarningBox = ({ list, title }: WarningBoxProps) => {
 
   return (
     <WarningBoxWrapper tabIndex={-1}>
-      <figcaption>
-        <AiOutlineWarning aria-hidden />
-        <strong>{title}</strong>
-      </figcaption>
+      <AiOutlineWarning aria-hidden />
 
-      {list && warnings && (
-        <Ul>
-          {warnings.map((warningKey) => (
-            <Li key={`warning-${warningKey}`} id={`warning-${warningKey}`}>
-              {list[warningKey]}
-            </Li>
-          ))}
-        </Ul>
-      )}
+      <div>
+        <figcaption>
+          <strong>{title}</strong>
+        </figcaption>
+
+        {list && warnings && (
+          <Ul>
+            {warnings.map((warningKey) => (
+              <Li key={`warning-${warningKey}`} id={`warning-${warningKey}`}>
+                {list[warningKey]}
+              </Li>
+            ))}
+          </Ul>
+        )}
+      </div>
     </WarningBoxWrapper>
   );
 };

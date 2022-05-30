@@ -1,12 +1,12 @@
 import { HTMLAttributes, useEffect, useRef, useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import { AiOutlineCopy } from "react-icons/ai";
 import { useHydrated } from "~/modules/misc/hooks/useHydrated";
 import { Button } from "./Buttons/Button";
 import { VisuallyHidden } from "./VisuallyHidden";
 
 export interface ButtonCopyProps extends HTMLAttributes<HTMLButtonElement> {
   toCopy: string;
-  icon: React.ReactElement<unknown>;
   children: React.ReactNode;
 }
 
@@ -48,6 +48,8 @@ export const ButtonCopy = ({ toCopy, children, ...props }: ButtonCopyProps) => {
         <Button
           onClick={handleClick}
           aria-live="polite"
+          icon={<AiOutlineCopy aria-hidden />}
+          variant="ghost"
           {...copyToClipBoardProps}
         >
           {isCopied ? (
@@ -66,8 +68,14 @@ export const ButtonCopy = ({ toCopy, children, ...props }: ButtonCopyProps) => {
   const spanProps = props as HTMLAttributes<HTMLSpanElement>;
 
   return (
-    <span aria-live="polite" {...spanProps}>
+    <Button
+      as={"span"}
+      aria-live="polite"
+      icon={<AiOutlineCopy aria-hidden />}
+      variant="ghost"
+      {...spanProps}
+    >
       {children}
-    </span>
+    </Button>
   );
 };

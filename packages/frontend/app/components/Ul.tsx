@@ -7,6 +7,9 @@ export interface UlProps {
 const ULWrapper = styled("ul", {
   paddingLeft: "$spacing$9",
   listStyle: "initial",
+  display: "flex",
+  flexDirection: "column",
+  gap: "$spacing$2",
 });
 
 export const Ul = ({ children }: UlProps) => {

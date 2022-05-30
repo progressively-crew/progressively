@@ -3,6 +3,7 @@ import { styled } from "~/stitches.config";
 import { Card, CardContent } from "~/components/CardGroup";
 import { Heading } from "./Heading";
 import { VisuallyHidden } from "./VisuallyHidden";
+import { Spacer } from "./Spacer";
 
 const SectionContext = createContext<string | undefined>(undefined);
 
@@ -64,7 +65,12 @@ export const SectionHeader = ({
         </Heading>
       )}
 
-      {description}
+      {description && (
+        <>
+          <Spacer size={2} />
+          {description}
+        </>
+      )}
 
       {endAction}
     </div>

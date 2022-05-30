@@ -136,3 +136,26 @@ table {
    v2.0 | 20110126
    License: none (public domain)
 */
+
+@supports selector(:focus-visible) {
+  button,
+  input,
+  textarea,
+  select,
+  [tabindex="0"] {
+    transition-property: box-shadow;
+    transition-duration: 0.2s;
+    border-radius: 4px;
+  }
+
+  *:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px var(--colors-focus);
+  }
+}
+
+@supports selector(:focus-visible) {
+  *:focus:not(:focus-visible) {
+    box-shadow: unset;
+  }
+}

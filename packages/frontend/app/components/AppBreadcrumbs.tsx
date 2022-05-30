@@ -12,6 +12,11 @@ const Ol = styled("ol", {
     fontWeight: "$fontWeights$bold",
     color: "$hover",
   },
+
+  "& li": {
+    display: "flex",
+    alignItems: "center",
+  },
 });
 
 const Separator = styled("div", {

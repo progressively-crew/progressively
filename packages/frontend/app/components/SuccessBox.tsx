@@ -8,17 +8,18 @@ export interface SuccessBoxProps {
 }
 
 const SuccessBoxWrapper = styled("p", {
-  display: "flex",
   alignItems: "center",
   background: "$successBg",
   color: "$successFg",
   border: "1px solid $successBorder",
-  padding: "$spacing$3",
+  padding: "$spacing$8",
   borderRadius: "$borderRadius$regular",
   fontFamily: "$default",
+  display: "flex",
+  gap: "$spacing$3",
 
   "& svg": {
-    marginRight: "$spacing$1",
+    fontSize: "$h3",
   },
 });
 
@@ -38,7 +39,7 @@ export const SuccessBox = ({ children, id, ...props }: SuccessBoxProps) => {
       {...props}
     >
       <AiOutlineCheckCircle aria-hidden />
-      {children}
+      <span>{children}</span>
     </SuccessBoxWrapper>
   );
 };

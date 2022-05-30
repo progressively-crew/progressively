@@ -23,13 +23,14 @@ const CardWrapper = styled("div", {
   borderRadius: "$borderRadius$regular",
   padding: "$spacing$8 0",
   border: "8px solid transparent",
+  transition: "border 0.2s",
   variants: {
     hydrated: {
       true: {
         // when hydrated
         cursor: "pointer",
         "&:active": {
-          border: "8px solid $primary",
+          border: "8px solid $hover",
         },
       },
     },
@@ -82,7 +83,7 @@ export const Card = ({ children, className, onClick }: CardProps) => {
       onClick={onClick}
       onKeyDown={handleKeyDown}
       className={`card ${className}`}
-      tabIndex={isHydrated ? 0 : undefined}
+      tabIndex={isHydrated && onClick ? 0 : undefined}
       hydrated={Boolean(isHydrated && onClick)}
     >
       {children}
@@ -91,7 +92,7 @@ export const Card = ({ children, className, onClick }: CardProps) => {
 };
 
 export const CardHeader = styled("div", {
-  padding: "0 $spacing$10 $spacing$3 $spacing$10",
+  padding: "0 $spacing$10",
   fontFamily: "$default",
   color: "$title",
   fontSize: "$content",

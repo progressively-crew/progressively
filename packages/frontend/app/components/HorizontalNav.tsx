@@ -27,11 +27,6 @@ const HorizontalNavWrapper = styled("nav", {
     color: "$primary",
   },
 
-  "& ul li a:focus": {
-    background: "$hover",
-    color: "$primary",
-  },
-
   "& ul li a.custom-nav-link.active": {},
 
   "& ul li svg": {

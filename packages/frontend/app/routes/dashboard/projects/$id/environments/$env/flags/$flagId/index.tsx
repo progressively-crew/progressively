@@ -31,7 +31,6 @@ import {
   ToggleFlag,
 } from "~/modules/flags/components/ToggleFlag";
 import { ButtonCopy } from "~/components/ButtonCopy";
-import { FiFlag } from "react-icons/fi";
 import { Typography } from "~/components/Typography";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { CardGroup } from "~/components/CardGroup";
@@ -146,12 +145,12 @@ export default function FlagById() {
         <Header
           title={currentFlag.name}
           startAction={
-            <div>
-              <ButtonCopy icon={<FiFlag />} toCopy={currentFlag.key}>
+            <>
+              <ToggleFlag isFlagActivated={isFlagActivated} />
+              <ButtonCopy toCopy={currentFlag.key}>
                 {currentFlag.key}
               </ButtonCopy>
-              <ToggleFlag isFlagActivated={isFlagActivated} />
-            </div>
+            </>
           }
         />
       }

@@ -1,5 +1,5 @@
 import { AiOutlineSetting } from "react-icons/ai";
-import { FiFlag, FiKey } from "react-icons/fi";
+import { FiFlag } from "react-icons/fi";
 import { LoaderFunction, MetaFunction, useLoaderData } from "remix";
 import { Crumbs, BreadCrumbs } from "~/components/AppBreadcrumbs";
 import { Button } from "~/components/Buttons/Button";
@@ -99,10 +99,7 @@ export default function EnvSettingsPage() {
         <Header
           title={environment.name}
           startAction={
-            <ButtonCopy
-              toCopy={environment.clientKey}
-              icon={<FiKey aria-hidden />}
-            >
+            <ButtonCopy toCopy={environment.clientKey}>
               {environment.clientKey}
             </ButtonCopy>
           }

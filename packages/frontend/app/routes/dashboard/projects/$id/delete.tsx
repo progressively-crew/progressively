@@ -1,4 +1,3 @@
-import { MdOutlineEmail } from "react-icons/md";
 import {
   ActionFunction,
   Form,
@@ -138,12 +137,7 @@ export default function DeleteProjectPage() {
               <Li key={user.uuid}>
                 <Typography as="span">{user.fullname}</Typography>
 
-                <ButtonCopy
-                  toCopy={user.email}
-                  icon={<MdOutlineEmail aria-hidden />}
-                >
-                  {user.email}
-                </ButtonCopy>
+                <ButtonCopy toCopy={user.email}>{user.email}</ButtonCopy>
               </Li>
             ))}
           </Ul>

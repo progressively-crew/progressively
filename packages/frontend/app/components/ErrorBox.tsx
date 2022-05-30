@@ -13,19 +13,21 @@ const ErrorBoxWrapper = styled("figure", {
   background: "$errorBg",
   color: "$errorFg",
   border: "1px solid $errorBorder",
-  padding: "$spacing$3",
+  padding: "$spacing$8",
   borderRadius: "$borderRadius$regular",
   fontFamily: "$default",
 
+  display: "flex",
+  gap: "$spacing$3",
+
   "& svg": {
-    marginRight: "$spacing$1",
+    fontSize: "$h3",
   },
 
   "& figcaption": {
-    display: "flex",
-    alignItems: "center",
-    marginBottom: "$spacing$2",
     fontWeight: "$bold",
+    marginBottom: "$spacing$4",
+    lineHeight: "$content",
   },
 });
 
@@ -45,18 +47,20 @@ export const ErrorBox = ({ list }: ErrorBoxProps) => {
 
   return (
     <ErrorBoxWrapper ref={boxRef} tabIndex={-1} className="error-box">
-      <figcaption>
-        <MdErrorOutline aria-hidden />
-        <strong>{label}</strong>
-      </figcaption>
+      <MdErrorOutline aria-hidden />
+      <div>
+        <figcaption>
+          <strong>{label}</strong>
+        </figcaption>
 
-      <Ul>
-        {errors.map((errorKey) => (
-          <Li key={`error-${errorKey}`} id={`error-${errorKey}`}>
-            {list[errorKey]}
-          </Li>
-        ))}
-      </Ul>
+        <Ul>
+          {errors.map((errorKey) => (
+            <Li key={`error-${errorKey}`} id={`error-${errorKey}`}>
+              {list[errorKey]}
+            </Li>
+          ))}
+        </Ul>
+      </div>
     </ErrorBoxWrapper>
   );
 };

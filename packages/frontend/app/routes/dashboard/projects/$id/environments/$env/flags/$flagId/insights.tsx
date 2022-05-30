@@ -33,7 +33,6 @@ import {
   toggleAction,
   ToggleFlag,
 } from "~/modules/flags/components/ToggleFlag";
-import { FiFlag } from "react-icons/fi";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { BigState } from "~/components/BigStat";
 import { Typography } from "~/components/Typography";
@@ -170,7 +169,7 @@ export default function FlagById() {
           title={currentFlag.name}
           startAction={
             <div>
-              <ButtonCopy icon={<FiFlag />} toCopy={currentFlag.key}>
+              <ButtonCopy toCopy={currentFlag.key}>
                 {currentFlag.key}
               </ButtonCopy>
               <ToggleFlag isFlagActivated={isFlagActivated} />

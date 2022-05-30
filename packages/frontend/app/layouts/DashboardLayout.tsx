@@ -39,18 +39,24 @@ export const DashboardLayout = ({
       <Main>
         <Spacer size={6} />
         <Container>
-          {header}
+          {header && (
+            <>
+              {header}
+              <Spacer size={10} />
+            </>
+          )}
 
-          <Spacer size={10} />
-
-          {subNav}
-
-          <Spacer size={8} />
+          {subNav && (
+            <>
+              {subNav}
+              <Spacer size={8} />
+            </>
+          )}
 
           {status && (
             <>
               {status}
-              <Spacer size={4} />
+              <Spacer size={8} />
             </>
           )}
 
