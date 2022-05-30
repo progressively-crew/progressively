@@ -26,6 +26,7 @@ import { deleteStrategy } from "~/modules/strategies/services/deleteStrategy";
 import { Button } from "~/components/Buttons/Button";
 import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
 import { Typography } from "~/components/Typography";
+import { DeleteButton } from "~/components/Buttons/DeleteButton";
 
 interface MetaArgs {
   data?: {
@@ -175,6 +176,7 @@ export default function DeleteStrategyPage() {
       }
       cancelAction={
         <Button
+          variant="ghost"
           to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`}
         >
           {`No, don't delete`} {strategy.name}
@@ -182,13 +184,13 @@ export default function DeleteStrategyPage() {
       }
       confirmAction={
         <Form method="post">
-          <Button
+          <DeleteButton
             type="submit"
             isLoading={transition.state === "submitting"}
             loadingText="Deleting the environment, please wait..."
           >
             Yes, delete the strategy
-          </Button>
+          </DeleteButton>
         </Form>
       }
     >

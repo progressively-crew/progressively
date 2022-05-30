@@ -1,23 +1,15 @@
 import { Button, ButtonProps } from "./Button";
-import { BsCheck } from "react-icons/bs";
-import { styled } from "~/stitches.config";
-
-const Wrapper = styled("span", {
-  display: "flex",
-  alignItems: "center",
-  "& svg": {
-    marginRight: "$spacing$2",
-  },
-});
+import { FiEdit } from "react-icons/fi";
 
 export const SubmitButton = ({ children, ...props }: ButtonProps) => {
   return (
-    <Button type="submit" {...props}>
-      <Wrapper>
-        <BsCheck aria-hidden />
-
-        {children}
-      </Wrapper>
+    <Button
+      type="submit"
+      variant="success"
+      icon={<FiEdit aria-hidden />}
+      {...props}
+    >
+      {children}
     </Button>
   );
 };

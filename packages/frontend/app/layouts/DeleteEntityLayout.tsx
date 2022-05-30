@@ -17,7 +17,12 @@ export interface DeleteEntityLayoutProps {
 const ActionWrapper = styled("div", {
   display: "flex",
   justifyContent: "space-between",
+  gap: "$spacing$6",
   marginTop: "$spacing$6",
+});
+
+const Wrapper = styled("div", {
+  maxWidth: "80ch",
 });
 
 export const DeleteEntityLayout = ({
@@ -31,16 +36,18 @@ export const DeleteEntityLayout = ({
 }: DeleteEntityLayoutProps) => {
   return (
     <DashboardLayout user={user} header={header} breadcrumb={breadcrumb}>
-      <Section>
-        {error}
+      <Wrapper>
+        <Section>
+          {error}
 
-        {children}
+          {children}
 
-        <ActionWrapper>
-          {cancelAction}
-          {confirmAction}
-        </ActionWrapper>
-      </Section>
+          <ActionWrapper>
+            {cancelAction}
+            {confirmAction}
+          </ActionWrapper>
+        </Section>
+      </Wrapper>
     </DashboardLayout>
   );
 };

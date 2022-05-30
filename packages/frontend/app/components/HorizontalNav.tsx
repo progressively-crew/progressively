@@ -5,29 +5,42 @@ const HorizontalNavWrapper = styled("nav", {
   "& ul": {
     background: "$backgroundAccent",
     display: "flex",
-    padding: "$spacing$1",
     borderRadius: "$borderRadius$regular",
     alignItems: "center",
-    gap: "$spacing$1",
   },
 
   "& ul li a": {
+    cursor: "pointer",
     display: "flex",
     fontFamily: "$default",
-    padding: "$spacing$4 $spacing$5",
+    paddingTop: "$spacing$4",
+    paddingBottom: "$spacing$4",
+    paddingLeft: "$spacing$4",
+    paddingRight: "$spacing$6",
     alignItems: "center",
     textDecoration: "none",
     color: "$title",
-    borderRadius: "$borderRadius$regular",
-    cursor: "pointer",
+    borderBottom: "4px solid transparent",
+    borderTop: "4px solid transparent",
+    gap: "$spacing$2",
+    transition: "border,box-shadow 0.2s",
+    fontSize: "$content",
+  },
+
+  "& ul li:first-of-type a": {
+    borderEndStartRadius: "$borderRadius$regular",
+    borderStartStartRadius: "$borderRadius$regular",
   },
 
   "& ul li a:hover": {
-    background: "$hover",
-    color: "$primary",
+    borderBottomColor: "$hover",
+    color: "$hover",
   },
 
-  "& ul li a.custom-nav-link.active": {},
+  "& ul li a.active": {
+    borderBottomColor: "$hover",
+    color: "$hover",
+  },
 
   "& ul li svg": {
     marginRight: "$spacing$1",
@@ -56,10 +69,12 @@ export interface NavItemProps {
 export const NavItem = ({ children, to, icon }: NavItemProps) => {
   return (
     <li>
-      <NavLink to={to} className="custom-nav-link">
-        <span style={{ display: "flex" }} aria-hidden>
-          {icon}
-        </span>
+      <NavLink
+        to={to}
+        end
+        className={({ isActive }) => (isActive ? "active" : undefined)}
+      >
+        <span aria-hidden>{icon}</span>
         {children}
       </NavLink>
     </li>

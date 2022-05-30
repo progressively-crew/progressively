@@ -2,7 +2,6 @@ import { AiOutlineSetting } from "react-icons/ai";
 import { FiFlag } from "react-icons/fi";
 import { LoaderFunction, MetaFunction, useLoaderData } from "remix";
 import { Crumbs, BreadCrumbs } from "~/components/AppBreadcrumbs";
-import { Button } from "~/components/Buttons/Button";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { Header } from "~/components/Header";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
@@ -19,6 +18,7 @@ import { getProject } from "~/modules/projects/services/getProject";
 import { Project, UserProject, UserRoles } from "~/modules/projects/types";
 import { User } from "~/modules/user/types";
 import { getSession } from "~/sessions";
+import { DeleteButton } from "~/components/Buttons/DeleteButton";
 
 interface MetaArgs {
   data?: {
@@ -138,11 +138,11 @@ export default function EnvSettingsPage() {
           />
 
           <SectionContent>
-            <Button
+            <DeleteButton
               to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/delete`}
             >
               Delete {`"${environment.name}"`} forever
-            </Button>
+            </DeleteButton>
           </SectionContent>
         </CardSection>
       )}

@@ -23,14 +23,13 @@ import {
 import { AiOutlineBarChart, AiOutlineSetting } from "react-icons/ai";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { FaPowerOff } from "react-icons/fa";
-import { Button } from "~/components/Buttons/Button";
 import {
   toggleAction,
   ToggleFlag,
 } from "~/modules/flags/components/ToggleFlag";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { Typography } from "~/components/Typography";
-import { VisuallyHidden } from "~/components/VisuallyHidden";
+import { DeleteButton } from "~/components/Buttons/DeleteButton";
 
 interface MetaArgs {
   data?: {
@@ -134,12 +133,12 @@ export default function FlagSettingPage() {
         <Header
           title={currentFlag.name}
           startAction={
-            <div>
+            <>
+              <ToggleFlag isFlagActivated={isFlagActivated} />
               <ButtonCopy toCopy={currentFlag.key}>
                 {currentFlag.key}
               </ButtonCopy>
-              <ToggleFlag isFlagActivated={isFlagActivated} />
-            </div>
+            </>
           }
         />
       }
@@ -182,12 +181,11 @@ export default function FlagSettingPage() {
           />
 
           <SectionContent>
-            <Button
+            <DeleteButton
               to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/delete`}
             >
-              Delete <span aria-hidden>{`"${currentFlag.name}"`} forever</span>
-              <VisuallyHidden>{`"${currentFlag.name}"`} forever</VisuallyHidden>
-            </Button>
+              Delete {currentFlag.name} forever
+            </DeleteButton>
           </SectionContent>
         </CardSection>
       )}

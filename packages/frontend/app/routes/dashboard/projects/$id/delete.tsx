@@ -23,6 +23,7 @@ import { Button } from "~/components/Buttons/Button";
 import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
 import { Typography } from "~/components/Typography";
 import { Li, Ul } from "~/components/Ul";
+import { DeleteButton } from "~/components/Buttons/DeleteButton";
 
 interface MetaArgs {
   data?: {
@@ -162,19 +163,22 @@ export default function DeleteProjectPage() {
         data.errors.backendError && <ErrorBox list={data.errors} />
       }
       cancelAction={
-        <Button to={`/dashboard/projects/${project.uuid}/settings`}>
-          No, {`don't`} delete <strong>{project.name}</strong>
+        <Button
+          variant="ghost"
+          to={`/dashboard/projects/${project.uuid}/settings`}
+        >
+          No, {`don't`} delete {project.name}
         </Button>
       }
       confirmAction={
         <Form method="post">
-          <Button
+          <DeleteButton
             type="submit"
             isLoading={transition.state === "submitting"}
             loadingText="Deleting the project, please wait..."
           >
             Yes, delete the project
-          </Button>
+          </DeleteButton>
         </Form>
       }
     >

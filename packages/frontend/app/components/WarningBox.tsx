@@ -13,7 +13,7 @@ const WarningBoxWrapper = styled("figure", {
   background: "$warningBg",
   color: "$warningFg",
   border: "1px solid $warningBorder",
-  padding: "$spacing$8",
+  padding: "$spacing$6 $spacing$4",
   borderRadius: "$borderRadius$regular",
   fontFamily: "$default",
   display: "flex",

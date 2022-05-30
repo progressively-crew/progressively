@@ -12,16 +12,18 @@ const RawLink = styled("a", {
   textDecoration: "none",
   position: "relative",
   overflow: "hidden",
+  padding: "0 $spacing$2",
+  margin: "0 -$spacing$2",
+  borderRadius: "$borderRadius$regular",
 
   "&:before": {
     content: "''",
     background: "$hover",
     position: "absolute",
     height: "4px",
-    width: "100%",
-    transform: "translateX(-100%)",
+    width: "0%",
     bottom: "$spacing$1",
-    transition: "transform 0.2s",
+    transition: "width 0.2s",
   },
 
   "@media (prefers-reduced-motion: reduce)": {
@@ -30,7 +32,7 @@ const RawLink = styled("a", {
 
   "&:hover": {
     "&:before": {
-      transform: "translateX(0%)",
+      width: "100%",
     },
   },
 

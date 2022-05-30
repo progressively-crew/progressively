@@ -10,6 +10,8 @@ const ULWrapper = styled("ul", {
   display: "flex",
   flexDirection: "column",
   gap: "$spacing$2",
+
+  "& li": { lineHeight: "$content" },
 });
 
 export const Ul = ({ children }: UlProps) => {

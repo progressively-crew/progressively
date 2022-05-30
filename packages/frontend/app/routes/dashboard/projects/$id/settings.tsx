@@ -9,7 +9,6 @@ import {
   useTransition,
 } from "remix";
 import { Crumbs, BreadCrumbs } from "~/components/AppBreadcrumbs";
-import { Button } from "~/components/Buttons/Button";
 import { ErrorBox } from "~/components/ErrorBox";
 import { Header } from "~/components/Header";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
@@ -31,6 +30,7 @@ import { Typography } from "~/components/Typography";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { Divider } from "~/components/Divider";
 import { Stack } from "~/components/Stack";
+import { DeleteButton } from "~/components/Buttons/DeleteButton";
 
 interface MetaArgs {
   data?: {
@@ -219,9 +219,9 @@ export default function SettingsPage() {
             />
 
             <SectionContent>
-              <Button to={`/dashboard/projects/${project.uuid}/delete`}>
+              <DeleteButton to={`/dashboard/projects/${project.uuid}/delete`}>
                 Delete <span>{`"${project.name}"`} forever</span>
-              </Button>
+              </DeleteButton>
             </SectionContent>
           </CardSection>
         )}

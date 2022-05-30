@@ -18,7 +18,7 @@ export const {
       backgroundAccent: "rgb(26, 28, 39)",
       primary: "#c3134e",
       content: "#9ba1a6",
-      hover: "hsl(340deg, 82%, 95%)",
+      hover: "hsl(340deg, 82%, 85%)",
       focus: "rgba(178,212,221)",
 
       successBg: "#c8e6c9",

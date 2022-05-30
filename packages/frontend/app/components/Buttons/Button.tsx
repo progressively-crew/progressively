@@ -1,21 +1,22 @@
 import { HTMLAttributes } from "react";
+import { Link } from "remix";
 import { styled } from "~/stitches.config";
-import { Link } from "../Link";
 
 export const RawButton = styled("button", {
+  boxSizing: "border-box",
   background: "$background",
   borderRadius: "$borderRadius$regular",
-  padding: "$spacing$3 $spacing$4",
+  padding: "0 $spacing$4",
   color: "$title",
   fontSize: "$btn",
   fontFamily: "$default",
   border: "2px solid $primary",
-  display: "inline-block",
+  display: "inline-flex",
   textDecoration: "none",
   height: "$cta",
   cursor: "pointer",
   margin: 0,
-  lineHeight: 1,
+  transition: "all 0.2s",
 
   variants: {
     fullWidth: {
@@ -28,6 +29,20 @@ export const RawButton = styled("button", {
       ghost: {
         background: "$backgroundAccent",
         border: "2px solid $border",
+        "&:hover": {
+          background: "$background",
+        },
+      },
+      danger: {
+        background: "$primary",
+      },
+      success: {
+        background: "$successBg",
+        border: "1px solid $successBorder",
+        color: "$background",
+        "&:hover": {
+          opacity: "0.9",
+        },
       },
     },
   },
@@ -47,7 +62,7 @@ export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean;
   loadingText?: string;
   type?: "button" | "submit" | "reset";
-  variant?: "ghost";
+  variant?: "ghost" | "danger" | "success";
   fullWidth?: boolean;
   icon?: React.ReactNode;
 }

@@ -26,6 +26,7 @@ import { Button } from "~/components/Buttons/Button";
 import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
 import { Typography } from "~/components/Typography";
 import { Li, Ul } from "~/components/Ul";
+import { DeleteButton } from "~/components/Buttons/DeleteButton";
 
 interface MetaArgs {
   data?: {
@@ -185,20 +186,21 @@ export default function DeleteEnvPage() {
       }
       cancelAction={
         <Button
+          variant="ghost"
           to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/settings`}
         >
-          No, {`don't`} delete <strong>{environment.name}</strong>
+          No, {`don't`} delete {environment.name}
         </Button>
       }
       confirmAction={
         <Form method="post">
-          <Button
+          <DeleteButton
             type="submit"
             isLoading={transition.state === "submitting"}
             loadingText="Deleting the environment, please wait..."
           >
             Yes, delete the environment
-          </Button>
+          </DeleteButton>
         </Form>
       }
     >

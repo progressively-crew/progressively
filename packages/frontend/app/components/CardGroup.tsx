@@ -23,7 +23,7 @@ const CardWrapper = styled("div", {
   borderRadius: "$borderRadius$regular",
   padding: "$spacing$8 0",
   border: "8px solid transparent",
-  transition: "border 0.2s",
+  transition: "border,box-shadow 0.2s",
   variants: {
     hydrated: {
       true: {
@@ -106,5 +106,6 @@ export const CardContent = styled("div", {
   padding: "0 $spacing$10",
   "& p": {
     fontSize: "$btn",
+    lineHeight: "$content",
   },
 });

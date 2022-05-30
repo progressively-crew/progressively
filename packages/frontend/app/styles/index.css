@@ -138,7 +138,6 @@ table {
 */
 
 @supports selector(:focus-visible) {
-  button,
   input,
   textarea,
   select,

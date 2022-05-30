@@ -14,6 +14,9 @@ const StyledSwitch = styled(SwitchPrimitive.Root, {
   "&:focus": { outline: `revert` },
   '&[data-state="checked"]': { backgroundColor: "$primary" },
   cursor: "pointer",
+
+  padding: "$spacing$1 $spacing$2",
+  border: "1px solid $border",
 });
 
 const StyledThumb = styled(SwitchPrimitive.Thumb, {
