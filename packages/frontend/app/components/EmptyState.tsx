@@ -1,5 +1,22 @@
-import { GiSailboat } from "react-icons/gi";
+import { styled } from "~/stitches.config";
 import { Heading } from "./Heading";
+import { EmptyBoxIcon } from "./Icons/EmptyBoxIcon";
+import { Spacer } from "./Spacer";
+import { Stack } from "./Stack";
+
+const Wrapper = styled("div", {
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+  padding: "$spacing$6 0",
+  textAlign: "center",
+
+  "& .empty-box-icon": {
+    height: "$emptyStateIconHeight",
+    fill: "$hover",
+  },
+});
 
 export interface EmptyStateProps {
   title: string;
@@ -17,16 +34,20 @@ export const EmptyState = ({
   action,
 }: EmptyStateProps) => {
   return (
-    <div>
-      <GiSailboat aria-hidden />
+    <Wrapper>
+      <EmptyBoxIcon />
 
-      <Heading as={titleAs} size="lg" id={id}>
-        {title}
-      </Heading>
+      <Spacer size={6} />
 
-      {description}
+      <Stack spacing={2}>
+        <Heading as={titleAs} size="lg" id={id}>
+          {title}
+        </Heading>
 
-      {action}
-    </div>
+        {description}
+
+        {action}
+      </Stack>
+    </Wrapper>
   );
 };

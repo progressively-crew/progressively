@@ -189,7 +189,7 @@ export default function FlagById() {
             The strategy has been successfully removed.
           </SuccessBox>
         ) : strategies.length === 0 ? (
-          <WarningBox title="You don't have strategies yet. When activating the flag, every user will receive the activated variant." />
+          <WarningBox title="You don't have strategies yet. When switching on the flag, every user will receive the activated variant." />
         ) : null
       }
     >

@@ -7,13 +7,12 @@ import {
   useTransition,
 } from "remix";
 import { BackLink } from "~/components/BackLink";
-import { Button } from "~/components/Buttons/Button";
+import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/ErrorBox";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Header } from "~/components/Header";
 import { SuccessBox } from "~/components/SuccessBox";
-import { Typography } from "~/components/Typography";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import {
   validateConfirmationPassword,
@@ -135,14 +134,12 @@ export default function ResetPasswordPage() {
             placeholder="**********"
           />
 
-          <Button
-            fullWidth
-            type="submit"
+          <SubmitButton
             isLoading={transition.state === "submitting"}
             loadingText="Password changing in progress, please wait..."
           >
             Change password
-          </Button>
+          </SubmitButton>
         </FormGroup>
       </Form>
     </NotAuthenticatedLayout>

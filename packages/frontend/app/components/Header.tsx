@@ -19,6 +19,7 @@ const HeaderRow = styled("div", {
 const HeadingWrapper = styled("div", {
   display: "flex",
   flexDirection: "column-reverse",
+  maxWidth: "80ch",
 });
 
 export const Header = ({

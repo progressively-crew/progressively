@@ -7,7 +7,6 @@ export const TagLine = styled(Typography, {
   fontSize: "$btn",
   fontWeight: "$slim",
   letterSpacing: "2px",
-  marginBottom: "$spacing$1",
   variants: {
     small: {
       true: {

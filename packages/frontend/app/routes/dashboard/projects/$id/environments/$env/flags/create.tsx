@@ -16,6 +16,7 @@ import { FormGroup } from "~/components/Fields/FormGroup";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
+import { Spacer } from "~/components/Spacer";
 import { Typography } from "~/components/Typography";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { authGuard } from "~/modules/auth/services/auth-guard";
@@ -165,17 +166,21 @@ export default function CreateFlagPage() {
               placeholder="e.g: New Homepage"
             />
 
-            <TextInput
-              name="flag-desc"
-              isInvalid={Boolean(errors?.description)}
-              label="Flag description"
-              placeholder="e.g: The new homepage"
-            />
+            <div>
+              <TextInput
+                name="flag-desc"
+                isInvalid={Boolean(errors?.description)}
+                label="Flag description"
+                placeholder="e.g: The new homepage"
+              />
 
-            <Typography>
-              After the creation of a feature flag, you will be able to get its
-              SDK key for application usage.
-            </Typography>
+              <Spacer size={2} />
+
+              <Typography>
+                After the creation of a feature flag, you will be able to get
+                its SDK key for application usage.
+              </Typography>
+            </div>
 
             <SubmitButton
               type="submit"

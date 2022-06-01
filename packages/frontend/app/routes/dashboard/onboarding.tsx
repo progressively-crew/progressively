@@ -6,8 +6,9 @@ import {
   LoaderFunction,
   useLoaderData,
 } from "remix";
-import { Button } from "~/components/Buttons/Button";
+import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/ErrorBox";
+import { FormGroup } from "~/components/Fields/FormGroup";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
@@ -86,19 +87,20 @@ export default function OnboardingPage() {
           }
         />
       }
+      status={errors?.name && <ErrorBox list={errors} />}
     >
       <Section>
-        {errors?.name && <ErrorBox list={errors} />}
-
         <Form method="post">
-          <TextInput
-            isInvalid={Boolean(errors?.name)}
-            label="Project name"
-            name="name"
-            placeholder="e.g: My super project"
-          />
+          <FormGroup>
+            <TextInput
+              isInvalid={Boolean(errors?.name)}
+              label="Project name"
+              name="name"
+              placeholder="e.g: My super project"
+            />
 
-          <Button type="submit">Create the project</Button>
+            <SubmitButton>Create the project</SubmitButton>
+          </FormGroup>
         </Form>
       </Section>
     </DashboardLayout>

@@ -20,18 +20,6 @@ export const RawButton = styled("button", {
   textAlign: "left",
 
   variants: {
-    size: {
-      xs: {
-        fontSize: "$xs",
-      },
-    },
-
-    fullWidth: {
-      true: {
-        width: "100%",
-      },
-    },
-
     variant: {
       ghost: {
         background: "$backgroundAccent",
@@ -46,10 +34,11 @@ export const RawButton = styled("button", {
           opacity: "0.9",
         },
       },
-      secondary: {
-        background: "$ctaBg",
+
+      primary: {
+        background: "$hover",
         border: "none",
-        color: "$ctaFg",
+        color: "$background",
         "&:active": {
           opacity: "0.8",
         },
@@ -72,17 +61,14 @@ export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean;
   loadingText?: string;
   type?: "button" | "submit" | "reset";
-  variant?: "ghost" | "danger" | "secondary";
-  fullWidth?: boolean;
+  variant?: "ghost" | "danger" | "primary";
   icon?: React.ReactNode;
-  size?: "xs";
 }
 
 export const Button = ({
   to,
   children,
   type,
-  fullWidth,
   icon,
   isLoading,
   loadingText,
@@ -102,7 +88,7 @@ export const Button = ({
   }
 
   return (
-    <RawButton type={type} fullWidth={fullWidth} {...props}>
+    <RawButton type={type} {...props}>
       <Wrapper>
         {icon}
         {children}

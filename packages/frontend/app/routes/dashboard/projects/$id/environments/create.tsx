@@ -28,6 +28,7 @@ import { TextInput } from "~/components/Fields/TextInput";
 import { Typography } from "~/components/Typography";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
+import { Spacer } from "~/components/Spacer";
 
 interface MetaArgs {
   data?: {
@@ -131,14 +132,19 @@ export default function CreateEnvironmentPage() {
       <Section>
         <Form method="post">
           <FormGroup>
-            <TextInput
-              isInvalid={Boolean(errors?.name)}
-              name="env-name"
-              placeholder="e.g: Staging"
-              label="Environment name"
-              description="After the creation of an environment, you will be able to get
-              its SDK key for application usage."
-            />
+            <div>
+              <TextInput
+                isInvalid={Boolean(errors?.name)}
+                name="env-name"
+                placeholder="e.g: Staging"
+                label="Environment name"
+              />
+              <Spacer size={2} />
+              <Typography>
+                After the creation of an environment, you will be able to get
+                its SDK key for application usage.
+              </Typography>
+            </div>
 
             <SubmitButton
               type="submit"

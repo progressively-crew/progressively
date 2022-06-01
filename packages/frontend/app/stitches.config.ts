@@ -21,9 +21,6 @@ export const {
       hover: "hsl(340deg, 82%, 85%)",
       focus: "#4D90FE",
 
-      ctaBg: "#1976D2",
-      ctaFg: "white",
-
       successBg: "#c8e6c9",
       successFg: "#1b5e20",
       successBorder: "#66bb6a",
@@ -41,6 +38,7 @@ export const {
       cardHeight: "160px",
       notAuthenticatedCardWidth: "400px",
       cta: "48px",
+      emptyStateIconHeight: "160px",
     },
     fontSizes: {
       xs: "0.8rem",

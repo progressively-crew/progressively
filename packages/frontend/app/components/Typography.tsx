@@ -6,4 +6,12 @@ export const Typography = styled("p", {
   fontFamily: "$default",
   lineHeight: "$content",
   maxWidth: "60ch",
+
+  variants: {
+    size: {
+      small: {
+        fontSize: "$cta",
+      },
+    },
+  },
 });

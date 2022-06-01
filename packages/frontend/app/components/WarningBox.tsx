@@ -1,5 +1,6 @@
 import { AiOutlineWarning } from "react-icons/ai";
 import { styled } from "~/stitches.config";
+import { Spacer } from "./Spacer";
 import { Li, Ul } from "./Ul";
 
 export interface WarningBoxProps {
@@ -24,7 +25,6 @@ const WarningBoxWrapper = styled("figure", {
   },
 
   "& figcaption": {
-    marginBottom: "$spacing$4",
     fontWeight: "$bold",
     lineHeight: "$content",
   },
@@ -42,15 +42,18 @@ export const WarningBox = ({ list, title }: WarningBoxProps) => {
           <strong>{title}</strong>
         </figcaption>
 
-        {list && warnings && (
-          <Ul>
-            {warnings.map((warningKey) => (
-              <Li key={`warning-${warningKey}`} id={`warning-${warningKey}`}>
-                {list[warningKey]}
-              </Li>
-            ))}
-          </Ul>
-        )}
+        {warnings && list && warnings.length > 0 ? (
+          <>
+            <Spacer size={4} />
+            <Ul>
+              {warnings.map((warningKey) => (
+                <Li key={`warning-${warningKey}`} id={`warning-${warningKey}`}>
+                  {list[warningKey]}
+                </Li>
+              ))}
+            </Ul>
+          </>
+        ) : null}
       </div>
     </WarningBoxWrapper>
   );

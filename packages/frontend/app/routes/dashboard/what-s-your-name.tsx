@@ -5,8 +5,9 @@ import {
   LoaderFunction,
   redirect,
 } from "remix";
-import { Button } from "~/components/Buttons/Button";
+import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/ErrorBox";
+import { FormGroup } from "~/components/Fields/FormGroup";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
@@ -66,19 +67,20 @@ export default function WhatsYourNamePage() {
   return (
     <DashboardLayout
       header={<Header title="Hey, welcome around! What's your name?" />}
+      status={errors?.fullname && <ErrorBox list={errors} />}
     >
       <Section>
-        {errors?.fullname && <ErrorBox list={errors} />}
-
         <Form method="post">
-          <TextInput
-            isInvalid={Boolean(errors?.fullname)}
-            label="Fullname"
-            name="fullname"
-            placeholder="e.g: John Doe"
-          />
+          <FormGroup>
+            <TextInput
+              isInvalid={Boolean(errors?.fullname)}
+              label="Fullname"
+              name="fullname"
+              placeholder="e.g: John Doe"
+            />
 
-          <Button type="submit">Set my fullname</Button>
+            <SubmitButton type="submit">Set my fullname</SubmitButton>
+          </FormGroup>
         </Form>
       </Section>
     </DashboardLayout>

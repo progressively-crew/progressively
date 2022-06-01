@@ -1,41 +1,8 @@
 import React, { useRef } from "react";
-import { styled } from "~/stitches.config";
+import { RawTable } from "~/components/RawTable";
 import { KeyboardKeys } from "../utils/keyboardKeys";
 import { TableProvider } from "./TableContext";
 import { moveToCol, moveToRow } from "./utils";
-
-const TableWrapper = styled("table", {
-  color: "$content",
-  width: "100%",
-  fontFamily: "$default",
-
-  "& th": {
-    padding: "$spacing$4",
-    textAlign: "left",
-    background: "$background",
-  },
-  "& th:first-of-type": {
-    borderStartStartRadius: "$borderRadius$regular",
-  },
-  "& th:last-of-type": {
-    borderStartEndRadius: "$borderRadius$regular",
-  },
-  "& tr": {
-    borderBottom: "1px solid $border",
-  },
-  "& tbody tr": {
-    "&:focus-within": {
-      background: "$border",
-    },
-
-    "&.row-selected": {
-      background: "$background",
-    },
-  },
-  "& td": {
-    padding: "$spacing$4",
-  },
-});
 
 export interface TableProps {
   children: React.ReactNode;
@@ -181,7 +148,7 @@ export const Table = ({
       onSelectAll={handleSelectAll}
       indeterminate={selected.length > 0 && selected.length < rowCount - 1}
     >
-      <TableWrapper
+      <RawTable
         ref={tableRef}
         role="grid"
         aria-rowcount={rowCount}
@@ -190,7 +157,7 @@ export const Table = ({
         onKeyDown={handleKeyDown}
       >
         {children}
-      </TableWrapper>
+      </RawTable>
     </TableProvider>
   );
 };

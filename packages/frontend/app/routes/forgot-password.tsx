@@ -6,7 +6,7 @@ import {
   useTransition,
 } from "remix";
 import { BackLink } from "~/components/BackLink";
-import { Button } from "~/components/Buttons/Button";
+import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/ErrorBox";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { TextInput } from "~/components/Fields/TextInput";
@@ -105,14 +105,12 @@ export default function ForgotPasswordPage() {
             placeholder="e.g: james.bond@mi6.com"
           />
 
-          <Button
-            fullWidth
-            type="submit"
+          <SubmitButton
             isLoading={transition.state === "submitting"}
             loadingText="Password resetting in progress, please wait..."
           >
             Reset password
-          </Button>
+          </SubmitButton>
         </FormGroup>
       </Form>
     </NotAuthenticatedLayout>

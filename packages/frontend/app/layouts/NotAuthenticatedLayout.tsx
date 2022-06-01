@@ -8,7 +8,7 @@ import { styled } from "~/stitches.config";
 export interface NotAuthenticatedLayoutProps {
   children: React.ReactNode;
   nav?: React.ReactNode;
-  header: React.ReactNode;
+  header?: React.ReactNode;
   status?: React.ReactNode;
 }
 

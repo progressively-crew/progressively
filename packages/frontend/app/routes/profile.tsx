@@ -8,7 +8,7 @@ import {
   useTransition,
 } from "remix";
 import { BackLink } from "~/components/BackLink";
-import { Button } from "~/components/Buttons/Button";
+import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { Container } from "~/components/Container";
 import { ErrorBox } from "~/components/ErrorBox";
 import { FormGroup } from "~/components/Fields/FormGroup";
@@ -146,13 +146,12 @@ export default function ProfilePage() {
                 type="password"
               />
 
-              <Button
-                type="submit"
+              <SubmitButton
                 isLoading={transition.state === "submitting"}
                 loadingText="Password changing in progress, please wait..."
               >
                 Change password
-              </Button>
+              </SubmitButton>
             </FormGroup>
           </Form>
         </SectionContent>

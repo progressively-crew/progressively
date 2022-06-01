@@ -1,5 +1,5 @@
-import { ActionFunction, Form, useActionData, useTransition } from "remix";
-import { Button } from "~/components/Buttons/Button";
+import { ActionFunction, Form, useTransition } from "remix";
+import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { TextInput } from "~/components/Fields/TextInput";
 import { createUser } from "../services/createUser";
@@ -92,12 +92,12 @@ export const RegisterForm = ({ errors }: RegisterFormProps) => {
           placeholder="************"
         />
 
-        <Button
+        <SubmitButton
           isLoading={transition.state === "submitting"}
           loadingText="Creation in progress, please wait..."
         >
           Create an account
-        </Button>
+        </SubmitButton>
       </FormGroup>
     </Form>
   );

@@ -108,23 +108,25 @@ export default function ProjectDetailPage() {
       <Section aria-labelledby="list-env-title" id="list-env-title">
         <SectionHeader title="Environments" hiddenTitle />
 
-        <CardGroup cols={2}>
-          <CreationCard
-            to={`/dashboard/projects/${project.uuid}/environments/create`}
-          >
-            Create an environment
-          </CreationCard>
+        {project.environments.length > 0 ? (
+          <CardGroup cols={2}>
+            <CreationCard
+              to={`/dashboard/projects/${project.uuid}/environments/create`}
+            >
+              Create an environment
+            </CreationCard>
 
-          {project.environments.map((env) => (
-            <EnvCard
-              key={env.uuid}
-              id={env.uuid}
-              linkTo={`/dashboard/projects/${project.uuid}/environments/${env.uuid}/flags`}
-              title={env.name}
-              clientKey={env.clientKey}
-            />
-          ))}
-        </CardGroup>
+            {project.environments.map((env) => (
+              <EnvCard
+                key={env.uuid}
+                id={env.uuid}
+                linkTo={`/dashboard/projects/${project.uuid}/environments/${env.uuid}/flags`}
+                title={env.name}
+                clientKey={env.clientKey}
+              />
+            ))}
+          </CardGroup>
+        ) : null}
 
         {project.environments.length === 0 ? (
           <EmptyState

@@ -9,13 +9,12 @@ import {
   LoaderFunction,
   useLoaderData,
 } from "remix";
-import { Button } from "~/components/Buttons/Button";
+import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/ErrorBox";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Header } from "~/components/Header";
 import { Link } from "~/components/Link";
-import { Stack } from "~/components/Stack";
 import { SuccessBox } from "~/components/SuccessBox";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import { AuthCredentials } from "~/modules/auth/types";
@@ -124,29 +123,24 @@ export default function Signin() {
             placeholder="e.g: james.bond@mi6.com"
           />
 
-          <Stack spacing={2}>
-            <div>
-              <TextInput
-                isInvalid={Boolean(errors?.password)}
-                name="password"
-                label="Password"
-                type="password"
-                placeholder="************"
-              />
-            </div>
-            <div>
-              <ForgotPasswordLink to="/forgot-password">{`I forgot my password`}</ForgotPasswordLink>
-            </div>
-          </Stack>
+          <div>
+            <TextInput
+              isInvalid={Boolean(errors?.password)}
+              name="password"
+              label="Password"
+              type="password"
+              placeholder="************"
+            />
 
-          <Button
-            fullWidth
-            type="submit"
+            <ForgotPasswordLink to="/forgot-password">{`I forgot my password`}</ForgotPasswordLink>
+          </div>
+
+          <SubmitButton
             isLoading={transition.state === "submitting"}
             loadingText="Signin in progress, please wait..."
           >
             Sign in
-          </Button>
+          </SubmitButton>
         </FormGroup>
       </Form>
 
