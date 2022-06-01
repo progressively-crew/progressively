@@ -1,10 +1,12 @@
+import { FormGroup } from "~/components/Fields/FormGroup";
 import { RadioField } from "~/components/Fields/RadioField";
 import { SelectField } from "~/components/Fields/SelectField";
 import { TextareaInput } from "~/components/Fields/TextareaInput";
 import { TextInput } from "~/components/Fields/TextInput";
-import { Section, SectionHeader } from "~/components/Section";
+import { Spacer } from "~/components/Spacer";
 import { ComparatorEnum, StrategyCreateDTO } from "../types";
 import { StrategyRuleType } from "../types/StrategyRule";
+import { SubForm } from "./SubForm";
 
 export interface StrategyAudienceProps {
   strategyType: StrategyRuleType;
@@ -24,10 +26,9 @@ export const StrategyAudience = ({
   initialFieldComparator,
 }: StrategyAudienceProps) => {
   return (
-    <Section id="strategy-audience">
-      <SectionHeader title="Strategy audience" />
-
+    <div>
       <RadioField<StrategyRuleType>
+        title="Strategy audience"
         value={strategyType}
         onChange={onStrategyChange}
         name="strategy-type"
@@ -37,8 +38,10 @@ export const StrategyAudience = ({
         ]}
       />
 
-      {strategyType === "field" && (
-        <>
+      <Spacer size={4} />
+
+      <SubForm>
+        <FormGroup>
           <TextInput
             isInvalid={Boolean(errors["field-name"])}
             label="Field name:"
@@ -66,8 +69,8 @@ export const StrategyAudience = ({
             defaultValue={initialFieldValue}
             placeholder="e.g: marvin.frachet@something.com"
           />
-        </>
-      )}
-    </Section>
+        </FormGroup>
+      </SubForm>
+    </div>
   );
 };

@@ -66,7 +66,12 @@ export const Row = ({ children, selection, disabled, ...props }: RowProps) => {
   };
 
   return (
-    <tr onClick={handleClick} onKeyDown={handleKeyDown} {...props}>
+    <tr
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
+      {...props}
+      className={isChecked ? "row-selected" : undefined}
+    >
       <td aria-colindex={1}>
         <VisuallyHidden>
           <span id={`select-col-${selection}`}>Select</span>

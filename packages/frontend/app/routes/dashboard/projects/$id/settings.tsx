@@ -31,6 +31,7 @@ import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { Divider } from "~/components/Divider";
 import { Stack } from "~/components/Stack";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
+import { Spacer } from "~/components/Spacer";
 
 interface MetaArgs {
   data?: {
@@ -137,6 +138,7 @@ export default function SettingsPage() {
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
+          tagline="Project"
           title={
             <span>
               {project.name}
@@ -164,13 +166,6 @@ export default function SettingsPage() {
       }
     >
       <Stack spacing={8}>
-        <CardSection id="details">
-          <SectionHeader
-            title="Project details"
-            description={<Typography>{project.name}</Typography>}
-          />
-        </CardSection>
-
         <CardSection id="members">
           <SectionHeader
             title="Project members"
@@ -183,12 +178,20 @@ export default function SettingsPage() {
           />
 
           <SectionContent>
-            {data?.errors.unauthorized && <ErrorBox list={data.errors} />}
+            {data?.errors.unauthorized && (
+              <>
+                <ErrorBox list={data.errors} />
+                <Spacer size={4} />
+              </>
+            )}
             {data?.success && (
-              <SuccessBox id="member-deleted">
-                {data?.removedCount} user have been successfully removed from
-                the project.
-              </SuccessBox>
+              <>
+                <SuccessBox id="member-deleted">
+                  {data?.removedCount} user have been successfully removed from
+                  the project.
+                </SuccessBox>
+                <Spacer size={4} />
+              </>
             )}
 
             <UserTable

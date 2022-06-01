@@ -1,3 +1,4 @@
+import { styled } from "~/stitches.config";
 import { Stack } from "../Stack";
 import { Label } from "./Label";
 
@@ -14,6 +15,15 @@ export interface SelectFieldProps {
   options: Array<SelectOption>;
 }
 
+const Select = styled("select", {
+  border: "4px solid $hover",
+  borderRadius: "$borderRadius$regular",
+  fontSize: "$content",
+  padding: "$spacing$2 $spacing$4",
+  display: "block",
+  boxSizing: "border-box",
+});
+
 export const SelectField = ({
   isInvalid,
   name,
@@ -25,7 +35,7 @@ export const SelectField = ({
     <Stack spacing={2}>
       <Label htmlFor={name}>{label}</Label>
 
-      <select
+      <Select
         name={name}
         id={name}
         defaultValue={defaultValue}
@@ -36,7 +46,7 @@ export const SelectField = ({
             {opt.label}
           </option>
         ))}
-      </select>
+      </Select>
     </Stack>
   );
 };

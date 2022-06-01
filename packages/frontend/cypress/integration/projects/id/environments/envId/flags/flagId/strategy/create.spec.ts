@@ -92,15 +92,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
       });
 
       it("shows the form layout", () => {
-        cy.findByRole("heading", { name: "General information" }).should(
-          "be.visible"
-        );
         cy.findByLabelText("Strategy name").should("be.visible");
-
-        // Strategy audience
-        cy.findByRole("heading", { name: "Strategy audience" }).should(
-          "be.visible"
-        );
 
         cy.findByLabelText("Everybody is concerned").should("be.visible");
         cy.findByLabelText("People with a specific field").should("be.visible");
@@ -109,10 +101,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
         //   "be.visible"
         // );
 
-        // Strategy activation
-        cy.findByRole("heading", { name: "Activation strategy" }).should(
-          "be.visible"
-        );
         cy.findByLabelText("Everyone will see the variants").should(
           "be.visible"
         );

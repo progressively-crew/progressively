@@ -1,10 +1,20 @@
-import { Button } from "~/components/Buttons/Button";
+import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { Card, CardContent, CardHeader } from "~/components/CardGroup";
 import { Spacer } from "~/components/Spacer";
 import { Typography } from "~/components/Typography";
 import { Li, Ul } from "~/components/Ul";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
+import { styled } from "~/stitches.config";
 import { ComparatorEnum, StrategyRetrieveDTO } from "../types";
+
+const WrapperUl = styled(Ul, {
+  color: "$content",
+});
+
+const ActionWrapper = styled("div", {
+  display: "flex",
+  justifyContent: "flex-end",
+});
 
 export interface StrategyCardProps {
   flagId: string;
@@ -67,11 +77,11 @@ const StrategyTargetConstraints = ({
     const targets = strat.fieldValue?.split("\n");
 
     return (
-      <Ul>
+      <WrapperUl>
         {targets?.map((target) => (
           <Li key={target}>{target}</Li>
         ))}
-      </Ul>
+      </WrapperUl>
     );
   }
 
@@ -90,18 +100,22 @@ export const StrategyCard = ({
         {strat.name}
       </CardHeader>
 
+      <Spacer size={2} />
+
       <CardContent>
         <StrategyAudience strat={strat} />
 
         <StrategyTargetConstraints strat={strat} />
 
-        <Spacer size={8} />
+        <Spacer size={6} />
 
-        <Button
-          to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/strategies/${strat.uuid}/delete`}
-        >
-          Remove<VisuallyHidden> {strat.name}</VisuallyHidden>
-        </Button>
+        <ActionWrapper>
+          <DeleteButton
+            to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/strategies/${strat.uuid}/delete`}
+          >
+            Remove<VisuallyHidden> {strat.name}</VisuallyHidden>
+          </DeleteButton>
+        </ActionWrapper>
       </CardContent>
     </Card>
   );

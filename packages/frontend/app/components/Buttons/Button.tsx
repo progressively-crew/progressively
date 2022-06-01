@@ -17,8 +17,15 @@ export const RawButton = styled("button", {
   cursor: "pointer",
   margin: 0,
   transition: "all 0.2s",
+  textAlign: "left",
 
   variants: {
+    size: {
+      xs: {
+        fontSize: "$xs",
+      },
+    },
+
     fullWidth: {
       true: {
         width: "100%",
@@ -29,19 +36,22 @@ export const RawButton = styled("button", {
       ghost: {
         background: "$backgroundAccent",
         border: "2px solid $border",
-        "&:hover": {
+        "&:active": {
           background: "$background",
         },
       },
       danger: {
         background: "$primary",
-      },
-      success: {
-        background: "$successBg",
-        border: "1px solid $successBorder",
-        color: "$background",
-        "&:hover": {
+        "&:active": {
           opacity: "0.9",
+        },
+      },
+      secondary: {
+        background: "$ctaBg",
+        border: "none",
+        color: "$ctaFg",
+        "&:active": {
+          opacity: "0.8",
         },
       },
     },
@@ -62,9 +72,10 @@ export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean;
   loadingText?: string;
   type?: "button" | "submit" | "reset";
-  variant?: "ghost" | "danger" | "success";
+  variant?: "ghost" | "danger" | "secondary";
   fullWidth?: boolean;
   icon?: React.ReactNode;
+  size?: "xs";
 }
 
 export const Button = ({

@@ -19,9 +19,10 @@ export const CardGroup = styled("div", {
 
 const CardWrapper = styled("div", {
   minHeight: "$cardHeight",
+  display: "flex",
+  flexDirection: "column",
   background: "$backgroundAccent",
   borderRadius: "$borderRadius$regular",
-  padding: "$spacing$8 0",
   border: "8px solid transparent",
   transition: "border,box-shadow 0.2s",
   variants: {
@@ -92,7 +93,7 @@ export const Card = ({ children, className, onClick }: CardProps) => {
 };
 
 export const CardHeader = styled("div", {
-  padding: "0 $spacing$10",
+  padding: "$spacing$4 $spacing$6 0 $spacing$6",
   fontFamily: "$default",
   color: "$title",
   fontSize: "$content",
@@ -103,9 +104,17 @@ export const CardHeader = styled("div", {
 });
 
 export const CardContent = styled("div", {
-  padding: "0 $spacing$10",
+  padding: "0 $spacing$6",
   "& p": {
     fontSize: "$btn",
     lineHeight: "$content",
   },
+});
+
+export const CardFooter = styled("div", {
+  padding: "$spacing$6 $spacing$6",
+  background: "$background",
+  marginTop: "auto",
+  borderEndEndRadius: "$borderRadius$regular",
+  borderEndStartRadius: "$borderRadius$regular",
 });

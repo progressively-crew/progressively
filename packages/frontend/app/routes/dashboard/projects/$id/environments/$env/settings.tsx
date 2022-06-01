@@ -98,6 +98,7 @@ export default function EnvSettingsPage() {
       header={
         <Header
           title={environment.name}
+          tagline="Environment"
           startAction={
             <ButtonCopy toCopy={environment.clientKey}>
               {environment.clientKey}

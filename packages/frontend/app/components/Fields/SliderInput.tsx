@@ -24,8 +24,8 @@ export const SliderInput = ({
         max={100}
         step={1}
         value={percentageValue}
-        name={`field-${name}`}
         id={`field-${name}`}
+        name={name}
         onChange={(e) => onChange(Number(e.target.value))}
       />
     </Stack>

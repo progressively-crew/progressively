@@ -19,7 +19,10 @@ export const {
       primary: "#c3134e",
       content: "#9ba1a6",
       hover: "hsl(340deg, 82%, 85%)",
-      focus: "rgba(178,212,221)",
+      focus: "#4D90FE",
+
+      ctaBg: "#1976D2",
+      ctaFg: "white",
 
       successBg: "#c8e6c9",
       successFg: "#1b5e20",
@@ -35,11 +38,12 @@ export const {
     },
     sizes: {
       container: "1080px",
-      cardHeight: "100px",
+      cardHeight: "160px",
       notAuthenticatedCardWidth: "400px",
       cta: "48px",
     },
     fontSizes: {
+      xs: "0.8rem",
       content: "1.25rem",
       btn: "1rem",
       title: "3.5rem",
@@ -50,6 +54,7 @@ export const {
       default: "Untitled Sans, apple-system, sans-serif",
     },
     fontWeights: {
+      slim: "300",
       normal: "normal",
       semiBold: "500",
       bold: "800",

@@ -1,28 +1,25 @@
 import { useState } from "react";
 import { RadioField } from "~/components/Fields/RadioField";
 import { SliderInput } from "~/components/Fields/SliderInput";
-import { Section, SectionHeader } from "~/components/Section";
+import { Spacer } from "~/components/Spacer";
 import { ActivationType } from "../types/activation";
+import { SubForm } from "./SubForm";
 
 export interface ActivationStrategyProps {
   activationStrategy: ActivationType;
-  errors: Record<string, string>;
   onActivationChange: (nextActionvation: ActivationType) => void;
 }
 
 export const ActivationStrategy = ({
   activationStrategy,
   onActivationChange,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  errors,
 }: ActivationStrategyProps) => {
   const [percentageValue, setPercentageValue] = useState<number>(50);
 
   return (
-    <Section id="activation-strategy">
-      <SectionHeader title="Activation strategy" />
-
+    <div>
       <RadioField<ActivationType>
+        title="Activation strategy"
         value={activationStrategy}
         onChange={onActivationChange}
         name="strategy-activation"
@@ -32,7 +29,9 @@ export const ActivationStrategy = ({
         ]}
       />
 
-      {activationStrategy === "percentage" && (
+      <Spacer size={4} />
+
+      <SubForm>
         <SliderInput
           name="percentage-value"
           label={`Percentage of the people concerned (${percentageValue}
@@ -40,7 +39,7 @@ export const ActivationStrategy = ({
           onChange={setPercentageValue}
           percentageValue={percentageValue}
         />
-      )}
-    </Section>
+      </SubForm>
+    </div>
   );
 };

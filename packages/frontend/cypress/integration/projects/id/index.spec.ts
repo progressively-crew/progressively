@@ -72,10 +72,6 @@ describe("/dashboard/projects/[id]", () => {
             "/dashboard/projects/1/environments/1/flags"
           );
 
-        cy.contains("The environment sdk key is valid-sdk-key").should(
-          "be.visible"
-        );
-
         cy.findByRole("link", { name: "Developer environment" })
           .should("be.visible")
           .and(
@@ -83,10 +79,6 @@ describe("/dashboard/projects/[id]", () => {
             "href",
             "/dashboard/projects/1/environments/2/flags"
           );
-
-        cy.contains("The environment sdk key is valid-sdk-key-2").should(
-          "be.visible"
-        );
 
         cy.checkA11y();
       });

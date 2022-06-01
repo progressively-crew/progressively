@@ -4,21 +4,20 @@ import { FlagStatus } from "../types";
 import { Switch } from "~/components/Switch";
 import { Typography } from "~/components/Typography";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
-import { Tag } from "~/components/Tag";
 import { Link } from "~/components/Link";
-import { Card, CardContent, CardHeader } from "~/components/CardGroup";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "~/components/CardGroup";
 import { Spacer } from "~/components/Spacer";
 import { styled } from "~/stitches.config";
+import { ButtonCopy } from "~/components/ButtonCopy";
 
-const HeaderInline = styled("div", {
+const ToggleWrapper = styled("div", {
   display: "flex",
-  gap: "$spacing$2",
-  justifyContent: "space-between",
-});
-
-const Footer = styled("div", {
-  display: "flex",
-  justifyContent: "space-between",
+  gap: "$spacing$4",
 });
 
 export interface FlagCardProps {
@@ -42,48 +41,41 @@ export const FlagCard = ({
 
   return (
     <Card onClick={() => linkRef?.current?.click()}>
-      <CardHeader>
-        <span aria-hidden>
-          <Tag>{flagKey}</Tag>
-        </span>
-
-        <VisuallyHidden>
-          <p>The flag key is {flagKey}</p>
-        </VisuallyHidden>
-      </CardHeader>
-
       <Spacer size={2} />
 
       <CardHeader as="h3" id={`article-${id}`}>
-        <HeaderInline>
-          <Link ref={linkRef} to={linkTo}>
-            {title} <VisuallyHidden>feature flag</VisuallyHidden>
-          </Link>
-        </HeaderInline>
+        <Link ref={linkRef} to={linkTo}>
+          {title} <VisuallyHidden>feature flag</VisuallyHidden>
+        </Link>
       </CardHeader>
 
       <CardContent>
         <Typography>{description}</Typography>
-
-        <Spacer size={8} />
-
-        <Footer>
-          <Form method="post">
-            <input
-              type="hidden"
-              name="nextStatus"
-              value={
-                flagStatus === FlagStatus.ACTIVATED
-                  ? FlagStatus.NOT_ACTIVATED
-                  : FlagStatus.ACTIVATED
-              }
-            />
-            <input type="hidden" name="flagId" value={id} />
-
-            <Switch checked={flagStatus === FlagStatus.ACTIVATED} />
-          </Form>
-        </Footer>
       </CardContent>
+
+      <Spacer size={4} />
+
+      <CardFooter>
+        <Form method="post">
+          <input
+            type="hidden"
+            name="nextStatus"
+            value={
+              flagStatus === FlagStatus.ACTIVATED
+                ? FlagStatus.NOT_ACTIVATED
+                : FlagStatus.ACTIVATED
+            }
+          />
+          <input type="hidden" name="flagId" value={id} />
+
+          <ToggleWrapper>
+            <ButtonCopy size="xs" toCopy={flagKey}>
+              {flagKey}
+            </ButtonCopy>
+            <Switch checked={flagStatus === FlagStatus.ACTIVATED} />
+          </ToggleWrapper>
+        </Form>
+      </CardFooter>
     </Card>
   );
 };

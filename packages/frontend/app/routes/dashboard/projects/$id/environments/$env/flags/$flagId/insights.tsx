@@ -166,6 +166,7 @@ export default function FlagById() {
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
+          tagline="Feature flag"
           title={currentFlag.name}
           startAction={
             <>

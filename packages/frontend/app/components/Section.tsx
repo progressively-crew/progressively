@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 import { styled } from "~/stitches.config";
-import { Card, CardContent } from "~/components/CardGroup";
+import { Card } from "~/components/CardGroup";
 import { Heading } from "./Heading";
 import { VisuallyHidden } from "./VisuallyHidden";
 import { Spacer } from "./Spacer";
@@ -13,12 +13,16 @@ export interface SectionProps extends React.HTMLAttributes<HTMLElement> {
   id?: string;
 }
 
+const CardSectionContent = styled("div", {
+  padding: "$spacing$8",
+});
+
 export const CardSection = (props: SectionProps) => {
   return (
     <Card>
-      <CardContent>
+      <CardSectionContent>
         <Section {...props} />
-      </CardContent>
+      </CardSectionContent>
     </Card>
   );
 };

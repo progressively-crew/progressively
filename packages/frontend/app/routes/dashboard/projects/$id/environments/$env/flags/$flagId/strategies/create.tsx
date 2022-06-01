@@ -27,12 +27,16 @@ import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { authGuard } from "~/modules/auth/services/auth-guard";
 import { User } from "~/modules/user/types";
 import { Header } from "~/components/Header";
-import { Section, SectionHeader } from "~/components/Section";
-import { Button } from "~/components/Buttons/Button";
+import {
+  CardSection,
+  SectionContent,
+  SectionHeader,
+} from "~/components/Section";
 import { Environment } from "~/modules/environments/types";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Typography } from "~/components/Typography";
-import { Container } from "~/components/Container";
+import { SubmitButton } from "~/components/Buttons/SubmitButton";
+import { FormGroup } from "~/components/Fields/FormGroup";
 
 interface MetaArgs {
   data?: {
@@ -211,42 +215,39 @@ export default function StrategyCreatePage() {
           }
         />
       }
+      status={actionData?.errors && <ErrorBox list={actionData.errors} />}
     >
       <Form method="post">
-        <Container>
-          {actionData?.errors && <ErrorBox list={actionData.errors} />}
+        <CardSection id="general-information">
+          <SectionContent>
+            <FormGroup>
+              <TextInput
+                name="strategy-name"
+                placeholder="e.g: Strategy 1"
+                label="Strategy name"
+                isInvalid={Boolean(errors["strategy-name"])}
+              />
 
-          <Section id="general-information">
-            <SectionHeader title="General information" />
+              <StrategyAudience
+                strategyType={strategyType}
+                onStrategyChange={setStrategyType}
+                errors={errors}
+              />
 
-            <TextInput
-              name="strategy-name"
-              placeholder="e.g: Strategy 1"
-              label="Strategy name"
-              isInvalid={Boolean(errors["strategy-name"])}
-            />
-          </Section>
+              <ActivationStrategy
+                activationStrategy={activationStrategy}
+                onActivationChange={setActivationStrategy}
+              />
+            </FormGroup>
+          </SectionContent>
+        </CardSection>
 
-          <StrategyAudience
-            strategyType={strategyType}
-            onStrategyChange={setStrategyType}
-            errors={errors}
-          />
-
-          <ActivationStrategy
-            activationStrategy={activationStrategy}
-            onActivationChange={setActivationStrategy}
-            errors={errors}
-          />
-
-          <Button
-            type="submit"
-            isLoading={transition.state === "submitting"}
-            loadingText="Saving the strategy, please wait..."
-          >
-            Save the strategy
-          </Button>
-        </Container>
+        <SubmitButton
+          isLoading={transition.state === "submitting"}
+          loadingText="Saving the strategy, please wait..."
+        >
+          Save the strategy
+        </SubmitButton>
       </Form>
     </DashboardLayout>
   );

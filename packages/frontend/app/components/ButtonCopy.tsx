@@ -1,11 +1,12 @@
-import { HTMLAttributes, useEffect, useRef, useState } from "react";
+import React, { HTMLAttributes, useEffect, useRef, useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { AiOutlineCopy } from "react-icons/ai";
+import { KeyboardKeys } from "~/modules/a11y/utils/keyboardKeys";
 import { useHydrated } from "~/modules/misc/hooks/useHydrated";
-import { Button } from "./Buttons/Button";
+import { Button, ButtonProps } from "./Buttons/Button";
 import { VisuallyHidden } from "./VisuallyHidden";
 
-export interface ButtonCopyProps extends HTMLAttributes<HTMLButtonElement> {
+export interface ButtonCopyProps extends ButtonProps {
   toCopy: string;
   children: React.ReactNode;
 }
@@ -43,13 +44,23 @@ export const ButtonCopy = ({ toCopy, children, ...props }: ButtonCopyProps) => {
       setIsCopied(true);
     };
 
+    const handleKeyDow = (e: React.KeyboardEvent) => {
+      // When used inside a Card, we don't want to trigger the link click when
+      // pressing enter
+      if (e.key === KeyboardKeys.ENTER) {
+        e.stopPropagation();
+      }
+    };
+
     return (
       <CopyToClipboard text={toCopy}>
         <Button
+          type="button"
           onClick={handleClick}
           aria-live="polite"
           icon={<AiOutlineCopy aria-hidden />}
           variant="ghost"
+          onKeyDown={handleKeyDow}
           {...copyToClipBoardProps}
         >
           {isCopied ? (

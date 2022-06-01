@@ -1,3 +1,4 @@
+import { styled } from "~/stitches.config";
 import { Stack } from "../Stack";
 import { Label } from "./Label";
 
@@ -8,6 +9,18 @@ export interface TextareaInputProps {
   label: string;
   placeholder?: string;
 }
+
+const Textarea = styled("textarea", {
+  border: "4px solid $hover",
+  borderRadius: "$borderRadius$regular",
+  fontSize: "$content",
+  padding: "$spacing$2 $spacing$4",
+  display: "block",
+  width: "100%",
+  boxSizing: "border-box",
+  maxWidth: "40ch",
+  minHeight: "200px",
+});
 
 export const TextareaInput = ({
   isInvalid,
@@ -20,7 +33,7 @@ export const TextareaInput = ({
     <Stack spacing={2}>
       <Label htmlFor={name}>{label}</Label>
 
-      <textarea
+      <Textarea
         name={name}
         id={name}
         defaultValue={defaultValue}

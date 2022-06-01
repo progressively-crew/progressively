@@ -16,7 +16,6 @@ import { getSession } from "~/sessions";
 import { User } from "~/modules/user/types";
 import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
-import { Button } from "~/components/Buttons/Button";
 import { validateEmail } from "~/modules/forms/utils/validateEmail";
 import { getProject } from "~/modules/projects/services/getProject";
 import { ButtonCopy } from "~/components/ButtonCopy";
@@ -25,6 +24,8 @@ import { SuccessBox } from "~/components/SuccessBox";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Typography } from "~/components/Typography";
 import { Li, Ul } from "~/components/Ul";
+import { FormGroup } from "~/components/Fields/FormGroup";
+import { SubmitButton } from "~/components/Buttons/SubmitButton";
 
 interface MetaArgs {
   data?: {
@@ -159,38 +160,40 @@ export default function CreateProjectPage() {
   }
 
   const errorsToDisplay = errors || {};
+  const hasError = Object.keys(errorsToDisplay).length > 0;
 
   return (
     <DashboardLayout
       user={user}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={<Header title="Add member" />}
-    >
-      <Section>
-        {data?.success && (
+      status={
+        data?.success ? (
           <SuccessBox id="member-added">
             The user has been invited invited to join the project.
           </SuccessBox>
-        )}
-
-        {Object.keys(errorsToDisplay).length > 0 && (
+        ) : hasError ? (
           <ErrorBox list={errorsToDisplay} />
-        )}
+        ) : null
+      }
+    >
+      <Section>
         <Form method="post">
-          <TextInput
-            isInvalid={Boolean(errors?.email)}
-            name="email"
-            label="Member email"
-            placeholder="e.g: john.doe@gmail.com"
-          />
+          <FormGroup>
+            <TextInput
+              isInvalid={Boolean(errors?.email)}
+              name="email"
+              label="Member email"
+              placeholder="e.g: john.doe@gmail.com"
+            />
 
-          <Button
-            type="submit"
-            isLoading={transition.state === "submitting"}
-            loadingText="Adding the member, please wait..."
-          >
-            Add the member
-          </Button>
+            <SubmitButton
+              isLoading={transition.state === "submitting"}
+              loadingText="Adding the member, please wait..."
+            >
+              Add the member
+            </SubmitButton>
+          </FormGroup>
         </Form>
       </Section>
     </DashboardLayout>

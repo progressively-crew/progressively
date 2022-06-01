@@ -4,19 +4,16 @@ export interface UlProps {
   children: React.ReactNode;
 }
 
-const ULWrapper = styled("ul", {
+export const Ul = styled("ul", {
   paddingLeft: "$spacing$9",
   listStyle: "initial",
   display: "flex",
   flexDirection: "column",
   gap: "$spacing$2",
+  fontFamily: "$default",
 
   "& li": { lineHeight: "$content" },
 });
-
-export const Ul = ({ children }: UlProps) => {
-  return <ULWrapper>{children}</ULWrapper>;
-};
 
 export interface LiProps {
   children: React.ReactNode;
