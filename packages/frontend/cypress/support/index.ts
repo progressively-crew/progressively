@@ -15,8 +15,8 @@
 
 // Import commands.js using ES2015 syntax:
 /// <reference types="cypress" />
-import "cypress-axe";
-import "./commands";
+
+import "./e2e";
 import { AvailableUsers } from "./constants";
 
 declare global {

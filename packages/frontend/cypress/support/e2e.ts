@@ -25,6 +25,7 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 // @ts-ignore
 import "@testing-library/cypress/add-commands";
+import "cypress-axe";
 import { AvailableUsers } from "./constants";
 
 Cypress.Commands.add("seed", () => cy.task("seed"));

@@ -1,35 +1,36 @@
-import * as SwitchPrimitive from "@radix-ui/react-switch";
 import { useState } from "react";
 import { styled } from "~/stitches.config";
 
-const StyledSwitch = styled(SwitchPrimitive.Root, {
-  all: "unset",
-  width: 42,
-  height: 25,
+const SwitchButton = styled("button", {
+  display: "flex",
+  alignItems: "center",
+  gap: "$spacing$2",
+  height: "$cta",
   backgroundColor: "$background",
-  borderRadius: "9999px",
-  position: "relative",
-  boxShadow: `0 2px 10px $primary`,
-  WebkitTapHighlightColor: "rgba(0, 0, 0, 0)",
-  "&:focus": { outline: `revert` },
-  '&[data-state="checked"]': { backgroundColor: "$primary" },
   cursor: "pointer",
-
-  padding: "$spacing$1 $spacing$2",
-  border: "1px solid $border",
+  border: "none",
+  borderRadius: "$borderRadius$regular",
+  padding: "0 $spacing$3",
 });
 
-const StyledThumb = styled(SwitchPrimitive.Thumb, {
+const StyledThumb = styled("span", {
   display: "block",
-  width: 21,
-  height: 21,
+  width: 20,
+  height: "100%",
   backgroundColor: "white",
   borderRadius: "9999px",
   boxShadow: `0 2px 2px $primary`,
   transition: "transform 100ms",
-  transform: "translateX(2px)",
+  transform: "translateX(0%)",
   willChange: "transform",
-  '&[data-state="checked"]': { transform: "translateX(19px)" },
+
+  variants: {
+    checked: {
+      true: {
+        transform: "translateX(100%)",
+      },
+    },
+  },
 });
 
 const Text = styled("span", {
@@ -38,10 +39,20 @@ const Text = styled("span", {
   fontFamily: "$default",
 });
 
-const SwitchWrapper = styled("div", {
-  display: "flex",
-  alignItems: "center",
-  gap: "$spacing$2",
+const SwitchInnerWrapper = styled("span", {
+  padding: "$spacing$1",
+  border: "1px solid $border",
+  borderRadius: "9999px",
+  width: 40,
+  height: 20,
+
+  variants: {
+    checked: {
+      true: {
+        backgroundColor: "$primary",
+      },
+    },
+  },
 });
 
 export interface SwitchProps {
@@ -52,17 +63,18 @@ export const Switch = ({ checked }: SwitchProps) => {
   const [internalChecked, setInternalChecked] = useState(checked);
 
   return (
-    <SwitchWrapper>
+    <SwitchButton
+      aria-checked={internalChecked}
+      type="submit"
+      role="switch"
+      aria-label="Feature flag status"
+      onClick={() => setInternalChecked((s) => !s)}
+    >
       <Text>Off</Text>
-      <StyledSwitch
-        checked={internalChecked}
-        type="submit"
-        aria-label="Feature flag activation"
-        onClick={() => setInternalChecked((s) => !s)}
-      >
-        <StyledThumb />
-      </StyledSwitch>
+      <SwitchInnerWrapper checked={internalChecked}>
+        <StyledThumb aria-hidden checked={internalChecked} />
+      </SwitchInnerWrapper>
       <Text>On</Text>
-    </SwitchWrapper>
+    </SwitchButton>
   );
 };
