@@ -36,6 +36,8 @@ import {
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { BigState } from "~/components/BigStat";
 import { Typography } from "~/components/Typography";
+import { styled } from "~/stitches.config";
+import { Spacer } from "~/components/Spacer";
 
 interface MetaArgs {
   data?: {
@@ -121,6 +123,11 @@ export const loader: LoaderFunction = async ({
     notActivatedCount,
   };
 };
+
+const BigStatWrapper = styled("div", {
+  display: "flex",
+  gap: "$spacing$4",
+});
 
 export default function FlagById() {
   const {
@@ -209,11 +216,17 @@ export default function FlagById() {
           description={<Typography>Number of hits per date</Typography>}
         />
 
-        <BigState name="Hits on activated variant" value={activatedCount} />
-        <BigState
-          name="Hits on not activated variant"
-          value={notActivatedCount}
-        />
+        <Spacer size={4} />
+
+        <BigStatWrapper>
+          <BigState name="Hits on activated variant" value={activatedCount} />
+          <BigState
+            name="Hits on not activated variant"
+            value={notActivatedCount}
+          />
+        </BigStatWrapper>
+
+        <Spacer size={4} />
 
         {hits.length > 0 && (
           <ResponsiveContainer width="100%" aspect={16.0 / 9.0}>
