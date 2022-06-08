@@ -92,18 +92,33 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
       });
 
       it("shows the form layout", () => {
-        cy.findByLabelText("Strategy name").should("be.visible");
-
-        cy.findByLabelText("Everybody is concerned").should("be.visible");
-        cy.findByLabelText("People with a specific field").should("be.visible");
-        // TODO: implement the strategy first before making the test on it
-        // cy.findByLabelText("People belonging to a given group").should(
-        //   "be.visible"
-        // );
-
-        cy.findByLabelText("Everyone will see the variants").should(
+        // General section
+        cy.findByRole("heading", { name: "General information" }).should(
           "be.visible"
         );
+        cy.findByText(
+          "They will be listed in the strategy list of a specific feature flag. Make sure to use meaningful names."
+        ).should("be.visible");
+        cy.findByLabelText("Strategy name").should("be.visible");
+
+        // Strategy audience
+        cy.findByRole("heading", { name: "Strategy audience" }).should(
+          "be.visible"
+        );
+        cy.findByText(
+          "It will determine the people you want to target using user specific criteria (qualitative)."
+        ).should("be.visible");
+        cy.findByLabelText("Everybody is concerned").should("be.visible");
+        cy.findByLabelText("People with a specific field").should("be.visible");
+
+        // Activation strategy
+        cy.findByRole("heading", { name: "Activation strategy" }).should(
+          "be.visible"
+        );
+        cy.findByText(
+          "It will determine the number of people you want to target (quantitative)."
+        ).should("be.visible");
+
         cy.findByLabelText("A percentage of the audience").should("be.visible");
         cy.findByRole("button", { name: "Save the strategy" }).should(
           "be.visible"

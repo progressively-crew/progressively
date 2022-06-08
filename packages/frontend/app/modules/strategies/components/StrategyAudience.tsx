@@ -4,6 +4,7 @@ import { SelectField } from "~/components/Fields/SelectField";
 import { TextareaInput } from "~/components/Fields/TextareaInput";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Spacer } from "~/components/Spacer";
+import { styled } from "~/stitches.config";
 import { ComparatorEnum, StrategyCreateDTO } from "../types";
 import { StrategyRuleType } from "../types/StrategyRule";
 import { SubForm } from "./SubForm";
@@ -17,6 +18,11 @@ export interface StrategyAudienceProps {
   initialFieldComparator?: StrategyCreateDTO["fieldComparator"];
 }
 
+const InlineWrapper = styled("div", {
+  display: "flex",
+  gap: "$spacing$4",
+});
+
 export const StrategyAudience = ({
   strategyType,
   onStrategyChange,
@@ -28,7 +34,7 @@ export const StrategyAudience = ({
   return (
     <div>
       <RadioField<StrategyRuleType>
-        title="Strategy audience"
+        title="Who's concerned?"
         value={strategyType}
         onChange={onStrategyChange}
         name="strategy-type"
@@ -38,39 +44,45 @@ export const StrategyAudience = ({
         ]}
       />
 
-      <Spacer size={4} />
+      {strategyType === "field" && (
+        <>
+          <Spacer size={4} />
 
-      <SubForm>
-        <FormGroup>
-          <TextInput
-            isInvalid={Boolean(errors["field-name"])}
-            label="Field name:"
-            placeholder="e.g: email"
-            defaultValue={initialFieldName}
-            name="field-name"
-          />
+          <SubForm>
+            <FormGroup>
+              <InlineWrapper>
+                <TextInput
+                  isInvalid={Boolean(errors["field-name"])}
+                  label="Field name:"
+                  placeholder="e.g: email"
+                  defaultValue={initialFieldName}
+                  name="field-name"
+                />
 
-          <SelectField
-            isInvalid={Boolean(errors["field-comparator"])}
-            name="field-comparator"
-            label="Field comparator:"
-            defaultValue={initialFieldComparator}
-            options={[
-              { value: ComparatorEnum.Equals, label: "Equals" },
-              { value: ComparatorEnum.NotEquals, label: "Not equals" },
-              { value: ComparatorEnum.Contains, label: "Contains" },
-            ]}
-          />
+                <SelectField
+                  isInvalid={Boolean(errors["field-comparator"])}
+                  name="field-comparator"
+                  label="Field comparator:"
+                  defaultValue={initialFieldComparator}
+                  options={[
+                    { value: ComparatorEnum.Equals, label: "Equals" },
+                    { value: ComparatorEnum.NotEquals, label: "Not equals" },
+                    { value: ComparatorEnum.Contains, label: "Contains" },
+                  ]}
+                />
+              </InlineWrapper>
 
-          <TextareaInput
-            isInvalid={Boolean(errors["field-value"])}
-            label="Values matching the previous field (one per line):"
-            name="field-value"
-            defaultValue={initialFieldValue}
-            placeholder="e.g: marvin.frachet@something.com"
-          />
-        </FormGroup>
-      </SubForm>
+              <TextareaInput
+                isInvalid={Boolean(errors["field-value"])}
+                label="Values matching the previous field (one per line):"
+                name="field-value"
+                defaultValue={initialFieldValue}
+                placeholder="e.g: marvin.frachet@something.com"
+              />
+            </FormGroup>
+          </SubForm>
+        </>
+      )}
     </div>
   );
 };

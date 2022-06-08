@@ -19,27 +19,31 @@ export const ActivationStrategy = ({
   return (
     <div>
       <RadioField<ActivationType>
-        title="Activation strategy"
+        title="How many people?"
         value={activationStrategy}
         onChange={onActivationChange}
         name="strategy-activation"
         options={[
-          { value: "boolean", label: "Everyone will see the variants" },
+          { value: "boolean", label: "Everybody / Nobody" },
           { value: "percentage", label: "A percentage of the audience" },
         ]}
       />
 
-      <Spacer size={4} />
+      {activationStrategy === "percentage" && (
+        <>
+          <Spacer size={4} />
 
-      <SubForm>
-        <SliderInput
-          name="percentage-value"
-          label={`Percentage of the people concerned (${percentageValue}
+          <SubForm>
+            <SliderInput
+              name="percentage-value"
+              label={`Percentage of the people concerned (${percentageValue}
             %):`}
-          onChange={setPercentageValue}
-          percentageValue={percentageValue}
-        />
-      </SubForm>
+              onChange={setPercentageValue}
+              percentageValue={percentageValue}
+            />
+          </SubForm>
+        </>
+      )}
     </div>
   );
 };

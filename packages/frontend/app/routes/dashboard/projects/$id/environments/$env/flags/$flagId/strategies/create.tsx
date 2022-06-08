@@ -27,16 +27,17 @@ import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { authGuard } from "~/modules/auth/services/auth-guard";
 import { User } from "~/modules/user/types";
 import { Header } from "~/components/Header";
-import {
-  CardSection,
-  SectionContent,
-  SectionHeader,
-} from "~/components/Section";
 import { Environment } from "~/modules/environments/types";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Typography } from "~/components/Typography";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
-import { FormGroup } from "~/components/Fields/FormGroup";
+import {
+  InlineSection,
+  InlineSectionTitle,
+  InlineSectionDescription,
+} from "~/components/InlineSection";
+import { Divider } from "~/components/Divider";
+import { styled } from "~/stitches.config";
 
 interface MetaArgs {
   data?: {
@@ -161,6 +162,15 @@ export const loader: LoaderFunction = async ({
   };
 };
 
+const PageWrapper = styled("div", {
+  marginTop: "$spacing$10",
+});
+
+const AlignCta = styled("div", {
+  display: "flex",
+  justifyContent: "flex-end",
+});
+
 export default function StrategyCreatePage() {
   const transition = useTransition();
 
@@ -217,38 +227,72 @@ export default function StrategyCreatePage() {
       }
       status={actionData?.errors && <ErrorBox list={actionData.errors} />}
     >
-      <Form method="post">
-        <CardSection id="general-information">
-          <SectionContent>
-            <FormGroup>
-              <TextInput
-                name="strategy-name"
-                placeholder="e.g: Strategy 1"
-                label="Strategy name"
-                isInvalid={Boolean(errors["strategy-name"])}
-              />
+      <PageWrapper>
+        <Form method="post">
+          <InlineSection id="general-information">
+            <div>
+              <InlineSectionTitle>General information</InlineSectionTitle>
+              <InlineSectionDescription>
+                They will be listed in the strategy list of a specific feature
+                flag. Make sure to use meaningful names.
+              </InlineSectionDescription>
+            </div>
 
-              <StrategyAudience
-                strategyType={strategyType}
-                onStrategyChange={setStrategyType}
-                errors={errors}
-              />
+            <TextInput
+              name="strategy-name"
+              placeholder="e.g: Strategy 1"
+              label="Strategy name"
+              isInvalid={Boolean(errors["strategy-name"])}
+            />
+          </InlineSection>
 
-              <ActivationStrategy
-                activationStrategy={activationStrategy}
-                onActivationChange={setActivationStrategy}
-              />
-            </FormGroup>
-          </SectionContent>
-        </CardSection>
+          <Divider />
 
-        <SubmitButton
-          isLoading={transition.state === "submitting"}
-          loadingText="Saving the strategy, please wait..."
-        >
-          Save the strategy
-        </SubmitButton>
-      </Form>
+          <InlineSection>
+            <div>
+              <InlineSectionTitle>Strategy audience</InlineSectionTitle>
+              <InlineSectionDescription>
+                It will determine the people you want to target using user
+                specific criteria (qualitative).
+              </InlineSectionDescription>
+            </div>
+
+            <StrategyAudience
+              strategyType={strategyType}
+              onStrategyChange={setStrategyType}
+              errors={errors}
+            />
+          </InlineSection>
+
+          <Divider />
+
+          <InlineSection>
+            <div>
+              <InlineSectionTitle>Activation strategy</InlineSectionTitle>
+              <InlineSectionDescription>
+                It will determine the number of people you want to target
+                (quantitative).
+              </InlineSectionDescription>
+            </div>
+
+            <ActivationStrategy
+              activationStrategy={activationStrategy}
+              onActivationChange={setActivationStrategy}
+            />
+          </InlineSection>
+
+          <Divider />
+
+          <AlignCta>
+            <SubmitButton
+              isLoading={transition.state === "submitting"}
+              loadingText="Saving the strategy, please wait..."
+            >
+              Save the strategy
+            </SubmitButton>
+          </AlignCta>
+        </Form>
+      </PageWrapper>
     </DashboardLayout>
   );
 }

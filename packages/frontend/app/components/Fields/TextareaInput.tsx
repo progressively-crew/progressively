@@ -18,7 +18,6 @@ const Textarea = styled("textarea", {
   display: "block",
   width: "100%",
   boxSizing: "border-box",
-  maxWidth: "40ch",
   minHeight: "200px",
 });
 
