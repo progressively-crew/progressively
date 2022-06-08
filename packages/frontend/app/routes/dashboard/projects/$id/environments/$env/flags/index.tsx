@@ -180,7 +180,7 @@ export default function FlagsByEnvPage() {
               Create a feature flag
             </CreateButton>
 
-            <Spacer size={6} />
+            <Spacer size={4} />
 
             <FlagList
               flags={flagsByEnv}

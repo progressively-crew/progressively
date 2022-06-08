@@ -9,7 +9,7 @@ import { SuccessBox } from "~/components/SuccessBox";
 import { getProject } from "~/modules/projects/services/getProject";
 import { Project } from "~/modules/projects/types";
 import { getSession } from "~/sessions";
-import { EnvCard } from "~/modules/environments/components/EnvCard";
+import { EnvRow } from "~/modules/environments/components/EnvRow";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { authGuard } from "~/modules/auth/services/auth-guard";
 import { User } from "~/modules/user/types";
@@ -21,8 +21,7 @@ import { FiLayers } from "react-icons/fi";
 import { EmptyState } from "~/components/EmptyState";
 import { Typography } from "~/components/Typography";
 import { CreateButton } from "~/components/Buttons/CreateButton";
-import { CardGroup } from "~/components/CardGroup";
-import { CreationCard } from "~/components/CreationCard";
+import { Spacer } from "~/components/Spacer";
 
 interface MetaArgs {
   data?: {
@@ -109,23 +108,27 @@ export default function ProjectDetailPage() {
         <SectionHeader title="Environments" hiddenTitle />
 
         {project.environments.length > 0 ? (
-          <CardGroup cols={2}>
-            <CreationCard
+          <div>
+            <CreateButton
               to={`/dashboard/projects/${project.uuid}/environments/create`}
             >
               Create an environment
-            </CreationCard>
+            </CreateButton>
 
-            {project.environments.map((env) => (
-              <EnvCard
-                key={env.uuid}
-                id={env.uuid}
-                linkTo={`/dashboard/projects/${project.uuid}/environments/${env.uuid}/flags`}
-                title={env.name}
-                clientKey={env.clientKey}
-              />
-            ))}
-          </CardGroup>
+            <Spacer size={4} />
+
+            <div>
+              {project.environments.map((env) => (
+                <EnvRow
+                  key={env.uuid}
+                  id={env.uuid}
+                  linkTo={`/dashboard/projects/${project.uuid}/environments/${env.uuid}/flags`}
+                  title={env.name}
+                  clientKey={env.clientKey}
+                />
+              ))}
+            </div>
+          </div>
         ) : null}
 
         {project.environments.length === 0 ? (

@@ -14,7 +14,7 @@ const Wrapper = styled("div", {
   gridColumnGap: "$spacing$8",
   gridRowGap: "$spacing$8",
   borderBottom: "1px solid $border",
-  padding: "0 $spacing$4 $spacing$2 $spacing$4",
+  padding: "$spacing$4 $spacing$8",
   cursor: "pointer",
   alignItems: "center",
   transition: "background 0.2s",
