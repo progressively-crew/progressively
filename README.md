@@ -1,7 +1,4 @@
 <div align="center">
-<div align="center" style="padding: 64px;">
-<img src="./packages/documentation/static/img/logo.jpg" alt="Progressively" />
-</div>
 
 <img src="https://github.com/mfrachet/progressively/actions/workflows/backend.yml/badge.svg" alt="Backend" />
 <img src="https://github.com/mfrachet/progressively/actions/workflows/frontend.yml/badge.svg" alt="Frontend" />
@@ -25,7 +22,7 @@ JavaScript SDK: <img src="https://img.shields.io/bundlephobia/minzip/@progressiv
 
 A feature flag solution focusing on accessibility, simplicity and providing **lightweight client side SDKs**.
 
-[The documentation website](https://mfrachet.github.io/progressively/) provides all the necessary information in order to get started.
+[The documentation repository](https://github.com/progressively-crew/progressively-crew.github.io) provides all the necessary information in order to get started.
 
 <div align="center">
 <i>Built on top of <a href="https://nestjs.com/">NestJs</a> and <a href="https://remix.run/">Remix.run</i>.
