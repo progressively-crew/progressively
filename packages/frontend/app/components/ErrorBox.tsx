@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { MdErrorOutline } from "react-icons/md";
-import { styled } from "~/stitches.config";
+import { keyframes, styled } from "~/stitches.config";
 import { Li, Ul } from "./Ul";
 
 export interface ErrorBoxProps {
@@ -9,6 +9,12 @@ export interface ErrorBoxProps {
   };
 }
 
+const bounce = keyframes({
+  "0%": { transform: "scale(0.98)", opacity: 0 },
+  "50%": { transform: "scale(1.02)" },
+  "100%": { transform: "scale(1)", opacity: 1 },
+});
+
 const ErrorBoxWrapper = styled("figure", {
   background: "$errorBg",
   color: "$errorFg",
@@ -16,6 +22,11 @@ const ErrorBoxWrapper = styled("figure", {
   padding: "$spacing$6 $spacing$4",
   borderRadius: "$borderRadius$regular",
   fontFamily: "$default",
+
+  animation: `${bounce} 300ms ease-in-out`,
+  "@media (prefers-reduced-motion: reduce)": {
+    animation: "unset",
+  },
 
   display: "flex",
   gap: "$spacing$3",

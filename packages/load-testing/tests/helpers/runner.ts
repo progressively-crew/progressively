@@ -20,13 +20,6 @@ const createRunner = () => {
     _tests.push(testFn);
   };
 
-  const runParallel = async (filePath: string) => {
-    require(path.join(__dirname, "..", filePath));
-
-    const promises = _tests.map((testFn) => testFn());
-    await Promise.all(promises);
-  };
-
   const run = async (filePath: string) => {
     require(path.join(__dirname, "..", filePath));
 
@@ -38,7 +31,6 @@ const createRunner = () => {
   return {
     registerTest,
     run,
-    runParallel,
   };
 };
 
