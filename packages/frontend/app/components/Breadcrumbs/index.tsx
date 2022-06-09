@@ -28,7 +28,7 @@ export const BreadCrumbs = ({ crumbs }: BreadCrumbsProps) => {
       </DesktopWrapper>
 
       <MobileWrapper>
-        <MobileNav />
+        <MobileNav crumbs={crumbs} />
       </MobileWrapper>
     </>
   );
