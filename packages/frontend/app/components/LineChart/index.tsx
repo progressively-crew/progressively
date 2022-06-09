@@ -16,6 +16,8 @@ const ChartWrapper = styled("div", {
   "& p": {
     fontSize: "$content",
     fontWeight: "$bold",
+    border: "none",
+    color: "$title",
   },
 });
 
@@ -89,11 +91,7 @@ export const LineChart = ({
           <XAxis dataKey="date" tickFormatter={formatDate} />
           <YAxis />
           <CartesianGrid strokeDasharray="3 3" vertical={false} />
-          <Tooltip
-            labelFormatter={formatDate}
-            contentStyle={contentStyle}
-            labelStyle={{ marginBottom: theme.spacing[2].toString() }}
-          />
+          <Tooltip labelFormatter={formatDate} contentStyle={contentStyle} />
 
           {dataKeys.map((dataKey, index: number) => (
             <Area

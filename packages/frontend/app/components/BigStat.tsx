@@ -10,18 +10,36 @@ const BigStatLabel = styled(Typography, {
   },
 });
 const BigStatValue = styled(CardContent, {
-  "& p": { fontSize: "$title", lineHeight: "unset" },
-  color: "$title",
   fontFamily: "$default",
+
+  "& p": {
+    display: "inline",
+    fontSize: "$title",
+    lineHeight: "unset",
+    color: "$hover",
+    borderBottom: "3px solid $hover",
+  },
+
+  variants: {
+    secondary: {
+      true: {
+        "& p": {
+          color: "$title",
+          borderBottom: "3px dashed $title",
+        },
+      },
+    },
+  },
 });
 
 export interface BigStateProps {
   children: React.ReactNode;
   name: string;
   id?: string;
+  secondary?: boolean;
 }
 
-export const BigState = ({ name, children, id }: BigStateProps) => {
+export const BigState = ({ name, children, id, secondary }: BigStateProps) => {
   return (
     <Card>
       <CardHeader>
@@ -30,7 +48,7 @@ export const BigState = ({ name, children, id }: BigStateProps) => {
         </BigStatLabel>
       </CardHeader>
 
-      <BigStatValue>{children}</BigStatValue>
+      <BigStatValue secondary={secondary}>{children}</BigStatValue>
     </Card>
   );
 };

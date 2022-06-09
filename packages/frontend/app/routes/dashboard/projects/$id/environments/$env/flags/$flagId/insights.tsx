@@ -213,7 +213,7 @@ export default function FlagById() {
           <BigState name="Hits on activated variant">
             <p>{activatedCount}</p>
           </BigState>
-          <BigState name="Hits on not activated variant">
+          <BigState name="Hits on not activated variant" secondary>
             <p>{notActivatedCount}</p>
           </BigState>
         </BigStatWrapper>
