@@ -31,11 +31,6 @@ import { styled } from "~/stitches.config";
 import { Spacer } from "~/components/Spacer";
 import { LineChart } from "~/components/LineChart";
 
-const ChartWrapper = styled("div", {
-  marginLeft: "-$spacing$8",
-  paddingBottom: "$spacing$8",
-});
-
 interface MetaArgs {
   data?: {
     project?: Project;
@@ -224,22 +219,20 @@ export default function FlagById() {
 
         {hits.length > 0 && (
           <BigState name="Chart">
-            <ChartWrapper>
-              <LineChart
-                items={hits}
-                dataKeys={[
-                  {
-                    name: "activated",
-                    color: "blue",
-                  },
-                  {
-                    name: "notactivated",
-                    color: "red",
-                    dashed: true,
-                  },
-                ]}
-              />
-            </ChartWrapper>
+            <LineChart
+              items={hits}
+              dataKeys={[
+                {
+                  name: "activated",
+                  color: "blue",
+                },
+                {
+                  name: "notactivated",
+                  color: "red",
+                  dashed: true,
+                },
+              ]}
+            />
           </BigState>
         )}
       </Section>
