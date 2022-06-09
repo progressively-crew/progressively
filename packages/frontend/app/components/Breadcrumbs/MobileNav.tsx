@@ -85,7 +85,11 @@ export const MobileNav = ({ crumbs }: DesktopNavProps) => {
   const tabIndex = isNavOpened ? 0 : -1;
 
   return (
-    <NavWrapper opened={isNavOpened} aria-hidden={!isNavOpened}>
+    <NavWrapper
+      opened={isNavOpened}
+      aria-hidden={!isNavOpened}
+      aria-label="General navigation"
+    >
       <FocusTrap isActive={isNavOpened}>
         <MobileHeaderWrapper>
           <Button
