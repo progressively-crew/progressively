@@ -25,22 +25,34 @@ export interface LineChartProps {
   dataKeys: Array<DataKey>;
   items: Array<{ date: string } & { [key: string]: number | string }>;
   variant: ChartVariant;
+  labelledBy: string;
 }
 
-export const LineChart = ({ dataKeys, items, variant }: LineChartProps) => {
+export const LineChart = ({
+  dataKeys,
+  items,
+  variant,
+  labelledBy,
+}: LineChartProps) => {
   const formatDate = (date: string) => {
     return new Intl.DateTimeFormat().format(new Date(date));
   };
 
   if (variant === "table") {
-    return <TableChart items={items} dateFormatter={formatDate} />;
+    return (
+      <TableChart
+        items={items}
+        dateFormatter={formatDate}
+        labelledBy={labelledBy}
+      />
+    );
   }
 
   return (
     <ChartWrapper>
       <ResponsiveContainer width="100%" aspect={16.0 / 9.0}>
         <AreaChart
-          aria-labelledby="lol"
+          aria-labelledby={labelledBy}
           data={items}
           margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
         >

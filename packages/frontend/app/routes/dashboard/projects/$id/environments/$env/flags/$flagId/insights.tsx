@@ -221,7 +221,7 @@ export default function FlagById() {
         <Spacer size={4} />
 
         {hits.length > 0 && (
-          <BigState name="Chart">
+          <BigState name="Flag hits per date" id="count-per-date-chart">
             <SwitchButton
               onClick={() =>
                 setChartVariant((s) => (s === "chart" ? "table" : "chart"))
@@ -233,6 +233,7 @@ export default function FlagById() {
             <Spacer size={4} />
 
             <LineChart
+              labelledBy="count-per-date-chart"
               variant={chartVariant}
               items={hits}
               dataKeys={[
