@@ -34,7 +34,7 @@ export const DashboardLayout = ({
         {user && user.fullname && <UseDropdown user={user as User} />}
       </Nav>
 
-      {breadcrumb}
+      {breadcrumb && <Container>{breadcrumb}</Container>}
 
       <Main>
         <Spacer size={6} />

@@ -4,7 +4,7 @@ import {
   MetaFunction,
   ActionFunction,
 } from "remix";
-import { Crumbs, BreadCrumbs } from "~/components/AppBreadcrumbs";
+import { Crumbs, BreadCrumbs } from "~/components/Breadcrumbs";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { authGuard } from "~/modules/auth/services/auth-guard";
 import { Environment } from "~/modules/environments/types";

@@ -5,7 +5,7 @@ import {
   ActionFunction,
   useSearchParams,
 } from "remix";
-import { Crumbs, BreadCrumbs } from "~/components/AppBreadcrumbs";
+import { Crumbs, BreadCrumbs } from "~/components/Breadcrumbs";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { Environment } from "~/modules/environments/types";
 import { activateFlag } from "~/modules/flags/services/activateFlag";

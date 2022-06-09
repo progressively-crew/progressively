@@ -8,7 +8,7 @@ import {
   useLoaderData,
   useTransition,
 } from "remix";
-import { Crumbs, BreadCrumbs } from "~/components/AppBreadcrumbs";
+import { Crumbs, BreadCrumbs } from "~/components/Breadcrumbs";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { ErrorBox } from "~/components/ErrorBox";
 import { WarningBox } from "~/components/WarningBox";

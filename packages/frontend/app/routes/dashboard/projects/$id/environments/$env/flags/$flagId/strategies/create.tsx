@@ -20,7 +20,7 @@ import { validateStrategyForm } from "~/modules/strategies/validators/validateSt
 import { ErrorBox } from "~/components/ErrorBox";
 import { StrategyCreateDTO } from "~/modules/strategies/types";
 import { createStrategy } from "~/modules/strategies/services/createStrategy";
-import { BreadCrumbs, Crumbs } from "~/components/AppBreadcrumbs";
+import { BreadCrumbs, Crumbs } from "~/components/Breadcrumbs";
 import { StrategyAudience } from "~/modules/strategies/components/StrategyAudience";
 import { ActivationStrategy } from "~/modules/strategies/components/ActivationStrategy";
 import { DashboardLayout } from "~/layouts/DashboardLayout";

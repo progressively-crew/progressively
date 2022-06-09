@@ -8,7 +8,7 @@ import {
   redirect,
   useTransition,
 } from "remix";
-import { Crumbs, BreadCrumbs } from "~/components/AppBreadcrumbs";
+import { Crumbs, BreadCrumbs } from "~/components/Breadcrumbs";
 import { ErrorBox } from "~/components/ErrorBox";
 import { authGuard } from "~/modules/auth/services/auth-guard";
 import { createEnv } from "~/modules/environments/services/createEnv";
