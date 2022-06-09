@@ -6,7 +6,7 @@ import { SkipNavLink } from "~/components/SkipNav";
 import { Container } from "~/components/Container";
 import { Nav } from "~/components/Nav";
 import { Spacer } from "~/components/Spacer";
-import { NavProvider } from "~/components/Breadcrumbs/NavProvider";
+import { NavProvider } from "~/components/Breadcrumbs/providers/NavProvider";
 
 export interface DashboardLayoutProps {
   user?: Partial<User>;
