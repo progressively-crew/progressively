@@ -3,7 +3,6 @@ import { Form, useTransition } from "remix";
 import { Cell, Col, Row, Table, Tbody, Thead } from "../../a11y/Table";
 import { useHydrated } from "../../misc/hooks/useHydrated";
 import { UserProject } from "../../projects/types";
-import { Button } from "~/components/Buttons/Button";
 import { Badge } from "~/components/Badge";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { styled } from "~/stitches.config";

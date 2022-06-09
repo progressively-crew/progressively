@@ -7,6 +7,11 @@ export const Typography = styled("p", {
   lineHeight: "$content",
   maxWidth: "60ch",
 
+  "& strong": {
+    fontWeight: "bold",
+    color: "$title",
+  },
+
   variants: {
     size: {
       small: {

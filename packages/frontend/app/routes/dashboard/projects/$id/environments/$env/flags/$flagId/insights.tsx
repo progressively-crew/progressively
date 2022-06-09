@@ -19,15 +19,6 @@ import { Section, SectionHeader } from "~/components/Section";
 import { AiOutlineBarChart, AiOutlineSetting } from "react-icons/ai";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { FaPowerOff } from "react-icons/fa";
-import {
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  ResponsiveContainer,
-  Area,
-  AreaChart,
-  Tooltip,
-} from "recharts";
 import { getFlagHits } from "~/modules/flags/services/getFlagHits";
 import {
   toggleAction,
@@ -36,6 +27,11 @@ import {
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { BigState } from "~/components/BigStat";
 import { Typography } from "~/components/Typography";
+import { styled, theme } from "~/stitches.config";
+import { Spacer } from "~/components/Spacer";
+import { ChartVariant, LineChart } from "~/components/LineChart";
+import { useState } from "react";
+import { SwitchButton } from "~/components/Buttons/SwitchButton";
 
 interface MetaArgs {
   data?: {
@@ -122,6 +118,11 @@ export const loader: LoaderFunction = async ({
   };
 };
 
+const BigStatWrapper = styled("div", {
+  display: "flex",
+  gap: "$spacing$4",
+});
+
 export default function FlagById() {
   const {
     project,
@@ -132,6 +133,7 @@ export default function FlagById() {
     activatedCount,
     notActivatedCount,
   } = useLoaderData<LoaderData>();
+  const [chartVariant, setChartVariant] = useState<ChartVariant>("chart");
 
   const currentFlag = currentFlagEnv.flag;
   const isFlagActivated = currentFlagEnv.status === FlagStatus.ACTIVATED;
@@ -155,10 +157,6 @@ export default function FlagById() {
       forceNotCurrent: true,
     },
   ];
-
-  const formatX = (item: string) => {
-    return new Intl.DateTimeFormat().format(new Date(item));
-  };
 
   return (
     <DashboardLayout
@@ -209,55 +207,49 @@ export default function FlagById() {
           description={<Typography>Number of hits per date</Typography>}
         />
 
-        <BigState name="Hits on activated variant" value={activatedCount} />
-        <BigState
-          name="Hits on not activated variant"
-          value={notActivatedCount}
-        />
+        <Spacer size={4} />
+
+        <BigStatWrapper>
+          <BigState name="Hits on activated variant">
+            <p>{activatedCount}</p>
+          </BigState>
+          <BigState name="Hits on not activated variant" secondary>
+            <p>{notActivatedCount}</p>
+          </BigState>
+        </BigStatWrapper>
+
+        <Spacer size={4} />
 
         {hits.length > 0 && (
-          <ResponsiveContainer width="100%" aspect={16.0 / 9.0}>
-            <AreaChart
-              data={hits}
-              margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+          <BigState name="Flag hits per date" id="count-per-date-chart">
+            <SwitchButton
+              onClick={() =>
+                setChartVariant((s) => (s === "chart" ? "table" : "chart"))
+              }
             >
-              <defs>
-                <linearGradient id="colorActivated" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="95%" stopColor={"red"} stopOpacity={0.4} />
-                </linearGradient>
-                <linearGradient
-                  id="colorNotActivated"
-                  x1="0"
-                  y1="0"
-                  x2="0"
-                  y2="1"
-                >
-                  <stop offset="95%" stopColor={"red"} stopOpacity={0.4} />
-                </linearGradient>
-              </defs>
-              <XAxis dataKey="date" tickFormatter={formatX} />
-              <YAxis />
-              <CartesianGrid strokeDasharray="3 3" vertical={false} />
-              <Tooltip />
-              <Area
-                type="linear"
-                dataKey="activated"
-                fillOpacity={1}
-                fill="url(#colorActivated)"
-                stroke={"blue"}
-                strokeWidth={3}
-              />
-              <Area
-                type="linear"
-                dataKey="notactivated"
-                fillOpacity={1}
-                fill="url(#colorNotActivated)"
-                stroke={"blue"}
-                strokeDasharray="3 3"
-                strokeWidth={3}
-              />
-            </AreaChart>
-          </ResponsiveContainer>
+              Switch to {chartVariant === "chart" ? "table view" : "chart view"}
+            </SwitchButton>
+
+            <Spacer size={4} />
+
+            <LineChart
+              labelledBy="count-per-date-chart"
+              variant={chartVariant}
+              items={hits}
+              dataKeys={[
+                {
+                  name: "activated",
+                  color: theme.colors.hover.toString(),
+                },
+                {
+                  name: "notactivated",
+                  color: theme.colors.title.toString(),
+                  dashed: true,
+                },
+              ]}
+            />
+            <Spacer size={8} />
+          </BigState>
         )}
       </Section>
     </DashboardLayout>
