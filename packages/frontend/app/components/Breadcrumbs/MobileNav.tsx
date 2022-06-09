@@ -20,10 +20,20 @@ const NavWrapper = styled("nav", {
 
   "& a": {
     fontSize: "$h3",
+    color: "$title",
   },
 
   "& svg": {
     transform: "rotateZ(90deg)",
+  },
+
+  "& ol": {
+    textAlign: "center",
+
+    "& li:last-of-type a": {
+      fontWeight: "$fontWeights$bold",
+      color: "$hover",
+    },
   },
 
   variants: {
