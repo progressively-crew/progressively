@@ -8,7 +8,7 @@ import {
   redirect,
   useTransition,
 } from "remix";
-import { Crumbs, BreadCrumbs } from "~/components/AppBreadcrumbs";
+import { Crumbs, BreadCrumbs } from "~/components/Breadcrumbs";
 import { Button } from "~/components/Buttons/Button";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/ErrorBox";

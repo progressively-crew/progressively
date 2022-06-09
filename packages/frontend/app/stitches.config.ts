@@ -10,6 +10,10 @@ export const {
   createTheme,
   config,
 } = createStitches({
+  media: {
+    tablet: `(max-width: ${1100 / 16}rem)`,
+    mobile: `(max-width: ${550 / 16}rem)`,
+  },
   theme: {
     colors: {
       title: "white",
@@ -46,6 +50,7 @@ export const {
       content: "1.25rem",
       btn: "1rem",
       title: "3.5rem",
+      titleMobile: "2.7rem",
       h2: "2rem",
       h3: "1.6rem",
     },

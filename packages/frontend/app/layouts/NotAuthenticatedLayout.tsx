@@ -29,7 +29,7 @@ export const NotAuthenticatedLayout = ({
   return (
     <div>
       <Nav aria-label="General">
-        <Logo to="/signin" />
+        <Logo to="/signin" hideOnMobile />
       </Nav>
 
       <Main>

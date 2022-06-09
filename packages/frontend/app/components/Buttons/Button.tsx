@@ -19,6 +19,11 @@ export const RawButton = styled("button", {
   transition: "all 0.2s",
   textAlign: "left",
 
+  "@mobile": {
+    justifyContent: "center",
+    width: "100%",
+  },
+
   variants: {
     variant: {
       ghost: {

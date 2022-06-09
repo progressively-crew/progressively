@@ -4,7 +4,7 @@ import {
   MetaFunction,
   useSearchParams,
 } from "remix";
-import { Crumbs, BreadCrumbs } from "~/components/AppBreadcrumbs";
+import { Crumbs, BreadCrumbs } from "~/components/Breadcrumbs";
 import { SuccessBox } from "~/components/SuccessBox";
 import { getProject } from "~/modules/projects/services/getProject";
 import { Project } from "~/modules/projects/types";

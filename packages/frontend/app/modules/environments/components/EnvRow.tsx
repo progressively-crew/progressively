@@ -23,6 +23,13 @@ const Wrapper = styled("div", {
   "& a": {
     color: "$title",
   },
+
+  "@mobile": {
+    padding: "$spacing$4",
+    "& button": {
+      display: "none",
+    },
+  },
 });
 
 export interface EnvCardProps {
