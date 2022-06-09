@@ -27,7 +27,7 @@ import {
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { BigState } from "~/components/BigStat";
 import { Typography } from "~/components/Typography";
-import { styled } from "~/stitches.config";
+import { styled, theme } from "~/stitches.config";
 import { Spacer } from "~/components/Spacer";
 import { ChartVariant, LineChart } from "~/components/LineChart";
 import { useState } from "react";
@@ -239,11 +239,11 @@ export default function FlagById() {
               dataKeys={[
                 {
                   name: "activated",
-                  color: "blue",
+                  color: theme.colors.hover.toString(),
                 },
                 {
                   name: "notactivated",
-                  color: "red",
+                  color: theme.colors.title.toString(),
                   dashed: true,
                 },
               ]}

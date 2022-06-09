@@ -7,11 +7,16 @@ import {
   AreaChart,
   Tooltip,
 } from "recharts";
-import { styled } from "~/stitches.config";
+import { styled, theme } from "~/stitches.config";
 import { TableChart } from "./TableChart";
 
 const ChartWrapper = styled("div", {
   marginLeft: "-$spacing$8",
+
+  "& p": {
+    fontSize: "$content",
+    fontWeight: "$bold",
+  },
 });
 
 interface DataKey {
@@ -48,6 +53,13 @@ export const LineChart = ({
     );
   }
 
+  const contentStyle = {
+    background: theme.colors.background.toString(),
+    border: "none",
+    borderRadius: theme.borderRadius.regular.toString(),
+    padding: theme.spacing[4].toString(),
+  };
+
   return (
     <ChartWrapper>
       <ResponsiveContainer width="100%" aspect={16.0 / 9.0}>
@@ -77,7 +89,11 @@ export const LineChart = ({
           <XAxis dataKey="date" tickFormatter={formatDate} />
           <YAxis />
           <CartesianGrid strokeDasharray="3 3" vertical={false} />
-          <Tooltip />
+          <Tooltip
+            labelFormatter={formatDate}
+            contentStyle={contentStyle}
+            labelStyle={{ marginBottom: theme.spacing[2].toString() }}
+          />
 
           {dataKeys.map((dataKey, index: number) => (
             <Area
