@@ -103,13 +103,13 @@ export default function ProfilePage() {
   return (
     <DashboardLayout
       user={user}
-      header={<Header title="My profile" />}
-      breadcrumb={
-        <Container>
+      header={
+        <>
           <nav aria-label="Profile navigation">
             <BackLink to="/dashboard">Back to dashboard</BackLink>
           </nav>
-        </Container>
+          <Header title="My profile" />
+        </>
       }
       status={
         <>

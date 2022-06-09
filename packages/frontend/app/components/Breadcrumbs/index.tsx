@@ -1,8 +1,9 @@
 import { IoMdClose } from "react-icons/io";
 import { MdChevronRight } from "react-icons/md";
 import { styled } from "~/stitches.config";
-import { Button } from "./Buttons/Button";
-import { Link } from "./Link";
+import { Button } from "../Buttons/Button";
+import { Link } from "../Link";
+import { useNavToggle } from "./useNavToggle";
 
 const Ol = styled("ol", {
   fontFamily: "$default",
@@ -43,6 +44,8 @@ export interface BreadCrumbsProps {
 
 const NavWrapper = styled("nav", {
   "@mobile": {
+    transform: "translateX(-100%)",
+    transition: "all 0.3s",
     position: "fixed",
     left: 0,
     top: 0,
@@ -68,10 +71,19 @@ const NavWrapper = styled("nav", {
       transform: "rotateZ(90deg)",
     },
   },
+
+  variants: {
+    opened: {
+      true: {
+        transform: "translateX(0%)",
+      },
+    },
+  },
 });
 
 const MobileHeaderWrapper = styled("div", {
   display: "none",
+
   "@mobile": {
     display: "flex",
     justifyContent: "flex-end",
@@ -94,12 +106,14 @@ const MobileHeaderWrapper = styled("div", {
 });
 
 export const BreadCrumbs = ({ crumbs }: BreadCrumbsProps) => {
+  const { toggleNav, isNavOpened } = useNavToggle();
+
   const lastItemIndex = crumbs.length - 1;
 
   return (
-    <NavWrapper aria-label="Breadcrumb">
+    <NavWrapper aria-label="Breadcrumb" opened={isNavOpened}>
       <MobileHeaderWrapper>
-        <Button variant="ghost" aria-label="Close the menu">
+        <Button variant="ghost" aria-label="Close the menu" onClick={toggleNav}>
           <IoMdClose aria-hidden />
         </Button>
       </MobileHeaderWrapper>
