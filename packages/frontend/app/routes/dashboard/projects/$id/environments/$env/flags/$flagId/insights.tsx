@@ -19,15 +19,6 @@ import { Section, SectionHeader } from "~/components/Section";
 import { AiOutlineBarChart, AiOutlineSetting } from "react-icons/ai";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { FaPowerOff } from "react-icons/fa";
-import {
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  ResponsiveContainer,
-  Area,
-  AreaChart,
-  Tooltip,
-} from "recharts";
 import { getFlagHits } from "~/modules/flags/services/getFlagHits";
 import {
   toggleAction,
@@ -38,6 +29,12 @@ import { BigState } from "~/components/BigStat";
 import { Typography } from "~/components/Typography";
 import { styled } from "~/stitches.config";
 import { Spacer } from "~/components/Spacer";
+import { LineChart } from "~/components/LineChart";
+
+const ChartWrapper = styled("div", {
+  marginLeft: "-$spacing$8",
+  paddingBottom: "$spacing$8",
+});
 
 interface MetaArgs {
   data?: {
@@ -163,10 +160,6 @@ export default function FlagById() {
     },
   ];
 
-  const formatX = (item: string) => {
-    return new Intl.DateTimeFormat().format(new Date(item));
-  };
-
   return (
     <DashboardLayout
       user={user}
@@ -219,58 +212,35 @@ export default function FlagById() {
         <Spacer size={4} />
 
         <BigStatWrapper>
-          <BigState name="Hits on activated variant" value={activatedCount} />
-          <BigState
-            name="Hits on not activated variant"
-            value={notActivatedCount}
-          />
+          <BigState name="Hits on activated variant">
+            <p>{activatedCount}</p>
+          </BigState>
+          <BigState name="Hits on not activated variant">
+            <p>{notActivatedCount}</p>
+          </BigState>
         </BigStatWrapper>
 
         <Spacer size={4} />
 
         {hits.length > 0 && (
-          <ResponsiveContainer width="100%" aspect={16.0 / 9.0}>
-            <AreaChart
-              data={hits}
-              margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-            >
-              <defs>
-                <linearGradient id="colorActivated" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="95%" stopColor={"red"} stopOpacity={0.4} />
-                </linearGradient>
-                <linearGradient
-                  id="colorNotActivated"
-                  x1="0"
-                  y1="0"
-                  x2="0"
-                  y2="1"
-                >
-                  <stop offset="95%" stopColor={"red"} stopOpacity={0.4} />
-                </linearGradient>
-              </defs>
-              <XAxis dataKey="date" tickFormatter={formatX} />
-              <YAxis />
-              <CartesianGrid strokeDasharray="3 3" vertical={false} />
-              <Tooltip />
-              <Area
-                type="linear"
-                dataKey="activated"
-                fillOpacity={1}
-                fill="url(#colorActivated)"
-                stroke={"blue"}
-                strokeWidth={3}
+          <BigState name="Chart">
+            <ChartWrapper>
+              <LineChart
+                items={hits}
+                dataKeys={[
+                  {
+                    name: "activated",
+                    color: "blue",
+                  },
+                  {
+                    name: "notactivated",
+                    color: "red",
+                    dashed: true,
+                  },
+                ]}
               />
-              <Area
-                type="linear"
-                dataKey="notactivated"
-                fillOpacity={1}
-                fill="url(#colorNotActivated)"
-                stroke={"blue"}
-                strokeDasharray="3 3"
-                strokeWidth={3}
-              />
-            </AreaChart>
-          </ResponsiveContainer>
+            </ChartWrapper>
+          </BigState>
         )}
       </Section>
     </DashboardLayout>

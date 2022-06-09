@@ -2,28 +2,32 @@ import { styled } from "~/stitches.config";
 import { Card, CardContent, CardHeader } from "./CardGroup";
 import { Typography } from "./Typography";
 
-const BigStatLabel = styled(Typography, {});
+const BigStatLabel = styled(Typography, {
+  marginBottom: "$spacing$4",
+
+  "& h3": {
+    lineHeight: "unset",
+  },
+});
 const BigStatValue = styled(CardContent, {
-  "& p": { fontSize: "$title" },
+  "& p": { fontSize: "$title", lineHeight: "unset" },
   color: "$title",
   fontFamily: "$default",
 });
 
 export interface BigStateProps {
-  value: string | number;
+  children: React.ReactNode;
   name: string;
 }
 
-export const BigState = ({ name, value }: BigStateProps) => {
+export const BigState = ({ name, children }: BigStateProps) => {
   return (
     <Card>
       <CardHeader>
-        <BigStatLabel>{name}</BigStatLabel>
+        <BigStatLabel as="h3">{name}</BigStatLabel>
       </CardHeader>
 
-      <BigStatValue>
-        <p>{value}</p>
-      </BigStatValue>
+      <BigStatValue>{children}</BigStatValue>
     </Card>
   );
 };
