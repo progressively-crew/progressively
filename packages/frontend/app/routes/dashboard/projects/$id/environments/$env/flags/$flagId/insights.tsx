@@ -32,6 +32,7 @@ import { Spacer } from "~/components/Spacer";
 import { ChartVariant, LineChart } from "~/components/LineChart";
 import { useState } from "react";
 import { SwitchButton } from "~/components/Buttons/SwitchButton";
+import { EmptyState } from "~/components/EmptyState";
 
 interface MetaArgs {
   data?: {
@@ -209,47 +210,62 @@ export default function FlagById() {
 
         <Spacer size={4} />
 
-        <BigStatWrapper>
-          <BigState name="Hits on activated variant">
-            <p>{activatedCount}</p>
-          </BigState>
-          <BigState name="Hits on not activated variant" secondary>
-            <p>{notActivatedCount}</p>
-          </BigState>
-        </BigStatWrapper>
-
-        <Spacer size={4} />
+        {hits.length === 0 && (
+          <EmptyState
+            title="No hits found"
+            description={
+              <Typography>
+                There are no hits for this flag. Make sure to activate the flag
+                in order to collect hits.
+              </Typography>
+            }
+          />
+        )}
 
         {hits.length > 0 && (
-          <BigState name="Flag hits per date" id="count-per-date-chart">
-            <SwitchButton
-              onClick={() =>
-                setChartVariant((s) => (s === "chart" ? "table" : "chart"))
-              }
-            >
-              Switch to {chartVariant === "chart" ? "table view" : "chart view"}
-            </SwitchButton>
+          <>
+            <BigStatWrapper>
+              <BigState name="Hits on activated variant">
+                <p>{activatedCount}</p>
+              </BigState>
+              <BigState name="Hits on not activated variant" secondary>
+                <p>{notActivatedCount}</p>
+              </BigState>
+            </BigStatWrapper>
 
             <Spacer size={4} />
 
-            <LineChart
-              labelledBy="count-per-date-chart"
-              variant={chartVariant}
-              items={hits}
-              dataKeys={[
-                {
-                  name: "activated",
-                  color: theme.colors.hover.toString(),
-                },
-                {
-                  name: "notactivated",
-                  color: theme.colors.title.toString(),
-                  dashed: true,
-                },
-              ]}
-            />
-            <Spacer size={8} />
-          </BigState>
+            <BigState name="Flag hits per date" id="count-per-date-chart">
+              <SwitchButton
+                onClick={() =>
+                  setChartVariant((s) => (s === "chart" ? "table" : "chart"))
+                }
+              >
+                Switch to{" "}
+                {chartVariant === "chart" ? "table view" : "chart view"}
+              </SwitchButton>
+
+              <Spacer size={4} />
+
+              <LineChart
+                labelledBy="count-per-date-chart"
+                variant={chartVariant}
+                items={hits}
+                dataKeys={[
+                  {
+                    name: "activated",
+                    color: theme.colors.hover.toString(),
+                  },
+                  {
+                    name: "notactivated",
+                    color: theme.colors.title.toString(),
+                    dashed: true,
+                  },
+                ]}
+              />
+              <Spacer size={8} />
+            </BigState>
+          </>
         )}
       </Section>
     </DashboardLayout>
