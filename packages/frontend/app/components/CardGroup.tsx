@@ -15,6 +15,14 @@ export const CardGroup = styled("div", {
       },
     },
   },
+
+  "@tablet": {
+    gridTemplateColumns: "1fr 1fr",
+  },
+
+  "@mobile": {
+    gridTemplateColumns: "1fr",
+  },
 });
 
 const CardWrapper = styled("div", {

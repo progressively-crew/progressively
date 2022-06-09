@@ -13,6 +13,10 @@ export const Ul = styled("ul", {
   fontFamily: "$default",
 
   "& li": { lineHeight: "$content" },
+
+  "@mobile": {
+    paddingLeft: "$spacing$4",
+  },
 });
 
 export interface LiProps {

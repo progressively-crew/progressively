@@ -11,6 +11,10 @@ export const RawH1 = styled(Heading, {
   "-webkit-text-fill-color": "transparent",
   "-moz-background-clip": "text",
   "-moz-text-fill-color": "transparent",
+
+  "@mobile": {
+    fontSize: "$titleMobile",
+  },
 });
 
 export const H1: React.FC<React.HTMLAttributes<HTMLHeadingElement>> = (
