@@ -183,8 +183,8 @@ export default function DeleteFlagPage() {
         title={
           <>
             We really want to warn you: if you validate the flag suppression,
-            you {`won't`} be able to access the{" "}
-            <strong>{currentFlag.name}</strong> flag anymore. It includes:
+            you {`won't`} be able to access the {currentFlag.name} flag anymore.
+            It includes:
           </>
         }
       />
