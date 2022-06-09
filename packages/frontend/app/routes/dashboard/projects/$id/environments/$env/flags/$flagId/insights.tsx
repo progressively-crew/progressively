@@ -29,7 +29,9 @@ import { BigState } from "~/components/BigStat";
 import { Typography } from "~/components/Typography";
 import { styled } from "~/stitches.config";
 import { Spacer } from "~/components/Spacer";
-import { LineChart } from "~/components/LineChart";
+import { ChartVariant, LineChart } from "~/components/LineChart";
+import { useState } from "react";
+import { SwitchButton } from "~/components/Buttons/SwitchButton";
 
 interface MetaArgs {
   data?: {
@@ -131,6 +133,7 @@ export default function FlagById() {
     activatedCount,
     notActivatedCount,
   } = useLoaderData<LoaderData>();
+  const [chartVariant, setChartVariant] = useState<ChartVariant>("chart");
 
   const currentFlag = currentFlagEnv.flag;
   const isFlagActivated = currentFlagEnv.status === FlagStatus.ACTIVATED;
@@ -219,7 +222,18 @@ export default function FlagById() {
 
         {hits.length > 0 && (
           <BigState name="Chart">
+            <SwitchButton
+              onClick={() =>
+                setChartVariant((s) => (s === "chart" ? "table" : "chart"))
+              }
+            >
+              Switch to {chartVariant === "chart" ? "table view" : "chart view"}
+            </SwitchButton>
+
+            <Spacer size={4} />
+
             <LineChart
+              variant={chartVariant}
               items={hits}
               dataKeys={[
                 {
@@ -233,6 +247,7 @@ export default function FlagById() {
                 },
               ]}
             />
+            <Spacer size={8} />
           </BigState>
         )}
       </Section>

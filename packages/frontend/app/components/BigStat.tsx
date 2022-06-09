@@ -18,13 +18,16 @@ const BigStatValue = styled(CardContent, {
 export interface BigStateProps {
   children: React.ReactNode;
   name: string;
+  id?: string;
 }
 
-export const BigState = ({ name, children }: BigStateProps) => {
+export const BigState = ({ name, children, id }: BigStateProps) => {
   return (
     <Card>
       <CardHeader>
-        <BigStatLabel as="h3">{name}</BigStatLabel>
+        <BigStatLabel as="h3" id={id}>
+          {name}
+        </BigStatLabel>
       </CardHeader>
 
       <BigStatValue>{children}</BigStatValue>

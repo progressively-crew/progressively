@@ -12,7 +12,6 @@ import { TableChart } from "./TableChart";
 
 const ChartWrapper = styled("div", {
   marginLeft: "-$spacing$8",
-  paddingBottom: "$spacing$8",
 });
 
 interface DataKey {
@@ -21,22 +20,27 @@ interface DataKey {
   dashed?: boolean;
 }
 
+export type ChartVariant = "chart" | "table";
 export interface LineChartProps {
   dataKeys: Array<DataKey>;
   items: Array<{ date: string } & { [key: string]: number | string }>;
+  variant: ChartVariant;
 }
 
-export const LineChart = ({ dataKeys, items }: LineChartProps) => {
+export const LineChart = ({ dataKeys, items, variant }: LineChartProps) => {
   const formatDate = (date: string) => {
     return new Intl.DateTimeFormat().format(new Date(date));
   };
 
-  return <TableChart items={items} dateFormatter={formatDate} />;
+  if (variant === "table") {
+    return <TableChart items={items} dateFormatter={formatDate} />;
+  }
 
   return (
     <ChartWrapper>
       <ResponsiveContainer width="100%" aspect={16.0 / 9.0}>
         <AreaChart
+          aria-labelledby="lol"
           data={items}
           margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
         >
