@@ -4,7 +4,7 @@ import {
   MetaFunction,
   ActionFunction,
 } from "remix";
-import { Crumbs, BreadCrumbs } from "~/components/Breadcrumbs";
+import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { authGuard } from "~/modules/auth/services/auth-guard";
 import { Environment } from "~/modules/environments/types";
@@ -33,6 +33,7 @@ import { ChartVariant, LineChart } from "~/components/LineChart";
 import { useState } from "react";
 import { SwitchButton } from "~/components/Buttons/SwitchButton";
 import { EmptyState } from "~/components/EmptyState";
+import { Crumbs } from "~/components/Breadcrumbs/types";
 
 interface MetaArgs {
   data?: {

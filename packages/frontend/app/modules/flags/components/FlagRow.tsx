@@ -7,6 +7,7 @@ import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { Link } from "~/components/Link";
 import { styled } from "~/stitches.config";
 import { ButtonCopy } from "~/components/ButtonCopy";
+import { HideMobile } from "~/components/HideMobile";
 
 const Wrapper = styled("div", {
   display: "grid",
@@ -62,22 +63,24 @@ export const FlagRow = ({
         <Typography size="small">{description}</Typography>
       </div>
 
-      <ButtonCopy toCopy={flagKey}>{flagKey}</ButtonCopy>
+      <HideMobile>
+        <ButtonCopy toCopy={flagKey}>{flagKey}</ButtonCopy>
 
-      <Form method="post">
-        <input
-          type="hidden"
-          name="nextStatus"
-          value={
-            flagStatus === FlagStatus.ACTIVATED
-              ? FlagStatus.NOT_ACTIVATED
-              : FlagStatus.ACTIVATED
-          }
-        />
-        <input type="hidden" name="flagId" value={id} />
+        <Form method="post">
+          <input
+            type="hidden"
+            name="nextStatus"
+            value={
+              flagStatus === FlagStatus.ACTIVATED
+                ? FlagStatus.NOT_ACTIVATED
+                : FlagStatus.ACTIVATED
+            }
+          />
+          <input type="hidden" name="flagId" value={id} />
 
-        <Switch checked={flagStatus === FlagStatus.ACTIVATED} />
-      </Form>
+          <Switch checked={flagStatus === FlagStatus.ACTIVATED} />
+        </Form>
+      </HideMobile>
     </Wrapper>
   );
 };

@@ -20,7 +20,7 @@ import { validateStrategyForm } from "~/modules/strategies/validators/validateSt
 import { ErrorBox } from "~/components/ErrorBox";
 import { StrategyCreateDTO } from "~/modules/strategies/types";
 import { createStrategy } from "~/modules/strategies/services/createStrategy";
-import { BreadCrumbs, Crumbs } from "~/components/Breadcrumbs";
+import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { StrategyAudience } from "~/modules/strategies/components/StrategyAudience";
 import { ActivationStrategy } from "~/modules/strategies/components/ActivationStrategy";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
@@ -38,6 +38,7 @@ import {
 } from "~/components/InlineSection";
 import { Divider } from "~/components/Divider";
 import { styled } from "~/stitches.config";
+import { Crumbs } from "~/components/Breadcrumbs/types";
 
 interface MetaArgs {
   data?: {

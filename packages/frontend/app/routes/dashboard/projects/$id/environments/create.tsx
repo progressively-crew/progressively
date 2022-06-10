@@ -8,7 +8,7 @@ import {
   redirect,
   useTransition,
 } from "remix";
-import { Crumbs, BreadCrumbs } from "~/components/Breadcrumbs";
+import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { ErrorBox } from "~/components/ErrorBox";
 import { authGuard } from "~/modules/auth/services/auth-guard";
 import { createEnv } from "~/modules/environments/services/createEnv";
@@ -29,6 +29,7 @@ import { Typography } from "~/components/Typography";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { Spacer } from "~/components/Spacer";
+import { Crumbs } from "~/components/Breadcrumbs/types";
 
 interface MetaArgs {
   data?: {

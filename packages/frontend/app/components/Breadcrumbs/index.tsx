@@ -1,4 +1,5 @@
 import { styled } from "~/stitches.config";
+import { HideMobile } from "../HideMobile";
 import { DesktopNav } from "./DesktopNav";
 import { MobileNav } from "./MobileNav";
 import { Crumbs } from "./types";
@@ -6,12 +7,6 @@ import { Crumbs } from "./types";
 export interface BreadCrumbsProps {
   crumbs: Crumbs;
 }
-
-const DesktopWrapper = styled("div", {
-  "@mobile": {
-    display: "none",
-  },
-});
 
 const MobileWrapper = styled("div", {
   display: "none",
@@ -23,9 +18,9 @@ const MobileWrapper = styled("div", {
 export const BreadCrumbs = ({ crumbs }: BreadCrumbsProps) => {
   return (
     <>
-      <DesktopWrapper>
+      <HideMobile>
         <DesktopNav crumbs={crumbs} />
-      </DesktopWrapper>
+      </HideMobile>
 
       <MobileWrapper>
         <MobileNav crumbs={crumbs} />
