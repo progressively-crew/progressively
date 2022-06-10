@@ -209,7 +209,7 @@ export default function DeleteEnvPage() {
         title={
           <>
             We really want to warn you: if you validate the environment
-            suppression, you {`won't`} be able to access the {environment.name}
+            suppression, you {`won't`} be able to access the {environment.name}{" "}
             environment anymore. It includes:
           </>
         }
