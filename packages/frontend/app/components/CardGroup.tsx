@@ -115,7 +115,7 @@ export const CardHeader = styled("div", {
 });
 
 export const CardContent = styled("div", {
-  padding: "0 $spacing$6",
+  padding: "0 $spacing$6 $spacing$4 $spacing$6",
   "& p": {
     fontSize: "$btn",
     lineHeight: "$content",

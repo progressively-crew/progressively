@@ -3,6 +3,8 @@ import { styled } from "~/stitches.config";
 
 const HorizontalNavWrapper = styled("nav", {
   "& ul": {
+    overflow: "auto",
+    width: "100%",
     background: "$backgroundAccent",
     display: "flex",
     borderRadius: "$borderRadius$regular",
