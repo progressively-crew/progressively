@@ -199,8 +199,8 @@ export default function DeleteStrategyPage() {
         title={
           <>
             We really want to warn you: if you validate the strategy
-            suppression, you {`won't`} be able to access the{" "}
-            <strong>{strategy.name}</strong> strategy anymore. It includes:
+            suppression, you {`won't`} be able to access the {strategy.name}{" "}
+            strategy anymore. It includes:
           </>
         }
       />

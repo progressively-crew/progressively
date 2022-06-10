@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavContext } from "./NavContext";
+import { NavContext } from "../context/NavContext";
 
 export interface NavProviderProps {
   children: React.ReactNode;
