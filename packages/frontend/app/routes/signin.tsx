@@ -28,13 +28,16 @@ const ForgotPasswordLink = styled(Link, {
   color: "$hover",
 });
 
-const SignupLink = styled(Link, {
-  fontSize: "$btn",
-  color: "$hover",
-  textAlign: "center",
-  padding: "$spacing$4 0",
+const SignupLinkWrapper = styled("div", {
+  paddingTop: "$spacing$4",
   borderTop: "1px solid $background",
-  display: "block",
+  textAlign: "center",
+
+  "& a": {
+    fontSize: "$btn",
+    color: "$hover",
+    textAlign: "center",
+  },
 });
 
 export const meta: MetaFunction = () => {
@@ -121,6 +124,7 @@ export default function Signin() {
             name="email"
             label="Email"
             placeholder="e.g: james.bond@mi6.com"
+            autoComplete="username"
           />
 
           <div>
@@ -130,6 +134,7 @@ export default function Signin() {
               label="Password"
               type="password"
               placeholder="************"
+              autoComplete="current-password"
             />
 
             <ForgotPasswordLink to="/forgot-password">{`I forgot my password`}</ForgotPasswordLink>
@@ -145,7 +150,9 @@ export default function Signin() {
       </Form>
 
       {showRegister ? (
-        <SignupLink to="/register">{`Create an account`}</SignupLink>
+        <SignupLinkWrapper>
+          <Link to="/register">{`Create an account`}</Link>
+        </SignupLinkWrapper>
       ) : null}
     </NotAuthenticatedLayout>
   );
