@@ -1,6 +1,13 @@
+import { forwardRef } from "react";
 import { styled } from "~/stitches.config";
 
-export const RawTable = styled("table", {
+const Wrapper = styled("div", {
+  display: "block",
+  width: "100%",
+  overflowX: "auto",
+});
+
+const Table = styled("table", {
   color: "$content",
   width: "100%",
   fontFamily: "$default",
@@ -36,3 +43,13 @@ export const RawTable = styled("table", {
     color: "$title",
   },
 });
+
+export const RawTable = forwardRef((props: any, ref: any) => {
+  return (
+    <Wrapper>
+      <Table ref={ref} {...props} />
+    </Wrapper>
+  );
+});
+
+RawTable.displayName = "RawTable";
