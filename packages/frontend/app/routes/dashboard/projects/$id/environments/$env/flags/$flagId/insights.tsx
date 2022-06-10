@@ -34,6 +34,7 @@ import { useState } from "react";
 import { SwitchButton } from "~/components/Buttons/SwitchButton";
 import { EmptyState } from "~/components/EmptyState";
 import { Crumbs } from "~/components/Breadcrumbs/types";
+import { HideMobile } from "~/components/HideMobile";
 
 interface MetaArgs {
   data?: {
@@ -175,9 +176,11 @@ export default function FlagById() {
           startAction={
             <>
               <ToggleFlag isFlagActivated={isFlagActivated} />
-              <ButtonCopy toCopy={currentFlag.key}>
-                {currentFlag.key}
-              </ButtonCopy>
+              <HideMobile>
+                <ButtonCopy toCopy={currentFlag.key}>
+                  {currentFlag.key}
+                </ButtonCopy>
+              </HideMobile>
             </>
           }
         />
