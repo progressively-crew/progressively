@@ -33,6 +33,7 @@ import { Stack } from "~/components/Stack";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { Spacer } from "~/components/Spacer";
 import { Crumbs } from "~/components/Breadcrumbs/types";
+import { HideMobile } from "~/components/HideMobile";
 
 interface MetaArgs {
   data?: {
@@ -224,7 +225,16 @@ export default function SettingsPage() {
 
             <SectionContent>
               <DeleteButton to={`/dashboard/projects/${project.uuid}/delete`}>
-                Delete <span>{`"${project.name}"`} forever</span>
+                <span>
+                  <span aria-hidden>
+                    Delete{" "}
+                    <HideMobile>{`"${project.name}"`} forever</HideMobile>
+                  </span>
+
+                  <VisuallyHidden>
+                    Delete {`"${project.name}"`} forever
+                  </VisuallyHidden>
+                </span>
               </DeleteButton>
             </SectionContent>
           </CardSection>

@@ -31,6 +31,8 @@ import { ButtonCopy } from "~/components/ButtonCopy";
 import { Typography } from "~/components/Typography";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { Crumbs } from "~/components/Breadcrumbs/types";
+import { HideMobile } from "~/components/HideMobile";
+import { VisuallyHidden } from "~/components/VisuallyHidden";
 
 interface MetaArgs {
   data?: {
@@ -186,7 +188,15 @@ export default function FlagSettingPage() {
             <DeleteButton
               to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/delete`}
             >
-              Delete {currentFlag.name} forever
+              <span>
+                <span aria-hidden>
+                  Delete <HideMobile>{currentFlag.name} forever</HideMobile>
+                </span>
+
+                <VisuallyHidden>
+                  Delete {currentFlag.name} forever
+                </VisuallyHidden>
+              </span>
             </DeleteButton>
           </SectionContent>
         </CardSection>

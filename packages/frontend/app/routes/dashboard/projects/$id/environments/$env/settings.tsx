@@ -20,6 +20,8 @@ import { User } from "~/modules/user/types";
 import { getSession } from "~/sessions";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { Crumbs } from "~/components/Breadcrumbs/types";
+import { HideMobile } from "~/components/HideMobile";
+import { VisuallyHidden } from "~/components/VisuallyHidden";
 
 interface MetaArgs {
   data?: {
@@ -143,7 +145,16 @@ export default function EnvSettingsPage() {
             <DeleteButton
               to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/delete`}
             >
-              Delete {`"${environment.name}"`} forever
+              <span>
+                <span aria-hidden>
+                  Delete{" "}
+                  <HideMobile>{`"${environment.name}"`} forever</HideMobile>
+                </span>
+
+                <VisuallyHidden>
+                  Delete {`"${environment.name}"`} forever
+                </VisuallyHidden>
+              </span>
             </DeleteButton>
           </SectionContent>
         </CardSection>

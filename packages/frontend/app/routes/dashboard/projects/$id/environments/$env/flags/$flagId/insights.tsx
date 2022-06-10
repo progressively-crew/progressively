@@ -123,6 +123,10 @@ export const loader: LoaderFunction = async ({
 const BigStatWrapper = styled("div", {
   display: "flex",
   gap: "$spacing$4",
+
+  "@mobile": {
+    flexDirection: "column",
+  },
 });
 
 export default function FlagById() {
