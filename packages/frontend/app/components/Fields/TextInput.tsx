@@ -1,3 +1,4 @@
+import { HTMLAttributes } from "react";
 import { styled } from "~/stitches.config";
 import { Stack } from "../Stack";
 import { Typography } from "../Typography";
@@ -11,6 +12,7 @@ export interface TextInputProps {
   placeholder?: string;
   type?: string;
   description?: string;
+  autoComplete?: "current-password" | "username";
 }
 
 const Input = styled("input", {
@@ -36,6 +38,7 @@ export const TextInput = ({
   placeholder,
   type = "text",
   description,
+  ...props
 }: TextInputProps) => {
   let ariaDescription: string | undefined;
 
@@ -55,6 +58,7 @@ export const TextInput = ({
         placeholder={placeholder}
         defaultValue={defaultValue}
         aria-describedby={ariaDescription}
+        {...props}
       />
 
       {description && <Hint id={`${name}-hint`}>{description}</Hint>}

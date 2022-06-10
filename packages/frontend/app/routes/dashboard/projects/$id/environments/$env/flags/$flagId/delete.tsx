@@ -8,7 +8,7 @@ import {
   useLoaderData,
   useTransition,
 } from "remix";
-import { Crumbs, BreadCrumbs } from "~/components/Breadcrumbs";
+import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { ErrorBox } from "~/components/ErrorBox";
 import { WarningBox } from "~/components/WarningBox";
 import { authGuard } from "~/modules/auth/services/auth-guard";
@@ -25,6 +25,7 @@ import { Button } from "~/components/Buttons/Button";
 import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
 import { Typography } from "~/components/Typography";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
+import { Crumbs } from "~/components/Breadcrumbs/types";
 
 interface MetaArgs {
   data?: {

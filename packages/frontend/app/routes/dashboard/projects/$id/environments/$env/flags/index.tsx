@@ -5,7 +5,7 @@ import {
   ActionFunction,
   useSearchParams,
 } from "remix";
-import { Crumbs, BreadCrumbs } from "~/components/Breadcrumbs";
+import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { Environment } from "~/modules/environments/types";
 import { activateFlag } from "~/modules/flags/services/activateFlag";
@@ -29,6 +29,8 @@ import { CreateButton } from "~/components/Buttons/CreateButton";
 import { FlagList } from "~/modules/flags/components/FlagList";
 import { Spacer } from "~/components/Spacer";
 import { styled } from "~/stitches.config";
+import { HideMobile } from "~/components/HideMobile";
+import { Crumbs } from "~/components/Breadcrumbs/types";
 
 const ToggleAction = styled("div", {
   display: "flex",
@@ -134,9 +136,11 @@ export default function FlagsByEnvPage() {
           tagline="Environment"
           title={environment.name}
           startAction={
-            <ButtonCopy toCopy={environment.clientKey}>
-              {environment.clientKey}
-            </ButtonCopy>
+            <HideMobile>
+              <ButtonCopy toCopy={environment.clientKey}>
+                {environment.clientKey}
+              </ButtonCopy>
+            </HideMobile>
           }
         />
       }

@@ -12,6 +12,9 @@ export const CardGroup = styled("div", {
     cols: {
       2: {
         gridTemplateColumns: "1fr 1fr",
+        "@mobile": {
+          gridTemplateColumns: "1fr",
+        },
       },
     },
   },
@@ -91,7 +94,7 @@ export const Card = ({ children, className, onClick }: CardProps) => {
     <CardWrapper
       onClick={onClick}
       onKeyDown={handleKeyDown}
-      className={`card ${className}`}
+      className={`card ${className || ""}`}
       tabIndex={isHydrated && onClick ? 0 : undefined}
       hydrated={Boolean(isHydrated && onClick)}
     >

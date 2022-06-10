@@ -55,6 +55,7 @@ export const RawButton = styled("button", {
 const Wrapper = styled("span", {
   display: "flex",
   alignItems: "center",
+  height: "100%",
   "& svg": {
     marginRight: "$spacing$2",
   },

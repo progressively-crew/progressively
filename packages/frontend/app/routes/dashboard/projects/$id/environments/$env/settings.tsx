@@ -1,7 +1,7 @@
 import { AiOutlineSetting } from "react-icons/ai";
 import { FiFlag } from "react-icons/fi";
 import { LoaderFunction, MetaFunction, useLoaderData } from "remix";
-import { Crumbs, BreadCrumbs } from "~/components/Breadcrumbs";
+import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { Header } from "~/components/Header";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
@@ -19,6 +19,9 @@ import { Project, UserProject, UserRoles } from "~/modules/projects/types";
 import { User } from "~/modules/user/types";
 import { getSession } from "~/sessions";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
+import { Crumbs } from "~/components/Breadcrumbs/types";
+import { HideMobile } from "~/components/HideMobile";
+import { VisuallyHidden } from "~/components/VisuallyHidden";
 
 interface MetaArgs {
   data?: {
@@ -100,9 +103,11 @@ export default function EnvSettingsPage() {
           title={environment.name}
           tagline="Environment"
           startAction={
-            <ButtonCopy toCopy={environment.clientKey}>
-              {environment.clientKey}
-            </ButtonCopy>
+            <HideMobile>
+              <ButtonCopy toCopy={environment.clientKey}>
+                {environment.clientKey}
+              </ButtonCopy>
+            </HideMobile>
           }
         />
       }
@@ -142,7 +147,16 @@ export default function EnvSettingsPage() {
             <DeleteButton
               to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/delete`}
             >
-              Delete {`"${environment.name}"`} forever
+              <span>
+                <span aria-hidden>
+                  Delete{" "}
+                  <HideMobile>{`"${environment.name}"`} forever</HideMobile>
+                </span>
+
+                <VisuallyHidden>
+                  Delete {`"${environment.name}"`} forever
+                </VisuallyHidden>
+              </span>
             </DeleteButton>
           </SectionContent>
         </CardSection>

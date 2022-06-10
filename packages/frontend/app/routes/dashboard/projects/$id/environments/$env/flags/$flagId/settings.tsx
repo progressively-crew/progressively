@@ -4,7 +4,7 @@ import {
   MetaFunction,
   ActionFunction,
 } from "remix";
-import { Crumbs, BreadCrumbs } from "~/components/Breadcrumbs";
+import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { authGuard } from "~/modules/auth/services/auth-guard";
 import { Environment } from "~/modules/environments/types";
@@ -30,6 +30,9 @@ import {
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { Typography } from "~/components/Typography";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
+import { Crumbs } from "~/components/Breadcrumbs/types";
+import { HideMobile } from "~/components/HideMobile";
+import { VisuallyHidden } from "~/components/VisuallyHidden";
 
 interface MetaArgs {
   data?: {
@@ -136,9 +139,11 @@ export default function FlagSettingPage() {
           startAction={
             <>
               <ToggleFlag isFlagActivated={isFlagActivated} />
-              <ButtonCopy toCopy={currentFlag.key}>
-                {currentFlag.key}
-              </ButtonCopy>
+              <HideMobile>
+                <ButtonCopy toCopy={currentFlag.key}>
+                  {currentFlag.key}
+                </ButtonCopy>
+              </HideMobile>
             </>
           }
         />
@@ -185,7 +190,15 @@ export default function FlagSettingPage() {
             <DeleteButton
               to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/delete`}
             >
-              Delete {currentFlag.name} forever
+              <span>
+                <span aria-hidden>
+                  Delete <HideMobile>{currentFlag.name} forever</HideMobile>
+                </span>
+
+                <VisuallyHidden>
+                  Delete {currentFlag.name} forever
+                </VisuallyHidden>
+              </span>
             </DeleteButton>
           </SectionContent>
         </CardSection>

@@ -2,6 +2,7 @@ import { IoMdMenu } from "react-icons/io";
 import { styled } from "~/stitches.config";
 import { useNavToggle } from "./Breadcrumbs/hooks/useNavToggle";
 import { Button } from "./Buttons/Button";
+import { HideMobile } from "./HideMobile";
 import { Link } from "./Link";
 import { Typography } from "./Typography";
 
@@ -19,10 +20,6 @@ const Wrapper = styled("div", {
     justifyContent: "center",
   },
   "@mobile": {
-    "& a": {
-      display: "none",
-    },
-
     "& button": {
       display: "flex",
     },
@@ -50,9 +47,11 @@ export const Logo = ({ to, hideOnMobile }: LogoProps) => {
         </Button>
       )}
 
-      <Link to={to || "/dashboard"}>
-        <Typography as="span">Progressively</Typography>
-      </Link>
+      <HideMobile>
+        <Link to={to || "/dashboard"}>
+          <Typography as="span">Progressively</Typography>
+        </Link>
+      </HideMobile>
     </Wrapper>
   );
 };

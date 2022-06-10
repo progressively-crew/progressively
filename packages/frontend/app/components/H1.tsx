@@ -7,6 +7,7 @@ export const RawH1 = styled(Heading, {
   fontWeight: "$bold",
   backgroundImage: "linear-gradient(90deg, $title, $primary)",
   backgroundClip: "text",
+
   "-webkit-background-clip": "text",
   "-webkit-text-fill-color": "transparent",
   "-moz-background-clip": "text",
@@ -15,6 +16,10 @@ export const RawH1 = styled(Heading, {
   "@mobile": {
     fontSize: "$titleMobile",
   },
+
+  // Since there's no lineheight, we need to pad bottom to avoid
+  // breaking letters like "g"
+  paddingBottom: "$spacing$2",
 });
 
 export const H1: React.FC<React.HTMLAttributes<HTMLHeadingElement>> = (

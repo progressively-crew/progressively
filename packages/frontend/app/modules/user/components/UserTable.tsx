@@ -19,6 +19,9 @@ const ActionWrapper = styled("div", {
   display: "flex",
   gap: "$spacing$4",
   marginBottom: "$spacing$4",
+  "@mobile": {
+    flexDirection: "column",
+  },
 });
 
 export const UserTable = ({

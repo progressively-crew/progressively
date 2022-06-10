@@ -5,7 +5,7 @@ import {
   ActionFunction,
   useSearchParams,
 } from "remix";
-import { Crumbs, BreadCrumbs } from "~/components/Breadcrumbs";
+import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { authGuard } from "~/modules/auth/services/auth-guard";
 import { Environment } from "~/modules/environments/types";
@@ -35,6 +35,8 @@ import { Typography } from "~/components/Typography";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { CardGroup } from "~/components/CardGroup";
 import { CreationCard } from "~/components/CreationCard";
+import { Crumbs } from "~/components/Breadcrumbs/types";
+import { HideMobile } from "~/components/HideMobile";
 
 interface MetaArgs {
   data?: {
@@ -148,9 +150,11 @@ export default function FlagById() {
           startAction={
             <>
               <ToggleFlag isFlagActivated={isFlagActivated} />
-              <ButtonCopy toCopy={currentFlag.key}>
-                {currentFlag.key}
-              </ButtonCopy>
+              <HideMobile>
+                <ButtonCopy toCopy={currentFlag.key}>
+                  {currentFlag.key}
+                </ButtonCopy>
+              </HideMobile>
             </>
           }
         />

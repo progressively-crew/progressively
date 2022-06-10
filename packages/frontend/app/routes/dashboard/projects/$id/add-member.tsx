@@ -7,7 +7,7 @@ import {
   useLoaderData,
   useTransition,
 } from "remix";
-import { Crumbs, BreadCrumbs } from "~/components/Breadcrumbs";
+import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { ErrorBox } from "~/components/ErrorBox";
 import { authGuard } from "~/modules/auth/services/auth-guard";
 import { Project, UserProject, UserRoles } from "~/modules/projects/types";
@@ -26,6 +26,7 @@ import { Typography } from "~/components/Typography";
 import { Li, Ul } from "~/components/Ul";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
+import { Crumbs } from "~/components/Breadcrumbs/types";
 
 interface MetaArgs {
   data?: {
