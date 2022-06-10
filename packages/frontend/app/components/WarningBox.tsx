@@ -28,6 +28,10 @@ const WarningBoxWrapper = styled("figure", {
     fontWeight: "$bold",
     lineHeight: "$content",
   },
+
+  "@mobile": {
+    flexDirection: "column",
+  },
 });
 
 export const WarningBox = ({ list, title }: WarningBoxProps) => {

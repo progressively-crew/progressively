@@ -103,9 +103,11 @@ export default function EnvSettingsPage() {
           title={environment.name}
           tagline="Environment"
           startAction={
-            <ButtonCopy toCopy={environment.clientKey}>
-              {environment.clientKey}
-            </ButtonCopy>
+            <HideMobile>
+              <ButtonCopy toCopy={environment.clientKey}>
+                {environment.clientKey}
+              </ButtonCopy>
+            </HideMobile>
           }
         />
       }

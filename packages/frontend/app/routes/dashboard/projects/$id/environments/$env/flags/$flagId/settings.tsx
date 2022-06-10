@@ -139,9 +139,11 @@ export default function FlagSettingPage() {
           startAction={
             <>
               <ToggleFlag isFlagActivated={isFlagActivated} />
-              <ButtonCopy toCopy={currentFlag.key}>
-                {currentFlag.key}
-              </ButtonCopy>
+              <HideMobile>
+                <ButtonCopy toCopy={currentFlag.key}>
+                  {currentFlag.key}
+                </ButtonCopy>
+              </HideMobile>
             </>
           }
         />

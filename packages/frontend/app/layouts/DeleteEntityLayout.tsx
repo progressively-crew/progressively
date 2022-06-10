@@ -19,6 +19,10 @@ const ActionWrapper = styled("div", {
   justifyContent: "space-between",
   gap: "$spacing$6",
   marginTop: "$spacing$6",
+
+  "@mobile": {
+    flexDirection: "column",
+  },
 });
 
 const Wrapper = styled("div", {
