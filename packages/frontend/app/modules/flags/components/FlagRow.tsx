@@ -69,7 +69,9 @@ export const FlagRow = ({
 
       <HideMobile>
         <ButtonCopy toCopy={flagKey}>{flagKey}</ButtonCopy>
+      </HideMobile>
 
+      <HideMobile>
         <Form method="post">
           <input
             type="hidden"
