@@ -1,10 +1,7 @@
-import { AiOutlineSetting } from "react-icons/ai";
-import { FiFlag } from "react-icons/fi";
 import { LoaderFunction, MetaFunction, useLoaderData } from "remix";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { Header } from "~/components/Header";
-import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import {
   CardSection,
   SectionContent,
@@ -22,6 +19,7 @@ import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { HideMobile } from "~/components/HideMobile";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
+import { EnvNavBar } from "~/modules/environments/components/EnvNavbar";
 
 interface MetaArgs {
   data?: {
@@ -111,23 +109,7 @@ export default function EnvSettingsPage() {
           }
         />
       }
-      subNav={
-        <HorizontalNav label={`Environment related`}>
-          <NavItem
-            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags`}
-            icon={<FiFlag />}
-          >
-            Feature flags
-          </NavItem>
-
-          <NavItem
-            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/settings`}
-            icon={<AiOutlineSetting />}
-          >
-            Settings
-          </NavItem>
-        </HorizontalNav>
-      }
+      subNav={<EnvNavBar projectId={project.uuid} envId={environment.uuid} />}
     >
       {userRole === UserRoles.Admin && (
         <CardSection id="danger">
