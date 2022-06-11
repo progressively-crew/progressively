@@ -1,5 +1,6 @@
 import { NavLink } from "remix";
 import { styled } from "~/stitches.config";
+import { Tag } from "./Tag";
 
 const HorizontalNavWrapper = styled("nav", {
   "& ul": {

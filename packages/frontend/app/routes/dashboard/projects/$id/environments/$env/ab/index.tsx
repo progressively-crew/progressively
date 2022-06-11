@@ -23,9 +23,6 @@ import { Section, SectionHeader } from "~/components/Section";
 import { EmptyState } from "~/components/EmptyState";
 import { Typography } from "~/components/Typography";
 import { CreateButton } from "~/components/Buttons/CreateButton";
-import { FlagList } from "~/modules/flags/components/FlagList";
-import { Spacer } from "~/components/Spacer";
-import { styled } from "~/stitches.config";
 import { HideMobile } from "~/components/HideMobile";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { EnvNavBar } from "~/modules/environments/components/EnvNavbar";
@@ -42,7 +39,7 @@ export const meta: MetaFunction = ({ data }: MetaArgs) => {
   const envName = data?.environment?.name || "An error ocurred";
 
   return {
-    title: `Progressively | ${projectName} | ${envName} | Flags`,
+    title: `Progressively | ${projectName} | ${envName} | A/B experiments`,
   };
 };
 
@@ -98,7 +95,7 @@ export const loader: LoaderFunction = async ({
   return { flagsByEnv, project, environment: environment!, user };
 };
 
-export default function FlagsByEnvPage() {
+export default function AbPage() {
   const { flagsByEnv, project, environment, user } =
     useLoaderData<LoaderData>();
 
@@ -141,54 +138,33 @@ export default function FlagsByEnvPage() {
       subNav={<EnvNavBar projectId={project.uuid} envId={environment.uuid} />}
       status={
         isFlagRemoved ? (
-          <SuccessBox id="flag-removed">
-            The flag has been successfully deleted.
+          <SuccessBox id="ab-removed">
+            The A/B experiment has been successfully deleted.
           </SuccessBox>
         ) : newFlagId ? (
-          <SuccessBox id="flag-added">
-            The flag has been successfully created.
+          <SuccessBox id="ab-added">
+            The A/B experiment has been successfully created.
           </SuccessBox>
         ) : null
       }
     >
-      <Section id="list-flags-title">
-        <SectionHeader title="Feature flags" hiddenTitle />
-
-        {flagsByEnv.length > 0 ? (
-          <div>
+      <Section id="list-abs-title">
+        <SectionHeader title="A/B experiments" hiddenTitle />
+        <EmptyState
+          title="No A/B experiments found"
+          description={
+            <Typography>
+              There are no A/B experiments yet on this environment.
+            </Typography>
+          }
+          action={
             <CreateButton
-              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/create`}
+              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/ab/create`}
             >
-              Create a feature flag
+              Create an A/B experiment
             </CreateButton>
-
-            <Spacer size={4} />
-
-            <FlagList
-              flags={flagsByEnv}
-              envId={environment.uuid}
-              projectId={project.uuid}
-            />
-          </div>
-        ) : null}
-
-        {flagsByEnv.length === 0 ? (
-          <EmptyState
-            title="No flags found"
-            description={
-              <Typography>
-                There are no flags yet on this environment.
-              </Typography>
-            }
-            action={
-              <CreateButton
-                to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/create`}
-              >
-                Create a feature flag
-              </CreateButton>
-            }
-          />
-        ) : null}
+          }
+        />
       </Section>
     </DashboardLayout>
   );
