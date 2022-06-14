@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Variation } from '@prisma/client';
 
 export const seedAbExperiments = async (prismaClient: PrismaClient) => {
   const homeExperiment = await prismaClient.experiment.create({
@@ -67,8 +67,8 @@ export const seedAbExperiments = async (prismaClient: PrismaClient) => {
 
 const seedVariationHits = async (
   prismaClient: PrismaClient,
-  control: any,
-  variation: any,
+  control: Variation,
+  variation: Variation,
   date: Date,
   count = 10,
 ) => {
@@ -80,7 +80,7 @@ const seedVariationHits = async (
   for (let i = 0; i < count; i++) {
     await prismaClient.variationHit.create({
       data: {
-        variation,
+        variationUuid: variation.uuid,
         date,
       },
     });
@@ -88,7 +88,7 @@ const seedVariationHits = async (
     if (i < count / 2) {
       await prismaClient.variationHit.create({
         data: {
-          variation: control,
+          variationUuid: control.uuid,
           date,
         },
       });
