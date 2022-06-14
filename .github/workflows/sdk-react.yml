@@ -21,6 +21,10 @@ jobs:
       - name: Bootstrap projects
         run: npm run setup:ci
 
+      - name: Preparation
+        working-directory: ./packages/backend
+        run: mv .env.example .env && npm run db:migrate:dev && npm run db:generate:schema
+
       - name: Build
         run: npm run build
 
