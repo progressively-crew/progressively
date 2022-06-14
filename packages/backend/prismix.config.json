@@ -1,7 +1,11 @@
 {
   "mixers": [
     {
-      "input": ["./prisma/base.prisma", "./prisma/flag.prisma"],
+      "input": [
+        "./prisma/base.prisma",
+        "./prisma/flag.prisma",
+        "./prisma/ab.prisma"
+      ],
       "output": "./prisma/schema.prisma"
     }
   ]

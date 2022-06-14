@@ -15,6 +15,7 @@ import { EnvironmentsController } from './environments/environments.controller';
 import { EnvironmentsModule } from './environments/environments.module';
 import { StrategyModule } from './strategy/strategy.module';
 import { AppLoggerMiddleware } from './logging.middleware';
+import { AbModule } from './ab/ab.module';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { AppLoggerMiddleware } from './logging.middleware';
     WebsocketModule,
     EnvironmentsModule,
     StrategyModule,
+    AbModule,
   ],
   providers: [AppService, MailService],
   controllers: [EnvironmentsController],
