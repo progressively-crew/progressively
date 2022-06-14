@@ -1,0 +1,61 @@
+model Flag {
+    uuid            String            @id @default(uuid())
+    name            String
+    key             String
+    description     String
+    createdAt       DateTime          @default(now())
+    flagEnvironment FlagEnvironment[]
+}
+
+model FlagEnvironment {
+    flag          Flag              @relation(fields: [flagId], references: [uuid])
+    flagId        String
+    environment   Environment       @relation(fields: [environmentId], references: [uuid])
+    environmentId String
+    flagHit       FlagHit[]
+    // the values set in flags/flag.status.ts
+    status        String            @default("NOT_ACTIVATED")
+    strategies    RolloutStrategy[]
+
+
+    @@id([flagId, environmentId])
+}
+
+model FlagHit {
+    id                           Int             @id @default(autoincrement())
+    date                         DateTime        @default(now())
+    flagEnvironment              FlagEnvironment @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
+    flagEnvironmentFlagId        String
+    flagEnvironmentEnvironmentId String
+    status                       String
+}
+
+model RolloutStrategy {
+    uuid String @id @default(uuid())
+    name String
+
+    // strategy rule
+    strategyRuleType String // available values in modules/strategies/types/SrategyRule
+    // related to strategy type "field"
+    fieldName        String?
+    fieldComparator  String?
+    fieldValue       String?
+
+    // activation
+    activationType String // available values in modules/strategies/types/Activation
+
+    // related to activation type "percentage"
+    rolloutPercentage Int?
+
+    // Relations
+    FlagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
+    flagEnvironmentFlagId        String?
+    flagEnvironmentEnvironmentId String?
+}
+
+// Alias model, don't touch this one.
+// If you need to modify the EnvironmentModel, go into the base.prisma file
+model Environment {
+    uuid            String            @id @default(uuid())
+    flagEnvironment FlagEnvironment[]
+}
