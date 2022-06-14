@@ -2,7 +2,8 @@ import { PrismaClient } from '@prisma/client';
 import { UserRoles } from '../../src/users/roles';
 import { seedPasswordReset, seedUsers } from './seeds/users';
 import { seedProjects } from './seeds/projects';
-import { seedFlags, seedHits } from './seeds/flags';
+import { seedFlags, seedFlagHits } from './seeds/flags';
+import { seedAbExperiments } from './seeds/ab';
 
 const prismaClient = new PrismaClient();
 
@@ -15,7 +16,7 @@ export const seedDb = async () => {
     const [projectFromSeeding, otherFromSeeding] = await seedProjects(
       prismaClient,
     );
-    const [homePageFlag, footerFlag, asideFlag] = await seedFlags(prismaClient);
+
     await seedPasswordReset(prismaClient, john); // Necessary to e2e test password reset
 
     //  Contextual seeding
@@ -61,6 +62,9 @@ export const seedDb = async () => {
         role: UserRoles.User,
       },
     });
+
+    // Flag setup
+    const [homePageFlag, footerFlag, asideFlag] = await seedFlags(prismaClient);
 
     const flagEnv = await prismaClient.flagEnvironment.create({
       data: {
@@ -120,10 +124,22 @@ export const seedDb = async () => {
       },
     });
 
-    await seedHits(prismaClient, flagEnv, new Date(1992, 0, 1, 1), 10);
-    await seedHits(prismaClient, flagEnv, new Date(1992, 0, 3, 1), 20);
-    await seedHits(prismaClient, flagEnv, new Date(1992, 0, 2, 1), 40);
-    await seedHits(prismaClient, flagEnv, new Date(1992, 0, 6, 1), 10);
+    await seedFlagHits(prismaClient, flagEnv, new Date(1992, 0, 1, 1), 10);
+    await seedFlagHits(prismaClient, flagEnv, new Date(1992, 0, 3, 1), 20);
+    await seedFlagHits(prismaClient, flagEnv, new Date(1992, 0, 2, 1), 40);
+    await seedFlagHits(prismaClient, flagEnv, new Date(1992, 0, 6, 1), 10);
+    // End of Flag setup
+
+    // Ab experiments setup
+    const [homePageExperiment] = await seedAbExperiments(prismaClient);
+    await prismaClient.experimentEnvironment.create({
+      data: {
+        environmentId: production.uuid,
+        experimentId: homePageExperiment.uuid,
+      },
+    });
+
+    // End of Ab experiments setup
   } catch (e) {
     console.error(e);
   }

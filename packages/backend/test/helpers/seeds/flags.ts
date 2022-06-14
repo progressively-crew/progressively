@@ -32,7 +32,7 @@ export const seedFlags = async (prismaClient: PrismaClient) => {
   return [homePageFlag, footerFlag, asideFlag] as const;
 };
 
-export const seedHits = async (
+export const seedFlagHits = async (
   prismaClient: PrismaClient,
   flagEnv: any,
   date: Date,
