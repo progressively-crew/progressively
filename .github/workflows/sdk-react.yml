@@ -21,12 +21,13 @@ jobs:
       - name: Bootstrap projects
         run: npm run setup:ci
 
-      - name: Preparation
-        working-directory: ./packages/backend
-        run: mv .env.example .env && npm run db:migrate:dev && npm run db:generate:schema
-
-      - name: Build
+      - name: Build sdk JS (dependency)
         run: npm run build
+        working-directory: ./packages/sdk-js
+
+      - name: Build sdk react
+        run: npm run build
+        working-directory: ./packages/react
 
       - name: Tests
         working-directory: ./packages/react
