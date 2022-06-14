@@ -1,0 +1,73 @@
+// RULE N°1: no database specific attributes / behaviours.
+// If you need enums, use a string and define the enum in a TS file
+// Make the check at the code level, not at the DB level
+
+datasource POSTGRES_DATASOURCE {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+model User {
+    uuid                String                @id @default(uuid())
+    fullname            String
+    email               String                @unique
+    password            String
+    userProject         UserProject[]
+    activationToken     String?
+    // the values set in users/status.ts
+    status              String
+    RefreshToken        RefreshToken[]
+    PasswordResetTokens PasswordResetTokens[]
+}
+
+model Project {
+    uuid         String        @id @default(uuid())
+    createdAt    DateTime      @default(now())
+    name         String
+    environments Environment[]
+    userProject  UserProject[]
+}
+
+model UserProject {
+    user   User   @relation(fields: [userId], references: [uuid])
+    userId String
+
+    project   Project @relation(fields: [projectId], references: [uuid])
+    projectId String
+
+    // the values set in users/roles.ts
+    role String
+
+    @@id([userId, projectId])
+}
+
+model Environment {
+    uuid      String  @id @default(uuid())
+    name      String
+    project   Project @relation(fields: [projectId], references: [uuid])
+    projectId String
+    clientKey String  @default(uuid())
+}
+
+model RefreshToken {
+    id      Int      @id @default(autoincrement())
+    user    User     @relation(fields: [userId], references: [uuid])
+    userId  String
+    expired DateTime
+    value   String
+}
+
+model PasswordResetTokens {
+    uuid     String   @id @default(uuid())
+    dateEnd  DateTime
+    token    String
+    user     User     @relation(fields: [userUuid], references: [uuid])
+    userUuid String
+}
