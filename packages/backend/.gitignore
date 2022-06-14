@@ -34,4 +34,4 @@ lerna-debug.log*
 !.vscode/extensions.json
 
 *.env
-./prisma/schema.prisma
+schema.prisma
