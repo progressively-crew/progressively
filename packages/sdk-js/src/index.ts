@@ -31,11 +31,12 @@ function Sdk(
   let flags: FlagDict = initialFlags;
   let socket: WebSocket;
 
-  function loadFlags() {
+  function loadFlags(ctrl?: AbortController) {
     let response: Response;
 
     return fetch(`${apiRoot}/sdk/${bToA(fields)}`, {
       credentials: "include",
+      signal: ctrl?.signal,
     })
       .then((res) => {
         response = res;

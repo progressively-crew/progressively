@@ -25,8 +25,10 @@ export const useFlagInit = (
       return () => sdk.disconnect();
     }
 
+    const ctrl = new AbortController();
+
     sdk
-      .loadFlags()
+      .loadFlags(ctrl)
       .then((res) => {
         sdk.onFlagUpdate(
           setFlags,
@@ -37,7 +39,10 @@ export const useFlagInit = (
       })
       .catch(setError);
 
-    return () => sdk.disconnect();
+    return () => {
+      ctrl.abort();
+      sdk.disconnect();
+    };
   }, []);
 
   return { flags, error, isLoading, setFlags };

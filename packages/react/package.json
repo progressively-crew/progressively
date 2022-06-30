@@ -43,15 +43,15 @@
   "bundlesize": [
     {
       "path": "./lib/modern/index.js",
-      "maxSize": "1005 B"
+      "maxSize": "1.1 kB"
     },
     {
       "path": "./lib/legacy/index.js",
-      "maxSize": "1.04 kB"
+      "maxSize": "1.06 kB"
     },
     {
       "path": "./lib/ssr.js",
-      "maxSize": "1.13 kB"
+      "maxSize": "2 kB"
     }
   ]
 }
