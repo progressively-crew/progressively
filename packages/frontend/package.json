@@ -15,34 +15,34 @@
     "test:e2e:ci:parallel": "cypress run --browser chrome --record --parallel"
   },
   "dependencies": {
-    "@remix-run/react": "^1.4.3",
-    "@remix-run/serve": "^1.4.3",
+    "@remix-run/react": "^1.6.3",
+    "@remix-run/serve": "^1.6.3",
     "@stitches/react": "^1.2.8",
-    "react": "^18.1.0",
+    "react": "^18.2.0",
     "react-copy-to-clipboard": "^5.1.0",
-    "react-dom": "^18.1.0",
+    "react-dom": "^18.2.0",
     "react-icons": "^4.4.0",
     "react-router-dom": "^6.3.0",
-    "recharts": "^2.1.10",
-    "remix": "^1.4.3"
+    "recharts": "^2.1.12",
+    "remix": "^1.6.3"
   },
   "devDependencies": {
-    "@remix-run/dev": "^1.4.3",
+    "@remix-run/dev": "^1.6.3",
     "@testing-library/cypress": "^8.0.3",
-    "@types/jest": "^28.1.1",
-    "@types/react": "^18.0.12",
+    "@types/jest": "^28.1.3",
+    "@types/react": "^18.0.14",
     "@types/react-copy-to-clipboard": "^5.0.2",
     "@types/react-dom": "^18.0.5",
-    "@typescript-eslint/eslint-plugin": "^5.27.1",
-    "@typescript-eslint/parser": "^5.27.1",
+    "@typescript-eslint/eslint-plugin": "^5.30.0",
+    "@typescript-eslint/parser": "^5.30.0",
     "axe-core": "^4.4.2",
-    "cypress": "^10.0.3",
-    "cypress-axe": "^0.14.0",
-    "eslint": "^8.17.0",
-    "eslint-plugin-react": "^7.30.0",
-    "jest": "^28.1.1",
-    "ts-jest": "^28.0.4",
-    "typescript": "^4.7.3"
+    "cypress": "^10.3.0",
+    "cypress-axe": "^1.0.0",
+    "eslint": "^8.18.0",
+    "eslint-plugin-react": "^7.30.1",
+    "jest": "^28.1.2",
+    "ts-jest": "^28.0.5",
+    "typescript": "^4.7.4"
   },
   "engines": {
     "node": ">=14"
