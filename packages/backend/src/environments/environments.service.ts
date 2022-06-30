@@ -96,6 +96,41 @@ export class EnvironmentsService {
       });
     }
 
+    // Remove A/B tests
+    const experimentsEnv = await this.prisma.experimentEnvironment.findMany({
+      where: {
+        environmentId: envId,
+      },
+    });
+
+    for (const experimentEnv of experimentsEnv) {
+      const variations = await this.prisma.variation.findMany({
+        where: {
+          experimentUuid: experimentEnv.experimentId,
+        },
+      });
+
+      for (const variation of variations) {
+        await this.prisma.variationHit.deleteMany({
+          where: {
+            variationUuid: variation.uuid,
+          },
+        });
+      }
+
+      await this.prisma.variation.deleteMany({
+        where: {
+          experimentUuid: experimentEnv.experimentId,
+        },
+      });
+    }
+
+    await this.prisma.experimentEnvironment.deleteMany({
+      where: {
+        environmentId: envId,
+      },
+    });
+
     return this.prisma.environment.delete({
       where: {
         uuid: envId,

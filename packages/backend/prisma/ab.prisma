@@ -8,7 +8,6 @@ model Experiment {
     createdAt             DateTime                @default(now())
     ExperimentEnvironment ExperimentEnvironment[]
     varations             Variation[]
-    variationUuid         String
 }
 
 model Variation {
