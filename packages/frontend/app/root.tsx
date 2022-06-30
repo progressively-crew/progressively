@@ -6,10 +6,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useCatch,
-  useLocation,
-} from "remix";
-import type { LinksFunction } from "remix";
+} from "@remix-run/react";
 import UnauthorizedPage from "./routes/401";
 import ForbiddenPage from "./routes/403";
 import NotFoundPage from "./routes/404";
