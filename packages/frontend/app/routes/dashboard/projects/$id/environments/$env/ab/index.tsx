@@ -1,10 +1,3 @@
-import {
-  useLoaderData,
-  LoaderFunction,
-  MetaFunction,
-  ActionFunction,
-  useSearchParams,
-} from "remix";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { Environment } from "~/modules/environments/types";
@@ -26,6 +19,8 @@ import { CreateButton } from "~/components/Buttons/CreateButton";
 import { HideMobile } from "~/components/HideMobile";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { EnvNavBar } from "~/modules/environments/components/EnvNavbar";
+import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
+import { useLoaderData, useSearchParams } from "@remix-run/react";
 
 interface MetaArgs {
   data?: {

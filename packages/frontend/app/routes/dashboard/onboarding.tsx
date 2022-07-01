@@ -1,11 +1,5 @@
-import {
-  Form,
-  useActionData,
-  ActionFunction,
-  redirect,
-  LoaderFunction,
-  useLoaderData,
-} from "remix";
+import { LoaderFunction, ActionFunction, redirect } from "@remix-run/node";
+import { useLoaderData, useActionData, Form } from "@remix-run/react";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/ErrorBox";
 import { FormGroup } from "~/components/Fields/FormGroup";

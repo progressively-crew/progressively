@@ -1,10 +1,3 @@
-import {
-  useLoaderData,
-  LoaderFunction,
-  MetaFunction,
-  redirect,
-  useSearchParams,
-} from "remix";
 import { SuccessBox } from "~/components/SuccessBox";
 import { getProjects } from "~/modules/projects/services/getProjects";
 import { UserProject } from "~/modules/projects/types";
@@ -17,6 +10,8 @@ import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
 import { CardGroup } from "~/components/CardGroup";
 import { CreationCard } from "~/components/CreationCard";
+import { MetaFunction, LoaderFunction, redirect } from "@remix-run/node";
+import { useSearchParams, useLoaderData } from "@remix-run/react";
 
 export const meta: MetaFunction = () => {
   return {

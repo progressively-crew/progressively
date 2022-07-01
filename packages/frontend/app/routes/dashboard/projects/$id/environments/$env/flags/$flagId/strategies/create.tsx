@@ -1,14 +1,5 @@
-import { useState } from "react";
-import {
-  ActionFunction,
-  Form,
-  LoaderFunction,
-  MetaFunction,
-  redirect,
-  useActionData,
-  useLoaderData,
-  useTransition,
-} from "remix";
+import { useState, useTransition } from "react";
+
 import { getFlagsByProjectEnv } from "~/modules/flags/services/getFlagsByProjectEnv";
 import { Flag, FlagEnv } from "~/modules/flags/types";
 import { getProject } from "~/modules/projects/services/getProject";
@@ -39,6 +30,13 @@ import {
 import { Divider } from "~/components/Divider";
 import { styled } from "~/stitches.config";
 import { Crumbs } from "~/components/Breadcrumbs/types";
+import {
+  MetaFunction,
+  ActionFunction,
+  redirect,
+  LoaderFunction,
+} from "@remix-run/node";
+import { useLoaderData, useActionData, Form } from "@remix-run/react";
 
 interface MetaArgs {
   data?: {

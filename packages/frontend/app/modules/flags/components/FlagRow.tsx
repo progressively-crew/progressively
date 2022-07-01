@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { Form } from "remix";
+
 import { FlagStatus } from "../types";
 import { Switch } from "~/components/Switch";
 import { Typography } from "~/components/Typography";
@@ -8,6 +8,7 @@ import { Link } from "~/components/Link";
 import { styled } from "~/stitches.config";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { HideMobile } from "~/components/HideMobile";
+import { Form } from "@remix-run/react";
 
 const Wrapper = styled("div", {
   display: "grid",

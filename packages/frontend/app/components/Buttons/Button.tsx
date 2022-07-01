@@ -1,5 +1,6 @@
+import { Link } from "@remix-run/react";
 import { HTMLAttributes } from "react";
-import { Link } from "remix";
+
 import { styled } from "~/stitches.config";
 
 export const RawButton = styled("button", {

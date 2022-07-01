@@ -1,4 +1,6 @@
-import { ActionFunction, Form, useTransition } from "remix";
+import { ActionFunction } from "@remix-run/node";
+import { Form } from "@remix-run/react";
+import { useTransition } from "react";
 import { Switch } from "~/components/Switch";
 import { getSession } from "~/sessions";
 import { activateFlag } from "../services/activateFlag";

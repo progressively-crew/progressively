@@ -1,9 +1,3 @@
-import {
-  LoaderFunction,
-  useLoaderData,
-  MetaFunction,
-  useSearchParams,
-} from "remix";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { SuccessBox } from "~/components/SuccessBox";
 import { getProject } from "~/modules/projects/services/getProject";
@@ -22,6 +16,9 @@ import { EmptyState } from "~/components/EmptyState";
 import { Typography } from "~/components/Typography";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { Spacer } from "~/components/Spacer";
+import { MetaFunction, LoaderFunction } from "@remix-run/node";
+import { useLoaderData, useSearchParams } from "@remix-run/react";
+import { Crumbs } from "~/components/Breadcrumbs/types";
 
 interface MetaArgs {
   data?: {

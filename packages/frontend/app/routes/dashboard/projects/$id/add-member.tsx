@@ -1,12 +1,3 @@
-import {
-  Form,
-  useActionData,
-  ActionFunction,
-  MetaFunction,
-  LoaderFunction,
-  useLoaderData,
-  useTransition,
-} from "remix";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { ErrorBox } from "~/components/ErrorBox";
 import { authGuard } from "~/modules/auth/services/auth-guard";
@@ -27,6 +18,9 @@ import { Li, Ul } from "~/components/Ul";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { Crumbs } from "~/components/Breadcrumbs/types";
+import { MetaFunction, LoaderFunction, ActionFunction } from "@remix-run/node";
+import { useActionData, useLoaderData, Form } from "@remix-run/react";
+import { useTransition } from "react";
 
 interface MetaArgs {
   data?: {

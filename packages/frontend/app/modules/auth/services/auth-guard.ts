@@ -1,4 +1,4 @@
-import { redirect } from "remix";
+import { redirect } from "@remix-run/node";
 import { getSession } from "~/sessions";
 import { getMe } from "../../user/services/getMe";
 
