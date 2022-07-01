@@ -1,28 +1,39 @@
+/** eslint-disable @typescript-eslint/no-empty-function */
 import { LoggerService } from '@nestjs/common';
 
 export class TestLogger implements LoggerService {
   /**
    * Write a 'log' level log.
    */
-  log(message: any, ...optionalParams: any[]) {}
+  log() {
+    // do stuff
+  }
 
   /**
    * Write an 'error' level log.
    */
-  error(message: any, ...optionalParams: any[]) {}
+  error() {
+    // do stuff
+  }
 
   /**
    * Write a 'warn' level log.
    */
-  warn(message: any, ...optionalParams: any[]) {}
+  warn() {
+    // do stuff
+  }
 
   /**
    * Write a 'debug' level log.
    */
-  debug(message: any, ...optionalParams: any[]) {}
+  debug() {
+    // do stuff
+  }
 
   /**
    * Write a 'verbose' level log.
    */
-  verbose(message: any, ...optionalParams: any[]) {}
+  verbose() {
+    // do stuff
+  }
 }
