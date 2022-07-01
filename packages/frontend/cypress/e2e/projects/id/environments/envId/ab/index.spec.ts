@@ -107,6 +107,13 @@ describe("/dashboard/projects/[id]/environments/[envId]/ab", () => {
 
         cy.findByRole("heading", { name: "Production" }).should("be.visible");
         cy.findByRole("heading", { name: "A/B experiments" }).should("exist");
+        cy.findByText("New homepage experiment").should("be.visible");
+
+        cy.findByText("Create an experiment").should("be.visible");
+
+        cy.findByText("Switch the new homepage design (experiment)").should(
+          "be.visible"
+        );
 
         cy.checkA11y();
       });
