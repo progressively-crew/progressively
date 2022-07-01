@@ -50,14 +50,14 @@ export class FlagsService {
     // Nested queries in raw, not perfect but it works :(
     const hits = this.prisma.$queryRaw<Array<FlagHitsRetrieveDTO>>`
       SELECT date, (
-        SELECT count(id) as activated
+        SELECT count(id)::int as activated
         FROM "FlagHit" as fh
         WHERE status = 'ACTIVATED'
         AND fh.date = rfh.date
         GROUP BY status
       ),
       (
-        SELECT count(id) as notActivated
+        SELECT count(id)::int as notActivated
         FROM "FlagHit" as fh
         WHERE status = 'NOT_ACTIVATED'
         AND fh.date = rfh.date
