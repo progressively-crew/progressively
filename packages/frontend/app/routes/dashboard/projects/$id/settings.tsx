@@ -1,13 +1,6 @@
 import { AiOutlineSetting } from "react-icons/ai";
 import { FiLayers } from "react-icons/fi";
-import {
-  ActionFunction,
-  LoaderFunction,
-  MetaFunction,
-  useActionData,
-  useLoaderData,
-  useTransition,
-} from "remix";
+
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { ErrorBox } from "~/components/ErrorBox";
 import { Header } from "~/components/Header";
@@ -28,12 +21,13 @@ import { UserTable } from "~/modules/user/components/UserTable";
 import { getSession } from "~/sessions";
 import { Typography } from "~/components/Typography";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
-import { Divider } from "~/components/Divider";
 import { Stack } from "~/components/Stack";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { Spacer } from "~/components/Spacer";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { HideMobile } from "~/components/HideMobile";
+import { MetaFunction, LoaderFunction, ActionFunction } from "@remix-run/node";
+import { useLoaderData, useActionData, useTransition } from "@remix-run/react";
 
 interface MetaArgs {
   data?: {

@@ -1,15 +1,12 @@
+import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
 import {
-  ActionFunction,
-  Form,
-  LoaderFunction,
-  MetaFunction,
   useActionData,
   useLoaderData,
+  Form,
   useTransition,
-} from "remix";
+} from "@remix-run/react";
 import { BackLink } from "~/components/BackLink";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
-import { Container } from "~/components/Container";
 import { ErrorBox } from "~/components/ErrorBox";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { TextInput } from "~/components/Fields/TextInput";

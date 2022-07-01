@@ -1,4 +1,5 @@
-import { ActionFunction, MetaFunction, useActionData } from "remix";
+import { MetaFunction, ActionFunction } from "@remix-run/node";
+import { useActionData } from "@remix-run/react";
 import { ErrorBox } from "~/components/ErrorBox";
 import { Header } from "~/components/Header";
 import { Typography } from "~/components/Typography";

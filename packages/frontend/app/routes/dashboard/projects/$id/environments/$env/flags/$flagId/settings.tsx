@@ -1,9 +1,3 @@
-import {
-  useLoaderData,
-  LoaderFunction,
-  MetaFunction,
-  ActionFunction,
-} from "remix";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { authGuard } from "~/modules/auth/services/auth-guard";
@@ -33,6 +27,8 @@ import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { HideMobile } from "~/components/HideMobile";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
+import { MetaFunction, LoaderFunction, ActionFunction } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
 
 interface MetaArgs {
   data?: {

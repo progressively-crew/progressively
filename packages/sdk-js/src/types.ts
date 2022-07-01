@@ -9,7 +9,9 @@ export interface SDKOptions {
 }
 
 export interface ProgressivelySdkType {
-  loadFlags: () => Promise<{ flags: FlagDict; response: Response }>;
+  loadFlags: (
+    ctrl?: AbortController
+  ) => Promise<{ flags: FlagDict; response: Response }>;
   disconnect: () => void;
   onFlagUpdate: (
     callback: (data: FlagDict) => void,

@@ -1,10 +1,3 @@
-import {
-  ActionFunction,
-  MetaFunction,
-  LoaderFunction,
-  redirect,
-  useActionData,
-} from "remix";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import {
   RegisterForm,
@@ -15,6 +8,13 @@ import { Header } from "~/components/Header";
 import { BackLink } from "~/components/BackLink";
 import { ErrorBox } from "~/components/ErrorBox";
 import { SuccessBox } from "~/components/SuccessBox";
+import {
+  MetaFunction,
+  ActionFunction,
+  LoaderFunction,
+  redirect,
+} from "@remix-run/node";
+import { useActionData } from "@remix-run/react";
 
 export const meta: MetaFunction = () => {
   return {

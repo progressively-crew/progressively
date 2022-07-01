@@ -1,4 +1,4 @@
-import { Link as RLink } from "remix";
+import { Link as RLink } from "@remix-run/react";
 import { forwardRef, HTMLAttributes } from "react";
 import { styled } from "~/stitches.config";
 

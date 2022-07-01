@@ -1,13 +1,3 @@
-import {
-  ActionFunction,
-  Form,
-  LoaderFunction,
-  MetaFunction,
-  redirect,
-  useActionData,
-  useLoaderData,
-  useTransition,
-} from "remix";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { ErrorBox } from "~/components/ErrorBox";
 import { WarningBox } from "~/components/WarningBox";
@@ -25,9 +15,20 @@ import { StrategyRetrieveDTO } from "~/modules/strategies/types";
 import { deleteStrategy } from "~/modules/strategies/services/deleteStrategy";
 import { Button } from "~/components/Buttons/Button";
 import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
-import { Typography } from "~/components/Typography";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { Crumbs } from "~/components/Breadcrumbs/types";
+import {
+  MetaFunction,
+  LoaderFunction,
+  ActionFunction,
+  redirect,
+} from "@remix-run/node";
+import {
+  useLoaderData,
+  useActionData,
+  Form,
+  useTransition,
+} from "@remix-run/react";
 
 interface MetaArgs {
   data?: {

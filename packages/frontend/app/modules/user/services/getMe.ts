@@ -1,4 +1,4 @@
-import { Session } from "remix";
+import { Session } from "@remix-run/node";
 import { Constants } from "~/constants";
 
 const refreshToken = (session: Session) => {
