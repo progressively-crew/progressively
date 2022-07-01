@@ -38,7 +38,7 @@
     "@prisma/client": "^4.0.0",
     "@types/ws": "^8.5.3",
     "bcrypt": "^5.0.1",
-    "camelcase": "^7.0.0",
+    "camelcase": "^6.3.0",
     "cookie-parser": "^1.4.6",
     "helmet": "^5.1.0",
     "joi": "^17.6.0",
