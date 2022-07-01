@@ -1,9 +1,6 @@
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { Environment } from "~/modules/environments/types";
-import { activateFlag } from "~/modules/flags/services/activateFlag";
-import { getFlagsByProjectEnv } from "~/modules/flags/services/getFlagsByProjectEnv";
-import { FlagEnv, FlagStatus } from "~/modules/flags/types";
 import { getProject } from "~/modules/projects/services/getProject";
 import { Project } from "~/modules/projects/types";
 import { getSession } from "~/sessions";
@@ -19,8 +16,12 @@ import { CreateButton } from "~/components/Buttons/CreateButton";
 import { HideMobile } from "~/components/HideMobile";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { EnvNavBar } from "~/modules/environments/components/EnvNavbar";
-import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
+import { MetaFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
+import { Experiment } from "~/modules/ab/types";
+import { getExperimentsByEnv } from "~/modules/ab/services/getExperimentsByEnv";
+import { Spacer } from "~/components/Spacer";
+import { ExperimentRow } from "~/modules/ab/components/ExperimentRow";
 
 interface MetaArgs {
   data?: {
@@ -38,32 +39,9 @@ export const meta: MetaFunction = ({ data }: MetaArgs) => {
   };
 };
 
-export const action: ActionFunction = async ({
-  request,
-  params,
-}): Promise<null> => {
-  const session = await getSession(request.headers.get("Cookie"));
-  const authCookie = session.get("auth-cookie");
-
-  const formData = await request.formData();
-  const nextStatus = formData.get("nextStatus");
-  const flagId = formData.get("flagId");
-
-  if (nextStatus && flagId) {
-    await activateFlag(
-      params.env!,
-      flagId as string,
-      nextStatus as FlagStatus,
-      authCookie
-    );
-  }
-
-  return null;
-};
-
 interface LoaderData {
   project: Project;
-  flagsByEnv: Array<FlagEnv>;
+  experiments: Array<Experiment>;
   environment: Environment;
   user: User;
 }
@@ -78,7 +56,7 @@ export const loader: LoaderFunction = async ({
 
   const project: Project = await getProject(params.id!, authCookie);
 
-  const flagsByEnv: Array<FlagEnv> = await getFlagsByProjectEnv(
+  const experiments: Array<Experiment> = await getExperimentsByEnv(
     params.env!,
     authCookie
   );
@@ -87,11 +65,11 @@ export const loader: LoaderFunction = async ({
     (env) => env.uuid === params.env
   );
 
-  return { flagsByEnv, project, environment: environment!, user };
+  return { experiments, project, environment: environment!, user };
 };
 
 export default function AbPage() {
-  const { flagsByEnv, project, environment, user } =
+  const { experiments, project, environment, user } =
     useLoaderData<LoaderData>();
 
   const [searchParams] = useSearchParams();
@@ -145,21 +123,46 @@ export default function AbPage() {
     >
       <Section id="list-abs-title">
         <SectionHeader title="A/B experiments" hiddenTitle />
-        <EmptyState
-          title="No A/B experiments found"
-          description={
-            <Typography>
-              There are no A/B experiments yet on this environment.
-            </Typography>
-          }
-          action={
+
+        {experiments.length > 0 ? (
+          <div>
             <CreateButton
-              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/ab/create`}
+              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/experiments/create`}
             >
-              Create an A/B experiment
+              Create an experiment
             </CreateButton>
-          }
-        />
+
+            <Spacer size={4} />
+
+            {experiments.map((exp) => (
+              <ExperimentRow
+                id={exp.uuid}
+                key={exp.uuid}
+                title={exp.name}
+                description={exp.description}
+                linkTo={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/experiments/${exp.uuid}`}
+              />
+            ))}
+          </div>
+        ) : null}
+
+        {experiments.length === 0 && (
+          <EmptyState
+            title="No A/B experiments found"
+            description={
+              <Typography>
+                There are no A/B experiments yet on this environment.
+              </Typography>
+            }
+            action={
+              <CreateButton
+                to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/ab/create`}
+              >
+                Create an A/B experiment
+              </CreateButton>
+            }
+          />
+        )}
       </Section>
     </DashboardLayout>
   );

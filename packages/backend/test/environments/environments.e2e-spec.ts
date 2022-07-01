@@ -164,6 +164,62 @@ describe('Environments (e2e)', () => {
     });
   });
 
+  describe('/environments/1/experiments (GET)', () => {
+    it('gives a 401 when the user is not authenticated', () =>
+      verifyAuthGuard(app, '/environments/1/experiments', 'get'));
+
+    it('gives a 403 when trying to access a valid project but an invalid env', async () => {
+      const access_token = await authenticate(app);
+
+      return request(app.getHttpServer())
+        .get('/environments/3/experiments')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('gives a 403 when the user is not allowed to access these information', async () => {
+      const access_token = await authenticate(
+        app,
+        'jane.doe@gmail.com',
+        'password',
+      );
+
+      return request(app.getHttpServer())
+        .get('/environments/1/experiments')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('gives a 200 and a list of experiments when the user is authorized to access the data', async () => {
+      const access_token = await authenticate(app);
+
+      const response = await request(app.getHttpServer())
+        .get('/environments/1/experiments')
+        .set('Authorization', `Bearer ${access_token}`);
+
+      const experiments = response.body;
+
+      expect(response.status).toBe(200);
+      expect(experiments.length).toBe(1);
+      expect(experiments[0]).toMatchObject({
+        description: 'Switch the new homepage design (experiment)',
+        key: 'newHomepageExperiment',
+        name: 'New homepage experiment',
+        uuid: '1',
+      });
+    });
+  });
+
   describe('/environments/1/flags (POST)', () => {
     it('gives a 401 when the user is not authenticated', () =>
       verifyAuthGuard(app, '/environments/1/flags', 'post'));
