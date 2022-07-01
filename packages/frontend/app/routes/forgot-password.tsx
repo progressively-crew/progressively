@@ -1,6 +1,5 @@
 import { MetaFunction, ActionFunction } from "@remix-run/node";
-import { useActionData, Form } from "@remix-run/react";
-import { useTransition } from "react";
+import { useActionData, Form, useTransition } from "@remix-run/react";
 import { BackLink } from "~/components/BackLink";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/ErrorBox";

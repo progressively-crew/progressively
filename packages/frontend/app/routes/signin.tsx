@@ -9,8 +9,8 @@ import {
   useSearchParams,
   useActionData,
   Form,
+  useTransition,
 } from "@remix-run/react";
-import { useTransition } from "react";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/ErrorBox";
 import { FormGroup } from "~/components/Fields/FormGroup";

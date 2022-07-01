@@ -26,8 +26,12 @@ import {
   ActionFunction,
   redirect,
 } from "@remix-run/node";
-import { useActionData, useLoaderData, Form } from "@remix-run/react";
-import { useTransition } from "react";
+import {
+  useActionData,
+  useLoaderData,
+  Form,
+  useTransition,
+} from "@remix-run/react";
 
 interface MetaArgs {
   data?: {
