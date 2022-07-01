@@ -6,6 +6,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useCatch,
 } from "@remix-run/react";
 import UnauthorizedPage from "./routes/401";
 import ForbiddenPage from "./routes/403";
@@ -16,6 +17,7 @@ import { H1 } from "./components/H1";
 import { Main } from "./components/Main";
 import { Button } from "./components/Buttons/Button";
 import { Background } from "./components/Background";
+import { LinksFunction } from "@remix-run/node";
 
 /**
  * The `links` export is a function that returns an array of objects that map to
@@ -62,10 +64,9 @@ const Document = ({ children, title }: DocumentProps) => {
       <body>
         {children}
 
-        <RouteChangeAnnouncement />
         <ScrollRestoration />
         <Scripts />
-        {process.env.NODE_ENV === "development" && <LiveReload />}
+        <LiveReload />
       </body>
     </html>
   );
@@ -120,60 +121,3 @@ export function ErrorBoundary({ error }: { error: Error }) {
     </Document>
   );
 }
-
-/**
- * Provides an alert for screen reader users when the route changes.
- */
-const RouteChangeAnnouncement = React.memo(() => {
-  const [hydrated, setHydrated] = React.useState(false);
-  const [innerHtml, setInnerHtml] = React.useState("");
-  const location = useLocation();
-
-  React.useEffect(() => {
-    setHydrated(true);
-  }, []);
-
-  const firstRenderRef = React.useRef(true);
-  React.useEffect(() => {
-    // Skip the first render because we don't want an announcement on the
-    // initial page load.
-    if (firstRenderRef.current) {
-      firstRenderRef.current = false;
-      return;
-    }
-
-    const pageTitle = location.pathname === "/" ? "Home page" : document.title;
-    setInnerHtml(`Navigated to ${pageTitle}`);
-  }, [location.pathname]);
-
-  // Render nothing on the server. The live region provides no value unless
-  // scripts are loaded and the browser takes over normal routing.
-  if (!hydrated) {
-    return null;
-  }
-
-  return (
-    <div
-      aria-live="assertive"
-      aria-atomic
-      id="route-change-region"
-      style={{
-        border: "0",
-        clipPath: "inset(100%)",
-        clip: "rect(0 0 0 0)",
-        height: "1px",
-        margin: "-1px",
-        overflow: "hidden",
-        padding: "0",
-        position: "absolute",
-        width: "1px",
-        whiteSpace: "nowrap",
-        wordWrap: "normal",
-      }}
-    >
-      {innerHtml}
-    </div>
-  );
-});
-
-RouteChangeAnnouncement.displayName = "MemoizedRouteChangeAnnouncement";
