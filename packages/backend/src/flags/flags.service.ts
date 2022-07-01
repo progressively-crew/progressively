@@ -108,27 +108,6 @@ export class FlagsService {
   }
 
   async deleteFlag(envId: string, flagId: string) {
-    await this.prisma.flagHit.deleteMany({
-      where: {
-        flagEnvironmentFlagId: flagId,
-        flagEnvironmentEnvironmentId: envId,
-      },
-    });
-
-    await this.prisma.rolloutStrategy.deleteMany({
-      where: {
-        flagEnvironmentFlagId: flagId,
-        flagEnvironmentEnvironmentId: envId,
-      },
-    });
-
-    await this.prisma.flagEnvironment.deleteMany({
-      where: {
-        environmentId: envId,
-        flagId: flagId,
-      },
-    });
-
     const flagDeleted = await this.prisma.flag.deleteMany({
       where: {
         uuid: flagId,

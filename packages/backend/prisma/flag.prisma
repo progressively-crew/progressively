@@ -8,9 +8,9 @@ model Flag {
 }
 
 model FlagEnvironment {
-    flag          Flag              @relation(fields: [flagId], references: [uuid])
+    flag          Flag              @relation(fields: [flagId], references: [uuid], onDelete: Cascade)
     flagId        String
-    environment   Environment       @relation(fields: [environmentId], references: [uuid])
+    environment   Environment       @relation(fields: [environmentId], references: [uuid], onDelete: Cascade)
     environmentId String
     flagHit       FlagHit[]
     // the values set in flags/flag.status.ts
@@ -24,7 +24,7 @@ model FlagEnvironment {
 model FlagHit {
     id                           Int             @id @default(autoincrement())
     date                         DateTime        @default(now())
-    flagEnvironment              FlagEnvironment @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
+    flagEnvironment              FlagEnvironment @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId], onDelete: Cascade)
     flagEnvironmentFlagId        String
     flagEnvironmentEnvironmentId String
     status                       String
@@ -48,7 +48,7 @@ model RolloutStrategy {
     rolloutPercentage Int?
 
     // Relations
-    FlagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
+    FlagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId], onDelete: Cascade)
     flagEnvironmentFlagId        String?
     flagEnvironmentEnvironmentId String?
 }

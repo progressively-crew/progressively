@@ -36,10 +36,10 @@ model Project {
 }
 
 model UserProject {
-    user   User   @relation(fields: [userId], references: [uuid])
+    user   User   @relation(fields: [userId], references: [uuid], onDelete: Cascade)
     userId String
 
-    project   Project @relation(fields: [projectId], references: [uuid])
+    project   Project @relation(fields: [projectId], references: [uuid], onDelete: Cascade)
     projectId String
 
     // the values set in users/roles.ts
@@ -51,14 +51,14 @@ model UserProject {
 model Environment {
     uuid      String  @id @default(uuid())
     name      String
-    project   Project @relation(fields: [projectId], references: [uuid])
+    project   Project @relation(fields: [projectId], references: [uuid], onDelete: Cascade)
     projectId String
     clientKey String  @default(uuid())
 }
 
 model RefreshToken {
     id      Int      @id @default(autoincrement())
-    user    User     @relation(fields: [userId], references: [uuid])
+    user    User     @relation(fields: [userId], references: [uuid], onDelete: Cascade)
     userId  String
     expired DateTime
     value   String
@@ -68,6 +68,6 @@ model PasswordResetTokens {
     uuid     String   @id @default(uuid())
     dateEnd  DateTime
     token    String
-    user     User     @relation(fields: [userUuid], references: [uuid])
+    user     User     @relation(fields: [userUuid], references: [uuid], onDelete: Cascade)
     userUuid String
 }
