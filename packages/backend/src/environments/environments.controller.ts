@@ -19,12 +19,14 @@ import { ValidationPipe } from '../shared/pipes/ValidationPipe';
 import { FlagsService } from '../flags/flags.service';
 import { FlagAlreadyExists } from '../flags/errors';
 import { FlagCreationSchema, FlagCreationDTO } from '../flags/flags.dto';
+import { AbService } from '../ab/ab.service';
 @ApiBearerAuth()
 @Controller('environments')
 export class EnvironmentsController {
   constructor(
     private readonly envService: EnvironmentsService,
     private readonly flagService: FlagsService,
+    private readonly abService: AbService,
   ) {}
 
   /**
@@ -35,6 +37,16 @@ export class EnvironmentsController {
   @UseGuards(JwtAuthGuard)
   getFlagsByProjectAndEnv(@Param('envId') envId: string) {
     return this.flagService.flagsByEnv(envId);
+  }
+
+  /**
+   * Get all the experiments of a given project/env (by envId)
+   */
+  @Get(':envId/experiments')
+  @UseGuards(HasEnvironmentAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  getABByProjectAndEnv(@Param('envId') envId: string) {
+    return this.abService.experimentsByEnv(envId);
   }
 
   /**
