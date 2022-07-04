@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
+import camelcase from 'camelcase';
 import { PrismaService } from '../prisma.service';
+import { ExperimentAlreadyExists } from './errors';
 
 @Injectable()
 export class AbService {
@@ -56,5 +58,40 @@ export class AbService {
         variants: true,
       },
     });
+  }
+
+  async createExperiment(envId: string, name: string, description: string) {
+    const experimentKey = camelcase(name);
+
+    const existingExperiment =
+      await this.prisma.experimentEnvironment.findFirst({
+        where: {
+          environmentId: envId,
+          experiment: {
+            key: experimentKey,
+          },
+        },
+      });
+
+    if (existingExperiment) {
+      throw new ExperimentAlreadyExists();
+    }
+
+    const experiment = await this.prisma.experiment.create({
+      data: {
+        name,
+        description,
+        key: experimentKey,
+      },
+    });
+
+    await this.prisma.experimentEnvironment.create({
+      data: {
+        experimentId: experiment.uuid,
+        environmentId: envId,
+      },
+    });
+
+    return experiment;
   }
 }

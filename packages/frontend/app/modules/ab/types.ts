@@ -12,3 +12,8 @@ export interface Experiment {
   date: string;
   variants: Array<Variant>;
 }
+
+export interface CreateExperimentDTO {
+  description?: string;
+  name?: string;
+}
