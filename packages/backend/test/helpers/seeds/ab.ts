@@ -39,6 +39,15 @@ export const seedAbExperiments = async (prismaClient: PrismaClient) => {
     },
   });
 
+  const footerExperiment = await prismaClient.experiment.create({
+    data: {
+      uuid: '3',
+      name: 'New footer experiment',
+      description: 'Switch the new footer design (experiment)',
+      key: 'otherFooterExperiment',
+    },
+  });
+
   await seedVariationHits(
     prismaClient,
     controlVariation,
@@ -71,7 +80,7 @@ export const seedAbExperiments = async (prismaClient: PrismaClient) => {
     10,
   );
 
-  return [homeExperiment] as const;
+  return [homeExperiment, footerExperiment] as const;
 };
 
 const seedVariationHits = async (

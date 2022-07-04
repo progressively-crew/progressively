@@ -3,6 +3,8 @@ import { Typography } from "~/components/Typography";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { Link } from "~/components/Link";
 import { styled } from "~/stitches.config";
+import { ButtonCopy } from "~/components/ButtonCopy";
+import { HideMobile } from "~/components/HideMobile";
 
 const Wrapper = styled("div", {
   display: "grid",
@@ -36,6 +38,7 @@ export interface ExperimentRowProps {
   linkTo: string;
   description: React.ReactNode;
   title: string;
+  experimentKey: string;
 }
 
 export const ExperimentRow = ({
@@ -43,6 +46,7 @@ export const ExperimentRow = ({
   linkTo,
   description,
   title,
+  experimentKey,
 }: ExperimentRowProps) => {
   const linkRef = useRef<HTMLAnchorElement>(null);
 
@@ -57,6 +61,10 @@ export const ExperimentRow = ({
 
         <Typography size="small">{description}</Typography>
       </div>
+
+      <HideMobile>
+        <ButtonCopy toCopy={experimentKey}>{experimentKey}</ButtonCopy>
+      </HideMobile>
     </Wrapper>
   );
 };

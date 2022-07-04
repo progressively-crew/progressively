@@ -3,27 +3,23 @@ import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { authGuard } from "~/modules/auth/services/auth-guard";
 import { Environment } from "~/modules/environments/types";
 import { getProject } from "~/modules/projects/services/getProject";
-import { Project, UserProject, UserRoles } from "~/modules/projects/types";
+import { Project } from "~/modules/projects/types";
 import { User } from "~/modules/user/types";
 import { getSession } from "~/sessions";
 import { Header } from "~/components/Header";
-import {
-  CardSection,
-  SectionContent,
-  SectionHeader,
-} from "~/components/Section";
+import { Section, SectionHeader } from "~/components/Section";
 import { AiOutlineExperiment } from "react-icons/ai";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { Typography } from "~/components/Typography";
-import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { HideMobile } from "~/components/HideMobile";
-import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { MetaFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { Experiment } from "~/modules/ab/types";
 import { getExperimentById } from "~/modules/ab/services/getExperimentById";
 import { AbNavBar } from "~/modules/ab/components/AbNavBar";
+import { CreateButton } from "~/components/Buttons/CreateButton";
+import { EmptyState } from "~/components/EmptyState";
 
 interface MetaArgs {
   data?: {
@@ -39,7 +35,7 @@ export const meta: MetaFunction = ({ data }: MetaArgs) => {
   const experimentName = data?.experiment?.name || "An error ocurred";
 
   return {
-    title: `Progressively | ${projectName} | ${envName} | ${experimentName} | Settings`,
+    title: `Progressively | ${projectName} | ${envName} | ${experimentName} | Variations`,
   };
 };
 
@@ -48,7 +44,6 @@ interface LoaderData {
   environment: Environment;
   experiment: Experiment;
   user: User;
-  userRole?: UserRoles;
 }
 
 export const loader: LoaderFunction = async ({
@@ -68,21 +63,16 @@ export const loader: LoaderFunction = async ({
 
   const experiment = await getExperimentById(params.experimentId!, authCookie);
 
-  const userProject: UserProject | undefined = project.userProject?.find(
-    (userProject) => userProject.userId === user.uuid
-  );
-
   return {
     project,
     environment: environment!,
     experiment,
     user,
-    userRole: userProject?.role,
   };
 };
 
 export default function ExperimentSettingsPage() {
-  const { project, environment, experiment, user, userRole } =
+  const { project, environment, experiment, user } =
     useLoaderData<LoaderData>();
 
   const crumbs: Crumbs = [
@@ -129,36 +119,25 @@ export default function ExperimentSettingsPage() {
         />
       }
     >
-      {userRole === UserRoles.Admin && (
-        <CardSection id="danger">
-          <SectionHeader
-            title="Danger zone"
-            description={
-              <Typography>
-                You can delete an A/B experiment at any time, but you {`won’t`}{" "}
-                be able to access its insights anymore and false will be served
-                to the application using it.
-              </Typography>
-            }
-          />
+      <Section id="variations">
+        <SectionHeader title="Variations" hiddenTitle />
 
-          <SectionContent>
-            <DeleteButton
-              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/ab/${experiment.uuid}/delete`}
+        <EmptyState
+          title="No variations found"
+          description={
+            <Typography>
+              There are no variations found to this flag yet.
+            </Typography>
+          }
+          action={
+            <CreateButton
+              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/ab/${experiment.uuid}/variations/create`}
             >
-              <span>
-                <span aria-hidden>
-                  Delete <HideMobile>{experiment.name} forever</HideMobile>
-                </span>
-
-                <VisuallyHidden>
-                  Delete {experiment.name} forever
-                </VisuallyHidden>
-              </span>
-            </DeleteButton>
-          </SectionContent>
-        </CardSection>
-      )}
+              Add a variation
+            </CreateButton>
+          }
+        />
+      </Section>
     </DashboardLayout>
   );
 }

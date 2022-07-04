@@ -138,9 +138,10 @@ export default function AbPage() {
               <ExperimentRow
                 id={exp.uuid}
                 key={exp.uuid}
+                experimentKey={exp.key}
                 title={exp.name}
                 description={exp.description}
-                linkTo={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/experiments/${exp.uuid}`}
+                linkTo={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/ab/${exp.uuid}/variations`}
               />
             ))}
           </div>
