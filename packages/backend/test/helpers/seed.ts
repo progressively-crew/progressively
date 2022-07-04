@@ -131,11 +131,20 @@ export const seedDb = async () => {
     // End of Flag setup
 
     // Ab experiments setup
-    const [homePageExperiment] = await seedAbExperiments(prismaClient);
+    const [homePageExperiment, footerExperiment] = await seedAbExperiments(
+      prismaClient,
+    );
     await prismaClient.experimentEnvironment.create({
       data: {
         environmentId: production.uuid,
         experimentId: homePageExperiment.uuid,
+      },
+    });
+
+    await prismaClient.experimentEnvironment.create({
+      data: {
+        environmentId: production.uuid,
+        experimentId: footerExperiment.uuid,
       },
     });
 
