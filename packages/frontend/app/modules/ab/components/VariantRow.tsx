@@ -17,15 +17,13 @@ const Wrapper = styled("div", {
   alignItems: "center",
   transition: "background 0.2s",
 
-  "&:hover": {
-    background: "$backgroundAccent",
-  },
-  "&:active": {
-    background: "$border",
-  },
-
-  "& a": {
+  "& h3": {
+    fontSize: "$content",
     color: "$title",
+    fontFamily: "$default",
+    height: "$cta",
+    alignItems: "center",
+    display: "flex",
   },
 
   "@mobile": {
@@ -33,37 +31,32 @@ const Wrapper = styled("div", {
   },
 });
 
-export interface ExperimentRowProps {
+export interface VariantRowProps {
   id: string;
   linkTo: string;
   description: React.ReactNode;
   title: string;
-  experimentKey: string;
+  variantKey: string;
 }
 
-export const ExperimentRow = ({
+export const VariantRow = ({
   id,
-  linkTo,
   description,
   title,
-  experimentKey,
-}: ExperimentRowProps) => {
-  const linkRef = useRef<HTMLAnchorElement>(null);
-
+  variantKey,
+}: VariantRowProps) => {
   return (
-    <Wrapper onClick={() => linkRef?.current?.click()}>
+    <Wrapper>
       <div>
         <h3 id={`article-${id}`}>
-          <Link ref={linkRef} to={linkTo}>
-            {title} <VisuallyHidden>experiment</VisuallyHidden>
-          </Link>
+          {title} <VisuallyHidden>variant</VisuallyHidden>
         </h3>
 
         <Typography size="small">{description}</Typography>
       </div>
 
       <HideMobile>
-        <ButtonCopy toCopy={experimentKey}>{experimentKey}</ButtonCopy>
+        <ButtonCopy toCopy={variantKey}>{variantKey}</ButtonCopy>
       </HideMobile>
     </Wrapper>
   );

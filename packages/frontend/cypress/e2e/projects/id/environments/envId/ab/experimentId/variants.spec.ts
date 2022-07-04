@@ -56,5 +56,30 @@ describe("/dashboard/projects/[id]/environments/[envId]/ab/[experimentId]/varian
         });
       });
     });
+
+    describe("with data", () => {
+      beforeEach(() => {
+        cy.signIn("Marvin");
+        cy.visit("/dashboard/projects/1/environments/1/ab/1/variants");
+        cy.injectAxe();
+      });
+
+      it("shows a page layout", () => {
+        cy.title().should(
+          "eq",
+          "Progressively | Project from seeding | Production | New homepage experiment | Variants"
+        );
+
+        cy.findByRole("heading", { name: "Variants" }).should("exist");
+        cy.findByRole("link", { name: "Add a variant" }).should("be.visible");
+
+        cy.findByText("Control variant for home").should("be.visible");
+        cy.findByText("Controls the homepage variant").should("be.visible");
+
+        cy.findAllByText("Alternative homepage").should("have.length", 2);
+
+        cy.checkA11y();
+      });
+    });
   });
 });
