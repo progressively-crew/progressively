@@ -17,6 +17,7 @@ model Variant {
     description    String
     createdAt      DateTime @default(now())
     experimentUuid String?
+    isControl      Boolean  @default(false)
 
     Experiment Experiment?  @relation(fields: [experimentUuid], references: [uuid])
     VariantHit VariantHit[]

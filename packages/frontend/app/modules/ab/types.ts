@@ -3,6 +3,7 @@ export interface Variant {
   key: string;
   name: string;
   description: string;
+  isControl: boolean;
 }
 export interface Experiment {
   uuid: string;

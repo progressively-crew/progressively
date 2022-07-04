@@ -85,6 +85,17 @@ export class AbService {
       },
     });
 
+    const variationName = `${experiment.name} Control`;
+    await this.prisma.variant.create({
+      data: {
+        key: camelcase(variationName),
+        name: variationName,
+        isControl: true,
+        experimentUuid: experiment.uuid,
+        description: `This is the control variant of the ${experiment.name} experiment`,
+      },
+    });
+
     await this.prisma.experimentEnvironment.create({
       data: {
         experimentId: experiment.uuid,
