@@ -1,7 +1,7 @@
-import { CreateExperimentDTO } from "../types";
+import { CreateVariantDTO } from "../types";
 
-export const validateExperimentShape = (values: CreateExperimentDTO) => {
-  const errors: Partial<CreateExperimentDTO> = {};
+export const validateVariationShape = (values: CreateVariantDTO) => {
+  const errors: Partial<CreateVariantDTO> = {};
 
   if (!values.name) {
     errors.name = "The name field is required, make sure to have one.";

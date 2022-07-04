@@ -18,3 +18,8 @@ export interface CreateExperimentDTO {
   description?: string;
   name?: string;
 }
+
+export interface CreateVariantDTO {
+  description?: string;
+  name?: string;
+}
