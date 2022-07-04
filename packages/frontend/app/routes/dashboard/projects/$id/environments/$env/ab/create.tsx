@@ -129,7 +129,7 @@ export default function CreateExperimentPage() {
       label: project.name,
     },
     {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags`,
+      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/ab`,
       label: environment.name,
     },
     {

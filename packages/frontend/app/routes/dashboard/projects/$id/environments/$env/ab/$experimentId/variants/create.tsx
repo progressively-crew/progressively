@@ -22,7 +22,6 @@ import { Section } from "~/components/Section";
 import { Spacer } from "~/components/Spacer";
 import { Typography } from "~/components/Typography";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { createExperiment } from "~/modules/ab/services/createExperiment";
 import { createVariant } from "~/modules/ab/services/createVariant";
 import { getExperimentById } from "~/modules/ab/services/getExperimentById";
 import { CreateVariantDTO, Experiment, Variant } from "~/modules/ab/types";
@@ -139,11 +138,11 @@ export default function CreateVariantPage() {
       label: project.name,
     },
     {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags`,
+      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/ab`,
       label: environment.name,
     },
     {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/ab/${experiment.uuid}`,
+      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/ab/${experiment.uuid}/variants`,
       label: experiment.name,
       forceNotCurrent: true,
       icon: <AiOutlineExperiment aria-hidden />,
