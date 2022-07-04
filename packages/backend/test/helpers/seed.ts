@@ -163,8 +163,8 @@ export const cleanupDb = async () => {
   await prismaClient.flagHit.deleteMany();
   await prismaClient.flagEnvironment.deleteMany();
   await prismaClient.flag.deleteMany();
-  await prismaClient.variationHit.deleteMany();
-  await prismaClient.variation.deleteMany();
+  await prismaClient.variantHit.deleteMany();
+  await prismaClient.variant.deleteMany();
   await prismaClient.experimentEnvironment.deleteMany();
   await prismaClient.experiment.deleteMany();
   await prismaClient.environment.deleteMany();

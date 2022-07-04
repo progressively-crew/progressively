@@ -1,5 +1,5 @@
 // When resolving an experiment in client side,
-// it should be like "flag.experimentKey = "variationKey"
+// it should be like "flag.experimentKey = "variantKey"
 model Experiment {
     uuid                  String                  @id @default(uuid())
     name                  String
@@ -18,15 +18,15 @@ model Variant {
     createdAt      DateTime @default(now())
     experimentUuid String?
 
-    Experiment   Experiment?    @relation(fields: [experimentUuid], references: [uuid])
-    VariationHit VariationHit[]
+    Experiment Experiment?  @relation(fields: [experimentUuid], references: [uuid])
+    VariantHit VariantHit[]
 }
 
-model VariationHit {
-    id            Int      @id @default(autoincrement())
-    date          DateTime @default(now())
-    variation     Variant  @relation(fields: [variationUuid], references: [uuid])
-    variationUuid String
+model VariantHit {
+    id          Int      @id @default(autoincrement())
+    date        DateTime @default(now())
+    variant     Variant  @relation(fields: [variantUuid], references: [uuid])
+    variantUuid String
 }
 
 model ExperimentEnvironment {

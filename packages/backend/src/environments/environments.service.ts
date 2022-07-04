@@ -104,21 +104,21 @@ export class EnvironmentsService {
     });
 
     for (const experimentEnv of experimentsEnv) {
-      const variations = await this.prisma.variation.findMany({
+      const variants = await this.prisma.variant.findMany({
         where: {
           experimentUuid: experimentEnv.experimentId,
         },
       });
 
-      for (const variation of variations) {
-        await this.prisma.variationHit.deleteMany({
+      for (const variant of variants) {
+        await this.prisma.variantHit.deleteMany({
           where: {
-            variationUuid: variation.uuid,
+            variantUuid: variant.uuid,
           },
         });
       }
 
-      await this.prisma.variation.deleteMany({
+      await this.prisma.variant.deleteMany({
         where: {
           experimentUuid: experimentEnv.experimentId,
         },

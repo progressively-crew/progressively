@@ -1,4 +1,4 @@
-import { PrismaClient, Variation } from '@prisma/client';
+import { PrismaClient, Variant } from '@prisma/client';
 
 export const seedAbExperiments = async (prismaClient: PrismaClient) => {
   const homeExperiment = await prismaClient.experiment.create({
@@ -10,17 +10,17 @@ export const seedAbExperiments = async (prismaClient: PrismaClient) => {
     },
   });
 
-  const controlVariation = await prismaClient.variation.create({
+  const controlVariant = await prismaClient.variant.create({
     data: {
       uuid: '1',
-      name: 'Control variation for home',
-      description: 'Controls the homepage variation',
+      name: 'Control variant for home',
+      description: 'Controls the homepage variant',
       key: 'control',
       experimentUuid: homeExperiment.uuid,
     },
   });
 
-  const alternativeHomepage = await prismaClient.variation.create({
+  const alternativeHomepage = await prismaClient.variant.create({
     data: {
       uuid: '2',
       name: 'Alternative homepage',
@@ -48,33 +48,33 @@ export const seedAbExperiments = async (prismaClient: PrismaClient) => {
     },
   });
 
-  await seedVariationHits(
+  await seedVariantHits(
     prismaClient,
-    controlVariation,
+    controlVariant,
     alternativeHomepage,
     new Date(1992, 0, 1, 1),
     10,
   );
 
-  await seedVariationHits(
+  await seedVariantHits(
     prismaClient,
-    controlVariation,
+    controlVariant,
     alternativeHomepage,
     new Date(1992, 0, 3, 1),
     20,
   );
 
-  await seedVariationHits(
+  await seedVariantHits(
     prismaClient,
-    controlVariation,
+    controlVariant,
     alternativeHomepage,
     new Date(1992, 0, 2, 1),
     40,
   );
 
-  await seedVariationHits(
+  await seedVariantHits(
     prismaClient,
-    controlVariation,
+    controlVariant,
     alternativeHomepage,
     new Date(1992, 0, 6, 1),
     10,
@@ -83,10 +83,10 @@ export const seedAbExperiments = async (prismaClient: PrismaClient) => {
   return [homeExperiment, footerExperiment] as const;
 };
 
-const seedVariationHits = async (
+const seedVariantHits = async (
   prismaClient: PrismaClient,
-  control: Variation,
-  variation: Variation,
+  control: Variant,
+  variant: Variant,
   date: Date,
   count = 10,
 ) => {
@@ -96,17 +96,17 @@ const seedVariationHits = async (
   date.setMilliseconds(2);
 
   for (let i = 0; i < count; i++) {
-    await prismaClient.variationHit.create({
+    await prismaClient.variantHit.create({
       data: {
-        variationUuid: variation.uuid,
+        variantUuid: variant.uuid,
         date,
       },
     });
 
     if (i < count / 2) {
-      await prismaClient.variationHit.create({
+      await prismaClient.variantHit.create({
         data: {
-          variationUuid: control.uuid,
+          variantUuid: control.uuid,
           date,
         },
       });
