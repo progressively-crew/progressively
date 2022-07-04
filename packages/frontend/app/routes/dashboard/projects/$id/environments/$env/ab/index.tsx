@@ -127,7 +127,7 @@ export default function AbPage() {
         {experiments.length > 0 ? (
           <div>
             <CreateButton
-              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/experiments/create`}
+              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/ab/create`}
             >
               Create an experiment
             </CreateButton>
