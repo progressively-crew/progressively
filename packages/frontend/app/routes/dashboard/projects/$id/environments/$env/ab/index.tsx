@@ -73,7 +73,7 @@ export default function AbPage() {
     useLoaderData<LoaderData>();
 
   const [searchParams] = useSearchParams();
-  const newFlagId = searchParams.get("newFlagId") || undefined;
+  const newExperimentId = searchParams.get("newExperimentId") || undefined;
   const isFlagRemoved = searchParams.get("flagRemoved") || undefined;
 
   const crumbs: Crumbs = [
@@ -114,8 +114,8 @@ export default function AbPage() {
           <SuccessBox id="ab-removed">
             The A/B experiment has been successfully deleted.
           </SuccessBox>
-        ) : newFlagId ? (
-          <SuccessBox id="ab-added">
+        ) : newExperimentId ? (
+          <SuccessBox id="experiment-added">
             The A/B experiment has been successfully created.
           </SuccessBox>
         ) : null
