@@ -74,7 +74,7 @@ describe('AbController (e2e)', () => {
     });
   });
 
-  describe.only('/experiments/1/variants (POST)', () => {
+  describe('/experiments/1/variants (POST)', () => {
     it('gives a 401 when the user is not authenticated', () =>
       verifyAuthGuard(app, '/experiments/1/variants', 'post'));
 
@@ -82,7 +82,7 @@ describe('AbController (e2e)', () => {
       const access_token = await authenticate(app);
 
       return request(app.getHttpServer())
-        .post('/experiments/3/variants')
+        .post('/experiments/2/variants')
         .set('Authorization', `Bearer ${access_token}`)
         .send({
           name: 'New flag',
@@ -165,7 +165,7 @@ describe('AbController (e2e)', () => {
       expect(res.body.createdAt).toBeDefined();
     });
 
-    it('gives a 400 when the flag key already exists in the env', async () => {
+    it('gives a 400 when the variant key already exists in the env', async () => {
       // create a flag
       const access_token = await authenticate(app);
       await request(app.getHttpServer())
@@ -186,7 +186,7 @@ describe('AbController (e2e)', () => {
         .expect(400)
         .expect({
           statusCode: 400,
-          message: 'Experiment already exists',
+          message: 'Variant already exists',
           error: 'Bad Request',
         });
     });

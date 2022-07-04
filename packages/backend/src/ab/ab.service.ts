@@ -107,10 +107,12 @@ export class AbService {
   }
 
   async createVariant(experimentId: string, name: string, description: string) {
+    const variantKey = camelcase(name);
+
     const existingVariant = await this.prisma.variant.findFirst({
       where: {
         experimentUuid: experimentId,
-        name,
+        key: variantKey,
       },
     });
 
@@ -118,12 +120,12 @@ export class AbService {
       throw new VariantAlreadyExists();
     }
 
-    const variantKey = camelcase(name);
     const variant = await this.prisma.variant.create({
       data: {
         name,
         description,
         key: variantKey,
+        experimentUuid: experimentId,
       },
     });
 

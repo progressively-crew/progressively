@@ -11,7 +11,7 @@ import {
 import { ValidationPipe } from '../shared/pipes/ValidationPipe';
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
 import { AbService } from './ab.service';
-import { ExperimentAlreadyExists, VariantAlreadyExists } from './errors';
+import { VariantAlreadyExists } from './errors';
 import { VariantCreationSchema, VariantCreationDTO } from './experiment.dto';
 import { HasExperimentAccess } from './guards/hasExperimentAccess';
 
