@@ -10,11 +10,7 @@ export class AbController {
   @Get('experiments/:experimentId')
   @UseGuards(HasExperimentAccess)
   @UseGuards(JwtAuthGuard)
-  async getStrategies(
-    @Param('experimentId') experimentId: string,
-  ): Promise<any> {
-    const x = await this.abService.getExperimentById(experimentId);
-    console.log('wtf', x);
-    return x;
+  getStrategies(@Param('experimentId') experimentId: string): Promise<any> {
+    return this.abService.getExperimentById(experimentId);
   }
 }

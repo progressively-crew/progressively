@@ -211,7 +211,7 @@ describe('Environments (e2e)', () => {
 
       expect(response.status).toBe(200);
       expect(experiments.length).toBe(2);
-      expect(experiments[0]).toMatchObject({
+      expect(experiments[1]).toMatchObject({
         description: 'Switch the new homepage design (experiment)',
         key: 'newHomepageExperiment',
         name: 'New homepage experiment',

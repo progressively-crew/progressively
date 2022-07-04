@@ -55,7 +55,22 @@ describe('AbController (e2e)', () => {
       expect(response.body.key).toBe('newHomepageExperiment');
 
       expect(response.body.createdAt).toBeDefined();
-      expect(response.body.variants).toMatchObject({});
+      expect(response.body.variants).toMatchObject([
+        {
+          uuid: '1',
+          key: 'control',
+          name: 'Control variant for home',
+          description: 'Controls the homepage variant',
+          experimentUuid: '1',
+        },
+        {
+          uuid: '2',
+          key: 'alternative',
+          name: 'Alternative homepage',
+          description: 'Alternative homepage',
+          experimentUuid: '1',
+        },
+      ]);
     });
   });
 });

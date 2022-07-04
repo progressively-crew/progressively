@@ -7,6 +7,9 @@ export class AbService {
 
   experimentsByEnv(envId: string) {
     return this.prisma.experiment.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
       where: {
         ExperimentEnvironment: {
           some: {
