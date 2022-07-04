@@ -12,7 +12,7 @@ import {
   SectionContent,
   SectionHeader,
 } from "~/components/Section";
-import { AiOutlineSetting } from "react-icons/ai";
+import { AiOutlineExperiment, AiOutlineSetting } from "react-icons/ai";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { Typography } from "~/components/Typography";
@@ -22,7 +22,6 @@ import { HideMobile } from "~/components/HideMobile";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { MetaFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { FiFlag } from "react-icons/fi";
 import { Experiment } from "~/modules/ab/types";
 import { getExperimentById } from "~/modules/ab/services/getExperimentById";
 
@@ -67,11 +66,7 @@ export const loader: LoaderFunction = async ({
     (env) => env.uuid === params.env
   );
 
-  const experiment = await getExperimentById(
-    environment!.uuid,
-    params.experimentId!,
-    authCookie
-  );
+  const experiment = await getExperimentById(params.experimentId!, authCookie);
 
   const userProject: UserProject | undefined = project.userProject?.find(
     (userProject) => userProject.userId === user.uuid
@@ -107,7 +102,7 @@ export default function ExperimentSettingsPage() {
       link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/ab/${experiment.uuid}`,
       label: experiment.name,
       forceNotCurrent: true,
-      icon: <FiFlag aria-hidden />,
+      icon: <AiOutlineExperiment aria-hidden />,
     },
   ];
 
@@ -152,7 +147,7 @@ export default function ExperimentSettingsPage() {
 
           <SectionContent>
             <DeleteButton
-              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/ab/${experiment.name}/delete`}
+              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/ab/${experiment.uuid}/delete`}
             >
               <span>
                 <span aria-hidden>
