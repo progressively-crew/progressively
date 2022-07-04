@@ -49,11 +49,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/ab/create", () => {
 
         cy.findByRole("link", { name: "Production" })
           .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/1/flags"
-          );
+          .and("have.attr", "href", "/dashboard/projects/1/environments/1/ab");
 
         cy.findByRole("link", { name: "Create an A/B experiment" })
           .should("be.visible")

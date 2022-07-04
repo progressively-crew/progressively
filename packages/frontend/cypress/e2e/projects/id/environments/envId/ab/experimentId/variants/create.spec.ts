@@ -1,4 +1,4 @@
-describe("/dashboard/projects/[id]/environments/[envId]/ab/[experimentId]/variants", () => {
+describe("/dashboard/projects/[id]/environments/[envId]/ab/[experimentId]/variants/create", () => {
   before(cy.seed);
   after(cy.cleanup);
 
@@ -49,11 +49,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/ab/[experimentId]/varian
 
         cy.findByRole("link", { name: "Production" })
           .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/1/flags"
-          );
+          .and("have.attr", "href", "/dashboard/projects/1/environments/1/ab");
 
         cy.findByRole("link", { name: "Create an experiment variant" })
           .should("be.visible")
