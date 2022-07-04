@@ -16,4 +16,39 @@ export class AbService {
       },
     });
   }
+
+  async hasPermissionOnExperiment(
+    experimentId: string,
+    userId: string,
+    roles?: Array<string>,
+  ) {
+    const experimentOfProject = await this.prisma.userProject.findFirst({
+      where: {
+        userId,
+        project: {
+          environments: {
+            some: { ExperimentEnvironment: { some: { experimentId } } },
+          },
+        },
+      },
+    });
+
+    if (!experimentOfProject) {
+      return false;
+    }
+
+    if (!roles || roles.length === 0) {
+      return true;
+    }
+
+    return roles.includes(experimentOfProject.role);
+  }
+
+  getExperimentById(experimentId: string) {
+    return this.prisma.experiment.findFirst({
+      where: {
+        uuid: experimentId,
+      },
+    });
+  }
 }
