@@ -142,6 +142,7 @@ export default function ExperimentSettingsPage() {
                   title={variant.name}
                   description={variant.description}
                   variantKey={variant.key}
+                  isControl={variant.isControl}
                 />
               ))}
             </div>
