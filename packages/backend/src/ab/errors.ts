@@ -3,3 +3,9 @@ export class ExperimentAlreadyExists extends Error {
     super('Experiment already exists');
   }
 }
+
+export class VariantAlreadyExists extends Error {
+  constructor() {
+    super('Variant already exists');
+  }
+}

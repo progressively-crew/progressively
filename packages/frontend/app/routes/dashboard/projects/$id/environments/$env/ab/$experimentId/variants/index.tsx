@@ -14,7 +14,7 @@ import { Typography } from "~/components/Typography";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { HideMobile } from "~/components/HideMobile";
 import { MetaFunction, LoaderFunction } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { Experiment } from "~/modules/ab/types";
 import { getExperimentById } from "~/modules/ab/services/getExperimentById";
 import { AbNavBar } from "~/modules/ab/components/AbNavBar";
@@ -22,6 +22,7 @@ import { CreateButton } from "~/components/Buttons/CreateButton";
 import { EmptyState } from "~/components/EmptyState";
 import { Spacer } from "~/components/Spacer";
 import { VariantRow } from "~/modules/ab/components/VariantRow";
+import { SuccessBox } from "~/components/SuccessBox";
 
 interface MetaArgs {
   data?: {
@@ -74,6 +75,8 @@ export const loader: LoaderFunction = async ({
 };
 
 export default function ExperimentSettingsPage() {
+  const [searchParams] = useSearchParams();
+  const newVariantId = searchParams.get("newVariantId") || undefined;
   const { project, environment, experiment, user } =
     useLoaderData<LoaderData>();
 
@@ -119,6 +122,13 @@ export default function ExperimentSettingsPage() {
           envId={environment.uuid}
           experimentId={experiment.uuid}
         />
+      }
+      status={
+        newVariantId ? (
+          <SuccessBox id="variant-added">
+            The experiment variant has been successfully created.
+          </SuccessBox>
+        ) : null
       }
     >
       <Section id="variants">
