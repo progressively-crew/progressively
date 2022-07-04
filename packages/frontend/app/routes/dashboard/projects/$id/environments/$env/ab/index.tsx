@@ -141,7 +141,7 @@ export default function AbPage() {
                 experimentKey={exp.key}
                 title={exp.name}
                 description={exp.description}
-                linkTo={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/ab/${exp.uuid}/variations`}
+                linkTo={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/ab/${exp.uuid}/variants`}
               />
             ))}
           </div>
