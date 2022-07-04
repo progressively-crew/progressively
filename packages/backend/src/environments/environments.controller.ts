@@ -20,6 +20,11 @@ import { FlagsService } from '../flags/flags.service';
 import { FlagAlreadyExists } from '../flags/errors';
 import { FlagCreationSchema, FlagCreationDTO } from '../flags/flags.dto';
 import { AbService } from '../ab/ab.service';
+import {
+  ExperimentCreationDTO,
+  ExperimentCreationSchema,
+} from '../ab/experiment.dto';
+import { ExperimentAlreadyExists } from '../ab/errors';
 @ApiBearerAuth()
 @Controller('environments')
 export class EnvironmentsController {
@@ -68,6 +73,34 @@ export class EnvironmentsController {
     } catch (e) {
       if (e instanceof FlagAlreadyExists) {
         throw new BadRequestException('Flag already exists');
+      }
+
+      throw e;
+    }
+  }
+
+  /**
+   * Create a flag on a given project/env (by projectId and envId)
+   */
+  @Post(':envId/experiments')
+  @UseGuards(HasEnvironmentAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(new ValidationPipe(ExperimentCreationSchema))
+  async createExperiments(
+    @Param('envId') envId,
+    @Body() body: ExperimentCreationDTO,
+  ) {
+    try {
+      const experiment = await this.abService.createExperiment(
+        envId,
+        body.name,
+        body.description,
+      );
+
+      return experiment;
+    } catch (e) {
+      if (e instanceof ExperimentAlreadyExists) {
+        throw new BadRequestException('Experiment already exists');
       }
 
       throw e;
