@@ -73,4 +73,122 @@ describe('AbController (e2e)', () => {
       ]);
     });
   });
+
+  describe.only('/experiments/1/variants (POST)', () => {
+    it('gives a 401 when the user is not authenticated', () =>
+      verifyAuthGuard(app, '/experiments/1/variants', 'post'));
+
+    it('gives a 403 when trying to access an invalid environment', async () => {
+      const access_token = await authenticate(app);
+
+      return request(app.getHttpServer())
+        .post('/experiments/3/variants')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send({
+          name: 'New flag',
+          description: 'The new flag aims to xxx',
+        })
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('gives a 403 when the user requests a forbidden environment', async () => {
+      const access_token = await authenticate(
+        app,
+        'jane.doe@gmail.com',
+        'password',
+      );
+
+      return request(app.getHttpServer())
+        .post('/experiments/1/variants')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it("gives a 400 when there's no name field", async () => {
+      const access_token = await authenticate(app);
+
+      return request(app.getHttpServer())
+        .post('/experiments/1/variants')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send({
+          description: 'valid description',
+        })
+        .expect(400)
+        .expect({
+          statusCode: 400,
+          message: 'Validation failed',
+          error: 'Bad Request',
+        });
+    });
+
+    it("gives a 400 when there's no description field", async () => {
+      const access_token = await authenticate(app);
+
+      return request(app.getHttpServer())
+        .post('/experiments/1/variants')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send({
+          name: 'valid name',
+        })
+        .expect(400)
+        .expect({
+          statusCode: 400,
+          message: 'Validation failed',
+          error: 'Bad Request',
+        });
+    });
+
+    it('gives a 201 when the experiment is created', async () => {
+      const access_token = await authenticate(app);
+      const res = await request(app.getHttpServer())
+        .post('/experiments/1/variants')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send({
+          name: 'New experiment',
+          description: 'The new experiment aims to xxx',
+        });
+
+      expect(res.body.uuid).toBeTruthy();
+      expect(res.body.name).toBe('New experiment');
+      expect(res.body.key).toBe('newExperiment');
+      expect(res.body.description).toBe('The new experiment aims to xxx');
+      expect(res.body.createdAt).toBeDefined();
+    });
+
+    it('gives a 400 when the flag key already exists in the env', async () => {
+      // create a flag
+      const access_token = await authenticate(app);
+      await request(app.getHttpServer())
+        .post('/experiments/1/variants')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send({
+          name: 'New experiment',
+          description: 'The new experiment aims to xxx',
+        });
+
+      return request(app.getHttpServer())
+        .post('/experiments/1/variants')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send({
+          name: 'New experiment',
+          description: 'The new experiment aims to xxx',
+        })
+        .expect(400)
+        .expect({
+          statusCode: 400,
+          message: 'Experiment already exists',
+          error: 'Bad Request',
+        });
+    });
+  });
 });

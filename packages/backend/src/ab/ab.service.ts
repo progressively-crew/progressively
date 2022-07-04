@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import camelcase from 'camelcase';
 import { PrismaService } from '../prisma.service';
-import { ExperimentAlreadyExists } from './errors';
+import { ExperimentAlreadyExists, VariantAlreadyExists } from './errors';
 
 @Injectable()
 export class AbService {
@@ -104,5 +104,29 @@ export class AbService {
     });
 
     return experiment;
+  }
+
+  async createVariant(experimentId: string, name: string, description: string) {
+    const existingVariant = await this.prisma.variant.findFirst({
+      where: {
+        experimentUuid: experimentId,
+        name,
+      },
+    });
+
+    if (existingVariant) {
+      throw new VariantAlreadyExists();
+    }
+
+    const variantKey = camelcase(name);
+    const variant = await this.prisma.variant.create({
+      data: {
+        name,
+        description,
+        key: variantKey,
+      },
+    });
+
+    return variant;
   }
 }
