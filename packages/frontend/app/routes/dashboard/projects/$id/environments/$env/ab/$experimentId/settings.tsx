@@ -2,8 +2,6 @@ import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { authGuard } from "~/modules/auth/services/auth-guard";
 import { Environment } from "~/modules/environments/types";
-import { getFlagsByProjectEnv } from "~/modules/flags/services/getFlagsByProjectEnv";
-import { FlagEnv, FlagStatus } from "~/modules/flags/types";
 import { getProject } from "~/modules/projects/services/getProject";
 import { Project, UserProject, UserRoles } from "~/modules/projects/types";
 import { User } from "~/modules/user/types";
@@ -14,45 +12,41 @@ import {
   SectionContent,
   SectionHeader,
 } from "~/components/Section";
-import { AiOutlineBarChart, AiOutlineSetting } from "react-icons/ai";
+import { AiOutlineExperiment, AiOutlineSetting } from "react-icons/ai";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
-import { FaPowerOff } from "react-icons/fa";
-import {
-  toggleAction,
-  ToggleFlag,
-} from "~/modules/flags/components/ToggleFlag";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { Typography } from "~/components/Typography";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { HideMobile } from "~/components/HideMobile";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
-import { MetaFunction, LoaderFunction, ActionFunction } from "@remix-run/node";
+import { MetaFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { FiFlag } from "react-icons/fi";
+import { Experiment } from "~/modules/ab/types";
+import { getExperimentById } from "~/modules/ab/services/getExperimentById";
 
 interface MetaArgs {
   data?: {
     project?: Project;
     environment?: Environment;
-    currentFlagEnv?: FlagEnv;
+    experiment?: Experiment;
   };
 }
 
 export const meta: MetaFunction = ({ data }: MetaArgs) => {
   const projectName = data?.project?.name || "An error ocurred";
   const envName = data?.environment?.name || "An error ocurred";
-  const flagName = data?.currentFlagEnv?.flag?.name || "An error ocurred";
+  const experimentName = data?.experiment?.name || "An error ocurred";
 
   return {
-    title: `Progressively | ${projectName} | ${envName} | ${flagName} | Settings`,
+    title: `Progressively | ${projectName} | ${envName} | ${experimentName} | Settings`,
   };
 };
 
 interface LoaderData {
   project: Project;
   environment: Environment;
-  currentFlagEnv: FlagEnv;
+  experiment: Experiment;
   user: User;
   userRole?: UserRoles;
 }
@@ -68,18 +62,11 @@ export const loader: LoaderFunction = async ({
 
   const project: Project = await getProject(params.id!, authCookie, true);
 
-  const flagsByEnv: Array<FlagEnv> = await getFlagsByProjectEnv(
-    params.env!,
-    authCookie
-  );
-
   const environment = project.environments.find(
     (env) => env.uuid === params.env
   );
 
-  const currentFlagEnv = flagsByEnv.find(
-    (flagEnv) => flagEnv.flagId === params.flagId!
-  )!;
+  const experiment = await getExperimentById(params.experimentId!, authCookie);
 
   const userProject: UserProject | undefined = project.userProject?.find(
     (userProject) => userProject.userId === user.uuid
@@ -88,22 +75,15 @@ export const loader: LoaderFunction = async ({
   return {
     project,
     environment: environment!,
-    currentFlagEnv,
+    experiment,
     user,
     userRole: userProject?.role,
   };
 };
 
-export const action: ActionFunction = ({ request, params }): Promise<null> => {
-  return toggleAction({ request, params });
-};
-
-export default function FlagSettingPage() {
-  const { project, environment, currentFlagEnv, user, userRole } =
+export default function ExperimentSettingsPage() {
+  const { project, environment, experiment, user, userRole } =
     useLoaderData<LoaderData>();
-
-  const currentFlag = currentFlagEnv.flag;
-  const isFlagActivated = currentFlagEnv.status === FlagStatus.ACTIVATED;
 
   const crumbs: Crumbs = [
     {
@@ -115,14 +95,14 @@ export default function FlagSettingPage() {
       label: project.name,
     },
     {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags`,
+      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/ab`,
       label: environment.name,
     },
     {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`,
-      label: currentFlag.name,
+      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/ab/${experiment.uuid}`,
+      label: experiment.name,
       forceNotCurrent: true,
-      icon: <FiFlag aria-hidden />,
+      icon: <AiOutlineExperiment aria-hidden />,
     },
   ];
 
@@ -132,38 +112,19 @@ export default function FlagSettingPage() {
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
-          tagline="Feature flag"
-          title={currentFlag.name}
+          tagline="A/B experiment"
+          title={experiment.name}
           startAction={
-            <>
-              <ToggleFlag isFlagActivated={isFlagActivated} />
-              <HideMobile>
-                <ButtonCopy toCopy={currentFlag.key}>
-                  {currentFlag.key}
-                </ButtonCopy>
-              </HideMobile>
-            </>
+            <HideMobile>
+              <ButtonCopy toCopy={experiment.key}>{experiment.key}</ButtonCopy>
+            </HideMobile>
           }
         />
       }
       subNav={
-        <HorizontalNav label={`Environment related`}>
+        <HorizontalNav label={`A/B experiment related`}>
           <NavItem
-            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`}
-            icon={<FaPowerOff />}
-          >
-            Strategies
-          </NavItem>
-
-          <NavItem
-            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/insights`}
-            icon={<AiOutlineBarChart />}
-          >
-            Insights
-          </NavItem>
-
-          <NavItem
-            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/settings`}
+            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/ab/${experiment.uuid}/settings`}
             icon={<AiOutlineSetting />}
           >
             Settings
@@ -177,24 +138,24 @@ export default function FlagSettingPage() {
             title="Danger zone"
             description={
               <Typography>
-                You can delete a feature flag at any time, but you {`won’t`} be
-                able to access its insights anymore and false will be served to
-                the application using it.
+                You can delete an A/B experiment at any time, but you {`won’t`}{" "}
+                be able to access its insights anymore and false will be served
+                to the application using it.
               </Typography>
             }
           />
 
           <SectionContent>
             <DeleteButton
-              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/delete`}
+              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/ab/${experiment.uuid}/delete`}
             >
               <span>
                 <span aria-hidden>
-                  Delete <HideMobile>{currentFlag.name} forever</HideMobile>
+                  Delete <HideMobile>{experiment.name} forever</HideMobile>
                 </span>
 
                 <VisuallyHidden>
-                  Delete {currentFlag.name} forever
+                  Delete {experiment.name} forever
                 </VisuallyHidden>
               </span>
             </DeleteButton>

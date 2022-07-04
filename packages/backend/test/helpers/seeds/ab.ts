@@ -30,6 +30,15 @@ export const seedAbExperiments = async (prismaClient: PrismaClient) => {
     },
   });
 
+  const otherExperiment = await prismaClient.experiment.create({
+    data: {
+      uuid: '2',
+      name: 'New other experiment',
+      description: 'Switch the new other design (experiment)',
+      key: 'otherHomepageExperiment',
+    },
+  });
+
   await seedVariationHits(
     prismaClient,
     controlVariation,
