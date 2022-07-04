@@ -37,6 +37,7 @@ import {
   LoaderFunction,
 } from "@remix-run/node";
 import { useLoaderData, useActionData, Form } from "@remix-run/react";
+import { FiFlag } from "react-icons/fi";
 
 interface MetaArgs {
   data?: {
@@ -198,6 +199,7 @@ export default function StrategyCreatePage() {
     {
       link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`,
       label: currentFlag.name,
+      icon: <FiFlag aria-hidden />,
     },
     {
       link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`,

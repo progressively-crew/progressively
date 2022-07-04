@@ -28,6 +28,12 @@ const Separator = styled("div", {
   display: "inline-block",
 });
 
+const HStack = styled("span", {
+  display: "flex",
+  alignItems: "center",
+  gap: "$spacing$2",
+});
+
 export interface DesktopNavProps {
   crumbs: Crumbs;
 }
@@ -53,8 +59,12 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
                 }
                 to={crumb.link}
               >
-                {crumb.label}
+                <HStack>
+                  {crumb.icon}
+                  {crumb.label}
+                </HStack>
               </Link>
+
               {!currentPage && (
                 <Separator aria-hidden>
                   <MdChevronRight />

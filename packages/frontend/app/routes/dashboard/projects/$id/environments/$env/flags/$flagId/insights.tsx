@@ -31,6 +31,7 @@ import { Crumbs } from "~/components/Breadcrumbs/types";
 import { HideMobile } from "~/components/HideMobile";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
+import { FiFlag } from "react-icons/fi";
 
 interface MetaArgs {
   data?: {
@@ -158,6 +159,7 @@ export default function FlagById() {
       link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`,
       label: currentFlag.name,
       forceNotCurrent: true,
+      icon: <FiFlag aria-hidden />,
     },
   ];
 
