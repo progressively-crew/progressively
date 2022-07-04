@@ -13,6 +13,8 @@ export class AbController {
   async getStrategies(
     @Param('experimentId') experimentId: string,
   ): Promise<any> {
-    return this.abService.getExperimentById(experimentId);
+    const x = await this.abService.getExperimentById(experimentId);
+    console.log('wtf', x);
+    return x;
   }
 }

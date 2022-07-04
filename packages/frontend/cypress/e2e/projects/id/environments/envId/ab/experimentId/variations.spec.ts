@@ -1,10 +1,10 @@
-describe("/dashboard/projects/[id]/environments/[envId]/ab/[experimentId]/variations", () => {
+describe("/dashboard/projects/[id]/environments/[envId]/ab/[experimentId]/variants", () => {
   before(cy.seed);
   after(cy.cleanup);
 
   describe("not authenticated", () => {
     beforeEach(() => {
-      cy.visit("/dashboard/projects/1/environments/1/ab/1/variations");
+      cy.visit("/dashboard/projects/1/environments/1/ab/1/variants");
     });
 
     it("checks that the route is protected", () => {
@@ -16,7 +16,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/ab/[experimentId]/variat
     describe("user: Jane", () => {
       beforeEach(() => {
         cy.signIn("Jane");
-        cy.visit("/dashboard/projects/1/environments/1/ab/1/variations", {
+        cy.visit("/dashboard/projects/1/environments/1/ab/1/variants", {
           failOnStatusCode: false,
         });
       });
@@ -30,29 +30,27 @@ describe("/dashboard/projects/[id]/environments/[envId]/ab/[experimentId]/variat
       describe("empty state", () => {
         beforeEach(() => {
           cy.signIn("Marvin");
-          cy.visit("/dashboard/projects/1/environments/1/ab/3/variations");
+          cy.visit("/dashboard/projects/1/environments/1/ab/3/variants");
           cy.injectAxe();
         });
 
         it("shows a page layout (empty state)", () => {
           cy.title().should(
             "eq",
-            "Progressively | Project from seeding | Production | New footer experiment | Variations"
+            "Progressively | Project from seeding | Production | New footer experiment | Variants"
           );
 
-          cy.findByRole("heading", { name: "Variations" }).should("exist");
+          cy.findByRole("heading", { name: "Variants" }).should("exist");
 
-          cy.findByRole("heading", { name: "No variations found" }).should(
+          cy.findByRole("heading", { name: "No variants found" }).should(
             "exist"
           );
 
-          cy.findByText(
-            "There are no variations found to this flag yet."
-          ).should("be.visible");
-
-          cy.findByRole("link", { name: "Add a variation" }).should(
+          cy.findByText("There are no variants found to this flag yet.").should(
             "be.visible"
           );
+
+          cy.findByRole("link", { name: "Add a variant" }).should("be.visible");
 
           cy.checkA11y();
         });

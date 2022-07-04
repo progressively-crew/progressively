@@ -53,7 +53,9 @@ describe('AbController (e2e)', () => {
       expect(response.body.uuid).toBe('1');
       expect(response.body.name).toBe('New homepage experiment');
       expect(response.body.key).toBe('newHomepageExperiment');
+
       expect(response.body.createdAt).toBeDefined();
+      expect(response.body.variants).toMatchObject({});
     });
   });
 });

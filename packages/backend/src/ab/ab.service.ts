@@ -49,6 +49,9 @@ export class AbService {
       where: {
         uuid: experimentId,
       },
+      include: {
+        variants: true,
+      },
     });
   }
 }

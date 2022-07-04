@@ -35,7 +35,7 @@ export const meta: MetaFunction = ({ data }: MetaArgs) => {
   const experimentName = data?.experiment?.name || "An error ocurred";
 
   return {
-    title: `Progressively | ${projectName} | ${envName} | ${experimentName} | Variations`,
+    title: `Progressively | ${projectName} | ${envName} | ${experimentName} | Variants`,
   };
 };
 
@@ -119,21 +119,21 @@ export default function ExperimentSettingsPage() {
         />
       }
     >
-      <Section id="variations">
-        <SectionHeader title="Variations" hiddenTitle />
+      <Section id="variants">
+        <SectionHeader title="Variants" hiddenTitle />
 
         <EmptyState
-          title="No variations found"
+          title="No variants found"
           description={
             <Typography>
-              There are no variations found to this flag yet.
+              There are no variants found to this flag yet.
             </Typography>
           }
           action={
             <CreateButton
-              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/ab/${experiment.uuid}/variations/create`}
+              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/ab/${experiment.uuid}/variants/create`}
             >
-              Add a variation
+              Add a variant
             </CreateButton>
           }
         />

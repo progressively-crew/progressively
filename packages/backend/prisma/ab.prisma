@@ -7,10 +7,10 @@ model Experiment {
     description           String
     createdAt             DateTime                @default(now())
     ExperimentEnvironment ExperimentEnvironment[]
-    varations             Variation[]
+    variants              Variant[]
 }
 
-model Variation {
+model Variant {
     uuid           String   @id @default(uuid())
     key            String
     name           String
@@ -23,9 +23,9 @@ model Variation {
 }
 
 model VariationHit {
-    id            Int       @id @default(autoincrement())
-    date          DateTime  @default(now())
-    variation     Variation @relation(fields: [variationUuid], references: [uuid])
+    id            Int      @id @default(autoincrement())
+    date          DateTime @default(now())
+    variation     Variant  @relation(fields: [variationUuid], references: [uuid])
     variationUuid String
 }
 
