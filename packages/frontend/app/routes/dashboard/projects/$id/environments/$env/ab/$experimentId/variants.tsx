@@ -20,6 +20,8 @@ import { getExperimentById } from "~/modules/ab/services/getExperimentById";
 import { AbNavBar } from "~/modules/ab/components/AbNavBar";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { EmptyState } from "~/components/EmptyState";
+import { Spacer } from "~/components/Spacer";
+import { VariantRow } from "~/modules/ab/components/VariantRow";
 
 interface MetaArgs {
   data?: {
@@ -122,21 +124,47 @@ export default function ExperimentSettingsPage() {
       <Section id="variants">
         <SectionHeader title="Variants" hiddenTitle />
 
-        <EmptyState
-          title="No variants found"
-          description={
-            <Typography>
-              There are no variants found to this flag yet.
-            </Typography>
-          }
-          action={
+        {experiment.variants.length > 0 ? (
+          <div>
             <CreateButton
               to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/ab/${experiment.uuid}/variants/create`}
             >
               Add a variant
             </CreateButton>
-          }
-        />
+
+            <Spacer size={4} />
+
+            <div>
+              {experiment.variants.map((variant) => (
+                <VariantRow
+                  key={variant.uuid}
+                  id={variant.uuid}
+                  title={variant.name}
+                  description={variant.description}
+                  variantKey={variant.key}
+                />
+              ))}
+            </div>
+          </div>
+        ) : null}
+
+        {experiment.variants.length === 0 && (
+          <EmptyState
+            title="No variants found"
+            description={
+              <Typography>
+                There are no variants found to this flag yet.
+              </Typography>
+            }
+            action={
+              <CreateButton
+                to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/ab/${experiment.uuid}/variants/create`}
+              >
+                Add a variant
+              </CreateButton>
+            }
+          />
+        )}
       </Section>
     </DashboardLayout>
   );
