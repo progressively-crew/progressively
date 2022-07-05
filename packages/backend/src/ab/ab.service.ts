@@ -131,4 +131,12 @@ export class AbService {
 
     return variant;
   }
+
+  deleteExperiment(experimentId: string) {
+    return this.prisma.experiment.deleteMany({
+      where: {
+        uuid: experimentId,
+      },
+    });
+  }
 }

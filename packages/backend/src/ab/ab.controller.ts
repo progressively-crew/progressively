@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -14,6 +15,8 @@ import { AbService } from './ab.service';
 import { VariantAlreadyExists } from './errors';
 import { VariantCreationSchema, VariantCreationDTO } from './experiment.dto';
 import { HasExperimentAccess } from './guards/hasExperimentAccess';
+import { Roles } from '../shared/decorators/Roles';
+import { UserRoles } from '../users/roles';
 
 @Controller()
 export class AbController {
@@ -49,5 +52,16 @@ export class AbController {
 
       throw e;
     }
+  }
+
+  /**
+   * Delete an environment on a given project (by project id AND env id)
+   */
+  @Delete('experiments/:experimentId')
+  @Roles(UserRoles.Admin)
+  @UseGuards(HasExperimentAccess)
+  @UseGuards(JwtAuthGuard)
+  deleteEnv(@Param('experimentId') experimentId: string) {
+    return this.abService.deleteExperiment(experimentId);
   }
 }
