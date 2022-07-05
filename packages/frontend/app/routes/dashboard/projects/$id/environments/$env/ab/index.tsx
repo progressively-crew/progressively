@@ -74,7 +74,8 @@ export default function AbPage() {
 
   const [searchParams] = useSearchParams();
   const newExperimentId = searchParams.get("newExperimentId") || undefined;
-  const isFlagRemoved = searchParams.get("flagRemoved") || undefined;
+  const isExperimentRemoved =
+    searchParams.get("experimentRemoved") || undefined;
 
   const crumbs: Crumbs = [
     {
@@ -110,8 +111,8 @@ export default function AbPage() {
       }
       subNav={<EnvNavBar projectId={project.uuid} envId={environment.uuid} />}
       status={
-        isFlagRemoved ? (
-          <SuccessBox id="ab-removed">
+        isExperimentRemoved ? (
+          <SuccessBox id="experiment-removed">
             The A/B experiment has been successfully deleted.
           </SuccessBox>
         ) : newExperimentId ? (
