@@ -32,12 +32,8 @@ export class AbController {
   @Get('experiments/:experimentId/hits')
   @UseGuards(HasExperimentAccess)
   @UseGuards(JwtAuthGuard)
-  async getFlagHits(@Param('experimentId') experimentId: string): Promise<any> {
-    try {
-      const rawHits = await this.abService.listExperimentHits(experimentId);
-
-      return rawHits;
-    } catch (e) {}
+  getFlagHits(@Param('experimentId') experimentId: string): Promise<any> {
+    return this.abService.listExperimentHits(experimentId);
   }
 
   @Post('experiments/:experimentId/variants')
