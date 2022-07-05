@@ -263,4 +263,108 @@ describe('AbController (e2e)', () => {
       expect(getResponse.status).toBe(403);
     });
   });
+
+  describe('/experiments/1/hits (GET)', () => {
+    it('gives a 401 when the user is not authenticated', () =>
+      verifyAuthGuard(app, '/experiments/1/hits', 'get'));
+
+    it('gives a 403 when trying to access an invalid experiment', async () => {
+      const access_token = await authenticate(app);
+
+      return request(app.getHttpServer())
+        .get('/experiments/2/hits')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('gives a 403 when the user requests a forbidden project', async () => {
+      const access_token = await authenticate(
+        app,
+        'jane.doe@gmail.com',
+        'password',
+      );
+
+      return request(app.getHttpServer())
+        .get('/experiments/1/hits')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('gives the hits for the status ACTIVATED by default', async () => {
+      const access_token = await authenticate(app);
+
+      return request(app.getHttpServer())
+        .get('/experiments/1/hits')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(200)
+        .expect([
+          {
+            count: 5,
+            date: '1992-01-01T02:02:02.002Z',
+            uuid: '1',
+            name: 'Control variant for home',
+            isControl: true,
+          },
+          {
+            count: 10,
+            date: '1992-01-01T02:02:02.002Z',
+            uuid: '2',
+            name: 'Alternative homepage',
+            isControl: false,
+          },
+          {
+            count: 20,
+            date: '1992-01-02T02:02:02.002Z',
+            uuid: '1',
+            name: 'Control variant for home',
+            isControl: true,
+          },
+          {
+            count: 40,
+            date: '1992-01-02T02:02:02.002Z',
+            uuid: '2',
+            name: 'Alternative homepage',
+            isControl: false,
+          },
+          {
+            count: 10,
+            date: '1992-01-03T02:02:02.002Z',
+            uuid: '1',
+            name: 'Control variant for home',
+            isControl: true,
+          },
+          {
+            count: 20,
+            date: '1992-01-03T02:02:02.002Z',
+            uuid: '2',
+            name: 'Alternative homepage',
+            isControl: false,
+          },
+          {
+            count: 5,
+            date: '1992-01-06T02:02:02.002Z',
+            uuid: '1',
+            name: 'Control variant for home',
+            isControl: true,
+          },
+          {
+            count: 10,
+            date: '1992-01-06T02:02:02.002Z',
+            uuid: '2',
+            name: 'Alternative homepage',
+            isControl: false,
+          },
+        ]);
+    });
+  });
 });

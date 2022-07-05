@@ -139,4 +139,14 @@ export class AbService {
       },
     });
   }
+
+  listExperimentHits(experimentId: string) {
+    return this.prisma.$queryRaw`
+      SELECT count(id)::int, "VariantHit"."date", "Variant"."uuid", "Variant"."name", "Variant"."isControl"
+      FROM "VariantHit"
+      INNER JOIN "Variant" ON "Variant"."uuid" = "VariantHit"."variantUuid"
+      WHERE "Variant"."experimentUuid" = ${experimentId}
+      GROUP BY "Variant"."uuid", "VariantHit"."date"
+      ORDER BY "VariantHit"."date", "Variant"."uuid"`;
+  }
 }

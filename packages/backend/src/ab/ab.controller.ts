@@ -29,6 +29,13 @@ export class AbController {
     return this.abService.getExperimentById(experimentId);
   }
 
+  @Get('experiments/:experimentId/hits')
+  @UseGuards(HasExperimentAccess)
+  @UseGuards(JwtAuthGuard)
+  getFlagHits(@Param('experimentId') experimentId: string): Promise<any> {
+    return this.abService.listExperimentHits(experimentId);
+  }
+
   @Post('experiments/:experimentId/variants')
   @UseGuards(HasExperimentAccess)
   @UseGuards(JwtAuthGuard)
