@@ -17,6 +17,7 @@ export const seedAbExperiments = async (prismaClient: PrismaClient) => {
       description: 'Controls the homepage variant',
       key: 'control',
       experimentUuid: homeExperiment.uuid,
+      isControl: true,
     },
   });
 
