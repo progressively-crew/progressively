@@ -1,4 +1,4 @@
-import { AiOutlineSetting } from "react-icons/ai";
+import { AiOutlineBarChart, AiOutlineSetting } from "react-icons/ai";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { IoShapes } from "react-icons/io5";
 
@@ -18,6 +18,13 @@ export const AbNavBar = ({ projectId, envId, experimentId }: AbNavBarProps) => {
         icon={<IoShapes />}
       >
         Variants
+      </NavItem>
+
+      <NavItem
+        to={`${rootEnvPath}/${experimentId}/insights`}
+        icon={<AiOutlineBarChart />}
+      >
+        Insights
       </NavItem>
 
       <NavItem
