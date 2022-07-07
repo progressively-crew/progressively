@@ -5,25 +5,25 @@ export interface TableChartProps {
   items: Array<{ date: string } & { [key: string]: number | string }>;
   dateFormatter: (date: string) => string;
   labelledBy: string;
+  headers: Array<{ key: string; label?: string }>;
 }
 // This is useful for people that can't read a chart and want to access the data another way
 export const TableChart = ({
   items,
   dateFormatter,
   labelledBy,
+  headers,
 }: TableChartProps) => {
-  // Assuming there's always at least one item, handling the TableChart visibility takes
-  // place in the parent
-  const firstItem = items[0];
-  const headings = Object.keys(firstItem);
-
   return (
     <RawTable aria-labelledby={labelledBy}>
       <thead>
         <tr>
-          {headings.map((heading, index: number) => (
-            <th key={`${heading}-${index}`}>
-              <TagLine as="span">{heading}</TagLine>
+          <th>
+            <TagLine as="span">Date</TagLine>
+          </th>
+          {headers.map((heading, index: number) => (
+            <th key={`${heading.key}-${index}`}>
+              <TagLine as="span">{heading.label || heading.key}</TagLine>
             </th>
           ))}
         </tr>
@@ -31,7 +31,9 @@ export const TableChart = ({
       <tbody>
         {items.map((item, index: number) => (
           <tr key={`row-${index}`}>
-            {headings.map((key, yndex: number) => {
+            <td>{dateFormatter(item.date)}</td>
+
+            {headers.map(({ key }, yndex: number) => {
               const itemValue = item[key];
 
               const formatedData =
