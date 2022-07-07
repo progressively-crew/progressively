@@ -151,34 +151,36 @@ export default function ExperimentInsights() {
           />
         )}
 
-        <BigState
-          name="A/B experiment variants hits per date"
-          id="count-per-date-chart"
-        >
-          <SwitchButton
-            onClick={() =>
-              setChartVariant((s) => (s === "chart" ? "table" : "chart"))
-            }
+        {hits.length > 0 && (
+          <BigState
+            name="A/B experiment variants hits per date"
+            id="count-per-date-chart"
           >
-            Switch to {chartVariant === "chart" ? "table view" : "chart view"}
-          </SwitchButton>
+            <SwitchButton
+              onClick={() =>
+                setChartVariant((s) => (s === "chart" ? "table" : "chart"))
+              }
+            >
+              Switch to {chartVariant === "chart" ? "table view" : "chart view"}
+            </SwitchButton>
 
-          <Spacer size={4} />
+            <Spacer size={4} />
 
-          <LineChart
-            labelledBy="count-per-date-chart"
-            variant={chartVariant}
-            items={hits}
-            dataKeys={experiment.variants.map((variant) => ({
-              name: variant.uuid,
-              color: variant.isControl
-                ? theme.colors.hover.toString()
-                : theme.colors.title.toString(),
-              label: variant.name,
-              dashed: !variant.isControl,
-            }))}
-          />
-        </BigState>
+            <LineChart
+              labelledBy="count-per-date-chart"
+              variant={chartVariant}
+              items={hits}
+              dataKeys={experiment.variants.map((variant) => ({
+                name: variant.uuid,
+                color: variant.isControl
+                  ? theme.colors.hover.toString()
+                  : theme.colors.title.toString(),
+                label: variant.name,
+                dashed: !variant.isControl,
+              }))}
+            />
+          </BigState>
+        )}
       </Section>
     </DashboardLayout>
   );

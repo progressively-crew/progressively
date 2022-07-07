@@ -31,13 +31,13 @@ describe("/dashboard/projects/[id]/environments/[envId]/ab/[experimentId]/insigh
         cy.signIn("Marvin");
       });
 
-      it.skip("shows the layout (with data)", () => {
+      it("shows the layout (with data)", () => {
         cy.visit("/dashboard/projects/1/environments/1/ab/1/insights");
         cy.injectAxe();
 
         cy.title().should(
           "eq",
-          "Progressively | Project from seeding | Production | New footer experiment | Insights"
+          "Progressively | Project from seeding | Production | New homepage experiment | Insights"
         );
 
         cy.findByRole("link", { name: "Projects" })
@@ -50,18 +50,14 @@ describe("/dashboard/projects/[id]/environments/[envId]/ab/[experimentId]/insigh
 
         cy.findByRole("link", { name: "Production" })
           .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/1/flags"
-          );
+          .and("have.attr", "href", "/dashboard/projects/1/environments/1/ab");
 
-        cy.findByRole("link", { name: "New homepage" })
+        cy.findByRole("link", { name: "New homepage experiment" })
           .should("be.visible")
           .and(
             "have.attr",
             "href",
-            "/dashboard/projects/1/environments/1/flags/1"
+            "/dashboard/projects/1/environments/1/ab/1"
           );
 
         cy.findByRole("link", { name: "Insights" })
@@ -69,11 +65,13 @@ describe("/dashboard/projects/[id]/environments/[envId]/ab/[experimentId]/insigh
           .and(
             "have.attr",
             "href",
-            "/dashboard/projects/1/environments/1/flags/1/insights"
+            "/dashboard/projects/1/environments/1/ab/1/insights"
           )
           .and("have.attr", "aria-current", "page");
 
-        cy.findByRole("heading", { name: "New homepage" }).should("be.visible");
+        cy.findByRole("heading", { name: "New homepage experiment" }).should(
+          "be.visible"
+        );
         cy.findByRole("heading", { name: "Insights" }).should("be.visible");
         cy.findByText("Number of hits per date").should("be.visible");
 
