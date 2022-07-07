@@ -25,6 +25,7 @@ interface DataKey {
   name: string;
   color: string;
   dashed?: boolean;
+  label?: string;
 }
 
 export type ChartVariant = "chart" | "table";
@@ -95,6 +96,7 @@ export const LineChart = ({
 
           {dataKeys.map((dataKey, index: number) => (
             <Area
+              name={dataKey.label}
               key={`chart-item-${dataKey.name}-${index}`}
               type="linear"
               dataKey={dataKey.name}

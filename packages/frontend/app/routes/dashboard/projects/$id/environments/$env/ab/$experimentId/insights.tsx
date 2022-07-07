@@ -9,7 +9,6 @@ import { getSession } from "~/sessions";
 import { Header } from "~/components/Header";
 import { Section, SectionHeader } from "~/components/Section";
 import { AiOutlineExperiment } from "react-icons/ai";
-import { getFlagHits } from "~/modules/flags/services/getFlagHits";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { Typography } from "~/components/Typography";
 import { Spacer } from "~/components/Spacer";
@@ -21,6 +20,12 @@ import { useLoaderData } from "@remix-run/react";
 import { getExperimentById } from "~/modules/ab/services/getExperimentById";
 import { Experiment } from "~/modules/ab/types";
 import { AbNavBar } from "~/modules/ab/components/AbNavBar";
+import { getExperimentHits } from "~/modules/ab/services/getExperimentHits";
+import { theme } from "~/stitches.config";
+import { ChartVariant, LineChart } from "~/components/LineChart";
+import { SwitchButton } from "~/components/Buttons/SwitchButton";
+import { useState } from "react";
+import { BigState } from "~/components/BigStat";
 
 interface MetaArgs {
   data?: {
@@ -39,15 +44,11 @@ export const meta: MetaFunction = ({ data }: MetaArgs) => {
   };
 };
 
-interface VariantHit {
-  date: string;
-}
-
 interface LoaderData {
   project: Project;
   environment: Environment;
   user: User;
-  hits: Array<VariantHit>;
+  hits: Array<any>; // dynamic key shapes
   experiment: Experiment;
 }
 
@@ -61,9 +62,8 @@ export const loader: LoaderFunction = async ({
   const authCookie = session.get("auth-cookie");
 
   const project: Project = await getProject(params.id!, authCookie);
-  const hits: Array<VariantHit> = await getFlagHits(
-    params.env!,
-    params.flagId!,
+  const hits: Array<any> = await getExperimentHits(
+    params.experimentId!,
     authCookie
   );
 
@@ -83,6 +83,7 @@ export const loader: LoaderFunction = async ({
 };
 
 export default function ExperimentInsights() {
+  const [chartVariant, setChartVariant] = useState<ChartVariant>("chart");
   const { project, environment, user, hits, experiment } =
     useLoaderData<LoaderData>();
 
@@ -149,6 +150,35 @@ export default function ExperimentInsights() {
             }
           />
         )}
+
+        <BigState
+          name="A/B experiment variants hits per date"
+          id="count-per-date-chart"
+        >
+          <SwitchButton
+            onClick={() =>
+              setChartVariant((s) => (s === "chart" ? "table" : "chart"))
+            }
+          >
+            Switch to {chartVariant === "chart" ? "table view" : "chart view"}
+          </SwitchButton>
+
+          <Spacer size={4} />
+
+          <LineChart
+            labelledBy="count-per-date-chart"
+            variant={chartVariant}
+            items={hits}
+            dataKeys={experiment.variants.map((variant) => ({
+              name: variant.uuid,
+              color: variant.isControl
+                ? theme.colors.hover.toString()
+                : theme.colors.title.toString(),
+              label: variant.name,
+              dashed: !variant.isControl,
+            }))}
+          />
+        </BigState>
       </Section>
     </DashboardLayout>
   );

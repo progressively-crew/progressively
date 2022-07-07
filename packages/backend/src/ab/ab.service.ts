@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import camelcase from 'camelcase';
 import { PrismaService } from '../prisma.service';
 import { ExperimentAlreadyExists, VariantAlreadyExists } from './errors';
+import { VariantHit } from './types';
 
 @Injectable()
 export class AbService {
@@ -140,7 +141,7 @@ export class AbService {
     });
   }
 
-  listExperimentHits(experimentId: string) {
+  listExperimentHits(experimentId: string): Promise<Array<VariantHit>> {
     return this.prisma.$queryRaw`
       SELECT count(id)::int, "VariantHit"."date", "Variant"."uuid", "Variant"."name", "Variant"."isControl"
       FROM "VariantHit"

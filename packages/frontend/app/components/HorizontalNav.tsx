@@ -3,7 +3,6 @@ import { styled } from "~/stitches.config";
 
 const HorizontalNavWrapper = styled("nav", {
   "& ul": {
-    overflow: "auto",
     width: "100%",
     background: "$backgroundAccent",
     display: "flex",
@@ -27,6 +26,7 @@ const HorizontalNavWrapper = styled("nav", {
     gap: "$spacing$2",
     transition: "border,box-shadow 0.2s",
     fontSize: "$content",
+    whiteSpace: "nowrap",
   },
 
   "& ul li:first-of-type a": {
@@ -46,6 +46,12 @@ const HorizontalNavWrapper = styled("nav", {
 
   "& ul li svg": {
     marginRight: "$spacing$1",
+  },
+
+  "@mobile": {
+    "& ul": {
+      overflow: "auto",
+    },
   },
 });
 
