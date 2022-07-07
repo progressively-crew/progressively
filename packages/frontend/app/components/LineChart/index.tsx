@@ -3,12 +3,14 @@ import {
   XAxis,
   YAxis,
   ResponsiveContainer,
-  Area,
-  AreaChart,
+  Line,
+  LineChart as RawLineChart,
   Tooltip,
+  Legend,
 } from "recharts";
 import { styled, theme } from "~/stitches.config";
 import { TableChart } from "./TableChart";
+import { formatDate } from "./utils";
 
 const ChartWrapper = styled("div", {
   marginLeft: "-$spacing$8",
@@ -42,16 +44,13 @@ export const LineChart = ({
   variant,
   labelledBy,
 }: LineChartProps) => {
-  const formatDate = (date: string) => {
-    return new Intl.DateTimeFormat().format(new Date(date));
-  };
-
   if (variant === "table") {
     return (
       <TableChart
         items={items}
         dateFormatter={formatDate}
         labelledBy={labelledBy}
+        headers={dataKeys.map(({ label, name }) => ({ key: name, label }))}
       />
     );
   }
@@ -66,48 +65,29 @@ export const LineChart = ({
   return (
     <ChartWrapper>
       <ResponsiveContainer width="100%" aspect={16.0 / 9.0}>
-        <AreaChart
+        <RawLineChart
           aria-labelledby={labelledBy}
           data={items}
           margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
         >
-          <defs>
-            {dataKeys.map((dataKey) => (
-              <linearGradient
-                key={`${dataKey.name}-${dataKey.color}`}
-                id={dataKey.name}
-                x1="0"
-                y1="0"
-                x2="0"
-                y2="1"
-              >
-                <stop
-                  offset="95%"
-                  stopColor={dataKey.color}
-                  stopOpacity={0.4}
-                />
-              </linearGradient>
-            ))}
-          </defs>
           <XAxis dataKey="date" tickFormatter={formatDate} />
           <YAxis />
           <CartesianGrid strokeDasharray="3 3" vertical={false} />
           <Tooltip labelFormatter={formatDate} contentStyle={contentStyle} />
+          <Legend verticalAlign="top" height={36} />
 
           {dataKeys.map((dataKey, index: number) => (
-            <Area
+            <Line
               name={dataKey.label}
               key={`chart-item-${dataKey.name}-${index}`}
-              type="linear"
               dataKey={dataKey.name}
-              fillOpacity={1}
-              fill={`url(#${dataKey.name})`}
+              type="monotone"
               stroke={dataKey.color}
               strokeDasharray={dataKey.dashed ? "3 3" : undefined}
               strokeWidth={3}
             />
           ))}
-        </AreaChart>
+        </RawLineChart>
       </ResponsiveContainer>
     </ChartWrapper>
   );
