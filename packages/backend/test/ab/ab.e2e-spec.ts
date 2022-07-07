@@ -308,62 +308,10 @@ describe('AbController (e2e)', () => {
         .set('Authorization', `Bearer ${access_token}`)
         .expect(200)
         .expect([
-          {
-            count: 5,
-            date: '1992-01-01T02:02:02.002Z',
-            uuid: '1',
-            name: 'Control variant for home',
-            isControl: true,
-          },
-          {
-            count: 10,
-            date: '1992-01-01T02:02:02.002Z',
-            uuid: '2',
-            name: 'Alternative homepage',
-            isControl: false,
-          },
-          {
-            count: 20,
-            date: '1992-01-02T02:02:02.002Z',
-            uuid: '1',
-            name: 'Control variant for home',
-            isControl: true,
-          },
-          {
-            count: 40,
-            date: '1992-01-02T02:02:02.002Z',
-            uuid: '2',
-            name: 'Alternative homepage',
-            isControl: false,
-          },
-          {
-            count: 10,
-            date: '1992-01-03T02:02:02.002Z',
-            uuid: '1',
-            name: 'Control variant for home',
-            isControl: true,
-          },
-          {
-            count: 20,
-            date: '1992-01-03T02:02:02.002Z',
-            uuid: '2',
-            name: 'Alternative homepage',
-            isControl: false,
-          },
-          {
-            count: 5,
-            date: '1992-01-06T02:02:02.002Z',
-            uuid: '1',
-            name: 'Control variant for home',
-            isControl: true,
-          },
-          {
-            count: 10,
-            date: '1992-01-06T02:02:02.002Z',
-            uuid: '2',
-            name: 'Alternative homepage',
-            isControl: false,
-          },
+          { '1': 5, '2': 10, date: '1992-01-01T02:02:02.002Z' },
+          { '1': 20, '2': 40, date: '1992-01-02T02:02:02.002Z' },
+          { '1': 10, '2': 20, date: '1992-01-03T02:02:02.002Z' },
+          { '1': 5, '2': 10, date: '1992-01-06T02:02:02.002Z' },
         ]);
     });
   });

@@ -8,6 +8,7 @@ const SkipNavAnchor = styled("a", {
   fontFamily: "$default",
   padding: "$spacing$3",
   borderRadius: "$borderRadius$regular",
+  zIndex: 1,
   "&:focus": {
     left: "$spacing$4",
     top: "$spacing$4",

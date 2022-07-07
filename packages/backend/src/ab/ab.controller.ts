@@ -32,8 +32,27 @@ export class AbController {
   @Get('experiments/:experimentId/hits')
   @UseGuards(HasExperimentAccess)
   @UseGuards(JwtAuthGuard)
-  getFlagHits(@Param('experimentId') experimentId: string): Promise<any> {
-    return this.abService.listExperimentHits(experimentId);
+  async getFlagHits(@Param('experimentId') experimentId: string): Promise<any> {
+    const hits = await this.abService.listExperimentHits(experimentId);
+
+    // hits are ordered by date, using a rupture is possible
+    let rupture: string;
+    let ruptureIndex: number = -1;
+    const formattedHits = [];
+
+    hits.forEach((hit) => {
+      const stringDate = hit.date.toString();
+
+      if (rupture !== stringDate) {
+        rupture = stringDate;
+        ruptureIndex++;
+        formattedHits[ruptureIndex] = { date: hit.date };
+      }
+
+      formattedHits[ruptureIndex][hit.uuid] = hit.count;
+    });
+
+    return formattedHits;
   }
 
   @Post('experiments/:experimentId/variants')
