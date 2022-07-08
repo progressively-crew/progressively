@@ -315,4 +315,95 @@ describe('AbController (e2e)', () => {
         ]);
     });
   });
+
+  describe('/environments/1/experiments/1 (PUT)', () => {
+    it('gives a 401 when the user is not authenticated', () =>
+      verifyAuthGuard(app, '/environments/1/experiments/1', 'put'));
+
+    it('gives a 403 when trying to access an invalid env', async () => {
+      const access_token = await authenticate(app);
+
+      return request(app.getHttpServer())
+        .put('/environments/3/experiments/1')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send({
+          status: 'ACTIVATED',
+        })
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('gives a 403 when the user requests a forbidden env', async () => {
+      const access_token = await authenticate(
+        app,
+        'jane.doe@gmail.com',
+        'password',
+      );
+
+      return request(app.getHttpServer())
+        .put('/environments/1/experiments/1')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('gives 400 when status is not activated, inactive or not activated', async () => {
+      const access_token = await authenticate(
+        app,
+        'marvin.frachet@something.com',
+        'password',
+      );
+
+      return request(app.getHttpServer())
+        .put('/environments/1/experiments/1')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send({
+          status: 'invalid status',
+        })
+        .expect(400)
+        .expect({
+          statusCode: 400,
+          message: 'Invalid status code',
+          error: 'Bad Request',
+        });
+    });
+
+    ['ACTIVATED', 'INACTIVE', 'NOT_ACTIVATED'].forEach((status) => {
+      it(`gives 200 when setting the status of an experiment to "${status}"`, async () => {
+        const access_token = await authenticate(
+          app,
+          'marvin.frachet@something.com',
+          'password',
+        );
+
+        const response = await request(app.getHttpServer())
+          .put('/environments/1/experiments/1')
+          .set('Authorization', `Bearer ${access_token}`)
+          .send({
+            status,
+          });
+
+        expect(response.status).toBe(200);
+        expect(response.body).toMatchObject({
+          experimentId: '1',
+          environmentId: '1',
+          status,
+          environment: {
+            uuid: '1',
+            name: 'Production',
+            projectId: '1',
+            clientKey: 'valid-sdk-key',
+          },
+        });
+      });
+    });
+  });
 });

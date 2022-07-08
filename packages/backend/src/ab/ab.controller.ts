@@ -6,6 +6,7 @@ import {
   Get,
   Param,
   Post,
+  Put,
   UseGuards,
   UsePipes,
 } from '@nestjs/common';
@@ -17,10 +18,19 @@ import { VariantCreationSchema, VariantCreationDTO } from './experiment.dto';
 import { HasExperimentAccess } from './guards/hasExperimentAccess';
 import { Roles } from '../shared/decorators/Roles';
 import { UserRoles } from '../users/roles';
+import { HasEnvironmentAccessGuard } from '../environments/guards/hasEnvAccess';
+import { ActivateExperimentDTO, ExperimentStatus } from './types';
+import { strToExperimentStatus } from './utils';
+import { EnvironmentsService } from '../environments/environments.service';
+import { WebsocketGateway } from '../websocket/websocket.gateway';
 
 @Controller()
 export class AbController {
-  constructor(private readonly abService: AbService) {}
+  constructor(
+    private readonly abService: AbService,
+    private readonly envService: EnvironmentsService,
+    private readonly wsGateway: WebsocketGateway,
+  ) {}
 
   @Get('experiments/:experimentId')
   @UseGuards(HasExperimentAccess)
@@ -89,5 +99,35 @@ export class AbController {
   @UseGuards(JwtAuthGuard)
   deleteEnv(@Param('experimentId') experimentId: string) {
     return this.abService.deleteExperiment(experimentId);
+  }
+
+  /**
+   * Update a flag on a given project/env (by project id AND env id AND flagId)
+   */
+  @Put('environments/:envId/experiments/:experimentId')
+  @UseGuards(HasEnvironmentAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  async changeExperimentForEnvStatus(
+    @Param('envId') envId: string,
+    @Param('experimentId') experimentId: string,
+    @Body() body: ActivateExperimentDTO,
+  ) {
+    const status: ExperimentStatus | undefined = strToExperimentStatus(
+      body.status,
+    );
+
+    if (!status) {
+      throw new BadRequestException('Invalid status code');
+    }
+
+    const updatedFlagEnv = await this.envService.changeExperimentForEnvStatus(
+      envId,
+      experimentId,
+      status,
+    );
+
+    // TODO: notify the websocket channel
+
+    return updatedFlagEnv;
   }
 }
