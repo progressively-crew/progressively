@@ -1,13 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import camelcase from 'camelcase';
+import { StrategyService } from '../strategy/strategy.service';
 import { PrismaService } from '../prisma.service';
 import { FlagAlreadyExists } from './errors';
 import { FlagStatus } from './flags.status';
-import { FlagHitsRetrieveDTO } from './types';
+import { FlagHitsRetrieveDTO, PopulatedFlagEnv } from './types';
+import { FieldRecord } from '../strategy/types';
 
 @Injectable()
 export class FlagsService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private strategyService: StrategyService,
+  ) {}
 
   flagsByEnv(environmentId: string) {
     return this.prisma.flagEnvironment.findMany({
@@ -163,5 +168,21 @@ export class FlagsService {
     }
 
     return roles.includes(flagOfProject.role);
+  }
+
+  resolveFlagStatus(flagEnv: PopulatedFlagEnv, fields: FieldRecord) {
+    let status: boolean;
+
+    if (flagEnv.status === FlagStatus.ACTIVATED) {
+      status = this.strategyService.resolveStrategies(
+        flagEnv,
+        flagEnv.strategies,
+        fields,
+      );
+    } else {
+      status = false;
+    }
+
+    return status;
   }
 }

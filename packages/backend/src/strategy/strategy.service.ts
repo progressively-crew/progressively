@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { Flag, FlagEnvironment, RolloutStrategy } from '@prisma/client';
-import { x86 as murmur } from 'murmurhash3js';
 import { PrismaService } from '../prisma.service';
 import {
   ActivationRuleType,
@@ -9,9 +8,7 @@ import {
   StrategyRuleType,
 } from './types';
 import { ComparatorFactory } from './comparators/comparatorFactory';
-
-const BUCKET_COUNT = 10000; // number of buckets
-const MAX_INT_32 = Math.pow(2, 32);
+import { isInBucket } from './utils';
 
 export interface ExtendedFlagEnv extends FlagEnvironment {
   flag: Flag;
@@ -19,15 +16,6 @@ export interface ExtendedFlagEnv extends FlagEnvironment {
 @Injectable()
 export class StrategyService {
   constructor(private prisma: PrismaService) {}
-
-  private _generateBucket(flagKey: string, userId: string) {
-    const bucketKey = `${userId}-${flagKey}`;
-    const bucketHash: number = murmur.hash32(bucketKey, 1);
-    const bucketHashRatio = bucketHash / MAX_INT_32; // int 32 hash divided by the max number of int 32
-    const bucket = Math.floor(bucketHashRatio * BUCKET_COUNT);
-
-    return bucket;
-  }
 
   private _checkActivationType(
     strategy: RolloutStrategy,
@@ -45,17 +33,11 @@ export class StrategyService {
       // Early break when the field is is not defined, except when the rollout is 100%
       if (!fields?.id) return false;
 
-      const bucket = this._generateBucket(
+      return isInBucket(
         flagEnv.flag.key,
         fields.id as string,
+        strategy.rolloutPercentage,
       );
-
-      // Example: 10000 * (70% / 100) = 7000
-      // If the bucket is 5000, it receives the variant
-      const higherBoundActivationThreshold =
-        BUCKET_COUNT * (strategy.rolloutPercentage / 100);
-
-      return bucket < higherBoundActivationThreshold;
     }
 
     return false;
@@ -84,7 +66,7 @@ export class StrategyService {
     return false;
   }
 
-  async resolveStrategies(
+  resolveStrategies(
     flagEnv: ExtendedFlagEnv,
     strategies: Array<RolloutStrategy>,
     fields: FieldRecord,

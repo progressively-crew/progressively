@@ -5,20 +5,14 @@ import {
   WebSocketGateway,
 } from '@nestjs/websockets';
 import { WebSocketServer as WSServer } from 'ws';
-import { StrategyService } from '../strategy/strategy.service';
 import { URL } from 'url';
 import { Rooms } from './rooms';
-import {
-  Environment,
-  Experiment,
-  ExperimentEnvironment,
-  Flag,
-  FlagEnvironment,
-  RolloutStrategy,
-} from '@prisma/client';
-import { FlagStatus } from '../flags/flags.status';
 import { LocalWebsocket } from './types';
 import { RedisService } from './redis.service';
+import { FlagsService } from '../flags/flags.service';
+import { PopulatedFlagEnv } from '../flags/types';
+import { PopulatedExperimentEnv } from '../ab/types';
+import { AbService } from '../ab/ab.service';
 
 @WebSocketGateway(4001)
 export class WebsocketGateway
@@ -29,8 +23,9 @@ export class WebsocketGateway
   private heartBeatIntervalId: NodeJS.Timer;
 
   constructor(
-    private readonly strategyService: StrategyService,
     private readonly redisService: RedisService,
+    private readonly flagService: FlagsService,
+    private readonly abService: AbService,
   ) {
     this.rooms = new Rooms();
   }
@@ -80,69 +75,60 @@ export class WebsocketGateway
 
       this.rooms.join(clientKey, socket);
 
-      this.redisService.subscribe(clientKey, (flagEnv) =>
-        this.onFlagChangingNotification(flagEnv),
+      this.redisService.subscribe(
+        clientKey,
+        (nextEntity: PopulatedExperimentEnv | PopulatedFlagEnv) => {
+          if (nextEntity._type === 'Flag') {
+            this.onFlagChangingNotification(nextEntity);
+          } else if (nextEntity._type === 'Experiment') {
+            this.onExperimentChangingNotification(nextEntity);
+          }
+        },
       );
     }
   }
 
-  /**
-   * TODO: if there is one thing to improve in terms of performances,
-   * it's this function
-   * it iterates of every socket available for the given client key
-   * and get + computes every strategies available
-   */
-
-  async onFlagChangingNotification(
-    flagEnv: FlagEnvironment & {
-      environment: Environment;
-      flag: Flag;
-      strategies: Array<RolloutStrategy>;
-    },
-  ) {
+  onFlagChangingNotification(flagEnv: PopulatedFlagEnv) {
     const room = flagEnv.environment.clientKey;
     const sockets = this.rooms.getSockets(room);
 
     for (const socket of sockets) {
-      let status: boolean;
-
-      if (flagEnv.status === FlagStatus.ACTIVATED) {
-        status = await this.strategyService.resolveStrategies(
-          flagEnv,
-          flagEnv.strategies,
-          socket.__FIELDS,
-        );
-      } else {
-        status = false;
-      }
+      const flagStatusRecord = this.flagService.resolveFlagStatus(
+        flagEnv,
+        socket.__FIELDS,
+      );
 
       const updatedFlag = {
-        [flagEnv.flag.key]: status,
+        [flagEnv.flag.key]: flagStatusRecord,
       };
 
       this.rooms.emit(socket, updatedFlag);
     }
   }
 
-  async notifyFlagChanging(
-    flagEnv: FlagEnvironment & {
-      environment: Environment;
-      flag: Flag;
-      strategies: Array<RolloutStrategy>;
-    },
-  ) {
+  onExperimentChangingNotification(experimentEnv: PopulatedExperimentEnv) {
+    const room = experimentEnv.environment.clientKey;
+    const sockets = this.rooms.getSockets(room);
+
+    for (const socket of sockets) {
+      const experimentStatusRecord =
+        this.abService.resolveExperimentVariantValue(
+          experimentEnv,
+          socket.__FIELDS,
+        );
+
+      this.rooms.emit(socket, experimentStatusRecord);
+    }
+  }
+
+  notifyFlagChanging(flagEnv: PopulatedFlagEnv) {
     this.redisService.notifyChannel(flagEnv.environment.clientKey, flagEnv);
   }
 
-  async notifyExperimentChanging(
-    experiment: ExperimentEnvironment & {
-      environment: Environment;
-      experiment: Experiment;
-    },
-  ) {
+  notifyExperimentChanging(experimentEnv: PopulatedExperimentEnv) {
     this.redisService.notifyChannel(
-      experiment.environment.clientKey,
-      experiment,
+      experimentEnv.environment.clientKey,
+      experimentEnv,
     );
   }
 }

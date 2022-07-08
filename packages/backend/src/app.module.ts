@@ -16,6 +16,7 @@ import { EnvironmentsModule } from './environments/environments.module';
 import { StrategyModule } from './strategy/strategy.module';
 import { AppLoggerMiddleware } from './logging.middleware';
 import { AbModule } from './ab/ab.module';
+import { SdkModule } from './sdk/sdk.module';
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import { AbModule } from './ab/ab.module';
     EnvironmentsModule,
     StrategyModule,
     AbModule,
+    SdkModule,
   ],
   providers: [AppService, MailService],
   controllers: [EnvironmentsController],
