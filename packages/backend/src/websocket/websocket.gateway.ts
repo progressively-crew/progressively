@@ -10,6 +10,8 @@ import { URL } from 'url';
 import { Rooms } from './rooms';
 import {
   Environment,
+  Experiment,
+  ExperimentEnvironment,
   Flag,
   FlagEnvironment,
   RolloutStrategy,
@@ -130,5 +132,17 @@ export class WebsocketGateway
     },
   ) {
     this.redisService.notifyChannel(flagEnv.environment.clientKey, flagEnv);
+  }
+
+  async notifyExperimentChanging(
+    experiment: ExperimentEnvironment & {
+      environment: Environment;
+      experiment: Experiment;
+    },
+  ) {
+    this.redisService.notifyChannel(
+      experiment.environment.clientKey,
+      experiment,
+    );
   }
 }

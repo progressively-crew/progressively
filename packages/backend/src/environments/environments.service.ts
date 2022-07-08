@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { ExperimentStatus } from 'src/ab/types';
 import { FlagStatus } from '../flags/flags.status';
 import { PrismaService } from '../prisma.service';
 
@@ -58,6 +59,27 @@ export class EnvironmentsService {
         environment: true,
         flag: true,
         strategies: true,
+      },
+    });
+  }
+
+  async changeExperimentForEnvStatus(
+    environmentId: string,
+    experimentId: string,
+    status: ExperimentStatus,
+  ) {
+    return this.prisma.experimentEnvironment.update({
+      where: {
+        experimentId_environmentId: {
+          experimentId,
+          environmentId,
+        },
+      },
+      data: {
+        status,
+      },
+      include: {
+        environment: true,
       },
     });
   }
