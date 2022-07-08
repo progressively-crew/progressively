@@ -15,8 +15,8 @@ export class EnvironmentsService {
     });
   }
 
-  async getEnvironmentByClientKey(clientKey: string) {
-    const flagEnv = this.prisma.flagEnvironment.findMany({
+  async getFlagEnvironmentByClientKey(clientKey: string) {
+    const flagEnv = await this.prisma.flagEnvironment.findMany({
       where: {
         environment: {
           clientKey,
@@ -29,6 +29,23 @@ export class EnvironmentsService {
     });
 
     return flagEnv;
+  }
+
+  async getExperimentEnvironmentByClientKey(clientKey: string) {
+    const experimentEnv = await this.prisma.experimentEnvironment.findMany({
+      where: {
+        environment: {
+          clientKey,
+        },
+      },
+      include: {
+        experiment: {
+          include: { variants: true },
+        },
+      },
+    });
+
+    return experimentEnv;
   }
 
   createEnvironment(projectId: string, environmentName: string) {
@@ -80,6 +97,11 @@ export class EnvironmentsService {
       },
       include: {
         environment: true,
+        experiment: {
+          include: {
+            variants: true,
+          },
+        },
       },
     });
   }

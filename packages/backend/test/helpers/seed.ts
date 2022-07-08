@@ -138,6 +138,7 @@ export const seedDb = async () => {
       data: {
         environmentId: production.uuid,
         experimentId: homePageExperiment.uuid,
+        status: 'ACTIVATED',
       },
     });
 

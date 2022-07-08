@@ -6,6 +6,7 @@ import { EnvironmentsService } from '../environments/environments.service';
 import { WebsocketGateway } from '../websocket/websocket.gateway';
 import { StrategyService } from '../strategy/strategy.service';
 import { RedisService } from '../websocket/redis.service';
+import { AbService } from '../ab/ab.service';
 
 @Module({
   providers: [
@@ -15,6 +16,7 @@ import { RedisService } from '../websocket/redis.service';
     EnvironmentsService,
     StrategyService,
     RedisService,
+    AbService,
   ],
   controllers: [FlagsController],
   exports: [FlagsService],

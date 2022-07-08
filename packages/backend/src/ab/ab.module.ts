@@ -6,6 +6,7 @@ import { AbController } from './ab.controller';
 import { AbService } from './ab.service';
 import { StrategyService } from '../strategy/strategy.service';
 import { RedisService } from '../websocket/redis.service';
+import { FlagsService } from '../flags/flags.service';
 
 @Module({
   controllers: [AbController],
@@ -16,6 +17,7 @@ import { RedisService } from '../websocket/redis.service';
     EnvironmentsService,
     StrategyService,
     RedisService,
+    FlagsService,
   ],
   exports: [AbService],
 })

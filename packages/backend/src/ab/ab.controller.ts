@@ -19,7 +19,11 @@ import { HasExperimentAccess } from './guards/hasExperimentAccess';
 import { Roles } from '../shared/decorators/Roles';
 import { UserRoles } from '../users/roles';
 import { HasEnvironmentAccessGuard } from '../environments/guards/hasEnvAccess';
-import { ActivateExperimentDTO, ExperimentStatus } from './types';
+import {
+  ActivateExperimentDTO,
+  ExperimentStatus,
+  PopulatedExperimentEnv,
+} from './types';
 import { strToExperimentStatus } from './utils';
 import { EnvironmentsService } from '../environments/environments.service';
 import { WebsocketGateway } from '../websocket/websocket.gateway';
@@ -120,14 +124,20 @@ export class AbController {
       throw new BadRequestException('Invalid status code');
     }
 
-    const updatedFlagEnv = await this.envService.changeExperimentForEnvStatus(
-      envId,
-      experimentId,
-      status,
-    );
+    const updatedExperimentEnv =
+      await this.envService.changeExperimentForEnvStatus(
+        envId,
+        experimentId,
+        status,
+      );
 
-    // TODO: notify the websocket channel
+    const updatedExperimentEnvPopulated: PopulatedExperimentEnv = {
+      ...updatedExperimentEnv,
+      _type: 'Experiment',
+    };
 
-    return updatedFlagEnv;
+    this.wsGateway.notifyExperimentChanging(updatedExperimentEnvPopulated);
+
+    return updatedExperimentEnv;
   }
 }

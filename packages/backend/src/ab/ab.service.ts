@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import camelcase from 'camelcase';
+import { FieldRecord } from '../strategy/types';
 import { PrismaService } from '../prisma.service';
 import { ExperimentAlreadyExists, VariantAlreadyExists } from './errors';
-import { VariantHit } from './types';
+import { ExperimentStatus, PopulatedExperimentEnv, VariantHit } from './types';
+import { isInBucket } from '../strategy/utils';
 
 @Injectable()
 export class AbService {
@@ -149,5 +151,33 @@ export class AbService {
       WHERE "Variant"."experimentUuid" = ${experimentId}
       GROUP BY "Variant"."uuid", "VariantHit"."date"
       ORDER BY "VariantHit"."date", "Variant"."uuid"`;
+  }
+
+  resolveExperimentVariantValue(
+    experimentEnv: PopulatedExperimentEnv,
+    fields: FieldRecord,
+  ) {
+    const variants = experimentEnv.experiment.variants;
+    const controlVariant = variants.find((variant) => variant.isControl);
+
+    if (experimentEnv.status !== ExperimentStatus.ACTIVATED) {
+      return controlVariant?.key;
+    }
+
+    if (!fields.id) {
+      return controlVariant?.key;
+    }
+
+    const userId = fields.id;
+    const experimentKey = experimentEnv.experiment.key;
+    const rolloutPercentage = 100 / variants.length;
+
+    const resolvedVariant = variants.find((variant) => {
+      const key = `${experimentKey}-${variant.key}`;
+
+      return isInBucket(key, String(userId), rolloutPercentage);
+    });
+
+    return resolvedVariant?.key || controlVariant?.key;
   }
 }
