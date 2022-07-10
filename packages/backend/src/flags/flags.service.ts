@@ -185,4 +185,14 @@ export class FlagsService {
 
     return status;
   }
+
+  resolveFlagStatusRecord(flagEnv: PopulatedFlagEnv, fields: FieldRecord) {
+    const flagStatusRecord = this.resolveFlagStatus(flagEnv, fields);
+
+    const updatedFlag = {
+      [flagEnv.flag.key]: flagStatusRecord,
+    };
+
+    return updatedFlag;
+  }
 }

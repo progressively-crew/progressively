@@ -7,7 +7,7 @@ import {
 import { WebSocketServer as WSServer } from 'ws';
 import { URL } from 'url';
 import { Rooms } from './rooms';
-import { LocalWebsocket } from './types';
+import { LocalWebsocket, Subscriber } from './types';
 import { RedisService } from './redis.service';
 import { FlagsService } from '../flags/flags.service';
 import { PopulatedFlagEnv } from '../flags/types';
@@ -19,7 +19,7 @@ export class WebsocketGateway
   implements OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit
 {
   private rooms: Rooms;
-
+  private subscribers: Array<Subscriber>;
   private heartBeatIntervalId: NodeJS.Timer;
 
   constructor(
@@ -28,6 +28,7 @@ export class WebsocketGateway
     private readonly abService: AbService,
   ) {
     this.rooms = new Rooms();
+    this.subscribers = [];
   }
 
   afterInit(server: WSServer) {
@@ -78,47 +79,33 @@ export class WebsocketGateway
       this.redisService.subscribe(
         clientKey,
         (nextEntity: PopulatedExperimentEnv | PopulatedFlagEnv) => {
+          const sockets = this.rooms.getSockets(clientKey);
+
           if (nextEntity._type === 'Flag') {
-            this.onFlagChangingNotification(nextEntity);
+            for (const socket of sockets) {
+              const updatedFlag = this.flagService.resolveFlagStatusRecord(
+                nextEntity,
+                socket.__FIELDS,
+              );
+
+              this.rooms.emit(socket, updatedFlag);
+            }
           } else if (nextEntity._type === 'Experiment') {
-            this.onExperimentChangingNotification(nextEntity);
+            const experimentStatusRecord =
+              this.abService.resolveExperimentVariantValue(
+                nextEntity,
+                socket.__FIELDS,
+              );
+
+            this.rooms.emit(socket, experimentStatusRecord);
           }
         },
       );
     }
   }
 
-  onFlagChangingNotification(flagEnv: PopulatedFlagEnv) {
-    const room = flagEnv.environment.clientKey;
-    const sockets = this.rooms.getSockets(room);
-
-    for (const socket of sockets) {
-      const flagStatusRecord = this.flagService.resolveFlagStatus(
-        flagEnv,
-        socket.__FIELDS,
-      );
-
-      const updatedFlag = {
-        [flagEnv.flag.key]: flagStatusRecord,
-      };
-
-      this.rooms.emit(socket, updatedFlag);
-    }
-  }
-
-  onExperimentChangingNotification(experimentEnv: PopulatedExperimentEnv) {
-    const room = experimentEnv.environment.clientKey;
-    const sockets = this.rooms.getSockets(room);
-
-    for (const socket of sockets) {
-      const experimentStatusRecord =
-        this.abService.resolveExperimentVariantValue(
-          experimentEnv,
-          socket.__FIELDS,
-        );
-
-      this.rooms.emit(socket, experimentStatusRecord);
-    }
+  register(subscriber: Subscriber) {
+    this.subscribers.push(subscriber);
   }
 
   notifyFlagChanging(flagEnv: PopulatedFlagEnv) {
