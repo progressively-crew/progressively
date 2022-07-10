@@ -9,7 +9,6 @@ import { ProjectsModule } from './projects/projects.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { WebsocketModule } from './websocket/websocket.module';
-import { MailService } from './mail/mail.service';
 import { TokensModule } from './tokens/tokens.module';
 import { EnvironmentsController } from './environments/environments.controller';
 import { EnvironmentsModule } from './environments/environments.module';
@@ -18,6 +17,7 @@ import { AppLoggerMiddleware } from './logging.middleware';
 import { AbModule } from './ab/ab.module';
 import { SdkModule } from './sdk/sdk.module';
 import { PrismaService } from './prisma.service';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -50,8 +50,9 @@ import { PrismaService } from './prisma.service';
     StrategyModule,
     AbModule,
     SdkModule,
+    MailModule,
   ],
-  providers: [AppService, MailService, PrismaService],
+  providers: [AppService, PrismaService],
   controllers: [EnvironmentsController],
   exports: [PrismaService],
 })
