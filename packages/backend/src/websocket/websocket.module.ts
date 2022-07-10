@@ -1,9 +1,13 @@
 import { Module } from '@nestjs/common';
-import { StrategyService } from '../strategy/strategy.service';
-import { FlagsService } from '../flags/flags.service';
-import { PrismaService } from '../prisma.service';
+import { RedisService } from './redis.service';
+import { WebsocketGateway } from './websocket.gateway';
+import { StrategyModule } from '../strategy/strategy.module';
+import { FlagsModule } from '../flags/flags.module';
+import { AbModule } from '../ab/ab.module';
 
 @Module({
-  providers: [FlagsService, PrismaService, StrategyService],
+  providers: [RedisService, WebsocketGateway],
+  exports: [RedisService, WebsocketGateway],
+  imports: [StrategyModule, FlagsModule, AbModule],
 })
 export class WebsocketModule {}
