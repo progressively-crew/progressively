@@ -7,8 +7,10 @@ import { AbService } from './ab.service';
 import { StrategyService } from '../strategy/strategy.service';
 import { RedisService } from '../websocket/redis.service';
 import { FlagsService } from '../flags/flags.service';
+import { EnvironmentsModule } from '../environments/environments.module';
 
 @Module({
+  imports: [EnvironmentsModule],
   controllers: [AbController],
   providers: [
     AbService,
