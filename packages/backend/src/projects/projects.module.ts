@@ -1,24 +1,17 @@
 import { Module } from '@nestjs/common';
-import { EnvironmentsService } from '../environments/environments.service';
-import { FlagsService } from '../flags/flags.service';
 import { PrismaService } from '../prisma.service';
 import { ProjectsController } from './projects.controller';
 import { ProjectsService } from './projects.service';
-import { StrategyService } from '../strategy/strategy.service';
-import { UsersService } from '../users/users.service';
 import { MailService } from '../mail/mail.service';
+import { FlagsModule } from '../flags/flags.module';
+import { StrategyModule } from '../strategy/strategy.module';
+import { EnvironmentsModule } from '../environments/environments.module';
+import { UsersModule } from '../users/users.module';
 
 @Module({
+  imports: [FlagsModule, StrategyModule, EnvironmentsModule, UsersModule],
   controllers: [ProjectsController],
-  providers: [
-    ProjectsService,
-    FlagsService,
-    PrismaService,
-    EnvironmentsService,
-    StrategyService,
-    UsersService,
-    MailService,
-  ],
+  providers: [ProjectsService, PrismaService, MailService],
   exports: [ProjectsService],
 })
 export class ProjectsModule {}
