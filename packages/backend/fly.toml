@@ -14,11 +14,11 @@ processes = []
   SMTP_PORT = 587
   SMTP_SECURE = true
   FRONTEND_URL = "http://localhost:3000"
-  BACKEND_URL = "http://localhost:4000"
   SOCKET_TIMEOUT = 10000
   ALLOW_REGISTRATION = true
   THROTTLING_TTL = 10
   THROTTLING_LIMIT = 10000
+  BACKEND_URL = "backend-progressively.fly.dev"
 
 [experimental]
   allowed_public_ports = []
