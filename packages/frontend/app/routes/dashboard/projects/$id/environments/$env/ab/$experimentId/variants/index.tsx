@@ -12,10 +12,9 @@ import { AiOutlineExperiment } from "react-icons/ai";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { Typography } from "~/components/Typography";
 import { Crumbs } from "~/components/Breadcrumbs/types";
-import { HideMobile } from "~/components/HideMobile";
-import { MetaFunction, LoaderFunction } from "@remix-run/node";
+import { MetaFunction, LoaderFunction, ActionFunction } from "@remix-run/node";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
-import { Experiment } from "~/modules/ab/types";
+import { Experiment, ExperimentStatus } from "~/modules/ab/types";
 import { getExperimentById } from "~/modules/ab/services/getExperimentById";
 import { AbNavBar } from "~/modules/ab/components/AbNavBar";
 import { CreateButton } from "~/components/Buttons/CreateButton";
@@ -23,19 +22,22 @@ import { EmptyState } from "~/components/EmptyState";
 import { Spacer } from "~/components/Spacer";
 import { VariantRow } from "~/modules/ab/components/VariantRow";
 import { SuccessBox } from "~/components/SuccessBox";
+import { ExperimentHeaderAction } from "~/modules/ab/components/ExperimentHeaderAction";
+import { toggleAction } from "~/modules/ab/components/ToggleExperiment";
 
 interface MetaArgs {
   data?: {
     project?: Project;
     environment?: Environment;
-    experiment?: Experiment;
+    experimentEnv?: Experiment;
   };
 }
 
 export const meta: MetaFunction = ({ data }: MetaArgs) => {
   const projectName = data?.project?.name || "An error ocurred";
   const envName = data?.environment?.name || "An error ocurred";
-  const experimentName = data?.experiment?.name || "An error ocurred";
+  const experimentName =
+    data?.experimentEnv?.experiment?.name || "An error ocurred";
 
   return {
     title: `Progressively | ${projectName} | ${envName} | ${experimentName} | Variants`,
@@ -45,9 +47,13 @@ export const meta: MetaFunction = ({ data }: MetaArgs) => {
 interface LoaderData {
   project: Project;
   environment: Environment;
-  experiment: Experiment;
+  experimentEnv: Experiment;
   user: User;
 }
+
+export const action: ActionFunction = ({ request, params }): Promise<null> => {
+  return toggleAction({ request, params });
+};
 
 export const loader: LoaderFunction = async ({
   request,
@@ -64,12 +70,16 @@ export const loader: LoaderFunction = async ({
     (env) => env.uuid === params.env
   );
 
-  const experiment = await getExperimentById(params.experimentId!, authCookie);
+  const experimentEnv = await getExperimentById(
+    params.env!,
+    params.experimentId!,
+    authCookie
+  );
 
   return {
     project,
     environment: environment!,
-    experiment,
+    experimentEnv,
     user,
   };
 };
@@ -77,8 +87,11 @@ export const loader: LoaderFunction = async ({
 export default function ExperimentSettingsPage() {
   const [searchParams] = useSearchParams();
   const newVariantId = searchParams.get("newVariantId") || undefined;
-  const { project, environment, experiment, user } =
+  const { project, environment, experimentEnv, user } =
     useLoaderData<LoaderData>();
+
+  const { status, experiment } = experimentEnv;
+  const isExperimentActivated = status === ExperimentStatus.ACTIVATED;
 
   const crumbs: Crumbs = [
     {
@@ -110,9 +123,10 @@ export default function ExperimentSettingsPage() {
           tagline="A/B experiment"
           title={experiment.name}
           startAction={
-            <HideMobile>
-              <ButtonCopy toCopy={experiment.key}>{experiment.key}</ButtonCopy>
-            </HideMobile>
+            <ExperimentHeaderAction
+              experimentKey={experiment.key}
+              isExperimentActivated={isExperimentActivated}
+            />
           }
         />
       }

@@ -5,13 +5,19 @@ export interface Variant {
   description: string;
   isControl: boolean;
 }
+
 export interface Experiment {
-  uuid: string;
-  name: string;
-  description: string;
-  key: string;
-  date: string;
-  variants: Array<Variant>;
+  experimentId: string;
+  environmentId: string;
+  status: ExperimentStatus;
+  experiment: {
+    uuid: string;
+    name: string;
+    description: string;
+    key: string;
+    date: string;
+    variants: Array<Variant>;
+  };
 }
 
 export interface CreateExperimentDTO {
@@ -22,4 +28,10 @@ export interface CreateExperimentDTO {
 export interface CreateVariantDTO {
   description?: string;
   name?: string;
+}
+
+export enum ExperimentStatus {
+  ACTIVATED = "ACTIVATED",
+  NOT_ACTIVATED = "NOT_ACTIVATED",
+  INACTIVE = "INACTIVE",
 }

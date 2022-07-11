@@ -13,7 +13,6 @@ import {
   SectionHeader,
 } from "~/components/Section";
 import { AiOutlineExperiment } from "react-icons/ai";
-import { ButtonCopy } from "~/components/ButtonCopy";
 import { Typography } from "~/components/Typography";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { Crumbs } from "~/components/Breadcrumbs/types";
@@ -21,22 +20,24 @@ import { HideMobile } from "~/components/HideMobile";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { MetaFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { Experiment } from "~/modules/ab/types";
+import { Experiment, ExperimentStatus } from "~/modules/ab/types";
 import { getExperimentById } from "~/modules/ab/services/getExperimentById";
 import { AbNavBar } from "~/modules/ab/components/AbNavBar";
+import { ExperimentHeaderAction } from "~/modules/ab/components/ExperimentHeaderAction";
 
 interface MetaArgs {
   data?: {
     project?: Project;
     environment?: Environment;
-    experiment?: Experiment;
+    experimentEnv?: Experiment;
   };
 }
 
 export const meta: MetaFunction = ({ data }: MetaArgs) => {
   const projectName = data?.project?.name || "An error ocurred";
   const envName = data?.environment?.name || "An error ocurred";
-  const experimentName = data?.experiment?.name || "An error ocurred";
+  const experimentName =
+    data?.experimentEnv?.experiment?.name || "An error ocurred";
 
   return {
     title: `Progressively | ${projectName} | ${envName} | ${experimentName} | Settings`,
@@ -46,7 +47,7 @@ export const meta: MetaFunction = ({ data }: MetaArgs) => {
 interface LoaderData {
   project: Project;
   environment: Environment;
-  experiment: Experiment;
+  experimentEnv: Experiment;
   user: User;
   userRole?: UserRoles;
 }
@@ -66,7 +67,11 @@ export const loader: LoaderFunction = async ({
     (env) => env.uuid === params.env
   );
 
-  const experiment = await getExperimentById(params.experimentId!, authCookie);
+  const experimentEnv = await getExperimentById(
+    params.env!,
+    params.experimentId!,
+    authCookie
+  );
 
   const userProject: UserProject | undefined = project.userProject?.find(
     (userProject) => userProject.userId === user.uuid
@@ -75,15 +80,18 @@ export const loader: LoaderFunction = async ({
   return {
     project,
     environment: environment!,
-    experiment,
+    experimentEnv,
     user,
     userRole: userProject?.role,
   };
 };
 
 export default function ExperimentSettingsPage() {
-  const { project, environment, experiment, user, userRole } =
+  const { project, environment, experimentEnv, user, userRole } =
     useLoaderData<LoaderData>();
+
+  const { status, experiment } = experimentEnv;
+  const isExperimentActivated = status === ExperimentStatus.ACTIVATED;
 
   const crumbs: Crumbs = [
     {
@@ -115,9 +123,10 @@ export default function ExperimentSettingsPage() {
           tagline="A/B experiment"
           title={experiment.name}
           startAction={
-            <HideMobile>
-              <ButtonCopy toCopy={experiment.key}>{experiment.key}</ButtonCopy>
-            </HideMobile>
+            <ExperimentHeaderAction
+              experimentKey={experiment.key}
+              isExperimentActivated={isExperimentActivated}
+            />
           }
         />
       }
