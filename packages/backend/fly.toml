@@ -13,12 +13,12 @@ processes = []
   REFRESH_TOKEN_EXPIRES = 84600
   SMTP_PORT = 587
   SMTP_SECURE = true
-  FRONTEND_URL = "frontend-progressively.fly.dev"
+  FRONTEND_URL = "https://frontend-progressively.fly.dev"
   SOCKET_TIMEOUT = 10000
   ALLOW_REGISTRATION = true
   THROTTLING_TTL = 10
   THROTTLING_LIMIT = 10000
-  BACKEND_URL = "backend-progressively.fly.dev"
+  BACKEND_URL = "https://backend-progressively.fly.dev"
 
 [experimental]
   allowed_public_ports = []

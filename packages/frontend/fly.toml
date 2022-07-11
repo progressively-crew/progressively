@@ -7,7 +7,7 @@ processes = []
 
 [env]
   PORT = "8080"
-  BACKEND_URL = "backend-progressively.fly.dev"
+  BACKEND_URL = "https://backend-progressively.fly.dev"
   ALLOW_REGISTRATION=true
 
 [experimental]
@@ -16,7 +16,7 @@ processes = []
 
 [[services]]
   http_checks = []
-  internal_port = 3000
+  internal_port = 8080
   processes = ["app"]
   protocol = "tcp"
   script_checks = []
