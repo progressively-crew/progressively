@@ -17,7 +17,7 @@ import { UserRoles } from '../users/roles';
 import { HasEnvironmentAccessGuard } from './guards/hasEnvAccess';
 import { ValidationPipe } from '../shared/pipes/ValidationPipe';
 import { FlagsService } from '../flags/flags.service';
-import { FlagAlreadyExists } from '../flags/errors';
+import { FlagAlreadyExists } from './errors';
 import { FlagCreationSchema, FlagCreationDTO } from '../flags/flags.dto';
 import { AbService } from '../ab/ab.service';
 import {
@@ -63,7 +63,7 @@ export class EnvironmentsController {
   @UsePipes(new ValidationPipe(FlagCreationSchema))
   async createFlag(@Param('envId') envId, @Body() body: FlagCreationDTO) {
     try {
-      const flag = await this.flagService.createFlag(
+      const flag = await this.envService.createFlagEnvironment(
         envId,
         body.name,
         body.description,

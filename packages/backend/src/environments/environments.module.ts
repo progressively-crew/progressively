@@ -2,19 +2,12 @@ import { Module } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { EnvironmentsService } from './environments.service';
 import { EnvironmentsController } from './environments.controller';
-import { FlagsService } from '../flags/flags.service';
-import { AbService } from '../ab/ab.service';
-import { StrategyService } from '../strategy/strategy.service';
+import { AbModule } from '../ab/ab.module';
 
 @Module({
+  imports: [AbModule],
   controllers: [EnvironmentsController],
-  providers: [
-    PrismaService,
-    EnvironmentsService,
-    FlagsService,
-    AbService,
-    StrategyService,
-  ],
+  providers: [PrismaService, EnvironmentsService],
   exports: [EnvironmentsService],
 })
 export class EnvironmentsModule {}
