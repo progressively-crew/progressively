@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { ExperimentStatus } from 'src/ab/types';
-import { FlagStatus } from '../flags/flags.status';
-import { PrismaService } from '../prisma.service';
+import camelcase from 'camelcase';
+import { PrismaService } from '../database/prisma.service';
+import { FlagAlreadyExists, ExperimentAlreadyExists } from './errors';
 
 @Injectable()
 export class EnvironmentsService {
@@ -57,50 +57,56 @@ export class EnvironmentsService {
     });
   }
 
-  async changeFlagForEnvStatus(
-    environmentId: string,
-    flagId: string,
-    status: FlagStatus,
+  async createFlagEnvironment(
+    envId: string,
+    name: string,
+    description: string,
   ) {
-    return this.prisma.flagEnvironment.update({
+    const flagKey = camelcase(name);
+
+    const existingFlag = await this.prisma.flagEnvironment.findFirst({
       where: {
-        flagId_environmentId: {
-          flagId,
-          environmentId,
+        environmentId: envId,
+        flag: {
+          key: flagKey,
         },
-      },
-      data: {
-        status,
-      },
-      include: {
-        environment: true,
-        flag: true,
-        strategies: true,
       },
     });
+
+    if (existingFlag) {
+      throw new FlagAlreadyExists();
+    }
+
+    const flag = await this.prisma.flag.create({
+      data: {
+        name,
+        description,
+        key: flagKey,
+      },
+    });
+
+    await this.prisma.flagEnvironment.create({
+      data: {
+        flagId: flag.uuid,
+        environmentId: envId,
+      },
+    });
+
+    return flag;
   }
 
-  async changeExperimentForEnvStatus(
-    environmentId: string,
-    experimentId: string,
-    status: ExperimentStatus,
-  ) {
-    return this.prisma.experimentEnvironment.update({
+  flagsByEnv(environmentId: string) {
+    return this.prisma.flagEnvironment.findMany({
       where: {
-        experimentId_environmentId: {
-          experimentId,
-          environmentId,
-        },
-      },
-      data: {
-        status,
+        environmentId,
       },
       include: {
+        flag: true,
         environment: true,
-        experiment: {
-          include: {
-            variants: true,
-          },
+      },
+      orderBy: {
+        flag: {
+          createdAt: 'desc',
         },
       },
     });
@@ -209,5 +215,66 @@ export class EnvironmentsService {
     }
 
     return roles.includes(environmentOfProject.role);
+  }
+
+  experimentsByEnv(envId: string) {
+    return this.prisma.experiment.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+      where: {
+        ExperimentEnvironment: {
+          some: {
+            environmentId: envId,
+          },
+        },
+      },
+    });
+  }
+
+  async createExperimentEnv(envId: string, name: string, description: string) {
+    const experimentKey = camelcase(name);
+
+    const existingExperiment =
+      await this.prisma.experimentEnvironment.findFirst({
+        where: {
+          environmentId: envId,
+          experiment: {
+            key: experimentKey,
+          },
+        },
+      });
+
+    if (existingExperiment) {
+      throw new ExperimentAlreadyExists();
+    }
+
+    const experiment = await this.prisma.experiment.create({
+      data: {
+        name,
+        description,
+        key: experimentKey,
+      },
+    });
+
+    const variationName = `${experiment.name} Control`;
+    await this.prisma.variant.create({
+      data: {
+        key: camelcase(variationName),
+        name: variationName,
+        isControl: true,
+        experimentUuid: experiment.uuid,
+        description: `This is the control variant of the ${experiment.name} experiment`,
+      },
+    });
+
+    await this.prisma.experimentEnvironment.create({
+      data: {
+        experimentId: experiment.uuid,
+        environmentId: envId,
+      },
+    });
+
+    return experiment;
   }
 }

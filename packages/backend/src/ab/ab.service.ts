@@ -1,29 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import camelcase from 'camelcase';
 import { FieldRecord } from '../strategy/types';
-import { PrismaService } from '../prisma.service';
-import { ExperimentAlreadyExists, VariantAlreadyExists } from './errors';
+import { PrismaService } from '../database/prisma.service';
+import { VariantAlreadyExists } from './errors';
 import { ExperimentStatus, PopulatedExperimentEnv, VariantHit } from './types';
 import { isInBucket } from '../strategy/utils';
 
 @Injectable()
 export class AbService {
   constructor(private prisma: PrismaService) {}
-
-  experimentsByEnv(envId: string) {
-    return this.prisma.experiment.findMany({
-      orderBy: {
-        createdAt: 'desc',
-      },
-      where: {
-        ExperimentEnvironment: {
-          some: {
-            environmentId: envId,
-          },
-        },
-      },
-    });
-  }
 
   async hasPermissionOnExperiment(
     experimentId: string,
@@ -61,52 +46,6 @@ export class AbService {
         variants: true,
       },
     });
-  }
-
-  async createExperiment(envId: string, name: string, description: string) {
-    const experimentKey = camelcase(name);
-
-    const existingExperiment =
-      await this.prisma.experimentEnvironment.findFirst({
-        where: {
-          environmentId: envId,
-          experiment: {
-            key: experimentKey,
-          },
-        },
-      });
-
-    if (existingExperiment) {
-      throw new ExperimentAlreadyExists();
-    }
-
-    const experiment = await this.prisma.experiment.create({
-      data: {
-        name,
-        description,
-        key: experimentKey,
-      },
-    });
-
-    const variationName = `${experiment.name} Control`;
-    await this.prisma.variant.create({
-      data: {
-        key: camelcase(variationName),
-        name: variationName,
-        isControl: true,
-        experimentUuid: experiment.uuid,
-        description: `This is the control variant of the ${experiment.name} experiment`,
-      },
-    });
-
-    await this.prisma.experimentEnvironment.create({
-      data: {
-        experimentId: experiment.uuid,
-        environmentId: envId,
-      },
-    });
-
-    return experiment;
   }
 
   async createVariant(experimentId: string, name: string, description: string) {
@@ -179,5 +118,31 @@ export class AbService {
     });
 
     return resolvedVariant?.key || controlVariant?.key;
+  }
+
+  async changeExperimentForEnvStatus(
+    environmentId: string,
+    experimentId: string,
+    status: ExperimentStatus,
+  ) {
+    return this.prisma.experimentEnvironment.update({
+      where: {
+        experimentId_environmentId: {
+          experimentId,
+          environmentId,
+        },
+      },
+      data: {
+        status,
+      },
+      include: {
+        environment: true,
+        experiment: {
+          include: {
+            variants: true,
+          },
+        },
+      },
+    });
   }
 }

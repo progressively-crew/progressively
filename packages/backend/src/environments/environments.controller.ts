@@ -16,23 +16,17 @@ import { Roles } from '../shared/decorators/Roles';
 import { UserRoles } from '../users/roles';
 import { HasEnvironmentAccessGuard } from './guards/hasEnvAccess';
 import { ValidationPipe } from '../shared/pipes/ValidationPipe';
-import { FlagsService } from '../flags/flags.service';
-import { FlagAlreadyExists } from '../flags/errors';
+import { FlagAlreadyExists, ExperimentAlreadyExists } from './errors';
 import { FlagCreationSchema, FlagCreationDTO } from '../flags/flags.dto';
-import { AbService } from '../ab/ab.service';
 import {
   ExperimentCreationDTO,
   ExperimentCreationSchema,
 } from '../ab/experiment.dto';
-import { ExperimentAlreadyExists } from '../ab/errors';
+
 @ApiBearerAuth()
 @Controller('environments')
 export class EnvironmentsController {
-  constructor(
-    private readonly envService: EnvironmentsService,
-    private readonly flagService: FlagsService,
-    private readonly abService: AbService,
-  ) {}
+  constructor(private readonly envService: EnvironmentsService) {}
 
   /**
    * Get all the flag of a given project/env (by projectId and envId)
@@ -41,7 +35,7 @@ export class EnvironmentsController {
   @UseGuards(HasEnvironmentAccessGuard)
   @UseGuards(JwtAuthGuard)
   getFlagsByProjectAndEnv(@Param('envId') envId: string) {
-    return this.flagService.flagsByEnv(envId);
+    return this.envService.flagsByEnv(envId);
   }
 
   /**
@@ -51,7 +45,7 @@ export class EnvironmentsController {
   @UseGuards(HasEnvironmentAccessGuard)
   @UseGuards(JwtAuthGuard)
   getABByProjectAndEnv(@Param('envId') envId: string) {
-    return this.abService.experimentsByEnv(envId);
+    return this.envService.experimentsByEnv(envId);
   }
 
   /**
@@ -63,7 +57,7 @@ export class EnvironmentsController {
   @UsePipes(new ValidationPipe(FlagCreationSchema))
   async createFlag(@Param('envId') envId, @Body() body: FlagCreationDTO) {
     try {
-      const flag = await this.flagService.createFlag(
+      const flag = await this.envService.createFlagEnvironment(
         envId,
         body.name,
         body.description,
@@ -91,7 +85,7 @@ export class EnvironmentsController {
     @Body() body: ExperimentCreationDTO,
   ) {
     try {
-      const experiment = await this.abService.createExperiment(
+      const experiment = await this.envService.createExperimentEnv(
         envId,
         body.name,
         body.description,

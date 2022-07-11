@@ -1,8 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import camelcase from 'camelcase';
 import { StrategyService } from '../strategy/strategy.service';
-import { PrismaService } from '../prisma.service';
-import { FlagAlreadyExists } from './errors';
+import { PrismaService } from '../database/prisma.service';
 import { FlagStatus } from './flags.status';
 import { FlagHitsRetrieveDTO, PopulatedFlagEnv } from './types';
 import { FieldRecord } from '../strategy/types';
@@ -27,6 +25,29 @@ export class FlagsService {
         flag: {
           createdAt: 'desc',
         },
+      },
+    });
+  }
+
+  async changeFlagForEnvStatus(
+    environmentId: string,
+    flagId: string,
+    status: FlagStatus,
+  ) {
+    return this.prisma.flagEnvironment.update({
+      where: {
+        flagId_environmentId: {
+          flagId,
+          environmentId,
+        },
+      },
+      data: {
+        status,
+      },
+      include: {
+        environment: true,
+        flag: true,
+        strategies: true,
       },
     });
   }
@@ -76,40 +97,6 @@ export class FlagsService {
     `;
 
     return hits;
-  }
-
-  async createFlag(envId: string, name: string, description: string) {
-    const flagKey = camelcase(name);
-
-    const existingFlag = await this.prisma.flagEnvironment.findFirst({
-      where: {
-        environmentId: envId,
-        flag: {
-          key: flagKey,
-        },
-      },
-    });
-
-    if (existingFlag) {
-      throw new FlagAlreadyExists();
-    }
-
-    const flag = await this.prisma.flag.create({
-      data: {
-        name,
-        description,
-        key: flagKey,
-      },
-    });
-
-    await this.prisma.flagEnvironment.create({
-      data: {
-        flagId: flag.uuid,
-        environmentId: envId,
-      },
-    });
-
-    return flag;
   }
 
   async deleteFlag(envId: string, flagId: string) {
@@ -184,5 +171,15 @@ export class FlagsService {
     }
 
     return status;
+  }
+
+  resolveFlagStatusRecord(flagEnv: PopulatedFlagEnv, fields: FieldRecord) {
+    const flagStatusRecord = this.resolveFlagStatus(flagEnv, fields);
+
+    const updatedFlag = {
+      [flagEnv.flag.key]: flagStatusRecord,
+    };
+
+    return updatedFlag;
   }
 }

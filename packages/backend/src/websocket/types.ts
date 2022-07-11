@@ -6,3 +6,8 @@ export interface LocalWebsocket extends WS {
   __FIELDS: FieldRecord;
   isAlive: boolean;
 }
+
+export type Subscriber<T> = (
+  args: T,
+  fields: FieldRecord,
+) => unknown | undefined;

@@ -10,7 +10,6 @@ import {
   UseGuards,
   UsePipes,
 } from '@nestjs/common';
-import { EnvironmentsService } from '../environments/environments.service';
 import { FlagStatus } from './flags.status';
 import { StrategyService } from '../strategy/strategy.service';
 import { FlagsService } from './flags.service';
@@ -29,7 +28,6 @@ import { PopulatedFlagEnv } from './types';
 @Controller()
 export class FlagsController {
   constructor(
-    private readonly envService: EnvironmentsService,
     private readonly strategyService: StrategyService,
     private readonly flagService: FlagsService,
     private readonly wsGateway: WebsocketGateway,
@@ -52,7 +50,7 @@ export class FlagsController {
       throw new BadRequestException('Invalid status code');
     }
 
-    const updatedFlagEnv = await this.envService.changeFlagForEnvStatus(
+    const updatedFlagEnv = await this.flagService.changeFlagForEnvStatus(
       envId,
       flagId,
       status,
@@ -60,10 +58,13 @@ export class FlagsController {
 
     const updatedFlagEnvWithType: PopulatedFlagEnv = {
       ...updatedFlagEnv,
-      _type: 'Flag',
+      _type: 'Flag', // necessary for websocket subscriptions
     };
 
-    this.wsGateway.notifyFlagChanging(updatedFlagEnvWithType);
+    this.wsGateway.notifyChanges(
+      updatedFlagEnvWithType.environment.clientKey,
+      updatedFlagEnvWithType,
+    );
 
     return updatedFlagEnv;
   }

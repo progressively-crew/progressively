@@ -1,6 +1,6 @@
 import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { PrismaService } from '../prisma.service';
+import { PrismaService } from '../database/prisma.service';
 import { jwtConstants } from '../jwtConstants';
 import { RefreshTokenPayload } from './types';
 import { UserRetrieveDTO } from '../users/users.dto';

@@ -9,7 +9,6 @@ import { ProjectsModule } from './projects/projects.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { WebsocketModule } from './websocket/websocket.module';
-import { MailService } from './mail/mail.service';
 import { TokensModule } from './tokens/tokens.module';
 import { EnvironmentsController } from './environments/environments.controller';
 import { EnvironmentsModule } from './environments/environments.module';
@@ -17,6 +16,8 @@ import { StrategyModule } from './strategy/strategy.module';
 import { AppLoggerMiddleware } from './logging.middleware';
 import { AbModule } from './ab/ab.module';
 import { SdkModule } from './sdk/sdk.module';
+import { MailModule } from './mail/mail.module';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
@@ -49,8 +50,10 @@ import { SdkModule } from './sdk/sdk.module';
     StrategyModule,
     AbModule,
     SdkModule,
+    MailModule,
+    DatabaseModule,
   ],
-  providers: [AppService, MailService],
+  providers: [AppService],
   controllers: [EnvironmentsController],
 })
 export class AppModule {

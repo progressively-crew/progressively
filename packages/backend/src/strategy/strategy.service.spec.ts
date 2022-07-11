@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { RolloutStrategy } from '@prisma/client';
-import { PrismaService } from '../prisma.service';
+import { PrismaService } from '../database/prisma.service';
 import { FlagStatus } from '../flags/flags.status';
 import { ExtendedFlagEnv, StrategyService } from './strategy.service';
 import { ActivationRuleType, StrategyRuleType } from './types';
