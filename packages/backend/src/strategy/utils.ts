@@ -8,15 +8,23 @@ export const isInBucket = (
   userId: string,
   rolloutPercentage: number,
 ) => {
+  const bucket = genBucket(key, userId);
+
+  return isInRange(bucket, rolloutPercentage);
+};
+
+export const isInRange = (bucket: number, rolloutPercentage: number) => {
+  const higherBoundActivationThreshold =
+    BUCKET_COUNT * (rolloutPercentage / 100);
+
+  return bucket < higherBoundActivationThreshold;
+};
+
+export const genBucket = (key: string, userId: string) => {
   const bucketKey = `${userId}-${key}`;
   const bucketHash: number = murmur.hash32(bucketKey, 1);
   const bucketHashRatio = bucketHash / MAX_INT_32; // int 32 hash divided by the max number of int 32
   const bucket = Math.floor(bucketHashRatio * BUCKET_COUNT);
 
-  // Example: 10000 * (70% / 100) = 7000
-  // If the bucket is 5000, it receives the variant
-  const higherBoundActivationThreshold =
-    BUCKET_COUNT * (rolloutPercentage / 100);
-
-  return bucket < higherBoundActivationThreshold;
+  return bucket;
 };
