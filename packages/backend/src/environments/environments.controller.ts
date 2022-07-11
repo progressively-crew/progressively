@@ -16,21 +16,17 @@ import { Roles } from '../shared/decorators/Roles';
 import { UserRoles } from '../users/roles';
 import { HasEnvironmentAccessGuard } from './guards/hasEnvAccess';
 import { ValidationPipe } from '../shared/pipes/ValidationPipe';
-import { FlagAlreadyExists } from './errors';
+import { FlagAlreadyExists, ExperimentAlreadyExists } from './errors';
 import { FlagCreationSchema, FlagCreationDTO } from '../flags/flags.dto';
-import { AbService } from '../ab/ab.service';
 import {
   ExperimentCreationDTO,
   ExperimentCreationSchema,
 } from '../ab/experiment.dto';
-import { ExperimentAlreadyExists } from '../ab/errors';
+
 @ApiBearerAuth()
 @Controller('environments')
 export class EnvironmentsController {
-  constructor(
-    private readonly envService: EnvironmentsService,
-    private readonly abService: AbService,
-  ) {}
+  constructor(private readonly envService: EnvironmentsService) {}
 
   /**
    * Get all the flag of a given project/env (by projectId and envId)
@@ -49,7 +45,7 @@ export class EnvironmentsController {
   @UseGuards(HasEnvironmentAccessGuard)
   @UseGuards(JwtAuthGuard)
   getABByProjectAndEnv(@Param('envId') envId: string) {
-    return this.abService.experimentsByEnv(envId);
+    return this.envService.experimentsByEnv(envId);
   }
 
   /**
@@ -89,7 +85,7 @@ export class EnvironmentsController {
     @Body() body: ExperimentCreationDTO,
   ) {
     try {
-      const experiment = await this.abService.createExperiment(
+      const experiment = await this.envService.createExperimentEnv(
         envId,
         body.name,
         body.description,
