@@ -29,6 +29,29 @@ export class FlagsService {
     });
   }
 
+  async changeFlagForEnvStatus(
+    environmentId: string,
+    flagId: string,
+    status: FlagStatus,
+  ) {
+    return this.prisma.flagEnvironment.update({
+      where: {
+        flagId_environmentId: {
+          flagId,
+          environmentId,
+        },
+      },
+      data: {
+        status,
+      },
+      include: {
+        environment: true,
+        flag: true,
+        strategies: true,
+      },
+    });
+  }
+
   async hitFlag(environmentId: string, flagId: string, status: FlagStatus) {
     // Make it easier to group by date, 2 is arbitrary
     const date = new Date();

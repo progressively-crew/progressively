@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import camelcase from 'camelcase';
-import { ExperimentStatus } from 'src/ab/types';
-import { FlagStatus } from '../flags/flags.status';
 import { PrismaService } from '../prisma.service';
 import { FlagAlreadyExists, ExperimentAlreadyExists } from './errors';
 
@@ -110,29 +108,6 @@ export class EnvironmentsService {
         flag: {
           createdAt: 'desc',
         },
-      },
-    });
-  }
-
-  async changeFlagForEnvStatus(
-    environmentId: string,
-    flagId: string,
-    status: FlagStatus,
-  ) {
-    return this.prisma.flagEnvironment.update({
-      where: {
-        flagId_environmentId: {
-          flagId,
-          environmentId,
-        },
-      },
-      data: {
-        status,
-      },
-      include: {
-        environment: true,
-        flag: true,
-        strategies: true,
       },
     });
   }
