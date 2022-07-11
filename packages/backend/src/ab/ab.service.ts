@@ -97,7 +97,7 @@ export class AbService {
 
   resolveExperimentVariantValue(
     experimentEnv: PopulatedExperimentEnv,
-    fields: FieldRecord,
+    fields: FieldRecord = {},
   ) {
     const variants = experimentEnv.experiment.variants;
     const controlVariant = variants.find((variant) => variant.isControl);
@@ -147,5 +147,17 @@ export class AbService {
         },
       },
     });
+  }
+
+  resolveExperimentVarianRecord(
+    experimentEnv: PopulatedExperimentEnv,
+    fields: FieldRecord,
+  ) {
+    const variantKey = this.resolveExperimentVariantValue(
+      experimentEnv,
+      fields,
+    );
+
+    return { [experimentEnv.experiment.key]: variantKey };
   }
 }

@@ -36,7 +36,7 @@ export class SdkModule implements OnModuleInit {
       }
 
       if (entity._type === 'Experiment') {
-        return this.abService.resolveExperimentVariantValue(entity, fields);
+        return this.abService.resolveExperimentVarianRecord(entity, fields);
       }
 
       return undefined;
