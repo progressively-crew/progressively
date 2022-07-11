@@ -60,10 +60,13 @@ export class FlagsController {
 
     const updatedFlagEnvWithType: PopulatedFlagEnv = {
       ...updatedFlagEnv,
-      _type: 'Flag',
+      _type: 'Flag', // necessary for websocket subscriptions
     };
 
-    this.wsGateway.notifyFlagChanging(updatedFlagEnvWithType);
+    this.wsGateway.notifyChanges(
+      updatedFlagEnvWithType.environment.clientKey,
+      updatedFlagEnvWithType,
+    );
 
     return updatedFlagEnv;
   }

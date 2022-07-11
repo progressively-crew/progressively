@@ -9,8 +9,6 @@ import { URL } from 'url';
 import { Rooms } from './rooms';
 import { LocalWebsocket, Subscriber } from './types';
 import { RedisService } from './redis.service';
-import { PopulatedFlagEnv } from '../flags/types';
-import { PopulatedExperimentEnv } from '../ab/types';
 
 @WebSocketGateway(4001)
 export class WebsocketGateway
@@ -96,14 +94,7 @@ export class WebsocketGateway
     this.subscribers.push(subscriber);
   }
 
-  notifyFlagChanging(flagEnv: PopulatedFlagEnv) {
-    this.redisService.notifyChannel(flagEnv.environment.clientKey, flagEnv);
-  }
-
-  notifyExperimentChanging(experimentEnv: PopulatedExperimentEnv) {
-    this.redisService.notifyChannel(
-      experimentEnv.environment.clientKey,
-      experimentEnv,
-    );
+  notifyChanges(channel: string, entity: unknown) {
+    this.redisService.notifyChannel(channel, entity);
   }
 }

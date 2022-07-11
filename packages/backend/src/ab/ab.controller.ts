@@ -133,10 +133,13 @@ export class AbController {
 
     const updatedExperimentEnvPopulated: PopulatedExperimentEnv = {
       ...updatedExperimentEnv,
-      _type: 'Experiment',
+      _type: 'Experiment', // necessary for websocket subscriptions
     };
 
-    this.wsGateway.notifyExperimentChanging(updatedExperimentEnvPopulated);
+    this.wsGateway.notifyChanges(
+      updatedExperimentEnvPopulated.environment.clientKey,
+      updatedExperimentEnvPopulated,
+    );
 
     return updatedExperimentEnv;
   }
