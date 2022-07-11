@@ -1,24 +1,14 @@
-# fly.toml file generated for backend-progressively on 2022-07-11T15:08:21+02:00
+# fly.toml file generated for frontend-progressively on 2022-07-11T15:25:48+02:00
 
-app = "backend-progressively"
+app = "frontend-progressively"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
 
-[build]
-  builder = "heroku/buildpacks:20"
-
 [env]
   PORT = "8080"
-  REFRESH_TOKEN_EXPIRES = 84600
-  SMTP_PORT = 587
-  SMTP_SECURE = true
-  FRONTEND_URL = "frontend-progressively.fly.dev"
-  SOCKET_TIMEOUT = 10000
-  ALLOW_REGISTRATION = true
-  THROTTLING_TTL = 10
-  THROTTLING_LIMIT = 10000
   BACKEND_URL = "backend-progressively.fly.dev"
+  ALLOW_REGISTRATION=true
 
 [experimental]
   allowed_public_ports = []
