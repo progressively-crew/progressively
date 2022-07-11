@@ -16,7 +16,6 @@ import { Roles } from '../shared/decorators/Roles';
 import { UserRoles } from '../users/roles';
 import { HasEnvironmentAccessGuard } from './guards/hasEnvAccess';
 import { ValidationPipe } from '../shared/pipes/ValidationPipe';
-import { FlagsService } from '../flags/flags.service';
 import { FlagAlreadyExists } from './errors';
 import { FlagCreationSchema, FlagCreationDTO } from '../flags/flags.dto';
 import { AbService } from '../ab/ab.service';
@@ -30,7 +29,6 @@ import { ExperimentAlreadyExists } from '../ab/errors';
 export class EnvironmentsController {
   constructor(
     private readonly envService: EnvironmentsService,
-    private readonly flagService: FlagsService,
     private readonly abService: AbService,
   ) {}
 
@@ -41,7 +39,7 @@ export class EnvironmentsController {
   @UseGuards(HasEnvironmentAccessGuard)
   @UseGuards(JwtAuthGuard)
   getFlagsByProjectAndEnv(@Param('envId') envId: string) {
-    return this.flagService.flagsByEnv(envId);
+    return this.envService.flagsByEnv(envId);
   }
 
   /**

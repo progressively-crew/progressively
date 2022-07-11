@@ -97,6 +97,23 @@ export class EnvironmentsService {
     return flag;
   }
 
+  flagsByEnv(environmentId: string) {
+    return this.prisma.flagEnvironment.findMany({
+      where: {
+        environmentId,
+      },
+      include: {
+        flag: true,
+        environment: true,
+      },
+      orderBy: {
+        flag: {
+          createdAt: 'desc',
+        },
+      },
+    });
+  }
+
   async changeFlagForEnvStatus(
     environmentId: string,
     flagId: string,
