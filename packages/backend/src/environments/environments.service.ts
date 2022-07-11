@@ -137,32 +137,6 @@ export class EnvironmentsService {
     });
   }
 
-  async changeExperimentForEnvStatus(
-    environmentId: string,
-    experimentId: string,
-    status: ExperimentStatus,
-  ) {
-    return this.prisma.experimentEnvironment.update({
-      where: {
-        experimentId_environmentId: {
-          experimentId,
-          environmentId,
-        },
-      },
-      data: {
-        status,
-      },
-      include: {
-        environment: true,
-        experiment: {
-          include: {
-            variants: true,
-          },
-        },
-      },
-    });
-  }
-
   async deleteEnv(envId: string) {
     const flagEnvs = await this.prisma.flagEnvironment.findMany({
       where: {

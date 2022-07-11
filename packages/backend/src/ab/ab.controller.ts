@@ -25,14 +25,12 @@ import {
   PopulatedExperimentEnv,
 } from './types';
 import { strToExperimentStatus } from './utils';
-import { EnvironmentsService } from '../environments/environments.service';
 import { WebsocketGateway } from '../websocket/websocket.gateway';
 
 @Controller()
 export class AbController {
   constructor(
     private readonly abService: AbService,
-    private readonly envService: EnvironmentsService,
     private readonly wsGateway: WebsocketGateway,
   ) {}
 
@@ -125,7 +123,7 @@ export class AbController {
     }
 
     const updatedExperimentEnv =
-      await this.envService.changeExperimentForEnvStatus(
+      await this.abService.changeExperimentForEnvStatus(
         envId,
         experimentId,
         status,
