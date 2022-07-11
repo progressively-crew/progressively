@@ -12,7 +12,6 @@ processes = []
   PORT = "8080"
   REFRESH_TOKEN_EXPIRES = 84600
   SMTP_PORT = 587
-  SMTP_SECURE = true
   FRONTEND_URL = "https://progressively.app"
   SOCKET_TIMEOUT = 10000
   ALLOW_REGISTRATION = "true"
