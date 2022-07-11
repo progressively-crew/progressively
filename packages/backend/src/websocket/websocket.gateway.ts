@@ -9,24 +9,18 @@ import { URL } from 'url';
 import { Rooms } from './rooms';
 import { LocalWebsocket, Subscriber } from './types';
 import { RedisService } from './redis.service';
-import { FlagsService } from '../flags/flags.service';
 import { PopulatedFlagEnv } from '../flags/types';
 import { PopulatedExperimentEnv } from '../ab/types';
-import { AbService } from '../ab/ab.service';
 
 @WebSocketGateway(4001)
 export class WebsocketGateway
   implements OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit
 {
   private rooms: Rooms;
-  private subscribers: Array<Subscriber>;
+  private subscribers: Array<Subscriber<unknown>>;
   private heartBeatIntervalId: NodeJS.Timer;
 
-  constructor(
-    private readonly redisService: RedisService,
-    private readonly flagService: FlagsService,
-    private readonly abService: AbService,
-  ) {
+  constructor(private readonly redisService: RedisService) {
     this.rooms = new Rooms();
     this.subscribers = [];
   }
@@ -76,35 +70,29 @@ export class WebsocketGateway
 
       this.rooms.join(clientKey, socket);
 
-      this.redisService.subscribe(
-        clientKey,
-        (nextEntity: PopulatedExperimentEnv | PopulatedFlagEnv) => {
-          const sockets = this.rooms.getSockets(clientKey);
-
-          if (nextEntity._type === 'Flag') {
-            for (const socket of sockets) {
-              const updatedFlag = this.flagService.resolveFlagStatusRecord(
-                nextEntity,
-                socket.__FIELDS,
-              );
-
-              this.rooms.emit(socket, updatedFlag);
-            }
-          } else if (nextEntity._type === 'Experiment') {
-            const experimentStatusRecord =
-              this.abService.resolveExperimentVariantValue(
-                nextEntity,
-                socket.__FIELDS,
-              );
-
-            this.rooms.emit(socket, experimentStatusRecord);
-          }
-        },
-      );
+      this.initRedisSubscription(clientKey, socket);
     }
   }
 
-  register(subscriber: Subscriber) {
+  initRedisSubscription(clientKey: string, connectedSocket: LocalWebsocket) {
+    this.redisService.subscribe(clientKey, (subscribedEntity: unknown) => {
+      const sockets = this.rooms.getSockets(clientKey);
+      for (const sock of sockets) {
+        for (const subscriber of this.subscribers) {
+          const nextEntity = subscriber(
+            subscribedEntity,
+            connectedSocket.__FIELDS,
+          );
+
+          if (nextEntity) {
+            this.rooms.emit(sock, nextEntity);
+          }
+        }
+      }
+    });
+  }
+
+  registerSubscriptionHandler<T>(subscriber: Subscriber<T>) {
     this.subscribers.push(subscriber);
   }
 
