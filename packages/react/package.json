@@ -11,6 +11,7 @@
   "types": "./lib",
   "scripts": {
     "build": "rollup -c rollup.config.js",
+    "build:dev": "npm run build -- --environment BUILD:development",
     "test": "jest",
     "bundlesize": "bundlesize --enable-github-checks"
   },
@@ -47,7 +48,7 @@
     },
     {
       "path": "./lib/legacy/index.js",
-      "maxSize": "1.06 kB"
+      "maxSize": "1.1 kB"
     },
     {
       "path": "./lib/ssr.js",

@@ -1,17 +1,21 @@
 /** For internal usage only, don't export it. For usage in application, make sure to use useFlags */
 import { FlagDict, ProgressivelySdkType } from "@progressively/sdk-js";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const useFlagInit = (
   sdkRef: React.MutableRefObject<ProgressivelySdkType>,
   initialFlags?: FlagDict
 ) => {
+  const alreadyConnected = useRef(false);
   const [isLoading, setIsLoading] = useState(!initialFlags);
   const [error, setError] = useState<any>();
   const [flags, setFlags] = useState<FlagDict>(initialFlags || {});
 
-  // Only run the effect on mount, NEVER later
   useEffect(() => {
+    // React 18 fires effects twice in strict / dev mode, this one prevent the second call
+    // from connecting the socket another time and break it
+    if (alreadyConnected.current) return;
+
     const sdk = sdkRef.current;
 
     // Early return the client side fetch when they are resolved on the server
@@ -22,7 +26,14 @@ export const useFlagInit = (
         ?.split("=")[1];
 
       sdk.onFlagUpdate(setFlags, cookieValue);
-      return () => sdk.disconnect();
+
+      return () => {
+        if (alreadyConnected.current) {
+          sdk.disconnect();
+        } else {
+          alreadyConnected.current = true;
+        }
+      };
     }
 
     const ctrl = new AbortController();
@@ -40,8 +51,12 @@ export const useFlagInit = (
       .catch(setError);
 
     return () => {
-      ctrl.abort();
-      sdk.disconnect();
+      if (alreadyConnected.current) {
+        sdk.disconnect();
+        ctrl.abort();
+      } else {
+        alreadyConnected.current = true;
+      }
     };
   }, []);
 

@@ -48,3 +48,27 @@ Cypress.Commands.add("changeFlagStatus", (envId, flagId, status) => {
     });
   });
 });
+
+Cypress.Commands.add(
+  "changeExperimentStatus",
+  (envId, experimentId, status) => {
+    // Auth with the admin
+    cy.request("POST", "http://localhost:4000/auth/login", {
+      username: "marvin.frachet@something.com",
+      password: "password",
+    }).then((res) => {
+      const { access_token } = res.body;
+
+      return cy.request({
+        url: `http://localhost:4000/environments/${envId}/experiments/${experimentId}`,
+        method: "PUT",
+        body: {
+          status,
+        },
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+    });
+  }
+);
