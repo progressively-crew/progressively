@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CryptoService } from '../crypto/crypto.service';
-import { PrismaService } from '../prisma.service';
+import { PrismaService } from '../database/prisma.service';
 import { UserStatus } from '../users/status';
 
 @Injectable()

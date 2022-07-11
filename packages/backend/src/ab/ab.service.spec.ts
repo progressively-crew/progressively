@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PrismaService } from '../prisma.service';
+import { PrismaService } from '../database/prisma.service';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { AbService } from './ab.service';
 import { ExperimentStatus, PopulatedExperimentEnv } from './types';

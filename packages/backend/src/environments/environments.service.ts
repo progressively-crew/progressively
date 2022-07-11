@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import camelcase from 'camelcase';
-import { PrismaService } from '../prisma.service';
+import { PrismaService } from '../database/prisma.service';
 import { FlagAlreadyExists, ExperimentAlreadyExists } from './errors';
 
 @Injectable()

@@ -16,8 +16,8 @@ import { StrategyModule } from './strategy/strategy.module';
 import { AppLoggerMiddleware } from './logging.middleware';
 import { AbModule } from './ab/ab.module';
 import { SdkModule } from './sdk/sdk.module';
-import { PrismaService } from './prisma.service';
 import { MailModule } from './mail/mail.module';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
@@ -51,10 +51,10 @@ import { MailModule } from './mail/mail.module';
     AbModule,
     SdkModule,
     MailModule,
+    DatabaseModule,
   ],
-  providers: [AppService, PrismaService],
+  providers: [AppService],
   controllers: [EnvironmentsController],
-  exports: [PrismaService],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {

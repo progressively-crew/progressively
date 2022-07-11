@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { StrategyService } from '../strategy/strategy.service';
-import { PrismaService } from '../prisma.service';
+import { PrismaService } from '../database/prisma.service';
 import { FlagStatus } from './flags.status';
 import { FlagHitsRetrieveDTO, PopulatedFlagEnv } from './types';
 import { FieldRecord } from '../strategy/types';

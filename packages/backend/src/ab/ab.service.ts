@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import camelcase from 'camelcase';
 import { FieldRecord } from '../strategy/types';
-import { PrismaService } from '../prisma.service';
+import { PrismaService } from '../database/prisma.service';
 import { VariantAlreadyExists } from './errors';
 import { ExperimentStatus, PopulatedExperimentEnv, VariantHit } from './types';
 import { isInBucket } from '../strategy/utils';
