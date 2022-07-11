@@ -7,7 +7,7 @@ processes = []
 
 [env]
   PORT = "8080"
-  BACKEND_URL = "https://backend-progressively.fly.dev"
+  BACKEND_URL = "https://api.progressively.app"
   ALLOW_REGISTRATION = "true"
 
 [experimental]
