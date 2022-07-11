@@ -3,7 +3,7 @@ import camelcase from 'camelcase';
 import { FieldRecord } from '../strategy/types';
 import { VariantAlreadyExists } from './errors';
 import { ExperimentStatus, PopulatedExperimentEnv, VariantHit } from './types';
-import { isInBucket } from '../strategy/utils';
+import { genBucket, isInBucket, isInRange } from '../strategy/utils';
 import { PrismaService } from '../database/prisma.service';
 
 @Injectable()
@@ -110,15 +110,21 @@ export class AbService {
       return controlVariant?.key;
     }
 
-    const userId = fields.id;
+    const userId = String(fields.id);
     const experimentKey = experimentEnv.experiment.key;
     const rolloutPercentage = 100 / variants.length;
 
-    const resolvedVariant = variants.find((variant) => {
-      const key = `${experimentKey}-${variant.key}`;
+    const resolvedVariant = variants
+      .map((variant) => ({
+        ...variant,
+        bucket: genBucket(`${experimentKey}-${variant.key}`, userId),
+      }))
+      .sort((a, b) => b.bucket - a.bucket)
+      .find((variant, index) => {
+        const percentageRange = rolloutPercentage * (index + 1);
 
-      return isInBucket(key, String(userId), rolloutPercentage);
-    });
+        return isInRange(variant.bucket, percentageRange);
+      });
 
     return resolvedVariant?.key || controlVariant?.key;
   }

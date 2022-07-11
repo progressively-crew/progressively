@@ -42,7 +42,7 @@ describe('AbService', () => {
         name: 'First experient',
         createdAt: new Date('1992-06-21'),
         description: 'First experiment description',
-        key: 'firstExperiment',
+        key: 'fepfjzpejfpzejfpzejfpezj',
         variants: [
           {
             uuid: '1',
@@ -61,6 +61,15 @@ describe('AbService', () => {
             experimentUuid: '1',
             isControl: false,
             key: 'alternative',
+          },
+          {
+            uuid: '3',
+            name: 'Other',
+            description: 'Alternative description',
+            createdAt: new Date('1992-06-21'),
+            experimentUuid: '1',
+            isControl: false,
+            key: 'a',
           },
         ],
       },
@@ -94,22 +103,34 @@ describe('AbService', () => {
     });
 
     describe('activated', () => {
-      it('returns the alternative variant when targeting it', () => {
+      it('returns the control variant over the 6666', () => {
         const variantKey = service.resolveExperimentVariantValue(
           experimentEnv,
           { id: '1' },
         );
 
+        // bucket is 9778 which is over 6666 (over 66% of the range from the ordered variant list)
         expect(variantKey).toEqual('alternative');
       });
 
-      it('returns the control variant when targeting it', () => {
+      it('returns the alternative variant between 3333 and 6666', () => {
+        const variantKey = service.resolveExperimentVariantValue(
+          experimentEnv,
+          { id: '10' },
+        );
+
+        // bucket is 4830 which is over 3333 and below 6666
+        expect(variantKey).toEqual('alternative');
+      });
+
+      it('returns the a variant when bucket is below 3333', () => {
         const variantKey = service.resolveExperimentVariantValue(
           experimentEnv,
           { id: '2' },
         );
 
-        expect(variantKey).toEqual('control');
+        // bucket is 2630 which is below 3333
+        expect(variantKey).toEqual('a');
       });
     });
   });
