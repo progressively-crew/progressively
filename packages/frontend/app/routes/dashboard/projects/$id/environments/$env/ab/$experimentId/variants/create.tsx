@@ -37,14 +37,15 @@ interface MetaArgs {
   data?: {
     project?: Project;
     environment?: Environment;
-    experiment?: Experiment;
+    experimentEnv?: Experiment;
   };
 }
 
 export const meta: MetaFunction = ({ data }: MetaArgs) => {
   const projectName = data?.project?.name || "An error ocurred";
   const envName = data?.environment?.name || "An error ocurred";
-  const experimentName = data?.experiment?.name || "An error ocurred";
+  const experimentName =
+    data?.experimentEnv?.experiment?.name || "An error ocurred";
 
   return {
     title: `Progressively | ${projectName} | ${envName} | ${experimentName} | Variants | Create`,
@@ -55,7 +56,7 @@ interface LoaderData {
   project: Project;
   user: User;
   environment: Environment;
-  experiment: Experiment;
+  experimentEnv: Experiment;
 }
 
 export const loader: LoaderFunction = async ({
@@ -72,9 +73,13 @@ export const loader: LoaderFunction = async ({
     (env) => env.uuid === params.env
   );
 
-  const experiment = await getExperimentById(params.experimentId!, authCookie);
+  const experimentEnv = await getExperimentById(
+    params.env!,
+    params.experimentId!,
+    authCookie
+  );
 
-  return { project, environment: environment!, user, experiment };
+  return { project, environment: environment!, user, experimentEnv };
 };
 
 interface ActionData {
@@ -124,9 +129,11 @@ export default function CreateVariantPage() {
   const data = useActionData<ActionData>();
   const transition = useTransition();
 
-  const { project, environment, user, experiment } =
+  const { project, environment, user, experimentEnv } =
     useLoaderData<LoaderData>();
   const errors = data?.errors;
+
+  const { experiment } = experimentEnv;
 
   const crumbs: Crumbs = [
     {

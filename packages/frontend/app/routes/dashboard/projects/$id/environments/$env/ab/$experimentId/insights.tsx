@@ -9,16 +9,14 @@ import { getSession } from "~/sessions";
 import { Header } from "~/components/Header";
 import { Section, SectionHeader } from "~/components/Section";
 import { AiOutlineExperiment } from "react-icons/ai";
-import { ButtonCopy } from "~/components/ButtonCopy";
 import { Typography } from "~/components/Typography";
 import { Spacer } from "~/components/Spacer";
 import { EmptyState } from "~/components/EmptyState";
 import { Crumbs } from "~/components/Breadcrumbs/types";
-import { HideMobile } from "~/components/HideMobile";
 import { MetaFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { getExperimentById } from "~/modules/ab/services/getExperimentById";
-import { Experiment } from "~/modules/ab/types";
+import { Experiment, ExperimentStatus } from "~/modules/ab/types";
 import { AbNavBar } from "~/modules/ab/components/AbNavBar";
 import { getExperimentHits } from "~/modules/ab/services/getExperimentHits";
 import { theme } from "~/stitches.config";
@@ -26,18 +24,20 @@ import { ChartVariant, LineChart } from "~/components/LineChart";
 import { SwitchButton } from "~/components/Buttons/SwitchButton";
 import { useState } from "react";
 import { BigState } from "~/components/BigStat";
+import { ExperimentHeaderAction } from "~/modules/ab/components/ExperimentHeaderAction";
 
 interface MetaArgs {
   data?: {
     project?: Project;
     environment?: Environment;
-    experiment?: Experiment;
+    experimentEnv?: Experiment;
   };
 }
 export const meta: MetaFunction = ({ data }: MetaArgs) => {
   const projectName = data?.project?.name || "An error ocurred";
   const envName = data?.environment?.name || "An error ocurred";
-  const experimentName = data?.experiment?.name || "An error ocurred";
+  const experimentName =
+    data?.experimentEnv?.experiment?.name || "An error ocurred";
 
   return {
     title: `Progressively | ${projectName} | ${envName} | ${experimentName} | Insights`,
@@ -49,7 +49,7 @@ interface LoaderData {
   environment: Environment;
   user: User;
   hits: Array<any>; // dynamic key shapes
-  experiment: Experiment;
+  experimentEnv: Experiment;
 }
 
 export const loader: LoaderFunction = async ({
@@ -71,21 +71,28 @@ export const loader: LoaderFunction = async ({
     (env) => env.uuid === params.env
   );
 
-  const experiment = await getExperimentById(params.experimentId!, authCookie);
+  const experimentEnv = await getExperimentById(
+    params.env!,
+    params.experimentId!,
+    authCookie
+  );
 
   return {
     project,
     environment: environment!,
     user,
     hits,
-    experiment,
+    experimentEnv,
   };
 };
 
 export default function ExperimentInsights() {
   const [chartVariant, setChartVariant] = useState<ChartVariant>("chart");
-  const { project, environment, user, hits, experiment } =
+  const { project, environment, user, hits, experimentEnv } =
     useLoaderData<LoaderData>();
+
+  const { status, experiment } = experimentEnv;
+  const isExperimentActivated = status === ExperimentStatus.ACTIVATED;
 
   const crumbs: Crumbs = [
     {
@@ -117,9 +124,10 @@ export default function ExperimentInsights() {
           tagline="A/B experiment"
           title={experiment.name}
           startAction={
-            <HideMobile>
-              <ButtonCopy toCopy={experiment.key}>{experiment.key}</ButtonCopy>
-            </HideMobile>
+            <ExperimentHeaderAction
+              experimentKey={experiment.key}
+              isExperimentActivated={isExperimentActivated}
+            />
           }
         />
       }

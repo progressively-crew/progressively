@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import camelcase from 'camelcase';
 import { FieldRecord } from '../strategy/types';
-import { PrismaService } from '../database/prisma.service';
 import { VariantAlreadyExists } from './errors';
 import { ExperimentStatus, PopulatedExperimentEnv, VariantHit } from './types';
 import { isInBucket } from '../strategy/utils';
+import { PrismaService } from '../database/prisma.service';
 
 @Injectable()
 export class AbService {
@@ -37,13 +37,16 @@ export class AbService {
     return roles.includes(experimentOfProject.role);
   }
 
-  getExperimentById(experimentId: string) {
-    return this.prisma.experiment.findFirst({
+  getExperimentById(envId: string, experimentId: string) {
+    return this.prisma.experimentEnvironment.findFirst({
       where: {
-        uuid: experimentId,
+        experimentId,
+        environmentId: envId,
       },
       include: {
-        variants: true,
+        experiment: {
+          include: { variants: true },
+        },
       },
     });
   }

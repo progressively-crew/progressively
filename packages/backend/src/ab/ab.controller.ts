@@ -34,11 +34,14 @@ export class AbController {
     private readonly wsGateway: WebsocketGateway,
   ) {}
 
-  @Get('experiments/:experimentId')
+  @Get('environments/:envId/experiments/:experimentId')
   @UseGuards(HasExperimentAccess)
   @UseGuards(JwtAuthGuard)
-  getStrategies(@Param('experimentId') experimentId: string): Promise<any> {
-    return this.abService.getExperimentById(experimentId);
+  getStrategies(
+    @Param('experimentId') experimentId: string,
+    @Param('envId') envId: string,
+  ): Promise<any> {
+    return this.abService.getExperimentById(envId, experimentId);
   }
 
   @Get('experiments/:experimentId/hits')

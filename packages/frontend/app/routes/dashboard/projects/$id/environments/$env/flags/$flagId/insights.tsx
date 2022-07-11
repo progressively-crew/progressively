@@ -14,11 +14,7 @@ import { AiOutlineBarChart, AiOutlineSetting } from "react-icons/ai";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { FaPowerOff } from "react-icons/fa";
 import { getFlagHits } from "~/modules/flags/services/getFlagHits";
-import {
-  toggleAction,
-  ToggleFlag,
-} from "~/modules/flags/components/ToggleFlag";
-import { ButtonCopy } from "~/components/ButtonCopy";
+import { toggleAction } from "~/modules/flags/components/ToggleFlag";
 import { BigState } from "~/components/BigStat";
 import { Typography } from "~/components/Typography";
 import { styled, theme } from "~/stitches.config";
@@ -28,10 +24,10 @@ import { useState } from "react";
 import { SwitchButton } from "~/components/Buttons/SwitchButton";
 import { EmptyState } from "~/components/EmptyState";
 import { Crumbs } from "~/components/Breadcrumbs/types";
-import { HideMobile } from "~/components/HideMobile";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { FiFlag } from "react-icons/fi";
+import { FlagHeaderAction } from "~/modules/flags/components/FlagHeaderAction";
 
 interface MetaArgs {
   data?: {
@@ -172,14 +168,10 @@ export default function FlagById() {
           tagline="Feature flag"
           title={currentFlag.name}
           startAction={
-            <>
-              <ToggleFlag isFlagActivated={isFlagActivated} />
-              <HideMobile>
-                <ButtonCopy toCopy={currentFlag.key}>
-                  {currentFlag.key}
-                </ButtonCopy>
-              </HideMobile>
-            </>
+            <FlagHeaderAction
+              flagKey={currentFlag.key}
+              isFlagActivated={isFlagActivated}
+            />
           }
         />
       }

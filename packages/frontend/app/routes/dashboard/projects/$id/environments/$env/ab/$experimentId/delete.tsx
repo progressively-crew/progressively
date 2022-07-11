@@ -38,14 +38,15 @@ interface MetaArgs {
   data?: {
     project?: Project;
     environment?: Environment;
-    experiment?: Experiment;
+    experimentEnv?: Experiment;
   };
 }
 
 export const meta: MetaFunction = ({ data }: MetaArgs) => {
   const projectName = data?.project?.name || "An error ocurred";
   const envName = data?.environment?.name || "An error ocurred";
-  const experimentName = data?.experiment?.name || "An error ocurred";
+  const experimentName =
+    data?.experimentEnv?.experiment?.name || "An error ocurred";
 
   return {
     title: `Progressively | ${projectName} | ${envName} | ${experimentName} | Settings | Delete`,
@@ -58,7 +59,7 @@ interface LoaderData {
   environment: Environment;
   userRole?: UserRoles;
   user: User;
-  experiment: Experiment;
+  experimentEnv: Experiment;
 }
 
 export const loader: LoaderFunction = async ({
@@ -79,7 +80,11 @@ export const loader: LoaderFunction = async ({
     (userProject) => userProject.userId === user.uuid
   );
 
-  const experiment = await getExperimentById(params.experimentId!, authCookie);
+  const experimentEnv = await getExperimentById(
+    params.env!,
+    params.experimentId!,
+    authCookie
+  );
 
   const adminOfProject = (project?.userProject || [])
     ?.filter((up) => up.role === UserRoles.Admin)
@@ -91,7 +96,7 @@ export const loader: LoaderFunction = async ({
     userRole: userProject?.role,
     adminOfProject,
     user,
-    experiment,
+    experimentEnv,
   };
 };
 
@@ -128,9 +133,17 @@ export const action: ActionFunction = async ({
 export default function DeleteExperimentPage() {
   const transition = useTransition();
 
-  const { project, userRole, experiment, adminOfProject, environment, user } =
-    useLoaderData<LoaderData>();
+  const {
+    project,
+    userRole,
+    experimentEnv,
+    adminOfProject,
+    environment,
+    user,
+  } = useLoaderData<LoaderData>();
   const data = useActionData<ActionData>();
+
+  const { experiment } = experimentEnv;
 
   const crumbs: Crumbs = [
     {

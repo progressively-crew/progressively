@@ -24,15 +24,15 @@ describe('AbController (e2e)', () => {
     await cleanupDb();
   });
 
-  describe('experiments/1 (GET)', () => {
+  describe('/environments/1/experiments/1 (GET)', () => {
     it('gives a 401 when the user is not authenticated', () =>
-      verifyAuthGuard(app, '/experiments/1', 'get'));
+      verifyAuthGuard(app, '/environments/1/experiments/1', 'get'));
 
     it('gives a 403 when trying to access an invalid experiment', async () => {
       const access_token = await authenticate(app);
 
       return request(app.getHttpServer())
-        .get('/experiments/2')
+        .get('/environments/1/experiments/2')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(403)
         .expect({
@@ -46,16 +46,20 @@ describe('AbController (e2e)', () => {
       const access_token = await authenticate(app);
 
       const response = await request(app.getHttpServer())
-        .get('/experiments/1')
+        .get('/environments/1/experiments/1')
         .set('Authorization', `Bearer ${access_token}`);
 
-      expect(response.status).toBe(200);
-      expect(response.body.uuid).toBe('1');
-      expect(response.body.name).toBe('New homepage experiment');
-      expect(response.body.key).toBe('newHomepageExperiment');
+      const experiment = response.body.experiment;
+      const status = response.body.status;
 
-      expect(response.body.createdAt).toBeDefined();
-      expect(response.body.variants).toMatchObject([
+      expect(response.status).toBe(200);
+
+      expect(status).toBe('ACTIVATED');
+      expect(experiment.uuid).toBe('1');
+      expect(experiment.name).toBe('New homepage experiment');
+      expect(experiment.key).toBe('newHomepageExperiment');
+      expect(experiment.createdAt).toBeDefined();
+      expect(experiment.variants).toMatchObject([
         {
           uuid: '1',
           key: 'control',
@@ -260,7 +264,7 @@ describe('AbController (e2e)', () => {
         .get('/experiments/1')
         .set('Authorization', `Bearer ${access_token}`);
 
-      expect(getResponse.status).toBe(403);
+      expect(getResponse.status).toBe(404);
     });
   });
 
