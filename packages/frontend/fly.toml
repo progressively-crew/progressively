@@ -8,7 +8,7 @@ processes = []
 [env]
   PORT = "8080"
   BACKEND_URL = "https://api.progressively.app"
-  ALLOW_REGISTRATION = "true"
+  ALLOW_REGISTRATION = "false"
 
 [experimental]
   allowed_public_ports = []
