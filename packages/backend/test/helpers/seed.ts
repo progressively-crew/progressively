@@ -12,7 +12,7 @@ export const seedDb = async () => {
 
   try {
     // Initial seeding
-    const [marvin, john, , , withoutFullName] = await seedUsers(prismaClient);
+    const [marvin, john] = await seedUsers(prismaClient);
     const [projectFromSeeding, otherFromSeeding] = await seedProjects(
       prismaClient,
     );

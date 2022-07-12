@@ -1,0 +1,50 @@
+# fly.toml file generated for backend-progressively on 2022-07-11T15:08:21+02:00
+
+app = "backend-progressively"
+kill_signal = "SIGINT"
+kill_timeout = 5
+processes = []
+
+[build]
+  builder = "heroku/buildpacks:20"
+
+[env]
+  PORT = "8080"
+  REFRESH_TOKEN_EXPIRES = 84600
+  SMTP_PORT = 587
+  FRONTEND_URL = "https://progressively.app"
+  SOCKET_TIMEOUT = 10000
+  ALLOW_REGISTRATION = "false"
+  THROTTLING_TTL = 10
+  THROTTLING_LIMIT = 10000
+  BACKEND_URL = "https://api.progressively.app"
+
+[experimental]
+  allowed_public_ports = []
+  auto_rollback = true
+
+[[services]]
+  http_checks = []
+  internal_port = 4000
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
+
+  [[services.ports]]
+    force_https = true
+    handlers = ["http"]
+    port = 80
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
+
+  [[services.tcp_checks]]
+    grace_period = "1s"
+    interval = "15s"
+    restart_limit = 0
+    timeout = "2s"

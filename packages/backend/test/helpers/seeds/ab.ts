@@ -31,7 +31,7 @@ export const seedAbExperiments = async (prismaClient: PrismaClient) => {
     },
   });
 
-  const otherExperiment = await prismaClient.experiment.create({
+  await prismaClient.experiment.create({
     data: {
       uuid: '2',
       name: 'New other experiment',

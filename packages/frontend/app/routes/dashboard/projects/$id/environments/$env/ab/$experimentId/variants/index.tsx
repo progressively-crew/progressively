@@ -9,7 +9,6 @@ import { getSession } from "~/sessions";
 import { Header } from "~/components/Header";
 import { Section, SectionHeader } from "~/components/Section";
 import { AiOutlineExperiment } from "react-icons/ai";
-import { ButtonCopy } from "~/components/ButtonCopy";
 import { Typography } from "~/components/Typography";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { MetaFunction, LoaderFunction, ActionFunction } from "@remix-run/node";

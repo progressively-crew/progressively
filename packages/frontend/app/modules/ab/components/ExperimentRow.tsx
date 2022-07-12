@@ -5,7 +5,6 @@ import { Link } from "~/components/Link";
 import { styled } from "~/stitches.config";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { HideMobile } from "~/components/HideMobile";
-import { Tag } from "~/components/Tag";
 
 const Wrapper = styled("div", {
   display: "grid",

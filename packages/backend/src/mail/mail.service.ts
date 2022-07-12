@@ -10,10 +10,13 @@ export class MailService {
     this.transporter = nodemailer.createTransport({
       host: Smtp.host,
       port: Smtp.port,
-      secure: Smtp.secure,
+      secure: false,
       auth: {
         user: Smtp.user,
         pass: Smtp.password,
+      },
+      tls: {
+        ciphers: 'SSLv3',
       },
     });
   }
@@ -28,19 +31,19 @@ export class MailService {
       to,
       subject: '[Progressively] Activate your new user', // Subject line
       html: `<div>
-        <h1>Hello ${fullname}</h1>
-        <p>You've recently created a new user on Progressively.</p>
-        <p>
-          In order for it to be activated, you would need to follow this link:
-          <a
-            href="${process.env.BACKEND_URL}/auth/activate/${activationToken}"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            ${process.env.BACKEND_URL}/auth/activate/${activationToken}</a
-          >
-        </p>
-      </div>`,
+          <h1>Hello ${fullname}</h1>
+          <p>You've recently created a new user on Progressively.</p>
+          <p>
+            In order for it to be activated, you would need to follow this link:
+            <a
+              href="${process.env.BACKEND_URL}/auth/activate/${activationToken}"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              ${process.env.BACKEND_URL}/auth/activate/${activationToken}</a
+            >
+          </p>
+        </div>`,
     });
   }
 
