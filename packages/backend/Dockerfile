@@ -17,6 +17,5 @@ COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/scripts ./scripts
 
 EXPOSE 4000
-EXPOSE 4001
 
 CMD [ "npm", "run", "start:prod" ]
