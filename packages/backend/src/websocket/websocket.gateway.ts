@@ -10,7 +10,7 @@ import { Rooms } from './rooms';
 import { LocalWebsocket, Subscriber } from './types';
 import { RedisService } from './redis.service';
 
-@WebSocketGateway(4001)
+@WebSocketGateway()
 export class WebsocketGateway
   implements OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit
 {
