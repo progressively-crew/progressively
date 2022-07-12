@@ -7,7 +7,7 @@
   },
   "scripts": {
     "build": "lerna run build",
-    "db:prepare": "lerna run db:migrate:dev && lerna run db:generate:schema",
+    "db:prepare": "lerna run db:migrate:dev",
     "db:seed": "lerna run db:seed",
     "db:cleanup": "lerna run db:cleanup",
     "setup": "npm i && lerna bootstrap",

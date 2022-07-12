@@ -43,7 +43,7 @@ jobs:
 
       - name: Preparation
         working-directory: ./packages/backend
-        run: mv .env.example .env && npm run db:migrate:dev && npm run db:generate:schema
+        run: mv .env.example .env && npm run db:migrate:dev
 
       - name: Build
         working-directory: ./packages/backend
