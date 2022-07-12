@@ -39,9 +39,7 @@ export const links: LinksFunction = () => {
 export default function App() {
   return (
     <Document>
-      <Background>
-        <Outlet />
-      </Background>
+      <Outlet />
     </Document>
   );
 }
@@ -62,8 +60,7 @@ const Document = ({ children, title }: DocumentProps) => {
         <Links />
       </head>
       <body>
-        {children}
-
+        <Background>{children}</Background>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
