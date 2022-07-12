@@ -1,5 +1,6 @@
 import { styled } from "~/stitches.config";
 import { Link } from "./Link";
+import { Tag } from "./Tag";
 
 export interface LogoProps {
   to?: string;
@@ -24,7 +25,7 @@ const LinkWrapper = styled(Link, {
 export const Logo = ({ to }: LogoProps) => {
   return (
     <LinkWrapper to={to || "/dashboard"}>
-      <span>Progress</span>ively
+      <span>Progress</span>ively <Tag>Alpha</Tag>
     </LinkWrapper>
   );
 };
