@@ -12,12 +12,14 @@ import UnauthorizedPage from "./routes/401";
 import ForbiddenPage from "./routes/403";
 import NotFoundPage from "./routes/404";
 import styles from "./styles/index.css";
-import { NotAuthenticatedLayout } from "./layouts/NotAuthenticatedLayout";
 import { H1 } from "./components/H1";
 import { Main } from "./components/Main";
 import { Button } from "./components/Buttons/Button";
 import { Background } from "./components/Background";
 import { LinksFunction } from "@remix-run/node";
+import { ErrorLayout } from "./layouts/ErrorLayout";
+import { Typography } from "./components/Typography";
+import { Spacer } from "./components/Spacer";
 
 /**
  * The `links` export is a function that returns an array of objects that map to
@@ -105,15 +107,16 @@ export function ErrorBoundary({ error }: { error: Error }) {
   return (
     <Document title="Error!">
       <Layout>
-        <NotAuthenticatedLayout>
+        <ErrorLayout>
           <Main>
             <H1>Outch, a wild error appeared!</H1>
 
-            <p>{error.message}</p>
+            <Typography>{error.message}</Typography>
+            <Spacer size={4} />
 
             <Button to="/signin">Signin page</Button>
           </Main>
-        </NotAuthenticatedLayout>
+        </ErrorLayout>
       </Layout>
     </Document>
   );
