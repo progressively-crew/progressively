@@ -1,7 +1,8 @@
 import { Container } from "~/components/Container";
-import { Logo } from "~/components/Logo";
 import { Main } from "~/components/Main";
+import { Menu } from "~/components/Menu";
 import { Nav } from "~/components/Nav";
+import { Spacer } from "~/components/Spacer";
 import { Stack } from "~/components/Stack";
 import { styled } from "~/stitches.config";
 
@@ -29,8 +30,10 @@ export const NotAuthenticatedLayout = ({
   return (
     <div>
       <Nav aria-label="General">
-        <Logo to="/signin" hideOnMobile />
+        <Menu to="/signin" hideOnMobile />
       </Nav>
+
+      <Spacer size={5} />
 
       <Main>
         <Container>

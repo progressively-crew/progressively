@@ -1,4 +1,3 @@
-import { Logo } from "~/components/Logo";
 import { Main } from "~/components/Main";
 import { User } from "~/modules/user/types";
 import { UseDropdown } from "~/modules/user/components/UserDropdown";
@@ -8,6 +7,7 @@ import { Nav } from "~/components/Nav";
 import { Spacer } from "~/components/Spacer";
 import { NavProvider } from "~/components/Breadcrumbs/providers/NavProvider";
 import { InertWhenNavOpened } from "~/components/Breadcrumbs/InertWhenNavOpened";
+import { Menu } from "~/components/Menu";
 
 export interface DashboardLayoutProps {
   user?: Partial<User>;
@@ -33,10 +33,12 @@ export const DashboardLayout = ({
           <SkipNavLink>Skip to content</SkipNavLink>
 
           <Nav aria-label="General">
-            <Logo hideOnMobile={!breadcrumb} />
+            <Menu hideOnMobile={!breadcrumb} />
 
             {user && user.fullname && <UseDropdown user={user as User} />}
           </Nav>
+
+          <Spacer size={5} />
         </InertWhenNavOpened>
 
         {breadcrumb && <Container>{breadcrumb}</Container>}

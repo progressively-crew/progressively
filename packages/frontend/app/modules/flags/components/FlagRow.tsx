@@ -1,14 +1,11 @@
 import React, { useRef } from "react";
-
 import { FlagStatus } from "../types";
-import { Switch } from "~/components/Switch";
 import { Typography } from "~/components/Typography";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { Link } from "~/components/Link";
 import { styled } from "~/stitches.config";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { HideMobile } from "~/components/HideMobile";
-import { Form } from "@remix-run/react";
 
 const Wrapper = styled("div", {
   display: "grid",
@@ -51,7 +48,6 @@ export const FlagRow = ({
   linkTo,
   description,
   title,
-  flagStatus,
   flagKey,
 }: FlagRowProps) => {
   const linkRef = useRef<HTMLAnchorElement>(null);
@@ -70,23 +66,6 @@ export const FlagRow = ({
 
       <HideMobile>
         <ButtonCopy toCopy={flagKey}>{flagKey}</ButtonCopy>
-      </HideMobile>
-
-      <HideMobile>
-        <Form method="post">
-          <input
-            type="hidden"
-            name="nextStatus"
-            value={
-              flagStatus === FlagStatus.ACTIVATED
-                ? FlagStatus.NOT_ACTIVATED
-                : FlagStatus.ACTIVATED
-            }
-          />
-          <input type="hidden" name="flagId" value={id} />
-
-          <Switch checked={flagStatus === FlagStatus.ACTIVATED} />
-        </Form>
       </HideMobile>
     </Wrapper>
   );
