@@ -12,13 +12,17 @@ const Wrapper = styled("span", {
   fontSize: "$btn",
 });
 
+const UserLink = styled(Link, {
+  textDecoration: "none",
+});
+
 export interface UserDropdownProps {
   user: User;
 }
 
 export const UseDropdown = ({ user }: UserDropdownProps) => {
   return (
-    <Link to="/profile">
+    <UserLink to="/profile">
       <Wrapper>
         <Avatar>{user.fullname}</Avatar>
         <VisuallyHidden>{user.fullname}</VisuallyHidden>
@@ -26,6 +30,6 @@ export const UseDropdown = ({ user }: UserDropdownProps) => {
           {user.fullname}
         </HideMobile>
       </Wrapper>
-    </Link>
+    </UserLink>
   );
 };

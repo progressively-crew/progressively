@@ -9,35 +9,9 @@ const RawLink = styled("a", {
   fontFamily: "$default",
   height: "$cta",
   alignItems: "center",
-  textDecoration: "none",
-  position: "relative",
-  overflow: "hidden",
-  padding: "0 $spacing$2",
-  margin: "0 -$spacing$2",
-  borderRadius: "$borderRadius$regular",
-
-  "&:before": {
-    content: "''",
-    background: "$hover",
-    position: "absolute",
-    height: "4px",
-    width: "0%",
-    bottom: "$spacing$1",
-    transition: "width 0.2s",
-  },
-
-  "@media (prefers-reduced-motion: reduce)": {
-    "&:before": { transition: "unset" },
-  },
-
-  "&:hover": {
-    "&:before": {
-      width: "100%",
-    },
-  },
 
   "&:active": {
-    color: "$hover",
+    color: "$title",
   },
 });
 

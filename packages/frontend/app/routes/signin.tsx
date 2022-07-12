@@ -11,6 +11,7 @@ import {
   Form,
   useTransition,
 } from "@remix-run/react";
+import { CreateButton } from "~/components/Buttons/CreateButton";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/ErrorBox";
 import { FormGroup } from "~/components/Fields/FormGroup";
@@ -27,7 +28,6 @@ import { validateSigninForm } from "../modules/auth/validators/validate-signin-f
 
 const ForgotPasswordLink = styled(Link, {
   fontSize: "$btn",
-  color: "$hover",
 });
 
 const SignupLinkWrapper = styled("div", {
