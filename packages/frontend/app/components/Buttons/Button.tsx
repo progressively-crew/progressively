@@ -11,14 +11,18 @@ export const RawButton = styled("button", {
   color: "$title",
   fontSize: "$btn",
   fontFamily: "$default",
-  border: "2px solid $primary",
+  border: "2px solid $hover",
   display: "inline-flex",
   textDecoration: "none",
   height: "$cta",
   cursor: "pointer",
   margin: 0,
-  transition: "all 0.2s",
   textAlign: "left",
+  transition: "all 0.1s",
+
+  "&:hover": {
+    transform: "scale(1.05)",
+  },
 
   "@mobile": {
     justifyContent: "center",

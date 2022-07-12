@@ -10,6 +10,11 @@ const LinkWrapper = styled(Link, {
   letterSpacing: "2px",
   textDecoration: "none",
   color: "$title",
+  transition: "all 0.1s",
+
+  "&:hover": {
+    transform: "scale(1.05)",
+  },
 
   "& span:first-of-type": {
     color: "$hover",
