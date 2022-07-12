@@ -45,6 +45,7 @@ export class AuthController {
   async login(
     @Request() req,
     @Res({ passthrough: true }) res: ExpressResponse,
+    /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
     @Body() _: LoginDTO,
   ) {
     const user = req.user as User;

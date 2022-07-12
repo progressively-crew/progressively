@@ -1,7 +1,6 @@
-import React, { useRef } from "react";
+import React from "react";
 import { Typography } from "~/components/Typography";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
-import { Link } from "~/components/Link";
 import { styled } from "~/stitches.config";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { HideMobile } from "~/components/HideMobile";

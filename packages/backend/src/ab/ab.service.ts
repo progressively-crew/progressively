@@ -3,7 +3,7 @@ import camelcase from 'camelcase';
 import { FieldRecord } from '../strategy/types';
 import { VariantAlreadyExists } from './errors';
 import { ExperimentStatus, PopulatedExperimentEnv, VariantHit } from './types';
-import { genBucket, isInBucket, isInRange } from '../strategy/utils';
+import { genBucket, isInRange } from '../strategy/utils';
 import { PrismaService } from '../database/prisma.service';
 
 @Injectable()

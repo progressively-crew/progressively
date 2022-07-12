@@ -52,7 +52,7 @@ export class AbController {
 
     // hits are ordered by date, using a rupture is possible
     let rupture: string;
-    let ruptureIndex: number = -1;
+    let ruptureIndex = -1;
     const formattedHits = [];
 
     hits.forEach((hit) => {
