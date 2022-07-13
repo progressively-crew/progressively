@@ -45,6 +45,10 @@ const Hero = styled("div", {
   gap: "$spacing$8",
   padding: "$spacing$16 0",
   alignItems: "center",
+
+  "@mobile": {
+    flexDirection: "column",
+  },
 });
 
 const HeadingWrapper = styled("div", {
@@ -192,31 +196,34 @@ export default function Index() {
         </InvertedBackground>
 
         <section aria-labelledby="privacy">
-          <Centered>
-            <div>
-              <H2 id="privacy">People is what matters</H2>
-              <Typography>
-                We do not keep information about your users. Progressively only
-                records the flag and A/B variant resolution to give you insights
-                on what is going on. We do not track the user journey, neither
-                get analytics.
-              </Typography>
-              <Spacer size={8} />
-              <Typography>
-                Also, if you find your experience to be inconsistent or not
-                accessible, please, let us know so that we can improve the tool.
-              </Typography>
+          <Container>
+            <Centered>
+              <div>
+                <H2 id="privacy">People is what matters</H2>
+                <Typography>
+                  We do not keep information about your users. Progressively
+                  only records the flag and A/B variant resolution to give you
+                  insights on what is going on. We do not track the user
+                  journey, neither get analytics.
+                </Typography>
+                <Spacer size={8} />
+                <Typography>
+                  Also, if you find your experience to be inconsistent or not
+                  accessible, please, let us know so that we can improve the
+                  tool.
+                </Typography>
 
-              <Spacer size={8} />
+                <Spacer size={8} />
 
-              <AddButton
-                href="https://github.com/progressively-crew/progressively/issues"
-                target="_blank"
-              >
-                Create a Github issue
-              </AddButton>
-            </div>
-          </Centered>
+                <AddButton
+                  href="https://github.com/progressively-crew/progressively/issues"
+                  target="_blank"
+                >
+                  Create a Github issue
+                </AddButton>
+              </div>
+            </Centered>
+          </Container>
         </section>
 
         <Spacer size={16} />
