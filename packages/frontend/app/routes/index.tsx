@@ -1,5 +1,4 @@
-import { HeadersFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { HeadersFunction, MetaFunction } from "@remix-run/node";
 import { useState } from "react";
 import { Browser } from "~/components/Browser";
 import { AddButton } from "~/components/Buttons/AddButton";
@@ -16,6 +15,7 @@ import { Typography } from "~/components/Typography";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { MarketingLayout } from "~/layouts/MarketingLayout";
 import { styled } from "~/stitches.config";
+import bundleSize from "../progressively-sdk-sizes.json";
 
 const ExampleOldPage = styled("div", {
   padding: "$spacing$4",
@@ -85,24 +85,12 @@ export const headers: HeadersFunction = () => {
   };
 };
 
-export const loader: LoaderFunction = async () => {
-  const response = await fetch(
-    `https://bundlephobia.com/api/size?package=@progressively/react@0.0.1-alpha.6&record=true`
-  );
-
-  const data = await response.json();
-  const gzip = (data.gzip / 1000).toFixed(2);
-  const rawSize = (data.size / 1000).toFixed(2);
-
-  return {
-    gzip,
-    rawSize,
-  };
-};
-
 export default function Index() {
   const [showNewHomepage, setShowNewHomepage] = useState(false);
-  const { gzip, rawSize } = useLoaderData<LoaderData>();
+  const { gzip, size } = bundleSize;
+
+  const gzipFormatted = (gzip / 1000).toFixed(2);
+  const rawSizeFormatted = (size / 1000).toFixed(2);
 
   return (
     <MarketingLayout>
@@ -161,10 +149,14 @@ export default function Index() {
                 aside={
                   <div>
                     <MetricWrapper>
-                      <Metric label="Minified" value={rawSize} unit="kB" />
+                      <Metric
+                        label="Minified"
+                        value={rawSizeFormatted}
+                        unit="kB"
+                      />
                       <Metric
                         label="Minified + Gzipped"
-                        value={gzip}
+                        value={gzipFormatted}
                         unit="kB"
                         highlighted
                       />
