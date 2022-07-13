@@ -1,5 +1,6 @@
 import { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
+import { Browser } from "~/components/Browser";
 import { AddButton } from "~/components/Buttons/AddButton";
 import { Container } from "~/components/Container";
 import { Feature } from "~/components/Feature";
@@ -23,6 +24,12 @@ const Centered = styled("div", {
 
 const InvertedBackground = styled("div", {
   background: "$backgroundAccent",
+  padding: "$spacing$16 0",
+});
+
+const Hero = styled("div", {
+  display: "flex",
+  gap: "$spacing$8",
   padding: "$spacing$16 0",
 });
 
@@ -82,14 +89,18 @@ export default function Index() {
 
       <Stack spacing={16}>
         <Container>
-          <HeadingWrapper>
-            <H1>Feature flags service that does not kill performances</H1>
-            <Typography>
-              Progressively provides simple solutions for feature flagging and
-              A/B testing with an accessible dashboard, lightweight browser SDKs
-              — and it respects your privacy.
-            </Typography>
-          </HeadingWrapper>
+          <Hero>
+            <HeadingWrapper>
+              <H1>Feature flags service that does not kill performances</H1>
+              <Typography>
+                Progressively provides simple solutions for feature flagging and
+                A/B testing with an accessible dashboard, lightweight browser
+                SDKs — and it respects your privacy.
+              </Typography>
+            </HeadingWrapper>
+
+            <Browser>Hello world</Browser>
+          </Hero>
         </Container>
 
         <InvertedBackground>
