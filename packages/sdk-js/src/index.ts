@@ -15,8 +15,8 @@ function init(clientKey: string, options?: SDKOptions): ProgressivelySdkType {
   fields.clientKey = clientKey;
 
   return Sdk(
-    options?.apiUrl || "http://localhost:4000",
-    options?.websocketUrl || "ws://localhost:4000",
+    options?.apiUrl || "https://api.progressively.app",
+    options?.websocketUrl || "wss://api.progressively.app",
     fields,
     options?.initialFlags || {}
   );
