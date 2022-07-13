@@ -87,7 +87,7 @@ export const headers: HeadersFunction = () => {
 
 export const loader: LoaderFunction = async () => {
   const response = await fetch(
-    `https://bundlephobia.com/api/size?package=@progressively/react@0.0.1-alpha.5&record=true`
+    `https://bundlephobia.com/api/size?package=@progressively/react@0.0.1-alpha.6&record=true`
   );
 
   const data = await response.json();
