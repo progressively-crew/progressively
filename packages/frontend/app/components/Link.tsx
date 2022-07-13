@@ -18,12 +18,19 @@ const RawLink = styled("a", {
 export interface LinkProps extends HTMLAttributes<HTMLAnchorElement> {
   to: string;
   children: React.ReactNode;
+  href?: string;
 }
 export const Link = forwardRef(
-  ({ to, children, ...props }: LinkProps, ref: any) => {
+  ({ to, children, href, ...props }: LinkProps, ref: any) => {
     return (
       <div>
-        <RawLink as={RLink} ref={ref} to={to} {...props}>
+        <RawLink
+          as={href ? "a" : RLink}
+          href={href}
+          ref={ref}
+          to={href ? undefined : to}
+          {...props}
+        >
           {children}
         </RawLink>
       </div>

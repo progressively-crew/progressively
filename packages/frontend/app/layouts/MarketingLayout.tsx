@@ -1,6 +1,5 @@
 import { Main } from "~/components/Main";
 import { SkipNavLink } from "~/components/SkipNav";
-import { Container } from "~/components/Container";
 import { Nav } from "~/components/Nav";
 import { Spacer } from "~/components/Spacer";
 import { NavProvider } from "~/components/Breadcrumbs/providers/NavProvider";
@@ -39,9 +38,7 @@ export const MarketingLayout = ({ children }: DashboardLayoutProps) => {
         </InertWhenNavOpened>
 
         <InertWhenNavOpened>
-          <Main>
-            <Container>{children}</Container>
-          </Main>
+          <Main>{children}</Main>
         </InertWhenNavOpened>
       </div>
     </NavProvider>
