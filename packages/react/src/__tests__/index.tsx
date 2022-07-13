@@ -21,7 +21,12 @@ const FlaggedComponent = () => {
 describe("React-sdk root", () => {
   const render = (props?: ProgressivelyProviderProps) =>
     renderTL(
-      <ProgressivelyProvider {...(props || {})} clientKey="valid-sdk-key">
+      <ProgressivelyProvider
+        {...(props || {})}
+        clientKey="valid-sdk-key"
+        websocketUrl="ws://localhost:4000"
+        apiUrl="http://localhost:4000"
+      >
         <FlaggedComponent />
       </ProgressivelyProvider>
     );

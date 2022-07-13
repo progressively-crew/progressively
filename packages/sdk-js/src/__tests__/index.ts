@@ -63,7 +63,10 @@ describe("SDK", () => {
         })
       );
 
-      const sdk = Sdk.init("client-key");
+      const sdk = Sdk.init("client-key", {
+        websocketUrl: "ws://localhost:1234",
+        apiUrl: "http://localhost:4000",
+      });
 
       const { flags } = await sdk.loadFlags();
 
@@ -84,6 +87,8 @@ describe("SDK", () => {
 
       const sdk = Sdk.init("client-key", {
         fields: { email: "john.doe@gmail.com", id: "some-super-cool-id" },
+        websocketUrl: "ws://localhost:1234",
+        apiUrl: "http://localhost:4000",
       });
 
       await sdk.loadFlags();
@@ -99,6 +104,7 @@ describe("SDK", () => {
     it("sets the flag when receiving a valid message when no flags are set", (done) => {
       const sdk = Sdk.init("client-key", {
         websocketUrl: "ws://localhost:1234",
+        apiUrl: "http://localhost:4000",
       });
 
       sendMessage({ hello: true });
@@ -118,6 +124,7 @@ describe("SDK", () => {
 
       const sdk = Sdk.init("client-key", {
         websocketUrl: "ws://localhost:1234",
+        apiUrl: "http://localhost:4000",
       });
 
       sdk.onFlagUpdate((flags) => {
@@ -136,6 +143,7 @@ describe("SDK", () => {
 
       const sdk = Sdk.init("client-key", {
         websocketUrl: "ws://localhost:1234",
+        apiUrl: "http://localhost:4000",
         fields: { email: "john.doe@gmail.com", id: "some-super-cool-id" },
       });
 
@@ -150,6 +158,7 @@ describe("SDK", () => {
 
       const sdk = Sdk.init("client-key", {
         websocketUrl: "ws://localhost:1234",
+        apiUrl: "http://localhost:4000",
         fields: { email: "john.doe@gmail.com", id: "some-super-cool-id" },
       });
 
@@ -164,6 +173,7 @@ describe("SDK", () => {
     it("does nothing", () => {
       const sdk = Sdk.init("client-key", {
         websocketUrl: "ws://localhost:1234",
+        apiUrl: "http://localhost:4000",
       });
 
       sdk.disconnect();
@@ -175,6 +185,7 @@ describe("SDK", () => {
 
       const sdk = Sdk.init("client-key", {
         websocketUrl: "ws://localhost:1234",
+        apiUrl: "http://localhost:4000",
       });
 
       sdk.onFlagUpdate(() => {});
