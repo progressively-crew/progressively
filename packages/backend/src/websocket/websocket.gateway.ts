@@ -56,8 +56,6 @@ export class WebsocketGateway
     const useLessPrefix = `http://localhost`; // just to be able to rely on the URL class
     const searchParams = new URL(`${useLessPrefix}${req.url}`).searchParams;
 
-    console.log('---------wtf', searchParams);
-
     const urlParams = JSON.parse(
       Buffer.from(searchParams.get('opts'), 'base64').toString('ascii'),
     );
