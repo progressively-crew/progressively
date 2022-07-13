@@ -1,7 +1,6 @@
 import { HeadersFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { useState } from "react";
-import { getSSRProps } from "@progressively/react/lib/ssr";
 import { Browser } from "~/components/Browser";
 import { AddButton } from "~/components/Buttons/AddButton";
 import { Container } from "~/components/Container";
@@ -94,29 +93,17 @@ export const loader: LoaderFunction = async () => {
   const gzip = (data.gzip / 1000).toFixed(2);
   const rawSize = (data.size / 1000).toFixed(2);
 
-  // Initialize the flags on the server and pass it to the client
-  const { ssrProps, cookies } = await getSSRProps("valid-sdk-key", {
-    fields: {
-      email: "marvin.frachet@something.com",
-      id: "1",
-    },
-  });
-
   return {
     gzip,
     rawSize,
     reactSdkVersion: reactJson.version,
     packageName: reactJson.name,
-    progressivelyProps: ssrProps,
-    headers: {
-      "Set-Cookie": cookies,
-    },
   };
 };
 
 export default function Index() {
   const [showNewHomepage, setShowNewHomepage] = useState(false);
-  const { gzip, rawSize, packageName, reactSdkVersion, progressivelyProps } =
+  const { gzip, rawSize, packageName, reactSdkVersion } =
     useLoaderData<LoaderData>();
 
   return (
