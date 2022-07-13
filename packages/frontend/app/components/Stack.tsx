@@ -48,6 +48,11 @@ export const Stack = styled("div", {
           marginTop: "$spacing$9",
         },
       },
+      16: {
+        "& > * + *": {
+          marginTop: "$spacing$16",
+        },
+      },
     },
   },
 });

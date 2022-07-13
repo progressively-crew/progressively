@@ -46,6 +46,7 @@ export const ToggleFlag = ({ isFlagActivated }: ToggleFlag) => {
       />
 
       <Switch
+        label="Feature flag status"
         optimistic={transition.state === "submitting"}
         type="submit"
         checked={isFlagActivated}

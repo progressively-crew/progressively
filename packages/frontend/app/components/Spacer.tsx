@@ -1,7 +1,7 @@
 import { styled } from "~/stitches.config";
 
 export interface SpacerProps {
-  size: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
+  size: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16;
 }
 
 const RawSpacer = styled("div", {
@@ -36,6 +36,24 @@ const RawSpacer = styled("div", {
       },
       10: {
         height: "$spacing$10",
+      },
+      11: {
+        height: "$spacing$11",
+      },
+      12: {
+        height: "$spacing$12",
+      },
+      13: {
+        height: "$spacing$13",
+      },
+      14: {
+        height: "$spacing$14",
+      },
+      15: {
+        height: "$spacing$15",
+      },
+      16: {
+        height: "$spacing$16",
       },
     },
   },

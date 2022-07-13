@@ -47,9 +47,11 @@ export const {
     },
     fontSizes: {
       xs: "0.8rem",
+      big: "3rem",
       content: "1.25rem",
       btn: "1rem",
       title: "3.5rem",
+
       titleMobile: "2.7rem",
       h2: "2rem",
       h3: "1.6rem",
@@ -82,6 +84,11 @@ export const {
       8: "32px",
       9: "36px",
       10: "40px",
+      11: "44px",
+      12: "48px",
+      13: "52px",
+      14: "56px",
+      16: "60px",
     },
   },
 });
