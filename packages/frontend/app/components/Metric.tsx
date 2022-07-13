@@ -2,6 +2,7 @@ import { useId } from "react";
 import { styled } from "~/stitches.config";
 import { Spacer } from "./Spacer";
 import { Typography } from "./Typography";
+import { VisuallyHidden } from "./VisuallyHidden";
 
 const MetricWrapper = styled("div", {
   background: "$background",
@@ -44,16 +45,19 @@ export interface MetricProps {
 }
 
 export const Metric = ({ label, unit, value, highlighted }: MetricProps) => {
-  const id = useId();
-
   return (
     <MetricWrapper highlighted={highlighted}>
-      <div>
-        <MetricValue aria-labelledby={id}>{value}</MetricValue>{" "}
-        <MetricUnit>{unit}</MetricUnit>
+      <VisuallyHidden>{`${label} ${value} ${unit}`}</VisuallyHidden>
+
+      <div aria-hidden>
+        <MetricValue>
+          {value} <MetricUnit>{unit}</MetricUnit>
+        </MetricValue>
       </div>
+
       <Spacer size={1} />
-      <MetricLabel id={id}>{label}</MetricLabel>
+
+      <MetricLabel aria-hidden>{label}</MetricLabel>
     </MetricWrapper>
   );
 };

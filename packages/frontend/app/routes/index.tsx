@@ -1,4 +1,4 @@
-import { LoaderFunction } from "@remix-run/node";
+import { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { AddButton } from "~/components/Buttons/AddButton";
 import { Container } from "~/components/Container";
@@ -48,6 +48,12 @@ export interface LoaderData {
   reactSdkVersion: string;
   packageName: string;
 }
+
+export const meta: MetaFunction = () => {
+  return {
+    title: "Progressively | Homepage",
+  };
+};
 
 export const loader: LoaderFunction = async () => {
   const response = await fetch(
@@ -106,8 +112,8 @@ export default function Index() {
                     <Spacer size={3} />
 
                     <div style={{ textAlign: "center" }}>
-                      <TagLine>
-                        <VisuallyHidden>Numbers for</VisuallyHidden>
+                      <VisuallyHidden>{`Numbers for ${packageName} v${reactSdkVersion}`}</VisuallyHidden>
+                      <TagLine aria-hidden>
                         {packageName} v{reactSdkVersion}
                       </TagLine>
                     </div>
