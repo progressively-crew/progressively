@@ -26,7 +26,7 @@ export const MarketingLayout = ({ children }: DashboardLayoutProps) => {
           <SkipNavLink>Skip to content</SkipNavLink>
 
           <Nav aria-label="General">
-            <Menu to="/" />
+            <Menu to="/" hideOnMobile />
 
             <SubNavWrapper>
               <GithubLink />

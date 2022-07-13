@@ -11,6 +11,10 @@ const Wrapper = styled("div", {
   justifyContent: "space-between",
   alignItems: "center",
   gap: "$spacing$4",
+
+  "@mobile": {
+    flexDirection: "column",
+  },
 });
 
 const AsideWrapper = styled("div", {
