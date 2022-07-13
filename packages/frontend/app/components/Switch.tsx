@@ -57,22 +57,28 @@ const SwitchInnerWrapper = styled("span", {
 
 export interface SwitchProps {
   checked: boolean;
+  type?: "reset" | "submit" | "button";
+  onClick?: () => void;
+  label: string;
 }
 
-export const Switch = ({ checked }: SwitchProps) => {
-  const [internalChecked, setInternalChecked] = useState(checked);
-
+export const Switch = ({
+  checked,
+  type = "submit",
+  onClick,
+  label,
+}: SwitchProps) => {
   return (
     <SwitchButton
-      aria-checked={internalChecked}
-      type="submit"
+      aria-checked={checked}
+      type={type}
       role="switch"
-      aria-label="Feature flag status"
-      onClick={() => setInternalChecked((s) => !s)}
+      aria-label={"Feature flag status"}
+      onClick={onClick}
     >
       <Text>Off</Text>
-      <SwitchInnerWrapper checked={internalChecked}>
-        <StyledThumb aria-hidden checked={internalChecked} />
+      <SwitchInnerWrapper checked={checked}>
+        <StyledThumb aria-hidden checked={checked} />
       </SwitchInnerWrapper>
       <Text>On</Text>
     </SwitchButton>

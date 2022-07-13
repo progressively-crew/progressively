@@ -50,6 +50,7 @@ export const ToggleExperiment = ({
       />
 
       <Switch
+        label="Experiment status"
         optimistic={transition.state === "submitting"}
         type="submit"
         checked={isExperimentActivated}

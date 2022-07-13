@@ -1,5 +1,6 @@
 import { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
+import { useState } from "react";
 import { Browser } from "~/components/Browser";
 import { AddButton } from "~/components/Buttons/AddButton";
 import { Container } from "~/components/Container";
@@ -9,12 +10,25 @@ import { Link } from "~/components/Link";
 import { Metric } from "~/components/Metric";
 import { Spacer } from "~/components/Spacer";
 import { Stack } from "~/components/Stack";
+import { Switch } from "~/components/Switch";
 import { TagLine } from "~/components/Tagline";
 import { Typography } from "~/components/Typography";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { MarketingLayout } from "~/layouts/MarketingLayout";
 import { styled } from "~/stitches.config";
 import reactJson from "../../../react/package.json";
+
+const ExampleOldPage = styled("div", {
+  padding: "$spacing$4",
+  border: "1px solid $hover",
+});
+
+const ExampleNewPage = styled("div", {
+  padding: "$spacing$4",
+  border: "1px solid $hover",
+  background: "$hover",
+  color: "$background",
+});
 
 const Centered = styled("div", {
   display: "flex",
@@ -31,6 +45,7 @@ const Hero = styled("div", {
   display: "flex",
   gap: "$spacing$8",
   padding: "$spacing$16 0",
+  alignItems: "center",
 });
 
 const HeadingWrapper = styled("div", {
@@ -80,6 +95,7 @@ export const loader: LoaderFunction = async () => {
 };
 
 export default function Index() {
+  const [showNewHomepage, setShowNewHomepage] = useState(false);
   const { gzip, rawSize, packageName, reactSdkVersion } =
     useLoaderData<LoaderData>();
 
@@ -99,7 +115,36 @@ export default function Index() {
               </Typography>
             </HeadingWrapper>
 
-            <Browser>Hello world</Browser>
+            <section aria-labelledby="example" style={{ width: "100%" }}>
+              <VisuallyHidden id="example">
+                Example of how feature flags work
+              </VisuallyHidden>
+
+              <Browser>
+                <div aria-live="polite">
+                  {showNewHomepage ? (
+                    <ExampleNewPage>
+                      <p>This is the new home page!</p>
+                    </ExampleNewPage>
+                  ) : (
+                    <ExampleOldPage>
+                      <p>
+                        This is an old page. {`Let's switch to the new page`}
+                      </p>
+                    </ExampleOldPage>
+                  )}
+                </div>
+
+                <Spacer size={4} />
+
+                <Switch
+                  label="Switch to the new homepage"
+                  type="button"
+                  checked={showNewHomepage}
+                  onClick={() => setShowNewHomepage((s) => !s)}
+                />
+              </Browser>
+            </section>
           </Hero>
         </Container>
 
@@ -174,6 +219,8 @@ export default function Index() {
             </div>
           </Centered>
         </section>
+
+        <Spacer size={16} />
       </Stack>
     </MarketingLayout>
   );

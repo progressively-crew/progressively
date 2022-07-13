@@ -11,7 +11,12 @@ const vhStyles = {
 
 export interface VisuallyHiddenProps {
   children: React.ReactNode;
+  id?: string;
 }
-export const VisuallyHidden = ({ children }: VisuallyHiddenProps) => {
-  return <div style={vhStyles}>{children}</div>;
+export const VisuallyHidden = ({ children, id }: VisuallyHiddenProps) => {
+  return (
+    <div style={vhStyles} id={id}>
+      {children}
+    </div>
+  );
 };
