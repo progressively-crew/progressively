@@ -1,17 +1,25 @@
 import { LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
+import { AddButton } from "~/components/Buttons/AddButton";
 import { Container } from "~/components/Container";
 import { Feature } from "~/components/Feature";
 import { H1 } from "~/components/H1";
 import { Link } from "~/components/Link";
 import { Metric } from "~/components/Metric";
 import { Spacer } from "~/components/Spacer";
+import { Stack } from "~/components/Stack";
 import { TagLine } from "~/components/Tagline";
 import { Typography } from "~/components/Typography";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { MarketingLayout } from "~/layouts/MarketingLayout";
 import { styled } from "~/stitches.config";
 import reactJson from "../../../react/package.json";
+
+const Centered = styled("div", {
+  display: "flex",
+  justifyContent: "center",
+  textAlign: "center",
+});
 
 const InvertedBackground = styled("div", {
   background: "$backgroundAccent",
@@ -66,74 +74,90 @@ export default function Index() {
     <MarketingLayout>
       <Spacer size={16} />
 
-      <Container>
-        <HeadingWrapper>
-          <H1>Feature flags service that does not kill performances</H1>
-          <Typography>
-            Progressively provides simple solutions for feature flagging and A/B
-            testing with an accessible dashboard, lightweight browser SDKs — and
-            it respects your privacy.
-          </Typography>
-        </HeadingWrapper>
-      </Container>
-
-      <Spacer size={16} />
-
-      <InvertedBackground>
+      <Stack spacing={16}>
         <Container>
-          <section aria-labelledby="bundle-size">
-            <Feature
-              title={<H2 id="bundle-size">Minimal bundle footprint</H2>}
-              aside={
-                <div>
-                  <MetricWrapper>
-                    <Metric label="Minified" value={rawSize} unit="kB" />
-                    <Metric
-                      label="Minified + Gzipped"
-                      value={gzip}
-                      unit="kB"
-                      highlighted
-                    />
-                  </MetricWrapper>
-
-                  <Spacer size={3} />
-
-                  <div style={{ textAlign: "center" }}>
-                    <TagLine>
-                      <VisuallyHidden>Numbers for</VisuallyHidden>
-                      {packageName} v{reactSdkVersion}
-                    </TagLine>
-                  </div>
-                </div>
-              }
-            >
-              <div>
-                <Typography>
-                  {`Progressively's client side SDKs`} aims to be minimal to
-                  avoid bloating your client side applications and kill your
-                  performances scores.
-                </Typography>
-
-                <Link href="https://bundlephobia.com/" target="_blank">
-                  Numbers from @bundlephobia
-                </Link>
-              </div>
-            </Feature>
-          </section>
+          <HeadingWrapper>
+            <H1>Feature flags service that does not kill performances</H1>
+            <Typography>
+              Progressively provides simple solutions for feature flagging and
+              A/B testing with an accessible dashboard, lightweight browser SDKs
+              — and it respects your privacy.
+            </Typography>
+          </HeadingWrapper>
         </Container>
-      </InvertedBackground>
 
-      <Spacer size={16} />
+        <InvertedBackground>
+          <Container>
+            <section aria-labelledby="bundle-size">
+              <Feature
+                title={<H2 id="bundle-size">Minimal bundle footprint</H2>}
+                aside={
+                  <div>
+                    <MetricWrapper>
+                      <Metric label="Minified" value={rawSize} unit="kB" />
+                      <Metric
+                        label="Minified + Gzipped"
+                        value={gzip}
+                        unit="kB"
+                        highlighted
+                      />
+                    </MetricWrapper>
 
-      <section aria-labelledby="privacy">
-        <H2 id="privacy">People is what matters</H2>
-        <Typography>
-          We do not keep information about your users. Progressively only
-          records the flag and A/B variant resolution to give you insights on
-          what is going on. We do not track the user journey, neither get
-          analytics.
-        </Typography>
-      </section>
+                    <Spacer size={3} />
+
+                    <div style={{ textAlign: "center" }}>
+                      <TagLine>
+                        <VisuallyHidden>Numbers for</VisuallyHidden>
+                        {packageName} v{reactSdkVersion}
+                      </TagLine>
+                    </div>
+                  </div>
+                }
+              >
+                <div>
+                  <Typography>
+                    {`Progressively's client side SDKs`} aims to be minimal to
+                    avoid bloating your client side applications and kill your
+                    performances scores.
+                  </Typography>
+
+                  <Link href="https://bundlephobia.com/" target="_blank">
+                    Numbers from @bundlephobia
+                  </Link>
+                </div>
+              </Feature>
+            </section>
+          </Container>
+        </InvertedBackground>
+
+        <section aria-labelledby="privacy">
+          <Centered>
+            <div>
+              <H2 id="privacy">People is what matters</H2>
+              <Typography>
+                We do not keep information about your users. Progressively only
+                records the flag and A/B variant resolution to give you insights
+                on what is going on. We do not track the user journey, neither
+                get analytics.
+              </Typography>
+              <Spacer size={8} />
+              <Typography>
+                Also, if you find your experience to be inconsistent or not
+                accessible, please, let us know so that we can improve the tool.
+              </Typography>
+
+              <Spacer size={8} />
+
+              <AddButton
+                href="https://github.com/progressively-crew/progressively/issues"
+                target="_blank"
+              >
+                Create a Github issue
+              </AddButton>
+            </div>
+          </Centered>
+        </section>
+      </Stack>
     </MarketingLayout>
   );
 }
