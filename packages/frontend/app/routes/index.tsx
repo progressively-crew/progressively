@@ -81,7 +81,7 @@ export const meta: MetaFunction = () => {
 
 export const headers: HeadersFunction = () => {
   return {
-    "Cache-Control": "max-age=300", // cached for 5 minutes
+    "Cache-Control": "max-age=300, s-maxage=300, stale-while-revalidate",
   };
 };
 
