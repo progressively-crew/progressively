@@ -16,7 +16,6 @@ import { Typography } from "~/components/Typography";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { MarketingLayout } from "~/layouts/MarketingLayout";
 import { styled } from "~/stitches.config";
-import reactJson from "../../../react/package.json";
 
 const ExampleOldPage = styled("div", {
   padding: "$spacing$4",
@@ -67,8 +66,6 @@ const MetricWrapper = styled("div", {
 export interface LoaderData {
   gzip: string;
   rawSize: string;
-  reactSdkVersion: string;
-  packageName: string;
   progressivelyProps: any;
 }
 
@@ -86,7 +83,7 @@ export const headers: HeadersFunction = () => {
 
 export const loader: LoaderFunction = async () => {
   const response = await fetch(
-    `https://bundlephobia.com/api/size?package=@progressively/react@${reactJson.version}&record=true`
+    `https://bundlephobia.com/api/size?package=@progressively/react@0.0.1-alpha.5&record=true`
   );
 
   const data = await response.json();
@@ -96,15 +93,12 @@ export const loader: LoaderFunction = async () => {
   return {
     gzip,
     rawSize,
-    reactSdkVersion: reactJson.version,
-    packageName: reactJson.name,
   };
 };
 
 export default function Index() {
   const [showNewHomepage, setShowNewHomepage] = useState(false);
-  const { gzip, rawSize, packageName, reactSdkVersion } =
-    useLoaderData<LoaderData>();
+  const { gzip, rawSize } = useLoaderData<LoaderData>();
 
   return (
     <MarketingLayout>
@@ -175,10 +169,8 @@ export default function Index() {
                     <Spacer size={3} />
 
                     <div style={{ textAlign: "center" }}>
-                      <VisuallyHidden>{`Numbers for ${packageName} v${reactSdkVersion}`}</VisuallyHidden>
-                      <TagLine aria-hidden>
-                        {packageName} v{reactSdkVersion}
-                      </TagLine>
+                      <VisuallyHidden>{`Numbers for  @progressively/react`}</VisuallyHidden>
+                      <TagLine aria-hidden>@progressively/react</TagLine>
                     </div>
                   </div>
                 }
