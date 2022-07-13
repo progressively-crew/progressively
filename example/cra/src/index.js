@@ -17,7 +17,7 @@ const Home = () => {
     <ProgressivelyProvider
       clientKey="valid-sdk-key"
       websocketUrl="ws://localhost:4000"
-      apiUrl="ws://localhost:4000"
+      apiUrl="http://localhost:4000"
     >
       <main>
         <FlaggedComponent />

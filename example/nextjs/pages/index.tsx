@@ -49,7 +49,7 @@ export async function getServerSideProps({
       id: "1",
     },
     websocketUrl: "ws://localhost:4000",
-    apiUrl: "ws://localhost:4000",
+    apiUrl: "http://localhost:4000",
   });
 
   res.setHeader("set-cookie", cookies);
