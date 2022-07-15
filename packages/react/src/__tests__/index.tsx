@@ -120,18 +120,5 @@ describe("React-sdk root", () => {
         "ws://localhost:4000?opts=eyJjbGllbnRLZXkiOiJ2YWxpZC1zZGsta2V5IiwiaWQiOiJhYmNkIn0="
       );
     });
-
-    it("[From SSR loads] Socket init through cookies", () => {
-      document.cookie = "progressively-id=super-cool";
-
-      render({
-        initialFlags: { newHomepage: true },
-        clientKey: "valid-sdk-key",
-      });
-
-      expect(global.WebSocket).toHaveBeenCalledWith(
-        "ws://localhost:4000?opts=eyJjbGllbnRLZXkiOiJ2YWxpZC1zZGsta2V5IiwiaWQiOiJzdXBlci1jb29sIn0="
-      );
-    });
   });
 });
