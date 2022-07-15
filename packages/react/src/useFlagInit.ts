@@ -7,7 +7,7 @@ export const useFlagInit = (
   initialFlags?: FlagDict
 ) => {
   const alreadyConnected = useRef(false);
-  const [isLoading, setIsLoading] = useState(!initialFlags);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<any>();
   const [flags, setFlags] = useState<FlagDict>(initialFlags || {});
 
