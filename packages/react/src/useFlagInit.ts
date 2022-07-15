@@ -7,7 +7,7 @@ export const useFlagInit = (
   initialFlags?: FlagDict
 ) => {
   const alreadyConnected = useRef(false);
-  const [isLoading, setIsLoading] = useState(!initialFlags);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<any>();
   const [flags, setFlags] = useState<FlagDict>(initialFlags || {});
 
@@ -17,25 +17,6 @@ export const useFlagInit = (
     if (alreadyConnected.current) return;
 
     const sdk = sdkRef.current;
-
-    // Early return the client side fetch when they are resolved on the server
-    if (initialFlags) {
-      const cookieValue = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("progressively-id="))
-        ?.split("=")[1];
-
-      sdk.onFlagUpdate(setFlags, cookieValue);
-
-      return () => {
-        if (alreadyConnected.current) {
-          sdk.disconnect();
-        } else {
-          alreadyConnected.current = true;
-        }
-      };
-    }
-
     const ctrl = new AbortController();
 
     sdk
