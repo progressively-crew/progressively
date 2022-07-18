@@ -35,7 +35,7 @@ const CardWrapper = styled("div", {
   background: "$backgroundAccent",
   borderRadius: "$borderRadius$regular",
   border: "8px solid transparent",
-  transition: "border,box-shadow 0.2s",
+  transition: "border,box-shadow,transform 0.2s",
   variants: {
     hydrated: {
       true: {
@@ -43,6 +43,16 @@ const CardWrapper = styled("div", {
         cursor: "pointer",
         "&:active": {
           border: "8px solid $hover",
+        },
+      },
+    },
+    isClickable: {
+      true: {
+        "&:hover,&:focus": {
+          transform: "scale(1.05)",
+          "@media (prefers-reduced-motion: reduce)": {
+            transform: "unset",
+          },
         },
       },
     },
@@ -95,6 +105,7 @@ export const Card = ({ children, className, onClick }: CardProps) => {
       onClick={onClick}
       onKeyDown={handleKeyDown}
       className={`card ${className || ""}`}
+      isClickable={Boolean(onClick)}
       tabIndex={isHydrated && onClick ? 0 : undefined}
       hydrated={Boolean(isHydrated && onClick)}
     >
