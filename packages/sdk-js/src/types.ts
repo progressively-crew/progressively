@@ -10,7 +10,7 @@ export interface SDKOptions {
 
 export interface ProgressivelySdkType {
   loadFlags: (
-    ctrl?: AbortController
+    args?: LoadFlagsArgs
   ) => Promise<{ flags: FlagDict; response: Response }>;
   disconnect: () => void;
   onFlagUpdate: (
@@ -18,3 +18,10 @@ export interface ProgressivelySdkType {
     userId?: string | null
   ) => void;
 }
+
+export interface LoadFlagsArgs {
+  ctrl?: AbortController;
+  btoAFn?: BtoaFn;
+}
+
+export type BtoaFn = (str: string) => string;
