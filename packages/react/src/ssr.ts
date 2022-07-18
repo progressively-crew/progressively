@@ -1,12 +1,15 @@
 import ProgressivelySdk, { SDKOptions } from "@progressively/sdk-js";
 
+const btoA = (toTransform: string) =>
+  Buffer.from(toTransform).toString("base64");
+
 export function getSSRProps(
   clientKey: string,
   options?: SDKOptions | undefined
 ) {
   const sdk = ProgressivelySdk.init(clientKey, options);
 
-  return sdk.loadFlags().then(({ flags, response }) => {
+  return sdk.loadFlags({ btoAFn: btoA }).then(({ flags, response }) => {
     return {
       ssrProps: {
         initialFlags: flags,

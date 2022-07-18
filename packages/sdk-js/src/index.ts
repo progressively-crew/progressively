@@ -1,14 +1,12 @@
-import { Fields, FlagDict, ProgressivelySdkType, SDKOptions } from "./types";
+import {
+  Fields,
+  FlagDict,
+  LoadFlagsArgs,
+  ProgressivelySdkType,
+  SDKOptions,
+} from "./types";
 
 export * from "./types";
-
-function bToA(obj: object) {
-  const value = JSON.stringify(obj);
-
-  return typeof window === "undefined"
-    ? Buffer.from(value).toString("base64")
-    : btoa(value);
-}
 
 function init(clientKey: string, options?: SDKOptions): ProgressivelySdkType {
   const fields: Fields = options?.fields || {};
@@ -31,12 +29,14 @@ function Sdk(
   let flags: FlagDict = initialFlags;
   let socket: WebSocket;
 
-  function loadFlags(ctrl?: AbortController) {
+  function loadFlags(args?: LoadFlagsArgs) {
     let response: Response;
 
-    return fetch(`${apiRoot}/sdk/${bToA(fields)}`, {
+    const toBase64 = args?.btoAFn || btoa;
+
+    return fetch(`${apiRoot}/sdk/${toBase64(JSON.stringify(fields))}`, {
       credentials: "include",
-      signal: ctrl?.signal,
+      signal: args?.ctrl?.signal,
     })
       .then((res) => {
         response = res;
@@ -55,7 +55,7 @@ function Sdk(
     // Mutating is okay, load has been done before hands
     if (userId) fields.id = userId;
 
-    socket = new WebSocket(`${wsRoot}?opts=${bToA(fields)}`);
+    socket = new WebSocket(`${wsRoot}?opts=${btoa(JSON.stringify(fields))}`);
 
     socket.onmessage = (event) => {
       flags = { ...flags, ...JSON.parse(event.data).data };

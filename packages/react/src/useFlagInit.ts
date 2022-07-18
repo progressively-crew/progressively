@@ -20,7 +20,7 @@ export const useFlagInit = (
     const ctrl = new AbortController();
 
     sdk
-      .loadFlags(ctrl)
+      .loadFlags({ ctrl })
       .then((res) => {
         sdk.onFlagUpdate(
           setFlags,
