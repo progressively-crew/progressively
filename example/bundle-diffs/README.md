@@ -10,7 +10,7 @@ It includes:
 - [GrowthBook](https://www.growthbook.io/)
 - [Progressively](https://progressively.app)
 
-On the 18th of July 2022, Progressively is
+On the 18th of July 2022, and according to the data provided by the analyzer, Progressively is:
 
 - **14 times** smaller than LaunchDarkly
 - **7 times** smaller than Unleash
