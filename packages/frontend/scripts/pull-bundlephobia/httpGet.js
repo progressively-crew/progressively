@@ -6,12 +6,10 @@ const httpGet = (url) => {
       .get(url, (resp) => {
         let data = "";
 
-        // Un morceau de réponse est reçu
         resp.on("data", (chunk) => {
           data += chunk;
         });
 
-        // La réponse complète à été reçue. On affiche le résultat.
         resp.on("end", () => {
           resolve(JSON.parse(data));
         });
