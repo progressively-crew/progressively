@@ -3,14 +3,12 @@ import { useState } from "react";
 import { Browser } from "~/components/Browser";
 import { AddButton } from "~/components/Buttons/AddButton";
 import { Container } from "~/components/Container";
-import { Feature } from "~/components/Feature";
+import { ExternalLink } from "~/components/ExternalLink";
 import { H1 } from "~/components/H1";
-import { Link } from "~/components/Link";
 import { Metric } from "~/components/Metric";
 import { Spacer } from "~/components/Spacer";
 import { Stack } from "~/components/Stack";
 import { Switch } from "~/components/Switch";
-import { TagLine } from "~/components/Tagline";
 import { Typography } from "~/components/Typography";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { MarketingLayout } from "~/layouts/MarketingLayout";
@@ -31,8 +29,9 @@ const ExampleNewPage = styled("div", {
 
 const Centered = styled("div", {
   display: "flex",
-  justifyContent: "center",
+  alignItems: "center",
   textAlign: "center",
+  flexDirection: "column",
 });
 
 const InvertedBackground = styled("div", {
@@ -63,8 +62,13 @@ const H2 = styled("h2", {
 });
 
 const MetricWrapper = styled("div", {
-  display: "flex",
+  display: "grid",
+  gridTemplateColumns: "1fr 1fr",
   gap: "$spacing$4",
+
+  "@tablet": {
+    gridTemplateColumns: "1fr",
+  },
 });
 
 export interface LoaderData {
@@ -87,10 +91,13 @@ export const headers: HeadersFunction = () => {
 
 export default function Index() {
   const [showNewHomepage, setShowNewHomepage] = useState(false);
-  const { gzip, size } = bundleSize;
+  bundleSize.sort((a, b) => a.gzip - b.gzip);
 
-  const gzipFormatted = (gzip / 1000).toFixed(2);
-  const rawSizeFormatted = (size / 1000).toFixed(2);
+  const packages = bundleSize.map((packageData) => {
+    const gzip = (packageData.gzip / 1000).toFixed(2);
+    const size = (packageData.size / 1000).toFixed(2);
+    return { ...packageData, gzip, size };
+  });
 
   return (
     <MarketingLayout>
@@ -141,51 +148,46 @@ export default function Index() {
           </Hero>
         </Container>
 
-        <InvertedBackground>
-          <Container>
-            <section aria-labelledby="bundle-size">
-              <Feature
-                title={<H2 id="bundle-size">Minimal bundle footprint</H2>}
-                aside={
-                  <div>
-                    <MetricWrapper>
-                      <Metric
-                        label="Minified"
-                        value={rawSizeFormatted}
-                        unit="kB"
-                      />
-                      <Metric
-                        label="Minified + Gzipped"
-                        value={gzipFormatted}
-                        unit="kB"
-                        highlighted
-                      />
-                    </MetricWrapper>
+        <section aria-labelledby="bundle-size">
+          <InvertedBackground>
+            <Container>
+              <Centered>
+                <H2 id="bundle-size">Minimal bundle footprint</H2>
+                <Typography>
+                  {`Progressively's client side SDKs`} aims to be minimal to
+                  avoid bloating your client applications and kill your
+                  performances.
+                </Typography>
 
-                    <Spacer size={3} />
+                <Spacer size={8} />
 
-                    <div style={{ textAlign: "center" }}>
-                      <VisuallyHidden>{`Numbers for  @progressively/react`}</VisuallyHidden>
-                      <TagLine aria-hidden>@progressively/react</TagLine>
-                    </div>
-                  </div>
-                }
-              >
-                <div>
-                  <Typography>
-                    {`Progressively's client side SDKs`} aims to be minimal to
-                    avoid bloating your client side applications and kill your
-                    performances scores.
-                  </Typography>
+                <MetricWrapper>
+                  {packages.map((p, index) => (
+                    <Metric
+                      key={p.package}
+                      label={p.package}
+                      value={p.gzip}
+                      unit="kB"
+                      highlighted={index === 0}
+                    />
+                  ))}
+                </MetricWrapper>
 
-                  <Link href="https://bundlephobia.com/" target="_blank">
-                    Numbers from @bundlephobia
-                  </Link>
-                </div>
-              </Feature>
-            </section>
-          </Container>
-        </InvertedBackground>
+                <Spacer size={8} />
+
+                <Typography>
+                  And if you {`don't`} trust{" "}
+                  <ExternalLink href="https://bundlephobia.com/">{`@bundlephobia's`}</ExternalLink>{" "}
+                  numbers that much, check{" "}
+                  <ExternalLink href="https://github.com/progressively-crew/progressively/tree/master/example/bundle-diffs">
+                    this Nextjs project
+                  </ExternalLink>{" "}
+                  running bundle analyzer against the different tools.
+                </Typography>
+              </Centered>
+            </Container>
+          </InvertedBackground>
+        </section>
 
         <section aria-labelledby="privacy">
           <Container>

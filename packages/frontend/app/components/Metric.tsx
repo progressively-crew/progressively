@@ -1,4 +1,3 @@
-import { useId } from "react";
 import { styled } from "~/stitches.config";
 import { Spacer } from "./Spacer";
 import { Typography } from "./Typography";
@@ -8,18 +7,17 @@ const MetricWrapper = styled("div", {
   background: "$background",
   padding: "$spacing$8",
   borderRadius: "$borderRadius$regular",
-  border: "4px solid transparent",
+  border: "6px solid transparent",
   variants: {
     highlighted: {
       true: {
-        border: "4px solid $hover",
+        border: "6px dashed $hover",
       },
     },
   },
 });
 
 const MetricLabel = styled(Typography, {
-  textTransform: "uppercase",
   letterSpacing: "2px",
   fontWeight: "$slim",
   lineHeight: "unset",

@@ -8,7 +8,7 @@
     "dev": "remix dev",
     "lint": "eslint app --fix",
     "postinstall": "remix setup node",
-    "pull:bundledata": "node ./scripts/pull-bundlephobia.js",
+    "pull:bundledata": "node ./scripts/pull-bundlephobia/index.js",
     "start": "remix-serve build",
     "test": "jest --passWithNoTests",
     "test:e2e": "cypress open",
