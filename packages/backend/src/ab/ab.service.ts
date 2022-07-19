@@ -159,12 +159,9 @@ export class AbService {
     experimentEnv: PopulatedExperimentEnv,
     fields: FieldRecord,
   ) {
-    const variantKey = this.resolveExperimentVariantValue(
-      experimentEnv,
-      fields,
-    );
+    const variant = this.resolveExperimentVariantValue(experimentEnv, fields);
 
-    return { [experimentEnv.experiment.key]: variantKey };
+    return { [experimentEnv.experiment.key]: variant.key };
   }
 
   async hitVariant(variantId: string) {
