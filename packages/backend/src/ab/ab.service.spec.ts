@@ -83,54 +83,51 @@ describe('AbService', () => {
           it(`always returns "undefined" when the experiment is ${status}`, () => {
             experimentEnv.status = ExperimentStatus.NOT_ACTIVATED;
 
-            const variantKey = service.resolveExperimentVariantValue(
+            const variant = service.resolveExperimentVariantValue(
               experimentEnv,
               { id: '123' },
             );
 
-            expect(variantKey).toEqual('control');
+            expect(variant.key).toEqual('control');
           }),
       );
 
       it('always returns "undefined" when the fields.id is not defined', () => {
-        const variantKey = service.resolveExperimentVariantValue(
+        const variant = service.resolveExperimentVariantValue(
           experimentEnv,
           {},
         );
 
-        expect(variantKey).toEqual('control');
+        expect(variant.key).toEqual('control');
       });
     });
 
     describe('activated', () => {
       it('returns the control variant over the 6666', () => {
-        const variantKey = service.resolveExperimentVariantValue(
-          experimentEnv,
-          { id: '1' },
-        );
+        const variant = service.resolveExperimentVariantValue(experimentEnv, {
+          id: '1',
+        });
 
         // bucket is 9778 which is over 6666 (over 66% of the range from the ordered variant list)
-        expect(variantKey).toEqual('alternative');
+        expect(variant.key).toEqual('alternative');
       });
 
       it('returns the alternative variant between 3333 and 6666', () => {
-        const variantKey = service.resolveExperimentVariantValue(
-          experimentEnv,
-          { id: '10' },
-        );
+        const variant = service.resolveExperimentVariantValue(experimentEnv, {
+          id: '10',
+        });
 
         // bucket is 4830 which is over 3333 and below 6666
-        expect(variantKey).toEqual('alternative');
+        expect(variant.key).toEqual('alternative');
       });
 
       it('returns the a variant when bucket is below 3333', () => {
-        const variantKey = service.resolveExperimentVariantValue(
-          experimentEnv,
-          { id: '2' },
-        );
+        const variant = service.resolveExperimentVariantValue(experimentEnv, {
+          id: '2',
+        });
 
         // bucket is 2630 which is below 3333
-        expect(variantKey).toEqual('a');
+        expect(variant.key).toEqual('a');
       });
     });
   });
