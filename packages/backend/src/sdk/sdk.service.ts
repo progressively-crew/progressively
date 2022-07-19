@@ -47,13 +47,17 @@ export class SdkService {
     const experiments = {};
 
     for (const experimentEnv of experimentEnvs) {
-      const experimentVariantValue =
-        this.abService.resolveExperimentVariantValue(
-          experimentEnv as PopulatedExperimentEnv,
-          fields,
-        );
+      const experimentVariant = this.abService.resolveExperimentVariantValue(
+        experimentEnv as PopulatedExperimentEnv,
+        fields,
+      );
 
-      experiments[experimentEnv.experiment.key] = experimentVariantValue;
+      experiments[experimentEnv.experiment.key] = experimentVariant?.key;
+
+      if (experimentVariant) {
+        this.abService.hitVariant(experimentVariant.uuid);
+      }
+      
     }
 
     return experiments;

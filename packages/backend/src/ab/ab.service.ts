@@ -103,11 +103,11 @@ export class AbService {
     const controlVariant = variants.find((variant) => variant.isControl);
 
     if (experimentEnv.status !== ExperimentStatus.ACTIVATED) {
-      return controlVariant?.key;
+      return controlVariant;
     }
 
     if (!fields.id) {
-      return controlVariant?.key;
+      return controlVariant;
     }
 
     const userId = String(fields.id);
@@ -126,7 +126,7 @@ export class AbService {
         return isInRange(variant.bucket, percentageRange);
       });
 
-    return resolvedVariant?.key || controlVariant?.key;
+    return resolvedVariant || controlVariant;
   }
 
   async changeExperimentForEnvStatus(
@@ -159,11 +159,26 @@ export class AbService {
     experimentEnv: PopulatedExperimentEnv,
     fields: FieldRecord,
   ) {
-    const variantKey = this.resolveExperimentVariantValue(
-      experimentEnv,
-      fields,
-    );
+    const variant = this.resolveExperimentVariantValue(experimentEnv, fields);
 
-    return { [experimentEnv.experiment.key]: variantKey };
+    return { [experimentEnv.experiment.key]: variant.key };
+  }
+
+  async hitVariant(variantId: string) {
+    // Make it easier to group by date, 2 is arbitrary
+    const date = new Date();
+    date.setHours(2);
+    date.setMinutes(2);
+    date.setSeconds(2);
+    date.setMilliseconds(2);
+
+    const hit = await this.prisma.variantHit.create({
+      data: {
+        variantUuid: variantId,
+        date,
+      },
+    });
+
+    return hit;
   }
 }
