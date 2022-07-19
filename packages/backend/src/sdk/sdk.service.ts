@@ -52,8 +52,12 @@ export class SdkService {
         fields,
       );
 
-      experiments[experimentEnv.experiment.key] = experimentVariant.key;
-      this.abService.hitVariant(experimentVariant.uuid);
+      experiments[experimentEnv.experiment.key] = experimentVariant?.key;
+
+      if (experimentVariant) {
+        this.abService.hitVariant(experimentVariant.uuid);
+      }
+      
     }
 
     return experiments;
