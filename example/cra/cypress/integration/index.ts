@@ -5,6 +5,7 @@ describe("/", () => {
   afterEach(cy.cleanup);
 
   beforeEach(() => {
+    cy.wait(6000); // to counter the max-age cache
     cy.visit("/");
   });
 
