@@ -5,6 +5,7 @@ describe("/", () => {
   afterEach(cy.cleanup);
 
   beforeEach(() => {
+    cy.wait(6000); // to counter the max-age cache
     cy.visit("/");
   });
 
@@ -16,6 +17,7 @@ describe("/", () => {
     cy.findByText("New variant").should("be.visible");
 
     // Verify the activation using SSR
+    cy.wait(6000); // to counter the max-age cache
     cy.reload();
     cy.findByText("Old variant").should("not.exist");
     cy.findByText("New variant").should("be.visible");
