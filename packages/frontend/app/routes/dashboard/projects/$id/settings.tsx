@@ -124,7 +124,10 @@ export default function SettingsPage() {
     {
       link: `/dashboard/projects/${project.uuid}`,
       label: project.name,
-      forceNotCurrent: true,
+    },
+    {
+      link: `/dashboard/projects/${project.uuid}/settings`,
+      label: "Settings",
     },
   ];
 

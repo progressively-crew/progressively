@@ -40,6 +40,10 @@ describe("/dashboard/projects/[id]", () => {
 
         cy.findByRole("link", { name: "Project from seeding" })
           .should("be.visible")
+          .and("have.attr", "href", "/dashboard/projects/1");
+
+        cy.findByRole("link", { name: "Environments" })
+          .should("be.visible")
           .and("have.attr", "href", "/dashboard/projects/1")
           .and("have.attr", "aria-current", "page");
 

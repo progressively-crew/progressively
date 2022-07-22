@@ -159,9 +159,13 @@ export default function DeleteExperimentPage() {
       label: environment.name,
     },
     {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/ab/${experiment.uuid}`,
+      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/ab/${experiment.uuid}/variants`,
       label: experiment.name,
       icon: <AiOutlineExperiment aria-hidden />,
+    },
+    {
+      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/ab/${experiment.uuid}/delete`,
+      label: "Delete an A/B experiment",
     },
   ];
 

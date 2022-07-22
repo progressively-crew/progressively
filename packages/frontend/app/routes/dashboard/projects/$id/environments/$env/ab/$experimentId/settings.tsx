@@ -109,8 +109,11 @@ export default function ExperimentSettingsPage() {
     {
       link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/ab/${experiment.uuid}`,
       label: experiment.name,
-      forceNotCurrent: true,
       icon: <AiOutlineExperiment aria-hidden />,
+    },
+    {
+      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/ab/${experiment.uuid}/settings`,
+      label: "Settings",
     },
   ];
 

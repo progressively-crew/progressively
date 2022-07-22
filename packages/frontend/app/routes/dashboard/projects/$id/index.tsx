@@ -65,6 +65,10 @@ export default function ProjectDetailPage() {
       link: `/dashboard/projects/${project.uuid}`,
       label: project.name,
     },
+    {
+      link: `/dashboard/projects/${project.uuid}`,
+      label: "Environments",
+    },
   ];
 
   return (

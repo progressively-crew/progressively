@@ -90,6 +90,10 @@ export default function AbPage() {
       link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags`,
       label: environment.name,
     },
+    {
+      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags`,
+      label: "A/B experiments",
+    },
   ];
 
   return (

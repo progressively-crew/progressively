@@ -146,6 +146,10 @@ export default function DeleteFlagPage() {
       label: currentFlag.name,
       icon: <FiFlag aria-hidden />,
     },
+    {
+      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/delete`,
+      label: "Delete a feature flag",
+    },
   ];
 
   const warnings = {

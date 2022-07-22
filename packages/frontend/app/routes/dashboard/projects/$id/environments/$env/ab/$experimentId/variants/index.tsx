@@ -106,10 +106,13 @@ export default function ExperimentSettingsPage() {
       label: environment.name,
     },
     {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/ab/${experiment.uuid}`,
+      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/ab/${experiment.uuid}/variants`,
       label: experiment.name,
-      forceNotCurrent: true,
       icon: <AiOutlineExperiment aria-hidden />,
+    },
+    {
+      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/ab/${experiment.uuid}/variants`,
+      label: "Variants",
     },
   ];
 

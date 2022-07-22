@@ -130,6 +130,10 @@ export default function FlagById() {
       label: currentFlag.name,
       icon: <FiFlag aria-hidden />,
     },
+    {
+      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`,
+      label: "Strategies",
+    },
   ];
 
   return (

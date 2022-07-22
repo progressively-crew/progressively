@@ -154,8 +154,11 @@ export default function FlagById() {
     {
       link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`,
       label: currentFlag.name,
-      forceNotCurrent: true,
       icon: <FiFlag aria-hidden />,
+    },
+    {
+      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/insights`,
+      label: "Insights",
     },
   ];
 

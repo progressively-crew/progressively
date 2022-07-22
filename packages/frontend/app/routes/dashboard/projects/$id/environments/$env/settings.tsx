@@ -89,7 +89,10 @@ export default function EnvSettingsPage() {
     {
       link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags`,
       label: environment.name,
-      forceNotCurrent: true,
+    },
+    {
+      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags`,
+      label: "Settings",
     },
   ];
 
