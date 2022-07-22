@@ -17,13 +17,13 @@ import bundleSize from "../progressively-sdk-sizes.json";
 
 const ExampleOldPage = styled("div", {
   padding: "$spacing$4",
-  border: "1px solid $hover",
+  border: "1px solid $secondary",
 });
 
 const ExampleNewPage = styled("div", {
   padding: "$spacing$4",
-  border: "1px solid $hover",
-  background: "$hover",
+  border: "1px solid $secondary",
+  background: "$secondary",
   color: "$background",
 });
 
@@ -56,9 +56,9 @@ const HeadingWrapper = styled("div", {
 
 const H2 = styled("h2", {
   fontSize: "$big",
-  color: "$title",
+  color: "$textAccent",
   fontFamily: "$default",
-  lineHeight: "$content",
+  lineHeight: "$text",
 });
 
 const MetricWrapper = styled("div", {

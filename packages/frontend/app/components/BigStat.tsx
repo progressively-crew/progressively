@@ -16,15 +16,15 @@ const BigStatValue = styled(CardContent, {
     display: "inline",
     fontSize: "$title",
     lineHeight: "unset",
-    color: "$hover",
-    borderBottom: "3px solid $hover",
+    color: "$secondary",
+    borderBottom: "3px solid $secondary",
   },
 
   variants: {
     secondary: {
       true: {
         "& p": {
-          color: "$title",
+          color: "$textAccent",
           borderBottom: "3px dashed $title",
         },
       },

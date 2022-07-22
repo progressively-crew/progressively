@@ -2,7 +2,7 @@ import { FiExternalLink } from "react-icons/fi";
 import { styled } from "~/stitches.config";
 
 const Link = styled("a", {
-  color: "$title",
+  color: "$textAccent",
   transition: "all 0.1s",
 
   "&:active": {
@@ -12,7 +12,7 @@ const Link = styled("a", {
   "& svg": {
     verticalAlign: "text-top",
     fontSize: "$xs",
-    color: "$hover",
+    color: "$secondary",
   },
 });
 

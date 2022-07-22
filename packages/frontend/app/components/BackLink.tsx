@@ -9,7 +9,7 @@ export interface BackLinkProps {
 
 const BackLinkWrapper = styled(Link, {
   display: "inline-flex",
-  color: "$content",
+  color: "$text",
   fontSize: "$btn",
 
   "& svg": {

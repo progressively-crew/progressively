@@ -8,10 +8,10 @@ export const RawButton = styled("button", {
   background: "$background",
   borderRadius: "$borderRadius$regular",
   padding: "0 $spacing$4",
-  color: "$title",
+  color: "$textAccent",
   fontSize: "$btn",
   fontFamily: "$default",
-  border: "2px solid $hover",
+  border: "2px solid $secondary",
   display: "inline-flex",
   textDecoration: "none",
   height: "$cta",
@@ -46,7 +46,7 @@ export const RawButton = styled("button", {
       },
 
       primary: {
-        background: "$hover",
+        background: "$secondary",
         border: "none",
         color: "$background",
         "&:active": {

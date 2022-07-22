@@ -16,9 +16,9 @@ export interface TextInputProps {
 }
 
 const Input = styled("input", {
-  border: "4px solid $hover",
+  border: "4px solid $secondary",
   borderRadius: "$borderRadius$regular",
-  fontSize: "$content",
+  fontSize: "$text",
   padding: "$spacing$2 $spacing$4",
   display: "block",
   width: "100%",

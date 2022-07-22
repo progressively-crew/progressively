@@ -181,8 +181,8 @@ export default function ExperimentInsights() {
               dataKeys={experiment.variants.map((variant) => ({
                 name: variant.uuid,
                 color: variant.isControl
-                  ? theme.colors.hover.toString()
-                  : theme.colors.title.toString(),
+                  ? theme.colors.secondary.toString()
+                  : theme.colors.textAccent.toString(),
                 label: variant.name,
                 dashed: !variant.isControl,
               }))}

@@ -36,7 +36,7 @@ const SignupLinkWrapper = styled("div", {
 
   "& a": {
     fontSize: "$btn",
-    color: "$hover",
+    color: "$secondary",
     textAlign: "center",
   },
 });

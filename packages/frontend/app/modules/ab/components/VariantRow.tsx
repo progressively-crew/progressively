@@ -18,8 +18,8 @@ const Wrapper = styled("div", {
   transition: "background 0.2s",
 
   "& h3": {
-    fontSize: "$content",
-    color: "$title",
+    fontSize: "$text",
+    color: "$textAccent",
     fontFamily: "$default",
     height: "$cta",
     alignItems: "center",

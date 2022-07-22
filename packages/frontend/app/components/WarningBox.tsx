@@ -26,7 +26,7 @@ const WarningBoxWrapper = styled("figure", {
 
   "& figcaption": {
     fontWeight: "$bold",
-    lineHeight: "$content",
+    lineHeight: "$text",
   },
 
   "@mobile": {

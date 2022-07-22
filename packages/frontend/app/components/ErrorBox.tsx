@@ -38,7 +38,7 @@ const ErrorBoxWrapper = styled("figure", {
   "& figcaption": {
     fontWeight: "$bold",
     marginBottom: "$spacing$4",
-    lineHeight: "$content",
+    lineHeight: "$text",
   },
 });
 

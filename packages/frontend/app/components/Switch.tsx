@@ -35,7 +35,7 @@ const StyledThumb = styled("span", {
 
 const Text = styled("span", {
   fontSize: "$btn",
-  color: "$hover",
+  color: "$secondary",
   fontFamily: "$default",
 });
 

@@ -14,7 +14,7 @@ const Wrapper = styled("div", {
 
   "& .empty-box-icon": {
     height: "$emptyStateIconHeight",
-    fill: "$hover",
+    fill: "$secondary",
   },
 });
 

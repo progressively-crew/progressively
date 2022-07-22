@@ -12,7 +12,7 @@ export const Ul = styled("ul", {
   gap: "$spacing$2",
   fontFamily: "$default",
 
-  "& li": { lineHeight: "$content" },
+  "& li": { lineHeight: "$text" },
 
   "@mobile": {
     paddingLeft: "$spacing$4",

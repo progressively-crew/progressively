@@ -8,7 +8,7 @@ const Wrapper = styled("div", {
 });
 
 const Table = styled("table", {
-  color: "$content",
+  color: "$text",
   width: "100%",
   fontFamily: "$default",
 
@@ -37,10 +37,10 @@ const Table = styled("table", {
   },
   "& td": {
     padding: "$spacing$4",
-    color: "$title",
+    color: "$textAccent",
   },
   "& a": {
-    color: "$title",
+    color: "$textAccent",
   },
 });
 

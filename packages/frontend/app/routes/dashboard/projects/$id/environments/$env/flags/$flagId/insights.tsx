@@ -252,11 +252,11 @@ export default function FlagById() {
                 dataKeys={[
                   {
                     name: "activated",
-                    color: theme.colors.hover.toString(),
+                    color: theme.colors.secondary.toString(),
                   },
                   {
                     name: "notactivated",
-                    color: theme.colors.title.toString(),
+                    color: theme.colors.textAccent.toString(),
                     dashed: true,
                   },
                 ]}

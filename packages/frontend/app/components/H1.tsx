@@ -5,13 +5,7 @@ export const RawH1 = styled(Heading, {
   fontSize: "$title",
   fontFamily: "$default",
   fontWeight: "$bold",
-  backgroundImage: "linear-gradient(90deg, $title, $primary)",
-  backgroundClip: "text",
-
-  "-webkit-background-clip": "text",
-  "-webkit-text-fill-color": "transparent",
-  "-moz-background-clip": "text",
-  "-moz-text-fill-color": "transparent",
+  color: "$textAccent",
 
   "@mobile": {
     fontSize: "$titleMobile",

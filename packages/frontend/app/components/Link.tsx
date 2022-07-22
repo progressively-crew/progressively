@@ -4,14 +4,14 @@ import { styled } from "~/stitches.config";
 
 const RawLink = styled("a", {
   display: "inline-flex",
-  fontSize: "$content",
-  color: "$content",
+  fontSize: "$text",
+  color: "$text",
   fontFamily: "$default",
   height: "$cta",
   alignItems: "center",
 
   "&:active": {
-    color: "$title",
+    color: "$textAccent",
   },
 });
 

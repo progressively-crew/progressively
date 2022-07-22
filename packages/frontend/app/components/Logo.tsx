@@ -10,7 +10,7 @@ const LinkWrapper = styled(Link, {
   fontFamily: "Varela",
   letterSpacing: "2px",
   textDecoration: "none",
-  color: "$title",
+  color: "$textAccent",
   transition: "all 0.1s",
 
   "&:hover": {
@@ -18,7 +18,7 @@ const LinkWrapper = styled(Link, {
   },
 
   "& span:first-of-type": {
-    color: "$hover",
+    color: "$secondary",
   },
 });
 

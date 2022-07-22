@@ -16,14 +16,19 @@ export const {
   },
   theme: {
     colors: {
-      title: "white",
-      background: "#151722",
-      border: "rgb(36, 38, 49)",
-      backgroundAccent: "rgb(26, 28, 39)",
       primary: "#c3134e",
-      content: "#9ba1a6",
-      hover: "hsl(340deg, 82%, 85%)",
+      secondary: "hsl(340deg, 82%, 85%)",
+      text: "#9ba1a6",
+      textAccent: "white",
+      background: "#151722",
+      backgroundAccent: "rgb(26, 28, 39)",
+      border: "rgb(36, 38, 49)",
+
       focus: "#4D90FE",
+      hoverBg: "hsl(340deg, 82%, 85%)",
+      hoverFg: "hsl(340deg, 82%, 85%)",
+      activeBg: "hsl(340deg, 82%, 85%)",
+      activeFg: "hsl(340deg, 82%, 85%)",
 
       successBg: "#c8e6c9",
       successFg: "#1b5e20",

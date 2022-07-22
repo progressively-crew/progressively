@@ -25,7 +25,7 @@ const Input = styled("input", {
   margin: 0,
   padding: 0,
   backgroundColor: "transparent",
-  border: "1px solid $hover",
+  border: "1px solid $secondary",
   borderRadius: "50%",
   height: 24,
   width: 24,
@@ -42,7 +42,7 @@ const Input = styled("input", {
     top: 2,
   },
   "&:checked:after": {
-    background: "$hover",
+    background: "$secondary",
   },
 });
 

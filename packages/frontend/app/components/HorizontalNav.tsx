@@ -20,12 +20,12 @@ const HorizontalNavWrapper = styled("nav", {
     paddingRight: "$spacing$6",
     alignItems: "center",
     textDecoration: "none",
-    color: "$title",
+    color: "$textAccent",
     borderBottom: "4px solid transparent",
     borderTop: "4px solid transparent",
     gap: "$spacing$2",
     transition: "border,box-shadow 0.2s",
-    fontSize: "$content",
+    fontSize: "$text",
     whiteSpace: "nowrap",
   },
 
@@ -35,13 +35,13 @@ const HorizontalNavWrapper = styled("nav", {
   },
 
   "& ul li a:hover": {
-    borderBottomColor: "$hover",
-    color: "$hover",
+    borderBottomColor: "$hoverBg",
+    color: "$hoverFg",
   },
 
   "& ul li a.active": {
-    borderBottomColor: "$hover",
-    color: "$hover",
+    borderBottomColor: "$hoverBg",
+    color: "$hoverFg",
   },
 
   "& ul li svg": {
