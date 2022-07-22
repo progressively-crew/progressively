@@ -24,7 +24,7 @@ const Wrapper = styled("div", {
     },
 
     "& button svg": {
-      fontSize: "$h3",
+      fontSize: "$mars",
       margin: "unset",
     },
   },

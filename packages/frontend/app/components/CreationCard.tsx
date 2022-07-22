@@ -23,7 +23,7 @@ const Wrapper = styled(Card, {
   "& svg": {
     display: "block",
     color: "$textAccent",
-    fontSize: "$title",
+    fontSize: "$venus",
     marginBottom: "$spacing$4",
   },
 });

@@ -19,7 +19,7 @@ const NavWrapper = styled("nav", {
   zIndex: 2,
 
   "& a": {
-    fontSize: "$h3",
+    fontSize: "$mars",
     color: "$textAccent",
   },
 
@@ -60,7 +60,7 @@ const MobileHeaderWrapper = styled("div", {
   },
 
   "& button svg": {
-    fontSize: "$h3",
+    fontSize: "$mars",
     margin: "unset",
   },
 });

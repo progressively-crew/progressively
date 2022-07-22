@@ -9,7 +9,7 @@ const Wrapper = styled("span", {
   display: "flex",
   gap: "$spacing$2",
   alignItems: "center",
-  fontSize: "$btn",
+  fontSize: "$uranus",
 });
 
 const UserLink = styled(Link, {

@@ -26,12 +26,12 @@ const MetricLabel = styled(Typography, {
 const MetricValue = styled("span", {
   fontFamily: "$default",
   color: "$textAccent",
-  fontSize: "$title",
+  fontSize: "$venus",
 });
 
 const MetricUnit = styled("span", {
   color: "$text",
-  fontSize: "$h2",
+  fontSize: "$earth",
   fontFamily: "$default",
 });
 

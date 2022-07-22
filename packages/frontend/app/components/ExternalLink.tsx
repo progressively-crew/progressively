@@ -11,7 +11,7 @@ const Link = styled("a", {
 
   "& svg": {
     verticalAlign: "text-top",
-    fontSize: "$xs",
+    fontSize: "$neptune",
     color: "$secondary",
   },
 });

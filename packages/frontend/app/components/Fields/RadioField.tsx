@@ -47,7 +47,7 @@ const Input = styled("input", {
 });
 
 const SmallLabel = styled(Label, {
-  fontSize: "$btn",
+  fontSize: "$uranus",
 });
 
 export const RadioField = <T extends string>({

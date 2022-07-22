@@ -55,7 +55,7 @@ const HeadingWrapper = styled("div", {
 });
 
 const H2 = styled("h2", {
-  fontSize: "$big",
+  fontSize: "$saturn",
   color: "$textAccent",
   fontFamily: "$default",
   lineHeight: "$text",

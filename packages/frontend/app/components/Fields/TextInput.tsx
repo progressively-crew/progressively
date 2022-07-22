@@ -18,7 +18,7 @@ export interface TextInputProps {
 const Input = styled("input", {
   border: "4px solid $secondary",
   borderRadius: "$borderRadius$regular",
-  fontSize: "$text",
+  fontSize: "$jupiter",
   padding: "$spacing$2 $spacing$4",
   display: "block",
   width: "100%",
@@ -27,7 +27,7 @@ const Input = styled("input", {
 });
 
 const Hint = styled(Typography, {
-  fontSize: "$btn",
+  fontSize: "$uranus",
 });
 
 export const TextInput = ({

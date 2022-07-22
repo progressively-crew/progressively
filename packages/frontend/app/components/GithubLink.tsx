@@ -2,7 +2,7 @@ import { styled } from "~/stitches.config";
 
 const GithubLinkWrapper = styled("a", {
   display: "inline-flex",
-  fontSize: "$text",
+  fontSize: "$jupiter",
   color: "$text",
   fontFamily: "$default",
   alignItems: "center",

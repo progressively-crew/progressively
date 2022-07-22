@@ -16,7 +16,7 @@ const ChartWrapper = styled("div", {
   marginLeft: "-$spacing$8",
 
   "& p": {
-    fontSize: "$text",
+    fontSize: "$jupiter",
     fontWeight: "$bold",
     border: "none",
     color: "$textAccent",

@@ -9,7 +9,7 @@ export const RawButton = styled("button", {
   borderRadius: "$borderRadius$regular",
   padding: "0 $spacing$4",
   color: "$textAccent",
-  fontSize: "$btn",
+  fontSize: "$uranus",
   fontFamily: "$default",
   border: "2px solid $secondary",
   display: "inline-flex",
@@ -39,6 +39,7 @@ export const RawButton = styled("button", {
         },
       },
       danger: {
+        border: "2px solid $primary",
         background: "$primary",
         "&:active": {
           opacity: "0.9",

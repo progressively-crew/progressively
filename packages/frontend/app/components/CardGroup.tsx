@@ -118,7 +118,7 @@ export const CardHeader = styled("div", {
   padding: "$spacing$4 $spacing$6 0 $spacing$6",
   fontFamily: "$default",
   color: "$textAccent",
-  fontSize: "$text",
+  fontSize: "$jupiter",
 
   "& a": {
     color: "$textAccent",
@@ -128,7 +128,7 @@ export const CardHeader = styled("div", {
 export const CardContent = styled("div", {
   padding: "0 $spacing$6 $spacing$4 $spacing$6",
   "& p": {
-    fontSize: "$btn",
+    fontSize: "$uranus",
     lineHeight: "$text",
   },
 });

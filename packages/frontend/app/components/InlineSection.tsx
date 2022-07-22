@@ -15,12 +15,12 @@ export const InlineSection = styled("section", {
 export const InlineSectionTitle = styled("h2", {
   color: "$textAccent",
   fontFamily: "$default",
-  fontSize: "$text",
+  fontSize: "$jupiter",
   fontWeight: "$semiBold",
   marginBottom: "$spacing$2",
 
   "@mobile": {
-    fontSize: "$h2",
+    fontSize: "$earth",
   },
 });
 

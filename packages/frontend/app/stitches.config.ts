@@ -51,18 +51,18 @@ export const {
       avatar: "40px",
     },
     fontSizes: {
-      xs: "0.8rem",
-      big: "3rem",
-      content: "1.25rem",
-      btn: "1rem",
-      title: "3.5rem",
-
-      titleMobile: "2.7rem",
-      h2: "2rem",
-      h3: "1.6rem",
+      venus: "3.5rem",
+      saturn: "3rem",
+      venusMobile: "2.7rem",
+      earth: "2rem",
+      mars: "1.6rem",
+      jupiter: "1.25rem",
+      uranus: "1rem",
+      neptune: "0.8rem",
     },
     fonts: {
-      default: "Untitled Sans, apple-system, sans-serif",
+      default: `system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif`,
     },
     fontWeights: {
       slim: "300",
@@ -71,8 +71,7 @@ export const {
       bold: "800",
     },
     lineHeights: {
-      content: "1.6",
-      title: "2",
+      text: "1.6",
     },
     borderRadius: {
       regular: "8px",

@@ -25,7 +25,7 @@ const HorizontalNavWrapper = styled("nav", {
     borderTop: "4px solid transparent",
     gap: "$spacing$2",
     transition: "border,box-shadow 0.2s",
-    fontSize: "$text",
+    fontSize: "$jupiter",
     whiteSpace: "nowrap",
   },
 

@@ -14,7 +14,7 @@ const BigStatValue = styled(CardContent, {
 
   "& p": {
     display: "inline",
-    fontSize: "$title",
+    fontSize: "$venus",
     lineHeight: "unset",
     color: "$secondary",
     borderBottom: "3px solid $secondary",
@@ -25,7 +25,7 @@ const BigStatValue = styled(CardContent, {
       true: {
         "& p": {
           color: "$textAccent",
-          borderBottom: "3px dashed $title",
+          borderBottom: "3px dashed $textAccent",
         },
       },
     },

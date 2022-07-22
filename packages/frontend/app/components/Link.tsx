@@ -4,7 +4,7 @@ import { styled } from "~/stitches.config";
 
 const RawLink = styled("a", {
   display: "inline-flex",
-  fontSize: "$text",
+  fontSize: "$jupiter",
   color: "$text",
   fontFamily: "$default",
   height: "$cta",

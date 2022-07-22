@@ -6,5 +6,5 @@ export const Tag = styled("span", {
   background: "$backgroundAccent",
   color: "$text",
   fontFamily: "$default",
-  fontSize: "$xs",
+  fontSize: "$neptune",
 });
