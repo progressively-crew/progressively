@@ -32,13 +32,13 @@ const ErrorBoxWrapper = styled("figure", {
   gap: "$spacing$3",
 
   "& svg": {
-    fontSize: "$h3",
+    fontSize: "$mars",
   },
 
   "& figcaption": {
     fontWeight: "$bold",
     marginBottom: "$spacing$4",
-    lineHeight: "$content",
+    lineHeight: "$text",
   },
 });
 

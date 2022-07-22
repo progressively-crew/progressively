@@ -1,15 +1,15 @@
 import { styled } from "~/stitches.config";
 
 export const Typography = styled("p", {
-  color: "$content",
-  fontSize: "$content",
+  color: "$text",
+  fontSize: "$jupiter",
   fontFamily: "$default",
-  lineHeight: "$content",
+  lineHeight: "$text",
   maxWidth: "60ch",
 
   "& strong": {
     fontWeight: "bold",
-    color: "$title",
+    color: "$textAccent",
   },
 
   variants: {

@@ -21,12 +21,12 @@ const WarningBoxWrapper = styled("figure", {
   gap: "$spacing$3",
 
   "& svg": {
-    fontSize: "$h3",
+    fontSize: "$mars",
   },
 
   "& figcaption": {
     fontWeight: "$bold",
-    lineHeight: "$content",
+    lineHeight: "$text",
   },
 
   "@mobile": {

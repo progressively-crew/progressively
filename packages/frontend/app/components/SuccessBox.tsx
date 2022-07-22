@@ -30,7 +30,7 @@ const SuccessBoxWrapper = styled("p", {
   },
 
   "& svg": {
-    fontSize: "$h3",
+    fontSize: "$mars",
   },
 });
 

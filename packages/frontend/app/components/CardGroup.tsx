@@ -42,7 +42,7 @@ const CardWrapper = styled("div", {
         // when hydrated
         cursor: "pointer",
         "&:active": {
-          border: "8px solid $hover",
+          border: "8px solid $activeBg",
         },
       },
     },
@@ -117,19 +117,19 @@ export const Card = ({ children, className, onClick }: CardProps) => {
 export const CardHeader = styled("div", {
   padding: "$spacing$4 $spacing$6 0 $spacing$6",
   fontFamily: "$default",
-  color: "$title",
-  fontSize: "$content",
+  color: "$textAccent",
+  fontSize: "$jupiter",
 
   "& a": {
-    color: "$title",
+    color: "$textAccent",
   },
 });
 
 export const CardContent = styled("div", {
   padding: "0 $spacing$6 $spacing$4 $spacing$6",
   "& p": {
-    fontSize: "$btn",
-    lineHeight: "$content",
+    fontSize: "$uranus",
+    lineHeight: "$text",
   },
 });
 

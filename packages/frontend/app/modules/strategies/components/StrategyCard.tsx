@@ -8,7 +8,7 @@ import { styled } from "~/stitches.config";
 import { ComparatorEnum, StrategyRetrieveDTO } from "../types";
 
 const WrapperUl = styled(Ul, {
-  color: "$content",
+  color: "$text",
 });
 
 const ActionWrapper = styled("div", {

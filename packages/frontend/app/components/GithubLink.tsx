@@ -2,8 +2,8 @@ import { styled } from "~/stitches.config";
 
 const GithubLinkWrapper = styled("a", {
   display: "inline-flex",
-  fontSize: "$content",
-  color: "$content",
+  fontSize: "$jupiter",
+  color: "$text",
   fontFamily: "$default",
   alignItems: "center",
   background: "$background",
@@ -16,13 +16,13 @@ const GithubLinkWrapper = styled("a", {
   transition: "all 0.1s",
 
   "&:hover": {
-    color: "$title",
+    color: "$textAccent",
     transform: "scale(1.05)",
   },
 
   "&:active": {
-    color: "$title",
-    border: "1px dashed $hover",
+    color: "$textAccent",
+    border: "1px dashed $activeBg",
   },
 });
 

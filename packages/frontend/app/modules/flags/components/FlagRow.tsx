@@ -26,7 +26,7 @@ const Wrapper = styled("div", {
   },
 
   "& a": {
-    color: "$title",
+    color: "$textAccent",
   },
 
   "@mobile": {

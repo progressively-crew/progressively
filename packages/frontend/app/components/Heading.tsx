@@ -1,7 +1,7 @@
 import { styled } from "~/stitches.config";
 
 export const Heading = styled("h2", {
-  color: "$title",
+  color: "$textAccent",
   fontWeight: "$fontWeights$semiBold",
   fontFamily: "$default",
 
@@ -9,15 +9,15 @@ export const Heading = styled("h2", {
     as: {
       h2: {
         "& a": {
-          fontSize: "$h2",
+          fontSize: "$earth",
         },
-        fontSize: "$h2",
+        fontSize: "$earth",
       },
       h3: {
         "& a": {
-          fontSize: "$h3",
+          fontSize: "$mars",
         },
-        fontSize: "$h3",
+        fontSize: "$mars",
       },
     },
   },

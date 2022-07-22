@@ -16,10 +16,10 @@ const ChartWrapper = styled("div", {
   marginLeft: "-$spacing$8",
 
   "& p": {
-    fontSize: "$content",
+    fontSize: "$jupiter",
     fontWeight: "$bold",
     border: "none",
-    color: "$title",
+    color: "$textAccent",
   },
 });
 

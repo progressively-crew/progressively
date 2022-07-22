@@ -11,7 +11,7 @@ const MetricWrapper = styled("div", {
   variants: {
     highlighted: {
       true: {
-        border: "6px dashed $hover",
+        border: "6px dashed $secondary",
       },
     },
   },
@@ -25,13 +25,13 @@ const MetricLabel = styled(Typography, {
 
 const MetricValue = styled("span", {
   fontFamily: "$default",
-  color: "$title",
-  fontSize: "$title",
+  color: "$textAccent",
+  fontSize: "$venus",
 });
 
 const MetricUnit = styled("span", {
-  color: "$content",
-  fontSize: "$h2",
+  color: "$text",
+  fontSize: "$earth",
   fontFamily: "$default",
 });
 

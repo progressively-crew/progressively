@@ -2,19 +2,13 @@ import { styled } from "~/stitches.config";
 import { Heading } from "./Heading";
 
 export const RawH1 = styled(Heading, {
-  fontSize: "$title",
+  fontSize: "$venus",
   fontFamily: "$default",
   fontWeight: "$bold",
-  backgroundImage: "linear-gradient(90deg, $title, $primary)",
-  backgroundClip: "text",
-
-  "-webkit-background-clip": "text",
-  "-webkit-text-fill-color": "transparent",
-  "-moz-background-clip": "text",
-  "-moz-text-fill-color": "transparent",
+  color: "$textAccent",
 
   "@mobile": {
-    fontSize: "$titleMobile",
+    fontSize: "$venusMobile",
   },
 
   // Since there's no lineheight, we need to pad bottom to avoid

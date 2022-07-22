@@ -106,6 +106,7 @@ section {
 }
 body {
   line-height: 1;
+  letter-spacing: 0.3px;
 }
 ol,
 ul {

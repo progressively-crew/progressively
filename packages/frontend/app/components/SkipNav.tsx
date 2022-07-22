@@ -1,7 +1,7 @@
 import { styled } from "~/stitches.config";
 
 const SkipNavAnchor = styled("a", {
-  background: "$title",
+  background: "$textAccent",
   color: "$background",
   position: "absolute",
   transform: "translateY(-100%)",

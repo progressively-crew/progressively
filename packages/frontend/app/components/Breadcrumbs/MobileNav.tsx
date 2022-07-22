@@ -19,8 +19,8 @@ const NavWrapper = styled("nav", {
   zIndex: 2,
 
   "& a": {
-    fontSize: "$h3",
-    color: "$title",
+    fontSize: "$mars",
+    color: "$textAccent",
   },
 
   "& svg": {
@@ -32,7 +32,7 @@ const NavWrapper = styled("nav", {
 
     "& li:last-of-type a": {
       fontWeight: "$fontWeights$bold",
-      color: "$hover",
+      color: "$secondary",
     },
   },
 
@@ -60,7 +60,7 @@ const MobileHeaderWrapper = styled("div", {
   },
 
   "& button svg": {
-    fontSize: "$h3",
+    fontSize: "$mars",
     margin: "unset",
   },
 });
@@ -70,7 +70,7 @@ const Separator = styled("div", {
   display: "inline-block",
 
   "& svg": {
-    fill: "$content",
+    fill: "$text",
   },
 });
 

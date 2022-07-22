@@ -17,13 +17,13 @@ const Wrapper = styled(Card, {
   border: "8px solid $border",
 
   "& a": {
-    color: "$title",
+    color: "$textAccent",
   },
 
   "& svg": {
     display: "block",
-    color: "$title",
-    fontSize: "$title",
+    color: "$textAccent",
+    fontSize: "$venus",
     marginBottom: "$spacing$4",
   },
 });

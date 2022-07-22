@@ -9,7 +9,7 @@ const AvatarWrapper = styled("div", {
   width: "$avatar",
   height: "$avatar",
   borderRadius: "50%",
-  color: "$title",
+  color: "$textAccent",
   background: "$primary",
   display: "flex",
   alignItems: "center",

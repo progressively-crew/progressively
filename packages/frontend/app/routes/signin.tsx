@@ -26,7 +26,7 @@ import { authenticate } from "../modules/auth/services/authenticate";
 import { validateSigninForm } from "../modules/auth/validators/validate-signin-form";
 
 const ForgotPasswordLink = styled(Link, {
-  fontSize: "$btn",
+  fontSize: "$uranus",
 });
 
 const SignupLinkWrapper = styled("div", {
@@ -35,8 +35,8 @@ const SignupLinkWrapper = styled("div", {
   textAlign: "center",
 
   "& a": {
-    fontSize: "$btn",
-    color: "$hover",
+    fontSize: "$uranus",
+    color: "$secondary",
     textAlign: "center",
   },
 });

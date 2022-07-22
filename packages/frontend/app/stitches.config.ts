@@ -16,14 +16,19 @@ export const {
   },
   theme: {
     colors: {
-      title: "white",
-      background: "#151722",
-      border: "rgb(36, 38, 49)",
-      backgroundAccent: "rgb(26, 28, 39)",
       primary: "#c3134e",
-      content: "#9ba1a6",
-      hover: "hsl(340deg, 82%, 85%)",
+      secondary: "hsl(340deg, 82%, 85%)",
+      text: "#9ba1a6",
+      textAccent: "white",
+      background: "#151722",
+      backgroundAccent: "rgb(26, 28, 39)",
+      border: "rgb(36, 38, 49)",
+
       focus: "#4D90FE",
+      hoverBg: "hsl(340deg, 82%, 85%)",
+      hoverFg: "hsl(340deg, 82%, 85%)",
+      activeBg: "hsl(340deg, 82%, 85%)",
+      activeFg: "hsl(340deg, 82%, 85%)",
 
       successBg: "#c8e6c9",
       successFg: "#1b5e20",
@@ -46,18 +51,18 @@ export const {
       avatar: "40px",
     },
     fontSizes: {
-      xs: "0.8rem",
-      big: "3rem",
-      content: "1.25rem",
-      btn: "1rem",
-      title: "3.5rem",
-
-      titleMobile: "2.7rem",
-      h2: "2rem",
-      h3: "1.6rem",
+      venus: "3.5rem",
+      saturn: "3rem",
+      venusMobile: "2.7rem",
+      earth: "2rem",
+      mars: "1.6rem",
+      jupiter: "1.25rem",
+      uranus: "1rem",
+      neptune: "0.8rem",
     },
     fonts: {
-      default: "Untitled Sans, apple-system, sans-serif",
+      default: `system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif`,
     },
     fontWeights: {
       slim: "300",
@@ -66,8 +71,7 @@ export const {
       bold: "800",
     },
     lineHeights: {
-      content: "1.6",
-      title: "2",
+      text: "1.6",
     },
     borderRadius: {
       regular: "8px",

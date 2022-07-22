@@ -18,7 +18,7 @@ const ActionBar = styled("div", {
 
 const BrowserContent = styled("div", {
   padding: "$spacing$4 $spacing$4",
-  color: "$content",
+  color: "$text",
   fontFamily: "$default",
 });
 
