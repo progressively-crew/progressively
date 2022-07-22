@@ -8,6 +8,7 @@ import { Spacer } from "~/components/Spacer";
 import { NavProvider } from "~/components/Breadcrumbs/providers/NavProvider";
 import { InertWhenNavOpened } from "~/components/Breadcrumbs/InertWhenNavOpened";
 import { Menu } from "~/components/Menu";
+import { styled } from "~/stitches.config";
 
 export interface DashboardLayoutProps {
   user?: Partial<User>;
@@ -17,6 +18,21 @@ export interface DashboardLayoutProps {
   subNav?: React.ReactNode;
   status?: React.ReactNode;
 }
+
+const ContentWrapper = styled("div", {
+  display: "grid",
+  gridTemplateColumns: "auto 1fr",
+  gap: "$spacing$10",
+});
+
+const MenuWrapper = styled("div", {
+  width: "$menuWidth",
+});
+
+const BreadcrumbWrapper = styled("div", {
+  background: "$secondary",
+  padding: "$spacing$2 0",
+});
 
 export const DashboardLayout = ({
   user,
@@ -37,40 +53,40 @@ export const DashboardLayout = ({
 
             {user && user.fullname && <UseDropdown user={user as User} />}
           </Nav>
-
-          <Spacer size={5} />
         </InertWhenNavOpened>
 
-        {breadcrumb && <Container>{breadcrumb}</Container>}
+        {breadcrumb && (
+          <BreadcrumbWrapper>
+            <Container>{breadcrumb}</Container>
+          </BreadcrumbWrapper>
+        )}
 
         <InertWhenNavOpened>
-          <Main>
-            <Spacer size={6} />
-            <Container>
-              {header && (
-                <>
-                  {header}
-                  <Spacer size={10} />
-                </>
-              )}
+          <Spacer size={10} />
+          <Container>
+            <ContentWrapper>
+              <div>{subNav && <MenuWrapper>{subNav}</MenuWrapper>}</div>
+              <Main>
+                <Spacer size={6} />
 
-              {subNav && (
-                <>
-                  {subNav}
-                  <Spacer size={8} />
-                </>
-              )}
+                {header && (
+                  <>
+                    {header}
+                    <Spacer size={10} />
+                  </>
+                )}
 
-              {status && (
-                <>
-                  {status}
-                  <Spacer size={8} />
-                </>
-              )}
+                {status && (
+                  <>
+                    {status}
+                    <Spacer size={8} />
+                  </>
+                )}
 
-              {children}
-            </Container>
-          </Main>
+                {children}
+              </Main>
+            </ContentWrapper>
+          </Container>
         </InertWhenNavOpened>
       </div>
     </NavProvider>

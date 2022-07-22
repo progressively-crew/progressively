@@ -57,6 +57,8 @@ const CardWrapper = styled("div", {
       },
     },
   },
+
+  boxShadow: `$card`,
 });
 
 export interface CardProps {

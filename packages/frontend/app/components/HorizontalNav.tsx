@@ -3,11 +3,10 @@ import { styled } from "~/stitches.config";
 
 const HorizontalNavWrapper = styled("nav", {
   "& ul": {
-    width: "100%",
-    background: "$backgroundAccent",
     display: "flex",
-    borderRadius: "$borderRadius$regular",
-    alignItems: "center",
+    flexDirection: "column",
+    gap: "$spacing$4",
+    marginLeft: "-$spacing$4",
   },
 
   "& ul li a": {
@@ -21,27 +20,17 @@ const HorizontalNavWrapper = styled("nav", {
     alignItems: "center",
     textDecoration: "none",
     color: "$textAccent",
-    borderBottom: "4px solid transparent",
-    borderTop: "4px solid transparent",
     gap: "$spacing$2",
     transition: "border,box-shadow 0.2s",
     fontSize: "$jupiter",
     whiteSpace: "nowrap",
-  },
-
-  "& ul li:first-of-type a": {
-    borderEndStartRadius: "$borderRadius$regular",
-    borderStartStartRadius: "$borderRadius$regular",
-  },
-
-  "& ul li a:hover": {
-    borderBottomColor: "$hoverBg",
-    color: "$hoverFg",
+    borderRadius: "$borderRadius$regular",
   },
 
   "& ul li a.active": {
-    borderBottomColor: "$hoverBg",
-    color: "$hoverFg",
+    background: "$backgroundAccent",
+    color: "$activeFg",
+    fontWeight: "$bold",
   },
 
   "& ul li svg": {

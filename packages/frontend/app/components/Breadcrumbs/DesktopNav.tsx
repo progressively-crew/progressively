@@ -9,12 +9,19 @@ const Ol = styled("ol", {
   display: "flex",
 
   "& li a": {
+    border: "2px dashed transparent",
+    color: "$background",
     transition: "border,box-shadow 0.2s",
+  },
+
+  "& li a:active": {
+    color: "$background",
+    opacity: 0.7,
   },
 
   "& li:last-of-type a": {
     fontWeight: "$fontWeights$bold",
-    color: "$secondary",
+    color: "$backgroundAccent",
   },
 
   "& li": {
@@ -26,6 +33,7 @@ const Ol = styled("ol", {
 const Separator = styled("div", {
   margin: "0 $spacing$2",
   display: "inline-block",
+  color: "$backgroundAccent",
 });
 
 const HStack = styled("span", {

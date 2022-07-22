@@ -43,7 +43,7 @@ export const {
       warningBorder: "#ffca28",
     },
     sizes: {
-      container: "1080px",
+      menuWidth: "280px",
       cardHeight: "160px",
       notAuthenticatedCardWidth: "400px",
       cta: "48px",
@@ -93,6 +93,9 @@ export const {
       13: "52px",
       14: "56px",
       16: "60px",
+    },
+    shadows: {
+      card: `rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(16, 16, 16, 0.55) 0px 4px 6px -1px, rgba(16, 16, 16, 0.55) 0px 2px 4px -2px`,
     },
   },
 });
