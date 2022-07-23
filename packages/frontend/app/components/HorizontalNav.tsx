@@ -22,7 +22,7 @@ const HorizontalNavWrapper = styled("nav", {
     color: "$textAccent",
     gap: "$spacing$2",
     transition: "border,box-shadow 0.2s",
-    fontSize: "$jupiter",
+    fontSize: "$uranus",
     whiteSpace: "nowrap",
     borderRadius: "$borderRadius$regular",
   },

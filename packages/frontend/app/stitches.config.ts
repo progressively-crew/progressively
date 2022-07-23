@@ -43,7 +43,7 @@ export const {
       warningBorder: "#ffca28",
     },
     sizes: {
-      menuWidth: "280px",
+      menuWidth: "240px",
       cardHeight: "160px",
       notAuthenticatedCardWidth: "400px",
       cta: "48px",

@@ -102,8 +102,12 @@ export default function EnvSettingsPage() {
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
-          title={environment.name}
-          tagline="Environment"
+          title={
+            <span>
+              Settings
+              <VisuallyHidden> of {environment.name}</VisuallyHidden>
+            </span>
+          }
           startAction={
             <HideMobile>
               <ButtonCopy toCopy={environment.clientKey}>

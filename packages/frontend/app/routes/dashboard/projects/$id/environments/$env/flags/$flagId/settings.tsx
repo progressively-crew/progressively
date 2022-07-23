@@ -132,8 +132,12 @@ export default function FlagSettingPage() {
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
-          tagline="Feature flag"
-          title={currentFlag.name}
+          title={
+            <span>
+              Settings
+              <VisuallyHidden> of {currentFlag.name}</VisuallyHidden>
+            </span>
+          }
           startAction={
             <FlagHeaderAction
               flagKey={currentFlag.key}

@@ -22,6 +22,7 @@ import { Experiment } from "~/modules/ab/types";
 import { getExperimentsByEnv } from "~/modules/ab/services/getExperimentsByEnv";
 import { Spacer } from "~/components/Spacer";
 import { ExperimentRow } from "~/modules/ab/components/ExperimentRow";
+import { VisuallyHidden } from "~/components/VisuallyHidden";
 
 interface MetaArgs {
   data?: {
@@ -102,8 +103,12 @@ export default function AbPage() {
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
-          tagline="Environment"
-          title={environment.name}
+          title={
+            <span>
+              A/B experiments
+              <VisuallyHidden> of {environment.name}</VisuallyHidden>
+            </span>
+          }
           startAction={
             <HideMobile>
               <ButtonCopy toCopy={environment.clientKey}>

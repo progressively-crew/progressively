@@ -23,6 +23,7 @@ import { VariantRow } from "~/modules/ab/components/VariantRow";
 import { SuccessBox } from "~/components/SuccessBox";
 import { ExperimentHeaderAction } from "~/modules/ab/components/ExperimentHeaderAction";
 import { toggleAction } from "~/modules/ab/components/ToggleExperiment";
+import { VisuallyHidden } from "~/components/VisuallyHidden";
 
 interface MetaArgs {
   data?: {
@@ -122,8 +123,12 @@ export default function ExperimentSettingsPage() {
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
-          tagline="A/B experiment"
-          title={experiment.name}
+          title={
+            <span>
+              Variants
+              <VisuallyHidden> of {experiment.name}</VisuallyHidden>
+            </span>
+          }
           startAction={
             <ExperimentHeaderAction
               experimentKey={experiment.key}

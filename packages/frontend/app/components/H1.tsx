@@ -2,7 +2,7 @@ import { styled } from "~/stitches.config";
 import { Heading } from "./Heading";
 
 export const RawH1 = styled(Heading, {
-  fontSize: "$venus",
+  fontSize: "$earth",
   fontFamily: "$default",
   fontWeight: "$bold",
   color: "$textAccent",

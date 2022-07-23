@@ -23,6 +23,7 @@ import { Crumbs } from "~/components/Breadcrumbs/types";
 import { EnvNavBar } from "~/modules/environments/components/EnvNavbar";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
+import { VisuallyHidden } from "~/components/VisuallyHidden";
 
 interface MetaArgs {
   data?: {
@@ -125,8 +126,12 @@ export default function FlagsByEnvPage() {
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
-          tagline="Environment"
-          title={environment.name}
+          title={
+            <span>
+              Feature flags
+              <VisuallyHidden> of {environment.name}</VisuallyHidden>
+            </span>
+          }
           startAction={
             <HideMobile>
               <ButtonCopy toCopy={environment.clientKey}>

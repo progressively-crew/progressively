@@ -9,7 +9,6 @@ const Ol = styled("ol", {
   display: "flex",
 
   "& li a": {
-    border: "2px dashed transparent",
     color: "$background",
     transition: "border,box-shadow 0.2s",
   },
@@ -32,8 +31,10 @@ const Ol = styled("ol", {
 
 const Separator = styled("div", {
   margin: "0 $spacing$2",
+  marginTop: "$spacing$1",
   display: "inline-block",
   color: "$backgroundAccent",
+  fontSize: "$mars",
 });
 
 const HStack = styled("span", {
@@ -56,7 +57,7 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
           const currentPage = index === lastItemIndex;
 
           return (
-            <li key={crumb.link}>
+            <li key={`desktop-breadcrumbs-${crumb.link}-${crumb.label}`}>
               <Link
                 aria-current={
                   crumb.forceNotCurrent

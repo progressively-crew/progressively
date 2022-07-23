@@ -123,8 +123,12 @@ export default function ExperimentSettingsPage() {
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
-          tagline="A/B experiment"
-          title={experiment.name}
+          title={
+            <span>
+              Settings
+              <VisuallyHidden> of {experiment.name}</VisuallyHidden>
+            </span>
+          }
           startAction={
             <ExperimentHeaderAction
               experimentKey={experiment.key}

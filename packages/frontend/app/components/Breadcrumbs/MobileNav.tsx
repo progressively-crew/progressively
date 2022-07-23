@@ -107,7 +107,7 @@ export const MobileNav = ({ crumbs }: DesktopNavProps) => {
             const currentPage = index === lastItemIndex;
 
             return (
-              <li key={crumb.link}>
+              <li key={`mobile-breadcrumbs-${crumb.link}-${crumb.label}`}>
                 <Link
                   aria-current={
                     crumb.forceNotCurrent

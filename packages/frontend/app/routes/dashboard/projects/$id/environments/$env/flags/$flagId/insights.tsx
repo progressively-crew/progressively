@@ -28,6 +28,7 @@ import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { FiFlag } from "react-icons/fi";
 import { FlagHeaderAction } from "~/modules/flags/components/FlagHeaderAction";
+import { VisuallyHidden } from "~/components/VisuallyHidden";
 
 interface MetaArgs {
   data?: {
@@ -168,8 +169,12 @@ export default function FlagById() {
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
-          tagline="Feature flag"
-          title={currentFlag.name}
+          title={
+            <span>
+              Insights
+              <VisuallyHidden> of {currentFlag.name}</VisuallyHidden>
+            </span>
+          }
           startAction={
             <FlagHeaderAction
               flagKey={currentFlag.key}

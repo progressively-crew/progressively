@@ -25,6 +25,7 @@ import { SwitchButton } from "~/components/Buttons/SwitchButton";
 import { useState } from "react";
 import { BigState } from "~/components/BigStat";
 import { ExperimentHeaderAction } from "~/modules/ab/components/ExperimentHeaderAction";
+import { VisuallyHidden } from "~/components/VisuallyHidden";
 
 interface MetaArgs {
   data?: {
@@ -125,8 +126,12 @@ export default function ExperimentInsights() {
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
-          tagline="A/B experiment"
-          title={experiment.name}
+          title={
+            <span>
+              Insights
+              <VisuallyHidden> of {experiment.name}</VisuallyHidden>
+            </span>
+          }
           startAction={
             <ExperimentHeaderAction
               experimentKey={experiment.key}
