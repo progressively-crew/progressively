@@ -1,4 +1,5 @@
 import { styled } from "~/stitches.config";
+import { Button } from "./Buttons/Button";
 
 const GithubLinkWrapper = styled("a", {
   display: "inline-flex",
@@ -28,11 +29,11 @@ const GithubLinkWrapper = styled("a", {
 
 export const GithubLink = () => {
   return (
-    <GithubLinkWrapper
+    <Button
       href="https://github.com/progressively-crew/progressively"
-      target="_blank"
+      variant="ghost"
     >
       Github
-    </GithubLinkWrapper>
+    </Button>
   );
 };

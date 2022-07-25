@@ -8,6 +8,7 @@ import { Menu } from "~/components/Menu";
 import { Button } from "~/components/Buttons/Button";
 import { styled } from "~/stitches.config";
 import { GithubLink } from "~/components/GithubLink";
+import { useFlags } from "@progressively/react";
 
 export interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -19,6 +20,8 @@ export const SubNavWrapper = styled("div", {
 });
 
 export const MarketingLayout = ({ children }: DashboardLayoutProps) => {
+  const { flags } = useFlags();
+
   return (
     <NavProvider>
       <div>
@@ -29,6 +32,14 @@ export const MarketingLayout = ({ children }: DashboardLayoutProps) => {
             <Menu to="/" hideOnMobile />
 
             <SubNavWrapper>
+              {flags.showDocumentationButton && (
+                <Button
+                  href="https://progressively-crew.github.io/"
+                  variant="ghost"
+                >
+                  Documentation
+                </Button>
+              )}
               <GithubLink />
               <Button to="/signin">Dashboard</Button>
             </SubNavWrapper>
