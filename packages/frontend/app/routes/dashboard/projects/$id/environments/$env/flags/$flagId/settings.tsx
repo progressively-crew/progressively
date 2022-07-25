@@ -14,16 +14,14 @@ import {
   SectionContent,
   SectionHeader,
 } from "~/components/Section";
-import { toggleAction } from "~/modules/flags/components/ToggleFlag";
 import { Typography } from "~/components/Typography";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { HideMobile } from "~/components/HideMobile";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
-import { MetaFunction, LoaderFunction, ActionFunction } from "@remix-run/node";
+import { MetaFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { FiFlag } from "react-icons/fi";
-import { FlagHeaderAction } from "~/modules/flags/components/FlagHeaderAction";
 import { FlagNavBar } from "~/modules/flags/components/FlagNavBar";
 
 interface MetaArgs {
@@ -89,16 +87,11 @@ export const loader: LoaderFunction = async ({
   };
 };
 
-export const action: ActionFunction = ({ request, params }): Promise<null> => {
-  return toggleAction({ request, params });
-};
-
 export default function FlagSettingPage() {
   const { project, environment, currentFlagEnv, user, userRole } =
     useLoaderData<LoaderData>();
 
   const currentFlag = currentFlagEnv.flag;
-  const isFlagActivated = currentFlagEnv.status === FlagStatus.ACTIVATED;
 
   const crumbs: Crumbs = [
     {
@@ -135,12 +128,6 @@ export default function FlagSettingPage() {
               Settings
               <VisuallyHidden> of {currentFlag.name}</VisuallyHidden>
             </span>
-          }
-          startAction={
-            <FlagHeaderAction
-              flagKey={currentFlag.key}
-              isFlagActivated={isFlagActivated}
-            />
           }
         />
       }

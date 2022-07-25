@@ -11,9 +11,9 @@ import { Section, SectionHeader } from "~/components/Section";
 import { AiOutlineExperiment } from "react-icons/ai";
 import { Typography } from "~/components/Typography";
 import { Crumbs } from "~/components/Breadcrumbs/types";
-import { MetaFunction, LoaderFunction, ActionFunction } from "@remix-run/node";
+import { MetaFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
-import { Experiment, ExperimentStatus } from "~/modules/ab/types";
+import { Experiment } from "~/modules/ab/types";
 import { getExperimentById } from "~/modules/ab/services/getExperimentById";
 import { AbNavBar } from "~/modules/ab/components/AbNavBar";
 import { CreateButton } from "~/components/Buttons/CreateButton";
@@ -21,8 +21,6 @@ import { EmptyState } from "~/components/EmptyState";
 import { Spacer } from "~/components/Spacer";
 import { VariantRow } from "~/modules/ab/components/VariantRow";
 import { SuccessBox } from "~/components/SuccessBox";
-import { ExperimentHeaderAction } from "~/modules/ab/components/ExperimentHeaderAction";
-import { toggleAction } from "~/modules/ab/components/ToggleExperiment";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 
 interface MetaArgs {
@@ -50,10 +48,6 @@ interface LoaderData {
   experimentEnv: Experiment;
   user: User;
 }
-
-export const action: ActionFunction = ({ request, params }): Promise<null> => {
-  return toggleAction({ request, params });
-};
 
 export const loader: LoaderFunction = async ({
   request,
@@ -91,7 +85,6 @@ export default function ExperimentSettingsPage() {
     useLoaderData<LoaderData>();
 
   const { status, experiment } = experimentEnv;
-  const isExperimentActivated = status === ExperimentStatus.ACTIVATED;
 
   const crumbs: Crumbs = [
     {
@@ -128,12 +121,6 @@ export default function ExperimentSettingsPage() {
               Variants
               <VisuallyHidden> of {experiment.name}</VisuallyHidden>
             </span>
-          }
-          startAction={
-            <ExperimentHeaderAction
-              experimentKey={experiment.key}
-              isExperimentActivated={isExperimentActivated}
-            />
           }
         />
       }

@@ -23,7 +23,6 @@ import { useLoaderData } from "@remix-run/react";
 import { Experiment, ExperimentStatus } from "~/modules/ab/types";
 import { getExperimentById } from "~/modules/ab/services/getExperimentById";
 import { AbNavBar } from "~/modules/ab/components/AbNavBar";
-import { ExperimentHeaderAction } from "~/modules/ab/components/ExperimentHeaderAction";
 
 interface MetaArgs {
   data?: {
@@ -90,8 +89,7 @@ export default function ExperimentSettingsPage() {
   const { project, environment, experimentEnv, user, userRole } =
     useLoaderData<LoaderData>();
 
-  const { status, experiment } = experimentEnv;
-  const isExperimentActivated = status === ExperimentStatus.ACTIVATED;
+  const { experiment } = experimentEnv;
 
   const crumbs: Crumbs = [
     {
@@ -128,12 +126,6 @@ export default function ExperimentSettingsPage() {
               Settings
               <VisuallyHidden> of {experiment.name}</VisuallyHidden>
             </span>
-          }
-          startAction={
-            <ExperimentHeaderAction
-              experimentKey={experiment.key}
-              isExperimentActivated={isExperimentActivated}
-            />
           }
         />
       }

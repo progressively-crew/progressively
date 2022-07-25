@@ -3,7 +3,7 @@ import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { authGuard } from "~/modules/auth/services/auth-guard";
 import { Environment } from "~/modules/environments/types";
 import { getFlagsByProjectEnv } from "~/modules/flags/services/getFlagsByProjectEnv";
-import { FlagEnv, FlagStatus } from "~/modules/flags/types";
+import { FlagEnv } from "~/modules/flags/types";
 import { getProject } from "~/modules/projects/services/getProject";
 import { Project } from "~/modules/projects/types";
 import { getStrategies } from "~/modules/strategies/services/getStrategies";
@@ -16,16 +16,14 @@ import { WarningBox } from "~/components/WarningBox";
 import { Header } from "~/components/Header";
 import { Section, SectionHeader } from "~/components/Section";
 import { EmptyState } from "~/components/EmptyState";
-import { toggleAction } from "~/modules/flags/components/ToggleFlag";
 import { Typography } from "~/components/Typography";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { CardGroup } from "~/components/CardGroup";
 import { CreationCard } from "~/components/CreationCard";
 import { Crumbs } from "~/components/Breadcrumbs/types";
-import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
+import { MetaFunction, LoaderFunction } from "@remix-run/node";
 import { useSearchParams, useLoaderData } from "@remix-run/react";
 import { FiFlag } from "react-icons/fi";
-import { FlagHeaderAction } from "~/modules/flags/components/FlagHeaderAction";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { FlagNavBar } from "~/modules/flags/components/FlagNavBar";
 
@@ -45,10 +43,6 @@ export const meta: MetaFunction = ({ data }: MetaArgs) => {
   return {
     title: `Progressively | ${projectName} | ${envName} | Flags | ${flagName}`,
   };
-};
-
-export const action: ActionFunction = ({ request, params }): Promise<null> => {
-  return toggleAction({ request, params });
 };
 
 interface LoaderData {
@@ -109,8 +103,6 @@ export default function FlagById() {
 
   const currentFlag = currentFlagEnv.flag;
 
-  const isFlagActivated = currentFlagEnv.status === FlagStatus.ACTIVATED;
-
   const crumbs: Crumbs = [
     {
       link: "/dashboard",
@@ -146,12 +138,6 @@ export default function FlagById() {
               Strategies
               <VisuallyHidden> of {currentFlag.name}</VisuallyHidden>
             </span>
-          }
-          startAction={
-            <FlagHeaderAction
-              flagKey={currentFlag.key}
-              isFlagActivated={isFlagActivated}
-            />
           }
         />
       }
