@@ -99,7 +99,11 @@ export const headers: HeadersFunction = () => {
 
 export const loader: LoaderFunction = async () => {
   const { ssrProps, cookies } = await getSSRProps(
-    "37c15cf9-3625-4516-9080-74931ed639d4"
+    (process.env as any).PROGRESSIVELY_SDK_KEY,
+    {
+      websocketUrl: (process.env as any).PROGRESSIVELY_WS,
+      apiUrl: (process.env as any).BACKEND_URL,
+    }
   );
 
   return json({
