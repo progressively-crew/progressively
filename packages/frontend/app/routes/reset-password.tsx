@@ -94,12 +94,21 @@ export default function ResetPasswordPage() {
   const [searchParams] = useSearchParams();
   const transition = useTransition();
   const urlToken = searchParams.get("token");
+  const pageType = searchParams.get("p");
   const success = data?.success;
   const errors = data?.errors;
 
+  let pageTitle: string;
+
+  if (pageType === "s") {
+    pageTitle = "Set your password";
+  } else {
+    pageTitle = "Reset password";
+  }
+
   return (
     <NotAuthenticatedLayout
-      header={<Header title="Reset password" />}
+      header={<Header title={pageTitle} />}
       nav={<BackLink to="/signin">Back to signin</BackLink>}
       status={
         <>
