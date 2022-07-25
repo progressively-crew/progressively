@@ -1,5 +1,4 @@
 import { BreadCrumbs } from "~/components/Breadcrumbs";
-import { ButtonCopy } from "~/components/ButtonCopy";
 import { Environment } from "~/modules/environments/types";
 import { getProject } from "~/modules/projects/services/getProject";
 import { Project } from "~/modules/projects/types";
@@ -13,7 +12,6 @@ import { Section, SectionHeader } from "~/components/Section";
 import { EmptyState } from "~/components/EmptyState";
 import { Typography } from "~/components/Typography";
 import { CreateButton } from "~/components/Buttons/CreateButton";
-import { HideMobile } from "~/components/HideMobile";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { EnvNavBar } from "~/modules/environments/components/EnvNavbar";
 import { MetaFunction, LoaderFunction } from "@remix-run/node";
@@ -109,13 +107,6 @@ export default function AbPage() {
               <VisuallyHidden> of {environment.name}</VisuallyHidden>
             </span>
           }
-          startAction={
-            <HideMobile>
-              <ButtonCopy toCopy={environment.clientKey}>
-                {environment.clientKey}
-              </ButtonCopy>
-            </HideMobile>
-          }
         />
       }
       subNav={<EnvNavBar projectId={project.uuid} envId={environment.uuid} />}
@@ -151,7 +142,7 @@ export default function AbPage() {
                 experimentKey={exp.key}
                 title={exp.name}
                 description={exp.description}
-                linkTo={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/ab/${exp.uuid}/variants`}
+                linkTo={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/ab/${exp.uuid}/insights`}
               />
             ))}
           </div>

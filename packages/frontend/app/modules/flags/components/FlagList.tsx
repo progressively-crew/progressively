@@ -14,7 +14,7 @@ export const FlagList = ({ flags, projectId, envId }: FlagListProps) => {
         <FlagRow
           key={flagEnv.flagId}
           id={flagEnv.flagId}
-          linkTo={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}`}
+          linkTo={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/insights`}
           title={flagEnv.flag.name}
           flagStatus={flagEnv.status}
           flagKey={flagEnv.flag.key}

@@ -65,7 +65,7 @@ export const DashboardLayout = ({
           <Spacer size={10} />
           <Container>
             <ContentWrapper>
-              <div>{subNav && <MenuWrapper>{subNav}</MenuWrapper>}</div>
+              {subNav && <MenuWrapper>{subNav}</MenuWrapper>}
               <Main>
                 {header && (
                   <>

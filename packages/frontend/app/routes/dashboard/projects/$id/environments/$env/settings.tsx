@@ -1,5 +1,4 @@
 import { BreadCrumbs } from "~/components/Breadcrumbs";
-import { ButtonCopy } from "~/components/ButtonCopy";
 import { Header } from "~/components/Header";
 import {
   CardSection,
@@ -107,13 +106,6 @@ export default function EnvSettingsPage() {
               Settings
               <VisuallyHidden> of {environment.name}</VisuallyHidden>
             </span>
-          }
-          startAction={
-            <HideMobile>
-              <ButtonCopy toCopy={environment.clientKey}>
-                {environment.clientKey}
-              </ButtonCopy>
-            </HideMobile>
           }
         />
       }

@@ -14,17 +14,17 @@ export const AbNavBar = ({ projectId, envId, experimentId }: AbNavBarProps) => {
   return (
     <HorizontalNav label={`A/B experiment related`}>
       <NavItem
-        to={`${rootEnvPath}/${experimentId}/variants`}
-        icon={<IoShapes />}
-      >
-        Variants
-      </NavItem>
-
-      <NavItem
         to={`${rootEnvPath}/${experimentId}/insights`}
         icon={<AiOutlineBarChart />}
       >
         Insights
+      </NavItem>
+
+      <NavItem
+        to={`${rootEnvPath}/${experimentId}/variants`}
+        icon={<IoShapes />}
+      >
+        Variants
       </NavItem>
 
       <NavItem

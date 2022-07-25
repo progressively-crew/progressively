@@ -30,6 +30,7 @@ import { useSearchParams, useLoaderData } from "@remix-run/react";
 import { FiFlag } from "react-icons/fi";
 import { FlagHeaderAction } from "~/modules/flags/components/FlagHeaderAction";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
+import { FlagNavBar } from "~/modules/flags/components/FlagNavBar";
 
 interface MetaArgs {
   data?: {
@@ -158,28 +159,11 @@ export default function FlagById() {
         />
       }
       subNav={
-        <HorizontalNav label={`Flag related`}>
-          <NavItem
-            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`}
-            icon={<FaPowerOff />}
-          >
-            Strategies
-          </NavItem>
-
-          <NavItem
-            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/insights`}
-            icon={<AiOutlineBarChart />}
-          >
-            Insights
-          </NavItem>
-
-          <NavItem
-            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/settings`}
-            icon={<AiOutlineSetting />}
-          >
-            Settings
-          </NavItem>
-        </HorizontalNav>
+        <FlagNavBar
+          projectId={project.uuid}
+          envId={environment.uuid}
+          flagId={currentFlag.uuid}
+        />
       }
       status={
         isStrategyAdded ? (

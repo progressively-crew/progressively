@@ -1,5 +1,4 @@
 import { BreadCrumbs } from "~/components/Breadcrumbs";
-import { ButtonCopy } from "~/components/ButtonCopy";
 import { Environment } from "~/modules/environments/types";
 import { activateFlag } from "~/modules/flags/services/activateFlag";
 import { getFlagsByProjectEnv } from "~/modules/flags/services/getFlagsByProjectEnv";
@@ -18,7 +17,6 @@ import { Typography } from "~/components/Typography";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { FlagList } from "~/modules/flags/components/FlagList";
 import { Spacer } from "~/components/Spacer";
-import { HideMobile } from "~/components/HideMobile";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { EnvNavBar } from "~/modules/environments/components/EnvNavbar";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
@@ -131,13 +129,6 @@ export default function FlagsByEnvPage() {
               Feature flags
               <VisuallyHidden> of {environment.name}</VisuallyHidden>
             </span>
-          }
-          startAction={
-            <HideMobile>
-              <ButtonCopy toCopy={environment.clientKey}>
-                {environment.clientKey}
-              </ButtonCopy>
-            </HideMobile>
           }
         />
       }
