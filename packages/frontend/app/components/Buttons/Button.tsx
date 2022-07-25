@@ -2,6 +2,7 @@ import { Link } from "@remix-run/react";
 import { HTMLAttributes } from "react";
 
 import { styled } from "~/stitches.config";
+import { Spinner } from "../Spinner";
 
 export const RawButton = styled("button", {
   boxSizing: "border-box",
@@ -62,9 +63,7 @@ const Wrapper = styled("span", {
   display: "flex",
   alignItems: "center",
   height: "100%",
-  "& svg": {
-    marginRight: "$spacing$2",
-  },
+  gap: "$spacing$2",
 });
 
 export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
@@ -107,9 +106,14 @@ export const Button = ({
   }
 
   return (
-    <RawButton type={type} {...props}>
+    <RawButton
+      type={type}
+      {...props}
+      aria-disabled={isLoading}
+      aria-label={isLoading ? loadingText : undefined}
+    >
       <Wrapper>
-        {icon}
+        {isLoading ? <Spinner /> : icon}
         {children}
       </Wrapper>
     </RawButton>
