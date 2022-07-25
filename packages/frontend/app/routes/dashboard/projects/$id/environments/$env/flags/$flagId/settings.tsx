@@ -14,9 +14,6 @@ import {
   SectionContent,
   SectionHeader,
 } from "~/components/Section";
-import { AiOutlineBarChart, AiOutlineSetting } from "react-icons/ai";
-import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
-import { FaPowerOff } from "react-icons/fa";
 import { toggleAction } from "~/modules/flags/components/ToggleFlag";
 import { Typography } from "~/components/Typography";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
