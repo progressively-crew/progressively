@@ -93,7 +93,14 @@ export class ProjectsController {
       throw new UnauthorizedException();
     }
 
-    return this.projectService.removeMember(id, memberId);
+    const res = await this.projectService.removeMember(id, memberId);
+
+    // When users have an activationToken, they are not activated.
+    if (!userProject.user.activationToken) {
+      await this.userService.deleteByUuid(userProject.user.uuid);
+    }
+
+    return res;
   }
 
   @Post(':id/members')

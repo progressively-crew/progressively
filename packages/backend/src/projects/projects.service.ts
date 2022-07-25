@@ -109,8 +109,12 @@ export class ProjectsService {
         userId: memberId,
         projectId,
       },
+      include: {
+        user: true,
+      },
     });
   }
+
   removeMember(projectId: string, memberId: string) {
     return this.prisma.userProject.delete({
       where: {
