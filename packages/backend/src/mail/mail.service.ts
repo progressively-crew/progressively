@@ -62,11 +62,11 @@ export class MailService {
         <p>
           In order for it to be done, you would need to follow this link:
           <a
-            href=" ${process.env.FRONTEND_URL}/reset-password?token=${resetPasswordToken}"
+            href=" ${process.env.FRONTEND_URL}/reset-password?token=${resetPasswordToken}&p=s"
             target="_blank"
             rel="noopener noreferrer"
           >
-          ${process.env.FRONTEND_URL}/reset-password?token=${resetPasswordToken}</a
+          ${process.env.FRONTEND_URL}/reset-password?token=${resetPasswordToken}&p=s</a
           >
         </p>
         <p style="color:red;">This link will be valid for 15mns.</p>
