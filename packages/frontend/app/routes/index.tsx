@@ -1,5 +1,12 @@
-import { HeadersFunction, MetaFunction } from "@remix-run/node";
+import {
+  HeadersFunction,
+  json,
+  LoaderFunction,
+  MetaFunction,
+} from "@remix-run/node";
 import { useState } from "react";
+import { ProgressivelyProvider } from "@progressively/react";
+import { getSSRProps } from "@progressively/react/lib/ssr";
 import { Browser } from "~/components/Browser";
 import { AddButton } from "~/components/Buttons/AddButton";
 import { Container } from "~/components/Container";
@@ -14,6 +21,7 @@ import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { MarketingLayout } from "~/layouts/MarketingLayout";
 import { styled } from "~/stitches.config";
 import bundleSize from "../progressively-sdk-sizes.json";
+import { useLoaderData } from "@remix-run/react";
 
 const ExampleOldPage = styled("div", {
   padding: "$spacing$4",
@@ -89,7 +97,21 @@ export const headers: HeadersFunction = () => {
   };
 };
 
+export const loader: LoaderFunction = async () => {
+  const { ssrProps, cookies } = await getSSRProps(
+    "37c15cf9-3625-4516-9080-74931ed639d4"
+  );
+
+  return json({
+    progressivelyProps: ssrProps,
+    headers: {
+      "Set-Cookie": cookies,
+    },
+  });
+};
+
 export default function Index() {
+  const { progressivelyProps } = useLoaderData();
   const [showNewHomepage, setShowNewHomepage] = useState(false);
   bundleSize.sort((a, b) => a.gzip - b.gzip);
 
@@ -100,128 +122,130 @@ export default function Index() {
   });
 
   return (
-    <MarketingLayout>
-      <Spacer size={16} />
+    <ProgressivelyProvider {...progressivelyProps}>
+      <MarketingLayout>
+        <Spacer size={16} />
 
-      <Stack spacing={16}>
-        <Container>
-          <Hero>
-            <HeadingWrapper>
-              <H1>Feature flags service that does not kill performances</H1>
-              <Typography>
-                Progressively provides simple solutions for feature flagging and
-                A/B testing with an accessible dashboard, lightweight browser
-                SDKs — and it respects your privacy.
-              </Typography>
-            </HeadingWrapper>
+        <Stack spacing={16}>
+          <Container>
+            <Hero>
+              <HeadingWrapper>
+                <H1>Feature flags service that does not kill performances</H1>
+                <Typography>
+                  Progressively provides simple solutions for feature flagging
+                  and A/B testing with an accessible dashboard, lightweight
+                  browser SDKs — and it respects your privacy.
+                </Typography>
+              </HeadingWrapper>
 
-            <section aria-labelledby="example" style={{ width: "100%" }}>
-              <VisuallyHidden id="example">
-                Example of how feature flags work
-              </VisuallyHidden>
+              <section aria-labelledby="example" style={{ width: "100%" }}>
+                <VisuallyHidden id="example">
+                  Example of how feature flags work
+                </VisuallyHidden>
 
-              <Browser>
-                <div aria-live="polite">
-                  {showNewHomepage ? (
-                    <ExampleNewPage>
-                      <p>This is the new home page!</p>
-                    </ExampleNewPage>
-                  ) : (
-                    <ExampleOldPage>
-                      <p>
-                        This is an old page. {`Let's switch to the new page`}
-                      </p>
-                    </ExampleOldPage>
-                  )}
-                </div>
+                <Browser>
+                  <div aria-live="polite">
+                    {showNewHomepage ? (
+                      <ExampleNewPage>
+                        <p>This is the new home page!</p>
+                      </ExampleNewPage>
+                    ) : (
+                      <ExampleOldPage>
+                        <p>
+                          This is an old page. {`Let's switch to the new page`}
+                        </p>
+                      </ExampleOldPage>
+                    )}
+                  </div>
 
-                <Spacer size={4} />
+                  <Spacer size={4} />
 
-                <Switch
-                  label="Switch to the new homepage"
-                  type="button"
-                  checked={showNewHomepage}
-                  onClick={() => setShowNewHomepage((s) => !s)}
-                />
-              </Browser>
-            </section>
-          </Hero>
-        </Container>
+                  <Switch
+                    label="Switch to the new homepage"
+                    type="button"
+                    checked={showNewHomepage}
+                    onClick={() => setShowNewHomepage((s) => !s)}
+                  />
+                </Browser>
+              </section>
+            </Hero>
+          </Container>
 
-        <section aria-labelledby="bundle-size">
-          <InvertedBackground>
+          <section aria-labelledby="bundle-size">
+            <InvertedBackground>
+              <Container>
+                <Centered>
+                  <H2 id="bundle-size">Minimal bundle footprint</H2>
+                  <Typography>
+                    {`Progressively's client side SDKs`} aims to be minimal to
+                    avoid bloating your client applications and kill your
+                    performances.
+                  </Typography>
+
+                  <Spacer size={8} />
+
+                  <MetricWrapper>
+                    {packages.map((p, index) => (
+                      <Metric
+                        key={p.package}
+                        label={p.package}
+                        value={p.gzip}
+                        unit="kB"
+                        highlighted={index === 0}
+                      />
+                    ))}
+                  </MetricWrapper>
+
+                  <Spacer size={8} />
+
+                  <Typography>
+                    And if you {`don't`} trust{" "}
+                    <ExternalLink href="https://bundlephobia.com/">{`@bundlephobia's`}</ExternalLink>{" "}
+                    numbers that much, check{" "}
+                    <ExternalLink href="https://github.com/progressively-crew/progressively/tree/master/example/bundle-diffs">
+                      this Nextjs project
+                    </ExternalLink>{" "}
+                    running bundle analyzer against the different tools.
+                  </Typography>
+                </Centered>
+              </Container>
+            </InvertedBackground>
+          </section>
+
+          <section aria-labelledby="privacy">
             <Container>
               <Centered>
-                <H2 id="bundle-size">Minimal bundle footprint</H2>
-                <Typography>
-                  {`Progressively's client side SDKs`} aims to be minimal to
-                  avoid bloating your client applications and kill your
-                  performances.
-                </Typography>
+                <div>
+                  <H2 id="privacy">People is what matters</H2>
+                  <Typography>
+                    We do not keep information about your users. Progressively
+                    only records the flag and A/B variant resolution to give you
+                    insights on what is going on. We do not track the user
+                    journey, neither get analytics.
+                  </Typography>
+                  <Spacer size={8} />
+                  <Typography>
+                    Also, if you find your experience to be inconsistent or not
+                    accessible, please, let us know so that we can improve the
+                    tool.
+                  </Typography>
 
-                <Spacer size={8} />
+                  <Spacer size={8} />
 
-                <MetricWrapper>
-                  {packages.map((p, index) => (
-                    <Metric
-                      key={p.package}
-                      label={p.package}
-                      value={p.gzip}
-                      unit="kB"
-                      highlighted={index === 0}
-                    />
-                  ))}
-                </MetricWrapper>
-
-                <Spacer size={8} />
-
-                <Typography>
-                  And if you {`don't`} trust{" "}
-                  <ExternalLink href="https://bundlephobia.com/">{`@bundlephobia's`}</ExternalLink>{" "}
-                  numbers that much, check{" "}
-                  <ExternalLink href="https://github.com/progressively-crew/progressively/tree/master/example/bundle-diffs">
-                    this Nextjs project
-                  </ExternalLink>{" "}
-                  running bundle analyzer against the different tools.
-                </Typography>
+                  <AddButton
+                    href="https://github.com/progressively-crew/progressively/issues"
+                    target="_blank"
+                  >
+                    Create a Github issue
+                  </AddButton>
+                </div>
               </Centered>
             </Container>
-          </InvertedBackground>
-        </section>
+          </section>
 
-        <section aria-labelledby="privacy">
-          <Container>
-            <Centered>
-              <div>
-                <H2 id="privacy">People is what matters</H2>
-                <Typography>
-                  We do not keep information about your users. Progressively
-                  only records the flag and A/B variant resolution to give you
-                  insights on what is going on. We do not track the user
-                  journey, neither get analytics.
-                </Typography>
-                <Spacer size={8} />
-                <Typography>
-                  Also, if you find your experience to be inconsistent or not
-                  accessible, please, let us know so that we can improve the
-                  tool.
-                </Typography>
-
-                <Spacer size={8} />
-
-                <AddButton
-                  href="https://github.com/progressively-crew/progressively/issues"
-                  target="_blank"
-                >
-                  Create a Github issue
-                </AddButton>
-              </div>
-            </Centered>
-          </Container>
-        </section>
-
-        <Spacer size={16} />
-      </Stack>
-    </MarketingLayout>
+          <Spacer size={16} />
+        </Stack>
+      </MarketingLayout>
+    </ProgressivelyProvider>
   );
 }

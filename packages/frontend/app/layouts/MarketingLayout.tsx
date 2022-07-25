@@ -1,3 +1,4 @@
+import { useFlags } from "@progressively/react";
 import { Main } from "~/components/Main";
 import { SkipNavLink } from "~/components/SkipNav";
 import { Nav } from "~/components/Nav";
@@ -19,6 +20,8 @@ export const SubNavWrapper = styled("div", {
 });
 
 export const MarketingLayout = ({ children }: DashboardLayoutProps) => {
+  const { flags } = useFlags();
+
   return (
     <NavProvider>
       <div>
@@ -29,6 +32,14 @@ export const MarketingLayout = ({ children }: DashboardLayoutProps) => {
             <Menu to="/" hideOnMobile />
 
             <SubNavWrapper>
+              {flags.showDocumentationButton && (
+                <Button
+                  variant="ghost"
+                  href="https://progressively-crew.github.io/"
+                >
+                  Documentation
+                </Button>
+              )}
               <GithubLink />
               <Button to="/signin">Dashboard</Button>
             </SubNavWrapper>
