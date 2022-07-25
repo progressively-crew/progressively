@@ -124,6 +124,7 @@ export default function ResetPasswordPage() {
             label="New password"
             name="password"
             placeholder="**********"
+            type="password"
           />
 
           <TextInput
@@ -131,6 +132,7 @@ export default function ResetPasswordPage() {
             label="Confirmation password"
             name="confirmationPassword"
             placeholder="**********"
+            type="password"
           />
 
           <SubmitButton
