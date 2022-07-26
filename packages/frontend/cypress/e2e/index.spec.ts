@@ -9,7 +9,7 @@ describe("/", () => {
   });
 
   beforeEach(() => {
-    cy.visit("/");
+    cy.visitPage("/");
     cy.injectAxe();
   });
 

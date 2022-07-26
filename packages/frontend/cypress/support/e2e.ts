@@ -26,6 +26,7 @@
 // @ts-ignore
 import "@testing-library/cypress/add-commands";
 import "cypress-axe";
+import { WebSocket } from "mock-socket";
 import { AvailableUsers } from "./constants";
 
 Cypress.Commands.add("seed", () => cy.task("seed"));
@@ -61,3 +62,11 @@ Cypress.on(
   "uncaught:exception",
   (err) => !err.message.includes("ResizeObserver loop limit exceeded")
 );
+
+Cypress.Commands.add("visitPage", (url: string) => {
+  cy.visit(url, {
+    onBeforeLoad(win) {
+      cy.stub(win, "WebSocket", (url) => new WebSocket(url));
+    },
+  });
+});
