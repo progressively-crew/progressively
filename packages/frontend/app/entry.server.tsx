@@ -2,6 +2,11 @@ import type { EntryContext } from "@remix-run/node";
 import { RemixServer } from "@remix-run/react";
 import { renderToString } from "react-dom/server";
 import { getCssText } from "./stitches.config";
+import { server } from "./mocks/msw-server";
+
+if (process.env.START_MOCK_SERVER === "true") {
+  server?.listen({ onUnhandledRequest: "warn" });
+}
 
 export default function handleRequest(
   request: Request,
