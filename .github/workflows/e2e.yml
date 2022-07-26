@@ -8,6 +8,7 @@ jobs:
   static:
     env:
       ALLOW_REGISTRATION: true
+      START_MOCK_SERVER: true
     runs-on: ubuntu-latest
     # Uncomment for parallel
     # strategy:
@@ -64,7 +65,7 @@ jobs:
 
       - name: Start the frontend project
         working-directory: ./packages/frontend
-        run: npm run start:ci &
+        run: npm start &
 
       # Uncomment for parallel
       - name: E2E tests
