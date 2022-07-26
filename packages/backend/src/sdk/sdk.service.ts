@@ -57,7 +57,6 @@ export class SdkService {
       if (experimentVariant) {
         this.abService.hitVariant(experimentVariant.uuid);
       }
-      
     }
 
     return experiments;
@@ -82,7 +81,7 @@ export class SdkService {
       this.flagService.hitFlag(
         flagEnv.environmentId,
         flagEnv.flagId,
-        flagEnv.status as FlagStatus,
+        flagStatus ? FlagStatus.ACTIVATED : FlagStatus.NOT_ACTIVATED,
       );
     }
 
