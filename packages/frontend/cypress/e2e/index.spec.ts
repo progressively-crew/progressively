@@ -3,7 +3,7 @@ import { progressivelyApiMocks } from "../../app/mocks/data";
 describe("/", () => {
   beforeEach(() => {
     progressivelyApiMocks.forEach((route) => {
-      cy.intercept("GET", route.path, {
+      cy.intercept("GET", `${route.host}${route.path}`, {
         statusCode: 200,
         body: route.body,
       });

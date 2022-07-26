@@ -8,7 +8,7 @@ jobs:
   static:
     env:
       ALLOW_REGISTRATION: true
-      START_MOCK_SERVER: "true"
+      START_MOCK_SERVER: true
     runs-on: ubuntu-latest
     # Uncomment for parallel
     # strategy:
@@ -65,12 +65,11 @@ jobs:
 
       - name: Start the frontend project
         working-directory: ./packages/frontend
-        run: npm start > log.txt &
+        run: npm start &
 
       # Uncomment for parallel
       - name: E2E tests
-        working-directory: ./packages/frontend
-        run: npx wait-on -t 60000 tcp:4000 && npm run test:e2e:ci && cat log.txt
+        run: npx wait-on -t 60000 tcp:4000 && npm run test:e2e:ci
         # env:
         #   CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
         #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
