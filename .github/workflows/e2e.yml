@@ -8,6 +8,7 @@ jobs:
   static:
     env:
       ALLOW_REGISTRATION: true
+      START_MOCK_SERVER: true
     runs-on: ubuntu-latest
     # Uncomment for parallel
     # strategy:
@@ -62,12 +63,16 @@ jobs:
         working-directory: ./packages/backend
         run: npm start &
 
+      - name: Force install remote @progressively/react
+        working-directory: ./packages/frontend
+        run: npm install
+
       - name: Start the frontend project
         working-directory: ./packages/frontend
         run: npm start &
-
       # Uncomment for parallel
       - name: E2E tests
+        working-directory: ./packages/frontend
         run: npx wait-on -t 60000 tcp:4000 && npm run test:e2e:ci
         # env:
         #   CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
