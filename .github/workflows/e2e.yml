@@ -61,7 +61,7 @@ jobs:
 
       - name: Start the backend project
         working-directory: ./packages/backend
-        run: npm start &
+        run: npm start > log.txt &
 
       - name: Start the frontend project
         working-directory: ./packages/frontend
@@ -69,7 +69,8 @@ jobs:
 
       # Uncomment for parallel
       - name: E2E tests
-        run: npx wait-on -t 60000 tcp:4000 && npm run test:e2e:ci
+        working-directory: ./packages/frontend
+        run: npx wait-on -t 60000 tcp:4000 && npm run test:e2e:ci && cat log.txt
         # env:
         #   CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
         #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
