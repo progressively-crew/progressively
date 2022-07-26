@@ -6,6 +6,7 @@ import { server } from "./mocks/msw-server";
 
 if (process.env.START_MOCK_SERVER === "true") {
   server?.listen({ onUnhandledRequest: "warn" });
+  console.info("[Server] MSW initialised");
 }
 
 export default function handleRequest(
