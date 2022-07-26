@@ -64,7 +64,7 @@ jobs:
 
       - name: Start the frontend project
         working-directory: ./packages/frontend
-        run: npm start:ci &
+        run: npm run start:ci &
 
       # Uncomment for parallel
       - name: E2E tests
