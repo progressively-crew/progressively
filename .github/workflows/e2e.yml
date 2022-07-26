@@ -61,11 +61,11 @@ jobs:
 
       - name: Start the backend project
         working-directory: ./packages/backend
-        run: npm start > log.txt &
+        run: npm start &
 
       - name: Start the frontend project
         working-directory: ./packages/frontend
-        run: npm start &
+        run: npm start > log.txt &
 
       # Uncomment for parallel
       - name: E2E tests
