@@ -98,20 +98,16 @@ export const headers: HeadersFunction = () => {
 };
 
 export const loader: LoaderFunction = async () => {
-  try {
-    const { ssrProps, cookies } = await getSSRProps(
-      "37c15cf9-3625-4516-9080-74931ed639d4"
-    );
+  const { ssrProps, cookies } = await getSSRProps(
+    "37c15cf9-3625-4516-9080-74931ed639d4"
+  );
 
-    return json({
-      progressivelyProps: ssrProps,
-      headers: {
-        "Set-Cookie": cookies,
-      },
-    });
-  } catch (err: any) {
-    console.log("on catch des trucs", err, err.message);
-  }
+  return json({
+    progressivelyProps: ssrProps,
+    headers: {
+      "Set-Cookie": cookies,
+    },
+  });
 };
 
 export default function Index() {

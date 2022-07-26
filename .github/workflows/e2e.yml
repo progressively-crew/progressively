@@ -47,6 +47,13 @@ jobs:
             packages/frontend/package-lock.json
             packages/backend/package-lock.json
 
+      - name: Upload screenshots
+        uses: actions/upload-artifact@latest
+        if: failure()
+        with:
+          name: cypress-snapshots
+          path: packages/frontend/cypress/snapshots
+
       - name: Creating .env files
         run: mv ./packages/frontend/.env.example ./packages/frontend/.env && mv ./packages/backend/.env.example ./packages/backend/.env
 
