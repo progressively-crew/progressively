@@ -10,7 +10,6 @@
     "postinstall": "remix setup node",
     "pull:bundledata": "node ./scripts/pull-bundlephobia/index.js",
     "start": "remix-serve build",
-    "start:ci": "START_MOCK_SERVER='true' remix-serve build",
     "test": "jest --passWithNoTests",
     "test:e2e": "cypress open",
     "test:e2e:ci": "cypress run --browser chrome",
