@@ -13,7 +13,6 @@ import { TokensModule } from './tokens/tokens.module';
 import { EnvironmentsModule } from './environments/environments.module';
 import { StrategyModule } from './strategy/strategy.module';
 import { AppLoggerMiddleware } from './logging.middleware';
-import { AbModule } from './ab/ab.module';
 import { SdkModule } from './sdk/sdk.module';
 import { MailModule } from './mail/mail.module';
 import { DatabaseModule } from './database/database.module';
@@ -47,7 +46,6 @@ import { DatabaseModule } from './database/database.module';
     WebsocketModule,
     EnvironmentsModule,
     StrategyModule,
-    AbModule,
     SdkModule,
     MailModule,
     DatabaseModule,

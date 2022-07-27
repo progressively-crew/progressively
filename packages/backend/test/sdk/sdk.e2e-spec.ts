@@ -49,7 +49,6 @@ describe('SdkController (e2e)', () => {
       expect(response.body).toEqual({
         newHomepage: false,
         newFooter: false,
-        newHomepageExperiment: 'alternative',
       });
       expect(response.headers['set-cookie']).toMatchInlineSnapshot(`
         Array [
@@ -69,7 +68,6 @@ describe('SdkController (e2e)', () => {
       expect(response.body).toEqual({
         newHomepage: false,
         newFooter: true,
-        newHomepageExperiment: 'control',
       });
       expect(response.headers['set-cookie']).toMatchInlineSnapshot(`
         Array [
@@ -83,7 +81,6 @@ describe('SdkController (e2e)', () => {
         JSON.stringify({
           clientKey: 'valid-sdk-key',
           id: '2',
-          newHomepageExperiment: 'control',
         }),
       );
 
@@ -93,7 +90,6 @@ describe('SdkController (e2e)', () => {
       expect(response.body).toEqual({
         newHomepage: false,
         newFooter: false,
-        newHomepageExperiment: 'control',
       });
       expect(response.headers['set-cookie']).toMatchInlineSnapshot(`
         Array [
@@ -113,7 +109,6 @@ describe('SdkController (e2e)', () => {
       expect(response.body).toEqual({
         newHomepage: false,
         newFooter: true,
-        newHomepageExperiment: 'control',
       });
       expect(response.headers['set-cookie']).toMatchInlineSnapshot(`
         Array [
@@ -133,32 +128,7 @@ describe('SdkController (e2e)', () => {
       expect(response.body).toEqual({
         newHomepage: false,
         newFooter: false,
-        newHomepageExperiment: 'control',
       });
-      expect(response.headers['set-cookie']).toMatchInlineSnapshot(`
-        Array [
-          "progressively-id=2; Path=/; Secure; SameSite=Lax",
-        ]
-      `);
-    });
-
-    it('gives the alternative variant for A/B experiment when id is 2 (field is passed as query)', async () => {
-      const fields = btoa(
-        JSON.stringify({
-          clientKey: 'valid-sdk-key',
-          id: '2',
-        }),
-      );
-
-      const response = await request(app.getHttpServer()).get(`/sdk/${fields}`);
-
-      expect(response.status).toBe(200);
-      expect(response.body).toEqual({
-        newHomepage: false,
-        newFooter: false,
-        newHomepageExperiment: 'control',
-      });
-
       expect(response.headers['set-cookie']).toMatchInlineSnapshot(`
         Array [
           "progressively-id=2; Path=/; Secure; SameSite=Lax",

@@ -22,7 +22,6 @@ import { HasFlagAccessGuard } from './guards/hasFlagAccess';
 import { ValidationPipe } from '../shared/pipes/ValidationPipe';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { ActivateFlagDTO } from './flags.dto';
-import { PopulatedFlagEnv } from './types';
 
 @ApiBearerAuth()
 @Controller()
@@ -56,14 +55,9 @@ export class FlagsController {
       status,
     );
 
-    const updatedFlagEnvWithType: PopulatedFlagEnv = {
-      ...updatedFlagEnv,
-      _type: 'Flag', // necessary for websocket subscriptions
-    };
-
     this.wsGateway.notifyChanges(
-      updatedFlagEnvWithType.environment.clientKey,
-      updatedFlagEnvWithType,
+      updatedFlagEnv.environment.clientKey,
+      updatedFlagEnv,
     );
 
     return updatedFlagEnv;

@@ -1,4 +1,4 @@
-import { AiOutlineExperiment, AiOutlineSetting } from "react-icons/ai";
+import { AiOutlineSetting } from "react-icons/ai";
 import { FiFlag } from "react-icons/fi";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 
@@ -14,10 +14,6 @@ export const EnvNavBar = ({ projectId, envId }: EnvNavBarProps) => {
     <HorizontalNav label={`Environment related`}>
       <NavItem to={`${rootEnvPath}/flags`} icon={<FiFlag />}>
         Feature flags
-      </NavItem>
-
-      <NavItem to={`${rootEnvPath}/ab`} icon={<AiOutlineExperiment />}>
-        A/B experiments
       </NavItem>
 
       <NavItem to={`${rootEnvPath}/settings`} icon={<AiOutlineSetting />}>

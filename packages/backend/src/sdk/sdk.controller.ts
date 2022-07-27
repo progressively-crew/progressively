@@ -35,12 +35,8 @@ export class SdkController {
     fields.id = this.sdkService.resolveUserId(fields, cookieUserId);
     this._prepareCookie(response, fields.id);
 
-    // Flag/Experiment resolution section, managing the flag status
-    const [flags, experiments] = await Promise.all([
-      this.sdkService.resolveSdkFlags(fields),
-      this.sdkService.resolveSdkExperiment(fields),
-    ]);
+    const flags = await this.sdkService.resolveSdkFlags(fields);
 
-    return { ...flags, ...experiments };
+    return flags;
   }
 }

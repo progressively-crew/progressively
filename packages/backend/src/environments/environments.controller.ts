@@ -16,12 +16,8 @@ import { Roles } from '../shared/decorators/Roles';
 import { UserRoles } from '../users/roles';
 import { HasEnvironmentAccessGuard } from './guards/hasEnvAccess';
 import { ValidationPipe } from '../shared/pipes/ValidationPipe';
-import { FlagAlreadyExists, ExperimentAlreadyExists } from './errors';
+import { FlagAlreadyExists } from './errors';
 import { FlagCreationSchema, FlagCreationDTO } from '../flags/flags.dto';
-import {
-  ExperimentCreationDTO,
-  ExperimentCreationSchema,
-} from '../ab/experiment.dto';
 
 @ApiBearerAuth()
 @Controller('environments')
@@ -36,16 +32,6 @@ export class EnvironmentsController {
   @UseGuards(JwtAuthGuard)
   getFlagsByProjectAndEnv(@Param('envId') envId: string) {
     return this.envService.flagsByEnv(envId);
-  }
-
-  /**
-   * Get all the experiments of a given project/env (by envId)
-   */
-  @Get(':envId/experiments')
-  @UseGuards(HasEnvironmentAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  getABByProjectAndEnv(@Param('envId') envId: string) {
-    return this.envService.experimentsByEnv(envId);
   }
 
   /**
@@ -67,34 +53,6 @@ export class EnvironmentsController {
     } catch (e) {
       if (e instanceof FlagAlreadyExists) {
         throw new BadRequestException('Flag already exists');
-      }
-
-      throw e;
-    }
-  }
-
-  /**
-   * Create a flag on a given project/env (by projectId and envId)
-   */
-  @Post(':envId/experiments')
-  @UseGuards(HasEnvironmentAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  @UsePipes(new ValidationPipe(ExperimentCreationSchema))
-  async createExperiments(
-    @Param('envId') envId,
-    @Body() body: ExperimentCreationDTO,
-  ) {
-    try {
-      const experiment = await this.envService.createExperimentEnv(
-        envId,
-        body.name,
-        body.description,
-      );
-
-      return experiment;
-    } catch (e) {
-      if (e instanceof ExperimentAlreadyExists) {
-        throw new BadRequestException('Experiment already exists');
       }
 
       throw e;

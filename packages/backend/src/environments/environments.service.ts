@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import camelcase from 'camelcase';
 import { PrismaService } from '../database/prisma.service';
-import { FlagAlreadyExists, ExperimentAlreadyExists } from './errors';
+import { FlagAlreadyExists } from './errors';
 
 @Injectable()
 export class EnvironmentsService {
@@ -29,23 +29,6 @@ export class EnvironmentsService {
     });
 
     return flagEnv;
-  }
-
-  async getExperimentEnvironmentByClientKey(clientKey: string) {
-    const experimentEnv = await this.prisma.experimentEnvironment.findMany({
-      where: {
-        environment: {
-          clientKey,
-        },
-      },
-      include: {
-        experiment: {
-          include: { variants: true },
-        },
-      },
-    });
-
-    return experimentEnv;
   }
 
   createEnvironment(projectId: string, environmentName: string) {
@@ -146,41 +129,6 @@ export class EnvironmentsService {
       });
     }
 
-    // Remove A/B tests
-    const experimentsEnv = await this.prisma.experimentEnvironment.findMany({
-      where: {
-        environmentId: envId,
-      },
-    });
-
-    for (const experimentEnv of experimentsEnv) {
-      const variants = await this.prisma.variant.findMany({
-        where: {
-          experimentUuid: experimentEnv.experimentId,
-        },
-      });
-
-      for (const variant of variants) {
-        await this.prisma.variantHit.deleteMany({
-          where: {
-            variantUuid: variant.uuid,
-          },
-        });
-      }
-
-      await this.prisma.variant.deleteMany({
-        where: {
-          experimentUuid: experimentEnv.experimentId,
-        },
-      });
-    }
-
-    await this.prisma.experimentEnvironment.deleteMany({
-      where: {
-        environmentId: envId,
-      },
-    });
-
     return this.prisma.environment.delete({
       where: {
         uuid: envId,
@@ -215,66 +163,5 @@ export class EnvironmentsService {
     }
 
     return roles.includes(environmentOfProject.role);
-  }
-
-  experimentsByEnv(envId: string) {
-    return this.prisma.experiment.findMany({
-      orderBy: {
-        createdAt: 'desc',
-      },
-      where: {
-        ExperimentEnvironment: {
-          some: {
-            environmentId: envId,
-          },
-        },
-      },
-    });
-  }
-
-  async createExperimentEnv(envId: string, name: string, description: string) {
-    const experimentKey = camelcase(name);
-
-    const existingExperiment =
-      await this.prisma.experimentEnvironment.findFirst({
-        where: {
-          environmentId: envId,
-          experiment: {
-            key: experimentKey,
-          },
-        },
-      });
-
-    if (existingExperiment) {
-      throw new ExperimentAlreadyExists();
-    }
-
-    const experiment = await this.prisma.experiment.create({
-      data: {
-        name,
-        description,
-        key: experimentKey,
-      },
-    });
-
-    const variationName = `${experiment.name} Control`;
-    await this.prisma.variant.create({
-      data: {
-        key: camelcase(variationName),
-        name: variationName,
-        isControl: true,
-        experimentUuid: experiment.uuid,
-        description: `This is the control variant of the ${experiment.name} experiment`,
-      },
-    });
-
-    await this.prisma.experimentEnvironment.create({
-      data: {
-        experimentId: experiment.uuid,
-        environmentId: envId,
-      },
-    });
-
-    return experiment;
   }
 }
