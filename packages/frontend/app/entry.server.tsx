@@ -11,6 +11,10 @@ export default function handleRequest(
   remixContext: EntryContext
 ) {
   if (process.env.START_MOCK_SERVER === "true") {
+    console.log(
+      "[Mock server initiated] Value is: ",
+      process.env.START_MOCK_SERVER
+    );
     startMockServer();
   }
 

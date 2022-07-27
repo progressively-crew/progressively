@@ -9,6 +9,7 @@ processes = []
   PORT = "8080"
   BACKEND_URL = "https://api.progressively.app"
   ALLOW_REGISTRATION = "false"
+  START_MOCK_SERVER = "false"
 
 [experimental]
   allowed_public_ports = []
