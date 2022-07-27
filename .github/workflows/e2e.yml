@@ -8,6 +8,7 @@ jobs:
   static:
     env:
       ALLOW_REGISTRATION: true
+      START_MOCK_SERVER: true
     runs-on: ubuntu-latest
     # Uncomment for parallel
     # strategy:
@@ -55,6 +56,10 @@ jobs:
       - name: Prepare the DB
         run: npm run db:prepare
 
+      - name: Force install remote @progressively/react
+        working-directory: ./packages/frontend
+        run: npm install
+
       - name: Build
         run: npm run build
 
@@ -65,7 +70,6 @@ jobs:
       - name: Start the frontend project
         working-directory: ./packages/frontend
         run: npm start &
-
       # Uncomment for parallel
       - name: E2E tests
         run: npx wait-on -t 60000 tcp:4000 && npm run test:e2e:ci
