@@ -142,7 +142,6 @@ export class ProjectsService {
         environments: {
           include: {
             flagEnvironment: true,
-            ExperimentEnvironment: true,
           },
         },
       },
@@ -165,35 +164,6 @@ export class ProjectsService {
           },
         });
       }
-
-      // Remove A/B tests
-      for (const experimentEnv of env.ExperimentEnvironment) {
-        const variants = await this.prisma.variant.findMany({
-          where: {
-            experimentUuid: experimentEnv.experimentId,
-          },
-        });
-
-        for (const variant of variants) {
-          await this.prisma.variantHit.deleteMany({
-            where: {
-              variantUuid: variant.uuid,
-            },
-          });
-        }
-
-        await this.prisma.variant.deleteMany({
-          where: {
-            experimentUuid: experimentEnv.experimentId,
-          },
-        });
-      }
-
-      await this.prisma.experimentEnvironment.deleteMany({
-        where: {
-          environmentId: env.uuid,
-        },
-      });
 
       // remove all the flagEnv from the given project
       await this.prisma.flagEnvironment.deleteMany({

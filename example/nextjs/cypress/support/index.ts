@@ -36,15 +36,6 @@ declare global {
        * Change the flag status
        */
       changeFlagStatus(envId: string, flagId: string, status: string): void;
-
-      /**
-       * Change the experiment status
-       */
-      changeExperimentStatus(
-        envId: string,
-        experimentId: string,
-        status: string
-      ): void;
     }
   }
 }

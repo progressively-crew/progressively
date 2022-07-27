@@ -3,7 +3,6 @@ import { UserRoles } from '../../src/users/roles';
 import { seedPasswordReset, seedUsers } from './seeds/users';
 import { seedProjects } from './seeds/projects';
 import { seedFlags, seedFlagHits } from './seeds/flags';
-import { seedAbExperiments } from './seeds/ab';
 
 const prismaClient = new PrismaClient();
 
@@ -129,27 +128,6 @@ export const seedDb = async () => {
     await seedFlagHits(prismaClient, flagEnv, new Date(1992, 0, 2, 1), 40);
     await seedFlagHits(prismaClient, flagEnv, new Date(1992, 0, 6, 1), 10);
     // End of Flag setup
-
-    // Ab experiments setup
-    const [homePageExperiment, footerExperiment] = await seedAbExperiments(
-      prismaClient,
-    );
-    await prismaClient.experimentEnvironment.create({
-      data: {
-        environmentId: production.uuid,
-        experimentId: homePageExperiment.uuid,
-        status: 'ACTIVATED',
-      },
-    });
-
-    await prismaClient.experimentEnvironment.create({
-      data: {
-        environmentId: production.uuid,
-        experimentId: footerExperiment.uuid,
-      },
-    });
-
-    // End of Ab experiments setup
   } catch (e) {
     console.error(e);
   }
@@ -164,10 +142,6 @@ export const cleanupDb = async () => {
   await prismaClient.flagHit.deleteMany();
   await prismaClient.flagEnvironment.deleteMany();
   await prismaClient.flag.deleteMany();
-  await prismaClient.variantHit.deleteMany();
-  await prismaClient.variant.deleteMany();
-  await prismaClient.experimentEnvironment.deleteMany();
-  await prismaClient.experiment.deleteMany();
   await prismaClient.environment.deleteMany();
   await prismaClient.passwordResetTokens.deleteMany();
   await prismaClient.userProject.deleteMany();

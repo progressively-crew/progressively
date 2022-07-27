@@ -15,5 +15,4 @@ export interface PopulatedFlagEnv extends FlagEnvironment {
   environment: Environment;
   flag: Flag;
   strategies: Array<RolloutStrategy>;
-  _type: 'Flag'; // needed for websocket checking between A/B updates and flag update
 }

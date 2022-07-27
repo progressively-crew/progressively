@@ -1,6 +1,5 @@
 /**
  * This is a command to generate users without validating by email.
- * Practical for experimenting
  */
 const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcrypt');

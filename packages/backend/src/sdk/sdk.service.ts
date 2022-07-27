@@ -5,15 +5,12 @@ import { FlagsService } from '../flags/flags.service';
 import { FlagStatus } from '../flags/flags.status';
 import { PopulatedFlagEnv } from 'src/flags/types';
 import { FieldRecord } from '../strategy/types';
-import { AbService } from '../ab/ab.service';
-import { PopulatedExperimentEnv } from '../ab/types';
 
 @Injectable()
 export class SdkService {
   constructor(
     private readonly envService: EnvironmentsService,
     private readonly flagService: FlagsService,
-    private readonly abService: AbService,
   ) {}
 
   resolveUserId(params: FieldRecord, cookieUserId?: string) {
@@ -37,29 +34,6 @@ export class SdkService {
     } catch (e) {
       throw new BadRequestException();
     }
-  }
-
-  async resolveSdkExperiment(fields: FieldRecord) {
-    const clientKey = String(fields.clientKey);
-    const experimentEnvs =
-      await this.envService.getExperimentEnvironmentByClientKey(clientKey);
-
-    const experiments = {};
-
-    for (const experimentEnv of experimentEnvs) {
-      const experimentVariant = this.abService.resolveExperimentVariantValue(
-        experimentEnv as PopulatedExperimentEnv,
-        fields,
-      );
-
-      experiments[experimentEnv.experiment.key] = experimentVariant?.key;
-
-      if (experimentVariant) {
-        this.abService.hitVariant(experimentVariant.uuid);
-      }
-    }
-
-    return experiments;
   }
 
   async resolveSdkFlags(fields: FieldRecord) {
