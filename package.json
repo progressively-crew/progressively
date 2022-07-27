@@ -19,8 +19,5 @@
     "test:e2e:ci": "lerna run test:e2e:ci --stream",
     "deploy:lib": "lerna publish",
     "deploy:images": "./scripts/docker-build-deploy.sh"
-  },
-  "dependencies": {
-    "msw": "^0.44.2"
   }
 }

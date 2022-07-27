@@ -1,13 +1,9 @@
-import { rest } from "msw";
-import { setupServer } from "msw/node";
+import nock from "nock";
 
 export const startMockServer = () => {
-  const server = setupServer(
-    rest.get("https://api.progressively.app/sdk/*", (req, res, ctx) => {
-      console.log("API shooted");
-      return res(ctx.json({ showDocumentationButton: false }));
-    })
-  );
-
-  server.listen();
+  nock("https://api.progressively.app")
+    .get(
+      "/sdk/eyJjbGllbnRLZXkiOiIzN2MxNWNmOS0zNjI1LTQ1MTYtOTA4MC03NDkzMWVkNjM5ZDQifQ=="
+    )
+    .reply(200, { showDocumentationButton: false });
 };

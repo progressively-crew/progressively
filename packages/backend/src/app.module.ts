@@ -10,7 +10,6 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { WebsocketModule } from './websocket/websocket.module';
 import { TokensModule } from './tokens/tokens.module';
-import { EnvironmentsController } from './environments/environments.controller';
 import { EnvironmentsModule } from './environments/environments.module';
 import { StrategyModule } from './strategy/strategy.module';
 import { AppLoggerMiddleware } from './logging.middleware';
@@ -54,7 +53,7 @@ import { DatabaseModule } from './database/database.module';
     DatabaseModule,
   ],
   providers: [AppService],
-  controllers: [EnvironmentsController],
+  controllers: [],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {

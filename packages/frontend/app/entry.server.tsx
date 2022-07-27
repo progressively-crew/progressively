@@ -4,17 +4,16 @@ import { renderToString } from "react-dom/server";
 import { startMockServer } from "./mocks/mock-server";
 import { getCssText } from "./stitches.config";
 
-if (process.env.START_MOCK_SERVER === "true") {
-  startMockServer();
-  console.log("[Mock server] has been started");
-}
-
 export default function handleRequest(
   request: Request,
   responseStatusCode: number,
   responseHeaders: Headers,
   remixContext: EntryContext
 ) {
+  if (process.env.START_MOCK_SERVER === "true") {
+    startMockServer();
+  }
+
   const markup = renderToString(
     <RemixServer context={remixContext} url={request.url} />
   ).replace(/<\/head>/, `<style id="stitches">${getCssText()}</style></head>`);
