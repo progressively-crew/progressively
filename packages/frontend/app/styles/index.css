@@ -106,7 +106,6 @@ section {
 }
 body {
   line-height: 1;
-  letter-spacing: 0.3px;
 }
 ol,
 ul {
@@ -161,10 +160,17 @@ body {
 }
 
 @font-face {
-  font-family: "Varela";
+  font-family: "Catamaran";
+  font-style: bold;
+  font-weight: 600;
+  src: url("/fonts/Catamaran-ExtraBold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Mulish";
   font-style: normal;
   font-weight: 400;
-  src: url("/fonts/VarelaRound-Regular.ttf") format("truetype");
+  src: url("/fonts/Mulish-Medium.ttf") format("truetype");
 }
 
 .logo {
