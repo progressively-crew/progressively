@@ -65,11 +65,7 @@ export class AuthController {
       userId: user.uuid,
     });
 
-    res.cookie('refresh-token', refreshToken, {
-      httpOnly: true,
-      secure: true,
-      path: '/',
-    });
+    res.cookie('refresh-token', refreshToken, { httpOnly: true });
 
     return {
       access_token: accessToken,
@@ -129,9 +125,9 @@ export class AuthController {
     const updatedUser = await this.authService.activateUser(rawToken);
 
     if (updatedUser) {
-      return res
-        .status(302)
-        .redirect(`${process.env.FRONTEND_URL}/signin?userActivated=true`);
+      return res.redirect(
+        `${process.env.FRONTEND_URL}/signin?userActivated=true`,
+      );
     }
 
     throw new UnauthorizedException();

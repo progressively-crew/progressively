@@ -27,14 +27,12 @@
     "test:e2e": "cross-env TZ=UTC jest --runInBand --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@fastify/cookie": "^7.3.1",
     "@nestjs/common": "^9.0.3",
     "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.0.3",
     "@nestjs/jwt": "^9.0.0",
     "@nestjs/passport": "^9.0.0",
     "@nestjs/platform-express": "^9.0.3",
-    "@nestjs/platform-fastify": "^9.0.5",
     "@nestjs/platform-ws": "^9.0.3",
     "@nestjs/throttler": "^3.0.0",
     "@nestjs/websockets": "^9.0.3",
@@ -42,7 +40,7 @@
     "@types/ws": "^8.5.3",
     "bcrypt": "^5.0.1",
     "camelcase": "6.3.0",
-    "fastify": "^4.3.0",
+    "cookie-parser": "^1.4.6",
     "helmet": "^5.1.0",
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",

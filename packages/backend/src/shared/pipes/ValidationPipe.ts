@@ -12,11 +12,6 @@ export class ValidationPipe implements PipeTransform {
 
   transform(value: any, _metadata: ArgumentMetadata) {
     if (_metadata.type === 'body') {
-      if (value === undefined) {
-        // When the object passed in validation is undefined, throw
-        throw new BadRequestException('Validation failed');
-      }
-
       const { error } = this.schema.validate(value);
 
       if (error) {

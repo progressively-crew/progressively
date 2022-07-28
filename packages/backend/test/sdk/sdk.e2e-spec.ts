@@ -52,7 +52,7 @@ describe('SdkController (e2e)', () => {
       });
       expect(response.headers['set-cookie']).toMatchInlineSnapshot(`
         Array [
-          "progressively-id=12345-marvin; Path=/; HttpOnly; Secure; SameSite=Lax",
+          "progressively-id=12345-marvin; Path=/; Secure; SameSite=Lax",
         ]
       `);
     });
@@ -71,7 +71,7 @@ describe('SdkController (e2e)', () => {
       });
       expect(response.headers['set-cookie']).toMatchInlineSnapshot(`
         Array [
-          "progressively-id=1; Path=/; HttpOnly; Secure; SameSite=Lax",
+          "progressively-id=1; Path=/; Secure; SameSite=Lax",
         ]
       `);
     });
@@ -93,7 +93,7 @@ describe('SdkController (e2e)', () => {
       });
       expect(response.headers['set-cookie']).toMatchInlineSnapshot(`
         Array [
-          "progressively-id=2; Path=/; HttpOnly; Secure; SameSite=Lax",
+          "progressively-id=2; Path=/; Secure; SameSite=Lax",
         ]
       `);
     });
@@ -112,7 +112,7 @@ describe('SdkController (e2e)', () => {
       });
       expect(response.headers['set-cookie']).toMatchInlineSnapshot(`
         Array [
-          "progressively-id=1; Path=/; HttpOnly; Secure; SameSite=Lax",
+          "progressively-id=1; Path=/; Secure; SameSite=Lax",
         ]
       `);
     });
@@ -131,7 +131,7 @@ describe('SdkController (e2e)', () => {
       });
       expect(response.headers['set-cookie']).toMatchInlineSnapshot(`
         Array [
-          "progressively-id=2; Path=/; HttpOnly; Secure; SameSite=Lax",
+          "progressively-id=2; Path=/; Secure; SameSite=Lax",
         ]
       `);
     });
