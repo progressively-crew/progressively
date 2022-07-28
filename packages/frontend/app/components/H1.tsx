@@ -3,8 +3,7 @@ import { Heading } from "./Heading";
 
 export const RawH1 = styled(Heading, {
   fontSize: "$venus",
-  fontFamily: "$default",
-  fontWeight: "$bold",
+  fontFamily: "$title",
   color: "$textAccent",
 
   "@mobile": {

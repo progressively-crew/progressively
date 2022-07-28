@@ -7,8 +7,6 @@ export interface LogoProps {
 }
 
 const LinkWrapper = styled(Link, {
-  fontFamily: "Varela",
-  letterSpacing: "2px",
   textDecoration: "none",
   color: "$textAccent",
   transition: "all 0.1s",

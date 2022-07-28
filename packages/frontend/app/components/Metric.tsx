@@ -18,7 +18,6 @@ const MetricWrapper = styled("div", {
 });
 
 const MetricLabel = styled(Typography, {
-  letterSpacing: "2px",
   fontWeight: "$slim",
   lineHeight: "unset",
 });

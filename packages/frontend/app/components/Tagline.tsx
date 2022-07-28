@@ -6,7 +6,6 @@ export const TagLine = styled(Typography, {
   textTransform: "uppercase",
   fontSize: "$uranus",
   fontWeight: "$slim",
-  letterSpacing: "2px",
   variants: {
     small: {
       true: {
