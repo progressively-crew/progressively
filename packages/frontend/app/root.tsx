@@ -57,6 +57,7 @@ const Document = ({ children, title }: DocumentProps) => {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <link rel="shortcut icon" type="image/jpg" href="/favicon.png" />
         {title ? <title>{title}</title> : null}
         <Meta />
         <Links />
