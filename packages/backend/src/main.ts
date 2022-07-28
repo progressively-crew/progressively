@@ -1,13 +1,20 @@
 import { NestFactory } from '@nestjs/core';
 import helmet from 'helmet';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import * as cookieParser from 'cookie-parser';
 import { WsAdapter } from '@nestjs/platform-ws';
+import {
+  FastifyAdapter,
+  NestFastifyApplication,
+} from '@nestjs/platform-fastify';
+import fastifyCookie from '@fastify/cookie';
 import { AppModule } from './app.module';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestFastifyApplication>(
+    AppModule,
+    new FastifyAdapter({ maxParamLength: 3000 }),
+  );
 
   app.enableCors({
     credentials: true,
@@ -19,8 +26,10 @@ async function bootstrap() {
 
   // Middlewares
   app.use(helmet());
-  app.use(cookieParser());
   app.useWebSocketAdapter(new WsAdapter(app));
+  await app.register(fastifyCookie, {
+    secret: process.env.COOKIE_TOKEN,
+  });
 
   const config = new DocumentBuilder()
     .setTitle('Progressively API')
