@@ -3,7 +3,7 @@ import { styled } from "~/stitches.config";
 import { useNavToggle } from "./Breadcrumbs/hooks/useNavToggle";
 import { Button } from "./Buttons/Button";
 import { HideMobile } from "./HideMobile";
-import { Logo } from "./Logo";
+import { DarkLogo } from "./Logo/DarkLogo";
 
 export interface LogoProps {
   to?: string;
@@ -47,7 +47,7 @@ export const Menu = ({ to, hideOnMobile }: LogoProps) => {
       )}
 
       <HideMobile>
-        <Logo to={to || "/dashboard"} />
+        <DarkLogo to={to || "/dashboard"} />
       </HideMobile>
     </Wrapper>
   );
