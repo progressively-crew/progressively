@@ -65,7 +65,11 @@ export class AuthController {
       userId: user.uuid,
     });
 
-    res.cookie('refresh-token', refreshToken, { httpOnly: true, secure: true });
+    res.cookie('refresh-token', refreshToken, {
+      httpOnly: true,
+      secure: true,
+      path: '/',
+    });
 
     return {
       access_token: accessToken,

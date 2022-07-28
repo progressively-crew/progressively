@@ -5,7 +5,10 @@ import { WsAdapter } from '@nestjs/platform-ws';
 import { MailService } from '../../src/mail/mail.service';
 import { AppModule } from '../../src/app.module';
 import { TestLogger } from './TestLogger';
-import { NestFastifyApplication } from '@nestjs/platform-fastify';
+import {
+  FastifyAdapter,
+  NestFastifyApplication,
+} from '@nestjs/platform-fastify';
 
 export const prepareApp = async () => {
   const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -27,12 +30,17 @@ export const prepareApp = async () => {
     })
     .compile();
 
-  const app = moduleFixture.createNestApplication<NestFastifyApplication>();
+  const app = moduleFixture.createNestApplication<NestFastifyApplication>(
+    new FastifyAdapter(),
+  );
+
   app.useWebSocketAdapter(new WsAdapter(app));
   await app.register(fastifyCookie, {
     secret: 'my-secret', // for cookies signature
   });
+
   await app.init();
+  await app.getHttpAdapter().getInstance().ready();
 
   return app;
 };

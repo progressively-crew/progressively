@@ -15,6 +15,7 @@ export class SdkController {
       sameSite: 'lax',
       secure: true,
       httpOnly: true,
+      path: '/',
     });
 
     response.header('Cache-Control', 'max-age=5, s-maxage=5');
