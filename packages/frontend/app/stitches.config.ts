@@ -61,8 +61,8 @@ export const {
       neptune: "0.8rem",
     },
     fonts: {
-      title: "Catamaran",
-      default: "Mulish",
+      title: `system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif`,
+      default: `system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif`,
     },
     fontWeights: {
       slim: "300",

@@ -2,22 +2,6 @@
    v2.0 | 20110126
    License: none (public domain)
 */
-@font-face {
-  font-display: fallback;
-  font-family: "Catamaran";
-  font-style: bold;
-  font-weight: 600;
-  src: url("/fonts/Catamaran-ExtraBold.ttf") format("truetype");
-}
-
-@font-face {
-  font-display: fallback;
-  font-family: "Mulish";
-  font-style: normal;
-  font-weight: 400;
-  src: url("/fonts/Mulish-Medium.ttf") format("truetype");
-}
-
 html,
 body,
 div,

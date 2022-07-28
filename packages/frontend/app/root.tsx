@@ -30,7 +30,7 @@ import { Spacer } from "./components/Spacer";
  * https://remix.run/api/app#links
  */
 export const links: LinksFunction = () => {
-  return [{ rel: "stylesheet", href: styles }];
+  return [{ rel: "prefetch stylesheet", href: styles }];
 };
 
 /**
