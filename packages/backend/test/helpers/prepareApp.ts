@@ -1,10 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
-import * as cookieParser from 'cookie-parser';
+import fastifyCookie from '@fastify/cookie';
 import { WsAdapter } from '@nestjs/platform-ws';
 import { MailService } from '../../src/mail/mail.service';
 import { AppModule } from '../../src/app.module';
 import { TestLogger } from './TestLogger';
+import { NestFastifyApplication } from '@nestjs/platform-fastify';
 
 export const prepareApp = async () => {
   const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -26,9 +27,11 @@ export const prepareApp = async () => {
     })
     .compile();
 
-  const app = moduleFixture.createNestApplication();
-  app.use(cookieParser());
+  const app = moduleFixture.createNestApplication<NestFastifyApplication>();
   app.useWebSocketAdapter(new WsAdapter(app));
+  await app.register(fastifyCookie, {
+    secret: 'my-secret', // for cookies signature
+  });
   await app.init();
 
   return app;
