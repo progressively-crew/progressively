@@ -75,7 +75,7 @@ export class UsersController {
 
   @Post('/forgot-password')
   async forgotPassword(@Body() body: ForgotPasswordDTO) {
-    if (!body?.email) {
+    if (!body.email) {
       throw new BadRequestException('Email is missing');
     }
 

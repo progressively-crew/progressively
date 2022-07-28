@@ -1,20 +1,19 @@
 import { Injectable, NestMiddleware, Logger } from '@nestjs/common';
-import { NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 
 @Injectable()
 export class AppLoggerMiddleware implements NestMiddleware {
   private logger = new Logger('HTTP');
 
-  use(request: any, response: any, next: NextFunction): void {
+  use(request: Request, response: Response, next: NextFunction): void {
     const startDate = Date.now();
 
     response.on('finish', () => {
       const endDate = Date.now();
-      const userAgent = request.headers['user-agent'] || '';
+      const userAgent = request.get('user-agent') || '';
       const { method, originalUrl, ip } = request;
       const { statusCode, statusMessage } = response;
-
-      const contentLength = response.getHeader('content-length');
+      const contentLength = response.get('content-length');
 
       this.logger.log({
         method,

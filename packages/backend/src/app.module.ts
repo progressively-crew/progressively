@@ -55,6 +55,6 @@ import { DatabaseModule } from './database/database.module';
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(AppLoggerMiddleware).forRoutes('(.*)');
+    consumer.apply(AppLoggerMiddleware).forRoutes('*');
   }
 }
