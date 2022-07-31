@@ -16,11 +16,9 @@
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.3.0",
     "@rollup/plugin-typescript": "^8.3.2",
-    "@testing-library/jest-dom": "^5.16.4",
     "bundlesize2": "^0.0.31",
     "rollup": "^2.75.6",
     "rollup-plugin-terser": "^7.0.2",
-    "ts-jest": "^28.0.4",
     "ts-loader": "^9.3.0",
     "typescript": "^4.7.3"
   },
