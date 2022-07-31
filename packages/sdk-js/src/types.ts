@@ -22,6 +22,7 @@ export interface ProgressivelySdkType {
 export interface LoadFlagsArgs {
   ctrl?: AbortController;
   btoAFn?: BtoaFn;
+  alternativeFetch?: typeof fetch;
 }
 
 export type BtoaFn = (str: string) => string;

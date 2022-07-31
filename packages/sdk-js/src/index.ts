@@ -33,8 +33,9 @@ function Sdk(
     let response: Response;
 
     const toBase64 = args?.btoAFn || btoa;
+    const actualFetch = args?.alternativeFetch || fetch;
 
-    return fetch(`${apiRoot}/sdk/${toBase64(JSON.stringify(fields))}`, {
+    return actualFetch(`${apiRoot}/sdk/${toBase64(JSON.stringify(fields))}`, {
       credentials: "include",
       signal: args?.ctrl?.signal,
     })
