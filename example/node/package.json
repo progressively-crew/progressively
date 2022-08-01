@@ -1,0 +1,23 @@
+{
+  "name": "node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "start": "node index.js",
+    "test:e2e": "cypress open",
+    "test:e2e:ci": "cypress run --browser chrome"
+  },
+  "dependencies": {
+    "@progressively/cypress-helpers": "file:../cypress-helpers",
+    "@progressively/sdk-node": "file:../../packages/sdk-node",
+    "cypress": "^9.6.1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.7.4"
+  }
+}
