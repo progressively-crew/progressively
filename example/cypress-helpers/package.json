@@ -2,12 +2,11 @@
   "name": "cypress-helpers",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "private": true,
   "scripts": {},
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@testing-library/cypress": "^8.0.2"
   },
