@@ -14,7 +14,6 @@ export class SdkController {
       secure: true,
     });
 
-    response.header('Cache-Control', 'max-age=5, s-maxage=5');
     response.header('X-progressively-id', userId);
     response.header('Access-Control-Expose-Headers', 'X-progressively-id');
   }

@@ -1,34 +1,24 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { ProgressivelyProvider, useFlags } from "@progressively/react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { AnonymousPage } from "./anonymous";
+import { HomePage } from "./home";
 
-const FlaggedComponent = () => {
-  const { flags } = useFlags();
-
-  if (flags.newHomepage) {
-    return <div style={{ background: "red", color: "white" }}>New variant</div>;
-  }
-
-  return <div style={{ background: "lightblue" }}>Old variant</div>;
-};
-
-const Home = () => {
+const Index = () => {
   return (
-    <ProgressivelyProvider
-      clientKey="valid-sdk-key"
-      websocketUrl="ws://localhost:4000"
-      apiUrl="http://localhost:4000"
-    >
-      <main>
-        <FlaggedComponent />
-      </main>
-    </ProgressivelyProvider>
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/anonymous" element={<AnonymousPage />} />
+      </Routes>
+    </Router>
   );
 };
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
 root.render(
   <React.StrictMode>
-    <Home />
+    <Index />
   </React.StrictMode>
 );

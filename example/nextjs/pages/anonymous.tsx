@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import React from "react";
 import styles from "../styles/Home.module.css";
 import { ProgressivelyProvider, useFlags } from "@progressively/react";
 import { getSSRProps } from "@progressively/react/lib/ssr";
