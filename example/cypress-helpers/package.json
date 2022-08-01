@@ -1,0 +1,16 @@
+{
+  "name": "cypress-helpers",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@testing-library/cypress": "^8.0.2"
+  },
+  "peerDependencies": {
+    "cypress": "^9.6.1"
+  }
+}

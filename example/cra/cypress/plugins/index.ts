@@ -15,20 +15,8 @@
 /**
  * @type {Cypress.PluginConfig}
  */
-import {
-  cleanupDb,
-  seedDb,
-} from "../../../../packages/backend/test/helpers/seed";
-import { authenticate } from "../../../../packages/backend/test/helpers/authenticate";
+import { tasks } from "@progressively/cypress-helpers/tasks";
 
 module.exports = (on: any, config: any) => {
-  on("task", {
-    seed: () => {
-      return seedDb().then(() => null);
-    },
-    cleanup: () => {
-      return cleanupDb().then(() => null);
-    },
-    authenticate: () => authenticate().then((x) => x),
-  });
+  on("task", tasks());
 };
