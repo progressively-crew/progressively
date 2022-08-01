@@ -9,6 +9,7 @@ describe("/", () => {
   });
 
   it("forwards the cookie from the backend, to nextjs server, to the client", () => {
+    cy.wait(500);
     // 1 is the user id set in nextjs getServerSideProps
     cy.getCookie("progressively-id").should("have.property", "value", "1");
   });

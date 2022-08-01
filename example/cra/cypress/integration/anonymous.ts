@@ -43,22 +43,26 @@ describe("/anonymous", () => {
   });
 
   it("uses the same cookie for anonymous users after page reload", () => {
+    cy.wait(500);
     // Refreshing 3 times to "make sure" it's consistent
     cy.getCookie("progressively-id").then((previousCookie) => {
       cy.reload();
 
+      cy.wait(500);
       cy.getCookie("progressively-id").then((nextCookie) => {
         expect(previousCookie.value).to.equal(nextCookie.value);
       });
 
       cy.reload();
 
+      cy.wait(500);
       cy.getCookie("progressively-id").then((nextCookie) => {
         expect(previousCookie.value).to.equal(nextCookie.value);
       });
 
       cy.reload();
 
+      cy.wait(500);
       cy.getCookie("progressively-id").then((nextCookie) => {
         expect(previousCookie.value).to.equal(nextCookie.value);
       });
