@@ -5,12 +5,19 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "test:e2e": "cypress open",
+    "test:e2e:ci": "cypress run --browser chrome"
   },
   "dependencies": {
-    "@progressively/sdk-node": "file:../../packages/sdk-node"
+    "@progressively/cypress-helpers": "file:../cypress-helpers",
+    "@progressively/sdk-node": "file:../../packages/sdk-node",
+    "cypress": "^9.6.1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.7.4"
+  }
 }

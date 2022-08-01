@@ -31,8 +31,8 @@ const Sdk = (apiRoot: string, fields: Fields): ProgressivelySdkType => {
         response = res;
         return response.json();
       })
-      .then((data: FlagDict) => {
-        return { ...data, response };
+      .then((flags: FlagDict) => {
+        return { flags, response };
       });
   };
 
