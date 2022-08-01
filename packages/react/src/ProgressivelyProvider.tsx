@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { ProgressivelyContext } from "./ProgressivelyContext";
-import ProgressivelySdk from "@progressively/sdk-js";
+import { Progressively } from "@progressively/sdk-js";
 import { ProgressivelyProviderProps } from "./types";
 import { useFlagInit } from "./useFlagInit";
 
@@ -13,7 +13,7 @@ export const ProgressivelyProvider = ({
   fields,
 }: ProgressivelyProviderProps) => {
   const sdkRef = useRef(
-    ProgressivelySdk.init(clientKey, {
+    Progressively.init(clientKey, {
       fields: fields || {},
       apiUrl,
       websocketUrl,
