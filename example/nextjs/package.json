@@ -16,7 +16,7 @@
     "react-dom": "18.1.0"
   },
   "devDependencies": {
-    "@testing-library/cypress": "^8.0.2",
+    "@progressively/cypress-helpers": "file:../cypress-helpers",
     "@types/node": "17.0.31",
     "@types/react": "18.0.9",
     "cypress": "^9.6.0",

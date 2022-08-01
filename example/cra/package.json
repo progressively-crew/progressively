@@ -13,8 +13,8 @@
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
-    "@testing-library/cypress": "^8.0.2",
-    "cypress": "^9.6.1"
+    "cypress": "^9.6.1",
+    "@progressively/cypress-helpers": "file:../cypress-helpers"
   },
   "scripts": {
     "start": "rm -rf ../../packages/react/node_modules && react-scripts start",

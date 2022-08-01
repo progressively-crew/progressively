@@ -24,27 +24,4 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 // @ts-ignore
-import "@testing-library/cypress/add-commands";
-
-Cypress.Commands.add("seed", () => cy.task("seed"));
-Cypress.Commands.add("cleanup", () => cy.task("cleanup"));
-Cypress.Commands.add("changeFlagStatus", (envId, flagId, status) => {
-  // Auth with the admin
-  cy.request("POST", "http://localhost:4000/auth/login", {
-    username: "marvin.frachet@something.com",
-    password: "password",
-  }).then((res) => {
-    const { access_token } = res.body;
-
-    return cy.request({
-      url: `http://localhost:4000/environments/${envId}/flags/${flagId}`,
-      method: "PUT",
-      body: {
-        status,
-      },
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-      },
-    });
-  });
-});
+import "@progressively/cypress-helpers/commands";
