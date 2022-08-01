@@ -1,0 +1,19 @@
+{
+  "name": "@progressively/sdk-node",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^18.6.3",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.7"
+  }
+}

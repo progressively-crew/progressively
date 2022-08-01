@@ -1,0 +1,16 @@
+{
+  "name": "node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@progressively/sdk-node": "file:../../packages/sdk-node"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
