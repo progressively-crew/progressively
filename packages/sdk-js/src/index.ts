@@ -71,4 +71,4 @@ function Sdk(
   return { loadFlags, disconnect, onFlagUpdate };
 }
 
-export default { init };
+export const Progressively = { init };
