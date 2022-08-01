@@ -11,7 +11,7 @@ import { rest } from "msw";
 import { setupServer } from "msw/node";
 import fetch from "node-fetch";
 import { WebSocketServer, WebSocket } from "ws";
-import Sdk from "../";
+import { Progressively as Sdk } from "../";
 
 describe("SDK", () => {
   const sendMessage = (data: any) => {
