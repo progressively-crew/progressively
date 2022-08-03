@@ -98,6 +98,7 @@ export default function Signin() {
   const transition = useTransition();
   const [searchParams] = useSearchParams();
   const userActivated = searchParams.get("userActivated");
+  const userCreated = searchParams.get("userCreated");
   const data = useActionData<ActionData>();
   const errors = data?.errors;
 
@@ -113,6 +114,11 @@ export default function Signin() {
           {Boolean(userActivated) && (
             <SuccessBox id="user-activated">
               The account has been activated, you can now log in
+            </SuccessBox>
+          )}
+          {Boolean(userCreated) && (
+            <SuccessBox id="user-created">
+              The account has been created, you can now log in
             </SuccessBox>
           )}
         </>
