@@ -1,4 +1,4 @@
-import { MetaFunction, ActionFunction } from "@remix-run/node";
+import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
 import { useActionData } from "@remix-run/react";
 import { ErrorBox } from "~/components/ErrorBox";
 import { Header } from "~/components/Header";
@@ -20,10 +20,16 @@ interface ActionData {
   errors?: Partial<AuthCredentials & { badUser: string }>;
 }
 
-export const action: ActionFunction = ({
+export const action: ActionFunction = async ({
   request,
 }): Promise<ActionData | Response> => {
-  return registerAction({ request });
+  const data: ActionData = await registerAction({ request });
+
+  if (data?.errors) {
+    return data;
+  }
+
+  return redirect("/signin?userCreated=true");
 };
 
 export default function WelcomePage() {

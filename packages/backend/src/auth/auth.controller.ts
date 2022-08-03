@@ -93,13 +93,17 @@ export class AuthController {
       }
     }
 
-    const activationToken = alreadyHasUsers ? uuidv4() : undefined;
+    const activationToken = alreadyHasUsers
+      ? CryptoService.sha256(uuidv4())
+      : null;
+
     const user: Omit<User, 'uuid'> = {
       fullname: userDto.fullname,
       password: userDto.password,
       email: userDto.email,
-      activationToken: CryptoService.sha256(activationToken),
-      status: UserStatus.Pending,
+      activationToken,
+      // Activate only the first user, then, every body is pending
+      status: alreadyHasUsers ? UserStatus.Pending : UserStatus.Active,
     };
 
     const newUser = await this.userService.createUser(user);
