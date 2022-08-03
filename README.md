@@ -1,5 +1,12 @@
 <div align="center">
+ <img src="https://user-images.githubusercontent.com/3874873/182601482-09575409-cc78-4965-878c-9a44ffec893f.png" alt="Progressively" />
+ <p><strong>Rollout quickly, effectively, progressively</strong></p>
+</div>
 
+<br />
+<br />
+
+<div align="center">
 <img src="https://github.com/progressively-crew/progressively/actions/workflows/backend.yml/badge.svg" alt="Backend" />
 <img src="https://github.com/progressively-crew/progressively/actions/workflows/frontend.yml/badge.svg" alt="Frontend" />
 <img src="https://github.com/progressively-crew/progressively/actions/workflows/e2e.yml/badge.svg" alt="E2E" />
@@ -8,22 +15,29 @@
 <img src="https://github.com/progressively-crew/progressively/actions/workflows/example-nextjs.yml/badge.svg" alt="Example NextJs">
 <img src="https://github.com/progressively-crew/progressively/actions/workflows/example-cra.yml/badge.svg" alt="Example create-react-app">
 <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License MIT" />
-
-<br/>
-<br/>
-
-<div align="center">
-React SDK: <img src="https://img.shields.io/bundlephobia/minzip/@progressively/react" alt="React SDK minified and gzipped size"> 
-JavaScript SDK: <img src="https://img.shields.io/bundlephobia/minzip/@progressively/sdk-js" alt="JS SDK minified and gzipped size">
-</div>
 </div>
 
-<hr />
+## Get started
 
-A feature flag solution focusing on accessibility, simplicity and providing **lightweight client side SDKs**.
+```sh
+$ git clone https://github.com/progressively-crew/progressively
+$ cd progressively
+$ docker-compose up -d
+```
 
-[The documentation repository](https://github.com/progressively-crew/progressively-crew.github.io) provides all the necessary information in order to get started.
+You can now open http://localhost:3000/welcome to create your admin user.
 
-<div align="center">
-<i>Built on top of <a href="https://nestjs.com/">NestJs</a> and <a href="https://remix.run/">Remix.run</i>.
-</div>
+## How is progressively different
+
+- Progressively is smaller than its competitors ([1kB for the React SDK](https://github.com/progressively-crew/progressively/tree/master/example/bundle-diffs))
+- Progressively has an accessible dashboard (if you face issues, please [create an issue](https://github.com/progressively-crew/progressively/issues))
+- Progressively comes with built-in SSR support so that the page don't blink when resolving the flags
+- Real-time propagation with Websockets
+- No intrusive tracking (expect [Sentry](sentry.io/) or [Plausible](https://plausible.io/) to be added at some point so that we understand more the audience)
+- Self-hosted so that you own the data
+
+## Contribution
+
+Contributions of any kind are very much appreciated :blush:. Thanks for your help!
+
+If you're interested in modifying code, make sure to follow [the development setup](./DEV_SETUP.md). Otherwise, make sure be kind and respectful with the community on the different discussion channels :heart:
