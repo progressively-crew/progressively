@@ -79,21 +79,21 @@ export class AuthController {
      * When ALLOW_REGISTRATION is not activated, we still have to create an admin account.
      * Thus, we'll accept the only first user to be created that way
      */
-    if (process.env.ALLOW_REGISTRATION !== 'true') {
-      const alreadyHasUsers = await this.userService.hasUsers();
-      if (alreadyHasUsers) {
-        throw new NotFoundException();
-      }
-    } else {
+    const alreadyHasUsers = await this.userService.hasUsers();
+
+    if (process.env.ALLOW_REGISTRATION === 'true') {
       const existingUser = await this.userService.findByEmail(userDto.email);
 
       if (existingUser) {
         throw new BadRequestException('This email is already used.');
       }
+    } else {
+      if (alreadyHasUsers) {
+        throw new NotFoundException();
+      }
     }
 
-    const activationToken = uuidv4();
-
+    const activationToken = alreadyHasUsers ? uuidv4() : undefined;
     const user: Omit<User, 'uuid'> = {
       fullname: userDto.fullname,
       password: userDto.password,
@@ -104,11 +104,14 @@ export class AuthController {
 
     const newUser = await this.userService.createUser(user);
 
-    await this.mailService.sendRegistrationMail(
-      userDto.fullname,
-      userDto.email,
-      activationToken,
-    );
+    // Don't send activation email for the first user created
+    if (alreadyHasUsers) {
+      await this.mailService.sendRegistrationMail(
+        userDto.fullname,
+        userDto.email,
+        activationToken,
+      );
+    }
 
     return {
       email: newUser.email,
