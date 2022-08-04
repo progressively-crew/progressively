@@ -1,5 +1,71 @@
 import { createStitches } from "@stitches/react";
 
+export const fontWeights = {
+  slim: "300",
+  normal: "normal",
+  semiBold: "500",
+  bold: "800",
+};
+export const lineHeights = {
+  text: "1.6",
+  title: "1.2",
+};
+
+export const fonts = {
+  title: `Catamaran, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif`,
+  default: `Mulish, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif`,
+};
+
+export const fontSizes = {
+  venus: "3.5rem",
+  saturn: "3rem",
+  venusMobile: "2.7rem",
+  earth: "2rem",
+  mars: "1.6rem",
+  jupiter: "1.25rem",
+  uranus: "1rem",
+  neptune: "0.8rem",
+};
+
+export const colors = {
+  primary: "#c3134e",
+  secondary: "hsl(340deg, 82%, 85%)",
+  text: "#9ba1a6",
+  textAccent: "white",
+  background: "#151722",
+  backgroundAccent: "rgb(26, 28, 39)",
+  border: "rgb(36, 38, 49)",
+
+  focus: "#4D90FE",
+  hoverBg: "hsl(340deg, 82%, 85%)",
+  hoverFg: "hsl(340deg, 82%, 85%)",
+  activeBg: "hsl(340deg, 82%, 85%)",
+  activeFg: "hsl(340deg, 82%, 85%)",
+
+  successBg: "#c8e6c9",
+  successFg: "#1b5e20",
+  successBorder: "#66bb6a",
+
+  errorBg: "#ffcdd2",
+  errorFg: "#b71c1c",
+  errorBorder: "#ef5350",
+
+  warningBg: "#ffecb3",
+  warningFg: "#bf360c",
+  warningBorder: "#ffca28",
+};
+
+export const mapTokenToVariant = (cssAttribute: string, partialTheme: any) => {
+  const partialThemeKeys = Object.keys(partialTheme);
+  const computedVariant = {};
+
+  for (const key of partialThemeKeys) {
+    computedVariant[key] = { [cssAttribute]: `$${key}` };
+  }
+
+  return computedVariant;
+};
+
 export const {
   styled,
   css,
@@ -15,33 +81,7 @@ export const {
     mobile: `(max-width: ${550 / 16}rem)`,
   },
   theme: {
-    colors: {
-      primary: "#c3134e",
-      secondary: "hsl(340deg, 82%, 85%)",
-      text: "#9ba1a6",
-      textAccent: "white",
-      background: "#151722",
-      backgroundAccent: "rgb(26, 28, 39)",
-      border: "rgb(36, 38, 49)",
-
-      focus: "#4D90FE",
-      hoverBg: "hsl(340deg, 82%, 85%)",
-      hoverFg: "hsl(340deg, 82%, 85%)",
-      activeBg: "hsl(340deg, 82%, 85%)",
-      activeFg: "hsl(340deg, 82%, 85%)",
-
-      successBg: "#c8e6c9",
-      successFg: "#1b5e20",
-      successBorder: "#66bb6a",
-
-      errorBg: "#ffcdd2",
-      errorFg: "#b71c1c",
-      errorBorder: "#ef5350",
-
-      warningBg: "#ffecb3",
-      warningFg: "#bf360c",
-      warningBorder: "#ffca28",
-    },
+    colors,
     sizes: {
       container: "1080px",
       cardHeight: "160px",
@@ -50,29 +90,10 @@ export const {
       emptyStateIconHeight: "160px",
       avatar: "40px",
     },
-    fontSizes: {
-      venus: "3.5rem",
-      saturn: "3rem",
-      venusMobile: "2.7rem",
-      earth: "2rem",
-      mars: "1.6rem",
-      jupiter: "1.25rem",
-      uranus: "1rem",
-      neptune: "0.8rem",
-    },
-    fonts: {
-      title: `Catamaran, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif`,
-      default: `Mulish, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif`,
-    },
-    fontWeights: {
-      slim: "300",
-      normal: "normal",
-      semiBold: "500",
-      bold: "800",
-    },
-    lineHeights: {
-      text: "1.6",
-    },
+    fontSizes,
+    fonts,
+    fontWeights,
+    lineHeights,
     borderRadius: {
       regular: "8px",
     },

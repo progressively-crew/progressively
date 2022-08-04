@@ -1,4 +1,12 @@
-import { styled } from "~/stitches.config";
+import {
+  styled,
+  fontSizes,
+  mapTokenToVariant,
+  fonts,
+  lineHeights,
+  fontWeights,
+  colors,
+} from "~/stitches.config";
 
 export const Typography = styled("p", {
   color: "$text",
@@ -13,10 +21,10 @@ export const Typography = styled("p", {
   },
 
   variants: {
-    size: {
-      small: {
-        fontSize: "$cta",
-      },
-    },
+    fontWeight: mapTokenToVariant("fontWeight", fontWeights),
+    lineHeight: mapTokenToVariant("lineHeight", lineHeights),
+    font: mapTokenToVariant("fontFamily", fonts),
+    size: mapTokenToVariant("fontSize", fontSizes),
+    color: mapTokenToVariant("color", colors),
   },
 });
