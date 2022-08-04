@@ -1,58 +1,10 @@
-import { styled } from "~/stitches.config";
+import { styled, mapTokenToVariant, spacing } from "~/stitches.config";
 
-export const Stack = styled("div", {
+export const Stack = styled<any, any>("div", {
+  display: "flex",
+  flexDirection: "column",
+
   variants: {
-    spacing: {
-      1: {
-        "& > * + *": {
-          marginTop: "$spacing$1",
-        },
-      },
-      2: {
-        "& > * + *": {
-          marginTop: "$spacing$2",
-        },
-      },
-      3: {
-        "& > * + *": {
-          marginTop: "$spacing$3",
-        },
-      },
-      4: {
-        "& > * + *": {
-          marginTop: "$spacing$4",
-        },
-      },
-      5: {
-        "& > * + *": {
-          marginTop: "$spacing$5",
-        },
-      },
-      6: {
-        "& > * + *": {
-          marginTop: "$spacing$6",
-        },
-      },
-      7: {
-        "& > * + *": {
-          marginTop: "$spacing$7",
-        },
-      },
-      8: {
-        "& > * + *": {
-          marginTop: "$spacing$8",
-        },
-      },
-      9: {
-        "& > * + *": {
-          marginTop: "$spacing$9",
-        },
-      },
-      16: {
-        "& > * + *": {
-          marginTop: "$spacing$16",
-        },
-      },
-    },
+    spacing: mapTokenToVariant("gap", spacing, "$spacing"),
   },
 });

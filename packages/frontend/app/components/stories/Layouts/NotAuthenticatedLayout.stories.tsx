@@ -1,7 +1,7 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { NotAuthenticatedLayout } from "../../../layouts/NotAuthenticatedLayout";
-import { Box } from "./Box";
+import { Box } from "../Box";
 import { SuccessBox } from "~/components/SuccessBox";
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export

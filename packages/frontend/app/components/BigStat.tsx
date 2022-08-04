@@ -32,14 +32,14 @@ const BigStatValue = styled(CardContent, {
   },
 });
 
-export interface BigStateProps {
+export interface BigStatProps {
   children: React.ReactNode;
   name: string;
   id?: string;
   secondary?: boolean;
 }
 
-export const BigState = ({ name, children, id, secondary }: BigStateProps) => {
+export const BigStat = ({ name, children, id, secondary }: BigStatProps) => {
   return (
     <Card>
       <CardHeader>

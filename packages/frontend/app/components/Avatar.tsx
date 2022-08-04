@@ -14,6 +14,7 @@ const AvatarWrapper = styled("div", {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
+  fontFamily: "$default",
 });
 
 export const Avatar = ({ children }: AvatarProps) => {

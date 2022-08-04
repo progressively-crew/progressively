@@ -1,29 +1,25 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import { DashboardLayout } from "../../../layouts/DashboardLayout";
-import { Box } from "../Box";
-import { SuccessBox } from "~/components/SuccessBox";
+
+import { ButtonCopy } from "../../ButtonCopy";
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: "Components/Layouts/DashboardLayout",
-  component: DashboardLayout,
+  title: "Components/Buttons/ButtonCopy",
+  component: ButtonCopy,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
     backgroundColor: { control: "color" },
   },
-} as ComponentMeta<typeof DashboardLayout>;
+} as ComponentMeta<typeof ButtonCopy>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const DefaultTemplate: ComponentStory<typeof DashboardLayout> = (args) => (
-  <DashboardLayout
-    header={<Box />}
-    status={<SuccessBox id="success">Hello world</SuccessBox>}
-    breadcrumb={<Box />}
-  >
-    <Box />
-  </DashboardLayout>
+const DefaultTemplate: ComponentStory<typeof ButtonCopy> = (args) => (
+  <ButtonCopy {...args} />
 );
 export const Default = DefaultTemplate.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-Default.args = {};
+Default.args = {
+  children: "Click me",
+  toCopy: "Copy me",
+};

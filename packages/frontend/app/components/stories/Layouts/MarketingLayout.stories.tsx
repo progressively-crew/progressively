@@ -1,7 +1,7 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { MarketingLayout } from "../../../layouts/MarketingLayout";
-import { Box } from "./Box";
+import { Box } from "../Box";
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {

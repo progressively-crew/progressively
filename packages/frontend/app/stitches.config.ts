@@ -1,5 +1,24 @@
 import { createStitches } from "@stitches/react";
 
+export const spacing = {
+  0: "0px",
+  1: "4px",
+  2: "8px",
+  3: "12px",
+  4: "16px",
+  5: "20px",
+  6: "24px",
+  7: "28px",
+  8: "32px",
+  9: "36px",
+  10: "40px",
+  11: "44px",
+  12: "48px",
+  13: "52px",
+  14: "56px",
+  16: "60px",
+};
+
 export const fontWeights = {
   slim: "300",
   normal: "normal",
@@ -55,12 +74,18 @@ export const colors = {
   warningBorder: "#ffca28",
 };
 
-export const mapTokenToVariant = (cssAttribute: string, partialTheme: any) => {
+export const mapTokenToVariant = (
+  cssAttribute: string,
+  partialTheme: any,
+  prefix?: string
+) => {
   const partialThemeKeys = Object.keys(partialTheme);
   const computedVariant = {};
 
   for (const key of partialThemeKeys) {
-    computedVariant[key] = { [cssAttribute]: `$${key}` };
+    computedVariant[key] = {
+      [cssAttribute]: prefix ? `${prefix}$${key}` : `$${key}`,
+    };
   }
 
   return computedVariant;
@@ -97,23 +122,6 @@ export const {
     borderRadius: {
       regular: "8px",
     },
-    spacing: {
-      0: "0px",
-      1: "4px",
-      2: "8px",
-      3: "12px",
-      4: "16px",
-      5: "20px",
-      6: "24px",
-      7: "28px",
-      8: "32px",
-      9: "36px",
-      10: "40px",
-      11: "44px",
-      12: "48px",
-      13: "52px",
-      14: "56px",
-      16: "60px",
-    },
+    spacing,
   },
 });
