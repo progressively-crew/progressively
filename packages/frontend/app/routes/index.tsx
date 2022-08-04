@@ -8,7 +8,6 @@ import { useState } from "react";
 import { ProgressivelyProvider } from "@progressively/react";
 import { getSSRProps } from "@progressively/react/lib/ssr";
 import { Browser } from "~/components/Browser";
-import { AddButton } from "~/components/Buttons/AddButton";
 import { Container } from "~/components/Container";
 import { ExternalLink } from "~/components/ExternalLink";
 import { H1 } from "~/components/H1";
@@ -22,6 +21,7 @@ import { MarketingLayout } from "~/layouts/MarketingLayout";
 import { styled } from "~/stitches.config";
 import bundleSize from "../progressively-sdk-sizes.json";
 import { useLoaderData } from "@remix-run/react";
+import { CreateButton } from "~/components/Buttons/CreateButton";
 
 const ExampleOldPage = styled("div", {
   padding: "$spacing$4",
@@ -230,12 +230,12 @@ export default function Index() {
 
                   <Spacer size={8} />
 
-                  <AddButton
+                  <CreateButton
                     href="https://github.com/progressively-crew/progressively/issues"
                     target="_blank"
                   >
                     Create a Github issue
-                  </AddButton>
+                  </CreateButton>
                 </div>
               </Centered>
             </Container>

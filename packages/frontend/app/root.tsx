@@ -12,6 +12,7 @@ import UnauthorizedPage from "./routes/401";
 import ForbiddenPage from "./routes/403";
 import NotFoundPage from "./routes/404";
 import styles from "./styles/index.css";
+import fonts from "./styles/fonts.css";
 import { H1 } from "./components/H1";
 import { Main } from "./components/Main";
 import { Button } from "./components/Buttons/Button";
@@ -30,7 +31,10 @@ import { Spacer } from "./components/Spacer";
  * https://remix.run/api/app#links
  */
 export const links: LinksFunction = () => {
-  return [{ rel: "prefetch stylesheet", href: styles }];
+  return [
+    { rel: "prefetch stylesheet", href: fonts },
+    { rel: "stylesheet", href: styles },
+  ];
 };
 
 /**

@@ -5,8 +5,8 @@ import { UserProject } from "../../projects/types";
 import { Badge } from "~/components/Badge";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { styled } from "~/stitches.config";
-import { AddButton } from "~/components/Buttons/AddButton";
 import { Form, useTransition } from "@remix-run/react";
+import { CreateButton } from "~/components/Buttons/CreateButton";
 
 export interface UserTableProps {
   projectId: string;
@@ -42,9 +42,9 @@ export const UserTable = ({
 
       {canEdit && (
         <ActionWrapper>
-          <AddButton to={`/dashboard/projects/${projectId}/add-member`}>
+          <CreateButton to={`/dashboard/projects/${projectId}/add-member`}>
             Add member
-          </AddButton>
+          </CreateButton>
 
           <DeleteButton
             type={canDelete ? "submit" : "button"}

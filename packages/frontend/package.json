@@ -13,7 +13,9 @@
     "test": "jest --passWithNoTests",
     "test:e2e": "cypress open",
     "test:e2e:ci": "cypress run --browser chrome",
-    "test:e2e:ci:parallel": "cypress run --browser chrome --record --parallel"
+    "test:e2e:ci:parallel": "cypress run --browser chrome --record --parallel",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "@progressively/react": "^0.0.1-alpha.9",
@@ -29,7 +31,16 @@
     "recharts": "^2.1.12"
   },
   "devDependencies": {
+    "@babel/core": "^7.18.10",
     "@remix-run/dev": "^1.6.5",
+    "@storybook/addon-actions": "^6.5.10",
+    "@storybook/addon-essentials": "^6.5.10",
+    "@storybook/addon-interactions": "^6.5.10",
+    "@storybook/addon-links": "^6.5.10",
+    "@storybook/builder-webpack4": "^6.5.10",
+    "@storybook/manager-webpack4": "^6.5.10",
+    "@storybook/react": "^6.5.10",
+    "@storybook/testing-library": "^0.0.13",
     "@testing-library/cypress": "^8.0.3",
     "@types/jest": "^28.1.6",
     "@types/react": "^18.0.15",
@@ -38,6 +49,7 @@
     "@typescript-eslint/eslint-plugin": "^5.30.6",
     "@typescript-eslint/parser": "^5.30.6",
     "axe-core": "^4.4.3",
+    "babel-loader": "^8.2.5",
     "cypress": "^10.3.0",
     "cypress-axe": "^1.0.0",
     "eslint": "^8.20.0",
