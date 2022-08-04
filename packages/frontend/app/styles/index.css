@@ -139,22 +139,20 @@ body {
   font-size: 100%;
 }
 
-@supports selector(:focus-visible) {
-  input,
-  textarea,
-  select,
-  [tabindex="0"] {
-    transition-property: box-shadow;
-    transition-duration: 0.2s;
-    border-radius: 4px;
-  }
+input,
+textarea,
+select,
+[tabindex="0"] {
+  transition-property: box-shadow;
+  transition-duration: 0.2s;
+  border-radius: 4px;
+}
 
-  *:focus:not(:focus-visible) {
-    box-shadow: unset;
-  }
+*:focus:not(:focus-visible) {
+  box-shadow: unset;
+}
 
-  *:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 4px var(--colors-focus);
-  }
+*:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px var(--colors-focus);
 }
