@@ -1,5 +1,3 @@
-import { HTMLAttributes } from "react";
-import { styled } from "~/stitches.config";
 import { Stack } from "../Stack";
 import { Typography } from "../Typography";
 import { Label } from "./Label";
@@ -14,21 +12,6 @@ export interface TextInputProps {
   description?: string;
   autoComplete?: "current-password" | "username";
 }
-
-const Input = styled("input", {
-  border: "4px solid $secondary",
-  borderRadius: "$borderRadius$regular",
-  fontSize: "$jupiter",
-  padding: "$spacing$2 $spacing$4",
-  display: "block",
-  width: "100%",
-  boxSizing: "border-box",
-  maxWidth: "40ch",
-});
-
-const Hint = styled(Typography, {
-  fontSize: "$uranus",
-});
 
 export const TextInput = ({
   isInvalid,
@@ -49,9 +32,9 @@ export const TextInput = ({
   }
 
   return (
-    <Stack spacing={2}>
+    <Stack>
       <Label htmlFor={name}>{label}</Label>
-      <Input
+      <input
         type={type}
         name={name}
         id={name}
@@ -61,7 +44,9 @@ export const TextInput = ({
         {...props}
       />
 
-      {description && <Hint id={`${name}-hint`}>{description}</Hint>}
+      {description && (
+        <Typography id={`${name}-hint`}>{description}</Typography>
+      )}
     </Stack>
   );
 };

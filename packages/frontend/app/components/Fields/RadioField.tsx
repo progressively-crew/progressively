@@ -1,4 +1,3 @@
-import { styled } from "~/stitches.config";
 import { Stack } from "../Stack";
 import { Label } from "./Label";
 
@@ -15,41 +14,6 @@ export interface RadioFieldProps<T> {
   title: string;
 }
 
-const RadioItem = styled("div", {
-  display: "flex",
-  gap: "$spacing$2",
-  alignItems: "center",
-});
-
-const Input = styled("input", {
-  margin: 0,
-  padding: 0,
-  backgroundColor: "transparent",
-  border: "1px solid $secondary",
-  borderRadius: "50%",
-  height: 24,
-  width: 24,
-  "-webkit-appearance": "none",
-  "&:after": {
-    borderRadius: " 50%",
-    content: "",
-    position: "relative",
-    zIndex: 1,
-    display: "block",
-    height: 18,
-    width: 18,
-    left: 2,
-    top: 2,
-  },
-  "&:checked:after": {
-    background: "$secondary",
-  },
-});
-
-const SmallLabel = styled(Label, {
-  fontSize: "$uranus",
-});
-
 export const RadioField = <T extends string>({
   name,
   value,
@@ -58,12 +22,12 @@ export const RadioField = <T extends string>({
   title,
 }: RadioFieldProps<T>) => {
   return (
-    <Stack as="fieldset" spacing={4}>
+    <Stack as="fieldset">
       <Label as="legend">{title}</Label>
-      <Stack spacing={2}>
+      <Stack>
         {options.map((opt) => (
-          <RadioItem key={opt.value}>
-            <Input
+          <div key={opt.value}>
+            <input
               type="radio"
               id={opt.value}
               name={name}
@@ -71,8 +35,8 @@ export const RadioField = <T extends string>({
               checked={opt.value === value}
               onChange={(e) => onChange(e.target.value as T)}
             />
-            <SmallLabel htmlFor={opt.value}>{opt.label}</SmallLabel>
-          </RadioItem>
+            <Label htmlFor={opt.value}>{opt.label}</Label>
+          </div>
         ))}
       </Stack>
     </Stack>

@@ -1,22 +1,7 @@
-import { styled } from "~/stitches.config";
 import { Heading } from "./Heading";
 import { EmptyBoxIcon } from "./Icons/EmptyBoxIcon";
 import { Spacer } from "./Spacer";
 import { Stack } from "./Stack";
-
-const Wrapper = styled("div", {
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  justifyContent: "center",
-  padding: "$spacing$6 0",
-  textAlign: "center",
-
-  "& .empty-box-icon": {
-    height: "$emptyStateIconHeight",
-    fill: "$secondary",
-  },
-});
 
 export interface EmptyStateProps {
   title: string;
@@ -34,7 +19,7 @@ export const EmptyState = ({
   action,
 }: EmptyStateProps) => {
   return (
-    <Wrapper>
+    <div>
       <EmptyBoxIcon />
 
       <Spacer size={6} />
@@ -48,6 +33,6 @@ export const EmptyState = ({
 
         {action}
       </Stack>
-    </Wrapper>
+    </div>
   );
 };

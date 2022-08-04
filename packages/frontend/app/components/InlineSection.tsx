@@ -1,31 +1,14 @@
-import { styled } from "~/stitches.config";
+import { HTMLAttributes } from "react";
+import { Typography } from "./Typography";
 
-export const InlineSection = styled("section", {
-  display: "grid",
-  gridTemplateColumns: "1fr 3fr",
-  gap: "$spacing$10",
+export const InlineSection = (props: HTMLAttributes<HTMLDivElement>) => (
+  <section {...props} />
+);
 
-  "@mobile": {
-    gridTemplateColumns: "unset",
-    gridTemplateRows: "auto auto",
-    gap: "$spacing$6",
-  },
-});
+export const InlineSectionTitle = (
+  props: HTMLAttributes<HTMLHeadingElement>
+) => <h2 {...props} />;
 
-export const InlineSectionTitle = styled("h2", {
-  color: "$textAccent",
-  fontFamily: "$default",
-  fontSize: "$jupiter",
-  fontWeight: "$semiBold",
-  marginBottom: "$spacing$2",
-
-  "@mobile": {
-    fontSize: "$earth",
-  },
-});
-
-export const InlineSectionDescription = styled("p", {
-  color: "$text",
-  fontFamily: "$default",
-  lineHeight: "$text",
-});
+export const InlineSectionDescription = (
+  props: HTMLAttributes<HTMLParagraphElement>
+) => <Typography {...props} />;

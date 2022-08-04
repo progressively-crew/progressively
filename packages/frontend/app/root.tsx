@@ -63,7 +63,7 @@ const Document = ({ children, title }: DocumentProps) => {
         <Links />
       </head>
       <body>
-        <Background>{children}</Background>
+        <div>{children}</div>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />

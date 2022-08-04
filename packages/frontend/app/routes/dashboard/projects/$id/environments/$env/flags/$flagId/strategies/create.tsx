@@ -28,7 +28,6 @@ import {
   InlineSectionDescription,
 } from "~/components/InlineSection";
 import { Divider } from "~/components/Divider";
-import { styled } from "~/stitches.config";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import {
   MetaFunction,
@@ -162,15 +161,6 @@ export const loader: LoaderFunction = async ({
   };
 };
 
-const PageWrapper = styled("div", {
-  marginTop: "$spacing$10",
-});
-
-const AlignCta = styled("div", {
-  display: "flex",
-  justifyContent: "flex-end",
-});
-
 export default function StrategyCreatePage() {
   const transition = useTransition();
 
@@ -228,7 +218,7 @@ export default function StrategyCreatePage() {
       }
       status={actionData?.errors && <ErrorBox list={actionData.errors} />}
     >
-      <PageWrapper>
+      <div>
         <Form method="post">
           <InlineSection id="general-information">
             <div>
@@ -284,16 +274,16 @@ export default function StrategyCreatePage() {
 
           <Divider />
 
-          <AlignCta>
+          <div>
             <SubmitButton
               isLoading={transition.state === "submitting"}
               loadingText="Saving the strategy, please wait..."
             >
               Save the strategy
             </SubmitButton>
-          </AlignCta>
+          </div>
         </Form>
-      </PageWrapper>
+      </div>
     </DashboardLayout>
   );
 }

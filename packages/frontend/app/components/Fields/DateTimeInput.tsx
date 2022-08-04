@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { styled } from "~/stitches.config";
 import { Stack } from "../Stack";
 import { Typography } from "../Typography";
 import { Label } from "./Label";
@@ -11,34 +10,6 @@ export interface TextInputProps {
   description?: string;
   autoComplete?: "current-password" | "username";
 }
-
-const Input = styled("input", {
-  border: "4px solid $secondary",
-  borderRadius: "$borderRadius$regular",
-  fontSize: "$jupiter",
-  padding: "$spacing$2 $spacing$4",
-  display: "block",
-  width: "100%",
-  boxSizing: "border-box",
-  maxWidth: "40ch",
-});
-
-const Hint = styled(Typography, {
-  fontSize: "$uranus",
-});
-
-const InlineFields = styled("div", {
-  display: "flex",
-  gap: "$spacing$4",
-
-  '& [type="date"]': {
-    width: "12rem",
-  },
-
-  '& [type="time"]': {
-    width: "8rem",
-  },
-});
 
 const completeWithZero = (n: number) => {
   return n < 10 ? `0${n}` : String(n);
@@ -74,13 +45,13 @@ export const DateTimeInput = ({
   const timestamp = date && time ? new Date(`${date} ${time}`).getTime() : null;
 
   return (
-    <Stack spacing={2}>
+    <Stack>
       <fieldset aria-describedby={ariaDescription}>
-        <Stack spacing={2}>
+        <Stack>
           <Label as="legend">{label}</Label>
 
-          <InlineFields>
-            <Input
+          <div>
+            <input
               type="date"
               name={`date-${name}`}
               id={`date-${name}`}
@@ -89,7 +60,7 @@ export const DateTimeInput = ({
               value={date}
             />
 
-            <Input
+            <input
               type="time"
               name={`time-${name}`}
               id={`time-${name}`}
@@ -97,7 +68,7 @@ export const DateTimeInput = ({
               onChange={(e) => setTime(e.target.value)}
               value={time}
             />
-          </InlineFields>
+          </div>
 
           <input
             type="hidden"
@@ -105,7 +76,9 @@ export const DateTimeInput = ({
             value={timestamp || ""}
           />
 
-          {description && <Hint id={`hint-${name}`}>{description}</Hint>}
+          {description && (
+            <Typography id={`hint-${name}`}>{description}</Typography>
+          )}
         </Stack>
       </fieldset>
     </Stack>

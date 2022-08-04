@@ -1,4 +1,3 @@
-import { styled } from "~/stitches.config";
 import { H1 } from "./H1";
 import { Spacer } from "./Spacer";
 import { TagLine } from "./Tagline";
@@ -10,18 +9,6 @@ export interface HeaderProps {
   tagline?: string;
 }
 
-const HeaderRow = styled("div", {
-  display: "flex",
-  alignItems: "center",
-  gap: "$spacing$10",
-});
-
-const HeadingWrapper = styled("div", {
-  display: "flex",
-  flexDirection: "column-reverse",
-  maxWidth: "80ch",
-});
-
 export const Header = ({
   title,
   description,
@@ -30,16 +17,16 @@ export const Header = ({
 }: HeaderProps) => {
   return (
     <div>
-      <HeadingWrapper>
+      <div>
         <H1>{title}</H1>
         {tagline && <TagLine>{tagline}</TagLine>}
-      </HeadingWrapper>
+      </div>
 
       {description || startAction ? <Spacer size={2} /> : null}
 
       {description}
 
-      {startAction && <HeaderRow>{startAction}</HeaderRow>}
+      {startAction && <div>{startAction}</div>}
     </div>
   );
 };

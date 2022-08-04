@@ -2,35 +2,6 @@ import { useRef } from "react";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { Link } from "~/components/Link";
 import { ButtonCopy } from "~/components/ButtonCopy";
-import { styled } from "~/stitches.config";
-
-const Wrapper = styled("div", {
-  display: "flex",
-  justifyContent: "space-between",
-  borderBottom: "1px solid $border",
-  padding: "$spacing$4 $spacing$8",
-  cursor: "pointer",
-  alignItems: "center",
-  transition: "background 0.2s",
-
-  "&:hover": {
-    background: "$backgroundAccent",
-  },
-  "&:active": {
-    background: "$border",
-  },
-
-  "& a": {
-    color: "$textAccent",
-  },
-
-  "@mobile": {
-    padding: "$spacing$4",
-    "& button": {
-      display: "none",
-    },
-  },
-});
 
 export interface EnvCardProps {
   id: string;
@@ -43,7 +14,7 @@ export const EnvRow = ({ id, linkTo, title, clientKey }: EnvCardProps) => {
   const linkRef = useRef<HTMLAnchorElement>(null);
 
   return (
-    <Wrapper onClick={() => linkRef?.current?.click()}>
+    <div onClick={() => linkRef?.current?.click()}>
       <h3 id={`article-${id}`}>
         <Link ref={linkRef} to={linkTo}>
           {title} <VisuallyHidden>environment</VisuallyHidden>
@@ -54,6 +25,6 @@ export const EnvRow = ({ id, linkTo, title, clientKey }: EnvCardProps) => {
         <VisuallyHidden>Sdk Key:</VisuallyHidden>
         {clientKey}
       </ButtonCopy>
-    </Wrapper>
+    </div>
   );
 };

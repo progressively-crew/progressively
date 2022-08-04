@@ -1,8 +1,5 @@
-import { styled } from "~/stitches.config";
+import { HTMLAttributes } from "react";
 
-export const Divider = styled("hr", {
-  background: "$backgroundAccent",
-  margin: "$spacing$8 0",
-  height: "2px",
-  border: "none",
-});
+export const Divider = (props: HTMLAttributes<HTMLDivElement>) => {
+  return <hr {...props} />;
+};

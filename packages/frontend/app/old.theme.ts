@@ -1,15 +1,4 @@
-import { createStitches } from "@stitches/react";
-
-export const {
-  styled,
-  css,
-  globalCss,
-  keyframes,
-  getCssText,
-  theme,
-  createTheme,
-  config,
-} = createStitches({
+const oldTHeme = {
   media: {
     tablet: `(max-width: ${1100 / 16}rem)`,
     mobile: `(max-width: ${550 / 16}rem)`,
@@ -95,4 +84,4 @@ export const {
       16: "60px",
     },
   },
-});
+};

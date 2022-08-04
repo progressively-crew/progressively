@@ -1,19 +1,5 @@
 import { Link as RLink } from "@remix-run/react";
 import { forwardRef, HTMLAttributes } from "react";
-import { styled } from "~/stitches.config";
-
-const RawLink = styled("a", {
-  display: "inline-flex",
-  fontSize: "$jupiter",
-  color: "$text",
-  fontFamily: "$default",
-  height: "$cta",
-  alignItems: "center",
-
-  "&:active": {
-    color: "$textAccent",
-  },
-});
 
 export interface LinkProps extends HTMLAttributes<HTMLAnchorElement> {
   to: string;
@@ -24,7 +10,7 @@ export const Link = forwardRef(
   ({ to, children, href, ...props }: LinkProps, ref: any) => {
     return (
       <div>
-        <RawLink
+        <a
           as={href ? "a" : RLink}
           href={href}
           ref={ref}
@@ -32,7 +18,7 @@ export const Link = forwardRef(
           {...props}
         >
           {children}
-        </RawLink>
+        </a>
       </div>
     );
   }

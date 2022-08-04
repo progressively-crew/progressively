@@ -4,10 +4,8 @@ import {
   LoaderFunction,
   MetaFunction,
 } from "@remix-run/node";
-import { useState } from "react";
 import { ProgressivelyProvider } from "@progressively/react";
 import { getSSRProps } from "@progressively/react/lib/ssr";
-import { Browser } from "~/components/Browser";
 import { AddButton } from "~/components/Buttons/AddButton";
 import { Container } from "~/components/Container";
 import { ExternalLink } from "~/components/ExternalLink";
@@ -15,69 +13,10 @@ import { H1 } from "~/components/H1";
 import { Metric } from "~/components/Metric";
 import { Spacer } from "~/components/Spacer";
 import { Stack } from "~/components/Stack";
-import { Switch } from "~/components/Switch";
 import { Typography } from "~/components/Typography";
-import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { MarketingLayout } from "~/layouts/MarketingLayout";
-import { styled } from "~/stitches.config";
 import bundleSize from "../progressively-sdk-sizes.json";
 import { useLoaderData } from "@remix-run/react";
-
-const ExampleOldPage = styled("div", {
-  padding: "$spacing$4",
-  border: "1px solid $secondary",
-});
-
-const ExampleNewPage = styled("div", {
-  padding: "$spacing$4",
-  border: "1px solid $secondary",
-  background: "$secondary",
-  color: "$background",
-});
-
-const Centered = styled("div", {
-  display: "flex",
-  alignItems: "center",
-  textAlign: "center",
-  flexDirection: "column",
-});
-
-const InvertedBackground = styled("div", {
-  background: "$backgroundAccent",
-  padding: "$spacing$16 0",
-});
-
-const Hero = styled("div", {
-  display: "flex",
-  gap: "$spacing$8",
-  padding: "$spacing$16 0",
-  alignItems: "center",
-
-  "@mobile": {
-    flexDirection: "column",
-  },
-});
-
-const HeadingWrapper = styled("div", {
-  maxWidth: "600px",
-});
-
-const H2 = styled("h2", {
-  fontSize: "$saturn",
-  color: "$textAccent",
-  fontFamily: "$default",
-  lineHeight: "$text",
-});
-
-const MetricWrapper = styled("div", {
-  display: "grid",
-  gridTemplateColumns: "1fr 1fr",
-  gap: "$spacing$4",
-
-  "@tablet": {
-    gridTemplateColumns: "1fr",
-  },
-});
 
 export interface LoaderData {
   gzip: string;
@@ -110,7 +49,7 @@ export const loader: LoaderFunction = async () => {
 
 export default function Index() {
   const { progressivelyProps } = useLoaderData();
-  const [showNewHomepage, setShowNewHomepage] = useState(false);
+
   bundleSize.sort((a, b) => a.gzip - b.gzip);
 
   const packages = bundleSize.map((packageData) => {
@@ -124,56 +63,25 @@ export default function Index() {
       <MarketingLayout>
         <Spacer size={16} />
 
-        <Stack spacing={16}>
+        <Stack>
           <Container>
-            <Hero>
-              <HeadingWrapper>
+            <div>
+              <div>
                 <H1>Feature flags service that does not kill performances</H1>
                 <Typography>
                   Progressively provides simple solutions for feature flagging
                   and A/B testing with an accessible dashboard, lightweight
                   browser SDKs — and it respects your privacy.
                 </Typography>
-              </HeadingWrapper>
-
-              <section aria-labelledby="example" style={{ width: "100%" }}>
-                <VisuallyHidden id="example">
-                  Example of how feature flags work
-                </VisuallyHidden>
-
-                <Browser>
-                  <div aria-live="polite">
-                    {showNewHomepage ? (
-                      <ExampleNewPage>
-                        <p>This is the new home page!</p>
-                      </ExampleNewPage>
-                    ) : (
-                      <ExampleOldPage>
-                        <p>
-                          This is an old page. {`Let's switch to the new page`}
-                        </p>
-                      </ExampleOldPage>
-                    )}
-                  </div>
-
-                  <Spacer size={4} />
-
-                  <Switch
-                    label="Switch to the new homepage"
-                    type="button"
-                    checked={showNewHomepage}
-                    onClick={() => setShowNewHomepage((s) => !s)}
-                  />
-                </Browser>
-              </section>
-            </Hero>
+              </div>
+            </div>
           </Container>
 
           <section aria-labelledby="bundle-size">
-            <InvertedBackground>
+            <div>
               <Container>
-                <Centered>
-                  <H2 id="bundle-size">Minimal bundle footprint</H2>
+                <div>
+                  <h2 id="bundle-size">Minimal bundle footprint</h2>
                   <Typography>
                     {`Progressively's client side SDKs`} aims to be minimal to
                     avoid bloating your client applications and kill your
@@ -182,17 +90,16 @@ export default function Index() {
 
                   <Spacer size={8} />
 
-                  <MetricWrapper>
-                    {packages.map((p, index) => (
+                  <div>
+                    {packages.map((p) => (
                       <Metric
                         key={p.package}
                         label={p.package}
                         value={p.gzip}
                         unit="kB"
-                        highlighted={index === 0}
                       />
                     ))}
-                  </MetricWrapper>
+                  </div>
 
                   <Spacer size={8} />
 
@@ -205,16 +112,16 @@ export default function Index() {
                     </ExternalLink>{" "}
                     running bundle analyzer against the different tools.
                   </Typography>
-                </Centered>
+                </div>
               </Container>
-            </InvertedBackground>
+            </div>
           </section>
 
           <section aria-labelledby="privacy">
             <Container>
-              <Centered>
+              <div>
                 <div>
-                  <H2 id="privacy">People is what matters</H2>
+                  <h2 id="privacy">People is what matters</h2>
                   <Typography>
                     We do not keep information about your users. Progressively
                     only records the flag and A/B variant resolution to give you
@@ -237,7 +144,7 @@ export default function Index() {
                     Create a Github issue
                   </AddButton>
                 </div>
-              </Centered>
+              </div>
             </Container>
           </section>
 

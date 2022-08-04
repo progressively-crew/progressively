@@ -1,63 +1,14 @@
-import React from "react";
+import React, { HTMLAttributes } from "react";
 import { KeyboardKeys } from "~/modules/a11y/utils/keyboardKeys";
 import { useHydrated } from "~/modules/misc/hooks/useHydrated";
-import { styled } from "~/stitches.config";
 
-export const CardGroup = styled("div", {
-  display: "grid",
-  gridTemplateColumns: "1fr 1fr 1fr",
-  gridColumnGap: "$spacing$4",
-  gridRowGap: "$spacing$4",
-  variants: {
-    cols: {
-      2: {
-        gridTemplateColumns: "1fr 1fr",
-        "@mobile": {
-          gridTemplateColumns: "1fr",
-        },
-      },
-    },
-  },
+export const CardGroup = (props: HTMLAttributes<HTMLDivElement>) => {
+  return <div {...props} />;
+};
 
-  "@tablet": {
-    gridTemplateColumns: "1fr 1fr",
-  },
-
-  "@mobile": {
-    gridTemplateColumns: "1fr",
-  },
-});
-
-const CardWrapper = styled("div", {
-  minHeight: "$cardHeight",
-  display: "flex",
-  flexDirection: "column",
-  background: "$backgroundAccent",
-  borderRadius: "$borderRadius$regular",
-  border: "8px solid transparent",
-  transition: "border,box-shadow,transform 0.2s",
-  variants: {
-    hydrated: {
-      true: {
-        // when hydrated
-        cursor: "pointer",
-        "&:active": {
-          border: "8px solid $activeBg",
-        },
-      },
-    },
-    isClickable: {
-      true: {
-        "&:hover,&:focus": {
-          transform: "scale(1.05)",
-          "@media (prefers-reduced-motion: reduce)": {
-            transform: "unset",
-          },
-        },
-      },
-    },
-  },
-});
+const CardWrapper = (props: HTMLAttributes<HTMLDivElement>) => {
+  return <div {...props} />;
+};
 
 export interface CardProps {
   children: React.ReactNode;
@@ -105,38 +56,21 @@ export const Card = ({ children, className, onClick }: CardProps) => {
       onClick={onClick}
       onKeyDown={handleKeyDown}
       className={`card ${className || ""}`}
-      isClickable={Boolean(onClick)}
       tabIndex={isHydrated && onClick ? 0 : undefined}
-      hydrated={Boolean(isHydrated && onClick)}
     >
       {children}
     </CardWrapper>
   );
 };
 
-export const CardHeader = styled("div", {
-  padding: "$spacing$4 $spacing$6 0 $spacing$6",
-  fontFamily: "$default",
-  color: "$textAccent",
-  fontSize: "$jupiter",
+export const CardHeader = (props: HTMLAttributes<HTMLDivElement>) => {
+  return <div {...props} />;
+};
 
-  "& a": {
-    color: "$textAccent",
-  },
-});
+export const CardContent = (props: HTMLAttributes<HTMLDivElement>) => {
+  return <div {...props} />;
+};
 
-export const CardContent = styled("div", {
-  padding: "0 $spacing$6 $spacing$4 $spacing$6",
-  "& p": {
-    fontSize: "$uranus",
-    lineHeight: "$text",
-  },
-});
-
-export const CardFooter = styled("div", {
-  padding: "$spacing$6 $spacing$6",
-  background: "$background",
-  marginTop: "auto",
-  borderEndEndRadius: "$borderRadius$regular",
-  borderEndStartRadius: "$borderRadius$regular",
-});
+export const CardFooter = (props: HTMLAttributes<HTMLDivElement>) => {
+  return <div {...props} />;
+};

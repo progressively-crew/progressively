@@ -1,22 +1,5 @@
-import { styled } from "~/stitches.config";
+import { HTMLAttributes } from "react";
 
-export const Typography = styled("p", {
-  color: "$text",
-  fontSize: "$jupiter",
-  fontFamily: "$default",
-  lineHeight: "$text",
-  maxWidth: "60ch",
-
-  "& strong": {
-    fontWeight: "bold",
-    color: "$textAccent",
-  },
-
-  variants: {
-    size: {
-      small: {
-        fontSize: "$cta",
-      },
-    },
-  },
-});
+export const Typography = (props: HTMLAttributes<HTMLParagraphElement>) => (
+  <p {...props} />
+);

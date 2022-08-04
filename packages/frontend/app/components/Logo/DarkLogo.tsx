@@ -1,32 +1,12 @@
-import { styled } from "~/stitches.config";
 import { Link } from "../Link";
 
 export interface LogoProps {
   to?: string;
 }
 
-const LinkWrapper = styled(Link, {
-  textDecoration: "none",
-  color: "$textAccent",
-  transition: "all 0.1s",
-
-  "&:hover": {
-    transform: "scale(1.05)",
-  },
-
-  "& span:first-of-type": {
-    color: "$secondary",
-  },
-
-  "& svg": {
-    height: "40px",
-    width: "100%",
-  },
-});
-
 export const DarkLogo = ({ to }: LogoProps) => {
   return (
-    <LinkWrapper to={to || "/dashboard"} aria-label="Progressively">
+    <Link to={to || "/dashboard"} aria-label="Progressively">
       <svg
         width="1946"
         height="387"
@@ -133,6 +113,6 @@ export const DarkLogo = ({ to }: LogoProps) => {
           </linearGradient>
         </defs>
       </svg>
-    </LinkWrapper>
+    </Link>
   );
 };

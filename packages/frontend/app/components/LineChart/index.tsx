@@ -8,20 +8,9 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
-import { styled, theme } from "~/stitches.config";
+
 import { TableChart } from "./TableChart";
 import { formatDate } from "./utils";
-
-const ChartWrapper = styled("div", {
-  marginLeft: "-$spacing$8",
-
-  "& p": {
-    fontSize: "$jupiter",
-    fontWeight: "$bold",
-    border: "none",
-    color: "$textAccent",
-  },
-});
 
 interface DataKey {
   name: string;
@@ -56,14 +45,11 @@ export const LineChart = ({
   }
 
   const contentStyle = {
-    background: theme.colors.background.toString(),
     border: "none",
-    borderRadius: theme.borderRadius.regular.toString(),
-    padding: theme.spacing[4].toString(),
   };
 
   return (
-    <ChartWrapper>
+    <div>
       <ResponsiveContainer width="100%" aspect={16.0 / 9.0}>
         <RawLineChart
           aria-labelledby={labelledBy}
@@ -89,6 +75,6 @@ export const LineChart = ({
           ))}
         </RawLineChart>
       </ResponsiveContainer>
-    </ChartWrapper>
+    </div>
   );
 };

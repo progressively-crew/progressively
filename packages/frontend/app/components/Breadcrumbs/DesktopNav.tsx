@@ -1,38 +1,6 @@
 import { MdChevronRight } from "react-icons/md";
-import { styled } from "~/stitches.config";
 import { Link } from "../Link";
 import { Crumbs } from "./types";
-
-const Ol = styled("ol", {
-  fontFamily: "$default",
-  color: "$text",
-  display: "flex",
-
-  "& li a": {
-    transition: "border,box-shadow 0.2s",
-  },
-
-  "& li:last-of-type a": {
-    fontWeight: "$fontWeights$bold",
-    color: "$secondary",
-  },
-
-  "& li": {
-    display: "flex",
-    alignItems: "center",
-  },
-});
-
-const Separator = styled("div", {
-  margin: "0 $spacing$2",
-  display: "inline-block",
-});
-
-const HStack = styled("span", {
-  display: "flex",
-  alignItems: "center",
-  gap: "$spacing$2",
-});
 
 export interface DesktopNavProps {
   crumbs: Crumbs;
@@ -43,7 +11,7 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
 
   return (
     <nav aria-label="Breadcrumb">
-      <Ol>
+      <ol>
         {crumbs.map((crumb, index) => {
           const currentPage = index === lastItemIndex;
 
@@ -59,21 +27,21 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
                 }
                 to={crumb.link}
               >
-                <HStack>
+                <span>
                   {crumb.icon}
                   {crumb.label}
-                </HStack>
+                </span>
               </Link>
 
               {!currentPage && (
-                <Separator aria-hidden>
+                <div aria-hidden>
                   <MdChevronRight />
-                </Separator>
+                </div>
               )}
             </li>
           );
         })}
-      </Ol>
+      </ol>
     </nav>
   );
 };

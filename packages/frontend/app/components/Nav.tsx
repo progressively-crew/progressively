@@ -1,12 +1,5 @@
-import { styled } from "~/stitches.config";
+import { HTMLAttributes } from "react";
 
-export const Nav = styled("nav", {
-  padding: "$spacing$4 $spacing$6",
-  display: "flex",
-  justifyContent: "space-between",
-  background: "$backgroundAccent",
-
-  "@mobile": {
-    padding: "$spacing$4",
-  },
-});
+export const Nav = (props: HTMLAttributes<HTMLDivElement>) => (
+  <nav {...props} />
+);

@@ -1,7 +1,7 @@
 import React from "react";
 import { Section } from "~/components/Section";
 import { User } from "~/modules/user/types";
-import { styled } from "~/stitches.config";
+
 import { DashboardLayout } from "./DashboardLayout";
 
 export interface DeleteEntityLayoutProps {
@@ -14,21 +14,6 @@ export interface DeleteEntityLayoutProps {
   cancelAction?: React.ReactNode;
 }
 
-const ActionWrapper = styled("div", {
-  display: "flex",
-  justifyContent: "space-between",
-  gap: "$spacing$6",
-  marginTop: "$spacing$6",
-
-  "@mobile": {
-    flexDirection: "column",
-  },
-});
-
-const Wrapper = styled("div", {
-  maxWidth: "80ch",
-});
-
 export const DeleteEntityLayout = ({
   user,
   breadcrumb,
@@ -40,18 +25,18 @@ export const DeleteEntityLayout = ({
 }: DeleteEntityLayoutProps) => {
   return (
     <DashboardLayout user={user} header={header} breadcrumb={breadcrumb}>
-      <Wrapper>
+      <div>
         <Section>
           {error}
 
           {children}
 
-          <ActionWrapper>
+          <div>
             {cancelAction}
             {confirmAction}
-          </ActionWrapper>
+          </div>
         </Section>
-      </Wrapper>
+      </div>
     </DashboardLayout>
   );
 };

@@ -1,4 +1,4 @@
-import { styled } from "~/stitches.config";
+import { HTMLAttributes } from "react";
 import { HideMobile } from "../HideMobile";
 import { DesktopNav } from "./DesktopNav";
 import { MobileNav } from "./MobileNav";
@@ -8,12 +8,9 @@ export interface BreadCrumbsProps {
   crumbs: Crumbs;
 }
 
-const MobileWrapper = styled("div", {
-  display: "none",
-  "@mobile": {
-    display: "block",
-  },
-});
+const MobileWrapper = (props: HTMLAttributes<HTMLDivElement>) => (
+  <div {...props} />
+);
 
 export const BreadCrumbs = ({ crumbs }: BreadCrumbsProps) => {
   return (

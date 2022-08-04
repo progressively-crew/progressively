@@ -1,7 +1,5 @@
-import { styled } from "~/stitches.config";
+import { HTMLAttributes } from "react";
 
-export const HideMobile = styled("span", {
-  "@mobile": {
-    display: "none",
-  },
-});
+export const HideMobile = (props: HTMLAttributes<HTMLSpanElement>) => (
+  <span {...props} />
+);

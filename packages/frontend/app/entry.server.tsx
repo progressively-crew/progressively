@@ -2,7 +2,6 @@ import type { EntryContext } from "@remix-run/node";
 import { RemixServer } from "@remix-run/react";
 import { renderToString } from "react-dom/server";
 import { startMockServer } from "./mocks/mock-server";
-import { getCssText } from "./stitches.config";
 
 export default function handleRequest(
   request: Request,
@@ -20,7 +19,7 @@ export default function handleRequest(
 
   const markup = renderToString(
     <RemixServer context={remixContext} url={request.url} />
-  ).replace(/<\/head>/, `<style id="stitches">${getCssText()}</style></head>`);
+  );
 
   responseHeaders.set("Content-Type", "text/html");
 

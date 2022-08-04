@@ -4,7 +4,7 @@ import { useHydrated } from "../../misc/hooks/useHydrated";
 import { UserProject } from "../../projects/types";
 import { Badge } from "~/components/Badge";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
-import { styled } from "~/stitches.config";
+
 import { AddButton } from "~/components/Buttons/AddButton";
 import { Form, useTransition } from "@remix-run/react";
 
@@ -14,15 +14,6 @@ export interface UserTableProps {
   labelledBy: string;
   canEdit: boolean;
 }
-
-const ActionWrapper = styled("div", {
-  display: "flex",
-  gap: "$spacing$4",
-  marginBottom: "$spacing$4",
-  "@mobile": {
-    flexDirection: "column",
-  },
-});
 
 export const UserTable = ({
   userProjects,
@@ -41,7 +32,7 @@ export const UserTable = ({
       <input type="hidden" name="_method" value="delete-member" />
 
       {canEdit && (
-        <ActionWrapper>
+        <div>
           <AddButton to={`/dashboard/projects/${projectId}/add-member`}>
             Add member
           </AddButton>
@@ -54,7 +45,7 @@ export const UserTable = ({
           >
             Remove from project
           </DeleteButton>
-        </ActionWrapper>
+        </div>
       )}
 
       <Table labelledBy={labelledBy} onSelect={setSelected} selected={selected}>

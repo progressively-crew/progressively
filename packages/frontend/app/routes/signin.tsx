@@ -21,25 +21,8 @@ import { SuccessBox } from "~/components/SuccessBox";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import { AuthCredentials } from "~/modules/auth/types";
 import { commitSession, getSession } from "~/sessions";
-import { styled } from "~/stitches.config";
 import { authenticate } from "../modules/auth/services/authenticate";
 import { validateSigninForm } from "../modules/auth/validators/validate-signin-form";
-
-const ForgotPasswordLink = styled(Link, {
-  fontSize: "$uranus",
-});
-
-const SignupLinkWrapper = styled("div", {
-  paddingTop: "$spacing$4",
-  borderTop: "1px solid $background",
-  textAlign: "center",
-
-  "& a": {
-    fontSize: "$uranus",
-    color: "$secondary",
-    textAlign: "center",
-  },
-});
 
 export const meta: MetaFunction = () => {
   return {
@@ -144,7 +127,7 @@ export default function Signin() {
               autoComplete="current-password"
             />
 
-            <ForgotPasswordLink to="/forgot-password">{`I forgot my password`}</ForgotPasswordLink>
+            <Link to="/forgot-password">{`I forgot my password`}</Link>
           </div>
 
           <SubmitButton
@@ -156,11 +139,7 @@ export default function Signin() {
         </FormGroup>
       </Form>
 
-      {showRegister ? (
-        <SignupLinkWrapper>
-          <Link to="/register">{`Create an account`}</Link>
-        </SignupLinkWrapper>
-      ) : null}
+      {showRegister ? <Link to="/register">{`Create an account`}</Link> : null}
     </NotAuthenticatedLayout>
   );
 }

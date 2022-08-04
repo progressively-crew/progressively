@@ -1,10 +1,5 @@
-import { styled } from "~/stitches.config";
+import { HTMLAttributes } from "react";
 
-export const Tag = styled("span", {
-  padding: "$spacing$2",
-  borderRadius: "$borderRadius$regular",
-  background: "$backgroundAccent",
-  color: "$text",
-  fontFamily: "$default",
-  fontSize: "$neptune",
-});
+export const Tag = (props: HTMLAttributes<HTMLDivElement>) => (
+  <div {...props} />
+);

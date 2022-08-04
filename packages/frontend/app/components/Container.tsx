@@ -1,11 +1,5 @@
-import { styled } from "~/stitches.config";
+import { HTMLAttributes } from "react";
 
-export const Container = styled("div", {
-  maxWidth: "$sizes$container",
-  margin: "0 auto",
-  padding: "0 $spacing$8",
-
-  "@mobile": {
-    padding: "0 $spacing$4",
-  },
-});
+export const Container = (props: HTMLAttributes<HTMLDivElement>) => {
+  return <div {...props} />;
+};

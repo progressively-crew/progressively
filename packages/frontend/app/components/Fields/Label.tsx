@@ -1,8 +1,5 @@
-import { styled } from "~/stitches.config";
+import { HTMLAttributes } from "react";
 
-export const Label = styled("label", {
-  fontFamily: "$default",
-  color: "$textAccent",
-  fontSize: "$jupiter",
-  display: "block",
-});
+export const Label = (props: HTMLAttributes<HTMLLabelElement>) => (
+  <label {...props} />
+);

@@ -1,30 +1,7 @@
-import { styled } from "~/stitches.config";
+import { HTMLAttributes } from "react";
 
-export interface UlProps {
-  children: React.ReactNode;
-}
+export const Ul = (props: HTMLAttributes<HTMLUListElement>) => (
+  <ul {...props} />
+);
 
-export const Ul = styled("ul", {
-  paddingLeft: "$spacing$9",
-  listStyle: "initial",
-  display: "flex",
-  flexDirection: "column",
-  gap: "$spacing$2",
-  fontFamily: "$default",
-
-  "& li": { lineHeight: "$text" },
-
-  "@mobile": {
-    paddingLeft: "$spacing$4",
-  },
-});
-
-export interface LiProps {
-  children: React.ReactNode;
-  id?: string;
-  color?: string;
-}
-
-export const Li = ({ children, id }: LiProps) => {
-  return <li id={id}>{children}</li>;
-};
+export const Li = (props: HTMLAttributes<HTMLLIElement>) => <li {...props} />;

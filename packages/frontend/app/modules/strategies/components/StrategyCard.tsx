@@ -4,17 +4,7 @@ import { Spacer } from "~/components/Spacer";
 import { Typography } from "~/components/Typography";
 import { Li, Ul } from "~/components/Ul";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
-import { styled } from "~/stitches.config";
 import { ComparatorEnum, StrategyRetrieveDTO } from "../types";
-
-const WrapperUl = styled(Ul, {
-  color: "$text",
-});
-
-const ActionWrapper = styled("div", {
-  display: "flex",
-  justifyContent: "flex-end",
-});
 
 export interface StrategyCardProps {
   flagId: string;
@@ -77,11 +67,11 @@ const StrategyTargetConstraints = ({
     const targets = strat.fieldValue?.split("\n");
 
     return (
-      <WrapperUl>
+      <ul>
         {targets?.map((target) => (
           <Li key={target}>{target}</Li>
         ))}
-      </WrapperUl>
+      </ul>
     );
   }
 
@@ -109,13 +99,13 @@ export const StrategyCard = ({
 
         <Spacer size={6} />
 
-        <ActionWrapper>
+        <div>
           <DeleteButton
             to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/strategies/${strat.uuid}/delete`}
           >
             Remove<VisuallyHidden> {strat.name}</VisuallyHidden>
           </DeleteButton>
-        </ActionWrapper>
+        </div>
       </CardContent>
     </Card>
   );

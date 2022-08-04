@@ -17,7 +17,6 @@ import { getFlagHits } from "~/modules/flags/services/getFlagHits";
 import { toggleAction } from "~/modules/flags/components/ToggleFlag";
 import { BigState } from "~/components/BigStat";
 import { Typography } from "~/components/Typography";
-import { styled, theme } from "~/stitches.config";
 import { Spacer } from "~/components/Spacer";
 import { ChartVariant, LineChart } from "~/components/LineChart";
 import { useState } from "react";
@@ -113,15 +112,6 @@ export const loader: LoaderFunction = async ({
     notActivatedCount,
   };
 };
-
-const BigStatWrapper = styled("div", {
-  display: "flex",
-  gap: "$spacing$4",
-
-  "@mobile": {
-    flexDirection: "column",
-  },
-});
 
 export default function FlagById() {
   const {
@@ -222,14 +212,14 @@ export default function FlagById() {
 
         {hits.length > 0 && (
           <>
-            <BigStatWrapper>
+            <div>
               <BigState name="Hits on activated variant">
                 <p>{activatedCount}</p>
               </BigState>
-              <BigState name="Hits on not activated variant" secondary>
+              <BigState name="Hits on not activated variant">
                 <p>{notActivatedCount}</p>
               </BigState>
-            </BigStatWrapper>
+            </div>
 
             <Spacer size={4} />
 
@@ -252,11 +242,11 @@ export default function FlagById() {
                 dataKeys={[
                   {
                     name: "activated",
-                    color: theme.colors.secondary.toString(),
+                    color: "red",
                   },
                   {
                     name: "notactivated",
-                    color: theme.colors.textAccent.toString(),
+                    color: "blue",
                     dashed: true,
                   },
                 ]}
