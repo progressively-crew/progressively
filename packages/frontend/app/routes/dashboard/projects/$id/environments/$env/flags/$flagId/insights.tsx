@@ -15,7 +15,7 @@ import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { FaPowerOff } from "react-icons/fa";
 import { getFlagHits } from "~/modules/flags/services/getFlagHits";
 import { toggleAction } from "~/modules/flags/components/ToggleFlag";
-import { BigState } from "~/components/BigStat";
+import { BigStat } from "~/components/BigStat";
 import { Typography } from "~/components/Typography";
 import { styled, theme } from "~/stitches.config";
 import { Spacer } from "~/components/Spacer";
@@ -223,17 +223,17 @@ export default function FlagById() {
         {hits.length > 0 && (
           <>
             <BigStatWrapper>
-              <BigState name="Hits on activated variant">
+              <BigStat name="Hits on activated variant">
                 <p>{activatedCount}</p>
-              </BigState>
-              <BigState name="Hits on not activated variant" secondary>
+              </BigStat>
+              <BigStat name="Hits on not activated variant" secondary>
                 <p>{notActivatedCount}</p>
-              </BigState>
+              </BigStat>
             </BigStatWrapper>
 
             <Spacer size={4} />
 
-            <BigState name="Flag hits per date" id="count-per-date-chart">
+            <BigStat name="Flag hits per date" id="count-per-date-chart">
               <SwitchButton
                 onClick={() =>
                   setChartVariant((s) => (s === "chart" ? "table" : "chart"))
@@ -262,7 +262,7 @@ export default function FlagById() {
                 ]}
               />
               <Spacer size={8} />
-            </BigState>
+            </BigStat>
           </>
         )}
       </Section>

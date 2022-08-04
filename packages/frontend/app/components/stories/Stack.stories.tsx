@@ -1,29 +1,29 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import { DashboardLayout } from "../../../layouts/DashboardLayout";
-import { Box } from "../Box";
-import { SuccessBox } from "~/components/SuccessBox";
+
+import { Stack } from "../Stack";
+import { Box } from "./Box";
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: "Components/Layouts/DashboardLayout",
-  component: DashboardLayout,
+  title: "Components/Stack",
+  component: Stack,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
     backgroundColor: { control: "color" },
   },
-} as ComponentMeta<typeof DashboardLayout>;
+} as ComponentMeta<typeof Stack>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const DefaultTemplate: ComponentStory<typeof DashboardLayout> = (args) => (
-  <DashboardLayout
-    header={<Box />}
-    status={<SuccessBox id="success">Hello world</SuccessBox>}
-    breadcrumb={<Box />}
-  >
+const DefaultTemplate: ComponentStory<typeof Stack> = (args) => (
+  <Stack spacing={4}>
     <Box />
-  </DashboardLayout>
+    <Box />
+    <Box />
+  </Stack>
 );
 export const Default = DefaultTemplate.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-Default.args = {};
+Default.args = {
+  children: "Marvin Frachet",
+};

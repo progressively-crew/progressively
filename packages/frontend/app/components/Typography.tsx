@@ -8,7 +8,7 @@ import {
   colors,
 } from "~/stitches.config";
 
-export const Typography = styled("p", {
+export const Typography = styled<any, any>("p", {
   color: "$text",
   fontSize: "$jupiter",
   fontFamily: "$default",
