@@ -19,6 +19,7 @@ const Textarea = styled("textarea", {
   width: "100%",
   boxSizing: "border-box",
   minHeight: "200px",
+  fontFamily: "$default",
 });
 
 export const TextareaInput = ({
