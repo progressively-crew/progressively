@@ -93,7 +93,9 @@ export default function OnboardingPage() {
               placeholder="e.g: My super project"
             />
 
-            <SubmitButton>Create the project</SubmitButton>
+            <div>
+              <SubmitButton>Create the project</SubmitButton>
+            </div>
           </FormGroup>
         </Form>
       </Section>

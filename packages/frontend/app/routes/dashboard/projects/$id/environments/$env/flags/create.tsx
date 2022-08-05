@@ -184,13 +184,15 @@ export default function CreateFlagPage() {
               </Typography>
             </div>
 
-            <SubmitButton
-              type="submit"
-              isLoading={transition.state === "submitting"}
-              loadingText="Creating the feature flag, please wait..."
-            >
-              Create the feature flag
-            </SubmitButton>
+            <div>
+              <SubmitButton
+                type="submit"
+                isLoading={transition.state === "submitting"}
+                loadingText="Creating the feature flag, please wait..."
+              >
+                Create the feature flag
+              </SubmitButton>
+            </div>
           </FormGroup>
         </Form>
       </Section>

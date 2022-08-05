@@ -149,13 +149,15 @@ export default function CreateEnvironmentPage() {
               </Typography>
             </div>
 
-            <SubmitButton
-              type="submit"
-              isLoading={transition.state === "submitting"}
-              loadingText="Creating the environment, please wait..."
-            >
-              Create the environment
-            </SubmitButton>
+            <div>
+              <SubmitButton
+                type="submit"
+                isLoading={transition.state === "submitting"}
+                loadingText="Creating the environment, please wait..."
+              >
+                Create the environment
+              </SubmitButton>
+            </div>
           </FormGroup>
         </Form>
       </Section>

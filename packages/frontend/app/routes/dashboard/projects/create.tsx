@@ -116,13 +116,15 @@ export default function CreateProjectPage() {
               placeholder="e.g: My super project"
             />
 
-            <SubmitButton
-              type="submit"
-              isLoading={transition.state === "submitting"}
-              loadingText="Creating the project, please wait..."
-            >
-              Create the project
-            </SubmitButton>
+            <div>
+              <SubmitButton
+                type="submit"
+                isLoading={transition.state === "submitting"}
+                loadingText="Creating the project, please wait..."
+              >
+                Create the project
+              </SubmitButton>
+            </div>
           </FormGroup>
         </Form>
       </Section>

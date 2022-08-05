@@ -16,6 +16,9 @@ const Table = styled("table", {
     padding: "$spacing$4",
     textAlign: "left",
     background: "$background",
+    textTransform: "uppercase",
+    fontSize: "$neptune",
+    fontFamily: "$title",
   },
   "& th:first-of-type": {
     borderStartStartRadius: "$borderRadius$regular",
@@ -25,6 +28,12 @@ const Table = styled("table", {
   },
   "& tr": {
     borderBottom: "1px solid $border",
+  },
+
+  "& tbody tr:nth-child(odd)": { background: "$backgroundAccent" },
+
+  "& tbody tr:hover": {
+    background: "$border",
   },
   "& tbody tr": {
     "&:focus-within": {

@@ -20,6 +20,14 @@ const Textarea = styled("textarea", {
   boxSizing: "border-box",
   minHeight: "200px",
   fontFamily: "$default",
+
+  variants: {
+    invalid: {
+      true: {
+        border: "4px solid $errorBorder",
+      },
+    },
+  },
 });
 
 export const TextareaInput = ({
@@ -38,6 +46,7 @@ export const TextareaInput = ({
         id={name}
         defaultValue={defaultValue}
         placeholder={placeholder}
+        invalid={isInvalid}
         aria-describedby={isInvalid ? `error-${name}` : undefined}
       />
     </Stack>
