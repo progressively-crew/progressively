@@ -19,9 +19,13 @@ export interface LinkProps extends HTMLAttributes<HTMLAnchorElement> {
   to: string;
   children: React.ReactNode;
   href?: string;
+  target?: string;
+  rel?: string;
+  endIcon?: string;
+  startIcon?: string;
 }
 export const Link = forwardRef(
-  ({ to, children, href, ...props }: LinkProps, ref: any) => {
+  ({ to, children, href, target, rel, ...props }: LinkProps, ref: any) => {
     return (
       <div>
         <RawLink
@@ -29,6 +33,8 @@ export const Link = forwardRef(
           href={href}
           ref={ref}
           to={href ? undefined : to}
+          target={target}
+          rel={rel}
           {...props}
         >
           {children}

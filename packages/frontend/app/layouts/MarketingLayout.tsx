@@ -8,7 +8,6 @@ import { InertWhenNavOpened } from "~/components/Breadcrumbs/InertWhenNavOpened"
 import { Menu } from "~/components/Menu";
 import { Button } from "~/components/Buttons/Button";
 import { styled } from "~/stitches.config";
-import { GithubLink } from "~/components/GithubLink";
 
 export interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -39,7 +38,12 @@ export const MarketingLayout = ({ children }: DashboardLayoutProps) => {
                   Documentation
                 </Button>
               )}
-              <GithubLink />
+              <Button
+                variant="ghost"
+                href="https://github.com/progressively-crew/progressively"
+              >
+                Github
+              </Button>
               <Button to="/signin">Dashboard</Button>
             </SubNavWrapper>
           </Nav>
