@@ -22,7 +22,6 @@ import { FaPowerOff } from "react-icons/fa";
 import { toggleAction } from "~/modules/flags/components/ToggleFlag";
 import { Typography } from "~/components/Typography";
 import { CreateButton } from "~/components/Buttons/CreateButton";
-import { CardGroup } from "~/components/Card";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
 import { useSearchParams, useLoaderData } from "@remix-run/react";
@@ -199,7 +198,7 @@ export default function FlagById() {
 
             <Spacer size={4} />
 
-            <CardGroup cols={2}>
+            <div>
               {strategies.map((strat) => (
                 <StrategyCard
                   key={`${strat.uuid}`}
@@ -209,7 +208,7 @@ export default function FlagById() {
                   strat={strat}
                 />
               ))}
-            </CardGroup>
+            </div>
           </div>
         ) : null}
 

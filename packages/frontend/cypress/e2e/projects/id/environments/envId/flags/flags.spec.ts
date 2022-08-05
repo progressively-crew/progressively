@@ -118,9 +118,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags", () => {
           );
 
         /* verify the flag list */
-        cy.findByRole("heading", { name: "New homepage feature flag" }).should(
-          "be.visible"
-        );
+        cy.findByRole("link", { name: "New homepage" }).should("be.visible");
         cy.findByText("newHomepage").should("be.visible");
 
         cy.checkA11y();

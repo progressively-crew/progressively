@@ -27,19 +27,17 @@ export interface LinkProps extends HTMLAttributes<HTMLAnchorElement> {
 export const Link = forwardRef(
   ({ to, children, href, target, rel, ...props }: LinkProps, ref: any) => {
     return (
-      <div>
-        <RawLink
-          as={href ? "a" : RLink}
-          href={href}
-          ref={ref}
-          to={href ? undefined : to}
-          target={target}
-          rel={rel}
-          {...props}
-        >
-          {children}
-        </RawLink>
-      </div>
+      <RawLink
+        as={href ? "a" : RLink}
+        href={href}
+        ref={ref}
+        to={href ? undefined : to}
+        target={target}
+        rel={rel}
+        {...props}
+      >
+        {children}
+      </RawLink>
     );
   }
 );

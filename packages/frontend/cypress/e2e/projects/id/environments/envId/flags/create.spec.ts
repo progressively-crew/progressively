@@ -101,7 +101,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/create", () => {
         cy.checkA11y();
       });
 
-      it("creates an environment", () => {
+      it("creates a flag", () => {
         cy.findByLabelText("Flag name").type("My new flag");
         cy.findByLabelText("Flag description").type("My new flag description");
         cy.findByRole("button", { name: "Create the feature flag" }).click();
@@ -110,9 +110,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/create", () => {
           .should("have.focus")
           .and("contain.text", "The flag has been successfully created.");
 
-        cy.findByRole("heading", { name: "My new flag feature flag" }).should(
-          "be.visible"
-        );
+        cy.findByRole("link", { name: "My new flag" }).should("be.visible");
         cy.findByText("My new flag description").should("be.visible");
 
         cy.url().should(

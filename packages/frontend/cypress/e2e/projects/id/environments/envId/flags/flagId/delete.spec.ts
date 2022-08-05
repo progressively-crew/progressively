@@ -78,7 +78,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/delete", 
         cy.signIn("Marvin");
       });
 
-      it("removes the environment and get me back to the flags page (empty state)", () => {
+      it("removes the flag and get me back to the envs page (empty state)", () => {
         // Delete the first flag
         cy.visit("/dashboard/projects/1/environments/1/flags/1/delete");
         cy.findByRole("button", {

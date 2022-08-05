@@ -1,5 +1,7 @@
+import { ButtonCopy } from "~/components/ButtonCopy";
+import { Link } from "~/components/Link";
+import { RawTable } from "~/components/RawTable";
 import { FlagEnv } from "../types";
-import { FlagRow } from "./FlagRow";
 
 export interface FlagListProps {
   flags: Array<FlagEnv>;
@@ -9,18 +11,33 @@ export interface FlagListProps {
 
 export const FlagList = ({ flags, projectId, envId }: FlagListProps) => {
   return (
-    <div>
-      {flags.map((flagEnv) => (
-        <FlagRow
-          key={flagEnv.flagId}
-          id={flagEnv.flagId}
-          linkTo={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}`}
-          title={flagEnv.flag.name}
-          flagStatus={flagEnv.status}
-          flagKey={flagEnv.flag.key}
-          description={flagEnv.flag.description}
-        />
-      ))}
-    </div>
+    <RawTable>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Flag key</th>
+        </tr>
+      </thead>
+      <tbody>
+        {flags.map((flagEnv) => (
+          <tr key={flagEnv.flagId}>
+            <td>
+              <Link
+                to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}`}
+              >
+                {flagEnv.flag.name}
+              </Link>
+            </td>
+            <td>{flagEnv.flag.description}</td>
+            <td>
+              <ButtonCopy toCopy={flagEnv.flag.key}>
+                {flagEnv.flag.key}
+              </ButtonCopy>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </RawTable>
   );
 };
