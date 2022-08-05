@@ -1,7 +1,7 @@
 import { AiOutlineWarning } from "react-icons/ai";
 import { styled } from "~/stitches.config";
-import { Spacer } from "./Spacer";
-import { Li, Ul } from "./Ul";
+import { Spacer } from "../Spacer";
+import { Li, Ul } from "../Ul";
 
 export interface WarningBoxProps {
   title: React.ReactNode;

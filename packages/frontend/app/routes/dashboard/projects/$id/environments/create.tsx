@@ -1,5 +1,5 @@
 import { BreadCrumbs } from "~/components/Breadcrumbs";
-import { ErrorBox } from "~/components/ErrorBox";
+import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { authGuard } from "~/modules/auth/services/auth-guard";
 import { createEnv } from "~/modules/environments/services/createEnv";
 import {

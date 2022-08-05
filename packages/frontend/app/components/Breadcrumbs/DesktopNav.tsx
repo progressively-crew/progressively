@@ -1,5 +1,6 @@
 import { MdChevronRight } from "react-icons/md";
 import { styled } from "~/stitches.config";
+import { HStack } from "../HStack";
 import { Link } from "../Link";
 import { Crumbs } from "./types";
 
@@ -28,12 +29,6 @@ const Separator = styled("div", {
   display: "inline-block",
 });
 
-const HStack = styled("span", {
-  display: "flex",
-  alignItems: "center",
-  gap: "$spacing$2",
-});
-
 export interface DesktopNavProps {
   crumbs: Crumbs;
 }
@@ -59,7 +54,7 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
                 }
                 to={crumb.link}
               >
-                <HStack>
+                <HStack spacing={2}>
                   {crumb.icon}
                   {crumb.label}
                 </HStack>

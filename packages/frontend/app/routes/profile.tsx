@@ -7,7 +7,7 @@ import {
 } from "@remix-run/react";
 import { BackLink } from "~/components/BackLink";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
-import { ErrorBox } from "~/components/ErrorBox";
+import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Header } from "~/components/Header";
@@ -16,7 +16,7 @@ import {
   SectionContent,
   SectionHeader,
 } from "~/components/Section";
-import { SuccessBox } from "~/components/SuccessBox";
+import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { authGuard } from "~/modules/auth/services/auth-guard";
 import {

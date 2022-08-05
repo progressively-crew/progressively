@@ -1,5 +1,5 @@
 import { BreadCrumbs } from "~/components/Breadcrumbs";
-import { ErrorBox } from "~/components/ErrorBox";
+import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { authGuard } from "~/modules/auth/services/auth-guard";
 import { createProject } from "~/modules/projects/services/createProject";
 import { CreateProjectDTO, UserProject } from "~/modules/projects/types";

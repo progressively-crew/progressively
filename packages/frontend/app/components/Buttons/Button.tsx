@@ -2,6 +2,7 @@ import { Link } from "@remix-run/react";
 import { HTMLAttributes } from "react";
 
 import { styled } from "~/stitches.config";
+import { HStack } from "../HStack";
 import { Spinner } from "../Spinner";
 
 export const RawButton = styled("button", {
@@ -59,13 +60,6 @@ export const RawButton = styled("button", {
   },
 });
 
-const Wrapper = styled("span", {
-  display: "flex",
-  alignItems: "center",
-  height: "100%",
-  gap: "$spacing$2",
-});
-
 export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   to?: string;
   href?: string;
@@ -97,10 +91,10 @@ export const Button = ({
         href={href}
         {...linkProps}
       >
-        <Wrapper>
+        <HStack spacing={2}>
           {icon}
           {children}
-        </Wrapper>
+        </HStack>
       </RawButton>
     );
   }
@@ -112,10 +106,10 @@ export const Button = ({
       aria-disabled={isLoading}
       aria-label={isLoading ? loadingText : undefined}
     >
-      <Wrapper>
+      <HStack spacing={2}>
         {isLoading ? <Spinner /> : icon}
         {children}
-      </Wrapper>
+      </HStack>
     </RawButton>
   );
 };

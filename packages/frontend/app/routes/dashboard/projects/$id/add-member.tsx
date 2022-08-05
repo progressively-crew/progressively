@@ -1,5 +1,5 @@
 import { BreadCrumbs } from "~/components/Breadcrumbs";
-import { ErrorBox } from "~/components/ErrorBox";
+import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { authGuard } from "~/modules/auth/services/auth-guard";
 import { Project, UserProject, UserRoles } from "~/modules/projects/types";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
@@ -11,7 +11,7 @@ import { validateEmail } from "~/modules/forms/utils/validateEmail";
 import { getProject } from "~/modules/projects/services/getProject";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { addMemberToProject } from "~/modules/projects/services/addMemberToProject";
-import { SuccessBox } from "~/components/SuccessBox";
+import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Typography } from "~/components/Typography";
 import { Li, Ul } from "~/components/Ul";

@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { Typography } from "~/components/Typography";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { Link } from "~/components/Link";
-import { Card, CardContent, CardHeader } from "~/components/CardGroup";
+import { Card, CardContent, CardHeader } from "~/components/Card";
 
 export interface ProjectCardProps {
   id: string;

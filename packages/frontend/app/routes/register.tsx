@@ -6,8 +6,8 @@ import {
 } from "~/modules/user/components/RegisterForm";
 import { Header } from "~/components/Header";
 import { BackLink } from "~/components/BackLink";
-import { ErrorBox } from "~/components/ErrorBox";
-import { SuccessBox } from "~/components/SuccessBox";
+import { ErrorBox } from "~/components/Boxes/ErrorBox";
+import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import {
   MetaFunction,
   ActionFunction,

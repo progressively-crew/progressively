@@ -1,5 +1,5 @@
 import { styled } from "~/stitches.config";
-import { Card, CardContent, CardHeader } from "./CardGroup";
+import { Card, CardContent, CardHeader } from "./Card";
 import { Typography } from "./Typography";
 
 const BigStatLabel = styled(Typography, {

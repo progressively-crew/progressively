@@ -1,6 +1,6 @@
 import { BreadCrumbs } from "~/components/Breadcrumbs";
-import { ErrorBox } from "~/components/ErrorBox";
-import { WarningBox } from "~/components/WarningBox";
+import { ErrorBox } from "~/components/Boxes/ErrorBox";
+import { WarningBox } from "~/components/Boxes/WarningBox";
 import { authGuard } from "~/modules/auth/services/auth-guard";
 import { Environment } from "~/modules/environments/types";
 import { getProject } from "~/modules/projects/services/getProject";

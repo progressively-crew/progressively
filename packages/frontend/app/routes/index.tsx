@@ -22,6 +22,7 @@ import { styled } from "~/stitches.config";
 import bundleSize from "../progressively-sdk-sizes.json";
 import { useLoaderData } from "@remix-run/react";
 import { CreateButton } from "~/components/Buttons/CreateButton";
+import { Heading } from "~/components/Heading";
 
 const ExampleOldPage = styled("div", {
   padding: "$spacing$4",
@@ -60,13 +61,6 @@ const Hero = styled("div", {
 
 const HeadingWrapper = styled("div", {
   maxWidth: "600px",
-});
-
-const H2 = styled("h2", {
-  fontSize: "$saturn",
-  color: "$textAccent",
-  fontFamily: "$default",
-  lineHeight: "$text",
 });
 
 const MetricWrapper = styled("div", {
@@ -173,7 +167,9 @@ export default function Index() {
             <InvertedBackground>
               <Container>
                 <Centered>
-                  <H2 id="bundle-size">Minimal bundle footprint</H2>
+                  <Heading id="bundle-size" fontSize="saturn">
+                    Minimal bundle footprint
+                  </Heading>
                   <Typography>
                     {`Progressively's client side SDKs`} aims to be minimal to
                     avoid bloating your client applications and kill your
@@ -214,7 +210,9 @@ export default function Index() {
             <Container>
               <Centered>
                 <div>
-                  <H2 id="privacy">People is what matters</H2>
+                  <Heading id="privacy" fontSize="saturn">
+                    People is what matters
+                  </Heading>
                   <Typography>
                     We do not keep information about your users. Progressively
                     only records the flag and A/B variant resolution to give you

@@ -7,16 +7,11 @@ import { NavProvider } from "~/components/Breadcrumbs/providers/NavProvider";
 import { InertWhenNavOpened } from "~/components/Breadcrumbs/InertWhenNavOpened";
 import { Menu } from "~/components/Menu";
 import { Button } from "~/components/Buttons/Button";
-import { styled } from "~/stitches.config";
+import { HStack } from "~/components/HStack";
 
 export interface DashboardLayoutProps {
   children: React.ReactNode;
 }
-
-export const SubNavWrapper = styled("div", {
-  display: "flex",
-  gap: "$spacing$6",
-});
 
 export const MarketingLayout = ({ children }: DashboardLayoutProps) => {
   const { flags } = useFlags();
@@ -29,7 +24,7 @@ export const MarketingLayout = ({ children }: DashboardLayoutProps) => {
           <Nav aria-label="General">
             <Menu to="/" hideOnMobile />
 
-            <SubNavWrapper>
+            <HStack spacing={6}>
               {flags.showDocumentationButton && (
                 <Button
                   href="https://progressively-crew.github.io/"
@@ -45,7 +40,7 @@ export const MarketingLayout = ({ children }: DashboardLayoutProps) => {
                 Github
               </Button>
               <Button to="/signin">Dashboard</Button>
-            </SubNavWrapper>
+            </HStack>
           </Nav>
 
           <Spacer size={5} />

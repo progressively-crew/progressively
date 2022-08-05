@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { MdErrorOutline } from "react-icons/md";
 import { keyframes, styled } from "~/stitches.config";
-import { Li, Ul } from "./Ul";
+import { Li, Ul } from "../Ul";
 
 export interface ErrorBoxProps {
   list: {

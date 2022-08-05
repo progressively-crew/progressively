@@ -11,6 +11,7 @@ export const H1: React.FC<React.HTMLAttributes<HTMLHeadingElement>> = (
       font="title"
       color="textAccent"
       fontWeight="semiBold"
+      lineHeight="title"
       {...props}
     />
   );
