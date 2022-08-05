@@ -3,31 +3,6 @@ import { KeyboardKeys } from "~/modules/a11y/utils/keyboardKeys";
 import { useHydrated } from "~/modules/misc/hooks/useHydrated";
 import { styled } from "~/stitches.config";
 
-export const CardGroup = styled("div", {
-  display: "grid",
-  gridTemplateColumns: "1fr 1fr 1fr",
-  gridColumnGap: "$spacing$4",
-  gridRowGap: "$spacing$4",
-  variants: {
-    cols: {
-      2: {
-        gridTemplateColumns: "1fr 1fr",
-        "@mobile": {
-          gridTemplateColumns: "1fr",
-        },
-      },
-    },
-  },
-
-  "@tablet": {
-    gridTemplateColumns: "1fr 1fr",
-  },
-
-  "@mobile": {
-    gridTemplateColumns: "1fr",
-  },
-});
-
 const CardWrapper = styled("div", {
   minHeight: "$cardHeight",
   display: "flex",
@@ -131,12 +106,4 @@ export const CardContent = styled("div", {
     fontSize: "$uranus",
     lineHeight: "$text",
   },
-});
-
-export const CardFooter = styled("div", {
-  padding: "$spacing$6 $spacing$6",
-  background: "$background",
-  marginTop: "auto",
-  borderEndEndRadius: "$borderRadius$regular",
-  borderEndStartRadius: "$borderRadius$regular",
 });

@@ -3,7 +3,6 @@ import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { getProject } from "~/modules/projects/services/getProject";
 import { Project } from "~/modules/projects/types";
 import { getSession } from "~/sessions";
-import { EnvRow } from "~/modules/environments/components/EnvRow";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { authGuard } from "~/modules/auth/services/auth-guard";
 import { User } from "~/modules/user/types";
@@ -19,6 +18,7 @@ import { Spacer } from "~/components/Spacer";
 import { MetaFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { Crumbs } from "~/components/Breadcrumbs/types";
+import { EnvList } from "~/modules/environments/components/EnvList";
 
 interface MetaArgs {
   data?: {
@@ -114,17 +114,10 @@ export default function ProjectDetailPage() {
 
             <Spacer size={4} />
 
-            <div>
-              {project.environments.map((env) => (
-                <EnvRow
-                  key={env.uuid}
-                  id={env.uuid}
-                  linkTo={`/dashboard/projects/${project.uuid}/environments/${env.uuid}/flags`}
-                  title={env.name}
-                  clientKey={env.clientKey}
-                />
-              ))}
-            </div>
+            <EnvList
+              environments={project.environments}
+              projectId={project.uuid}
+            />
           </div>
         ) : null}
 

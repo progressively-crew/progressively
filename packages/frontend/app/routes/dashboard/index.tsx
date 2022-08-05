@@ -2,17 +2,16 @@ import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { getProjects } from "~/modules/projects/services/getProjects";
 import { UserProject } from "~/modules/projects/types";
 import { getSession } from "~/sessions";
-import { ProjectCard } from "~/modules/projects/components/ProjectCard";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { authGuard } from "~/modules/auth/services/auth-guard";
 import { User } from "~/modules/user/types";
 import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
-import { CardGroup } from "~/components/Card";
 import { MetaFunction, LoaderFunction, redirect } from "@remix-run/node";
 import { useSearchParams, useLoaderData } from "@remix-run/react";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { Spacer } from "~/components/Spacer";
+import { ProjectList } from "~/modules/projects/components/ProjectList";
 
 export const meta: MetaFunction = () => {
   return {
@@ -72,21 +71,7 @@ export default function DashboardRoot() {
 
         <Spacer size={4} />
 
-        <CardGroup>
-          {projects.map((project) => (
-            <ProjectCard
-              key={project.projectId}
-              id={project.projectId}
-              linkTo={`/dashboard/projects/${project.projectId}`}
-              title={project.project.name}
-              description={
-                <>
-                  You are an <em>{project.role}</em> of the project.
-                </>
-              }
-            />
-          ))}
-        </CardGroup>
+        <ProjectList projects={projects} />
       </Section>
     </DashboardLayout>
   );
