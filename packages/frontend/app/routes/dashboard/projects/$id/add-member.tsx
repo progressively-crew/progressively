@@ -186,12 +186,14 @@ export default function CreateProjectPage() {
               placeholder="e.g: john.doe@gmail.com"
             />
 
-            <SubmitButton
-              isLoading={transition.state === "submitting"}
-              loadingText="Adding the member, please wait..."
-            >
-              Add the member
-            </SubmitButton>
+            <div>
+              <SubmitButton
+                isLoading={transition.state === "submitting"}
+                loadingText="Adding the member, please wait..."
+              >
+                Add the member
+              </SubmitButton>
+            </div>
           </FormGroup>
         </Form>
       </Section>
