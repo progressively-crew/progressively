@@ -1,6 +1,6 @@
 import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
 import { useActionData } from "@remix-run/react";
-import { ErrorBox } from "~/components/ErrorBox";
+import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { Header } from "~/components/Header";
 import { Typography } from "~/components/Typography";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";

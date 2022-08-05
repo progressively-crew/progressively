@@ -3,8 +3,8 @@ import { RadioField } from "~/components/Fields/RadioField";
 import { SelectField } from "~/components/Fields/SelectField";
 import { TextareaInput } from "~/components/Fields/TextareaInput";
 import { TextInput } from "~/components/Fields/TextInput";
+import { HStack } from "~/components/HStack";
 import { Spacer } from "~/components/Spacer";
-import { styled } from "~/stitches.config";
 import { ComparatorEnum, StrategyCreateDTO } from "../types";
 import { StrategyRuleType } from "../types/StrategyRule";
 import { SubForm } from "./SubForm";
@@ -17,11 +17,6 @@ export interface StrategyAudienceProps {
   initialFieldValue?: StrategyCreateDTO["fieldValue"];
   initialFieldComparator?: StrategyCreateDTO["fieldComparator"];
 }
-
-const InlineWrapper = styled("div", {
-  display: "flex",
-  gap: "$spacing$4",
-});
 
 export const StrategyAudience = ({
   strategyType,
@@ -50,7 +45,7 @@ export const StrategyAudience = ({
 
           <SubForm>
             <FormGroup>
-              <InlineWrapper>
+              <HStack spacing={4}>
                 <TextInput
                   isInvalid={Boolean(errors["field-name"])}
                   label="Field name:"
@@ -70,7 +65,7 @@ export const StrategyAudience = ({
                     { value: ComparatorEnum.Contains, label: "Contains" },
                   ]}
                 />
-              </InlineWrapper>
+              </HStack>
 
               <TextareaInput
                 isInvalid={Boolean(errors["field-value"])}

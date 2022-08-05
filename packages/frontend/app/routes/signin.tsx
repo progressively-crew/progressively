@@ -12,12 +12,12 @@ import {
   useTransition,
 } from "@remix-run/react";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
-import { ErrorBox } from "~/components/ErrorBox";
+import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Header } from "~/components/Header";
 import { Link } from "~/components/Link";
-import { SuccessBox } from "~/components/SuccessBox";
+import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import { AuthCredentials } from "~/modules/auth/types";
 import { commitSession, getSession } from "~/sessions";

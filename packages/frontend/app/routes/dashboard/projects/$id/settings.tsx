@@ -2,7 +2,7 @@ import { AiOutlineSetting } from "react-icons/ai";
 import { FiLayers } from "react-icons/fi";
 
 import { BreadCrumbs } from "~/components/Breadcrumbs";
-import { ErrorBox } from "~/components/ErrorBox";
+import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { Header } from "~/components/Header";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import {
@@ -10,7 +10,7 @@ import {
   SectionContent,
   SectionHeader,
 } from "~/components/Section";
-import { SuccessBox } from "~/components/SuccessBox";
+import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { authGuard } from "~/modules/auth/services/auth-guard";
 import { getProject } from "~/modules/projects/services/getProject";

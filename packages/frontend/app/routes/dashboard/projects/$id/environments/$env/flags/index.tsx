@@ -7,7 +7,7 @@ import { FlagEnv, FlagStatus } from "~/modules/flags/types";
 import { getProject } from "~/modules/projects/services/getProject";
 import { Project } from "~/modules/projects/types";
 import { getSession } from "~/sessions";
-import { SuccessBox } from "~/components/SuccessBox";
+import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { authGuard } from "~/modules/auth/services/auth-guard";
 import { User } from "~/modules/user/types";

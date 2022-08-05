@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 import { styled } from "~/stitches.config";
-import { Card } from "~/components/CardGroup";
+import { Card } from "~/components/Card";
 import { Heading } from "./Heading";
 import { VisuallyHidden } from "./VisuallyHidden";
 import { Spacer } from "./Spacer";

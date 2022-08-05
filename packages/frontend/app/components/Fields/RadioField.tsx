@@ -1,4 +1,5 @@
 import { styled } from "~/stitches.config";
+import { HStack } from "../HStack";
 import { Stack } from "../Stack";
 import { Label } from "./Label";
 
@@ -14,12 +15,6 @@ export interface RadioFieldProps<T> {
   options: Array<RadioFieldOption<T>>;
   title: string;
 }
-
-const RadioItem = styled("div", {
-  display: "flex",
-  gap: "$spacing$2",
-  alignItems: "center",
-});
 
 const Input = styled("input", {
   margin: 0,
@@ -62,7 +57,7 @@ export const RadioField = <T extends string>({
       <Label as="legend">{title}</Label>
       <Stack spacing={2}>
         {options.map((opt) => (
-          <RadioItem key={opt.value}>
+          <HStack key={opt.value} spacing={2}>
             <Input
               type="radio"
               id={opt.value}
@@ -72,7 +67,7 @@ export const RadioField = <T extends string>({
               onChange={(e) => onChange(e.target.value as T)}
             />
             <SmallLabel htmlFor={opt.value}>{opt.label}</SmallLabel>
-          </RadioItem>
+          </HStack>
         ))}
       </Stack>
     </Stack>

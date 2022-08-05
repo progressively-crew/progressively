@@ -1,7 +1,7 @@
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { ButtonCopy } from "~/components/ButtonCopy";
-import { ErrorBox } from "~/components/ErrorBox";
-import { WarningBox } from "~/components/WarningBox";
+import { ErrorBox } from "~/components/Boxes/ErrorBox";
+import { WarningBox } from "~/components/Boxes/WarningBox";
 import { authGuard } from "~/modules/auth/services/auth-guard";
 import { deleteEnvironment } from "~/modules/environments/services/deleteEnvironment";
 import { Environment } from "~/modules/environments/types";

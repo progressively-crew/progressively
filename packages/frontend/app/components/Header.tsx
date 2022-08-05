@@ -1,5 +1,6 @@
 import { styled } from "~/stitches.config";
 import { H1 } from "./H1";
+import { HStack } from "./HStack";
 import { Spacer } from "./Spacer";
 import { TagLine } from "./Tagline";
 
@@ -9,12 +10,6 @@ export interface HeaderProps {
   startAction?: React.ReactNode;
   tagline?: string;
 }
-
-const HeaderRow = styled("div", {
-  display: "flex",
-  alignItems: "center",
-  gap: "$spacing$10",
-});
 
 const HeadingWrapper = styled("div", {
   display: "flex",
@@ -39,7 +34,7 @@ export const Header = ({
 
       {description}
 
-      {startAction && <HeaderRow>{startAction}</HeaderRow>}
+      {startAction && <HStack spacing={10}>{startAction}</HStack>}
     </div>
   );
 };

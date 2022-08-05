@@ -10,9 +10,9 @@ import { getStrategies } from "~/modules/strategies/services/getStrategies";
 import { StrategyCard } from "~/modules/strategies/components/StrategyCard";
 import { User } from "~/modules/user/types";
 import { getSession } from "~/sessions";
-import { SuccessBox } from "~/components/SuccessBox";
+import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { StrategyRetrieveDTO } from "~/modules/strategies/types";
-import { WarningBox } from "~/components/WarningBox";
+import { WarningBox } from "~/components/Boxes/WarningBox";
 import { Header } from "~/components/Header";
 import { Section, SectionHeader } from "~/components/Section";
 import { EmptyState } from "~/components/EmptyState";
@@ -22,13 +22,13 @@ import { FaPowerOff } from "react-icons/fa";
 import { toggleAction } from "~/modules/flags/components/ToggleFlag";
 import { Typography } from "~/components/Typography";
 import { CreateButton } from "~/components/Buttons/CreateButton";
-import { CardGroup } from "~/components/CardGroup";
-import { CreationCard } from "~/components/CreationCard";
+import { CardGroup } from "~/components/Card";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
 import { useSearchParams, useLoaderData } from "@remix-run/react";
 import { FiFlag } from "react-icons/fi";
 import { FlagHeaderAction } from "~/modules/flags/components/FlagHeaderAction";
+import { Spacer } from "~/components/Spacer";
 
 interface MetaArgs {
   data?: {
@@ -190,23 +190,27 @@ export default function FlagById() {
         <SectionHeader title="Strategies" hiddenTitle />
 
         {strategies.length > 0 ? (
-          <CardGroup cols={2}>
-            <CreationCard
+          <div>
+            <CreateButton
               to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
             >
               Add a strategy
-            </CreationCard>
+            </CreateButton>
 
-            {strategies.map((strat) => (
-              <StrategyCard
-                key={`${strat.uuid}`}
-                projectId={project.uuid}
-                envId={environment.uuid}
-                flagId={currentFlag.uuid}
-                strat={strat}
-              />
-            ))}
-          </CardGroup>
+            <Spacer size={4} />
+
+            <CardGroup cols={2}>
+              {strategies.map((strat) => (
+                <StrategyCard
+                  key={`${strat.uuid}`}
+                  projectId={project.uuid}
+                  envId={environment.uuid}
+                  flagId={currentFlag.uuid}
+                  strat={strat}
+                />
+              ))}
+            </CardGroup>
+          </div>
         ) : null}
 
         {strategies.length === 0 ? (

@@ -1,5 +1,5 @@
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
-import { Card, CardContent, CardHeader } from "~/components/CardGroup";
+import { Card, CardContent, CardHeader } from "~/components/Card";
 import { Spacer } from "~/components/Spacer";
 import { Typography } from "~/components/Typography";
 import { Li, Ul } from "~/components/Ul";

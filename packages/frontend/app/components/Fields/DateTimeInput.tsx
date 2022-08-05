@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { styled } from "~/stitches.config";
+import { HStack } from "../HStack";
 import { Stack } from "../Stack";
 import { Typography } from "../Typography";
 import { Label } from "./Label";
@@ -27,10 +28,7 @@ const Hint = styled(Typography, {
   fontSize: "$uranus",
 });
 
-const InlineFields = styled("div", {
-  display: "flex",
-  gap: "$spacing$4",
-
+const FieldsWrapper = styled("div", {
   '& [type="date"]': {
     width: "12rem",
   },
@@ -70,7 +68,6 @@ export const DateTimeInput = ({
     ariaDescription = `hint-${name}`;
   }
 
-  console.log("xxxx", date, time);
   const timestamp = date && time ? new Date(`${date} ${time}`).getTime() : null;
 
   return (
@@ -79,25 +76,27 @@ export const DateTimeInput = ({
         <Stack spacing={2}>
           <Label as="legend">{label}</Label>
 
-          <InlineFields>
-            <Input
-              type="date"
-              name={`date-${name}`}
-              id={`date-${name}`}
-              placeholder={""}
-              onChange={(e) => setDate(e.target.value)}
-              value={date}
-            />
+          <FieldsWrapper>
+            <HStack spacing={4}>
+              <Input
+                type="date"
+                name={`date-${name}`}
+                id={`date-${name}`}
+                placeholder={""}
+                onChange={(e) => setDate(e.target.value)}
+                value={date}
+              />
 
-            <Input
-              type="time"
-              name={`time-${name}`}
-              id={`time-${name}`}
-              placeholder={"aaaa"}
-              onChange={(e) => setTime(e.target.value)}
-              value={time}
-            />
-          </InlineFields>
+              <Input
+                type="time"
+                name={`time-${name}`}
+                id={`time-${name}`}
+                placeholder={"aaaa"}
+                onChange={(e) => setTime(e.target.value)}
+                value={time}
+              />
+            </HStack>
+          </FieldsWrapper>
 
           <input
             type="hidden"

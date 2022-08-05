@@ -1,5 +1,5 @@
 import { BreadCrumbs } from "~/components/Breadcrumbs";
-import { SuccessBox } from "~/components/SuccessBox";
+import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { getProject } from "~/modules/projects/services/getProject";
 import { Project } from "~/modules/projects/types";
 import { getSession } from "~/sessions";

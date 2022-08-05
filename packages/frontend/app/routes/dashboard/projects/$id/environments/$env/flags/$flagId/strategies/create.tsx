@@ -8,7 +8,7 @@ import { ActivationType } from "~/modules/strategies/types/activation";
 import { StrategyRuleType } from "~/modules/strategies/types/StrategyRule";
 import { getSession } from "~/sessions";
 import { validateStrategyForm } from "~/modules/strategies/validators/validateStrategyForm";
-import { ErrorBox } from "~/components/ErrorBox";
+import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { StrategyCreateDTO } from "~/modules/strategies/types";
 import { createStrategy } from "~/modules/strategies/services/createStrategy";
 import { BreadCrumbs } from "~/components/Breadcrumbs";

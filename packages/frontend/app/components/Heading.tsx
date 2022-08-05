@@ -1,24 +1,9 @@
-import { styled } from "~/stitches.config";
+import { fontSizes, mapTokenToVariant, styled } from "~/stitches.config";
 
-export const Heading = styled("h2", {
+export const Heading = styled<any, any>("h2", {
   color: "$textAccent",
-  fontWeight: "$fontWeights$semiBold",
-  fontFamily: "$default",
-
+  fontFamily: "$title",
   variants: {
-    as: {
-      h2: {
-        "& a": {
-          fontSize: "$earth",
-        },
-        fontSize: "$earth",
-      },
-      h3: {
-        "& a": {
-          fontSize: "$mars",
-        },
-        fontSize: "$mars",
-      },
-    },
+    fontSize: mapTokenToVariant("fontSize", fontSizes),
   },
 });
