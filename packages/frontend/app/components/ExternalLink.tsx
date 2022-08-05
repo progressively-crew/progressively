@@ -1,14 +1,8 @@
 import { FiExternalLink } from "react-icons/fi";
 import { styled } from "~/stitches.config";
+import { Link } from "./Link";
 
-const Link = styled("a", {
-  color: "$textAccent",
-  transition: "all 0.1s",
-
-  "&:active": {
-    opacity: 0.7,
-  },
-
+const Wrapper = styled("span", {
   "& svg": {
     verticalAlign: "text-top",
     fontSize: "$neptune",
@@ -24,7 +18,9 @@ export interface ExternalLinkProps {
 export const ExternalLink = ({ href, children }: ExternalLinkProps) => {
   return (
     <Link href={href} target="_blank" rel="noopener noreferrer">
-      {children} <FiExternalLink aria-hidden />
+      <Wrapper>
+        {children} <FiExternalLink aria-hidden />
+      </Wrapper>
     </Link>
   );
 };
