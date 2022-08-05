@@ -64,7 +64,7 @@ describe("/dashboard/projects/[id]", () => {
           );
 
         /* verify the env list */
-        cy.findByRole("link", { name: "Production environment" })
+        cy.findByRole("link", { name: "Production" })
           .should("be.visible")
           .and(
             "have.attr",
@@ -72,7 +72,7 @@ describe("/dashboard/projects/[id]", () => {
             "/dashboard/projects/1/environments/1/flags"
           );
 
-        cy.findByRole("link", { name: "Developer environment" })
+        cy.findByRole("link", { name: "Developer" })
           .should("be.visible")
           .and(
             "have.attr",

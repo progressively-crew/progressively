@@ -110,12 +110,8 @@ describe("/dashboard/projects/[id]/environments/[envId]/delete", () => {
 
         cy.url().should("contain", "/dashboard/projects/1?envRemoved=true");
 
-        cy.findByRole("heading", { name: "Developer environment" }).should(
-          "be.visible"
-        );
-        cy.findByRole("heading", { name: "Production environment" }).should(
-          "not.exist"
-        );
+        cy.findByRole("link", { name: "Developer" }).should("be.visible");
+        cy.findByRole("link", { name: "Production" }).should("not.exist");
         cy.get(".success-box")
           .should("have.focus")
           .and(

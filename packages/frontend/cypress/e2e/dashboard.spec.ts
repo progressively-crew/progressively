@@ -27,7 +27,7 @@ describe("/dashboard", () => {
         cy.findByRole("heading", { name: "Projects" }).should("be.visible");
         cy.findByRole("link", { name: /Marvin Frachet/i }).should("be.visible");
 
-        cy.findByRole("link", { name: "Project from seeding project" })
+        cy.findByRole("link", { name: "Project from seeding" })
           .should("be.visible")
           .and("have.attr", "href", "/dashboard/projects/1");
 
@@ -37,7 +37,7 @@ describe("/dashboard", () => {
           "/dashboard/projects/create"
         );
 
-        cy.contains("You are an admin of the project.").should("be.visible");
+        cy.contains("admin").should("be.visible");
 
         cy.checkA11y();
       });
