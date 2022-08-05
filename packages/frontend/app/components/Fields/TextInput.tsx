@@ -1,4 +1,3 @@
-import { HTMLAttributes } from "react";
 import { styled } from "~/stitches.config";
 import { Stack } from "../Stack";
 import { Typography } from "../Typography";
@@ -24,10 +23,24 @@ const Input = styled("input", {
   width: "100%",
   boxSizing: "border-box",
   maxWidth: "40ch",
+  variants: {
+    invalid: {
+      true: {
+        border: "4px solid $errorBorder",
+      },
+    },
+  },
 });
 
 const Hint = styled(Typography, {
   fontSize: "$uranus",
+  variants: {
+    invalid: {
+      true: {
+        color: "$errorFg",
+      },
+    },
+  },
 });
 
 export const TextInput = ({
@@ -58,10 +71,15 @@ export const TextInput = ({
         placeholder={placeholder}
         defaultValue={defaultValue}
         aria-describedby={ariaDescription}
+        invalid={isInvalid}
         {...props}
       />
 
-      {description && <Hint id={`${name}-hint`}>{description}</Hint>}
+      {description && (
+        <Hint id={`${name}-hint`} invalid={isInvalid}>
+          {description}
+        </Hint>
+      )}
     </Stack>
   );
 };
