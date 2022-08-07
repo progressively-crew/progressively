@@ -41,8 +41,9 @@ export const RawButton = styled("button", {
         },
       },
       danger: {
-        border: "2px solid $primary",
-        background: "$primary",
+        border: "2px solid $errorBorder",
+        background: "$errorBg",
+        color: "$errorFg",
         "&:active": {
           opacity: "0.9",
         },
