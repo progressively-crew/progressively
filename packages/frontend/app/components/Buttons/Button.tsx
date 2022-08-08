@@ -33,12 +33,20 @@ export const RawButton = styled("button", {
 
   variants: {
     variant: {
-      ghost: {
+      secondary: {
         background: "none",
         border: "2px solid $hermes",
         color: "$hermes",
         "&:active": {
-          background: "$background",
+          opacity: "0.9",
+        },
+      },
+      ghost: {
+        background: "none",
+        border: "2px solid transparent",
+        color: "$hermes",
+        "&:active": {
+          opacity: "0.9",
         },
       },
       danger: {
@@ -54,7 +62,7 @@ export const RawButton = styled("button", {
         background: "$hermes",
         color: "$hades",
         "&:active": {
-          opacity: "0.5",
+          opacity: "0.8",
         },
       },
     },
@@ -68,7 +76,7 @@ export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean;
   loadingText?: string;
   type?: "button" | "submit" | "reset";
-  variant?: "ghost" | "danger" | "primary";
+  variant?: "ghost" | "danger" | "primary" | "secondary";
   icon?: React.ReactNode;
 }
 

@@ -30,13 +30,13 @@ export const MarketingLayout = ({ children }: DashboardLayoutProps) => {
               {flags.showDocumentationButton && (
                 <Button
                   href="https://progressively-crew.github.io/"
-                  variant="ghost"
+                  variant="secondary"
                 >
                   Documentation
                 </Button>
               )}
               <Button
-                variant="ghost"
+                variant="secondary"
                 href="https://github.com/progressively-crew/progressively"
                 icon={<AiOutlineGithub aria-hidden />}
               >
