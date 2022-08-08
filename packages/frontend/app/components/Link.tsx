@@ -1,6 +1,11 @@
 import { Link as RLink } from "@remix-run/react";
 import { forwardRef, HTMLAttributes } from "react";
-import { colors, mapTokenToVariant, styled } from "~/stitches.config";
+import {
+  colors,
+  fontSizes,
+  mapTokenToVariant,
+  styled,
+} from "~/stitches.config";
 
 const RawLink = styled<any, any>("a", {
   display: "inline-flex",
@@ -15,6 +20,7 @@ const RawLink = styled<any, any>("a", {
   },
   variants: {
     color: mapTokenToVariant("color", colors),
+    fontSize: mapTokenToVariant("fontSize", fontSizes),
   },
 });
 

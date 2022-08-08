@@ -23,6 +23,7 @@ import { Crumbs } from "~/components/Breadcrumbs/types";
 import { EnvNavBar } from "~/modules/environments/components/EnvNavbar";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
+import { Card } from "~/components/Card";
 
 interface MetaArgs {
   data?: {
@@ -158,11 +159,13 @@ export default function FlagsByEnvPage() {
 
             <Spacer size={4} />
 
-            <FlagList
-              flags={flagsByEnv}
-              envId={environment.uuid}
-              projectId={project.uuid}
-            />
+            <Card>
+              <FlagList
+                flags={flagsByEnv}
+                envId={environment.uuid}
+                projectId={project.uuid}
+              />
+            </Card>
           </div>
         ) : null}
 

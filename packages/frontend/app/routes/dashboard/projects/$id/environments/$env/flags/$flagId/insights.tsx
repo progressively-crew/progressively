@@ -223,10 +223,10 @@ export default function FlagById() {
         {hits.length > 0 && (
           <>
             <BigStatWrapper>
-              <BigStat name="Hits on activated variant">
+              <BigStat name="Evaluated as activated">
                 <p>{activatedCount}</p>
               </BigStat>
-              <BigStat name="Hits on not activated variant" secondary>
+              <BigStat name="Evaluated as NOT activated" secondary>
                 <p>{notActivatedCount}</p>
               </BigStat>
             </BigStatWrapper>

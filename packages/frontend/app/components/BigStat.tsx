@@ -1,5 +1,6 @@
 import { styled } from "~/stitches.config";
-import { Card } from "./Card";
+import { Card, CardContent } from "./Card";
+import { Spacer } from "./Spacer";
 import { Typography } from "./Typography";
 
 const BigStatLabel = styled(Typography, {
@@ -42,11 +43,14 @@ export interface BigStatProps {
 export const BigStat = ({ name, children, id, secondary }: BigStatProps) => {
   return (
     <Card>
-      <BigStatLabel as="h3" id={id}>
-        {name}
-      </BigStatLabel>
+      <CardContent>
+        <BigStatLabel as="h3" id={id}>
+          {name}
+        </BigStatLabel>
 
-      <BigStatValue secondary={secondary}>{children}</BigStatValue>
+        <BigStatValue secondary={secondary}>{children}</BigStatValue>
+        <Spacer size={8} />
+      </CardContent>
     </Card>
   );
 };

@@ -13,19 +13,35 @@ const Table = styled("table", {
   fontFamily: "$default",
 
   "& th": {
-    padding: "$spacing$4",
+    padding: "$spacing$6 0",
     textAlign: "left",
     textTransform: "uppercase",
     fontSize: "$neptune",
     fontFamily: "$title",
   },
 
+  "& tr td:first-of-type": {
+    paddingLeft: "$spacing$12",
+  },
+  "& tr td:last-of-type": {
+    paddingLeft: "$spacing$12",
+  },
+
+  "& tr th:first-of-type": {
+    paddingLeft: "$spacing$12",
+  },
+
+  "& tr th:last-of-type": {
+    paddingLeft: "$spacing$12",
+  },
+
   "& tr": {
-    borderBottom: "1px solid $apollo",
+    transition: "all 0.2s",
+    borderTop: "1px solid $heracles",
   },
 
   "& tbody tr:hover": {
-    background: "$apollo",
+    background: "$heracles",
   },
   "& td": {
     padding: "$spacing$4",

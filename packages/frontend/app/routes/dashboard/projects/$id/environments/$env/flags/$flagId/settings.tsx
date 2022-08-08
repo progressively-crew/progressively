@@ -23,6 +23,7 @@ import { MetaFunction, LoaderFunction, ActionFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { FiFlag } from "react-icons/fi";
 import { FlagHeaderAction } from "~/modules/flags/components/FlagHeaderAction";
+import { Card, CardContent } from "~/components/Card";
 
 interface MetaArgs {
   data?: {
@@ -161,34 +162,38 @@ export default function FlagSettingPage() {
       }
     >
       {userRole === UserRoles.Admin && (
-        <Section id="danger">
-          <SectionHeader
-            title="Danger zone"
-            description={
-              <Typography>
-                You can delete a feature flag at any time, but you {`won’t`} be
-                able to access its insights anymore and false will be served to
-                the application using it.
-              </Typography>
-            }
-          />
+        <Card>
+          <CardContent>
+            <Section id="danger">
+              <SectionHeader
+                title="Danger zone"
+                description={
+                  <Typography>
+                    You can delete a feature flag at any time, but you {`won’t`}{" "}
+                    be able to access its insights anymore and false will be
+                    served to the application using it.
+                  </Typography>
+                }
+              />
 
-          <div>
-            <DeleteButton
-              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/delete`}
-            >
-              <span>
-                <span aria-hidden>
-                  Delete <HideMobile>{currentFlag.name} forever</HideMobile>
-                </span>
+              <div>
+                <DeleteButton
+                  to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/delete`}
+                >
+                  <span>
+                    <span aria-hidden>
+                      Delete <HideMobile>{currentFlag.name} forever</HideMobile>
+                    </span>
 
-                <VisuallyHidden>
-                  Delete {currentFlag.name} forever
-                </VisuallyHidden>
-              </span>
-            </DeleteButton>
-          </div>
-        </Section>
+                    <VisuallyHidden>
+                      Delete {currentFlag.name} forever
+                    </VisuallyHidden>
+                  </span>
+                </DeleteButton>
+              </div>
+            </Section>
+          </CardContent>
+        </Card>
       )}
     </DashboardLayout>
   );

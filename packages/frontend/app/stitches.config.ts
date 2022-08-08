@@ -57,8 +57,8 @@ export const colors = {
   hades: "#0E061F",
   nemesis: "#4B37A9",
 
-  heracles: "white",
-  apollo: "#f9f9f9",
+  heracles: "#efefef",
+  apollo: "#fff",
   hera: "#eee",
   //secondaries
   nike: "linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), linear-gradient(220.78deg, #F8B9CE 9.58%, #9F47A0 36.95%, #430A8B 70.69%, #1E4EC8 107.45%)",
