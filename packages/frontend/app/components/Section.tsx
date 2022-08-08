@@ -2,6 +2,7 @@ import { createContext, useContext } from "react";
 import { Heading } from "./Heading";
 import { VisuallyHidden } from "./VisuallyHidden";
 import { Spacer } from "./Spacer";
+import { styled } from "~/stitches.config";
 
 const SectionContext = createContext<string | undefined>(undefined);
 
@@ -29,6 +30,10 @@ export interface SectionHeaderProps extends React.HTMLAttributes<HTMLElement> {
   hiddenTitle?: boolean;
 }
 
+const SectionHeaderWrapper = styled("div", {
+  marginBottom: "$spacing$4",
+});
+
 export const SectionHeader = ({
   title,
   titleAs = "h2",
@@ -40,7 +45,7 @@ export const SectionHeader = ({
   const id = useContext(SectionContext);
 
   return (
-    <div {...props}>
+    <SectionHeaderWrapper {...props}>
       {hiddenTitle ? (
         <VisuallyHidden>
           <Heading as={titleAs} id={id}>
@@ -61,6 +66,6 @@ export const SectionHeader = ({
       )}
 
       {endAction}
-    </div>
+    </SectionHeaderWrapper>
   );
 };
