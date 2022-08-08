@@ -24,7 +24,6 @@ import { Typography } from "~/components/Typography";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import {
   InlineSection,
-  InlineSectionTitle,
   InlineSectionDescription,
 } from "~/components/InlineSection";
 import { Divider } from "~/components/Divider";
@@ -232,7 +231,9 @@ export default function StrategyCreatePage() {
         <Form method="post">
           <InlineSection id="general-information">
             <div>
-              <InlineSectionTitle>General information</InlineSectionTitle>
+              <Typography as="h2" font="title">
+                General information
+              </Typography>
               <InlineSectionDescription>
                 They will be listed in the strategy list of a specific feature
                 flag. Make sure to use meaningful names.
@@ -251,7 +252,9 @@ export default function StrategyCreatePage() {
 
           <InlineSection>
             <div>
-              <InlineSectionTitle>Strategy audience</InlineSectionTitle>
+              <Typography as="h2" font="title">
+                Strategy audience
+              </Typography>
               <InlineSectionDescription>
                 It will determine the people you want to target using user
                 specific criteria (qualitative).
@@ -269,7 +272,9 @@ export default function StrategyCreatePage() {
 
           <InlineSection>
             <div>
-              <InlineSectionTitle>Activation strategy</InlineSectionTitle>
+              <Typography as="h2" font="title">
+                Activation strategy
+              </Typography>
               <InlineSectionDescription>
                 It will determine the number of people you want to target
                 (quantitative).

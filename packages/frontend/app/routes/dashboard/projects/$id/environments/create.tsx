@@ -18,7 +18,6 @@ import { TextInput } from "~/components/Fields/TextInput";
 import { Typography } from "~/components/Typography";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
-import { Spacer } from "~/components/Spacer";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import {
   MetaFunction,
@@ -125,7 +124,8 @@ export default function CreateEnvironmentPage() {
           description={
             <Typography>
               The new environment will appear in <strong>{project.name}</strong>
-              .
+              . After the creation of an environment, you will be able to get
+              its SDK key for application usage.
             </Typography>
           }
         />
@@ -142,11 +142,6 @@ export default function CreateEnvironmentPage() {
                 placeholder="e.g: Staging"
                 label="Environment name"
               />
-              <Spacer size={2} />
-              <Typography>
-                After the creation of an environment, you will be able to get
-                its SDK key for application usage.
-              </Typography>
             </div>
 
             <div>

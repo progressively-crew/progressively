@@ -149,7 +149,9 @@ export default function CreateFlagPage() {
             <Typography>
               The new feature flag will appear in{" "}
               <strong>{project.name}</strong> /{" "}
-              <strong>{environment.name}</strong>.
+              <strong>{environment.name}</strong>. After the creation of a
+              feature flag, you will be able to get its SDK key for application
+              usage.
             </Typography>
           }
         />
@@ -175,13 +177,6 @@ export default function CreateFlagPage() {
                 label="Flag description"
                 placeholder="e.g: The new homepage"
               />
-
-              <Spacer size={2} />
-
-              <Typography>
-                After the creation of a feature flag, you will be able to get
-                its SDK key for application usage.
-              </Typography>
             </div>
 
             <div>
