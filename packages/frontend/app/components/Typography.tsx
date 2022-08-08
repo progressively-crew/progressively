@@ -9,7 +9,7 @@ import {
 } from "~/stitches.config";
 
 export const Typography = styled<any, any>("p", {
-  color: "$text",
+  color: "$hades",
   fontSize: "$jupiter",
   fontFamily: "$default",
   lineHeight: "$text",
@@ -17,7 +17,6 @@ export const Typography = styled<any, any>("p", {
 
   "& strong": {
     fontWeight: "bold",
-    color: "$textAccent",
   },
 
   variants: {

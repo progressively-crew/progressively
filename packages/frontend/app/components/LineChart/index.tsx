@@ -19,7 +19,7 @@ const ChartWrapper = styled("div", {
     fontSize: "$jupiter",
     fontWeight: "$bold",
     border: "none",
-    color: "$textAccent",
+    color: "$hades",
   },
 });
 

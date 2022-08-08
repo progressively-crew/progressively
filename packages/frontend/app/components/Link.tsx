@@ -1,17 +1,20 @@
 import { Link as RLink } from "@remix-run/react";
 import { forwardRef, HTMLAttributes } from "react";
-import { styled } from "~/stitches.config";
+import { colors, mapTokenToVariant, styled } from "~/stitches.config";
 
-const RawLink = styled("a", {
+const RawLink = styled<any, any>("a", {
   display: "inline-flex",
   fontSize: "$jupiter",
-  color: "$text",
+  color: "$hades",
   fontFamily: "$default",
   height: "$cta",
   alignItems: "center",
 
   "&:active": {
-    color: "$textAccent",
+    color: "$nemesis",
+  },
+  variants: {
+    color: mapTokenToVariant("color", colors),
   },
 });
 

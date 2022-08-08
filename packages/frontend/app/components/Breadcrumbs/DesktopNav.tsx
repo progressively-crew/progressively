@@ -6,16 +6,17 @@ import { Crumbs } from "./types";
 
 const Ol = styled("ol", {
   fontFamily: "$default",
-  color: "$text",
+  color: "$hades",
   display: "flex",
 
   "& li a": {
+    color: "$hades",
     transition: "border,box-shadow 0.2s",
   },
 
   "& li:last-of-type a": {
-    fontWeight: "$fontWeights$bold",
-    color: "$secondary",
+    fontWeight: "$bold",
+    color: "$nemesis",
   },
 
   "& li": {

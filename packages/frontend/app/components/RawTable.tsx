@@ -8,48 +8,31 @@ const Wrapper = styled("div", {
 });
 
 const Table = styled("table", {
-  color: "$text",
+  color: "$hades",
   width: "100%",
   fontFamily: "$default",
 
   "& th": {
     padding: "$spacing$4",
     textAlign: "left",
-    background: "$background",
     textTransform: "uppercase",
     fontSize: "$neptune",
     fontFamily: "$title",
   },
-  "& th:first-of-type": {
-    borderStartStartRadius: "$borderRadius$regular",
-  },
-  "& th:last-of-type": {
-    borderStartEndRadius: "$borderRadius$regular",
-  },
-  "& tr": {
-    borderBottom: "1px solid $border",
-  },
 
-  "& tbody tr:nth-child(odd)": { background: "$backgroundAccent" },
+  "& tr": {
+    borderBottom: "1px solid $apollo",
+  },
 
   "& tbody tr:hover": {
-    background: "$border",
-  },
-  "& tbody tr": {
-    "&:focus-within": {
-      background: "$border",
-    },
-
-    "&.row-selected": {
-      background: "$background",
-    },
+    background: "$apollo",
   },
   "& td": {
     padding: "$spacing$4",
-    color: "$textAccent",
+    color: "$hades",
   },
   "& a": {
-    color: "$textAccent",
+    color: "$hades",
   },
 });
 

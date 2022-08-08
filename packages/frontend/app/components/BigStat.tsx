@@ -16,16 +16,16 @@ const BigStatValue = styled(CardContent, {
     display: "inline",
     fontSize: "$venus",
     lineHeight: "unset",
-    color: "$secondary",
-    borderBottom: "3px solid $secondary",
+    color: "$nemesis",
+    borderBottom: "3px solid $nemesis",
   },
 
   variants: {
     secondary: {
       true: {
         "& p": {
-          color: "$textAccent",
-          borderBottom: "3px dashed $textAccent",
+          color: "$hades",
+          borderBottom: "3px dashed $hades",
         },
       },
     },

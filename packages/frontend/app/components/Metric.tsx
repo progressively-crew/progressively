@@ -4,14 +4,14 @@ import { Typography } from "./Typography";
 import { VisuallyHidden } from "./VisuallyHidden";
 
 const MetricWrapper = styled("div", {
-  background: "$background",
+  background: "$heracles",
   padding: "$spacing$8",
   borderRadius: "$borderRadius$regular",
   border: "6px solid transparent",
   variants: {
     highlighted: {
       true: {
-        border: "6px dashed $secondary",
+        border: "6px dashed $nemesis",
       },
     },
   },
@@ -24,12 +24,12 @@ const MetricLabel = styled(Typography, {
 
 const MetricValue = styled("span", {
   fontFamily: "$default",
-  color: "$textAccent",
+  color: "$hades",
   fontSize: "$venus",
 });
 
 const MetricUnit = styled("span", {
-  color: "$text",
+  color: "$hades",
   fontSize: "$earth",
   fontFamily: "$default",
 });

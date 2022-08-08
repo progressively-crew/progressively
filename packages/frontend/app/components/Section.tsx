@@ -59,12 +59,12 @@ export const SectionHeader = ({
     <div {...props}>
       {hiddenTitle ? (
         <VisuallyHidden>
-          <Heading as={titleAs} id={id} size="xl">
+          <Heading as={titleAs} id={id}>
             {title}
           </Heading>
         </VisuallyHidden>
       ) : (
-        <Heading as={titleAs} id={id} size="xl">
+        <Heading as={titleAs} id={id} fontSize="earth">
           {title}
         </Heading>
       )}

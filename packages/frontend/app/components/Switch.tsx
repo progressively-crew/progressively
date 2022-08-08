@@ -5,7 +5,7 @@ const SwitchButton = styled("button", {
   alignItems: "center",
   gap: "$spacing$2",
   height: "$cta",
-  backgroundColor: "$background",
+  backgroundColor: "transparent",
   cursor: "pointer",
   border: "none",
   borderRadius: "$borderRadius$regular",
@@ -16,7 +16,7 @@ const StyledThumb = styled("span", {
   display: "block",
   width: 20,
   height: "100%",
-  backgroundColor: "white",
+  backgroundColor: "$heracles",
   borderRadius: "9999px",
   boxShadow: `0 2px 2px $hermes`,
   transition: "transform 100ms",
@@ -34,16 +34,16 @@ const StyledThumb = styled("span", {
 
 const Text = styled("span", {
   fontSize: "$uranus",
-  color: "$secondary",
+  color: "$0E061F",
   fontFamily: "$default",
 });
 
 const SwitchInnerWrapper = styled("span", {
   padding: "$spacing$1",
-  border: "1px solid $border",
   borderRadius: "9999px",
   width: 40,
   height: 20,
+  background: "$hera",
 
   variants: {
     checked: {

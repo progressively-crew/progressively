@@ -7,15 +7,10 @@ export interface LogoProps {
 
 const LinkWrapper = styled(Link, {
   textDecoration: "none",
-  color: "$textAccent",
   transition: "all 0.1s",
 
   "&:hover": {
     transform: "scale(1.05)",
-  },
-
-  "& span:first-of-type": {
-    color: "$secondary",
   },
 
   "& svg": {

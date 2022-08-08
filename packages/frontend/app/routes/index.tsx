@@ -27,14 +27,14 @@ import { HStack } from "~/components/HStack";
 
 const ExampleOldPage = styled("div", {
   padding: "$spacing$4",
-  border: "1px solid $secondary",
+  border: "1px solid $tyche",
 });
 
 const ExampleNewPage = styled("div", {
   padding: "$spacing$4",
-  border: "1px solid $secondary",
-  background: "$secondary",
-  color: "$background",
+  border: "1px solid $tyche",
+  background: "$tyche",
+  color: "$heracles",
 });
 
 const Centered = styled("div", {
@@ -45,7 +45,7 @@ const Centered = styled("div", {
 });
 
 const InvertedBackground = styled("div", {
-  background: "$backgroundAccent",
+  background: "$apollo",
   padding: "$spacing$16 0",
 });
 

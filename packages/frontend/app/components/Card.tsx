@@ -7,7 +7,7 @@ const CardWrapper = styled("div", {
   minHeight: "$cardHeight",
   display: "flex",
   flexDirection: "column",
-  background: "$backgroundAccent",
+  background: "$apollo",
   borderRadius: "$borderRadius$regular",
   border: "8px solid transparent",
   transition: "border,box-shadow,transform 0.2s",
@@ -92,11 +92,11 @@ export const Card = ({ children, className, onClick }: CardProps) => {
 export const CardHeader = styled("div", {
   padding: "$spacing$4 $spacing$6 0 $spacing$6",
   fontFamily: "$default",
-  color: "$textAccent",
+  color: "$hades",
   fontSize: "$jupiter",
 
   "& a": {
-    color: "$textAccent",
+    color: "$hades",
   },
 });
 

@@ -26,6 +26,7 @@ import { validateSigninForm } from "../modules/auth/validators/validate-signin-f
 import { Typography } from "~/components/Typography";
 import { HStack } from "~/components/HStack";
 import { Button } from "~/components/Buttons/Button";
+import { AiOutlineLock } from "react-icons/ai";
 
 export const meta: MetaFunction = () => {
   return {
@@ -97,7 +98,11 @@ export default function Signin() {
             showRegister ? (
               <Typography>
                 If you {`don't`} have a user account yet, you can{" "}
-                <Link to="/register">{`create an account`}</Link>.
+                <Link
+                  to="/register"
+                  color="nemesis"
+                >{`create an account`}</Link>
+                .
               </Typography>
             ) : null
           }
@@ -151,7 +156,10 @@ export default function Signin() {
               Sign in
             </SubmitButton>
 
-            <Button to="/forgot-password">{`I forgot my password`}</Button>
+            <Button
+              to="/forgot-password"
+              icon={<AiOutlineLock aria-hidden />}
+            >{`I forgot my password`}</Button>
           </HStack>
         </FormGroup>
       </Form>

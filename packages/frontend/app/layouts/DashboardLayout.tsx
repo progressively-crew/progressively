@@ -8,6 +8,7 @@ import { Spacer } from "~/components/Spacer";
 import { NavProvider } from "~/components/Breadcrumbs/providers/NavProvider";
 import { InertWhenNavOpened } from "~/components/Breadcrumbs/InertWhenNavOpened";
 import { Menu } from "~/components/Menu";
+import { styled } from "~/stitches.config";
 
 export interface DashboardLayoutProps {
   user?: Partial<User>;
@@ -17,6 +18,10 @@ export interface DashboardLayoutProps {
   subNav?: React.ReactNode;
   status?: React.ReactNode;
 }
+
+const SubNavWrapper = styled("div", {
+  background: "$apollo",
+});
 
 export const DashboardLayout = ({
   user,
@@ -45,7 +50,7 @@ export const DashboardLayout = ({
 
         <InertWhenNavOpened>
           <Main>
-            <Spacer size={6} />
+            <Spacer size={8} />
             <Container>
               {header && (
                 <>
@@ -53,14 +58,18 @@ export const DashboardLayout = ({
                   <Spacer size={10} />
                 </>
               )}
+            </Container>
 
-              {subNav && (
-                <>
-                  {subNav}
-                  <Spacer size={8} />
-                </>
-              )}
+            {subNav && (
+              <>
+                <SubNavWrapper>
+                  <Container>{subNav}</Container>
+                </SubNavWrapper>
+                <Spacer size={8} />
+              </>
+            )}
 
+            <Container>
               {status && (
                 <>
                   {status}

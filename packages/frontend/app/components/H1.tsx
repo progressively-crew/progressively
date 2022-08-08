@@ -9,7 +9,7 @@ export const H1: React.FC<React.HTMLAttributes<HTMLHeadingElement>> = (
       id="page-title"
       size="venus"
       font="title"
-      color="textAccent"
+      color="hades"
       fontWeight="semiBold"
       lineHeight="title"
       {...props}

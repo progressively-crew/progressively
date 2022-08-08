@@ -14,7 +14,7 @@ const Wrapper = styled("div", {
 
   "& .empty-box-icon": {
     height: "$emptyStateIconHeight",
-    fill: "$secondary",
+    fill: "$nemesis",
   },
 });
 
@@ -40,7 +40,7 @@ export const EmptyState = ({
       <Spacer size={6} />
 
       <Stack spacing={2}>
-        <Heading as={titleAs} size="lg" id={id}>
+        <Heading as={titleAs} fontSize="earth" id={id}>
           {title}
         </Heading>
 

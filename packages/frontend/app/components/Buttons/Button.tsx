@@ -7,14 +7,15 @@ import { Spinner } from "../Spinner";
 
 export const RawButton = styled("button", {
   boxSizing: "border-box",
-  background: "$background",
+  background: "$heracles",
   borderRadius: "$borderRadius$regular",
   padding: "0 $spacing$4",
-  color: "$textAccent",
+  color: "$hades",
   fontSize: "$uranus",
   fontFamily: "$default",
   border: "2px solid transparent",
   display: "inline-flex",
+  alignItems: "center",
   textDecoration: "none",
   height: "$cta",
   cursor: "pointer",
@@ -35,8 +36,8 @@ export const RawButton = styled("button", {
     variant: {
       secondary: {
         background: "none",
-        border: "2px solid $hermes",
-        color: "$hermes",
+        border: "2px solid $nemesis",
+        color: "$nemesis",
         "&:active": {
           opacity: "0.9",
         },
@@ -50,9 +51,8 @@ export const RawButton = styled("button", {
         },
       },
       danger: {
-        border: "2px solid $errorBorder",
-        background: "$errorBg",
-        color: "$errorFg",
+        background: "$tyche",
+        color: "$hades",
         "&:active": {
           opacity: "0.9",
         },
