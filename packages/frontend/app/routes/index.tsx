@@ -23,6 +23,7 @@ import bundleSize from "../progressively-sdk-sizes.json";
 import { useLoaderData } from "@remix-run/react";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { Heading } from "~/components/Heading";
+import { HStack } from "~/components/HStack";
 
 const ExampleOldPage = styled("div", {
   padding: "$spacing$4",
@@ -49,9 +50,9 @@ const InvertedBackground = styled("div", {
 });
 
 const Hero = styled("div", {
+  background: "$nike",
+  height: "600px",
   display: "flex",
-  gap: "$spacing$8",
-  padding: "$spacing$16 0",
   alignItems: "center",
 
   "@mobile": {
@@ -116,14 +117,14 @@ export default function Index() {
   return (
     <ProgressivelyProvider {...progressivelyProps}>
       <MarketingLayout>
-        <Spacer size={16} />
-
-        <Stack spacing={16}>
+        <Hero>
           <Container>
-            <Hero>
+            <HStack spacing={8}>
               <HeadingWrapper>
-                <H1>Feature flags service that does not kill performances</H1>
-                <Typography>
+                <H1 color="heracles">
+                  Rollout quickly, effectively, progressively
+                </H1>
+                <Typography color="heracles">
                   Progressively provides simple solutions for feature flagging
                   and A/B testing with an accessible dashboard, lightweight
                   browser SDKs — and it respects your privacy.
@@ -160,9 +161,10 @@ export default function Index() {
                   />
                 </Browser>
               </section>
-            </Hero>
+            </HStack>
           </Container>
-
+        </Hero>
+        <Stack spacing={16}>
           <section aria-labelledby="bundle-size">
             <InvertedBackground>
               <Container>

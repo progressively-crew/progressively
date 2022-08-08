@@ -8,6 +8,8 @@ import { InertWhenNavOpened } from "~/components/Breadcrumbs/InertWhenNavOpened"
 import { Menu } from "~/components/Menu";
 import { Button } from "~/components/Buttons/Button";
 import { HStack } from "~/components/HStack";
+import { AiOutlineGithub } from "react-icons/ai";
+import { FaChartBar } from "react-icons/fa";
 
 export interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -36,14 +38,19 @@ export const MarketingLayout = ({ children }: DashboardLayoutProps) => {
               <Button
                 variant="ghost"
                 href="https://github.com/progressively-crew/progressively"
+                icon={<AiOutlineGithub aria-hidden />}
               >
                 Github
               </Button>
-              <Button to="/signin">Dashboard</Button>
+              <Button
+                to="/signin"
+                variant="primary"
+                icon={<FaChartBar aria-hidden />}
+              >
+                Dashboard
+              </Button>
             </HStack>
           </Nav>
-
-          <Spacer size={5} />
         </InertWhenNavOpened>
 
         <InertWhenNavOpened>

@@ -18,7 +18,7 @@ const StyledThumb = styled("span", {
   height: "100%",
   backgroundColor: "white",
   borderRadius: "9999px",
-  boxShadow: `0 2px 2px $primary`,
+  boxShadow: `0 2px 2px $hermes`,
   transition: "transform 100ms",
   transform: "translateX(0%)",
   willChange: "transform",
@@ -48,7 +48,7 @@ const SwitchInnerWrapper = styled("span", {
   variants: {
     checked: {
       true: {
-        backgroundColor: "$primary",
+        backgroundColor: "$hermes",
       },
     },
   },

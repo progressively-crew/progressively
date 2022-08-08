@@ -100,12 +100,14 @@ export default function ForgotPasswordPage() {
             placeholder="e.g: james.bond@mi6.com"
           />
 
-          <SubmitButton
-            isLoading={transition.state === "submitting"}
-            loadingText="Password resetting in progress, please wait..."
-          >
-            Reset password
-          </SubmitButton>
+          <div>
+            <SubmitButton
+              isLoading={transition.state === "submitting"}
+              loadingText="Password resetting in progress, please wait..."
+            >
+              Reset password
+            </SubmitButton>
+          </div>
         </FormGroup>
       </Form>
     </NotAuthenticatedLayout>

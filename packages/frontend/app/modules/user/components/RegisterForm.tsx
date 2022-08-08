@@ -92,13 +92,14 @@ export const RegisterForm = ({ errors }: RegisterFormProps) => {
           type="password"
           placeholder="************"
         />
-
-        <SubmitButton
-          isLoading={transition.state === "submitting"}
-          loadingText="Creation in progress, please wait..."
-        >
-          Create an account
-        </SubmitButton>
+        <div>
+          <SubmitButton
+            isLoading={transition.state === "submitting"}
+            loadingText="Creation in progress, please wait..."
+          >
+            Create an account
+          </SubmitButton>
+        </div>
       </FormGroup>
     </Form>
   );

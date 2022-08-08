@@ -13,7 +13,7 @@ export const RawButton = styled("button", {
   color: "$textAccent",
   fontSize: "$uranus",
   fontFamily: "$default",
-  border: "2px solid $secondary",
+  border: "2px solid transparent",
   display: "inline-flex",
   textDecoration: "none",
   height: "$cta",
@@ -34,8 +34,9 @@ export const RawButton = styled("button", {
   variants: {
     variant: {
       ghost: {
-        background: "$backgroundAccent",
-        border: "2px solid $border",
+        background: "none",
+        border: "2px solid $hermes",
+        color: "$hermes",
         "&:active": {
           background: "$background",
         },
@@ -50,9 +51,8 @@ export const RawButton = styled("button", {
       },
 
       primary: {
-        background: "$secondary",
-        border: "none",
-        color: "$background",
+        background: "$hermes",
+        color: "$hades",
         "&:active": {
           opacity: "0.5",
         },

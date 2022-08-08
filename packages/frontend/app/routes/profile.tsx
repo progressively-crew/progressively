@@ -143,12 +143,14 @@ export default function ProfilePage() {
                 type="password"
               />
 
-              <SubmitButton
-                isLoading={transition.state === "submitting"}
-                loadingText="Password changing in progress, please wait..."
-              >
-                Change password
-              </SubmitButton>
+              <div>
+                <SubmitButton
+                  isLoading={transition.state === "submitting"}
+                  loadingText="Password changing in progress, please wait..."
+                >
+                  Change password
+                </SubmitButton>
+              </div>
             </FormGroup>
           </Form>
         </SectionContent>

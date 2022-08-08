@@ -147,12 +147,14 @@ export default function Signin() {
             <ForgotPasswordLink to="/forgot-password">{`I forgot my password`}</ForgotPasswordLink>
           </div>
 
-          <SubmitButton
-            isLoading={transition.state === "submitting"}
-            loadingText="Signin in progress, please wait..."
-          >
-            Sign in
-          </SubmitButton>
+          <div>
+            <SubmitButton
+              isLoading={transition.state === "submitting"}
+              loadingText="Signin in progress, please wait..."
+            >
+              Sign in
+            </SubmitButton>
+          </div>
         </FormGroup>
       </Form>
 

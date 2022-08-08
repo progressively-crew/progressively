@@ -17,6 +17,11 @@ export const spacing = {
   13: "52px",
   14: "56px",
   16: "60px",
+  17: "64px",
+  18: "68px",
+  19: "72px",
+  20: "76px",
+  21: "80px",
 };
 
 export const fontWeights = {
@@ -47,6 +52,18 @@ export const fontSizes = {
 };
 
 export const colors = {
+  // New colors
+  //primaries
+  hades: "#0E061F",
+  nemesis: "#4B37A9",
+  heracles: "white",
+  //secondaries
+  nike: "linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), linear-gradient(220.78deg, #F8B9CE 9.58%, #9F47A0 36.95%, #430A8B 70.69%, #1E4EC8 107.45%)",
+  hermes: "#9ED9D0",
+  tyche: "#E0A0C6",
+  hypnos: "#430A8B",
+
+  // Old colors
   primary: "#c3134e",
   secondary: "#c3134e",
   text: "#000",
