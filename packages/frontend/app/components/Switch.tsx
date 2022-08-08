@@ -43,7 +43,7 @@ const SwitchInnerWrapper = styled("span", {
   borderRadius: "9999px",
   width: 40,
   height: 20,
-  background: "$hera",
+  background: "$apollo",
 
   variants: {
     checked: {
