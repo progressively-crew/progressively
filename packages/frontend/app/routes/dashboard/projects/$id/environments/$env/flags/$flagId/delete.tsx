@@ -164,7 +164,7 @@ export default function DeleteFlagPage() {
       }
       cancelAction={
         <Button
-          variant="ghost"
+          variant="secondary"
           to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/settings`}
         >
           No, {`don't`} delete {currentFlag.name}

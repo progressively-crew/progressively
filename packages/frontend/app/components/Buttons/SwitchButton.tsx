@@ -4,7 +4,7 @@ import { HiOutlineSwitchHorizontal } from "react-icons/hi";
 export const SwitchButton = ({ children, ...props }: ButtonProps) => {
   return (
     <Button
-      variant="ghost"
+      variant="secondary"
       icon={<HiOutlineSwitchHorizontal aria-hidden />}
       {...props}
     >

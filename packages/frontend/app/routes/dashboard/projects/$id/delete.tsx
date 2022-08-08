@@ -167,8 +167,8 @@ export default function DeleteProjectPage() {
       }
       cancelAction={
         <Button
-          variant="ghost"
           to={`/dashboard/projects/${project.uuid}/settings`}
+          variant="secondary"
         >
           No, {`don't`} delete {project.name}
         </Button>
