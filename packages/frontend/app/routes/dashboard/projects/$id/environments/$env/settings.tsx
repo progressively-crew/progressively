@@ -1,11 +1,7 @@
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { Header } from "~/components/Header";
-import {
-  CardSection,
-  SectionContent,
-  SectionHeader,
-} from "~/components/Section";
+import { Section, SectionHeader } from "~/components/Section";
 import { Typography } from "~/components/Typography";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { authGuard } from "~/modules/auth/services/auth-guard";
@@ -113,7 +109,7 @@ export default function EnvSettingsPage() {
       subNav={<EnvNavBar projectId={project.uuid} envId={environment.uuid} />}
     >
       {userRole === UserRoles.Admin && (
-        <CardSection id="danger">
+        <Section id="danger">
           <SectionHeader
             title="Danger zone"
             description={
@@ -126,7 +122,7 @@ export default function EnvSettingsPage() {
             }
           />
 
-          <SectionContent>
+          <div>
             <DeleteButton
               to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/delete`}
             >
@@ -141,8 +137,8 @@ export default function EnvSettingsPage() {
                 </VisuallyHidden>
               </span>
             </DeleteButton>
-          </SectionContent>
-        </CardSection>
+          </div>
+        </Section>
       )}
     </DashboardLayout>
   );

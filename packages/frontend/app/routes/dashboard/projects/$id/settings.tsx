@@ -5,11 +5,7 @@ import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { Header } from "~/components/Header";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
-import {
-  CardSection,
-  SectionContent,
-  SectionHeader,
-} from "~/components/Section";
+import { Section, SectionHeader } from "~/components/Section";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { authGuard } from "~/modules/auth/services/auth-guard";
@@ -162,7 +158,7 @@ export default function SettingsPage() {
       }
     >
       <Stack spacing={8}>
-        <CardSection id="members">
+        <Section id="members">
           <SectionHeader
             title="Project members"
             description={
@@ -173,7 +169,7 @@ export default function SettingsPage() {
             }
           />
 
-          <SectionContent>
+          <div>
             {data?.errors.unauthorized && (
               <>
                 <ErrorBox list={data.errors} />
@@ -200,11 +196,11 @@ export default function SettingsPage() {
             <Typography aria-live="polite">
               {transition.state === "submitting" ? "Removing the users..." : ""}
             </Typography>
-          </SectionContent>
-        </CardSection>
+          </div>
+        </Section>
 
         {userRole === UserRoles.Admin && (
-          <CardSection id="danger">
+          <Section id="danger">
             <SectionHeader
               title="Danger zone"
               description={
@@ -217,7 +213,7 @@ export default function SettingsPage() {
               }
             />
 
-            <SectionContent>
+            <div>
               <DeleteButton to={`/dashboard/projects/${project.uuid}/delete`}>
                 <span>
                   <span aria-hidden>
@@ -230,8 +226,8 @@ export default function SettingsPage() {
                   </VisuallyHidden>
                 </span>
               </DeleteButton>
-            </SectionContent>
-          </CardSection>
+            </div>
+          </Section>
         )}
       </Stack>
     </DashboardLayout>

@@ -11,11 +11,7 @@ import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Header } from "~/components/Header";
-import {
-  CardSection,
-  SectionContent,
-  SectionHeader,
-} from "~/components/Section";
+import { Section, SectionHeader } from "~/components/Section";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { authGuard } from "~/modules/auth/services/auth-guard";
@@ -122,39 +118,38 @@ export default function ProfilePage() {
         </>
       }
     >
-      <CardSection>
+      <Section>
         <SectionHeader title="Change password" />
-        <SectionContent>
-          <Form method="post">
-            <FormGroup>
-              <TextInput
-                label="New password"
-                name="password"
-                isInvalid={Boolean(errors?.password)}
-                placeholder="**********"
-                type="password"
-              />
 
-              <TextInput
-                label="Confirmation password"
-                name="confirmationPassword"
-                isInvalid={Boolean(errors?.confirmationPassword)}
-                placeholder="**********"
-                type="password"
-              />
+        <Form method="post">
+          <FormGroup>
+            <TextInput
+              label="New password"
+              name="password"
+              isInvalid={Boolean(errors?.password)}
+              placeholder="**********"
+              type="password"
+            />
 
-              <div>
-                <SubmitButton
-                  isLoading={transition.state === "submitting"}
-                  loadingText="Password changing in progress, please wait..."
-                >
-                  Change password
-                </SubmitButton>
-              </div>
-            </FormGroup>
-          </Form>
-        </SectionContent>
-      </CardSection>
+            <TextInput
+              label="Confirmation password"
+              name="confirmationPassword"
+              isInvalid={Boolean(errors?.confirmationPassword)}
+              placeholder="**********"
+              type="password"
+            />
+
+            <div>
+              <SubmitButton
+                isLoading={transition.state === "submitting"}
+                loadingText="Password changing in progress, please wait..."
+              >
+                Change password
+              </SubmitButton>
+            </div>
+          </FormGroup>
+        </Form>
+      </Section>
     </DashboardLayout>
   );
 }

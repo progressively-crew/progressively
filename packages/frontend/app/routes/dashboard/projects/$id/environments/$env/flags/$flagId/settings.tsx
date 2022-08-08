@@ -9,11 +9,7 @@ import { Project, UserProject, UserRoles } from "~/modules/projects/types";
 import { User } from "~/modules/user/types";
 import { getSession } from "~/sessions";
 import { Header } from "~/components/Header";
-import {
-  CardSection,
-  SectionContent,
-  SectionHeader,
-} from "~/components/Section";
+import { Section, SectionHeader } from "~/components/Section";
 import { AiOutlineBarChart, AiOutlineSetting } from "react-icons/ai";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { FaPowerOff } from "react-icons/fa";
@@ -165,7 +161,7 @@ export default function FlagSettingPage() {
       }
     >
       {userRole === UserRoles.Admin && (
-        <CardSection id="danger">
+        <Section id="danger">
           <SectionHeader
             title="Danger zone"
             description={
@@ -177,7 +173,7 @@ export default function FlagSettingPage() {
             }
           />
 
-          <SectionContent>
+          <div>
             <DeleteButton
               to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/delete`}
             >
@@ -191,8 +187,8 @@ export default function FlagSettingPage() {
                 </VisuallyHidden>
               </span>
             </DeleteButton>
-          </SectionContent>
-        </CardSection>
+          </div>
+        </Section>
       )}
     </DashboardLayout>
   );
