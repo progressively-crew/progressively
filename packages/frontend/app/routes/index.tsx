@@ -60,6 +60,12 @@ const Hero = styled("div", {
   },
 });
 
+const HeroContent = styled("div", {
+  display: "grid",
+  gridTemplateColumns: "1fr 1fr",
+  gap: "$spacing$21",
+});
+
 const HeadingWrapper = styled("div", {
   maxWidth: "600px",
 });
@@ -119,7 +125,7 @@ export default function Index() {
       <MarketingLayout>
         <Hero>
           <Container>
-            <HStack spacing={8}>
+            <HeroContent>
               <HeadingWrapper>
                 <H1 color="heracles">
                   Rollout quickly, effectively, progressively
@@ -161,7 +167,7 @@ export default function Index() {
                   />
                 </Browser>
               </section>
-            </HStack>
+            </HeroContent>
           </Container>
         </Hero>
         <Stack spacing={16}>
