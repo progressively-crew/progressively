@@ -22,6 +22,7 @@ import {
 import { changePassword } from "~/modules/user/services/changePassword";
 import { User } from "~/modules/user/types";
 import { getSession } from "~/sessions";
+import { Card, CardContent } from "~/components/Card";
 
 export const meta: MetaFunction = () => {
   return {
@@ -118,38 +119,42 @@ export default function ProfilePage() {
         </>
       }
     >
-      <Section>
-        <SectionHeader title="Change password" />
+      <Card>
+        <CardContent>
+          <Section>
+            <SectionHeader title="Change password" />
 
-        <Form method="post">
-          <FormGroup>
-            <TextInput
-              label="New password"
-              name="password"
-              isInvalid={Boolean(errors?.password)}
-              placeholder="**********"
-              type="password"
-            />
+            <Form method="post">
+              <FormGroup>
+                <TextInput
+                  label="New password"
+                  name="password"
+                  isInvalid={Boolean(errors?.password)}
+                  placeholder="**********"
+                  type="password"
+                />
 
-            <TextInput
-              label="Confirmation password"
-              name="confirmationPassword"
-              isInvalid={Boolean(errors?.confirmationPassword)}
-              placeholder="**********"
-              type="password"
-            />
+                <TextInput
+                  label="Confirmation password"
+                  name="confirmationPassword"
+                  isInvalid={Boolean(errors?.confirmationPassword)}
+                  placeholder="**********"
+                  type="password"
+                />
 
-            <div>
-              <SubmitButton
-                isLoading={transition.state === "submitting"}
-                loadingText="Password changing in progress, please wait..."
-              >
-                Change password
-              </SubmitButton>
-            </div>
-          </FormGroup>
-        </Form>
-      </Section>
+                <div>
+                  <SubmitButton
+                    isLoading={transition.state === "submitting"}
+                    loadingText="Password changing in progress, please wait..."
+                  >
+                    Change password
+                  </SubmitButton>
+                </div>
+              </FormGroup>
+            </Form>
+          </Section>
+        </CardContent>
+      </Card>
     </DashboardLayout>
   );
 }

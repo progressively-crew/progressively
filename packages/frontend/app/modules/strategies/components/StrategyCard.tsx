@@ -1,5 +1,5 @@
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
-import { Card } from "~/components/Card";
+import { Card, CardContent } from "~/components/Card";
 import { Spacer } from "~/components/Spacer";
 import { Typography } from "~/components/Typography";
 import { Li, Ul } from "~/components/Ul";
@@ -96,27 +96,27 @@ export const StrategyCard = ({
 }: StrategyCardProps) => {
   return (
     <Card>
-      <Typography as="h3" id={strat.uuid}>
-        {strat.name}
-      </Typography>
+      <CardContent>
+        <Typography as="h3" id={strat.uuid} font="title">
+          {strat.name}
+        </Typography>
 
-      <Spacer size={2} />
+        <Spacer size={2} />
 
-      <div>
-        <StrategyAudience strat={strat} />
+        <div>
+          <StrategyAudience strat={strat} />
 
-        <StrategyTargetConstraints strat={strat} />
+          <StrategyTargetConstraints strat={strat} />
 
-        <Spacer size={6} />
-
-        <ActionWrapper>
-          <DeleteButton
-            to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/strategies/${strat.uuid}/delete`}
-          >
-            Remove<VisuallyHidden> {strat.name}</VisuallyHidden>
-          </DeleteButton>
-        </ActionWrapper>
-      </div>
+          <ActionWrapper>
+            <DeleteButton
+              to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/strategies/${strat.uuid}/delete`}
+            >
+              Remove<VisuallyHidden> {strat.name}</VisuallyHidden>
+            </DeleteButton>
+          </ActionWrapper>
+        </div>
+      </CardContent>
     </Card>
   );
 };

@@ -44,7 +44,7 @@ const Table = styled("table", {
     background: "$heracles",
   },
   "& td": {
-    padding: "$spacing$4",
+    padding: "$spacing$4 0",
     color: "$hades",
   },
   "& a": {
