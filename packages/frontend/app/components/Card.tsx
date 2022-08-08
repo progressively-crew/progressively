@@ -4,7 +4,7 @@ import { useHydrated } from "~/modules/misc/hooks/useHydrated";
 import { styled } from "~/stitches.config";
 
 const CardWrapper = styled("div", {
-  minHeight: "$cardHeight",
+  padding: "$spacing$4",
   display: "flex",
   flexDirection: "column",
   background: "$apollo",
@@ -88,22 +88,3 @@ export const Card = ({ children, className, onClick }: CardProps) => {
     </CardWrapper>
   );
 };
-
-export const CardHeader = styled("div", {
-  padding: "$spacing$4 $spacing$6 0 $spacing$6",
-  fontFamily: "$default",
-  color: "$hades",
-  fontSize: "$jupiter",
-
-  "& a": {
-    color: "$hades",
-  },
-});
-
-export const CardContent = styled("div", {
-  padding: "0 $spacing$6 $spacing$4 $spacing$6",
-  "& p": {
-    fontSize: "$uranus",
-    lineHeight: "$text",
-  },
-});

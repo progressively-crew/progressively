@@ -1,5 +1,5 @@
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
-import { Card, CardContent, CardHeader } from "~/components/Card";
+import { Card } from "~/components/Card";
 import { Spacer } from "~/components/Spacer";
 import { Typography } from "~/components/Typography";
 import { Li, Ul } from "~/components/Ul";
@@ -96,13 +96,13 @@ export const StrategyCard = ({
 }: StrategyCardProps) => {
   return (
     <Card>
-      <CardHeader as="h3" id={strat.uuid}>
+      <Typography as="h3" id={strat.uuid}>
         {strat.name}
-      </CardHeader>
+      </Typography>
 
       <Spacer size={2} />
 
-      <CardContent>
+      <div>
         <StrategyAudience strat={strat} />
 
         <StrategyTargetConstraints strat={strat} />
@@ -116,7 +116,7 @@ export const StrategyCard = ({
             Remove<VisuallyHidden> {strat.name}</VisuallyHidden>
           </DeleteButton>
         </ActionWrapper>
-      </CardContent>
+      </div>
     </Card>
   );
 };
