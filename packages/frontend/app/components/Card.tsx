@@ -4,7 +4,7 @@ import { useHydrated } from "~/modules/misc/hooks/useHydrated";
 import { styled } from "~/stitches.config";
 
 const CardWrapper = styled("div", {
-  padding: "$spacing$4",
+  padding: "$spacing$6",
   display: "flex",
   flexDirection: "column",
   background: "$apollo",
