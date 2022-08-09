@@ -19,8 +19,10 @@ export interface DashboardLayoutProps {
   status?: React.ReactNode;
 }
 
-const SubNavWrapper = styled("div", {
-  background: "$apollo",
+const PageWrapper = styled("div", {
+  display: "flex",
+  flexDirection: "row",
+  gap: "$spacing$12",
 });
 
 export const DashboardLayout = ({
@@ -46,38 +48,36 @@ export const DashboardLayout = ({
           <Spacer size={5} />
         </InertWhenNavOpened>
 
-        {breadcrumb && <Container>{breadcrumb}</Container>}
+        {breadcrumb && (
+          <Container>
+            {breadcrumb}
+            <Spacer size={10} />
+          </Container>
+        )}
+
+        {header && (
+          <Container>
+            <header>{header}</header>
+            <Spacer size={10} />
+          </Container>
+        )}
 
         <InertWhenNavOpened>
           <Main>
-            <Spacer size={8} />
             <Container>
-              {header && (
-                <>
-                  {header}
-                  <Spacer size={10} />
-                </>
-              )}
-            </Container>
+              <PageWrapper>
+                {subNav ? <div>{subNav}</div> : null}
+                <div style={{ flex: 1 }}>
+                  {status && (
+                    <>
+                      {status}
+                      <Spacer size={8} />
+                    </>
+                  )}
 
-            {subNav && (
-              <>
-                <SubNavWrapper>
-                  <Container>{subNav}</Container>
-                </SubNavWrapper>
-                <Spacer size={8} />
-              </>
-            )}
-
-            <Container>
-              {status && (
-                <>
-                  {status}
-                  <Spacer size={8} />
-                </>
-              )}
-
-              {children}
+                  {children}
+                </div>
+              </PageWrapper>
             </Container>
           </Main>
         </InertWhenNavOpened>

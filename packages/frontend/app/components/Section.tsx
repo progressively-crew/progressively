@@ -44,19 +44,21 @@ export const SectionHeader = ({
 }: SectionHeaderProps) => {
   const id = useContext(SectionContext);
 
-  return (
-    <SectionHeaderWrapper {...props}>
-      {hiddenTitle ? (
-        <VisuallyHidden>
-          <Heading as={titleAs} id={id}>
-            {title}
-          </Heading>
-        </VisuallyHidden>
-      ) : (
-        <Heading as={titleAs} id={id} fontSize="earth">
+  if (hiddenTitle) {
+    return (
+      <VisuallyHidden>
+        <Heading as={titleAs} id={id}>
           {title}
         </Heading>
-      )}
+      </VisuallyHidden>
+    );
+  }
+
+  return (
+    <SectionHeaderWrapper {...props}>
+      <Heading as={titleAs} id={id} fontSize="earth">
+        {title}
+      </Heading>
 
       {description && (
         <>

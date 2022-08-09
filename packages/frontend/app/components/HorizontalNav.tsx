@@ -1,44 +1,39 @@
 import { NavLink } from "@remix-run/react";
 import { styled } from "~/stitches.config";
+import { HStack } from "./HStack";
 
 const HorizontalNavWrapper = styled("nav", {
+  width: "220px",
   "& ul": {
-    width: "100%",
     display: "flex",
-    alignItems: "center",
+    flexDirection: "column",
+    gap: "$spacing$2",
   },
 
   "& ul li a": {
+    display: "block",
     cursor: "pointer",
-    display: "flex",
     fontFamily: "$default",
-    paddingTop: "$spacing$4",
-    paddingBottom: "$spacing$4",
-    paddingLeft: "$spacing$4",
-    paddingRight: "$spacing$6",
-    alignItems: "center",
     textDecoration: "none",
     color: "$hades",
-    borderBottom: "4px solid transparent",
-    borderTop: "4px solid transparent",
-    gap: "$spacing$2",
-    transition: "border,box-shadow 0.2s",
-    fontSize: "$jupiter",
-    whiteSpace: "nowrap",
+    padding: "$spacing$3 $spacing$4",
+    borderRadius: "$borderRadius$regular",
+    transition: "all 0.2s",
+    fontSize: "$uranus",
   },
 
   "& ul li a:hover": {
-    borderBottomColor: "$nemesis",
-    color: "$nemesis",
+    background: "$nemesisHover",
   },
 
   "& ul li a.active": {
-    borderBottomColor: "$nemesis",
+    background: "$nemesisHover",
+    fontWeight: "$bold",
     color: "$nemesis",
   },
 
-  "& ul li svg": {
-    marginRight: "$spacing$1",
+  "& ul li a svg": {
+    color: "$nemesis",
   },
 
   "@mobile": {
@@ -75,8 +70,10 @@ export const NavItem = ({ children, to, icon }: NavItemProps) => {
         end
         className={({ isActive }) => (isActive ? "active" : undefined)}
       >
-        <span aria-hidden>{icon}</span>
-        {children}
+        <HStack spacing={2}>
+          <span aria-hidden>{icon}</span>
+          <span>{children}</span>
+        </HStack>
       </NavLink>
     </li>
   );
