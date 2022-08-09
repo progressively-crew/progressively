@@ -23,6 +23,9 @@ const PageWrapper = styled("div", {
   display: "flex",
   flexDirection: "row",
   gap: "$spacing$12",
+  "@tablet": {
+    flexDirection: "column",
+  },
 });
 
 const HeaderWrapper = styled("div", {
@@ -70,7 +73,13 @@ export const DashboardLayout = ({
           </Container>
         </HeaderWrapper>
 
-        <Spacer size={8} />
+        <Spacer
+          size={{
+            "@initial": 8,
+            "@tablet": 0,
+            "@mobile": 0,
+          }}
+        />
 
         <InertWhenNavOpened>
           <Main>

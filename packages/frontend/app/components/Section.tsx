@@ -48,7 +48,12 @@ export const SectionHeader = ({
 
   return (
     <SectionHeaderWrapper {...props}>
-      <HStack justifyContent="space-between" alignItems="flex-start">
+      <HStack
+        justifyContent="space-between"
+        alignItems="flex-start"
+        direction={{ "@tablet": "column" }}
+        gap={{ "@tablet": "3" }}
+      >
         <Heading as={titleAs} id={id} fontSize={fontSize} icon={icon}>
           {title}
         </Heading>

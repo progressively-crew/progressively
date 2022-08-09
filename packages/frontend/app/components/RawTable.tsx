@@ -11,6 +11,7 @@ const Table = styled("table", {
   color: "$hades",
   width: "100%",
   fontFamily: "$default",
+  overflowX: "scroll",
 
   "& th": {
     padding: "$spacing$6 0",
