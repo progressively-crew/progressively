@@ -56,6 +56,7 @@ export const colors = {
   //primaries
   hades: "#0E061F",
   nemesis: "#4B37A9",
+  nemesisHover: "#e3e0f9",
 
   heracles: "#f4f4f4",
   apollo: "#fff",
@@ -126,6 +127,7 @@ export const {
       cardHeight: "160px",
       notAuthenticatedCardWidth: "400px",
       cta: "48px",
+      ctaSmall: "40px",
       emptyStateIconHeight: "160px",
       avatar: "40px",
     },

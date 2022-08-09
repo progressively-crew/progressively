@@ -19,8 +19,21 @@ export interface DashboardLayoutProps {
   status?: React.ReactNode;
 }
 
-const SubNavWrapper = styled("div", {
+const PageWrapper = styled("div", {
+  display: "flex",
+  flexDirection: "row",
+  gap: "$spacing$12",
+});
+
+const HeaderWrapper = styled("div", {
   background: "$apollo",
+
+  variants: {
+    hasBreadcrumbs: {
+      true: { padding: "$spacing$4 0 $spacing$10 0" },
+      false: { padding: "$spacing$10 0 $spacing$10 0" },
+    },
+  },
 });
 
 export const DashboardLayout = ({
@@ -42,42 +55,39 @@ export const DashboardLayout = ({
 
             {user && user.fullname && <UseDropdown user={user as User} />}
           </Nav>
-
-          <Spacer size={5} />
         </InertWhenNavOpened>
 
-        {breadcrumb && <Container>{breadcrumb}</Container>}
+        <HeaderWrapper hasBreadcrumbs={Boolean(breadcrumb)}>
+          {breadcrumb && (
+            <Container>
+              {breadcrumb}
+              <Spacer size={4} />
+            </Container>
+          )}
+
+          <Container>
+            <header>{header}</header>
+          </Container>
+        </HeaderWrapper>
+
+        <Spacer size={8} />
 
         <InertWhenNavOpened>
           <Main>
-            <Spacer size={8} />
             <Container>
-              {header && (
-                <>
-                  {header}
-                  <Spacer size={10} />
-                </>
-              )}
-            </Container>
+              <PageWrapper>
+                {subNav ? <div>{subNav}</div> : null}
+                <div style={{ flex: 1 }}>
+                  {status && (
+                    <>
+                      {status}
+                      <Spacer size={8} />
+                    </>
+                  )}
 
-            {subNav && (
-              <>
-                <SubNavWrapper>
-                  <Container>{subNav}</Container>
-                </SubNavWrapper>
-                <Spacer size={8} />
-              </>
-            )}
-
-            <Container>
-              {status && (
-                <>
-                  {status}
-                  <Spacer size={8} />
-                </>
-              )}
-
-              {children}
+                  {children}
+                </div>
+              </PageWrapper>
             </Container>
           </Main>
         </InertWhenNavOpened>

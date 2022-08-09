@@ -71,7 +71,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
             "/dashboard/projects/1/environments/1/flags/1"
           );
 
-        cy.findByRole("link", { name: "Add a strategy" })
+        cy.findByRole("link", { name: "Create a strategy" })
           .should("be.visible")
           .and(
             "have.attr",
@@ -80,12 +80,12 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
           )
           .and("have.attr", "aria-current", "page");
 
-        cy.findByRole("heading", { name: "Add a strategy" }).should(
+        cy.findByRole("heading", { name: "Create a strategy" }).should(
           "be.visible"
         );
 
         cy.contains(
-          "You're about to add a strategy to New homepage in Project from seeding on Production."
+          "You're about to create a strategy to New homepage in Project from seeding on Production."
         ).should("be.visible");
 
         cy.checkA11y();

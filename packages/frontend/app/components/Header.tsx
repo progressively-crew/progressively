@@ -2,13 +2,12 @@ import { styled } from "~/stitches.config";
 import { H1 } from "./H1";
 import { HStack } from "./HStack";
 import { Spacer } from "./Spacer";
-import { TagLine } from "./Tagline";
 
 export interface HeaderProps {
   title: string | React.ReactNode;
   description?: React.ReactNode;
   startAction?: React.ReactNode;
-  tagline?: string;
+  tagline?: React.ReactNode;
 }
 
 const HeadingWrapper = styled("div", {
@@ -27,14 +26,14 @@ export const Header = ({
     <div>
       <HeadingWrapper>
         <H1>{title}</H1>
-        {tagline && <TagLine>{tagline}</TagLine>}
+        {tagline}
       </HeadingWrapper>
 
       {description || startAction ? <Spacer size={2} /> : null}
 
       {description}
 
-      {startAction && <HStack spacing={10}>{startAction}</HStack>}
+      {startAction && <HStack spacing={6}>{startAction}</HStack>}
     </div>
   );
 };

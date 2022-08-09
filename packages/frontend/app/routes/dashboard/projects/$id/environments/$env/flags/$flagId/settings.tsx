@@ -21,9 +21,12 @@ import { HideMobile } from "~/components/HideMobile";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { MetaFunction, LoaderFunction, ActionFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { FiFlag } from "react-icons/fi";
 import { FlagHeaderAction } from "~/modules/flags/components/FlagHeaderAction";
 import { Card, CardContent } from "~/components/Card";
+import { Heading } from "~/components/Heading";
+import { Stack } from "~/components/Stack";
+import { TagLine } from "~/components/Tagline";
+import { FiFlag } from "react-icons/fi";
 
 interface MetaArgs {
   data?: {
@@ -116,7 +119,6 @@ export default function FlagSettingPage() {
       link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`,
       label: currentFlag.name,
       forceNotCurrent: true,
-      icon: <FiFlag aria-hidden />,
     },
   ];
 
@@ -126,7 +128,7 @@ export default function FlagSettingPage() {
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
-          tagline="Feature flag"
+          tagline={<TagLine icon={<FiFlag />}>Feature flag</TagLine>}
           title={currentFlag.name}
           startAction={
             <FlagHeaderAction
@@ -161,40 +163,48 @@ export default function FlagSettingPage() {
         </HorizontalNav>
       }
     >
-      {userRole === UserRoles.Admin && (
-        <Card>
-          <CardContent>
-            <Section id="danger">
-              <SectionHeader
-                title="Danger zone"
-                description={
-                  <Typography>
-                    You can delete a feature flag at any time, but you {`won’t`}{" "}
-                    be able to access its insights anymore and false will be
-                    served to the application using it.
-                  </Typography>
-                }
-              />
+      <Stack spacing={4}>
+        <Heading as={"h2"} fontSize="earth" icon={<AiOutlineSetting />}>
+          Settings
+        </Heading>
 
-              <div>
-                <DeleteButton
-                  to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/delete`}
-                >
-                  <span>
-                    <span aria-hidden>
-                      Delete <HideMobile>{currentFlag.name} forever</HideMobile>
+        {userRole === UserRoles.Admin && (
+          <Card>
+            <CardContent>
+              <Section id="danger">
+                <SectionHeader
+                  title="Danger zone"
+                  titleAs="h3"
+                  description={
+                    <Typography>
+                      You can delete a feature flag at any time, but you{" "}
+                      {`won’t`} be able to access its insights anymore and false
+                      will be served to the application using it.
+                    </Typography>
+                  }
+                />
+
+                <div>
+                  <DeleteButton
+                    to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/delete`}
+                  >
+                    <span>
+                      <span aria-hidden>
+                        Delete{" "}
+                        <HideMobile>{currentFlag.name} forever</HideMobile>
+                      </span>
+
+                      <VisuallyHidden>
+                        Delete {currentFlag.name} forever
+                      </VisuallyHidden>
                     </span>
-
-                    <VisuallyHidden>
-                      Delete {currentFlag.name} forever
-                    </VisuallyHidden>
-                  </span>
-                </DeleteButton>
-              </div>
-            </Section>
-          </CardContent>
-        </Card>
-      )}
+                  </DeleteButton>
+                </div>
+              </Section>
+            </CardContent>
+          </Card>
+        )}
+      </Stack>
     </DashboardLayout>
   );
 }

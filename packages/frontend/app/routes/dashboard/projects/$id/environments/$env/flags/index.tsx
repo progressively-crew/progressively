@@ -17,13 +17,14 @@ import { EmptyState } from "~/components/EmptyState";
 import { Typography } from "~/components/Typography";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { FlagList } from "~/modules/flags/components/FlagList";
-import { Spacer } from "~/components/Spacer";
 import { HideMobile } from "~/components/HideMobile";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { EnvNavBar } from "~/modules/environments/components/EnvNavbar";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { Card } from "~/components/Card";
+import { FiFlag, FiLayers } from "react-icons/fi";
+import { TagLine } from "~/components/Tagline";
 
 interface MetaArgs {
   data?: {
@@ -116,17 +117,19 @@ export default function FlagsByEnvPage() {
     },
   ];
 
+  const hasFlags = flagsByEnv.length > 0;
+
   return (
     <DashboardLayout
       user={user}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
-          tagline="Environment"
+          tagline={<TagLine icon={<FiLayers />}>Environment</TagLine>}
           title={environment.name}
           startAction={
             <HideMobile>
-              <ButtonCopy toCopy={environment.clientKey}>
+              <ButtonCopy toCopy={environment.clientKey} small={true}>
                 {environment.clientKey}
               </ButtonCopy>
             </HideMobile>
@@ -147,29 +150,29 @@ export default function FlagsByEnvPage() {
       }
     >
       <Section id="list-flags-title">
-        <SectionHeader title="Feature flags" hiddenTitle />
+        <SectionHeader
+          title="Feature flags"
+          icon={<FiFlag />}
+          action={
+            hasFlags && (
+              <CreateButton
+                to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/create`}
+              >
+                Create a feature flag
+              </CreateButton>
+            )
+          }
+        />
 
-        {flagsByEnv.length > 0 ? (
-          <div>
-            <CreateButton
-              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/create`}
-            >
-              Create a feature flag
-            </CreateButton>
-
-            <Spacer size={4} />
-
-            <Card>
-              <FlagList
-                flags={flagsByEnv}
-                envId={environment.uuid}
-                projectId={project.uuid}
-              />
-            </Card>
-          </div>
-        ) : null}
-
-        {flagsByEnv.length === 0 ? (
+        {hasFlags ? (
+          <Card>
+            <FlagList
+              flags={flagsByEnv}
+              envId={environment.uuid}
+              projectId={project.uuid}
+            />
+          </Card>
+        ) : (
           <EmptyState
             title="No flags found"
             description={
@@ -185,7 +188,7 @@ export default function FlagsByEnvPage() {
               </CreateButton>
             }
           />
-        ) : null}
+        )}
       </Section>
     </DashboardLayout>
   );

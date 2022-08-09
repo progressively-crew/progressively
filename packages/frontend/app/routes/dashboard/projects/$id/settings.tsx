@@ -25,6 +25,9 @@ import { HideMobile } from "~/components/HideMobile";
 import { MetaFunction, LoaderFunction, ActionFunction } from "@remix-run/node";
 import { useLoaderData, useActionData, useTransition } from "@remix-run/react";
 import { Card, CardContent } from "~/components/Card";
+import { Heading } from "~/components/Heading";
+import { TagLine } from "~/components/Tagline";
+import { MdOutlineGroupWork } from "react-icons/md";
 
 interface MetaArgs {
   data?: {
@@ -131,7 +134,7 @@ export default function SettingsPage() {
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
-          tagline="Project"
+          tagline={<TagLine icon={<MdOutlineGroupWork />}>Project</TagLine>}
           title={
             <span>
               {project.name}
@@ -159,18 +162,13 @@ export default function SettingsPage() {
       }
     >
       <Stack spacing={8}>
+        <Heading as={"h2"} fontSize="earth" icon={<AiOutlineSetting />}>
+          Settings
+        </Heading>
         <Card>
           <CardContent>
             <Section id="members">
-              <SectionHeader
-                title="Project members"
-                description={
-                  <Typography>
-                    Remember that users with the role <em>Admin</em> {`can't`}{" "}
-                    be removed.
-                  </Typography>
-                }
-              />
+              <SectionHeader title="Project members" titleAs="h3" />
 
               <div>
                 {data?.errors.unauthorized && (
@@ -212,6 +210,7 @@ export default function SettingsPage() {
               <Section id="danger">
                 <SectionHeader
                   title="Danger zone"
+                  titleAs="h3"
                   description={
                     <Typography>
                       You can delete a project at any time, but you {`won’t`} be

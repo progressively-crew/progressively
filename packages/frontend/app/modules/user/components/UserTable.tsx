@@ -6,6 +6,7 @@ import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { styled } from "~/stitches.config";
 import { Form, useTransition } from "@remix-run/react";
 import { CreateButton } from "~/components/Buttons/CreateButton";
+import { Tag } from "~/components/Tag";
 
 export interface UserTableProps {
   projectId: string;
@@ -71,7 +72,9 @@ export const UserTable = ({
             >
               <Cell>{userProject.user?.fullname}</Cell>
               <Cell>{userProject.user?.email}</Cell>
-              <Cell>{userProject.role}</Cell>
+              <Cell>
+                <Tag>{userProject.role}</Tag>
+              </Cell>
             </Row>
           ))}
         </Tbody>

@@ -15,7 +15,9 @@ export const FlagHeaderAction = ({
     <>
       <ToggleFlag isFlagActivated={isFlagActivated} />
       <HideMobile>
-        <ButtonCopy toCopy={flagKey}>{flagKey}</ButtonCopy>
+        <ButtonCopy toCopy={flagKey} small={true}>
+          {flagKey}
+        </ButtonCopy>
       </HideMobile>
     </>
   );

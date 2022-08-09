@@ -14,12 +14,13 @@ import { FiLayers } from "react-icons/fi";
 import { EmptyState } from "~/components/EmptyState";
 import { Typography } from "~/components/Typography";
 import { CreateButton } from "~/components/Buttons/CreateButton";
-import { Spacer } from "~/components/Spacer";
 import { MetaFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { EnvList } from "~/modules/environments/components/EnvList";
 import { Card } from "~/components/Card";
+import { TagLine } from "~/components/Tagline";
+import { MdOutlineGroupWork } from "react-icons/md";
 
 interface MetaArgs {
   data?: {
@@ -68,11 +69,18 @@ export default function ProjectDetailPage() {
     },
   ];
 
+  const hasEnvironments = project.environments.length > 0;
+
   return (
     <DashboardLayout
       user={user}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
-      header={<Header tagline="Project" title={project.name} />}
+      header={
+        <Header
+          tagline={<TagLine icon={<MdOutlineGroupWork />}>Project</TagLine>}
+          title={project.name}
+        />
+      }
       subNav={
         <HorizontalNav label={`Project related`}>
           <NavItem
@@ -103,28 +111,28 @@ export default function ProjectDetailPage() {
       }
     >
       <Section aria-labelledby="list-env-title" id="list-env-title">
-        <SectionHeader title="Environments" hiddenTitle />
+        <SectionHeader
+          title="Environments"
+          icon={<FiLayers />}
+          action={
+            hasEnvironments && (
+              <CreateButton
+                to={`/dashboard/projects/${project.uuid}/environments/create`}
+              >
+                Create an environment
+              </CreateButton>
+            )
+          }
+        />
 
-        {project.environments.length > 0 ? (
-          <div>
-            <CreateButton
-              to={`/dashboard/projects/${project.uuid}/environments/create`}
-            >
-              Create an environment
-            </CreateButton>
-
-            <Spacer size={4} />
-
-            <Card>
-              <EnvList
-                environments={project.environments}
-                projectId={project.uuid}
-              />
-            </Card>
-          </div>
-        ) : null}
-
-        {project.environments.length === 0 ? (
+        {hasEnvironments ? (
+          <Card>
+            <EnvList
+              environments={project.environments}
+              projectId={project.uuid}
+            />
+          </Card>
+        ) : (
           <EmptyState
             title="No environments found"
             description={
@@ -140,7 +148,7 @@ export default function ProjectDetailPage() {
               </CreateButton>
             }
           />
-        ) : null}
+        )}
       </Section>
     </DashboardLayout>
   );

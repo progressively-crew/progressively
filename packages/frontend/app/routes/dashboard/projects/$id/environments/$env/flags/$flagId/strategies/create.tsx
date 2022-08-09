@@ -202,7 +202,7 @@ export default function StrategyCreatePage() {
     },
     {
       link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`,
-      label: "Add a strategy",
+      label: "Create a strategy",
     },
   ];
 
@@ -214,10 +214,10 @@ export default function StrategyCreatePage() {
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
-          title="Add a strategy"
+          title="Create a strategy"
           description={
             <Typography>
-              {`You're`} about to add a strategy to{" "}
+              {`You're`} about to create a strategy to{" "}
               <strong>{currentFlag.name}</strong> in{" "}
               <strong>{project.name}</strong> on{" "}
               <strong>{environment.name}</strong>.

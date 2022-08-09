@@ -26,8 +26,10 @@ const Ol = styled("ol", {
 });
 
 const Separator = styled("div", {
+  display: "flex",
   margin: "0 $spacing$2",
-  display: "inline-block",
+  marginTop: "$spacing$1",
+  fontSize: "$mars",
 });
 
 export interface DesktopNavProps {

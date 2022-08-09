@@ -13,7 +13,7 @@ export const EnvList = ({ environments, projectId }: EnvListProps) => {
     <RawTable>
       <thead>
         <tr>
-          <th>Name</th>
+          <th width="70%">Name</th>
           <th>Client key</th>
         </tr>
       </thead>
@@ -28,7 +28,9 @@ export const EnvList = ({ environments, projectId }: EnvListProps) => {
               </Link>
             </td>
             <td>
-              <ButtonCopy toCopy={env.clientKey}>{env.clientKey}</ButtonCopy>
+              <ButtonCopy toCopy={env.clientKey} small={true}>
+                {env.clientKey}
+              </ButtonCopy>
             </td>
           </tr>
         ))}

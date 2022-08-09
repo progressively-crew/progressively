@@ -25,9 +25,9 @@ import { CreateButton } from "~/components/Buttons/CreateButton";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
 import { useSearchParams, useLoaderData } from "@remix-run/react";
-import { FiFlag } from "react-icons/fi";
 import { FlagHeaderAction } from "~/modules/flags/components/FlagHeaderAction";
-import { Spacer } from "~/components/Spacer";
+import { TagLine } from "~/components/Tagline";
+import { FiFlag } from "react-icons/fi";
 
 interface MetaArgs {
   data?: {
@@ -127,9 +127,10 @@ export default function FlagById() {
     {
       link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`,
       label: currentFlag.name,
-      icon: <FiFlag aria-hidden />,
     },
   ];
+
+  const hasStrategies = strategies.length > 0;
 
   return (
     <DashboardLayout
@@ -137,7 +138,7 @@ export default function FlagById() {
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
-          tagline="Feature flag"
+          tagline={<TagLine icon={<FiFlag />}>Feature flag</TagLine>}
           title={currentFlag.name}
           startAction={
             <FlagHeaderAction
@@ -186,33 +187,33 @@ export default function FlagById() {
       }
     >
       <Section id="concerned-audience">
-        <SectionHeader title="Strategies" hiddenTitle />
+        <SectionHeader
+          title="Strategies"
+          icon={<FaPowerOff />}
+          action={
+            hasStrategies && (
+              <CreateButton
+                to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
+              >
+                Create a strategy
+              </CreateButton>
+            )
+          }
+        />
 
-        {strategies.length > 0 ? (
+        {hasStrategies ? (
           <div>
-            <CreateButton
-              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
-            >
-              Add a strategy
-            </CreateButton>
-
-            <Spacer size={4} />
-
-            <div>
-              {strategies.map((strat) => (
-                <StrategyCard
-                  key={`${strat.uuid}`}
-                  projectId={project.uuid}
-                  envId={environment.uuid}
-                  flagId={currentFlag.uuid}
-                  strat={strat}
-                />
-              ))}
-            </div>
+            {strategies.map((strat) => (
+              <StrategyCard
+                key={`${strat.uuid}`}
+                projectId={project.uuid}
+                envId={environment.uuid}
+                flagId={currentFlag.uuid}
+                strat={strat}
+              />
+            ))}
           </div>
-        ) : null}
-
-        {strategies.length === 0 ? (
+        ) : (
           <EmptyState
             title="No strategy found"
             description={
@@ -224,11 +225,11 @@ export default function FlagById() {
               <CreateButton
                 to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
               >
-                Add a strategy
+                Create a strategy
               </CreateButton>
             }
           />
-        ) : null}
+        )}
       </Section>
     </DashboardLayout>
   );

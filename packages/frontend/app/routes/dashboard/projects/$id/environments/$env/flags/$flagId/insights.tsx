@@ -26,8 +26,9 @@ import { EmptyState } from "~/components/EmptyState";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { FiFlag } from "react-icons/fi";
 import { FlagHeaderAction } from "~/modules/flags/components/FlagHeaderAction";
+import { TagLine } from "~/components/Tagline";
+import { FiFlag } from "react-icons/fi";
 
 interface MetaArgs {
   data?: {
@@ -114,13 +115,10 @@ export const loader: LoaderFunction = async ({
   };
 };
 
-const BigStatWrapper = styled("div", {
-  display: "flex",
+const InsightsGrid = styled("div", {
+  display: "grid",
   gap: "$spacing$4",
-
-  "@mobile": {
-    flexDirection: "column",
-  },
+  gridTemplateColumns: "auto 1fr",
 });
 
 export default function FlagById() {
@@ -155,7 +153,6 @@ export default function FlagById() {
       link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`,
       label: currentFlag.name,
       forceNotCurrent: true,
-      icon: <FiFlag aria-hidden />,
     },
   ];
 
@@ -165,7 +162,7 @@ export default function FlagById() {
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
-          tagline="Feature flag"
+          tagline={<TagLine icon={<FiFlag />}>Feature flag</TagLine>}
           title={currentFlag.name}
           startAction={
             <FlagHeaderAction
@@ -204,6 +201,7 @@ export default function FlagById() {
         <SectionHeader
           title="Insights"
           description={<Typography>Number of hits per date</Typography>}
+          icon={<AiOutlineBarChart />}
         />
 
         <Spacer size={4} />
@@ -221,17 +219,18 @@ export default function FlagById() {
         )}
 
         {hits.length > 0 && (
-          <>
-            <BigStatWrapper>
+          <InsightsGrid>
+            <div>
               <BigStat name="Evaluated as activated">
                 <p>{activatedCount}</p>
               </BigStat>
+
+              <Spacer size={4} />
+
               <BigStat name="Evaluated as NOT activated" secondary>
                 <p>{notActivatedCount}</p>
               </BigStat>
-            </BigStatWrapper>
-
-            <Spacer size={4} />
+            </div>
 
             <BigStat name="Flag hits per date" id="count-per-date-chart">
               <SwitchButton
@@ -261,9 +260,8 @@ export default function FlagById() {
                   },
                 ]}
               />
-              <Spacer size={8} />
             </BigStat>
-          </>
+          </InsightsGrid>
         )}
       </Section>
     </DashboardLayout>
