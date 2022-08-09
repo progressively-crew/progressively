@@ -23,7 +23,7 @@ import { EnvNavBar } from "~/modules/environments/components/EnvNavbar";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { Card } from "~/components/Card";
-import { FiFlag } from "react-icons/fi";
+import { FiFlag, FiLayers } from "react-icons/fi";
 import { TagLine } from "~/components/Tagline";
 
 interface MetaArgs {
@@ -125,7 +125,7 @@ export default function FlagsByEnvPage() {
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
-          tagline={<TagLine>Environment</TagLine>}
+          tagline={<TagLine icon={<FiLayers />}>Environment</TagLine>}
           title={environment.name}
           startAction={
             <HideMobile>

@@ -20,6 +20,7 @@ import { Crumbs } from "~/components/Breadcrumbs/types";
 import { EnvList } from "~/modules/environments/components/EnvList";
 import { Card } from "~/components/Card";
 import { TagLine } from "~/components/Tagline";
+import { MdOutlineGroupWork } from "react-icons/md";
 
 interface MetaArgs {
   data?: {
@@ -75,7 +76,10 @@ export default function ProjectDetailPage() {
       user={user}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
-        <Header tagline={<TagLine>Project</TagLine>} title={project.name} />
+        <Header
+          tagline={<TagLine icon={<MdOutlineGroupWork />}>Project</TagLine>}
+          title={project.name}
+        />
       }
       subNav={
         <HorizontalNav label={`Project related`}>

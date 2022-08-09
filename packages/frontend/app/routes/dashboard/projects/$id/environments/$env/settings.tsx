@@ -22,6 +22,7 @@ import { Stack } from "~/components/Stack";
 import { Heading } from "~/components/Heading";
 import { AiOutlineSetting } from "react-icons/ai";
 import { TagLine } from "~/components/Tagline";
+import { FiLayers } from "react-icons/fi";
 
 interface MetaArgs {
   data?: {
@@ -101,7 +102,7 @@ export default function EnvSettingsPage() {
       header={
         <Header
           title={environment.name}
-          tagline={<TagLine>Environment</TagLine>}
+          tagline={<TagLine icon={<FiLayers />}>Environment</TagLine>}
           startAction={
             <HideMobile>
               <ButtonCopy toCopy={environment.clientKey} small={true}>

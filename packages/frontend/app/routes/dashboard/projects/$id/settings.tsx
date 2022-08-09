@@ -27,6 +27,7 @@ import { useLoaderData, useActionData, useTransition } from "@remix-run/react";
 import { Card, CardContent } from "~/components/Card";
 import { Heading } from "~/components/Heading";
 import { TagLine } from "~/components/Tagline";
+import { MdOutlineGroupWork } from "react-icons/md";
 
 interface MetaArgs {
   data?: {
@@ -133,7 +134,7 @@ export default function SettingsPage() {
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
-          tagline={<TagLine>Project</TagLine>}
+          tagline={<TagLine icon={<MdOutlineGroupWork />}>Project</TagLine>}
           title={
             <span>
               {project.name}

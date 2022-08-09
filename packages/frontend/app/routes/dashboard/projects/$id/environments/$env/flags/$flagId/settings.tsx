@@ -26,6 +26,7 @@ import { Card, CardContent } from "~/components/Card";
 import { Heading } from "~/components/Heading";
 import { Stack } from "~/components/Stack";
 import { TagLine } from "~/components/Tagline";
+import { FiFlag } from "react-icons/fi";
 
 interface MetaArgs {
   data?: {
@@ -127,7 +128,7 @@ export default function FlagSettingPage() {
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
-          tagline={<TagLine>Feature flag</TagLine>}
+          tagline={<TagLine icon={<FiFlag />}>Feature flag</TagLine>}
           title={currentFlag.name}
           startAction={
             <FlagHeaderAction
