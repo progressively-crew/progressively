@@ -61,9 +61,6 @@ describe("/dashboard/projects/[id]/environments/create", () => {
         ).should("be.visible");
 
         cy.findByLabelText("Environment name").should("be.visible");
-        cy.findByText(
-          "After the creation of an environment, you will be able to get its SDK key for application usage."
-        ).should("be.visible");
 
         cy.findByRole("button", { name: "Create the environment" }).should(
           "be.visible"

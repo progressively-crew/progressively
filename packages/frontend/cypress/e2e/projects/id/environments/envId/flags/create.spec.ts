@@ -74,9 +74,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/create", () => {
 
         cy.findByLabelText("Flag name").should("be.visible");
         cy.findByLabelText("Flag description").should("be.visible");
-        cy.findByText(
-          "After the creation of a feature flag, you will be able to get its SDK key for application usage."
-        ).should("be.visible");
+
         cy.findByRole("button", { name: "Create the feature flag" }).should(
           "be.visible"
         );
