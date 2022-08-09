@@ -27,6 +27,7 @@ import { Crumbs } from "~/components/Breadcrumbs/types";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { FlagHeaderAction } from "~/modules/flags/components/FlagHeaderAction";
+import { TagLine } from "~/components/Tagline";
 
 interface MetaArgs {
   data?: {
@@ -160,7 +161,7 @@ export default function FlagById() {
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
-          tagline="Feature flag"
+          tagline={<TagLine>Feature flag</TagLine>}
           title={currentFlag.name}
           startAction={
             <FlagHeaderAction

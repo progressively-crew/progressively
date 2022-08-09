@@ -1,7 +1,7 @@
 import { Typography } from "./Typography";
 import { styled } from "~/stitches.config";
 
-export const TagLine = styled(Typography, {
+const TagLineWrapper = styled(Typography, {
   display: "block",
   textTransform: "uppercase",
   fontSize: "$uranus",
@@ -14,3 +14,17 @@ export const TagLine = styled(Typography, {
     },
   },
 });
+
+export interface TagLineProps {
+  icon?: React.ReactNode;
+  children: React.ReactNode;
+}
+
+export const TagLine = ({ icon, children, ...props }: TagLineProps) => {
+  return (
+    <TagLineWrapper {...props}>
+      {icon && <span aria-hidden>{icon}</span>}
+      {children}
+    </TagLineWrapper>
+  );
+};

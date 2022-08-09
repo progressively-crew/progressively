@@ -24,6 +24,7 @@ import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { Card } from "~/components/Card";
 import { FiFlag } from "react-icons/fi";
+import { TagLine } from "~/components/Tagline";
 
 interface MetaArgs {
   data?: {
@@ -124,7 +125,7 @@ export default function FlagsByEnvPage() {
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
-          tagline="Environment"
+          tagline={<TagLine>Environment</TagLine>}
           title={environment.name}
           startAction={
             <HideMobile>

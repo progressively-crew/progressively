@@ -19,6 +19,7 @@ import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { EnvList } from "~/modules/environments/components/EnvList";
 import { Card } from "~/components/Card";
+import { TagLine } from "~/components/Tagline";
 
 interface MetaArgs {
   data?: {
@@ -73,7 +74,9 @@ export default function ProjectDetailPage() {
     <DashboardLayout
       user={user}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
-      header={<Header tagline="Project" title={project.name} />}
+      header={
+        <Header tagline={<TagLine>Project</TagLine>} title={project.name} />
+      }
       subNav={
         <HorizontalNav label={`Project related`}>
           <NavItem

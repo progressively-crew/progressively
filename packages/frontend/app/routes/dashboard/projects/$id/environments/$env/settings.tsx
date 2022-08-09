@@ -21,6 +21,7 @@ import { Card, CardContent } from "~/components/Card";
 import { Stack } from "~/components/Stack";
 import { Heading } from "~/components/Heading";
 import { AiOutlineSetting } from "react-icons/ai";
+import { TagLine } from "~/components/Tagline";
 
 interface MetaArgs {
   data?: {
@@ -100,7 +101,7 @@ export default function EnvSettingsPage() {
       header={
         <Header
           title={environment.name}
-          tagline="Environment"
+          tagline={<TagLine>Environment</TagLine>}
           startAction={
             <HideMobile>
               <ButtonCopy toCopy={environment.clientKey} small={true}>

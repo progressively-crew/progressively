@@ -26,6 +26,7 @@ import { MetaFunction, LoaderFunction, ActionFunction } from "@remix-run/node";
 import { useLoaderData, useActionData, useTransition } from "@remix-run/react";
 import { Card, CardContent } from "~/components/Card";
 import { Heading } from "~/components/Heading";
+import { TagLine } from "~/components/Tagline";
 
 interface MetaArgs {
   data?: {
@@ -132,7 +133,7 @@ export default function SettingsPage() {
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
-          tagline="Project"
+          tagline={<TagLine>Project</TagLine>}
           title={
             <span>
               {project.name}
@@ -166,16 +167,7 @@ export default function SettingsPage() {
         <Card>
           <CardContent>
             <Section id="members">
-              <SectionHeader
-                title="Project members"
-                titleAs="h3"
-                description={
-                  <Typography>
-                    Remember that users with the role <em>Admin</em> {`can't`}{" "}
-                    be removed.
-                  </Typography>
-                }
-              />
+              <SectionHeader title="Project members" titleAs="h3" />
 
               <div>
                 {data?.errors.unauthorized && (

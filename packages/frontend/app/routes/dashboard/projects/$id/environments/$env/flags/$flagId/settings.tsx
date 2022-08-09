@@ -25,6 +25,7 @@ import { FlagHeaderAction } from "~/modules/flags/components/FlagHeaderAction";
 import { Card, CardContent } from "~/components/Card";
 import { Heading } from "~/components/Heading";
 import { Stack } from "~/components/Stack";
+import { TagLine } from "~/components/Tagline";
 
 interface MetaArgs {
   data?: {
@@ -126,7 +127,7 @@ export default function FlagSettingPage() {
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
-          tagline="Feature flag"
+          tagline={<TagLine>Feature flag</TagLine>}
           title={currentFlag.name}
           startAction={
             <FlagHeaderAction
