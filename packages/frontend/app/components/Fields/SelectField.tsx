@@ -22,6 +22,7 @@ const Select = styled("select", {
   padding: "$spacing$2 $spacing$4",
   display: "block",
   boxSizing: "border-box",
+  background: "$apollo",
 });
 
 export const SelectField = ({

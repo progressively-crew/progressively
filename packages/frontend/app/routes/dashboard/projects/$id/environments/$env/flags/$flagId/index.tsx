@@ -7,7 +7,6 @@ import { FlagEnv, FlagStatus } from "~/modules/flags/types";
 import { getProject } from "~/modules/projects/services/getProject";
 import { Project } from "~/modules/projects/types";
 import { getStrategies } from "~/modules/strategies/services/getStrategies";
-import { StrategyCard } from "~/modules/strategies/components/StrategyCard";
 import { User } from "~/modules/user/types";
 import { getSession } from "~/sessions";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
@@ -28,6 +27,8 @@ import { useSearchParams, useLoaderData } from "@remix-run/react";
 import { FlagHeaderAction } from "~/modules/flags/components/FlagHeaderAction";
 import { TagLine } from "~/components/Tagline";
 import { FiFlag } from "react-icons/fi";
+import { StrategyList } from "~/modules/strategies/components/StrategyList";
+import { Card } from "~/components/Card";
 
 interface MetaArgs {
   data?: {
@@ -202,17 +203,14 @@ export default function FlagById() {
         />
 
         {hasStrategies ? (
-          <div>
-            {strategies.map((strat) => (
-              <StrategyCard
-                key={`${strat.uuid}`}
-                projectId={project.uuid}
-                envId={environment.uuid}
-                flagId={currentFlag.uuid}
-                strat={strat}
-              />
-            ))}
-          </div>
+          <Card>
+            <StrategyList
+              strategies={strategies}
+              projectId={project.uuid}
+              envId={environment.uuid}
+              flagId={currentFlag.uuid}
+            />
+          </Card>
         ) : (
           <EmptyState
             title="No strategy found"

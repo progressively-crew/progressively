@@ -75,7 +75,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/insights"
 
         cy.findByRole("heading", { name: "New homepage" }).should("be.visible");
         cy.findByRole("heading", { name: "Insights" }).should("be.visible");
-        cy.findByText("Number of hits per date").should("be.visible");
 
         cy.checkA11y();
       });
