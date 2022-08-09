@@ -164,7 +164,7 @@ export default function FlagSettingPage() {
       }
     >
       <Stack spacing={8}>
-        <Heading as={"h2"} fontSize="earth">
+        <Heading as={"h2"} fontSize="earth" icon={<AiOutlineSetting />}>
           Settings
         </Heading>
         {userRole === UserRoles.Admin && (

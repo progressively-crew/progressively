@@ -160,7 +160,7 @@ export default function SettingsPage() {
       }
     >
       <Stack spacing={8}>
-        <Heading as={"h2"} fontSize="earth">
+        <Heading as={"h2"} fontSize="earth" icon={<AiOutlineSetting />}>
           Settings
         </Heading>
         <Card>

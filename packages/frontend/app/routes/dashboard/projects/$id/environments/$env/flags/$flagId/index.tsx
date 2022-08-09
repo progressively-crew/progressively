@@ -186,7 +186,7 @@ export default function FlagById() {
       }
     >
       <Section id="concerned-audience">
-        <SectionHeader title="Strategies" />
+        <SectionHeader title="Strategies" icon={<FaPowerOff />} />
 
         {strategies.length > 0 ? (
           <div>

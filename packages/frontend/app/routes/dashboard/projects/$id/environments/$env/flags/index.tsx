@@ -24,6 +24,7 @@ import { EnvNavBar } from "~/modules/environments/components/EnvNavbar";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { Card } from "~/components/Card";
+import { FiFlag } from "react-icons/fi";
 
 interface MetaArgs {
   data?: {
@@ -147,7 +148,7 @@ export default function FlagsByEnvPage() {
       }
     >
       <Section id="list-flags-title">
-        <SectionHeader title="Feature flags" />
+        <SectionHeader title="Feature flags" icon={<FiFlag />} />
 
         {flagsByEnv.length > 0 ? (
           <div>

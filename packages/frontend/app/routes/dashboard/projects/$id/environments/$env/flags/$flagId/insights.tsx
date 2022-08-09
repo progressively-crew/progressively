@@ -201,6 +201,7 @@ export default function FlagById() {
         <SectionHeader
           title="Insights"
           description={<Typography>Number of hits per date</Typography>}
+          icon={<AiOutlineBarChart />}
         />
 
         <Spacer size={4} />

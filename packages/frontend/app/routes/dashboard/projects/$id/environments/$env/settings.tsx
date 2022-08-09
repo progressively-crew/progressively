@@ -20,6 +20,7 @@ import { useLoaderData } from "@remix-run/react";
 import { Card, CardContent } from "~/components/Card";
 import { Stack } from "~/components/Stack";
 import { Heading } from "~/components/Heading";
+import { AiOutlineSetting } from "react-icons/ai";
 
 interface MetaArgs {
   data?: {
@@ -112,7 +113,7 @@ export default function EnvSettingsPage() {
       subNav={<EnvNavBar projectId={project.uuid} envId={environment.uuid} />}
     >
       <Stack spacing={8}>
-        <Heading as={"h2"} fontSize="earth">
+        <Heading as={"h2"} fontSize="earth" icon={<AiOutlineSetting />}>
           Settings
         </Heading>
 

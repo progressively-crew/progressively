@@ -25,6 +25,7 @@ export interface SectionHeaderProps extends React.HTMLAttributes<HTMLElement> {
   title: string;
   titleAs?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
   description?: React.ReactNode;
+  icon?: React.ReactNode;
 }
 
 const SectionHeaderWrapper = styled("div", {
@@ -35,6 +36,7 @@ export const SectionHeader = ({
   title,
   titleAs = "h2",
   description,
+  icon,
   ...props
 }: SectionHeaderProps) => {
   const id = useContext(SectionContext);
@@ -43,7 +45,7 @@ export const SectionHeader = ({
 
   return (
     <SectionHeaderWrapper {...props}>
-      <Heading as={titleAs} id={id} fontSize={fontSize}>
+      <Heading as={titleAs} id={id} fontSize={fontSize} icon={icon}>
         {title}
       </Heading>
 
