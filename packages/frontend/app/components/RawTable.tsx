@@ -35,6 +35,10 @@ const Table = styled("table", {
     paddingLeft: "$spacing$12",
   },
 
+  "& thead tr:first-of-type": {
+    borderTop: "none",
+  },
+
   "& tr": {
     transition: "all 0.2s",
     borderTop: "1px solid $heracles",
