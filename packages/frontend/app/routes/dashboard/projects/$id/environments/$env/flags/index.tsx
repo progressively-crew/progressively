@@ -126,7 +126,7 @@ export default function FlagsByEnvPage() {
           title={environment.name}
           startAction={
             <HideMobile>
-              <ButtonCopy toCopy={environment.clientKey}>
+              <ButtonCopy toCopy={environment.clientKey} small={true}>
                 {environment.clientKey}
               </ButtonCopy>
             </HideMobile>

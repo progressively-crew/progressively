@@ -20,6 +20,7 @@ const BrowserContent = styled("div", {
   padding: "$spacing$4 $spacing$4",
   color: "$hades",
   fontFamily: "$default",
+  background: "$apollo",
 });
 
 const ActionDots = styled("div", {

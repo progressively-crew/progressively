@@ -102,7 +102,7 @@ export default function EnvSettingsPage() {
           tagline="Environment"
           startAction={
             <HideMobile>
-              <ButtonCopy toCopy={environment.clientKey}>
+              <ButtonCopy toCopy={environment.clientKey} small={true}>
                 {environment.clientKey}
               </ButtonCopy>
             </HideMobile>

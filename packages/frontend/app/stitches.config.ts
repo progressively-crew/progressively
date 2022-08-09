@@ -127,6 +127,7 @@ export const {
       cardHeight: "160px",
       notAuthenticatedCardWidth: "400px",
       cta: "48px",
+      ctaSmall: "40px",
       emptyStateIconHeight: "160px",
       avatar: "40px",
     },

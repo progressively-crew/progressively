@@ -16,7 +16,7 @@ const StyledThumb = styled("span", {
   display: "block",
   width: 20,
   height: "100%",
-  backgroundColor: "$heracles",
+  backgroundColor: "$apollo",
   borderRadius: "9999px",
   boxShadow: `0 2px 2px $hermes`,
   transition: "transform 100ms",
@@ -43,7 +43,7 @@ const SwitchInnerWrapper = styled("span", {
   borderRadius: "9999px",
   width: 40,
   height: 20,
-  background: "$apollo",
+  background: "$heracles",
 
   variants: {
     checked: {

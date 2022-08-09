@@ -34,7 +34,7 @@ export const Header = ({
 
       {description}
 
-      {startAction && <HStack spacing={10}>{startAction}</HStack>}
+      {startAction && <HStack spacing={6}>{startAction}</HStack>}
     </div>
   );
 };

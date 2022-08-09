@@ -15,7 +15,7 @@ export const FlagList = ({ flags, projectId, envId }: FlagListProps) => {
       <thead>
         <tr>
           <th>Name</th>
-          <th>Description</th>
+          <th width="50%">Description</th>
           <th>Flag key</th>
         </tr>
       </thead>
@@ -31,7 +31,7 @@ export const FlagList = ({ flags, projectId, envId }: FlagListProps) => {
             </td>
             <td>{flagEnv.flag.description}</td>
             <td>
-              <ButtonCopy toCopy={flagEnv.flag.key}>
+              <ButtonCopy toCopy={flagEnv.flag.key} small={true}>
                 {flagEnv.flag.key}
               </ButtonCopy>
             </td>

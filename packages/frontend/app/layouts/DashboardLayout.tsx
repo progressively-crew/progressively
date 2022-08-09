@@ -25,6 +25,17 @@ const PageWrapper = styled("div", {
   gap: "$spacing$12",
 });
 
+const HeaderWrapper = styled("div", {
+  background: "$apollo",
+
+  variants: {
+    hasBreadcrumbs: {
+      true: { padding: "$spacing$4 0 $spacing$10 0" },
+      false: { padding: "$spacing$10 0 $spacing$10 0" },
+    },
+  },
+});
+
 export const DashboardLayout = ({
   user,
   children,
@@ -44,23 +55,22 @@ export const DashboardLayout = ({
 
             {user && user.fullname && <UseDropdown user={user as User} />}
           </Nav>
-
-          <Spacer size={5} />
         </InertWhenNavOpened>
 
-        {breadcrumb && (
-          <Container>
-            {breadcrumb}
-            <Spacer size={10} />
-          </Container>
-        )}
+        <HeaderWrapper hasBreadcrumbs={Boolean(breadcrumb)}>
+          {breadcrumb && (
+            <Container>
+              {breadcrumb}
+              <Spacer size={4} />
+            </Container>
+          )}
 
-        {header && (
           <Container>
             <header>{header}</header>
-            <Spacer size={10} />
           </Container>
-        )}
+        </HeaderWrapper>
+
+        <Spacer size={8} />
 
         <InertWhenNavOpened>
           <Main>

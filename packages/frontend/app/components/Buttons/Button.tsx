@@ -33,6 +33,12 @@ export const RawButton = styled("button", {
   },
 
   variants: {
+    small: {
+      true: {
+        height: "$ctaSmall",
+        padding: "0 $spacing$2",
+      },
+    },
     variant: {
       secondary: {
         background: "none",
@@ -78,6 +84,7 @@ export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   type?: "button" | "submit" | "reset";
   variant?: "ghost" | "danger" | "primary" | "secondary";
   icon?: React.ReactNode;
+  small?: boolean;
 }
 
 export const Button = ({

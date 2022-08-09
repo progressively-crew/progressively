@@ -11,7 +11,7 @@ export const ProjectList = ({ projects }: ProjectListProps) => {
     <RawTable>
       <thead>
         <tr>
-          <th>Name</th>
+          <th width="80%">Name</th>
           <th>Role</th>
         </tr>
       </thead>
