@@ -7,7 +7,6 @@ import {
 import { useState } from "react";
 import { ProgressivelyProvider } from "@progressively/react";
 import { getSSRProps } from "@progressively/react/lib/ssr";
-import { Browser } from "~/components/Browser";
 import { Container } from "~/components/Container";
 import { ExternalLink } from "~/components/ExternalLink";
 import { H1 } from "~/components/H1";
@@ -23,19 +22,8 @@ import bundleSize from "../progressively-sdk-sizes.json";
 import { useLoaderData } from "@remix-run/react";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { Heading } from "~/components/Heading";
-import { HStack } from "~/components/HStack";
-
-const ExampleOldPage = styled("div", {
-  padding: "$spacing$4",
-  border: "1px solid $tyche",
-});
-
-const ExampleNewPage = styled("div", {
-  padding: "$spacing$4",
-  border: "1px solid $tyche",
-  background: "$tyche",
-  color: "$heracles",
-});
+import { NewVariant } from "~/modules/marketing/components/HomeExample/NewVariant";
+import { OldVariant } from "~/modules/marketing/components/HomeExample/OldVariant";
 
 const Centered = styled("div", {
   display: "flex",
@@ -142,30 +130,14 @@ export default function Index() {
                   Example of how feature flags work
                 </VisuallyHidden>
 
-                <Browser>
-                  <div aria-live="polite">
-                    {showNewHomepage ? (
-                      <ExampleNewPage>
-                        <p>This is the new home page!</p>
-                      </ExampleNewPage>
-                    ) : (
-                      <ExampleOldPage>
-                        <p>
-                          This is an old page. {`Let's switch to the new page`}
-                        </p>
-                      </ExampleOldPage>
-                    )}
-                  </div>
+                <Switch
+                  label="Switch to the new homepage"
+                  type="button"
+                  checked={showNewHomepage}
+                  onClick={() => setShowNewHomepage((s) => !s)}
+                />
 
-                  <Spacer size={4} />
-
-                  <Switch
-                    label="Switch to the new homepage"
-                    type="button"
-                    checked={showNewHomepage}
-                    onClick={() => setShowNewHomepage((s) => !s)}
-                  />
-                </Browser>
+                {showNewHomepage ? <NewVariant /> : <OldVariant />}
               </section>
             </HeroContent>
           </Container>
