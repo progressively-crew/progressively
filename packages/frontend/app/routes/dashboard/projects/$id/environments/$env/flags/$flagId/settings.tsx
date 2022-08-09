@@ -21,7 +21,6 @@ import { HideMobile } from "~/components/HideMobile";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { MetaFunction, LoaderFunction, ActionFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { FiFlag } from "react-icons/fi";
 import { FlagHeaderAction } from "~/modules/flags/components/FlagHeaderAction";
 import { Card, CardContent } from "~/components/Card";
 import { Heading } from "~/components/Heading";
@@ -118,7 +117,6 @@ export default function FlagSettingPage() {
       link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`,
       label: currentFlag.name,
       forceNotCurrent: true,
-      icon: <FiFlag aria-hidden />,
     },
   ];
 
