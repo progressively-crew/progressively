@@ -103,7 +103,7 @@ export default function ProjectDetailPage() {
       }
     >
       <Section aria-labelledby="list-env-title" id="list-env-title">
-        <SectionHeader title="Environments" hiddenTitle />
+        <SectionHeader title="Environments" />
 
         {project.environments.length > 0 ? (
           <div>

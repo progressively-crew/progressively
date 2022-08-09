@@ -25,6 +25,7 @@ import { HideMobile } from "~/components/HideMobile";
 import { MetaFunction, LoaderFunction, ActionFunction } from "@remix-run/node";
 import { useLoaderData, useActionData, useTransition } from "@remix-run/react";
 import { Card, CardContent } from "~/components/Card";
+import { Heading } from "~/components/Heading";
 
 interface MetaArgs {
   data?: {
@@ -159,11 +160,15 @@ export default function SettingsPage() {
       }
     >
       <Stack spacing={8}>
+        <Heading as={"h2"} fontSize="earth">
+          Settings
+        </Heading>
         <Card>
           <CardContent>
             <Section id="members">
               <SectionHeader
                 title="Project members"
+                titleAs="h3"
                 description={
                   <Typography>
                     Remember that users with the role <em>Admin</em> {`can't`}{" "}
@@ -212,6 +217,7 @@ export default function SettingsPage() {
               <Section id="danger">
                 <SectionHeader
                   title="Danger zone"
+                  titleAs="h3"
                   description={
                     <Typography>
                       You can delete a project at any time, but you {`won’t`} be

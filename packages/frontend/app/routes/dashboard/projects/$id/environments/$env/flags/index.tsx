@@ -147,7 +147,7 @@ export default function FlagsByEnvPage() {
       }
     >
       <Section id="list-flags-title">
-        <SectionHeader title="Feature flags" hiddenTitle />
+        <SectionHeader title="Feature flags" />
 
         {flagsByEnv.length > 0 ? (
           <div>

@@ -114,13 +114,10 @@ export const loader: LoaderFunction = async ({
   };
 };
 
-const BigStatWrapper = styled("div", {
-  display: "flex",
+const InsightsGrid = styled("div", {
+  display: "grid",
   gap: "$spacing$4",
-
-  "@mobile": {
-    flexDirection: "column",
-  },
+  gridTemplateColumns: "auto 1fr",
 });
 
 export default function FlagById() {
@@ -221,17 +218,18 @@ export default function FlagById() {
         )}
 
         {hits.length > 0 && (
-          <>
-            <BigStatWrapper>
+          <InsightsGrid>
+            <div>
               <BigStat name="Evaluated as activated">
                 <p>{activatedCount}</p>
               </BigStat>
+
+              <Spacer size={4} />
+
               <BigStat name="Evaluated as NOT activated" secondary>
                 <p>{notActivatedCount}</p>
               </BigStat>
-            </BigStatWrapper>
-
-            <Spacer size={4} />
+            </div>
 
             <BigStat name="Flag hits per date" id="count-per-date-chart">
               <SwitchButton
@@ -261,9 +259,8 @@ export default function FlagById() {
                   },
                 ]}
               />
-              <Spacer size={8} />
             </BigStat>
-          </>
+          </InsightsGrid>
         )}
       </Section>
     </DashboardLayout>

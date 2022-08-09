@@ -1,6 +1,5 @@
 import { createContext, useContext } from "react";
 import { Heading } from "./Heading";
-import { VisuallyHidden } from "./VisuallyHidden";
 import { Spacer } from "./Spacer";
 import { styled } from "~/stitches.config";
 
@@ -25,9 +24,7 @@ export const Section = ({ children, id, ...props }: SectionProps) => {
 export interface SectionHeaderProps extends React.HTMLAttributes<HTMLElement> {
   title: string;
   titleAs?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
-  endAction?: React.ReactNode;
   description?: React.ReactNode;
-  hiddenTitle?: boolean;
 }
 
 const SectionHeaderWrapper = styled("div", {
@@ -37,26 +34,16 @@ const SectionHeaderWrapper = styled("div", {
 export const SectionHeader = ({
   title,
   titleAs = "h2",
-  endAction,
   description,
-  hiddenTitle,
   ...props
 }: SectionHeaderProps) => {
   const id = useContext(SectionContext);
 
-  if (hiddenTitle) {
-    return (
-      <VisuallyHidden>
-        <Heading as={titleAs} id={id}>
-          {title}
-        </Heading>
-      </VisuallyHidden>
-    );
-  }
+  const fontSize = titleAs === "h2" ? "earth" : "mars";
 
   return (
     <SectionHeaderWrapper {...props}>
-      <Heading as={titleAs} id={id} fontSize="earth">
+      <Heading as={titleAs} id={id} fontSize={fontSize}>
         {title}
       </Heading>
 
@@ -66,8 +53,6 @@ export const SectionHeader = ({
           {description}
         </>
       )}
-
-      {endAction}
     </SectionHeaderWrapper>
   );
 };

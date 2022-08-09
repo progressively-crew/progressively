@@ -186,7 +186,7 @@ export default function FlagById() {
       }
     >
       <Section id="concerned-audience">
-        <SectionHeader title="Strategies" hiddenTitle />
+        <SectionHeader title="Strategies" />
 
         {strategies.length > 0 ? (
           <div>

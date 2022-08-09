@@ -18,6 +18,8 @@ import { EnvNavBar } from "~/modules/environments/components/EnvNavbar";
 import { MetaFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { Card, CardContent } from "~/components/Card";
+import { Stack } from "~/components/Stack";
+import { Heading } from "~/components/Heading";
 
 interface MetaArgs {
   data?: {
@@ -109,42 +111,51 @@ export default function EnvSettingsPage() {
       }
       subNav={<EnvNavBar projectId={project.uuid} envId={environment.uuid} />}
     >
-      {userRole === UserRoles.Admin && (
-        <Card>
-          <CardContent>
-            <Section id="danger">
-              <SectionHeader
-                title="Danger zone"
-                description={
-                  <Typography>
-                    You can delete an environment at any time, but you {`won’t`}{" "}
-                    be able to access its flags will be removed and be falsy in
-                    your applications. Be sure to know what {`you're`} doing
-                    before removing an environment.
-                  </Typography>
-                }
-              />
+      <Stack spacing={8}>
+        <Heading as={"h2"} fontSize="earth">
+          Settings
+        </Heading>
 
-              <div>
-                <DeleteButton
-                  to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/delete`}
-                >
-                  <span>
-                    <span aria-hidden>
-                      Delete{" "}
-                      <HideMobile>{`"${environment.name}"`} forever</HideMobile>
+        {userRole === UserRoles.Admin && (
+          <Card>
+            <CardContent>
+              <Section id="danger">
+                <SectionHeader
+                  title="Danger zone"
+                  titleAs="h3"
+                  description={
+                    <Typography>
+                      You can delete an environment at any time, but you{" "}
+                      {`won’t`} be able to access its flags will be removed and
+                      be falsy in your applications. Be sure to know what{" "}
+                      {`you're`} doing before removing an environment.
+                    </Typography>
+                  }
+                />
+
+                <div>
+                  <DeleteButton
+                    to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/delete`}
+                  >
+                    <span>
+                      <span aria-hidden>
+                        Delete{" "}
+                        <HideMobile>
+                          {`"${environment.name}"`} forever
+                        </HideMobile>
+                      </span>
+
+                      <VisuallyHidden>
+                        Delete {`"${environment.name}"`} forever
+                      </VisuallyHidden>
                     </span>
-
-                    <VisuallyHidden>
-                      Delete {`"${environment.name}"`} forever
-                    </VisuallyHidden>
-                  </span>
-                </DeleteButton>
-              </div>
-            </Section>
-          </CardContent>
-        </Card>
-      )}
+                  </DeleteButton>
+                </div>
+              </Section>
+            </CardContent>
+          </Card>
+        )}
+      </Stack>
     </DashboardLayout>
   );
 }
