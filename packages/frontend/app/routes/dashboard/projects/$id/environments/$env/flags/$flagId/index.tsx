@@ -28,6 +28,7 @@ import { useSearchParams, useLoaderData } from "@remix-run/react";
 import { FlagHeaderAction } from "~/modules/flags/components/FlagHeaderAction";
 import { TagLine } from "~/components/Tagline";
 import { FiFlag } from "react-icons/fi";
+import { StrategyList } from "~/modules/strategies/components/StrategyList";
 
 interface MetaArgs {
   data?: {
@@ -202,17 +203,12 @@ export default function FlagById() {
         />
 
         {hasStrategies ? (
-          <div>
-            {strategies.map((strat) => (
-              <StrategyCard
-                key={`${strat.uuid}`}
-                projectId={project.uuid}
-                envId={environment.uuid}
-                flagId={currentFlag.uuid}
-                strat={strat}
-              />
-            ))}
-          </div>
+          <StrategyList
+            strategies={strategies}
+            projectId={project.uuid}
+            envId={environment.uuid}
+            flagId={currentFlag.uuid}
+          />
         ) : (
           <EmptyState
             title="No strategy found"

@@ -26,7 +26,6 @@ import {
   InlineSection,
   InlineSectionDescription,
 } from "~/components/InlineSection";
-import { styled } from "~/stitches.config";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import {
   MetaFunction,
@@ -162,15 +161,6 @@ export const loader: LoaderFunction = async ({
   };
 };
 
-const PageWrapper = styled("div", {
-  marginTop: "$spacing$10",
-});
-
-const AlignCta = styled("div", {
-  display: "flex",
-  justifyContent: "flex-end",
-});
-
 export default function StrategyCreatePage() {
   const transition = useTransition();
 
@@ -228,86 +218,84 @@ export default function StrategyCreatePage() {
       }
       status={actionData?.errors && <ErrorBox list={actionData.errors} />}
     >
-      <PageWrapper>
-        <Form method="post">
-          <Stack spacing={4}>
-            <Card>
-              <CardContent>
-                <InlineSection id="general-information">
-                  <div>
-                    <Typography as="h2" font="title">
-                      General information
-                    </Typography>
-                    <InlineSectionDescription>
-                      They will be listed in the strategy list of a specific
-                      feature flag. Make sure to use meaningful names.
-                    </InlineSectionDescription>
-                  </div>
+      <Form method="post">
+        <Stack spacing={4}>
+          <Card>
+            <CardContent>
+              <InlineSection id="general-information">
+                <div>
+                  <Typography as="h2" font="title">
+                    General information
+                  </Typography>
+                  <InlineSectionDescription>
+                    They will be listed in the strategy list of a specific
+                    feature flag. Make sure to use meaningful names.
+                  </InlineSectionDescription>
+                </div>
 
-                  <TextInput
-                    name="strategy-name"
-                    placeholder="e.g: Strategy 1"
-                    label="Strategy name"
-                    isInvalid={Boolean(errors["strategy-name"])}
-                  />
-                </InlineSection>
-              </CardContent>
-            </Card>
+                <TextInput
+                  name="strategy-name"
+                  placeholder="e.g: Strategy 1"
+                  label="Strategy name"
+                  isInvalid={Boolean(errors["strategy-name"])}
+                />
+              </InlineSection>
+            </CardContent>
+          </Card>
 
-            <Card>
-              <CardContent>
-                <InlineSection>
-                  <div>
-                    <Typography as="h2" font="title">
-                      Strategy audience
-                    </Typography>
-                    <InlineSectionDescription>
-                      It will determine the people you want to target using user
-                      specific criteria (qualitative).
-                    </InlineSectionDescription>
-                  </div>
+          <Card>
+            <CardContent>
+              <InlineSection>
+                <div>
+                  <Typography as="h2" font="title">
+                    Strategy audience
+                  </Typography>
+                  <InlineSectionDescription>
+                    It will determine the people you want to target using user
+                    specific criteria (qualitative).
+                  </InlineSectionDescription>
+                </div>
 
-                  <StrategyAudience
-                    strategyType={strategyType}
-                    onStrategyChange={setStrategyType}
-                    errors={errors}
-                  />
-                </InlineSection>
-              </CardContent>
-            </Card>
+                <StrategyAudience
+                  strategyType={strategyType}
+                  onStrategyChange={setStrategyType}
+                  errors={errors}
+                />
+              </InlineSection>
+            </CardContent>
+          </Card>
 
-            <Card>
-              <CardContent>
-                <InlineSection>
-                  <div>
-                    <Typography as="h2" font="title">
-                      Activation strategy
-                    </Typography>
-                    <InlineSectionDescription>
-                      It will determine the number of people you want to target
-                      (quantitative).
-                    </InlineSectionDescription>
-                  </div>
+          <Card>
+            <CardContent>
+              <InlineSection>
+                <div>
+                  <Typography as="h2" font="title">
+                    Activation strategy
+                  </Typography>
+                  <InlineSectionDescription>
+                    It will determine the number of people you want to target
+                    (quantitative).
+                  </InlineSectionDescription>
+                </div>
 
-                  <ActivationStrategy
-                    activationStrategy={activationStrategy}
-                    onActivationChange={setActivationStrategy}
-                  />
-                </InlineSection>
-              </CardContent>
-            </Card>
+                <ActivationStrategy
+                  activationStrategy={activationStrategy}
+                  onActivationChange={setActivationStrategy}
+                />
+              </InlineSection>
+            </CardContent>
+          </Card>
 
-            <AlignCta>
-              <SubmitButton
-                isLoading={transition.state === "submitting"}
-                loadingText="Saving the strategy, please wait..."
-              >
-                Save the strategy
-              </SubmitButton>
-            </AlignCta>
-          </Stack>
-        </Form>
-      </PageWrapper>
+          <div>
+            <SubmitButton
+              isLoading={transition.state === "submitting"}
+              loadingText="Saving the strategy, please wait..."
+            >
+              Save the strategy
+            </SubmitButton>
+          </div>
+        </Stack>
+      </Form>
     </DashboardLayout>
   );
 }
