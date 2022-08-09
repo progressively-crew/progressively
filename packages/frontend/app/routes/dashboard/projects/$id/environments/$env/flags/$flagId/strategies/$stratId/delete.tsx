@@ -29,7 +29,6 @@ import {
   Form,
   useTransition,
 } from "@remix-run/react";
-import { FiFlag } from "react-icons/fi";
 
 interface MetaArgs {
   data?: {
@@ -156,7 +155,6 @@ export default function DeleteStrategyPage() {
     {
       link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`,
       label: currentFlag.name,
-      icon: <FiFlag aria-hidden />,
     },
     {
       link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/1/delete`,

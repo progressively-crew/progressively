@@ -34,7 +34,6 @@ import {
   LoaderFunction,
 } from "@remix-run/node";
 import { useLoaderData, useActionData, Form } from "@remix-run/react";
-import { FiFlag } from "react-icons/fi";
 import { Card, CardContent } from "~/components/Card";
 import { Stack } from "~/components/Stack";
 
@@ -189,7 +188,6 @@ export default function StrategyCreatePage() {
     {
       link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`,
       label: currentFlag.name,
-      icon: <FiFlag aria-hidden />,
     },
     {
       link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`,
