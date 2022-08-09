@@ -7,7 +7,7 @@ import { Spinner } from "../Spinner";
 
 export const RawButton = styled("button", {
   boxSizing: "border-box",
-  background: "$apollo",
+  background: "transparent",
   borderRadius: "$borderRadius$regular",
   padding: "0 $spacing$4",
   color: "$hades",

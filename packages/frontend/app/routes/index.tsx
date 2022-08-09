@@ -221,6 +221,7 @@ export default function Index() {
                   <Heading id="privacy" fontSize="saturn">
                     People is what matters
                   </Heading>
+
                   <Typography>
                     We do not keep information about your users. Progressively
                     only records the flag and A/B variant resolution to give you
