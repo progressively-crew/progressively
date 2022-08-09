@@ -148,7 +148,7 @@ export default function Signin() {
             />
           </div>
 
-          <HStack spacing={4}>
+          <HStack spacing={4} direction={{ "@tablet": "column" }}>
             <SubmitButton
               isLoading={transition.state === "submitting"}
               loadingText="Signin in progress, please wait..."

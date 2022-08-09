@@ -1,12 +1,11 @@
 import { styled } from "~/stitches.config";
 
-export interface SpacerProps {
-  size: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16;
-}
-
-const RawSpacer = styled("div", {
+export const Spacer = styled<any, any>("div", {
   variants: {
     size: {
+      0: {
+        height: "$spacing$0",
+      },
       1: {
         height: "$spacing$1",
       },
@@ -58,7 +57,3 @@ const RawSpacer = styled("div", {
     },
   },
 });
-
-export const Spacer = ({ size }: SpacerProps) => {
-  return <RawSpacer size={size} />;
-};

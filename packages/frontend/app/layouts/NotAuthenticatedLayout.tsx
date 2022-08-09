@@ -1,6 +1,6 @@
 import { Container } from "~/components/Container";
+import { DarkLogo } from "~/components/Logo/DarkLogo";
 import { Main } from "~/components/Main";
-import { Menu } from "~/components/Menu";
 import { Nav } from "~/components/Nav";
 import { Spacer } from "~/components/Spacer";
 import { Stack } from "~/components/Stack";
@@ -26,11 +26,10 @@ export const NotAuthenticatedLayout = ({
   return (
     <div>
       <Nav aria-label="General">
-        <Menu to="/" hideOnMobile />
+        <DarkLogo to={"/"} />
       </Nav>
 
       <Spacer size={5} />
-
       <Main>
         <Container>
           <Wrapper>

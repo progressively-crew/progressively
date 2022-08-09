@@ -67,7 +67,7 @@ const MobileHeaderWrapper = styled("div", {
 
 const Separator = styled("div", {
   margin: "0 $spacing$2",
-  display: "inline-block",
+  display: "block",
 
   "& svg": {
     fill: "$hades",

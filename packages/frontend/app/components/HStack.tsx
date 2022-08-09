@@ -18,5 +18,19 @@ export const HStack = styled<any, any>("div", {
         alignItems: "flex-start",
       },
     },
+
+    direction: {
+      column: { flexDirection: "column" },
+    },
+
+    gap: {
+      "3": { gap: "$spacing$3" },
+    },
+
+    inline: {
+      true: {
+        display: "inline-flex",
+      },
+    },
   },
 });

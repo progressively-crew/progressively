@@ -1,4 +1,5 @@
 import { styled } from "~/stitches.config";
+import { Card, CardContent } from "./Card";
 import { Heading } from "./Heading";
 import { EmptyBoxIcon } from "./Icons/EmptyBoxIcon";
 import { Spacer } from "./Spacer";
@@ -34,20 +35,24 @@ export const EmptyState = ({
   action,
 }: EmptyStateProps) => {
   return (
-    <Wrapper>
-      <EmptyBoxIcon />
+    <Card>
+      <CardContent>
+        <Wrapper>
+          <EmptyBoxIcon />
 
-      <Spacer size={6} />
+          <Spacer size={6} />
 
-      <Stack spacing={2}>
-        <Heading as={titleAs} fontSize="earth" id={id}>
-          {title}
-        </Heading>
+          <Stack spacing={2}>
+            <Heading as={titleAs} fontSize="earth" id={id}>
+              {title}
+            </Heading>
 
-        {description}
+            {description}
 
-        {action}
-      </Stack>
-    </Wrapper>
+            <div>{action}</div>
+          </Stack>
+        </Wrapper>
+      </CardContent>
+    </Card>
   );
 };

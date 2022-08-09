@@ -65,9 +65,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]", () => {
           .and("have.attr", "aria-current", "page");
 
         cy.findByRole("heading", { name: "New homepage" }).should("be.visible");
-        cy.findByRole("heading", { name: "Super strategy" }).should(
-          "be.visible"
-        );
+        cy.findAllByText("Super strategy").should("be.visible");
 
         cy.checkA11y();
       });

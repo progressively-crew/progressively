@@ -36,9 +36,18 @@ const HorizontalNavWrapper = styled("nav", {
     color: "$nemesis",
   },
 
-  "@mobile": {
+  "@tablet": {
+    width: "100%",
+    marginTop: "$spacing$6",
+
     "& ul": {
+      flexDirection: "row",
       overflow: "auto",
+      justifyContent: "center",
+    },
+
+    "& ul li a": {
+      padding: "$spacing$4",
     },
   },
 });
