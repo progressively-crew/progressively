@@ -5,6 +5,7 @@ import { Typography } from "./Typography";
 
 const BigStatLabel = styled(Typography, {
   marginBottom: "$spacing$4",
+  fontFamily: "$title",
 
   "& h3": {
     lineHeight: "unset",

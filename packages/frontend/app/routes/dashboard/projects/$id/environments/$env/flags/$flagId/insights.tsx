@@ -198,13 +198,7 @@ export default function FlagById() {
       }
     >
       <Section id="flag-status">
-        <SectionHeader
-          title="Insights"
-          description={<Typography>Number of hits per date</Typography>}
-          icon={<AiOutlineBarChart />}
-        />
-
-        <Spacer size={4} />
+        <SectionHeader title="Insights" icon={<AiOutlineBarChart />} />
 
         {hits.length === 0 && (
           <EmptyState

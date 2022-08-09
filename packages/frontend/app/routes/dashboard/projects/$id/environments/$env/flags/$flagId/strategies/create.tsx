@@ -26,7 +26,6 @@ import {
   InlineSection,
   InlineSectionDescription,
 } from "~/components/InlineSection";
-import { Divider } from "~/components/Divider";
 import { styled } from "~/stitches.config";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import {
@@ -37,6 +36,8 @@ import {
 } from "@remix-run/node";
 import { useLoaderData, useActionData, Form } from "@remix-run/react";
 import { FiFlag } from "react-icons/fi";
+import { Card, CardContent } from "~/components/Card";
+import { Stack } from "~/components/Stack";
 
 interface MetaArgs {
   data?: {
@@ -229,74 +230,82 @@ export default function StrategyCreatePage() {
     >
       <PageWrapper>
         <Form method="post">
-          <InlineSection id="general-information">
-            <div>
-              <Typography as="h2" font="title">
-                General information
-              </Typography>
-              <InlineSectionDescription>
-                They will be listed in the strategy list of a specific feature
-                flag. Make sure to use meaningful names.
-              </InlineSectionDescription>
-            </div>
+          <Stack spacing={4}>
+            <Card>
+              <CardContent>
+                <InlineSection id="general-information">
+                  <div>
+                    <Typography as="h2" font="title">
+                      General information
+                    </Typography>
+                    <InlineSectionDescription>
+                      They will be listed in the strategy list of a specific
+                      feature flag. Make sure to use meaningful names.
+                    </InlineSectionDescription>
+                  </div>
 
-            <TextInput
-              name="strategy-name"
-              placeholder="e.g: Strategy 1"
-              label="Strategy name"
-              isInvalid={Boolean(errors["strategy-name"])}
-            />
-          </InlineSection>
+                  <TextInput
+                    name="strategy-name"
+                    placeholder="e.g: Strategy 1"
+                    label="Strategy name"
+                    isInvalid={Boolean(errors["strategy-name"])}
+                  />
+                </InlineSection>
+              </CardContent>
+            </Card>
 
-          <Divider />
+            <Card>
+              <CardContent>
+                <InlineSection>
+                  <div>
+                    <Typography as="h2" font="title">
+                      Strategy audience
+                    </Typography>
+                    <InlineSectionDescription>
+                      It will determine the people you want to target using user
+                      specific criteria (qualitative).
+                    </InlineSectionDescription>
+                  </div>
 
-          <InlineSection>
-            <div>
-              <Typography as="h2" font="title">
-                Strategy audience
-              </Typography>
-              <InlineSectionDescription>
-                It will determine the people you want to target using user
-                specific criteria (qualitative).
-              </InlineSectionDescription>
-            </div>
+                  <StrategyAudience
+                    strategyType={strategyType}
+                    onStrategyChange={setStrategyType}
+                    errors={errors}
+                  />
+                </InlineSection>
+              </CardContent>
+            </Card>
 
-            <StrategyAudience
-              strategyType={strategyType}
-              onStrategyChange={setStrategyType}
-              errors={errors}
-            />
-          </InlineSection>
+            <Card>
+              <CardContent>
+                <InlineSection>
+                  <div>
+                    <Typography as="h2" font="title">
+                      Activation strategy
+                    </Typography>
+                    <InlineSectionDescription>
+                      It will determine the number of people you want to target
+                      (quantitative).
+                    </InlineSectionDescription>
+                  </div>
 
-          <Divider />
+                  <ActivationStrategy
+                    activationStrategy={activationStrategy}
+                    onActivationChange={setActivationStrategy}
+                  />
+                </InlineSection>
+              </CardContent>
+            </Card>
 
-          <InlineSection>
-            <div>
-              <Typography as="h2" font="title">
-                Activation strategy
-              </Typography>
-              <InlineSectionDescription>
-                It will determine the number of people you want to target
-                (quantitative).
-              </InlineSectionDescription>
-            </div>
-
-            <ActivationStrategy
-              activationStrategy={activationStrategy}
-              onActivationChange={setActivationStrategy}
-            />
-          </InlineSection>
-
-          <Divider />
-
-          <AlignCta>
-            <SubmitButton
-              isLoading={transition.state === "submitting"}
-              loadingText="Saving the strategy, please wait..."
-            >
-              Save the strategy
-            </SubmitButton>
-          </AlignCta>
+            <AlignCta>
+              <SubmitButton
+                isLoading={transition.state === "submitting"}
+                loadingText="Saving the strategy, please wait..."
+              >
+                Save the strategy
+              </SubmitButton>
+            </AlignCta>
+          </Stack>
         </Form>
       </PageWrapper>
     </DashboardLayout>
