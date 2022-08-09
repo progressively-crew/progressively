@@ -1,5 +1,6 @@
 import { Link } from "~/components/Link";
 import { RawTable } from "~/components/RawTable";
+import { Tag } from "~/components/Tag";
 import { UserProject } from "../types";
 
 export interface ProjectListProps {
@@ -23,7 +24,9 @@ export const ProjectList = ({ projects }: ProjectListProps) => {
                 {userProject.project.name}
               </Link>
             </td>
-            <td>{userProject.role}</td>
+            <td>
+              <Tag>{userProject.role}</Tag>
+            </td>
           </tr>
         ))}
       </tbody>
