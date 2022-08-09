@@ -193,7 +193,7 @@ export default function FlagById() {
             <CreateButton
               to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
             >
-              Add a strategy
+              Create a strategy
             </CreateButton>
 
             <Spacer size={4} />
@@ -224,7 +224,7 @@ export default function FlagById() {
               <CreateButton
                 to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
               >
-                Add a strategy
+                Create a strategy
               </CreateButton>
             }
           />
