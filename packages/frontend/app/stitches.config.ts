@@ -57,7 +57,7 @@ export const colors = {
   hades: "#0E061F",
   nemesis: "#4B37A9",
 
-  heracles: "#efefef",
+  heracles: "#f4f4f4",
   apollo: "#fff",
   hera: "#eee",
   //secondaries
