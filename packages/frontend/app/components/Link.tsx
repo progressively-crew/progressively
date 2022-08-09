@@ -19,6 +19,7 @@ const RawLink = styled<any, any>("a", {
     color: "$nemesis",
   },
   variants: {
+    active: mapTokenToVariant("color", colors, undefined, "active"),
     color: mapTokenToVariant("color", colors),
     fontSize: mapTokenToVariant("fontSize", fontSizes),
   },

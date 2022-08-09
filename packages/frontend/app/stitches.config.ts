@@ -86,15 +86,20 @@ export const colors = {
 export const mapTokenToVariant = (
   cssAttribute: string,
   partialTheme: any,
-  prefix?: string
+  prefix?: string,
+  pseudoElement?: string
 ) => {
   const partialThemeKeys = Object.keys(partialTheme);
-  const computedVariant = {};
+  const computedVariant: any = {};
 
   for (const key of partialThemeKeys) {
-    computedVariant[key] = {
+    const rule = {
       [cssAttribute]: prefix ? `${prefix}$${key}` : `$${key}`,
     };
+
+    computedVariant[key] = pseudoElement
+      ? { [`&:${pseudoElement}`]: rule }
+      : rule;
   }
 
   return computedVariant;
