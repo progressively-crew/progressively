@@ -5,11 +5,7 @@ import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { Header } from "~/components/Header";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
-import {
-  CardSection,
-  SectionContent,
-  SectionHeader,
-} from "~/components/Section";
+import { Section, SectionHeader } from "~/components/Section";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { authGuard } from "~/modules/auth/services/auth-guard";
@@ -28,6 +24,7 @@ import { Crumbs } from "~/components/Breadcrumbs/types";
 import { HideMobile } from "~/components/HideMobile";
 import { MetaFunction, LoaderFunction, ActionFunction } from "@remix-run/node";
 import { useLoaderData, useActionData, useTransition } from "@remix-run/react";
+import { Card, CardContent } from "~/components/Card";
 
 interface MetaArgs {
   data?: {
@@ -162,76 +159,88 @@ export default function SettingsPage() {
       }
     >
       <Stack spacing={8}>
-        <CardSection id="members">
-          <SectionHeader
-            title="Project members"
-            description={
-              <Typography>
-                Remember that users with the role <em>Admin</em> {`can't`} be
-                removed.
-              </Typography>
-            }
-          />
+        <Card>
+          <CardContent>
+            <Section id="members">
+              <SectionHeader
+                title="Project members"
+                description={
+                  <Typography>
+                    Remember that users with the role <em>Admin</em> {`can't`}{" "}
+                    be removed.
+                  </Typography>
+                }
+              />
 
-          <SectionContent>
-            {data?.errors.unauthorized && (
-              <>
-                <ErrorBox list={data.errors} />
-                <Spacer size={4} />
-              </>
-            )}
-            {data?.success && (
-              <>
-                <SuccessBox id="member-deleted">
-                  {data?.removedCount} user have been successfully removed from
-                  the project.
-                </SuccessBox>
-                <Spacer size={4} />
-              </>
-            )}
+              <div>
+                {data?.errors.unauthorized && (
+                  <>
+                    <ErrorBox list={data.errors} />
+                    <Spacer size={4} />
+                  </>
+                )}
+                {data?.success && (
+                  <>
+                    <SuccessBox id="member-deleted">
+                      {data?.removedCount} user have been successfully removed
+                      from the project.
+                    </SuccessBox>
+                    <Spacer size={4} />
+                  </>
+                )}
 
-            <UserTable
-              projectId={project.uuid}
-              userProjects={project.userProject || []}
-              labelledBy="members"
-              canEdit={userRole === UserRoles.Admin}
-            />
+                <UserTable
+                  projectId={project.uuid}
+                  userProjects={project.userProject || []}
+                  labelledBy="members"
+                  canEdit={userRole === UserRoles.Admin}
+                />
 
-            <Typography aria-live="polite">
-              {transition.state === "submitting" ? "Removing the users..." : ""}
-            </Typography>
-          </SectionContent>
-        </CardSection>
+                <Typography aria-live="polite">
+                  {transition.state === "submitting"
+                    ? "Removing the users..."
+                    : ""}
+                </Typography>
+              </div>
+            </Section>
+          </CardContent>
+        </Card>
 
         {userRole === UserRoles.Admin && (
-          <CardSection id="danger">
-            <SectionHeader
-              title="Danger zone"
-              description={
-                <Typography>
-                  You can delete a project at any time, but you {`won’t`} be
-                  able to access its environments and all the related flags will
-                  be removed and be falsy in your applications. Be sure to know
-                  what {`you're`} doing before removing a project.
-                </Typography>
-              }
-            />
+          <Card>
+            <CardContent>
+              <Section id="danger">
+                <SectionHeader
+                  title="Danger zone"
+                  description={
+                    <Typography>
+                      You can delete a project at any time, but you {`won’t`} be
+                      able to access its environments and all the related flags
+                      will be removed and be falsy in your applications. Be sure
+                      to know what {`you're`} doing before removing a project.
+                    </Typography>
+                  }
+                />
 
-            <SectionContent>
-              <DeleteButton to={`/dashboard/projects/${project.uuid}/delete`}>
-                <span>
-                  <span aria-hidden>
-                    Delete{" "}
-                    <HideMobile>{`"${project.name}"`} forever</HideMobile>
-                  </span>
+                <div>
+                  <DeleteButton
+                    to={`/dashboard/projects/${project.uuid}/delete`}
+                  >
+                    <span>
+                      <span aria-hidden>
+                        Delete{" "}
+                        <HideMobile>{`"${project.name}"`} forever</HideMobile>
+                      </span>
 
-                  <VisuallyHidden>
-                    Delete {`"${project.name}"`} forever
-                  </VisuallyHidden>
-                </span>
-              </DeleteButton>
-            </SectionContent>
-          </CardSection>
+                      <VisuallyHidden>
+                        Delete {`"${project.name}"`} forever
+                      </VisuallyHidden>
+                    </span>
+                  </DeleteButton>
+                </div>
+              </Section>
+            </CardContent>
+          </Card>
         )}
       </Stack>
     </DashboardLayout>

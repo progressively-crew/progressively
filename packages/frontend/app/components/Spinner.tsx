@@ -6,10 +6,10 @@ const spin = keyframes({
 
 export const Spinner = styled("div", {
   display: "inline-block",
-  width: "16px",
-  height: "16px",
-  border: " 3px solid $backgroundAccent",
+  width: "10px",
+  height: "10px",
+  border: "3px solid $apollo",
   borderRadius: " 50%",
-  borderTopColor: "#fff",
+  borderTopColor: "$currentColor",
   animation: `${spin} 1s ease-in-out infinite`,
 });

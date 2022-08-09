@@ -13,14 +13,14 @@ const NavWrapper = styled("nav", {
   position: "fixed",
   left: 0,
   top: 0,
-  background: "$background",
+  background: "$heracles",
   height: "100%",
   width: "100%",
   zIndex: 2,
 
   "& a": {
     fontSize: "$mars",
-    color: "$textAccent",
+    color: "$hades",
   },
 
   "& svg": {
@@ -32,7 +32,7 @@ const NavWrapper = styled("nav", {
 
     "& li:last-of-type a": {
       fontWeight: "$fontWeights$bold",
-      color: "$secondary",
+      color: "$nemesis",
     },
   },
 
@@ -70,7 +70,7 @@ const Separator = styled("div", {
   display: "inline-block",
 
   "& svg": {
-    fill: "$text",
+    fill: "$hades",
   },
 });
 

@@ -21,25 +21,12 @@ import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import { AuthCredentials } from "~/modules/auth/types";
 import { commitSession, getSession } from "~/sessions";
-import { styled } from "~/stitches.config";
 import { authenticate } from "../modules/auth/services/authenticate";
 import { validateSigninForm } from "../modules/auth/validators/validate-signin-form";
-
-const ForgotPasswordLink = styled(Link, {
-  fontSize: "$uranus",
-});
-
-const SignupLinkWrapper = styled("div", {
-  paddingTop: "$spacing$4",
-  borderTop: "1px solid $background",
-  textAlign: "center",
-
-  "& a": {
-    fontSize: "$uranus",
-    color: "$secondary",
-    textAlign: "center",
-  },
-});
+import { Typography } from "~/components/Typography";
+import { HStack } from "~/components/HStack";
+import { Button } from "~/components/Buttons/Button";
+import { AiOutlineLock } from "react-icons/ai";
 
 export const meta: MetaFunction = () => {
   return {
@@ -104,7 +91,23 @@ export default function Signin() {
 
   return (
     <NotAuthenticatedLayout
-      header={<Header title="Signin" />}
+      header={
+        <Header
+          title="Signin"
+          description={
+            showRegister ? (
+              <Typography>
+                If you {`don't`} have a user account yet, you can{" "}
+                <Link
+                  to="/register"
+                  color="nemesis"
+                >{`create an account`}</Link>
+                .
+              </Typography>
+            ) : null
+          }
+        />
+      }
       status={
         <>
           {(errors?.password || errors?.email || errors?.badUser) && (
@@ -143,24 +146,23 @@ export default function Signin() {
               placeholder="************"
               autoComplete="current-password"
             />
-
-            <ForgotPasswordLink to="/forgot-password">{`I forgot my password`}</ForgotPasswordLink>
           </div>
 
-          <SubmitButton
-            isLoading={transition.state === "submitting"}
-            loadingText="Signin in progress, please wait..."
-          >
-            Sign in
-          </SubmitButton>
+          <HStack spacing={4}>
+            <SubmitButton
+              isLoading={transition.state === "submitting"}
+              loadingText="Signin in progress, please wait..."
+            >
+              Sign in
+            </SubmitButton>
+
+            <Button
+              to="/forgot-password"
+              icon={<AiOutlineLock aria-hidden />}
+            >{`I forgot my password`}</Button>
+          </HStack>
         </FormGroup>
       </Form>
-
-      {showRegister ? (
-        <SignupLinkWrapper>
-          <Link to="/register">{`Create an account`}</Link>
-        </SignupLinkWrapper>
-      ) : null}
     </NotAuthenticatedLayout>
   );
 }

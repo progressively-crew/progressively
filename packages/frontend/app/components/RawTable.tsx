@@ -8,48 +8,51 @@ const Wrapper = styled("div", {
 });
 
 const Table = styled("table", {
-  color: "$text",
+  color: "$hades",
   width: "100%",
   fontFamily: "$default",
 
   "& th": {
-    padding: "$spacing$4",
+    padding: "$spacing$6 0",
     textAlign: "left",
-    background: "$background",
     textTransform: "uppercase",
     fontSize: "$neptune",
     fontFamily: "$title",
   },
-  "& th:first-of-type": {
-    borderStartStartRadius: "$borderRadius$regular",
+
+  "& tr td:first-of-type": {
+    paddingLeft: "$spacing$12",
   },
-  "& th:last-of-type": {
-    borderStartEndRadius: "$borderRadius$regular",
-  },
-  "& tr": {
-    borderBottom: "1px solid $border",
+  "& tr td:last-of-type": {
+    paddingLeft: "$spacing$12",
   },
 
-  "& tbody tr:nth-child(odd)": { background: "$backgroundAccent" },
+  "& tr th:first-of-type": {
+    paddingLeft: "$spacing$12",
+  },
+
+  "& tr th:last-of-type": {
+    paddingLeft: "$spacing$12",
+  },
+
+  "& thead tr:first-of-type": {
+    borderTop: "none",
+  },
+
+  "& tr": {
+    transition: "all 0.2s",
+    borderTop: "1px solid $heracles",
+  },
 
   "& tbody tr:hover": {
-    background: "$border",
-  },
-  "& tbody tr": {
-    "&:focus-within": {
-      background: "$border",
-    },
-
-    "&.row-selected": {
-      background: "$background",
-    },
+    background: "$heracles",
   },
   "& td": {
-    padding: "$spacing$4",
-    color: "$textAccent",
+    padding: "$spacing$4 0",
+    color: "$hades",
   },
   "& a": {
-    color: "$textAccent",
+    color: "$hades",
   },
 });
 

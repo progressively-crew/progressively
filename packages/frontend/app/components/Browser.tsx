@@ -7,18 +7,18 @@ export interface BrowserProps {
 const BrowserWrapper = styled("div", {
   width: "100%",
   borderRadius: "$borderRadius$regular",
-  border: "4px solid $backgroundAccent",
-  background: "$background",
+  overflow: "hidden",
+  background: "$heracles",
 });
 
 const ActionBar = styled("div", {
   padding: "$spacing$4",
-  background: "$backgroundAccent",
+  background: "$nemesis",
 });
 
 const BrowserContent = styled("div", {
   padding: "$spacing$4 $spacing$4",
-  color: "$text",
+  color: "$hades",
   fontFamily: "$default",
 });
 

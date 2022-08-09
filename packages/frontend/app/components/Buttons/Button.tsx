@@ -7,14 +7,15 @@ import { Spinner } from "../Spinner";
 
 export const RawButton = styled("button", {
   boxSizing: "border-box",
-  background: "$background",
+  background: "$heracles",
   borderRadius: "$borderRadius$regular",
   padding: "0 $spacing$4",
-  color: "$textAccent",
+  color: "$hades",
   fontSize: "$uranus",
   fontFamily: "$default",
-  border: "2px solid $secondary",
+  border: "2px solid transparent",
   display: "inline-flex",
+  alignItems: "center",
   textDecoration: "none",
   height: "$cta",
   cursor: "pointer",
@@ -33,27 +34,35 @@ export const RawButton = styled("button", {
 
   variants: {
     variant: {
-      ghost: {
-        background: "$backgroundAccent",
-        border: "2px solid $border",
+      secondary: {
+        background: "none",
+        border: "2px solid $nemesis",
+        color: "$nemesis",
         "&:active": {
-          background: "$background",
+          opacity: "0.9",
+        },
+      },
+      ghost: {
+        background: "none",
+        border: "2px solid transparent",
+        color: "$hermes",
+        "&:active": {
+          opacity: "0.9",
         },
       },
       danger: {
-        border: "2px solid $primary",
-        background: "$primary",
+        background: "$tyche",
+        color: "$hades",
         "&:active": {
           opacity: "0.9",
         },
       },
 
       primary: {
-        background: "$secondary",
-        border: "none",
-        color: "$background",
+        background: "$hermes",
+        color: "$hades",
         "&:active": {
-          opacity: "0.5",
+          opacity: "0.8",
         },
       },
     },
@@ -67,7 +76,7 @@ export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean;
   loadingText?: string;
   type?: "button" | "submit" | "reset";
-  variant?: "ghost" | "danger" | "primary";
+  variant?: "ghost" | "danger" | "primary" | "secondary";
   icon?: React.ReactNode;
 }
 

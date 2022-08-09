@@ -6,7 +6,7 @@ const Wrapper = styled("span", {
   "& svg": {
     verticalAlign: "text-top",
     fontSize: "$neptune",
-    color: "$secondary",
+    color: "$nemesis",
   },
 });
 

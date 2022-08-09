@@ -19,6 +19,7 @@ import { MetaFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { EnvList } from "~/modules/environments/components/EnvList";
+import { Card } from "~/components/Card";
 
 interface MetaArgs {
   data?: {
@@ -114,10 +115,12 @@ export default function ProjectDetailPage() {
 
             <Spacer size={4} />
 
-            <EnvList
-              environments={project.environments}
-              projectId={project.uuid}
-            />
+            <Card>
+              <EnvList
+                environments={project.environments}
+                projectId={project.uuid}
+              />
+            </Card>
           </div>
         ) : null}
 

@@ -23,17 +23,18 @@ import bundleSize from "../progressively-sdk-sizes.json";
 import { useLoaderData } from "@remix-run/react";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { Heading } from "~/components/Heading";
+import { HStack } from "~/components/HStack";
 
 const ExampleOldPage = styled("div", {
   padding: "$spacing$4",
-  border: "1px solid $secondary",
+  border: "1px solid $tyche",
 });
 
 const ExampleNewPage = styled("div", {
   padding: "$spacing$4",
-  border: "1px solid $secondary",
-  background: "$secondary",
-  color: "$background",
+  border: "1px solid $tyche",
+  background: "$tyche",
+  color: "$heracles",
 });
 
 const Centered = styled("div", {
@@ -44,19 +45,25 @@ const Centered = styled("div", {
 });
 
 const InvertedBackground = styled("div", {
-  background: "$backgroundAccent",
+  background: "$apollo",
   padding: "$spacing$16 0",
 });
 
 const Hero = styled("div", {
+  background: "$nike",
+  height: "600px",
   display: "flex",
-  gap: "$spacing$8",
-  padding: "$spacing$16 0",
   alignItems: "center",
 
   "@mobile": {
     flexDirection: "column",
   },
+});
+
+const HeroContent = styled("div", {
+  display: "grid",
+  gridTemplateColumns: "1fr 1fr",
+  gap: "$spacing$21",
 });
 
 const HeadingWrapper = styled("div", {
@@ -116,14 +123,14 @@ export default function Index() {
   return (
     <ProgressivelyProvider {...progressivelyProps}>
       <MarketingLayout>
-        <Spacer size={16} />
-
-        <Stack spacing={16}>
+        <Hero>
           <Container>
-            <Hero>
+            <HeroContent>
               <HeadingWrapper>
-                <H1>Feature flags service that does not kill performances</H1>
-                <Typography>
+                <H1 color="heracles">
+                  Rollout quickly, effectively, progressively
+                </H1>
+                <Typography color="heracles">
                   Progressively provides simple solutions for feature flagging
                   and A/B testing with an accessible dashboard, lightweight
                   browser SDKs — and it respects your privacy.
@@ -160,9 +167,10 @@ export default function Index() {
                   />
                 </Browser>
               </section>
-            </Hero>
+            </HeroContent>
           </Container>
-
+        </Hero>
+        <Stack spacing={16}>
           <section aria-labelledby="bundle-size">
             <InvertedBackground>
               <Container>

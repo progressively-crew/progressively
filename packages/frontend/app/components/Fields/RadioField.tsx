@@ -1,5 +1,6 @@
 import { styled } from "~/stitches.config";
 import { HStack } from "../HStack";
+import { Spacer } from "../Spacer";
 import { Stack } from "../Stack";
 import { Label } from "./Label";
 
@@ -20,7 +21,7 @@ const Input = styled("input", {
   margin: 0,
   padding: 0,
   backgroundColor: "transparent",
-  border: "1px solid $secondary",
+  border: "1px solid $hermes",
   borderRadius: "50%",
   height: 24,
   width: 24,
@@ -37,7 +38,7 @@ const Input = styled("input", {
     top: 2,
   },
   "&:checked:after": {
-    background: "$secondary",
+    background: "$hermes",
   },
 });
 
@@ -55,6 +56,7 @@ export const RadioField = <T extends string>({
   return (
     <Stack as="fieldset" spacing={4}>
       <Label as="legend">{title}</Label>
+      <Spacer size={2} />
       <Stack spacing={2}>
         {options.map((opt) => (
           <HStack key={opt.value} spacing={2}>

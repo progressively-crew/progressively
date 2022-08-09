@@ -1,7 +1,7 @@
 import { styled } from "~/stitches.config";
 
 export const Divider = styled("hr", {
-  background: "$backgroundAccent",
+  background: "$apollo",
   margin: "$spacing$8 0",
   height: "2px",
   border: "none",

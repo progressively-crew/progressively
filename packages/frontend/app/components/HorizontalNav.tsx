@@ -4,9 +4,7 @@ import { styled } from "~/stitches.config";
 const HorizontalNavWrapper = styled("nav", {
   "& ul": {
     width: "100%",
-    background: "$backgroundAccent",
     display: "flex",
-    borderRadius: "$borderRadius$regular",
     alignItems: "center",
   },
 
@@ -20,7 +18,7 @@ const HorizontalNavWrapper = styled("nav", {
     paddingRight: "$spacing$6",
     alignItems: "center",
     textDecoration: "none",
-    color: "$textAccent",
+    color: "$hades",
     borderBottom: "4px solid transparent",
     borderTop: "4px solid transparent",
     gap: "$spacing$2",
@@ -29,19 +27,14 @@ const HorizontalNavWrapper = styled("nav", {
     whiteSpace: "nowrap",
   },
 
-  "& ul li:first-of-type a": {
-    borderEndStartRadius: "$borderRadius$regular",
-    borderStartStartRadius: "$borderRadius$regular",
-  },
-
   "& ul li a:hover": {
-    borderBottomColor: "$hoverBg",
-    color: "$hoverFg",
+    borderBottomColor: "$nemesis",
+    color: "$nemesis",
   },
 
   "& ul li a.active": {
-    borderBottomColor: "$hoverBg",
-    color: "$hoverFg",
+    borderBottomColor: "$nemesis",
+    color: "$nemesis",
   },
 
   "& ul li svg": {

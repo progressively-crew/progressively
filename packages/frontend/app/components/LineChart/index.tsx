@@ -19,7 +19,7 @@ const ChartWrapper = styled("div", {
     fontSize: "$jupiter",
     fontWeight: "$bold",
     border: "none",
-    color: "$textAccent",
+    color: "$hades",
   },
 });
 
@@ -56,7 +56,7 @@ export const LineChart = ({
   }
 
   const contentStyle = {
-    background: theme.colors.background.toString(),
+    background: theme.colors.heracles.toString(),
     border: "none",
     borderRadius: theme.borderRadius.regular.toString(),
     padding: theme.spacing[4].toString(),

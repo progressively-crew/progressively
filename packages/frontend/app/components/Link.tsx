@@ -1,17 +1,27 @@
 import { Link as RLink } from "@remix-run/react";
 import { forwardRef, HTMLAttributes } from "react";
-import { styled } from "~/stitches.config";
+import {
+  colors,
+  fontSizes,
+  mapTokenToVariant,
+  styled,
+} from "~/stitches.config";
 
-const RawLink = styled("a", {
+const RawLink = styled<any, any>("a", {
   display: "inline-flex",
   fontSize: "$jupiter",
-  color: "$text",
+  color: "$hades",
   fontFamily: "$default",
   height: "$cta",
   alignItems: "center",
 
   "&:active": {
-    color: "$textAccent",
+    color: "$nemesis",
+  },
+  variants: {
+    active: mapTokenToVariant("color", colors, undefined, "active"),
+    color: mapTokenToVariant("color", colors),
+    fontSize: mapTokenToVariant("fontSize", fontSizes),
   },
 });
 
@@ -23,6 +33,8 @@ export interface LinkProps extends HTMLAttributes<HTMLAnchorElement> {
   rel?: string;
   endIcon?: string;
   startIcon?: string;
+  active?: string;
+  hover?: string;
 }
 export const Link = forwardRef(
   ({ to, children, href, target, rel, ...props }: LinkProps, ref: any) => {

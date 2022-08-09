@@ -17,6 +17,11 @@ export const spacing = {
   13: "52px",
   14: "56px",
   16: "60px",
+  17: "64px",
+  18: "68px",
+  19: "72px",
+  20: "76px",
+  21: "80px",
 };
 
 export const fontWeights = {
@@ -47,27 +52,31 @@ export const fontSizes = {
 };
 
 export const colors = {
-  primary: "#c3134e",
-  secondary: "hsl(340deg, 82%, 85%)",
-  text: "#9ba1a6",
-  textAccent: "white",
-  background: "#151722",
-  backgroundAccent: "rgb(26, 28, 39)",
-  border: "rgb(36, 38, 49)",
+  // New colors
+  //primaries
+  hades: "#0E061F",
+  nemesis: "#4B37A9",
 
+  heracles: "#f4f4f4",
+  apollo: "#fff",
+  hera: "#eee",
+  //secondaries
+  nike: "linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), linear-gradient(220.78deg, #F8B9CE 9.58%, #9F47A0 36.95%, #430A8B 70.69%, #1E4EC8 107.45%)",
+  hermes: "#9ED9D0",
+  tyche: "#E0A0C6",
+  hypnos: "#430A8B",
+
+  // Old colors
   focus: "#4D90FE",
-  hoverBg: "hsl(340deg, 82%, 85%)",
-  hoverFg: "hsl(340deg, 82%, 85%)",
-  activeBg: "hsl(340deg, 82%, 85%)",
-  activeFg: "hsl(340deg, 82%, 85%)",
+  activeBg: "hsl(340deg, 82%, 35%)",
 
   successBg: "#c8e6c9",
   successFg: "#1b5e20",
   successBorder: "#66bb6a",
 
-  errorBg: "#ffcdd2",
-  errorFg: "#b71c1c",
-  errorBorder: "#ef5350",
+  errorBg: "#800118",
+  errorFg: "#fff",
+  errorBorder: "#800118",
 
   warningBg: "#ffecb3",
   warningFg: "#bf360c",
@@ -77,15 +86,20 @@ export const colors = {
 export const mapTokenToVariant = (
   cssAttribute: string,
   partialTheme: any,
-  prefix?: string
+  prefix?: string,
+  pseudoElement?: string
 ) => {
   const partialThemeKeys = Object.keys(partialTheme);
-  const computedVariant = {};
+  const computedVariant: any = {};
 
   for (const key of partialThemeKeys) {
-    computedVariant[key] = {
+    const rule = {
       [cssAttribute]: prefix ? `${prefix}$${key}` : `$${key}`,
     };
+
+    computedVariant[key] = pseudoElement
+      ? { [`&:${pseudoElement}`]: rule }
+      : rule;
   }
 
   return computedVariant;

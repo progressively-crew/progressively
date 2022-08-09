@@ -12,20 +12,8 @@ export const InlineSection = styled("section", {
   },
 });
 
-export const InlineSectionTitle = styled("h2", {
-  color: "$textAccent",
-  fontFamily: "$default",
-  fontSize: "$jupiter",
-  fontWeight: "$semiBold",
-  marginBottom: "$spacing$2",
-
-  "@mobile": {
-    fontSize: "$earth",
-  },
-});
-
 export const InlineSectionDescription = styled("p", {
-  color: "$text",
+  color: "$hades",
   fontFamily: "$default",
   lineHeight: "$text",
 });

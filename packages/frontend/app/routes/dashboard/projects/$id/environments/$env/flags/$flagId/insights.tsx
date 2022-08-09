@@ -223,10 +223,10 @@ export default function FlagById() {
         {hits.length > 0 && (
           <>
             <BigStatWrapper>
-              <BigStat name="Hits on activated variant">
+              <BigStat name="Evaluated as activated">
                 <p>{activatedCount}</p>
               </BigStat>
-              <BigStat name="Hits on not activated variant" secondary>
+              <BigStat name="Evaluated as NOT activated" secondary>
                 <p>{notActivatedCount}</p>
               </BigStat>
             </BigStatWrapper>
@@ -252,11 +252,11 @@ export default function FlagById() {
                 dataKeys={[
                   {
                     name: "activated",
-                    color: theme.colors.secondary.toString(),
+                    color: theme.colors.nemesis.toString(),
                   },
                   {
                     name: "notactivated",
-                    color: theme.colors.textAccent.toString(),
+                    color: theme.colors.tyche.toString(),
                     dashed: true,
                   },
                 ]}

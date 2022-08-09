@@ -12,6 +12,7 @@ import { useSearchParams, useLoaderData } from "@remix-run/react";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { Spacer } from "~/components/Spacer";
 import { ProjectList } from "~/modules/projects/components/ProjectList";
+import { Card, CardContent } from "~/components/Card";
 
 export const meta: MetaFunction = () => {
   return {
@@ -70,8 +71,9 @@ export default function DashboardRoot() {
         </CreateButton>
 
         <Spacer size={4} />
-
-        <ProjectList projects={projects} />
+        <Card>
+          <ProjectList projects={projects} />
+        </Card>
       </Section>
     </DashboardLayout>
   );

@@ -14,11 +14,7 @@ export interface NotAuthenticatedLayoutProps {
 }
 
 const Wrapper = styled("div", {
-  background: "$backgroundAccent",
-  padding: "$spacing$10",
-  maxWidth: "$notAuthenticatedCardWidth",
-  margin: "0 auto",
-  borderRadius: "$borderRadius$regular",
+  padding: "$spacing$10 0",
 });
 
 export const NotAuthenticatedLayout = ({
@@ -38,8 +34,8 @@ export const NotAuthenticatedLayout = ({
       <Main>
         <Container>
           <Wrapper>
-            <Stack spacing={8}>
-              {nav}
+            {nav && <div>{nav}</div>}
+            <Stack spacing={4}>
               <Stack spacing={2}>
                 {header}
                 {status && <Stack spacing={4}>{status}</Stack>}
