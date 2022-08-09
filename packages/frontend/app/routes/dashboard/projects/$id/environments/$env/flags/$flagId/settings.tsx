@@ -163,10 +163,11 @@ export default function FlagSettingPage() {
         </HorizontalNav>
       }
     >
-      <Stack spacing={8}>
+      <Stack spacing={4}>
         <Heading as={"h2"} fontSize="earth" icon={<AiOutlineSetting />}>
           Settings
         </Heading>
+
         {userRole === UserRoles.Admin && (
           <Card>
             <CardContent>

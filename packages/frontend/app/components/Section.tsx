@@ -48,7 +48,7 @@ export const SectionHeader = ({
 
   return (
     <SectionHeaderWrapper {...props}>
-      <HStack justifyContent="space-between">
+      <HStack justifyContent="space-between" alignItems="flex-start">
         <Heading as={titleAs} id={id} fontSize={fontSize} icon={icon}>
           {title}
         </Heading>
