@@ -157,7 +157,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
           .should("have.focus")
           .and("contain.text", "The strategy has been successfully created.");
 
-        cy.findByRole("heading", { name: "New strategy" }).should("be.visible");
+        cy.findAllByText("New strategy").should("be.visible");
 
         cy.checkA11y();
       });
