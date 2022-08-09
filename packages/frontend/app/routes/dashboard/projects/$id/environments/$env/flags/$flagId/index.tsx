@@ -27,7 +27,6 @@ import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
 import { useSearchParams, useLoaderData } from "@remix-run/react";
 import { FiFlag } from "react-icons/fi";
 import { FlagHeaderAction } from "~/modules/flags/components/FlagHeaderAction";
-import { Spacer } from "~/components/Spacer";
 
 interface MetaArgs {
   data?: {
@@ -131,6 +130,8 @@ export default function FlagById() {
     },
   ];
 
+  const hasStrategies = strategies.length > 0;
+
   return (
     <DashboardLayout
       user={user}
@@ -186,33 +187,33 @@ export default function FlagById() {
       }
     >
       <Section id="concerned-audience">
-        <SectionHeader title="Strategies" icon={<FaPowerOff />} />
+        <SectionHeader
+          title="Strategies"
+          icon={<FaPowerOff />}
+          action={
+            hasStrategies && (
+              <CreateButton
+                to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
+              >
+                Create a strategy
+              </CreateButton>
+            )
+          }
+        />
 
-        {strategies.length > 0 ? (
+        {hasStrategies ? (
           <div>
-            <CreateButton
-              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
-            >
-              Create a strategy
-            </CreateButton>
-
-            <Spacer size={4} />
-
-            <div>
-              {strategies.map((strat) => (
-                <StrategyCard
-                  key={`${strat.uuid}`}
-                  projectId={project.uuid}
-                  envId={environment.uuid}
-                  flagId={currentFlag.uuid}
-                  strat={strat}
-                />
-              ))}
-            </div>
+            {strategies.map((strat) => (
+              <StrategyCard
+                key={`${strat.uuid}`}
+                projectId={project.uuid}
+                envId={environment.uuid}
+                flagId={currentFlag.uuid}
+                strat={strat}
+              />
+            ))}
           </div>
-        ) : null}
-
-        {strategies.length === 0 ? (
+        ) : (
           <EmptyState
             title="No strategy found"
             description={
@@ -228,7 +229,7 @@ export default function FlagById() {
               </CreateButton>
             }
           />
-        ) : null}
+        )}
       </Section>
     </DashboardLayout>
   );

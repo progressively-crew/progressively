@@ -7,5 +7,10 @@ export const HStack = styled<any, any>("div", {
 
   variants: {
     spacing: mapTokenToVariant("gap", spacing, "$spacing"),
+    justifyContent: {
+      "space-between": {
+        justifyContent: "space-between",
+      },
+    },
   },
 });

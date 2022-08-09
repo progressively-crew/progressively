@@ -14,7 +14,6 @@ import { FiLayers } from "react-icons/fi";
 import { EmptyState } from "~/components/EmptyState";
 import { Typography } from "~/components/Typography";
 import { CreateButton } from "~/components/Buttons/CreateButton";
-import { Spacer } from "~/components/Spacer";
 import { MetaFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { Crumbs } from "~/components/Breadcrumbs/types";
@@ -68,6 +67,8 @@ export default function ProjectDetailPage() {
     },
   ];
 
+  const hasEnvironments = project.environments.length > 0;
+
   return (
     <DashboardLayout
       user={user}
@@ -103,28 +104,28 @@ export default function ProjectDetailPage() {
       }
     >
       <Section aria-labelledby="list-env-title" id="list-env-title">
-        <SectionHeader title="Environments" icon={<FiLayers />} />
+        <SectionHeader
+          title="Environments"
+          icon={<FiLayers />}
+          action={
+            hasEnvironments && (
+              <CreateButton
+                to={`/dashboard/projects/${project.uuid}/environments/create`}
+              >
+                Create an environment
+              </CreateButton>
+            )
+          }
+        />
 
-        {project.environments.length > 0 ? (
-          <div>
-            <CreateButton
-              to={`/dashboard/projects/${project.uuid}/environments/create`}
-            >
-              Create an environment
-            </CreateButton>
-
-            <Spacer size={4} />
-
-            <Card>
-              <EnvList
-                environments={project.environments}
-                projectId={project.uuid}
-              />
-            </Card>
-          </div>
-        ) : null}
-
-        {project.environments.length === 0 ? (
+        {hasEnvironments ? (
+          <Card>
+            <EnvList
+              environments={project.environments}
+              projectId={project.uuid}
+            />
+          </Card>
+        ) : (
           <EmptyState
             title="No environments found"
             description={
@@ -140,7 +141,7 @@ export default function ProjectDetailPage() {
               </CreateButton>
             }
           />
-        ) : null}
+        )}
       </Section>
     </DashboardLayout>
   );

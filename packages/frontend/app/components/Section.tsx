@@ -2,6 +2,7 @@ import { createContext, useContext } from "react";
 import { Heading } from "./Heading";
 import { Spacer } from "./Spacer";
 import { styled } from "~/stitches.config";
+import { HStack } from "./HStack";
 
 const SectionContext = createContext<string | undefined>(undefined);
 
@@ -26,6 +27,7 @@ export interface SectionHeaderProps extends React.HTMLAttributes<HTMLElement> {
   titleAs?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
   description?: React.ReactNode;
   icon?: React.ReactNode;
+  action?: React.ReactNode;
 }
 
 const SectionHeaderWrapper = styled("div", {
@@ -37,6 +39,7 @@ export const SectionHeader = ({
   titleAs = "h2",
   description,
   icon,
+  action,
   ...props
 }: SectionHeaderProps) => {
   const id = useContext(SectionContext);
@@ -45,9 +48,12 @@ export const SectionHeader = ({
 
   return (
     <SectionHeaderWrapper {...props}>
-      <Heading as={titleAs} id={id} fontSize={fontSize} icon={icon}>
-        {title}
-      </Heading>
+      <HStack justifyContent="space-between">
+        <Heading as={titleAs} id={id} fontSize={fontSize} icon={icon}>
+          {title}
+        </Heading>
+        {action}
+      </HStack>
 
       {description && (
         <>
