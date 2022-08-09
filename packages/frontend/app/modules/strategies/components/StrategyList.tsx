@@ -1,5 +1,8 @@
+import { DeleteButton } from "~/components/Buttons/DeleteButton";
+import { RawTable } from "~/components/RawTable";
+import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { StrategyRetrieveDTO } from "../types";
-import { StrategyCard } from "./StrategyCard";
+import { StrategyTargeting } from "./StrategyTargeting";
 
 export interface StrategyListProps {
   strategies: Array<StrategyRetrieveDTO>;
@@ -15,16 +18,32 @@ export const StrategyList = ({
   flagId,
 }: StrategyListProps) => {
   return (
-    <div>
-      {strategies.map((strat) => (
-        <StrategyCard
-          key={`${strat.uuid}`}
-          projectId={projectId}
-          envId={envId}
-          flagId={flagId}
-          strat={strat}
-        />
-      ))}
-    </div>
+    <RawTable>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th width="50%">Targeting</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {strategies.map((strat) => (
+          <tr key={strat.uuid}>
+            <td>{strat.name}</td>
+            <td>
+              <StrategyTargeting strat={strat} />
+            </td>
+            <td>
+              <DeleteButton
+                small
+                to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/strategies/${strat.uuid}/delete`}
+              >
+                Remove<VisuallyHidden> {strat.name}</VisuallyHidden>
+              </DeleteButton>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </RawTable>
   );
 };
