@@ -38,16 +38,16 @@ const HorizontalNavWrapper = styled("nav", {
 
   "@tablet": {
     width: "100%",
-    background: "$apollo",
+    marginTop: "$spacing$6",
+
     "& ul": {
       flexDirection: "row",
       overflow: "auto",
-      gap: "unset",
+      justifyContent: "center",
     },
 
     "& ul li a": {
-      padding: "$spacing$6",
-      borderRadius: "unset",
+      padding: "$spacing$4",
     },
   },
 });
