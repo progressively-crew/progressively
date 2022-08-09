@@ -8,7 +8,11 @@ export interface BackLinkProps {
 
 export const BackLink = ({ children, to }: BackLinkProps) => {
   return (
-    <Button to={to} icon={<HiOutlineArrowNarrowLeft aria-hidden />}>
+    <Button
+      to={to}
+      icon={<HiOutlineArrowNarrowLeft aria-hidden />}
+      style={{ textAlign: "left" }}
+    >
       {children}
     </Button>
   );

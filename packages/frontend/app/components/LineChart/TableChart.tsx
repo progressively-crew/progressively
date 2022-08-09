@@ -18,12 +18,10 @@ export const TableChart = ({
     <RawTable aria-labelledby={labelledBy}>
       <thead>
         <tr>
-          <th>
-            <TagLine as="span">Date</TagLine>
-          </th>
+          <th>Date</th>
           {headers.map((heading, index: number) => (
             <th key={`${heading.key}-${index}`}>
-              <TagLine as="span">{heading.label || heading.key}</TagLine>
+              {heading.label || heading.key}
             </th>
           ))}
         </tr>

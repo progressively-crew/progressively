@@ -100,8 +100,11 @@ export default function ProfilePage() {
       header={
         <>
           <nav aria-label="Profile navigation">
-            <BackLink to="/dashboard">Back to dashboard</BackLink>
+            <span>
+              <BackLink to="/dashboard">Back to dashboard</BackLink>
+            </span>
           </nav>
+
           <Header title="My profile" />
         </>
       }

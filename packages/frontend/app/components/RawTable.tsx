@@ -2,28 +2,32 @@ import { forwardRef } from "react";
 import { styled } from "~/stitches.config";
 
 const Wrapper = styled("div", {
-  display: "block",
-  width: "100%",
   overflowX: "auto",
 });
 
 const Table = styled("table", {
   color: "$hades",
-  width: "100%",
   fontFamily: "$default",
-  overflowX: "scroll",
+  whiteSpace: "nowrap",
+  width: "100%",
 
   "& th": {
-    padding: "$spacing$6 0",
+    padding: "$spacing$6 $spacing$3",
     textAlign: "left",
     textTransform: "uppercase",
     fontSize: "$neptune",
     fontFamily: "$title",
   },
 
+  "& td": {
+    padding: "$spacing$4 $spacing$3",
+    color: "$hades",
+  },
+
   "& tr td:first-of-type": {
     paddingLeft: "$spacing$12",
   },
+
   "& tr td:last-of-type": {
     paddingLeft: "$spacing$12",
   },
@@ -48,10 +52,7 @@ const Table = styled("table", {
   "& tbody tr:hover": {
     background: "$heracles",
   },
-  "& td": {
-    padding: "$spacing$4 0",
-    color: "$hades",
-  },
+
   "& a": {
     color: "$hades",
   },

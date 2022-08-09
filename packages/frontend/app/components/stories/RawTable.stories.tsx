@@ -18,39 +18,25 @@ const DefaultTemplate: ComponentStory<typeof RawTable> = (args) => (
   <RawTable>
     <thead>
       <tr>
-        <th>Name</th>
-        <th>Client key</th>
+        <th width="200px">Field 1</th>
+        <th width="200px">Field 2</th>
+        <th width="200px">Field 3</th>
+        <th width="200px">Field 4</th>
+        <th width="200px">Field 5</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>Marvin</td>
-        <td>Admin</td>
-      </tr>
-      <tr>
-        <td>Marvin</td>
-        <td>Admin</td>
-      </tr>
-      <tr>
-        <td>Marvin</td>
-        <td>Admin</td>
-      </tr>
-      <tr>
-        <td>Marvin</td>
-        <td>Admin</td>
-      </tr>
-      <tr>
-        <td>Marvin</td>
-        <td>Admin</td>
-      </tr>
-      <tr>
-        <td>Marvin</td>
-        <td>Admin</td>
-      </tr>
-      <tr>
-        <td>Marvin</td>
-        <td>Admin</td>
-      </tr>
+      {Array(20)
+        .fill(null)
+        .map((x, idx) => (
+          <tr key={idx}>
+            <td>Value 1</td>
+            <td>Value 2</td>
+            <td>Value 3</td>
+            <td>Value 4</td>
+            <td>Value 5</td>
+          </tr>
+        ))}
     </tbody>
   </RawTable>
 );

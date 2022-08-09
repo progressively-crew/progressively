@@ -119,6 +119,10 @@ const InsightsGrid = styled("div", {
   display: "grid",
   gap: "$spacing$4",
   gridTemplateColumns: "auto 1fr",
+
+  "@tablet": {
+    gridTemplateColumns: "1fr",
+  },
 });
 
 export default function FlagById() {

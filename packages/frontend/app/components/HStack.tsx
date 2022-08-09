@@ -26,5 +26,11 @@ export const HStack = styled<any, any>("div", {
     gap: {
       "3": { gap: "$spacing$3" },
     },
+
+    inline: {
+      true: {
+        display: "inline-flex",
+      },
+    },
   },
 });

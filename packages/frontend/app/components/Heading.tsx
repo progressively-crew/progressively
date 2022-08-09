@@ -23,7 +23,7 @@ export interface HeadingProps extends HeadingWrapperType {
 export const Heading = ({ icon, children, ...props }: HeadingProps) => {
   return (
     <HeadingWrapper {...props}>
-      <HStack spacing={2}>
+      <HStack spacing={2} inline>
         {icon && <span aria-hidden>{icon}</span>}
         {children}
       </HStack>
