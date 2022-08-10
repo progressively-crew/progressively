@@ -10,6 +10,7 @@ const Table = styled("table", {
   fontFamily: "$default",
   whiteSpace: "nowrap",
   width: "100%",
+  height: "100%",
 
   "& th": {
     padding: "$spacing$6 $spacing$3",
