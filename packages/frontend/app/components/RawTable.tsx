@@ -25,6 +25,10 @@ const Table = styled("table", {
     color: "$hades",
   },
 
+  "& td a": {
+    fontSize: "$uranus",
+  },
+
   "& tr td:first-of-type": {
     paddingLeft: "$spacing$12",
   },
