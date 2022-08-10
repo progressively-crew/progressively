@@ -23,11 +23,11 @@ const HorizontalNavWrapper = styled("nav", {
   },
 
   "& ul li a:hover": {
-    background: "$nemesisHover",
+    background: "$nemesisLight",
   },
 
   "& ul li a.active": {
-    background: "$nemesisHover",
+    background: "$nemesisLight",
     fontWeight: "$bold",
     color: "$nemesis",
   },

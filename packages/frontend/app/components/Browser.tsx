@@ -8,6 +8,8 @@ const BrowserWrapper = styled("div", {
   width: "100%",
   borderRadius: "$borderRadius$regular",
   overflow: "hidden",
+  boxShadow: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
+  background: "$apollo",
 });
 
 const ActionBar = styled("div", {
