@@ -15,10 +15,7 @@ import { styled } from "~/stitches.config";
 import { useLoaderData } from "@remix-run/react";
 import { Heading } from "~/components/Heading";
 import { Card, CardContent } from "~/components/Card";
-import { Browser } from "~/components/Browser";
 import { Spacer } from "~/components/Spacer";
-import { HStack } from "~/components/HStack";
-import { Switch } from "~/components/Switch";
 import { RolloutExample } from "~/modules/marketing/components/HomeExample/RolloutExample";
 
 const Centered = styled("div", {
