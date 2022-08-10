@@ -123,7 +123,7 @@ export const {
   theme: {
     colors,
     sizes: {
-      container: "1080px",
+      container: "1260px",
       cardHeight: "160px",
       notAuthenticatedCardWidth: "400px",
       cta: "48px",
