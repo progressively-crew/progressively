@@ -58,6 +58,14 @@ const Table = styled("table", {
     background: "$heracles",
   },
 
+  "& tbody tr.clickable": {
+    cursor: "pointer",
+  },
+
+  "& tbody tr.clickable:active": {
+    background: "$hera",
+  },
+
   "& a": {
     color: "$hades",
   },
@@ -71,14 +79,18 @@ export const RawTable = forwardRef((props: any, ref: any) => {
   );
 });
 
-export const Tr = styled("tr", {
-  variants: {
-    isClickable: {
-      true: {
-        cursor: "pointer",
-      },
-    },
-  },
-});
+export interface TrProps {
+  onClick: () => void;
+  children: React.ReactNode;
+}
+export const Tr = ({ children, onClick }: TrProps) => {
+  const isClickable = Boolean(onClick);
+
+  return (
+    <tr onClick={onClick} className={isClickable ? "clickable" : undefined}>
+      {children}
+    </tr>
+  );
+};
 
 RawTable.displayName = "RawTable";

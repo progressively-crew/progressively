@@ -102,7 +102,7 @@ export default function EnvSettingsPage() {
       header={
         <Header
           title={environment.name}
-          tagline={<TagLine icon={<FiLayers />}>Environment</TagLine>}
+          tagline={<TagLine icon={<FiLayers />}>ENVIRONMENT</TagLine>}
           startAction={
             <HideMobile>
               <ButtonCopy toCopy={environment.clientKey} small={true}>

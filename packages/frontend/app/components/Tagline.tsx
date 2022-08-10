@@ -2,23 +2,11 @@ import { Typography } from "./Typography";
 import { styled } from "~/stitches.config";
 import { HStack } from "./HStack";
 
-const TagLineWrapper = styled(Typography, {
-  display: "block",
-  textTransform: "uppercase",
-  fontSize: "$uranus",
-  fontWeight: "$slim",
-
+const IconWrapper = styled("span", {
+  display: "flex",
   "& svg": {
     fontSize: "$neptune",
     color: "$nemesis",
-  },
-
-  variants: {
-    small: {
-      true: {
-        fontSize: "$neptune",
-      },
-    },
   },
 });
 
@@ -27,13 +15,13 @@ export interface TagLineProps {
   children: React.ReactNode;
 }
 
-export const TagLine = ({ icon, children, ...props }: TagLineProps) => {
+export const TagLine = ({ icon, children }: TagLineProps) => {
   return (
-    <TagLineWrapper {...props}>
+    <div>
       <HStack spacing={1}>
-        {icon && <span aria-hidden>{icon}</span>}
-        {children}
+        {icon && <IconWrapper aria-hidden>{icon}</IconWrapper>}
+        <Typography size="uranus">{children}</Typography>
       </HStack>
-    </TagLineWrapper>
+    </div>
   );
 };

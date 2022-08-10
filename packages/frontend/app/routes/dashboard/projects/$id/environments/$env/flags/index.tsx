@@ -125,7 +125,7 @@ export default function FlagsByEnvPage() {
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
-          tagline={<TagLine icon={<FiLayers />}>Environment</TagLine>}
+          tagline={<TagLine icon={<FiLayers />}>ENVIRONMENT</TagLine>}
           title={environment.name}
           startAction={
             <HideMobile>

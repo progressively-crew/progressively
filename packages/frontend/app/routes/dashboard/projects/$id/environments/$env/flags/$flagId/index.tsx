@@ -29,6 +29,7 @@ import { TagLine } from "~/components/Tagline";
 import { FiFlag } from "react-icons/fi";
 import { StrategyList } from "~/modules/strategies/components/StrategyList";
 import { Card } from "~/components/Card";
+import { Stack } from "~/components/Stack";
 
 interface MetaArgs {
   data?: {
@@ -139,7 +140,7 @@ export default function FlagById() {
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
-          tagline={<TagLine icon={<FiFlag />}>Feature flag</TagLine>}
+          tagline={<TagLine icon={<FiFlag />}>FEATURE FLAG</TagLine>}
           title={currentFlag.name}
           startAction={
             <FlagHeaderAction
@@ -182,8 +183,6 @@ export default function FlagById() {
           <SuccessBox id="strategy-removed">
             The strategy has been successfully removed.
           </SuccessBox>
-        ) : strategies.length === 0 ? (
-          <WarningBox title="You don't have strategies yet. When switching on the flag, every user will receive the activated variant." />
         ) : null
       }
     >
@@ -212,21 +211,26 @@ export default function FlagById() {
             />
           </Card>
         ) : (
-          <EmptyState
-            title="No strategy found"
-            description={
-              <Typography>
-                There are no strategies bound to this flag yet.
-              </Typography>
-            }
-            action={
-              <CreateButton
-                to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
-              >
-                Create a strategy
-              </CreateButton>
-            }
-          />
+          <Stack spacing={4}>
+            {strategies.length === 0 && (
+              <WarningBox title="You don't have strategies yet. When switching on the flag, every user will receive the activated variant." />
+            )}
+            <EmptyState
+              title="No strategy found"
+              description={
+                <Typography>
+                  There are no strategies bound to this flag yet.
+                </Typography>
+              }
+              action={
+                <CreateButton
+                  to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
+                >
+                  Create a strategy
+                </CreateButton>
+              }
+            />
+          </Stack>
         )}
       </Section>
     </DashboardLayout>
