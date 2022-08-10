@@ -21,6 +21,7 @@ import { LinksFunction } from "@remix-run/node";
 import { ErrorLayout } from "./layouts/ErrorLayout";
 import { Typography } from "./components/Typography";
 import { Spacer } from "./components/Spacer";
+import { withSentry } from "@sentry/remix";
 
 /**
  * The `links` export is a function that returns an array of objects that map to
@@ -42,13 +43,15 @@ export const links: LinksFunction = () => {
  * route via the `<Outlet />` component. Think of this as the global layout
  * component for your app.
  */
-export default function App() {
+function App() {
   return (
     <Document>
       <Outlet />
     </Document>
   );
 }
+
+export default withSentry(App);
 
 interface DocumentProps {
   children: React.ReactNode;
