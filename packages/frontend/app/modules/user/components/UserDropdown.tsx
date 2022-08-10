@@ -16,6 +16,7 @@ export const UseDropdown = ({ user }: UserDropdownProps) => {
       color="heracles"
       active="hermes"
       style={{ textDecoration: "none" }}
+      fontSize="uranus"
     >
       <HStack spacing={2}>
         <Avatar>{user.fullname}</Avatar>
