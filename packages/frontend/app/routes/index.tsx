@@ -14,15 +14,30 @@ import { MarketingLayout } from "~/layouts/MarketingLayout";
 import { styled } from "~/stitches.config";
 import { useLoaderData } from "@remix-run/react";
 import { Heading } from "~/components/Heading";
-import { Card, CardContent } from "~/components/Card";
+import { Card } from "~/components/Card";
 import { Spacer } from "~/components/Spacer";
 import { RolloutExample } from "~/modules/marketing/components/HomeExample/RolloutExample";
+import { ExternalLink } from "~/components/ExternalLink";
+
+const TextCenter = styled("div", {
+  textAlign: "center",
+});
 
 const Centered = styled("div", {
   display: "flex",
   alignItems: "center",
   textAlign: "center",
   flexDirection: "column",
+});
+
+const CardGroup = styled("div", {
+  display: "grid",
+  gridTemplateColumns: "1fr 1fr 1fr",
+  gap: "$spacing$8",
+});
+
+const CardContent = styled("div", {
+  padding: "$spacing$8",
 });
 
 const InvertedBackground = styled("div", {
@@ -150,11 +165,109 @@ export default function Index() {
                     Why is it different?
                   </Heading>
 
-                  <Card>
-                    <CardContent>
-                      <Typography>Hello world</Typography>
-                    </CardContent>
-                  </Card>
+                  <Spacer size={6} />
+
+                  <CardGroup>
+                    <Card>
+                      <CardContent>
+                        <Typography font="title" size="mars">
+                          Lightweight SDKs
+                        </Typography>
+                        <Typography>
+                          Progressively is smaller than its competitors (1kB for
+                          the React SDK).
+                        </Typography>
+
+                        <Spacer size={3} />
+
+                        <TextCenter>
+                          <ExternalLink href="https://github.com/progressively-crew/progressively/tree/master/example/bundle-diffs">
+                            See alternatives comparisons
+                          </ExternalLink>
+                        </TextCenter>
+                      </CardContent>
+                    </Card>
+
+                    <Card>
+                      <CardContent>
+                        <Typography font="title" size="mars">
+                          Accessible
+                        </Typography>
+
+                        <Typography>
+                          Progressively has an accessible dashboard. If you face
+                          issues, please, tell us.
+                        </Typography>
+
+                        <Spacer size={3} />
+
+                        <TextCenter>
+                          <ExternalLink href="https://github.com/progressively-crew/progressively/issues">
+                            Create an accessibility issue
+                          </ExternalLink>
+                        </TextCenter>
+                      </CardContent>
+                    </Card>
+
+                    <Card>
+                      <CardContent>
+                        <Typography font="title" size="mars">
+                          SSR friendly
+                        </Typography>
+
+                        <Spacer size={3} />
+
+                        <Typography>
+                          Progressively comes with built-in SSR support so that
+                          the page {"don't"} blink when resolving the flags
+                        </Typography>
+                      </CardContent>
+                    </Card>
+
+                    <Card>
+                      <CardContent>
+                        <Typography font="title" size="mars">
+                          Real-time
+                        </Typography>
+
+                        <Spacer size={3} />
+
+                        <Typography>
+                          Real-time propagation with Websockets
+                        </Typography>
+                      </CardContent>
+                    </Card>
+
+                    <Card>
+                      <CardContent>
+                        <Typography font="title" size="mars">
+                          No tracking
+                        </Typography>
+
+                        <Spacer size={3} />
+
+                        <Typography>
+                          No intrusive tracking, we only get data from flags
+                          evaluations for insights purpose. We also use
+                          Sentry.io for error tracking.
+                        </Typography>
+                      </CardContent>
+                    </Card>
+
+                    <Card>
+                      <CardContent>
+                        <Typography font="title" size="mars">
+                          Self hosted
+                        </Typography>
+
+                        <Spacer size={3} />
+
+                        <Typography>
+                          Self-hosted so that you own the data
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  </CardGroup>
                 </div>
               </Centered>
             </Container>
