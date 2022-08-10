@@ -14,6 +14,10 @@ const RawLink = styled<any, any>("a", {
   fontFamily: "$default",
   height: "$cta",
   alignItems: "center",
+  borderRadius: "$borderRadius$regular",
+  padding: "$spacing$2",
+  margin: "-$spacing$2",
+  transition: "all 0.1s",
 
   "&:active": {
     color: "$nemesis",
