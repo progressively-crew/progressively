@@ -128,7 +128,7 @@ export default function FlagSettingPage() {
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
-          tagline={<TagLine icon={<FiFlag />}>Feature flag</TagLine>}
+          tagline={<TagLine icon={<FiFlag />}>FEATURE FLAG</TagLine>}
           title={currentFlag.name}
           startAction={
             <FlagHeaderAction

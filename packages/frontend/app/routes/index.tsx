@@ -23,11 +23,11 @@ import bundleSize from "../progressively-sdk-sizes.json";
 import { useLoaderData } from "@remix-run/react";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { Heading } from "~/components/Heading";
-import { HStack } from "~/components/HStack";
 
 const ExampleOldPage = styled("div", {
   padding: "$spacing$4",
   border: "1px solid $tyche",
+  background: "$heracles",
 });
 
 const ExampleNewPage = styled("div", {

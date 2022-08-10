@@ -10,6 +10,7 @@ const Table = styled("table", {
   fontFamily: "$default",
   whiteSpace: "nowrap",
   width: "100%",
+  height: "100%",
 
   "& th": {
     padding: "$spacing$6 $spacing$3",
@@ -22,6 +23,10 @@ const Table = styled("table", {
   "& td": {
     padding: "$spacing$4 $spacing$3",
     color: "$hades",
+  },
+
+  "& td a": {
+    fontSize: "$uranus",
   },
 
   "& tr td:first-of-type": {
@@ -53,6 +58,14 @@ const Table = styled("table", {
     background: "$heracles",
   },
 
+  "& tbody tr.clickable": {
+    cursor: "pointer",
+  },
+
+  "& tbody tr.clickable:active": {
+    background: "$hera",
+  },
+
   "& a": {
     color: "$hades",
   },
@@ -65,5 +78,19 @@ export const RawTable = forwardRef((props: any, ref: any) => {
     </Wrapper>
   );
 });
+
+export interface TrProps {
+  onClick: () => void;
+  children: React.ReactNode;
+}
+export const Tr = ({ children, onClick }: TrProps) => {
+  const isClickable = Boolean(onClick);
+
+  return (
+    <tr onClick={onClick} className={isClickable ? "clickable" : undefined}>
+      {children}
+    </tr>
+  );
+};
 
 RawTable.displayName = "RawTable";

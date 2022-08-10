@@ -134,7 +134,7 @@ export default function SettingsPage() {
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
-          tagline={<TagLine icon={<MdOutlineGroupWork />}>Project</TagLine>}
+          tagline={<TagLine icon={<MdOutlineGroupWork />}>PROJECT</TagLine>}
           title={
             <span>
               {project.name}

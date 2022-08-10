@@ -8,7 +8,6 @@ const BrowserWrapper = styled("div", {
   width: "100%",
   borderRadius: "$borderRadius$regular",
   overflow: "hidden",
-  background: "$heracles",
 });
 
 const ActionBar = styled("div", {
@@ -17,10 +16,8 @@ const ActionBar = styled("div", {
 });
 
 const BrowserContent = styled("div", {
-  padding: "$spacing$4 $spacing$4",
   color: "$hades",
   fontFamily: "$default",
-  background: "$apollo",
 });
 
 const ActionDots = styled("div", {

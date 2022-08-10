@@ -1,12 +1,34 @@
+import { useRef } from "react";
 import { Link } from "~/components/Link";
-import { RawTable } from "~/components/RawTable";
+import { RawTable, Tr } from "~/components/RawTable";
 import { Tag } from "~/components/Tag";
+import { useHydrated } from "~/modules/misc/hooks/useHydrated";
 import { UserProject } from "../types";
 
 export interface ProjectListProps {
   projects: Array<UserProject>;
 }
 
+interface ProjectRowProps {
+  userProject: UserProject;
+}
+const ProjectRow = ({ userProject }: ProjectRowProps) => {
+  const linkRef = useRef<HTMLAnchorElement>(null);
+  const isHydrated = useHydrated();
+
+  return (
+    <Tr onClick={() => linkRef.current?.click()} isClickable={isHydrated}>
+      <td>
+        <Link ref={linkRef} to={`/dashboard/projects/${userProject.projectId}`}>
+          {userProject.project.name}
+        </Link>
+      </td>
+      <td>
+        <Tag>{userProject.role}</Tag>
+      </td>
+    </Tr>
+  );
+};
 export const ProjectList = ({ projects }: ProjectListProps) => {
   return (
     <RawTable>
@@ -18,16 +40,7 @@ export const ProjectList = ({ projects }: ProjectListProps) => {
       </thead>
       <tbody>
         {projects.map((userProject) => (
-          <tr key={userProject.projectId}>
-            <td>
-              <Link to={`/dashboard/projects/${userProject.projectId}`}>
-                {userProject.project.name}
-              </Link>
-            </td>
-            <td>
-              <Tag>{userProject.role}</Tag>
-            </td>
-          </tr>
+          <ProjectRow key={userProject.projectId} userProject={userProject} />
         ))}
       </tbody>
     </RawTable>

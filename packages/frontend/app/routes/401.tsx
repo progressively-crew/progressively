@@ -20,7 +20,9 @@ export default function UnauthorizedPage() {
 
       <Spacer size={4} />
 
-      <Button to="/signin">Signin page</Button>
+      <Button to="/signin" variant="primary">
+        Signin page
+      </Button>
     </ErrorLayout>
   );
 }

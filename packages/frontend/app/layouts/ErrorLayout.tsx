@@ -8,6 +8,7 @@ export interface ErrorLayoutProps {
 
 const Wrapper = styled("div", {
   padding: "$spacing$10 0",
+  maxWidth: "$container",
 });
 
 export function ErrorLayout({ children }: ErrorLayoutProps) {

@@ -20,12 +20,28 @@ export interface DashboardLayoutProps {
 }
 
 const PageWrapper = styled("div", {
-  display: "flex",
-  flexDirection: "row",
+  display: "grid",
+  gridTemplateColumns: "auto 1fr",
   gap: "$spacing$12",
+
   "@tablet": {
     flexDirection: "column",
+    gridTemplateColumns: "1fr",
   },
+
+  variants: {
+    singleColumn: {
+      true: {
+        gridTemplateColumns: "1fr",
+      },
+    },
+  },
+});
+
+const EndSection = styled("div", {
+  overflow: "hidden", // scroll inside table elements,
+  padding: "$spacing$1", // show box shadow when overflowing,
+  margin: "-$spacing$1",
 });
 
 const HeaderWrapper = styled("div", {
@@ -84,9 +100,10 @@ export const DashboardLayout = ({
         <InertWhenNavOpened>
           <Main>
             <Container>
-              <PageWrapper>
+              <PageWrapper singleColumn={!subNav}>
                 {subNav ? <div>{subNav}</div> : null}
-                <div style={{ flex: 1 }}>
+
+                <EndSection>
                   {status && (
                     <>
                       {status}
@@ -95,7 +112,7 @@ export const DashboardLayout = ({
                   )}
 
                   {children}
-                </div>
+                </EndSection>
               </PageWrapper>
             </Container>
           </Main>

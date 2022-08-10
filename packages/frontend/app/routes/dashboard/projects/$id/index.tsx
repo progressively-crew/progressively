@@ -77,7 +77,7 @@ export default function ProjectDetailPage() {
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
-          tagline={<TagLine icon={<MdOutlineGroupWork />}>Project</TagLine>}
+          tagline={<TagLine icon={<MdOutlineGroupWork />}>PROJECT</TagLine>}
           title={project.name}
         />
       }

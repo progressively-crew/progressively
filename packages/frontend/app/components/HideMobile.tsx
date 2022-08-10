@@ -5,3 +5,9 @@ export const HideMobile = styled("span", {
     display: "none",
   },
 });
+
+export const HideTablet = styled("span", {
+  "@tablet": {
+    display: "none",
+  },
+});

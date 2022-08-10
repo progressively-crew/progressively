@@ -35,6 +35,7 @@ export interface LinkProps extends HTMLAttributes<HTMLAnchorElement> {
   startIcon?: string;
   active?: string;
   hover?: string;
+  fontSize?: string;
 }
 export const Link = forwardRef(
   ({ to, children, href, target, rel, ...props }: LinkProps, ref: any) => {
