@@ -71,4 +71,14 @@ export const RawTable = forwardRef((props: any, ref: any) => {
   );
 });
 
+export const Tr = styled("tr", {
+  variants: {
+    isClickable: {
+      true: {
+        cursor: "pointer",
+      },
+    },
+  },
+});
+
 RawTable.displayName = "RawTable";
