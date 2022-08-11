@@ -8,11 +8,6 @@ export enum StrategyRuleType {
   Pool = 'pool',
 }
 
-export enum ActivationRuleType {
-  Boolean = 'boolean',
-  Percentage = 'percentage',
-}
-
 export type FieldRecord = Record<string, string | number | boolean>;
 
 export enum ComparatorEnum {

@@ -100,8 +100,7 @@ model RolloutStrategy {
   fieldName                    String?
   fieldComparator              String?
   fieldValue                   String?
-  activationType               String
-  rolloutPercentage            Int?
+  rolloutPercentage            Int
   FlagEnvironment              FlagEnvironment? @relation(name: "FlagEnvironmentToRolloutStrategy", fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
   flagEnvironmentFlagId        String?
   flagEnvironmentEnvironmentId String?

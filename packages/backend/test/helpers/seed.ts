@@ -94,7 +94,7 @@ export const seedDb = async () => {
         flagEnvironmentEnvironmentId: flagEnv.environmentId,
         name: 'Super strategy',
         strategyRuleType: 'default',
-        activationType: 'boolean',
+        rolloutPercentage: 100,
       },
     });
 
@@ -105,7 +105,7 @@ export const seedDb = async () => {
         flagEnvironmentEnvironmentId: footerFlagEnv.environmentId,
         name: 'Field based',
         strategyRuleType: 'field',
-        activationType: 'boolean',
+        rolloutPercentage: 100,
         fieldName: 'id',
         fieldComparator: 'eq',
         fieldValue: '1',
@@ -119,7 +119,7 @@ export const seedDb = async () => {
         flagEnvironmentEnvironmentId: otherFlagEnv.environmentId,
         name: 'Super strategy',
         strategyRuleType: 'default',
-        activationType: 'boolean',
+        rolloutPercentage: 100,
       },
     });
 
