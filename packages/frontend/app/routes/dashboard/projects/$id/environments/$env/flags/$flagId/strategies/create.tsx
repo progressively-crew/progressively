@@ -13,7 +13,6 @@ import { StrategyCreateDTO } from "~/modules/strategies/types";
 import { createStrategy } from "~/modules/strategies/services/createStrategy";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { StrategyAudience } from "~/modules/strategies/components/StrategyAudience";
-import { ActivationStrategy } from "~/modules/strategies/components/ActivationStrategy";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { authGuard } from "~/modules/auth/services/auth-guard";
 import { User } from "~/modules/user/types";
@@ -22,10 +21,6 @@ import { Environment } from "~/modules/environments/types";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Typography } from "~/components/Typography";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
-import {
-  InlineSection,
-  InlineSectionDescription,
-} from "~/components/InlineSection";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import {
   MetaFunction,
@@ -36,6 +31,22 @@ import {
 import { useLoaderData, useActionData, Form } from "@remix-run/react";
 import { Card, CardContent } from "~/components/Card";
 import { Stack } from "~/components/Stack";
+import { RadioField } from "~/components/Fields/RadioField";
+import { SliderInput } from "~/components/Fields/SliderInput";
+import { Divider } from "~/components/Divider";
+import { Section } from "~/components/Section";
+import { styled } from "~/stitches.config";
+import { Spacer } from "~/components/Spacer";
+
+const CardGroup = styled("div", {
+  display: "grid",
+  gridTemplateColumns: "1fr 1fr",
+  gap: "$spacing$8",
+
+  "@tablet": {
+    gridTemplateColumns: "1fr",
+  },
+});
 
 interface MetaArgs {
   data?: {
@@ -162,6 +173,7 @@ export const loader: LoaderFunction = async ({
 
 export default function StrategyCreatePage() {
   const transition = useTransition();
+  const [percentageValue, setPercentageValue] = useState<number>(50);
 
   const { project, environment, currentFlag, user } =
     useLoaderData<LoaderData>();
@@ -217,82 +229,86 @@ export default function StrategyCreatePage() {
       status={actionData?.errors && <ErrorBox list={actionData.errors} />}
     >
       <Form method="post">
-        <Stack spacing={4}>
+        <CardGroup>
           <Card>
             <CardContent>
-              <InlineSection id="general-information">
-                <div>
-                  <Typography as="h2" font="title">
-                    General information
-                  </Typography>
-                  <InlineSectionDescription>
-                    They will be listed in the strategy list of a specific
-                    feature flag. Make sure to use meaningful names.
-                  </InlineSectionDescription>
-                </div>
+              <Section id="general-information">
+                <Typography as="h2" font="title" size="earth">
+                  General information
+                </Typography>
 
-                <TextInput
-                  name="strategy-name"
-                  placeholder="e.g: Strategy 1"
-                  label="Strategy name"
-                  isInvalid={Boolean(errors["strategy-name"])}
-                />
-              </InlineSection>
+                <Spacer size={4} />
+
+                <Stack spacing={4}>
+                  <TextInput
+                    name="strategy-name"
+                    placeholder="e.g: Strategy 1"
+                    label="Strategy name"
+                    isInvalid={Boolean(errors["strategy-name"])}
+                  />
+
+                  <Divider />
+
+                  <RadioField<ActivationType>
+                    title="Serve the flag to"
+                    value={activationStrategy}
+                    onChange={setActivationStrategy}
+                    name="strategy-activation"
+                    options={[
+                      { value: "boolean", label: "Everybody / Nobody" },
+                      {
+                        value: "percentage",
+                        label: "A percentage of the audience",
+                      },
+                    ]}
+                  />
+
+                  {activationStrategy === "percentage" && (
+                    <>
+                      <Divider />
+
+                      <SliderInput
+                        name="percentage-value"
+                        label={`A percentage of the audience`}
+                        onChange={setPercentageValue}
+                        percentageValue={percentageValue}
+                      />
+                    </>
+                  )}
+                </Stack>
+              </Section>
             </CardContent>
           </Card>
 
           <Card>
             <CardContent>
-              <InlineSection>
-                <div>
-                  <Typography as="h2" font="title">
-                    Strategy audience
-                  </Typography>
-                  <InlineSectionDescription>
-                    It will determine the people you want to target using user
-                    specific criteria (qualitative).
-                  </InlineSectionDescription>
-                </div>
+              <Section>
+                <Typography as="h2" font="title" size="earth">
+                  Strategy audience
+                </Typography>
+
+                <Spacer size={4} />
 
                 <StrategyAudience
                   strategyType={strategyType}
                   onStrategyChange={setStrategyType}
                   errors={errors}
                 />
-              </InlineSection>
+              </Section>
             </CardContent>
           </Card>
+        </CardGroup>
 
-          <Card>
-            <CardContent>
-              <InlineSection>
-                <div>
-                  <Typography as="h2" font="title">
-                    Activation strategy
-                  </Typography>
-                  <InlineSectionDescription>
-                    It will determine the number of people you want to target
-                    (quantitative).
-                  </InlineSectionDescription>
-                </div>
+        <Spacer size={8} />
 
-                <ActivationStrategy
-                  activationStrategy={activationStrategy}
-                  onActivationChange={setActivationStrategy}
-                />
-              </InlineSection>
-            </CardContent>
-          </Card>
-
-          <div>
-            <SubmitButton
-              isLoading={transition.state === "submitting"}
-              loadingText="Saving the strategy, please wait..."
-            >
-              Save the strategy
-            </SubmitButton>
-          </div>
-        </Stack>
+        <div>
+          <SubmitButton
+            isLoading={transition.state === "submitting"}
+            loadingText="Saving the strategy, please wait..."
+          >
+            Save the strategy
+          </SubmitButton>
+        </div>
       </Form>
     </DashboardLayout>
   );

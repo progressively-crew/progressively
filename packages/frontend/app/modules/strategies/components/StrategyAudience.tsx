@@ -1,3 +1,4 @@
+import { Divider } from "~/components/Divider";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { RadioField } from "~/components/Fields/RadioField";
 import { SelectField } from "~/components/Fields/SelectField";
@@ -5,9 +6,9 @@ import { TextareaInput } from "~/components/Fields/TextareaInput";
 import { TextInput } from "~/components/Fields/TextInput";
 import { HStack } from "~/components/HStack";
 import { Spacer } from "~/components/Spacer";
+import { Stack } from "~/components/Stack";
 import { ComparatorEnum, StrategyCreateDTO } from "../types";
 import { StrategyRuleType } from "../types/StrategyRule";
-import { SubForm } from "./SubForm";
 
 export interface StrategyAudienceProps {
   strategyType: StrategyRuleType;
@@ -27,7 +28,7 @@ export const StrategyAudience = ({
   initialFieldComparator,
 }: StrategyAudienceProps) => {
   return (
-    <div>
+    <Stack spacing={4}>
       <RadioField<StrategyRuleType>
         title="Who's concerned?"
         value={strategyType}
@@ -41,43 +42,41 @@ export const StrategyAudience = ({
 
       {strategyType === "field" && (
         <>
-          <Spacer size={4} />
+          <Divider />
 
-          <SubForm>
-            <FormGroup>
-              <HStack spacing={4}>
-                <TextInput
-                  isInvalid={Boolean(errors["field-name"])}
-                  label="Field name:"
-                  placeholder="e.g: email"
-                  defaultValue={initialFieldName}
-                  name="field-name"
-                />
-
-                <SelectField
-                  isInvalid={Boolean(errors["field-comparator"])}
-                  name="field-comparator"
-                  label="Field comparator:"
-                  defaultValue={initialFieldComparator}
-                  options={[
-                    { value: ComparatorEnum.Equals, label: "Equals" },
-                    { value: ComparatorEnum.NotEquals, label: "Not equals" },
-                    { value: ComparatorEnum.Contains, label: "Contains" },
-                  ]}
-                />
-              </HStack>
-
-              <TextareaInput
-                isInvalid={Boolean(errors["field-value"])}
-                label="Values matching the previous field (one per line):"
-                name="field-value"
-                defaultValue={initialFieldValue}
-                placeholder="e.g: marvin.frachet@something.com"
+          <FormGroup>
+            <HStack spacing={4}>
+              <TextInput
+                isInvalid={Boolean(errors["field-name"])}
+                label="Field name:"
+                placeholder="e.g: email"
+                defaultValue={initialFieldName}
+                name="field-name"
               />
-            </FormGroup>
-          </SubForm>
+
+              <SelectField
+                isInvalid={Boolean(errors["field-comparator"])}
+                name="field-comparator"
+                label="Field comparator:"
+                defaultValue={initialFieldComparator}
+                options={[
+                  { value: ComparatorEnum.Equals, label: "Equals" },
+                  { value: ComparatorEnum.NotEquals, label: "Not equals" },
+                  { value: ComparatorEnum.Contains, label: "Contains" },
+                ]}
+              />
+            </HStack>
+
+            <TextareaInput
+              isInvalid={Boolean(errors["field-value"])}
+              label="Values matching the previous field (one per line):"
+              name="field-value"
+              defaultValue={initialFieldValue}
+              placeholder="e.g: marvin.frachet@something.com"
+            />
+          </FormGroup>
         </>
       )}
-    </div>
+    </Stack>
   );
 };

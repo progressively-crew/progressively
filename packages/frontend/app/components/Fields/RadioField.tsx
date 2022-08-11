@@ -42,10 +42,6 @@ const Input = styled("input", {
   },
 });
 
-const SmallLabel = styled(Label, {
-  fontSize: "$uranus",
-});
-
 export const RadioField = <T extends string>({
   name,
   value,
@@ -54,7 +50,7 @@ export const RadioField = <T extends string>({
   title,
 }: RadioFieldProps<T>) => {
   return (
-    <Stack as="fieldset" spacing={4}>
+    <fieldset>
       <Label as="legend">{title}</Label>
       <Spacer size={2} />
       <Stack spacing={2}>
@@ -68,10 +64,12 @@ export const RadioField = <T extends string>({
               checked={opt.value === value}
               onChange={(e) => onChange(e.target.value as T)}
             />
-            <SmallLabel htmlFor={opt.value}>{opt.label}</SmallLabel>
+            <Label size="uranus" htmlFor={opt.value}>
+              {opt.label}
+            </Label>
           </HStack>
         ))}
       </Stack>
-    </Stack>
+    </fieldset>
   );
 };
