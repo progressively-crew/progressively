@@ -36,6 +36,9 @@ import {
 import { useLoaderData, useActionData, Form } from "@remix-run/react";
 import { Card, CardContent } from "~/components/Card";
 import { Stack } from "~/components/Stack";
+import { RadioField } from "~/components/Fields/RadioField";
+import { SliderInput } from "~/components/Fields/SliderInput";
+import { Divider } from "~/components/Divider";
 
 interface MetaArgs {
   data?: {
@@ -162,6 +165,7 @@ export const loader: LoaderFunction = async ({
 
 export default function StrategyCreatePage() {
   const transition = useTransition();
+  const [percentageValue, setPercentageValue] = useState<number>(50);
 
   const { project, environment, currentFlag, user } =
     useLoaderData<LoaderData>();
@@ -231,12 +235,44 @@ export default function StrategyCreatePage() {
                   </InlineSectionDescription>
                 </div>
 
-                <TextInput
-                  name="strategy-name"
-                  placeholder="e.g: Strategy 1"
-                  label="Strategy name"
-                  isInvalid={Boolean(errors["strategy-name"])}
-                />
+                <Stack spacing={8}>
+                  <TextInput
+                    name="strategy-name"
+                    placeholder="e.g: Strategy 1"
+                    label="Strategy name"
+                    isInvalid={Boolean(errors["strategy-name"])}
+                  />
+
+                  <Divider />
+
+                  <RadioField<ActivationType>
+                    title="Serve the flag to"
+                    value={activationStrategy}
+                    onChange={setActivationStrategy}
+                    name="strategy-activation"
+                    options={[
+                      { value: "boolean", label: "Everybody / Nobody" },
+                      {
+                        value: "percentage",
+                        label: "A percentage of the audience",
+                      },
+                    ]}
+                    inline
+                  />
+
+                  {activationStrategy === "percentage" && (
+                    <>
+                      <Divider />
+
+                      <SliderInput
+                        name="percentage-value"
+                        label={`Percentage of the people concerned`}
+                        onChange={setPercentageValue}
+                        percentageValue={percentageValue}
+                      />
+                    </>
+                  )}
+                </Stack>
               </InlineSection>
             </CardContent>
           </Card>
@@ -258,27 +294,6 @@ export default function StrategyCreatePage() {
                   strategyType={strategyType}
                   onStrategyChange={setStrategyType}
                   errors={errors}
-                />
-              </InlineSection>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent>
-              <InlineSection>
-                <div>
-                  <Typography as="h2" font="title">
-                    Activation strategy
-                  </Typography>
-                  <InlineSectionDescription>
-                    It will determine the number of people you want to target
-                    (quantitative).
-                  </InlineSectionDescription>
-                </div>
-
-                <ActivationStrategy
-                  activationStrategy={activationStrategy}
-                  onActivationChange={setActivationStrategy}
                 />
               </InlineSection>
             </CardContent>

@@ -15,6 +15,7 @@ export interface RadioFieldProps<T> {
   onChange: (nextValue: T) => void;
   options: Array<RadioFieldOption<T>>;
   title: string;
+  inline?: boolean;
 }
 
 const Input = styled("input", {
@@ -42,22 +43,22 @@ const Input = styled("input", {
   },
 });
 
-const SmallLabel = styled(Label, {
-  fontSize: "$uranus",
-});
-
 export const RadioField = <T extends string>({
   name,
   value,
   onChange,
   options,
   title,
+  inline,
 }: RadioFieldProps<T>) => {
+  const ActualStack = inline ? HStack : Stack;
+  const stackSpacing = inline ? 6 : 2;
+
   return (
-    <Stack as="fieldset" spacing={4}>
+    <fieldset>
       <Label as="legend">{title}</Label>
       <Spacer size={2} />
-      <Stack spacing={2}>
+      <ActualStack spacing={stackSpacing}>
         {options.map((opt) => (
           <HStack key={opt.value} spacing={2}>
             <Input
@@ -68,10 +69,12 @@ export const RadioField = <T extends string>({
               checked={opt.value === value}
               onChange={(e) => onChange(e.target.value as T)}
             />
-            <SmallLabel htmlFor={opt.value}>{opt.label}</SmallLabel>
+            <Label size="uranus" htmlFor={opt.value}>
+              {opt.label}
+            </Label>
           </HStack>
         ))}
-      </Stack>
-    </Stack>
+      </ActualStack>
+    </fieldset>
   );
 };
