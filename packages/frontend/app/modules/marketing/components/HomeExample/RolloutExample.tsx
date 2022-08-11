@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Browser } from "~/components/Browser";
-import { Label } from "~/components/Fields/Label";
 import { SliderInput } from "~/components/Fields/SliderInput";
-import { Spacer } from "~/components/Spacer";
+import { HStack } from "~/components/HStack";
 import { Switch } from "~/components/Switch";
+import { Typography } from "~/components/Typography";
 import { styled } from "~/stitches.config";
 
 const BrowserGrid = styled("div", {
@@ -27,7 +27,6 @@ const InnerBrowserWrapper = styled("div", {
   alignItems: "center",
   justifyContent: "center",
   height: "200px",
-  width: "150px",
   transition: "all 0.2s",
   background: "$apollo",
   margin: "$spacing$4",
@@ -69,11 +68,9 @@ const InnerBrowser = ({
 const ActionWrapper = styled("div", {
   display: "flex",
   gap: "$spacing$12",
-  justifyContent: "space-between",
-
-  "@mobile": {
-    flexDirection: "column",
-  },
+  flexDirection: "column",
+  justifyContent: "left",
+  textAlign: "left",
 });
 
 export const RolloutExample = () => {
@@ -82,10 +79,10 @@ export const RolloutExample = () => {
 
   return (
     <div>
-      <FeatureBox>
+      <HStack spacing={8} direction={{ "@tablet": "column" }}>
         <ActionWrapper>
           <div>
-            <Label as="p">Show the new homepage (example)</Label>
+            <Typography>Show the new homepage</Typography>
             <Switch
               checked={isActivated}
               label="Show new homepage"
@@ -97,45 +94,45 @@ export const RolloutExample = () => {
 
           <SliderInput
             name="slider"
-            label={`Percentage of users (${slider}%)`}
+            label="Percentage of users"
             percentageValue={slider}
             onChange={setSlider}
           />
         </ActionWrapper>
 
-        <Spacer size={8} />
-
-        <BrowserGrid>
-          <Browser>
-            <InnerBrowser
-              rolloutPercentage={slider}
-              isFlagActive={isActivated}
-              activatedAt={25}
-            />
-          </Browser>
-          <Browser>
-            <InnerBrowser
-              rolloutPercentage={slider}
-              isFlagActive={isActivated}
-              activatedAt={50}
-            />
-          </Browser>
-          <Browser>
-            <InnerBrowser
-              rolloutPercentage={slider}
-              isFlagActive={isActivated}
-              activatedAt={75}
-            />
-          </Browser>
-          <Browser>
-            <InnerBrowser
-              rolloutPercentage={slider}
-              isFlagActive={isActivated}
-              activatedAt={100}
-            />
-          </Browser>
-        </BrowserGrid>
-      </FeatureBox>
+        <FeatureBox>
+          <BrowserGrid>
+            <Browser>
+              <InnerBrowser
+                rolloutPercentage={slider}
+                isFlagActive={isActivated}
+                activatedAt={25}
+              />
+            </Browser>
+            <Browser>
+              <InnerBrowser
+                rolloutPercentage={slider}
+                isFlagActive={isActivated}
+                activatedAt={50}
+              />
+            </Browser>
+            <Browser>
+              <InnerBrowser
+                rolloutPercentage={slider}
+                isFlagActive={isActivated}
+                activatedAt={75}
+              />
+            </Browser>
+            <Browser>
+              <InnerBrowser
+                rolloutPercentage={slider}
+                isFlagActive={isActivated}
+                activatedAt={100}
+              />
+            </Browser>
+          </BrowserGrid>
+        </FeatureBox>
+      </HStack>
     </div>
   );
 };

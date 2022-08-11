@@ -48,9 +48,10 @@ const RangeInput = styled("input", {
   },
 
   "&::-moz-range-thumb": {
-    border: "none",
     borderRadius: "50%",
-    backgroundColor: "$hermes",
+    padding: "2px",
+    border: "2px solid $hermes",
+    backgroundColor: "$apollo",
     height: `${ThumbSize}rem`,
     width: `${ThumbSize}rem`,
   },
@@ -84,7 +85,7 @@ export const SliderInput = ({
     <Stack spacing={2}>
       <Label htmlFor={`field-${name}`}>{label}</Label>
 
-      <HStack spacing={4}>
+      <HStack spacing={2}>
         <RangeInput
           type="range"
           min={0}
