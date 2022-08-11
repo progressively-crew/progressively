@@ -36,7 +36,7 @@ describe('StrategyService', () => {
       flagEnvironmentEnvironmentId: '1',
       flagEnvironmentFlagId: '1',
       name: 'Strategy name',
-      rolloutPercentage: undefined,
+      rolloutPercentage: 100,
       strategyRuleType: StrategyRuleType.Default,
       uuid: '123',
     };
