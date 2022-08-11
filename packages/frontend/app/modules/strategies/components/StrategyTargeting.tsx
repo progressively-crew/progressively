@@ -24,7 +24,7 @@ const StrategyAudience = ({ strat }: { strat: StrategyRetrieveDTO }) => {
   let targetedUsers = "all the people";
   let fieldName = undefined;
 
-  if (strat.activationType === "percentage") {
+  if (strat.rolloutPercentage < 100) {
     targetedUsers = `${strat.rolloutPercentage}% of the people`;
   }
 
