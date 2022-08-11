@@ -82,10 +82,10 @@ export const RolloutExample = () => {
       <HStack spacing={8} direction={{ "@tablet": "column" }}>
         <ActionWrapper>
           <div>
-            <Typography>Show the new homepage</Typography>
+            <Typography>Show the login homepage</Typography>
             <Switch
               checked={isActivated}
-              label="Show new homepage"
+              label="Show login homepage"
               onClick={() => {
                 setIsActivated((s) => !s);
               }}
