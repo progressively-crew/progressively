@@ -15,7 +15,6 @@ export interface RadioFieldProps<T> {
   onChange: (nextValue: T) => void;
   options: Array<RadioFieldOption<T>>;
   title: string;
-  inline?: boolean;
 }
 
 const Input = styled("input", {
@@ -49,16 +48,12 @@ export const RadioField = <T extends string>({
   onChange,
   options,
   title,
-  inline,
 }: RadioFieldProps<T>) => {
-  const ActualStack = inline ? HStack : Stack;
-  const stackSpacing = inline ? 6 : 2;
-
   return (
     <fieldset>
       <Label as="legend">{title}</Label>
       <Spacer size={2} />
-      <ActualStack spacing={stackSpacing}>
+      <Stack spacing={2}>
         {options.map((opt) => (
           <HStack key={opt.value} spacing={2}>
             <Input
@@ -74,7 +69,7 @@ export const RadioField = <T extends string>({
             </Label>
           </HStack>
         ))}
-      </ActualStack>
+      </Stack>
     </fieldset>
   );
 };

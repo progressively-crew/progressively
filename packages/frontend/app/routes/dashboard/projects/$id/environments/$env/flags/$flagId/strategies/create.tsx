@@ -13,7 +13,6 @@ import { StrategyCreateDTO } from "~/modules/strategies/types";
 import { createStrategy } from "~/modules/strategies/services/createStrategy";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { StrategyAudience } from "~/modules/strategies/components/StrategyAudience";
-import { ActivationStrategy } from "~/modules/strategies/components/ActivationStrategy";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { authGuard } from "~/modules/auth/services/auth-guard";
 import { User } from "~/modules/user/types";
@@ -22,10 +21,6 @@ import { Environment } from "~/modules/environments/types";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Typography } from "~/components/Typography";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
-import {
-  InlineSection,
-  InlineSectionDescription,
-} from "~/components/InlineSection";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import {
   MetaFunction,
@@ -39,6 +34,19 @@ import { Stack } from "~/components/Stack";
 import { RadioField } from "~/components/Fields/RadioField";
 import { SliderInput } from "~/components/Fields/SliderInput";
 import { Divider } from "~/components/Divider";
+import { Section } from "~/components/Section";
+import { styled } from "~/stitches.config";
+import { Spacer } from "~/components/Spacer";
+
+const CardGroup = styled("div", {
+  display: "grid",
+  gridTemplateColumns: "1fr 1fr",
+  gap: "$spacing$8",
+
+  "@tablet": {
+    gridTemplateColumns: "1fr",
+  },
+});
 
 interface MetaArgs {
   data?: {
@@ -221,21 +229,17 @@ export default function StrategyCreatePage() {
       status={actionData?.errors && <ErrorBox list={actionData.errors} />}
     >
       <Form method="post">
-        <Stack spacing={4}>
+        <CardGroup>
           <Card>
             <CardContent>
-              <InlineSection id="general-information">
-                <div>
-                  <Typography as="h2" font="title">
-                    General information
-                  </Typography>
-                  <InlineSectionDescription>
-                    They will be listed in the strategy list of a specific
-                    feature flag. Make sure to use meaningful names.
-                  </InlineSectionDescription>
-                </div>
+              <Section id="general-information">
+                <Typography as="h2" font="title" size="earth">
+                  General information
+                </Typography>
 
-                <Stack spacing={8}>
+                <Spacer size={4} />
+
+                <Stack spacing={4}>
                   <TextInput
                     name="strategy-name"
                     placeholder="e.g: Strategy 1"
@@ -257,7 +261,6 @@ export default function StrategyCreatePage() {
                         label: "A percentage of the audience",
                       },
                     ]}
-                    inline
                   />
 
                   {activationStrategy === "percentage" && (
@@ -266,48 +269,46 @@ export default function StrategyCreatePage() {
 
                       <SliderInput
                         name="percentage-value"
-                        label={`Percentage of the people concerned`}
+                        label={`A percentage of the audience`}
                         onChange={setPercentageValue}
                         percentageValue={percentageValue}
                       />
                     </>
                   )}
                 </Stack>
-              </InlineSection>
+              </Section>
             </CardContent>
           </Card>
 
           <Card>
             <CardContent>
-              <InlineSection>
-                <div>
-                  <Typography as="h2" font="title">
-                    Strategy audience
-                  </Typography>
-                  <InlineSectionDescription>
-                    It will determine the people you want to target using user
-                    specific criteria (qualitative).
-                  </InlineSectionDescription>
-                </div>
+              <Section>
+                <Typography as="h2" font="title" size="earth">
+                  Strategy audience
+                </Typography>
+
+                <Spacer size={4} />
 
                 <StrategyAudience
                   strategyType={strategyType}
                   onStrategyChange={setStrategyType}
                   errors={errors}
                 />
-              </InlineSection>
+              </Section>
             </CardContent>
           </Card>
+        </CardGroup>
 
-          <div>
-            <SubmitButton
-              isLoading={transition.state === "submitting"}
-              loadingText="Saving the strategy, please wait..."
-            >
-              Save the strategy
-            </SubmitButton>
-          </div>
-        </Stack>
+        <Spacer size={8} />
+
+        <div>
+          <SubmitButton
+            isLoading={transition.state === "submitting"}
+            loadingText="Saving the strategy, please wait..."
+          >
+            Save the strategy
+          </SubmitButton>
+        </div>
       </Form>
     </DashboardLayout>
   );
