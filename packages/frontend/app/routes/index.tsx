@@ -141,37 +141,35 @@ export default function Index() {
         <section aria-labelledby="problems">
           <InvertedBackground>
             <Container>
-              <Centered>
-                <Stack spacing={4}>
-                  <Heading
-                    id="problems"
-                    fontSize={{ "@initial": "saturn", "@mobile": "earth" }}
-                  >
-                    What problem does it solve?
-                  </Heading>
+              <Stack spacing={4}>
+                <Heading
+                  id="problems"
+                  fontSize={{ "@initial": "saturn", "@mobile": "earth" }}
+                >
+                  What problem does it solve?
+                </Heading>
 
-                  <Typography>
-                    Let us say that you have built a brand new login page, but
-                    you are not 100% confident to show it to your millions of
-                    users, <strong>all at once</strong>.
-                  </Typography>
+                <Typography>
+                  Let us say that you have built a brand new login page, but you
+                  are not 100% confident to show it to your millions of users,{" "}
+                  <strong>all at once</strong>.
+                </Typography>
 
-                  <Typography>
-                    What if, instead, you could show this new login page to only{" "}
-                    <strong>a subset of your users</strong>, and progressively
-                    show it to more users?
-                  </Typography>
+                <Typography>
+                  What if, instead, you could show this new login page to only{" "}
+                  <strong>a subset of your users</strong>, and progressively
+                  show it to more users?
+                </Typography>
 
-                  <Typography>
-                    Progressively is a feature flag solutions that solves
-                    exactly this.
-                  </Typography>
-                </Stack>
+                <Typography>
+                  Progressively is a feature flag solutions that solves exactly
+                  this.
+                </Typography>
+              </Stack>
 
-                <Spacer size={8} />
+              <Spacer size={12} />
 
-                <RolloutExample />
-              </Centered>
+              <RolloutExample />
             </Container>
           </InvertedBackground>
         </section>
