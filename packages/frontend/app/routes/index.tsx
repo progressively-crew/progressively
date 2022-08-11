@@ -34,6 +34,11 @@ const CardGroup = styled("div", {
   display: "grid",
   gridTemplateColumns: "1fr 1fr 1fr",
   gap: "$spacing$8",
+
+  "@mobile": {
+    gridTemplateColumns: "1fr",
+    gap: "$spacing$4",
+  },
 });
 
 const CardContent = styled("div", {
@@ -58,6 +63,8 @@ const Hero = styled("div", {
 
   "@mobile": {
     flexDirection: "column",
+    height: "unset",
+    padding: "$spacing$8",
   },
 });
 
@@ -65,6 +72,10 @@ const HeroContent = styled("div", {
   display: "grid",
   gridTemplateColumns: "1fr 1fr",
   gap: "$spacing$21",
+
+  "@mobile": {
+    gridTemplateColumns: "1fr",
+  },
 });
 
 const HeadingWrapper = styled("div", {
@@ -110,7 +121,13 @@ export default function Index() {
           <Container>
             <HeroContent>
               <HeadingWrapper>
-                <H1 color="heracles">
+                <H1
+                  color="heracles"
+                  size={{
+                    "@initial": "venus",
+                    "@mobile": "mercury",
+                  }}
+                >
                   Rollout quickly, effectively, progressively
                 </H1>
                 <Typography color="heracles">
@@ -126,7 +143,10 @@ export default function Index() {
             <Container>
               <Centered>
                 <Stack spacing={4}>
-                  <Heading id="problems" fontSize="saturn">
+                  <Heading
+                    id="problems"
+                    fontSize={{ "@initial": "saturn", "@mobile": "earth" }}
+                  >
                     What problem does it solve?
                   </Heading>
 
@@ -161,7 +181,10 @@ export default function Index() {
             <Container>
               <Centered>
                 <div>
-                  <Heading id="difference" fontSize="saturn">
+                  <Heading
+                    id="difference"
+                    fontSize={{ "@initial": "saturn", "@mobile": "earth" }}
+                  >
                     Why is it different?
                   </Heading>
 

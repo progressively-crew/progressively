@@ -43,7 +43,7 @@ export const fonts = {
 export const fontSizes = {
   venus: "3.5rem",
   saturn: "3rem",
-  venusMobile: "2.7rem",
+  mercury: "2.7rem",
   earth: "2rem",
   mars: "1.6rem",
   jupiter: "1.25rem",

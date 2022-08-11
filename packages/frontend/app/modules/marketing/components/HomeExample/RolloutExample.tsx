@@ -10,6 +10,10 @@ const BrowserGrid = styled("div", {
   display: "grid",
   gridTemplateColumns: "1fr 1fr 1fr 1fr",
   gap: "$spacing$8",
+  "@mobile": {
+    gridTemplateColumns: "1fr",
+    gap: "$spacing$4",
+  },
 });
 
 const FeatureBox = styled("div", {
@@ -28,6 +32,10 @@ const InnerBrowserWrapper = styled("div", {
   background: "$apollo",
   margin: "$spacing$4",
   border: "4px solid transparent",
+
+  "@mobile": {
+    width: "unset",
+  },
 
   variants: {
     activated: {
@@ -62,6 +70,10 @@ const ActionWrapper = styled("div", {
   display: "flex",
   gap: "$spacing$12",
   justifyContent: "space-between",
+
+  "@mobile": {
+    flexDirection: "column",
+  },
 });
 
 export const RolloutExample = () => {
