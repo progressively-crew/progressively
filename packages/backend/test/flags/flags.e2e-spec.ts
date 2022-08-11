@@ -276,7 +276,7 @@ describe('FlagsController (e2e)', () => {
       const validStrategy: any = {
         name: 'Super strategy',
         strategyRuleType: 'default',
-        activationType: 'boolean',
+        rolloutPercentage: 100,
       };
 
       return request(app.getHttpServer())
@@ -304,7 +304,7 @@ describe('FlagsController (e2e)', () => {
         .send({
           name: 'Super strategy',
           strategyRuleType: 'field',
-          activationType: 'boolean',
+          rolloutPercentage: 100,
           fieldName: 'email',
           fieldComparator: 'eq',
           fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
@@ -323,7 +323,7 @@ describe('FlagsController (e2e)', () => {
       const invalidStrategy: any = {
         name: undefined,
         strategyRuleType: 'default',
-        activationType: 'boolean',
+        rolloutPercentage: 100,
       };
 
       await request(app.getHttpServer())
@@ -344,28 +344,7 @@ describe('FlagsController (e2e)', () => {
       const invalidStrategy: any = {
         name: 'Super strategy',
         strategyRuleType: 'invalid strategy',
-        activationType: 'boolean',
-      };
-
-      await request(app.getHttpServer())
-        .post('/environments/1/flags/1/strategies')
-        .set('Authorization', `Bearer ${access_token}`)
-        .send(invalidStrategy)
-        .expect(400)
-        .expect({
-          statusCode: 400,
-          message: 'Validation failed',
-          error: 'Bad Request',
-        });
-    });
-
-    it('gives 400 when the project receives a wrong activation type', async () => {
-      const access_token = await authenticate(app);
-
-      const invalidStrategy: any = {
-        name: 'Super strategy',
-        strategyRuleType: 'default',
-        activationType: 'not-valid',
+        rolloutPercentage: 100,
       };
 
       await request(app.getHttpServer())
@@ -387,7 +366,7 @@ describe('FlagsController (e2e)', () => {
         const invalidStrategy: any = {
           name: 'Super strategy',
           strategyRuleType: 'field',
-          activationType: 'boolean',
+          rolloutPercentage: 100,
           [field]: undefined,
         };
 
@@ -410,7 +389,7 @@ describe('FlagsController (e2e)', () => {
       const validStrategy: any = {
         name: 'Super strategy',
         strategyRuleType: 'default',
-        activationType: 'boolean',
+        rolloutPercentage: 100,
       };
 
       const response = await request(app.getHttpServer())
@@ -428,8 +407,7 @@ describe('FlagsController (e2e)', () => {
         fieldName: null,
         fieldComparator: null,
         fieldValue: null,
-        activationType: 'boolean',
-        rolloutPercentage: null,
+        rolloutPercentage: 100,
         flagEnvironmentFlagId: '1',
         flagEnvironmentEnvironmentId: '1',
       });
@@ -441,7 +419,7 @@ describe('FlagsController (e2e)', () => {
       const validStrategy: any = {
         name: 'Super strategy',
         strategyRuleType: 'field',
-        activationType: 'boolean',
+        rolloutPercentage: 100,
         fieldName: 'email',
         fieldComparator: 'eq',
         fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
@@ -462,8 +440,7 @@ describe('FlagsController (e2e)', () => {
         fieldName: 'email',
         fieldComparator: 'eq',
         fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
-        activationType: 'boolean',
-        rolloutPercentage: null,
+        rolloutPercentage: 100,
         flagEnvironmentFlagId: '1',
         flagEnvironmentEnvironmentId: '1',
       });
@@ -475,7 +452,6 @@ describe('FlagsController (e2e)', () => {
       const validStrategy: any = {
         name: 'Super strategy',
         strategyRuleType: 'field',
-        activationType: 'percentage',
         fieldName: 'email',
         fieldComparator: 'eq',
         fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
@@ -497,7 +473,6 @@ describe('FlagsController (e2e)', () => {
         fieldName: 'email',
         fieldComparator: 'eq',
         fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
-        activationType: 'percentage',
         rolloutPercentage: 99,
         flagEnvironmentFlagId: '1',
         flagEnvironmentEnvironmentId: '1',
@@ -547,7 +522,6 @@ describe('FlagsController (e2e)', () => {
       const validStrategy: any = {
         name: 'Super strategy',
         strategyRuleType: 'field',
-        activationType: 'percentage',
         fieldName: 'email',
         fieldComparator: 'eq',
         fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
@@ -567,14 +541,13 @@ describe('FlagsController (e2e)', () => {
       const newStrat = response.body[0];
 
       expect(response.status).toBe(200);
-      expect(newStrat.activationType).toEqual('boolean');
       expect(newStrat.fieldComparator).toEqual(null);
       expect(newStrat.fieldName).toEqual(null);
       expect(newStrat.fieldValue).toEqual(null);
       expect(newStrat.flagEnvironmentEnvironmentId).toEqual('1');
       expect(newStrat.flagEnvironmentFlagId).toEqual('1');
       expect(newStrat.name).toEqual('Super strategy');
-      expect(newStrat.rolloutPercentage).toEqual(null);
+      expect(newStrat.rolloutPercentage).toEqual(100);
       expect(newStrat.strategyRuleType).toEqual('default');
       expect(newStrat.uuid).toBeDefined();
     });

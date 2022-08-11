@@ -1,5 +1,3 @@
-import { ActivationType } from "./types/activation";
-
 export enum ComparatorEnum {
   Equals = "eq",
   NotEquals = "neq",
@@ -14,11 +12,7 @@ export interface StrategyCreateDTO {
   fieldName?: string;
   fieldComparator?: ComparatorEnum;
   fieldValue?: string;
-
-  activationType?: ActivationType;
-
-  // only exists for activation "percentage"
-  rolloutPercentage?: number;
+  rolloutPercentage: number;
 }
 
 export interface StrategyRetrieveDTO extends StrategyCreateDTO {

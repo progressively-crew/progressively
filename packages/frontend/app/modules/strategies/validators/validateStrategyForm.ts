@@ -3,7 +3,6 @@ export const validateStrategyForm = (formData: FormData) => {
 
   const strategyName = formData.get("strategy-name");
   const strategyType = formData.get("strategy-type");
-  const activationStrategy = formData.get("strategy-activation");
 
   if (!strategyName) {
     errors["strategy-name"] = "The strategy name is required.";
@@ -29,10 +28,6 @@ export const validateStrategyForm = (formData: FormData) => {
     }
   } else {
     errors["strategy-type"] = "The strategy audience is required.";
-  }
-
-  if (!activationStrategy) {
-    errors["strategy-activation"] = "The activation strategy is required.";
   }
 
   return errors;

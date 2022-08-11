@@ -69,14 +69,13 @@ describe('Strategy (e2e)', () => {
 
       expect(response.status).toBe(200);
       expect(response.body).toEqual({
-        activationType: 'boolean',
         fieldComparator: null,
         fieldName: null,
         fieldValue: null,
         flagEnvironmentEnvironmentId: '1',
         flagEnvironmentFlagId: '1',
         name: 'Super strategy',
-        rolloutPercentage: null,
+        rolloutPercentage: 100,
         strategyRuleType: 'default',
         uuid: '1',
       });
@@ -128,14 +127,13 @@ describe('Strategy (e2e)', () => {
 
       expect(prev.body).toMatchInlineSnapshot(`
         Object {
-          "activationType": "boolean",
           "fieldComparator": null,
           "fieldName": null,
           "fieldValue": null,
           "flagEnvironmentEnvironmentId": "1",
           "flagEnvironmentFlagId": "1",
           "name": "Super strategy",
-          "rolloutPercentage": null,
+          "rolloutPercentage": 100,
           "strategyRuleType": "default",
           "uuid": "1",
         }
@@ -152,8 +150,7 @@ describe('Strategy (e2e)', () => {
           fieldName: null,
           fieldComparator: null,
           fieldValue: null,
-          activationType: 'boolean',
-          rolloutPercentage: null,
+          rolloutPercentage: 100,
           flagEnvironmentFlagId: '1',
           flagEnvironmentEnvironmentId: '1',
         });

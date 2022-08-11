@@ -3,7 +3,7 @@ import { RolloutStrategy } from '@prisma/client';
 import { PrismaService } from '../database/prisma.service';
 import { FlagStatus } from '../flags/flags.status';
 import { ExtendedFlagEnv, StrategyService } from './strategy.service';
-import { ActivationRuleType, StrategyRuleType } from './types';
+import { StrategyRuleType } from './types';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 
 describe('StrategyService', () => {
@@ -30,14 +30,13 @@ describe('StrategyService', () => {
 
   beforeEach(() => {
     strategy = {
-      activationType: ActivationRuleType.Boolean,
       fieldComparator: undefined,
       fieldName: undefined,
       fieldValue: undefined,
       flagEnvironmentEnvironmentId: '1',
       flagEnvironmentFlagId: '1',
       name: 'Strategy name',
-      rolloutPercentage: undefined,
+      rolloutPercentage: 100,
       strategyRuleType: StrategyRuleType.Default,
       uuid: '123',
     };
@@ -67,9 +66,9 @@ describe('StrategyService', () => {
       });
     });
 
-    describe('ActivationRuleType', () => {
-      it('returns true when the activation rule is Boolean', async () => {
-        strategy.activationType = ActivationRuleType.Boolean;
+    describe('Percentage rollout', () => {
+      it('returns true when the rollout percentage is 100%', async () => {
+        strategy.rolloutPercentage = 100;
 
         const shouldActivate = await service.resolveStrategies(
           flagEnv,
@@ -84,7 +83,6 @@ describe('StrategyService', () => {
 
       it('returns false when the activation rule is Percentage but the userId is falsy', async () => {
         strategy.rolloutPercentage = 99;
-        strategy.activationType = ActivationRuleType.Percentage;
 
         const shouldActivate = await service.resolveStrategies(
           flagEnv,
@@ -97,7 +95,6 @@ describe('StrategyService', () => {
 
       it('returns true when the activation rule is Percentage, the userId is falsy BUT the percentage is 100', async () => {
         strategy.rolloutPercentage = 100;
-        strategy.activationType = ActivationRuleType.Percentage;
 
         const shouldActivate = await service.resolveStrategies(
           flagEnv,
@@ -109,7 +106,6 @@ describe('StrategyService', () => {
       });
 
       it('returns true when the ActivationRuleType is Percentage (70%) and that the user/flag combination is in the percentage range', async () => {
-        strategy.activationType = ActivationRuleType.Percentage;
         strategy.rolloutPercentage = 70;
 
         const shouldActivate = await service.resolveStrategies(
@@ -124,22 +120,6 @@ describe('StrategyService', () => {
       });
 
       it('returns false when the ActivationRuleType is Percentage (5%) and that the user/flag combination is NOT in the percentage range', async () => {
-        strategy.activationType = ActivationRuleType.Percentage;
-        strategy.rolloutPercentage = 5;
-
-        const shouldActivate = await service.resolveStrategies(
-          flagEnv,
-          [strategy],
-          {
-            id: 'user-id-123',
-          },
-        );
-
-        expect(shouldActivate).toBe(false);
-      });
-
-      it('returns false when the ActivationRuleType does not match any known one', async () => {
-        strategy.activationType = 'unknown';
         strategy.rolloutPercentage = 5;
 
         const shouldActivate = await service.resolveStrategies(

@@ -4,7 +4,6 @@ import { getFlagsByProjectEnv } from "~/modules/flags/services/getFlagsByProject
 import { Flag, FlagEnv } from "~/modules/flags/types";
 import { getProject } from "~/modules/projects/services/getProject";
 import { Project } from "~/modules/projects/types";
-import { ActivationType } from "~/modules/strategies/types/activation";
 import { StrategyRuleType } from "~/modules/strategies/types/StrategyRule";
 import { getSession } from "~/sessions";
 import { validateStrategyForm } from "~/modules/strategies/validators/validateStrategyForm";
@@ -88,11 +87,6 @@ export const action: ActionFunction = async ({
     "strategy-type"
   ) as StrategyCreateDTO["strategyRuleType"];
 
-  const activationStrategy =
-    (formData.get(
-      "strategy-activation"
-    ) as StrategyCreateDTO["activationType"]) || undefined;
-
   const fieldName = (formData.get("field-name") as string) || undefined;
   const fieldValue = (formData.get("field-value") as string) || undefined;
 
@@ -106,11 +100,10 @@ export const action: ActionFunction = async ({
   const strategy: StrategyCreateDTO = {
     name: strategyName,
     strategyRuleType: strategyType,
-    activationType: activationStrategy,
     fieldComparator: fieldComparator,
     fieldName,
     fieldValue,
-    rolloutPercentage: percentageValue ? Number(percentageValue) : undefined,
+    rolloutPercentage: Number(percentageValue),
   };
 
   try {
@@ -173,7 +166,7 @@ export const loader: LoaderFunction = async ({
 
 export default function StrategyCreatePage() {
   const transition = useTransition();
-  const [percentageValue, setPercentageValue] = useState<number>(50);
+  const [percentageValue, setPercentageValue] = useState<number>(100);
 
   const { project, environment, currentFlag, user } =
     useLoaderData<LoaderData>();
@@ -181,8 +174,6 @@ export default function StrategyCreatePage() {
   const actionData = useActionData<ActionData>();
 
   const [strategyType, setStrategyType] = useState<StrategyRuleType>("default");
-  const [activationStrategy, setActivationStrategy] =
-    useState<ActivationType>("boolean");
 
   const crumbs: Crumbs = [
     {
@@ -249,32 +240,12 @@ export default function StrategyCreatePage() {
 
                   <Divider />
 
-                  <RadioField<ActivationType>
-                    title="Serve the flag to"
-                    value={activationStrategy}
-                    onChange={setActivationStrategy}
-                    name="strategy-activation"
-                    options={[
-                      { value: "boolean", label: "Everybody / Nobody" },
-                      {
-                        value: "percentage",
-                        label: "A percentage of the audience",
-                      },
-                    ]}
+                  <SliderInput
+                    name="percentage-value"
+                    label={`Percentage of the audience concerned`}
+                    onChange={setPercentageValue}
+                    percentageValue={percentageValue}
                   />
-
-                  {activationStrategy === "percentage" && (
-                    <>
-                      <Divider />
-
-                      <SliderInput
-                        name="percentage-value"
-                        label={`A percentage of the audience`}
-                        onChange={setPercentageValue}
-                        percentageValue={percentageValue}
-                      />
-                    </>
-                  )}
                 </Stack>
               </Section>
             </CardContent>

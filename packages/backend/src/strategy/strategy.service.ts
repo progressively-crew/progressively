@@ -1,12 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Flag, FlagEnvironment, RolloutStrategy } from '@prisma/client';
 import { PrismaService } from '../database/prisma.service';
-import {
-  ActivationRuleType,
-  ComparatorEnum,
-  FieldRecord,
-  StrategyRuleType,
-} from './types';
+import { ComparatorEnum, FieldRecord, StrategyRuleType } from './types';
 import { ComparatorFactory } from './comparators/comparatorFactory';
 import { isInBucket } from './utils';
 
@@ -22,25 +17,17 @@ export class StrategyService {
     flagEnv: ExtendedFlagEnv,
     fields: FieldRecord,
   ) {
-    if (strategy.activationType === ActivationRuleType.Boolean) {
-      return true;
-    }
+    // Return the flag to everyone, even people with no ID fields when the percentage is 100%
+    if (strategy.rolloutPercentage === 100) return true;
 
-    if (strategy.activationType === ActivationRuleType.Percentage) {
-      // Return the flag to everyone, even people with no ID fields when the percentage is 100%
-      if (strategy.rolloutPercentage === 100) return true;
+    // Early break when the field is is not defined, except when the rollout is 100%
+    if (!fields?.id) return false;
 
-      // Early break when the field is is not defined, except when the rollout is 100%
-      if (!fields?.id) return false;
-
-      return isInBucket(
-        flagEnv.flag.key,
-        fields.id as string,
-        strategy.rolloutPercentage,
-      );
-    }
-
-    return false;
+    return isInBucket(
+      flagEnv.flag.key,
+      fields.id as string,
+      strategy.rolloutPercentage,
+    );
   }
 
   private _checkStrategyRule(strategy: RolloutStrategy, fields: FieldRecord) {
@@ -111,7 +98,6 @@ export class StrategyService {
         },
         name: strategy.name,
         strategyRuleType: strategy.strategyRuleType,
-        activationType: strategy.activationType,
 
         // only for strategy rule type being "field"
         fieldName: strategy.fieldName,

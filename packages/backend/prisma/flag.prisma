@@ -17,7 +17,6 @@ model FlagEnvironment {
     status        String            @default("NOT_ACTIVATED")
     strategies    RolloutStrategy[]
 
-
     @@id([flagId, environmentId])
 }
 
@@ -41,11 +40,8 @@ model RolloutStrategy {
     fieldComparator  String?
     fieldValue       String?
 
-    // activation
-    activationType String // available values in modules/strategies/types/Activation
-
     // related to activation type "percentage"
-    rolloutPercentage Int?
+    rolloutPercentage Int
 
     // Relations
     FlagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
