@@ -35,7 +35,7 @@ const CardGroup = styled("div", {
   gridTemplateColumns: "1fr 1fr 1fr",
   gap: "$spacing$8",
 
-  "@mobile": {
+  "@tablet": {
     gridTemplateColumns: "1fr",
     gap: "$spacing$4",
   },
@@ -178,118 +178,123 @@ export default function Index() {
           <Background>
             <Container>
               <Centered>
-                <div>
-                  <Heading
-                    id="difference"
-                    fontSize={{ "@initial": "saturn", "@mobile": "earth" }}
-                  >
-                    Why is it different?
-                  </Heading>
+                <Heading
+                  id="difference"
+                  fontSize={{ "@initial": "saturn", "@mobile": "earth" }}
+                >
+                  Why is it different?
+                </Heading>
 
-                  <Spacer size={6} />
+                <Typography>
+                  There are a bunch of professional and very efficient feature
+                  flags solutions out there. Every tool works very well, but we
+                  wanted something just a bit different.
+                </Typography>
 
-                  <CardGroup>
-                    <Card>
-                      <CardContent>
-                        <Typography font="title" size="mars">
-                          Lightweight SDKs
-                        </Typography>
-                        <Typography>
-                          Progressively is smaller than its competitors (1kB for
-                          the React SDK).
-                        </Typography>
+                <Spacer size={12} />
 
-                        <Spacer size={3} />
+                <CardGroup>
+                  <Card>
+                    <CardContent>
+                      <Typography font="title" size="mars">
+                        Lightweight SDKs
+                      </Typography>
+                      <Typography>
+                        Progressively is smaller than its competitors (1kB for
+                        the React SDK).
+                      </Typography>
 
-                        <TextCenter>
-                          <ExternalLink href="https://github.com/progressively-crew/progressively/tree/master/example/bundle-diffs">
-                            See alternatives comparisons
-                          </ExternalLink>
-                        </TextCenter>
-                      </CardContent>
-                    </Card>
+                      <Spacer size={3} />
 
-                    <Card>
-                      <CardContent>
-                        <Typography font="title" size="mars">
-                          Accessible
-                        </Typography>
+                      <TextCenter>
+                        <ExternalLink href="https://github.com/progressively-crew/progressively/tree/master/example/bundle-diffs">
+                          See alternatives comparisons
+                        </ExternalLink>
+                      </TextCenter>
+                    </CardContent>
+                  </Card>
 
-                        <Typography>
-                          Progressively has an accessible dashboard. If you face
-                          issues, please, tell us.
-                        </Typography>
+                  <Card>
+                    <CardContent>
+                      <Typography font="title" size="mars">
+                        Accessible
+                      </Typography>
 
-                        <Spacer size={3} />
+                      <Typography>
+                        Progressively has an accessible dashboard. If you face
+                        issues, please, tell us.
+                      </Typography>
 
-                        <TextCenter>
-                          <ExternalLink href="https://github.com/progressively-crew/progressively/issues">
-                            Create an accessibility issue
-                          </ExternalLink>
-                        </TextCenter>
-                      </CardContent>
-                    </Card>
+                      <Spacer size={3} />
 
-                    <Card>
-                      <CardContent>
-                        <Typography font="title" size="mars">
-                          SSR friendly
-                        </Typography>
+                      <TextCenter>
+                        <ExternalLink href="https://github.com/progressively-crew/progressively/issues">
+                          Create an accessibility issue
+                        </ExternalLink>
+                      </TextCenter>
+                    </CardContent>
+                  </Card>
 
-                        <Spacer size={3} />
+                  <Card>
+                    <CardContent>
+                      <Typography font="title" size="mars">
+                        SSR friendly
+                      </Typography>
 
-                        <Typography>
-                          Progressively comes with built-in SSR support so that
-                          the page {"don't"} blink when resolving the flags
-                        </Typography>
-                      </CardContent>
-                    </Card>
+                      <Spacer size={3} />
 
-                    <Card>
-                      <CardContent>
-                        <Typography font="title" size="mars">
-                          Real-time
-                        </Typography>
+                      <Typography>
+                        Progressively comes with built-in SSR support so that
+                        the page {"don't"} blink when resolving the flags.
+                      </Typography>
+                    </CardContent>
+                  </Card>
 
-                        <Spacer size={3} />
+                  <Card>
+                    <CardContent>
+                      <Typography font="title" size="mars">
+                        Real-time
+                      </Typography>
 
-                        <Typography>
-                          Real-time propagation with Websockets
-                        </Typography>
-                      </CardContent>
-                    </Card>
+                      <Spacer size={3} />
 
-                    <Card>
-                      <CardContent>
-                        <Typography font="title" size="mars">
-                          No tracking
-                        </Typography>
+                      <Typography>
+                        Progressively propagates in near real-time with
+                        Websockets on the client.
+                      </Typography>
+                    </CardContent>
+                  </Card>
 
-                        <Spacer size={3} />
+                  <Card>
+                    <CardContent>
+                      <Typography font="title" size="mars">
+                        No tracking
+                      </Typography>
 
-                        <Typography>
-                          No intrusive tracking, we only get data from flags
-                          evaluations for insights purpose. We also use
-                          Sentry.io for error tracking.
-                        </Typography>
-                      </CardContent>
-                    </Card>
+                      <Spacer size={3} />
 
-                    <Card>
-                      <CardContent>
-                        <Typography font="title" size="mars">
-                          Self hosted
-                        </Typography>
+                      <Typography>
+                        No intrusive tracking, we only get flag evaluations
+                        metrics <strong>to help you</strong> take decisions.
+                      </Typography>
+                    </CardContent>
+                  </Card>
 
-                        <Spacer size={3} />
+                  <Card>
+                    <CardContent>
+                      <Typography font="title" size="mars">
+                        Self hosted
+                      </Typography>
 
-                        <Typography>
-                          Self-hosted so that you own the data
-                        </Typography>
-                      </CardContent>
-                    </Card>
-                  </CardGroup>
-                </div>
+                      <Spacer size={3} />
+
+                      <Typography>
+                        Progressively is Open Source, and self hosted. Own your
+                        servers, own your data.
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </CardGroup>
               </Centered>
             </Container>
           </Background>
