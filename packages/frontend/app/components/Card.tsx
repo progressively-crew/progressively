@@ -22,6 +22,7 @@ const GradientBorderedCardInner = styled("div", {
   display: "flex",
   justifyContent: "center",
   textAlign: "center",
+  borderRadius: "$borderRadius$small",
 });
 
 export interface GradientBorderedCardProps {
