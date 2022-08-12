@@ -12,7 +12,7 @@ import {
   StrategyCreateDTO,
   StrategyRetrieveDTO,
 } from "~/modules/strategies/types";
-import { createStrategy } from "~/modules/strategies/services/createStrategy";
+import { editStrategy } from "~/modules/strategies/services/editStrategy";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { StrategyAudience } from "~/modules/strategies/components/StrategyAudience";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
@@ -121,7 +121,7 @@ export const action: ActionFunction = async ({
   };
 
   try {
-    await createStrategy(
+    await editStrategy(
       params.env!,
       params.flagId!,
       strategy,
