@@ -12,7 +12,7 @@ import {
   StrategyCreateDTO,
   StrategyRetrieveDTO,
 } from "~/modules/strategies/types";
-import { createStrategy } from "~/modules/strategies/services/createStrategy";
+import { editStrategy } from "~/modules/strategies/services/editStrategy";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { StrategyAudience } from "~/modules/strategies/components/StrategyAudience";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
@@ -121,12 +121,7 @@ export const action: ActionFunction = async ({
   };
 
   try {
-    await createStrategy(
-      params.env!,
-      params.flagId!,
-      strategy,
-      session.get("auth-cookie")
-    );
+    await editStrategy(params.stratId!, strategy, session.get("auth-cookie"));
 
     return redirect(
       `/dashboard/projects/${params.id}/environments/${params.env}/flags/${params.flagId}?strategyUpdated=true#strategy-updated`
