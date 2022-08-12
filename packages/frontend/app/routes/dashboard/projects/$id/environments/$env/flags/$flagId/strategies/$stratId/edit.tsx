@@ -121,12 +121,7 @@ export const action: ActionFunction = async ({
   };
 
   try {
-    await editStrategy(
-      params.env!,
-      params.flagId!,
-      strategy,
-      session.get("auth-cookie")
-    );
+    await editStrategy(params.stratId!, strategy, session.get("auth-cookie"));
 
     return redirect(
       `/dashboard/projects/${params.id}/environments/${params.env}/flags/${params.flagId}?strategyUpdated=true#strategy-updated`
