@@ -44,6 +44,9 @@ export const RawButton = styled("button", {
         background: "none",
         border: "2px solid $nemesis",
         color: "$nemesis",
+        "& svg": {
+          color: "$nemesis",
+        },
         "&:active": {
           opacity: "0.9",
         },

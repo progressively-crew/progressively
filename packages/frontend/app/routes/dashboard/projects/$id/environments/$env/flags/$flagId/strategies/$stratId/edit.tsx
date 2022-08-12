@@ -31,10 +31,8 @@ import {
   LoaderFunction,
 } from "@remix-run/node";
 import { useLoaderData, useActionData, Form } from "@remix-run/react";
-import { Card, CardContent } from "~/components/Card";
-import { Stack } from "~/components/Stack";
+import { Card, CardContent, GradientBorderedCard } from "~/components/Card";
 import { SliderInput } from "~/components/Fields/SliderInput";
-import { Divider } from "~/components/Divider";
 import { Section } from "~/components/Section";
 import { styled } from "~/stitches.config";
 import { Spacer } from "~/components/Spacer";
@@ -48,6 +46,17 @@ const CardGroup = styled("div", {
   "@tablet": {
     gridTemplateColumns: "1fr",
   },
+});
+
+const Row = styled("div", {
+  display: "flex",
+  flexDirection: "column-reverse",
+  gap: "$spacing$4",
+});
+
+const AlignActions = styled("div", {
+  display: "flex",
+  justifyContent: "flex-end",
 });
 
 interface MetaArgs {
@@ -216,41 +225,18 @@ export default function StrategyEditPage() {
     <DashboardLayout
       user={user}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
-      header={
-        <Header
-          title="Edit a strategy"
-          description={
-            <Typography>
-              {`You're`} about to create a strategy to{" "}
-              <strong>{currentFlag.name}</strong> in{" "}
-              <strong>{project.name}</strong> on{" "}
-              <strong>{environment.name}</strong>.
-            </Typography>
-          }
-        />
-      }
+      header={<Header title={`Edit ${strategy.name}`} />}
       status={actionData?.errors && <ErrorBox list={actionData.errors} />}
     >
       <Form method="post">
-        <CardGroup>
-          <Card>
-            <CardContent>
-              <Section id="general-information">
-                <Typography as="h2" font="title" size="earth">
-                  General information
-                </Typography>
-
-                <Spacer size={4} />
-
-                <Stack spacing={4}>
-                  <TextInput
-                    name="strategy-name"
-                    placeholder="e.g: Strategy 1"
-                    label="Strategy name"
-                    isInvalid={Boolean(errors["strategy-name"])}
-                  />
-
-                  <Divider />
+        <Row>
+          <div>
+            <Section id="percentage-rollout">
+              <GradientBorderedCard>
+                <CardContent>
+                  <Typography as="h2" font="title" size="earth">
+                    Targeting audience
+                  </Typography>
 
                   <SliderInput
                     name="percentage-value"
@@ -258,40 +244,73 @@ export default function StrategyEditPage() {
                     onChange={setPercentageValue}
                     percentageValue={percentageValue}
                   />
-                </Stack>
-              </Section>
-            </CardContent>
-          </Card>
+                </CardContent>
+              </GradientBorderedCard>
+            </Section>
 
-          <Card>
-            <CardContent>
-              <Section>
-                <Typography as="h2" font="title" size="earth">
-                  Targeting criteria
-                </Typography>
+            <Spacer size={4} />
 
-                <Spacer size={4} />
+            <CardGroup>
+              <Card>
+                <CardContent>
+                  <Section id="general-information">
+                    <Typography as="h2" font="title" size="earth">
+                      General information
+                    </Typography>
 
-                <StrategyAudience
-                  strategyType={strategyType}
-                  onStrategyChange={setStrategyType}
-                  errors={errors}
-                />
-              </Section>
-            </CardContent>
-          </Card>
-        </CardGroup>
+                    <Spacer size={4} />
 
-        <Spacer size={8} />
+                    <TextInput
+                      name="strategy-name"
+                      placeholder="e.g: Strategy 1"
+                      label="Strategy name"
+                      isInvalid={Boolean(errors["strategy-name"])}
+                    />
+                  </Section>
+                </CardContent>
+              </Card>
 
-        <div>
+              <Card>
+                <CardContent>
+                  <Section>
+                    <Typography as="h2" font="title" size="earth">
+                      Targeting criteria
+                    </Typography>
+
+                    <Spacer size={4} />
+
+                    <StrategyAudience
+                      strategyType={strategyType}
+                      onStrategyChange={setStrategyType}
+                      errors={errors}
+                    />
+                  </Section>
+                </CardContent>
+              </Card>
+            </CardGroup>
+          </div>
+
+          <AlignActions aria-hidden>
+            <SubmitButton
+              tabIndex={-1}
+              isLoading={transition.state === "submitting"}
+              loadingText="Saving the strategy, please wait..."
+            >
+              Save the strategy
+            </SubmitButton>
+          </AlignActions>
+        </Row>
+
+        <Spacer size={4} />
+
+        <AlignActions>
           <SubmitButton
             isLoading={transition.state === "submitting"}
             loadingText="Saving the strategy, please wait..."
           >
             Save the strategy
           </SubmitButton>
-        </div>
+        </AlignActions>
       </Form>
     </DashboardLayout>
   );

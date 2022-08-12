@@ -1,3 +1,4 @@
+import { AiOutlineEdit } from "react-icons/ai";
 import { Button } from "~/components/Buttons/Button";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { HStack } from "~/components/HStack";
@@ -41,8 +42,11 @@ export const StrategyList = ({
               <StrategyCriteria strat={strat} />
             </td>
             <td>
-              <HStack spacing={2}>
+              <HStack spacing={4}>
                 <Button
+                  variant="secondary"
+                  small
+                  icon={<AiOutlineEdit />}
                   to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/strategies/${strat.uuid}/edit`}
                 >
                   Edit<VisuallyHidden> {strat.name}</VisuallyHidden>
