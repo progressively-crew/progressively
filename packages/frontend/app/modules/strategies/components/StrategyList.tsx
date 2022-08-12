@@ -1,8 +1,9 @@
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { RawTable } from "~/components/RawTable";
+import { Tag } from "~/components/Tag";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { StrategyRetrieveDTO } from "../types";
-import { StrategyTargeting } from "./StrategyTargeting";
+import { StrategyCriteria, StrategyTargeting } from "./StrategyCriteria";
 
 export interface StrategyListProps {
   strategies: Array<StrategyRetrieveDTO>;
@@ -22,7 +23,8 @@ export const StrategyList = ({
       <thead>
         <tr>
           <th>Name</th>
-          <th width="50%">Targeting</th>
+          <th>Targeting</th>
+          <th width="30%">Criteria</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -31,7 +33,10 @@ export const StrategyList = ({
           <tr key={strat.uuid}>
             <td>{strat.name}</td>
             <td>
-              <StrategyTargeting strat={strat} />
+              <Tag>{strat.rolloutPercentage}%</Tag> of the audience
+            </td>
+            <td>
+              <StrategyCriteria strat={strat} />
             </td>
             <td>
               <DeleteButton
