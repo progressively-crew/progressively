@@ -18,7 +18,7 @@ const bounce = keyframes({
 const ErrorBoxWrapper = styled("figure", {
   background: "$errorBg",
   color: "$errorFg",
-  border: "4px solid $errorBorder",
+  border: "1px solid $errorBorder",
   padding: "$spacing$6 $spacing$4",
   borderRadius: "$borderRadius$regular",
   fontFamily: "$default",

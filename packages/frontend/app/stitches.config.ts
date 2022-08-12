@@ -71,13 +71,13 @@ export const colors = {
   focus: "#4D90FE",
   activeBg: "hsl(340deg, 82%, 35%)",
 
-  successBg: "#c8e6c9",
-  successFg: "#1b5e20",
-  successBorder: "#66bb6a",
+  successBg: "#E0F2F1",
+  successFg: "#00695C",
+  successBorder: "#B2DFDB",
 
-  errorBg: "#800118",
-  errorFg: "#fff",
-  errorBorder: "#800118",
+  errorBg: "#FBE9E7",
+  errorFg: "#BF360C",
+  errorBorder: "#FFAB91",
 
   warningBg: "#ffecb3",
   warningFg: "#bf360c",
