@@ -187,14 +187,18 @@ export const loader: LoaderFunction = async ({
 
 export default function StrategyEditPage() {
   const transition = useTransition();
-  const [percentageValue, setPercentageValue] = useState<number>(100);
-
   const { project, environment, currentFlag, user, strategy } =
     useLoaderData<LoaderData>();
 
+  const [percentageValue, setPercentageValue] = useState<number>(
+    strategy.rolloutPercentage
+  );
+
   const actionData = useActionData<ActionData>();
 
-  const [strategyType, setStrategyType] = useState<StrategyRuleType>("default");
+  const [strategyType, setStrategyType] = useState<StrategyRuleType>(
+    strategy.strategyRuleType
+  );
 
   const crumbs: Crumbs = [
     {
@@ -264,6 +268,7 @@ export default function StrategyEditPage() {
                       name="strategy-name"
                       placeholder="e.g: Strategy 1"
                       label="Strategy name"
+                      defaultValue={strategy.name}
                       isInvalid={Boolean(errors["strategy-name"])}
                     />
                   </Section>
@@ -283,6 +288,9 @@ export default function StrategyEditPage() {
                       strategyType={strategyType}
                       onStrategyChange={setStrategyType}
                       errors={errors}
+                      initialFieldName={strategy.fieldName}
+                      initialFieldValue={strategy.fieldValue}
+                      initialFieldComparator={strategy.fieldComparator}
                     />
                   </Section>
                 </CardContent>
