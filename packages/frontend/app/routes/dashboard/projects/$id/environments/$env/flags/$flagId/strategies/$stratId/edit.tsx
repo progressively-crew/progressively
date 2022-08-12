@@ -8,7 +8,10 @@ import { StrategyRuleType } from "~/modules/strategies/types/StrategyRule";
 import { getSession } from "~/sessions";
 import { validateStrategyForm } from "~/modules/strategies/validators/validateStrategyForm";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
-import { StrategyCreateDTO } from "~/modules/strategies/types";
+import {
+  StrategyCreateDTO,
+  StrategyRetrieveDTO,
+} from "~/modules/strategies/types";
 import { createStrategy } from "~/modules/strategies/services/createStrategy";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { StrategyAudience } from "~/modules/strategies/components/StrategyAudience";
@@ -28,13 +31,12 @@ import {
   LoaderFunction,
 } from "@remix-run/node";
 import { useLoaderData, useActionData, Form } from "@remix-run/react";
-import { Card, CardContent } from "~/components/Card";
-import { Stack } from "~/components/Stack";
+import { Card, CardContent, GradientBorderedCard } from "~/components/Card";
 import { SliderInput } from "~/components/Fields/SliderInput";
-import { Divider } from "~/components/Divider";
 import { Section } from "~/components/Section";
 import { styled } from "~/stitches.config";
 import { Spacer } from "~/components/Spacer";
+import { getStrategy } from "~/modules/strategies/services/getStrategy";
 
 const CardGroup = styled("div", {
   display: "grid",
@@ -46,11 +48,23 @@ const CardGroup = styled("div", {
   },
 });
 
+const Row = styled("div", {
+  display: "flex",
+  flexDirection: "column-reverse",
+  gap: "$spacing$4",
+});
+
+const AlignActions = styled("div", {
+  display: "flex",
+  justifyContent: "flex-end",
+});
+
 interface MetaArgs {
   data?: {
     project?: Project;
     environment?: Environment;
     currentFlag?: Flag;
+    strategy?: StrategyRetrieveDTO;
   };
 }
 
@@ -58,9 +72,10 @@ export const meta: MetaFunction = ({ data }: MetaArgs) => {
   const projectName = data?.project?.name || "An error ocurred";
   const envName = data?.environment?.name || "An error ocurred";
   const flagName = data?.currentFlag?.name || "An error ocurred";
+  const strategyName = data?.strategy?.name || "An error ocurred";
 
   return {
-    title: `Progressively | ${projectName} | ${envName} | Flags | ${flagName} | Strategies | Create`,
+    title: `Progressively | ${projectName} | ${envName} | Flags | ${flagName} | ${strategyName} | Edit`,
   };
 };
 
@@ -114,7 +129,7 @@ export const action: ActionFunction = async ({
     );
 
     return redirect(
-      `/dashboard/projects/${params.id}/environments/${params.env}/flags/${params.flagId}?newStrategy=true#strategy-added`
+      `/dashboard/projects/${params.id}/environments/${params.env}/flags/${params.flagId}?strategyUpdated=true#strategy-updated`
     );
   } catch (e: unknown) {
     if (e instanceof Error) {
@@ -130,6 +145,7 @@ interface LoaderData {
   environment: Environment;
   currentFlag: Flag;
   user: User;
+  strategy: StrategyRetrieveDTO;
 }
 
 export const loader: LoaderFunction = async ({
@@ -155,24 +171,34 @@ export const loader: LoaderFunction = async ({
     (flagEnv) => flagEnv.flagId === params.flagId!
   )!.flag;
 
+  const strategy: StrategyRetrieveDTO = await getStrategy(
+    params.stratId!,
+    authCookie
+  );
+
   return {
     project,
     environment: environment!,
     currentFlag,
     user,
+    strategy,
   };
 };
 
-export default function StrategyCreatePage() {
+export default function StrategyEditPage() {
   const transition = useTransition();
-  const [percentageValue, setPercentageValue] = useState<number>(100);
-
-  const { project, environment, currentFlag, user } =
+  const { project, environment, currentFlag, user, strategy } =
     useLoaderData<LoaderData>();
+
+  const [percentageValue, setPercentageValue] = useState<number>(
+    strategy.rolloutPercentage
+  );
 
   const actionData = useActionData<ActionData>();
 
-  const [strategyType, setStrategyType] = useState<StrategyRuleType>("default");
+  const [strategyType, setStrategyType] = useState<StrategyRuleType>(
+    strategy.strategyRuleType
+  );
 
   const crumbs: Crumbs = [
     {
@@ -192,8 +218,8 @@ export default function StrategyCreatePage() {
       label: currentFlag.name,
     },
     {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`,
-      label: "Create a strategy",
+      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/${strategy.uuid}/edit`,
+      label: `Edit ${strategy.name}`,
     },
   ];
 
@@ -203,41 +229,18 @@ export default function StrategyCreatePage() {
     <DashboardLayout
       user={user}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
-      header={
-        <Header
-          title="Create a strategy"
-          description={
-            <Typography>
-              {`You're`} about to create a strategy to{" "}
-              <strong>{currentFlag.name}</strong> in{" "}
-              <strong>{project.name}</strong> on{" "}
-              <strong>{environment.name}</strong>.
-            </Typography>
-          }
-        />
-      }
+      header={<Header title={`Edit ${strategy.name}`} />}
       status={actionData?.errors && <ErrorBox list={actionData.errors} />}
     >
       <Form method="post">
-        <CardGroup>
-          <Card>
-            <CardContent>
-              <Section id="general-information">
-                <Typography as="h2" font="title" size="earth">
-                  General information
-                </Typography>
-
-                <Spacer size={4} />
-
-                <Stack spacing={4}>
-                  <TextInput
-                    name="strategy-name"
-                    placeholder="e.g: Strategy 1"
-                    label="Strategy name"
-                    isInvalid={Boolean(errors["strategy-name"])}
-                  />
-
-                  <Divider />
+        <Row>
+          <div>
+            <Section id="percentage-rollout">
+              <GradientBorderedCard>
+                <CardContent>
+                  <Typography as="h2" font="title" size="earth">
+                    Targeting audience
+                  </Typography>
 
                   <SliderInput
                     name="percentage-value"
@@ -245,40 +248,77 @@ export default function StrategyCreatePage() {
                     onChange={setPercentageValue}
                     percentageValue={percentageValue}
                   />
-                </Stack>
-              </Section>
-            </CardContent>
-          </Card>
+                </CardContent>
+              </GradientBorderedCard>
+            </Section>
 
-          <Card>
-            <CardContent>
-              <Section>
-                <Typography as="h2" font="title" size="earth">
-                  Targeting criteria
-                </Typography>
+            <Spacer size={4} />
 
-                <Spacer size={4} />
+            <CardGroup>
+              <Card>
+                <CardContent>
+                  <Section id="general-information">
+                    <Typography as="h2" font="title" size="earth">
+                      General information
+                    </Typography>
 
-                <StrategyAudience
-                  strategyType={strategyType}
-                  onStrategyChange={setStrategyType}
-                  errors={errors}
-                />
-              </Section>
-            </CardContent>
-          </Card>
-        </CardGroup>
+                    <Spacer size={4} />
 
-        <Spacer size={8} />
+                    <TextInput
+                      name="strategy-name"
+                      placeholder="e.g: Strategy 1"
+                      label="Strategy name"
+                      defaultValue={strategy.name}
+                      isInvalid={Boolean(errors["strategy-name"])}
+                    />
+                  </Section>
+                </CardContent>
+              </Card>
 
-        <div>
+              <Card>
+                <CardContent>
+                  <Section>
+                    <Typography as="h2" font="title" size="earth">
+                      Targeting criteria
+                    </Typography>
+
+                    <Spacer size={4} />
+
+                    <StrategyAudience
+                      strategyType={strategyType}
+                      onStrategyChange={setStrategyType}
+                      errors={errors}
+                      initialFieldName={strategy.fieldName}
+                      initialFieldValue={strategy.fieldValue}
+                      initialFieldComparator={strategy.fieldComparator}
+                    />
+                  </Section>
+                </CardContent>
+              </Card>
+            </CardGroup>
+          </div>
+
+          <AlignActions aria-hidden>
+            <SubmitButton
+              tabIndex={-1}
+              isLoading={transition.state === "submitting"}
+              loadingText="Saving the strategy, please wait..."
+            >
+              Save the strategy
+            </SubmitButton>
+          </AlignActions>
+        </Row>
+
+        <Spacer size={4} />
+
+        <AlignActions>
           <SubmitButton
             isLoading={transition.state === "submitting"}
             loadingText="Saving the strategy, please wait..."
           >
             Save the strategy
           </SubmitButton>
-        </div>
+        </AlignActions>
       </Form>
     </DashboardLayout>
   );

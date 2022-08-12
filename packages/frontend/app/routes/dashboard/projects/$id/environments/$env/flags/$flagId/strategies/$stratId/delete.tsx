@@ -157,7 +157,7 @@ export default function DeleteStrategyPage() {
       label: currentFlag.name,
     },
     {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/1/delete`,
+      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/${strategy.uuid}/delete`,
       label: "Delete a strategy",
     },
   ];

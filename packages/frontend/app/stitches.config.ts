@@ -137,6 +137,7 @@ export const {
     lineHeights,
     borderRadius: {
       regular: "8px",
+      small: "4px",
     },
     spacing,
   },

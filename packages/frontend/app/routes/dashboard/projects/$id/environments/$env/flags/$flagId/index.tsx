@@ -107,6 +107,7 @@ export default function FlagById() {
     useLoaderData<LoaderData>();
 
   const isStrategyAdded = searchParams.get("newStrategy") || undefined;
+  const isStrategyUpdated = searchParams.get("strategyUpdated") || undefined;
   const isStrategyRemoved = searchParams.get("stratRemoved") || undefined;
 
   const currentFlag = currentFlagEnv.flag;
@@ -175,7 +176,11 @@ export default function FlagById() {
         </HorizontalNav>
       }
       status={
-        isStrategyAdded ? (
+        isStrategyUpdated ? (
+          <SuccessBox id="strategy-updated">
+            The strategy has been successfully updated.
+          </SuccessBox>
+        ) : isStrategyAdded ? (
           <SuccessBox id="strategy-added">
             The strategy has been successfully created.
           </SuccessBox>
@@ -190,6 +195,12 @@ export default function FlagById() {
         <SectionHeader
           title="Strategies"
           icon={<FaPowerOff />}
+          description={
+            <Typography>
+              If a user matches, at least, one of the following strategies, they
+              will resolve the activated variant of the flag.
+            </Typography>
+          }
           action={
             hasStrategies && (
               <CreateButton

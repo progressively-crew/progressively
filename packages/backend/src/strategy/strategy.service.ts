@@ -4,6 +4,7 @@ import { PrismaService } from '../database/prisma.service';
 import { ComparatorEnum, FieldRecord, StrategyRuleType } from './types';
 import { ComparatorFactory } from './comparators/comparatorFactory';
 import { isInBucket } from './utils';
+import { StrategyCreationDTO } from './strategy.dto';
 
 export interface ExtendedFlagEnv extends FlagEnvironment {
   flag: Flag;
@@ -79,6 +80,15 @@ export class StrategyService {
     }
 
     return false;
+  }
+
+  editStrategy(stratId: string, strategy: StrategyCreationDTO) {
+    return this.prisma.rolloutStrategy.update({
+      data: strategy,
+      where: {
+        uuid: stratId,
+      },
+    });
   }
 
   addStrategyToFlagEnv(

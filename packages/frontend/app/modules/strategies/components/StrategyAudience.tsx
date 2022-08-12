@@ -5,7 +5,6 @@ import { SelectField } from "~/components/Fields/SelectField";
 import { TextareaInput } from "~/components/Fields/TextareaInput";
 import { TextInput } from "~/components/Fields/TextInput";
 import { HStack } from "~/components/HStack";
-import { Spacer } from "~/components/Spacer";
 import { Stack } from "~/components/Stack";
 import { ComparatorEnum, StrategyCreateDTO } from "../types";
 import { StrategyRuleType } from "../types/StrategyRule";

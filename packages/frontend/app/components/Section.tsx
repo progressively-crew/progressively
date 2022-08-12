@@ -54,18 +54,19 @@ export const SectionHeader = ({
         direction={{ "@tablet": "column" }}
         gap={{ "@tablet": "3" }}
       >
-        <Heading as={titleAs} id={id} fontSize={fontSize} icon={icon}>
-          {title}
-        </Heading>
+        <div>
+          <Heading as={titleAs} id={id} fontSize={fontSize} icon={icon}>
+            {title}
+          </Heading>
+          {description && (
+            <>
+              <Spacer size={2} />
+              {description}
+            </>
+          )}
+        </div>
         {action}
       </HStack>
-
-      {description && (
-        <>
-          <Spacer size={2} />
-          {description}
-        </>
-      )}
     </SectionHeaderWrapper>
   );
 };
