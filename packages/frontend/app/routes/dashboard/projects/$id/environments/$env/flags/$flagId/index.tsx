@@ -190,6 +190,12 @@ export default function FlagById() {
         <SectionHeader
           title="Strategies"
           icon={<FaPowerOff />}
+          description={
+            <Typography>
+              If a user matches, at least, one of the following strategies, they
+              will resolve the activated variant of the flag.
+            </Typography>
+          }
           action={
             hasStrategies && (
               <CreateButton
