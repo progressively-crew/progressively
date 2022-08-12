@@ -1,4 +1,6 @@
+import { Button } from "~/components/Buttons/Button";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
+import { HStack } from "~/components/HStack";
 import { RawTable } from "~/components/RawTable";
 import { Tag } from "~/components/Tag";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
@@ -39,12 +41,19 @@ export const StrategyList = ({
               <StrategyCriteria strat={strat} />
             </td>
             <td>
-              <DeleteButton
-                small
-                to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/strategies/${strat.uuid}/delete`}
-              >
-                Remove<VisuallyHidden> {strat.name}</VisuallyHidden>
-              </DeleteButton>
+              <HStack spacing={2}>
+                <Button
+                  to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/strategies/${strat.uuid}/edit`}
+                >
+                  Edit<VisuallyHidden> {strat.name}</VisuallyHidden>
+                </Button>
+                <DeleteButton
+                  small
+                  to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/strategies/${strat.uuid}/delete`}
+                >
+                  Remove<VisuallyHidden> {strat.name}</VisuallyHidden>
+                </DeleteButton>
+              </HStack>
             </td>
           </tr>
         ))}

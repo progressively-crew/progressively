@@ -8,7 +8,10 @@ import { StrategyRuleType } from "~/modules/strategies/types/StrategyRule";
 import { getSession } from "~/sessions";
 import { validateStrategyForm } from "~/modules/strategies/validators/validateStrategyForm";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
-import { StrategyCreateDTO } from "~/modules/strategies/types";
+import {
+  StrategyCreateDTO,
+  StrategyRetrieveDTO,
+} from "~/modules/strategies/types";
 import { createStrategy } from "~/modules/strategies/services/createStrategy";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { StrategyAudience } from "~/modules/strategies/components/StrategyAudience";
@@ -35,6 +38,7 @@ import { Divider } from "~/components/Divider";
 import { Section } from "~/components/Section";
 import { styled } from "~/stitches.config";
 import { Spacer } from "~/components/Spacer";
+import { getStrategy } from "~/modules/strategies/services/getStrategy";
 
 const CardGroup = styled("div", {
   display: "grid",
@@ -51,6 +55,7 @@ interface MetaArgs {
     project?: Project;
     environment?: Environment;
     currentFlag?: Flag;
+    strategy?: StrategyRetrieveDTO;
   };
 }
 
@@ -58,9 +63,10 @@ export const meta: MetaFunction = ({ data }: MetaArgs) => {
   const projectName = data?.project?.name || "An error ocurred";
   const envName = data?.environment?.name || "An error ocurred";
   const flagName = data?.currentFlag?.name || "An error ocurred";
+  const strategyName = data?.strategy?.name || "An error ocurred";
 
   return {
-    title: `Progressively | ${projectName} | ${envName} | Flags | ${flagName} | Strategies | Create`,
+    title: `Progressively | ${projectName} | ${envName} | Flags | ${flagName} | ${strategyName} | Edit`,
   };
 };
 
@@ -130,6 +136,7 @@ interface LoaderData {
   environment: Environment;
   currentFlag: Flag;
   user: User;
+  strategy: StrategyRetrieveDTO;
 }
 
 export const loader: LoaderFunction = async ({
@@ -155,19 +162,25 @@ export const loader: LoaderFunction = async ({
     (flagEnv) => flagEnv.flagId === params.flagId!
   )!.flag;
 
+  const strategy: StrategyRetrieveDTO = await getStrategy(
+    params.stratId!,
+    authCookie
+  );
+
   return {
     project,
     environment: environment!,
     currentFlag,
     user,
+    strategy,
   };
 };
 
-export default function StrategyCreatePage() {
+export default function StrategyEditPage() {
   const transition = useTransition();
   const [percentageValue, setPercentageValue] = useState<number>(100);
 
-  const { project, environment, currentFlag, user } =
+  const { project, environment, currentFlag, user, strategy } =
     useLoaderData<LoaderData>();
 
   const actionData = useActionData<ActionData>();
@@ -192,8 +205,8 @@ export default function StrategyCreatePage() {
       label: currentFlag.name,
     },
     {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`,
-      label: "Create a strategy",
+      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/${strategy.uuid}/edit`,
+      label: `Edit ${strategy.name}`,
     },
   ];
 
@@ -205,7 +218,7 @@ export default function StrategyCreatePage() {
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
-          title="Create a strategy"
+          title="Edit a strategy"
           description={
             <Typography>
               {`You're`} about to create a strategy to{" "}
