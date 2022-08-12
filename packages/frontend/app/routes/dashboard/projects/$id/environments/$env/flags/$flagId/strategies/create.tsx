@@ -255,7 +255,7 @@ export default function StrategyCreatePage() {
             <CardContent>
               <Section>
                 <Typography as="h2" font="title" size="earth">
-                  Strategy audience
+                  Targeting criteria
                 </Typography>
 
                 <Spacer size={4} />
