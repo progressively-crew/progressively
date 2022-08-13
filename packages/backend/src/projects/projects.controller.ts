@@ -22,7 +22,7 @@ import {
 } from './projects.dto';
 import { ProjectsService } from './projects.service';
 import { UserRetrieveDTO } from 'src/users/users.dto';
-import { Environment, UserProject } from '@prisma/client';
+
 import { Roles } from '../shared/decorators/Roles';
 import { UserRoles } from '../users/roles';
 import { HasProjectAccessGuard } from './guards/hasProjectAccess';
@@ -35,6 +35,8 @@ import {
 } from '../environments/environments.dto';
 import { UserStatus } from '../users/status';
 import { MailService } from '../mail/mail.service';
+import { Environment } from '../environments/types';
+import { UserProject } from './types';
 @ApiBearerAuth()
 @Controller('projects')
 export class ProjectsController {
@@ -66,7 +68,7 @@ export class ProjectsController {
   @Post()
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(ProjectCreationSchema))
-  async createProject(
+  createProject(
     @Request() req,
     @Body() projectDto: ProjectCreationDTO,
   ): Promise<UserProject> {

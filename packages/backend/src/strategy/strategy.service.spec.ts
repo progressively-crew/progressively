@@ -1,9 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { RolloutStrategy } from '@prisma/client';
 import { PrismaService } from '../database/prisma.service';
 import { FlagStatus } from '../flags/flags.status';
 import { ExtendedFlagEnv, StrategyService } from './strategy.service';
-import { StrategyRuleType } from './types';
+import { RolloutStrategy, StrategyRuleType } from './types';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 
 describe('StrategyService', () => {

@@ -19,7 +19,6 @@ export class ProjectsService {
         userId,
         role: UserRoles.Admin,
       },
-      include: { project: true },
     });
 
     await this.prisma.environment.create({

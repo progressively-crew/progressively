@@ -1,10 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { Flag, FlagEnvironment, RolloutStrategy } from '@prisma/client';
+
 import { PrismaService } from '../database/prisma.service';
-import { ComparatorEnum, FieldRecord, StrategyRuleType } from './types';
+import {
+  ComparatorEnum,
+  FieldRecord,
+  RolloutStrategy,
+  StrategyRuleType,
+} from './types';
 import { ComparatorFactory } from './comparators/comparatorFactory';
 import { isInBucket } from './utils';
 import { StrategyCreationDTO } from './strategy.dto';
+import { Flag, FlagEnvironment } from '../flags/types';
 
 export interface ExtendedFlagEnv extends FlagEnvironment {
   flag: Flag;
