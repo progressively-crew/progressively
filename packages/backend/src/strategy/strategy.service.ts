@@ -100,7 +100,7 @@ export class StrategyService {
   addStrategyToFlagEnv(
     envId: string,
     flagId: string,
-    strategy: Partial<RolloutStrategy>,
+    strategy: Partial<StrategyCreationDTO>,
   ) {
     return this.prisma.rolloutStrategy.create({
       data: {
