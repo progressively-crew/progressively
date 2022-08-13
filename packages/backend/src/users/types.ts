@@ -3,6 +3,6 @@ export interface User {
   fullname: string;
   email: string;
   password: string;
-  activationToken: string | null;
+  activationToken?: string;
   status: string;
 }
