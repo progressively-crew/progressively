@@ -1,8 +1,8 @@
-import { User } from '@prisma/client';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
 import { CryptoService } from '../crypto/crypto.service';
 import { v4 as uuidv4 } from 'uuid';
+import { User } from './types';
 
 @Injectable()
 export class UsersService {

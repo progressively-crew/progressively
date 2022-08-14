@@ -1,9 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { RolloutStrategy } from '@prisma/client';
 import { PrismaService } from '../database/prisma.service';
 import { FlagStatus } from '../flags/flags.status';
 import { ExtendedFlagEnv, StrategyService } from './strategy.service';
-import { StrategyRuleType } from './types';
+import { ComparatorEnum, RolloutStrategy, StrategyRuleType } from './types';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 
 describe('StrategyService', () => {
@@ -200,7 +199,7 @@ describe('StrategyService', () => {
           strategy.strategyRuleType = StrategyRuleType.Field;
           strategy.fieldName = 'email';
           strategy.fieldValue = 'marvin.frachet@something.com';
-          strategy.fieldComparator = 'neq';
+          strategy.fieldComparator = ComparatorEnum.NotEquals;
 
           const fields = { email: 'should.workg@gmail.com' };
           const shouldActivate = await service.resolveStrategies(
@@ -216,7 +215,7 @@ describe('StrategyService', () => {
           strategy.strategyRuleType = StrategyRuleType.Field;
           strategy.fieldName = 'email';
           strategy.fieldValue = '@gmail';
-          strategy.fieldComparator = 'contains';
+          strategy.fieldComparator = ComparatorEnum.Contains;
 
           const fields = { email: 'should.workg@gmail.com' };
           const shouldActivate = await service.resolveStrategies(

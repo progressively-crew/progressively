@@ -1,4 +1,3 @@
-import { User } from '@prisma/client';
 import {
   Controller,
   Request,
@@ -30,6 +29,7 @@ import { LoginDTO, RegistrationSchema, UserCreationDTO } from './types';
 import { MailService } from '../mail/mail.service';
 import { AuthService } from './auth.service';
 import { CryptoService } from '../crypto/crypto.service';
+import { User } from '../users/types';
 
 @Controller('auth')
 export class AuthController {

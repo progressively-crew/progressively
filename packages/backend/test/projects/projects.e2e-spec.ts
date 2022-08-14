@@ -52,9 +52,6 @@ describe('ProjectsController (e2e)', () => {
       expect(res.body.userId).toBeTruthy();
       expect(res.body.projectId).toBeTruthy();
       expect(res.body.role).toBe('admin');
-      expect(res.body.project.uuid).toBeTruthy();
-      expect(res.body.project.createdAt).toBeTruthy();
-      expect(res.body.project.name).toBe('New project of the street');
     });
   });
 
