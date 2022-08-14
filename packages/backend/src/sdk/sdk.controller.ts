@@ -34,8 +34,6 @@ export class SdkController {
     fields.id = this.sdkService.resolveUserId(fields, cookieUserId);
     this._prepareCookie(response, fields.id);
 
-    const flags = await this.sdkService.resolveSdkFlags(fields);
-
-    return flags;
+    return await this.sdkService.resolveSdkFlags(fields);
   }
 }

@@ -22,12 +22,10 @@ export class TokensService {
 
     expiration.setTime(expiration.getTime() + RefreshTokenExpire);
 
-    const refreshToken = await this.jwtService.signAsync(payload, {
+    return await this.jwtService.signAsync(payload, {
       secret: RefreshTokenSecret,
       expiresIn: `${RefreshTokenExpire}s`,
     });
-
-    return refreshToken;
   }
 
   async refreshTokens(encodedRefreshToken: string) {

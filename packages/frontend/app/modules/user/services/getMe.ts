@@ -32,8 +32,7 @@ const getUserWithToken = (accessToken: string) => {
  */
 export const getMe = async (session: Session) => {
   try {
-    const user = await getUserWithToken(session.get("auth-cookie"));
-    return user;
+    return await getUserWithToken(session.get("auth-cookie"));
   } catch (err) {
     const response = await refreshToken(session);
     const jsonResponse = await response.json();
@@ -41,7 +40,6 @@ export const getMe = async (session: Session) => {
     session.set("auth-cookie", jsonResponse.access_token);
     session.set("refresh-token-cookie", response.headers.get("set-cookie"));
 
-    const user = await getUserWithToken(session.get("auth-cookie"));
-    return user;
+    return await getUserWithToken(session.get("auth-cookie"));
   }
 };

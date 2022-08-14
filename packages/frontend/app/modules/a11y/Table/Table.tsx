@@ -129,10 +129,8 @@ export const Table = ({
       if (node.type.name.includes("Tbody")) {
         const rows = React.Children.toArray(node.props.children);
         rows.forEach((row) => {
-          if (React.isValidElement(row)) {
-            if (!row.props.disabled) {
-              nextSelections.push(row.props.selection);
-            }
+          if (React.isValidElement(row) && !row.props.disabled) {
+            nextSelections.push(row.props.selection);
           }
         });
       }

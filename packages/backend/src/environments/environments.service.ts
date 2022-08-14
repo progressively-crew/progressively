@@ -16,7 +16,7 @@ export class EnvironmentsService {
   }
 
   async getFlagEnvironmentByClientKey(clientKey: string) {
-    const flagEnv = await this.prisma.flagEnvironment.findMany({
+    return await this.prisma.flagEnvironment.findMany({
       where: {
         environment: {
           clientKey,
@@ -27,8 +27,6 @@ export class EnvironmentsService {
         strategies: true,
       },
     });
-
-    return flagEnv;
   }
 
   createEnvironment(projectId: string, environmentName: string) {

@@ -45,11 +45,9 @@ const completeWithZero = (n: number) => {
 const getFormattedToday = () => {
   const now = new Date();
 
-  const formattedToday = `${now.getFullYear()}-${completeWithZero(
+  return `${now.getFullYear()}-${completeWithZero(
     now.getMonth() + 1
   )}-${completeWithZero(now.getDate())}`;
-
-  return formattedToday;
 };
 
 export const DateTimeInput = ({
