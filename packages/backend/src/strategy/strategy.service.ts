@@ -8,9 +8,10 @@ import {
   StrategyRuleType,
 } from './types';
 import { ComparatorFactory } from './comparators/comparatorFactory';
-import { isInBucket } from './utils';
+
 import { StrategyCreationDTO } from './strategy.dto';
 import { Flag, FlagEnvironment } from '../flags/types';
+import { isInBucket } from '../shared/utils/generateBucketId';
 
 export interface ExtendedFlagEnv extends FlagEnvironment {
   flag: Flag;
@@ -19,22 +20,13 @@ export interface ExtendedFlagEnv extends FlagEnvironment {
 export class StrategyService {
   constructor(private prisma: PrismaService) {}
 
-  private _checkActivationType(
-    strategy: RolloutStrategy,
-    flagEnv: ExtendedFlagEnv,
-    fields: FieldRecord,
-  ) {
-    // Return the flag to everyone, even people with no ID fields when the percentage is 100%
-    if (strategy.rolloutPercentage === 100) return true;
+  private _checkActivationType(flagEnv: ExtendedFlagEnv, userId?: string) {
+    // Shortcut when percentage are easily known
+    if (flagEnv.rolloutPercentage === 100) return true;
+    if (flagEnv.rolloutPercentage === 0) return false;
+    if (!userId) return false;
 
-    // Early break when the field is is not defined, except when the rollout is 100%
-    if (!fields?.id) return false;
-
-    return isInBucket(
-      flagEnv.flag.key,
-      fields.id as string,
-      strategy.rolloutPercentage,
-    );
+    return isInBucket(flagEnv.flag.key, userId, flagEnv.rolloutPercentage);
   }
 
   private _checkStrategyRule(strategy: RolloutStrategy, fields: FieldRecord) {
@@ -65,6 +57,7 @@ export class StrategyService {
     strategies: Array<RolloutStrategy>,
     fields: FieldRecord,
   ) {
+    const userId = fields.id;
     // Always return true when no strategies are passed
     if (strategies.length === 0) return true;
 
@@ -75,9 +68,8 @@ export class StrategyService {
       if (!isValidStrategyRule) return false;
 
       const isValidActivationType = this._checkActivationType(
-        strategy,
         flagEnv,
-        fields,
+        userId ? String(userId) : undefined,
       );
 
       if (isValidActivationType) {
@@ -119,9 +111,6 @@ export class StrategyService {
         fieldName: strategy.fieldName,
         fieldValue: strategy.fieldValue,
         fieldComparator: strategy.fieldComparator,
-
-        // only for activation type being "percentage"
-        rolloutPercentage: strategy.rolloutPercentage,
       },
     });
   }

@@ -9,9 +9,6 @@ export class StrategyCreationDTO {
   fieldName?: string;
   fieldComparator?: ComparatorEnum;
   fieldValue?: string;
-
-  // only exists for activation "percentage"
-  rolloutPercentage?: number;
 }
 
 export const StrategySchema = Joi.object({
@@ -29,11 +26,4 @@ export const StrategySchema = Joi.object({
   fieldValue: Joi.string().when('strategyRuleType', {
     switch: [{ is: 'field', then: Joi.required() }],
   }),
-
-  rolloutPercentage: Joi.number()
-    .integer()
-    .positive()
-    .min(0)
-    .max(100)
-    .required(),
 });

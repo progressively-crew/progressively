@@ -8,14 +8,19 @@ model Flag {
 }
 
 model FlagEnvironment {
-    flag          Flag              @relation(fields: [flagId], references: [uuid])
+    flag          Flag        @relation(fields: [flagId], references: [uuid])
     flagId        String
-    environment   Environment       @relation(fields: [environmentId], references: [uuid])
+    environment   Environment @relation(fields: [environmentId], references: [uuid])
     environmentId String
     flagHit       FlagHit[]
+
     // the values set in flags/flag.status.ts
-    status        String            @default("NOT_ACTIVATED")
-    strategies    RolloutStrategy[]
+    status     String            @default("NOT_ACTIVATED")
+    strategies RolloutStrategy[]
+
+    // related to activation type "percentage"
+    rolloutPercentage Int
+    rolloutDate       DateTime?
 
     @@id([flagId, environmentId])
 }
@@ -39,9 +44,6 @@ model RolloutStrategy {
     fieldName        String?
     fieldComparator  String?
     fieldValue       String?
-
-    // related to activation type "percentage"
-    rolloutPercentage Int
 
     // Relations
     FlagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])

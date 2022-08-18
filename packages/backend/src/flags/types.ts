@@ -19,10 +19,10 @@ export interface FlagEnvironment {
   flagId: string;
   environmentId: string;
   status: string;
+  rolloutPercentage: number;
 }
 
 export interface PopulatedFlagEnv extends FlagEnvironment {
-  environment: Environment;
   flag: Flag;
   strategies: Array<RolloutStrategy>;
 }

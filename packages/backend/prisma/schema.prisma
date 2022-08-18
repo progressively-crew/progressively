@@ -73,13 +73,15 @@ model Flag {
 }
 
 model FlagEnvironment {
-  flag          Flag              @relation(name: "FlagToFlagEnvironment", fields: [flagId], references: [uuid])
-  flagId        String
-  environment   Environment       @relation(name: "EnvironmentToFlagEnvironment", fields: [environmentId], references: [uuid])
-  environmentId String
-  flagHit       FlagHit[]         @relation(name: "FlagEnvironmentToFlagHit")
-  status        String            @default("NOT_ACTIVATED")
-  strategies    RolloutStrategy[] @relation(name: "FlagEnvironmentToRolloutStrategy")
+  flag              Flag              @relation(name: "FlagToFlagEnvironment", fields: [flagId], references: [uuid])
+  flagId            String
+  environment       Environment       @relation(name: "EnvironmentToFlagEnvironment", fields: [environmentId], references: [uuid])
+  environmentId     String
+  flagHit           FlagHit[]         @relation(name: "FlagEnvironmentToFlagHit")
+  status            String            @default("NOT_ACTIVATED")
+  strategies        RolloutStrategy[] @relation(name: "FlagEnvironmentToRolloutStrategy")
+  rolloutPercentage Int
+  rolloutDate       DateTime?
 
   @@id([flagId, environmentId])
 }
@@ -100,7 +102,6 @@ model RolloutStrategy {
   fieldName                    String?
   fieldComparator              String?
   fieldValue                   String?
-  rolloutPercentage            Int
   FlagEnvironment              FlagEnvironment? @relation(name: "FlagEnvironmentToRolloutStrategy", fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
   flagEnvironmentFlagId        String?
   flagEnvironmentEnvironmentId String?
