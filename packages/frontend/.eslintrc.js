@@ -30,5 +30,6 @@ module.exports = {
     "unicorn/filename-case": "off",
     "unicorn/prefer-module": "off",
     "unicorn/prevent-abbreviations": "off",
+    "unicorn/no-null": "off",
   },
 };
