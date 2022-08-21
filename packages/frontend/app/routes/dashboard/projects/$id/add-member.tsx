@@ -53,9 +53,9 @@ export const action: ActionFunction = async ({
     await addMemberToProject(params.id!, memberEmail!, session.get("auth-cookie"));
 
     return { success: true };
-  } catch (e) {
-    if (e instanceof Error) {
-      return { errors: { backendError: e.message } };
+  } catch (error) {
+    if (error instanceof Error) {
+      return { errors: { backendError: error.message } };
     }
 
     return { errors: { backendError: "An error ocurred" } };
@@ -132,9 +132,9 @@ export default function CreateProjectPage() {
           <SuccessBox id="member-added">
             The user has been invited invited to join the project.
           </SuccessBox>
-        ) : hasError ? (
+        ) : (hasError ? (
           <ErrorBox list={errorsToDisplay} />
-        ) : null
+        ) : null)
       }
     >
       <Section>

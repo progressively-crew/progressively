@@ -9,8 +9,8 @@ interface TableContextType {
 }
 
 const TableContext = createContext<TableContextType>({
-  onSelectAll: () => undefined,
-  onSelect: () => undefined,
+  onSelectAll: () => {},
+  onSelect: () => {},
   selections: [],
   indeterminate: false,
 });

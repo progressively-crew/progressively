@@ -3,14 +3,16 @@ import { getProjects } from "~/modules/projects/services/getProjects";
 import { UserProject } from "~/modules/projects/types";
 import { getSession } from "~/sessions";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
+import { authGuard } from "~/modules/auth/services/auth-guard";
+import { User } from "~/modules/user/types";
+import { Header } from "~/components/Header";
+import { Section } from "~/components/Section";
 import { MetaFunction, LoaderFunction, redirect } from "@remix-run/node";
 import { useSearchParams, useLoaderData } from "@remix-run/react";
 import { CreateButton } from "~/components/Buttons/CreateButton";
+import { Spacer } from "~/components/Spacer";
 import { ProjectList } from "~/modules/projects/components/ProjectList";
 import { Card } from "~/components/Card";
-import { useUser } from "~/modules/user/contexts/useUser";
-import { PageTitle } from "~/components/PageTitle";
-import { TbFolders } from "react-icons/tb";
 
 export const meta: MetaFunction = () => {
   return {
@@ -19,10 +21,15 @@ export const meta: MetaFunction = () => {
 };
 
 interface LoaderData {
+  user: User;
   projects: Array<UserProject>;
 }
 
-export const loader: LoaderFunction = async ({ request }): Promise<LoaderData | Response> => {
+export const loader: LoaderFunction = async ({
+  request,
+}): Promise<LoaderData | Response> => {
+  const user = await authGuard(request);
+
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
 
@@ -32,13 +39,12 @@ export const loader: LoaderFunction = async ({ request }): Promise<LoaderData | 
     return redirect("/dashboard/onboarding");
   }
 
-  return { projects };
+  return { projects, user };
 };
 
 export default function DashboardRoot() {
   const [searchParams] = useSearchParams();
-  const { projects } = useLoaderData<LoaderData>();
-  const { user } = useUser();
+  const { projects, user } = useLoaderData<LoaderData>();
 
   const newProjectId = searchParams.get("newProjectId") || undefined;
   const hasRemovedProject = searchParams.get("projectRemoved") || undefined;
@@ -46,23 +52,29 @@ export default function DashboardRoot() {
   return (
     <DashboardLayout
       user={user}
+      header={<Header title="Projects" />}
       status={
         newProjectId ? (
-          <SuccessBox id="project-added">The project has been successfully created.</SuccessBox>
-        ) : hasRemovedProject ? (
-          <SuccessBox id="project-removed">The project has been successfully removed.</SuccessBox>
-        ) : null
+          <SuccessBox id="project-added">
+            The project has been successfully created.
+          </SuccessBox>
+        ) : (hasRemovedProject ? (
+          <SuccessBox id="project-removed">
+            The project has been successfully removed.
+          </SuccessBox>
+        ) : null)
       }
     >
-      <PageTitle
-        icon={<TbFolders />}
-        value="Projects"
-        action={<CreateButton to="/dashboard/projects/create">Create a project</CreateButton>}
-      />
+      <Section>
+        <CreateButton to="/dashboard/projects/create">
+          Create a project
+        </CreateButton>
 
-      <Card>
-        <ProjectList projects={projects} />
-      </Card>
+        <Spacer size={4} />
+        <Card>
+          <ProjectList projects={projects} />
+        </Card>
+      </Section>
     </DashboardLayout>
   );
 }
