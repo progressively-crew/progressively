@@ -59,6 +59,8 @@ export interface SwitchProps {
   type?: "reset" | "submit" | "button";
   onClick?: () => void;
   label: string;
+  onLabel?: string;
+  offLabel?: string;
 }
 
 export const Switch = ({
@@ -66,6 +68,8 @@ export const Switch = ({
   type = "submit",
   onClick,
   label,
+  onLabel,
+  offLabel,
 }: SwitchProps) => {
   return (
     <SwitchButton
@@ -75,11 +79,11 @@ export const Switch = ({
       aria-label={label}
       onClick={onClick}
     >
-      <Text>Off</Text>
+      <Text>{offLabel || "Off"}</Text>
       <SwitchInnerWrapper checked={checked}>
         <StyledThumb aria-hidden checked={checked} />
       </SwitchInnerWrapper>
-      <Text>On</Text>
+      <Text>{onLabel || "On"}</Text>
     </SwitchButton>
   );
 };

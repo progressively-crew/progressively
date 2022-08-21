@@ -1,5 +1,5 @@
 import { ActionFunction } from "@remix-run/node";
-import { Form, useTransition } from "@remix-run/react";
+import { Form } from "@remix-run/react";
 import { Switch } from "~/components/Switch";
 import { getSession } from "~/sessions";
 import { activateFlag } from "../services/activateFlag";
@@ -33,8 +33,6 @@ export interface ToggleFlag {
 }
 
 export const ToggleFlag = ({ isFlagActivated }: ToggleFlag) => {
-  const transition = useTransition();
-
   return (
     <Form method="post">
       <input
@@ -47,9 +45,10 @@ export const ToggleFlag = ({ isFlagActivated }: ToggleFlag) => {
 
       <Switch
         label="Feature flag status"
-        optimistic={transition.state === "submitting"}
         type="submit"
         checked={isFlagActivated}
+        onLabel={"Activated"}
+        offLabel={"Not activated"}
       />
     </Form>
   );
