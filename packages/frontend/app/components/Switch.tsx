@@ -72,7 +72,7 @@ export const Switch = ({
       aria-checked={checked}
       type={type}
       role="switch"
-      aria-label={"Feature flag status"}
+      aria-label={label}
       onClick={onClick}
     >
       <Text>Off</Text>

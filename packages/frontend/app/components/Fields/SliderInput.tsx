@@ -87,6 +87,7 @@ export const SliderInput = ({
 
       <HStack spacing={2}>
         <RangeInput
+          autoComplete="off"
           type="range"
           min={0}
           max={100}

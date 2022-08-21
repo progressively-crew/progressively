@@ -2,8 +2,8 @@ import { useRef } from "react";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { Link } from "~/components/Link";
 import { RawTable, Tr } from "~/components/RawTable";
-import { useHydrated } from "~/modules/misc/hooks/useHydrated";
-import { FlagEnv } from "../types";
+import { Tag } from "~/components/Tag";
+import { FlagEnv, FlagStatus } from "../types";
 
 export interface FlagListProps {
   flags: Array<FlagEnv>;
@@ -17,12 +17,35 @@ interface FlagRowProps {
   envId: string;
 }
 
+export interface StatusProps {
+  value: FlagStatus;
+}
+
+const Status = ({ value }: StatusProps) => {
+  if (value === FlagStatus.ACTIVATED) {
+    return (
+      <Tag color="successFg" background="successBg">
+        Activated
+      </Tag>
+    );
+  }
+
+  if (value === FlagStatus.NOT_ACTIVATED) {
+    return (
+      <Tag color="errorFg" background="errorBg">
+        Not activated
+      </Tag>
+    );
+  }
+
+  return <Tag>Inactive</Tag>;
+};
+
 const FlagRow = ({ flagEnv, projectId, envId }: FlagRowProps) => {
   const linkRef = useRef<HTMLAnchorElement>(null);
-  const isHydrated = useHydrated();
 
   return (
-    <Tr onClick={() => linkRef.current?.click()} isClickable={isHydrated}>
+    <Tr onClick={() => linkRef.current?.click()}>
       <td>
         <Link
           ref={linkRef}
@@ -32,6 +55,9 @@ const FlagRow = ({ flagEnv, projectId, envId }: FlagRowProps) => {
         </Link>
       </td>
       <td>{flagEnv.flag.description}</td>
+      <td>
+        <Status value={flagEnv.status} />
+      </td>
       <td>
         <ButtonCopy toCopy={flagEnv.flag.key} small={true}>
           {flagEnv.flag.key}
@@ -47,7 +73,8 @@ export const FlagList = ({ flags, projectId, envId }: FlagListProps) => {
       <thead>
         <tr>
           <th>Name</th>
-          <th width="50%">Description</th>
+          <th width="30%">Description</th>
+          <th>Status</th>
           <th>Flag key</th>
         </tr>
       </thead>
