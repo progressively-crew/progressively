@@ -22,5 +22,9 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     'sonarjs/no-duplicate-string': 'off',
+    'unicorn/filename-case': 'off',
+    'unicorn/prefer-module': 'off',
+    'unicorn/prevent-abbreviations': 'off',
+    'unicorn/no-null': 'off',
   },
 };
