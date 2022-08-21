@@ -1,5 +1,4 @@
 import { BreadCrumbs } from "~/components/Breadcrumbs";
-import { ButtonCopy } from "~/components/ButtonCopy";
 import { Environment } from "~/modules/environments/types";
 import { activateFlag } from "~/modules/flags/services/activateFlag";
 import { getFlagsByProjectEnv } from "~/modules/flags/services/getFlagsByProjectEnv";
@@ -17,7 +16,6 @@ import { EmptyState } from "~/components/EmptyState";
 import { Typography } from "~/components/Typography";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { FlagList } from "~/modules/flags/components/FlagList";
-import { HideMobile } from "~/components/HideMobile";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { EnvNavBar } from "~/modules/environments/components/EnvNavbar";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
@@ -127,13 +125,6 @@ export default function FlagsByEnvPage() {
         <Header
           tagline={<TagLine icon={<FiLayers />}>ENVIRONMENT</TagLine>}
           title={environment.name}
-          startAction={
-            <HideMobile>
-              <ButtonCopy toCopy={environment.clientKey} small={true}>
-                {environment.clientKey}
-              </ButtonCopy>
-            </HideMobile>
-          }
         />
       }
       subNav={<EnvNavBar projectId={project.uuid} envId={environment.uuid} />}
