@@ -27,5 +27,6 @@ module.exports = {
     "react/prop-types": "off",
     "sonarjs/no-duplicate-string": "off",
     "react/no-unescaped-entities": "off",
+    "unicorn/prevent-abbreviations": "off",
   },
 };
