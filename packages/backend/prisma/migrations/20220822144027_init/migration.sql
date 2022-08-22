@@ -73,7 +73,8 @@ CREATE TABLE "Flag" (
 CREATE TABLE "FlagEnvironment" (
     "flagId" TEXT NOT NULL,
     "environmentId" TEXT NOT NULL,
-    "status" TEXT NOT NULL DEFAULT 'NOT_ACTIVATED',
+    "status" TEXT DEFAULT 'NOT_ACTIVATED',
+    "rolloutPercentage" INTEGER NOT NULL DEFAULT 100,
 
     CONSTRAINT "FlagEnvironment_pkey" PRIMARY KEY ("flagId","environmentId")
 );
@@ -97,54 +98,10 @@ CREATE TABLE "RolloutStrategy" (
     "fieldName" TEXT,
     "fieldComparator" TEXT,
     "fieldValue" TEXT,
-    "activationType" TEXT NOT NULL,
-    "rolloutPercentage" INTEGER,
     "flagEnvironmentFlagId" TEXT,
     "flagEnvironmentEnvironmentId" TEXT,
 
     CONSTRAINT "RolloutStrategy_pkey" PRIMARY KEY ("uuid")
-);
-
--- CreateTable
-CREATE TABLE "Experiment" (
-    "uuid" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
-    "key" TEXT NOT NULL,
-    "description" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT "Experiment_pkey" PRIMARY KEY ("uuid")
-);
-
--- CreateTable
-CREATE TABLE "Variant" (
-    "uuid" TEXT NOT NULL,
-    "key" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
-    "description" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "experimentUuid" TEXT,
-    "isControl" BOOLEAN NOT NULL DEFAULT false,
-
-    CONSTRAINT "Variant_pkey" PRIMARY KEY ("uuid")
-);
-
--- CreateTable
-CREATE TABLE "VariantHit" (
-    "id" SERIAL NOT NULL,
-    "date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "variantUuid" TEXT NOT NULL,
-
-    CONSTRAINT "VariantHit_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "ExperimentEnvironment" (
-    "experimentId" TEXT NOT NULL,
-    "environmentId" TEXT NOT NULL,
-    "status" TEXT NOT NULL DEFAULT 'NOT_ACTIVATED',
-
-    CONSTRAINT "ExperimentEnvironment_pkey" PRIMARY KEY ("experimentId","environmentId")
 );
 
 -- CreateIndex
@@ -166,25 +123,13 @@ ALTER TABLE "RefreshToken" ADD CONSTRAINT "RefreshToken_userId_fkey" FOREIGN KEY
 ALTER TABLE "PasswordResetTokens" ADD CONSTRAINT "PasswordResetTokens_userUuid_fkey" FOREIGN KEY ("userUuid") REFERENCES "User"("uuid") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "FlagEnvironment" ADD CONSTRAINT "FlagEnvironment_environmentId_fkey" FOREIGN KEY ("environmentId") REFERENCES "Environment"("uuid") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "FlagEnvironment" ADD CONSTRAINT "FlagEnvironment_flagId_fkey" FOREIGN KEY ("flagId") REFERENCES "Flag"("uuid") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "FlagEnvironment" ADD CONSTRAINT "FlagEnvironment_flagId_fkey" FOREIGN KEY ("flagId") REFERENCES "Flag"("uuid") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "FlagEnvironment" ADD CONSTRAINT "FlagEnvironment_environmentId_fkey" FOREIGN KEY ("environmentId") REFERENCES "Environment"("uuid") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "FlagHit" ADD CONSTRAINT "FlagHit_flagEnvironmentFlagId_flagEnvironmentEnvironmentId_fkey" FOREIGN KEY ("flagEnvironmentFlagId", "flagEnvironmentEnvironmentId") REFERENCES "FlagEnvironment"("flagId", "environmentId") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "RolloutStrategy" ADD CONSTRAINT "RolloutStrategy_flagEnvironmentFlagId_flagEnvironmentEnvir_fkey" FOREIGN KEY ("flagEnvironmentFlagId", "flagEnvironmentEnvironmentId") REFERENCES "FlagEnvironment"("flagId", "environmentId") ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Variant" ADD CONSTRAINT "Variant_experimentUuid_fkey" FOREIGN KEY ("experimentUuid") REFERENCES "Experiment"("uuid") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "VariantHit" ADD CONSTRAINT "VariantHit_variantUuid_fkey" FOREIGN KEY ("variantUuid") REFERENCES "Variant"("uuid") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "ExperimentEnvironment" ADD CONSTRAINT "ExperimentEnvironment_environmentId_fkey" FOREIGN KEY ("environmentId") REFERENCES "Environment"("uuid") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "ExperimentEnvironment" ADD CONSTRAINT "ExperimentEnvironment_experimentId_fkey" FOREIGN KEY ("experimentId") REFERENCES "Experiment"("uuid") ON DELETE CASCADE ON UPDATE CASCADE;

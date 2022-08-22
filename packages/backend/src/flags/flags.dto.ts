@@ -13,3 +13,16 @@ export class FlagCreationDTO {
 export class ActivateFlagDTO {
   status: string;
 }
+
+export class ChangePercentageDTO {
+  rolloutPercentage: number;
+}
+
+export const ChangePercentageSchema = Joi.object({
+  rolloutPercentage: Joi.number()
+    .integer()
+    .positive()
+    .min(0)
+    .max(100)
+    .required(),
+});

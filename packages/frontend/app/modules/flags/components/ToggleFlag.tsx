@@ -5,29 +5,6 @@ import { getSession } from "~/sessions";
 import { activateFlag } from "../services/activateFlag";
 import { FlagStatus } from "../types";
 
-export const toggleAction: ActionFunction = async ({
-  request,
-  params,
-}): Promise<null> => {
-  const session = await getSession(request.headers.get("Cookie"));
-  const authCookie = session.get("auth-cookie");
-
-  const formData = await request.formData();
-  const nextStatus = formData.get("nextStatus");
-  const flagId = params.flagId;
-
-  if (nextStatus && flagId) {
-    await activateFlag(
-      params.env!,
-      flagId as string,
-      nextStatus as FlagStatus,
-      authCookie
-    );
-  }
-
-  return null;
-};
-
 export interface ToggleFlag {
   isFlagActivated: boolean;
 }

@@ -27,10 +27,3 @@ export interface PopulatedFlagEnv extends FlagEnvironment {
   flag: Flag;
   strategies: Array<RolloutStrategy>;
 }
-
-// rolloutPercentage: Joi.number()
-// .integer()
-// .positive()
-// .min(0)
-// .max(100)
-// .required(),

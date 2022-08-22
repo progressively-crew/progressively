@@ -78,9 +78,9 @@ model FlagEnvironment {
   environment       Environment       @relation(name: "EnvironmentToFlagEnvironment", fields: [environmentId], references: [uuid])
   environmentId     String
   flagHit           FlagHit[]         @relation(name: "FlagEnvironmentToFlagHit")
-  status            String            @default("NOT_ACTIVATED")
+  status            String?           @default("NOT_ACTIVATED")
   strategies        RolloutStrategy[] @relation(name: "FlagEnvironmentToRolloutStrategy")
-  rolloutPercentage Int
+  rolloutPercentage Int               @default(100)
 
   @@id([flagId, environmentId])
 }
