@@ -15,9 +15,7 @@ export default {
 } as ComponentMeta<typeof NotAuthenticatedLayout>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const DefaultTemplate: ComponentStory<typeof NotAuthenticatedLayout> = (
-  args
-) => (
+const DefaultTemplate: ComponentStory<typeof NotAuthenticatedLayout> = () => (
   <NotAuthenticatedLayout
     nav={<Box />}
     header={<Box />}

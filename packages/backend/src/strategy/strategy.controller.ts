@@ -23,14 +23,14 @@ export class StrategyController {
   @Get(':stratId')
   @UseGuards(HasStrategyAccessGuard)
   @UseGuards(JwtAuthGuard)
-  async getStrategy(@Param('stratId') stratId: string): Promise<any> {
+  getStrategy(@Param('stratId') stratId: string): Promise<any> {
     return this.strategyService.getStrategy(stratId);
   }
 
   @Delete(':stratId')
   @UseGuards(HasStrategyAccessGuard)
   @UseGuards(JwtAuthGuard)
-  async deleteStrategy(@Param('stratId') stratId: string): Promise<any> {
+  deleteStrategy(@Param('stratId') stratId: string): Promise<any> {
     return this.strategyService.deleteStrategy(stratId);
   }
 
@@ -38,7 +38,7 @@ export class StrategyController {
   @UseGuards(HasStrategyAccessGuard)
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(StrategySchema))
-  async editStrategy(
+  editStrategy(
     @Param('stratId') stratId: string,
     @Body() strategyDto: StrategyCreationDTO,
   ): Promise<any> {

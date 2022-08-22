@@ -15,7 +15,7 @@ export default {
 } as ComponentMeta<typeof Stack>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const DefaultTemplate: ComponentStory<typeof Stack> = (args) => (
+const DefaultTemplate: ComponentStory<typeof Stack> = () => (
   <Stack spacing={4}>
     <Box />
     <Box />

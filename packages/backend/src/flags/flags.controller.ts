@@ -69,10 +69,7 @@ export class FlagsController {
   @Delete('environments/:envId/flags/:flagId')
   @UseGuards(HasEnvironmentAccessGuard)
   @UseGuards(JwtAuthGuard)
-  async deleteFlag(
-    @Param('envId') envId: string,
-    @Param('flagId') flagId: string,
-  ) {
+  deleteFlag(@Param('envId') envId: string, @Param('flagId') flagId: string) {
     return this.flagService.deleteFlag(envId, flagId);
   }
 
@@ -82,18 +79,18 @@ export class FlagsController {
   @Get('environments/:envId/flags/:flagId/hits')
   @UseGuards(HasEnvironmentAccessGuard)
   @UseGuards(JwtAuthGuard)
-  async getFlagHits(
+  getFlagHits(
     @Param('envId') envId: string,
     @Param('flagId') flagId: string,
   ): Promise<any> {
-    return await this.flagService.listFlagHits(envId, flagId);
+    return this.flagService.listFlagHits(envId, flagId);
   }
 
   @Post('environments/:envId/flags/:flagId/strategies')
   @UseGuards(HasFlagAccessGuard)
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(StrategySchema))
-  async addStrategyToProject(
+  addStrategyToProject(
     @Param('envId') envId: string,
     @Param('flagId') flagId: string,
     @Body() strategyDto: StrategyCreationDTO,
@@ -108,7 +105,7 @@ export class FlagsController {
   @Get('environments/:envId/flags/:flagId/strategies')
   @UseGuards(HasFlagAccessGuard)
   @UseGuards(JwtAuthGuard)
-  async getStrategies(
+  getStrategies(
     @Param('envId') envId: string,
     @Param('flagId') flagId: string,
   ): Promise<any> {

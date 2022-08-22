@@ -14,7 +14,7 @@ export default {
 } as ComponentMeta<typeof DarkLogo>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const DefaultTemplate: ComponentStory<typeof DarkLogo> = (args) => (
+const DefaultTemplate: ComponentStory<typeof DarkLogo> = () => (
   <DarkLogo {...args} />
 );
 export const Default = DefaultTemplate.bind({});

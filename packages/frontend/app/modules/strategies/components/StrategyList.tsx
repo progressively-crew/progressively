@@ -6,7 +6,7 @@ import { RawTable } from "~/components/RawTable";
 import { Tag } from "~/components/Tag";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { StrategyRetrieveDTO } from "../types";
-import { StrategyCriteria, StrategyTargeting } from "./StrategyCriteria";
+import { StrategyCriteria } from "./StrategyCriteria";
 
 export interface StrategyListProps {
   strategies: Array<StrategyRetrieveDTO>;

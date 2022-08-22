@@ -15,7 +15,7 @@ export default {
 } as ComponentMeta<typeof HStack>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const DefaultTemplate: ComponentStory<typeof HStack> = (args) => (
+const DefaultTemplate: ComponentStory<typeof HStack> = () => (
   <HStack spacing={4}>
     <Box />
     <Box />

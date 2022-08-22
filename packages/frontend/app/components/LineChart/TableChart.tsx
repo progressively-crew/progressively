@@ -1,5 +1,4 @@
 import { RawTable } from "../RawTable";
-import { TagLine } from "../Tagline";
 
 export interface TableChartProps {
   items: Array<{ date: string } & { [key: string]: number | string }>;

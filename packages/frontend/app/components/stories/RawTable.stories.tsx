@@ -14,7 +14,7 @@ export default {
 } as ComponentMeta<typeof RawTable>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const DefaultTemplate: ComponentStory<typeof RawTable> = (args) => (
+const DefaultTemplate: ComponentStory<typeof RawTable> = () => (
   <div style={{ padding: 40, background: "#efefef" }}>
     <RawTable>
       <thead>
