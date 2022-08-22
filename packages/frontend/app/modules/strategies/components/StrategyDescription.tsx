@@ -14,8 +14,8 @@ export const StrategyDescription = ({
   if (!isFlagActivated) {
     return (
       <Typography>
-        Nobody will receive the <strong>"true"</strong> variant of the flag:{" "}
-        {"it's"}{" "}
+        Nobody will receive the <strong>"true"</strong> variant of the flag:
+        it's
         <Tag color="errorFg" background="errorBg">
           not activated
         </Tag>

@@ -108,8 +108,6 @@ export const action: ActionFunction = async ({
       "field-comparator"
     ) as StrategyCreateDTO["fieldComparator"]) || undefined;
 
-  const percentageValue = formData.get("percentage-value") || undefined;
-
   const strategy: StrategyCreateDTO = {
     name: strategyName,
     strategyRuleType: strategyType,

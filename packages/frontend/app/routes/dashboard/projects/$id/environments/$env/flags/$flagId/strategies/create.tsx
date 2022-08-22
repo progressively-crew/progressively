@@ -30,8 +30,6 @@ import {
 import { useLoaderData, useActionData, Form } from "@remix-run/react";
 import { Card, CardContent } from "~/components/Card";
 import { Stack } from "~/components/Stack";
-import { SliderInput } from "~/components/Fields/SliderInput";
-import { Divider } from "~/components/Divider";
 import { Section } from "~/components/Section";
 import { styled } from "~/stitches.config";
 import { Spacer } from "~/components/Spacer";
