@@ -1,6 +1,7 @@
 <?php
 
 namespace Progressively;
+
 class Flag
 {
     private $uid;
@@ -65,6 +66,4 @@ class Flag
     {
         $this->value = $value;
     }
-
-
 }
