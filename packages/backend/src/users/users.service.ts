@@ -91,7 +91,7 @@ export class UsersService {
   async checkPasswordToken(rawToken: string) {
     const hashedToken = CryptoService.sha256(rawToken);
 
-    const passwordToken = await this.prisma.passwordResetTokens.findFirst({
+    return await this.prisma.passwordResetTokens.findFirst({
       where: {
         token: hashedToken,
         dateEnd: {
@@ -99,8 +99,6 @@ export class UsersService {
         },
       },
     });
-
-    return passwordToken;
   }
 
   async resetUserPassword(userId: string, rawPassword: string) {
@@ -125,7 +123,7 @@ export class UsersService {
   async changeUserPassword(password: string, userId: string) {
     const encryptedPassword = await CryptoService.hash(password);
 
-    const updatedUser = await this.prisma.user.update({
+    return await this.prisma.user.update({
       data: {
         password: encryptedPassword,
       },
@@ -133,7 +131,5 @@ export class UsersService {
         uuid: userId,
       },
     });
-
-    return updatedUser;
   }
 }

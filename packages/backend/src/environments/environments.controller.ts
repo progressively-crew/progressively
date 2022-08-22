@@ -43,13 +43,11 @@ export class EnvironmentsController {
   @UsePipes(new ValidationPipe(FlagCreationSchema))
   async createFlag(@Param('envId') envId, @Body() body: FlagCreationDTO) {
     try {
-      const flag = await this.envService.createFlagEnvironment(
+      return await this.envService.createFlagEnvironment(
         envId,
         body.name,
         body.description,
       );
-
-      return flag;
     } catch (e) {
       if (e instanceof FlagAlreadyExists) {
         throw new BadRequestException('Flag already exists');

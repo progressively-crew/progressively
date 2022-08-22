@@ -4,11 +4,9 @@ export const getFocusableNodes = (node: HTMLElement) => {
       'a, button, input, textarea, select, details, [tabindex]:not([tabindex="-1"])'
     ),
   ];
-  const focusables = nodes.filter((node) => {
+  return nodes.filter((node) => {
     if (node.hasAttribute("disabled")) return false;
 
     return node.getAttribute("tabindex") !== "-1";
   });
-
-  return focusables;
 };

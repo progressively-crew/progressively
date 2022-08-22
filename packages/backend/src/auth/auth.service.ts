@@ -18,7 +18,7 @@ export class AuthService {
       throw new NotFoundException();
     }
 
-    const updatedUser = await this.prisma.user.update({
+    return await this.prisma.user.update({
       data: {
         status: UserStatus.Active,
         activationToken: null,
@@ -27,7 +27,5 @@ export class AuthService {
         uuid: user.uuid,
       },
     });
-
-    return updatedUser;
   }
 }

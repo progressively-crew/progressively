@@ -4,9 +4,7 @@ import * as crypto from 'crypto';
 export class CryptoService {
   static async hash(toHash: string): Promise<string> {
     const saltOrRounds = 10;
-    const hash = await bcrypt.hash(toHash, saltOrRounds);
-
-    return hash;
+    return await bcrypt.hash(toHash, saltOrRounds);
   }
 
   static sha256(plainText: string) {

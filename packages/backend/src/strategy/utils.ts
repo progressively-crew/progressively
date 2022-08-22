@@ -24,7 +24,5 @@ export const genBucket = (key: string, userId: string) => {
   const bucketKey = `${userId}-${key}`;
   const bucketHash: number = murmur.hash32(bucketKey, 1);
   const bucketHashRatio = bucketHash / MAX_INT_32; // int 32 hash divided by the max number of int 32
-  const bucket = Math.floor(bucketHashRatio * BUCKET_COUNT);
-
-  return bucket;
+  return Math.floor(bucketHashRatio * BUCKET_COUNT);
 };

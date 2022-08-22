@@ -86,9 +86,7 @@ export class FlagsController {
     @Param('envId') envId: string,
     @Param('flagId') flagId: string,
   ): Promise<any> {
-    const rawHits = await this.flagService.listFlagHits(envId, flagId);
-
-    return rawHits;
+    return await this.flagService.listFlagHits(envId, flagId);
   }
 
   @Post('environments/:envId/flags/:flagId/strategies')

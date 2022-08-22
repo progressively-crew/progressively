@@ -19,9 +19,7 @@ export const moveToRow = (
   );
 
   if (nextRow) {
-    const nextCol = closestFocusable(nextRow, `[aria-colindex="${colIndex}"]`);
-
-    return nextCol;
+    return closestFocusable(nextRow, `[aria-colindex="${colIndex}"]`);
   }
 
   return null;
@@ -35,12 +33,10 @@ export const moveToCol = (el: HTMLElement, position: number) => {
   const nextColIndex = parseInt(colIndex) + position;
 
   if (closestRow) {
-    const nextCol = closestFocusable(
+    return closestFocusable(
       closestRow,
       `[aria-colindex="${nextColIndex}"]`
     );
-
-    return nextCol;
   }
 
   return null;

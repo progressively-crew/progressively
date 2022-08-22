@@ -60,7 +60,7 @@ export class FlagsService {
     date.setSeconds(2);
     date.setMilliseconds(2);
 
-    const hit = await this.prisma.flagHit.create({
+    return await this.prisma.flagHit.create({
       data: {
         flagEnvironmentFlagId: flagId,
         flagEnvironmentEnvironmentId: environmentId,
@@ -68,13 +68,11 @@ export class FlagsService {
         date,
       },
     });
-
-    return hit;
   }
 
   async listFlagHits(envId: string, flagId: string) {
     // Nested queries in raw, not perfect but it works :(
-    const hits = this.prisma.$queryRaw<Array<FlagHitsRetrieveDTO>>`
+    return this.prisma.$queryRaw<Array<FlagHitsRetrieveDTO>>`
       SELECT date, (
         SELECT count(id)::int as activated
         FROM "FlagHit" as fh
@@ -95,8 +93,6 @@ export class FlagsService {
       GROUP BY date
       ORDER BY date ASC
     `;
-
-    return hits;
   }
 
   async deleteFlag(envId: string, flagId: string) {
@@ -121,13 +117,11 @@ export class FlagsService {
       },
     });
 
-    const flagDeleted = await this.prisma.flag.deleteMany({
+    return await this.prisma.flag.deleteMany({
       where: {
         uuid: flagId,
       },
     });
-
-    return flagDeleted;
   }
 
   async hasPermissionOnFlag(
@@ -176,10 +170,8 @@ export class FlagsService {
   resolveFlagStatusRecord(flagEnv: PopulatedFlagEnv, fields: FieldRecord) {
     const flagStatusRecord = this.resolveFlagStatus(flagEnv, fields);
 
-    const updatedFlag = {
+    return {
       [flagEnv.flag.key]: flagStatusRecord,
     };
-
-    return updatedFlag;
   }
 }
