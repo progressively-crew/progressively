@@ -24,7 +24,7 @@ export const Header = ({
   tagline,
 }: HeaderProps) => {
   return (
-    <HStack>
+    <HStack justifyContent="space-between">
       <div>
         <HeadingWrapper>
           <H1>{title}</H1>
