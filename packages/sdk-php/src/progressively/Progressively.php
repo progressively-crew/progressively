@@ -1,6 +1,6 @@
 <?php
 
-include_once ("Flag.php");
+include_once("Flag.php");
 
 class Progressively
 {

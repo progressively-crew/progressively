@@ -1,0 +1,19 @@
+{
+    "name": "progressively/sdk-php",
+    "description": "Sdk for the progressively application",
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Progressively\\SdkPhp\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Jim",
+            "email": "besse.jimmy@gmail.com"
+        }
+    ],
+    "require": {}
+}
