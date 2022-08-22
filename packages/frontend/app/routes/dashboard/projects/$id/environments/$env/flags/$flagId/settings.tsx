@@ -10,10 +10,11 @@ import { User } from "~/modules/user/types";
 import { getSession } from "~/sessions";
 import { Header } from "~/components/Header";
 import { Section, SectionHeader } from "~/components/Section";
-import { AiOutlineBarChart, AiOutlineSetting } from "react-icons/ai";
-import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
-import { FaPowerOff } from "react-icons/fa";
-import { toggleAction } from "~/modules/flags/components/ToggleFlag";
+import { AiOutlineSetting } from "react-icons/ai";
+import {
+  toggleAction,
+  ToggleFlag,
+} from "~/modules/flags/components/ToggleFlag";
 import { Typography } from "~/components/Typography";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { Crumbs } from "~/components/Breadcrumbs/types";
@@ -21,12 +22,14 @@ import { HideMobile } from "~/components/HideMobile";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { MetaFunction, LoaderFunction, ActionFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { FlagHeaderAction } from "~/modules/flags/components/FlagHeaderAction";
 import { Card, CardContent } from "~/components/Card";
 import { Heading } from "~/components/Heading";
 import { Stack } from "~/components/Stack";
 import { TagLine } from "~/components/Tagline";
 import { FiFlag } from "react-icons/fi";
+import { FlagMenu } from "~/modules/flags/components/FlagMenu";
+import { ButtonCopy } from "~/components/ButtonCopy";
+import { Spacer } from "~/components/Spacer";
 
 interface MetaArgs {
   data?: {
@@ -130,43 +133,37 @@ export default function FlagSettingPage() {
         <Header
           tagline={<TagLine icon={<FiFlag />}>FEATURE FLAG</TagLine>}
           title={currentFlag.name}
-          startAction={
-            <FlagHeaderAction
-              flagKey={currentFlag.key}
-              isFlagActivated={isFlagActivated}
-            />
-          }
+          startAction={<ToggleFlag isFlagActivated={isFlagActivated} />}
         />
       }
       subNav={
-        <HorizontalNav label={`Environment related`}>
-          <NavItem
-            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`}
-            icon={<FaPowerOff />}
-          >
-            Strategies
-          </NavItem>
-
-          <NavItem
-            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/insights`}
-            icon={<AiOutlineBarChart />}
-          >
-            Insights
-          </NavItem>
-
-          <NavItem
-            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/settings`}
-            icon={<AiOutlineSetting />}
-          >
-            Settings
-          </NavItem>
-        </HorizontalNav>
+        <FlagMenu
+          projectId={project.uuid}
+          envId={environment.uuid}
+          flagId={currentFlag.uuid}
+        />
       }
     >
       <Stack spacing={4}>
         <Heading as={"h2"} fontSize="earth" icon={<AiOutlineSetting />}>
           Settings
         </Heading>
+
+        <Card>
+          <CardContent>
+            <Section id="general">
+              <SectionHeader title="General" />
+              <Typography>
+                The following is the flag key to use inside your application to
+                get the flag variation
+              </Typography>
+              <Spacer size={4} />
+              <ButtonCopy toCopy={currentFlag.key}>
+                {currentFlag.key}
+              </ButtonCopy>
+            </Section>
+          </CardContent>
+        </Card>
 
         {userRole === UserRoles.Admin && (
           <Card>
