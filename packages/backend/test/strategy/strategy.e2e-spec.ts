@@ -75,7 +75,6 @@ describe('Strategy (e2e)', () => {
         flagEnvironmentEnvironmentId: '1',
         flagEnvironmentFlagId: '1',
         name: 'Super strategy',
-        rolloutPercentage: 100,
         strategyRuleType: 'default',
         uuid: '1',
       });
@@ -133,7 +132,6 @@ describe('Strategy (e2e)', () => {
           "flagEnvironmentEnvironmentId": "1",
           "flagEnvironmentFlagId": "1",
           "name": "Super strategy",
-          "rolloutPercentage": 100,
           "strategyRuleType": "default",
           "uuid": "1",
         }
@@ -150,7 +148,6 @@ describe('Strategy (e2e)', () => {
           fieldName: null,
           fieldComparator: null,
           fieldValue: null,
-          rolloutPercentage: 100,
           flagEnvironmentFlagId: '1',
           flagEnvironmentEnvironmentId: '1',
         });
@@ -211,7 +208,6 @@ describe('Strategy (e2e)', () => {
       const invalidStrategy: any = {
         name: undefined,
         strategyRuleType: 'default',
-        rolloutPercentage: 100,
       };
 
       await request(app.getHttpServer())
@@ -232,7 +228,6 @@ describe('Strategy (e2e)', () => {
       const invalidStrategy: any = {
         name: 'Super strategy',
         strategyRuleType: 'invalid strategy',
-        rolloutPercentage: 100,
       };
 
       await request(app.getHttpServer())
@@ -254,7 +249,6 @@ describe('Strategy (e2e)', () => {
         const invalidStrategy: any = {
           name: 'Super strategy',
           strategyRuleType: 'field',
-          rolloutPercentage: 100,
           [field]: undefined,
         };
 
@@ -277,7 +271,6 @@ describe('Strategy (e2e)', () => {
       const validStrategy: any = {
         name: 'Super strategy 2',
         strategyRuleType: 'default',
-        rolloutPercentage: 67,
       };
 
       const response = await request(app.getHttpServer())
@@ -295,7 +288,6 @@ describe('Strategy (e2e)', () => {
         fieldName: null,
         fieldComparator: null,
         fieldValue: null,
-        rolloutPercentage: 67,
         flagEnvironmentFlagId: '1',
         flagEnvironmentEnvironmentId: '1',
       });

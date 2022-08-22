@@ -19,6 +19,7 @@ export interface FlagEnvironment {
   flagId: string;
   environmentId: string;
   status: string;
+  rolloutPercentage: number;
 }
 
 export interface PopulatedFlagEnv extends FlagEnvironment {
@@ -26,3 +27,10 @@ export interface PopulatedFlagEnv extends FlagEnvironment {
   flag: Flag;
   strategies: Array<RolloutStrategy>;
 }
+
+// rolloutPercentage: Joi.number()
+// .integer()
+// .positive()
+// .min(0)
+// .max(100)
+// .required(),

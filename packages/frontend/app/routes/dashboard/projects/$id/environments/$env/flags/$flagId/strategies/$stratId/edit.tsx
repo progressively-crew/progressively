@@ -117,7 +117,6 @@ export const action: ActionFunction = async ({
     fieldComparator: fieldComparator,
     fieldName,
     fieldValue,
-    rolloutPercentage: Number(percentageValue),
   };
 
   try {
