@@ -1,6 +1,7 @@
 <?php
 
 namespace Progressively;
+
 use Progressively\Flag;
 
 class Progressively
@@ -58,8 +59,17 @@ class Progressively
         ));
 
         $response = curl_exec($curl);
-        var_dump($response);
-        if (!$response) {
+        if (!curl_errno($curl)) {
+            switch ($http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE)) {
+                case 200:
+                    if (!$response) {
+                        die("Connection Failure");
+                    }
+                    break;
+                default:
+                    die("Connection Failure Unexpected HTTP code: " . $http_code );
+            }
+        }else{
             die("Connection Failure");
         }
         curl_close($curl);
