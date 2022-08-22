@@ -30,6 +30,8 @@ import { StrategyList } from "~/modules/strategies/components/StrategyList";
 import { Card } from "~/components/Card";
 import { Stack } from "~/components/Stack";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
+import { Tag } from "~/components/Tag";
+import { StrategyDescription } from "~/modules/strategies/components/StrategyDescription";
 
 interface MetaArgs {
   data?: {
@@ -174,12 +176,10 @@ export default function FlagById() {
           title="Strategies"
           icon={<FaPowerOff />}
           description={
-            hasStrategies && (
-              <Typography>
-                If a user matches, at least, one of the following strategies,
-                they will resolve the activated variant of the flag.
-              </Typography>
-            )
+            <StrategyDescription
+              hasStrategies={hasStrategies}
+              rolloutPercentage={currentFlagEnv.rolloutPercentage}
+            />
           }
           action={
             hasStrategies && (

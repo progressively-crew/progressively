@@ -31,8 +31,7 @@ import {
   LoaderFunction,
 } from "@remix-run/node";
 import { useLoaderData, useActionData, Form } from "@remix-run/react";
-import { Card, CardContent, GradientBorderedCard } from "~/components/Card";
-import { SliderInput } from "~/components/Fields/SliderInput";
+import { Card, CardContent } from "~/components/Card";
 import { Section } from "~/components/Section";
 import { styled } from "~/stitches.config";
 import { Spacer } from "~/components/Spacer";
@@ -184,10 +183,6 @@ export default function StrategyEditPage() {
   const { project, environment, currentFlag, user, strategy } =
     useLoaderData<LoaderData>();
 
-  const [percentageValue, setPercentageValue] = useState<number>(
-    strategy.rolloutPercentage
-  );
-
   const actionData = useActionData<ActionData>();
 
   const [strategyType, setStrategyType] = useState<StrategyRuleType>(
@@ -229,25 +224,6 @@ export default function StrategyEditPage() {
       <Form method="post">
         <Row>
           <div>
-            <Section id="percentage-rollout">
-              <GradientBorderedCard>
-                <CardContent>
-                  <Typography as="h2" font="title" size="earth">
-                    Targeting audience
-                  </Typography>
-
-                  <SliderInput
-                    name="percentage-value"
-                    label={`Percentage of the audience concerned`}
-                    onChange={setPercentageValue}
-                    percentageValue={percentageValue}
-                  />
-                </CardContent>
-              </GradientBorderedCard>
-            </Section>
-
-            <Spacer size={4} />
-
             <CardGroup>
               <Card>
                 <CardContent>

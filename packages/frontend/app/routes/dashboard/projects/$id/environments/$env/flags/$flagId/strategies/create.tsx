@@ -94,8 +94,6 @@ export const action: ActionFunction = async ({
       "field-comparator"
     ) as StrategyCreateDTO["fieldComparator"]) || undefined;
 
-  const percentageValue = formData.get("percentage-value") || undefined;
-
   const strategy: StrategyCreateDTO = {
     name: strategyName,
     strategyRuleType: strategyType,
@@ -164,7 +162,6 @@ export const loader: LoaderFunction = async ({
 
 export default function StrategyCreatePage() {
   const transition = useTransition();
-  const [percentageValue, setPercentageValue] = useState<number>(100);
 
   const { project, environment, currentFlag, user } =
     useLoaderData<LoaderData>();
@@ -234,15 +231,6 @@ export default function StrategyCreatePage() {
                     placeholder="e.g: Strategy 1"
                     label="Strategy name"
                     isInvalid={Boolean(errors["strategy-name"])}
-                  />
-
-                  <Divider />
-
-                  <SliderInput
-                    name="percentage-value"
-                    label={`Percentage of the audience concerned`}
-                    onChange={setPercentageValue}
-                    percentageValue={percentageValue}
                   />
                 </Stack>
               </Section>
