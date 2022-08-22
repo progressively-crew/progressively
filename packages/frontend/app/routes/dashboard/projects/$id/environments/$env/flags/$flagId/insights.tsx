@@ -23,7 +23,7 @@ import { SwitchButton } from "~/components/Buttons/SwitchButton";
 import { EmptyState } from "~/components/EmptyState";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { useActionData, useLoaderData } from "@remix-run/react";
 import { TagLine } from "~/components/Tagline";
 import { FiFlag } from "react-icons/fi";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
@@ -48,10 +48,12 @@ export const meta: MetaFunction = ({ data }: MetaArgs) => {
   };
 };
 
+type ActionDataType = null | { successChangePercentage: boolean };
+
 export const action: ActionFunction = async ({
   request,
   params,
-}): Promise<null> => {
+}): Promise<ActionDataType> => {
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
   const flagId = params.flagId;
@@ -68,6 +70,8 @@ export const action: ActionFunction = async ({
         Number(rolloutPercentage),
         authCookie
       );
+
+      return { successChangePercentage: true };
     }
   }
 
@@ -158,7 +162,7 @@ const InsightsGrid = styled("div", {
   },
 });
 
-export default function FlagById() {
+export default function FlagInsights() {
   const {
     project,
     environment,
@@ -168,6 +172,7 @@ export default function FlagById() {
     activatedCount,
     notActivatedCount,
   } = useLoaderData<LoaderData>();
+  const actionData = useActionData<ActionDataType>();
   const [chartVariant, setChartVariant] = useState<ChartVariant>("chart");
 
   const currentFlag = currentFlagEnv.flag;
@@ -206,6 +211,7 @@ export default function FlagById() {
             <SliderFlag
               isFlagActivated={isFlagActivated}
               initialRolloutPercentage={currentFlagEnv.rolloutPercentage}
+              isSuccessful={Boolean(actionData?.successChangePercentage)}
             />
           }
         />

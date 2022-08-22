@@ -20,7 +20,11 @@ import { Typography } from "~/components/Typography";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
-import { useSearchParams, useLoaderData } from "@remix-run/react";
+import {
+  useSearchParams,
+  useLoaderData,
+  useActionData,
+} from "@remix-run/react";
 import { TagLine } from "~/components/Tagline";
 import { FiFlag } from "react-icons/fi";
 import { StrategyList } from "~/modules/strategies/components/StrategyList";
@@ -50,10 +54,12 @@ export const meta: MetaFunction = ({ data }: MetaArgs) => {
   };
 };
 
+type ActionDataType = null | { successChangePercentage: boolean };
+
 export const action: ActionFunction = async ({
   request,
   params,
-}): Promise<null> => {
+}): Promise<ActionDataType> => {
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
   const flagId = params.flagId;
@@ -70,6 +76,8 @@ export const action: ActionFunction = async ({
         Number(rolloutPercentage),
         authCookie
       );
+
+      return { successChangePercentage: true };
     }
   }
 
@@ -136,6 +144,7 @@ export const loader: LoaderFunction = async ({
 
 export default function FlagById() {
   const [searchParams] = useSearchParams();
+  const actionData = useActionData<ActionDataType>();
 
   const { project, environment, currentFlagEnv, user, strategies } =
     useLoaderData<LoaderData>();
@@ -182,6 +191,7 @@ export default function FlagById() {
             <SliderFlag
               isFlagActivated={isFlagActivated}
               initialRolloutPercentage={currentFlagEnv.rolloutPercentage}
+              isSuccessful={Boolean(actionData?.successChangePercentage)}
             />
           }
         />

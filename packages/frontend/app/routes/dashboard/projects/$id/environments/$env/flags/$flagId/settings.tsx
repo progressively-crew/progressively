@@ -18,7 +18,7 @@ import { Crumbs } from "~/components/Breadcrumbs/types";
 import { HideMobile } from "~/components/HideMobile";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { MetaFunction, LoaderFunction, ActionFunction } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { useActionData, useLoaderData } from "@remix-run/react";
 import { Card, CardContent } from "~/components/Card";
 import { Heading } from "~/components/Heading";
 import { Stack } from "~/components/Stack";
@@ -94,10 +94,12 @@ export const loader: LoaderFunction = async ({
   };
 };
 
+type ActionDataType = null | { successChangePercentage: boolean };
+
 export const action: ActionFunction = async ({
   request,
   params,
-}): Promise<null> => {
+}): Promise<ActionDataType> => {
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
   const flagId = params.flagId;
@@ -114,6 +116,8 @@ export const action: ActionFunction = async ({
         Number(rolloutPercentage),
         authCookie
       );
+
+      return { successChangePercentage: true };
     }
   }
 
@@ -131,6 +135,7 @@ export const action: ActionFunction = async ({
   return null;
 };
 export default function FlagSettingPage() {
+  const actionData = useActionData<ActionDataType>();
   const { project, environment, currentFlagEnv, user, userRole } =
     useLoaderData<LoaderData>();
 
@@ -170,6 +175,7 @@ export default function FlagSettingPage() {
             <SliderFlag
               isFlagActivated={isFlagActivated}
               initialRolloutPercentage={currentFlagEnv.rolloutPercentage}
+              isSuccessful={Boolean(actionData?.successChangePercentage)}
             />
           }
         />

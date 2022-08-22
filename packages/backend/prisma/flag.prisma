@@ -14,11 +14,11 @@ model FlagEnvironment {
     environmentId String
     flagHit       FlagHit[]
     // the values set in flags/flag.status.ts
-    status        String            @default("NOT_ACTIVATED")
+    status        String?           @default("NOT_ACTIVATED")
     strategies    RolloutStrategy[]
 
     // related to activation type "percentage"
-    rolloutPercentage Int
+    rolloutPercentage Int @default(100)
 
     @@id([flagId, environmentId])
 }
