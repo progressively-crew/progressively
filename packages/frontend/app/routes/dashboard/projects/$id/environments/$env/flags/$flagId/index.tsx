@@ -30,6 +30,8 @@ import { StrategyList } from "~/modules/strategies/components/StrategyList";
 import { Card } from "~/components/Card";
 import { Stack } from "~/components/Stack";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
+import { StrategyDescription } from "~/modules/strategies/components/StrategyDescription";
+import { SliderFlag } from "~/modules/flags/components/SliderFlag";
 
 interface MetaArgs {
   data?: {
@@ -144,6 +146,12 @@ export default function FlagById() {
           tagline={<TagLine icon={<FiFlag />}>FEATURE FLAG</TagLine>}
           title={currentFlag.name}
           startAction={<ToggleFlag isFlagActivated={isFlagActivated} />}
+          endAction={
+            <SliderFlag
+              isFlagActivated={isFlagActivated}
+              initialRolloutPercentage={currentFlagEnv.rolloutPercentage}
+            />
+          }
         />
       }
       subNav={
@@ -174,12 +182,11 @@ export default function FlagById() {
           title="Strategies"
           icon={<FaPowerOff />}
           description={
-            hasStrategies && (
-              <Typography>
-                If a user matches, at least, one of the following strategies,
-                they will resolve the activated variant of the flag.
-              </Typography>
-            )
+            <StrategyDescription
+              isFlagActivated={isFlagActivated}
+              hasStrategies={hasStrategies}
+              rolloutPercentage={currentFlagEnv.rolloutPercentage}
+            />
           }
           action={
             hasStrategies && (

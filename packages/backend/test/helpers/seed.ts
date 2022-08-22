@@ -69,6 +69,7 @@ export const seedDb = async () => {
       data: {
         environmentId: production.uuid,
         flagId: homePageFlag.uuid,
+        rolloutPercentage: 100,
       },
     });
 
@@ -77,6 +78,7 @@ export const seedDb = async () => {
         environmentId: production.uuid,
         flagId: footerFlag.uuid,
         status: 'ACTIVATED',
+        rolloutPercentage: 100,
       },
     });
 
@@ -84,6 +86,7 @@ export const seedDb = async () => {
       data: {
         environmentId: otherEnv.uuid,
         flagId: asideFlag.uuid,
+        rolloutPercentage: 100,
       },
     });
 
@@ -94,7 +97,6 @@ export const seedDb = async () => {
         flagEnvironmentEnvironmentId: flagEnv.environmentId,
         name: 'Super strategy',
         strategyRuleType: 'default',
-        rolloutPercentage: 100,
       },
     });
 
@@ -105,7 +107,6 @@ export const seedDb = async () => {
         flagEnvironmentEnvironmentId: footerFlagEnv.environmentId,
         name: 'Field based',
         strategyRuleType: 'field',
-        rolloutPercentage: 100,
         fieldName: 'id',
         fieldComparator: 'eq',
         fieldValue: '1',
@@ -119,7 +120,6 @@ export const seedDb = async () => {
         flagEnvironmentEnvironmentId: otherFlagEnv.environmentId,
         name: 'Super strategy',
         strategyRuleType: 'default',
-        rolloutPercentage: 100,
       },
     });
 

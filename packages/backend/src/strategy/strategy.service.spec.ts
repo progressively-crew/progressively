@@ -35,7 +35,6 @@ describe('StrategyService', () => {
       flagEnvironmentEnvironmentId: '1',
       flagEnvironmentFlagId: '1',
       name: 'Strategy name',
-      rolloutPercentage: 100,
       strategyRuleType: StrategyRuleType.Default,
       uuid: '123',
     };
@@ -51,6 +50,7 @@ describe('StrategyService', () => {
         name: 'Super flag',
       },
       status: FlagStatus.ACTIVATED,
+      rolloutPercentage: 100,
     };
   });
 
@@ -67,7 +67,7 @@ describe('StrategyService', () => {
 
     describe('Percentage rollout', () => {
       it('returns true when the rollout percentage is 100%', async () => {
-        strategy.rolloutPercentage = 100;
+        flagEnv.rolloutPercentage = 100;
 
         const shouldActivate = await service.resolveStrategies(
           flagEnv,
@@ -81,7 +81,7 @@ describe('StrategyService', () => {
       });
 
       it('returns false when the activation rule is Percentage but the userId is falsy', async () => {
-        strategy.rolloutPercentage = 99;
+        flagEnv.rolloutPercentage = 99;
 
         const shouldActivate = await service.resolveStrategies(
           flagEnv,
@@ -93,7 +93,7 @@ describe('StrategyService', () => {
       });
 
       it('returns true when the activation rule is Percentage, the userId is falsy BUT the percentage is 100', async () => {
-        strategy.rolloutPercentage = 100;
+        flagEnv.rolloutPercentage = 100;
 
         const shouldActivate = await service.resolveStrategies(
           flagEnv,
@@ -105,7 +105,7 @@ describe('StrategyService', () => {
       });
 
       it('returns true when the ActivationRuleType is Percentage (70%) and that the user/flag combination is in the percentage range', async () => {
-        strategy.rolloutPercentage = 70;
+        flagEnv.rolloutPercentage = 70;
 
         const shouldActivate = await service.resolveStrategies(
           flagEnv,
@@ -119,7 +119,7 @@ describe('StrategyService', () => {
       });
 
       it('returns false when the ActivationRuleType is Percentage (5%) and that the user/flag combination is NOT in the percentage range', async () => {
-        strategy.rolloutPercentage = 5;
+        flagEnv.rolloutPercentage = 5;
 
         const shouldActivate = await service.resolveStrategies(
           flagEnv,

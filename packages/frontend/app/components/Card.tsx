@@ -1,4 +1,4 @@
-import { styled } from "~/stitches.config";
+import { mapTokenToVariant, styled, spacing } from "~/stitches.config";
 
 export const Card = styled("div", {
   display: "flex",
@@ -15,25 +15,32 @@ const GradientBorderedCardWrapper = styled("div", {
   overflow: "hidden",
   background: "$nike",
   padding: "$spacing$1",
+
+  variants: {
+    isFlagActivated: {
+      false: {
+        background: "$heracles",
+      },
+    },
+  },
 });
 
 const GradientBorderedCardInner = styled("div", {
   background: "$apollo",
-  display: "flex",
-  justifyContent: "center",
-  textAlign: "center",
   borderRadius: "$borderRadius$small",
 });
 
 export interface GradientBorderedCardProps {
   children: React.ReactNode;
+  isFlagActivated?: boolean;
 }
 
 export const GradientBorderedCard = ({
   children,
+  ...props
 }: GradientBorderedCardProps) => {
   return (
-    <GradientBorderedCardWrapper>
+    <GradientBorderedCardWrapper {...props}>
       <GradientBorderedCardInner>{children}</GradientBorderedCardInner>
     </GradientBorderedCardWrapper>
   );
@@ -41,4 +48,7 @@ export const GradientBorderedCard = ({
 
 export const CardContent = styled("div", {
   padding: "$spacing$12",
+  variants: {
+    padding: mapTokenToVariant("padding", spacing, "$spacing"),
+  },
 });

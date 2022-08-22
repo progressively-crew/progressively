@@ -70,6 +70,7 @@ export class EnvironmentsService {
       data: {
         flagId: flag.uuid,
         environmentId: envId,
+        rolloutPercentage: 100,
       },
     });
 

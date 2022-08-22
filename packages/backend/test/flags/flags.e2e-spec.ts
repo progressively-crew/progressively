@@ -276,7 +276,6 @@ describe('FlagsController (e2e)', () => {
       const validStrategy: any = {
         name: 'Super strategy',
         strategyRuleType: 'default',
-        rolloutPercentage: 100,
       };
 
       return request(app.getHttpServer())
@@ -304,7 +303,6 @@ describe('FlagsController (e2e)', () => {
         .send({
           name: 'Super strategy',
           strategyRuleType: 'field',
-          rolloutPercentage: 100,
           fieldName: 'email',
           fieldComparator: 'eq',
           fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
@@ -323,7 +321,6 @@ describe('FlagsController (e2e)', () => {
       const invalidStrategy: any = {
         name: undefined,
         strategyRuleType: 'default',
-        rolloutPercentage: 100,
       };
 
       await request(app.getHttpServer())
@@ -344,7 +341,6 @@ describe('FlagsController (e2e)', () => {
       const invalidStrategy: any = {
         name: 'Super strategy',
         strategyRuleType: 'invalid strategy',
-        rolloutPercentage: 100,
       };
 
       await request(app.getHttpServer())
@@ -366,7 +362,6 @@ describe('FlagsController (e2e)', () => {
         const invalidStrategy: any = {
           name: 'Super strategy',
           strategyRuleType: 'field',
-          rolloutPercentage: 100,
           [field]: undefined,
         };
 
@@ -389,7 +384,6 @@ describe('FlagsController (e2e)', () => {
       const validStrategy: any = {
         name: 'Super strategy',
         strategyRuleType: 'default',
-        rolloutPercentage: 100,
       };
 
       const response = await request(app.getHttpServer())
@@ -407,7 +401,6 @@ describe('FlagsController (e2e)', () => {
         fieldName: null,
         fieldComparator: null,
         fieldValue: null,
-        rolloutPercentage: 100,
         flagEnvironmentFlagId: '1',
         flagEnvironmentEnvironmentId: '1',
       });
@@ -419,7 +412,6 @@ describe('FlagsController (e2e)', () => {
       const validStrategy: any = {
         name: 'Super strategy',
         strategyRuleType: 'field',
-        rolloutPercentage: 100,
         fieldName: 'email',
         fieldComparator: 'eq',
         fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
@@ -440,7 +432,6 @@ describe('FlagsController (e2e)', () => {
         fieldName: 'email',
         fieldComparator: 'eq',
         fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
-        rolloutPercentage: 100,
         flagEnvironmentFlagId: '1',
         flagEnvironmentEnvironmentId: '1',
       });
@@ -455,7 +446,6 @@ describe('FlagsController (e2e)', () => {
         fieldName: 'email',
         fieldComparator: 'eq',
         fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
-        rolloutPercentage: 99,
       };
 
       const response = await request(app.getHttpServer())
@@ -473,7 +463,6 @@ describe('FlagsController (e2e)', () => {
         fieldName: 'email',
         fieldComparator: 'eq',
         fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
-        rolloutPercentage: 99,
         flagEnvironmentFlagId: '1',
         flagEnvironmentEnvironmentId: '1',
       });
@@ -525,7 +514,6 @@ describe('FlagsController (e2e)', () => {
         fieldName: 'email',
         fieldComparator: 'eq',
         fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
-        rolloutPercentage: 99,
       };
 
       // Create a strategy to check it works
@@ -547,7 +535,6 @@ describe('FlagsController (e2e)', () => {
       expect(newStrat.flagEnvironmentEnvironmentId).toEqual('1');
       expect(newStrat.flagEnvironmentFlagId).toEqual('1');
       expect(newStrat.name).toEqual('Super strategy');
-      expect(newStrat.rolloutPercentage).toEqual(100);
       expect(newStrat.strategyRuleType).toEqual('default');
       expect(newStrat.uuid).toBeDefined();
     });

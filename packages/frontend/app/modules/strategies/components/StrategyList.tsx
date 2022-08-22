@@ -3,7 +3,6 @@ import { Button } from "~/components/Buttons/Button";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { HStack } from "~/components/HStack";
 import { RawTable } from "~/components/RawTable";
-import { Tag } from "~/components/Tag";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { StrategyRetrieveDTO } from "../types";
 import { StrategyCriteria } from "./StrategyCriteria";
@@ -26,8 +25,7 @@ export const StrategyList = ({
       <thead>
         <tr>
           <th>Name</th>
-          <th>Targeting</th>
-          <th width="30%">Criteria</th>
+          <th width="50%">Criteria</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -35,16 +33,15 @@ export const StrategyList = ({
         {strategies.map((strat) => (
           <tr key={strat.uuid}>
             <td>{strat.name}</td>
-            <td>
-              <Tag>{strat.rolloutPercentage}%</Tag> of the audience
-            </td>
+
             <td>
               <StrategyCriteria strat={strat} />
             </td>
+
             <td>
               <HStack spacing={4}>
                 <Button
-                  variant="secondary"
+                  variant="ghost"
                   small
                   icon={<AiOutlineEdit />}
                   to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/strategies/${strat.uuid}/edit`}

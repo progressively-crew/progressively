@@ -12,7 +12,6 @@ export interface StrategyCreateDTO {
   fieldName?: string;
   fieldComparator?: ComparatorEnum;
   fieldValue?: string;
-  rolloutPercentage: number;
 }
 
 export interface StrategyRetrieveDTO extends StrategyCreateDTO {

@@ -20,6 +20,7 @@ export interface FlagEnv {
   status: FlagStatus;
   flag: Flag;
   environment: Environment;
+  rolloutPercentage: number;
 }
 
 export interface CreateFlagDTO {

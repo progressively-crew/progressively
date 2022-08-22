@@ -23,7 +23,6 @@ export interface RolloutStrategy {
   fieldName?: string;
   fieldComparator?: ComparatorEnum;
   fieldValue?: string;
-  rolloutPercentage: number;
   flagEnvironmentFlagId?: string;
   flagEnvironmentEnvironmentId?: string;
 }

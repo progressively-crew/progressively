@@ -50,5 +50,5 @@ export const StrategyCriteria = ({ strat }: StrategyTargetingProps) => {
     return <StrategyCriteriaField strat={strat} />;
   }
 
-  return null;
+  return <span>N/A</span>;
 };

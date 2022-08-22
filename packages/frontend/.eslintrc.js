@@ -25,5 +25,6 @@ module.exports = {
     "@typescript-eslint/no-non-null-assertion": "off",
     "react/prop-types": "off",
     "sonarjs/no-duplicate-string": "off",
+    "react/no-unescaped-entities": "off",
   },
 };

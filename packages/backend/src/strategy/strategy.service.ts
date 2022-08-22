@@ -25,7 +25,7 @@ export class StrategyService {
     fields: FieldRecord,
   ) {
     // Return the flag to everyone, even people with no ID fields when the percentage is 100%
-    if (strategy.rolloutPercentage === 100) return true;
+    if (flagEnv.rolloutPercentage === 100) return true;
 
     // Early break when the field is is not defined, except when the rollout is 100%
     if (!fields?.id) return false;
@@ -33,7 +33,7 @@ export class StrategyService {
     return isInBucket(
       flagEnv.flag.key,
       fields.id as string,
-      strategy.rolloutPercentage,
+      flagEnv.rolloutPercentage,
     );
   }
 
@@ -119,9 +119,6 @@ export class StrategyService {
         fieldName: strategy.fieldName,
         fieldValue: strategy.fieldValue,
         fieldComparator: strategy.fieldComparator,
-
-        // only for activation type being "percentage"
-        rolloutPercentage: strategy.rolloutPercentage,
       },
     });
   }
