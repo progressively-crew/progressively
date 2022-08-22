@@ -29,7 +29,7 @@ export class FlagsService {
     });
   }
 
-  async changeFlagForEnvStatus(
+  changeFlagForEnvStatus(
     environmentId: string,
     flagId: string,
     status: FlagStatus,
@@ -43,6 +43,29 @@ export class FlagsService {
       },
       data: {
         status,
+      },
+      include: {
+        environment: true,
+        flag: true,
+        strategies: true,
+      },
+    });
+  }
+
+  adjustFlagPercentage(
+    environmentId: string,
+    flagId: string,
+    rolloutPercentage: number,
+  ) {
+    return this.prisma.flagEnvironment.update({
+      where: {
+        flagId_environmentId: {
+          flagId,
+          environmentId,
+        },
+      },
+      data: {
+        rolloutPercentage,
       },
       include: {
         environment: true,

@@ -12,10 +12,7 @@ import { Header } from "~/components/Header";
 import { Section, SectionHeader } from "~/components/Section";
 import { AiOutlineBarChart } from "react-icons/ai";
 import { getFlagHits } from "~/modules/flags/services/getFlagHits";
-import {
-  toggleAction,
-  ToggleFlag,
-} from "~/modules/flags/components/ToggleFlag";
+import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
 import { BigStat } from "~/components/BigStat";
 import { Typography } from "~/components/Typography";
 import { styled, theme } from "~/stitches.config";
@@ -31,6 +28,8 @@ import { TagLine } from "~/components/Tagline";
 import { FiFlag } from "react-icons/fi";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
 import { SliderFlag } from "~/modules/flags/components/SliderFlag";
+import { activateFlag } from "~/modules/flags/services/activateFlag";
+import { changePercentageFlag } from "~/modules/flags/services/changePercentageFlag";
 
 interface MetaArgs {
   data?: {
@@ -49,10 +48,42 @@ export const meta: MetaFunction = ({ data }: MetaArgs) => {
   };
 };
 
-export const action: ActionFunction = ({ request, params }): Promise<null> => {
-  return toggleAction({ request, params });
-};
+export const action: ActionFunction = async ({
+  request,
+  params,
+}): Promise<null> => {
+  const session = await getSession(request.headers.get("Cookie"));
+  const authCookie = session.get("auth-cookie");
+  const flagId = params.flagId;
+  const formData = await request.formData();
+  const type = formData.get("_type");
 
+  if (type === "percentage") {
+    const rolloutPercentage = formData.get("rolloutPercentage");
+
+    if (rolloutPercentage && flagId) {
+      await changePercentageFlag(
+        params.env!,
+        flagId as string,
+        Number(rolloutPercentage),
+        authCookie
+      );
+    }
+  }
+
+  const nextStatus = formData.get("nextStatus");
+
+  if (nextStatus && flagId) {
+    await activateFlag(
+      params.env!,
+      flagId as string,
+      nextStatus as FlagStatus,
+      authCookie
+    );
+  }
+
+  return null;
+};
 interface FlagHit {
   date: string;
   activated: number;

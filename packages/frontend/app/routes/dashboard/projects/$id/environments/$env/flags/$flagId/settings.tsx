@@ -11,10 +11,7 @@ import { getSession } from "~/sessions";
 import { Header } from "~/components/Header";
 import { Section, SectionHeader } from "~/components/Section";
 import { AiOutlineSetting } from "react-icons/ai";
-import {
-  toggleAction,
-  ToggleFlag,
-} from "~/modules/flags/components/ToggleFlag";
+import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
 import { Typography } from "~/components/Typography";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { Crumbs } from "~/components/Breadcrumbs/types";
@@ -31,6 +28,8 @@ import { FlagMenu } from "~/modules/flags/components/FlagMenu";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { Spacer } from "~/components/Spacer";
 import { SliderFlag } from "~/modules/flags/components/SliderFlag";
+import { activateFlag } from "~/modules/flags/services/activateFlag";
+import { changePercentageFlag } from "~/modules/flags/services/changePercentageFlag";
 
 interface MetaArgs {
   data?: {
@@ -95,10 +94,42 @@ export const loader: LoaderFunction = async ({
   };
 };
 
-export const action: ActionFunction = ({ request, params }): Promise<null> => {
-  return toggleAction({ request, params });
-};
+export const action: ActionFunction = async ({
+  request,
+  params,
+}): Promise<null> => {
+  const session = await getSession(request.headers.get("Cookie"));
+  const authCookie = session.get("auth-cookie");
+  const flagId = params.flagId;
+  const formData = await request.formData();
+  const type = formData.get("_type");
 
+  if (type === "percentage") {
+    const rolloutPercentage = formData.get("rolloutPercentage");
+
+    if (rolloutPercentage && flagId) {
+      await changePercentageFlag(
+        params.env!,
+        flagId as string,
+        Number(rolloutPercentage),
+        authCookie
+      );
+    }
+  }
+
+  const nextStatus = formData.get("nextStatus");
+
+  if (nextStatus && flagId) {
+    await activateFlag(
+      params.env!,
+      flagId as string,
+      nextStatus as FlagStatus,
+      authCookie
+    );
+  }
+
+  return null;
+};
 export default function FlagSettingPage() {
   const { project, environment, currentFlagEnv, user, userRole } =
     useLoaderData<LoaderData>();

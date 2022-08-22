@@ -15,10 +15,7 @@ import { Header } from "~/components/Header";
 import { Section, SectionHeader } from "~/components/Section";
 import { EmptyState } from "~/components/EmptyState";
 import { FaPowerOff } from "react-icons/fa";
-import {
-  toggleAction,
-  ToggleFlag,
-} from "~/modules/flags/components/ToggleFlag";
+import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
 import { Typography } from "~/components/Typography";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { Crumbs } from "~/components/Breadcrumbs/types";
@@ -32,6 +29,8 @@ import { Stack } from "~/components/Stack";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
 import { StrategyDescription } from "~/modules/strategies/components/StrategyDescription";
 import { SliderFlag } from "~/modules/flags/components/SliderFlag";
+import { changePercentageFlag } from "~/modules/flags/services/changePercentageFlag";
+import { activateFlag } from "~/modules/flags/services/activateFlag";
 
 interface MetaArgs {
   data?: {
@@ -51,8 +50,41 @@ export const meta: MetaFunction = ({ data }: MetaArgs) => {
   };
 };
 
-export const action: ActionFunction = ({ request, params }): Promise<null> => {
-  return toggleAction({ request, params });
+export const action: ActionFunction = async ({
+  request,
+  params,
+}): Promise<null> => {
+  const session = await getSession(request.headers.get("Cookie"));
+  const authCookie = session.get("auth-cookie");
+  const flagId = params.flagId;
+  const formData = await request.formData();
+  const type = formData.get("_type");
+
+  if (type === "percentage") {
+    const rolloutPercentage = formData.get("rolloutPercentage");
+
+    if (rolloutPercentage && flagId) {
+      await changePercentageFlag(
+        params.env!,
+        flagId as string,
+        Number(rolloutPercentage),
+        authCookie
+      );
+    }
+  }
+
+  const nextStatus = formData.get("nextStatus");
+
+  if (nextStatus && flagId) {
+    await activateFlag(
+      params.env!,
+      flagId as string,
+      nextStatus as FlagStatus,
+      authCookie
+    );
+  }
+
+  return null;
 };
 
 interface LoaderData {

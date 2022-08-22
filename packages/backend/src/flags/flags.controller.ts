@@ -21,7 +21,11 @@ import { StrategySchema, StrategyCreationDTO } from '../strategy/strategy.dto';
 import { HasFlagAccessGuard } from './guards/hasFlagAccess';
 import { ValidationPipe } from '../shared/pipes/ValidationPipe';
 import { ApiBearerAuth } from '@nestjs/swagger';
-import { ActivateFlagDTO } from './flags.dto';
+import {
+  ActivateFlagDTO,
+  ChangePercentageDTO,
+  ChangePercentageSchema,
+} from './flags.dto';
 
 @ApiBearerAuth()
 @Controller()
@@ -53,6 +57,29 @@ export class FlagsController {
       envId,
       flagId,
       status,
+    );
+
+    this.wsGateway.notifyChanges(
+      updatedFlagEnv.environment.clientKey,
+      updatedFlagEnv,
+    );
+
+    return updatedFlagEnv;
+  }
+
+  @Put('environments/:envId/flags/:flagId/percentage')
+  @UseGuards(HasEnvironmentAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(new ValidationPipe(ChangePercentageSchema))
+  async adjustFlagPercentage(
+    @Param('envId') envId: string,
+    @Param('flagId') flagId: string,
+    @Body() body: ChangePercentageDTO,
+  ) {
+    const updatedFlagEnv = await this.flagService.adjustFlagPercentage(
+      envId,
+      flagId,
+      body.rolloutPercentage,
     );
 
     this.wsGateway.notifyChanges(
