@@ -30,7 +30,6 @@ import { StrategyList } from "~/modules/strategies/components/StrategyList";
 import { Card } from "~/components/Card";
 import { Stack } from "~/components/Stack";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
-import { Tag } from "~/components/Tag";
 import { StrategyDescription } from "~/modules/strategies/components/StrategyDescription";
 
 interface MetaArgs {
@@ -177,6 +176,7 @@ export default function FlagById() {
           icon={<FaPowerOff />}
           description={
             <StrategyDescription
+              isFlagActivated={isFlagActivated}
               hasStrategies={hasStrategies}
               rolloutPercentage={currentFlagEnv.rolloutPercentage}
             />
