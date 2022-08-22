@@ -23,6 +23,7 @@ import { Heading } from "~/components/Heading";
 import { AiOutlineSetting } from "react-icons/ai";
 import { TagLine } from "~/components/Tagline";
 import { FiLayers } from "react-icons/fi";
+import { Spacer } from "~/components/Spacer";
 
 interface MetaArgs {
   data?: {
@@ -103,13 +104,6 @@ export default function EnvSettingsPage() {
         <Header
           title={environment.name}
           tagline={<TagLine icon={<FiLayers />}>ENVIRONMENT</TagLine>}
-          startAction={
-            <HideMobile>
-              <ButtonCopy toCopy={environment.clientKey} small={true}>
-                {environment.clientKey}
-              </ButtonCopy>
-            </HideMobile>
-          }
         />
       }
       subNav={<EnvNavBar projectId={project.uuid} envId={environment.uuid} />}
@@ -118,6 +112,22 @@ export default function EnvSettingsPage() {
         <Heading as={"h2"} fontSize="earth" icon={<AiOutlineSetting />}>
           Settings
         </Heading>
+
+        <Card>
+          <CardContent>
+            <Section id="general">
+              <SectionHeader title="General" />
+              <Typography>
+                The following is the client key to use inside your application
+                to retrieve the flags
+              </Typography>
+              <Spacer size={4} />
+              <ButtonCopy toCopy={environment.clientKey}>
+                {environment.clientKey}
+              </ButtonCopy>
+            </Section>
+          </CardContent>
+        </Card>
 
         {userRole === UserRoles.Admin && (
           <Card>

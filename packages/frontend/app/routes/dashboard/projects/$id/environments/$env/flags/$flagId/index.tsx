@@ -196,10 +196,12 @@ export default function FlagById() {
           title="Strategies"
           icon={<FaPowerOff />}
           description={
-            <Typography>
-              If a user matches, at least, one of the following strategies, they
-              will resolve the activated variant of the flag.
-            </Typography>
+            hasStrategies && (
+              <Typography>
+                If a user matches, at least, one of the following strategies,
+                they will resolve the activated variant of the flag.
+              </Typography>
+            )
           }
           action={
             hasStrategies && (
@@ -223,14 +225,13 @@ export default function FlagById() {
           </Card>
         ) : (
           <Stack spacing={4}>
-            {strategies.length === 0 && (
-              <WarningBox title="You don't have strategies yet. When switching on the flag, every user will receive the activated variant." />
-            )}
             <EmptyState
               title="No strategy found"
               description={
                 <Typography>
-                  There are no strategies bound to this flag yet.
+                  There are no strategies bound to this flag yet. In this case,
+                  when the flag is activated, every user will receive the{" "}
+                  {`"true"`} variant.
                 </Typography>
               }
               action={
