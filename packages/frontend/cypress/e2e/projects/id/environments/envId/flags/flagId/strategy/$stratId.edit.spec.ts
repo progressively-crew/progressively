@@ -101,9 +101,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
         cy.findByLabelText("Everybody is concerned").should("be.visible");
         cy.findByLabelText("People with a specific field").should("be.visible");
 
-        cy.findByLabelText("Percentage of the audience concerned").should(
-          "be.visible"
-        );
         cy.findByRole("button", { name: "Save the strategy" }).should(
           "be.visible"
         );
