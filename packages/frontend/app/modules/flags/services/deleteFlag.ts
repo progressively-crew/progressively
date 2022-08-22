@@ -1,11 +1,7 @@
 import { Constants } from "~/constants";
 
-export const deleteFlag = (
-  envId: string,
-  flagId: string,
-  accessToken: string
-) =>
-  fetch(`${Constants.BackendUrl}/environments/${envId}/flags/${flagId}`, {
+export const deleteFlag = (flagId: string, accessToken: string) =>
+  fetch(`${Constants.BackendUrl}/flags/${flagId}`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${accessToken}`,

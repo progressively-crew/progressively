@@ -42,6 +42,7 @@ export class EnvironmentsService {
     envId: string,
     name: string,
     description: string,
+    environments: Array<string>,
   ) {
     const flagKey = camelcase(name);
 
@@ -66,13 +67,15 @@ export class EnvironmentsService {
       },
     });
 
-    await this.prisma.flagEnvironment.create({
-      data: {
-        flagId: flag.uuid,
-        environmentId: envId,
-        rolloutPercentage: 100,
-      },
-    });
+    for (const env of environments) {
+      await this.prisma.flagEnvironment.create({
+        data: {
+          flagId: flag.uuid,
+          environmentId: env,
+          rolloutPercentage: 100,
+        },
+      });
+    }
 
     return flag;
   }

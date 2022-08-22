@@ -1,4 +1,4 @@
-import { styled } from "~/stitches.config";
+import { colors, mapTokenToVariant, styled } from "~/stitches.config";
 
 export const Divider = styled("hr", {
   height: "2px",
@@ -6,4 +6,7 @@ export const Divider = styled("hr", {
   display: "block",
   border: 0,
   width: "100%",
+  variants: {
+    background: mapTokenToVariant("background", colors),
+  },
 });

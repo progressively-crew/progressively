@@ -93,11 +93,11 @@ export class FlagsController {
   /**
    * Delete a project by project/env/flag
    */
-  @Delete('environments/:envId/flags/:flagId')
-  @UseGuards(HasEnvironmentAccessGuard)
+  @Delete('/flags/:flagId')
+  @UseGuards(HasFlagAccessGuard)
   @UseGuards(JwtAuthGuard)
-  deleteFlag(@Param('envId') envId: string, @Param('flagId') flagId: string) {
-    return this.flagService.deleteFlag(envId, flagId);
+  deleteFlag(@Param('flagId') flagId: string) {
+    return this.flagService.deleteFlag(flagId);
   }
 
   /**

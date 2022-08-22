@@ -8,6 +8,7 @@ import {
   Post,
   UseGuards,
   UsePipes,
+  Request,
 } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
@@ -18,6 +19,7 @@ import { HasEnvironmentAccessGuard } from './guards/hasEnvAccess';
 import { ValidationPipe } from '../shared/pipes/ValidationPipe';
 import { FlagAlreadyExists } from './errors';
 import { FlagCreationSchema, FlagCreationDTO } from '../flags/flags.dto';
+import { User } from '../users/types';
 
 @ApiBearerAuth()
 @Controller('environments')
@@ -41,12 +43,33 @@ export class EnvironmentsController {
   @UseGuards(HasEnvironmentAccessGuard)
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(FlagCreationSchema))
-  async createFlag(@Param('envId') envId, @Body() body: FlagCreationDTO) {
+  async createFlag(
+    @Request() req,
+    @Param('envId') envId,
+    @Body() body: FlagCreationDTO,
+  ) {
+    const environments = body.environments;
+    const user = req.user as User;
+
+    for (const env of environments) {
+      const hasAccessToEnv = await this.envService.hasPermissionOnEnv(
+        env,
+        user.uuid,
+      );
+
+      if (!hasAccessToEnv) {
+        throw new Error(
+          "You're not authorized to create a flag on this environment.",
+        );
+      }
+    }
+
     try {
       return await this.envService.createFlagEnvironment(
         envId,
         body.name,
         body.description,
+        body.environments,
       );
     } catch (e) {
       if (e instanceof FlagAlreadyExists) {

@@ -270,15 +270,15 @@ describe('FlagsController (e2e)', () => {
     });
   });
 
-  describe('environments/1/flags/1 (DELETE)', () => {
+  describe('/flags/1 (DELETE)', () => {
     it('gives a 401 when the user is not authenticated', () =>
-      verifyAuthGuard(app, '/environments/1/flags/1', 'delete'));
+      verifyAuthGuard(app, '/flags/1', 'delete'));
 
     it('gives a 403 when trying to access a valid project but an invalid env', async () => {
       const access_token = await authenticate(app);
 
       return request(app.getHttpServer())
-        .delete('/environments/3/flags/1')
+        .delete('/flags/53')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(403)
         .expect({
@@ -296,7 +296,7 @@ describe('FlagsController (e2e)', () => {
       );
 
       return request(app.getHttpServer())
-        .delete('/environments/1/flags/1')
+        .delete('/flags/1')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(403)
         .expect({
@@ -351,7 +351,7 @@ describe('FlagsController (e2e)', () => {
       ]);
 
       const response = await request(app.getHttpServer())
-        .delete('/environments/1/flags/1')
+        .delete('/flags/1')
         .set('Authorization', `Bearer ${access_token}`);
       expect(response.status).toBe(200);
 

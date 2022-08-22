@@ -1,10 +1,11 @@
 import { forwardRef, HTMLAttributes } from "react";
 
 export interface CheckboxProps extends HTMLAttributes<HTMLInputElement> {
-  checked: boolean;
+  checked?: boolean;
   value: string;
   name: string;
   disabled?: boolean;
+  defaultChecked?: boolean;
 }
 
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
