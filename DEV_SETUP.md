@@ -4,8 +4,8 @@ This is a suite of commands to run in order to be ready to start the project loc
 
 ```sh
 $ git clone https://github.com/progressively-crew/progressively && cd progressively
-$ mv ./packages/backend/.env.example ./packages/backend/.env
-$ mv ./packages/frontend/.env.example ./packages/frontend/.env
+$ cp ./packages/backend/.env.example ./packages/backend/.env
+$ cp ./packages/frontend/.env.example ./packages/frontend/.env
 $ docker run --name progressively-db -e POSTGRES_PASSWORD=admin -e POSTGRES_USER=admin -e POSTGRES_DB=progressively -p 5432:5432 -d postgres
 $ docker run -it --rm --name progressively-redis -p 6379:6379 -d redis
 $ npm run setup && npm run db:prepare && npm run db:seed
@@ -58,8 +58,8 @@ Let's go this.
 The repository has `.env.example` in both these packages that you can rename and modify.
 
 ```sh
-$  mv ./packages/backend/.env.example ./packages/backend/.env
-$  mv ./packages/frontend/.env.example ./packages/frontend/.env
+$  cp ./packages/backend/.env.example ./packages/backend/.env
+$  cp ./packages/frontend/.env.example ./packages/frontend/.env
 ```
 
 **2. start Postgres**
