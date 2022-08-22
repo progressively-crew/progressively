@@ -14,7 +14,7 @@ export default {
 } as ComponentMeta<typeof Typography>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const DefaultTemplate: ComponentStory<typeof Typography> = (args) => (
+const DefaultTemplate: ComponentStory<typeof Typography> = () => (
   <div>
     {["venus", "saturn", "earth", "mars", "jupiter", "uranus", "neptune"].map(
       (size) => (

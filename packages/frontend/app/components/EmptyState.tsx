@@ -22,7 +22,7 @@ const Wrapper = styled("div", {
 export interface EmptyStateProps {
   title: string;
   description: React.ReactNode;
-  titleAs?: any;
+  titleAs?: string;
   id?: string;
   action?: React.ReactNode;
 }

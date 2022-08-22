@@ -14,7 +14,7 @@ export default {
 } as ComponentMeta<typeof SliderInput>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const DefaultTemplate: ComponentStory<typeof SliderInput> = (args) => {
+const DefaultTemplate: ComponentStory<typeof SliderInput> = () => {
   const [percentage, setPercentage] = useState(50);
   return (
     <SliderInput

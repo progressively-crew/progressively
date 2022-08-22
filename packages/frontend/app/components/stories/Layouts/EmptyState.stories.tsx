@@ -15,7 +15,7 @@ export default {
 } as ComponentMeta<typeof EmptyState>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const DefaultTemplate: ComponentStory<typeof EmptyState> = (args) => (
+const DefaultTemplate: ComponentStory<typeof EmptyState> = () => (
   <EmptyState
     title="No environments found"
     description={<Typography>There are no XXX yet</Typography>}

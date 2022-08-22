@@ -14,7 +14,7 @@ export default {
 } as ComponentMeta<typeof MarketingLayout>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const DefaultTemplate: ComponentStory<typeof MarketingLayout> = (args) => (
+const DefaultTemplate: ComponentStory<typeof MarketingLayout> = () => (
   <MarketingLayout>
     <Box />
   </MarketingLayout>

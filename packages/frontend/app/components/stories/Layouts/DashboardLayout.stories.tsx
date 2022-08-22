@@ -15,7 +15,7 @@ export default {
 } as ComponentMeta<typeof DashboardLayout>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const DefaultTemplate: ComponentStory<typeof DashboardLayout> = (args) => (
+const DefaultTemplate: ComponentStory<typeof DashboardLayout> = () => (
   <DashboardLayout
     header={<Box />}
     status={<SuccessBox id="success">Hello world</SuccessBox>}
