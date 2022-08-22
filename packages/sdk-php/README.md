@@ -1,9 +1,23 @@
 For documentation, make sure to check [the documentation website](https://progressively-crew.github.io/).
 
-About the sdk for PHP 
+## Sdk for PHP 
 
-Include Progressively.php 
+### Prérequis & Installation``
+``` 
+ compose install
+  ```
+### Test version 
+```  
+docker-compose up -d
+```
+And access to the page /example/index.php
+
+### Example
    ``` php 
+   
+    require '../vendor/autoload.php';
+    use Progressively\Progressively;
+   
     $option = array(
                 "clientKey"=>"37c15cf9-3625-4516-9080-74931ed639d4"
     );
@@ -14,7 +28,7 @@ Include Progressively.php
     }
   ```
   
-Ability to get all your tag
+#### Ability to get all your tag
 
 ``` php
     $option = array(
@@ -25,7 +39,7 @@ Ability to get all your tag
     $progressively->getFlags()
 ```
 
-If the data need to be refresh during the same execution 
+#### If the data need to be refresh during the same execution 
 ``` php
     $option = array(
                 "clientKey"=>"37c15cf9-3625-4516-9080-74931ed639d4"
