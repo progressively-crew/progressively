@@ -29,6 +29,11 @@ import { getProject } from "~/modules/projects/services/getProject";
 import { Project } from "~/modules/projects/types";
 import { User } from "~/modules/user/types";
 import { getSession } from "~/sessions";
+import { Checkbox } from "~/components/Checkbox";
+import { Label } from "~/components/Fields/Label";
+import { HStack } from "~/components/HStack";
+import { Stack } from "~/components/Stack";
+import { Divider } from "~/components/Divider";
 
 interface MetaArgs {
   data?: {
@@ -50,6 +55,7 @@ interface LoaderData {
   project: Project;
   user: User;
   environment: Environment;
+  environments: Array<Environment>;
 }
 
 export const loader: LoaderFunction = async ({
@@ -66,7 +72,12 @@ export const loader: LoaderFunction = async ({
     (env) => env.uuid === params.env
   );
 
-  return { project, environment: environment!, user };
+  return {
+    project,
+    environment: environment!,
+    user,
+    environments: project.environments,
+  };
 };
 
 interface ActionData {
@@ -81,6 +92,7 @@ export const action: ActionFunction = async ({
   const envId = params.env!;
   const formData = await request.formData();
   const name = formData.get("flag-name")?.toString();
+  const environments = formData.getAll("otherEnvironments");
   const description = formData.get("flag-desc")?.toString();
 
   const errors = validateFlagShape({ name, description });
@@ -96,6 +108,7 @@ export const action: ActionFunction = async ({
       envId,
       name!,
       description!,
+      environments,
       session.get("auth-cookie")
     );
 
@@ -115,7 +128,9 @@ export default function CreateFlagPage() {
   const data = useActionData<ActionData>();
   const transition = useTransition();
 
-  const { project, environment, user } = useLoaderData<LoaderData>();
+  const { project, environment, user, environments } =
+    useLoaderData<LoaderData>();
+
   const errors = data?.errors;
 
   const crumbs: Crumbs = [
@@ -177,6 +192,29 @@ export default function CreateFlagPage() {
                 placeholder="e.g: The new homepage"
               />
             </div>
+
+            <Divider background="apollo" />
+
+            <fieldset>
+              <Stack spacing={2}>
+                <Label as="legend">
+                  Create this flag for the following environments
+                </Label>
+                {environments.map((env) => (
+                  <HStack spacing={2} key={env.uuid}>
+                    <Checkbox
+                      id={env.uuid}
+                      value={env.uuid}
+                      name="otherEnvironments"
+                      defaultChecked={true}
+                    />
+                    <Label size="uranus" htmlFor={env.uuid}>
+                      {env.name}
+                    </Label>
+                  </HStack>
+                ))}
+              </Stack>
+            </fieldset>
 
             <div>
               <SubmitButton
