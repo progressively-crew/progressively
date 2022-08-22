@@ -6,6 +6,7 @@ export interface HeaderProps {
   title: string | React.ReactNode;
   description?: React.ReactNode;
   startAction?: React.ReactNode;
+  endAction?: React.ReactNode;
   tagline?: React.ReactNode;
 }
 
@@ -19,18 +20,23 @@ export const Header = ({
   title,
   description,
   startAction,
+  endAction,
   tagline,
 }: HeaderProps) => {
   return (
-    <div>
-      <HeadingWrapper>
-        <H1>{title}</H1>
-        {tagline}
-      </HeadingWrapper>
+    <HStack>
+      <div>
+        <HeadingWrapper>
+          <H1>{title}</H1>
+          {tagline}
+        </HeadingWrapper>
 
-      {description}
+        {description}
 
-      {startAction && <HStack spacing={6}>{startAction}</HStack>}
-    </div>
+        {startAction && <HStack spacing={6}>{startAction}</HStack>}
+      </div>
+
+      <div>{endAction}</div>
+    </HStack>
   );
 };
