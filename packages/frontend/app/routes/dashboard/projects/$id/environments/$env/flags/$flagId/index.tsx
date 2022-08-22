@@ -11,25 +11,25 @@ import { User } from "~/modules/user/types";
 import { getSession } from "~/sessions";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { StrategyRetrieveDTO } from "~/modules/strategies/types";
-import { WarningBox } from "~/components/Boxes/WarningBox";
 import { Header } from "~/components/Header";
 import { Section, SectionHeader } from "~/components/Section";
 import { EmptyState } from "~/components/EmptyState";
-import { AiOutlineBarChart, AiOutlineSetting } from "react-icons/ai";
-import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { FaPowerOff } from "react-icons/fa";
-import { toggleAction } from "~/modules/flags/components/ToggleFlag";
+import {
+  toggleAction,
+  ToggleFlag,
+} from "~/modules/flags/components/ToggleFlag";
 import { Typography } from "~/components/Typography";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
 import { useSearchParams, useLoaderData } from "@remix-run/react";
-import { FlagHeaderAction } from "~/modules/flags/components/FlagHeaderAction";
 import { TagLine } from "~/components/Tagline";
 import { FiFlag } from "react-icons/fi";
 import { StrategyList } from "~/modules/strategies/components/StrategyList";
 import { Card } from "~/components/Card";
 import { Stack } from "~/components/Stack";
+import { FlagMenu } from "~/modules/flags/components/FlagMenu";
 
 interface MetaArgs {
   data?: {
@@ -143,37 +143,15 @@ export default function FlagById() {
         <Header
           tagline={<TagLine icon={<FiFlag />}>FEATURE FLAG</TagLine>}
           title={currentFlag.name}
-          startAction={
-            <FlagHeaderAction
-              flagKey={currentFlag.key}
-              isFlagActivated={isFlagActivated}
-            />
-          }
+          startAction={<ToggleFlag isFlagActivated={isFlagActivated} />}
         />
       }
       subNav={
-        <HorizontalNav label={`Flag related`}>
-          <NavItem
-            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`}
-            icon={<FaPowerOff />}
-          >
-            Strategies
-          </NavItem>
-
-          <NavItem
-            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/insights`}
-            icon={<AiOutlineBarChart />}
-          >
-            Insights
-          </NavItem>
-
-          <NavItem
-            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/settings`}
-            icon={<AiOutlineSetting />}
-          >
-            Settings
-          </NavItem>
-        </HorizontalNav>
+        <FlagMenu
+          projectId={project.uuid}
+          envId={environment.uuid}
+          flagId={currentFlag.uuid}
+        />
       }
       status={
         isStrategyUpdated ? (

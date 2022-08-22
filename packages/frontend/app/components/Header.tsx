@@ -29,8 +29,6 @@ export const Header = ({
         {tagline}
       </HeadingWrapper>
 
-      {description || startAction ? <Spacer size={2} /> : null}
-
       {description}
 
       {startAction && <HStack spacing={6}>{startAction}</HStack>}
