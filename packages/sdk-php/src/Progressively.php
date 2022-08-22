@@ -1,6 +1,7 @@
 <?php
 
-include_once("Flag.php");
+namespace Progressively;
+use Progressively\Flag;
 
 class Progressively
 {
@@ -12,7 +13,7 @@ class Progressively
     private function __construct(array $options = [])
     {
         // Warn if any unknown options are passed
-        $knownOptions = ["apiUrl", "websocketUrl", "initialFlags","clientKey", "idUser"];
+        $knownOptions = ["apiUrl", "websocketUrl", "initialFlags", "clientKey", "idUser"];
         $unknownOptions = array_diff(array_keys($options), $knownOptions);
         if (count($unknownOptions)) {
             trigger_error('Unknown Config options: ' . implode(", ", $unknownOptions), E_USER_NOTICE);
@@ -27,7 +28,7 @@ class Progressively
 
     public static function create($params = array()): Progressively
     {
-        if(!isset($params["clientKey"]) || empty($params["clientKey"])){
+        if (!isset($params["clientKey"]) || empty($params["clientKey"])) {
             throw new Exception('Missing inforamation clientKey is required');
         }
         return new Progressively($params);
@@ -36,7 +37,7 @@ class Progressively
 
     private function getFieldsEncode(): string
     {
-        return base64_encode(json_encode(array("clientKey"=>$this->getClientKey(),"id"=> $this->getIdUser())));
+        return base64_encode(json_encode(array("clientKey" => $this->getClientKey(), "id" => $this->getIdUser())));
     }
 
 
@@ -57,17 +58,20 @@ class Progressively
         ));
 
         $response = curl_exec($curl);
-        if(!$response){die("Connection Failure");}
+        var_dump($response);
+        if (!$response) {
+            die("Connection Failure");
+        }
         curl_close($curl);
-        return json_decode($response,true);
+        return json_decode($response, true);
 
     }
 
     public function isOn($tagName): bool
     {
         $result = false;
-        foreach ($this->flags as $flag){
-            if($flag->getName() == $tagName){
+        foreach ($this->flags as $flag) {
+            if ($flag->getName() == $tagName) {
                 $result = $flag->getValue();
             }
         }
@@ -128,10 +132,11 @@ class Progressively
     /**
      * @return void
      */
-    public function refreshFlags():void
+    public function refreshFlags(): void
     {
         $this->setFlags();
     }
+
     /**
      * @return array
      */

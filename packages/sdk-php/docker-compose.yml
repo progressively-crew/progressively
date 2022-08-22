@@ -5,4 +5,4 @@ services:
     ports:
       - "8181:80"
     volumes:
-      - ./app:/var/www/html
+      - .:/var/www/html

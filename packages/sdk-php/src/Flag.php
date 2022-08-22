@@ -1,5 +1,6 @@
 <?php
 
+namespace Progressively;
 class Flag
 {
     private $uid;
