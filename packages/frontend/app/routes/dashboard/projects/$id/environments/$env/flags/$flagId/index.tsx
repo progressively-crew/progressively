@@ -69,7 +69,11 @@ export const action: ActionFunction = async ({
   if (type === "percentage") {
     const rolloutPercentage = formData.get("rolloutPercentage");
 
-    if (rolloutPercentage && flagId) {
+    if (
+      rolloutPercentage !== undefined &&
+      rolloutPercentage !== null &&
+      flagId
+    ) {
       await changePercentageFlag(
         params.env!,
         flagId as string,

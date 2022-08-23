@@ -33,9 +33,19 @@ export const StrategyDescription = ({
   }
 
   if (hasStrategies) {
+    if (rolloutPercentage === 0) {
+      return (
+        <Typography>
+          Only the user matching at least one of the following strategies will
+          resolve the <strong>"true"</strong> variant of the flag since the
+          rollout percentage is <Tag>{rolloutPercentage}%</Tag>.
+        </Typography>
+      );
+    }
+
     return (
       <Typography>
-        <Tag>{rolloutPercentage}%</Tag> of the audience plus the users matching
+        <Tag>{rolloutPercentage}%</Tag> of the audience AND the users matching
         at least one of the following strategies will resolve the{" "}
         <strong>"true"</strong> variant of the flag.
       </Typography>
