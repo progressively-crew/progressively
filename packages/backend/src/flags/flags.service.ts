@@ -171,6 +171,36 @@ export class FlagsService {
     return roles.includes(flagOfProject.role);
   }
 
+  async hasPermissionOnFlagEnv(
+    envId: string,
+    flagId: string,
+    userId: string,
+    roles?: Array<string>,
+  ) {
+    const flagOfProject = await this.prisma.userProject.findFirst({
+      where: {
+        userId,
+        project: {
+          environments: {
+            some: {
+              flagEnvironment: { some: { flagId, environmentId: envId } },
+            },
+          },
+        },
+      },
+    });
+
+    if (!flagOfProject) {
+      return false;
+    }
+
+    if (!roles || roles.length === 0) {
+      return true;
+    }
+
+    return roles.includes(flagOfProject.role);
+  }
+
   resolveFlagStatus(flagEnv: PopulatedFlagEnv, fields: FieldRecord) {
     let status: boolean;
 

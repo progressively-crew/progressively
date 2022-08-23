@@ -16,7 +16,6 @@ import { FlagsService } from './flags.service';
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
 import { strToFlagStatus } from './utils';
 import { WebsocketGateway } from '../websocket/websocket.gateway';
-import { HasEnvironmentAccessGuard } from '../environments/guards/hasEnvAccess';
 import { StrategySchema, StrategyCreationDTO } from '../strategy/strategy.dto';
 import { HasFlagAccessGuard } from './guards/hasFlagAccess';
 import { ValidationPipe } from '../shared/pipes/ValidationPipe';
@@ -26,6 +25,7 @@ import {
   ChangePercentageDTO,
   ChangePercentageSchema,
 } from './flags.dto';
+import { HasFlagEnvAccessGuard } from './guards/hasFlagEnvAccess';
 
 @ApiBearerAuth()
 @Controller()
@@ -40,7 +40,7 @@ export class FlagsController {
    * Update a flag on a given project/env (by project id AND env id AND flagId)
    */
   @Put('environments/:envId/flags/:flagId')
-  @UseGuards(HasEnvironmentAccessGuard)
+  @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
   async changeFlagForEnvStatus(
     @Param('envId') envId: string,
@@ -68,7 +68,7 @@ export class FlagsController {
   }
 
   @Put('environments/:envId/flags/:flagId/percentage')
-  @UseGuards(HasEnvironmentAccessGuard)
+  @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(ChangePercentageSchema))
   async adjustFlagPercentage(
@@ -104,7 +104,7 @@ export class FlagsController {
    * Get the flag hits grouped by date
    */
   @Get('environments/:envId/flags/:flagId/hits')
-  @UseGuards(HasEnvironmentAccessGuard)
+  @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
   getFlagHits(
     @Param('envId') envId: string,
@@ -114,7 +114,7 @@ export class FlagsController {
   }
 
   @Post('environments/:envId/flags/:flagId/strategies')
-  @UseGuards(HasFlagAccessGuard)
+  @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(StrategySchema))
   addStrategyToProject(
@@ -130,7 +130,7 @@ export class FlagsController {
   }
 
   @Get('environments/:envId/flags/:flagId/strategies')
-  @UseGuards(HasFlagAccessGuard)
+  @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
   getStrategies(
     @Param('envId') envId: string,
