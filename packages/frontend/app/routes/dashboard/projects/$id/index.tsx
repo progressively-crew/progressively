@@ -1,4 +1,3 @@
-import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { getProject } from "~/modules/projects/services/getProject";
 import { Project } from "~/modules/projects/types";
@@ -8,15 +7,12 @@ import { authGuard } from "~/modules/auth/services/auth-guard";
 import { User } from "~/modules/user/types";
 import { Header } from "~/components/Header";
 import { Section, SectionHeader } from "~/components/Section";
-import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
-import { AiOutlineSetting } from "react-icons/ai";
 import { FiLayers } from "react-icons/fi";
 import { EmptyState } from "~/components/EmptyState";
 import { Typography } from "~/components/Typography";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { MetaFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
-import { Crumbs } from "~/components/Breadcrumbs/types";
 import { EnvList } from "~/modules/environments/components/EnvList";
 import { Card } from "~/components/Card";
 import { TagLine } from "~/components/Tagline";
@@ -58,45 +54,16 @@ export default function ProjectDetailPage() {
   const newEnvId = searchParams.get("newEnvId") || undefined;
   const envRemoved = searchParams.get("envRemoved") || undefined;
 
-  const crumbs: Crumbs = [
-    {
-      link: "/dashboard",
-      label: "Projects",
-    },
-    {
-      link: `/dashboard/projects/${project.uuid}`,
-      label: project.name,
-    },
-  ];
-
   const hasEnvironments = project.environments.length > 0;
 
   return (
     <DashboardLayout
       user={user}
-      breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
           tagline={<TagLine icon={<MdOutlineGroupWork />}>PROJECT</TagLine>}
           title={project.name}
         />
-      }
-      subNav={
-        <HorizontalNav label={`Project related`}>
-          <NavItem
-            to={`/dashboard/projects/${project.uuid}`}
-            icon={<FiLayers />}
-          >
-            Environments
-          </NavItem>
-
-          <NavItem
-            to={`/dashboard/projects/${project.uuid}/settings`}
-            icon={<AiOutlineSetting />}
-          >
-            Settings
-          </NavItem>
-        </HorizontalNav>
       }
       status={
         newEnvId ? (

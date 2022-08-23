@@ -80,10 +80,6 @@ export default function CreateProjectPage() {
 
   const crumbs: Crumbs = [
     {
-      link: "/dashboard",
-      label: "Projects",
-    },
-    {
       link: "/dashboard/projects/create",
       label: "Create a project",
     },

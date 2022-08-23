@@ -1,13 +1,10 @@
 import { Main } from "~/components/Main";
 import { User } from "~/modules/user/types";
-import { UseDropdown } from "~/modules/user/components/UserDropdown";
 import { SkipNavLink } from "~/components/SkipNav";
 import { Container } from "~/components/Container";
-import { Nav } from "~/components/Nav";
 import { Spacer } from "~/components/Spacer";
 import { NavProvider } from "~/components/Breadcrumbs/providers/NavProvider";
 import { InertWhenNavOpened } from "~/components/Breadcrumbs/InertWhenNavOpened";
-import { Menu } from "~/components/Menu";
 import { styled } from "~/stitches.config";
 
 export interface DashboardLayoutProps {
@@ -18,25 +15,6 @@ export interface DashboardLayoutProps {
   subNav?: React.ReactNode;
   status?: React.ReactNode;
 }
-
-const PageWrapper = styled("div", {
-  display: "grid",
-  gridTemplateColumns: "auto 1fr",
-  gap: "$spacing$12",
-
-  "@tablet": {
-    flexDirection: "column",
-    gridTemplateColumns: "1fr",
-  },
-
-  variants: {
-    singleColumn: {
-      true: {
-        gridTemplateColumns: "1fr",
-      },
-    },
-  },
-});
 
 const EndSection = styled("div", {
   overflow: "hidden", // scroll inside table elements,
@@ -55,8 +33,11 @@ const HeaderWrapper = styled("div", {
   },
 });
 
+const SubNavWrapper = styled("div", {
+  background: "$nemesisLight",
+});
+
 export const DashboardLayout = ({
-  user,
   children,
   breadcrumb,
   header,
@@ -68,12 +49,6 @@ export const DashboardLayout = ({
       <div>
         <InertWhenNavOpened>
           <SkipNavLink>Skip to content</SkipNavLink>
-
-          <Nav aria-label="General">
-            <Menu hideOnMobile={!breadcrumb} />
-
-            {user && user.fullname && <UseDropdown user={user as User} />}
-          </Nav>
         </InertWhenNavOpened>
 
         <HeaderWrapper hasBreadcrumbs={Boolean(breadcrumb)}>
@@ -89,31 +64,31 @@ export const DashboardLayout = ({
           </Container>
         </HeaderWrapper>
 
-        <Spacer
-          size={{
-            "@initial": 8,
-            "@tablet": 0,
-            "@mobile": 0,
-          }}
-        />
-
         <InertWhenNavOpened>
           <Main>
+            <SubNavWrapper>
+              <Container>{subNav}</Container>
+            </SubNavWrapper>
+
             <Container>
-              <PageWrapper singleColumn={!subNav}>
-                {subNav ? <div>{subNav}</div> : null}
+              <Spacer
+                size={{
+                  "@initial": 8,
+                  "@tablet": 0,
+                  "@mobile": 0,
+                }}
+              />
 
-                <EndSection>
-                  {status && (
-                    <>
-                      {status}
-                      <Spacer size={8} />
-                    </>
-                  )}
+              <EndSection>
+                {status && (
+                  <>
+                    {status}
+                    <Spacer size={8} />
+                  </>
+                )}
 
-                  {children}
-                </EndSection>
-              </PageWrapper>
+                {children}
+              </EndSection>
             </Container>
           </Main>
         </InertWhenNavOpened>

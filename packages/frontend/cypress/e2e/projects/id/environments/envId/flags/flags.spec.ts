@@ -39,10 +39,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags", () => {
           "Progressively | Project from seeding | Developer | Flags"
         );
 
-        cy.findByRole("link", { name: "Projects" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard");
-
         cy.findByRole("link", { name: "Project from seeding" })
           .should("be.visible")
           .and("have.attr", "href", "/dashboard/projects/1");
@@ -87,10 +83,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags", () => {
           "eq",
           "Progressively | Project from seeding | Production | Flags"
         );
-
-        cy.findByRole("link", { name: "Projects" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard");
 
         cy.findByRole("link", { name: "Project from seeding" })
           .should("be.visible")

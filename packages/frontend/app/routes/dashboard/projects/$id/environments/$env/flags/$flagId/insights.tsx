@@ -180,10 +180,6 @@ export default function FlagInsights() {
 
   const crumbs: Crumbs = [
     {
-      link: "/dashboard",
-      label: "Projects",
-    },
-    {
       link: `/dashboard/projects/${project.uuid}`,
       label: project.name,
     },

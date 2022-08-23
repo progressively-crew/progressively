@@ -25,10 +25,6 @@ describe("/dashboard/projects/create", () => {
         "be.visible"
       );
 
-      cy.findByRole("link", { name: "Projects" })
-        .should("be.visible")
-        .and("have.attr", "href", "/dashboard");
-
       cy.findByRole("link", { name: "Create a project" })
         .should("be.visible")
         .and("have.attr", "href", "/dashboard/projects/create")

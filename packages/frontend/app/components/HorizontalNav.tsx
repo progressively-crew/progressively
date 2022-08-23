@@ -3,52 +3,35 @@ import { styled } from "~/stitches.config";
 import { HStack } from "./HStack";
 
 const HorizontalNavWrapper = styled("nav", {
-  width: "220px",
   "& ul": {
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "row",
     gap: "$spacing$2",
   },
 
   "& ul li a": {
-    display: "block",
+    height: "$cta",
+    display: "flex",
     cursor: "pointer",
     fontFamily: "$default",
     textDecoration: "none",
     color: "$hades",
-    padding: "$spacing$3 $spacing$4",
-    borderRadius: "$borderRadius$regular",
+    padding: "0 $spacing$4",
     transition: "all 0.2s",
     fontSize: "$uranus",
-  },
-
-  "& ul li a:hover": {
-    background: "$nemesisLight",
+    borderTop: "4px solid transparent",
+    borderBottom: "4px solid transparent",
   },
 
   "& ul li a.active": {
     background: "$nemesisLight",
     fontWeight: "$bold",
     color: "$nemesis",
+    borderBottom: "4px solid $nemesis",
   },
 
   "& ul li a svg": {
     color: "$nemesis",
-  },
-
-  "@tablet": {
-    width: "100%",
-    marginTop: "$spacing$6",
-
-    "& ul": {
-      flexDirection: "row",
-      overflow: "auto",
-      justifyContent: "center",
-    },
-
-    "& ul li a": {
-      padding: "$spacing$4",
-    },
   },
 });
 

@@ -34,10 +34,6 @@ describe("/dashboard/projects/[id]", () => {
       it("shows the project layout", () => {
         cy.title().should("eq", "Progressively | Project from seeding");
 
-        cy.findByRole("link", { name: "Projects" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard");
-
         cy.findByRole("link", { name: "Project from seeding" })
           .should("be.visible")
           .and("have.attr", "href", "/dashboard/projects/1")

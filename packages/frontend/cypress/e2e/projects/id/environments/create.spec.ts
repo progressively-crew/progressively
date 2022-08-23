@@ -39,10 +39,6 @@ describe("/dashboard/projects/[id]/environments/create", () => {
           "Progressively | Project from seeding | Create an environment"
         );
 
-        cy.findByRole("link", { name: "Projects" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard");
-
         cy.findByRole("link", { name: "Project from seeding" })
           .should("be.visible")
           .and("have.attr", "href", "/dashboard/projects/1");

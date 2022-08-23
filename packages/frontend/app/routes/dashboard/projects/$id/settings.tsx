@@ -1,10 +1,6 @@
 import { AiOutlineSetting } from "react-icons/ai";
-import { FiLayers } from "react-icons/fi";
-
-import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { Header } from "~/components/Header";
-import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { Section, SectionHeader } from "~/components/Section";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
@@ -20,7 +16,6 @@ import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { Stack } from "~/components/Stack";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { Spacer } from "~/components/Spacer";
-import { Crumbs } from "~/components/Breadcrumbs/types";
 import { HideMobile } from "~/components/HideMobile";
 import { MetaFunction, LoaderFunction, ActionFunction } from "@remix-run/node";
 import {
@@ -118,22 +113,9 @@ export default function SettingsPage() {
   const data = useActionData<ActionData>();
   const transition = useTransition();
 
-  const crumbs: Crumbs = [
-    {
-      link: "/dashboard",
-      label: "Projects",
-    },
-    {
-      link: `/dashboard/projects/${project.uuid}`,
-      label: project.name,
-      forceNotCurrent: true,
-    },
-  ];
-
   return (
     <DashboardLayout
       user={user}
-      breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
           tagline={<TagLine icon={<MdOutlineGroupWork />}>PROJECT</TagLine>}
@@ -144,23 +126,6 @@ export default function SettingsPage() {
             </span>
           }
         />
-      }
-      subNav={
-        <HorizontalNav label={`Project related`}>
-          <NavItem
-            to={`/dashboard/projects/${project.uuid}`}
-            icon={<FiLayers />}
-          >
-            Environments
-          </NavItem>
-
-          <NavItem
-            to={`/dashboard/projects/${project.uuid}/settings`}
-            icon={<AiOutlineSetting />}
-          >
-            Settings
-          </NavItem>
-        </HorizontalNav>
       }
     >
       <Stack spacing={8}>
