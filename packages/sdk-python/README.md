@@ -17,7 +17,7 @@ And access to the page /example/index.php
     sdk = Progressively("99b95c4a-066e-4888-a1e5-b24f47c2df08",options)
     sdk.loadFlags()
 
-    if sdk->isActivate('FlagName'):
+    if sdk.isActivate('FlagName'):
         // My code 
     
   ```
@@ -36,13 +36,13 @@ And access to the page /example/index.php
     sdk = Progressively("99b95c4a-066e-4888-a1e5-b24f47c2df08",options)
     sdk.loadFlags()
 
-    if sdk->isActivate('FlagName'):
+    if sdk.isActivate('FlagName'):
         // My code 
     // Other stuff
     
     sdk.loadFlags()
     
-    if sdk->isActivate('FlagName'):
+    if sdk.isActivate('FlagName'):
         // My code 
     
 ```
