@@ -2,8 +2,6 @@
 
 namespace Progressively;
 
-use phpDocumentor\Reflection\PseudoTypes\IntegerRange;
-
 class Progressively
 {
     private $options = array();
