@@ -208,7 +208,7 @@ export default function CreateFlagPage() {
                       name="otherEnvironments"
                       defaultChecked={true}
                     />
-                    <Label size="uranus" htmlFor={env.uuid}>
+                    <Label size="uranus" htmlFor={env.uuid} fontWeight="normal">
                       {env.name}
                     </Label>
                   </HStack>
