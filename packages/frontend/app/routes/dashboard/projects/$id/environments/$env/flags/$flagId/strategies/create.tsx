@@ -28,21 +28,7 @@ import {
   LoaderFunction,
 } from "@remix-run/node";
 import { useLoaderData, useActionData, Form } from "@remix-run/react";
-import { Card, CardContent } from "~/components/Card";
-import { Stack } from "~/components/Stack";
-import { Section } from "~/components/Section";
-import { styled } from "~/stitches.config";
-import { Spacer } from "~/components/Spacer";
-
-const CardGroup = styled("div", {
-  display: "grid",
-  gridTemplateColumns: "1fr 1fr",
-  gap: "$spacing$8",
-
-  "@tablet": {
-    gridTemplateColumns: "1fr",
-  },
-});
+import { FormGroup } from "~/components/Fields/FormGroup";
 
 interface MetaArgs {
   data?: {
@@ -213,57 +199,29 @@ export default function StrategyCreatePage() {
       status={actionData?.errors && <ErrorBox list={actionData.errors} />}
     >
       <Form method="post">
-        <CardGroup>
-          <Card>
-            <CardContent>
-              <Section id="general-information">
-                <Typography as="h2" font="title" size="earth">
-                  General information
-                </Typography>
+        <FormGroup>
+          <TextInput
+            name="strategy-name"
+            placeholder="e.g: Strategy 1"
+            label="Strategy name"
+            isInvalid={Boolean(errors["strategy-name"])}
+          />
 
-                <Spacer size={4} />
+          <StrategyAudience
+            strategyType={strategyType}
+            onStrategyChange={setStrategyType}
+            errors={errors}
+          />
 
-                <Stack spacing={4}>
-                  <TextInput
-                    name="strategy-name"
-                    placeholder="e.g: Strategy 1"
-                    label="Strategy name"
-                    isInvalid={Boolean(errors["strategy-name"])}
-                  />
-                </Stack>
-              </Section>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent>
-              <Section>
-                <Typography as="h2" font="title" size="earth">
-                  Targeting criteria
-                </Typography>
-
-                <Spacer size={4} />
-
-                <StrategyAudience
-                  strategyType={strategyType}
-                  onStrategyChange={setStrategyType}
-                  errors={errors}
-                />
-              </Section>
-            </CardContent>
-          </Card>
-        </CardGroup>
-
-        <Spacer size={8} />
-
-        <div>
-          <SubmitButton
-            isLoading={transition.state === "submitting"}
-            loadingText="Saving the strategy, please wait..."
-          >
-            Save the strategy
-          </SubmitButton>
-        </div>
+          <div>
+            <SubmitButton
+              isLoading={transition.state === "submitting"}
+              loadingText="Saving the strategy, please wait..."
+            >
+              Save the strategy
+            </SubmitButton>
+          </div>
+        </FormGroup>
       </Form>
     </DashboardLayout>
   );

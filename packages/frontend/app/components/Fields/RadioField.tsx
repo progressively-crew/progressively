@@ -64,7 +64,7 @@ export const RadioField = <T extends string>({
               checked={opt.value === value}
               onChange={(e) => onChange(e.target.value as T)}
             />
-            <Label size="uranus" htmlFor={opt.value}>
+            <Label size="uranus" htmlFor={opt.value} fontWeight="normal">
               {opt.label}
             </Label>
           </HStack>

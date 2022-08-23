@@ -31,32 +31,8 @@ import {
   LoaderFunction,
 } from "@remix-run/node";
 import { useLoaderData, useActionData, Form } from "@remix-run/react";
-import { Card, CardContent } from "~/components/Card";
-import { Section } from "~/components/Section";
-import { styled } from "~/stitches.config";
-import { Spacer } from "~/components/Spacer";
 import { getStrategy } from "~/modules/strategies/services/getStrategy";
-
-const CardGroup = styled("div", {
-  display: "grid",
-  gridTemplateColumns: "1fr 1fr",
-  gap: "$spacing$8",
-
-  "@tablet": {
-    gridTemplateColumns: "1fr",
-  },
-});
-
-const Row = styled("div", {
-  display: "flex",
-  flexDirection: "column-reverse",
-  gap: "$spacing$4",
-});
-
-const AlignActions = styled("div", {
-  display: "flex",
-  justifyContent: "flex-end",
-});
+import { FormGroup } from "~/components/Fields/FormGroup";
 
 interface MetaArgs {
   data?: {
@@ -220,53 +196,25 @@ export default function StrategyEditPage() {
       status={actionData?.errors && <ErrorBox list={actionData.errors} />}
     >
       <Form method="post">
-        <Row>
+        <FormGroup>
+          <TextInput
+            name="strategy-name"
+            placeholder="e.g: Strategy 1"
+            label="Strategy name"
+            defaultValue={strategy.name}
+            isInvalid={Boolean(errors["strategy-name"])}
+          />
+
+          <StrategyAudience
+            strategyType={strategyType}
+            onStrategyChange={setStrategyType}
+            errors={errors}
+            initialFieldName={strategy.fieldName}
+            initialFieldValue={strategy.fieldValue}
+            initialFieldComparator={strategy.fieldComparator}
+          />
+
           <div>
-            <CardGroup>
-              <Card>
-                <CardContent>
-                  <Section id="general-information">
-                    <Typography as="h2" font="title" size="earth">
-                      General information
-                    </Typography>
-
-                    <Spacer size={4} />
-
-                    <TextInput
-                      name="strategy-name"
-                      placeholder="e.g: Strategy 1"
-                      label="Strategy name"
-                      defaultValue={strategy.name}
-                      isInvalid={Boolean(errors["strategy-name"])}
-                    />
-                  </Section>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardContent>
-                  <Section>
-                    <Typography as="h2" font="title" size="earth">
-                      Targeting criteria
-                    </Typography>
-
-                    <Spacer size={4} />
-
-                    <StrategyAudience
-                      strategyType={strategyType}
-                      onStrategyChange={setStrategyType}
-                      errors={errors}
-                      initialFieldName={strategy.fieldName}
-                      initialFieldValue={strategy.fieldValue}
-                      initialFieldComparator={strategy.fieldComparator}
-                    />
-                  </Section>
-                </CardContent>
-              </Card>
-            </CardGroup>
-          </div>
-
-          <AlignActions aria-hidden>
             <SubmitButton
               tabIndex={-1}
               isLoading={transition.state === "submitting"}
@@ -274,19 +222,8 @@ export default function StrategyEditPage() {
             >
               Save the strategy
             </SubmitButton>
-          </AlignActions>
-        </Row>
-
-        <Spacer size={4} />
-
-        <AlignActions>
-          <SubmitButton
-            isLoading={transition.state === "submitting"}
-            loadingText="Saving the strategy, please wait..."
-          >
-            Save the strategy
-          </SubmitButton>
-        </AlignActions>
+          </div>
+        </FormGroup>
       </Form>
     </DashboardLayout>
   );

@@ -17,6 +17,7 @@ const Textarea = styled("textarea", {
   padding: "$spacing$2 $spacing$4",
   display: "block",
   width: "100%",
+  maxWidth: "60ch",
   boxSizing: "border-box",
   minHeight: "200px",
   fontFamily: "$default",

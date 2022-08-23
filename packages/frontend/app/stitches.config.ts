@@ -27,7 +27,7 @@ export const spacing = {
 export const fontWeights = {
   slim: "300",
   normal: "normal",
-  semiBold: "500",
+  semiBold: "600",
   bold: "800",
 };
 export const lineHeights = {
