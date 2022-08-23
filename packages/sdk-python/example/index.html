@@ -5,8 +5,11 @@
     <title>Example SDK Python</title>
 </head>
 <body>
-<h1>
-    Test   {{my_string}} 
-</h1>
+    
+    {% if flags['test'] %}
+        <h1>
+            My Test is visible   
+        </h1>
+    {% endif %}
 </body>
 </html>
