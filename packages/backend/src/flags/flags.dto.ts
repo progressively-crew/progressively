@@ -21,10 +21,5 @@ export class ChangePercentageDTO {
 }
 
 export const ChangePercentageSchema = Joi.object({
-  rolloutPercentage: Joi.number()
-    .integer()
-    .positive()
-    .min(0)
-    .max(100)
-    .required(),
+  rolloutPercentage: Joi.number().integer().min(0).max(100).required(),
 });
