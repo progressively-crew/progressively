@@ -135,7 +135,8 @@ export default function DashboardLayoutPage() {
             {projects.map((userProject) => (
               <MenuItem key={userProject.projectId}>
                 <NavLink
-                  to={`/dashboard/projects/${userProject.projectId}/settings`}
+                  to={`/dashboard/projects/${userProject.projectId}`}
+                  end
                   className={({ isActive }) =>
                     isActive ? "active" : undefined
                   }
