@@ -44,7 +44,9 @@ export const SliderFlag = ({
             />
 
             <div>
-              <SubmitButton variant="secondary">Adjust</SubmitButton>
+              <SubmitButton variant="secondary" small>
+                Adjust
+              </SubmitButton>
             </div>
           </Stack>
           <input type="hidden" name="_type" value="percentage" />
