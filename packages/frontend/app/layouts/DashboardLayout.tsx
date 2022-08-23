@@ -73,7 +73,7 @@ export const DashboardLayout = ({
             <Container>
               <Spacer
                 size={{
-                  "@initial": 8,
+                  "@initial": 12,
                   "@tablet": 0,
                   "@mobile": 0,
                 }}
