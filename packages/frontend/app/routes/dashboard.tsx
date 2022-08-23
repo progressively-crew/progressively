@@ -1,6 +1,7 @@
 import { LoaderFunction, redirect } from "@remix-run/node";
 import { Link, NavLink, Outlet, useLoaderData } from "@remix-run/react";
 import { MdOutlineGroupWork } from "react-icons/md";
+import { Divider } from "~/components/Divider";
 import { HStack } from "~/components/HStack";
 import { DarkLogo } from "~/components/Logo/DarkLogo";
 import { Spacer } from "~/components/Spacer";
@@ -49,6 +50,7 @@ const SubMenuList = styled("ul", {
 
 const MenuItem = styled("li", {
   "& a": {
+    color: "$nemesisLight",
     boxSizing: "border-box",
     padding: "0 $spacing$3",
     width: "100%",
@@ -60,7 +62,17 @@ const MenuItem = styled("li", {
     borderRadius: "$borderRadius$regular",
   },
 
+  "& a svg": {
+    color: "$apollo",
+  },
+
+  "& a span": {
+    color: "currentColor",
+  },
+
   "& a.active": {
+    color: "$apollo",
+    fontWeight: "$bold",
     background: "rgba(255,255,255,0.1)",
   },
 });
@@ -106,13 +118,17 @@ export default function DashboardLayoutPage() {
             <DarkLogo to={"/dashboard"} />
           </LogoContainer>
 
+          <Divider background="nemesisLight" />
+
+          <Spacer size={4} />
+
           <MenuListWrapper>
-            <Typography color="apollo" size="uranus" fontWeight="bold">
-              Dashboard
+            <Typography color="apollo" fontWeight="bold" font="title">
+              My projects
             </Typography>
           </MenuListWrapper>
 
-          <Spacer size={3} />
+          <Spacer size={1} />
 
           <MenuList>
             {projects.map((userProject) => (

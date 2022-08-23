@@ -6,6 +6,8 @@ export const Divider = styled("hr", {
   display: "block",
   border: 0,
   width: "100%",
+  margin: 0,
+  padding: 0,
   variants: {
     background: mapTokenToVariant("background", colors),
   },
