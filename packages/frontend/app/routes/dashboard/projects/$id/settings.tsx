@@ -23,11 +23,18 @@ import { Spacer } from "~/components/Spacer";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { HideMobile } from "~/components/HideMobile";
 import { MetaFunction, LoaderFunction, ActionFunction } from "@remix-run/node";
-import { useLoaderData, useActionData, useTransition } from "@remix-run/react";
+import {
+  useLoaderData,
+  useActionData,
+  useTransition,
+  Form,
+} from "@remix-run/react";
 import { Card, CardContent } from "~/components/Card";
 import { Heading } from "~/components/Heading";
 import { TagLine } from "~/components/Tagline";
 import { MdOutlineGroupWork } from "react-icons/md";
+import { HStack } from "~/components/HStack";
+import { CreateButton } from "~/components/Buttons/CreateButton";
 
 interface MetaArgs {
   data?: {
@@ -80,35 +87,30 @@ export const action: ActionFunction = async ({
 }): Promise<ActionData | null> => {
   const session = await getSession(request.headers.get("Cookie"));
   const formData = await request.formData();
-  const method = formData.get("_method");
 
-  if (method === "delete-member") {
-    const promiseOfMembersToRemove: Array<Promise<{ statusCode: number }>> = [];
+  const promiseOfMembersToRemove: Array<Promise<{ statusCode: number }>> = [];
 
-    formData.forEach((d) => {
-      if (d !== "delete-member" && d !== "select-all") {
-        promiseOfMembersToRemove.push(
-          removeMember(params.id!, d.toString(), session.get("auth-cookie"))
-        );
-      }
-    });
+  formData.forEach((d) => {
+    if (d !== "delete-member" && d !== "select-all") {
+      promiseOfMembersToRemove.push(
+        removeMember(params.id!, d.toString(), session.get("auth-cookie"))
+      );
+    }
+  });
 
-    const result = await Promise.all(promiseOfMembersToRemove);
-    const successful = result.filter((res) => res?.statusCode !== 401);
+  const result = await Promise.all(promiseOfMembersToRemove);
+  const successful = result.filter((res) => res?.statusCode !== 401);
 
-    return {
-      errors: {
-        unauthorized:
-          successful.length !== result.length
-            ? "You have attempted to remove an admin user! No worries, we got your back!"
-            : undefined,
-      },
-      success: successful.length > 0,
-      removedCount: successful.length,
-    };
-  }
-
-  return null;
+  return {
+    errors: {
+      unauthorized:
+        successful.length !== result.length
+          ? "You have attempted to remove an admin user! No worries, we got your back!"
+          : undefined,
+    },
+    success: successful.length > 0,
+    removedCount: successful.length,
+  };
 };
 
 export default function SettingsPage() {
@@ -165,18 +167,20 @@ export default function SettingsPage() {
         <Heading as={"h2"} fontSize="earth" icon={<AiOutlineSetting />}>
           Settings
         </Heading>
-        <Card>
-          <CardContent>
-            <Section id="members">
-              <SectionHeader title="Project members" titleAs="h3" />
 
-              <div>
+        <Card>
+          <Section id="members">
+            <Form method="post">
+              <CardContent noBottom>
+                <SectionHeader title="Project members" titleAs="h3" />
+
                 {data?.errors.unauthorized && (
                   <>
                     <ErrorBox list={data.errors} />
                     <Spacer size={4} />
                   </>
                 )}
+
                 {data?.success && (
                   <>
                     <SuccessBox id="member-deleted">
@@ -187,21 +191,32 @@ export default function SettingsPage() {
                   </>
                 )}
 
-                <UserTable
-                  projectId={project.uuid}
-                  userProjects={project.userProject || []}
-                  labelledBy="members"
-                  canEdit={userRole === UserRoles.Admin}
-                />
+                {userRole === UserRoles.Admin && (
+                  <HStack spacing={4}>
+                    <CreateButton
+                      to={`/dashboard/projects/${project.uuid}/add-member`}
+                    >
+                      Add member
+                    </CreateButton>
 
-                <Typography aria-live="polite">
-                  {transition.state === "submitting"
-                    ? "Removing the users..."
-                    : ""}
-                </Typography>
-              </div>
-            </Section>
-          </CardContent>
+                    <DeleteButton
+                      type={"submit"}
+                      isLoading={transition.state === "submitting"}
+                      loadingText="Deleting the member(s), please wait..."
+                    >
+                      Remove from project
+                    </DeleteButton>
+                  </HStack>
+                )}
+              </CardContent>
+
+              <UserTable
+                userProjects={project.userProject || []}
+                labelledBy="members"
+                canEdit={userRole === UserRoles.Admin}
+              />
+            </Form>
+          </Section>
         </Card>
 
         {userRole === UserRoles.Admin && (

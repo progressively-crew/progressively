@@ -50,5 +50,15 @@ export const CardContent = styled("div", {
   padding: "$spacing$12",
   variants: {
     padding: mapTokenToVariant("padding", spacing, "$spacing"),
+    noTop: {
+      true: {
+        paddingTop: 0,
+      },
+    },
+    noBottom: {
+      true: {
+        paddingBottom: 0,
+      },
+    },
   },
 });
