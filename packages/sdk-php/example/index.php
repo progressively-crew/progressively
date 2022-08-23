@@ -2,6 +2,7 @@
 require '../vendor/autoload.php';
 
 use Progressively\Progressively;
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,16 +14,31 @@ use Progressively\Progressively;
 </head>
 
 <body>
-    <?php
-    $option = array(
-        "clientKey" => "99b95c4a-066e-4888-a1e5-b24f47c2df08"
-    );
+<?php
+$option = array(
+    "fields" => array(
+        "idUser" => 12
+    )
+);
 
-    $sdk = Progressively::create($option);
-    echo "<pre>";
-    print_r($sdk->getFlags());
-    echo "</pre>";
-    ?>
+$sdk = Progressively::create("99b95c4a-066e-4888-a1e5-b24f47c2df08", $option);
+$flags = $sdk->loadFlags();
+
+
+echo "<pre>";
+var_dump($flags);
+echo "</pre>";
+
+if ($sdk->isActivated('test')) {
+    echo "<p>Test is active</p>";
+} else {
+    echo "<p>Non Actif</p>";
+}
+
+if (!$flags->testOff) {
+    echo "<p>Test non active</p>";
+}
+?>
 </body>
 
 </html>

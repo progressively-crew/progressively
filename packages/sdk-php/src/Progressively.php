@@ -2,54 +2,48 @@
 
 namespace Progressively;
 
-use Progressively\Flag;
+use phpDocumentor\Reflection\PseudoTypes\IntegerRange;
 
 class Progressively
 {
-    private $clientKey;
-    private $idUser;
     private $options = array();
+    private $fields = array();
     private $flags = array();
 
     private function __construct(array $options = [])
     {
         // Warn if any unknown options are passed
-        $knownOptions = ["apiUrl", "websocketUrl", "initialFlags", "clientKey", "idUser"];
+        $knownOptions = ["apiUrl", "websocketUrl", "fields", "initialFlags", "clientKey"];
         $unknownOptions = array_diff(array_keys($options), $knownOptions);
 
         if (count($unknownOptions)) {
             trigger_error('Unknown Config options: ' . implode(", ", $unknownOptions), E_USER_NOTICE);
         }
 
-        $this->options["apiUrl"] = (isset($options["apiUrl"]) && !empty($options["apiUrl"])) ? $options["apiUrl"] : "https://api.progressively.app/sdk/";
-        $this->options["websocketUrl"] = (isset($options["websocketUrl"]) && !empty($options["websocketUrl"])) ? $options["websocketUrl"] : "wss://api.progressively.app";
-        $this->options["initialFlags"] = (isset($options["initialFlags"]) && !empty($options["initialFlags"])) ? $options["initialFlags"] : array();
-        $this->clientKey = $options["clientKey"];
-        $this->idUser = (isset($options["idUser"]) && !empty($options["idUser"])) ? $options["idUser"] : "Unknown";
-        $this->refreshFlags();
+        $this->options["apiUrl"] = $this->safeGet($options, "apiUrl","https://api.progressively.app/sdk/");
+        $this->options["websocketUrl"] = $this->safeGet($options, "websocketUrl","wss://api.progressively.app");
+        $this->options["initialFlags"] = $this->safeGet($options, "initialFlags",array());
+        $this->fields = $this->safeGet($options, "fields ",array());
+        $this->fields["clientKey"] = $options["clientKey"];
+
     }
 
 
-    public static function create($params = array()): Progressively
+    public static function create($clientKey, $options = array()): Progressively
     {
-        if (!isset($params["clientKey"]) || empty($params["clientKey"])) {
-            throw new Exception('Missing argument "clientKey". It\'s required. You can find one on an environment settings page in the dashboard.');
-        }
-
-        return new Progressively($params);
+        $options["clientKey"] = $clientKey;
+        return new Progressively($options);
     }
 
 
     private function normalizeOptions(): string
     {
-        $opts = array("clientKey" => $this->clientKey, "id" => $this->idUser);
-        $jsonEncodedOpts = json_encode($opts);
-
+        $jsonEncodedOpts = json_encode($this->fields);
         return base64_encode($jsonEncodedOpts);
     }
 
 
-    private function callApi(): array
+    private function callApi()
     {
         $curl = curl_init();
 
@@ -82,36 +76,25 @@ class Progressively
 
         curl_close($curl);
 
-        return json_decode($response, true);
+        return json_decode($response);
     }
 
     public function isActivated($flagKey): bool
     {
-        $result = false;
-        foreach ($this->flags as $flag) {
-            if ($flag->getName() == $flagKey) {
-                $result = $flag->getValue();
-            }
-        }
-        return $result;
+        return $this->flags->$flagKey;
     }
 
     /**
-     * @return void
+     * @return mixed
      */
-    public function refreshFlags(): void
+    public function loadFlags()
     {
-        $this->flags = array();
-        foreach ($this->callApi() as $itemname => $flag) {
-            $this->flags[] = new Flag($itemname, $flag);
-        }
-    }
-
-    /**
-     * @return array
-     */
-    public function getFlags(): array
-    {
+        $this->flags = $this->callApi();
         return $this->flags;
+    }
+
+
+    private function safeGet($array, $indexName, $defaultValue){
+        return (isset($array[$indexName]) && !empty($array[$indexName])) ? $array[$indexName] : $defaultValue;
     }
 }

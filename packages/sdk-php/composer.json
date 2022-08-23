@@ -15,5 +15,8 @@
       "email": "besse.jimmy@gmail.com"
     }
   ],
-  "require": {}
+  "require": {
+    "ext-curl": "*",
+    "ext-json": "*"
+  }
 }

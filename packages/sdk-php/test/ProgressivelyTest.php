@@ -6,17 +6,12 @@ use PHPUnit\Framework\TestCase;
 class ProgressivelyTest extends TestCase
 {
 
-    public function testRefreshFlags()
+    public function testLoadFlags()
     {
         $stack = [];
         $this->assertEmpty($stack);
     }
 
-    public function testGetIdUser()
-    {
-        $stack = [];
-        $this->assertEmpty($stack);
-    }
 
     public function testCreate()
     {
@@ -32,7 +27,7 @@ class ProgressivelyTest extends TestCase
         $this->assertNotEmpty($stack);
     }
 
-    public function testIsOn()
+    public function testIActivated()
     {
         $this->assertNotEmpty("Test");
         $this->assertNotEmpty("Testfalse");
