@@ -1,5 +1,5 @@
 import { LoaderFunction, redirect } from "@remix-run/node";
-import { Link, NavLink, Outlet, useLoaderData } from "@remix-run/react";
+import { NavLink, Outlet, useLoaderData } from "@remix-run/react";
 import { FiLayers } from "react-icons/fi";
 import { MdOutlineGroupWork } from "react-icons/md";
 import { Divider } from "~/components/Divider";
