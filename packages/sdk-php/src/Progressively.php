@@ -11,26 +11,26 @@ class Progressively
     private function __construct(Http $httpService, array $options = [])
     {
         $this->httpService = $httpService;
-        // Warn if any unknown options are passed
-        $knownOptions = ["apiUrl", "websocketUrl", "fields", "initialFlags", "clientKey"];
-        $unknownOptions = array_diff(array_keys($options), $knownOptions);
-
-        if (count($unknownOptions)) {
-            trigger_error('Unknown Config options: ' . implode(", ", $unknownOptions), E_USER_NOTICE);
-        }
-
-        $this->options["apiUrl"] = $this->safeGet($options, "apiUrl", "https://api.progressively.app") . '/sdk/';
-        $this->options["websocketUrl"] = $this->safeGet($options, "websocketUrl", "wss://api.progressively.app");
-        $this->options["initialFlags"] = $this->safeGet($options, "initialFlags", array());
-        $this->fields = $this->safeGet($options, "fields ", array());
-        $this->fields["clientKey"] = $options["clientKey"];
+        $this->options = $options;
     }
 
 
-    public static function create($clientKey, $options = array()): Progressively
+    public static function create($clientKey, $options = array(), Http $httpService = new Http()): Progressively
     {
-        $options["clientKey"] = $clientKey;
-        return new Progressively(new Http(), $options);
+        $actualOptions = array();
+        $actualOptions["clientKey"] = $clientKey;
+        $actualOptions["apiUrl"] = Progressively::safeGet($options, "apiUrl", "https://api.progressively.app") . '/sdk/';
+        $actualOptions["websocketUrl"] = Progressively::safeGet($options, "websocketUrl", "wss://api.progressively.app");
+        $actualOptions["initialFlags"] = Progressively::safeGet($options, "initialFlags", array());
+        $actualOptions["fields"] = Progressively::safeGet($options, "fields ", array());
+
+
+        return new Progressively($httpService, $actualOptions,);
+    }
+
+    private static function safeGet($array, $indexName, $defaultValue)
+    {
+        return (isset($array[$indexName]) && !empty($array[$indexName])) ? $array[$indexName] : $defaultValue;
     }
 
     public function loadFlags()
@@ -48,10 +48,5 @@ class Progressively
         $url = $this->options["apiUrl"] . $encodedUrlParams;
 
         return $url;
-    }
-
-    private function safeGet($array, $indexName, $defaultValue)
-    {
-        return (isset($array[$indexName]) && !empty($array[$indexName])) ? $array[$indexName] : $defaultValue;
     }
 }

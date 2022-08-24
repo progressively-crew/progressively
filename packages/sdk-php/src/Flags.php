@@ -12,6 +12,10 @@ class Flags
 
     public function isActivated($flagName): bool
     {
-        return $this->flagsDict[$flagName];
+        if (isset($this->flagsDict[$flagName])) {
+            return $this->flagsDict[$flagName];
+        }
+
+        return false;
     }
 }
