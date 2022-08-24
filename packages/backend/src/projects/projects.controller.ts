@@ -97,11 +97,6 @@ export class ProjectsController {
 
     const res = await this.projectService.removeMember(id, memberId);
 
-    // When users have an activationToken, they are not activated.
-    if (!userProject.user.activationToken) {
-      await this.userService.deleteByUuid(userProject.user.uuid);
-    }
-
     return res;
   }
 

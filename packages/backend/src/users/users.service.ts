@@ -66,14 +66,6 @@ export class UsersService {
     });
   }
 
-  deleteByUuid(uuid: string) {
-    return this.prisma.user.delete({
-      where: {
-        uuid,
-      },
-    });
-  }
-
   findByEmail(email: string): Promise<User> {
     return this.prisma.user.findUnique({
       where: {
