@@ -6,7 +6,6 @@ class Progressively
 {
     private $options = array();
     private $fields = array();
-    private $flags = array();
 
     private function __construct(array $options = [])
     {
@@ -18,12 +17,11 @@ class Progressively
             trigger_error('Unknown Config options: ' . implode(", ", $unknownOptions), E_USER_NOTICE);
         }
 
-        $this->options["apiUrl"] = $this->safeGet($options, "apiUrl","https://api.progressively.app/sdk/");
-        $this->options["websocketUrl"] = $this->safeGet($options, "websocketUrl","wss://api.progressively.app");
-        $this->options["initialFlags"] = $this->safeGet($options, "initialFlags",array());
-        $this->fields = $this->safeGet($options, "fields ",array());
+        $this->options["apiUrl"] = $this->safeGet($options, "apiUrl", "https://api.progressively.app") . '/sdk/';
+        $this->options["websocketUrl"] = $this->safeGet($options, "websocketUrl", "wss://api.progressively.app");
+        $this->options["initialFlags"] = $this->safeGet($options, "initialFlags", array());
+        $this->fields = $this->safeGet($options, "fields ", array());
         $this->fields["clientKey"] = $options["clientKey"];
-
     }
 
 
@@ -74,25 +72,20 @@ class Progressively
 
         curl_close($curl);
 
-        return json_decode($response);
+        return json_decode($response, true);
     }
 
-    public function isActivated($flagKey): bool
-    {
-        return $this->flags->$flagKey;
-    }
 
-    /**
-     * @return mixed
-     */
     public function loadFlags()
     {
-        $this->flags = $this->callApi();
-        return $this->flags;
+        $flags = $this->callApi();
+
+        return new Flags($flags);
     }
 
 
-    private function safeGet($array, $indexName, $defaultValue){
+    private function safeGet($array, $indexName, $defaultValue)
+    {
         return (isset($array[$indexName]) && !empty($array[$indexName])) ? $array[$indexName] : $defaultValue;
     }
 }

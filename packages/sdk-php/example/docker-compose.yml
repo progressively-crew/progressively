@@ -1,8 +1,0 @@
-version: "2"
-services:
-  webserver:
-    image: php:7.4.3-apache
-    ports:
-      - "8181:80"
-    volumes:
-      - ../:/var/www/html
