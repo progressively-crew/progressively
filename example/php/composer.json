@@ -1,0 +1,19 @@
+{
+  "name": "progressively/sdk-php",
+  "description": "Example of the PHP sdk",
+  "autoload": {
+    "psr-4": {
+      "Progressively\\": "../../packages/sdk-php/src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Jim",
+      "email": "besse.jimmy@gmail.com"
+    }
+  ],
+  "require": {
+    "ext-curl": "*",
+    "ext-json": "*"
+  }
+}
