@@ -4,11 +4,6 @@
   "require-dev": {
     "phpunit/phpunit": "^9.5"
   },
-  "autoload": {
-    "psr-4": {
-      "Progressively\\": "src/"
-    }
-  },
   "authors": [
     {
       "name": "Jim",

@@ -6,9 +6,11 @@ class Progressively
 {
     private $options = array();
     private $fields = array();
+    private $httpService;
 
-    private function __construct(array $options = [])
+    private function __construct(Http $httpService, array $options = [])
     {
+        $this->httpService = $httpService;
         // Warn if any unknown options are passed
         $knownOptions = ["apiUrl", "websocketUrl", "fields", "initialFlags", "clientKey"];
         $unknownOptions = array_diff(array_keys($options), $knownOptions);
@@ -28,61 +30,25 @@ class Progressively
     public static function create($clientKey, $options = array()): Progressively
     {
         $options["clientKey"] = $clientKey;
-        return new Progressively($options);
+        return new Progressively(new Http(), $options);
     }
-
-
-    private function normalizeOptions(): string
-    {
-        $jsonEncodedOpts = json_encode($this->fields);
-        return base64_encode($jsonEncodedOpts);
-    }
-
-
-    private function callApi()
-    {
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => $this->options["apiUrl"] . $this->normalizeOptions(),
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'GET',
-        ));
-
-        $response = curl_exec($curl);
-
-        if (!curl_errno($curl)) {
-            switch ($http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE)) {
-                case 200:
-                    if (!$response) {
-                        die("Connection Failure");
-                    }
-                    break;
-                default:
-                    die("Connection Failure Unexpected HTTP code: " . $http_code);
-            }
-        } else {
-            die("Connection Failure");
-        }
-
-        curl_close($curl);
-
-        return json_decode($response, true);
-    }
-
 
     public function loadFlags()
     {
-        $flags = $this->callApi();
+        $flags =  $this->httpService->execute($this->generateUrl());
 
         return new Flags($flags);
     }
 
+    private function generateUrl(): string
+    {
+        $jsonEncodedOpts = json_encode($this->fields);
+        $encodedUrlParams = base64_encode($jsonEncodedOpts);
+
+        $url = $this->options["apiUrl"] . $encodedUrlParams;
+
+        return $url;
+    }
 
     private function safeGet($array, $indexName, $defaultValue)
     {

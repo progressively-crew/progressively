@@ -2,14 +2,17 @@
 
 
 use PHPUnit\Framework\TestCase;
+use Progressively\Progressively;
 
 class ProgressivelyTest extends TestCase
 {
 
-    public function testLoadFlags()
+    public function testSetsTheDefaultWhenCreatingSdk()
     {
-        $stack = [];
-        $this->assertEmpty($stack);
+
+        $sdk = Progressively::create("my-api-key");
+
+        $this->assertEquals($sdk->options)
     }
 
 
