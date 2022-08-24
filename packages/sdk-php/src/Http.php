@@ -2,12 +2,7 @@
 
 namespace Progressively;
 
-interface HttpRequest
-{
-    public function execute(string $url);
-}
-
-class Http implements HttpRequest
+class Http
 {
     public function execute(string $url)
     {
