@@ -1,20 +1,9 @@
 {
   "name": "progressively/test-php",
   "description": "Example of the PHP sdk in action",
-  "autoload": {
-    "psr-4": {
-      "Progressively\\": "../../packages/sdk-php/src/"
-    }
-  },
-  "authors": [
-    {
-      "name": "Jim",
-      "email": "besse.jimmy@gmail.com"
-    }
-  ],
   "require": {
     "ext-curl": "*",
     "ext-json": "*",
-    "progressively/sdk-php": "dev-master"
+    "progressively/sdk-php": "dev-fix-packagist"
   }
 }
