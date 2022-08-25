@@ -73,6 +73,16 @@ export const seedDb = async () => {
       },
     });
 
+    await prismaClient.schedule.create({
+      data: {
+        timestamp: 1661416969541,
+        rolloutPercentage: 66,
+        flagEnvironmentFlagId: flagEnv.flagId,
+        flagEnvironmentEnvironmentId: flagEnv.environmentId,
+        status: 'ACTIVATED',
+      },
+    });
+
     const footerFlagEnv = await prismaClient.flagEnvironment.create({
       data: {
         environmentId: production.uuid,
@@ -138,6 +148,7 @@ export const seedDb = async () => {
 export const cleanupDb = async () => {
   await prismaClient.$connect();
   await prismaClient.rolloutStrategy.deleteMany();
+  await prismaClient.schedule.deleteMany();
   await prismaClient.refreshToken.deleteMany();
   await prismaClient.flagHit.deleteMany();
   await prismaClient.flagEnvironment.deleteMany();

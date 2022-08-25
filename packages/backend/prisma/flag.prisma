@@ -20,6 +20,8 @@ model FlagEnvironment {
     // related to activation type "percentage"
     rolloutPercentage Int @default(100)
 
+    scheduling Schedule[]
+
     @@id([flagId, environmentId])
 }
 
@@ -44,6 +46,16 @@ model RolloutStrategy {
     fieldValue       String?
 
     // Relations
+    FlagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
+    flagEnvironmentFlagId        String?
+    flagEnvironmentEnvironmentId String?
+}
+
+model Schedule {
+    uuid                         String           @id @default(uuid())
+    timestamp                    BigInt
+    rolloutPercentage            Int
+    status                       String
     FlagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
     flagEnvironmentFlagId        String?
     flagEnvironmentEnvironmentId String?
