@@ -26,6 +26,7 @@ import { Card } from "~/components/Card";
 import { Typography } from "~/components/Typography";
 import { Schedule } from "~/modules/scheduling/types";
 import { getScheduling } from "~/modules/scheduling/services/getScheduling";
+import { EmptyState } from "~/components/EmptyState";
 
 interface MetaArgs {
   data?: {
@@ -41,7 +42,7 @@ export const meta: MetaFunction = ({ data }: MetaArgs) => {
   const flagName = data?.currentFlagEnv?.flag?.name || "An error ocurred";
 
   return {
-    title: `Progressively | ${projectName} | ${envName} | Flags | ${flagName}`,
+    title: `Progressively | ${projectName} | ${envName} | Flags | ${flagName} | Scheduling`,
   };
 };
 
@@ -204,9 +205,20 @@ export default function SchedulingOfFlag() {
           }
         />
 
-        <Card>
-          <SchedulingList scheduling={scheduling} />
-        </Card>
+        {scheduling.length === 0 && (
+          <EmptyState
+            title="No scheduling found"
+            description={
+              <Typography>There are no scheduling for this flag.</Typography>
+            }
+          />
+        )}
+
+        {scheduling.length > 0 && (
+          <Card>
+            <SchedulingList scheduling={scheduling} />
+          </Card>
+        )}
       </Section>
     </DashboardLayout>
   );
