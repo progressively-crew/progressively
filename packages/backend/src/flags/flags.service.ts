@@ -264,6 +264,7 @@ export class FlagsService {
         },
         data: {
           status: schedule.status,
+          rolloutPercentage: schedule.rolloutPercentage,
         },
       });
     }
