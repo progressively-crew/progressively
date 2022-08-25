@@ -696,8 +696,6 @@ describe('FlagsController (e2e)', () => {
 
       const schedule = response.body[0];
 
-      console.log('lol', schedule);
-
       expect(response.status).toBe(200);
       expect(schedule.rolloutPercentage).toBe(66);
       expect(schedule.flagEnvironmentFlagId).toBe('1');

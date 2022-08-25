@@ -55,6 +55,7 @@ model Schedule {
     uuid                         String           @id @default(uuid())
     timestamp                    BigInt
     rolloutPercentage            Int
+    status                       String
     FlagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
     flagEnvironmentFlagId        String?
     flagEnvironmentEnvironmentId String?

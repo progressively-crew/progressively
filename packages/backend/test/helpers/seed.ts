@@ -79,6 +79,7 @@ export const seedDb = async () => {
         rolloutPercentage: 66,
         flagEnvironmentFlagId: flagEnv.flagId,
         flagEnvironmentEnvironmentId: flagEnv.environmentId,
+        status: 'ACTIVATED',
       },
     });
 

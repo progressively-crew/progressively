@@ -1,8 +1,29 @@
 import { RawTable } from "~/components/RawTable";
 import { Tag } from "~/components/Tag";
 import { FlagStatus } from "~/modules/flags/components/FlagStatus";
+import { FlagStatus as FlagStatusType } from "~/modules/flags/types";
+import { Schedule } from "../types";
 
-export const SchedulingList = () => {
+export const formatDate = (timestamp: number) => {
+  const options = {
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    hour12: false,
+  };
+
+  return new Intl.DateTimeFormat("default", options).format(
+    new Date(timestamp)
+  );
+};
+
+export interface SchedulingListProps {
+  scheduling: Array<Schedule>;
+}
+export const SchedulingList = ({ scheduling }: SchedulingListProps) => {
   return (
     <RawTable>
       <thead>
@@ -13,15 +34,19 @@ export const SchedulingList = () => {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>21/06/2023 at 13:00</td>
-          <td>
-            <FlagStatus value={"ACTIVATED"} />
-          </td>
-          <td>
-            <Tag>100%</Tag>
-          </td>
-        </tr>
+        {scheduling.map((schedule, index: number) => (
+          <tr
+            key={`${schedule.timestamp}-${schedule.rolloutPercentage}-${index}`}
+          >
+            <td>{formatDate(schedule.timestamp)}</td>
+            <td>
+              <FlagStatus value={schedule.status as FlagStatusType} />
+            </td>
+            <td>
+              <Tag>{schedule.rolloutPercentage}%</Tag>
+            </td>
+          </tr>
+        ))}
       </tbody>
     </RawTable>
   );

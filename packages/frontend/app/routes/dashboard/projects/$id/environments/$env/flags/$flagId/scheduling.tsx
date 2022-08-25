@@ -24,6 +24,8 @@ import { AiOutlineClockCircle } from "react-icons/ai";
 import { SchedulingList } from "~/modules/scheduling/components/SchedulingList";
 import { Card } from "~/components/Card";
 import { Typography } from "~/components/Typography";
+import { Schedule } from "~/modules/scheduling/types";
+import { getScheduling } from "~/modules/scheduling/services/getScheduling";
 
 interface MetaArgs {
   data?: {
@@ -93,6 +95,7 @@ interface LoaderData {
   environment: Environment;
   currentFlagEnv: FlagEnv;
   user: User;
+  scheduling: Array<Schedule>;
 }
 
 export const loader: LoaderFunction = async ({
@@ -111,6 +114,12 @@ export const loader: LoaderFunction = async ({
     authCookie
   );
 
+  const scheduling: Array<Schedule> = await getScheduling(
+    params.env!,
+    params.flagId!,
+    authCookie
+  );
+
   const environment = project.environments.find(
     (env) => env.uuid === params.env
   );
@@ -124,13 +133,14 @@ export const loader: LoaderFunction = async ({
     environment: environment!,
     currentFlagEnv,
     user,
+    scheduling,
   };
 };
 
 export default function SchedulingOfFlag() {
   const actionData = useActionData<ActionDataType>();
 
-  const { project, environment, currentFlagEnv, user } =
+  const { project, environment, currentFlagEnv, user, scheduling } =
     useLoaderData<LoaderData>();
 
   const currentFlag = currentFlagEnv.flag;
@@ -195,7 +205,7 @@ export default function SchedulingOfFlag() {
         />
 
         <Card>
-          <SchedulingList />
+          <SchedulingList scheduling={scheduling} />
         </Card>
       </Section>
     </DashboardLayout>
