@@ -636,4 +636,74 @@ describe('FlagsController (e2e)', () => {
       expect(newStrat.uuid).toBeDefined();
     });
   });
+
+  describe('/environments/1/flags/1/scheduling (GET)', () => {
+    it('gives a 401 when the user is not authenticated', () =>
+      verifyAuthGuard(app, '/environments/1/flags/1/scheduling', 'get'));
+
+    it('gives a 403 when trying to access a valid project but an invalid env', async () => {
+      const access_token = await authenticate(app);
+
+      return request(app.getHttpServer())
+        .get('/environments/1/flags/3/scheduling')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('gives a 403 when the user requests a forbidden project', async () => {
+      const access_token = await authenticate(
+        app,
+        'jane.doe@gmail.com',
+        'password',
+      );
+
+      return request(app.getHttpServer())
+        .get('/environments/1/flags/1/scheduling')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('gives the strategies information when the user is authenticated and authorized', async () => {
+      const access_token = await authenticate(app);
+
+      const validStrategy: any = {
+        name: 'Super strategy',
+        strategyRuleType: 'field',
+        fieldName: 'email',
+        fieldComparator: 'eq',
+        fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
+      };
+
+      // Create a strategy to check it works
+      await request(app.getHttpServer())
+        .post('/environments/1/flags/1/scheduling')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send(validStrategy);
+
+      const response = await request(app.getHttpServer())
+        .get('/environments/1/flags/1/scheduling')
+        .set('Authorization', `Bearer ${access_token}`);
+
+      const schedule = response.body[0];
+
+      console.log('lol', schedule);
+
+      expect(response.status).toBe(200);
+      expect(schedule.rolloutPercentage).toBe(66);
+      expect(schedule.flagEnvironmentFlagId).toBe('1');
+      expect(schedule.flagEnvironmentEnvironmentId).toBe('1');
+      expect(schedule.timestamp).toBe(1661416969541);
+      expect(schedule.uuid).toBeDefined();
+    });
+  });
 });

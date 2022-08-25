@@ -81,6 +81,7 @@ model FlagEnvironment {
   status            String?           @default("NOT_ACTIVATED")
   strategies        RolloutStrategy[] @relation(name: "FlagEnvironmentToRolloutStrategy")
   rolloutPercentage Int               @default(100)
+  scheduling        Schedule[]        @relation(name: "FlagEnvironmentToSchedule")
 
   @@id([flagId, environmentId])
 }
@@ -102,6 +103,15 @@ model RolloutStrategy {
   fieldComparator              String?
   fieldValue                   String?
   FlagEnvironment              FlagEnvironment? @relation(name: "FlagEnvironmentToRolloutStrategy", fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
+  flagEnvironmentFlagId        String?
+  flagEnvironmentEnvironmentId String?
+}
+
+model Schedule {
+  uuid                         String           @id @default(uuid())
+  timestamp                    BigInt
+  rolloutPercentage            Int
+  FlagEnvironment              FlagEnvironment? @relation(name: "FlagEnvironmentToSchedule", fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
   flagEnvironmentFlagId        String?
   flagEnvironmentEnvironmentId String?
 }

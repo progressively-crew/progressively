@@ -132,6 +132,20 @@ export class StrategyService {
     });
   }
 
+  async listScheduling(envId: string, flagId: string) {
+    const scheduling = await this.prisma.schedule.findMany({
+      where: {
+        flagEnvironmentEnvironmentId: envId,
+        flagEnvironmentFlagId: flagId,
+      },
+    });
+
+    return scheduling.map((schedule) => ({
+      ...schedule,
+      timestamp: Number(schedule.timestamp),
+    }));
+  }
+
   getStrategy(stratId: string) {
     return this.prisma.rolloutStrategy.findUnique({
       where: {

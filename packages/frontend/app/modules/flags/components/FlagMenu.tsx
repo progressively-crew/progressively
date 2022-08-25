@@ -1,4 +1,8 @@
-import { AiOutlineBarChart, AiOutlineSetting } from "react-icons/ai";
+import {
+  AiOutlineBarChart,
+  AiOutlineClockCircle,
+  AiOutlineSetting,
+} from "react-icons/ai";
 import { FaPowerOff } from "react-icons/fa";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 
@@ -23,6 +27,13 @@ export const FlagMenu = ({ projectId, envId, flagId }: FlagMenuProps) => {
         icon={<AiOutlineBarChart />}
       >
         Insights
+      </NavItem>
+
+      <NavItem
+        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/scheduling`}
+        icon={<AiOutlineClockCircle />}
+      >
+        Scheduling
       </NavItem>
 
       <NavItem

@@ -2,8 +2,8 @@ import { useRef } from "react";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { Link } from "~/components/Link";
 import { RawTable, Tr } from "~/components/RawTable";
-import { Tag } from "~/components/Tag";
-import { FlagEnv, FlagStatus } from "../types";
+import { FlagEnv } from "../types";
+import { FlagStatus } from "./FlagStatus";
 
 export interface FlagListProps {
   flags: Array<FlagEnv>;
@@ -16,30 +16,6 @@ interface FlagRowProps {
   projectId: string;
   envId: string;
 }
-
-export interface StatusProps {
-  value: FlagStatus;
-}
-
-const Status = ({ value }: StatusProps) => {
-  if (value === FlagStatus.ACTIVATED) {
-    return (
-      <Tag color="successFg" background="successBg">
-        Activated
-      </Tag>
-    );
-  }
-
-  if (value === FlagStatus.NOT_ACTIVATED) {
-    return (
-      <Tag color="errorFg" background="errorBg">
-        Not activated
-      </Tag>
-    );
-  }
-
-  return <Tag>Inactive</Tag>;
-};
 
 const FlagRow = ({ flagEnv, projectId, envId }: FlagRowProps) => {
   const linkRef = useRef<HTMLAnchorElement>(null);
@@ -56,7 +32,7 @@ const FlagRow = ({ flagEnv, projectId, envId }: FlagRowProps) => {
       </td>
       <td>{flagEnv.flag.description}</td>
       <td>
-        <Status value={flagEnv.status} />
+        <FlagStatus value={flagEnv.status} />
       </td>
       <td>
         <ButtonCopy toCopy={flagEnv.flag.key} small={true}>
