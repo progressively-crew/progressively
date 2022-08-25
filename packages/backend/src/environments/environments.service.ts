@@ -25,6 +25,7 @@ export class EnvironmentsService {
       include: {
         flag: true,
         strategies: true,
+        scheduling: true,
       },
     });
   }

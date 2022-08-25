@@ -57,6 +57,7 @@ model Schedule {
     rolloutPercentage            Int
     status                       String
     FlagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
+    schedulingStatus             String           @default("NOT_RUN")
     flagEnvironmentFlagId        String?
     flagEnvironmentEnvironmentId String?
 }

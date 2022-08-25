@@ -45,8 +45,14 @@ export class SdkService {
     const flags = {};
 
     for (const flagEnv of flagEnvs) {
+      if (flagEnv.scheduling.length > 0) {
+        await this.flagService.manageScheduling(
+          flagEnv as unknown as PopulatedFlagEnv,
+        );
+      }
+
       const flagStatus = this.flagService.resolveFlagStatus(
-        flagEnv as PopulatedFlagEnv,
+        flagEnv as unknown as PopulatedFlagEnv,
         fields,
       );
 

@@ -224,4 +224,6 @@ export class FlagsService {
       [flagEnv.flag.key]: flagStatusRecord,
     };
   }
+
+  async manageScheduling(flagEnv: PopulatedFlagEnv) {}
 }
