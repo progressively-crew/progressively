@@ -1,3 +1,4 @@
+import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { RawTable } from "~/components/RawTable";
 import { Tag } from "~/components/Tag";
 import { FlagStatus } from "~/modules/flags/components/FlagStatus";
@@ -22,8 +23,16 @@ export const formatDate = (timestamp: number) => {
 
 export interface SchedulingListProps {
   scheduling: Array<Schedule>;
+  projectId: string;
+  envId: string;
+  flagId: string;
 }
-export const SchedulingList = ({ scheduling }: SchedulingListProps) => {
+export const SchedulingList = ({
+  scheduling,
+  projectId,
+  envId,
+  flagId,
+}: SchedulingListProps) => {
   return (
     <RawTable>
       <thead>
@@ -31,6 +40,7 @@ export const SchedulingList = ({ scheduling }: SchedulingListProps) => {
           <th>Date</th>
           <th>Status at that date</th>
           <th>Rollout percentage at that date</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -44,6 +54,14 @@ export const SchedulingList = ({ scheduling }: SchedulingListProps) => {
             </td>
             <td>
               <Tag>{schedule.rolloutPercentage}%</Tag>
+            </td>
+            <td>
+              <DeleteButton
+                small
+                to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/scheduling/${schedule.uuid}/delete`}
+              >
+                Remove
+              </DeleteButton>
             </td>
           </tr>
         ))}
