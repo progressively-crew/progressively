@@ -27,10 +27,6 @@ import {
   LoaderFunction,
 } from "@remix-run/node";
 import { useLoaderData, useActionData, Form } from "@remix-run/react";
-import { FormGroup } from "~/components/Fields/FormGroup";
-import { DateTimeInput } from "~/components/Fields/DateTimeInput";
-import { RadioField } from "~/components/Fields/RadioField";
-import { SliderInput } from "~/components/Fields/SliderInput";
 import { CreateSchedulingFrom } from "~/modules/strategies/components/CreateSchedulingForm";
 import { SchedulingCreateDTO } from "~/modules/scheduling/types";
 import { createScheduling } from "~/modules/scheduling/services/createScheduling";

@@ -1,9 +1,26 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
+import { SchedulingCreationDTO } from './types';
 
 @Injectable()
 export class SchedulingService {
   constructor(private prisma: PrismaService) {}
+
+  addSchedulingToFlagEnv(
+    envId: string,
+    flagId: string,
+    scheduling: SchedulingCreationDTO,
+  ) {
+    return this.prisma.schedule.create({
+      data: {
+        timestamp: scheduling.timestamp,
+        status: scheduling.status,
+        rolloutPercentage: scheduling.rolloutPercentage,
+        flagEnvironmentFlagId: flagId,
+        flagEnvironmentEnvironmentId: envId,
+      },
+    });
+  }
 
   deleteSchedule(uuid: string) {
     return this.prisma.schedule.deleteMany({

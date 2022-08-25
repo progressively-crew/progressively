@@ -704,4 +704,207 @@ describe('FlagsController (e2e)', () => {
       expect(schedule.uuid).toBeDefined();
     });
   });
+
+  describe.only('/environments/:envId/flags/:flagId/scheduling (POST)', () => {
+    it('gives a 401 when the user is not authenticated', () =>
+      verifyAuthGuard(app, '/environments/1/flags/1/scheduling', 'post'));
+
+    it('gives a 403 when trying to access a valid project but an invalid env', async () => {
+      const access_token = await authenticate(app);
+
+      const validStrategy: any = {
+        name: 'Super strategy',
+        strategyRuleType: 'default',
+      };
+
+      return request(app.getHttpServer())
+        .post('/environments/1/flags/3/scheduling')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send(validStrategy)
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('gives a 403 when the user requests a forbidden project', async () => {
+      const access_token = await authenticate(
+        app,
+        'jane.doe@gmail.com',
+        'password',
+      );
+
+      return request(app.getHttpServer())
+        .post('/environments/1/flags/1/scheduling')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send({
+          name: 'Super strategy',
+          strategyRuleType: 'field',
+          fieldName: 'email',
+          fieldComparator: 'eq',
+          fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
+        })
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('gives 400 when the project has noname', async () => {
+      const access_token = await authenticate(app);
+
+      const invalidStrategy: any = {
+        name: undefined,
+        strategyRuleType: 'default',
+      };
+
+      await request(app.getHttpServer())
+        .post('/environments/1/flags/1/scheduling')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send(invalidStrategy)
+        .expect(400)
+        .expect({
+          statusCode: 400,
+          message: 'Validation failed',
+          error: 'Bad Request',
+        });
+    });
+
+    it('gives 400 when the project receives a wrong strategy type', async () => {
+      const access_token = await authenticate(app);
+
+      const invalidStrategy: any = {
+        name: 'Super strategy',
+        strategyRuleType: 'invalid strategy',
+      };
+
+      await request(app.getHttpServer())
+        .post('/environments/1/flags/1/scheduling')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send(invalidStrategy)
+        .expect(400)
+        .expect({
+          statusCode: 400,
+          message: 'Validation failed',
+          error: 'Bad Request',
+        });
+    });
+
+    ['fieldName', 'fieldComparator', 'fieldValue'].forEach((field) => {
+      it(`gives 400 when the project has a strategy of type "field" but no "${field}"`, async () => {
+        const access_token = await authenticate(app);
+
+        const invalidStrategy: any = {
+          name: 'Super strategy',
+          strategyRuleType: 'field',
+          [field]: undefined,
+        };
+
+        await request(app.getHttpServer())
+          .post('/environments/1/flags/1/scheduling')
+          .set('Authorization', `Bearer ${access_token}`)
+          .send(invalidStrategy)
+          .expect(400)
+          .expect({
+            statusCode: 400,
+            message: 'Validation failed',
+            error: 'Bad Request',
+          });
+      });
+    });
+
+    it('creates a default strategy', async () => {
+      const access_token = await authenticate(app);
+
+      const validStrategy: any = {
+        name: 'Super strategy',
+        strategyRuleType: 'default',
+      };
+
+      const response = await request(app.getHttpServer())
+        .post('/environments/1/flags/1/scheduling')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send(validStrategy)
+        .expect(201);
+
+      const { uuid, ...obj } = response.body;
+
+      expect(uuid).toBeDefined();
+      expect(obj).toEqual({
+        name: 'Super strategy',
+        strategyRuleType: 'default',
+        fieldName: null,
+        fieldComparator: null,
+        fieldValue: null,
+        flagEnvironmentFlagId: '1',
+        flagEnvironmentEnvironmentId: '1',
+      });
+    });
+
+    it('creates a field strategy', async () => {
+      const access_token = await authenticate(app);
+
+      const validStrategy: any = {
+        name: 'Super strategy',
+        strategyRuleType: 'field',
+        fieldName: 'email',
+        fieldComparator: 'eq',
+        fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
+      };
+
+      const response = await request(app.getHttpServer())
+        .post('/environments/1/flags/1/scheduling')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send(validStrategy)
+        .expect(201);
+
+      const { uuid, ...obj } = response.body;
+
+      expect(uuid).toBeDefined();
+      expect(obj).toEqual({
+        name: 'Super strategy',
+        strategyRuleType: 'field',
+        fieldName: 'email',
+        fieldComparator: 'eq',
+        fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
+        flagEnvironmentFlagId: '1',
+        flagEnvironmentEnvironmentId: '1',
+      });
+    });
+
+    it('creates a field strategy with an activation percentage', async () => {
+      const access_token = await authenticate(app);
+
+      const validStrategy: any = {
+        name: 'Super strategy',
+        strategyRuleType: 'field',
+        fieldName: 'email',
+        fieldComparator: 'eq',
+        fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
+      };
+
+      const response = await request(app.getHttpServer())
+        .post('/environments/1/flags/1/scheduling')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send(validStrategy)
+        .expect(201);
+
+      const { uuid, ...obj } = response.body;
+
+      expect(uuid).toBeDefined();
+      expect(obj).toEqual({
+        name: 'Super strategy',
+        strategyRuleType: 'field',
+        fieldName: 'email',
+        fieldComparator: 'eq',
+        fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
+        flagEnvironmentFlagId: '1',
+        flagEnvironmentEnvironmentId: '1',
+      });
+    });
+  });
 });
