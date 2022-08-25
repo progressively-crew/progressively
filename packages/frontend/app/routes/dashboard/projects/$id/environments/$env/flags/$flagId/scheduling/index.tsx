@@ -13,7 +13,11 @@ import { Section, SectionHeader } from "~/components/Section";
 import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
-import { useLoaderData, useActionData } from "@remix-run/react";
+import {
+  useLoaderData,
+  useActionData,
+  useSearchParams,
+} from "@remix-run/react";
 import { TagLine } from "~/components/Tagline";
 import { FiFlag } from "react-icons/fi";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
@@ -27,6 +31,7 @@ import { Typography } from "~/components/Typography";
 import { Schedule } from "~/modules/scheduling/types";
 import { getScheduling } from "~/modules/scheduling/services/getScheduling";
 import { EmptyState } from "~/components/EmptyState";
+import { SuccessBox } from "~/components/Boxes/SuccessBox";
 
 interface MetaArgs {
   data?: {
@@ -139,8 +144,10 @@ export const loader: LoaderFunction = async ({
 };
 
 export default function SchedulingOfFlag() {
+  const [searchParams] = useSearchParams();
   const actionData = useActionData<ActionDataType>();
 
+  const isScheduleRemoved = searchParams.get("scheduleRemoved") || undefined;
   const { project, environment, currentFlagEnv, user, scheduling } =
     useLoaderData<LoaderData>();
 
@@ -192,6 +199,13 @@ export default function SchedulingOfFlag() {
           flagId={currentFlag.uuid}
         />
       }
+      status={
+        isScheduleRemoved && (
+          <SuccessBox id="schedule-updated">
+            The schedule has been successfully removed.
+          </SuccessBox>
+        )
+      }
     >
       <Section id="scheduling">
         <SectionHeader
@@ -207,7 +221,7 @@ export default function SchedulingOfFlag() {
 
         {scheduling.length === 0 && (
           <EmptyState
-            title="No scheduling found"
+            title="No schedule found"
             description={
               <Typography>There are no scheduling for this flag.</Typography>
             }
