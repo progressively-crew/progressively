@@ -1,24 +1,16 @@
-import { useState, useTransition } from "react";
-
 import { getFlagsByProjectEnv } from "~/modules/flags/services/getFlagsByProjectEnv";
 import { Flag, FlagEnv, FlagStatus } from "~/modules/flags/types";
 import { getProject } from "~/modules/projects/services/getProject";
 import { Project } from "~/modules/projects/types";
-import { StrategyRuleType } from "~/modules/strategies/types/StrategyRule";
 import { getSession } from "~/sessions";
-import { validateStrategyForm } from "~/modules/strategies/validators/validateStrategyForm";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
-import { StrategyCreateDTO } from "~/modules/strategies/types";
-import { createStrategy } from "~/modules/strategies/services/createStrategy";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
-import { StrategyAudience } from "~/modules/strategies/components/StrategyAudience";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { authGuard } from "~/modules/auth/services/auth-guard";
 import { User } from "~/modules/user/types";
 import { Header } from "~/components/Header";
 import { Environment } from "~/modules/environments/types";
 import { Typography } from "~/components/Typography";
-import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import {
   MetaFunction,
@@ -26,7 +18,12 @@ import {
   redirect,
   LoaderFunction,
 } from "@remix-run/node";
-import { useLoaderData, useActionData, Form } from "@remix-run/react";
+import {
+  useLoaderData,
+  useActionData,
+  Form,
+  useSearchParams,
+} from "@remix-run/react";
 import { CreateSchedulingFrom } from "~/modules/strategies/components/CreateSchedulingForm";
 import { SchedulingCreateDTO } from "~/modules/scheduling/types";
 import { createScheduling } from "~/modules/scheduling/services/createScheduling";
@@ -60,12 +57,14 @@ export const action: ActionFunction = async ({
   const formData = await request.formData();
   const session = await getSession(request.headers.get("Cookie"));
 
-  const timestamp =
-    (formData.get("timestamp-dateTime") as unknown as number) || undefined;
+  const timestamp = Number(formData.get("timestamp-dateTime")?.toString());
+
   const status =
     (formData.get("nextStatus") as unknown as FlagStatus) || undefined;
-  const rolloutPercentage =
-    (formData.get("rolloutPercentage") as unknown as number) || undefined;
+
+  const rolloutPercentage = Number(
+    formData.get("rolloutPercentage")?.toString()
+  );
 
   if (!timestamp) {
     return {
@@ -175,8 +174,6 @@ export default function SchedulingCreatePage() {
       label: "Create a scheduling",
     },
   ];
-
-  const errors = actionData?.errors || {};
 
   return (
     <DashboardLayout

@@ -149,6 +149,7 @@ export default function SchedulingOfFlag() {
   const actionData = useActionData<ActionDataType>();
 
   const isScheduleRemoved = searchParams.get("scheduleRemoved") || undefined;
+  const isScheduleAdded = searchParams.get("newSchedule") || undefined;
   const { project, environment, currentFlagEnv, user, scheduling } =
     useLoaderData<LoaderData>();
 
@@ -203,11 +204,15 @@ export default function SchedulingOfFlag() {
         />
       }
       status={
-        isScheduleRemoved && (
+        isScheduleRemoved ? (
           <SuccessBox id="schedule-updated">
             The schedule has been successfully removed.
           </SuccessBox>
-        )
+        ) : isScheduleAdded ? (
+          <SuccessBox id="schedule-added">
+            The schedule has been successfully added.
+          </SuccessBox>
+        ) : null
       }
     >
       <Section id="scheduling">

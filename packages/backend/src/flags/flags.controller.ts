@@ -147,13 +147,9 @@ export class FlagsController {
       schedulingDto,
     );
 
-    if (schedule) {
-      (schedule as any).timestamp = Number(schedule.timestamp);
+    (schedule as any).timestamp = Number(schedule.timestamp);
 
-      return schedule;
-    }
-
-    return null;
+    return schedule;
   }
 
   @Get('environments/:envId/flags/:flagId/strategies')
