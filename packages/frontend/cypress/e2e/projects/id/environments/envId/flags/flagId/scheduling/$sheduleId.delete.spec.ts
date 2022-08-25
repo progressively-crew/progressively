@@ -43,35 +43,31 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
       it("shows the layout of the page", () => {
         cy.title().should(
           "eq",
-          "Progressively | Project from seeding | Production | New homepage | Super strategy | Delete"
+          "Progressively | Project from seeding | Production | New homepage | Scheduling | Delete"
         );
 
-        cy.findByText("Deleting a strategy").should("be.visible");
+        cy.findByText("Deleting a schedule").should("be.visible");
         cy.contains(
-          "We really want to warn you: if you validate the strategy suppression, you won't be able to access the Super strategy strategy anymore. It includes:"
-        ).should("be.visible");
-
-        cy.findByText(
-          "The feature flag will not take this strategy into consideration when being evaluated."
+          "The feature flag will not take this schedule into consideration when being evaluated."
         ).should("be.visible");
 
         cy.findByRole("button", {
-          name: "Yes, delete the strategy",
+          name: "Yes, delete the schedule",
         }).should("be.visible");
 
-        cy.findByRole("link", { name: "No, don't delete Super strategy" })
+        cy.findByRole("link", { name: "No, don't delete" })
           .should("be.visible")
           .and(
             "have.attr",
             "href",
-            "/dashboard/projects/1/environments/1/flags/1"
+            "/dashboard/projects/1/environments/1/flags/1/scheduling"
           );
 
         cy.checkA11y();
       });
     });
 
-    describe("removing strategy (needs reseeding after each test)", () => {
+    describe("removing scheduling (needs reseeding after each test)", () => {
       beforeEach(cy.seed);
       afterEach(cy.cleanup);
 
@@ -82,23 +78,23 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
         );
       });
 
-      it("removes the strat and get me back to the flags page", () => {
+      it("removes the schedule and get me back to the flags page", () => {
         cy.findByRole("button", {
-          name: "Yes, delete the strategy",
+          name: "Yes, delete the schedule",
         }).click();
 
         cy.url().should(
           "contain",
-          "/dashboard/projects/1/environments/1/flags/1?stratRemoved=true"
+          "/dashboard/projects/1/environments/1/flags/1/scheduling?scheduleRemoved=true"
         );
 
-        cy.findByRole("heading", { name: "No strategy found" }).should(
+        cy.findByRole("heading", { name: "No schedule found" }).should(
           "be.visible"
         );
 
         cy.get(".success-box")
           .should("have.focus")
-          .and("contain.text", "The strategy has been successfully removed.");
+          .and("contain.text", "The schedule has been successfully removed.");
       });
     });
   });
