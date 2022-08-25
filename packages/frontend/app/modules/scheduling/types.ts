@@ -6,3 +6,9 @@ export interface Schedule {
   status: FlagStatus;
   uuid: string;
 }
+
+export interface SchedulingCreateDTO {
+  timestamp: number;
+  rolloutPercentage: number;
+  status: FlagStatus;
+}

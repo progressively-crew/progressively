@@ -32,6 +32,7 @@ import { Schedule } from "~/modules/scheduling/types";
 import { getScheduling } from "~/modules/scheduling/services/getScheduling";
 import { EmptyState } from "~/components/EmptyState";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
+import { CreateButton } from "~/components/Buttons/CreateButton";
 
 interface MetaArgs {
   data?: {
@@ -169,10 +170,12 @@ export default function SchedulingOfFlag() {
       label: environment.name,
     },
     {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`,
+      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/scheduling`,
       label: currentFlag.name,
     },
   ];
+
+  const hasScheduling = scheduling.length > 0;
 
   return (
     <DashboardLayout
@@ -217,6 +220,15 @@ export default function SchedulingOfFlag() {
               dates.
             </Typography>
           }
+          action={
+            hasScheduling && (
+              <CreateButton
+                to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/scheduling/create`}
+              >
+                Create a schedule
+              </CreateButton>
+            )
+          }
         />
 
         {scheduling.length === 0 && (
@@ -224,6 +236,13 @@ export default function SchedulingOfFlag() {
             title="No schedule found"
             description={
               <Typography>There are no scheduling for this flag.</Typography>
+            }
+            action={
+              <CreateButton
+                to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/scheduling/create`}
+              >
+                Create a schedule
+              </CreateButton>
             }
           />
         )}
