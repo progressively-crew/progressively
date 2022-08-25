@@ -700,7 +700,7 @@ describe('FlagsController (e2e)', () => {
       expect(schedule.rolloutPercentage).toBe(66);
       expect(schedule.flagEnvironmentFlagId).toBe('1');
       expect(schedule.flagEnvironmentEnvironmentId).toBe('1');
-      expect(schedule.timestamp).toBe(1661416969541);
+      expect(schedule.timestamp).toBeDefined();
       expect(schedule.uuid).toBeDefined();
     });
   });
