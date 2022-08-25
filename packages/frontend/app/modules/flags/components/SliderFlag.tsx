@@ -1,4 +1,3 @@
-import { ActionFunction } from "@remix-run/node";
 import { Form } from "@remix-run/react";
 import { useState } from "react";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
