@@ -61,7 +61,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
           .and(
             "have.attr",
             "href",
-            "/dashboard/projects/1/environments/1/flags/1"
+            "/dashboard/projects/1/environments/1/flags/1/scheduling"
           );
 
         cy.findByRole("link", { name: "Insights" })
