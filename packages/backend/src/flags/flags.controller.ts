@@ -26,7 +26,7 @@ import {
   ChangePercentageSchema,
 } from './flags.dto';
 import { HasFlagEnvAccessGuard } from './guards/hasFlagEnvAccess';
-import { SchedulingCreationDTO } from '../scheduling/types';
+import { SchedulingCreationDTO, SchedulingSchema } from '../scheduling/types';
 import { SchedulingService } from '../scheduling/scheduling.service';
 
 @ApiBearerAuth()
@@ -135,17 +135,25 @@ export class FlagsController {
   @Post('environments/:envId/flags/:flagId/scheduling')
   @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
-  @UsePipes(new ValidationPipe(StrategySchema))
-  addSchedulingToFlag(
+  @UsePipes(new ValidationPipe(SchedulingSchema))
+  async addSchedulingToFlag(
     @Param('envId') envId: string,
     @Param('flagId') flagId: string,
     @Body() schedulingDto: SchedulingCreationDTO,
   ): Promise<any> {
-    return this.schedulingService.addSchedulingToFlagEnv(
+    const schedule = await this.schedulingService.addSchedulingToFlagEnv(
       envId,
       flagId,
       schedulingDto,
     );
+
+    if (schedule) {
+      (schedule as any).timestamp = Number(schedule.timestamp);
+
+      return schedule;
+    }
+
+    return null;
   }
 
   @Get('environments/:envId/flags/:flagId/strategies')

@@ -11,15 +11,19 @@ export class SchedulingService {
     flagId: string,
     scheduling: SchedulingCreationDTO,
   ) {
-    return this.prisma.schedule.create({
-      data: {
-        timestamp: scheduling.timestamp,
-        status: scheduling.status,
-        rolloutPercentage: scheduling.rolloutPercentage,
-        flagEnvironmentFlagId: flagId,
-        flagEnvironmentEnvironmentId: envId,
-      },
-    });
+    return this.prisma.schedule
+      .create({
+        data: {
+          timestamp: scheduling.timestamp,
+          status: scheduling.status,
+          rolloutPercentage: scheduling.rolloutPercentage,
+          flagEnvironmentFlagId: flagId,
+          flagEnvironmentEnvironmentId: envId,
+        },
+      })
+      .catch((err) => {
+        console.log('LOOL', err);
+      });
   }
 
   deleteSchedule(uuid: string) {

@@ -705,7 +705,7 @@ describe('FlagsController (e2e)', () => {
     });
   });
 
-  describe.only('/environments/:envId/flags/:flagId/scheduling (POST)', () => {
+  describe('/environments/:envId/flags/:flagId/scheduling (POST)', () => {
     it('gives a 401 when the user is not authenticated', () =>
       verifyAuthGuard(app, '/environments/1/flags/1/scheduling', 'post'));
 
@@ -754,18 +754,19 @@ describe('FlagsController (e2e)', () => {
         });
     });
 
-    it('gives 400 when the project has noname', async () => {
+    it('gives 400 when the scheduling has a wrong timestamp', async () => {
       const access_token = await authenticate(app);
 
-      const invalidStrategy: any = {
-        name: undefined,
-        strategyRuleType: 'default',
+      const invalidScheduling: any = {
+        timestamp: -1000,
+        status: 'Activated',
+        rolloutPercentage: 12,
       };
 
       await request(app.getHttpServer())
         .post('/environments/1/flags/1/scheduling')
         .set('Authorization', `Bearer ${access_token}`)
-        .send(invalidStrategy)
+        .send(invalidScheduling)
         .expect(400)
         .expect({
           statusCode: 400,
@@ -774,18 +775,19 @@ describe('FlagsController (e2e)', () => {
         });
     });
 
-    it('gives 400 when the project receives a wrong strategy type', async () => {
+    it('gives 400 when the scheduling has a wrong status', async () => {
       const access_token = await authenticate(app);
 
-      const invalidStrategy: any = {
-        name: 'Super strategy',
-        strategyRuleType: 'invalid strategy',
+      const invalidScheduling: any = {
+        timestamp: 1000,
+        status: 'INVALID_STATUS',
+        rolloutPercentage: 12,
       };
 
       await request(app.getHttpServer())
         .post('/environments/1/flags/1/scheduling')
         .set('Authorization', `Bearer ${access_token}`)
-        .send(invalidStrategy)
+        .send(invalidScheduling)
         .expect(400)
         .expect({
           statusCode: 400,
@@ -794,116 +796,46 @@ describe('FlagsController (e2e)', () => {
         });
     });
 
-    ['fieldName', 'fieldComparator', 'fieldValue'].forEach((field) => {
-      it(`gives 400 when the project has a strategy of type "field" but no "${field}"`, async () => {
-        const access_token = await authenticate(app);
-
-        const invalidStrategy: any = {
-          name: 'Super strategy',
-          strategyRuleType: 'field',
-          [field]: undefined,
-        };
-
-        await request(app.getHttpServer())
-          .post('/environments/1/flags/1/scheduling')
-          .set('Authorization', `Bearer ${access_token}`)
-          .send(invalidStrategy)
-          .expect(400)
-          .expect({
-            statusCode: 400,
-            message: 'Validation failed',
-            error: 'Bad Request',
-          });
-      });
-    });
-
-    it('creates a default strategy', async () => {
+    it('gives 400 when the scheduling has a wrong rolloutPercentage', async () => {
       const access_token = await authenticate(app);
 
-      const validStrategy: any = {
-        name: 'Super strategy',
-        strategyRuleType: 'default',
+      const invalidScheduling: any = {
+        timestamp: 1000,
+        status: 'ACTIVATED',
+        rolloutPercentage: 1000,
+      };
+
+      await request(app.getHttpServer())
+        .post('/environments/1/flags/1/scheduling')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send(invalidScheduling)
+        .expect(400)
+        .expect({
+          statusCode: 400,
+          message: 'Validation failed',
+          error: 'Bad Request',
+        });
+    });
+
+    it('creates a scheduling', async () => {
+      const access_token = await authenticate(app);
+
+      const validScheduling: any = {
+        timestamp: 1000,
+        status: 'ACTIVATED',
+        rolloutPercentage: 89,
       };
 
       const response = await request(app.getHttpServer())
         .post('/environments/1/flags/1/scheduling')
         .set('Authorization', `Bearer ${access_token}`)
-        .send(validStrategy)
+        .send(validScheduling)
         .expect(201);
 
-      const { uuid, ...obj } = response.body;
-
-      expect(uuid).toBeDefined();
-      expect(obj).toEqual({
-        name: 'Super strategy',
-        strategyRuleType: 'default',
-        fieldName: null,
-        fieldComparator: null,
-        fieldValue: null,
-        flagEnvironmentFlagId: '1',
-        flagEnvironmentEnvironmentId: '1',
-      });
-    });
-
-    it('creates a field strategy', async () => {
-      const access_token = await authenticate(app);
-
-      const validStrategy: any = {
-        name: 'Super strategy',
-        strategyRuleType: 'field',
-        fieldName: 'email',
-        fieldComparator: 'eq',
-        fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
-      };
-
-      const response = await request(app.getHttpServer())
-        .post('/environments/1/flags/1/scheduling')
-        .set('Authorization', `Bearer ${access_token}`)
-        .send(validStrategy)
-        .expect(201);
-
-      const { uuid, ...obj } = response.body;
-
-      expect(uuid).toBeDefined();
-      expect(obj).toEqual({
-        name: 'Super strategy',
-        strategyRuleType: 'field',
-        fieldName: 'email',
-        fieldComparator: 'eq',
-        fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
-        flagEnvironmentFlagId: '1',
-        flagEnvironmentEnvironmentId: '1',
-      });
-    });
-
-    it('creates a field strategy with an activation percentage', async () => {
-      const access_token = await authenticate(app);
-
-      const validStrategy: any = {
-        name: 'Super strategy',
-        strategyRuleType: 'field',
-        fieldName: 'email',
-        fieldComparator: 'eq',
-        fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
-      };
-
-      const response = await request(app.getHttpServer())
-        .post('/environments/1/flags/1/scheduling')
-        .set('Authorization', `Bearer ${access_token}`)
-        .send(validStrategy)
-        .expect(201);
-
-      const { uuid, ...obj } = response.body;
-
-      expect(uuid).toBeDefined();
-      expect(obj).toEqual({
-        name: 'Super strategy',
-        strategyRuleType: 'field',
-        fieldName: 'email',
-        fieldComparator: 'eq',
-        fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
-        flagEnvironmentFlagId: '1',
-        flagEnvironmentEnvironmentId: '1',
+      expect(response.body).toMatchObject({
+        rolloutPercentage: 89,
+        status: 'ACTIVATED',
+        timestamp: 1000,
       });
     });
   });
