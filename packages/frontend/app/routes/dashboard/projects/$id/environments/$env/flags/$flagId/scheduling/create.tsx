@@ -18,12 +18,7 @@ import {
   redirect,
   LoaderFunction,
 } from "@remix-run/node";
-import {
-  useLoaderData,
-  useActionData,
-  Form,
-  useSearchParams,
-} from "@remix-run/react";
+import { useLoaderData, useActionData, Form } from "@remix-run/react";
 import { CreateSchedulingFrom } from "~/modules/strategies/components/CreateSchedulingForm";
 import { SchedulingCreateDTO } from "~/modules/scheduling/types";
 import { createScheduling } from "~/modules/scheduling/services/createScheduling";

@@ -42,7 +42,7 @@ export const CreateSchedulingFrom = () => {
           isLoading={transition.state === "submitting"}
           loadingText="Saving the scheduling, please wait..."
         >
-          Save the scheduling
+          Save the schedule
         </SubmitButton>
       </div>
     </FormGroup>
