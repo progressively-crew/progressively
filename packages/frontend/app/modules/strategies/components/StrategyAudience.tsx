@@ -1,11 +1,9 @@
-import { Divider } from "~/components/Divider";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { RadioField } from "~/components/Fields/RadioField";
 import { SelectField } from "~/components/Fields/SelectField";
 import { TextareaInput } from "~/components/Fields/TextareaInput";
 import { TextInput } from "~/components/Fields/TextInput";
 import { HStack } from "~/components/HStack";
-import { Stack } from "~/components/Stack";
 import { ComparatorEnum, StrategyCreateDTO } from "../types";
 import { StrategyRuleType } from "../types/StrategyRule";
 

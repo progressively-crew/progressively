@@ -5,10 +5,11 @@ import { StrategyService } from '../strategy/strategy.service';
 import { EnvironmentsModule } from '../environments/environments.module';
 import { WebsocketModule } from '../websocket/websocket.module';
 import { DatabaseModule } from '../database/database.module';
+import { SchedulingService } from '../scheduling/scheduling.service';
 
 @Module({
   imports: [EnvironmentsModule, WebsocketModule, DatabaseModule],
-  providers: [FlagsService, StrategyService],
+  providers: [FlagsService, StrategyService, SchedulingService],
   controllers: [FlagsController],
   exports: [FlagsService],
 })

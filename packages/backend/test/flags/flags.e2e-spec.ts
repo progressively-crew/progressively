@@ -704,4 +704,139 @@ describe('FlagsController (e2e)', () => {
       expect(schedule.uuid).toBeDefined();
     });
   });
+
+  describe('/environments/:envId/flags/:flagId/scheduling (POST)', () => {
+    it('gives a 401 when the user is not authenticated', () =>
+      verifyAuthGuard(app, '/environments/1/flags/1/scheduling', 'post'));
+
+    it('gives a 403 when trying to access a valid project but an invalid env', async () => {
+      const access_token = await authenticate(app);
+
+      const validStrategy: any = {
+        name: 'Super strategy',
+        strategyRuleType: 'default',
+      };
+
+      return request(app.getHttpServer())
+        .post('/environments/1/flags/3/scheduling')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send(validStrategy)
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('gives a 403 when the user requests a forbidden project', async () => {
+      const access_token = await authenticate(
+        app,
+        'jane.doe@gmail.com',
+        'password',
+      );
+
+      return request(app.getHttpServer())
+        .post('/environments/1/flags/1/scheduling')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send({
+          name: 'Super strategy',
+          strategyRuleType: 'field',
+          fieldName: 'email',
+          fieldComparator: 'eq',
+          fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
+        })
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('gives 400 when the scheduling has a wrong timestamp', async () => {
+      const access_token = await authenticate(app);
+
+      const invalidScheduling: any = {
+        timestamp: -1000,
+        status: 'Activated',
+        rolloutPercentage: 12,
+      };
+
+      await request(app.getHttpServer())
+        .post('/environments/1/flags/1/scheduling')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send(invalidScheduling)
+        .expect(400)
+        .expect({
+          statusCode: 400,
+          message: 'Validation failed',
+          error: 'Bad Request',
+        });
+    });
+
+    it('gives 400 when the scheduling has a wrong status', async () => {
+      const access_token = await authenticate(app);
+
+      const invalidScheduling: any = {
+        timestamp: 1000,
+        status: 'INVALID_STATUS',
+        rolloutPercentage: 12,
+      };
+
+      await request(app.getHttpServer())
+        .post('/environments/1/flags/1/scheduling')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send(invalidScheduling)
+        .expect(400)
+        .expect({
+          statusCode: 400,
+          message: 'Validation failed',
+          error: 'Bad Request',
+        });
+    });
+
+    it('gives 400 when the scheduling has a wrong rolloutPercentage', async () => {
+      const access_token = await authenticate(app);
+
+      const invalidScheduling: any = {
+        timestamp: 1000,
+        status: 'ACTIVATED',
+        rolloutPercentage: 1000,
+      };
+
+      await request(app.getHttpServer())
+        .post('/environments/1/flags/1/scheduling')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send(invalidScheduling)
+        .expect(400)
+        .expect({
+          statusCode: 400,
+          message: 'Validation failed',
+          error: 'Bad Request',
+        });
+    });
+
+    it('creates a scheduling', async () => {
+      const access_token = await authenticate(app);
+
+      const validScheduling: any = {
+        timestamp: 1000,
+        status: 'ACTIVATED',
+        rolloutPercentage: 89,
+      };
+
+      const response = await request(app.getHttpServer())
+        .post('/environments/1/flags/1/scheduling')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send(validScheduling)
+        .expect(201);
+
+      expect(response.body).toMatchObject({
+        rolloutPercentage: 89,
+        status: 'ACTIVATED',
+        timestamp: 1000,
+      });
+    });
+  });
 });

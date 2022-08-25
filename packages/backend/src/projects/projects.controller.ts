@@ -95,9 +95,7 @@ export class ProjectsController {
       throw new UnauthorizedException();
     }
 
-    const res = await this.projectService.removeMember(id, memberId);
-
-    return res;
+    return await this.projectService.removeMember(id, memberId);
   }
 
   @Post(':id/members')

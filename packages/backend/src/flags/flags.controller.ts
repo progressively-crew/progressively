@@ -26,12 +26,15 @@ import {
   ChangePercentageSchema,
 } from './flags.dto';
 import { HasFlagEnvAccessGuard } from './guards/hasFlagEnvAccess';
+import { SchedulingCreationDTO, SchedulingSchema } from '../scheduling/types';
+import { SchedulingService } from '../scheduling/scheduling.service';
 
 @ApiBearerAuth()
 @Controller()
 export class FlagsController {
   constructor(
     private readonly strategyService: StrategyService,
+    private readonly schedulingService: SchedulingService,
     private readonly flagService: FlagsService,
     private readonly wsGateway: WebsocketGateway,
   ) {}
@@ -117,7 +120,7 @@ export class FlagsController {
   @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(StrategySchema))
-  addStrategyToProject(
+  addStrategyToFlag(
     @Param('envId') envId: string,
     @Param('flagId') flagId: string,
     @Body() strategyDto: StrategyCreationDTO,
@@ -127,6 +130,26 @@ export class FlagsController {
       flagId,
       strategyDto,
     );
+  }
+
+  @Post('environments/:envId/flags/:flagId/scheduling')
+  @UseGuards(HasFlagEnvAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(new ValidationPipe(SchedulingSchema))
+  async addSchedulingToFlag(
+    @Param('envId') envId: string,
+    @Param('flagId') flagId: string,
+    @Body() schedulingDto: SchedulingCreationDTO,
+  ): Promise<any> {
+    const schedule = await this.schedulingService.addSchedulingToFlagEnv(
+      envId,
+      flagId,
+      schedulingDto,
+    );
+
+    (schedule as any).timestamp = Number(schedule.timestamp);
+
+    return schedule;
   }
 
   @Get('environments/:envId/flags/:flagId/strategies')

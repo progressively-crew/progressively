@@ -32,6 +32,7 @@ import { Schedule } from "~/modules/scheduling/types";
 import { getScheduling } from "~/modules/scheduling/services/getScheduling";
 import { EmptyState } from "~/components/EmptyState";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
+import { CreateButton } from "~/components/Buttons/CreateButton";
 
 interface MetaArgs {
   data?: {
@@ -148,6 +149,7 @@ export default function SchedulingOfFlag() {
   const actionData = useActionData<ActionDataType>();
 
   const isScheduleRemoved = searchParams.get("scheduleRemoved") || undefined;
+  const isScheduleAdded = searchParams.get("newSchedule") || undefined;
   const { project, environment, currentFlagEnv, user, scheduling } =
     useLoaderData<LoaderData>();
 
@@ -169,10 +171,12 @@ export default function SchedulingOfFlag() {
       label: environment.name,
     },
     {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`,
+      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/scheduling`,
       label: currentFlag.name,
     },
   ];
+
+  const hasScheduling = scheduling.length > 0;
 
   return (
     <DashboardLayout
@@ -200,11 +204,15 @@ export default function SchedulingOfFlag() {
         />
       }
       status={
-        isScheduleRemoved && (
+        isScheduleRemoved ? (
           <SuccessBox id="schedule-updated">
             The schedule has been successfully removed.
           </SuccessBox>
-        )
+        ) : isScheduleAdded ? (
+          <SuccessBox id="schedule-added">
+            The schedule has been successfully added.
+          </SuccessBox>
+        ) : null
       }
     >
       <Section id="scheduling">
@@ -217,6 +225,15 @@ export default function SchedulingOfFlag() {
               dates.
             </Typography>
           }
+          action={
+            hasScheduling && (
+              <CreateButton
+                to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/scheduling/create`}
+              >
+                Create a schedule
+              </CreateButton>
+            )
+          }
         />
 
         {scheduling.length === 0 && (
@@ -224,6 +241,13 @@ export default function SchedulingOfFlag() {
             title="No schedule found"
             description={
               <Typography>There are no scheduling for this flag.</Typography>
+            }
+            action={
+              <CreateButton
+                to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/scheduling/create`}
+              >
+                Create a schedule
+              </CreateButton>
             }
           />
         )}

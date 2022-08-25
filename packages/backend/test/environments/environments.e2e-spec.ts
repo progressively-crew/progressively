@@ -265,7 +265,7 @@ describe('Environments (e2e)', () => {
         .send({
           name: 'New flag',
           description: 'The new flag aims to xxx',
-          environments: ['1']
+          environments: ['1'],
         });
 
       return request(app.getHttpServer())
