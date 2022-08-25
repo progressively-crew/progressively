@@ -6,10 +6,41 @@ export class SchedulingService {
   constructor(private prisma: PrismaService) {}
 
   deleteSchedule(uuid: string) {
-    return this.prisma.schedule.delete({
+    return this.prisma.schedule.deleteMany({
       where: {
         uuid,
       },
     });
+  }
+
+  async hasPermissionOnSchedule(
+    scheduleId: string,
+    userId: string,
+    roles?: Array<string>,
+  ) {
+    const flagOfProject = await this.prisma.userProject.findFirst({
+      where: {
+        userId,
+        project: {
+          environments: {
+            some: {
+              flagEnvironment: {
+                some: { scheduling: { some: { uuid: scheduleId } } },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!flagOfProject) {
+      return false;
+    }
+
+    if (!roles || roles.length === 0) {
+      return true;
+    }
+
+    return roles.includes(flagOfProject.role);
   }
 }
