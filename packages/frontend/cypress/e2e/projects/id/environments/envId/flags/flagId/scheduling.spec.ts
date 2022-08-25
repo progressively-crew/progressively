@@ -132,7 +132,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
         cy.findByRole("heading", { name: "New footer" }).should("be.visible");
         cy.findByRole("heading", { name: "Scheduling" }).should("be.visible");
 
-        cy.findByText("No scheduling found").should("be.visible");
+        cy.findByText("No schedule found").should("be.visible");
         cy.findByText("There are no scheduling for this flag.").should(
           "be.visible"
         );

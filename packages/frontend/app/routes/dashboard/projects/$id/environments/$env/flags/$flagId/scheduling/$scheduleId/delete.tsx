@@ -10,9 +10,6 @@ import { getSession } from "~/sessions";
 import { Header } from "~/components/Header";
 import { FlagEnv } from "~/modules/flags/types";
 import { getFlagsByProjectEnv } from "~/modules/flags/services/getFlagsByProjectEnv";
-import { getStrategy } from "~/modules/strategies/services/getStrategy";
-import { StrategyRetrieveDTO } from "~/modules/strategies/types";
-import { deleteStrategy } from "~/modules/strategies/services/deleteStrategy";
 import { Button } from "~/components/Buttons/Button";
 import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
@@ -28,14 +25,15 @@ import {
   useActionData,
   Form,
   useTransition,
+  useParams,
 } from "@remix-run/react";
+import { deleteSchedule } from "~/modules/scheduling/services/deleteSchedule";
 
 interface MetaArgs {
   data?: {
     project?: Project;
     environment?: Environment;
     currentFlagEnv?: FlagEnv;
-    strategy?: StrategyRetrieveDTO;
   };
 }
 
@@ -43,10 +41,9 @@ export const meta: MetaFunction = ({ data }: MetaArgs) => {
   const projectName = data?.project?.name || "An error ocurred";
   const envName = data?.environment?.name || "An error ocurred";
   const flagName = data?.currentFlagEnv?.flag?.name || "An error ocurred";
-  const strategyName = data?.strategy?.name || "An error ocurred";
 
   return {
-    title: `Progressively | ${projectName} | ${envName} | ${flagName} | ${strategyName} | Delete`,
+    title: `Progressively | ${projectName} | ${envName} | ${flagName} | Scheduling | Delete`,
   };
 };
 
@@ -55,7 +52,6 @@ interface LoaderData {
   environment: Environment;
   user: User;
   currentFlagEnv: FlagEnv;
-  strategy: StrategyRetrieveDTO;
 }
 
 export const loader: LoaderFunction = async ({
@@ -85,17 +81,11 @@ export const loader: LoaderFunction = async ({
     (flagEnv) => flagEnv.flagId === params.flagId!
   )!;
 
-  const strategy: StrategyRetrieveDTO = await getStrategy(
-    params.stratId!,
-    authCookie
-  );
-
   return {
     project,
     environment: environment!,
     user,
     currentFlagEnv,
-    strategy,
   };
 };
 
@@ -113,10 +103,9 @@ export const action: ActionFunction = async ({
   const projectId = params.id!;
   const envId = params.env!;
   const flagId = params.flagId!;
-  const stratId = params.stratId!;
 
   try {
-    await deleteStrategy(stratId, session.get("auth-cookie"));
+    await deleteSchedule(params.scheduleId!, session.get("auth-cookie"));
   } catch (e: unknown) {
     if (e instanceof Error) {
       return { errors: { backendError: e.message } };
@@ -126,14 +115,15 @@ export const action: ActionFunction = async ({
   }
 
   return redirect(
-    `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}?stratRemoved=true#strat-removed`
+    `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/scheduling?scheduleRemoved=true#schedule-removed`
   );
 };
 
-export default function DeleteStrategyPage() {
+export default function DeleteSchedulePage() {
   const transition = useTransition();
+  const params = useParams();
 
-  const { project, environment, user, currentFlagEnv, strategy } =
+  const { project, environment, user, currentFlagEnv } =
     useLoaderData<LoaderData>();
   const data = useActionData<ActionData>();
 
@@ -157,21 +147,21 @@ export default function DeleteStrategyPage() {
       label: currentFlag.name,
     },
     {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/${strategy.uuid}/delete`,
-      label: "Delete a strategy",
+      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/scheduling/${params.scheduleId}/delete`,
+      label: "Delete a schedule",
     },
   ];
 
   const warnings = {
     "turned-off":
-      "The feature flag will not take this strategy into consideration when being evaluated.",
+      "The feature flag will not take this schedule into consideration when being evaluated.",
   };
 
   return (
     <DeleteEntityLayout
       user={user}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
-      header={<Header title={`Deleting a strategy`} />}
+      header={<Header title={`Deleting a schedule`} />}
       error={
         data?.errors &&
         data.errors.backendError && <ErrorBox list={data.errors} />
@@ -179,9 +169,9 @@ export default function DeleteStrategyPage() {
       cancelAction={
         <Button
           variant="secondary"
-          to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`}
+          to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/scheduling`}
         >
-          {`No, don't delete`} {strategy.name}
+          {`No, don't delete`}
         </Button>
       }
       confirmAction={
@@ -189,9 +179,9 @@ export default function DeleteStrategyPage() {
           <DeleteButton
             type="submit"
             isLoading={transition.state === "submitting"}
-            loadingText="Deleting the strategy, please wait..."
+            loadingText="Deleting the schedule, please wait..."
           >
-            Yes, delete the strategy
+            Yes, delete the schedule
           </DeleteButton>
         </Form>
       }
@@ -200,9 +190,8 @@ export default function DeleteStrategyPage() {
         list={warnings}
         title={
           <>
-            We really want to warn you: if you validate the strategy
-            suppression, you {`won't`} be able to access the {strategy.name}{" "}
-            strategy anymore. It includes:
+            We really want to warn you: if you validate the schedule
+            suppression, it won't apply anymore.
           </>
         }
       />
