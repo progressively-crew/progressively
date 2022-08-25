@@ -2,7 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { StrategyService } from '../strategy/strategy.service';
 import { PrismaService } from '../database/prisma.service';
 import { FlagStatus } from './flags.status';
-import { FlagHitsRetrieveDTO, PopulatedFlagEnv } from './types';
+import {
+  FlagHitsRetrieveDTO,
+  PopulatedFlagEnv,
+  SchedulingStatus,
+} from './types';
 import { FieldRecord } from '../strategy/types';
 
 @Injectable()
@@ -225,5 +229,43 @@ export class FlagsService {
     };
   }
 
-  async manageScheduling(flagEnv: PopulatedFlagEnv) {}
+  async manageScheduling(flagEnv: PopulatedFlagEnv) {
+    const now = Date.now();
+    const scheduling = await this.prisma.schedule.findMany({
+      orderBy: {
+        timestamp: 'asc',
+      },
+      where: {
+        flagEnvironmentFlagId: flagEnv.flagId,
+        flagEnvironmentEnvironmentId: flagEnv.environmentId,
+        schedulingStatus: SchedulingStatus.NOT_RUN,
+        timestamp: {
+          lt: now,
+        },
+      },
+    });
+
+    for (const schedule of scheduling) {
+      await this.prisma.schedule.update({
+        where: {
+          uuid: schedule.uuid,
+        },
+        data: {
+          status: SchedulingStatus.HAS_RUN,
+        },
+      });
+
+      await this.prisma.flagEnvironment.update({
+        where: {
+          flagId_environmentId: {
+            environmentId: flagEnv.environmentId,
+            flagId: flagEnv.flagId,
+          },
+        },
+        data: {
+          status: schedule.status,
+        },
+      });
+    }
+  }
 }

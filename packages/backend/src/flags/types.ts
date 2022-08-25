@@ -40,4 +40,5 @@ export interface PopulatedFlagEnv extends FlagEnvironment {
 
 export enum SchedulingStatus {
   NOT_RUN = 'NOT_RUN',
+  HAS_RUN = 'HAS_RUN',
 }
