@@ -16,6 +16,7 @@ import { AppLoggerMiddleware } from './logging.middleware';
 import { SdkModule } from './sdk/sdk.module';
 import { MailModule } from './mail/mail.module';
 import { DatabaseModule } from './database/database.module';
+import { SchedulingModule } from './scheduling/scheduling.module';
 
 @Module({
   imports: [
@@ -49,6 +50,7 @@ import { DatabaseModule } from './database/database.module';
     SdkModule,
     MailModule,
     DatabaseModule,
+    SchedulingModule,
   ],
   providers: [AppService],
   controllers: [],

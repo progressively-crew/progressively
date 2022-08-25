@@ -216,7 +216,12 @@ export default function SchedulingOfFlag() {
 
         {scheduling.length > 0 && (
           <Card>
-            <SchedulingList scheduling={scheduling} />
+            <SchedulingList
+              scheduling={scheduling}
+              projectId={project.uuid}
+              envId={environment.uuid}
+              flagId={currentFlag.uuid}
+            />
           </Card>
         )}
       </Section>
