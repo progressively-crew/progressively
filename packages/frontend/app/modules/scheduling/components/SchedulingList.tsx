@@ -1,6 +1,5 @@
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { RawTable } from "~/components/RawTable";
-import { Tag } from "~/components/Tag";
 import { FlagStatus } from "~/modules/flags/components/FlagStatus";
 import { FlagStatus as FlagStatusType } from "~/modules/flags/types";
 import { Schedule } from "../types";
