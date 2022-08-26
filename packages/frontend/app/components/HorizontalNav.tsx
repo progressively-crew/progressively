@@ -4,6 +4,7 @@ import { HStack } from "./HStack";
 
 const HorizontalNavWrapper = styled("nav", {
   width: "220px",
+
   "& ul": {
     display: "flex",
     flexDirection: "column",
@@ -38,17 +39,7 @@ const HorizontalNavWrapper = styled("nav", {
 
   "@tablet": {
     width: "100%",
-    marginTop: "$spacing$6",
-
-    "& ul": {
-      flexDirection: "row",
-      overflow: "auto",
-      justifyContent: "center",
-    },
-
-    "& ul li a": {
-      padding: "$spacing$4",
-    },
+    marginTop: "$spacing$4",
   },
 });
 

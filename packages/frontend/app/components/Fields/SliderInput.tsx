@@ -24,7 +24,7 @@ const RangeInput = styled("input", {
 
   // chrome edge safari
   "&::-webkit-slider-runnable-track": {
-    background: "$heracles",
+    background: "$nemesisLight",
     height: `${TrackSize}rem`,
     borderRadius: "$borderRadius$regular",
   },
@@ -42,7 +42,7 @@ const RangeInput = styled("input", {
   // firefox
   "&::-moz-range-track": {
     marginTop: `-${(ThumbSize - TrackSize) / 2}rem`,
-    background: "$heracles",
+    background: "$nemesisLight",
     height: `${TrackSize}rem`,
     borderRadius: "$borderRadius$regular",
   },
