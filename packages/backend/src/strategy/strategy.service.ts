@@ -132,18 +132,13 @@ export class StrategyService {
     });
   }
 
-  async listScheduling(envId: string, flagId: string) {
-    const scheduling = await this.prisma.schedule.findMany({
+  listScheduling(envId: string, flagId: string) {
+    return this.prisma.schedule.findMany({
       where: {
         flagEnvironmentEnvironmentId: envId,
         flagEnvironmentFlagId: flagId,
       },
     });
-
-    return scheduling.map((schedule) => ({
-      ...schedule,
-      timestamp: Number(schedule.timestamp),
-    }));
   }
 
   getStrategy(stratId: string) {

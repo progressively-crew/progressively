@@ -232,16 +232,16 @@ export class FlagsService {
   async manageScheduling(flagEnv: PopulatedFlagEnv): Promise<PopulatedFlagEnv> {
     let nextFlagEnv: PopulatedFlagEnv = flagEnv;
 
-    const now = Date.now();
+    const now = new Date();
     const scheduling = await this.prisma.schedule.findMany({
       orderBy: {
-        timestamp: 'asc',
+        utc: 'asc',
       },
       where: {
         flagEnvironmentFlagId: flagEnv.flagId,
         flagEnvironmentEnvironmentId: flagEnv.environmentId,
         schedulingStatus: SchedulingStatus.NOT_RUN,
-        timestamp: {
+        utc: {
           lt: now,
         },
       },

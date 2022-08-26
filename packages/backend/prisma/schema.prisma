@@ -109,7 +109,7 @@ model RolloutStrategy {
 
 model Schedule {
   uuid                         String           @id @default(uuid())
-  timestamp                    BigInt
+  utc                          DateTime
   rolloutPercentage            Int
   status                       String
   FlagEnvironment              FlagEnvironment? @relation(name: "FlagEnvironmentToSchedule", fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])

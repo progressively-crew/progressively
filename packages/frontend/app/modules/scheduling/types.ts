@@ -6,7 +6,7 @@ export enum SchedulingStatus {
 }
 
 export interface Schedule {
-  timestamp: number;
+  utc: string;
   rolloutPercentage: number;
   status: FlagStatus;
   uuid: string;
@@ -14,7 +14,7 @@ export interface Schedule {
 }
 
 export interface SchedulingCreateDTO {
-  timestamp: number;
+  utc: string;
   rolloutPercentage: number;
   status: FlagStatus;
 }

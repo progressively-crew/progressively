@@ -147,8 +147,6 @@ export class FlagsController {
       schedulingDto,
     );
 
-    (schedule as any).timestamp = Number(schedule.timestamp);
-
     return schedule;
   }
 
