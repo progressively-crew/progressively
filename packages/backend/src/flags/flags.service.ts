@@ -229,7 +229,9 @@ export class FlagsService {
     };
   }
 
-  async manageScheduling(flagEnv: PopulatedFlagEnv) {
+  async manageScheduling(flagEnv: PopulatedFlagEnv): Promise<PopulatedFlagEnv> {
+    let nextFlagEnv: PopulatedFlagEnv = flagEnv;
+
     const now = Date.now();
     const scheduling = await this.prisma.schedule.findMany({
       orderBy: {
@@ -255,7 +257,7 @@ export class FlagsService {
         },
       });
 
-      await this.prisma.flagEnvironment.update({
+      const response = await this.prisma.flagEnvironment.update({
         where: {
           flagId_environmentId: {
             environmentId: flagEnv.environmentId,
@@ -266,7 +268,16 @@ export class FlagsService {
           status: schedule.status,
           rolloutPercentage: schedule.rolloutPercentage,
         },
+        include: {
+          flag: true,
+          strategies: true,
+          scheduling: true,
+        },
       });
+
+      nextFlagEnv = response as unknown as PopulatedFlagEnv;
     }
+
+    return nextFlagEnv;
   }
 }

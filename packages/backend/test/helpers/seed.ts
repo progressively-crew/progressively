@@ -76,8 +76,8 @@ export const seedDb = async () => {
     await prismaClient.schedule.create({
       data: {
         uuid: '1',
-        timestamp: Date.now() + 86400000, // add one day so that the test don't break because of scheduling updates
-        rolloutPercentage: 66,
+        timestamp: Date.now() + 1000 * 10, // add 10 seconds so that the test don't break because of scheduling updates
+        rolloutPercentage: 100,
         flagEnvironmentFlagId: flagEnv.flagId,
         flagEnvironmentEnvironmentId: flagEnv.environmentId,
         status: 'ACTIVATED',

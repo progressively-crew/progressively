@@ -38,29 +38,31 @@ export class SdkService {
 
   async resolveSdkFlags(fields: FieldRecord) {
     const clientKey = String(fields.clientKey);
-    const flagEnvs = await this.envService.getFlagEnvironmentByClientKey(
+    const flagEnvs = (await this.envService.getFlagEnvironmentByClientKey(
       clientKey,
-    );
+    )) as unknown as Array<PopulatedFlagEnv>;
 
     const flags = {};
 
     for (const flagEnv of flagEnvs) {
+      let nextFlag: PopulatedFlagEnv = flagEnv;
+
       if (flagEnv.scheduling.length > 0) {
-        await this.flagService.manageScheduling(
+        nextFlag = await this.flagService.manageScheduling(
           flagEnv as unknown as PopulatedFlagEnv,
         );
       }
 
       const flagStatus = this.flagService.resolveFlagStatus(
-        flagEnv as unknown as PopulatedFlagEnv,
+        nextFlag as unknown as PopulatedFlagEnv,
         fields,
       );
 
-      flags[flagEnv.flag.key] = flagStatus;
+      flags[nextFlag.flag.key] = flagStatus;
 
       this.flagService.hitFlag(
-        flagEnv.environmentId,
-        flagEnv.flagId,
+        nextFlag.environmentId,
+        nextFlag.flagId,
         flagStatus ? FlagStatus.ACTIVATED : FlagStatus.NOT_ACTIVATED,
       );
     }
