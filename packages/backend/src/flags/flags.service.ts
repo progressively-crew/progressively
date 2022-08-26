@@ -8,12 +8,14 @@ import {
   SchedulingStatus,
 } from './types';
 import { FieldRecord } from '../strategy/types';
+import { WebsocketGateway } from '../websocket/websocket.gateway';
 
 @Injectable()
 export class FlagsService {
   constructor(
     private prisma: PrismaService,
     private strategyService: StrategyService,
+    private readonly wsGateway: WebsocketGateway,
   ) {}
 
   flagsByEnv(environmentId: string) {
@@ -272,10 +274,16 @@ export class FlagsService {
           flag: true,
           strategies: true,
           scheduling: true,
+          environment: true,
         },
       });
 
       nextFlagEnv = response as unknown as PopulatedFlagEnv;
+
+      this.wsGateway.notifyChanges(
+        nextFlagEnv.environment.clientKey,
+        nextFlagEnv,
+      );
     }
 
     return nextFlagEnv;
