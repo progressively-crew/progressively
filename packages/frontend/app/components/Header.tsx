@@ -24,7 +24,7 @@ export const Header = ({
   tagline,
 }: HeaderProps) => {
   return (
-    <HStack justifyContent="space-between">
+    <HStack justifyContent="space-between" direction={{ "@tablet": "column" }}>
       <div>
         <HeadingWrapper>
           <H1>{title}</H1>
