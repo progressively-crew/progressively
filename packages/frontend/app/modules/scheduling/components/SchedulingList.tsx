@@ -4,6 +4,7 @@ import { Tag } from "~/components/Tag";
 import { FlagStatus } from "~/modules/flags/components/FlagStatus";
 import { FlagStatus as FlagStatusType } from "~/modules/flags/types";
 import { Schedule } from "../types";
+import { ScheduleStatus } from "./ScheduleStatus";
 
 export const formatDate = (timestamp: number) => {
   const options = {
@@ -38,8 +39,9 @@ export const SchedulingList = ({
       <thead>
         <tr>
           <th>Date</th>
-          <th>Status at that date</th>
-          <th>Rollout percentage at that date</th>
+          <th>Status of the flag</th>
+          <th>Rollout percentage</th>
+          <th>Has the schedule run</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -52,8 +54,9 @@ export const SchedulingList = ({
             <td>
               <FlagStatus value={schedule.status as FlagStatusType} />
             </td>
+            <td>{schedule.rolloutPercentage}%</td>
             <td>
-              <Tag>{schedule.rolloutPercentage}%</Tag>
+              <ScheduleStatus value={schedule.schedulingStatus} />
             </td>
             <td>
               <DeleteButton
