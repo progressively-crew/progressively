@@ -27,13 +27,17 @@ export class SdkController {
     @Res({ passthrough: true }) response: Response,
     @Req() request: Request,
   ) {
-    // User section, managing the user ID and cookies
-    const cookieUserId = request?.cookies?.[COOKIE_KEY];
-    const fields = this.sdkService.parseBase64Params(base64Params);
+    try {
+      // User section, managing the user ID and cookies
+      const cookieUserId = request?.cookies?.[COOKIE_KEY];
+      const fields = this.sdkService.parseBase64Params(base64Params);
 
-    fields.id = this.sdkService.resolveUserId(fields, cookieUserId);
-    this._prepareCookie(response, fields.id);
+      fields.id = this.sdkService.resolveUserId(fields, cookieUserId);
+      this._prepareCookie(response, fields.id);
 
-    return await this.sdkService.resolveSdkFlags(fields);
+      return await this.sdkService.resolveSdkFlags(fields);
+    } catch (err) {
+      console.log('WTF', err);
+    }
   }
 }

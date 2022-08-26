@@ -274,10 +274,12 @@ export class FlagsService {
           flag: true,
           strategies: true,
           scheduling: true,
+          environment: true,
         },
       });
 
       nextFlagEnv = response as unknown as PopulatedFlagEnv;
+
       this.wsGateway.notifyChanges(
         nextFlagEnv.environment.clientKey,
         nextFlagEnv,
