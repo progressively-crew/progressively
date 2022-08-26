@@ -25,7 +25,7 @@ export interface FlagEnvironment {
 
 interface Schedule {
   uuid: string;
-  timestamp: number;
+  utc: string;
   rolloutPercentage: number;
   status: FlagStatus;
   schedulingStatus: SchedulingStatus;

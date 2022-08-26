@@ -13,7 +13,7 @@ export class SchedulingService {
   ): Promise<any> {
     return this.prisma.schedule.create({
       data: {
-        timestamp: scheduling.timestamp,
+        utc: scheduling.utc,
         status: scheduling.status,
         rolloutPercentage: scheduling.rolloutPercentage,
         flagEnvironmentFlagId: flagId,

@@ -700,7 +700,7 @@ describe('FlagsController (e2e)', () => {
       expect(schedule.rolloutPercentage).toBe(100);
       expect(schedule.flagEnvironmentFlagId).toBe('1');
       expect(schedule.flagEnvironmentEnvironmentId).toBe('1');
-      expect(schedule.timestamp).toBeDefined();
+      expect(schedule.utc).toBeDefined();
       expect(schedule.uuid).toBeDefined();
     });
   });
@@ -754,11 +754,11 @@ describe('FlagsController (e2e)', () => {
         });
     });
 
-    it('gives 400 when the scheduling has a wrong timestamp', async () => {
+    it('gives 400 when the scheduling has a wrong utc', async () => {
       const access_token = await authenticate(app);
 
       const invalidScheduling: any = {
-        timestamp: -1000,
+        utc: 'invalid date',
         status: 'Activated',
         rolloutPercentage: 12,
       };
@@ -779,7 +779,7 @@ describe('FlagsController (e2e)', () => {
       const access_token = await authenticate(app);
 
       const invalidScheduling: any = {
-        timestamp: 1000,
+        utc: new Date('1992-06-21'),
         status: 'INVALID_STATUS',
         rolloutPercentage: 12,
       };
@@ -800,7 +800,7 @@ describe('FlagsController (e2e)', () => {
       const access_token = await authenticate(app);
 
       const invalidScheduling: any = {
-        timestamp: 1000,
+        utc: new Date('1992-06-21'),
         status: 'ACTIVATED',
         rolloutPercentage: 1000,
       };
@@ -821,7 +821,7 @@ describe('FlagsController (e2e)', () => {
       const access_token = await authenticate(app);
 
       const validScheduling: any = {
-        timestamp: 1000,
+        utc: new Date('1992-06-21'),
         status: 'ACTIVATED',
         rolloutPercentage: 89,
       };
@@ -835,7 +835,7 @@ describe('FlagsController (e2e)', () => {
       expect(response.body).toMatchObject({
         rolloutPercentage: 89,
         status: 'ACTIVATED',
-        timestamp: 1000,
+        utc: '1992-06-21T00:00:00.000Z',
       });
     });
   });

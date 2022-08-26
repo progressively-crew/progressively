@@ -5,7 +5,7 @@ import { FlagStatus as FlagStatusType } from "~/modules/flags/types";
 import { Schedule } from "../types";
 import { ScheduleStatus } from "./ScheduleStatus";
 
-export const formatDate = (timestamp: number) => {
+export const formatDate = (utc: string) => {
   const options = {
     year: "numeric",
     month: "numeric",
@@ -16,9 +16,7 @@ export const formatDate = (timestamp: number) => {
     hour12: false,
   };
 
-  return new Intl.DateTimeFormat("default", options).format(
-    new Date(timestamp)
-  );
+  return new Intl.DateTimeFormat("default", options).format(new Date(utc));
 };
 
 export interface SchedulingListProps {
@@ -46,10 +44,8 @@ export const SchedulingList = ({
       </thead>
       <tbody>
         {scheduling.map((schedule, index: number) => (
-          <tr
-            key={`${schedule.timestamp}-${schedule.rolloutPercentage}-${index}`}
-          >
-            <td>{formatDate(schedule.timestamp)}</td>
+          <tr key={`${schedule.utc}-${schedule.rolloutPercentage}-${index}`}>
+            <td>{formatDate(schedule.utc)}</td>
             <td>
               <FlagStatus value={schedule.status as FlagStatusType} />
             </td>

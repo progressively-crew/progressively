@@ -52,7 +52,7 @@ export const action: ActionFunction = async ({
   const formData = await request.formData();
   const session = await getSession(request.headers.get("Cookie"));
 
-  const timestamp = Number(formData.get("timestamp-dateTime")?.toString());
+  const utc = formData.get("utc-dateTime")?.toString();
 
   const status =
     (formData.get("nextStatus") as unknown as FlagStatus) || undefined;
@@ -61,10 +61,10 @@ export const action: ActionFunction = async ({
     formData.get("rolloutPercentage")?.toString()
   );
 
-  if (!timestamp) {
+  if (!utc) {
     return {
       errors: {
-        timestamp: "The provided date is invalid",
+        utc: "The provided date is invalid",
       },
     };
   }
@@ -72,13 +72,13 @@ export const action: ActionFunction = async ({
   if (rolloutPercentage === undefined || rolloutPercentage === null) {
     return {
       errors: {
-        timestamp: "The rollout percentage is invalid",
+        utc: "The rollout percentage is invalid",
       },
     };
   }
 
   const scheduling: SchedulingCreateDTO = {
-    timestamp,
+    utc,
     status,
     rolloutPercentage,
   };

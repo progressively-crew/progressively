@@ -66,7 +66,7 @@ export const DateTimeInput = ({
     ariaDescription = `hint-${name}`;
   }
 
-  const timestamp = date && time ? new Date(`${date} ${time}`).getTime() : null;
+  const utc = date && time ? new Date(`${date} ${time}`).toISOString() : null;
 
   return (
     <Stack spacing={2}>
@@ -96,11 +96,7 @@ export const DateTimeInput = ({
             </HStack>
           </FieldsWrapper>
 
-          <input
-            type="hidden"
-            name={`timestamp-${name}`}
-            value={timestamp || ""}
-          />
+          <input type="hidden" name={`utc-${name}`} value={utc || ""} />
 
           {description && <Hint id={`hint-${name}`}>{description}</Hint>}
         </Stack>
