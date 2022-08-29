@@ -80,6 +80,7 @@ describe("/dashboard/projects/[id]/add-member", () => {
           cy.findByLabelText("Member email").type("lol");
           cy.findByRole("button", { name: "Add the member" }).click();
 
+          cy.wait(500); // Wait for the CSS transition
           cy.get(".error-box")
             .should("have.focus")
             .and(
@@ -96,6 +97,7 @@ describe("/dashboard/projects/[id]/add-member", () => {
           );
           cy.findByRole("button", { name: "Add the member" }).click();
 
+          cy.wait(500); // Wait for the CSS transition
           cy.get(".error-box")
             .should("have.focus")
             .and(
@@ -127,6 +129,7 @@ describe("/dashboard/projects/[id]/add-member", () => {
           cy.findByLabelText("Member email").type("jane.doe@gmail.com");
           cy.findByRole("button", { name: "Add the member" }).click();
 
+          cy.wait(500); // Wait for the CSS transition
           cy.get(".success-box")
             .should("have.focus")
             .and(

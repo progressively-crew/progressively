@@ -33,6 +33,8 @@ describe("/dashboard/what-s-your-name", () => {
 
     it("shows an error when submitting an empty form", () => {
       cy.findByRole("button", { name: "Set my fullname" }).click();
+
+      cy.wait(500); // Wait for the CSS transition
       cy.get(".error-box")
         .should("have.focus")
         .and(

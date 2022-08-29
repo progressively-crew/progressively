@@ -34,6 +34,7 @@ describe("/welcome", () => {
   it("gives feedbacks when the required fields are not filled", () => {
     cy.findByRole("button", { name: "Create an account" }).click();
 
+    cy.wait(500); // Wait for the CSS transition
     cy.get(".error-box")
       .should("have.focus")
       .and("contain.text", "The email field is required.")
