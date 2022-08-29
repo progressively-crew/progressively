@@ -26,6 +26,7 @@ describe("/forgot-password", () => {
   it("shows an error message when the email is empty", () => {
     cy.findByRole("button", { name: "Reset password" }).click();
 
+    cy.wait(500); // Wait for the CSS transition
     cy.get(".error-box")
       .should("have.focus")
       .and("contain.text", "The email field is required.");
