@@ -1,11 +1,6 @@
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
-import { getProject } from "~/modules/projects/services/getProject";
-import { Project } from "~/modules/projects/types";
-import { getSession } from "~/sessions";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { authGuard } from "~/modules/auth/services/auth-guard";
-import { User } from "~/modules/user/types";
 import { Header } from "~/components/Header";
 import { Section, SectionHeader } from "~/components/Section";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
@@ -14,46 +9,28 @@ import { FiLayers } from "react-icons/fi";
 import { EmptyState } from "~/components/EmptyState";
 import { Typography } from "~/components/Typography";
 import { CreateButton } from "~/components/Buttons/CreateButton";
-import { MetaFunction, LoaderFunction } from "@remix-run/node";
-import { useLoaderData, useSearchParams } from "@remix-run/react";
+import { MetaFunction } from "@remix-run/node";
+import { useSearchParams } from "@remix-run/react";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { EnvList } from "~/modules/environments/components/EnvList";
 import { Card } from "~/components/Card";
 import { TagLine } from "~/components/Tagline";
 import { MdOutlineGroupWork } from "react-icons/md";
+import { useUser } from "~/modules/user/contexts/useUser";
+import { useProject } from "~/modules/projects/contexts/useProject";
+import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 
-interface MetaArgs {
-  data?: {
-    project?: Project;
-  };
-}
-
-export const meta: MetaFunction = ({ data }: MetaArgs) => {
-  const title = data?.project?.name || "An error ocurred";
+export const meta: MetaFunction = ({ parentsData }) => {
+  const projectName = getProjectMetaTitle(parentsData);
 
   return {
-    title: `Progressively | ${title}`,
+    title: `Progressively | ${projectName}`,
   };
-};
-
-interface LoaderData {
-  user: User;
-  project: Project;
-}
-
-export const loader: LoaderFunction = async ({
-  request,
-  params,
-}): Promise<LoaderData> => {
-  const user = await authGuard(request);
-  const session = await getSession(request.headers.get("Cookie"));
-  const project = await getProject(params.id!, session.get("auth-cookie"));
-
-  return { user, project };
 };
 
 export default function ProjectDetailPage() {
-  const { user, project } = useLoaderData<LoaderData>();
+  const { user } = useUser();
+  const { project } = useProject();
   const [searchParams] = useSearchParams();
   const newEnvId = searchParams.get("newEnvId") || undefined;
   const envRemoved = searchParams.get("envRemoved") || undefined;

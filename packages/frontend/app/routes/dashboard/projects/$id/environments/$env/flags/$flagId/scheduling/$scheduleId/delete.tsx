@@ -1,91 +1,35 @@
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { WarningBox } from "~/components/Boxes/WarningBox";
-import { authGuard } from "~/modules/auth/services/auth-guard";
-import { Environment } from "~/modules/environments/types";
-import { getProject } from "~/modules/projects/services/getProject";
-import { Project } from "~/modules/projects/types";
-import { User } from "~/modules/user/types";
 import { getSession } from "~/sessions";
 import { Header } from "~/components/Header";
-import { FlagEnv } from "~/modules/flags/types";
-import { getFlagsByProjectEnv } from "~/modules/flags/services/getFlagsByProjectEnv";
 import { Button } from "~/components/Buttons/Button";
 import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { Crumbs } from "~/components/Breadcrumbs/types";
+import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
 import {
-  MetaFunction,
-  LoaderFunction,
-  ActionFunction,
-  redirect,
-} from "@remix-run/node";
-import {
-  useLoaderData,
   useActionData,
   Form,
   useTransition,
   useParams,
 } from "@remix-run/react";
 import { deleteSchedule } from "~/modules/scheduling/services/deleteSchedule";
+import { useProject } from "~/modules/projects/contexts/useProject";
+import { useUser } from "~/modules/user/contexts/useUser";
+import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
+import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
+import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
+import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
+import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 
-interface MetaArgs {
-  data?: {
-    project?: Project;
-    environment?: Environment;
-    currentFlagEnv?: FlagEnv;
-  };
-}
-
-export const meta: MetaFunction = ({ data }: MetaArgs) => {
-  const projectName = data?.project?.name || "An error ocurred";
-  const envName = data?.environment?.name || "An error ocurred";
-  const flagName = data?.currentFlagEnv?.flag?.name || "An error ocurred";
+export const meta: MetaFunction = ({ parentsData, params }) => {
+  const projectName = getProjectMetaTitle(parentsData);
+  const envName = getEnvMetaTitle(parentsData, params.env);
+  const flagName = getFlagMetaTitle(parentsData);
 
   return {
     title: `Progressively | ${projectName} | ${envName} | ${flagName} | Scheduling | Delete`,
-  };
-};
-
-interface LoaderData {
-  project: Project;
-  environment: Environment;
-  user: User;
-  currentFlagEnv: FlagEnv;
-}
-
-export const loader: LoaderFunction = async ({
-  request,
-  params,
-}): Promise<LoaderData> => {
-  const user = await authGuard(request);
-  const session = await getSession(request.headers.get("Cookie"));
-  const authCookie = session.get("auth-cookie");
-
-  const project: Project = await getProject(
-    params.id!,
-    session.get("auth-cookie"),
-    true
-  );
-
-  const flagsByEnv: Array<FlagEnv> = await getFlagsByProjectEnv(
-    params.env!,
-    authCookie
-  );
-
-  const environment = project.environments.find(
-    (env) => env.uuid === params.env
-  );
-
-  const currentFlagEnv = flagsByEnv.find(
-    (flagEnv) => flagEnv.flagId === params.flagId!
-  )!;
-
-  return {
-    project,
-    environment: environment!,
-    user,
-    currentFlagEnv,
   };
 };
 
@@ -122,12 +66,13 @@ export const action: ActionFunction = async ({
 export default function DeleteSchedulePage() {
   const transition = useTransition();
   const params = useParams();
-
-  const { project, environment, user, currentFlagEnv } =
-    useLoaderData<LoaderData>();
   const data = useActionData<ActionData>();
+  const { project } = useProject();
+  const { user } = useUser();
+  const { environment } = useEnvironment();
+  const { flagEnv } = useFlagEnv();
 
-  const currentFlag = currentFlagEnv.flag;
+  const currentFlag = flagEnv.flag;
 
   const crumbs: Crumbs = [
     {

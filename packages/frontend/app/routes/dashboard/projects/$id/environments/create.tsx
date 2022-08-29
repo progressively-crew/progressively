@@ -1,17 +1,13 @@
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
-import { authGuard } from "~/modules/auth/services/auth-guard";
 import { createEnv } from "~/modules/environments/services/createEnv";
 import {
   CreateEnvironmentDTO,
   Environment,
 } from "~/modules/environments/types";
 import { validateEnvName } from "~/modules/environments/validators/validateEnvName";
-import { getProject } from "~/modules/projects/services/getProject";
-import { Project } from "~/modules/projects/types";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { getSession } from "~/sessions";
-import { User } from "~/modules/user/types";
 import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
 import { TextInput } from "~/components/Fields/TextInput";
@@ -19,47 +15,18 @@ import { Typography } from "~/components/Typography";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { Crumbs } from "~/components/Breadcrumbs/types";
-import {
-  MetaFunction,
-  LoaderFunction,
-  ActionFunction,
-  redirect,
-} from "@remix-run/node";
-import {
-  useActionData,
-  useLoaderData,
-  Form,
-  useTransition,
-} from "@remix-run/react";
+import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
+import { useActionData, Form, useTransition } from "@remix-run/react";
+import { useProject } from "~/modules/projects/contexts/useProject";
+import { useUser } from "~/modules/user/contexts/useUser";
+import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 
-interface MetaArgs {
-  data?: {
-    project?: Project;
-  };
-}
-
-export const meta: MetaFunction = ({ data }: MetaArgs) => {
-  const title = data?.project?.name || "An error ocurred";
+export const meta: MetaFunction = ({ parentsData }) => {
+  const projectName = getProjectMetaTitle(parentsData);
 
   return {
-    title: `Progressively | ${title} | Create an environment`,
+    title: `Progressively | ${projectName} | Create an environment`,
   };
-};
-
-interface LoaderData {
-  user: User;
-  project: Project;
-}
-
-export const loader: LoaderFunction = async ({
-  request,
-  params,
-}): Promise<LoaderData> => {
-  const user = await authGuard(request);
-  const session = await getSession(request.headers.get("Cookie"));
-  const project = await getProject(params.id!, session.get("auth-cookie"));
-
-  return { project, user };
 };
 
 interface ActionData {
@@ -96,7 +63,8 @@ export const action: ActionFunction = async ({
 export default function CreateEnvironmentPage() {
   const transition = useTransition();
   const data = useActionData<ActionData>();
-  const { project, user } = useLoaderData<LoaderData>();
+  const { project } = useProject();
+  const { user } = useUser();
   const errors = data?.errors;
 
   const crumbs: Crumbs = [

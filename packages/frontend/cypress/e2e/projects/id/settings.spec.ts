@@ -71,7 +71,6 @@ describe("/dashboard/projects/[id]/settings", () => {
         cy.get("#col-1").last().click();
         cy.findByRole("button", { name: "Remove from project" }).click();
 
-        cy.wait(500); // Wait for the CSS transition
         cy.get(".error-box")
           .should("have.focus")
           .and(
@@ -86,7 +85,6 @@ describe("/dashboard/projects/[id]/settings", () => {
         cy.get("#col-2").last().click();
         cy.findByRole("button", { name: "Remove from project" }).click();
 
-        cy.wait(500); // Wait for the CSS transition
         cy.get(".success-box")
           .should("have.focus")
           .and(

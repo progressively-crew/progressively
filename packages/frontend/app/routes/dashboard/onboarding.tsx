@@ -1,5 +1,5 @@
-import { LoaderFunction, ActionFunction, redirect } from "@remix-run/node";
-import { useLoaderData, useActionData, Form } from "@remix-run/react";
+import { ActionFunction, redirect } from "@remix-run/node";
+import { useActionData, Form } from "@remix-run/react";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { FormGroup } from "~/components/Fields/FormGroup";
@@ -7,30 +7,17 @@ import { TextInput } from "~/components/Fields/TextInput";
 import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
 import { Typography } from "~/components/Typography";
-import { authGuard } from "~/modules/auth/services/auth-guard";
 import { createProject } from "~/modules/projects/services/createProject";
 import { CreateProjectDTO, UserProject } from "~/modules/projects/types";
 import { validateProjectName } from "~/modules/projects/validators/validateProjectName";
-import { User } from "~/modules/user/types";
 import { getSession } from "~/sessions";
 import { DashboardLayout } from "../../layouts/DashboardLayout";
+import { useUser } from "~/modules/user/contexts/useUser";
 
 export const meta = () => {
   return {
     title: "Progressively | Onboarding",
   };
-};
-
-interface LoaderData {
-  user: User;
-}
-
-export const loader: LoaderFunction = async ({
-  request,
-}): Promise<LoaderData> => {
-  const user = await authGuard(request);
-
-  return { user };
 };
 
 interface ActionData {
@@ -62,7 +49,7 @@ export const action: ActionFunction = async ({
 };
 
 export default function OnboardingPage() {
-  const { user } = useLoaderData<LoaderData>();
+  const { user } = useUser();
   const data = useActionData<ActionData>();
 
   const errors = data?.errors;

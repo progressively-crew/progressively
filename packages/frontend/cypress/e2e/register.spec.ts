@@ -11,7 +11,6 @@ describe("/register", () => {
     cy.findByLabelText("Email").type("invalid@email");
     cy.findByRole("button", { name: "Create an account" }).click();
 
-    cy.wait(500); // Wait for the CSS transition
     cy.get(".error-box")
       .should("have.focus")
       .and(
@@ -35,7 +34,6 @@ describe("/register", () => {
   it("gives feedbacks when the required fields are not filled", () => {
     cy.findByRole("button", { name: "Create an account" }).click();
 
-    cy.wait(500); // Wait for the CSS transition
     cy.get(".error-box")
       .should("have.focus")
       .and("contain.text", "The email field is required.")
@@ -52,7 +50,6 @@ describe("/register", () => {
     cy.findByLabelText("Confirm your password").type("aabcd");
     cy.findByRole("button", { name: "Create an account" }).click();
 
-    cy.wait(500); // Wait for the CSS transition
     cy.get(".error-box")
       .should("have.focus")
       .and("contain.text", "The two passwords are not the same.");
@@ -68,7 +65,6 @@ describe("/register", () => {
     cy.findByLabelText("Confirm your password").type("12345678901112");
     cy.findByRole("button", { name: "Create an account" }).click();
 
-    cy.wait(500); // Wait for the CSS transition
     cy.get(".error-box")
       .should("have.focus")
       .and("contain.text", "This email is already used.");

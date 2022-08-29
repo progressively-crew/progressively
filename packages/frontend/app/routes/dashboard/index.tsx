@@ -3,8 +3,6 @@ import { getProjects } from "~/modules/projects/services/getProjects";
 import { UserProject } from "~/modules/projects/types";
 import { getSession } from "~/sessions";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { authGuard } from "~/modules/auth/services/auth-guard";
-import { User } from "~/modules/user/types";
 import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
 import { MetaFunction, LoaderFunction, redirect } from "@remix-run/node";
@@ -13,6 +11,7 @@ import { CreateButton } from "~/components/Buttons/CreateButton";
 import { Spacer } from "~/components/Spacer";
 import { ProjectList } from "~/modules/projects/components/ProjectList";
 import { Card } from "~/components/Card";
+import { useUser } from "~/modules/user/contexts/useUser";
 
 export const meta: MetaFunction = () => {
   return {
@@ -21,15 +20,12 @@ export const meta: MetaFunction = () => {
 };
 
 interface LoaderData {
-  user: User;
   projects: Array<UserProject>;
 }
 
 export const loader: LoaderFunction = async ({
   request,
 }): Promise<LoaderData | Response> => {
-  const user = await authGuard(request);
-
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
 
@@ -39,12 +35,13 @@ export const loader: LoaderFunction = async ({
     return redirect("/dashboard/onboarding");
   }
 
-  return { projects, user };
+  return { projects };
 };
 
 export default function DashboardRoot() {
   const [searchParams] = useSearchParams();
-  const { projects, user } = useLoaderData<LoaderData>();
+  const { projects } = useLoaderData<LoaderData>();
+  const { user } = useUser();
 
   const newProjectId = searchParams.get("newProjectId") || undefined;
   const hasRemovedProject = searchParams.get("projectRemoved") || undefined;

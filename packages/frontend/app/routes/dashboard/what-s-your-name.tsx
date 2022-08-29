@@ -1,4 +1,4 @@
-import { LoaderFunction, ActionFunction, redirect } from "@remix-run/node";
+import { ActionFunction, redirect } from "@remix-run/node";
 import { useActionData, Form } from "@remix-run/react";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
@@ -6,9 +6,7 @@ import { FormGroup } from "~/components/Fields/FormGroup";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
-import { authGuard } from "~/modules/auth/services/auth-guard";
 import { changeFullname } from "~/modules/user/services/changeFullname";
-import { User } from "~/modules/user/types";
 import { validateUserFullname } from "~/modules/user/validators/validate-user-fullname";
 import { getSession } from "~/sessions";
 import { DashboardLayout } from "../../layouts/DashboardLayout";
@@ -17,18 +15,6 @@ export const meta = () => {
   return {
     title: "Progressively | What's your name?",
   };
-};
-
-interface LoaderData {
-  user: User;
-}
-
-export const loader: LoaderFunction = async ({
-  request,
-}): Promise<LoaderData> => {
-  const user = await authGuard(request);
-
-  return { user };
 };
 
 interface ActionData {
@@ -74,7 +60,9 @@ export default function WhatsYourNamePage() {
               placeholder="e.g: John Doe"
             />
 
-            <SubmitButton type="submit">Set my fullname</SubmitButton>
+            <div>
+              <SubmitButton type="submit">Set my fullname</SubmitButton>
+            </div>
           </FormGroup>
         </Form>
       </Section>

@@ -1,13 +1,7 @@
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { authGuard } from "~/modules/auth/services/auth-guard";
-import { Environment } from "~/modules/environments/types";
-import { getFlagsByProjectEnv } from "~/modules/flags/services/getFlagsByProjectEnv";
-import { FlagEnv, FlagStatus } from "~/modules/flags/types";
-import { getProject } from "~/modules/projects/services/getProject";
-import { Project } from "~/modules/projects/types";
+import { FlagStatus } from "~/modules/flags/types";
 import { getStrategies } from "~/modules/strategies/services/getStrategies";
-import { User } from "~/modules/user/types";
 import { getSession } from "~/sessions";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { StrategyRetrieveDTO } from "~/modules/strategies/types";
@@ -35,19 +29,18 @@ import { StrategyDescription } from "~/modules/strategies/components/StrategyDes
 import { SliderFlag } from "~/modules/flags/components/SliderFlag";
 import { changePercentageFlag } from "~/modules/flags/services/changePercentageFlag";
 import { activateFlag } from "~/modules/flags/services/activateFlag";
+import { useProject } from "~/modules/projects/contexts/useProject";
+import { useUser } from "~/modules/user/contexts/useUser";
+import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
+import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
+import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
+import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
+import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 
-interface MetaArgs {
-  data?: {
-    project?: Project;
-    environment?: Environment;
-    currentFlagEnv?: FlagEnv;
-  };
-}
-
-export const meta: MetaFunction = ({ data }: MetaArgs) => {
-  const projectName = data?.project?.name || "An error ocurred";
-  const envName = data?.environment?.name || "An error ocurred";
-  const flagName = data?.currentFlagEnv?.flag?.name || "An error ocurred";
+export const meta: MetaFunction = ({ parentsData, params }) => {
+  const projectName = getProjectMetaTitle(parentsData);
+  const envName = getEnvMetaTitle(parentsData, params.env);
+  const flagName = getFlagMetaTitle(parentsData);
 
   return {
     title: `Progressively | ${projectName} | ${envName} | Flags | ${flagName}`,
@@ -100,23 +93,15 @@ export const action: ActionFunction = async ({
 };
 
 interface LoaderData {
-  project: Project;
-  environment: Environment;
-  currentFlagEnv: FlagEnv;
   strategies: Array<StrategyRetrieveDTO>;
-  user: User;
 }
 
 export const loader: LoaderFunction = async ({
   request,
   params,
 }): Promise<LoaderData> => {
-  const user = await authGuard(request);
-
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
-
-  const project: Project = await getProject(params.id!, authCookie);
 
   const strategies = await getStrategies(
     params.env!,
@@ -124,42 +109,27 @@ export const loader: LoaderFunction = async ({
     authCookie
   );
 
-  const flagsByEnv: Array<FlagEnv> = await getFlagsByProjectEnv(
-    params.env!,
-    authCookie
-  );
-
-  const environment = project.environments.find(
-    (env) => env.uuid === params.env
-  );
-
-  const currentFlagEnv = flagsByEnv.find(
-    (flagEnv) => flagEnv.flagId === params.flagId!
-  )!;
-
   return {
-    project,
-    environment: environment!,
-    currentFlagEnv,
     strategies,
-    user,
   };
 };
 
 export default function FlagById() {
   const [searchParams] = useSearchParams();
   const actionData = useActionData<ActionDataType>();
+  const { project } = useProject();
+  const { user } = useUser();
+  const { environment } = useEnvironment();
+  const { flagEnv } = useFlagEnv();
 
-  const { project, environment, currentFlagEnv, user, strategies } =
-    useLoaderData<LoaderData>();
+  const { strategies } = useLoaderData<LoaderData>();
 
   const isStrategyAdded = searchParams.get("newStrategy") || undefined;
   const isStrategyUpdated = searchParams.get("strategyUpdated") || undefined;
   const isStrategyRemoved = searchParams.get("stratRemoved") || undefined;
 
-  const currentFlag = currentFlagEnv.flag;
-
-  const isFlagActivated = currentFlagEnv.status === FlagStatus.ACTIVATED;
+  const currentFlag = flagEnv.flag;
+  const isFlagActivated = flagEnv.status === FlagStatus.ACTIVATED;
 
   const crumbs: Crumbs = [
     {
@@ -194,7 +164,7 @@ export default function FlagById() {
           endAction={
             <SliderFlag
               isFlagActivated={isFlagActivated}
-              initialRolloutPercentage={currentFlagEnv.rolloutPercentage}
+              initialRolloutPercentage={flagEnv.rolloutPercentage}
               isSuccessful={Boolean(actionData?.successChangePercentage)}
             />
           }
@@ -231,7 +201,7 @@ export default function FlagById() {
             <StrategyDescription
               isFlagActivated={isFlagActivated}
               hasStrategies={hasStrategies}
-              rolloutPercentage={currentFlagEnv.rolloutPercentage}
+              rolloutPercentage={flagEnv.rolloutPercentage}
             />
           }
           action={

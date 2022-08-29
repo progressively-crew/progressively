@@ -1,9 +1,4 @@
 import { useState, useTransition } from "react";
-
-import { getFlagsByProjectEnv } from "~/modules/flags/services/getFlagsByProjectEnv";
-import { Flag, FlagEnv } from "~/modules/flags/types";
-import { getProject } from "~/modules/projects/services/getProject";
-import { Project } from "~/modules/projects/types";
 import { StrategyRuleType } from "~/modules/strategies/types/StrategyRule";
 import { getSession } from "~/sessions";
 import { validateStrategyForm } from "~/modules/strategies/validators/validateStrategyForm";
@@ -13,35 +8,26 @@ import { createStrategy } from "~/modules/strategies/services/createStrategy";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { StrategyAudience } from "~/modules/strategies/components/StrategyAudience";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { authGuard } from "~/modules/auth/services/auth-guard";
-import { User } from "~/modules/user/types";
 import { Header } from "~/components/Header";
-import { Environment } from "~/modules/environments/types";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Typography } from "~/components/Typography";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { Crumbs } from "~/components/Breadcrumbs/types";
-import {
-  MetaFunction,
-  ActionFunction,
-  redirect,
-  LoaderFunction,
-} from "@remix-run/node";
-import { useLoaderData, useActionData, Form } from "@remix-run/react";
+import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
+import { useActionData, Form } from "@remix-run/react";
 import { FormGroup } from "~/components/Fields/FormGroup";
+import { useProject } from "~/modules/projects/contexts/useProject";
+import { useUser } from "~/modules/user/contexts/useUser";
+import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
+import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
+import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
+import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
+import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 
-interface MetaArgs {
-  data?: {
-    project?: Project;
-    environment?: Environment;
-    currentFlag?: Flag;
-  };
-}
-
-export const meta: MetaFunction = ({ data }: MetaArgs) => {
-  const projectName = data?.project?.name || "An error ocurred";
-  const envName = data?.environment?.name || "An error ocurred";
-  const flagName = data?.currentFlag?.name || "An error ocurred";
+export const meta: MetaFunction = ({ parentsData, params }) => {
+  const projectName = getProjectMetaTitle(parentsData);
+  const envName = getEnvMetaTitle(parentsData, params.env);
+  const flagName = getFlagMetaTitle(parentsData);
 
   return {
     title: `Progressively | ${projectName} | ${envName} | Flags | ${flagName} | Strategies | Create`,
@@ -106,53 +92,16 @@ export const action: ActionFunction = async ({
   }
 };
 
-interface LoaderData {
-  project: Project;
-  environment: Environment;
-  currentFlag: Flag;
-  user: User;
-}
-
-export const loader: LoaderFunction = async ({
-  request,
-  params,
-}): Promise<LoaderData> => {
-  const user = await authGuard(request);
-  const session = await getSession(request.headers.get("Cookie"));
-  const authCookie = session.get("auth-cookie");
-
-  const project: Project = await getProject(params.id!, authCookie);
-
-  const flagsByEnv: Array<FlagEnv> = await getFlagsByProjectEnv(
-    params.env!,
-    authCookie
-  );
-
-  const environment = project.environments.find(
-    (env) => env.uuid === params.env
-  );
-
-  const currentFlag = flagsByEnv.find(
-    (flagEnv) => flagEnv.flagId === params.flagId!
-  )!.flag;
-
-  return {
-    project,
-    environment: environment!,
-    currentFlag,
-    user,
-  };
-};
-
 export default function StrategyCreatePage() {
   const transition = useTransition();
-
-  const { project, environment, currentFlag, user } =
-    useLoaderData<LoaderData>();
-
+  const { flagEnv } = useFlagEnv();
+  const { project } = useProject();
+  const { user } = useUser();
+  const { environment } = useEnvironment();
   const actionData = useActionData<ActionData>();
-
   const [strategyType, setStrategyType] = useState<StrategyRuleType>("default");
+
+  const currentFlag = flagEnv.flag;
 
   const crumbs: Crumbs = [
     {

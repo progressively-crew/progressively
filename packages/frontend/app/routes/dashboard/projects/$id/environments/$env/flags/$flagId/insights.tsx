@@ -1,12 +1,6 @@
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { authGuard } from "~/modules/auth/services/auth-guard";
-import { Environment } from "~/modules/environments/types";
-import { getFlagsByProjectEnv } from "~/modules/flags/services/getFlagsByProjectEnv";
-import { FlagEnv, FlagStatus } from "~/modules/flags/types";
-import { getProject } from "~/modules/projects/services/getProject";
-import { Project } from "~/modules/projects/types";
-import { User } from "~/modules/user/types";
+import { FlagStatus } from "~/modules/flags/types";
 import { getSession } from "~/sessions";
 import { Header } from "~/components/Header";
 import { Section, SectionHeader } from "~/components/Section";
@@ -30,18 +24,18 @@ import { FlagMenu } from "~/modules/flags/components/FlagMenu";
 import { SliderFlag } from "~/modules/flags/components/SliderFlag";
 import { activateFlag } from "~/modules/flags/services/activateFlag";
 import { changePercentageFlag } from "~/modules/flags/services/changePercentageFlag";
+import { useUser } from "~/modules/user/contexts/useUser";
+import { useProject } from "~/modules/projects/contexts/useProject";
+import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
+import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
+import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
+import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
+import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 
-interface MetaArgs {
-  data?: {
-    project?: Project;
-    environment?: Environment;
-    currentFlagEnv?: FlagEnv;
-  };
-}
-export const meta: MetaFunction = ({ data }: MetaArgs) => {
-  const projectName = data?.project?.name || "An error ocurred";
-  const envName = data?.environment?.name || "An error ocurred";
-  const flagName = data?.currentFlagEnv?.flag?.name || "An error ocurred";
+export const meta: MetaFunction = ({ parentsData, params }) => {
+  const projectName = getProjectMetaTitle(parentsData);
+  const envName = getEnvMetaTitle(parentsData, params.env);
+  const flagName = getFlagMetaTitle(parentsData);
 
   return {
     title: `Progressively | ${projectName} | ${envName} | ${flagName} | Insights`,
@@ -95,10 +89,6 @@ interface FlagHit {
 }
 
 interface LoaderData {
-  project: Project;
-  environment: Environment;
-  currentFlagEnv: FlagEnv;
-  user: User;
   hits: Array<FlagHit>;
   activatedCount: number;
   notActivatedCount: number;
@@ -108,12 +98,10 @@ export const loader: LoaderFunction = async ({
   request,
   params,
 }): Promise<LoaderData> => {
-  const user = await authGuard(request);
   const session = await getSession(request.headers.get("Cookie"));
 
   const authCookie = session.get("auth-cookie");
 
-  const project: Project = await getProject(params.id!, authCookie);
   const hits: Array<FlagHit> = await getFlagHits(
     params.env!,
     params.flagId!,
@@ -128,24 +116,7 @@ export const loader: LoaderFunction = async ({
     notActivatedCount += hit.notactivated;
   }
 
-  const flagsByEnv: Array<FlagEnv> = await getFlagsByProjectEnv(
-    params.env!,
-    authCookie
-  );
-
-  const environment = project.environments.find(
-    (env) => env.uuid === params.env
-  );
-
-  const currentFlagEnv = flagsByEnv.find(
-    (flagEnv) => flagEnv.flagId === params.flagId!
-  )!;
-
   return {
-    project,
-    environment: environment!,
-    currentFlagEnv,
-    user,
     hits,
     activatedCount,
     notActivatedCount,
@@ -163,20 +134,18 @@ const InsightsGrid = styled("div", {
 });
 
 export default function FlagInsights() {
-  const {
-    project,
-    environment,
-    currentFlagEnv,
-    user,
-    hits,
-    activatedCount,
-    notActivatedCount,
-  } = useLoaderData<LoaderData>();
+  const { hits, activatedCount, notActivatedCount } =
+    useLoaderData<LoaderData>();
+  const { flagEnv } = useFlagEnv();
+  const { user } = useUser();
+  const { project } = useProject();
+  const { environment } = useEnvironment();
+
   const actionData = useActionData<ActionDataType>();
   const [chartVariant, setChartVariant] = useState<ChartVariant>("chart");
 
-  const currentFlag = currentFlagEnv.flag;
-  const isFlagActivated = currentFlagEnv.status === FlagStatus.ACTIVATED;
+  const currentFlag = flagEnv.flag;
+  const isFlagActivated = flagEnv.status === FlagStatus.ACTIVATED;
 
   const crumbs: Crumbs = [
     {
@@ -210,7 +179,7 @@ export default function FlagInsights() {
           endAction={
             <SliderFlag
               isFlagActivated={isFlagActivated}
-              initialRolloutPercentage={currentFlagEnv.rolloutPercentage}
+              initialRolloutPercentage={flagEnv.rolloutPercentage}
               isSuccessful={Boolean(actionData?.successChangePercentage)}
             />
           }

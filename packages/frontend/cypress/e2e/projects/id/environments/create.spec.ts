@@ -72,7 +72,6 @@ describe("/dashboard/projects/[id]/environments/create", () => {
       it("shows an error when submitting an empty form", () => {
         cy.findByRole("button", { name: "Create the environment" }).click();
 
-        cy.wait(500); // Wait for the CSS transition
         cy.get(".error-box")
           .should("have.focus")
           .and(
@@ -87,7 +86,6 @@ describe("/dashboard/projects/[id]/environments/create", () => {
         cy.findByLabelText("Environment name").type("My new env");
         cy.findByRole("button", { name: "Create the environment" }).click();
 
-        cy.wait(500); // Wait for the CSS transition
         cy.get(".success-box")
           .should("have.focus")
           .and(

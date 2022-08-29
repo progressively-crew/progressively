@@ -1,15 +1,5 @@
-import {
-  MetaFunction,
-  LoaderFunction,
-  ActionFunction,
-  redirect,
-} from "@remix-run/node";
-import {
-  useActionData,
-  useLoaderData,
-  Form,
-  useTransition,
-} from "@remix-run/react";
+import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
+import { useActionData, Form, useTransition } from "@remix-run/react";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
@@ -20,63 +10,27 @@ import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
 import { Typography } from "~/components/Typography";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { authGuard } from "~/modules/auth/services/auth-guard";
-import { Environment } from "~/modules/environments/types";
 import { createFlag } from "~/modules/flags/services/createFlag";
 import { CreateFlagDTO, Flag } from "~/modules/flags/types";
 import { validateFlagShape } from "~/modules/flags/validators/validateFlagShape";
-import { getProject } from "~/modules/projects/services/getProject";
-import { Project } from "~/modules/projects/types";
-import { User } from "~/modules/user/types";
 import { getSession } from "~/sessions";
 import { Checkbox } from "~/components/Checkbox";
 import { Label } from "~/components/Fields/Label";
 import { HStack } from "~/components/HStack";
 import { Stack } from "~/components/Stack";
 import { Divider } from "~/components/Divider";
+import { useProject } from "~/modules/projects/contexts/useProject";
+import { useUser } from "~/modules/user/contexts/useUser";
+import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
+import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
+import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 
-interface MetaArgs {
-  data?: {
-    project?: Project;
-    environment?: Environment;
-  };
-}
-
-export const meta: MetaFunction = ({ data }: MetaArgs) => {
-  const projectName = data?.project?.name || "An error ocurred";
-  const envName = data?.environment?.name || "An error ocurred";
+export const meta: MetaFunction = ({ params, parentsData }) => {
+  const projectName = getProjectMetaTitle(parentsData);
+  const envName = getEnvMetaTitle(parentsData, params.env);
 
   return {
     title: `Progressively | ${projectName} | ${envName} | Flags | Create`,
-  };
-};
-
-interface LoaderData {
-  project: Project;
-  user: User;
-  environment: Environment;
-  environments: Array<Environment>;
-}
-
-export const loader: LoaderFunction = async ({
-  request,
-  params,
-}): Promise<LoaderData> => {
-  const user = await authGuard(request);
-
-  const session = await getSession(request.headers.get("Cookie"));
-  const authCookie = session.get("auth-cookie");
-
-  const project: Project = await getProject(params.id!, authCookie);
-  const environment = project.environments.find(
-    (env) => env.uuid === params.env
-  );
-
-  return {
-    project,
-    environment: environment!,
-    user,
-    environments: project.environments,
   };
 };
 
@@ -125,11 +79,13 @@ export const action: ActionFunction = async ({
 };
 
 export default function CreateFlagPage() {
+  const { project } = useProject();
+  const { user } = useUser();
   const data = useActionData<ActionData>();
   const transition = useTransition();
+  const { environment } = useEnvironment();
 
-  const { project, environment, user, environments } =
-    useLoaderData<LoaderData>();
+  const environments = project.environments;
 
   const errors = data?.errors;
 
