@@ -1,12 +1,10 @@
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
-import { authGuard } from "~/modules/auth/services/auth-guard";
 import { createProject } from "~/modules/projects/services/createProject";
 import { CreateProjectDTO, UserProject } from "~/modules/projects/types";
 import { validateProjectName } from "~/modules/projects/validators/validateProjectName";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { getSession } from "~/sessions";
-import { User } from "~/modules/user/types";
 import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
 import { TextInput } from "~/components/Fields/TextInput";
@@ -14,34 +12,14 @@ import { Typography } from "~/components/Typography";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { Crumbs } from "~/components/Breadcrumbs/types";
-import {
-  MetaFunction,
-  LoaderFunction,
-  ActionFunction,
-  redirect,
-} from "@remix-run/node";
-import {
-  useActionData,
-  useLoaderData,
-  Form,
-  useTransition,
-} from "@remix-run/react";
+import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
+import { useActionData, Form, useTransition } from "@remix-run/react";
+import { useUser } from "~/modules/user/contexts/useUser";
 
 export const meta: MetaFunction = () => {
   return {
     title: "Progressively | Create a project",
   };
-};
-
-interface LoaderData {
-  user: User;
-}
-
-export const loader: LoaderFunction = async ({
-  request,
-}): Promise<LoaderData> => {
-  const user = await authGuard(request);
-  return { user };
 };
 
 interface ActionData {
@@ -75,7 +53,7 @@ export const action: ActionFunction = async ({
 export default function CreateProjectPage() {
   const data = useActionData<ActionData>();
   const transition = useTransition();
-  const { user } = useLoaderData<LoaderData>();
+  const { user } = useUser();
   const errors = data?.errors;
 
   const crumbs: Crumbs = [

@@ -1,40 +1,28 @@
-import { getFlagsByProjectEnv } from "~/modules/flags/services/getFlagsByProjectEnv";
-import { Flag, FlagEnv, FlagStatus } from "~/modules/flags/types";
-import { getProject } from "~/modules/projects/services/getProject";
-import { Project } from "~/modules/projects/types";
+import { FlagStatus } from "~/modules/flags/types";
 import { getSession } from "~/sessions";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { authGuard } from "~/modules/auth/services/auth-guard";
-import { User } from "~/modules/user/types";
 import { Header } from "~/components/Header";
-import { Environment } from "~/modules/environments/types";
 import { Typography } from "~/components/Typography";
 import { Crumbs } from "~/components/Breadcrumbs/types";
-import {
-  MetaFunction,
-  ActionFunction,
-  redirect,
-  LoaderFunction,
-} from "@remix-run/node";
-import { useLoaderData, useActionData, Form } from "@remix-run/react";
+import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
+import { useActionData, Form } from "@remix-run/react";
 import { CreateSchedulingFrom } from "~/modules/strategies/components/CreateSchedulingForm";
 import { SchedulingCreateDTO } from "~/modules/scheduling/types";
 import { createScheduling } from "~/modules/scheduling/services/createScheduling";
+import { useUser } from "~/modules/user/contexts/useUser";
+import { useProject } from "~/modules/projects/contexts/useProject";
+import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
+import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
+import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
+import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
+import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 
-interface MetaArgs {
-  data?: {
-    project?: Project;
-    environment?: Environment;
-    currentFlag?: Flag;
-  };
-}
-
-export const meta: MetaFunction = ({ data }: MetaArgs) => {
-  const projectName = data?.project?.name || "An error ocurred";
-  const envName = data?.environment?.name || "An error ocurred";
-  const flagName = data?.currentFlag?.name || "An error ocurred";
+export const meta: MetaFunction = ({ parentsData, params }) => {
+  const projectName = getProjectMetaTitle(parentsData);
+  const envName = getEnvMetaTitle(parentsData, params.env);
+  const flagName = getFlagMetaTitle(parentsData);
 
   return {
     title: `Progressively | ${projectName} | ${envName} | Flags | ${flagName} | Scheduling | Create`,
@@ -103,47 +91,13 @@ export const action: ActionFunction = async ({
   }
 };
 
-interface LoaderData {
-  project: Project;
-  environment: Environment;
-  currentFlag: Flag;
-  user: User;
-}
-
-export const loader: LoaderFunction = async ({
-  request,
-  params,
-}): Promise<LoaderData> => {
-  const user = await authGuard(request);
-  const session = await getSession(request.headers.get("Cookie"));
-  const authCookie = session.get("auth-cookie");
-
-  const project: Project = await getProject(params.id!, authCookie);
-
-  const flagsByEnv: Array<FlagEnv> = await getFlagsByProjectEnv(
-    params.env!,
-    authCookie
-  );
-
-  const environment = project.environments.find(
-    (env) => env.uuid === params.env
-  );
-
-  const currentFlag = flagsByEnv.find(
-    (flagEnv) => flagEnv.flagId === params.flagId!
-  )!.flag;
-
-  return {
-    project,
-    environment: environment!,
-    currentFlag,
-    user,
-  };
-};
-
 export default function SchedulingCreatePage() {
-  const { project, environment, currentFlag, user } =
-    useLoaderData<LoaderData>();
+  const { user } = useUser();
+  const { project } = useProject();
+  const { flagEnv } = useFlagEnv();
+  const { environment } = useEnvironment();
+
+  const currentFlag = flagEnv.flag;
 
   const actionData = useActionData<ActionData>();
 
