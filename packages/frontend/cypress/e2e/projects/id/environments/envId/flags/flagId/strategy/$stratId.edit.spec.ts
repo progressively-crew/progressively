@@ -106,7 +106,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
         });
         cy.findByRole("button", { name: "Save the strategy" }).click();
 
-        cy.wait(500); // Wait for the CSS transition
         cy.get(".error-box")
           .should("have.focus")
           .and("contain.text", "The following 2 errors have been found:")
@@ -125,7 +124,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
           "/dashboard/projects/1/environments/1/flags/1?strategyUpdated=true"
         );
 
-        cy.wait(500); // Wait for the CSS transition
         cy.get(".success-box")
           .should("have.focus")
           .and("contain.text", "The strategy has been successfully updated.");

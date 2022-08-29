@@ -49,7 +49,6 @@ describe("/dashboard/projects/create", () => {
     it("shows an error when submitting an empty form", () => {
       cy.findByRole("button", { name: "Create the project" }).click();
 
-      cy.wait(500); // Wait for the CSS transition
       cy.get(".error-box")
         .should("have.focus")
         .and(
@@ -64,7 +63,6 @@ describe("/dashboard/projects/create", () => {
       cy.findByLabelText("Project name").type("My new project");
       cy.findByRole("button", { name: "Create the project" }).click();
 
-      cy.wait(500); // Wait for the CSS transition
       cy.get(".success-box")
         .should("have.focus")
         .and("contain.text", "The project has been successfully created.");

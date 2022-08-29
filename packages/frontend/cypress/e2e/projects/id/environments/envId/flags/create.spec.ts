@@ -85,7 +85,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/create", () => {
       it("shows an error when submitting an empty form", () => {
         cy.findByRole("button", { name: "Create the feature flag" }).click();
 
-        cy.wait(500); // Wait for the CSS transition
         cy.get(".error-box")
           .should("have.focus")
           .and(
@@ -100,12 +99,11 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/create", () => {
         cy.checkA11y();
       });
 
-      it("creates a flag", () => {
+      it("creates a flag ", () => {
         cy.findByLabelText("Flag name").type("My new flag");
         cy.findByLabelText("Flag description").type("My new flag description");
         cy.findByRole("button", { name: "Create the feature flag" }).click();
 
-        cy.wait(500); // Wait for the CSS transition
         cy.get(".success-box")
           .should("have.focus")
           .and("contain.text", "The flag has been successfully created.");
