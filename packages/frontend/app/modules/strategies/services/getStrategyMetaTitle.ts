@@ -1,10 +1,10 @@
 import { StrategyCreateDTO } from "../types";
 
 export const getStrategyMetaTitle = (parentsData: any): string => {
-  const strategy: StrategyCreateDTO =
-    parentsData[
+  const strategy: StrategyCreateDTO | undefined =
+    parentsData?.[
       "routes/dashboard/projects/$id/environments/$env/flags/$flagId/strategies/$stratId"
-    ].strategy;
+    ]?.strategy;
 
-  return strategy.name;
+  return strategy?.name || "";
 };
