@@ -21,7 +21,6 @@ import { useActionData, useLoaderData } from "@remix-run/react";
 import { TagLine } from "~/components/Tagline";
 import { FiFlag } from "react-icons/fi";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
-import { SliderFlag } from "~/modules/flags/components/SliderFlag";
 import { activateFlag } from "~/modules/flags/services/activateFlag";
 import { changePercentageFlag } from "~/modules/flags/services/changePercentageFlag";
 import { useUser } from "~/modules/user/contexts/useUser";
@@ -31,6 +30,8 @@ import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
+import { Heading } from "~/components/Heading";
+import { Stack } from "~/components/Stack";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -186,67 +187,71 @@ export default function FlagInsights() {
         />
       }
     >
-      <Section id="flag-status">
-        <SectionHeader title="Insights" icon={<AiOutlineBarChart />} />
+      <Stack spacing={8}>
+        <Heading as={"h2"} fontSize="earth" icon={<AiOutlineBarChart />}>
+          Insights
+        </Heading>
 
-        {hits.length === 0 && (
-          <EmptyState
-            title="No hits found"
-            description={
-              <Typography>
-                There are no hits for this flag. Make sure to activate the flag
-                in order to collect hits.
-              </Typography>
-            }
-          />
-        )}
+        <div>
+          {hits.length === 0 && (
+            <EmptyState
+              title="No hits found"
+              description={
+                <Typography>
+                  There are no hits for this flag. Make sure to activate the
+                  flag in order to collect hits.
+                </Typography>
+              }
+            />
+          )}
 
-        {hits.length > 0 && (
-          <InsightsGrid>
-            <div>
-              <BigStat name="Evaluated as activated">
-                <p>{activatedCount}</p>
+          {hits.length > 0 && (
+            <InsightsGrid>
+              <div>
+                <BigStat name="Evaluated as activated">
+                  <p>{activatedCount}</p>
+                </BigStat>
+
+                <Spacer size={4} />
+
+                <BigStat name="Evaluated as NOT activated" secondary>
+                  <p>{notActivatedCount}</p>
+                </BigStat>
+              </div>
+
+              <BigStat name="Flag hits per date" id="count-per-date-chart">
+                <SwitchButton
+                  onClick={() =>
+                    setChartVariant((s) => (s === "chart" ? "table" : "chart"))
+                  }
+                >
+                  Switch to{" "}
+                  {chartVariant === "chart" ? "table view" : "chart view"}
+                </SwitchButton>
+
+                <Spacer size={4} />
+
+                <LineChart
+                  labelledBy="count-per-date-chart"
+                  variant={chartVariant}
+                  items={hits}
+                  dataKeys={[
+                    {
+                      name: "activated",
+                      color: theme.colors.nemesis.toString(),
+                    },
+                    {
+                      name: "notactivated",
+                      color: theme.colors.tyche.toString(),
+                      dashed: true,
+                    },
+                  ]}
+                />
               </BigStat>
-
-              <Spacer size={4} />
-
-              <BigStat name="Evaluated as NOT activated" secondary>
-                <p>{notActivatedCount}</p>
-              </BigStat>
-            </div>
-
-            <BigStat name="Flag hits per date" id="count-per-date-chart">
-              <SwitchButton
-                onClick={() =>
-                  setChartVariant((s) => (s === "chart" ? "table" : "chart"))
-                }
-              >
-                Switch to{" "}
-                {chartVariant === "chart" ? "table view" : "chart view"}
-              </SwitchButton>
-
-              <Spacer size={4} />
-
-              <LineChart
-                labelledBy="count-per-date-chart"
-                variant={chartVariant}
-                items={hits}
-                dataKeys={[
-                  {
-                    name: "activated",
-                    color: theme.colors.nemesis.toString(),
-                  },
-                  {
-                    name: "notactivated",
-                    color: theme.colors.tyche.toString(),
-                    dashed: true,
-                  },
-                ]}
-              />
-            </BigStat>
-          </InsightsGrid>
-        )}
-      </Section>
+            </InsightsGrid>
+          )}
+        </div>
+      </Stack>
     </DashboardLayout>
   );
 }

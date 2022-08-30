@@ -191,7 +191,7 @@ export default function FlagById() {
         ) : null
       }
     >
-      <Stack spacing={4}>
+      <Stack spacing={8}>
         <Heading as={"h2"} fontSize="earth" icon={<FaPowerOff />}>
           Rollout details
         </Heading>

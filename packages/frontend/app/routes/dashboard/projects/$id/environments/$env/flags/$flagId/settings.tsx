@@ -134,7 +134,7 @@ export default function FlagSettingPage() {
         />
       }
     >
-      <Stack spacing={4}>
+      <Stack spacing={8}>
         <Heading as={"h2"} fontSize="earth" icon={<AiOutlineSetting />}>
           Settings
         </Heading>
