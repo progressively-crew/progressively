@@ -23,6 +23,11 @@ export const RawButton = styled("button", {
   textAlign: "left",
   transition: "all 0.1s",
 
+  "& svg": {
+    borderRight: "1px solid currentColor",
+    paddingRight: "$spacing$3",
+  },
+
   "&:hover": {
     transform: "scale(1.05)",
   },
@@ -35,47 +40,84 @@ export const RawButton = styled("button", {
   variants: {
     small: {
       true: {
+        borderRadius: "$borderRadius$small",
         height: "$ctaSmall",
         padding: "0 $spacing$2",
+
+        "& svg": {
+          paddingRight: "$spacing$2",
+        },
       },
     },
     variant: {
       secondary: {
         background: "none",
-        border: "2px solid $nemesis",
+        border: "1px solid $nemesis",
         color: "$nemesis",
-        "& svg": {
-          color: "$nemesis",
-        },
+
         "&:active": {
           opacity: "0.9",
         },
       },
-      ghost: {
+      tertiary: {
         background: "none",
         border: "2px solid transparent",
-        color: "$hermes",
+        color: "$nemesis",
         "&:active": {
           opacity: "0.9",
         },
-      },
-      danger: {
-        background: "$tyche",
-        color: "$hades",
-        "&:active": {
-          opacity: "0.9",
+        "&:hover": {
+          background: "$heracles",
         },
       },
 
       primary: {
-        background: "$hermes",
-        color: "$hades",
+        background: "$nemesis",
+        color: "$apollo",
         "&:active": {
           opacity: "0.8",
         },
       },
     },
+
+    scheme: {
+      danger: {
+        background: "$tyche",
+        color: "$apollo",
+        "&:active": {
+          opacity: "0.9",
+        },
+      },
+    },
   },
+
+  compoundVariants: [
+    {
+      scheme: "danger",
+      variant: "secondary",
+      css: {
+        background: "transparent",
+        border: "1px solid $tyche",
+        color: "$tyche",
+
+        "& svg": {
+          color: "$tyche",
+        },
+      },
+    },
+    {
+      scheme: "danger",
+      variant: "tertiary",
+      css: {
+        background: "transparent",
+        color: "$tyche",
+
+        "& svg": {
+          color: "$tyche",
+        },
+      },
+    },
+  ],
 });
 
 export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
@@ -85,7 +127,8 @@ export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean;
   loadingText?: string;
   type?: "button" | "submit" | "reset";
-  variant?: "ghost" | "danger" | "primary" | "secondary";
+  variant?: "tertiary" | "primary" | "secondary";
+  scheme?: "default" | "danger";
   icon?: React.ReactNode;
   small?: boolean;
 }
@@ -110,7 +153,7 @@ export const Button = ({
         href={href}
         {...linkProps}
       >
-        <HStack spacing={2}>
+        <HStack spacing={3}>
           {icon}
           {children}
         </HStack>
@@ -125,8 +168,10 @@ export const Button = ({
       aria-disabled={isLoading}
       aria-label={isLoading ? loadingText : undefined}
     >
-      <HStack spacing={2}>
-        {isLoading ? <Spinner /> : icon}
+      <HStack spacing={3}>
+        {icon && isLoading && <Spinner />}
+        {icon && !isLoading && icon}
+
         {children}
       </HStack>
     </RawButton>

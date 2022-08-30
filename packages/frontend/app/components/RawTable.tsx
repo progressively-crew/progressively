@@ -65,10 +65,6 @@ const Table = styled("table", {
   "& tbody tr.clickable:active": {
     background: "$hera",
   },
-
-  "& a": {
-    color: "$hades",
-  },
 });
 
 export const RawTable = forwardRef((props: any, ref: any) => {

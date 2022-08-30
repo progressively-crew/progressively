@@ -40,8 +40,8 @@ const PageWrapper = styled("div", {
 
 const EndSection = styled("div", {
   overflow: "hidden", // scroll inside table elements,
-  padding: "$spacing$1", // show box shadow when overflowing,
-  margin: "-$spacing$1",
+  padding: "$spacing$3", // show box shadow when overflowing,
+  margin: "-$spacing$3",
 });
 
 const HeaderWrapper = styled("div", {

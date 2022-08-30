@@ -135,6 +135,7 @@ export default function DeleteProjectPage() {
       confirmAction={
         <Form method="post">
           <DeleteButton
+            variant="primary"
             type="submit"
             isLoading={transition.state === "submitting"}
             loadingText="Deleting the project, please wait..."
