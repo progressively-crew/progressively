@@ -1,7 +1,7 @@
 {
   "name": "@progressively/react",
   "author": "mfrachet",
-  "version": "0.0.1-alpha.9",
+  "version": "0.0.1-alpha.10",
   "license": "MIT",
   "main": "./lib/legacy/index.js",
   "exports": {
@@ -39,7 +39,7 @@
     "typescript": "^4.7.3"
   },
   "dependencies": {
-    "@progressively/sdk-js": "^0.0.1-alpha.9"
+    "@progressively/sdk-js": "^0.0.1-alpha.10"
   },
   "bundlesize": [
     {
