@@ -38,7 +38,7 @@ export const Menu = ({ to, hideOnMobile }: LogoProps) => {
       {/** This is the mobile menu toggler taking place of the logo on mobile */}
       {!hideOnMobile && (
         <Button
-          variant="ghost"
+          variant="tertiary"
           onClick={toggleNav}
           aria-label="Toggle navigation"
         >

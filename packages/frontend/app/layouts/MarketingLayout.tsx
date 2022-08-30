@@ -35,7 +35,7 @@ export const MarketingLayout = ({ children }: DashboardLayoutProps) => {
                 </Button>
               )}
               <Button
-                variant="ghost"
+                variant="tertiary"
                 href="https://github.com/progressively-crew/progressively"
                 icon={<AiOutlineGithub aria-hidden />}
               >
