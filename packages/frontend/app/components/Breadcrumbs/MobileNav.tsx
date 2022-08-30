@@ -93,12 +93,11 @@ export const MobileNav = ({ crumbs }: DesktopNavProps) => {
       <FocusTrap isActive={isNavOpened}>
         <MobileHeaderWrapper>
           <Button
-            variant="tertiary"
             aria-label="Close the menu"
             onClick={toggleNav}
             tabIndex={tabIndex}
           >
-            <IoMdClose aria-hidden />
+            <IoMdClose aria-hidden style={{ border: "none" }} />
           </Button>
         </MobileHeaderWrapper>
 
