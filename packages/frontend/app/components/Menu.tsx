@@ -1,7 +1,6 @@
 import { IoMdMenu } from "react-icons/io";
 import { styled } from "~/stitches.config";
 import { useNavToggle } from "./Breadcrumbs/hooks/useNavToggle";
-import { Button } from "./Buttons/Button";
 import { HideMobile } from "./HideMobile";
 import { DarkLogo } from "./Logo/DarkLogo";
 
@@ -30,6 +29,14 @@ const Wrapper = styled("div", {
   },
 });
 
+const Btn = styled("button", {
+  color: "$apollo",
+  background: "transparent",
+  border: "none",
+  height: "$cta",
+  width: "$cta",
+});
+
 export const Menu = ({ to, hideOnMobile }: LogoProps) => {
   const { toggleNav } = useNavToggle();
 
@@ -37,13 +44,9 @@ export const Menu = ({ to, hideOnMobile }: LogoProps) => {
     <Wrapper>
       {/** This is the mobile menu toggler taking place of the logo on mobile */}
       {!hideOnMobile && (
-        <Button
-          variant="tertiary"
-          onClick={toggleNav}
-          aria-label="Toggle navigation"
-        >
+        <Btn onClick={toggleNav} aria-label="Toggle navigation">
           <IoMdMenu aria-hidden />
-        </Button>
+        </Btn>
       )}
 
       <HideMobile>

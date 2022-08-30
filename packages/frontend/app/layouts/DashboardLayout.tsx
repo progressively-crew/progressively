@@ -42,6 +42,10 @@ const EndSection = styled("div", {
   overflow: "hidden", // scroll inside table elements,
   padding: "$spacing$3", // show box shadow when overflowing,
   margin: "-$spacing$3",
+
+  "@tablet": {
+    marginTop: "$spacing$3",
+  },
 });
 
 const HeaderWrapper = styled("div", {
