@@ -8,6 +8,7 @@ export interface SliderInputProps {
   name: string;
   label: string;
   onChange: (nextValue: number) => void;
+  labelledBy?: string;
 }
 
 const ThumbSize = 1.6;
@@ -79,11 +80,12 @@ export const SliderInput = ({
   percentageValue,
   name,
   label,
+  labelledBy,
   onChange,
 }: SliderInputProps) => {
   return (
     <Stack spacing={2}>
-      <Label htmlFor={`field-${name}`}>{label}</Label>
+      {!labelledBy && <Label htmlFor={`field-${name}`}>{label}</Label>}
 
       <HStack spacing={2}>
         <RangeInput
@@ -96,6 +98,7 @@ export const SliderInput = ({
           id={`field-${name}`}
           name={name}
           onChange={(e) => onChange(Number(e.target.value))}
+          aria-labelledBy={labelledBy}
         />
 
         <HStack aria-hidden>
