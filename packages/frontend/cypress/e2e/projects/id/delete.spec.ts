@@ -1,7 +1,7 @@
 describe("/dashboard/projects/[id]/delete", () => {
   describe("general verifications", () => {
     before(cy.seed);
-    after(cy.cleanup);
+    after(cy.cleanupDb);
 
     describe("not authenticated", () => {
       beforeEach(() => {
@@ -100,7 +100,7 @@ describe("/dashboard/projects/[id]/delete", () => {
 
   describe("removing projects (needs reseeding after each test)", () => {
     beforeEach(cy.seed);
-    afterEach(cy.cleanup);
+    afterEach(cy.cleanupDb);
 
     beforeEach(() => {
       cy.signIn("Marvin");

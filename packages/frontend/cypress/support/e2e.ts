@@ -29,7 +29,7 @@ import "cypress-axe";
 import { AvailableUsers } from "./constants";
 
 Cypress.Commands.add("seed", () => cy.task("seed"));
-Cypress.Commands.add("cleanup", () => cy.task("cleanup"));
+Cypress.Commands.add("cleanupDb", () => cy.task("cleanupDb"));
 
 Cypress.Commands.add("signIn", (userName?: keyof typeof AvailableUsers) => {
   const user = AvailableUsers[userName || "Marvin"];
