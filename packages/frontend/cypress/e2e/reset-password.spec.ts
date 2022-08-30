@@ -1,6 +1,6 @@
 describe("/reset-password", () => {
   before(cy.seed);
-  after(cy.cleanup);
+  after(cy.cleanupDb);
 
   describe("shared", () => {
     beforeEach(() => {

@@ -1,6 +1,6 @@
 describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/scheduling", () => {
   before(cy.seed);
-  after(cy.cleanup);
+  after(cy.cleanupDb);
 
   describe("not authenticated", () => {
     beforeEach(() => {

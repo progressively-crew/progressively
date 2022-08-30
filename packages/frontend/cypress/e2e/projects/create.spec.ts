@@ -1,6 +1,6 @@
 describe("/dashboard/projects/create", () => {
   before(cy.seed);
-  after(cy.cleanup);
+  after(cy.cleanupDb);
 
   beforeEach(() => {
     cy.visit("/dashboard/projects/create");

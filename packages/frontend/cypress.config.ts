@@ -29,7 +29,7 @@ module.exports = defineConfig({
         seed: () => {
           return seedDb().then(() => null);
         },
-        cleanup: () => {
+        cleanupDb: () => {
           return cleanupDb().then(() => null);
         },
         serverLogin: (accessToken) => {

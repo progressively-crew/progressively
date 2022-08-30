@@ -1,6 +1,6 @@
 describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategies/[stratId]/1/edit", () => {
   before(cy.seed);
-  after(cy.cleanup);
+  after(cy.cleanupDb);
 
   describe("not authenticated", () => {
     beforeEach(() => {

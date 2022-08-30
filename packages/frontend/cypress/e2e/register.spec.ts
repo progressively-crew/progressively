@@ -1,6 +1,6 @@
 describe("/register", () => {
   before(cy.seed);
-  after(cy.cleanup);
+  after(cy.cleanupDb);
 
   beforeEach(() => {
     cy.visit("/register");

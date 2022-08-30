@@ -32,7 +32,7 @@ declare global {
        * Cleanup the database for testing purpose
        * @example cy.seed()
        */
-      cleanup(): void;
+      cleanupDb(): void;
 
       /**
        * Browse through the sign in flow and authenticate the user

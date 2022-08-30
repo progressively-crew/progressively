@@ -1,6 +1,6 @@
 describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/delete", () => {
   before(cy.seed);
-  after(cy.cleanup);
+  after(cy.cleanupDb);
 
   describe("not authenticated", () => {
     beforeEach(() => {
@@ -72,7 +72,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/delete", 
 
     describe("removing flags (needs reseeding after each test)", () => {
       beforeEach(cy.seed);
-      afterEach(cy.cleanup);
+      afterEach(cy.cleanupDb);
 
       beforeEach(() => {
         cy.signIn("Marvin");
