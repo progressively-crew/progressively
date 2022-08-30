@@ -19,7 +19,7 @@ export const FlagMenu = ({ projectId, envId, flagId }: FlagMenuProps) => {
         to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}`}
         icon={<FaPowerOff />}
       >
-        Strategies
+        Rollout details
       </NavItem>
 
       <NavItem

@@ -22,7 +22,7 @@ import {
 import { TagLine } from "~/components/Tagline";
 import { FiFlag } from "react-icons/fi";
 import { StrategyList } from "~/modules/strategies/components/StrategyList";
-import { Card } from "~/components/Card";
+import { Card, CardContent } from "~/components/Card";
 import { Stack } from "~/components/Stack";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
 import { StrategyDescription } from "~/modules/strategies/components/StrategyDescription";
@@ -36,6 +36,8 @@ import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
+import { Heading } from "~/components/Heading";
+import { Tag } from "~/components/Tag";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -127,6 +129,7 @@ export default function FlagById() {
   const isStrategyAdded = searchParams.get("newStrategy") || undefined;
   const isStrategyUpdated = searchParams.get("strategyUpdated") || undefined;
   const isStrategyRemoved = searchParams.get("stratRemoved") || undefined;
+  const hasPercentageChanged = Boolean(actionData?.successChangePercentage);
 
   const currentFlag = flagEnv.flag;
   const isFlagActivated = flagEnv.status === FlagStatus.ACTIVATED;
@@ -161,13 +164,6 @@ export default function FlagById() {
           tagline={<TagLine icon={<FiFlag />}>FEATURE FLAG</TagLine>}
           title={currentFlag.name}
           startAction={<ToggleFlag isFlagActivated={isFlagActivated} />}
-          endAction={
-            <SliderFlag
-              isFlagActivated={isFlagActivated}
-              initialRolloutPercentage={flagEnv.rolloutPercentage}
-              isSuccessful={Boolean(actionData?.successChangePercentage)}
-            />
-          }
         />
       }
       subNav={
@@ -190,62 +186,103 @@ export default function FlagById() {
           <SuccessBox id="strategy-removed">
             The strategy has been successfully removed.
           </SuccessBox>
+        ) : hasPercentageChanged ? (
+          <SuccessBox id="percentage-changed">Percentage adjusted.</SuccessBox>
         ) : null
       }
     >
-      <Section id="concerned-audience">
-        <SectionHeader
-          title="Strategies"
-          icon={<FaPowerOff />}
-          description={
-            <StrategyDescription
-              isFlagActivated={isFlagActivated}
-              hasStrategies={hasStrategies}
-              rolloutPercentage={flagEnv.rolloutPercentage}
-            />
-          }
-          action={
-            hasStrategies && (
-              <CreateButton
-                to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
-              >
-                Create a strategy
-              </CreateButton>
-            )
-          }
-        />
+      <Stack spacing={8}>
+        <Heading as={"h2"} fontSize="earth" icon={<FaPowerOff />}>
+          Rollout details
+        </Heading>
 
-        {hasStrategies ? (
+        <Section id="summup">
           <Card>
-            <StrategyList
-              strategies={strategies}
-              projectId={project.uuid}
-              envId={environment.uuid}
-              flagId={currentFlag.uuid}
-            />
+            <CardContent>
+              <SectionHeader
+                title="Sum-up"
+                description={
+                  <StrategyDescription
+                    isFlagActivated={isFlagActivated}
+                    hasStrategies={hasStrategies}
+                    rolloutPercentage={flagEnv.rolloutPercentage}
+                  />
+                }
+              />
+            </CardContent>
           </Card>
-        ) : (
-          <Stack spacing={4}>
-            <EmptyState
-              title="No strategy found"
-              description={
-                <Typography>
-                  There are no strategies bound to this flag yet. In this case,
-                  when the flag is activated, every user will receive the{" "}
-                  {`"true"`} variant.
-                </Typography>
-              }
-              action={
-                <CreateButton
-                  to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
-                >
-                  Create a strategy
-                </CreateButton>
-              }
-            />
-          </Stack>
-        )}
-      </Section>
+        </Section>
+
+        <Section id="rollout-target">
+          <Card>
+            <CardContent>
+              <SectionHeader
+                title="Percentage of the audience"
+                description={
+                  <Typography>
+                    This is the percentage of people that will receive the
+                    variant <Tag>true</Tag> when the flag is activated.
+                  </Typography>
+                }
+              />
+
+              <SliderFlag
+                labelledBy="rollout-target"
+                initialRolloutPercentage={flagEnv.rolloutPercentage}
+              />
+            </CardContent>
+          </Card>
+        </Section>
+
+        <Section id="concerned-audience">
+          <Card>
+            <CardContent noBottom>
+              <SectionHeader
+                title="Strategies"
+                action={
+                  hasStrategies && (
+                    <CreateButton
+                      variant="secondary"
+                      small
+                      to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
+                    >
+                      Create a strategy
+                    </CreateButton>
+                  )
+                }
+              />
+            </CardContent>
+
+            {hasStrategies ? (
+              <StrategyList
+                strategies={strategies}
+                projectId={project.uuid}
+                envId={environment.uuid}
+                flagId={currentFlag.uuid}
+              />
+            ) : (
+              <EmptyState
+                title="No strategy found"
+                description={
+                  <Typography>
+                    There are no strategies bound to this flag yet. In this
+                    case, when the flag is activated, every user will receive
+                    the {`"true"`} variant.
+                  </Typography>
+                }
+                action={
+                  <CreateButton
+                    variant="secondary"
+                    to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
+                  >
+                    Create a strategy
+                  </CreateButton>
+                }
+              />
+            )}
+          </Card>
+        </Section>
+      </Stack>
     </DashboardLayout>
   );
 }

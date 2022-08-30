@@ -41,7 +41,7 @@ export const StrategyList = ({
             <td>
               <HStack spacing={4}>
                 <Button
-                  variant="secondary"
+                  variant="tertiary"
                   small
                   icon={<AiOutlineEdit />}
                   to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/strategies/${strat.uuid}/edit`}
@@ -50,6 +50,7 @@ export const StrategyList = ({
                 </Button>
 
                 <DeleteButton
+                  variant="tertiary"
                   small
                   to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/strategies/${strat.uuid}/delete`}
                 >

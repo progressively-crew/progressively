@@ -124,13 +124,6 @@ export default function FlagSettingPage() {
           tagline={<TagLine icon={<FiFlag />}>FEATURE FLAG</TagLine>}
           title={currentFlag.name}
           startAction={<ToggleFlag isFlagActivated={isFlagActivated} />}
-          endAction={
-            <SliderFlag
-              isFlagActivated={isFlagActivated}
-              initialRolloutPercentage={flagEnv.rolloutPercentage}
-              isSuccessful={Boolean(actionData?.successChangePercentage)}
-            />
-          }
         />
       }
       subNav={
@@ -141,7 +134,7 @@ export default function FlagSettingPage() {
         />
       }
     >
-      <Stack spacing={4}>
+      <Stack spacing={8}>
         <Heading as={"h2"} fontSize="earth" icon={<AiOutlineSetting />}>
           Settings
         </Heading>
