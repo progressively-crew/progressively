@@ -1,7 +1,6 @@
 import { IoMdMenu } from "react-icons/io";
 import { styled } from "~/stitches.config";
 import { useNavToggle } from "./Breadcrumbs/hooks/useNavToggle";
-import { Button } from "./Buttons/Button";
 import { HideMobile } from "./HideMobile";
 import { DarkLogo } from "./Logo/DarkLogo";
 
