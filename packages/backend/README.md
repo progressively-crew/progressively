@@ -1,1 +1,1 @@
-For documentation, make sure to check [the documentation website](https://progressively-crew.github.io/).
+For documentation, make sure to check [the documentation](https://github.com/progressively-crew/progressively/wiki).
