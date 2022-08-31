@@ -72,6 +72,8 @@ export const action: ActionFunction = async ({
     fieldValue,
   };
 
+  console.log("lol", strategy);
+
   try {
     await createStrategy(
       params.env!,

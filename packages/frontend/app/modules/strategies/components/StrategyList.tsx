@@ -32,7 +32,9 @@ export const StrategyList = ({
       <tbody>
         {strategies.map((strat) => (
           <tr key={strat.uuid}>
-            <td>{strat.name}</td>
+            <td>
+              <div>{strat.name}</div>
+            </td>
 
             <td>
               <StrategyCriteria strat={strat} />
