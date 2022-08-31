@@ -1,5 +1,8 @@
-FROM node:16-alpine3.14 AS builder
+FROM node:18-slim AS builder
 WORKDIR /app
+
+RUN apt-get update || : && apt-get install python -y
+RUN apt-get install python3-pip -y
 
 COPY package*.json ./
 COPY prisma ./prisma/
@@ -8,7 +11,7 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-FROM node:16-alpine3.14 AS runner
+FROM node:18 AS runner
 
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package*.json ./
