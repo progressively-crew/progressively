@@ -5,7 +5,7 @@ import { DateTimeInput } from "~/components/Fields/DateTimeInput";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { RadioField } from "~/components/Fields/RadioField";
 import { SliderInput } from "~/components/Fields/SliderInput";
-import { FlagStatus } from "../../../../../backend/src/flags/flags.status";
+import { FlagStatus } from "~/modules/flags/types";
 
 export const CreateSchedulingFrom = () => {
   const [percentage, setPercentage] = useState(100);
@@ -14,10 +14,7 @@ export const CreateSchedulingFrom = () => {
   const transition = useTransition();
   return (
     <FormGroup>
-      <DateTimeInput
-        label="When should the flag change status"
-        name="dateTime"
-      />
+      <DateTimeInput label="When should the flag change status" name="dateTime" />
 
       <RadioField
         title="What should be the next status"

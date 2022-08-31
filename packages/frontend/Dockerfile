@@ -2,6 +2,7 @@
 FROM node:16-alpine3.14 AS builder
 WORKDIR /app
 
+RUN apk add g++ make py3-pip
 COPY package*.json ./
 RUN npm install
 
