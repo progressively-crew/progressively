@@ -78,7 +78,6 @@ export const DateTimeInput = ({
       utc = d.toISOString();
     } catch (err: unknown) {
       // silently swallow
-      console.log("loool", err);
     }
   }
 

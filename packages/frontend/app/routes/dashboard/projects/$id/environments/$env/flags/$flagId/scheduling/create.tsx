@@ -71,8 +71,6 @@ export const action: ActionFunction = async ({
     rolloutPercentage,
   };
 
-  console.log("-------", "wtf", scheduling, "------");
-
   try {
     await createScheduling(
       params.env!,
