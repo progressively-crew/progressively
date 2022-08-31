@@ -98,7 +98,7 @@ export const SliderInput = ({
           id={`field-${name}`}
           name={name}
           onChange={(e) => onChange(Number(e.target.value))}
-          aria-labelledBy={labelledBy}
+          aria-labelledby={labelledBy}
         />
 
         <HStack aria-hidden>
