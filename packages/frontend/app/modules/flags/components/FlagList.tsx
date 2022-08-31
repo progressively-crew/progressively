@@ -30,9 +30,13 @@ const FlagRow = ({ flagEnv, projectId, envId }: FlagRowProps) => {
           {flagEnv.flag.name}
         </Link>
       </td>
-      <td>{flagEnv.flag.description}</td>
       <td>
-        <FlagStatus value={flagEnv.status} />
+        <div>{flagEnv.flag.description}</div>
+      </td>
+      <td>
+        <div>
+          <FlagStatus value={flagEnv.status} />
+        </div>
       </td>
       <td>
         <ButtonCopy toCopy={flagEnv.flag.key} small={true}>
