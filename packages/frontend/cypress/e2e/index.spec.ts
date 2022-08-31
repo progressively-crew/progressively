@@ -1,6 +1,6 @@
 import { WebSocket } from "mock-websocket";
 
-describe("/", () => {
+describe.skip("/", () => {
   beforeEach(() => {
     cy.intercept("GET", "https://api.progressively.app/sdk/*", {
       statusCode: 200,
