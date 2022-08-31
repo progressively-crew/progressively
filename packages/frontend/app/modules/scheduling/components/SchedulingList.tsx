@@ -45,13 +45,21 @@ export const SchedulingList = ({
       <tbody>
         {scheduling.map((schedule, index: number) => (
           <tr key={`${schedule.utc}-${schedule.rolloutPercentage}-${index}`}>
-            <td>{formatDate(schedule.utc)}</td>
             <td>
-              <FlagStatus value={schedule.status as FlagStatusType} />
+              <div>{formatDate(schedule.utc)}</div>
             </td>
-            <td>{schedule.rolloutPercentage}%</td>
             <td>
-              <ScheduleStatus value={schedule.schedulingStatus} />
+              <div>
+                <FlagStatus value={schedule.status as FlagStatusType} />
+              </div>
+            </td>
+            <td>
+              <div>{schedule.rolloutPercentage}%</div>
+            </td>
+            <td>
+              <div>
+                <ScheduleStatus value={schedule.schedulingStatus} />
+              </div>
             </td>
             <td>
               <DeleteButton

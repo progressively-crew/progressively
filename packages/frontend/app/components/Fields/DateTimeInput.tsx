@@ -66,7 +66,20 @@ export const DateTimeInput = ({
     ariaDescription = `hint-${name}`;
   }
 
-  const utc = date && time ? new Date(`${date} ${time}`).toISOString() : null;
+  let utc: string | null;
+
+  if (date && time) {
+    const [hours, minutes] = time.split(":");
+    const d = new Date(date);
+
+    try {
+      d.setHours(Number(hours));
+      d.setMinutes(Number(minutes));
+      utc = d.toISOString();
+    } catch (err: unknown) {
+      // silently swallow
+    }
+  }
 
   return (
     <Stack spacing={2}>
