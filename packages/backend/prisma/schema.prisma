@@ -81,9 +81,21 @@ model FlagEnvironment {
   status            String?           @default("NOT_ACTIVATED")
   strategies        RolloutStrategy[] @relation(name: "FlagEnvironmentToRolloutStrategy")
   rolloutPercentage Int               @default(100)
+  variantType       String
   scheduling        Schedule[]        @relation(name: "FlagEnvironmentToSchedule")
+  variants          Variant[]         @relation(name: "FlagEnvironmentToVariant")
 
   @@id([flagId, environmentId])
+}
+
+model Variant {
+  uuid                         String           @id @default(uuid())
+  rolloutPercentage            Int              @default(100)
+  isControl                    Boolean
+  value                        String
+  FlagEnvironment              FlagEnvironment? @relation(name: "FlagEnvironmentToVariant", fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
+  flagEnvironmentFlagId        String?
+  flagEnvironmentEnvironmentId String?
 }
 
 model FlagHit {

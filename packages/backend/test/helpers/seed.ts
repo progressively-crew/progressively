@@ -70,6 +70,7 @@ export const seedDb = async () => {
         environmentId: production.uuid,
         flagId: homePageFlag.uuid,
         rolloutPercentage: 100,
+        variantType: 'SimpleVariant',
       },
     });
 
@@ -92,6 +93,7 @@ export const seedDb = async () => {
         flagId: footerFlag.uuid,
         status: 'ACTIVATED',
         rolloutPercentage: 100,
+        variantType: 'SimpleVariant',
       },
     });
 
@@ -100,6 +102,7 @@ export const seedDb = async () => {
         environmentId: otherEnv.uuid,
         flagId: asideFlag.uuid,
         rolloutPercentage: 100,
+        variantType: 'SimpleVariant',
       },
     });
 
