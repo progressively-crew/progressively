@@ -4,7 +4,7 @@ import { FlagStatus } from '../flags/flags.status';
 import { ExtendedFlagEnv, StrategyService } from './strategy.service';
 import { ComparatorEnum, RolloutStrategy, StrategyRuleType } from './types';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
-import { VariantType } from '../flags/types';
+import { Variant, VariantType } from '../flags/types';
 
 describe('StrategyService', () => {
   let service: StrategyService;
@@ -123,6 +123,57 @@ describe('StrategyService', () => {
         );
 
         expect(shouldActivate).toBe(false);
+      });
+    });
+
+    describe('MultiVariate', () => {
+      beforeEach(() => {
+        const variants: Array<Variant> = [];
+
+        flagEnv.variantType = VariantType.MultiVariate;
+        flagEnv.variants = variants;
+        flagEnv.rolloutPercentage = 0;
+
+        flagEnv.variants.push(
+          {
+            value: 'First',
+            rolloutPercentage: 25,
+            isControl: true,
+            uuid: '1',
+          },
+          {
+            value: 'Second',
+            rolloutPercentage: 50,
+            isControl: false,
+            uuid: '2',
+          },
+          {
+            value: 'Third',
+            rolloutPercentage: 25,
+            isControl: false,
+            uuid: '3',
+          },
+        );
+      });
+
+      [
+        ['3', 'First'],
+        ['4321', 'Second'],
+        ['789', 'Second'],
+        ['123', 'Second'],
+        ['1000', 'Second'],
+        ['10000', 'Third'],
+        ['30000', 'Third'],
+      ].forEach(([id, expectedVariant]) => {
+        it(`gives the ${expectedVariant} variant when the user ID is ${id}`, async () => {
+          const shouldActivate = await service.resolveStrategies(
+            flagEnv,
+            [strategy],
+            { id },
+          );
+
+          expect(shouldActivate).toBe(expectedVariant);
+        });
       });
     });
 

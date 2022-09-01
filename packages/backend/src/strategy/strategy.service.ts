@@ -8,7 +8,7 @@ import {
   StrategyRuleType,
 } from './types';
 import { ComparatorFactory } from './comparators/comparatorFactory';
-import { getVariation, isInBucket } from './utils';
+import { genBucket, getVariation, isInBucket } from './utils';
 import { StrategyCreationDTO } from './strategy.dto';
 import { Flag, FlagEnvironment, VariantType } from '../flags/types';
 
@@ -23,20 +23,14 @@ export class StrategyService {
     flagEnv: ExtendedFlagEnv,
     fields: FieldRecord,
   ): boolean | string {
+    const bucketId = genBucket(flagEnv.flag.key, fields.id as string);
+
     if (flagEnv.variantType === VariantType.SimpleVariant) {
-      return isInBucket(
-        flagEnv.flag.key,
-        fields.id as string,
-        flagEnv.rolloutPercentage,
-      );
+      return isInBucket(bucketId, flagEnv.rolloutPercentage);
     }
 
     if (flagEnv.variantType === VariantType.MultiVariate) {
-      const variant = getVariation(
-        flagEnv.flag.key,
-        fields.id as string,
-        flagEnv.variants,
-      );
+      const variant = getVariation(bucketId, flagEnv.variants);
 
       return variant.value;
     }
