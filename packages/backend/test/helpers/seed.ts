@@ -92,7 +92,7 @@ export const seedDb = async () => {
         environmentId: production.uuid,
         flagId: footerFlag.uuid,
         status: 'ACTIVATED',
-        rolloutPercentage: 100,
+        rolloutPercentage: 0,
         variantType: 'SimpleVariant',
       },
     });
