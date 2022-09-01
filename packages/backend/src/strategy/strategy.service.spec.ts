@@ -58,17 +58,7 @@ describe('StrategyService', () => {
   });
 
   describe('resolveStrategies', () => {
-    describe('no strategies', () => {
-      it('always returns true when no strategies are found', async () => {
-        const shouldActivate = await service.resolveStrategies(flagEnv, [], {
-          id: 'user-id-123',
-        });
-
-        expect(shouldActivate).toBe(true);
-      });
-    });
-
-    describe('Percentage rollout', () => {
+    describe('Simple Variant', () => {
       it('returns true when the rollout percentage is 100%', async () => {
         flagEnv.rolloutPercentage = 100;
 
@@ -136,7 +126,15 @@ describe('StrategyService', () => {
       });
     });
 
-    describe('StrategyRuleType', () => {
+    describe('Strategies', () => {
+      it('always returns true when no strategies are found', async () => {
+        const shouldActivate = await service.resolveStrategies(flagEnv, [], {
+          id: 'user-id-123',
+        });
+
+        expect(shouldActivate).toBe(true);
+      });
+
       it('returns true when the StrategyRuleType is field and that the field value matches', async () => {
         strategy.strategyRuleType = StrategyRuleType.Field;
         strategy.fieldName = 'email';
@@ -189,7 +187,7 @@ describe('StrategyService', () => {
         expect(shouldActivate).toBe(false);
       });
 
-      describe('comparators', () => {
+      describe('Comparators', () => {
         it('returns true when the StrategyRuleType is field and that the field name DOES NOT match with the NEQ comparator', async () => {
           strategy.strategyRuleType = StrategyRuleType.Field;
           strategy.fieldName = 'email';
