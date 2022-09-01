@@ -208,7 +208,7 @@ export class FlagsService {
   }
 
   resolveFlagStatus(flagEnv: PopulatedFlagEnv, fields: FieldRecord) {
-    let status: boolean;
+    let status: boolean | string;
 
     if (flagEnv.status === FlagStatus.ACTIVATED) {
       status = this.strategyService.resolveStrategies(

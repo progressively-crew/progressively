@@ -8,9 +8,9 @@ import {
   StrategyRuleType,
 } from './types';
 import { ComparatorFactory } from './comparators/comparatorFactory';
-import { isInBucket } from './utils';
+import { genBucket, getVariation, isInBucket } from './utils';
 import { StrategyCreationDTO } from './strategy.dto';
-import { Flag, FlagEnvironment } from '../flags/types';
+import { Flag, FlagEnvironment, VariantType } from '../flags/types';
 
 export interface ExtendedFlagEnv extends FlagEnvironment {
   flag: Flag;
@@ -19,29 +19,26 @@ export interface ExtendedFlagEnv extends FlagEnvironment {
 export class StrategyService {
   constructor(private prisma: PrismaService) {}
 
-  private _checkActivationType(
-    strategy: RolloutStrategy,
+  private resolveFlagVariantValue(
     flagEnv: ExtendedFlagEnv,
     fields: FieldRecord,
-  ) {
-    // Return the flag to everyone, even people with no ID fields when the percentage is 100%
-    if (flagEnv.rolloutPercentage === 100) return true;
+  ): boolean | string {
+    const bucketId = genBucket(flagEnv.flag.key, fields.id as string);
 
-    // Early break when the field is is not defined, except when the rollout is 100%
-    if (!fields?.id) return false;
-
-    return isInBucket(
-      flagEnv.flag.key,
-      fields.id as string,
-      flagEnv.rolloutPercentage,
-    );
-  }
-
-  private _checkStrategyRule(strategy: RolloutStrategy, fields: FieldRecord) {
-    if (strategy.strategyRuleType === StrategyRuleType.Default) {
-      return true;
+    if (flagEnv.variantType === VariantType.SimpleVariant) {
+      return isInBucket(bucketId, flagEnv.rolloutPercentage);
     }
 
+    if (flagEnv.variantType === VariantType.MultiVariate) {
+      const variant = getVariation(bucketId, flagEnv.variants);
+
+      return variant.value;
+    }
+
+    return false;
+  }
+
+  private isValidStrategy(strategy: RolloutStrategy, fields: FieldRecord) {
     if (strategy.strategyRuleType === StrategyRuleType.Field) {
       const fieldComparator = strategy.fieldComparator as ComparatorEnum;
       const isValid = ComparatorFactory.create(fieldComparator);
@@ -65,24 +62,24 @@ export class StrategyService {
     strategies: Array<RolloutStrategy>,
     fields: FieldRecord,
   ) {
+    if (flagEnv.rolloutPercentage === 100) return true;
+
+    // No users, we can't make assumptions, should be very rare
+    if (!fields?.id) return false;
+
+    const variant = this.resolveFlagVariantValue(flagEnv, fields);
+
+    if (Boolean(variant)) {
+      return variant;
+    }
+
     // Always return true when no strategies are passed
     if (strategies.length === 0) return true;
 
     for (const strategy of strategies) {
-      const isValidStrategyRule = this._checkStrategyRule(strategy, fields);
+      const isValidStrategyRule = this.isValidStrategy(strategy, fields);
 
-      // Already break when not matching the strat rule
-      if (!isValidStrategyRule) return false;
-
-      const isValidActivationType = this._checkActivationType(
-        strategy,
-        flagEnv,
-        fields,
-      );
-
-      if (isValidActivationType) {
-        return true;
-      }
+      if (isValidStrategyRule) return true;
     }
 
     return false;

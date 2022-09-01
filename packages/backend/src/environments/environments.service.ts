@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import camelcase from 'camelcase';
-import { VariantTypes } from '../flags/types';
+import { VariantType } from '../flags/types';
 import { PrismaService } from '../database/prisma.service';
 import { FlagAlreadyExists } from './errors';
 
@@ -27,6 +27,11 @@ export class EnvironmentsService {
         flag: true,
         strategies: true,
         scheduling: true,
+        variants: {
+          orderBy: {
+            rolloutPercentage: 'asc',
+          },
+        },
       },
     });
   }
@@ -75,7 +80,7 @@ export class EnvironmentsService {
           flagId: flag.uuid,
           environmentId: env,
           rolloutPercentage: 100,
-          variantType: VariantTypes.SimpleVariant,
+          variantType: VariantType.SimpleVariant,
         },
       });
     }

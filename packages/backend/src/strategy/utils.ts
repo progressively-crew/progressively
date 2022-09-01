@@ -1,23 +1,35 @@
 import { x86 as murmur } from 'murmurhash3js';
+import { Variant } from '../flags/types';
 
 const BUCKET_COUNT = 10000; // number of buckets
 const MAX_INT_32 = Math.pow(2, 32);
 
-export const isInBucket = (
-  key: string,
-  userId: string,
-  rolloutPercentage: number,
-) => {
-  const bucket = genBucket(key, userId);
+export const getVariation = (
+  bucketId: number,
+  orderedVariants: Array<Variant>,
+): Variant => {
+  let cumulative = 0;
+  for (let variant of orderedVariants) {
+    const countOfConcernedBuckets =
+      BUCKET_COUNT * (variant.rolloutPercentage / 100);
 
-  return isInRange(bucket, rolloutPercentage);
+    cumulative += countOfConcernedBuckets;
+
+    if (bucketId < cumulative) {
+      return variant;
+    }
+  }
+
+  // We guarantee that the control variant always exists and can't be removed
+  const controlVariant = orderedVariants.find((variant) => variant.isControl)!;
+  return controlVariant;
 };
 
-export const isInRange = (bucket: number, rolloutPercentage: number) => {
+export const isInBucket = (bucketId: number, rolloutPercentage: number) => {
   const higherBoundActivationThreshold =
     BUCKET_COUNT * (rolloutPercentage / 100);
 
-  return bucket < higherBoundActivationThreshold;
+  return bucketId < higherBoundActivationThreshold;
 };
 
 export const genBucket = (key: string, userId: string) => {
