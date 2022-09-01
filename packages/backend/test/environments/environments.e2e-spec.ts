@@ -238,6 +238,89 @@ describe('Environments (e2e)', () => {
         });
     });
 
+    describe('multi variate', () => {
+      it('gives a 400 when variants are missing but type is multi variate', async () => {
+        const access_token = await authenticate(app);
+
+        return request(app.getHttpServer())
+          .post('/environments/1/flags')
+          .set('Authorization', `Bearer ${access_token}`)
+          .send({
+            name: 'New flag',
+            description: 'The new flag aims to xxx',
+            environments: ['1'],
+            variantType: 'MultiVariate',
+          })
+          .expect(400)
+          .expect({
+            statusCode: 400,
+            message: 'Validation failed',
+            error: 'Bad Request',
+          });
+      });
+
+      [
+        ['rolloutPercentage', undefined],
+        ['isControl', undefined],
+        ['value', undefined],
+      ].forEach(([field, value]) => {
+        it(`gives a 400 when the field passed (${field}) is invalid in multi variate`, async () => {
+          const access_token = await authenticate(app);
+          const variant = {
+            uuid: '123',
+            rolloutPercentage: 100,
+            isControl: true,
+            value: 'abcd',
+            [field]: value,
+          };
+
+          return request(app.getHttpServer())
+            .post('/environments/1/flags')
+            .set('Authorization', `Bearer ${access_token}`)
+            .send({
+              name: 'New flag',
+              description: 'The new flag aims to xxx',
+              environments: ['1'],
+              variantType: 'MultiVariate',
+              variants: [variant],
+            })
+            .expect(400)
+            .expect({
+              statusCode: 400,
+              message: 'Validation failed',
+              error: 'Bad Request',
+            });
+        });
+      });
+
+      it(`gives a 201 when flagEnv has been created with variations`, async () => {
+        const access_token = await authenticate(app);
+        const variant = {
+          uuid: '123',
+          rolloutPercentage: 100,
+          isControl: true,
+          value: 'abcd',
+        };
+
+        return request(app.getHttpServer())
+          .post('/environments/1/flags')
+          .set('Authorization', `Bearer ${access_token}`)
+          .send({
+            name: 'New flag',
+            description: 'The new flag aims to xxx',
+            environments: ['1'],
+            variantType: 'MultiVariate',
+            variants: [variant],
+          })
+          .expect(400)
+          .expect({
+            statusCode: 400,
+            message: 'Validation failed',
+            error: 'Bad Request',
+          });
+      });
+    });
+
     it('gives a 201 when the flag is created', async () => {
       const access_token = await authenticate(app);
       const res = await request(app.getHttpServer())
