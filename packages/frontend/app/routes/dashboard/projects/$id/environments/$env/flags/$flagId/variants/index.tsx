@@ -103,7 +103,7 @@ export default function VariantsOfFlag() {
       label: environment.name,
     },
     {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/scheduling`,
+      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/variants`,
       label: currentFlag.name,
     },
   ];
