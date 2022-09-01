@@ -239,7 +239,7 @@ describe('Environments (e2e)', () => {
     });
 
     describe('multi variate', () => {
-      it("gives a 400 when there's no name field when variants are missing in multi variate", async () => {
+      it('gives a 400 when variants are missing but type is multi variate', async () => {
         const access_token = await authenticate(app);
 
         return request(app.getHttpServer())
