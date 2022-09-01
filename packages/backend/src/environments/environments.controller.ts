@@ -18,7 +18,11 @@ import { UserRoles } from '../users/roles';
 import { HasEnvironmentAccessGuard } from './guards/hasEnvAccess';
 import { ValidationPipe } from '../shared/pipes/ValidationPipe';
 import { FlagAlreadyExists } from './errors';
-import { FlagCreationSchema, FlagCreationDTO } from '../flags/flags.dto';
+import {
+  FlagCreationSchema,
+  FlagCreationDTO,
+  VariantCreationDTO,
+} from '../flags/flags.dto';
 import { User } from '../users/types';
 import { VariantType } from '../flags/types';
 
@@ -51,6 +55,17 @@ export class EnvironmentsController {
   ) {
     const environments = body.environments;
     const user = req.user as User;
+
+    if (body.variantType === VariantType.MultiVariate) {
+      const variants: Array<VariantCreationDTO> = body.variants || [];
+      const hasControlVariant = variants.some((variant) => variant.isControl);
+
+      if (!hasControlVariant) {
+        throw new BadRequestException(
+          'At least one variant should be the control variant',
+        );
+      }
+    }
 
     for (const env of environments) {
       const hasAccessToEnv = await this.envService.hasPermissionOnEnv(
