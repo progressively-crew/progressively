@@ -3,6 +3,7 @@ import camelcase from 'camelcase';
 import { VariantType } from '../flags/types';
 import { PrismaService } from '../database/prisma.service';
 import { FlagAlreadyExists } from './errors';
+import { VariantCreationDTO } from 'src/flags/flags.dto';
 
 @Injectable()
 export class EnvironmentsService {
@@ -50,6 +51,8 @@ export class EnvironmentsService {
     name: string,
     description: string,
     environments: Array<string>,
+    variantType: VariantType,
+    variants: Array<VariantCreationDTO>,
   ) {
     const flagKey = camelcase(name);
 
@@ -75,14 +78,26 @@ export class EnvironmentsService {
     });
 
     for (const env of environments) {
-      await this.prisma.flagEnvironment.create({
+      const flagEnv = await this.prisma.flagEnvironment.create({
         data: {
           flagId: flag.uuid,
           environmentId: env,
           rolloutPercentage: 100,
-          variantType: VariantType.SimpleVariant,
+          variantType,
         },
       });
+
+      for (const variant of variants) {
+        await this.prisma.variant.create({
+          data: {
+            flagEnvironmentFlagId: flagEnv.flagId,
+            flagEnvironmentEnvironmentId: flagEnv.environmentId,
+            rolloutPercentage: variant.rolloutPercentage,
+            isControl: variant.isControl,
+            value: variant.value,
+          },
+        });
+      }
     }
 
     return flag;

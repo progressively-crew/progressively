@@ -20,6 +20,7 @@ import { ValidationPipe } from '../shared/pipes/ValidationPipe';
 import { FlagAlreadyExists } from './errors';
 import { FlagCreationSchema, FlagCreationDTO } from '../flags/flags.dto';
 import { User } from '../users/types';
+import { VariantType } from '../flags/types';
 
 @ApiBearerAuth()
 @Controller('environments')
@@ -70,6 +71,8 @@ export class EnvironmentsController {
         body.name,
         body.description,
         body.environments,
+        body.variantType || VariantType.SimpleVariant,
+        body.variants || [],
       );
     } catch (e) {
       if (e instanceof FlagAlreadyExists) {
