@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { prisma, PrismaClient } from '@prisma/client';
 import { UserRoles } from '../../src/users/roles';
 import { seedPasswordReset, seedUsers } from './seeds/users';
 import { seedProjects } from './seeds/projects';
@@ -62,6 +62,14 @@ export const seedDb = async () => {
       },
     });
 
+    await prismaClient.userProject.create({
+      data: {
+        projectId: otherFromSeeding.uuid,
+        userId: marvin.uuid,
+        role: UserRoles.User,
+      },
+    });
+
     // Flag setup
     const [homePageFlag, footerFlag, asideFlag] = await seedFlags(prismaClient);
 
@@ -97,14 +105,38 @@ export const seedDb = async () => {
       },
     });
 
-    const otherFlagEnv = await prismaClient.flagEnvironment.create({
+    // Multi variate flag
+    const asideFlagEnv = await prismaClient.flagEnvironment.create({
       data: {
         environmentId: otherEnv.uuid,
         flagId: asideFlag.uuid,
         rolloutPercentage: 100,
-        variantType: 'SimpleVariant',
+        variantType: 'MultiVariate',
       },
     });
+
+    await prismaClient.variant.create({
+      data: {
+        uuid: '1',
+        rolloutPercentage: 12,
+        value: 'Control',
+        isControl: true,
+        flagEnvironmentFlagId: asideFlagEnv.flagId,
+        flagEnvironmentEnvironmentId: asideFlagEnv.environmentId,
+      },
+    });
+
+    await prismaClient.variant.create({
+      data: {
+        uuid: '2',
+        rolloutPercentage: 88,
+        value: 'Other',
+        isControl: false,
+        flagEnvironmentFlagId: asideFlagEnv.flagId,
+        flagEnvironmentEnvironmentId: asideFlagEnv.environmentId,
+      },
+    });
+    // End of Multi variate flag
 
     await prismaClient.rolloutStrategy.create({
       data: {
@@ -132,8 +164,8 @@ export const seedDb = async () => {
     await prismaClient.rolloutStrategy.create({
       data: {
         uuid: '3',
-        flagEnvironmentFlagId: otherFlagEnv.flagId,
-        flagEnvironmentEnvironmentId: otherFlagEnv.environmentId,
+        flagEnvironmentFlagId: asideFlagEnv.flagId,
+        flagEnvironmentEnvironmentId: asideFlagEnv.environmentId,
         name: 'Super strategy',
         strategyRuleType: 'default',
       },

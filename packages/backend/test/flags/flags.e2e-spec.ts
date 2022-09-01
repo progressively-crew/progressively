@@ -839,4 +839,70 @@ describe('FlagsController (e2e)', () => {
       });
     });
   });
+
+  describe('/environments/3/flags/3/variants (GET)', () => {
+    it('gives a 401 when the user is not authenticated', () =>
+      verifyAuthGuard(app, '/environments/3/flags/3/variants', 'get'));
+
+    it('gives a 403 when trying to access a valid project but an invalid env', async () => {
+      const access_token = await authenticate(app);
+
+      return request(app.getHttpServer())
+        .get('/environments/4/flags/3/variants')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('gives a 403 when the user requests a forbidden project', async () => {
+      const access_token = await authenticate(
+        app,
+        'jane.doe@gmail.com',
+        'password',
+      );
+
+      return request(app.getHttpServer())
+        .get('/environments/3/flags/3/variants')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('gives the variants array', async () => {
+      const access_token = await authenticate(app);
+
+      const response = await request(app.getHttpServer())
+        .get('/environments/3/flags/3/variants')
+        .set('Authorization', `Bearer ${access_token}`);
+
+      expect(response.status).toBe(200);
+
+      expect(response.body).toMatchObject([
+        {
+          flagEnvironmentEnvironmentId: '3',
+          flagEnvironmentFlagId: '3',
+          isControl: true,
+          rolloutPercentage: 12,
+          uuid: '1',
+          value: 'Control',
+        },
+        {
+          flagEnvironmentEnvironmentId: '3',
+          flagEnvironmentFlagId: '3',
+          isControl: false,
+          rolloutPercentage: 88,
+          uuid: '2',
+          value: 'Other',
+        },
+      ]);
+    });
+  });
 });

@@ -288,4 +288,13 @@ export class FlagsService {
 
     return nextFlagEnv;
   }
+
+  listVariants(envId: string, flagId: string) {
+    return this.prisma.variant.findMany({
+      where: {
+        flagEnvironmentEnvironmentId: envId,
+        flagEnvironmentFlagId: flagId,
+      },
+    });
+  }
 }

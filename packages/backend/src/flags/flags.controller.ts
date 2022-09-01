@@ -169,4 +169,14 @@ export class FlagsController {
   ): Promise<any> {
     return this.strategyService.listScheduling(envId, flagId);
   }
+
+  @Get('environments/:envId/flags/:flagId/variants')
+  @UseGuards(HasFlagEnvAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  getVariants(
+    @Param('envId') envId: string,
+    @Param('flagId') flagId: string,
+  ): Promise<any> {
+    return this.flagService.listVariants(envId, flagId);
+  }
 }
