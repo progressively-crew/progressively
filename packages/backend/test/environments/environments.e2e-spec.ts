@@ -267,7 +267,6 @@ describe('Environments (e2e)', () => {
         it(`gives a 400 when the field passed (${field}) is invalid in multi variate`, async () => {
           const access_token = await authenticate(app);
           const variant = {
-            uuid: '123',
             rolloutPercentage: 100,
             isControl: true,
             value: 'abcd',
@@ -293,12 +292,11 @@ describe('Environments (e2e)', () => {
         });
       });
 
-      it(`gives a 201 when flagEnv has been created with variations`, async () => {
+      it(`gives a 400 when no variations are control`, async () => {
         const access_token = await authenticate(app);
         const variant = {
-          uuid: '123',
           rolloutPercentage: 100,
-          isControl: true,
+          isControl: false,
           value: 'abcd',
         };
 
@@ -315,9 +313,30 @@ describe('Environments (e2e)', () => {
           .expect(400)
           .expect({
             statusCode: 400,
-            message: 'Validation failed',
+            message: 'At least one variant should be the control variant',
             error: 'Bad Request',
           });
+      });
+
+      it(`gives a 201 when flagEnv has been created with variations`, async () => {
+        const access_token = await authenticate(app);
+        const variant = {
+          rolloutPercentage: 100,
+          isControl: true,
+          value: 'abcd',
+        };
+
+        return request(app.getHttpServer())
+          .post('/environments/1/flags')
+          .set('Authorization', `Bearer ${access_token}`)
+          .send({
+            name: 'New flag',
+            description: 'The new flag aims to xxx',
+            environments: ['1'],
+            variantType: 'MultiVariate',
+            variants: [variant],
+          })
+          .expect(201);
       });
     });
 
