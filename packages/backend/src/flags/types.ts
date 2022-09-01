@@ -21,6 +21,8 @@ export interface FlagEnvironment {
   environmentId: string;
   status: string;
   rolloutPercentage: number;
+  variantType: VariantType;
+  variants: Array<Variant>;
 }
 
 interface Schedule {
@@ -43,7 +45,7 @@ export enum SchedulingStatus {
   HAS_RUN = 'HAS_RUN',
 }
 
-export enum VariantTypes {
+export enum VariantType {
   SimpleVariant = 'SimpleVariant',
   MultiVariate = 'MultiVariate',
 }

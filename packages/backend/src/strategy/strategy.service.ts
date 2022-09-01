@@ -8,9 +8,9 @@ import {
   StrategyRuleType,
 } from './types';
 import { ComparatorFactory } from './comparators/comparatorFactory';
-import { isInBucket } from './utils';
+import { getVariation, isInBucket } from './utils';
 import { StrategyCreationDTO } from './strategy.dto';
-import { Flag, FlagEnvironment } from '../flags/types';
+import { Flag, FlagEnvironment, VariantType } from '../flags/types';
 
 export interface ExtendedFlagEnv extends FlagEnvironment {
   flag: Flag;
@@ -20,21 +20,34 @@ export class StrategyService {
   constructor(private prisma: PrismaService) {}
 
   private _checkActivationType(
-    strategy: RolloutStrategy,
     flagEnv: ExtendedFlagEnv,
     fields: FieldRecord,
-  ) {
+  ): boolean | string {
     // Return the flag to everyone, even people with no ID fields when the percentage is 100%
     if (flagEnv.rolloutPercentage === 100) return true;
 
     // Early break when the field is is not defined, except when the rollout is 100%
     if (!fields?.id) return false;
 
-    return isInBucket(
-      flagEnv.flag.key,
-      fields.id as string,
-      flagEnv.rolloutPercentage,
-    );
+    if (flagEnv.variantType === VariantType.SimpleVariant) {
+      return isInBucket(
+        flagEnv.flag.key,
+        fields.id as string,
+        flagEnv.rolloutPercentage,
+      );
+    }
+
+    if (flagEnv.variantType === VariantType.MultiVariate) {
+      const variant = getVariation(
+        flagEnv.flag.key,
+        fields.id as string,
+        flagEnv.variants,
+      );
+
+      return variant.value;
+    }
+
+    return false;
   }
 
   private _checkStrategyRule(strategy: RolloutStrategy, fields: FieldRecord) {
@@ -65,6 +78,12 @@ export class StrategyService {
     strategies: Array<RolloutStrategy>,
     fields: FieldRecord,
   ) {
+    const variant = this._checkActivationType(flagEnv, fields);
+
+    if (Boolean(variant)) {
+      return variant;
+    }
+
     // Always return true when no strategies are passed
     if (strategies.length === 0) return true;
 
@@ -73,16 +92,6 @@ export class StrategyService {
 
       // Already break when not matching the strat rule
       if (!isValidStrategyRule) return false;
-
-      const isValidActivationType = this._checkActivationType(
-        strategy,
-        flagEnv,
-        fields,
-      );
-
-      if (isValidActivationType) {
-        return true;
-      }
     }
 
     return false;
