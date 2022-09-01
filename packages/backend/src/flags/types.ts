@@ -42,3 +42,15 @@ export enum SchedulingStatus {
   NOT_RUN = 'NOT_RUN',
   HAS_RUN = 'HAS_RUN',
 }
+
+export enum VariantTypes {
+  SimpleVariant = 'SimpleVariant',
+  MultiVariate = 'MultiVariate',
+}
+
+export interface Variant {
+  uuid: string;
+  rolloutPercentage: number;
+  isControl: boolean;
+  value: string;
+}
