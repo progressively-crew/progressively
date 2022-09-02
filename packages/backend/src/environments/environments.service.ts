@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import camelcase from 'camelcase';
-import { VariantCreationDTO } from 'src/flags/flags.dto';
 import { PrismaService } from '../database/prisma.service';
 import { FlagAlreadyExists } from './errors';
 
@@ -50,7 +49,6 @@ export class EnvironmentsService {
     name: string,
     description: string,
     environments: Array<string>,
-    variants: Array<VariantCreationDTO>,
   ) {
     const flagKey = camelcase(name);
 
@@ -76,25 +74,13 @@ export class EnvironmentsService {
     });
 
     for (const env of environments) {
-      const flagEnv = await this.prisma.flagEnvironment.create({
+      await this.prisma.flagEnvironment.create({
         data: {
           flagId: flag.uuid,
           environmentId: env,
           rolloutPercentage: 100,
         },
       });
-
-      for (const variant of variants) {
-        await this.prisma.variant.create({
-          data: {
-            flagEnvironmentFlagId: flagEnv.flagId,
-            flagEnvironmentEnvironmentId: flagEnv.environmentId,
-            rolloutPercentage: variant.rolloutPercentage,
-            isControl: variant.isControl,
-            value: variant.value,
-          },
-        });
-      }
     }
 
     return flag;
