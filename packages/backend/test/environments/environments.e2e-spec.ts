@@ -239,25 +239,6 @@ describe('Environments (e2e)', () => {
     });
 
     describe('multi variate', () => {
-      it('gives a 400 when variants are missing but type is multi variate', async () => {
-        const access_token = await authenticate(app);
-
-        return request(app.getHttpServer())
-          .post('/environments/1/flags')
-          .set('Authorization', `Bearer ${access_token}`)
-          .send({
-            name: 'New flag',
-            description: 'The new flag aims to xxx',
-            environments: ['1'],
-          })
-          .expect(400)
-          .expect({
-            statusCode: 400,
-            message: 'Validation failed',
-            error: 'Bad Request',
-          });
-      });
-
       [
         ['rolloutPercentage', undefined],
         ['isControl', undefined],
