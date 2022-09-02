@@ -310,4 +310,14 @@ export class FlagsService {
       },
     });
   }
+
+  deleteVariantFlag(envId: string, flagId: string, variantId: string) {
+    return this.prisma.variant.deleteMany({
+      where: {
+        flagEnvironmentFlagId: flagId,
+        flagEnvironmentEnvironmentId: envId,
+        uuid: variantId,
+      },
+    });
+  }
 }
