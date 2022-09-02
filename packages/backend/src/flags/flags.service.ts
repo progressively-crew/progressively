@@ -9,6 +9,7 @@ import {
 } from './types';
 import { FieldRecord } from '../strategy/types';
 import { WebsocketGateway } from '../websocket/websocket.gateway';
+import { VariantCreationDTO } from './flags.dto';
 
 @Injectable()
 export class FlagsService {
@@ -296,5 +297,25 @@ export class FlagsService {
         flagEnvironmentFlagId: flagId,
       },
     });
+  }
+
+  async createVariants(
+    envId: string,
+    flagId: string,
+    variants: Array<VariantCreationDTO>,
+  ) {
+    const promises = variants.map((variant) =>
+      this.prisma.variant.create({
+        data: {
+          flagEnvironmentEnvironmentId: envId,
+          flagEnvironmentFlagId: flagId,
+          isControl: Boolean(variant.isControl),
+          rolloutPercentage: variant.rolloutPercentage,
+          value: variant.value,
+        },
+      }),
+    );
+
+    return await Promise.all(promises);
   }
 }

@@ -4,11 +4,11 @@ import {
   ArgumentMetadata,
   BadRequestException,
 } from '@nestjs/common';
-import { ObjectSchema } from 'joi';
+import { ArraySchema, ObjectSchema } from 'joi';
 
 @Injectable()
 export class ValidationPipe implements PipeTransform {
-  constructor(private schema: ObjectSchema) {}
+  constructor(private schema: ObjectSchema | ArraySchema) {}
 
   transform(value: any, _metadata: ArgumentMetadata) {
     if (_metadata.type === 'body') {

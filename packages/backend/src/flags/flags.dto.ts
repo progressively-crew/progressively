@@ -7,6 +7,14 @@ export const FlagCreationSchema = Joi.object({
   environments: Joi.array().min(1).items(Joi.string()).required(),
 });
 
+export const VariantSchema = Joi.object({
+  rolloutPercentage: Joi.number().integer().min(0).max(100).required(),
+  isControl: Joi.boolean(),
+  value: Joi.string().required(),
+});
+
+export const VariantsSchema = Joi.array().items(VariantSchema).required();
+
 export type VariantCreationDTO = Omit<Variant, 'uuid'>;
 
 export class FlagCreationDTO {
