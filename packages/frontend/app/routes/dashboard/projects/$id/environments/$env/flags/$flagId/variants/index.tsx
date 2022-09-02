@@ -128,11 +128,20 @@ export const action: ActionFunction = async ({
     const value = String(formData.get("value"));
     const isControl = Boolean(formData.get("isControl"));
 
+    if (!value) {
+      return {
+        errors: {
+          invalidValue:
+            "The variant value is not valid. Make sure to fill one.",
+        },
+      };
+    }
+
     if (remainingPercent - rolloutPercentage < 0) {
       return {
         errors: {
           invalidPercentage:
-            "The sum of all the variant targets is over 100%. You should adjust. them",
+            "The sum of all the variant targets is over 100%. You should adjust them",
         },
       };
     }
