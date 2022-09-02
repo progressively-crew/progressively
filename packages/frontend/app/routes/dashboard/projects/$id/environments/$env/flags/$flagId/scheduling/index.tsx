@@ -23,7 +23,6 @@ import { FlagMenu } from "~/modules/flags/components/FlagMenu";
 import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { activateFlag } from "~/modules/flags/services/activateFlag";
-import { changePercentageFlag } from "~/modules/flags/services/changePercentageFlag";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { FlagStatus } from "~/modules/flags/types";
 import { useProject } from "~/modules/projects/contexts/useProject";
@@ -55,25 +54,6 @@ export const action: ActionFunction = async ({
   const flagId = params.flagId;
   const formData = await request.formData();
   const type = formData.get("_type");
-
-  if (type === "percentage") {
-    const rolloutPercentage = formData.get("rolloutPercentage");
-
-    if (
-      rolloutPercentage !== undefined &&
-      rolloutPercentage !== null &&
-      flagId
-    ) {
-      await changePercentageFlag(
-        params.env!,
-        flagId as string,
-        Number(rolloutPercentage),
-        authCookie
-      );
-
-      return { successChangePercentage: true };
-    }
-  }
 
   const nextStatus = formData.get("nextStatus");
 
@@ -113,7 +93,6 @@ export const loader: LoaderFunction = async ({
 
 export default function SchedulingOfFlag() {
   const [searchParams] = useSearchParams();
-  const actionData = useActionData<ActionDataType>();
   const { user } = useUser();
   const { project } = useProject();
   const { environment } = useEnvironment();

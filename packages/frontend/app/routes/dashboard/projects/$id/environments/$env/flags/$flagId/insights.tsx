@@ -55,21 +55,6 @@ export const action: ActionFunction = async ({
   const formData = await request.formData();
   const type = formData.get("_type");
 
-  if (type === "percentage") {
-    const rolloutPercentage = formData.get("rolloutPercentage");
-
-    if (rolloutPercentage && flagId) {
-      await changePercentageFlag(
-        params.env!,
-        flagId as string,
-        Number(rolloutPercentage),
-        authCookie
-      );
-
-      return { successChangePercentage: true };
-    }
-  }
-
   const nextStatus = formData.get("nextStatus");
 
   if (nextStatus && flagId) {
@@ -141,8 +126,6 @@ export default function FlagInsights() {
   const { user } = useUser();
   const { project } = useProject();
   const { environment } = useEnvironment();
-
-  const actionData = useActionData<ActionDataType>();
   const [chartVariant, setChartVariant] = useState<ChartVariant>("chart");
 
   const currentFlag = flagEnv.flag;

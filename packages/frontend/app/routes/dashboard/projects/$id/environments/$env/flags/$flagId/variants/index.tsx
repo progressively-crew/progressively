@@ -1,14 +1,22 @@
 import { ActionFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { Form, useActionData, useLoaderData } from "@remix-run/react";
+import { useState } from "react";
 import { AiOutlineAppstore } from "react-icons/ai";
 import { FiFlag } from "react-icons/fi";
+import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { CreateButton } from "~/components/Buttons/CreateButton";
-import { Card } from "~/components/Card";
+import { Card, CardContent } from "~/components/Card";
 import { EmptyState } from "~/components/EmptyState";
+import { SliderInput } from "~/components/Fields/SliderInput";
+import { TextInput } from "~/components/Fields/TextInput";
 import { Header } from "~/components/Header";
+import { Heading } from "~/components/Heading";
+import { HStack } from "~/components/HStack";
 import { Section, SectionHeader } from "~/components/Section";
+import { Spacer } from "~/components/Spacer";
+import { Stack } from "~/components/Stack";
 import { TagLine } from "~/components/Tagline";
 import { Typography } from "~/components/Typography";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
@@ -18,15 +26,15 @@ import { FlagMenu } from "~/modules/flags/components/FlagMenu";
 import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { activateFlag } from "~/modules/flags/services/activateFlag";
-import { changePercentageFlag } from "~/modules/flags/services/changePercentageFlag";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { FlagStatus } from "~/modules/flags/types";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { VariantList } from "~/modules/variants/components/VariantList";
+import { createVariant } from "~/modules/variants/services/createVariant";
 import { getVariants } from "~/modules/variants/services/getVariants";
-import { Variant } from "~/modules/variants/types";
+import { Variant, VariantCreateDTO } from "~/modules/variants/types";
 import { getSession } from "~/sessions";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
@@ -61,7 +69,20 @@ export const loader: LoaderFunction = async ({
   };
 };
 
-type ActionDataType = null | { successChangePercentage: boolean };
+const getRemainingPercentage = (variants: Array<VariantCreateDTO>) => {
+  let cumulative = 0;
+
+  for (const variant of variants) {
+    cumulative += variant.rolloutPercentage;
+  }
+
+  return Math.max(100 - cumulative, 0);
+};
+
+type ActionDataType = null | {
+  successChangePercentage?: boolean;
+  errors?: { [key: string]: string };
+};
 
 export const action: ActionFunction = async ({
   request,
@@ -73,23 +94,38 @@ export const action: ActionFunction = async ({
   const formData = await request.formData();
   const type = formData.get("_type");
 
-  if (type === "percentage") {
-    const rolloutPercentage = formData.get("rolloutPercentage");
+  if (type === "add-variant") {
+    const remainingPercent = Number(formData.get("remainingPercent"));
+    const rolloutPercentage = Number(formData.get("rolloutPercentage"));
+    const value = String(formData.get("value"));
+    const isControl = Boolean(formData.get("isControl"));
 
-    if (
-      rolloutPercentage !== undefined &&
-      rolloutPercentage !== null &&
-      flagId
-    ) {
-      await changePercentageFlag(
-        params.env!,
-        flagId as string,
-        Number(rolloutPercentage),
-        authCookie
-      );
-
-      return { successChangePercentage: true };
+    if (remainingPercent - rolloutPercentage < 0) {
+      return {
+        errors: {
+          invalidPercentage:
+            "The sum of all the variant targets is over 100%. You should adjust. them",
+        },
+      };
     }
+
+    try {
+      const variant: VariantCreateDTO = {
+        isControl,
+        rolloutPercentage,
+        value,
+      };
+
+      await createVariant(params.env!, flagId as string, variant, authCookie);
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        return { errors: { backendError: e.message } };
+      }
+
+      return { errors: { backendError: "An error ocurred" } };
+    }
+
+    return null;
   }
 
   const nextStatus = formData.get("nextStatus");
@@ -106,12 +142,29 @@ export const action: ActionFunction = async ({
   return null;
 };
 
+interface FormSliderInputProps {
+  initialPercentage: number;
+}
+const FormSliderInput = ({ initialPercentage }: FormSliderInputProps) => {
+  const [percentage, setPercentage] = useState(initialPercentage);
+
+  return (
+    <SliderInput
+      onChange={setPercentage}
+      percentageValue={percentage}
+      name="rolloutPercentage"
+      label="Rollout percentage"
+    />
+  );
+};
+
 export default function VariantsOfFlag() {
   const { user } = useUser();
   const { project } = useProject();
   const { environment } = useEnvironment();
   const { flagEnv } = useFlagEnv();
   const { variants } = useLoaderData<LoaderData>();
+  const actionData = useActionData<ActionDataType>();
 
   const currentFlag = flagEnv.flag;
 
@@ -137,6 +190,7 @@ export default function VariantsOfFlag() {
   ];
 
   const hasVariants = variants.length > 0;
+  const remainingPercentage = getRemainingPercentage(variants);
 
   return (
     <DashboardLayout
@@ -156,54 +210,77 @@ export default function VariantsOfFlag() {
           flagId={currentFlag.uuid}
         />
       }
+      status={
+        actionData?.errors ? <ErrorBox list={actionData?.errors} /> : null
+      }
     >
-      <Section id="variants">
-        <SectionHeader
-          title="Variants"
-          icon={<AiOutlineAppstore />}
-          description={
-            <Typography>The variants of the feature flag.</Typography>
-          }
-          action={
-            hasVariants && (
-              <CreateButton
-                to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/variants/create`}
-              >
-                Create a variant
-              </CreateButton>
-            )
-          }
-        />
+      <Stack spacing={8}>
+        <Heading as={"h2"} fontSize="earth" icon={<AiOutlineAppstore />}>
+          Variants
+        </Heading>
 
-        {!hasVariants && (
-          <EmptyState
-            title="No variants found"
-            description={
-              <Typography>
-                There are no variants found for this flag.
-              </Typography>
-            }
-            action={
-              <CreateButton
-                to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/variants/create`}
-              >
-                Create a variant
-              </CreateButton>
-            }
-          />
-        )}
-
-        {hasVariants && (
+        <Section id="list">
           <Card>
-            <VariantList
-              variants={variants}
-              projectId={project.uuid}
-              envId={environment.uuid}
-              flagId={currentFlag.uuid}
-            />
+            <CardContent noBottom>
+              <SectionHeader title="List of variants" />
+            </CardContent>
+
+            {!hasVariants && (
+              <EmptyState
+                title="No variants found"
+                description={
+                  <Typography>
+                    There are no variants found for this flag.
+                  </Typography>
+                }
+              />
+            )}
+
+            {hasVariants && (
+              <VariantList
+                variants={variants}
+                projectId={project.uuid}
+                envId={environment.uuid}
+                flagId={currentFlag.uuid}
+              />
+            )}
           </Card>
-        )}
-      </Section>
+        </Section>
+
+        <Section id="add-variant">
+          <Card>
+            <CardContent>
+              <SectionHeader title="Add a variant" />
+
+              <Spacer size={4} />
+
+              <Form method="post" aria-label="Add a new variant">
+                <input type="hidden" value="add-variant" name="_type" />
+                <input
+                  type="hidden"
+                  value={remainingPercentage}
+                  name="remainingPercent"
+                />
+                <Stack spacing={6}>
+                  <HStack spacing={6}>
+                    <TextInput
+                      name={"value"}
+                      label={"Variant value"}
+                      placeholder="e.g: Alternative"
+                    />
+
+                    <FormSliderInput initialPercentage={remainingPercentage} />
+                  </HStack>
+
+                  <div>
+                    <CreateButton type="submit">Add variant</CreateButton>
+                  </div>
+                </Stack>
+              </Form>
+            </CardContent>
+          </Card>
+        </Section>
+      </Stack>
     </DashboardLayout>
   );
 }
