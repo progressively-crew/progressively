@@ -1,3 +1,4 @@
+import { Form } from "@remix-run/react";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { RawTable } from "~/components/RawTable";
 import { Variant } from "../types";
@@ -38,12 +39,14 @@ export const VariantList = ({
               <div>{variant.isControl}</div>
             </td>
             <td>
-              <DeleteButton
-                small
-                to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/variants/${variant.uuid}/delete`}
-              >
-                Remove
-              </DeleteButton>
+              <Form method="post">
+                <input type="hidden" name="_type" value="delete-variant" />
+                <input type="hidden" name="variantId" value={variant.uuid} />
+
+                <DeleteButton small type="submit">
+                  Remove
+                </DeleteButton>
+              </Form>
             </td>
           </tr>
         ))}
