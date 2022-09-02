@@ -299,23 +299,15 @@ export class FlagsService {
     });
   }
 
-  async createVariants(
-    envId: string,
-    flagId: string,
-    variants: Array<VariantCreationDTO>,
-  ) {
-    const promises = variants.map((variant) =>
-      this.prisma.variant.create({
-        data: {
-          flagEnvironmentEnvironmentId: envId,
-          flagEnvironmentFlagId: flagId,
-          isControl: Boolean(variant.isControl),
-          rolloutPercentage: variant.rolloutPercentage,
-          value: variant.value,
-        },
-      }),
-    );
-
-    return await Promise.all(promises);
+  createVariant(envId: string, flagId: string, variant: VariantCreationDTO) {
+    return this.prisma.variant.create({
+      data: {
+        flagEnvironmentEnvironmentId: envId,
+        flagEnvironmentFlagId: flagId,
+        isControl: Boolean(variant.isControl),
+        rolloutPercentage: variant.rolloutPercentage,
+        value: variant.value,
+      },
+    });
   }
 }

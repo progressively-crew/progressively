@@ -13,8 +13,6 @@ export const VariantSchema = Joi.object({
   value: Joi.string().required(),
 });
 
-export const VariantsSchema = Joi.array().items(VariantSchema).required();
-
 export type VariantCreationDTO = Omit<Variant, 'uuid'>;
 
 export class FlagCreationDTO {

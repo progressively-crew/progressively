@@ -881,13 +881,11 @@ describe('FlagsController (e2e)', () => {
       return request(app.getHttpServer())
         .post('/environments/1/flags/6/variants')
         .set('Authorization', `Bearer ${access_token}`)
-        .send([
-          {
-            isControl: false,
-            rolloutPercentage: 12,
-            value: 'test',
-          },
-        ])
+        .send({
+          isControl: false,
+          rolloutPercentage: 12,
+          value: 'test',
+        })
         .expect(403)
         .expect({
           statusCode: 403,
@@ -907,11 +905,9 @@ describe('FlagsController (e2e)', () => {
         .post('/environments/1/flags/1/variants')
         .set('Authorization', `Bearer ${access_token}`)
         .send({
-          name: 'Super strategy',
-          strategyRuleType: 'field',
-          fieldName: 'email',
-          fieldComparator: 'eq',
-          fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
+          isControl: false,
+          rolloutPercentage: 12,
+          value: 'test',
         })
         .expect(403)
         .expect({
@@ -933,7 +929,7 @@ describe('FlagsController (e2e)', () => {
       await request(app.getHttpServer())
         .post('/environments/1/flags/1/variants')
         .set('Authorization', `Bearer ${access_token}`)
-        .send([invalidVariant])
+        .send(invalidVariant)
         .expect(400)
         .expect({
           statusCode: 400,
@@ -954,7 +950,7 @@ describe('FlagsController (e2e)', () => {
       await request(app.getHttpServer())
         .post('/environments/1/flags/1/variants')
         .set('Authorization', `Bearer ${access_token}`)
-        .send([invalidVariant])
+        .send(invalidVariant)
         .expect(400)
         .expect({
           statusCode: 400,
@@ -975,18 +971,16 @@ describe('FlagsController (e2e)', () => {
       const response = await request(app.getHttpServer())
         .post('/environments/1/flags/1/variants')
         .set('Authorization', `Bearer ${access_token}`)
-        .send([variant])
+        .send(variant)
         .expect(201);
 
-      expect(response.body).toMatchObject([
-        {
-          flagEnvironmentEnvironmentId: '1',
-          flagEnvironmentFlagId: '1',
-          isControl: true,
-          rolloutPercentage: 12,
-          value: 'test',
-        },
-      ]);
+      expect(response.body).toMatchObject({
+        flagEnvironmentEnvironmentId: '1',
+        flagEnvironmentFlagId: '1',
+        isControl: true,
+        rolloutPercentage: 12,
+        value: 'test',
+      });
     });
   });
 });
