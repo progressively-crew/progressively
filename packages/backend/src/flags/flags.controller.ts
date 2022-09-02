@@ -25,7 +25,7 @@ import {
   ChangePercentageDTO,
   ChangePercentageSchema,
   VariantCreationDTO,
-  VariantsSchema,
+  VariantSchema,
 } from './flags.dto';
 import { HasFlagEnvAccessGuard } from './guards/hasFlagEnvAccess';
 import { SchedulingCreationDTO, SchedulingSchema } from '../scheduling/types';
@@ -155,19 +155,19 @@ export class FlagsController {
   @Post('environments/:envId/flags/:flagId/variants')
   @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
-  @UsePipes(new ValidationPipe(VariantsSchema))
+  @UsePipes(new ValidationPipe(VariantSchema))
   async addVariantsToFlag(
     @Param('envId') envId: string,
     @Param('flagId') flagId: string,
-    @Body() variantsDto: Array<VariantCreationDTO>,
+    @Body() variantDto: VariantCreationDTO,
   ): Promise<any> {
-    const variants = await this.flagService.createVariants(
+    const variant = await this.flagService.createVariant(
       envId,
       flagId,
-      variantsDto,
+      variantDto,
     );
 
-    return variants;
+    return variant;
   }
 
   @Get('environments/:envId/flags/:flagId/strategies')
