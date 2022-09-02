@@ -9,6 +9,7 @@ import { useState } from "react";
 import { AiOutlineAppstore } from "react-icons/ai";
 import { FiFlag } from "react-icons/fi";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
+import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
@@ -38,6 +39,7 @@ import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaT
 import { useUser } from "~/modules/user/contexts/useUser";
 import { VariantList } from "~/modules/variants/components/VariantList";
 import { createVariant } from "~/modules/variants/services/createVariant";
+import { deleteVariant } from "~/modules/variants/services/deleteVariant";
 import { getVariants } from "~/modules/variants/services/getVariants";
 import { Variant, VariantCreateDTO } from "~/modules/variants/types";
 import { getSession } from "~/sessions";
@@ -86,9 +88,11 @@ const getRemainingPercentage = (variants: Array<VariantCreateDTO>) => {
 
 type ActionDataType = null | {
   successChangePercentage?: boolean;
+  successDelete?: boolean;
   errors?: { [key: string]: string };
 };
 
+/* eslint-disable sonarjs/cognitive-complexity */
 export const action: ActionFunction = async ({
   request,
   params,
@@ -99,17 +103,46 @@ export const action: ActionFunction = async ({
   const formData = await request.formData();
   const type = formData.get("_type");
 
+  if (type === "delete-variant") {
+    const uuid = formData.get("variantId");
+    try {
+      await deleteVariant(
+        params.env!,
+        flagId as string,
+        String(uuid),
+        authCookie
+      );
+
+      return { successDelete: true };
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        return { errors: { backendError: e.message } };
+      }
+
+      return { errors: { backendError: "An error ocurred" } };
+    }
+  }
+
   if (type === "add-variant") {
     const remainingPercent = Number(formData.get("remainingPercent"));
     const rolloutPercentage = Number(formData.get("rolloutPercentage"));
     const value = String(formData.get("value"));
     const isControl = Boolean(formData.get("isControl"));
 
+    if (!value) {
+      return {
+        errors: {
+          invalidValue:
+            "The variant value is not valid. Make sure to fill one.",
+        },
+      };
+    }
+
     if (remainingPercent - rolloutPercentage < 0) {
       return {
         errors: {
           invalidPercentage:
-            "The sum of all the variant targets is over 100%. You should adjust. them",
+            "The sum of all the variant targets is over 100%. You should adjust them",
         },
       };
     }
@@ -217,7 +250,15 @@ export default function VariantsOfFlag() {
         />
       }
       status={
-        actionData?.errors ? <ErrorBox list={actionData?.errors} /> : null
+        <>
+          {actionData?.errors ? (
+            <ErrorBox list={actionData?.errors} />
+          ) : actionData?.successDelete ? (
+            <SuccessBox id="variant-deleted">
+              The variant has been successfully deleted
+            </SuccessBox>
+          ) : null}
+        </>
       }
     >
       <Stack spacing={8}>

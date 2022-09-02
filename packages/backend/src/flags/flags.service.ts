@@ -132,6 +132,12 @@ export class FlagsService {
       },
     });
 
+    await this.prisma.variant.deleteMany({
+      where: {
+        flagEnvironmentFlagId: flagId,
+      },
+    });
+
     await this.prisma.rolloutStrategy.deleteMany({
       where: {
         flagEnvironmentFlagId: flagId,
@@ -307,6 +313,16 @@ export class FlagsService {
         isControl: Boolean(variant.isControl),
         rolloutPercentage: variant.rolloutPercentage,
         value: variant.value,
+      },
+    });
+  }
+
+  deleteVariantFlag(envId: string, flagId: string, variantId: string) {
+    return this.prisma.variant.deleteMany({
+      where: {
+        flagEnvironmentFlagId: flagId,
+        flagEnvironmentEnvironmentId: envId,
+        uuid: variantId,
       },
     });
   }

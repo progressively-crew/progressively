@@ -13,7 +13,6 @@ import { Crumbs } from "~/components/Breadcrumbs/types";
 import { HideMobile } from "~/components/HideMobile";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { MetaFunction, ActionFunction } from "@remix-run/node";
-import { useActionData } from "@remix-run/react";
 import { Card, CardContent } from "~/components/Card";
 import { Heading } from "~/components/Heading";
 import { Stack } from "~/components/Stack";
@@ -22,9 +21,7 @@ import { FiFlag } from "react-icons/fi";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { Spacer } from "~/components/Spacer";
-import { SliderFlag } from "~/modules/flags/components/SliderFlag";
 import { activateFlag } from "~/modules/flags/services/activateFlag";
-import { changePercentageFlag } from "~/modules/flags/services/changePercentageFlag";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
@@ -53,7 +50,6 @@ export const action: ActionFunction = async ({
   const authCookie = session.get("auth-cookie");
   const flagId = params.flagId;
   const formData = await request.formData();
-  const type = formData.get("_type");
 
   const nextStatus = formData.get("nextStatus");
 

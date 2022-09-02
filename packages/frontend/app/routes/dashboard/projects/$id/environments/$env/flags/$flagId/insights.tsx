@@ -3,7 +3,6 @@ import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { FlagStatus } from "~/modules/flags/types";
 import { getSession } from "~/sessions";
 import { Header } from "~/components/Header";
-import { Section, SectionHeader } from "~/components/Section";
 import { AiOutlineBarChart } from "react-icons/ai";
 import { getFlagHits } from "~/modules/flags/services/getFlagHits";
 import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
@@ -17,12 +16,11 @@ import { SwitchButton } from "~/components/Buttons/SwitchButton";
 import { EmptyState } from "~/components/EmptyState";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
-import { useActionData, useLoaderData } from "@remix-run/react";
+import { useLoaderData } from "@remix-run/react";
 import { TagLine } from "~/components/Tagline";
 import { FiFlag } from "react-icons/fi";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
 import { activateFlag } from "~/modules/flags/services/activateFlag";
-import { changePercentageFlag } from "~/modules/flags/services/changePercentageFlag";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
@@ -53,7 +51,6 @@ export const action: ActionFunction = async ({
   const authCookie = session.get("auth-cookie");
   const flagId = params.flagId;
   const formData = await request.formData();
-  const type = formData.get("_type");
 
   const nextStatus = formData.get("nextStatus");
 

@@ -105,6 +105,17 @@ export class FlagsController {
     return this.flagService.deleteFlag(flagId);
   }
 
+  @Delete('environments/:envId/flags/:flagId/variants/:variantId')
+  @UseGuards(HasFlagEnvAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  deleteVariantFlag(
+    @Param('envId') envId: string,
+    @Param('flagId') flagId: string,
+    @Param('variantId') variantId: string,
+  ) {
+    return this.flagService.deleteVariantFlag(envId, flagId, variantId);
+  }
+
   /**
    * Get the flag hits grouped by date
    */
