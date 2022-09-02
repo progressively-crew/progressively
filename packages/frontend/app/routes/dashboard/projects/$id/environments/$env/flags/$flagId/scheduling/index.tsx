@@ -1,9 +1,5 @@
 import { ActionFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
-import {
-  useActionData,
-  useLoaderData,
-  useSearchParams,
-} from "@remix-run/react";
+import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { FiFlag } from "react-icons/fi";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
@@ -53,7 +49,6 @@ export const action: ActionFunction = async ({
   const authCookie = session.get("auth-cookie");
   const flagId = params.flagId;
   const formData = await request.formData();
-  const type = formData.get("_type");
 
   const nextStatus = formData.get("nextStatus");
 

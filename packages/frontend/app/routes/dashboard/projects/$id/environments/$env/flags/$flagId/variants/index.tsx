@@ -92,6 +92,7 @@ type ActionDataType = null | {
   errors?: { [key: string]: string };
 };
 
+/* eslint-disable sonarjs/cognitive-complexity */
 export const action: ActionFunction = async ({
   request,
   params,

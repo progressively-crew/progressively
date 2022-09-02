@@ -5,16 +5,8 @@ import { Variant } from "../types";
 
 export interface VariantListProps {
   variants: Array<Variant>;
-  projectId: string;
-  envId: string;
-  flagId: string;
 }
-export const VariantList = ({
-  variants,
-  projectId,
-  envId,
-  flagId,
-}: VariantListProps) => {
+export const VariantList = ({ variants }: VariantListProps) => {
   return (
     <RawTable>
       <thead>
