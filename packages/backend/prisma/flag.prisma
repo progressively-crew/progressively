@@ -18,8 +18,6 @@ model FlagEnvironment {
     strategies        RolloutStrategy[]
     rolloutPercentage Int               @default(100)
 
-    // the values set in flags/types.ts
-    variantType String
     scheduling  Schedule[]
     variants    Variant[]
 

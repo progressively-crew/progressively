@@ -1,9 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import camelcase from 'camelcase';
-import { VariantType } from '../flags/types';
+import { VariantCreationDTO } from 'src/flags/flags.dto';
 import { PrismaService } from '../database/prisma.service';
 import { FlagAlreadyExists } from './errors';
-import { VariantCreationDTO } from 'src/flags/flags.dto';
 
 @Injectable()
 export class EnvironmentsService {
@@ -51,7 +50,6 @@ export class EnvironmentsService {
     name: string,
     description: string,
     environments: Array<string>,
-    variantType: VariantType,
     variants: Array<VariantCreationDTO>,
   ) {
     const flagKey = camelcase(name);
@@ -83,7 +81,6 @@ export class EnvironmentsService {
           flagId: flag.uuid,
           environmentId: env,
           rolloutPercentage: 100,
-          variantType,
         },
       });
 

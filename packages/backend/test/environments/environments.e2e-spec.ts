@@ -1,8 +1,8 @@
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { seedDb, cleanupDb } from '../helpers/seed';
-import { prepareApp } from '../helpers/prepareApp';
 import { authenticate } from '../helpers/authenticate';
+import { prepareApp } from '../helpers/prepareApp';
+import { cleanupDb, seedDb } from '../helpers/seed';
 import { verifyAuthGuard } from '../helpers/verify-auth-guard';
 
 describe('Environments (e2e)', () => {
@@ -239,26 +239,6 @@ describe('Environments (e2e)', () => {
     });
 
     describe('multi variate', () => {
-      it('gives a 400 when variants are missing but type is multi variate', async () => {
-        const access_token = await authenticate(app);
-
-        return request(app.getHttpServer())
-          .post('/environments/1/flags')
-          .set('Authorization', `Bearer ${access_token}`)
-          .send({
-            name: 'New flag',
-            description: 'The new flag aims to xxx',
-            environments: ['1'],
-            variantType: 'MultiVariate',
-          })
-          .expect(400)
-          .expect({
-            statusCode: 400,
-            message: 'Validation failed',
-            error: 'Bad Request',
-          });
-      });
-
       [
         ['rolloutPercentage', undefined],
         ['isControl', undefined],
@@ -280,7 +260,6 @@ describe('Environments (e2e)', () => {
               name: 'New flag',
               description: 'The new flag aims to xxx',
               environments: ['1'],
-              variantType: 'MultiVariate',
               variants: [variant],
             })
             .expect(400)
@@ -307,7 +286,6 @@ describe('Environments (e2e)', () => {
             name: 'New flag',
             description: 'The new flag aims to xxx',
             environments: ['1'],
-            variantType: 'MultiVariate',
             variants: [variant],
           })
           .expect(400)
@@ -333,7 +311,6 @@ describe('Environments (e2e)', () => {
             name: 'New flag',
             description: 'The new flag aims to xxx',
             environments: ['1'],
-            variantType: 'MultiVariate',
             variants: [variant],
           })
           .expect(201);

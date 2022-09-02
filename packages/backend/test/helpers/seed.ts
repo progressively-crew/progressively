@@ -1,8 +1,8 @@
 import { PrismaClient } from '@prisma/client';
 import { UserRoles } from '../../src/users/roles';
-import { seedPasswordReset, seedUsers } from './seeds/users';
+import { seedFlagHits, seedFlags } from './seeds/flags';
 import { seedProjects } from './seeds/projects';
-import { seedFlags, seedFlagHits } from './seeds/flags';
+import { seedPasswordReset, seedUsers } from './seeds/users';
 
 const prismaClient = new PrismaClient();
 
@@ -72,7 +72,6 @@ export const seedDb = async () => {
         environmentId: production.uuid,
         flagId: homePageFlag.uuid,
         rolloutPercentage: 100,
-        variantType: 'SimpleVariant',
       },
     });
 
@@ -95,7 +94,6 @@ export const seedDb = async () => {
         flagId: footerFlag.uuid,
         status: 'ACTIVATED',
         rolloutPercentage: 0,
-        variantType: 'SimpleVariant',
       },
     });
 
@@ -104,7 +102,6 @@ export const seedDb = async () => {
         environmentId: otherEnv.uuid,
         flagId: asideFlag.uuid,
         rolloutPercentage: 100,
-        variantType: 'SimpleVariant',
       },
     });
 
@@ -114,7 +111,6 @@ export const seedDb = async () => {
       data: {
         environmentId: production.uuid,
         flagId: multiVariate.uuid,
-        variantType: 'MultiVariate',
         rolloutPercentage: 100,
       },
     });

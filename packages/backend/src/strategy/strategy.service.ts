@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
 
 import { PrismaService } from '../database/prisma.service';
+import { Flag, FlagEnvironment } from '../flags/types';
+import { ComparatorFactory } from './comparators/comparatorFactory';
+import { StrategyCreationDTO } from './strategy.dto';
 import {
   ComparatorEnum,
   FieldRecord,
   RolloutStrategy,
   StrategyRuleType,
 } from './types';
-import { ComparatorFactory } from './comparators/comparatorFactory';
 import { genBucket, getVariation, isInBucket } from './utils';
-import { StrategyCreationDTO } from './strategy.dto';
-import { Flag, FlagEnvironment, VariantType } from '../flags/types';
 
 export interface ExtendedFlagEnv extends FlagEnvironment {
   flag: Flag;
@@ -24,18 +24,15 @@ export class StrategyService {
     fields: FieldRecord,
   ): boolean | string {
     const bucketId = genBucket(flagEnv.flag.key, fields.id as string);
+    const isMultiVariate = flagEnv.variants.length > 0;
 
-    if (flagEnv.variantType === VariantType.SimpleVariant) {
-      return isInBucket(bucketId, flagEnv.rolloutPercentage);
-    }
-
-    if (flagEnv.variantType === VariantType.MultiVariate) {
+    if (isMultiVariate) {
       const variant = getVariation(bucketId, flagEnv.variants);
 
       return variant.value;
     }
 
-    return false;
+    return isInBucket(bucketId, flagEnv.rolloutPercentage);
   }
 
   private isValidStrategy(strategy: RolloutStrategy, fields: FieldRecord) {

@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { PrismaService } from '../database/prisma.service';
 import { FlagStatus } from '../flags/flags.status';
+import { Variant } from '../flags/types';
 import { ExtendedFlagEnv, StrategyService } from './strategy.service';
 import { ComparatorEnum, RolloutStrategy, StrategyRuleType } from './types';
-import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
-import { Variant, VariantType } from '../flags/types';
 
 describe('StrategyService', () => {
   let service: StrategyService;
@@ -52,7 +52,6 @@ describe('StrategyService', () => {
       },
       status: FlagStatus.ACTIVATED,
       rolloutPercentage: 100,
-      variantType: VariantType.SimpleVariant,
       variants: [],
     };
   });
@@ -126,11 +125,10 @@ describe('StrategyService', () => {
       });
     });
 
-    describe('MultiVariate', () => {
+    describe('Multi Variate', () => {
       beforeEach(() => {
         const variants: Array<Variant> = [];
 
-        flagEnv.variantType = VariantType.MultiVariate;
         flagEnv.variants = variants;
         flagEnv.rolloutPercentage = 0;
 

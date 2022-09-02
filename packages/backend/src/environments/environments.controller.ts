@@ -6,25 +6,24 @@ import {
   Get,
   Param,
   Post,
+  Request,
   UseGuards,
   UsePipes,
-  Request,
 } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
-import { EnvironmentsService } from './environments.service';
-import { Roles } from '../shared/decorators/Roles';
-import { UserRoles } from '../users/roles';
-import { HasEnvironmentAccessGuard } from './guards/hasEnvAccess';
-import { ValidationPipe } from '../shared/pipes/ValidationPipe';
-import { FlagAlreadyExists } from './errors';
 import {
-  FlagCreationSchema,
   FlagCreationDTO,
+  FlagCreationSchema,
   VariantCreationDTO,
 } from '../flags/flags.dto';
+import { Roles } from '../shared/decorators/Roles';
+import { ValidationPipe } from '../shared/pipes/ValidationPipe';
+import { UserRoles } from '../users/roles';
 import { User } from '../users/types';
-import { VariantType } from '../flags/types';
+import { EnvironmentsService } from './environments.service';
+import { FlagAlreadyExists } from './errors';
+import { HasEnvironmentAccessGuard } from './guards/hasEnvAccess';
 
 @ApiBearerAuth()
 @Controller('environments')
@@ -56,7 +55,7 @@ export class EnvironmentsController {
     const environments = body.environments;
     const user = req.user as User;
 
-    if (body.variantType === VariantType.MultiVariate) {
+    if (body.variants?.length > 0) {
       const variants: Array<VariantCreationDTO> = body.variants || [];
       const hasControlVariant = variants.some((variant) => variant.isControl);
 
@@ -86,7 +85,6 @@ export class EnvironmentsController {
         body.name,
         body.description,
         body.environments,
-        body.variantType || VariantType.SimpleVariant,
         body.variants || [],
       );
     } catch (e) {

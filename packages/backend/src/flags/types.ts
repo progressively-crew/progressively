@@ -21,7 +21,6 @@ export interface FlagEnvironment {
   environmentId: string;
   status: string;
   rolloutPercentage: number;
-  variantType: VariantType;
   variants: Array<Variant>;
 }
 
@@ -43,11 +42,6 @@ export interface PopulatedFlagEnv extends FlagEnvironment {
 export enum SchedulingStatus {
   NOT_RUN = 'NOT_RUN',
   HAS_RUN = 'HAS_RUN',
-}
-
-export enum VariantType {
-  SimpleVariant = 'SimpleVariant',
-  MultiVariate = 'MultiVariate',
 }
 
 export interface Variant {
