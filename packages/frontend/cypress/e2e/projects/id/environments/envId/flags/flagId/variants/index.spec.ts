@@ -29,11 +29,12 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants"
     describe("user: Marvin", () => {
       beforeEach(() => {
         cy.signIn("Marvin");
-        cy.visit("/dashboard/projects/1/environments/1/flags/1/variants");
-        cy.injectAxe();
       });
 
-      it("shows the layout (empty)", () => {
+      it("shows the layout — (empty)", () => {
+        cy.visit("/dashboard/projects/1/environments/1/flags/1/variants");
+        cy.injectAxe();
+
         cy.title().should(
           "eq",
           "Progressively | Project from seeding | Production | Flags | New homepage | Variants"
@@ -74,6 +75,63 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants"
         cy.findByRole("link", { name: "Create a variant" }).should(
           "be.visible"
         );
+
+        cy.checkA11y();
+      });
+
+      it("shows the layout — (filled data)", () => {
+        cy.visit("/dashboard/projects/1/environments/1/flags/4/variants");
+        cy.injectAxe();
+
+        cy.title().should(
+          "eq",
+          "Progressively | Project from seeding | Production | Flags | With multivariate | Variants"
+        );
+
+        cy.findByRole("link", { name: "Projects" })
+          .should("be.visible")
+          .and("have.attr", "href", "/dashboard");
+
+        cy.findByRole("link", { name: "Project from seeding" })
+          .should("be.visible")
+          .and("have.attr", "href", "/dashboard/projects/1");
+
+        cy.findByRole("link", { name: "Production" })
+          .should("be.visible")
+          .and(
+            "have.attr",
+            "href",
+            "/dashboard/projects/1/environments/1/flags"
+          );
+
+        cy.findByRole("link", { name: "With multivariate" })
+          .should("be.visible")
+          .and(
+            "have.attr",
+            "href",
+            "/dashboard/projects/1/environments/1/flags/4/variants"
+          )
+          .and("have.attr", "aria-current", "page");
+
+        cy.findByRole("heading", { name: "With multivariate" }).should(
+          "be.visible"
+        );
+        cy.findByRole("heading", { name: "Variants" }).should("be.visible");
+
+        cy.findByRole("link", { name: "Create a variant" }).should(
+          "be.visible"
+        );
+
+        cy.findByRole("columnheader", { name: "Value" }).should("be.visible");
+        cy.findByRole("columnheader", { name: "Rollout percentage" }).should(
+          "be.visible"
+        );
+        cy.findByRole("columnheader", { name: "Is this the control" }).should(
+          "be.visible"
+        );
+
+        cy.findByRole("cell", { name: "Control" }).should("be.visible");
+        cy.findByRole("cell", { name: "12%" }).should("be.visible");
 
         cy.checkA11y();
       });

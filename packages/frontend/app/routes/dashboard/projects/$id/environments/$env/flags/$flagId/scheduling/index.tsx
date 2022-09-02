@@ -1,39 +1,38 @@
-import { BreadCrumbs } from "~/components/Breadcrumbs";
-import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { FlagStatus } from "~/modules/flags/types";
-import { getSession } from "~/sessions";
-import { Header } from "~/components/Header";
-import { Section, SectionHeader } from "~/components/Section";
-import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
-import { Crumbs } from "~/components/Breadcrumbs/types";
-import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
+import { ActionFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
 import {
-  useLoaderData,
   useActionData,
+  useLoaderData,
   useSearchParams,
 } from "@remix-run/react";
-import { TagLine } from "~/components/Tagline";
-import { FiFlag } from "react-icons/fi";
-import { FlagMenu } from "~/modules/flags/components/FlagMenu";
-import { SliderFlag } from "~/modules/flags/components/SliderFlag";
-import { changePercentageFlag } from "~/modules/flags/services/changePercentageFlag";
-import { activateFlag } from "~/modules/flags/services/activateFlag";
 import { AiOutlineClockCircle } from "react-icons/ai";
-import { SchedulingList } from "~/modules/scheduling/components/SchedulingList";
-import { Card } from "~/components/Card";
-import { Typography } from "~/components/Typography";
-import { Schedule } from "~/modules/scheduling/types";
-import { getScheduling } from "~/modules/scheduling/services/getScheduling";
-import { EmptyState } from "~/components/EmptyState";
+import { FiFlag } from "react-icons/fi";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
+import { BreadCrumbs } from "~/components/Breadcrumbs";
+import { Crumbs } from "~/components/Breadcrumbs/types";
 import { CreateButton } from "~/components/Buttons/CreateButton";
-import { useUser } from "~/modules/user/contexts/useUser";
-import { useProject } from "~/modules/projects/contexts/useProject";
-import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
+import { Card } from "~/components/Card";
+import { EmptyState } from "~/components/EmptyState";
+import { Header } from "~/components/Header";
+import { Section, SectionHeader } from "~/components/Section";
+import { TagLine } from "~/components/Tagline";
+import { Typography } from "~/components/Typography";
+import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
+import { FlagMenu } from "~/modules/flags/components/FlagMenu";
+import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
+import { activateFlag } from "~/modules/flags/services/activateFlag";
+import { changePercentageFlag } from "~/modules/flags/services/changePercentageFlag";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
+import { FlagStatus } from "~/modules/flags/types";
+import { useProject } from "~/modules/projects/contexts/useProject";
+import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
+import { SchedulingList } from "~/modules/scheduling/components/SchedulingList";
+import { getScheduling } from "~/modules/scheduling/services/getScheduling";
+import { Schedule } from "~/modules/scheduling/types";
+import { useUser } from "~/modules/user/contexts/useUser";
+import { getSession } from "~/sessions";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -200,7 +199,7 @@ export default function SchedulingOfFlag() {
           }
         />
 
-        {scheduling.length === 0 && (
+        {!hasScheduling && (
           <EmptyState
             title="No schedule found"
             description={
@@ -216,7 +215,7 @@ export default function SchedulingOfFlag() {
           />
         )}
 
-        {scheduling.length > 0 && (
+        {hasScheduling && (
           <Card>
             <SchedulingList
               scheduling={scheduling}

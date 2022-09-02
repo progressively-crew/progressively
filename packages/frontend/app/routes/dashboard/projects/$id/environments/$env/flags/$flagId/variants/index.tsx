@@ -1,28 +1,33 @@
+import { ActionFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
+import { AiOutlineAppstore } from "react-icons/ai";
+import { FiFlag } from "react-icons/fi";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
-import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { FlagStatus } from "~/modules/flags/types";
-import { getSession } from "~/sessions";
+import { Crumbs } from "~/components/Breadcrumbs/types";
+import { CreateButton } from "~/components/Buttons/CreateButton";
+import { Card } from "~/components/Card";
+import { EmptyState } from "~/components/EmptyState";
 import { Header } from "~/components/Header";
 import { Section, SectionHeader } from "~/components/Section";
-import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
-import { Crumbs } from "~/components/Breadcrumbs/types";
-import { MetaFunction, ActionFunction } from "@remix-run/node";
 import { TagLine } from "~/components/Tagline";
-import { FiFlag } from "react-icons/fi";
-import { FlagMenu } from "~/modules/flags/components/FlagMenu";
-import { changePercentageFlag } from "~/modules/flags/services/changePercentageFlag";
-import { activateFlag } from "~/modules/flags/services/activateFlag";
-import { AiOutlineAppstore } from "react-icons/ai";
 import { Typography } from "~/components/Typography";
-import { EmptyState } from "~/components/EmptyState";
-import { CreateButton } from "~/components/Buttons/CreateButton";
-import { useUser } from "~/modules/user/contexts/useUser";
-import { useProject } from "~/modules/projects/contexts/useProject";
-import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
+import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
+import { FlagMenu } from "~/modules/flags/components/FlagMenu";
+import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
+import { activateFlag } from "~/modules/flags/services/activateFlag";
+import { changePercentageFlag } from "~/modules/flags/services/changePercentageFlag";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
+import { FlagStatus } from "~/modules/flags/types";
+import { useProject } from "~/modules/projects/contexts/useProject";
+import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
+import { useUser } from "~/modules/user/contexts/useUser";
+import { VariantList } from "~/modules/variants/components/VariantList";
+import { getVariants } from "~/modules/variants/services/getVariants";
+import { Variant } from "~/modules/variants/types";
+import { getSession } from "~/sessions";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -31,6 +36,28 @@ export const meta: MetaFunction = ({ parentsData, params }) => {
 
   return {
     title: `Progressively | ${projectName} | ${envName} | Flags | ${flagName} | Variants`,
+  };
+};
+
+interface LoaderData {
+  variants: Array<Variant>;
+}
+
+export const loader: LoaderFunction = async ({
+  request,
+  params,
+}): Promise<LoaderData> => {
+  const session = await getSession(request.headers.get("Cookie"));
+  const authCookie = session.get("auth-cookie");
+
+  const variants: Array<Variant> = await getVariants(
+    params.env!,
+    params.flagId!,
+    authCookie
+  );
+
+  return {
+    variants,
   };
 };
 
@@ -84,6 +111,7 @@ export default function VariantsOfFlag() {
   const { project } = useProject();
   const { environment } = useEnvironment();
   const { flagEnv } = useFlagEnv();
+  const { variants } = useLoaderData<LoaderData>();
 
   const currentFlag = flagEnv.flag;
 
@@ -107,6 +135,8 @@ export default function VariantsOfFlag() {
       label: currentFlag.name,
     },
   ];
+
+  const hasVariants = variants.length > 0;
 
   return (
     <DashboardLayout
@@ -134,21 +164,45 @@ export default function VariantsOfFlag() {
           description={
             <Typography>The variants of the feature flag.</Typography>
           }
+          action={
+            hasVariants && (
+              <CreateButton
+                to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/variants/create`}
+              >
+                Create a variant
+              </CreateButton>
+            )
+          }
         />
 
-        <EmptyState
-          title="No variants found"
-          description={
-            <Typography>There are no variants found for this flag.</Typography>
-          }
-          action={
-            <CreateButton
-              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/variants/create`}
-            >
-              Create a variant
-            </CreateButton>
-          }
-        />
+        {!hasVariants && (
+          <EmptyState
+            title="No variants found"
+            description={
+              <Typography>
+                There are no variants found for this flag.
+              </Typography>
+            }
+            action={
+              <CreateButton
+                to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/variants/create`}
+              >
+                Create a variant
+              </CreateButton>
+            }
+          />
+        )}
+
+        {hasVariants && (
+          <Card>
+            <VariantList
+              variants={variants}
+              projectId={project.uuid}
+              envId={environment.uuid}
+              flagId={currentFlag.uuid}
+            />
+          </Card>
+        )}
       </Section>
     </DashboardLayout>
   );
