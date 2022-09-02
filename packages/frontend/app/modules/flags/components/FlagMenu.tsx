@@ -1,4 +1,5 @@
 import {
+  AiOutlineAppstore,
   AiOutlineBarChart,
   AiOutlineClockCircle,
   AiOutlineSetting,
@@ -27,6 +28,13 @@ export const FlagMenu = ({ projectId, envId, flagId }: FlagMenuProps) => {
         icon={<AiOutlineBarChart />}
       >
         Insights
+      </NavItem>
+
+      <NavItem
+        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/variants`}
+        icon={<AiOutlineAppstore />}
+      >
+        Variants
       </NavItem>
 
       <NavItem

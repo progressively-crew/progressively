@@ -63,7 +63,9 @@ export const seedDb = async () => {
     });
 
     // Flag setup
-    const [homePageFlag, footerFlag, asideFlag] = await seedFlags(prismaClient);
+    const [homePageFlag, footerFlag, asideFlag, multiVariate] = await seedFlags(
+      prismaClient,
+    );
 
     const flagEnv = await prismaClient.flagEnvironment.create({
       data: {
@@ -105,6 +107,40 @@ export const seedDb = async () => {
         variantType: 'SimpleVariant',
       },
     });
+
+    // Multi variate setup
+
+    const multiVariateFlagEnv = await prismaClient.flagEnvironment.create({
+      data: {
+        environmentId: production.uuid,
+        flagId: multiVariate.uuid,
+        variantType: 'MultiVariate',
+        rolloutPercentage: 100,
+      },
+    });
+
+    await prismaClient.variant.create({
+      data: {
+        uuid: '1',
+        rolloutPercentage: 12,
+        isControl: true,
+        value: 'Control',
+        flagEnvironmentEnvironmentId: multiVariateFlagEnv.environmentId,
+        flagEnvironmentFlagId: multiVariateFlagEnv.flagId,
+      },
+    });
+
+    await prismaClient.variant.create({
+      data: {
+        uuid: '2',
+        rolloutPercentage: 88,
+        isControl: false,
+        value: 'Second',
+        flagEnvironmentEnvironmentId: multiVariateFlagEnv.environmentId,
+        flagEnvironmentFlagId: multiVariateFlagEnv.flagId,
+      },
+    });
+    // End of multi variate setup
 
     await prismaClient.rolloutStrategy.create({
       data: {

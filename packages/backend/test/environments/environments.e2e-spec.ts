@@ -151,7 +151,7 @@ describe('Environments (e2e)', () => {
         .get('/environments/1/flags')
         .set('Authorization', `Bearer ${access_token}`);
 
-      const flagEnv = response.body[0];
+      const flagEnv = response.body[1];
 
       expect(response.status).toBe(200);
       expect(flagEnv.flagId).toBeDefined();

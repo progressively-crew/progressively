@@ -29,7 +29,16 @@ export const seedFlags = async (prismaClient: PrismaClient) => {
     },
   });
 
-  return [homePageFlag, footerFlag, asideFlag] as const;
+  const multiVariate = await prismaClient.flag.create({
+    data: {
+      uuid: '4',
+      name: 'With multivariate',
+      description: 'Switch the multivariate flag',
+      key: 'multivariate',
+    },
+  });
+
+  return [homePageFlag, footerFlag, asideFlag, multiVariate] as const;
 };
 
 export const seedFlagHits = async (

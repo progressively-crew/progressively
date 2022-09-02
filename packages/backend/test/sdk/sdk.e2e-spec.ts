@@ -49,6 +49,7 @@ describe('SdkController (e2e)', () => {
       expect(response.body).toEqual({
         newHomepage: false,
         newFooter: false,
+        multivariate: false,
       });
       expect(response.headers['set-cookie']).toMatchInlineSnapshot(`
         Array [
@@ -68,6 +69,7 @@ describe('SdkController (e2e)', () => {
       expect(response.body).toEqual({
         newHomepage: false,
         newFooter: true,
+        multivariate: false,
       });
       expect(response.headers['set-cookie']).toMatchInlineSnapshot(`
         Array [
@@ -90,6 +92,7 @@ describe('SdkController (e2e)', () => {
       expect(response.body).toEqual({
         newHomepage: false,
         newFooter: false,
+        multivariate: false,
       });
       expect(response.headers['set-cookie']).toMatchInlineSnapshot(`
         Array [
@@ -109,6 +112,7 @@ describe('SdkController (e2e)', () => {
       expect(response.body).toEqual({
         newHomepage: false,
         newFooter: true,
+        multivariate: false,
       });
       expect(response.headers['set-cookie']).toMatchInlineSnapshot(`
         Array [
@@ -128,6 +132,7 @@ describe('SdkController (e2e)', () => {
       expect(response.body).toEqual({
         newHomepage: false,
         newFooter: false,
+        multivariate: false,
       });
       expect(response.headers['set-cookie']).toMatchInlineSnapshot(`
         Array [
@@ -147,6 +152,7 @@ describe('SdkController (e2e)', () => {
       expect(response.body).toEqual({
         newHomepage: false,
         newFooter: false,
+        multivariate: false,
       });
 
       // The schedule should happen 10 seconds after the seeding process
@@ -161,6 +167,7 @@ describe('SdkController (e2e)', () => {
       expect(response2.body).toEqual({
         newHomepage: true,
         newFooter: false,
+        multivariate: false,
       });
     }, 20000);
   });

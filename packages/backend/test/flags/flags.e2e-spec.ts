@@ -311,44 +311,9 @@ describe('FlagsController (e2e)', () => {
 
       const prevResponse = await request(app.getHttpServer())
         .get('/environments/1/flags')
-        .set('Authorization', `Bearer ${access_token}`);
-
-      expect(prevResponse.body).toMatchObject([
-        {
-          environment: {
-            clientKey: 'valid-sdk-key',
-            name: 'Production',
-            projectId: '1',
-            uuid: '1',
-          },
-          environmentId: '1',
-          flag: {
-            description: 'Switch the new footer design',
-            key: 'newFooter',
-            name: 'New footer',
-            uuid: '2',
-          },
-          flagId: '2',
-          status: 'ACTIVATED',
-        },
-        {
-          environment: {
-            clientKey: 'valid-sdk-key',
-            name: 'Production',
-            projectId: '1',
-            uuid: '1',
-          },
-          environmentId: '1',
-          flag: {
-            description: 'Switch the new homepage design',
-            key: 'newHomepage',
-            name: 'New homepage',
-            uuid: '1',
-          },
-          flagId: '1',
-          status: 'NOT_ACTIVATED',
-        },
-      ]);
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(200);
+      expect(prevResponse.body.length).toBe(3);
 
       const response = await request(app.getHttpServer())
         .delete('/flags/1')
@@ -359,7 +324,7 @@ describe('FlagsController (e2e)', () => {
         .get('/environments/1/flags')
         .set('Authorization', `Bearer ${access_token}`);
 
-      expect(afterResponse.body.length).toBe(1);
+      expect(afterResponse.body.length).toBe(2);
     });
   });
 
@@ -837,6 +802,72 @@ describe('FlagsController (e2e)', () => {
         status: 'ACTIVATED',
         utc: '1992-06-21T00:00:00.000Z',
       });
+    });
+  });
+
+  describe('/environments/1/flags/4/variants (GET)', () => {
+    it('gives a 401 when the user is not authenticated', () =>
+      verifyAuthGuard(app, '/environments/1/flags/4/variants', 'get'));
+
+    it('gives a 403 when trying to access a valid project but an invalid env', async () => {
+      const access_token = await authenticate(app);
+
+      return request(app.getHttpServer())
+        .get('/environments/2/flags/4/variants')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('gives a 403 when the user requests a forbidden project', async () => {
+      const access_token = await authenticate(
+        app,
+        'jane.doe@gmail.com',
+        'password',
+      );
+
+      return request(app.getHttpServer())
+        .get('/environments/1/flags/4/variants')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('gives the variants array', async () => {
+      const access_token = await authenticate(app);
+
+      const response = await request(app.getHttpServer())
+        .get('/environments/1/flags/4/variants')
+        .set('Authorization', `Bearer ${access_token}`);
+
+      expect(response.status).toBe(200);
+
+      expect(response.body).toMatchObject([
+        {
+          flagEnvironmentEnvironmentId: '1',
+          flagEnvironmentFlagId: '4',
+          isControl: true,
+          rolloutPercentage: 12,
+          uuid: '1',
+          value: 'Control',
+        },
+        {
+          flagEnvironmentEnvironmentId: '1',
+          flagEnvironmentFlagId: '4',
+          isControl: false,
+          rolloutPercentage: 88,
+          uuid: '2',
+          value: 'Second',
+        },
+      ]);
     });
   });
 });
