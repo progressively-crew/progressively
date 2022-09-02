@@ -1,12 +1,17 @@
 import { ActionFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
-import { Form, useActionData, useLoaderData } from "@remix-run/react";
+import {
+  Form,
+  useActionData,
+  useLoaderData,
+  useTransition,
+} from "@remix-run/react";
 import { useState } from "react";
 import { AiOutlineAppstore } from "react-icons/ai";
 import { FiFlag } from "react-icons/fi";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { Crumbs } from "~/components/Breadcrumbs/types";
-import { CreateButton } from "~/components/Buttons/CreateButton";
+import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { Card, CardContent } from "~/components/Card";
 import { EmptyState } from "~/components/EmptyState";
 import { SliderInput } from "~/components/Fields/SliderInput";
@@ -164,6 +169,7 @@ export default function VariantsOfFlag() {
   const { environment } = useEnvironment();
   const { flagEnv } = useFlagEnv();
   const { variants } = useLoaderData<LoaderData>();
+  const transition = useTransition();
   const actionData = useActionData<ActionDataType>();
 
   const currentFlag = flagEnv.flag;
@@ -273,7 +279,12 @@ export default function VariantsOfFlag() {
                   </HStack>
 
                   <div>
-                    <CreateButton type="submit">Add variant</CreateButton>
+                    <SubmitButton
+                      isLoading={transition.state === "submitting"}
+                      loadingText="Saving the variant, please wait..."
+                    >
+                      Add variant
+                    </SubmitButton>
                   </div>
                 </Stack>
               </Form>
