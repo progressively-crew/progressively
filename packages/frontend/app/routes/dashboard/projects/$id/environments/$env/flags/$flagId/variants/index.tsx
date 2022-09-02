@@ -5,7 +5,7 @@ import {
   useLoaderData,
   useTransition,
 } from "@remix-run/react";
-import { useState } from "react";
+import { useEffect, useRef } from "react";
 import { AiOutlineAppstore } from "react-icons/ai";
 import { FiFlag } from "react-icons/fi";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
@@ -13,12 +13,10 @@ import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
-import { Card, CardContent } from "~/components/Card";
+import { Card } from "~/components/Card";
 import { EmptyState } from "~/components/EmptyState";
-import { SliderInput } from "~/components/Fields/SliderInput";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Header } from "~/components/Header";
-import { Heading } from "~/components/Heading";
 import { HStack } from "~/components/HStack";
 import { Section, SectionHeader } from "~/components/Section";
 import { Spacer } from "~/components/Spacer";
@@ -89,6 +87,7 @@ const getRemainingPercentage = (variants: Array<VariantCreateDTO>) => {
 type ActionDataType = null | {
   successChangePercentage?: boolean;
   successDelete?: boolean;
+  successCreated?: boolean;
   errors?: { [key: string]: string };
 };
 
@@ -124,8 +123,6 @@ export const action: ActionFunction = async ({
   }
 
   if (type === "add-variant") {
-    const remainingPercent = Number(formData.get("remainingPercent"));
-    const rolloutPercentage = Number(formData.get("rolloutPercentage"));
     const value = String(formData.get("value"));
     const isControl = Boolean(formData.get("isControl"));
 
@@ -138,23 +135,18 @@ export const action: ActionFunction = async ({
       };
     }
 
-    if (remainingPercent - rolloutPercentage < 0) {
-      return {
-        errors: {
-          invalidPercentage:
-            "The sum of all the variant targets is over 100%. You should adjust them",
-        },
-      };
-    }
-
     try {
       const variant: VariantCreateDTO = {
         isControl,
-        rolloutPercentage,
+        rolloutPercentage: 0,
         value,
       };
 
       await createVariant(params.env!, flagId as string, variant, authCookie);
+
+      return {
+        successCreated: true,
+      };
     } catch (e: unknown) {
       if (e instanceof Error) {
         return { errors: { backendError: e.message } };
@@ -180,29 +172,18 @@ export const action: ActionFunction = async ({
   return null;
 };
 
-interface FormSliderInputProps {
-  initialPercentage: number;
-}
-const FormSliderInput = ({ initialPercentage }: FormSliderInputProps) => {
-  const [percentage, setPercentage] = useState(initialPercentage);
-
-  return (
-    <SliderInput
-      onChange={setPercentage}
-      percentageValue={percentage}
-      name="rolloutPercentage"
-      label="Rollout percentage"
-    />
-  );
-};
-
 export default function VariantsOfFlag() {
+  const formRef = useRef<HTMLFormElement>(null);
   const { user } = useUser();
   const { project } = useProject();
   const { environment } = useEnvironment();
   const { flagEnv } = useFlagEnv();
   const { variants } = useLoaderData<LoaderData>();
   const transition = useTransition();
+  const isAdding =
+    transition.state === "submitting" &&
+    transition.submission?.formData.get("_type") === "add-variant";
+
   const actionData = useActionData<ActionDataType>();
 
   const currentFlag = flagEnv.flag;
@@ -231,6 +212,12 @@ export default function VariantsOfFlag() {
   const hasVariants = variants.length > 0;
   const remainingPercentage = getRemainingPercentage(variants);
 
+  useEffect(() => {
+    if (!isAdding) {
+      formRef?.current?.reset();
+    }
+  }, [isAdding]);
+
   return (
     <DashboardLayout
       user={user}
@@ -255,84 +242,72 @@ export default function VariantsOfFlag() {
             <ErrorBox list={actionData?.errors} />
           ) : actionData?.successDelete ? (
             <SuccessBox id="variant-deleted">
-              The variant has been successfully deleted
+              The variant has been successfully deleted.
+            </SuccessBox>
+          ) : actionData?.successCreated ? (
+            <SuccessBox id="variant-deleted">
+              The variant has been successfully created.
             </SuccessBox>
           ) : null}
         </>
       }
     >
-      <Stack spacing={8}>
-        <Heading as={"h2"} fontSize="earth" icon={<AiOutlineAppstore />}>
-          Variants
-        </Heading>
+      <Section id="variants">
+        <SectionHeader
+          title="Variants"
+          icon={<AiOutlineAppstore />}
+          description={
+            <Typography>
+              The strategies that you have defined will apply at the given
+              dates.
+            </Typography>
+          }
+        />
 
-        <Section id="list">
+        {!hasVariants && (
+          <EmptyState
+            title="No variants found"
+            description={
+              <Typography>
+                There are no variants found for this flag.
+              </Typography>
+            }
+          />
+        )}
+
+        {hasVariants && (
           <Card>
-            <CardContent noBottom>
-              <SectionHeader title="List of variants" />
-            </CardContent>
-
-            {!hasVariants && (
-              <EmptyState
-                title="No variants found"
-                description={
-                  <Typography>
-                    There are no variants found for this flag.
-                  </Typography>
-                }
-              />
-            )}
-
-            {hasVariants && (
-              <VariantList
-                variants={variants}
-                projectId={project.uuid}
-                envId={environment.uuid}
-                flagId={currentFlag.uuid}
-              />
-            )}
+            <VariantList variants={variants} />
           </Card>
-        </Section>
+        )}
 
-        <Section id="add-variant">
-          <Card>
-            <CardContent>
-              <SectionHeader title="Add a variant" />
+        <Spacer size={8} />
 
-              <Spacer size={4} />
+        <Form method="post" aria-label="Add a new variant" ref={formRef}>
+          <input type="hidden" value="add-variant" name="_type" />
+          <input
+            type="hidden"
+            value={remainingPercentage}
+            name="remainingPercent"
+          />
+          <Stack spacing={6}>
+            <HStack spacing={6} alignItems="flex-end">
+              <TextInput
+                name={"value"}
+                label={"New variant value"}
+                placeholder="e.g: Alternative"
+              />
 
-              <Form method="post" aria-label="Add a new variant">
-                <input type="hidden" value="add-variant" name="_type" />
-                <input
-                  type="hidden"
-                  value={remainingPercentage}
-                  name="remainingPercent"
-                />
-                <Stack spacing={6}>
-                  <HStack spacing={6}>
-                    <TextInput
-                      name={"value"}
-                      label={"Variant value"}
-                      placeholder="e.g: Alternative"
-                    />
-
-                    <FormSliderInput initialPercentage={remainingPercentage} />
-                  </HStack>
-
-                  <div>
-                    <SubmitButton
-                      isLoading={transition.state === "submitting"}
-                      loadingText="Saving the variant, please wait..."
-                    >
-                      Add variant
-                    </SubmitButton>
-                  </div>
-                </Stack>
-              </Form>
-            </CardContent>
-          </Card>
-        </Section>
-      </Stack>
+              <SubmitButton
+                isLoading={isAdding}
+                loadingText="Saving the variant, please wait..."
+              >
+                Add variant
+              </SubmitButton>
+            </HStack>
+          </Stack>
+        </Form>
+      </Section>
     </DashboardLayout>
   );
 }

@@ -17,6 +17,9 @@ export const HStack = styled<any, any>("div", {
       "flex-start": {
         alignItems: "flex-start",
       },
+      "flex-end": {
+        alignItems: "flex-end",
+      },
     },
 
     direction: {
