@@ -72,9 +72,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants"
         cy.findByText("There are no variants found for this flag.").should(
           "be.visible"
         );
-        cy.findByRole("link", { name: "Create a variant" }).should(
-          "be.visible"
-        );
+        cy.findByRole("button", { name: "Add variant" }).should("be.visible");
 
         cy.checkA11y();
       });
@@ -118,9 +116,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants"
         );
         cy.findByRole("heading", { name: "Variants" }).should("be.visible");
 
-        cy.findByRole("link", { name: "Create a variant" }).should(
-          "be.visible"
-        );
+        cy.findByRole("button", { name: "Add variant" }).should("be.visible");
 
         cy.findByRole("columnheader", { name: "Value" }).should("be.visible");
         cy.findByRole("columnheader", { name: "Rollout percentage" }).should(

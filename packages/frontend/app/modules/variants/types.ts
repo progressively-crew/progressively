@@ -5,4 +5,4 @@ export interface Variant {
   value: string;
 }
 
-export type VariantCreateDTO = Omit<Variant, "id">;
+export type VariantCreateDTO = Omit<Variant, "uuid">;
