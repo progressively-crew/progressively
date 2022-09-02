@@ -12,11 +12,7 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
-import {
-  FlagCreationDTO,
-  FlagCreationSchema,
-  VariantCreationDTO,
-} from '../flags/flags.dto';
+import { FlagCreationDTO, FlagCreationSchema } from '../flags/flags.dto';
 import { Roles } from '../shared/decorators/Roles';
 import { ValidationPipe } from '../shared/pipes/ValidationPipe';
 import { UserRoles } from '../users/roles';
@@ -55,17 +51,6 @@ export class EnvironmentsController {
     const environments = body.environments;
     const user = req.user as User;
 
-    if (body.variants?.length > 0) {
-      const variants: Array<VariantCreationDTO> = body.variants || [];
-      const hasControlVariant = variants.some((variant) => variant.isControl);
-
-      if (!hasControlVariant) {
-        throw new BadRequestException(
-          'At least one variant should be the control variant',
-        );
-      }
-    }
-
     for (const env of environments) {
       const hasAccessToEnv = await this.envService.hasPermissionOnEnv(
         env,
@@ -85,7 +70,6 @@ export class EnvironmentsController {
         body.name,
         body.description,
         body.environments,
-        body.variants || [],
       );
     } catch (e) {
       if (e instanceof FlagAlreadyExists) {
