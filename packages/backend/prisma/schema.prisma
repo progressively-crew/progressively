@@ -81,7 +81,6 @@ model FlagEnvironment {
   status            String?           @default("NOT_ACTIVATED")
   strategies        RolloutStrategy[] @relation(name: "FlagEnvironmentToRolloutStrategy")
   rolloutPercentage Int               @default(100)
-  variantType       String
   scheduling        Schedule[]        @relation(name: "FlagEnvironmentToSchedule")
   variants          Variant[]         @relation(name: "FlagEnvironmentToVariant")
 
