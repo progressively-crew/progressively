@@ -20,7 +20,7 @@ const RangeInput = styled("input", {
   appearance: "none",
   background: "transparent",
   cursor: "pointer",
-  height: `${TrackSize}rem`,
+  height: `$cta`,
   width: `${InputWidth}rem`,
 
   // chrome edge safari

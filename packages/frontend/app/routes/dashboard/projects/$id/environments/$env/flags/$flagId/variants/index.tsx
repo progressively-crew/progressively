@@ -13,7 +13,7 @@ import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
-import { Card } from "~/components/Card";
+import { Card, CardContent } from "~/components/Card";
 import { EmptyState } from "~/components/EmptyState";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Header } from "~/components/Header";
@@ -102,6 +102,10 @@ export const action: ActionFunction = async ({
   const formData = await request.formData();
   const type = formData.get("_type");
 
+  if (type === "edit-variant") {
+    return null;
+  }
+
   if (type === "delete-variant") {
     const uuid = formData.get("variantId");
     try {
@@ -154,8 +158,6 @@ export const action: ActionFunction = async ({
 
       return { errors: { backendError: "An error ocurred" } };
     }
-
-    return null;
   }
 
   const nextStatus = formData.get("nextStatus");
@@ -277,7 +279,9 @@ export default function VariantsOfFlag() {
 
         {hasVariants && (
           <Card>
-            <VariantList variants={variants} />
+            <CardContent>
+              <VariantList variants={variants} />
+            </CardContent>
           </Card>
         )}
 
@@ -299,6 +303,7 @@ export default function VariantsOfFlag() {
               />
 
               <SubmitButton
+                variant={hasVariants ? "secondary" : "primary"}
                 isLoading={isAdding}
                 loadingText="Saving the variant, please wait..."
               >
