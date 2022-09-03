@@ -1,6 +1,7 @@
 import { styled } from "~/stitches.config";
 import { Stack } from "../Stack";
 import { Typography } from "../Typography";
+import { VisuallyHidden } from "../VisuallyHidden";
 import { Label } from "./Label";
 
 export interface TextInputProps {
@@ -12,6 +13,7 @@ export interface TextInputProps {
   type?: string;
   description?: string;
   autoComplete?: "current-password" | "username";
+  hiddenLabel?: boolean;
 }
 
 const Input = styled("input", {
@@ -51,6 +53,7 @@ export const TextInput = ({
   placeholder,
   type = "text",
   description,
+  hiddenLabel,
   ...props
 }: TextInputProps) => {
   let ariaDescription: string | undefined;
@@ -63,7 +66,14 @@ export const TextInput = ({
 
   return (
     <Stack spacing={2}>
-      <Label htmlFor={name}>{label}</Label>
+      {hiddenLabel ? (
+        <VisuallyHidden>
+          <label htmlFor={name}>{label}</label>
+        </VisuallyHidden>
+      ) : (
+        <Label htmlFor={name}>{label}</Label>
+      )}
+
       <Input
         type={type}
         name={name}

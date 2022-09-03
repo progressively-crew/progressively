@@ -12,17 +12,19 @@ import { Variant } from "../types";
 
 export interface FormSliderInputProps {
   name: string;
+  label: string;
 }
 
-const FormSliderInput = ({ name }: FormSliderInputProps) => {
+const FormSliderInput = ({ name, label }: FormSliderInputProps) => {
   const [percentage, setPercentage] = useState(0);
 
   return (
     <SliderInput
       name={name}
+      hiddenLabel
       percentageValue={percentage}
       onChange={setPercentage}
-      label="Percentage"
+      label={label}
     />
   );
 };
@@ -43,14 +45,27 @@ export const VariantList = ({ variants }: VariantListProps) => {
           >
             <input type="hidden" name="uuid" value={variant.uuid} />
 
-            <HStack spacing={6}>
+            <HStack spacing={10}>
               <TextInput
+                hiddenLabel
                 name="name"
                 defaultValue={variant.value}
                 label={`Variant ${index + 1} value`}
               />
 
-              <FormSliderInput name={`rolloutPercentage`} />
+              <FormSliderInput
+                name={`rolloutPercentage`}
+                label={`Variant ${index + 1} rollout percentage`}
+              />
+
+              <Form method="post">
+                <input type="hidden" name="_type" value="delete-variant" />
+                <input type="hidden" name="variantId" value={variant.uuid} />
+
+                <DeleteButton small type="submit">
+                  Remove
+                </DeleteButton>
+              </Form>
             </HStack>
           </fieldset>
         ))}

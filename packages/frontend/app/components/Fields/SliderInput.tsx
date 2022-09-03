@@ -1,6 +1,7 @@
 import { styled } from "~/stitches.config";
 import { HStack } from "../HStack";
 import { Stack } from "../Stack";
+import { VisuallyHidden } from "../VisuallyHidden";
 import { Label } from "./Label";
 
 export interface SliderInputProps {
@@ -8,7 +9,7 @@ export interface SliderInputProps {
   name: string;
   label: string;
   onChange: (nextValue: number) => void;
-  labelledBy?: string;
+  hiddenLabel?: boolean;
 }
 
 const ThumbSize = 1.6;
@@ -80,12 +81,18 @@ export const SliderInput = ({
   percentageValue,
   name,
   label,
-  labelledBy,
+  hiddenLabel,
   onChange,
 }: SliderInputProps) => {
   return (
     <Stack spacing={2}>
-      {!labelledBy && <Label htmlFor={`field-${name}`}>{label}</Label>}
+      {hiddenLabel ? (
+        <VisuallyHidden>
+          <label htmlFor={name}>{label}</label>
+        </VisuallyHidden>
+      ) : (
+        <Label htmlFor={name}>{label}</Label>
+      )}
 
       <HStack spacing={2}>
         <RangeInput
@@ -98,7 +105,6 @@ export const SliderInput = ({
           id={`field-${name}`}
           name={name}
           onChange={(e) => onChange(Number(e.target.value))}
-          aria-labelledby={labelledBy}
         />
 
         <HStack aria-hidden>
