@@ -154,13 +154,11 @@ export class FlagsController {
     @Param('flagId') flagId: string,
     @Body() schedulingDto: SchedulingCreationDTO,
   ): Promise<any> {
-    const schedule = await this.schedulingService.addSchedulingToFlagEnv(
+    return await this.schedulingService.addSchedulingToFlagEnv(
       envId,
       flagId,
       schedulingDto,
     );
-
-    return schedule;
   }
 
   @Post('environments/:envId/flags/:flagId/variants')
@@ -172,13 +170,7 @@ export class FlagsController {
     @Param('flagId') flagId: string,
     @Body() variantDto: VariantCreationDTO,
   ): Promise<any> {
-    const variant = await this.flagService.createVariant(
-      envId,
-      flagId,
-      variantDto,
-    );
-
-    return variant;
+    return await this.flagService.createVariant(envId, flagId, variantDto);
   }
 
   @Get('environments/:envId/flags/:flagId/strategies')

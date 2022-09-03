@@ -9,7 +9,7 @@ export const getVariation = (
   orderedVariants: Array<Variant>,
 ): Variant => {
   let cumulative = 0;
-  for (let variant of orderedVariants) {
+  for (const variant of orderedVariants) {
     const countOfConcernedBuckets =
       BUCKET_COUNT * (variant.rolloutPercentage / 100);
 
@@ -21,8 +21,7 @@ export const getVariation = (
   }
 
   // We guarantee that the control variant always exists and can't be removed
-  const controlVariant = orderedVariants.find((variant) => variant.isControl)!;
-  return controlVariant;
+  return orderedVariants.find((variant) => variant.isControl)!;
 };
 
 export const isInBucket = (bucketId: number, rolloutPercentage: number) => {
