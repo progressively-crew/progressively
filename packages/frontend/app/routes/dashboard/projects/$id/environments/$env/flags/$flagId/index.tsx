@@ -28,7 +28,6 @@ import { FlagMenu } from "~/modules/flags/components/FlagMenu";
 import { StrategyDescription } from "~/modules/strategies/components/StrategyDescription";
 import { SliderFlag } from "~/modules/flags/components/SliderFlag";
 import { changePercentageFlag } from "~/modules/flags/services/changePercentageFlag";
-import { activateFlag } from "~/modules/flags/services/activateFlag";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
@@ -38,6 +37,7 @@ import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { Heading } from "~/components/Heading";
 import { Tag } from "~/components/Tag";
+import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -80,15 +80,8 @@ export const action: ActionFunction = async ({
     }
   }
 
-  const nextStatus = formData.get("nextStatus");
-
-  if (nextStatus && flagId) {
-    await activateFlag(
-      params.env!,
-      flagId as string,
-      nextStatus as FlagStatus,
-      authCookie
-    );
+  if (type === "toggle-flag") {
+    return toggleFlagAction(formData, params, authCookie);
   }
 
   return null;

@@ -9,6 +9,7 @@ export interface ToggleFlag {
 export const ToggleFlag = ({ isFlagActivated }: ToggleFlag) => {
   return (
     <Form method="post">
+      <input type="hidden" name="_type" value="toggle-flag" />
       <input
         type="hidden"
         name="nextStatus"

@@ -29,15 +29,16 @@ import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
 import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
-import { activateFlag } from "~/modules/flags/services/activateFlag";
+import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { FlagStatus } from "~/modules/flags/types";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { VariantList } from "~/modules/variants/components/VariantList";
-import { createVariant } from "~/modules/variants/services/createVariant";
-import { deleteVariant } from "~/modules/variants/services/deleteVariant";
+import { addVariantAction } from "~/modules/variants/form-actions/addVariantAction";
+import { deleteVariantAction } from "~/modules/variants/form-actions/deleteVariantAction";
+
 import { getVariants } from "~/modules/variants/services/getVariants";
 import { Variant, VariantCreateDTO } from "~/modules/variants/types";
 import { getSession } from "~/sessions";
@@ -88,7 +89,7 @@ type ActionDataType = null | {
   successChangePercentage?: boolean;
   successDelete?: boolean;
   successCreated?: boolean;
-  errors?: { [key: string]: string };
+  errors?: { [key: string]: string | undefined };
 };
 
 /* eslint-disable sonarjs/cognitive-complexity */
@@ -98,7 +99,6 @@ export const action: ActionFunction = async ({
 }): Promise<ActionDataType> => {
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
-  const flagId = params.flagId;
   const formData = await request.formData();
   const type = formData.get("_type");
 
@@ -107,68 +107,15 @@ export const action: ActionFunction = async ({
   }
 
   if (type === "delete-variant") {
-    const uuid = formData.get("variantId");
-    try {
-      await deleteVariant(
-        params.env!,
-        flagId as string,
-        String(uuid),
-        authCookie
-      );
-
-      return { successDelete: true };
-    } catch (e: unknown) {
-      if (e instanceof Error) {
-        return { errors: { backendError: e.message } };
-      }
-
-      return { errors: { backendError: "An error ocurred" } };
-    }
+    return deleteVariantAction(formData, params, authCookie);
   }
 
   if (type === "add-variant") {
-    const value = String(formData.get("value"));
-    const isControl = Boolean(formData.get("isControl"));
-
-    if (!value) {
-      return {
-        errors: {
-          invalidValue:
-            "The variant value is not valid. Make sure to fill one.",
-        },
-      };
-    }
-
-    try {
-      const variant: VariantCreateDTO = {
-        isControl,
-        rolloutPercentage: 0,
-        value,
-      };
-
-      await createVariant(params.env!, flagId as string, variant, authCookie);
-
-      return {
-        successCreated: true,
-      };
-    } catch (e: unknown) {
-      if (e instanceof Error) {
-        return { errors: { backendError: e.message } };
-      }
-
-      return { errors: { backendError: "An error ocurred" } };
-    }
+    return addVariantAction(formData, params, authCookie);
   }
 
-  const nextStatus = formData.get("nextStatus");
-
-  if (nextStatus && flagId) {
-    await activateFlag(
-      params.env!,
-      flagId as string,
-      nextStatus as FlagStatus,
-      authCookie
-    );
+  if (type === "toggle-flag") {
+    return toggleFlagAction(formData, params, authCookie);
   }
 
   return null;
