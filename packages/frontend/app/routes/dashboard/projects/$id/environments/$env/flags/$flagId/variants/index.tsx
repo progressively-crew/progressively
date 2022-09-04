@@ -103,7 +103,18 @@ export const action: ActionFunction = async ({
   const type = formData.get("_type");
 
   if (type === "edit-variant") {
-    return null;
+    const names = formData.getAll("name");
+    const errors: Record<string, string> = {};
+
+    names.forEach((name, index: number) => {
+      if (!name) {
+        errors[`name-${index}`] = `The variant value on line ${
+          index + 1
+        } is invalid.`;
+      }
+    });
+
+    return { errors };
   }
 
   if (type === "delete-variant") {
@@ -227,7 +238,7 @@ export default function VariantsOfFlag() {
         {hasVariants && (
           <Card>
             <CardContent>
-              <VariantList variants={variants} />
+              <VariantList variants={variants} errors={actionData?.errors} />
             </CardContent>
           </Card>
         )}

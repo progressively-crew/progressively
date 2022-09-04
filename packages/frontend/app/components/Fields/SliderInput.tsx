@@ -10,6 +10,7 @@ export interface SliderInputProps {
   label: string;
   onChange: (nextValue: number) => void;
   hiddenLabel?: boolean;
+  id?: string;
 }
 
 const ThumbSize = 1.6;
@@ -80,18 +81,21 @@ const Triangle = styled("div", {
 export const SliderInput = ({
   percentageValue,
   name,
+  id,
   label,
   hiddenLabel,
   onChange,
 }: SliderInputProps) => {
+  const currentId = id || name;
+
   return (
     <Stack spacing={2}>
       {hiddenLabel ? (
         <VisuallyHidden>
-          <label htmlFor={name}>{label}</label>
+          <label htmlFor={currentId}>{label}</label>
         </VisuallyHidden>
       ) : (
-        <Label htmlFor={name}>{label}</Label>
+        <Label htmlFor={currentId}>{label}</Label>
       )}
 
       <HStack spacing={2}>
@@ -102,7 +106,7 @@ export const SliderInput = ({
           max={100}
           step={1}
           value={percentageValue}
-          id={`field-${name}`}
+          id={currentId}
           name={name}
           onChange={(e) => onChange(Number(e.target.value))}
         />

@@ -2,6 +2,7 @@ import { Form } from "@remix-run/react";
 import { useState } from "react";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
+import { Checkbox } from "~/components/Checkbox";
 import { SliderInput } from "~/components/Fields/SliderInput";
 import { TextInput } from "~/components/Fields/TextInput";
 import { HStack } from "~/components/HStack";
@@ -13,13 +14,15 @@ import { Variant } from "../types";
 export interface FormSliderInputProps {
   name: string;
   label: string;
+  id: string;
 }
 
-const FormSliderInput = ({ name, label }: FormSliderInputProps) => {
+const FormSliderInput = ({ name, label, id }: FormSliderInputProps) => {
   const [percentage, setPercentage] = useState(0);
 
   return (
     <SliderInput
+      id={id}
       name={name}
       hiddenLabel
       percentageValue={percentage}
@@ -31,8 +34,11 @@ const FormSliderInput = ({ name, label }: FormSliderInputProps) => {
 
 export interface VariantListProps {
   variants: Array<Variant>;
+  errors?: Record<string, string>;
 }
-export const VariantList = ({ variants }: VariantListProps) => {
+export const VariantList = ({ variants, errors }: VariantListProps) => {
+  console.log("xxx", errors);
+
   return (
     <Form method="post">
       <input type="hidden" name="_type" value="edit-variant" />
@@ -46,26 +52,26 @@ export const VariantList = ({ variants }: VariantListProps) => {
             <input type="hidden" name="uuid" value={variant.uuid} />
 
             <HStack spacing={10}>
+              <Checkbox
+                value={variant.uuid}
+                name={"selected"}
+                aria-label="Select the variant"
+              />
+
               <TextInput
                 hiddenLabel
+                id={`name-${index}`}
                 name="name"
                 defaultValue={variant.value}
                 label={`Variant ${index + 1} value`}
+                isInvalid={Boolean(errors?.[`name-${index}`])}
               />
 
               <FormSliderInput
+                id={`rolloutPercentage-${index}`}
                 name={`rolloutPercentage`}
                 label={`Variant ${index + 1} rollout percentage`}
               />
-
-              <Form method="post">
-                <input type="hidden" name="_type" value="delete-variant" />
-                <input type="hidden" name="variantId" value={variant.uuid} />
-
-                <DeleteButton small type="submit">
-                  Remove
-                </DeleteButton>
-              </Form>
             </HStack>
           </fieldset>
         ))}
@@ -75,43 +81,5 @@ export const VariantList = ({ variants }: VariantListProps) => {
         </div>
       </Stack>
     </Form>
-  );
-  return (
-    <RawTable>
-      <thead>
-        <tr>
-          <th>Value</th>
-          <th>Rollout percentage</th>
-          <th>Is this the control</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {variants.map((variant) => (
-          <tr key={`${variant.uuid}`}>
-            <td>
-              <div>{variant.value}</div>
-            </td>
-
-            <td>
-              <div>{variant.rolloutPercentage}%</div>
-            </td>
-            <td>
-              <div>{variant.isControl}</div>
-            </td>
-            <td>
-              <Form method="post">
-                <input type="hidden" name="_type" value="delete-variant" />
-                <input type="hidden" name="variantId" value={variant.uuid} />
-
-                <DeleteButton small type="submit">
-                  Remove
-                </DeleteButton>
-              </Form>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </RawTable>
   );
 };
