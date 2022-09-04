@@ -218,8 +218,7 @@ export default function VariantsOfFlag() {
           icon={<AiOutlineAppstore />}
           description={
             <Typography>
-              The strategies that you have defined will apply at the given
-              dates.
+              The variants that will be shown to a portion of your population.
             </Typography>
           }
         />
