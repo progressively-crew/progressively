@@ -6,7 +6,7 @@ import { Checkbox } from "~/components/Checkbox";
 import { SliderInput } from "~/components/Fields/SliderInput";
 import { TextInput } from "~/components/Fields/TextInput";
 import { HStack } from "~/components/HStack";
-import { RawTable } from "~/components/RawTable";
+import { Spacer } from "~/components/Spacer";
 import { Stack } from "~/components/Stack";
 
 import { Variant } from "../types";
@@ -37,49 +37,64 @@ export interface VariantListProps {
   errors?: Record<string, string>;
 }
 export const VariantList = ({ variants, errors }: VariantListProps) => {
-  console.log("xxx", errors);
-
   return (
-    <Form method="post">
-      <input type="hidden" name="_type" value="edit-variant" />
+    <div>
+      <Form method="post" id="delete-form">
+        <input type="hidden" name="_type" value="delete-variant" />
 
-      <Stack spacing={6}>
-        {variants.map((variant, index) => (
-          <fieldset
-            key={`variant-at-${index}`}
-            aria-label={`Variant at position ${index + 1}`}
-          >
-            <input type="hidden" name="uuid" value={variant.uuid} />
+        <DeleteButton small type="submit">
+          Remove selected
+        </DeleteButton>
+      </Form>
 
-            <HStack spacing={10}>
-              <Checkbox
-                value={variant.uuid}
-                name={"selected"}
-                aria-label="Select the variant"
-              />
+      <Spacer size={6} />
 
-              <TextInput
-                hiddenLabel
-                id={`name-${index}`}
-                name="name"
-                defaultValue={variant.value}
-                label={`Variant ${index + 1} value`}
-                isInvalid={Boolean(errors?.[`name-${index}`])}
-              />
+      <Form method="post" id="edit-variant">
+        <input type="hidden" name="_type" value="edit-variant" />
 
-              <FormSliderInput
-                id={`rolloutPercentage-${index}`}
-                name={`rolloutPercentage`}
-                label={`Variant ${index + 1} rollout percentage`}
-              />
-            </HStack>
-          </fieldset>
-        ))}
+        <Stack spacing={6}>
+          {variants.map((variant, index) => (
+            <fieldset
+              key={`variant-at-${index}`}
+              aria-label={`Variant at position ${index + 1}`}
+            >
+              <input type="hidden" name="uuid" value={variant.uuid} />
 
-        <div>
-          <SubmitButton>Edit variants</SubmitButton>
-        </div>
-      </Stack>
-    </Form>
+              <HStack spacing={10}>
+                <HStack spacing={4}>
+                  <Checkbox
+                    form={"delete-form"}
+                    value={variant.uuid}
+                    name={"selected"}
+                    aria-label="Select the variant"
+                  />
+
+                  <TextInput
+                    hiddenLabel
+                    id={`name-${index}`}
+                    name="name"
+                    defaultValue={variant.value}
+                    label={`Variant ${index + 1} value`}
+                    isInvalid={Boolean(errors?.[`name-${index}`])}
+                  />
+                </HStack>
+
+                <FormSliderInput
+                  id={`rolloutPercentage-${index}`}
+                  name={`rolloutPercentage`}
+                  label={`Variant ${index + 1} rollout percentage`}
+                />
+              </HStack>
+            </fieldset>
+          ))}
+
+          <div>
+            <SubmitButton form="edit-variant">Edit variants</SubmitButton>
+          </div>
+        </Stack>
+      </Form>
+
+      <Spacer size={6} />
+    </div>
   );
 };

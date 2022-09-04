@@ -6,12 +6,15 @@ export const deleteVariantAction = async (
   params: Params<string>,
   authCookie: string
 ) => {
-  const uuid = formData.get("variantId");
   const flagId = String(params.flagId);
   const envId = String(params.env);
 
   try {
-    await deleteVariant(envId, flagId, String(uuid), authCookie);
+    const uuids = formData.getAll("selected");
+
+    for (const uuid of uuids) {
+      await deleteVariant(envId, flagId, String(uuid), authCookie);
+    }
 
     return { successDelete: true };
   } catch (e: unknown) {
