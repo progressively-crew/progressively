@@ -247,6 +247,7 @@ export default function VariantsOfFlag() {
                 name={"value"}
                 label={"New variant value"}
                 placeholder="e.g: Alternative"
+                isInvalid={Boolean(actionData?.errors?.value)}
               />
 
               <SubmitButton

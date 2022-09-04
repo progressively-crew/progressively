@@ -149,12 +149,12 @@ export class FlagsController {
   @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(SchedulingSchema))
-  async addSchedulingToFlag(
+  addSchedulingToFlag(
     @Param('envId') envId: string,
     @Param('flagId') flagId: string,
     @Body() schedulingDto: SchedulingCreationDTO,
   ): Promise<any> {
-    return await this.schedulingService.addSchedulingToFlagEnv(
+    return this.schedulingService.addSchedulingToFlagEnv(
       envId,
       flagId,
       schedulingDto,
@@ -165,12 +165,12 @@ export class FlagsController {
   @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(VariantSchema))
-  async addVariantsToFlag(
+  addVariantsToFlag(
     @Param('envId') envId: string,
     @Param('flagId') flagId: string,
     @Body() variantDto: VariantCreationDTO,
   ): Promise<any> {
-    return await this.flagService.createVariant(envId, flagId, variantDto);
+    return this.flagService.createVariant(envId, flagId, variantDto);
   }
 
   @Get('environments/:envId/flags/:flagId/strategies')

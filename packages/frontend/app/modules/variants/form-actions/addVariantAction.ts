@@ -16,7 +16,7 @@ export const addVariantAction = async (
   if (!value) {
     return {
       errors: {
-        invalidValue: "The variant value is not valid. Make sure to fill one.",
+        value: "The variant value is not valid. Make sure to fill one.",
       },
     };
   }
