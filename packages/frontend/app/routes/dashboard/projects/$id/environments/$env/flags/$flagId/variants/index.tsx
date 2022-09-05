@@ -38,6 +38,7 @@ import { useUser } from "~/modules/user/contexts/useUser";
 import { VariantList } from "~/modules/variants/components/VariantList";
 import { addVariantAction } from "~/modules/variants/form-actions/addVariantAction";
 import { deleteVariantAction } from "~/modules/variants/form-actions/deleteVariantAction";
+import { editVariantAction } from "~/modules/variants/form-actions/editVariantAction";
 
 import { getVariants } from "~/modules/variants/services/getVariants";
 import { Variant, VariantCreateDTO } from "~/modules/variants/types";
@@ -89,6 +90,7 @@ type ActionDataType = null | {
   successChangePercentage?: boolean;
   successDelete?: boolean;
   successCreated?: boolean;
+  successEdit?: boolean;
   errors?: { [key: string]: string | undefined };
 };
 
@@ -103,18 +105,7 @@ export const action: ActionFunction = async ({
   const type = formData.get("_type");
 
   if (type === "edit-variant") {
-    const names = formData.getAll("name");
-    const errors: Record<string, string> = {};
-
-    names.forEach((name, index: number) => {
-      if (!name) {
-        errors[`name-${index}`] = `The variant value on line ${
-          index + 1
-        } is invalid.`;
-      }
-    });
-
-    return { errors };
+    return editVariantAction(formData, params, authCookie);
   }
 
   if (type === "delete-variant") {
@@ -206,6 +197,10 @@ export default function VariantsOfFlag() {
         ) : actionData?.successCreated ? (
           <SuccessBox id="variant-deleted">
             The variant has been successfully created.
+          </SuccessBox>
+        ) : actionData?.successEdit ? (
+          <SuccessBox id="variant-edited">
+            The variants have been edited created.
           </SuccessBox>
         ) : null
       }

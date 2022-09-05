@@ -20,10 +20,16 @@ export interface FormSliderInputProps {
   name: string;
   label: string;
   id: string;
+  initialPercentage: number;
 }
 
-const FormSliderInput = ({ name, label, id }: FormSliderInputProps) => {
-  const [percentage, setPercentage] = useState(0);
+const FormSliderInput = ({
+  name,
+  label,
+  id,
+  initialPercentage,
+}: FormSliderInputProps) => {
+  const [percentage, setPercentage] = useState(initialPercentage);
 
   return (
     <SliderInput
@@ -84,6 +90,7 @@ export const VariantList = ({ variants, errors }: VariantListProps) => {
                   id={`rolloutPercentage-${index}`}
                   name={`rolloutPercentage`}
                   label={`Variant ${index + 1} rollout percentage`}
+                  initialPercentage={variant.rolloutPercentage}
                 />
 
                 <DeleteButton
