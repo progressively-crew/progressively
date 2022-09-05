@@ -21,7 +21,6 @@ import { FiFlag } from "react-icons/fi";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { Spacer } from "~/components/Spacer";
-import { activateFlag } from "~/modules/flags/services/activateFlag";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
@@ -29,6 +28,7 @@ import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
+import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -48,18 +48,11 @@ export const action: ActionFunction = async ({
 }): Promise<ActionDataType> => {
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
-  const flagId = params.flagId;
   const formData = await request.formData();
+  const type = formData.get("_type");
 
-  const nextStatus = formData.get("nextStatus");
-
-  if (nextStatus && flagId) {
-    await activateFlag(
-      params.env!,
-      flagId as string,
-      nextStatus as FlagStatus,
-      authCookie
-    );
+  if (type === "toggle-flag") {
+    return toggleFlagAction(formData, params, authCookie);
   }
 
   return null;

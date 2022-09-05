@@ -1,6 +1,6 @@
 describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants", () => {
-  before(cy.seed);
-  after(cy.cleanupDb);
+  beforeEach(cy.seed);
+  afterEach(cy.cleanupDb);
 
   describe("not authenticated", () => {
     beforeEach(() => {
@@ -29,6 +29,16 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants"
     describe("user: Marvin", () => {
       beforeEach(() => {
         cy.signIn("Marvin");
+      });
+
+      it("adds a variant", () => {
+        cy.visit("/dashboard/projects/1/environments/1/flags/1/variants");
+        cy.findByLabelText("New variant value").type("Alternative");
+        cy.findByRole("button", { name: "Add variant" }).click();
+
+        cy.findByLabelText("Variant 1 value")
+          .should("be.visible")
+          .and("have.attr", "value", "Alternative");
       });
 
       it("shows the layout — (empty)", () => {
@@ -117,17 +127,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants"
         cy.findByRole("heading", { name: "Variants" }).should("be.visible");
 
         cy.findByRole("button", { name: "Add variant" }).should("be.visible");
-
-        cy.findByRole("columnheader", { name: "Value" }).should("be.visible");
-        cy.findByRole("columnheader", { name: "Rollout percentage" }).should(
-          "be.visible"
-        );
-        cy.findByRole("columnheader", { name: "Is this the control" }).should(
-          "be.visible"
-        );
-
-        cy.findByRole("cell", { name: "Control" }).should("be.visible");
-        cy.findByRole("cell", { name: "12%" }).should("be.visible");
 
         cy.checkA11y();
       });

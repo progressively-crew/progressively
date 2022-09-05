@@ -11,11 +11,17 @@ export const HStack = styled<any, any>("div", {
       "space-between": {
         justifyContent: "space-between",
       },
+      "flex-end": {
+        justifyContent: "flex-end",
+      },
     },
 
     alignItems: {
       "flex-start": {
         alignItems: "flex-start",
+      },
+      "flex-end": {
+        alignItems: "flex-end",
       },
     },
 

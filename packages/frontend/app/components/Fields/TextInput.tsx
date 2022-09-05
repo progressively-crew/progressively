@@ -1,6 +1,7 @@
 import { styled } from "~/stitches.config";
 import { Stack } from "../Stack";
 import { Typography } from "../Typography";
+import { VisuallyHidden } from "../VisuallyHidden";
 import { Label } from "./Label";
 
 export interface TextInputProps {
@@ -12,6 +13,8 @@ export interface TextInputProps {
   type?: string;
   description?: string;
   autoComplete?: "current-password" | "username";
+  hiddenLabel?: boolean;
+  id?: string;
 }
 
 const Input = styled("input", {
@@ -51,23 +54,34 @@ export const TextInput = ({
   placeholder,
   type = "text",
   description,
+  hiddenLabel,
+  id,
   ...props
 }: TextInputProps) => {
   let ariaDescription: string | undefined;
 
+  const currentId = id || name;
+
   if (isInvalid) {
-    ariaDescription = `error-${name}`;
+    ariaDescription = `error-${currentId}`;
   } else if (description) {
-    ariaDescription = `${name}-hint`;
+    ariaDescription = `${currentId}-hint`;
   }
 
   return (
     <Stack spacing={2}>
-      <Label htmlFor={name}>{label}</Label>
+      {hiddenLabel ? (
+        <VisuallyHidden>
+          <label htmlFor={currentId}>{label}</label>
+        </VisuallyHidden>
+      ) : (
+        <Label htmlFor={currentId}>{label}</Label>
+      )}
+
       <Input
         type={type}
         name={name}
-        id={name}
+        id={currentId}
         placeholder={placeholder}
         defaultValue={defaultValue}
         aria-describedby={ariaDescription}
@@ -76,7 +90,7 @@ export const TextInput = ({
       />
 
       {description && (
-        <Hint id={`${name}-hint`} invalid={isInvalid}>
+        <Hint id={`${currentId}-hint`} invalid={isInvalid}>
           {description}
         </Hint>
       )}

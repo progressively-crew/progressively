@@ -18,7 +18,7 @@ import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
 import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
-import { activateFlag } from "~/modules/flags/services/activateFlag";
+import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { FlagStatus } from "~/modules/flags/types";
 import { useProject } from "~/modules/projects/contexts/useProject";
@@ -47,18 +47,11 @@ export const action: ActionFunction = async ({
 }): Promise<ActionDataType> => {
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
-  const flagId = params.flagId;
   const formData = await request.formData();
+  const type = formData.get("_type");
 
-  const nextStatus = formData.get("nextStatus");
-
-  if (nextStatus && flagId) {
-    await activateFlag(
-      params.env!,
-      flagId as string,
-      nextStatus as FlagStatus,
-      authCookie
-    );
+  if (type === "toggle-flag") {
+    return toggleFlagAction(formData, params, authCookie);
   }
 
   return null;

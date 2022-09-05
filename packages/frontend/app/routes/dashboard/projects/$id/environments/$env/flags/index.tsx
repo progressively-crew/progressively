@@ -1,7 +1,6 @@
 import { BreadCrumbs } from "~/components/Breadcrumbs";
-import { activateFlag } from "~/modules/flags/services/activateFlag";
 import { getFlagsByProjectEnv } from "~/modules/flags/services/getFlagsByProjectEnv";
-import { FlagEnv, FlagStatus } from "~/modules/flags/types";
+import { FlagEnv } from "~/modules/flags/types";
 import { getSession } from "~/sessions";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
@@ -23,6 +22,7 @@ import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
+import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
 
 export const meta: MetaFunction = ({ params, parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -39,18 +39,11 @@ export const action: ActionFunction = async ({
 }): Promise<null> => {
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
-
   const formData = await request.formData();
-  const nextStatus = formData.get("nextStatus");
-  const flagId = formData.get("flagId");
+  const type = formData.get("_type");
 
-  if (nextStatus && flagId) {
-    await activateFlag(
-      params.env!,
-      flagId as string,
-      nextStatus as FlagStatus,
-      authCookie
-    );
+  if (type === "toggle-flag") {
+    return toggleFlagAction(formData, params, authCookie);
   }
 
   return null;
