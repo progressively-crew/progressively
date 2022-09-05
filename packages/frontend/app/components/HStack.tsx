@@ -12,7 +12,7 @@ export const HStack = styled<any, any>("div", {
         justifyContent: "space-between",
       },
       "flex-end": {
-        justifyContent: "flex-e,d",
+        justifyContent: "flex-end",
       },
     },
 
