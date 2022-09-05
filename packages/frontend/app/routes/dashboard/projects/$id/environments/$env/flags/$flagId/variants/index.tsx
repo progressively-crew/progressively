@@ -197,19 +197,17 @@ export default function VariantsOfFlag() {
         />
       }
       status={
-        <>
-          {actionData?.errors ? (
-            <ErrorBox list={actionData?.errors} />
-          ) : actionData?.successDelete ? (
-            <SuccessBox id="variant-deleted">
-              The variant has been successfully deleted.
-            </SuccessBox>
-          ) : actionData?.successCreated ? (
-            <SuccessBox id="variant-deleted">
-              The variant has been successfully created.
-            </SuccessBox>
-          ) : null}
-        </>
+        actionData?.errors ? (
+          <ErrorBox list={actionData?.errors} />
+        ) : actionData?.successDelete ? (
+          <SuccessBox id="variant-deleted">
+            The variant has been successfully deleted.
+          </SuccessBox>
+        ) : actionData?.successCreated ? (
+          <SuccessBox id="variant-deleted">
+            The variant has been successfully created.
+          </SuccessBox>
+        ) : null
       }
     >
       <Section id="variants">
