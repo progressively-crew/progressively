@@ -25,5 +25,10 @@ export const Typography = styled<any, any>("p", {
     font: mapTokenToVariant("fontFamily", fonts),
     size: mapTokenToVariant("fontSize", fontSizes),
     color: mapTokenToVariant("color", colors),
+    textTransform: {
+      uppercase: {
+        textTransform: "uppercase",
+      },
+    },
   },
 });
