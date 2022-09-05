@@ -94,6 +94,7 @@ export class EnvironmentsService {
       include: {
         flag: true,
         environment: true,
+        variants: true,
       },
       orderBy: {
         flag: {

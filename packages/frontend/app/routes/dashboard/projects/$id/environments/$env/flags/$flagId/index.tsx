@@ -14,11 +14,7 @@ import { Typography } from "~/components/Typography";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
-import {
-  useSearchParams,
-  useLoaderData,
-  useActionData,
-} from "@remix-run/react";
+import { useSearchParams, useLoaderData, useActionData } from "@remix-run/react";
 import { TagLine } from "~/components/Tagline";
 import { FiFlag } from "react-icons/fi";
 import { StrategyList } from "~/modules/strategies/components/StrategyList";
@@ -38,6 +34,7 @@ import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { Heading } from "~/components/Heading";
 import { Tag } from "~/components/Tag";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
+import { VariantList } from "~/modules/variants/components/VariantList";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -51,10 +48,7 @@ export const meta: MetaFunction = ({ parentsData, params }) => {
 
 type ActionDataType = null | { successChangePercentage: boolean };
 
-export const action: ActionFunction = async ({
-  request,
-  params,
-}): Promise<ActionDataType> => {
+export const action: ActionFunction = async ({ request, params }): Promise<ActionDataType> => {
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
   const flagId = params.flagId;
@@ -64,11 +58,7 @@ export const action: ActionFunction = async ({
   if (type === "percentage") {
     const rolloutPercentage = formData.get("rolloutPercentage");
 
-    if (
-      rolloutPercentage !== undefined &&
-      rolloutPercentage !== null &&
-      flagId
-    ) {
+    if (rolloutPercentage !== undefined && rolloutPercentage !== null && flagId) {
       await changePercentageFlag(
         params.env!,
         flagId as string,
@@ -91,18 +81,11 @@ interface LoaderData {
   strategies: Array<StrategyRetrieveDTO>;
 }
 
-export const loader: LoaderFunction = async ({
-  request,
-  params,
-}): Promise<LoaderData> => {
+export const loader: LoaderFunction = async ({ request, params }): Promise<LoaderData> => {
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
 
-  const strategies = await getStrategies(
-    params.env!,
-    params.flagId!,
-    authCookie
-  );
+  const strategies = await getStrategies(params.env!, params.flagId!, authCookie);
 
   return {
     strategies,
@@ -147,6 +130,7 @@ export default function FlagById() {
   ];
 
   const hasStrategies = strategies.length > 0;
+  const isMultiVariants = flagEnv.variants.length > 0;
 
   return (
     <DashboardLayout
@@ -160,25 +144,15 @@ export default function FlagById() {
         />
       }
       subNav={
-        <FlagMenu
-          projectId={project.uuid}
-          envId={environment.uuid}
-          flagId={currentFlag.uuid}
-        />
+        <FlagMenu projectId={project.uuid} envId={environment.uuid} flagId={currentFlag.uuid} />
       }
       status={
         isStrategyUpdated ? (
-          <SuccessBox id="strategy-updated">
-            The strategy has been successfully updated.
-          </SuccessBox>
+          <SuccessBox id="strategy-updated">The strategy has been successfully updated.</SuccessBox>
         ) : isStrategyAdded ? (
-          <SuccessBox id="strategy-added">
-            The strategy has been successfully created.
-          </SuccessBox>
+          <SuccessBox id="strategy-added">The strategy has been successfully created.</SuccessBox>
         ) : isStrategyRemoved ? (
-          <SuccessBox id="strategy-removed">
-            The strategy has been successfully removed.
-          </SuccessBox>
+          <SuccessBox id="strategy-removed">The strategy has been successfully removed.</SuccessBox>
         ) : hasPercentageChanged ? (
           <SuccessBox id="percentage-changed">Percentage adjusted.</SuccessBox>
         ) : null
@@ -208,22 +182,35 @@ export default function FlagById() {
 
         <Section id="rollout-target">
           <Card>
-            <CardContent>
+            <CardContent noBottom>
               <SectionHeader
                 title="Percentage of the audience"
                 description={
-                  <Typography>
-                    This is the percentage of people that will receive the
-                    variant <Tag>true</Tag> when the flag is activated.
-                  </Typography>
+                  isMultiVariants ? (
+                    <Typography>
+                      These are the variants and their rollout percentage served to your users when
+                      the flag is activated.
+                    </Typography>
+                  ) : (
+                    <Typography>
+                      This is the percentage of people that will receive the variant <Tag>true</Tag>{" "}
+                      when the flag is activated.
+                    </Typography>
+                  )
                 }
               />
-
-              <SliderFlag
-                labelledBy="rollout-target"
-                initialRolloutPercentage={flagEnv.rolloutPercentage}
-              />
             </CardContent>
+
+            {isMultiVariants ? (
+              <VariantList variants={flagEnv.variants} />
+            ) : (
+              <CardContent>
+                <SliderFlag
+                  labelledBy="rollout-target"
+                  initialRolloutPercentage={flagEnv.rolloutPercentage}
+                />
+              </CardContent>
+            )}
           </Card>
         </Section>
 
@@ -258,9 +245,8 @@ export default function FlagById() {
                 title="No strategy found"
                 description={
                   <Typography>
-                    There are no strategies bound to this flag yet. In this
-                    case, when the flag is activated, every user will receive
-                    the {`"true"`} variant.
+                    There are no strategies bound to this flag yet. In this case, when the flag is
+                    activated, every user will receive the {`"true"`} variant.
                   </Typography>
                 }
                 action={
