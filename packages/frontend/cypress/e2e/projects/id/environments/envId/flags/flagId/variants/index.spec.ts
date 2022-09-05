@@ -41,6 +41,21 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants"
           .and("have.attr", "value", "Alternative");
       });
 
+      it("edits a variant", () => {
+        cy.visit("/dashboard/projects/1/environments/1/flags/1/variants");
+        cy.findByLabelText("New variant value").type("Alternative");
+        cy.findByRole("button", { name: "Add variant" }).click();
+
+        cy.findByLabelText("Variant 1 value").type("Variant alternative");
+        cy.findByRole("button", { name: "Edit variants" }).click();
+
+        cy.reload();
+
+        cy.findByLabelText("Variant 1 value")
+          .should("be.visible")
+          .and("have.attr", "value", "AlternativeVariant alternative");
+      });
+
       it("shows the layout — (empty)", () => {
         cy.visit("/dashboard/projects/1/environments/1/flags/1/variants");
         cy.injectAxe();

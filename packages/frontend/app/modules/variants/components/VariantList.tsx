@@ -2,17 +2,30 @@ import { Form } from "@remix-run/react";
 import { useState } from "react";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
+import { CardContent } from "~/components/Card";
 import { SliderInput } from "~/components/Fields/SliderInput";
 import { TextInput } from "~/components/Fields/TextInput";
-import { HStack } from "~/components/HStack";
 import { Spacer } from "~/components/Spacer";
+import { Typography } from "~/components/Typography";
 import { styled } from "~/stitches.config";
 import { Variant } from "../types";
 
-const FieldSets = styled("fieldset", {
+const Grid = styled("div", {
+  display: "grid",
+  gridTemplateColumns: "1fr 1fr 1fr",
+  gap: "$spacing$10",
+  alignItems: "center",
+  padding: "0 $spacing$12",
+});
+
+const FieldSets = styled("div", {
   "& fieldset": {
     borderTop: "1px solid $heracles",
     padding: "$spacing$4 0",
+  },
+
+  "& fieldset:last-of-type": {
+    borderBottom: "1px solid $heracles",
   },
 });
 
@@ -20,10 +33,11 @@ export interface FormSliderInputProps {
   name: string;
   label: string;
   id: string;
+  initialPercentage: number;
 }
 
-const FormSliderInput = ({ name, label, id }: FormSliderInputProps) => {
-  const [percentage, setPercentage] = useState(0);
+const FormSliderInput = ({ name, label, id, initialPercentage }: FormSliderInputProps) => {
+  const [percentage, setPercentage] = useState(initialPercentage);
 
   return (
     <SliderInput
@@ -60,6 +74,22 @@ export const VariantList = ({ variants, errors }: VariantListProps) => {
       <Form method="post" id="edit-variant">
         <input type="hidden" name="_type" value="edit-variant" />
 
+        <Grid aria-hidden>
+          <Typography textTransform="uppercase" size="neptune" font="title">
+            Variant value
+          </Typography>
+
+          <Typography fontWeight="bold" textTransform="uppercase" size="neptune" font="title">
+            Rollout percentage
+          </Typography>
+
+          <Typography fontWeight="bold" textTransform="uppercase" size="neptune" font="title">
+            Actions
+          </Typography>
+        </Grid>
+
+        <Spacer size={3} />
+
         <FieldSets>
           {variants.map((variant, index) => (
             <fieldset
@@ -68,41 +98,38 @@ export const VariantList = ({ variants, errors }: VariantListProps) => {
             >
               <input type="hidden" name="uuid" value={variant.uuid} />
 
-              <HStack spacing={10}>
-                <HStack spacing={4}>
-                  <TextInput
-                    hiddenLabel
-                    id={`name-${index}`}
-                    name="name"
-                    defaultValue={variant.value}
-                    label={`Variant ${index + 1} value`}
-                    isInvalid={Boolean(errors?.[`name-${index}`])}
-                  />
-                </HStack>
+              <Grid>
+                <TextInput
+                  hiddenLabel
+                  id={`name-${index}`}
+                  name="name"
+                  defaultValue={variant.value}
+                  label={`Variant ${index + 1} value`}
+                  isInvalid={Boolean(errors?.[`name-${index}`])}
+                />
 
                 <FormSliderInput
                   id={`rolloutPercentage-${index}`}
                   name={`rolloutPercentage`}
                   label={`Variant ${index + 1} rollout percentage`}
+                  initialPercentage={variant.rolloutPercentage}
                 />
 
-                <DeleteButton
-                  small
-                  type="submit"
-                  form={`delete-form-${variant.uuid}`}
-                >
-                  Remove
-                </DeleteButton>
-              </HStack>
+                <div>
+                  <DeleteButton small type="submit" form={`delete-form-${variant.uuid}`}>
+                    Remove
+                  </DeleteButton>
+                </div>
+              </Grid>
             </fieldset>
           ))}
         </FieldSets>
 
         <Spacer size={6} />
 
-        <div>
+        <CardContent noTop noBottom>
           <SubmitButton form="edit-variant">Edit variants</SubmitButton>
-        </div>
+        </CardContent>
       </Form>
 
       <Spacer size={6} />

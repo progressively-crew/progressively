@@ -15,7 +15,6 @@ export interface SliderInputProps {
 
 const ThumbSize = 1.6;
 const TrackSize = 0.5;
-const InputWidth = 15;
 
 const RangeInput = styled("input", {
   "-webkit-appearance": "none",
@@ -23,7 +22,6 @@ const RangeInput = styled("input", {
   background: "transparent",
   cursor: "pointer",
   height: `$cta`,
-  width: `${InputWidth}rem`,
 
   // chrome edge safari
   "&::-webkit-slider-runnable-track": {

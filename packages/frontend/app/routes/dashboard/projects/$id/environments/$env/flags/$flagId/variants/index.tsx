@@ -1,10 +1,5 @@
 import { ActionFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
-import {
-  Form,
-  useActionData,
-  useLoaderData,
-  useTransition,
-} from "@remix-run/react";
+import { Form, useActionData, useLoaderData, useTransition } from "@remix-run/react";
 import { useEffect, useRef } from "react";
 import { AiOutlineAppstore } from "react-icons/ai";
 import { FiFlag } from "react-icons/fi";
@@ -38,6 +33,7 @@ import { useUser } from "~/modules/user/contexts/useUser";
 import { VariantList } from "~/modules/variants/components/VariantList";
 import { addVariantAction } from "~/modules/variants/form-actions/addVariantAction";
 import { deleteVariantAction } from "~/modules/variants/form-actions/deleteVariantAction";
+import { editVariantAction } from "~/modules/variants/form-actions/editVariantAction";
 
 import { getVariants } from "~/modules/variants/services/getVariants";
 import { Variant, VariantCreateDTO } from "~/modules/variants/types";
@@ -57,18 +53,11 @@ interface LoaderData {
   variants: Array<Variant>;
 }
 
-export const loader: LoaderFunction = async ({
-  request,
-  params,
-}): Promise<LoaderData> => {
+export const loader: LoaderFunction = async ({ request, params }): Promise<LoaderData> => {
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
 
-  const variants: Array<Variant> = await getVariants(
-    params.env!,
-    params.flagId!,
-    authCookie
-  );
+  const variants: Array<Variant> = await getVariants(params.env!, params.flagId!, authCookie);
 
   return {
     variants,
@@ -89,32 +78,19 @@ type ActionDataType = null | {
   successChangePercentage?: boolean;
   successDelete?: boolean;
   successCreated?: boolean;
+  successEdit?: boolean;
   errors?: { [key: string]: string | undefined };
 };
 
 /* eslint-disable sonarjs/cognitive-complexity */
-export const action: ActionFunction = async ({
-  request,
-  params,
-}): Promise<ActionDataType> => {
+export const action: ActionFunction = async ({ request, params }): Promise<ActionDataType> => {
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
   const formData = await request.formData();
   const type = formData.get("_type");
 
   if (type === "edit-variant") {
-    const names = formData.getAll("name");
-    const errors: Record<string, string> = {};
-
-    names.forEach((name, index: number) => {
-      if (!name) {
-        errors[`name-${index}`] = `The variant value on line ${
-          index + 1
-        } is invalid.`;
-      }
-    });
-
-    return { errors };
+    return editVariantAction(formData, params, authCookie);
   }
 
   if (type === "delete-variant") {
@@ -190,23 +166,17 @@ export default function VariantsOfFlag() {
         />
       }
       subNav={
-        <FlagMenu
-          projectId={project.uuid}
-          envId={environment.uuid}
-          flagId={currentFlag.uuid}
-        />
+        <FlagMenu projectId={project.uuid} envId={environment.uuid} flagId={currentFlag.uuid} />
       }
       status={
         actionData?.errors ? (
           <ErrorBox list={actionData?.errors} />
         ) : actionData?.successDelete ? (
-          <SuccessBox id="variant-deleted">
-            The variant has been successfully deleted.
-          </SuccessBox>
+          <SuccessBox id="variant-deleted">The variant has been successfully deleted.</SuccessBox>
         ) : actionData?.successCreated ? (
-          <SuccessBox id="variant-deleted">
-            The variant has been successfully created.
-          </SuccessBox>
+          <SuccessBox id="variant-deleted">The variant has been successfully created.</SuccessBox>
+        ) : actionData?.successEdit ? (
+          <SuccessBox id="variant-edited">The variants have been edited created.</SuccessBox>
         ) : null
       }
     >
@@ -224,19 +194,13 @@ export default function VariantsOfFlag() {
         {!hasVariants && (
           <EmptyState
             title="No variants found"
-            description={
-              <Typography>
-                There are no variants found for this flag.
-              </Typography>
-            }
+            description={<Typography>There are no variants found for this flag.</Typography>}
           />
         )}
 
         {hasVariants && (
           <Card>
-            <CardContent>
-              <VariantList variants={variants} errors={actionData?.errors} />
-            </CardContent>
+            <VariantList variants={variants} errors={actionData?.errors} />
           </Card>
         )}
 
@@ -244,11 +208,7 @@ export default function VariantsOfFlag() {
 
         <Form method="post" aria-label="Add a new variant" ref={formRef}>
           <input type="hidden" value="add-variant" name="_type" />
-          <input
-            type="hidden"
-            value={remainingPercentage}
-            name="remainingPercent"
-          />
+          <input type="hidden" value={remainingPercentage} name="remainingPercent" />
           <Stack spacing={6}>
             <HStack spacing={6} alignItems="flex-end">
               <TextInput
