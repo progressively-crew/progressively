@@ -6,6 +6,7 @@ import {
   FlagHitsRetrieveDTO,
   PopulatedFlagEnv,
   SchedulingStatus,
+  Variant,
 } from './types';
 import { FieldRecord } from '../strategy/types';
 import { WebsocketGateway } from '../websocket/websocket.gateway';
@@ -315,6 +316,28 @@ export class FlagsService {
         value: variant.value,
       },
     });
+  }
+
+  async editVariants(envId: string, flagId: string, variants: Array<Variant>) {
+    let count: number = 0;
+    for (const variant of variants) {
+      await this.prisma.variant.updateMany({
+        where: {
+          uuid: variant.uuid,
+          flagEnvironmentFlagId: flagId,
+          flagEnvironmentEnvironmentId: envId,
+        },
+        data: {
+          isControl: Boolean(variant.isControl),
+          rolloutPercentage: variant.rolloutPercentage,
+          value: variant.value,
+        },
+      });
+
+      count++;
+    }
+
+    return { count };
   }
 
   deleteVariantFlag(envId: string, flagId: string, variantId: string) {

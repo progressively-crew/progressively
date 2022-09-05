@@ -1042,4 +1042,114 @@ describe('FlagsController (e2e)', () => {
       expect(afterResponse.body.length).toBe(1);
     });
   });
+
+  describe('/environments/:envId/flags/:flagId/variants (PUT)', () => {
+    it('gives a 401 when the user is not authenticated', () =>
+      verifyAuthGuard(app, '/environments/1/flags/1/variants', 'put'));
+
+    it('gives a 403 when trying to access a valid project but an invalid env', async () => {
+      const access_token = await authenticate(app);
+
+      return request(app.getHttpServer())
+        .put('/environments/1/flags/6/variants')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send([])
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('gives a 403 when the user requests a forbidden project', async () => {
+      const access_token = await authenticate(
+        app,
+        'jane.doe@gmail.com',
+        'password',
+      );
+
+      return request(app.getHttpServer())
+        .put('/environments/1/flags/1/variants')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send([])
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('gives 400 when the variants has a wrong rolloutPercentage', async () => {
+      const access_token = await authenticate(app);
+
+      const invalidVariant: any = [
+        {
+          uuid: '1',
+          rolloutPercentage: undefined,
+          value: 'test',
+          isControl: true,
+        },
+      ];
+
+      await request(app.getHttpServer())
+        .put('/environments/1/flags/1/variants')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send(invalidVariant)
+        .expect(400)
+        .expect({
+          statusCode: 400,
+          message: 'Validation failed',
+          error: 'Bad Request',
+        });
+    });
+
+    it('gives 400 when the variant has a wrong value', async () => {
+      const access_token = await authenticate(app);
+
+      const invalidVariant: any = [
+        {
+          uuid: '1',
+          rolloutPercentage: 12,
+          value: undefined,
+          isControl: true,
+        },
+      ];
+
+      await request(app.getHttpServer())
+        .put('/environments/1/flags/1/variants')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send(invalidVariant)
+        .expect(400)
+        .expect({
+          statusCode: 400,
+          message: 'Validation failed',
+          error: 'Bad Request',
+        });
+    });
+
+    it('creates a variant', async () => {
+      const access_token = await authenticate(app);
+
+      const variant: any = [
+        {
+          uuid: '1',
+          rolloutPercentage: 88,
+          value: 'test 2',
+          isControl: false,
+        },
+      ];
+
+      const response = await request(app.getHttpServer())
+        .put('/environments/1/flags/4/variants')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send(variant)
+        .expect(200);
+
+      expect(response.body).toMatchObject({
+        count: 1,
+      });
+    });
+  });
 });
