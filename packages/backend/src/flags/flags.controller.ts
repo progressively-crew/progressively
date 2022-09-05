@@ -26,10 +26,12 @@ import {
   ChangePercentageSchema,
   VariantCreationDTO,
   VariantSchema,
+  VariantsSchema,
 } from './flags.dto';
 import { HasFlagEnvAccessGuard } from './guards/hasFlagEnvAccess';
 import { SchedulingCreationDTO, SchedulingSchema } from '../scheduling/types';
 import { SchedulingService } from '../scheduling/scheduling.service';
+import { Variant } from './types';
 
 @ApiBearerAuth()
 @Controller()
@@ -171,6 +173,18 @@ export class FlagsController {
     @Body() variantDto: VariantCreationDTO,
   ): Promise<any> {
     return this.flagService.createVariant(envId, flagId, variantDto);
+  }
+
+  @Put('environments/:envId/flags/:flagId/variants')
+  @UseGuards(HasFlagEnvAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(new ValidationPipe(VariantsSchema))
+  editVariantsOfFlag(
+    @Param('envId') envId: string,
+    @Param('flagId') flagId: string,
+    @Body() variantsDto: Array<Variant>,
+  ): Promise<any> {
+    return this.flagService.editVariants(envId, flagId, variantsDto);
   }
 
   @Get('environments/:envId/flags/:flagId/strategies')

@@ -13,6 +13,15 @@ export const VariantSchema = Joi.object({
   value: Joi.string().required(),
 });
 
+export const VariantsSchema = Joi.array().items(
+  Joi.object({
+    uuid: Joi.string().required(),
+    rolloutPercentage: Joi.number().integer().min(0).max(100).required(),
+    isControl: Joi.boolean(),
+    value: Joi.string().required(),
+  }),
+);
+
 export type VariantCreationDTO = Omit<Variant, 'uuid'>;
 
 export class FlagCreationDTO {
