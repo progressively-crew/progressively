@@ -1,4 +1,5 @@
 import { Environment } from "../environments/types";
+import { Variant } from "../variants/types";
 
 export enum FlagStatus {
   ACTIVATED = "ACTIVATED",
@@ -21,6 +22,7 @@ export interface FlagEnv {
   flag: Flag;
   environment: Environment;
   rolloutPercentage: number;
+  variants: Array<Variant>;
 }
 
 export interface CreateFlagDTO {

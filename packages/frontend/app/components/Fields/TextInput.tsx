@@ -15,6 +15,7 @@ export interface TextInputProps {
   autoComplete?: "current-password" | "username";
   hiddenLabel?: boolean;
   id?: string;
+  isDisabled?: boolean;
 }
 
 const Input = styled("input", {
@@ -30,6 +31,13 @@ const Input = styled("input", {
     invalid: {
       true: {
         border: "4px solid $errorBorder",
+      },
+    },
+
+    isDisabled: {
+      true: {
+        border: "4px solid $heracles",
+        background: "$hera",
       },
     },
   },
@@ -56,6 +64,7 @@ export const TextInput = ({
   description,
   hiddenLabel,
   id,
+  isDisabled,
   ...props
 }: TextInputProps) => {
   let ariaDescription: string | undefined;
@@ -86,6 +95,9 @@ export const TextInput = ({
         defaultValue={defaultValue}
         aria-describedby={ariaDescription}
         invalid={isInvalid}
+        isDisabled={isDisabled}
+        aria-disabled={isDisabled}
+        readOnly={isDisabled}
         {...props}
       />
 
