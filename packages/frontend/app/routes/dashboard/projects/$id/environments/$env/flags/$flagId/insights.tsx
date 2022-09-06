@@ -8,11 +8,8 @@ import { getFlagHits } from "~/modules/flags/services/getFlagHits";
 import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
 import { BigStat } from "~/components/BigStat";
 import { Typography } from "~/components/Typography";
-import { styled, theme } from "~/stitches.config";
+import { styled } from "~/stitches.config";
 import { Spacer } from "~/components/Spacer";
-import { ChartVariant, LineChart } from "~/components/LineChart";
-import { useState } from "react";
-import { SwitchButton } from "~/components/Buttons/SwitchButton";
 import { EmptyState } from "~/components/EmptyState";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
@@ -57,37 +54,25 @@ export const action: ActionFunction = async ({ request, params }): Promise<Actio
 };
 interface FlagHit {
   date: string;
-  activated: number;
-  notactivated: number;
+  _count: number;
 }
 
 interface LoaderData {
-  hits: Array<FlagHit>;
-  activatedCount: number;
-  notActivatedCount: number;
+  hits: Array<{ name: string; hits: Array<FlagHit> }>;
 }
 
 export const loader: LoaderFunction = async ({ request, params }): Promise<LoaderData> => {
   const session = await getSession(request.headers.get("Cookie"));
 
   const authCookie = session.get("auth-cookie");
-
-  const hits: Array<FlagHit> = await getFlagHits(params.env!, params.flagId!, authCookie);
-
-  console.log("lol", hits);
-
-  let activatedCount = 0;
-  let notActivatedCount = 0;
-
-  for (const hit of hits) {
-    activatedCount += hit.activated;
-    notActivatedCount += hit.notactivated;
-  }
+  const hits: Array<{ name: string; hits: Array<FlagHit> }> = await getFlagHits(
+    params.env!,
+    params.flagId!,
+    authCookie
+  );
 
   return {
     hits,
-    activatedCount,
-    notActivatedCount,
   };
 };
 
@@ -102,12 +87,11 @@ const InsightsGrid = styled("div", {
 });
 
 export default function FlagInsights() {
-  const { hits, activatedCount, notActivatedCount } = useLoaderData<LoaderData>();
+  const { hits } = useLoaderData<LoaderData>();
   const { flagEnv } = useFlagEnv();
   const { user } = useUser();
   const { project } = useProject();
   const { environment } = useEnvironment();
-  const [chartVariant, setChartVariant] = useState<ChartVariant>("chart");
 
   const currentFlag = flagEnv.flag;
   const isFlagActivated = flagEnv.status === FlagStatus.ACTIVATED;
@@ -169,42 +153,15 @@ export default function FlagInsights() {
             <InsightsGrid>
               <div>
                 <BigStat name="Evaluated as activated">
-                  <p>{activatedCount}</p>
+                  <p>Paf</p>
                 </BigStat>
 
                 <Spacer size={4} />
 
                 <BigStat name="Evaluated as NOT activated" secondary>
-                  <p>{notActivatedCount}</p>
+                  <p>Pif</p>
                 </BigStat>
               </div>
-
-              <BigStat name="Flag hits per date" id="count-per-date-chart">
-                <SwitchButton
-                  onClick={() => setChartVariant((s) => (s === "chart" ? "table" : "chart"))}
-                >
-                  Switch to {chartVariant === "chart" ? "table view" : "chart view"}
-                </SwitchButton>
-
-                <Spacer size={4} />
-
-                <LineChart
-                  labelledBy="count-per-date-chart"
-                  variant={chartVariant}
-                  items={hits}
-                  dataKeys={[
-                    {
-                      name: "activated",
-                      color: theme.colors.nemesis.toString(),
-                    },
-                    {
-                      name: "notactivated",
-                      color: theme.colors.tyche.toString(),
-                      dashed: true,
-                    },
-                  ]}
-                />
-              </BigStat>
             </InsightsGrid>
           )}
         </div>

@@ -106,28 +106,56 @@ export class FlagsService {
   }
 
   async listFlagHits(envId: string, flagId: string) {
-    // Nested queries in raw, not perfect but it works :(
-    return this.prisma.$queryRaw<Array<FlagHitsRetrieveDTO>>`
-      SELECT date, (
-        SELECT count(id)::int as activated
-        FROM "FlagHit" as fh
-        WHERE status = 'ACTIVATED'
-        AND fh.date = rfh.date
-        GROUP BY status
-      ),
-      (
-        SELECT count(id)::int as notActivated
-        FROM "FlagHit" as fh
-        WHERE status = 'NOT_ACTIVATED'
-        AND fh.date = rfh.date
-        GROUP BY status
-      )
-      FROM "FlagHit" as rfh
-      WHERE "flagEnvironmentEnvironmentId" = ${envId}
-      AND "flagEnvironmentFlagId" = ${flagId}
-      GROUP BY date
-      ORDER BY date ASC
-    `;
+    const variants = await this.prisma.variant.findMany({
+      where: {
+        flagEnvironmentEnvironmentId: envId,
+        flagEnvironmentFlagId: flagId,
+      },
+    });
+
+    if (variants.length > 0) {
+      const variantHits = [];
+      for (const variant of variants) {
+        const hits = await this.prisma.flagHit.groupBy({
+          by: ['date'],
+          _count: true,
+          where: {
+            status: variant.value,
+            flagEnvironmentEnvironmentId: envId,
+            flagEnvironmentFlagId: flagId,
+          },
+        });
+
+        variantHits.push({ name: variant.value, hits });
+      }
+
+      return variantHits;
+    }
+
+    const activated = await this.prisma.flagHit.groupBy({
+      by: ['date'],
+      _count: true,
+      where: {
+        status: FlagStatus.ACTIVATED,
+        flagEnvironmentEnvironmentId: envId,
+        flagEnvironmentFlagId: flagId,
+      },
+    });
+
+    const notActivated = await this.prisma.flagHit.groupBy({
+      by: ['date'],
+      _count: true,
+      where: {
+        status: FlagStatus.NOT_ACTIVATED,
+        flagEnvironmentEnvironmentId: envId,
+        flagEnvironmentFlagId: flagId,
+      },
+    });
+
+    return [
+      { name: 'Activated', hits: activated },
+      { name: 'Not activated', hits: notActivated },
+    ];
   }
 
   async deleteFlag(flagId: string) {
