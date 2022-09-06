@@ -184,6 +184,29 @@ export class FlagsController {
     @Param('flagId') flagId: string,
     @Body() variantsDto: Array<Variant>,
   ): Promise<any> {
+    let cumulative: number = 0;
+    let hasControl: boolean = false;
+
+    for (const variant of variantsDto) {
+      if (variant.isControl) {
+        hasControl = true;
+      }
+
+      cumulative += variant.rolloutPercentage;
+    }
+
+    if (cumulative > 100) {
+      throw new BadRequestException(
+        `The cumulated percentage of the variants is ${cumulative}% which is over 100%.`,
+      );
+    }
+
+    if (!hasControl) {
+      throw new BadRequestException(
+        `There is no control variant found. You have to provide one.`,
+      );
+    }
+
     return this.flagService.editVariants(envId, flagId, variantsDto);
   }
 

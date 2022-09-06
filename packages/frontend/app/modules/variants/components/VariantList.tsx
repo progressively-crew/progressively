@@ -3,6 +3,7 @@ import { useState } from "react";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { CardContent } from "~/components/Card";
+import { Radio } from "~/components/Fields/Radio";
 import { SliderInput } from "~/components/Fields/SliderInput";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Spacer } from "~/components/Spacer";
@@ -15,33 +16,20 @@ export enum VariantListModes {
   Operational = "Operational",
 }
 
-const Grid = styled("div", {
-  display: "grid",
-
-  gap: "$spacing$10",
-  alignItems: "center",
+const Wrapper = styled("div", {
+  display: "table",
   padding: "0 $spacing$12",
 
-  variants: {
-    cols: {
-      "3": {
-        gridTemplateColumns: "1fr 1fr 1fr",
-      },
-      "2": {
-        gridTemplateColumns: "1fr 1fr",
-      },
-    },
-  },
-});
-
-const FieldSets = styled("div", {
-  "& fieldset": {
-    borderTop: "1px solid $heracles",
-    padding: "$spacing$4 0",
+  "& .row": {
+    display: "table-row",
   },
 
-  "& fieldset:last-of-type": {
+  "& .col": {
     borderBottom: "1px solid $heracles",
+    display: "table-cell",
+    minWidth: "80px",
+    verticalAlign: "middle",
+    padding: "$spacing$4",
   },
 });
 
@@ -96,33 +84,67 @@ export const VariantList = ({ variants, errors, mode }: VariantListProps) => {
       <Form method="post" id="edit-variant">
         <input type="hidden" name="_type" value="edit-variant" />
 
-        <Grid aria-hidden cols={showRemoveButton ? "3" : "2"}>
-          <Typography textTransform="uppercase" size="neptune" font="title">
-            Variant value
-          </Typography>
+        <Wrapper>
+          <div className="row">
+            <div className="col">
+              <Typography textTransform="uppercase" size="neptune" font="title" as="span">
+                Is control
+              </Typography>
+            </div>
 
-          <Typography fontWeight="bold" textTransform="uppercase" size="neptune" font="title">
-            Rollout percentage
-          </Typography>
+            <div className="col">
+              <Typography textTransform="uppercase" size="neptune" font="title" as="span">
+                Variant value
+              </Typography>
+            </div>
 
-          {showRemoveButton && (
-            <Typography fontWeight="bold" textTransform="uppercase" size="neptune" font="title">
-              Actions
-            </Typography>
-          )}
-        </Grid>
+            <div className="col">
+              <Typography
+                fontWeight="bold"
+                textTransform="uppercase"
+                size="neptune"
+                font="title"
+                as="span"
+              >
+                Rollout percentage
+              </Typography>
+            </div>
 
-        <Spacer size={3} />
+            {showRemoveButton && (
+              <div className="col">
+                <Typography
+                  fontWeight="bold"
+                  textTransform="uppercase"
+                  size="neptune"
+                  font="title"
+                  as="span"
+                >
+                  Actions
+                </Typography>
+              </div>
+            )}
+          </div>
 
-        <FieldSets>
           {variants.map((variant, index) => (
-            <fieldset
+            <div
+              role="group"
+              className="row"
               key={`variant-${variant.uuid}`}
               aria-label={`Variant at position ${index + 1}`}
             >
-              <input type="hidden" name="uuid" value={variant.uuid} />
+              <div className="col">
+                <input type="hidden" name="uuid" value={variant.uuid} />
+                <Radio
+                  type={"radio"}
+                  name={"isControl"}
+                  value={variant.uuid}
+                  defaultChecked={variant.isControl}
+                  aria-label={`Is variant at position ${index + 1} the control variant?`}
+                  readOnly
+                />
+              </div>
 
-              <Grid cols={showRemoveButton ? "3" : "2"}>
+              <div className="col">
                 <TextInput
                   hiddenLabel
                   id={`name-${index}`}
@@ -132,25 +154,27 @@ export const VariantList = ({ variants, errors, mode }: VariantListProps) => {
                   isInvalid={Boolean(errors?.[`name-${index}`])}
                   isDisabled={isValueInputDisabled}
                 />
+              </div>
 
+              <div className="col">
                 <FormSliderInput
                   id={`rolloutPercentage-${index}`}
                   name={`rolloutPercentage`}
                   label={`Variant ${index + 1} rollout percentage`}
                   initialPercentage={variant.rolloutPercentage}
                 />
+              </div>
 
-                {showRemoveButton && (
-                  <div>
-                    <DeleteButton small type="submit" form={`delete-form-${variant.uuid}`}>
-                      Remove
-                    </DeleteButton>
-                  </div>
-                )}
-              </Grid>
-            </fieldset>
+              {showRemoveButton && (
+                <div className="col">
+                  <DeleteButton small type="submit" form={`delete-form-${variant.uuid}`}>
+                    Remove
+                  </DeleteButton>
+                </div>
+              )}
+            </div>
           ))}
-        </FieldSets>
+        </Wrapper>
 
         <Spacer size={6} />
 
