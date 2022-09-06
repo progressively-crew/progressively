@@ -13,6 +13,7 @@ export const editVariantAction = async (
   const uuids = formData.getAll("uuid");
   const names = formData.getAll("name");
   const rolloutPercentages = formData.getAll("rolloutPercentage");
+  const controlId = formData.get("isControl");
   const errors: Record<string, string> = {};
 
   names.forEach((name, index: number) => {
@@ -27,11 +28,12 @@ export const editVariantAction = async (
 
   try {
     const variants = uuids.map((uuid, index: number) => {
+      const id = uuid.toString();
       const variant: Variant = {
-        uuid: uuid.toString(),
+        uuid: id,
         value: names[index].toString(),
         rolloutPercentage: Number(rolloutPercentages[index]),
-        isControl: false,
+        isControl: controlId === id,
       };
 
       return variant;

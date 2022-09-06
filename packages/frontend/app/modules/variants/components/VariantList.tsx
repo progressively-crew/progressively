@@ -134,7 +134,14 @@ export const VariantList = ({ variants, errors, mode }: VariantListProps) => {
             >
               <div className="col">
                 <input type="hidden" name="uuid" value={variant.uuid} />
-                <Radio type="radio" name={"isControl"} />
+                <Radio
+                  type={"radio"}
+                  name={"isControl"}
+                  value={variant.uuid}
+                  defaultChecked={variant.isControl}
+                  aria-label={`Is variant at position ${index + 1} the control variant?`}
+                  readOnly
+                />
               </div>
 
               <div className="col">

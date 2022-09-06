@@ -1,3 +1,4 @@
+import { WarningBox } from "~/components/Boxes/WarningBox";
 import { Stack } from "~/components/Stack";
 import { Tag } from "~/components/Tag";
 import { Typography } from "~/components/Typography";
@@ -68,10 +69,15 @@ const MultiVariantDescription = ({ flagEnv }: StrategyDescriptionProps) => {
       </Ul>
 
       {cumulative < 100 && (
-        <Typography>
-          The sum of the percentage is <strong>{cumulative}%</strong>. People that are not in these
-          bounds will receive the <strong>"{controlVariant?.value}"</strong> (the control variant).
-        </Typography>
+        <WarningBox
+          title={
+            <>
+              The sum of the percentage is <strong>{cumulative}%</strong>. People that are not in
+              these bounds will receive the <strong>"{controlVariant?.value}"</strong> (the control
+              variant).
+            </>
+          }
+        ></WarningBox>
       )}
     </Stack>
   );
