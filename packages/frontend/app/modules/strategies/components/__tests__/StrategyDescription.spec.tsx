@@ -7,6 +7,7 @@ describe("StrategyDescription", () => {
   let flagEnv: FlagEnv;
 
   const getText = () => document.querySelector("p")?.textContent;
+  const getAllLi = () => document.querySelectorAll("li");
 
   beforeEach(() => {
     flagEnv = {
@@ -115,6 +116,21 @@ describe("StrategyDescription", () => {
 
       expect(getText()).toBe(
         `Nobody will receive the "true" variant of the flag: it'snot activated`
+      );
+    });
+
+    it("shows messages about the flag variants and information about cumulative percent", () => {
+      render(<StrategyDescription flagEnv={flagEnv} hasStrategies={false} />);
+
+      const lis = getAllLi();
+
+      expect(lis[0].textContent).toBe(`12% of the audience will receive the "Control" variation`);
+      expect(lis[1].textContent).toBe(
+        `55% of the audience will receive the "Alternative" variation`
+      );
+
+      expect(getText()).toBe(
+        `The sum of the percentage is 67%. People that are not in these bounds will receive the "Control" (the control variant).`
       );
     });
   });

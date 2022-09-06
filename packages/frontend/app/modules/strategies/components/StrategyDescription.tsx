@@ -1,5 +1,7 @@
+import { Stack } from "~/components/Stack";
 import { Tag } from "~/components/Tag";
 import { Typography } from "~/components/Typography";
+import { Li, Ul } from "~/components/Ul";
 import { FlagEnv, FlagStatus } from "~/modules/flags/types";
 
 export interface StrategyDescriptionProps {
@@ -43,6 +45,38 @@ const SimpleVariantDescription = ({ flagEnv, hasStrategies }: StrategyDescriptio
     </Typography>
   );
 };
+
+const MultiVariantDescription = ({ flagEnv }: StrategyDescriptionProps) => {
+  let cumulative = 0;
+  const controlVariant = flagEnv.variants.find((variant) => variant.isControl)!;
+
+  return (
+    <Stack spacing={4}>
+      <Ul>
+        {flagEnv.variants.map((variant) => {
+          cumulative += variant.rolloutPercentage;
+
+          return (
+            <Li key={`variant-detail-${variant.uuid}`}>
+              <Typography as="span">
+                <strong>{variant.rolloutPercentage}%</strong> of the audience will receive the{" "}
+                <strong>"{variant.value}"</strong> variation
+              </Typography>
+            </Li>
+          );
+        })}
+      </Ul>
+
+      {cumulative < 100 && (
+        <Typography>
+          The sum of the percentage is <strong>{cumulative}%</strong>. People that are not in these
+          bounds will receive the <strong>"{controlVariant?.value}"</strong> (the control variant).
+        </Typography>
+      )}
+    </Stack>
+  );
+};
+
 export const StrategyDescription = ({ flagEnv, hasStrategies }: StrategyDescriptionProps) => {
   const isFlagActivated = flagEnv.status === FlagStatus.ACTIVATED;
 
@@ -57,9 +91,9 @@ export const StrategyDescription = ({ flagEnv, hasStrategies }: StrategyDescript
     );
   }
 
-  if (flagEnv.variants.length === 0) {
-    return <SimpleVariantDescription flagEnv={flagEnv} hasStrategies={hasStrategies} />;
+  if (flagEnv.variants.length > 0) {
+    return <MultiVariantDescription flagEnv={flagEnv} hasStrategies={hasStrategies} />;
   }
 
-  return null;
+  return <SimpleVariantDescription flagEnv={flagEnv} hasStrategies={hasStrategies} />;
 };
