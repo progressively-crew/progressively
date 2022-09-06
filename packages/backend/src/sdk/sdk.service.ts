@@ -53,17 +53,17 @@ export class SdkService {
         );
       }
 
-      const flagStatus = this.flagService.resolveFlagStatus(
+      const flagStatusOrVariant = this.flagService.resolveFlagStatus(
         nextFlag as unknown as PopulatedFlagEnv,
         fields,
       );
 
-      flags[nextFlag.flag.key] = flagStatus;
+      flags[nextFlag.flag.key] = flagStatusOrVariant;
 
       this.flagService.hitFlag(
         nextFlag.environmentId,
         nextFlag.flagId,
-        flagStatus ? FlagStatus.ACTIVATED : FlagStatus.NOT_ACTIVATED,
+        String(flagStatusOrVariant),
       );
     }
 

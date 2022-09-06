@@ -83,7 +83,11 @@ export class FlagsService {
     });
   }
 
-  async hitFlag(environmentId: string, flagId: string, status: FlagStatus) {
+  async hitFlag(
+    environmentId: string,
+    flagId: string,
+    statusOrVariant: string,
+  ) {
     // Make it easier to group by date, 2 is arbitrary
     const date = new Date();
     date.setHours(2);
@@ -95,7 +99,7 @@ export class FlagsService {
       data: {
         flagEnvironmentFlagId: flagId,
         flagEnvironmentEnvironmentId: environmentId,
-        status,
+        status: statusOrVariant,
         date,
       },
     });
