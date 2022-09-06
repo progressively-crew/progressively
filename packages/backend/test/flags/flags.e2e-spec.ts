@@ -965,7 +965,6 @@ describe('FlagsController (e2e)', () => {
       const variant: any = {
         rolloutPercentage: 12,
         value: 'test',
-        isControl: true,
       };
 
       const response = await request(app.getHttpServer())

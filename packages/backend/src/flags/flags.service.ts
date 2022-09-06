@@ -306,12 +306,25 @@ export class FlagsService {
     });
   }
 
-  createVariant(envId: string, flagId: string, variant: VariantCreationDTO) {
+  async createVariant(
+    envId: string,
+    flagId: string,
+    variant: VariantCreationDTO,
+  ) {
+    const variantsOfFlags = await this.prisma.variant.findMany({
+      where: {
+        flagEnvironmentEnvironmentId: envId,
+        flagEnvironmentFlagId: flagId,
+      },
+    });
+
+    const isFirstVariantCreatedThusControl = variantsOfFlags.length === 0;
+
     return this.prisma.variant.create({
       data: {
         flagEnvironmentEnvironmentId: envId,
         flagEnvironmentFlagId: flagId,
-        isControl: Boolean(variant.isControl),
+        isControl: isFirstVariantCreatedThusControl,
         rolloutPercentage: variant.rolloutPercentage,
         value: variant.value,
       },

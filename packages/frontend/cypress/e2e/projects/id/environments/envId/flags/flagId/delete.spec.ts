@@ -46,13 +46,9 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/delete", 
           "We really want to warn you: if you validate the flag suppression, you won't be able to access the New homepage flag anymore. It includes:"
         ).should("be.visible");
 
-        cy.findByText(
-          "All your feature flags will be turned off and removed"
-        ).should("be.visible");
+        cy.findByText("All your feature flags will be turned off and removed").should("be.visible");
 
-        cy.findByText(
-          "All the stats related to the flag will be removed"
-        ).should("be.visible");
+        cy.findByText("All the stats related to the flag will be removed").should("be.visible");
 
         cy.findByRole("button", {
           name: "Yes, delete the flag",
@@ -60,11 +56,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/delete", 
 
         cy.contains("No, don't delete New homepage")
           .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/1/flags/1/settings"
-          );
+          .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags/1/settings");
 
         cy.checkA11y();
       });
@@ -78,17 +70,14 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/delete", 
         cy.signIn("Marvin");
       });
 
-      it.only("removes the flag and get me back to the envs page (empty state)", () => {
+      it("removes the flag and get me back to the envs page (empty state)", () => {
         // Delete the first flag
         cy.visit("/dashboard/projects/1/environments/1/flags/1/delete");
         cy.findByRole("button", {
           name: "Yes, delete the flag",
         }).click();
 
-        cy.url().should(
-          "contain",
-          "/dashboard/projects/1/environments/1/flags?flagRemoved=true"
-        );
+        cy.url().should("contain", "/dashboard/projects/1/environments/1/flags?flagRemoved=true");
 
         // Delete the second flag
         cy.visit("/dashboard/projects/1/environments/1/flags/2/delete");
@@ -96,10 +85,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/delete", 
           name: "Yes, delete the flag",
         }).click();
 
-        cy.url().should(
-          "contain",
-          "/dashboard/projects/1/environments/1/flags?flagRemoved=true"
-        );
+        cy.url().should("contain", "/dashboard/projects/1/environments/1/flags?flagRemoved=true");
 
         cy.get(".success-box")
           .should("have.focus")
