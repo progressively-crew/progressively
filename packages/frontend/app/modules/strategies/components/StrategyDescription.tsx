@@ -6,7 +6,8 @@ export interface StrategyDescriptionProps {
   flagEnv: FlagEnv;
   hasStrategies: boolean;
 }
-export const StrategyDescription = ({ flagEnv, hasStrategies }: StrategyDescriptionProps) => {
+
+const SimpleVariantDescription = ({ flagEnv, hasStrategies }: StrategyDescriptionProps) => {
   const isFlagActivated = flagEnv.status === FlagStatus.ACTIVATED;
 
   if (!isFlagActivated) {
@@ -54,4 +55,11 @@ export const StrategyDescription = ({ flagEnv, hasStrategies }: StrategyDescript
       <strong>"true"</strong> variant of the flag.
     </Typography>
   );
+};
+export const StrategyDescription = ({ flagEnv, hasStrategies }: StrategyDescriptionProps) => {
+  if (flagEnv.variants.length === 0) {
+    return <SimpleVariantDescription flagEnv={flagEnv} hasStrategies={hasStrategies} />;
+  }
+
+  return null;
 };
