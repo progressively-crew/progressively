@@ -43,10 +43,7 @@ export const meta: MetaFunction = ({ parentsData, params }) => {
 
 type ActionDataType = null | { successChangePercentage: boolean };
 
-export const action: ActionFunction = async ({
-  request,
-  params,
-}): Promise<ActionDataType> => {
+export const action: ActionFunction = async ({ request, params }): Promise<ActionDataType> => {
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
   const formData = await request.formData();
@@ -70,19 +67,14 @@ interface LoaderData {
   notActivatedCount: number;
 }
 
-export const loader: LoaderFunction = async ({
-  request,
-  params,
-}): Promise<LoaderData> => {
+export const loader: LoaderFunction = async ({ request, params }): Promise<LoaderData> => {
   const session = await getSession(request.headers.get("Cookie"));
 
   const authCookie = session.get("auth-cookie");
 
-  const hits: Array<FlagHit> = await getFlagHits(
-    params.env!,
-    params.flagId!,
-    authCookie
-  );
+  const hits: Array<FlagHit> = await getFlagHits(params.env!, params.flagId!, authCookie);
+
+  console.log("lol", hits);
 
   let activatedCount = 0;
   let notActivatedCount = 0;
@@ -110,8 +102,7 @@ const InsightsGrid = styled("div", {
 });
 
 export default function FlagInsights() {
-  const { hits, activatedCount, notActivatedCount } =
-    useLoaderData<LoaderData>();
+  const { hits, activatedCount, notActivatedCount } = useLoaderData<LoaderData>();
   const { flagEnv } = useFlagEnv();
   const { user } = useUser();
   const { project } = useProject();
@@ -153,11 +144,7 @@ export default function FlagInsights() {
         />
       }
       subNav={
-        <FlagMenu
-          projectId={project.uuid}
-          envId={environment.uuid}
-          flagId={currentFlag.uuid}
-        />
+        <FlagMenu projectId={project.uuid} envId={environment.uuid} flagId={currentFlag.uuid} />
       }
     >
       <Stack spacing={8}>
@@ -171,8 +158,8 @@ export default function FlagInsights() {
               title="No hits found"
               description={
                 <Typography>
-                  There are no hits for this flag. Make sure to activate the
-                  flag in order to collect hits.
+                  There are no hits for this flag. Make sure to activate the flag in order to
+                  collect hits.
                 </Typography>
               }
             />
@@ -194,12 +181,9 @@ export default function FlagInsights() {
 
               <BigStat name="Flag hits per date" id="count-per-date-chart">
                 <SwitchButton
-                  onClick={() =>
-                    setChartVariant((s) => (s === "chart" ? "table" : "chart"))
-                  }
+                  onClick={() => setChartVariant((s) => (s === "chart" ? "table" : "chart"))}
                 >
-                  Switch to{" "}
-                  {chartVariant === "chart" ? "table view" : "chart view"}
+                  Switch to {chartVariant === "chart" ? "table view" : "chart view"}
                 </SwitchButton>
 
                 <Spacer size={4} />

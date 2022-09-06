@@ -74,3 +74,37 @@ export const seedFlagHits = async (
     }
   }
 };
+
+export const seedFlagHitsVariants = async (
+  prismaClient: PrismaClient,
+  flagEnv: any,
+  date: Date,
+  count = 10,
+) => {
+  date.setHours(2);
+  date.setMinutes(2);
+  date.setSeconds(2);
+  date.setMilliseconds(2);
+
+  for (let i = 0; i < count; i++) {
+    await prismaClient.flagHit.create({
+      data: {
+        flagEnvironmentFlagId: flagEnv.flagId,
+        flagEnvironmentEnvironmentId: flagEnv.environmentId,
+        status: 'Control',
+        date,
+      },
+    });
+
+    if (i < count / 2) {
+      await prismaClient.flagHit.create({
+        data: {
+          flagEnvironmentFlagId: flagEnv.flagId,
+          flagEnvironmentEnvironmentId: flagEnv.environmentId,
+          status: 'Second',
+          date,
+        },
+      });
+    }
+  }
+};

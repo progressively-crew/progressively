@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { UserRoles } from '../../src/users/roles';
-import { seedFlagHits, seedFlags } from './seeds/flags';
+import { seedFlagHits, seedFlagHitsVariants, seedFlags } from './seeds/flags';
 import { seedProjects } from './seeds/projects';
 import { seedPasswordReset, seedUsers } from './seeds/users';
 
@@ -175,6 +175,37 @@ export const seedDb = async () => {
     await seedFlagHits(prismaClient, flagEnv, new Date(1992, 0, 3, 1), 20);
     await seedFlagHits(prismaClient, flagEnv, new Date(1992, 0, 2, 1), 40);
     await seedFlagHits(prismaClient, flagEnv, new Date(1992, 0, 6, 1), 10);
+
+    await seedFlagHitsVariants(
+      prismaClient,
+      multiVariateFlagEnv,
+      new Date(1992, 0, 1, 1),
+      10,
+    );
+    await seedFlagHitsVariants(
+      prismaClient,
+      multiVariateFlagEnv,
+      new Date(1992, 0, 4, 1),
+      50,
+    );
+    await seedFlagHitsVariants(
+      prismaClient,
+      multiVariateFlagEnv,
+      new Date(1992, 0, 7, 1),
+      20,
+    );
+    await seedFlagHitsVariants(
+      prismaClient,
+      multiVariateFlagEnv,
+      new Date(1992, 0, 2, 1),
+      100,
+    );
+    await seedFlagHitsVariants(
+      prismaClient,
+      multiVariateFlagEnv,
+      new Date(1992, 0, 22, 1),
+      13,
+    );
     // End of Flag setup
   } catch (e) {
     console.error(e);
