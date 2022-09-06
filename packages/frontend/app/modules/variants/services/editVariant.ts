@@ -1,13 +1,13 @@
 import { Constants } from "~/constants";
 import { Variant } from "../types";
 
-export const editVariant = (
+export const editVariant = async (
   envId: string,
   flagId: string,
   variants: Array<Variant>,
   accessToken: string
-) =>
-  fetch(
+) => {
+  const res = await fetch(
     `${Constants.BackendUrl}/environments/${envId}/flags/${flagId}/variants`,
     {
       method: "PUT",
@@ -17,12 +17,12 @@ export const editVariant = (
         "Content-Type": "application/json",
       },
     }
-  ).then((res) => {
-    if (!res.ok) {
-      throw new Error(
-        "Woops! Something went wrong when trying to create the variant."
-      );
-    }
+  );
 
-    return res.json();
-  });
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.message);
+  }
+
+  return data;
+};

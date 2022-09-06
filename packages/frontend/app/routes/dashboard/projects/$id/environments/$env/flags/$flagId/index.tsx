@@ -36,6 +36,7 @@ import { Tag } from "~/components/Tag";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
 import { VariantList, VariantListModes } from "~/modules/variants/components/VariantList";
 import { editVariantAction } from "~/modules/variants/form-actions/editVariantAction";
+import { ErrorBox } from "~/components/Boxes/ErrorBox";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -140,6 +141,7 @@ export default function FlagById() {
   ];
 
   const hasStrategies = strategies.length > 0;
+  const hasErrors = Object.keys(actionData?.errors || {}).length > 0;
   const isMultiVariants = flagEnv.variants.length > 0;
 
   return (
@@ -167,6 +169,8 @@ export default function FlagById() {
           <SuccessBox id="percentage-changed">Percentage adjusted.</SuccessBox>
         ) : actionData?.successEdit ? (
           <SuccessBox id="variant-edited">The variants have been edited created.</SuccessBox>
+        ) : hasErrors ? (
+          <ErrorBox list={actionData?.errors || {}} />
         ) : null
       }
     >
