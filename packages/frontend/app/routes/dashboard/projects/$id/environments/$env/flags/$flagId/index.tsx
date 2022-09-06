@@ -34,7 +34,8 @@ import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { Heading } from "~/components/Heading";
 import { Tag } from "~/components/Tag";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
-import { VariantList } from "~/modules/variants/components/VariantList";
+import { VariantList, VariantListModes } from "~/modules/variants/components/VariantList";
+import { editVariantAction } from "~/modules/variants/form-actions/editVariantAction";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -46,7 +47,7 @@ export const meta: MetaFunction = ({ parentsData, params }) => {
   };
 };
 
-type ActionDataType = null | { successChangePercentage: boolean };
+type ActionDataType = null | { successChangePercentage: boolean; successEdit?: boolean };
 
 export const action: ActionFunction = async ({ request, params }): Promise<ActionDataType> => {
   const session = await getSession(request.headers.get("Cookie"));
@@ -68,6 +69,10 @@ export const action: ActionFunction = async ({ request, params }): Promise<Actio
 
       return { successChangePercentage: true };
     }
+  }
+
+  if (type === "edit-variant") {
+    return editVariantAction(formData, params, authCookie);
   }
 
   if (type === "toggle-flag") {
@@ -155,6 +160,8 @@ export default function FlagById() {
           <SuccessBox id="strategy-removed">The strategy has been successfully removed.</SuccessBox>
         ) : hasPercentageChanged ? (
           <SuccessBox id="percentage-changed">Percentage adjusted.</SuccessBox>
+        ) : actionData?.successEdit ? (
+          <SuccessBox id="variant-edited">The variants have been edited created.</SuccessBox>
         ) : null
       }
     >
@@ -202,7 +209,7 @@ export default function FlagById() {
             </CardContent>
 
             {isMultiVariants ? (
-              <VariantList variants={flagEnv.variants} />
+              <VariantList variants={flagEnv.variants} mode={VariantListModes.Operational} />
             ) : (
               <CardContent>
                 <SliderFlag

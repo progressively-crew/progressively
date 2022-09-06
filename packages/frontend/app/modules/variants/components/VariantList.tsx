@@ -10,12 +10,28 @@ import { Typography } from "~/components/Typography";
 import { styled } from "~/stitches.config";
 import { Variant } from "../types";
 
+export enum VariantListModes {
+  Editing = "Editing",
+  Operational = "Operational",
+}
+
 const Grid = styled("div", {
   display: "grid",
-  gridTemplateColumns: "1fr 1fr 1fr",
+
   gap: "$spacing$10",
   alignItems: "center",
   padding: "0 $spacing$12",
+
+  variants: {
+    cols: {
+      "3": {
+        gridTemplateColumns: "1fr 1fr 1fr",
+      },
+      "2": {
+        gridTemplateColumns: "1fr 1fr",
+      },
+    },
+  },
 });
 
 const FieldSets = styled("div", {
@@ -54,8 +70,14 @@ const FormSliderInput = ({ name, label, id, initialPercentage }: FormSliderInput
 export interface VariantListProps {
   variants: Array<Variant>;
   errors?: Record<string, string>;
+  mode?: VariantListModes;
 }
-export const VariantList = ({ variants, errors }: VariantListProps) => {
+export const VariantList = ({ variants, errors, mode }: VariantListProps) => {
+  const currentMode = mode || VariantListModes.Editing;
+
+  const isValueInputDisabled = currentMode === VariantListModes.Operational;
+  const showRemoveButton = currentMode === VariantListModes.Editing;
+
   return (
     <div>
       {variants.map((variant) => (
@@ -74,7 +96,7 @@ export const VariantList = ({ variants, errors }: VariantListProps) => {
       <Form method="post" id="edit-variant">
         <input type="hidden" name="_type" value="edit-variant" />
 
-        <Grid aria-hidden>
+        <Grid aria-hidden cols={showRemoveButton ? "3" : "2"}>
           <Typography textTransform="uppercase" size="neptune" font="title">
             Variant value
           </Typography>
@@ -83,9 +105,11 @@ export const VariantList = ({ variants, errors }: VariantListProps) => {
             Rollout percentage
           </Typography>
 
-          <Typography fontWeight="bold" textTransform="uppercase" size="neptune" font="title">
-            Actions
-          </Typography>
+          {showRemoveButton && (
+            <Typography fontWeight="bold" textTransform="uppercase" size="neptune" font="title">
+              Actions
+            </Typography>
+          )}
         </Grid>
 
         <Spacer size={3} />
@@ -98,7 +122,7 @@ export const VariantList = ({ variants, errors }: VariantListProps) => {
             >
               <input type="hidden" name="uuid" value={variant.uuid} />
 
-              <Grid>
+              <Grid cols={showRemoveButton ? "3" : "2"}>
                 <TextInput
                   hiddenLabel
                   id={`name-${index}`}
@@ -106,6 +130,7 @@ export const VariantList = ({ variants, errors }: VariantListProps) => {
                   defaultValue={variant.value}
                   label={`Variant ${index + 1} value`}
                   isInvalid={Boolean(errors?.[`name-${index}`])}
+                  isDisabled={isValueInputDisabled}
                 />
 
                 <FormSliderInput
@@ -115,11 +140,13 @@ export const VariantList = ({ variants, errors }: VariantListProps) => {
                   initialPercentage={variant.rolloutPercentage}
                 />
 
-                <div>
-                  <DeleteButton small type="submit" form={`delete-form-${variant.uuid}`}>
-                    Remove
-                  </DeleteButton>
-                </div>
+                {showRemoveButton && (
+                  <div>
+                    <DeleteButton small type="submit" form={`delete-form-${variant.uuid}`}>
+                      Remove
+                    </DeleteButton>
+                  </div>
+                )}
               </Grid>
             </fieldset>
           ))}

@@ -8,7 +8,7 @@ import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
-import { Card, CardContent } from "~/components/Card";
+import { Card } from "~/components/Card";
 import { EmptyState } from "~/components/EmptyState";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Header } from "~/components/Header";
