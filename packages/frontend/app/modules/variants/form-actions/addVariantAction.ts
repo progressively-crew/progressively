@@ -11,7 +11,6 @@ export const addVariantAction = async (
   const envId = String(params.env);
 
   const value = String(formData.get("value"));
-  const isControl = Boolean(formData.get("isControl"));
 
   if (!value) {
     return {
@@ -23,7 +22,6 @@ export const addVariantAction = async (
 
   try {
     const variant: VariantCreateDTO = {
-      isControl,
       rolloutPercentage: 0,
       value,
     };

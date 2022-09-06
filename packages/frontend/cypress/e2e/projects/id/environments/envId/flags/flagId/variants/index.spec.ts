@@ -75,28 +75,18 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants"
 
         cy.findByRole("link", { name: "Production" })
           .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/1/flags"
-          );
+          .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags");
 
         cy.findByRole("link", { name: "New homepage" })
           .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/1/flags/1/variants"
-          )
+          .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags/1/variants")
           .and("have.attr", "aria-current", "page");
 
         cy.findByRole("heading", { name: "New homepage" }).should("be.visible");
         cy.findByRole("heading", { name: "Variants" }).should("be.visible");
 
         cy.findByText("No variants found").should("be.visible");
-        cy.findByText("There are no variants found for this flag.").should(
-          "be.visible"
-        );
+        cy.findByText("There are no variants found for this flag.").should("be.visible");
         cy.findByRole("button", { name: "Add variant" }).should("be.visible");
 
         cy.checkA11y();
@@ -121,24 +111,14 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants"
 
         cy.findByRole("link", { name: "Production" })
           .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/1/flags"
-          );
+          .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags");
 
         cy.findByRole("link", { name: "With multivariate" })
           .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/1/flags/4/variants"
-          )
+          .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags/4/variants")
           .and("have.attr", "aria-current", "page");
 
-        cy.findByRole("heading", { name: "With multivariate" }).should(
-          "be.visible"
-        );
+        cy.findByRole("heading", { name: "With multivariate" }).should("be.visible");
         cy.findByRole("heading", { name: "Variants" }).should("be.visible");
 
         cy.findByRole("button", { name: "Add variant" }).should("be.visible");
