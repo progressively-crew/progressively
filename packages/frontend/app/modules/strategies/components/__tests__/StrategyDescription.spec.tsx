@@ -90,4 +90,32 @@ describe("StrategyDescription", () => {
       );
     });
   });
+
+  describe("Multiple variants", () => {
+    beforeEach(() => {
+      flagEnv.variants = [
+        {
+          uuid: "1",
+          isControl: true,
+          rolloutPercentage: 12,
+          value: "Control",
+        },
+        {
+          uuid: "2",
+          isControl: false,
+          rolloutPercentage: 55,
+          value: "Alternative",
+        },
+      ];
+    });
+
+    it("shows a generic message when the flag is not activated", () => {
+      flagEnv.status = FlagStatus.NOT_ACTIVATED;
+      render(<StrategyDescription flagEnv={flagEnv} hasStrategies={false} />);
+
+      expect(getText()).toBe(
+        `Nobody will receive the "true" variant of the flag: it'snot activated`
+      );
+    });
+  });
 });

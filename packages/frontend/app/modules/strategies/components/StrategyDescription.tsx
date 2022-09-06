@@ -8,19 +8,6 @@ export interface StrategyDescriptionProps {
 }
 
 const SimpleVariantDescription = ({ flagEnv, hasStrategies }: StrategyDescriptionProps) => {
-  const isFlagActivated = flagEnv.status === FlagStatus.ACTIVATED;
-
-  if (!isFlagActivated) {
-    return (
-      <Typography>
-        Nobody will receive the <strong>"true"</strong> variant of the flag: it's
-        <Tag color="errorFg" background="errorBg">
-          not activated
-        </Tag>
-      </Typography>
-    );
-  }
-
   if (flagEnv.rolloutPercentage === 100) {
     return (
       <Typography>
@@ -57,6 +44,19 @@ const SimpleVariantDescription = ({ flagEnv, hasStrategies }: StrategyDescriptio
   );
 };
 export const StrategyDescription = ({ flagEnv, hasStrategies }: StrategyDescriptionProps) => {
+  const isFlagActivated = flagEnv.status === FlagStatus.ACTIVATED;
+
+  if (!isFlagActivated) {
+    return (
+      <Typography>
+        Nobody will receive the <strong>"true"</strong> variant of the flag: it's
+        <Tag color="errorFg" background="errorBg">
+          not activated
+        </Tag>
+      </Typography>
+    );
+  }
+
   if (flagEnv.variants.length === 0) {
     return <SimpleVariantDescription flagEnv={flagEnv} hasStrategies={hasStrategies} />;
   }
