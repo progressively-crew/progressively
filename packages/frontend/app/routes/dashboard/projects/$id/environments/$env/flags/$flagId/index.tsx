@@ -47,7 +47,11 @@ export const meta: MetaFunction = ({ parentsData, params }) => {
   };
 };
 
-type ActionDataType = null | { successChangePercentage: boolean; successEdit?: boolean };
+type ActionDataType = null | {
+  successChangePercentage?: boolean;
+  successEdit?: boolean;
+  errors?: { [key: string]: string | undefined };
+};
 
 export const action: ActionFunction = async ({ request, params }): Promise<ActionDataType> => {
   const session = await getSession(request.headers.get("Cookie"));
@@ -176,11 +180,7 @@ export default function FlagById() {
               <SectionHeader
                 title="Sum-up"
                 description={
-                  <StrategyDescription
-                    isFlagActivated={isFlagActivated}
-                    hasStrategies={hasStrategies}
-                    rolloutPercentage={flagEnv.rolloutPercentage}
-                  />
+                  <StrategyDescription flagEnv={flagEnv} hasStrategies={hasStrategies} />
                 }
               />
             </CardContent>

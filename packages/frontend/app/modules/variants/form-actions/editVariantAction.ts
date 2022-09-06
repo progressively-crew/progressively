@@ -17,9 +17,7 @@ export const editVariantAction = async (
 
   names.forEach((name, index: number) => {
     if (!name) {
-      errors[`name-${index}`] = `The variant value on line ${
-        index + 1
-      } is invalid.`;
+      errors[`name-${index}`] = `The variant value on line ${index + 1} is invalid.`;
     }
   });
 
@@ -38,8 +36,6 @@ export const editVariantAction = async (
 
       return variant;
     });
-
-    console.log("lol", variants);
 
     await editVariant(envId, flagId, variants, authCookie);
 
