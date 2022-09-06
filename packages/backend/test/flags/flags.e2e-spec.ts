@@ -1129,7 +1129,67 @@ describe('FlagsController (e2e)', () => {
         });
     });
 
-    it('creates a variant', async () => {
+    it('gives 400 when the cumulative percentage is over 100', async () => {
+      const access_token = await authenticate(app);
+
+      const invalidVariant: any = [
+        {
+          uuid: '1',
+          rolloutPercentage: 80,
+          value: 'control',
+          isControl: true,
+        },
+        {
+          uuid: '2',
+          rolloutPercentage: 21,
+          value: 'alternative',
+          isControl: false,
+        },
+      ];
+
+      await request(app.getHttpServer())
+        .put('/environments/1/flags/1/variants')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send(invalidVariant)
+        .expect(400)
+        .expect({
+          statusCode: 400,
+          message: `The cumulated percentage of the variants is 101% which is over 100%.`,
+          error: 'Bad Request',
+        });
+    });
+
+    it('gives 400 when the control variant is not passed', async () => {
+      const access_token = await authenticate(app);
+
+      const invalidVariant: any = [
+        {
+          uuid: '1',
+          rolloutPercentage: 80,
+          value: 'control',
+          isControl: false,
+        },
+        {
+          uuid: '2',
+          rolloutPercentage: 20,
+          value: 'alternative',
+          isControl: false,
+        },
+      ];
+
+      await request(app.getHttpServer())
+        .put('/environments/1/flags/1/variants')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send(invalidVariant)
+        .expect(400)
+        .expect({
+          statusCode: 400,
+          message: `There is no control variant found. You have to provide one.`,
+          error: 'Bad Request',
+        });
+    });
+
+    it('edits a variant', async () => {
       const access_token = await authenticate(app);
 
       const variant: any = [
@@ -1137,7 +1197,7 @@ describe('FlagsController (e2e)', () => {
           uuid: '1',
           rolloutPercentage: 88,
           value: 'test 2',
-          isControl: false,
+          isControl: true,
         },
       ];
 
