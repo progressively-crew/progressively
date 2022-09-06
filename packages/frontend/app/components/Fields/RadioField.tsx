@@ -1,8 +1,8 @@
-import { styled } from "~/stitches.config";
 import { HStack } from "../HStack";
 import { Spacer } from "../Spacer";
 import { Stack } from "../Stack";
 import { Label } from "./Label";
+import { Radio } from "./Radio";
 
 export interface RadioFieldOption<T> {
   label: string;
@@ -16,31 +16,6 @@ export interface RadioFieldProps<T> {
   options: Array<RadioFieldOption<T>>;
   title: string;
 }
-
-const Input = styled("input", {
-  margin: 0,
-  padding: 0,
-  backgroundColor: "transparent",
-  border: "1px solid $hermes",
-  borderRadius: "50%",
-  height: 24,
-  width: 24,
-  "-webkit-appearance": "none",
-  "&:after": {
-    borderRadius: " 50%",
-    content: "",
-    position: "relative",
-    zIndex: 1,
-    display: "block",
-    height: 18,
-    width: 18,
-    left: 2,
-    top: 2,
-  },
-  "&:checked:after": {
-    background: "$hermes",
-  },
-});
 
 export const RadioField = <T extends string>({
   name,
@@ -56,7 +31,7 @@ export const RadioField = <T extends string>({
       <Stack spacing={2}>
         {options.map((opt) => (
           <HStack key={opt.value} spacing={2}>
-            <Input
+            <Radio
               type="radio"
               id={opt.value}
               name={name}
