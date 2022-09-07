@@ -27,6 +27,8 @@ import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { Heading } from "~/components/Heading";
 import { Stack } from "~/components/Stack";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
+import { BarChart } from "~/components/Charts/BarChart";
+import { Card } from "~/components/Card";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -59,27 +61,44 @@ interface FlagHit {
 
 interface LoaderData {
   hits: Array<{ name: string; hits: Array<FlagHit> }>;
+  organizedHits: Array<[string, Array<{ name: string; value: number }>]>;
 }
 
 export const loader: LoaderFunction = async ({ request, params }): Promise<LoaderData> => {
   const session = await getSession(request.headers.get("Cookie"));
 
   const authCookie = session.get("auth-cookie");
-  const hits: Array<{ name: string; hits: Array<FlagHit> }> = await getFlagHits(
+  const hitsPerFlags: Array<{ name: string; hits: Array<FlagHit> }> = await getFlagHits(
     params.env!,
     params.flagId!,
     authCookie
   );
 
+  const mapOfHits = new Map<string, Array<{ name: string; value: number }>>();
+
+  for (const hpf of hitsPerFlags) {
+    for (const hit of hpf.hits) {
+      if (!mapOfHits.has(hit.date)) {
+        const points: Array<{ name: string; value: number }> = [];
+        mapOfHits.set(hit.date, points);
+      }
+
+      mapOfHits.get(hit.date)?.push({ name: hpf.name, value: hit._count });
+    }
+  }
+
+  const organizedHits = Array.from(mapOfHits).sort(([d1], [d2]) => (d1 > d2 ? 1 : -1));
+
   return {
-    hits,
+    hits: hitsPerFlags,
+    organizedHits,
   };
 };
 
 const InsightsGrid = styled("div", {
   display: "grid",
   gap: "$spacing$4",
-  gridTemplateColumns: "auto 1fr",
+  gridTemplateColumns: "1fr 1fr 1fr",
 
   "@tablet": {
     gridTemplateColumns: "1fr",
@@ -87,7 +106,7 @@ const InsightsGrid = styled("div", {
 });
 
 export default function FlagInsights() {
-  const { hits } = useLoaderData<LoaderData>();
+  const { hits, organizedHits } = useLoaderData<LoaderData>();
   const { flagEnv } = useFlagEnv();
   const { user } = useUser();
   const { project } = useProject();
@@ -151,19 +170,22 @@ export default function FlagInsights() {
 
           {hits.length > 0 && (
             <InsightsGrid>
-              <div>
-                <BigStat name="Evaluated as activated">
-                  <p>Paf</p>
-                </BigStat>
+              {hits.map((hit) => {
+                const count = hit.hits.reduce((acc, curr) => acc + curr._count, 0);
 
-                <Spacer size={4} />
-
-                <BigStat name="Evaluated as NOT activated" secondary>
-                  <p>Pif</p>
-                </BigStat>
-              </div>
+                return (
+                  <BigStat name={hit.name} key={`variant-insight-${hit.name}`}>
+                    <p>{count}</p>
+                  </BigStat>
+                );
+              })}
             </InsightsGrid>
           )}
+
+          <Spacer size={4} />
+          <Card>
+            <BarChart data={organizedHits} />
+          </Card>
         </div>
       </Stack>
     </DashboardLayout>
