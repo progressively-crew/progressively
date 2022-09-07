@@ -7,10 +7,8 @@ import { AiOutlineBarChart } from "react-icons/ai";
 import { getFlagHits } from "~/modules/flags/services/getFlagHits";
 import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
 import { BigStat } from "~/components/BigStat";
-import { Typography } from "~/components/Typography";
 import { styled } from "~/stitches.config";
 import { Spacer } from "~/components/Spacer";
-import { EmptyState } from "~/components/EmptyState";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
@@ -205,42 +203,24 @@ export default function FlagInsights() {
           </HStack>
         </Form>
 
-        <div>
-          {hits.length === 0 && (
-            <EmptyState
-              title="No hits found"
-              description={
-                <Typography>
-                  There are no hits for this flag. Make sure to activate the flag in order to
-                  collect hits.
-                </Typography>
-              }
-            />
-          )}
+        <InsightsGrid>
+          {hits.map((hit) => {
+            const count = hit.hits.reduce((acc, curr) => acc + curr._count, 0);
 
-          {hits.length > 0 && (
-            <div>
-              <InsightsGrid>
-                {hits.map((hit) => {
-                  const count = hit.hits.reduce((acc, curr) => acc + curr._count, 0);
+            return (
+              <BigStat
+                name={`Variant ${hit.name}`}
+                key={`variant-insight-${hit.name}`}
+                unit="hits"
+                count={count}
+              />
+            );
+          })}
+        </InsightsGrid>
 
-                  return (
-                    <BigStat
-                      name={`Variant ${hit.name}`}
-                      key={`variant-insight-${hit.name}`}
-                      unit="hits"
-                      count={count}
-                    />
-                  );
-                })}
-              </InsightsGrid>
-              <Spacer size={4} />
-              <Card>
-                <BarChart data={organizedHits} max={max} />
-              </Card>
-            </div>
-          )}
-        </div>
+        <Card>
+          <BarChart data={organizedHits} max={max} />
+        </Card>
       </Stack>
     </DashboardLayout>
   );
