@@ -105,7 +105,12 @@ export class FlagsService {
     });
   }
 
-  async listFlagHits(envId: string, flagId: string) {
+  async listFlagHits(
+    envId: string,
+    flagId: string,
+    startDate: string,
+    endDate: string,
+  ) {
     const variants = await this.prisma.variant.findMany({
       where: {
         flagEnvironmentEnvironmentId: envId,
@@ -123,6 +128,10 @@ export class FlagsService {
             status: variant.value,
             flagEnvironmentEnvironmentId: envId,
             flagEnvironmentFlagId: flagId,
+            date: {
+              gte: new Date(startDate),
+              lte: new Date(endDate),
+            },
           },
         });
 
@@ -139,6 +148,10 @@ export class FlagsService {
         status: FlagStatus.ACTIVATED,
         flagEnvironmentEnvironmentId: envId,
         flagEnvironmentFlagId: flagId,
+        date: {
+          gte: new Date(startDate),
+          lte: new Date(endDate),
+        },
       },
     });
 
@@ -149,6 +162,10 @@ export class FlagsService {
         status: FlagStatus.NOT_ACTIVATED,
         flagEnvironmentEnvironmentId: envId,
         flagEnvironmentFlagId: flagId,
+        date: {
+          gte: new Date(startDate),
+          lte: new Date(endDate),
+        },
       },
     });
 
