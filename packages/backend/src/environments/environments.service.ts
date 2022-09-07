@@ -111,29 +111,29 @@ export class EnvironmentsService {
       },
     });
 
+    await this.prisma.flagHit.deleteMany({
+      where: {
+        flagEnvironmentEnvironmentId: envId,
+      },
+    });
+
+    await this.prisma.variant.deleteMany({
+      where: {
+        flagEnvironmentEnvironmentId: envId,
+      },
+    });
+
+    // remove all the flagEnv from the given project
+    await this.prisma.flagEnvironment.deleteMany({
+      where: {
+        environmentId: envId,
+      },
+    });
+
     for (const flagEnv of flagEnvs) {
-      // Remove all flag hits
-      await this.prisma.flagHit.deleteMany({
-        where: {
-          flagEnvironmentFlagId: flagEnv.flagId,
-        },
-      });
-
-      // remove all the flagEnv from the given project
-      await this.prisma.flagEnvironment.deleteMany({
-        where: {
-          environmentId: envId,
-        },
-      });
-
-      // Remove all the flag of the given env
       await this.prisma.flag.deleteMany({
         where: {
-          flagEnvironment: {
-            every: {
-              environmentId: envId,
-            },
-          },
+          uuid: flagEnv.flagId,
         },
       });
     }
