@@ -22,6 +22,7 @@ const ChartColumns = styled("div", {
 
   "& .chart-column": {
     padding: "0 $spacing$8",
+    paddingTop: "$spacing$8",
     borderRight: "1px dashed $nemesisLight",
     display: "flex",
     flexDirection: "column",
@@ -52,7 +53,15 @@ const ChartColumns = styled("div", {
     gap: "$spacing$1",
   },
 
-  "& .chart-value-title": {},
+  "& .chart-value-title": {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    position: "absolute",
+    whiteSpace: "nowrap",
+    height: "$ctaSmall",
+    marginTop: "-$sizes$ctaSmall",
+  },
 });
 
 const RawBar = styled("div", {
@@ -72,9 +81,9 @@ interface BarProps {
 
 const Bar = ({ size, name, value }: BarProps) => {
   return (
-    <BarWrapper style={{ height: size }}>
+    <BarWrapper style={{ height: size, position: "relative" }}>
       <Typography as="span" size="neptune" lineHeight="title" className="chart-value-title">
-        {`${name} (${value})`}
+        {value}
       </Typography>
       <RawBar style={{ background: generateColor(name) }} />
     </BarWrapper>
