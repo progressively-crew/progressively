@@ -181,7 +181,7 @@ export default function FlagInsights() {
                 const count = hit.hits.reduce((acc, curr) => acc + curr._count, 0);
 
                 return (
-                  <BigStat name={hit.name} key={`variant-insight-${hit.name}`}>
+                  <BigStat name={`Variant ${hit.name}`} key={`variant-insight-${hit.name}`}>
                     <p>{count}</p>
                   </BigStat>
                 );
