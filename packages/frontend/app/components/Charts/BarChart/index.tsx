@@ -22,7 +22,7 @@ const ChartColumns = styled("div", {
 
   "& .chart-column": {
     padding: "0 $spacing$8",
-    paddingTop: "$spacing$8",
+    paddingTop: "$spacing$10",
     borderRight: "1px dashed $nemesisLight",
     display: "flex",
     flexDirection: "column",
