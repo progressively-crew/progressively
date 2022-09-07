@@ -26,10 +26,12 @@ import { Heading } from "~/components/Heading";
 import { Stack } from "~/components/Stack";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
 import { BarChart } from "~/components/Charts/BarChart";
-import { Card } from "~/components/Card";
+import { Card, CardContent } from "~/components/Card";
 import { TextInput } from "~/components/Fields/TextInput";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { HStack } from "~/components/HStack";
+import { EmptyState } from "~/components/EmptyState";
+import { Typography } from "~/components/Typography";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -76,12 +78,11 @@ export const loader: LoaderFunction = async ({ request, params }): Promise<Loade
   const startDateForm = search.get("startDate");
   const endDateForm = search.get("endDate");
 
-  const startDate = startDateForm ? new Date(startDateForm) : new Date();
+  const start = new Date();
+  start.setDate(start.getDate() - 7);
 
-  const end = new Date();
-  end.setDate(end.getDate() + 7);
-
-  const endDate = endDateForm ? new Date(endDateForm) : end;
+  const startDate = startDateForm ? new Date(startDateForm) : start;
+  const endDate = endDateForm ? new Date(endDateForm) : new Date();
 
   const authCookie = session.get("auth-cookie");
   const hitsPerFlags: Array<{ name: string; hits: Array<FlagHit> }> = await getFlagHits(
@@ -123,7 +124,7 @@ export const loader: LoaderFunction = async ({ request, params }): Promise<Loade
 
 const InsightsGrid = styled("div", {
   display: "grid",
-  gap: "$spacing$4",
+  gap: "$spacing$8",
   gridTemplateColumns: "1fr 1fr",
 
   "@tablet": {
@@ -165,6 +166,21 @@ export default function FlagInsights() {
     },
   ];
 
+  let allCount = 0;
+  const hitNode = hits.map((hit) => {
+    const count = hit.hits.reduce((acc, curr) => acc + curr._count, 0);
+    allCount += count;
+
+    return (
+      <BigStat
+        name={`Variant ${hit.name}`}
+        key={`variant-insight-${hit.name}`}
+        unit="hits"
+        count={count}
+      />
+    );
+  });
+
   return (
     <DashboardLayout
       user={user}
@@ -185,41 +201,39 @@ export default function FlagInsights() {
           Insights
         </Heading>
 
-        <Form action=".">
-          <HStack spacing={4} alignItems="flex-end">
-            <TextInput
-              type="date"
-              name={"startDate"}
-              label={"Start date"}
-              defaultValue={formatDefaultDate(startDate)}
-            />
-            <TextInput
-              type="date"
-              name={"endDate"}
-              label={"End date"}
-              defaultValue={formatDefaultDate(endDate)}
-            />
-            <SubmitButton>Filter on date</SubmitButton>
-          </HStack>
-        </Form>
+        <Card>
+          <CardContent>
+            <Form action=".">
+              <HStack spacing={4} alignItems="flex-end">
+                <TextInput
+                  type="date"
+                  name={"startDate"}
+                  label={"Start date"}
+                  defaultValue={formatDefaultDate(startDate)}
+                />
+                <TextInput
+                  type="date"
+                  name={"endDate"}
+                  label={"End date"}
+                  defaultValue={formatDefaultDate(endDate)}
+                />
+                <SubmitButton>Filter on date</SubmitButton>
+              </HStack>
+            </Form>
+          </CardContent>
+        </Card>
 
-        <InsightsGrid>
-          {hits.map((hit) => {
-            const count = hit.hits.reduce((acc, curr) => acc + curr._count, 0);
-
-            return (
-              <BigStat
-                name={`Variant ${hit.name}`}
-                key={`variant-insight-${hit.name}`}
-                unit="hits"
-                count={count}
-              />
-            );
-          })}
-        </InsightsGrid>
+        <InsightsGrid>{hitNode}</InsightsGrid>
 
         <Card>
-          <BarChart data={organizedHits} max={max} />
+          {allCount > 0 ? (
+            <BarChart data={organizedHits} max={max} />
+          ) : (
+            <EmptyState
+              title="No hits found"
+              description={<Typography>There is no flag hit for this period.</Typography>}
+            />
+          )}
         </Card>
       </Stack>
     </DashboardLayout>
