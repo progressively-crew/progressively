@@ -187,7 +187,7 @@ export default function FlagInsights() {
           Insights
         </Heading>
 
-        <Form>
+        <Form action=".">
           <HStack spacing={4} alignItems="flex-end">
             <TextInput
               type="date"
