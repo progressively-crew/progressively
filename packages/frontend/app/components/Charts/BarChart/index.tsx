@@ -21,11 +21,12 @@ const ChartColumns = styled("div", {
   textAlign: "center",
 
   "& .chart-column": {
-    padding: "0 $spacing$8",
+    padding: "0 $spacing$4",
     paddingTop: "$spacing$10",
     borderRight: "1px dashed $nemesisLight",
     display: "flex",
     flexDirection: "column",
+    width: "130px",
 
     "& > div:first-of-type": {
       flex: 1,
@@ -41,7 +42,7 @@ const ChartColumns = styled("div", {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    width: "100%",
+    marginTop: "$spacing$6",
   },
 
   "& .chart-column:last-of-type": {
@@ -58,9 +59,9 @@ const ChartColumns = styled("div", {
     alignItems: "center",
     justifyContent: "center",
     position: "absolute",
-    whiteSpace: "nowrap",
     height: "$ctaSmall",
     marginTop: "-$sizes$ctaSmall",
+    width: "100%",
   },
 });
 
@@ -86,6 +87,8 @@ const Bar = ({ size, name, value }: BarProps) => {
         {value}
       </Typography>
       <RawBar style={{ background: generateColor(name) }} />
+
+      <Typography size="neptune">{name}</Typography>
     </BarWrapper>
   );
 };
