@@ -60,6 +60,7 @@ interface FlagHit {
 }
 
 interface LoaderData {
+  max: number;
   hits: Array<{ name: string; hits: Array<FlagHit> }>;
   organizedHits: Array<[string, Array<{ name: string; value: number }>]>;
 }
@@ -75,9 +76,14 @@ export const loader: LoaderFunction = async ({ request, params }): Promise<Loade
   );
 
   const mapOfHits = new Map<string, Array<{ name: string; value: number }>>();
+  let max = 0;
 
   for (const hpf of hitsPerFlags) {
     for (const hit of hpf.hits) {
+      if (max < hit._count) {
+        max = hit._count;
+      }
+
       if (!mapOfHits.has(hit.date)) {
         const points: Array<{ name: string; value: number }> = [];
         mapOfHits.set(hit.date, points);
@@ -92,6 +98,7 @@ export const loader: LoaderFunction = async ({ request, params }): Promise<Loade
   return {
     hits: hitsPerFlags,
     organizedHits,
+    max,
   };
 };
 
@@ -106,7 +113,7 @@ const InsightsGrid = styled("div", {
 });
 
 export default function FlagInsights() {
-  const { hits, organizedHits } = useLoaderData<LoaderData>();
+  const { hits, organizedHits, max } = useLoaderData<LoaderData>();
   const { flagEnv } = useFlagEnv();
   const { user } = useUser();
   const { project } = useProject();
@@ -184,7 +191,7 @@ export default function FlagInsights() {
 
           <Spacer size={4} />
           <Card>
-            <BarChart data={organizedHits} />
+            <BarChart data={organizedHits} max={max} />
           </Card>
         </div>
       </Stack>
