@@ -48,6 +48,8 @@ const ChartColumns = styled("div", {
     display: "flex",
     gap: "$spacing$1",
   },
+
+  "& .chart-value-title": {},
 });
 
 const RawBar = styled("div", {
@@ -56,6 +58,7 @@ const RawBar = styled("div", {
 
 const BarWrapper = styled("div", {
   marginTop: "auto",
+  width: "100%",
 });
 
 interface BarProps {
@@ -67,10 +70,9 @@ interface BarProps {
 const Bar = ({ size, name, value }: BarProps) => {
   return (
     <BarWrapper style={{ height: size }}>
-      <Typography as="span" size="uranus">
-        {name} ({value})
+      <Typography as="span" size="neptune" lineHeight="title" className="chart-value-title">
+        {`${name} (${value})`}
       </Typography>
-
       <RawBar style={{ background: generateColor(name) }} />
     </BarWrapper>
   );
