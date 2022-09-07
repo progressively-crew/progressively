@@ -262,6 +262,26 @@ describe('FlagsController (e2e)', () => {
         });
     });
 
+    it('gives a 400 when the startDate is not passed', async () => {
+      const access_token = await authenticate(app);
+
+      const res = await request(app.getHttpServer())
+        .get('/environments/1/flags/1/hits?endDate=1992-02-28')
+        .set('Authorization', `Bearer ${access_token}`);
+
+      expect(res.status).toBe(400);
+    });
+
+    it('gives a 400 when the endDate is not passed', async () => {
+      const access_token = await authenticate(app);
+
+      const res = await request(app.getHttpServer())
+        .get('/environments/1/flags/1/hits?startDate=1992-01-01')
+        .set('Authorization', `Bearer ${access_token}`);
+
+      expect(res.status).toBe(400);
+    });
+
     it('gives the hits for the status ACTIVATED by default', async () => {
       const access_token = await authenticate(app);
 
