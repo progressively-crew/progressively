@@ -51,7 +51,6 @@ const ChartColumns = styled("div", {
 });
 
 const RawBar = styled("div", {
-  background: "red",
   height: "100%",
 });
 
@@ -60,18 +59,19 @@ const BarWrapper = styled("div", {
 });
 
 interface BarProps {
-  children: React.ReactNode;
   name: string;
   size: string;
+  value: number;
 }
 
-const Bar = ({ children, size, name }: BarProps) => {
+const Bar = ({ size, name, value }: BarProps) => {
   return (
     <BarWrapper style={{ height: size }}>
-      <Typography as="strong" size="uranus">
-        {name}
+      <Typography as="span" size="uranus">
+        {name} ({value})
       </Typography>
-      <RawBar style={{ background: generateColor(name) }}>{children}</RawBar>
+
+      <RawBar style={{ background: generateColor(name) }} />
     </BarWrapper>
   );
 };
@@ -113,9 +113,8 @@ export const BarChart = ({ data, max }: BarChartProps) => {
                   name={vh.name}
                   size={`${(vh.value / max) * 100}%`}
                   key={`${vh.value}-${vh.name}-${date}`}
-                >
-                  {vh.value}
-                </Bar>
+                  value={vh.value}
+                />
               ))}
             </div>
 
