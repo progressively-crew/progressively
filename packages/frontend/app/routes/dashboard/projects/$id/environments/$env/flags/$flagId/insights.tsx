@@ -105,7 +105,7 @@ export const loader: LoaderFunction = async ({ request, params }): Promise<Loade
 const InsightsGrid = styled("div", {
   display: "grid",
   gap: "$spacing$4",
-  gridTemplateColumns: "1fr 1fr 1fr",
+  gridTemplateColumns: "1fr 1fr",
 
   "@tablet": {
     gridTemplateColumns: "1fr",
@@ -181,9 +181,12 @@ export default function FlagInsights() {
                 const count = hit.hits.reduce((acc, curr) => acc + curr._count, 0);
 
                 return (
-                  <BigStat name={`Variant ${hit.name}`} key={`variant-insight-${hit.name}`}>
-                    <p>{count}</p>
-                  </BigStat>
+                  <BigStat
+                    name={`Variant ${hit.name}`}
+                    key={`variant-insight-${hit.name}`}
+                    unit="hits"
+                    count={count}
+                  />
                 );
               })}
             </InsightsGrid>
