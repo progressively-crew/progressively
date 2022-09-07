@@ -206,6 +206,7 @@ export const seedDb = async () => {
       new Date(1992, 0, 22, 1),
       13,
     );
+
     // End of Flag setup
   } catch (e) {
     console.error(e);

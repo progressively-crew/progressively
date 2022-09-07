@@ -12,7 +12,10 @@ function generateColor(stringInput: string) {
 
 // Bars should be contained in this box specifically
 const ChartColumns = styled("div", {
+  width: "100%",
   display: "grid",
+  overflowX: "scroll",
+  gridAutoFlow: "column",
   gridTemplateColumns: "repeat(auto-fill, minmax(10rem, 1fr))",
   height: "500px",
   textAlign: "center",
@@ -105,7 +108,7 @@ export const BarChart = ({ data, max }: BarChartProps) => {
   const formatterRef = useRef(new Intl.DateTimeFormat("default"));
 
   return (
-    <div id="chart">
+    <div>
       <ChartColumns>
         {data.map(([date, variantsHits]) => (
           <div key={date} className="chart-column">
