@@ -13,7 +13,7 @@ import { Spacer } from "~/components/Spacer";
 import { EmptyState } from "~/components/EmptyState";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { Form, useLoaderData } from "@remix-run/react";
 import { TagLine } from "~/components/Tagline";
 import { FiFlag } from "react-icons/fi";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
@@ -29,6 +29,9 @@ import { Stack } from "~/components/Stack";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
 import { BarChart } from "~/components/Charts/BarChart";
 import { Card } from "~/components/Card";
+import { TextInput } from "~/components/Fields/TextInput";
+import { SubmitButton } from "~/components/Buttons/SubmitButton";
+import { HStack } from "~/components/HStack";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -63,15 +66,31 @@ interface LoaderData {
   max: number;
   hits: Array<{ name: string; hits: Array<FlagHit> }>;
   organizedHits: Array<[string, Array<{ name: string; value: number }>]>;
+  startDate: string;
+  endDate: string;
 }
 
 export const loader: LoaderFunction = async ({ request, params }): Promise<LoaderData> => {
   const session = await getSession(request.headers.get("Cookie"));
+  const url = new URL(request.url);
+  const search = new URLSearchParams(url.search);
+
+  const startDateForm = search.get("startDate");
+  const endDateForm = search.get("endDate");
+
+  const startDate = startDateForm ? new Date(startDateForm) : new Date();
+
+  const end = new Date();
+  end.setDate(end.getDate() + 7);
+
+  const endDate = endDateForm ? new Date(endDateForm) : end;
 
   const authCookie = session.get("auth-cookie");
   const hitsPerFlags: Array<{ name: string; hits: Array<FlagHit> }> = await getFlagHits(
     params.env!,
     params.flagId!,
+    startDate,
+    endDate,
     authCookie
   );
 
@@ -99,6 +118,8 @@ export const loader: LoaderFunction = async ({ request, params }): Promise<Loade
     hits: hitsPerFlags,
     organizedHits,
     max,
+    startDate: startDate.toISOString(),
+    endDate: endDate.toISOString(),
   };
 };
 
@@ -112,8 +133,12 @@ const InsightsGrid = styled("div", {
   },
 });
 
+const formatDefaultDate = (isoDate: string) => {
+  return isoDate.substr(0, 10);
+};
+
 export default function FlagInsights() {
-  const { hits, organizedHits, max } = useLoaderData<LoaderData>();
+  const { hits, organizedHits, max, startDate, endDate } = useLoaderData<LoaderData>();
   const { flagEnv } = useFlagEnv();
   const { user } = useUser();
   const { project } = useProject();
@@ -162,6 +187,24 @@ export default function FlagInsights() {
           Insights
         </Heading>
 
+        <Form>
+          <HStack spacing={4} alignItems="flex-end">
+            <TextInput
+              type="date"
+              name={"startDate"}
+              label={"Start date"}
+              defaultValue={formatDefaultDate(startDate)}
+            />
+            <TextInput
+              type="date"
+              name={"endDate"}
+              label={"End date"}
+              defaultValue={formatDefaultDate(endDate)}
+            />
+            <SubmitButton>Filter on date</SubmitButton>
+          </HStack>
+        </Form>
+
         <div>
           {hits.length === 0 && (
             <EmptyState
@@ -176,26 +219,27 @@ export default function FlagInsights() {
           )}
 
           {hits.length > 0 && (
-            <InsightsGrid>
-              {hits.map((hit) => {
-                const count = hit.hits.reduce((acc, curr) => acc + curr._count, 0);
+            <div>
+              <InsightsGrid>
+                {hits.map((hit) => {
+                  const count = hit.hits.reduce((acc, curr) => acc + curr._count, 0);
 
-                return (
-                  <BigStat
-                    name={`Variant ${hit.name}`}
-                    key={`variant-insight-${hit.name}`}
-                    unit="hits"
-                    count={count}
-                  />
-                );
-              })}
-            </InsightsGrid>
+                  return (
+                    <BigStat
+                      name={`Variant ${hit.name}`}
+                      key={`variant-insight-${hit.name}`}
+                      unit="hits"
+                      count={count}
+                    />
+                  );
+                })}
+              </InsightsGrid>
+              <Spacer size={4} />
+              <Card>
+                <BarChart data={organizedHits} max={max} />
+              </Card>
+            </div>
           )}
-
-          <Spacer size={4} />
-          <Card>
-            <BarChart data={organizedHits} max={max} />
-          </Card>
         </div>
       </Stack>
     </DashboardLayout>
