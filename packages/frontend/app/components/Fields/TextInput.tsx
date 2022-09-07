@@ -22,6 +22,7 @@ const Input = styled("input", {
   border: "4px solid $hermes",
   borderRadius: "$borderRadius$regular",
   fontSize: "$jupiter",
+  fontFamily: "$default",
   padding: "$spacing$2 $spacing$4",
   display: "block",
   width: "100%",
