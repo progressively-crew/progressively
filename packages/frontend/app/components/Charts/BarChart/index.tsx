@@ -2,6 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import { Typography } from "~/components/Typography";
 import { styled } from "~/stitches.config";
 
+function generateColor(stringInput: string) {
+  const stringUniqueHash = [...stringInput].reduce((acc, char) => {
+    return char.charCodeAt(0) + ((acc << 5) - acc);
+  }, 0);
+
+  return `hsl(${stringUniqueHash % 360}, 95%, 35%)`;
+}
+
 // Bars should be contained in this box specifically
 const ChartColumns = styled("div", {
   display: "grid",
@@ -10,7 +18,7 @@ const ChartColumns = styled("div", {
   textAlign: "center",
 
   "& .chart-column": {
-    padding: "0 $spacing$4",
+    padding: "0 $spacing$8",
     borderRight: "1px dashed $nemesisLight",
     display: "flex",
     flexDirection: "column",
@@ -35,9 +43,38 @@ const ChartColumns = styled("div", {
   "& .chart-column:last-of-type": {
     borderRight: "none",
   },
+
+  "& .chart-count-wrapper": {
+    display: "flex",
+    gap: "$spacing$1",
+  },
 });
 
-const Bar = styled("div", {});
+const RawBar = styled("div", {
+  background: "red",
+  height: "100%",
+});
+
+const BarWrapper = styled("div", {
+  marginTop: "auto",
+});
+
+interface BarProps {
+  children: React.ReactNode;
+  name: string;
+  size: string;
+}
+
+const Bar = ({ children, size, name }: BarProps) => {
+  return (
+    <BarWrapper style={{ height: size }}>
+      <Typography as="strong" size="uranus">
+        {name}
+      </Typography>
+      <RawBar style={{ background: generateColor(name) }}>{children}</RawBar>
+    </BarWrapper>
+  );
+};
 
 export interface BarChartProps {
   data: Array<[string, Array<{ name: string; value: number }>]>;
@@ -68,9 +105,20 @@ export const BarChart = ({ data, max }: BarChartProps) => {
   return (
     <div id="chart">
       <ChartColumns>
-        {data.map(([date]) => (
+        {data.map(([date, variantsHits]) => (
           <div key={date} className="chart-column">
-            <div></div>
+            <div className="chart-count-wrapper">
+              {variantsHits.map((vh) => (
+                <Bar
+                  name={vh.name}
+                  size={`${(vh.value / max) * 100}%`}
+                  key={`${vh.value}-${vh.name}-${date}`}
+                >
+                  {vh.value}
+                </Bar>
+              ))}
+            </div>
+
             <div>
               <FormattedDate date={date} formatterRef={formatterRef} />
             </div>
