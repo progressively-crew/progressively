@@ -7,6 +7,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
   UsePipes,
 } from '@nestjs/common';
@@ -127,8 +128,13 @@ export class FlagsController {
   getFlagHits(
     @Param('envId') envId: string,
     @Param('flagId') flagId: string,
+    @Query('startDate') startDate: string | undefined,
+    @Query('endDate') endDate: string | undefined,
   ): Promise<any> {
-    return this.flagService.listFlagHits(envId, flagId);
+    if (!endDate || !startDate) {
+      throw new BadRequestException('startDate and endDate are required.');
+    }
+    return this.flagService.listFlagHits(envId, flagId, startDate, endDate);
   }
 
   @Post('environments/:envId/flags/:flagId/strategies')

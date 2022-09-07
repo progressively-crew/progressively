@@ -1,47 +1,33 @@
+import { useRef } from "react";
 import { styled } from "~/stitches.config";
 import { Card, CardContent } from "./Card";
-import { Spacer } from "./Spacer";
+import { HStack } from "./HStack";
 import { Typography } from "./Typography";
 
 const BigStatLabel = styled(Typography, {
-  marginBottom: "$spacing$4",
-  fontFamily: "$title",
-
   "& h3": {
     lineHeight: "unset",
   },
 });
-const BigStatValue = styled("div", {
+const BigStatValue = styled("p", {
   fontFamily: "$default",
 
-  "& p": {
-    display: "inline",
-    fontSize: "$venus",
-    lineHeight: "unset",
-    color: "$nemesis",
-    borderBottom: "3px solid $nemesis",
-  },
-
-  variants: {
-    secondary: {
-      true: {
-        "& p": {
-          color: "$hades",
-          borderBottom: "3px dashed $hades",
-        },
-      },
-    },
-  },
+  display: "inline",
+  fontSize: "$venus",
+  lineHeight: "unset",
+  color: "$nemesis",
 });
 
 export interface BigStatProps {
-  children: React.ReactNode;
   name: string;
   id?: string;
-  secondary?: boolean;
+  unit?: string;
+  count: number;
 }
 
-export const BigStat = ({ name, children, id, secondary }: BigStatProps) => {
+export const BigStat = ({ name, count, id, unit }: BigStatProps) => {
+  const formatterRef = useRef(new Intl.NumberFormat());
+
   return (
     <Card>
       <CardContent>
@@ -49,8 +35,16 @@ export const BigStat = ({ name, children, id, secondary }: BigStatProps) => {
           {name}
         </BigStatLabel>
 
-        <BigStatValue secondary={secondary}>{children}</BigStatValue>
-        <Spacer size={8} />
+        <BigStatValue>
+          <HStack alignItems="flex-end" as="span">
+            {formatterRef.current.format(count)}{" "}
+            {unit && (
+              <Typography font="title" as="span">
+                {unit}
+              </Typography>
+            )}
+          </HStack>
+        </BigStatValue>
       </CardContent>
     </Card>
   );

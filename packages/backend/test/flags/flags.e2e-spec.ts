@@ -220,13 +220,19 @@ describe('FlagsController (e2e)', () => {
 
   describe('environments/1/flags/1/hits (GET)', () => {
     it('gives a 401 when the user is not authenticated', () =>
-      verifyAuthGuard(app, '/environments/1/flags/1/hits', 'get'));
+      verifyAuthGuard(
+        app,
+        '/environments/1/flags/1/hits?startDate=1992-01-01&endDate=1992-02-28',
+        'get',
+      ));
 
     it('gives a 403 when trying to access a valid project but an invalid env', async () => {
       const access_token = await authenticate(app);
 
       return request(app.getHttpServer())
-        .get('/environments/3/flags/1/hits')
+        .get(
+          '/environments/3/flags/1/hits?startDate=1992-01-01&endDate=1992-02-28',
+        )
         .set('Authorization', `Bearer ${access_token}`)
         .expect(403)
         .expect({
@@ -244,7 +250,9 @@ describe('FlagsController (e2e)', () => {
       );
 
       return request(app.getHttpServer())
-        .get('/environments/1/flags/1/hits')
+        .get(
+          '/environments/1/flags/1/hits?startDate=1992-01-01&endDate=1992-02-28',
+        )
         .set('Authorization', `Bearer ${access_token}`)
         .expect(403)
         .expect({
@@ -254,19 +262,36 @@ describe('FlagsController (e2e)', () => {
         });
     });
 
+    it('gives a 400 when the startDate is not passed', async () => {
+      const access_token = await authenticate(app);
+
+      const res = await request(app.getHttpServer())
+        .get('/environments/1/flags/1/hits?endDate=1992-02-28')
+        .set('Authorization', `Bearer ${access_token}`);
+
+      expect(res.status).toBe(400);
+    });
+
+    it('gives a 400 when the endDate is not passed', async () => {
+      const access_token = await authenticate(app);
+
+      const res = await request(app.getHttpServer())
+        .get('/environments/1/flags/1/hits?startDate=1992-01-01')
+        .set('Authorization', `Bearer ${access_token}`);
+
+      expect(res.status).toBe(400);
+    });
+
     it('gives the hits for the status ACTIVATED by default', async () => {
       const access_token = await authenticate(app);
 
-      return request(app.getHttpServer())
-        .get('/environments/1/flags/1/hits')
-        .set('Authorization', `Bearer ${access_token}`)
-        .expect(200)
-        .expect([
-          { date: '1992-01-01T02:02:02.002Z', activated: 10, notactivated: 5 },
-          { date: '1992-01-02T02:02:02.002Z', activated: 40, notactivated: 20 },
-          { date: '1992-01-03T02:02:02.002Z', activated: 20, notactivated: 10 },
-          { date: '1992-01-06T02:02:02.002Z', activated: 10, notactivated: 5 },
-        ]);
+      const res = await request(app.getHttpServer())
+        .get(
+          '/environments/1/flags/1/hits?startDate=1992-01-01&endDate=1992-02-28',
+        )
+        .set('Authorization', `Bearer ${access_token}`);
+
+      expect(res.status).toBe(200);
     });
   });
 

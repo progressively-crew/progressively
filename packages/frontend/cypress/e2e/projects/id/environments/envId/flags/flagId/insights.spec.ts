@@ -50,27 +50,15 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/insights"
 
         cy.findByRole("link", { name: "Production" })
           .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/1/flags"
-          );
+          .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags");
 
         cy.findByRole("link", { name: "New homepage" })
           .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/1/flags/1"
-          );
+          .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags/1");
 
         cy.findByRole("link", { name: "Insights" })
           .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/1/flags/1/insights"
-          )
+          .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags/1/insights")
           .and("have.attr", "aria-current", "page");
 
         cy.findByRole("heading", { name: "New homepage" }).should("be.visible");
@@ -98,28 +86,15 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/insights"
 
         cy.findByRole("link", { name: "Production" })
           .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/1/flags"
-          );
+          .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags");
 
         cy.findByRole("link", { name: "Insights" })
           .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/1/flags/2/insights"
-          )
+          .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags/2/insights")
           .and("have.attr", "aria-current", "page");
 
         cy.findByRole("heading", { name: "New footer" }).should("be.visible");
         cy.findByRole("heading", { name: "Insights" }).should("be.visible");
-
-        cy.findByText("No hits found").should("be.visible");
-        cy.findByText(
-          "There are no hits for this flag. Make sure to activate the flag in order to collect hits."
-        ).should("be.visible");
 
         cy.checkA11y();
       });
