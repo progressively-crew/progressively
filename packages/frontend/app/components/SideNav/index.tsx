@@ -89,13 +89,9 @@ export const SideNav = ({ user }: SideNavProps) => {
           {projects.map((up) => (
             <li key={`sidenav-project-${up.projectId}`}>
               <NavLink
-                end
                 to={`/dashboard/projects/${up.projectId}`}
                 className={({ isActive }) =>
-                  isActive ||
-                  location.pathname.includes(`/dashboard/projects/${up.projectId}/settings`)
-                    ? "active"
-                    : undefined
+                  isActive && !location.pathname.includes(`/environments`) ? "active" : undefined
                 }
               >
                 <HStack spacing={3}>
