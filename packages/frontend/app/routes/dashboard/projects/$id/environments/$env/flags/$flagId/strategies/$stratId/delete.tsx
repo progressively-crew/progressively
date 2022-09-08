@@ -83,7 +83,7 @@ export default function DeleteStrategyPage() {
       label: project.name,
     },
     {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags`,
+      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}`,
       label: environment.name,
     },
     {
@@ -106,10 +106,7 @@ export default function DeleteStrategyPage() {
       user={user}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={<Header title={`Deleting a strategy`} />}
-      error={
-        data?.errors &&
-        data.errors.backendError && <ErrorBox list={data.errors} />
-      }
+      error={data?.errors && data.errors.backendError && <ErrorBox list={data.errors} />}
       cancelAction={
         <Button
           variant="secondary"
@@ -135,9 +132,8 @@ export default function DeleteStrategyPage() {
         list={warnings}
         title={
           <>
-            We really want to warn you: if you validate the strategy
-            suppression, you {`won't`} be able to access the {strategy.name}{" "}
-            strategy anymore. It includes:
+            We really want to warn you: if you validate the strategy suppression, you {`won't`} be
+            able to access the {strategy.name} strategy anymore. It includes:
           </>
         }
       />

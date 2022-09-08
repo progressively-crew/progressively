@@ -52,17 +52,13 @@ export const action: ActionFunction = async ({
   }
 
   const strategyName = formData.get("strategy-name") as string;
-  const strategyType = formData.get(
-    "strategy-type"
-  ) as StrategyCreateDTO["strategyRuleType"];
+  const strategyType = formData.get("strategy-type") as StrategyCreateDTO["strategyRuleType"];
 
   const fieldName = (formData.get("field-name") as string) || undefined;
   const fieldValue = (formData.get("field-value") as string) || undefined;
 
   const fieldComparator =
-    (formData.get(
-      "field-comparator"
-    ) as StrategyCreateDTO["fieldComparator"]) || undefined;
+    (formData.get("field-comparator") as StrategyCreateDTO["fieldComparator"]) || undefined;
 
   const strategy: StrategyCreateDTO = {
     name: strategyName,
@@ -73,12 +69,7 @@ export const action: ActionFunction = async ({
   };
 
   try {
-    await createStrategy(
-      params.env!,
-      params.flagId!,
-      strategy,
-      session.get("auth-cookie")
-    );
+    await createStrategy(params.env!, params.flagId!, strategy, session.get("auth-cookie"));
 
     return redirect(
       `/dashboard/projects/${params.id}/environments/${params.env}/flags/${params.flagId}?newStrategy=true#strategy-added`
@@ -113,7 +104,7 @@ export default function StrategyCreatePage() {
       label: project.name,
     },
     {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags`,
+      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}`,
       label: environment.name,
     },
     {
@@ -137,10 +128,8 @@ export default function StrategyCreatePage() {
           title="Create a strategy"
           description={
             <Typography>
-              {`You're`} about to create a strategy to{" "}
-              <strong>{currentFlag.name}</strong> in{" "}
-              <strong>{project.name}</strong> on{" "}
-              <strong>{environment.name}</strong>.
+              {`You're`} about to create a strategy to <strong>{currentFlag.name}</strong> in{" "}
+              <strong>{project.name}</strong> on <strong>{environment.name}</strong>.
             </Typography>
           }
         />

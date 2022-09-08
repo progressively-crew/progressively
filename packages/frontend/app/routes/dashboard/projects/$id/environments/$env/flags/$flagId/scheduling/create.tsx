@@ -42,12 +42,9 @@ export const action: ActionFunction = async ({
 
   const utc = formData.get("utc-dateTime")?.toString();
 
-  const status =
-    (formData.get("nextStatus") as unknown as FlagStatus) || undefined;
+  const status = (formData.get("nextStatus") as unknown as FlagStatus) || undefined;
 
-  const rolloutPercentage = Number(
-    formData.get("rolloutPercentage")?.toString()
-  );
+  const rolloutPercentage = Number(formData.get("rolloutPercentage")?.toString());
 
   if (!utc) {
     return {
@@ -72,12 +69,7 @@ export const action: ActionFunction = async ({
   };
 
   try {
-    await createScheduling(
-      params.env!,
-      params.flagId!,
-      scheduling,
-      session.get("auth-cookie")
-    );
+    await createScheduling(params.env!, params.flagId!, scheduling, session.get("auth-cookie"));
 
     return redirect(
       `/dashboard/projects/${params.id}/environments/${params.env}/flags/${params.flagId}/scheduling?newSchedule=true#schedule-added`
@@ -111,7 +103,7 @@ export default function SchedulingCreatePage() {
       label: project.name,
     },
     {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags`,
+      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}`,
       label: environment.name,
     },
     {
@@ -133,10 +125,8 @@ export default function SchedulingCreatePage() {
           title="Create a scheduling"
           description={
             <Typography>
-              {`You're`} about to create a scheduling to{" "}
-              <strong>{currentFlag.name}</strong> in{" "}
-              <strong>{project.name}</strong> on{" "}
-              <strong>{environment.name}</strong>.
+              {`You're`} about to create a scheduling to <strong>{currentFlag.name}</strong> in{" "}
+              <strong>{project.name}</strong> on <strong>{environment.name}</strong>.
             </Typography>
           }
         />

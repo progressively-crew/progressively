@@ -33,10 +33,7 @@ export const meta: MetaFunction = ({ params, parentsData }) => {
   };
 };
 
-export const action: ActionFunction = async ({
-  request,
-  params,
-}): Promise<null> => {
+export const action: ActionFunction = async ({ request, params }): Promise<null> => {
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
   const formData = await request.formData();
@@ -53,17 +50,11 @@ interface LoaderData {
   flagsByEnv: Array<FlagEnv>;
 }
 
-export const loader: LoaderFunction = async ({
-  request,
-  params,
-}): Promise<LoaderData> => {
+export const loader: LoaderFunction = async ({ request, params }): Promise<LoaderData> => {
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
 
-  const flagsByEnv: Array<FlagEnv> = await getFlagsByProjectEnv(
-    params.env!,
-    authCookie
-  );
+  const flagsByEnv: Array<FlagEnv> = await getFlagsByProjectEnv(params.env!, authCookie);
 
   return { flagsByEnv };
 };
@@ -88,7 +79,7 @@ export default function FlagsByEnvPage() {
       label: project.name,
     },
     {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags`,
+      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}`,
       label: environment.name,
     },
   ];
@@ -108,13 +99,9 @@ export default function FlagsByEnvPage() {
       subNav={<EnvNavBar projectId={project.uuid} envId={environment.uuid} />}
       status={
         isFlagRemoved ? (
-          <SuccessBox id="flag-removed">
-            The flag has been successfully deleted.
-          </SuccessBox>
+          <SuccessBox id="flag-removed">The flag has been successfully deleted.</SuccessBox>
         ) : newFlagId ? (
-          <SuccessBox id="flag-added">
-            The flag has been successfully created.
-          </SuccessBox>
+          <SuccessBox id="flag-added">The flag has been successfully created.</SuccessBox>
         ) : null
       }
     >
@@ -135,20 +122,12 @@ export default function FlagsByEnvPage() {
 
         {hasFlags ? (
           <Card>
-            <FlagList
-              flags={flagsByEnv}
-              envId={environment.uuid}
-              projectId={project.uuid}
-            />
+            <FlagList flags={flagsByEnv} envId={environment.uuid} projectId={project.uuid} />
           </Card>
         ) : (
           <EmptyState
             title="No flags found"
-            description={
-              <Typography>
-                There are no flags yet on this environment.
-              </Typography>
-            }
+            description={<Typography>There are no flags yet on this environment.</Typography>}
             action={
               <CreateButton
                 to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/create`}

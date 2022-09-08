@@ -67,7 +67,7 @@ export const action: ActionFunction = async ({
     );
 
     return redirect(
-      `/dashboard/projects/${projectId}/environments/${envId}/flags?newFlagId=${newFlag.uuid}#flag-added`
+      `/dashboard/projects/${projectId}/environments/${envId}?newFlagId=${newFlag.uuid}#flag-added`
     );
   } catch (e: unknown) {
     if (e instanceof Error) {
@@ -99,7 +99,7 @@ export default function CreateFlagPage() {
       label: project.name,
     },
     {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags`,
+      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}`,
       label: environment.name,
     },
     {
@@ -117,18 +117,14 @@ export default function CreateFlagPage() {
           title="Create a feature flag"
           description={
             <Typography>
-              The new feature flag will appear in{" "}
-              <strong>{project.name}</strong> /{" "}
-              <strong>{environment.name}</strong>. After the creation of a
-              feature flag, you will be able to get its SDK key for application
-              usage.
+              The new feature flag will appear in <strong>{project.name}</strong> /{" "}
+              <strong>{environment.name}</strong>. After the creation of a feature flag, you will be
+              able to get its SDK key for application usage.
             </Typography>
           }
         />
       }
-      status={
-        (errors?.name || errors?.description) && <ErrorBox list={errors} />
-      }
+      status={(errors?.name || errors?.description) && <ErrorBox list={errors} />}
     >
       <Section>
         <Form method="post">
@@ -153,9 +149,7 @@ export default function CreateFlagPage() {
 
             <fieldset>
               <Stack spacing={2}>
-                <Label as="legend">
-                  Create this flag for the following environments
-                </Label>
+                <Label as="legend">Create this flag for the following environments</Label>
                 {environments.map((env) => (
                   <HStack spacing={2} key={env.uuid}>
                     <Checkbox

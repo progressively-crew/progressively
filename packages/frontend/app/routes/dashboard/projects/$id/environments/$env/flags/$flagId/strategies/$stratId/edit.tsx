@@ -54,17 +54,13 @@ export const action: ActionFunction = async ({
   }
 
   const strategyName = formData.get("strategy-name") as string;
-  const strategyType = formData.get(
-    "strategy-type"
-  ) as StrategyCreateDTO["strategyRuleType"];
+  const strategyType = formData.get("strategy-type") as StrategyCreateDTO["strategyRuleType"];
 
   const fieldName = (formData.get("field-name") as string) || undefined;
   const fieldValue = (formData.get("field-value") as string) || undefined;
 
   const fieldComparator =
-    (formData.get(
-      "field-comparator"
-    ) as StrategyCreateDTO["fieldComparator"]) || undefined;
+    (formData.get("field-comparator") as StrategyCreateDTO["fieldComparator"]) || undefined;
 
   const strategy: StrategyCreateDTO = {
     name: strategyName,
@@ -97,9 +93,7 @@ export default function StrategyEditPage() {
   const { strategy } = useStrategy();
   const actionData = useActionData<ActionData>();
 
-  const [strategyType, setStrategyType] = useState<StrategyRuleType>(
-    strategy.strategyRuleType
-  );
+  const [strategyType, setStrategyType] = useState<StrategyRuleType>(strategy.strategyRuleType);
 
   const { environment } = useEnvironment();
 
@@ -115,7 +109,7 @@ export default function StrategyEditPage() {
       label: project.name,
     },
     {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags`,
+      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}`,
       label: environment.name,
     },
     {

@@ -1,10 +1,10 @@
-describe("/dashboard/projects/[id]/environments/[envId]/flags", () => {
+describe("/dashboard/projects/[id]/environments/[envId]", () => {
   before(cy.seed);
   after(cy.cleanupDb);
 
   describe("not authenticated", () => {
     beforeEach(() => {
-      cy.visit("/dashboard/projects/1/environments/1/flags");
+      cy.visit("/dashboard/projects/1/environments/1");
     });
 
     it("checks that the route is protected", () => {
@@ -16,7 +16,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags", () => {
     describe("user: Jane", () => {
       beforeEach(() => {
         cy.signIn("Jane");
-        cy.visit("/dashboard/projects/1/environments/1/flags", {
+        cy.visit("/dashboard/projects/1/environments/1", {
           failOnStatusCode: false,
         });
       });
@@ -29,7 +29,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags", () => {
     describe("user: John", () => {
       beforeEach(() => {
         cy.signIn("John");
-        cy.visit("/dashboard/projects/1/environments/2/flags");
+        cy.visit("/dashboard/projects/1/environments/2");
         cy.injectAxe();
       });
 
@@ -39,7 +39,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags", () => {
         cy.verifyBreadcrumbs([
           ["Projects", "/dashboard"],
           ["Project from seeding", "/dashboard/projects/1"],
-          ["Developer", "/dashboard/projects/1/environments/2/flags"],
+          ["Developer", "/dashboard/projects/1/environments/2"],
         ]);
 
         cy.findByRole("heading", { name: "Developer" }).should("be.visible");
@@ -56,7 +56,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags", () => {
     describe("user: Marvin", () => {
       beforeEach(() => {
         cy.signIn("Marvin");
-        cy.visit("/dashboard/projects/1/environments/1/flags");
+        cy.visit("/dashboard/projects/1/environments/1");
         cy.injectAxe();
       });
 
@@ -66,7 +66,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags", () => {
         cy.verifyBreadcrumbs([
           ["Projects", "/dashboard"],
           ["Project from seeding", "/dashboard/projects/1"],
-          ["Production", "/dashboard/projects/1/environments/1/flags"],
+          ["Production", "/dashboard/projects/1/environments/1"],
         ]);
 
         cy.findByRole("heading", { name: "Production" }).should("be.visible");
