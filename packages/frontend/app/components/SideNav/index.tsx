@@ -12,10 +12,6 @@ const SideNavWrapper = styled("div", {
   boxSizing: "border-box",
   padding: "$spacing$4",
 
-  ".logo-wrapper": {
-    padding: "0 $spacing$6",
-  },
-
   "& nav": {
     padding: "0 $spacing$8",
   },
@@ -60,13 +56,10 @@ export const SideNav = ({ user }: SideNavProps) => {
 
   return (
     <SideNavWrapper>
-      <div className="logo-wrapper">
-        <DarkLogo to={"/dashboard"} />
-      </div>
-
-      <Spacer size={8} />
-
       <nav aria-label="Main navigation">
+        <DarkLogo to={"/dashboard"} />
+
+        <Spacer size={8} />
         <ul>
           {projects.map((up) => (
             <li key={`sidenav-project-${up.projectId}`}>
