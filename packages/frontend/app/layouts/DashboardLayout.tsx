@@ -7,6 +7,7 @@ import { NavProvider } from "~/components/Breadcrumbs/providers/NavProvider";
 import { InertWhenNavOpened } from "~/components/Breadcrumbs/InertWhenNavOpened";
 import { styled } from "~/stitches.config";
 import { SideNav } from "~/components/SideNav";
+import { Stack } from "~/components/Stack";
 
 export interface DashboardLayoutProps {
   user?: Partial<User>;
@@ -17,26 +18,7 @@ export interface DashboardLayoutProps {
   status?: React.ReactNode;
 }
 
-const ContentWrapper = styled("div", {
-  display: "grid",
-  gridTemplateColumns: "auto 1fr",
-  gap: "$spacing$12",
-
-  "@tablet": {
-    flexDirection: "column",
-    gridTemplateColumns: "1fr",
-  },
-
-  variants: {
-    singleColumn: {
-      true: {
-        gridTemplateColumns: "1fr",
-      },
-    },
-  },
-});
-
-const EndSection = styled("div", {
+const OverflowContainer = styled("div", {
   overflow: "hidden", // scroll inside table elements,
   padding: "$spacing$3", // show box shadow when overflowing,
   margin: "-$spacing$3",
@@ -82,37 +64,38 @@ export const DashboardLayout = ({
 
       <PageWrapper>
         <div>
-          {breadcrumb && (
-            <>
-              <BreadCrumbWrapper>
-                <Container>{breadcrumb}</Container>
-              </BreadCrumbWrapper>
-              <Spacer size={4} />
-            </>
-          )}
-          <Container>
-            <header>{header}</header>
-          </Container>
+          <Stack spacing={4}>
+            {breadcrumb && (
+              <div>
+                <BreadCrumbWrapper>
+                  <Container>{breadcrumb}</Container>
+                </BreadCrumbWrapper>
+              </div>
+            )}
+
+            <div>
+              <Container>
+                <header>{header}</header>
+              </Container>
+            </div>
+
+            {subNav}
+          </Stack>
 
           <Spacer size={8} />
-
           <InertWhenNavOpened>
             <Main>
               <Container>
-                <ContentWrapper singleColumn={!subNav}>
-                  {subNav ? <div>{subNav}</div> : null}
+                <OverflowContainer>
+                  {status && (
+                    <>
+                      {status}
+                      <Spacer size={8} />
+                    </>
+                  )}
 
-                  <EndSection>
-                    {status && (
-                      <>
-                        {status}
-                        <Spacer size={8} />
-                      </>
-                    )}
-
-                    {children}
-                  </EndSection>
-                </ContentWrapper>
+                  {children}
+                </OverflowContainer>
               </Container>
             </Main>
           </InertWhenNavOpened>

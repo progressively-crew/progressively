@@ -8,8 +8,10 @@ const Ol = styled("ol", {
   fontFamily: "$default",
   color: "$hades",
   display: "flex",
+  height: "$cta",
 
   "& li a": {
+    boxSizing: "border-box",
     color: "$hades",
     transition: "border,box-shadow 0.2s",
   },
