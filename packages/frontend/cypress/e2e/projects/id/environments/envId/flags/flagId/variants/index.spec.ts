@@ -69,7 +69,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants"
           ["Projects", "/dashboard"],
           ["Project from seeding", "/dashboard/projects/1"],
           ["Production", "/dashboard/projects/1/environments/1/flags"],
-          ["New homepage", "/dashboard/projects/1/environments/1/flags/1"],
+          ["New homepage", "/dashboard/projects/1/environments/1/flags/1/variants"],
         ]);
 
         cy.findByRole("heading", { name: "New homepage" }).should("be.visible");
@@ -95,7 +95,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants"
           ["Projects", "/dashboard"],
           ["Project from seeding", "/dashboard/projects/1"],
           ["Production", "/dashboard/projects/1/environments/1/flags"],
-          ["New homepage", "/dashboard/projects/1/environments/1/flags/1"],
           ["With multivariate", "/dashboard/projects/1/environments/1/flags/4/variants"],
         ]);
 
