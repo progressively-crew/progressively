@@ -67,18 +67,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/insights"
           "Progressively | Project from seeding | Production | New footer | Insights"
         );
 
-        cy.findByRole("link", { name: "Projects" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard");
-
-        cy.findByRole("link", { name: "Project from seeding" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard/projects/1");
-
-        cy.findByRole("link", { name: "Production" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags");
-
         cy.findByRole("link", { name: "Insights" })
           .should("be.visible")
           .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags/2/insights")

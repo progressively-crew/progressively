@@ -57,8 +57,8 @@ Cypress.Commands.add("verifyBreadcrumbs", (crumbs: Array<any>) => {
   const lastIndex = crumbs.length - 1;
 
   cy.findByLabelText("Breadcrumbs").within(() => {
-    crumbs.forEach(([name, href, notCurrent], index: number) => {
-      if (index === lastIndex && !notCurrent) {
+    crumbs.forEach(([name, href, shouldAssertCurrent = true], index: number) => {
+      if (index === lastIndex && shouldAssertCurrent) {
         cy.findByRole("link", { name })
           .should("be.visible")
           .and("have.attr", "href", href)
