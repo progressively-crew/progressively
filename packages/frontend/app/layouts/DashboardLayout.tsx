@@ -75,6 +75,7 @@ export const DashboardLayout = ({
 
             <div>
               <Container>
+                {!breadcrumb && <Spacer size={4} />}
                 <header>{header}</header>
               </Container>
             </div>

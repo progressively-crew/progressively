@@ -1,8 +1,9 @@
 import { styled } from "~/stitches.config";
 
 export const Container = styled("div", {
-  padding: "0 $spacing$12",
-  margin: "0 auto",
+  paddingLeft: "$spacing$12",
+  paddingRight: "300px", // side nav width
+  maxWidth: "140ch",
 
   "@tablet": {
     padding: "0 $spacing$12",

@@ -8,7 +8,6 @@ const HorizontalNavWrapper = styled("nav", {
 
   "& ul": {
     display: "flex",
-    gap: "$spacing$2",
   },
 
   "& ul li a": {
@@ -19,8 +18,8 @@ const HorizontalNavWrapper = styled("nav", {
     fontFamily: "$default",
     textDecoration: "none",
     color: "$hades",
-    paddingRight: "$spacing$4",
-    paddingLeft: "$spacing$1",
+    paddingRight: "$spacing$6",
+    paddingLeft: "$spacing$2",
     borderTop: "4px solid transparent",
     borderBottom: "4px solid transparent",
     transition: "all 0.2s",
