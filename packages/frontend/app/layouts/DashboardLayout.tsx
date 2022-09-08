@@ -46,15 +46,8 @@ const EndSection = styled("div", {
   },
 });
 
-const HeaderWrapper = styled("div", {
+const BreadCrumbWrapper = styled("div", {
   background: "$apollo",
-
-  variants: {
-    hasBreadcrumbs: {
-      true: { padding: "$spacing$4 0 $spacing$10 0" },
-      false: { padding: "$spacing$10 0 $spacing$10 0" },
-    },
-  },
 });
 
 const PageWrapper = styled("div", {
@@ -89,26 +82,19 @@ export const DashboardLayout = ({
 
       <PageWrapper>
         <div>
-          <HeaderWrapper hasBreadcrumbs={Boolean(breadcrumb)}>
-            {breadcrumb && (
-              <Container>
-                {breadcrumb}
-                <Spacer size={4} />
-              </Container>
-            )}
+          {breadcrumb && (
+            <>
+              <BreadCrumbWrapper>
+                <Container>{breadcrumb}</Container>
+              </BreadCrumbWrapper>
+              <Spacer size={4} />
+            </>
+          )}
+          <Container>
+            <header>{header}</header>
+          </Container>
 
-            <Container>
-              <header>{header}</header>
-            </Container>
-          </HeaderWrapper>
-
-          <Spacer
-            size={{
-              "@initial": 8,
-              "@tablet": 0,
-              "@mobile": 0,
-            }}
-          />
+          <Spacer size={8} />
 
           <InertWhenNavOpened>
             <Main>

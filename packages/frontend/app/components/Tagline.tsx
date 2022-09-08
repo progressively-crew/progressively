@@ -20,7 +20,7 @@ export const TagLine = ({ icon, children }: TagLineProps) => {
     <div>
       <HStack spacing={1}>
         {icon && <IconWrapper aria-hidden>{icon}</IconWrapper>}
-        <Typography size="uranus">{children}</Typography>
+        <Typography size="neptune">{children}</Typography>
       </HStack>
     </div>
   );
