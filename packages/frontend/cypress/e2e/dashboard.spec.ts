@@ -22,14 +22,15 @@ describe("/dashboard", () => {
         cy.injectAxe();
       });
 
-      it("shows a list of project and Marvin s name in the menu", () => {
+      it("shows a list of project", () => {
         cy.title().should("eq", "Progressively | Projects list");
         cy.findByRole("heading", { name: "Projects" }).should("be.visible");
-        cy.findByRole("link", { name: /Marvin Frachet/i }).should("be.visible");
 
-        cy.findByRole("link", { name: "Project from seeding" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard/projects/1");
+        cy.get("main").within(() => {
+          cy.findByRole("link", { name: "Project from seeding" })
+            .should("be.visible")
+            .and("have.attr", "href", "/dashboard/projects/1");
+        });
 
         cy.findByRole("link", { name: "Create a project" }).should(
           "have.attr",

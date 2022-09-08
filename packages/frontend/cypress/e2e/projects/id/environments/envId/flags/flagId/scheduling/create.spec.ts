@@ -44,7 +44,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
           ["Projects", "/dashboard"],
           ["Project from seeding", "/dashboard/projects/1"],
           ["Production", "/dashboard/projects/1/environments/1/flags"],
-          ["New homepage", "/dashboard/projects/1/environments/1/flags/1"],
+          ["New homepage", "/dashboard/projects/1/environments/1/flags/1/scheduling"],
           ["Create a scheduling", "/dashboard/projects/1/environments/1/flags/1/scheduling/create"],
         ]);
 

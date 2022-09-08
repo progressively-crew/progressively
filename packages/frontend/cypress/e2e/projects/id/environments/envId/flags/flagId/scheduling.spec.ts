@@ -44,7 +44,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
           ["Projects", "/dashboard"],
           ["Project from seeding", "/dashboard/projects/1"],
           ["Production", "/dashboard/projects/1/environments/1/flags"],
-          ["New homepage", "/dashboard/projects/1/environments/1/flags/1", false],
+          ["New homepage", "/dashboard/projects/1/environments/1/flags/1/scheduling", false],
         ]);
 
         cy.findByRole("link", { name: "Insights" })
@@ -70,27 +70,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
           "eq",
           "Progressively | Project from seeding | Production | Flags | New footer | Scheduling"
         );
-
-        cy.findByRole("link", { name: "Projects" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard");
-
-        cy.findByRole("link", { name: "Project from seeding" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard/projects/1");
-
-        cy.findByRole("link", { name: "Production" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags");
-
-        cy.findByRole("link", { name: "Insights" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags/2/insights");
-
-        cy.findByRole("link", { name: "Scheduling" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags/2/scheduling")
-          .and("have.attr", "aria-current", "page");
 
         cy.findByRole("heading", { name: "New footer" }).should("be.visible");
         cy.findByRole("heading", { name: "Scheduling" }).should("be.visible");

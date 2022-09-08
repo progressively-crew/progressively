@@ -21,27 +21,19 @@ describe("/dashboard/projects/create", () => {
 
     it("shows the create page layout", () => {
       cy.title().should("eq", "Progressively | Create a project");
-      cy.findByRole("heading", { name: "Create a project" }).should(
-        "be.visible"
-      );
+      cy.findByRole("heading", { name: "Create a project" }).should("be.visible");
 
-      cy.findByRole("link", { name: "Projects" })
-        .should("be.visible")
-        .and("have.attr", "href", "/dashboard");
-
-      cy.findByRole("link", { name: "Create a project" })
-        .should("be.visible")
-        .and("have.attr", "href", "/dashboard/projects/create")
-        .and("have.attr", "aria-current", "page");
+      cy.verifyBreadcrumbs([
+        ["Projects", "/dashboard"],
+        ["Create a project", "/dashboard/projects/create"],
+      ]);
 
       cy.findByLabelText("Project name").should("be.visible");
       cy.findByText(
         "When creating a project, you'll become the administrator of it and will have full control over it."
       ).should("be.visible");
 
-      cy.findByRole("button", { name: "Create the project" }).should(
-        "be.visible"
-      );
+      cy.findByRole("button", { name: "Create the project" }).should("be.visible");
 
       cy.checkA11y();
     });
@@ -51,10 +43,7 @@ describe("/dashboard/projects/create", () => {
 
       cy.get(".error-box")
         .should("have.focus")
-        .and(
-          "contain.text",
-          "The name field is required, make sure to have one."
-        );
+        .and("contain.text", "The name field is required, make sure to have one.");
 
       cy.checkA11y();
     });
@@ -68,7 +57,10 @@ describe("/dashboard/projects/create", () => {
         .and("contain.text", "The project has been successfully created.");
 
       // Verify the dashboard
-      cy.findByText("My new project").should("be.visible");
+      cy.get("main").within(() => {
+        cy.findByText("My new project").should("be.visible");
+      });
+
       cy.url().should("include", "/dashboard?newProjectId");
       cy.checkA11y();
     });

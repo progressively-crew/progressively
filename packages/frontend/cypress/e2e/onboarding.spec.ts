@@ -22,13 +22,11 @@ describe("/dashboard/onboarding", () => {
     it("shows an onboarding layout", () => {
       cy.title().should("eq", "Progressively | Onboarding");
       cy.findByText("Welcome aboard").should("be.visible");
-      cy.contains(
-        "Before being fully operational, you will need to create a project"
-      ).should("be.visible");
-      cy.findByLabelText("Project name").should("be.visible");
-      cy.findByRole("button", { name: "Create the project" }).should(
+      cy.contains("Before being fully operational, you will need to create a project").should(
         "be.visible"
       );
+      cy.findByLabelText("Project name").should("be.visible");
+      cy.findByRole("button", { name: "Create the project" }).should("be.visible");
 
       cy.checkA11y();
     });
@@ -38,10 +36,7 @@ describe("/dashboard/onboarding", () => {
 
       cy.get(".error-box")
         .should("have.focus")
-        .and(
-          "contain.text",
-          "The name field is required, make sure to have one."
-        );
+        .and("contain.text", "The name field is required, make sure to have one.");
 
       cy.checkA11y();
     });
@@ -54,7 +49,9 @@ describe("/dashboard/onboarding", () => {
         .should("have.focus")
         .and("contain.text", "The project has been successfully created.");
 
-      cy.findByText("My new project").should("be.visible");
+      cy.get("main").within(() => {
+        cy.findByText("My new project").should("be.visible");
+      });
 
       cy.url().should("include", "/dashboard?newProjectId");
       cy.checkA11y();

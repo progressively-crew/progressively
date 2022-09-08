@@ -79,7 +79,9 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags", () => {
 
         /* verify the flag list */
         cy.findByRole("link", { name: "New homepage" }).should("be.visible");
-        cy.findByText("newHomepage").should("be.visible");
+
+        // it overflows in the table, reason why we test the existence and no the visibility
+        cy.findByText("newHomepage").should("exist");
 
         cy.checkA11y();
       });
