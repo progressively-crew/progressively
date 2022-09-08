@@ -1,14 +1,12 @@
 import { Main } from "~/components/Main";
 import { User } from "~/modules/user/types";
-import { UseDropdown } from "~/modules/user/components/UserDropdown";
 import { SkipNavLink } from "~/components/SkipNav";
 import { Container } from "~/components/Container";
-import { Nav } from "~/components/Nav";
 import { Spacer } from "~/components/Spacer";
 import { NavProvider } from "~/components/Breadcrumbs/providers/NavProvider";
 import { InertWhenNavOpened } from "~/components/Breadcrumbs/InertWhenNavOpened";
-import { Menu } from "~/components/Menu";
 import { styled } from "~/stitches.config";
+import { SideNav } from "~/components/SideNav";
 
 export interface DashboardLayoutProps {
   user?: Partial<User>;
@@ -19,7 +17,7 @@ export interface DashboardLayoutProps {
   status?: React.ReactNode;
 }
 
-const PageWrapper = styled("div", {
+const ContentWrapper = styled("div", {
   display: "grid",
   gridTemplateColumns: "auto 1fr",
   gap: "$spacing$12",
@@ -59,6 +57,18 @@ const HeaderWrapper = styled("div", {
   },
 });
 
+const PageWrapper = styled("div", {
+  marginLeft: "300px",
+});
+
+const MenuWrapper = styled("div", {
+  height: "100%",
+  position: "fixed",
+  left: 0,
+  top: 0,
+  width: "300px",
+});
+
 export const DashboardLayout = ({
   user,
   children,
@@ -69,59 +79,59 @@ export const DashboardLayout = ({
 }: DashboardLayoutProps) => {
   return (
     <NavProvider>
-      <div>
-        <InertWhenNavOpened>
-          <SkipNavLink>Skip to content</SkipNavLink>
+      <InertWhenNavOpened>
+        <SkipNavLink>Skip to content</SkipNavLink>
+      </InertWhenNavOpened>
 
-          <Nav aria-label="General">
-            <Menu hideOnMobile={!breadcrumb} />
+      <MenuWrapper>
+        <SideNav user={user} />
+      </MenuWrapper>
 
-            {user && user.fullname && <UseDropdown user={user as User} />}
-          </Nav>
-        </InertWhenNavOpened>
+      <PageWrapper>
+        <div>
+          <HeaderWrapper hasBreadcrumbs={Boolean(breadcrumb)}>
+            {breadcrumb && (
+              <Container>
+                {breadcrumb}
+                <Spacer size={4} />
+              </Container>
+            )}
 
-        <HeaderWrapper hasBreadcrumbs={Boolean(breadcrumb)}>
-          {breadcrumb && (
             <Container>
-              {breadcrumb}
-              <Spacer size={4} />
+              <header>{header}</header>
             </Container>
-          )}
+          </HeaderWrapper>
 
-          <Container>
-            <header>{header}</header>
-          </Container>
-        </HeaderWrapper>
+          <Spacer
+            size={{
+              "@initial": 8,
+              "@tablet": 0,
+              "@mobile": 0,
+            }}
+          />
 
-        <Spacer
-          size={{
-            "@initial": 8,
-            "@tablet": 0,
-            "@mobile": 0,
-          }}
-        />
+          <InertWhenNavOpened>
+            <Main>
+              <Container>
+                <ContentWrapper singleColumn={!subNav}>
+                  {subNav ? <div>{subNav}</div> : null}
 
-        <InertWhenNavOpened>
-          <Main>
-            <Container>
-              <PageWrapper singleColumn={!subNav}>
-                {subNav ? <div>{subNav}</div> : null}
+                  <EndSection>
+                    {status && (
+                      <>
+                        {status}
+                        <Spacer size={8} />
+                      </>
+                    )}
 
-                <EndSection>
-                  {status && (
-                    <>
-                      {status}
-                      <Spacer size={8} />
-                    </>
-                  )}
-
-                  {children}
-                </EndSection>
-              </PageWrapper>
-            </Container>
-          </Main>
-        </InertWhenNavOpened>
-      </div>
+                    {children}
+                  </EndSection>
+                </ContentWrapper>
+              </Container>
+            </Main>
+          </InertWhenNavOpened>
+        </div>
+      </PageWrapper>
     </NavProvider>
   );
 };
