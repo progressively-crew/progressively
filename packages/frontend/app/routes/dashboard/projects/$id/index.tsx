@@ -60,42 +60,31 @@ export default function ProjectDetailPage() {
       }
       subNav={
         <HorizontalNav label={`Project related`}>
-          <NavItem
-            to={`/dashboard/projects/${project.uuid}`}
-            icon={<FiLayers />}
-          >
+          <NavItem to={`/dashboard/projects/${project.uuid}`} icon={<FiLayers />}>
             Environments
           </NavItem>
 
-          <NavItem
-            to={`/dashboard/projects/${project.uuid}/settings`}
-            icon={<AiOutlineSetting />}
-          >
+          <NavItem to={`/dashboard/projects/${project.uuid}/settings`} icon={<AiOutlineSetting />}>
             Settings
           </NavItem>
         </HorizontalNav>
       }
       status={
         newEnvId ? (
-          <SuccessBox id="env-added">
-            The environment has been successfully created.
-          </SuccessBox>
+          <SuccessBox id="env-added">The environment has been successfully created.</SuccessBox>
         ) : envRemoved ? (
-          <SuccessBox id="env-removed">
-            The environment has been successfully deleted.
-          </SuccessBox>
+          <SuccessBox id="env-removed">The environment has been successfully deleted.</SuccessBox>
         ) : null
       }
     >
       <Section aria-labelledby="list-env-title" id="list-env-title">
         <SectionHeader
           title="Environments"
+          titleAs="h1"
           icon={<FiLayers />}
           action={
             hasEnvironments && (
-              <CreateButton
-                to={`/dashboard/projects/${project.uuid}/environments/create`}
-              >
+              <CreateButton to={`/dashboard/projects/${project.uuid}/environments/create`}>
                 Create an environment
               </CreateButton>
             )
@@ -104,23 +93,14 @@ export default function ProjectDetailPage() {
 
         {hasEnvironments ? (
           <Card>
-            <EnvList
-              environments={project.environments}
-              projectId={project.uuid}
-            />
+            <EnvList environments={project.environments} projectId={project.uuid} />
           </Card>
         ) : (
           <EmptyState
             title="No environments found"
-            description={
-              <Typography>
-                There are no environments yet on this project.
-              </Typography>
-            }
+            description={<Typography>There are no environments yet on this project.</Typography>}
             action={
-              <CreateButton
-                to={`/dashboard/projects/${project.uuid}/environments/create`}
-              >
+              <CreateButton to={`/dashboard/projects/${project.uuid}/environments/create`}>
                 Create an environment
               </CreateButton>
             }

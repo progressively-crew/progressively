@@ -1,10 +1,5 @@
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
-import {
-  useActionData,
-  useLoaderData,
-  Form,
-  useTransition,
-} from "@remix-run/react";
+import { useActionData, useLoaderData, Form, useTransition } from "@remix-run/react";
 import { BackLink } from "~/components/BackLink";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
@@ -39,17 +34,14 @@ interface ActionData {
   };
 }
 
-export const action: ActionFunction = async ({
-  request,
-}): Promise<ActionData> => {
+export const action: ActionFunction = async ({ request }): Promise<ActionData> => {
   const formData = await request.formData();
 
   const password = formData.get("password")?.toString();
   const confirmationPassword = formData.get("confirmationPassword")?.toString();
 
   const passwordError = validatePassword(password);
-  const confirmationPasswordError =
-    validateConfirmationPassword(confirmationPassword);
+  const confirmationPasswordError = validateConfirmationPassword(confirmationPassword);
 
   if (passwordError || confirmationPasswordError) {
     return {
@@ -79,9 +71,7 @@ interface LoaderData {
   user: User;
 }
 
-export const loader: LoaderFunction = async ({
-  request,
-}): Promise<LoaderData | Response> => {
+export const loader: LoaderFunction = async ({ request }): Promise<LoaderData | Response> => {
   const user = await authGuard(request);
 
   return { user };
@@ -110,9 +100,7 @@ export default function ProfilePage() {
       }
       status={
         <>
-          {errors && Object.keys(errors).length > 0 && (
-            <ErrorBox list={errors} />
-          )}
+          {errors && Object.keys(errors).length > 0 && <ErrorBox list={errors} />}
 
           {passwordUpdated && (
             <SuccessBox id="password-changed">
@@ -125,7 +113,7 @@ export default function ProfilePage() {
       <Card>
         <CardContent>
           <Section>
-            <SectionHeader title="Change password" />
+            <SectionHeader title="Change password" titleAs="h1" />
 
             <Form method="post">
               <FormGroup>

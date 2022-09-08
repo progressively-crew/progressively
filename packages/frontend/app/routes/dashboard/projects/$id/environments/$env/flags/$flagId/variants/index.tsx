@@ -182,6 +182,7 @@ export default function VariantsOfFlag() {
     >
       <Section id="variants">
         <SectionHeader
+          titleAs="h1"
           title="Variants"
           icon={<AiOutlineAppstore />}
           description={

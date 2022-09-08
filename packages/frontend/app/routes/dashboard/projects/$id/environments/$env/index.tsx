@@ -107,6 +107,7 @@ export default function FlagsByEnvPage() {
     >
       <Section id="list-flags-title">
         <SectionHeader
+          titleAs="h1"
           title="Feature flags"
           icon={<FiFlag />}
           action={

@@ -132,6 +132,7 @@ export default function SchedulingOfFlag() {
       <Section id="scheduling">
         <SectionHeader
           title="Scheduling"
+          titleAs="h1"
           icon={<AiOutlineClockCircle />}
           description={
             <Typography>

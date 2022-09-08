@@ -11,6 +11,7 @@ const Ol = styled("ol", {
   height: "$cta",
 
   "& li a": {
+    whiteSpace: "nowrap",
     boxSizing: "border-box",
     color: "$hades",
     transition: "border,box-shadow 0.2s",

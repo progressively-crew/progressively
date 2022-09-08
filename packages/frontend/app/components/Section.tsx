@@ -44,7 +44,7 @@ export const SectionHeader = ({
 }: SectionHeaderProps) => {
   const id = useContext(SectionContext);
 
-  const fontSize = titleAs === "h2" ? "earth" : "mars";
+  const fontSize = titleAs === "h2" || titleAs === "h1" ? "earth" : "mars";
 
   return (
     <SectionHeaderWrapper {...props}>

@@ -67,7 +67,7 @@ export default function EnvSettingsPage() {
       subNav={<EnvNavBar projectId={project.uuid} envId={environment.uuid} />}
     >
       <Stack spacing={8}>
-        <Heading as={"h2"} fontSize="earth" icon={<AiOutlineSetting />}>
+        <Heading as={"h1"} fontSize="earth" icon={<AiOutlineSetting />}>
           Settings
         </Heading>
 

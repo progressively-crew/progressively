@@ -175,7 +175,7 @@ export default function FlagById() {
       }
     >
       <Stack spacing={8}>
-        <Heading as={"h2"} fontSize="earth" icon={<FaPowerOff />}>
+        <Heading as={"h1"} fontSize="earth" icon={<FaPowerOff />}>
           Rollout details
         </Heading>
 

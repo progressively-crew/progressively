@@ -24,6 +24,7 @@ const HorizontalNavWrapper = styled("nav", {
     borderBottom: "4px solid transparent",
     transition: "all 0.2s",
     fontSize: "$uranus",
+    whiteSpace: "nowrap",
   },
 
   "& ul li a:hover": {
