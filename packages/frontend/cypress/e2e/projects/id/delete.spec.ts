@@ -57,10 +57,7 @@ describe("/dashboard/projects/[id]/delete", () => {
         });
 
         it("shows the layout of the page", () => {
-          cy.title().should(
-            "eq",
-            "Progressively | Project from seeding | Delete"
-          );
+          cy.title().should("eq", "Progressively | Project from seeding | Delete");
 
           cy.findByRole("heading", {
             name: "Deleting a project",
@@ -70,17 +67,15 @@ describe("/dashboard/projects/[id]/delete", () => {
             "We really want to warn you: if you validate the project suppression, you won't be able to access the Project from seeding project anymore. It includes:"
           ).should("be.visible");
 
-          cy.findByText(
-            "All your feature flags will be turned off and removed"
-          ).should("be.visible");
-
-          cy.findByText("The associated environments will be removed").should(
+          cy.findByText("All your feature flags will be turned off and removed").should(
             "be.visible"
           );
 
-          cy.findByText(
-            "All the stats related to the project will be removed"
-          ).should("be.visible");
+          cy.findByText("The associated environments will be removed").should("be.visible");
+
+          cy.findByText("All the stats related to the project will be removed").should(
+            "be.visible"
+          );
 
           cy.findByRole("button", {
             name: "Yes, delete the project",
@@ -136,8 +131,10 @@ describe("/dashboard/projects/[id]/delete", () => {
         .and("be.visible")
         .and("contain", "The project has been successfully removed.");
 
-      cy.findByText("Project from seeding").should("not.exist");
-      cy.findByText("My new project").should("be.visible");
+      cy.get("main").within(() => {
+        cy.findByText("Project from seeding").should("not.exist");
+        cy.findByText("My new project").should("be.visible");
+      });
     });
   });
 });

@@ -54,13 +54,15 @@ describe("/dashboard/projects/[id]", () => {
           .and("have.attr", "href", "/dashboard/projects/1/environments/create");
 
         /* verify the env list */
-        cy.findByRole("link", { name: "Production" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags");
+        cy.get("main").within(() => {
+          cy.findByRole("link", { name: "Production" })
+            .should("be.visible")
+            .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags");
 
-        cy.findByRole("link", { name: "Developer" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard/projects/1/environments/2/flags");
+          cy.findByRole("link", { name: "Developer" })
+            .should("be.visible")
+            .and("have.attr", "href", "/dashboard/projects/1/environments/2/flags");
+        });
 
         cy.checkA11y();
       });
