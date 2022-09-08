@@ -39,34 +39,14 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/create", () => {
           "Progressively | Project from seeding | Production | Flags | Create"
         );
 
-        cy.findByRole("link", { name: "Projects" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard");
+        cy.verifyBreadcrumbs([
+          ["Projects", "/dashboard"],
+          ["Project from seeding", "/dashboard/projects/1"],
+          ["Production", "/dashboard/projects/1/environments/1/flags"],
+          ["Create a feature flag", "/dashboard/projects/1/environments/1/flags/create"],
+        ]);
 
-        cy.findByRole("link", { name: "Project from seeding" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard/projects/1");
-
-        cy.findByRole("link", { name: "Production" })
-          .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/1/flags"
-          );
-
-        cy.findByRole("link", { name: "Create a feature flag" })
-          .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/1/flags/create"
-          )
-          .and("have.attr", "aria-current", "page");
-
-        cy.findByRole("heading", { name: "Create a feature flag" }).should(
-          "be.visible"
-        );
+        cy.findByRole("heading", { name: "Create a feature flag" }).should("be.visible");
 
         cy.contains(
           "The new feature flag will appear in Project from seeding / Production."
@@ -75,9 +55,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/create", () => {
         cy.findByLabelText("Flag name").should("be.visible");
         cy.findByLabelText("Flag description").should("be.visible");
 
-        cy.findByRole("button", { name: "Create the feature flag" }).should(
-          "be.visible"
-        );
+        cy.findByRole("button", { name: "Create the feature flag" }).should("be.visible");
 
         cy.checkA11y();
       });
@@ -87,14 +65,8 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/create", () => {
 
         cy.get(".error-box")
           .should("have.focus")
-          .and(
-            "contain.text",
-            "The name field is required, make sure to have one."
-          )
-          .and(
-            "contain.text",
-            "The description field is required, make sure to have one."
-          );
+          .and("contain.text", "The name field is required, make sure to have one.")
+          .and("contain.text", "The description field is required, make sure to have one.");
 
         cy.checkA11y();
       });
@@ -111,10 +83,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/create", () => {
         cy.findByRole("link", { name: "My new flag" }).should("be.visible");
         cy.findByText("My new flag description").should("be.visible");
 
-        cy.url().should(
-          "include",
-          "/dashboard/projects/1/environments/1/flags?newFlagId"
-        );
+        cy.url().should("include", "/dashboard/projects/1/environments/1/flags?newFlagId");
 
         cy.checkA11y();
       });

@@ -44,7 +44,9 @@ export class ProjectsService {
         userId,
       },
       include: {
-        project: true,
+        project: {
+          include: { environments: true },
+        },
       },
     });
   }

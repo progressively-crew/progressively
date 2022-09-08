@@ -21,9 +21,7 @@ describe("/dashboard/what-s-your-name", () => {
 
     it("shows an onboarding layout", () => {
       cy.title().should("eq", "Progressively | What's your name?");
-      cy.findByText("Hey, welcome around! What's your name?").should(
-        "be.visible"
-      );
+      cy.findByText("Hey, welcome around! What's your name?").should("be.visible");
 
       cy.findByLabelText("Fullname").should("be.visible");
       cy.findByRole("button", { name: "Set my fullname" }).should("be.visible");
@@ -36,10 +34,7 @@ describe("/dashboard/what-s-your-name", () => {
 
       cy.get(".error-box")
         .should("have.focus")
-        .and(
-          "contain.text",
-          "The fullname field is required, make sure to have one."
-        );
+        .and("contain.text", "The fullname field is required, make sure to have one.");
 
       cy.checkA11y();
     });
@@ -48,7 +43,8 @@ describe("/dashboard/what-s-your-name", () => {
       cy.get("input").type("Linda");
       cy.findByRole("button", { name: "Set my fullname" }).click();
       cy.findByRole("heading", { name: "Welcome aboard" }).should("be.visible");
-      cy.findAllByText("Linda").should("be.visible");
+      cy.findByText("Welcome aboard").should("be.visible");
+      // cy.findAllByText("Linda").should("be.visible");
     });
   });
 });

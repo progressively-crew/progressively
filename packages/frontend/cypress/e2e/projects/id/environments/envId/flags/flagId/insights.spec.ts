@@ -40,21 +40,12 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/insights"
           "Progressively | Project from seeding | Production | New homepage | Insights"
         );
 
-        cy.findByRole("link", { name: "Projects" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard");
-
-        cy.findByRole("link", { name: "Project from seeding" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard/projects/1");
-
-        cy.findByRole("link", { name: "Production" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags");
-
-        cy.findByRole("link", { name: "New homepage" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags/1");
+        cy.verifyBreadcrumbs([
+          ["Projects", "/dashboard"],
+          ["Project from seeding", "/dashboard/projects/1"],
+          ["Production", "/dashboard/projects/1/environments/1/flags"],
+          ["New homepage", "/dashboard/projects/1/environments/1/flags/1", false],
+        ]);
 
         cy.findByRole("link", { name: "Insights" })
           .should("be.visible")
@@ -75,18 +66,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/insights"
           "eq",
           "Progressively | Project from seeding | Production | New footer | Insights"
         );
-
-        cy.findByRole("link", { name: "Projects" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard");
-
-        cy.findByRole("link", { name: "Project from seeding" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard/projects/1");
-
-        cy.findByRole("link", { name: "Production" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags");
 
         cy.findByRole("link", { name: "Insights" })
           .should("be.visible")

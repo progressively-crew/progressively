@@ -1,14 +1,13 @@
 import { Main } from "~/components/Main";
 import { User } from "~/modules/user/types";
-import { UseDropdown } from "~/modules/user/components/UserDropdown";
 import { SkipNavLink } from "~/components/SkipNav";
 import { Container } from "~/components/Container";
-import { Nav } from "~/components/Nav";
 import { Spacer } from "~/components/Spacer";
 import { NavProvider } from "~/components/Breadcrumbs/providers/NavProvider";
 import { InertWhenNavOpened } from "~/components/Breadcrumbs/InertWhenNavOpened";
-import { Menu } from "~/components/Menu";
 import { styled } from "~/stitches.config";
+import { SideNav } from "~/components/SideNav";
+import { Stack } from "~/components/Stack";
 
 export interface DashboardLayoutProps {
   user?: Partial<User>;
@@ -19,26 +18,7 @@ export interface DashboardLayoutProps {
   status?: React.ReactNode;
 }
 
-const PageWrapper = styled("div", {
-  display: "grid",
-  gridTemplateColumns: "auto 1fr",
-  gap: "$spacing$12",
-
-  "@tablet": {
-    flexDirection: "column",
-    gridTemplateColumns: "1fr",
-  },
-
-  variants: {
-    singleColumn: {
-      true: {
-        gridTemplateColumns: "1fr",
-      },
-    },
-  },
-});
-
-const EndSection = styled("div", {
+const OverflowContainer = styled("div", {
   overflow: "hidden", // scroll inside table elements,
   padding: "$spacing$3", // show box shadow when overflowing,
   margin: "-$spacing$3",
@@ -48,15 +28,20 @@ const EndSection = styled("div", {
   },
 });
 
-const HeaderWrapper = styled("div", {
+const BreadCrumbWrapper = styled("div", {
   background: "$apollo",
+});
 
-  variants: {
-    hasBreadcrumbs: {
-      true: { padding: "$spacing$4 0 $spacing$10 0" },
-      false: { padding: "$spacing$10 0 $spacing$10 0" },
-    },
-  },
+const PageWrapper = styled("div", {
+  marginLeft: "300px",
+});
+
+const MenuWrapper = styled("div", {
+  height: "100%",
+  position: "fixed",
+  left: 0,
+  top: 0,
+  width: "300px",
 });
 
 export const DashboardLayout = ({
@@ -69,45 +54,40 @@ export const DashboardLayout = ({
 }: DashboardLayoutProps) => {
   return (
     <NavProvider>
-      <div>
-        <InertWhenNavOpened>
-          <SkipNavLink>Skip to content</SkipNavLink>
+      <InertWhenNavOpened>
+        <SkipNavLink>Skip to content</SkipNavLink>
+      </InertWhenNavOpened>
 
-          <Nav aria-label="General">
-            <Menu hideOnMobile={!breadcrumb} />
+      <MenuWrapper>
+        <SideNav user={user} />
+      </MenuWrapper>
 
-            {user && user.fullname && <UseDropdown user={user as User} />}
-          </Nav>
-        </InertWhenNavOpened>
+      <PageWrapper>
+        <div>
+          <Stack spacing={4}>
+            {breadcrumb && (
+              <div>
+                <BreadCrumbWrapper>
+                  <Container>{breadcrumb}</Container>
+                </BreadCrumbWrapper>
+              </div>
+            )}
 
-        <HeaderWrapper hasBreadcrumbs={Boolean(breadcrumb)}>
-          {breadcrumb && (
-            <Container>
-              {breadcrumb}
-              <Spacer size={4} />
-            </Container>
-          )}
+            <div>
+              <Container>
+                {!breadcrumb && <Spacer size={4} />}
+                <header>{header}</header>
+              </Container>
+            </div>
 
-          <Container>
-            <header>{header}</header>
-          </Container>
-        </HeaderWrapper>
+            {subNav}
+          </Stack>
 
-        <Spacer
-          size={{
-            "@initial": 8,
-            "@tablet": 0,
-            "@mobile": 0,
-          }}
-        />
-
-        <InertWhenNavOpened>
-          <Main>
-            <Container>
-              <PageWrapper singleColumn={!subNav}>
-                {subNav ? <div>{subNav}</div> : null}
-
-                <EndSection>
+          <Spacer size={8} />
+          <InertWhenNavOpened>
+            <Main>
+              <Container>
+                <OverflowContainer>
                   {status && (
                     <>
                       {status}
@@ -116,12 +96,12 @@ export const DashboardLayout = ({
                   )}
 
                   {children}
-                </EndSection>
-              </PageWrapper>
-            </Container>
-          </Main>
-        </InertWhenNavOpened>
-      </div>
+                </OverflowContainer>
+              </Container>
+            </Main>
+          </InertWhenNavOpened>
+        </div>
+      </PageWrapper>
     </NavProvider>
   );
 };

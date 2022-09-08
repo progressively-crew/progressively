@@ -15,22 +15,19 @@ const HeadingWrapper = styled("div", {
   maxWidth: "80ch",
 });
 
-export const Header = ({
-  title,
-  description,
-  startAction,
-  tagline,
-}: HeaderProps) => {
+export const Header = ({ title, description, startAction, tagline }: HeaderProps) => {
   return (
-    <div>
-      <HeadingWrapper>
-        <H1>{title}</H1>
-        {tagline}
-      </HeadingWrapper>
+    <HStack justifyContent="space-between">
+      <div>
+        <HeadingWrapper>
+          <H1 size="mars">{title}</H1>
+          {tagline}
+        </HeadingWrapper>
 
-      {description}
+        {description}
+      </div>
 
       {startAction && <HStack spacing={6}>{startAction}</HStack>}
-    </div>
+    </HStack>
   );
 };

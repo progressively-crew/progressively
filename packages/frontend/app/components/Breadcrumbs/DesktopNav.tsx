@@ -8,8 +8,10 @@ const Ol = styled("ol", {
   fontFamily: "$default",
   color: "$hades",
   display: "flex",
+  height: "$cta",
 
   "& li a": {
+    boxSizing: "border-box",
     color: "$hades",
     transition: "border,box-shadow 0.2s",
   },
@@ -40,7 +42,7 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
   const lastItemIndex = crumbs.length - 1;
 
   return (
-    <nav aria-label="Breadcrumb">
+    <nav aria-label="Breadcrumbs">
       <Ol>
         {crumbs.map((crumb, index) => {
           const currentPage = index === lastItemIndex;
@@ -48,14 +50,9 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
           return (
             <li key={crumb.link}>
               <Link
-                aria-current={
-                  crumb.forceNotCurrent
-                    ? undefined
-                    : currentPage
-                    ? "page"
-                    : undefined
-                }
+                aria-current={crumb.forceNotCurrent ? undefined : currentPage ? "page" : undefined}
                 to={crumb.link}
+                fontSize="uranus"
               >
                 <HStack spacing={2}>
                   {crumb.icon}

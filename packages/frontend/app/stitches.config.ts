@@ -55,6 +55,7 @@ export const colors = {
   // New colors
   //primaries
   hades: "#0E061F",
+  hadesLight: "#231b36",
   nemesis: "#4B37A9",
   nemesisLight: "#e3e0f9",
 
@@ -98,47 +99,37 @@ export const mapTokenToVariant = (
       [cssAttribute]: prefix ? `${prefix}$${key}` : `$${key}`,
     };
 
-    computedVariant[key] = pseudoElement
-      ? { [`&:${pseudoElement}`]: rule }
-      : rule;
+    computedVariant[key] = pseudoElement ? { [`&:${pseudoElement}`]: rule } : rule;
   }
 
   return computedVariant;
 };
 
-export const {
-  styled,
-  css,
-  globalCss,
-  keyframes,
-  getCssText,
-  theme,
-  createTheme,
-  config,
-} = createStitches({
-  media: {
-    tablet: `(max-width: ${1100 / 16}rem)`,
-    mobile: `(max-width: ${550 / 16}rem)`,
-  },
-  theme: {
-    colors,
-    sizes: {
-      container: "1260px",
-      cardHeight: "160px",
-      notAuthenticatedCardWidth: "400px",
-      cta: "48px",
-      ctaSmall: "40px",
-      emptyStateIconHeight: "160px",
-      avatar: "40px",
+export const { styled, css, globalCss, keyframes, getCssText, theme, createTheme, config } =
+  createStitches({
+    media: {
+      tablet: `(max-width: ${1100 / 16}rem)`,
+      mobile: `(max-width: ${550 / 16}rem)`,
     },
-    fontSizes,
-    fonts,
-    fontWeights,
-    lineHeights,
-    borderRadius: {
-      regular: "8px",
-      small: "4px",
+    theme: {
+      colors,
+      sizes: {
+        container: "1260px",
+        cardHeight: "160px",
+        notAuthenticatedCardWidth: "400px",
+        cta: "48px",
+        ctaSmall: "40px",
+        emptyStateIconHeight: "160px",
+        avatar: "40px",
+      },
+      fontSizes,
+      fonts,
+      fontWeights,
+      lineHeights,
+      borderRadius: {
+        regular: "8px",
+        small: "4px",
+      },
+      spacing,
     },
-    spacing,
-  },
-});
+  });
