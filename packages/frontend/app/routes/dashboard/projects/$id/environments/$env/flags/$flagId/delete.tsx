@@ -54,7 +54,7 @@ export const action: ActionFunction = async ({
   }
 
   return redirect(
-    `/dashboard/projects/${projectId}/environments/${envId}/flags?flagRemoved=true#flag-removed`
+    `/dashboard/projects/${projectId}/environments/${envId}?flagRemoved=true#flag-removed`
   );
 };
 
@@ -78,7 +78,7 @@ export default function DeleteFlagPage() {
       label: project.name,
     },
     {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags`,
+      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}`,
       label: environment.name,
     },
     {
@@ -97,10 +97,7 @@ export default function DeleteFlagPage() {
       user={user}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={<Header title="Deleting a feature flag" />}
-      error={
-        data?.errors &&
-        data.errors.backendError && <ErrorBox list={data.errors} />
-      }
+      error={data?.errors && data.errors.backendError && <ErrorBox list={data.errors} />}
       cancelAction={
         <Button
           variant="secondary"
@@ -126,9 +123,8 @@ export default function DeleteFlagPage() {
         list={warnings}
         title={
           <>
-            We really want to warn you: if you validate the flag suppression,
-            you {`won't`} be able to access the {currentFlag.name} flag anymore.
-            It includes:
+            We really want to warn you: if you validate the flag suppression, you {`won't`} be able
+            to access the {currentFlag.name} flag anymore. It includes:
           </>
         }
       />

@@ -12,7 +12,7 @@ export const EnvNavBar = ({ projectId, envId }: EnvNavBarProps) => {
 
   return (
     <HorizontalNav label={`Environment related`}>
-      <NavItem to={`${rootEnvPath}/flags`} icon={<FiFlag />}>
+      <NavItem to={`${rootEnvPath}`} icon={<FiFlag />}>
         Feature flags
       </NavItem>
 

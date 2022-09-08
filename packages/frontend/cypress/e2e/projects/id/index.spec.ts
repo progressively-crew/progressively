@@ -57,11 +57,11 @@ describe("/dashboard/projects/[id]", () => {
         cy.get("main").within(() => {
           cy.findByRole("link", { name: "Production" })
             .should("be.visible")
-            .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags");
+            .and("have.attr", "href", "/dashboard/projects/1/environments/1");
 
           cy.findByRole("link", { name: "Developer" })
             .should("be.visible")
-            .and("have.attr", "href", "/dashboard/projects/1/environments/2/flags");
+            .and("have.attr", "href", "/dashboard/projects/1/environments/2");
         });
 
         cy.checkA11y();

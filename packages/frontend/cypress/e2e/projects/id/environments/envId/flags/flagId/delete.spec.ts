@@ -1,4 +1,4 @@
-describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/delete", () => {
+describe.only("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/delete", () => {
   before(cy.seed);
   after(cy.cleanupDb);
 
@@ -77,7 +77,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/delete", 
           name: "Yes, delete the flag",
         }).click();
 
-        cy.url().should("contain", "/dashboard/projects/1/environments/1/flags?flagRemoved=true");
+        cy.url().should("contain", "/dashboard/projects/1/environments/1?flagRemoved=true");
 
         // Delete the second flag
         cy.visit("/dashboard/projects/1/environments/1/flags/2/delete");
@@ -85,7 +85,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/delete", 
           name: "Yes, delete the flag",
         }).click();
 
-        cy.url().should("contain", "/dashboard/projects/1/environments/1/flags?flagRemoved=true");
+        cy.url().should("contain", "/dashboard/projects/1/environments/1?flagRemoved=true");
 
         cy.get(".success-box")
           .should("have.focus")

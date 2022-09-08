@@ -8,12 +8,7 @@ import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
-import {
-  useActionData,
-  Form,
-  useTransition,
-  useParams,
-} from "@remix-run/react";
+import { useActionData, Form, useTransition, useParams } from "@remix-run/react";
 import { deleteSchedule } from "~/modules/scheduling/services/deleteSchedule";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { useUser } from "~/modules/user/contexts/useUser";
@@ -84,7 +79,7 @@ export default function DeleteSchedulePage() {
       label: project.name,
     },
     {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags`,
+      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}`,
       label: environment.name,
     },
     {
@@ -107,10 +102,7 @@ export default function DeleteSchedulePage() {
       user={user}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={<Header title={`Deleting a schedule`} />}
-      error={
-        data?.errors &&
-        data.errors.backendError && <ErrorBox list={data.errors} />
-      }
+      error={data?.errors && data.errors.backendError && <ErrorBox list={data.errors} />}
       cancelAction={
         <Button
           variant="secondary"
@@ -136,8 +128,8 @@ export default function DeleteSchedulePage() {
         list={warnings}
         title={
           <>
-            We really want to warn you: if you validate the schedule
-            suppression, it won't apply anymore.
+            We really want to warn you: if you validate the schedule suppression, it won't apply
+            anymore.
           </>
         }
       />

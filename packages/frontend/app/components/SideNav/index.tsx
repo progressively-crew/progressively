@@ -24,7 +24,7 @@ const SideNavWrapper = styled("div", {
     marginTop: "$spacing$2",
   },
 
-  "& nav a": {
+  "& nav ul a": {
     display: "flex",
     fontSize: "$uranus",
     color: "$apollo",
@@ -67,9 +67,7 @@ export const SideNav = ({ user }: SideNavProps) => {
               <ul>
                 {up.project.environments.map((env) => (
                   <li key={`sidenav-env-${env.uuid}`}>
-                    <NavLink
-                      to={`/dashboard/projects/${up.projectId}/environments/${env.uuid}/flags`}
-                    >
+                    <NavLink to={`/dashboard/projects/${up.projectId}/environments/${env.uuid}`}>
                       {env.name}
                     </NavLink>
                   </li>

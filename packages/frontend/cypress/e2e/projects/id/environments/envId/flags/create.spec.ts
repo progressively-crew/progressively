@@ -42,7 +42,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/create", () => {
         cy.verifyBreadcrumbs([
           ["Projects", "/dashboard"],
           ["Project from seeding", "/dashboard/projects/1"],
-          ["Production", "/dashboard/projects/1/environments/1/flags"],
+          ["Production", "/dashboard/projects/1/environments/1"],
           ["Create a feature flag", "/dashboard/projects/1/environments/1/flags/create"],
         ]);
 
@@ -83,7 +83,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/create", () => {
         cy.findByRole("link", { name: "My new flag" }).should("be.visible");
         cy.findByText("My new flag description").should("be.visible");
 
-        cy.url().should("include", "/dashboard/projects/1/environments/1/flags?newFlagId");
+        cy.url().should("include", "/dashboard/projects/1/environments/1?newFlagId");
 
         cy.checkA11y();
       });

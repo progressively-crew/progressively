@@ -56,9 +56,7 @@ export const action: ActionFunction = async ({
     return { errors: { backendError: "An error ocurred" } };
   }
 
-  return redirect(
-    `/dashboard/projects/${projectId}?envRemoved=true#env-removed`
-  );
+  return redirect(`/dashboard/projects/${projectId}?envRemoved=true#env-removed`);
 };
 
 export default function DeleteEnvPage() {
@@ -82,7 +80,7 @@ export default function DeleteEnvPage() {
       label: project.name,
     },
     {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags`,
+      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}`,
       label: environment.name,
     },
     {
@@ -101,8 +99,7 @@ export default function DeleteEnvPage() {
         <Section>
           <figure>
             <Typography as="figcaption">
-              If you think this is an error, make sure to contact one of the
-              project administrators:
+              If you think this is an error, make sure to contact one of the project administrators:
             </Typography>
 
             <Ul>
@@ -130,10 +127,7 @@ export default function DeleteEnvPage() {
       user={user}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={<Header title="Deleting an environment" />}
-      error={
-        data?.errors &&
-        data.errors.backendError && <ErrorBox list={data.errors} />
-      }
+      error={data?.errors && data.errors.backendError && <ErrorBox list={data.errors} />}
       cancelAction={
         <Button
           variant="secondary"
@@ -159,9 +153,8 @@ export default function DeleteEnvPage() {
         list={warnings}
         title={
           <>
-            We really want to warn you: if you validate the environment
-            suppression, you {`won't`} be able to access the {environment.name}{" "}
-            environment anymore. It includes:
+            We really want to warn you: if you validate the environment suppression, you {`won't`}{" "}
+            be able to access the {environment.name} environment anymore. It includes:
           </>
         }
       />

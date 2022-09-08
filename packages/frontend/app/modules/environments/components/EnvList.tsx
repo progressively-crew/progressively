@@ -21,10 +21,7 @@ const EnvRow = ({ env, projectId }: EnvRowProps) => {
   return (
     <Tr onClick={() => linkRef.current?.click()} isClickable={isHydrated}>
       <td>
-        <Link
-          ref={linkRef}
-          to={`/dashboard/projects/${projectId}/environments/${env.uuid}/flags`}
-        >
+        <Link ref={linkRef} to={`/dashboard/projects/${projectId}/environments/${env.uuid}`}>
           {env.name}
         </Link>
       </td>

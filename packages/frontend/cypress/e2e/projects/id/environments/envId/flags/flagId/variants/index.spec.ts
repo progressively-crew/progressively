@@ -68,7 +68,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants"
         cy.verifyBreadcrumbs([
           ["Projects", "/dashboard"],
           ["Project from seeding", "/dashboard/projects/1"],
-          ["Production", "/dashboard/projects/1/environments/1/flags"],
+          ["Production", "/dashboard/projects/1/environments/1"],
           ["New homepage", "/dashboard/projects/1/environments/1/flags/1/variants"],
         ]);
 
@@ -94,7 +94,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants"
         cy.verifyBreadcrumbs([
           ["Projects", "/dashboard"],
           ["Project from seeding", "/dashboard/projects/1"],
-          ["Production", "/dashboard/projects/1/environments/1/flags"],
+          ["Production", "/dashboard/projects/1/environments/1"],
           ["With multivariate", "/dashboard/projects/1/environments/1/flags/4/variants"],
         ]);
 
