@@ -79,6 +79,16 @@ export const SideNav = ({ user }: SideNavProps) => {
   const { projects } = useProjects();
   const location = useLocation();
 
+  const isProjectActive = ({ isActive }: { isActive: boolean }) => {
+    // When creating an env, we are still in a page taking part of a project
+    const isCreateEnvPage = location.pathname.includes("/environments/create");
+
+    // When hitting the /environments, we defer the active to the child link
+    const isEnvPage = location.pathname.includes(`/environments`);
+
+    return isActive && (isCreateEnvPage || !isEnvPage) ? "active" : undefined;
+  };
+
   return (
     <SideNavWrapper>
       <nav aria-label="Main navigation">
@@ -88,12 +98,7 @@ export const SideNav = ({ user }: SideNavProps) => {
         <ul>
           {projects.map((up) => (
             <li key={`sidenav-project-${up.projectId}`}>
-              <NavLink
-                to={`/dashboard/projects/${up.projectId}`}
-                className={({ isActive }) =>
-                  isActive && !location.pathname.includes(`/environments`) ? "active" : undefined
-                }
-              >
+              <NavLink to={`/dashboard/projects/${up.projectId}`} className={isProjectActive}>
                 <HStack spacing={3}>
                   <MdOutlineGroupWork aria-hidden />
                   <span>{up.project.name}</span>
