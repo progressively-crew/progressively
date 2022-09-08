@@ -150,17 +150,18 @@ export default function SchedulingOfFlag() {
         />
 
         {flagEnv.variants.length > 0 && (
-          <WarningBox
-            title={
-              <>
-                Only flag without variants are concerned by the scheduling. However, multi variants
-                scheduling may come in the future.
-              </>
-            }
-          />
+          <>
+            <WarningBox
+              title={
+                <>
+                  Only flag without variants are concerned by the scheduling. However, multi
+                  variants scheduling may come in the future.
+                </>
+              }
+            />
+            <Spacer size={4} />
+          </>
         )}
-
-        <Spacer size={4} />
 
         {!hasScheduling && (
           <EmptyState

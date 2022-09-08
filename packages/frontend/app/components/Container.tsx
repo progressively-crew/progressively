@@ -5,7 +5,7 @@ export const Container = styled("div", {
   paddingRight: "300px", // side nav width
   maxWidth: "140ch",
 
-  "@tablet": {
+  "@desktop": {
     padding: "0 $spacing$12",
   },
 

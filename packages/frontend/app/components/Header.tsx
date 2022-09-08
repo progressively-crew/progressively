@@ -13,6 +13,7 @@ const HeadingWrapper = styled("div", {
   display: "flex",
   flexDirection: "column-reverse",
   maxWidth: "80ch",
+  padding: "$spacing$4 0",
 });
 
 export const Header = ({ title, description, startAction, tagline }: HeaderProps) => {
