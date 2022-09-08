@@ -34,44 +34,22 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags", () => {
       });
 
       it("should show the empty state when there are no flags", () => {
-        cy.title().should(
-          "eq",
-          "Progressively | Project from seeding | Developer | Flags"
-        );
+        cy.title().should("eq", "Progressively | Project from seeding | Developer | Flags");
 
-        cy.findByRole("link", { name: "Projects" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard");
-
-        cy.findByRole("link", { name: "Project from seeding" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard/projects/1");
-
-        cy.findByRole("link", { name: "Developer" })
-          .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/2/flags"
-          )
-          .and("have.attr", "aria-current", "page");
+        cy.verifyBreadcrumbs([
+          ["Projects", "/dashboard"],
+          ["Project from seeding", "/dashboard/projects/1"],
+          ["Developer", "/dashboard/projects/1/environments/2/flags"],
+        ]);
 
         cy.findByRole("heading", { name: "Developer" }).should("be.visible");
-        cy.findByRole("heading", { name: "No flags found" }).should(
-          "be.visible"
-        );
+        cy.findByRole("heading", { name: "No flags found" }).should("be.visible");
 
-        cy.findByText("There are no flags yet on this environment.").should(
-          "be.visible"
-        );
+        cy.findByText("There are no flags yet on this environment.").should("be.visible");
 
         cy.findByRole("link", { name: "Create a feature flag" })
           .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/2/flags/create"
-          );
+          .and("have.attr", "href", "/dashboard/projects/1/environments/2/flags/create");
       });
     });
 
@@ -83,27 +61,13 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags", () => {
       });
 
       it("shows the layout", () => {
-        cy.title().should(
-          "eq",
-          "Progressively | Project from seeding | Production | Flags"
-        );
+        cy.title().should("eq", "Progressively | Project from seeding | Production | Flags");
 
-        cy.findByRole("link", { name: "Projects" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard");
-
-        cy.findByRole("link", { name: "Project from seeding" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard/projects/1");
-
-        cy.findByRole("link", { name: "Production" })
-          .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/1/flags"
-          )
-          .and("have.attr", "aria-current", "page");
+        cy.verifyBreadcrumbs([
+          ["Projects", "/dashboard"],
+          ["Project from seeding", "/dashboard/projects/1"],
+          ["Production", "/dashboard/projects/1/environments/1/flags"],
+        ]);
 
         cy.findByRole("heading", { name: "Production" }).should("be.visible");
         cy.findByRole("heading", { name: "Feature flags" }).should("exist");
@@ -111,11 +75,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags", () => {
         cy.findByRole("link", { name: "Feature flags" }).should("be.visible");
         cy.findByRole("link", { name: "Create a feature flag" })
           .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/1/flags/create"
-          );
+          .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags/create");
 
         /* verify the flag list */
         cy.findByRole("link", { name: "New homepage" }).should("be.visible");

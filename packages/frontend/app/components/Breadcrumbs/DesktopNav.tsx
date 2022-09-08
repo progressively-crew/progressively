@@ -42,7 +42,7 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
   const lastItemIndex = crumbs.length - 1;
 
   return (
-    <nav aria-label="Breadcrumb">
+    <nav aria-label="Breadcrumbs">
       <Ol>
         {crumbs.map((crumb, index) => {
           const currentPage = index === lastItemIndex;

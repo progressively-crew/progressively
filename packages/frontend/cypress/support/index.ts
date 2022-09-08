@@ -43,6 +43,8 @@ declare global {
        * Checks if a route is well protected and can't be accessed without being logged
        */
       checkProtectedRoute(): void;
+
+      verifyBreadcrumbs(crumbs: Array<any>): void;
     }
   }
 }

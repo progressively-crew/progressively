@@ -34,37 +34,23 @@ describe("/dashboard/projects/[id]/environments/create", () => {
       });
 
       it("shows the create environment layout", () => {
-        cy.title().should(
-          "eq",
-          "Progressively | Project from seeding | Create an environment"
-        );
+        cy.title().should("eq", "Progressively | Project from seeding | Create an environment");
 
-        cy.findByRole("link", { name: "Projects" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard");
+        cy.verifyBreadcrumbs([
+          ["Projects", "/dashboard"],
+          ["Project from seeding", "/dashboard/projects/1"],
+          ["Create an environment", "/dashboard/projects/1/environments/create"],
+        ]);
 
-        cy.findByRole("link", { name: "Project from seeding" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard/projects/1");
+        cy.findByRole("heading", { name: "Create an environment" }).should("be.visible");
 
-        cy.findByRole("link", { name: "Create an environment" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard/projects/1/environments/create")
-          .and("have.attr", "aria-current", "page");
-
-        cy.findByRole("heading", { name: "Create an environment" }).should(
+        cy.contains("The new environment will appear in Project from seeding.").should(
           "be.visible"
         );
-
-        cy.contains(
-          "The new environment will appear in Project from seeding."
-        ).should("be.visible");
 
         cy.findByLabelText("Environment name").should("be.visible");
 
-        cy.findByRole("button", { name: "Create the environment" }).should(
-          "be.visible"
-        );
+        cy.findByRole("button", { name: "Create the environment" }).should("be.visible");
 
         cy.checkA11y();
       });
@@ -74,10 +60,7 @@ describe("/dashboard/projects/[id]/environments/create", () => {
 
         cy.get(".error-box")
           .should("have.focus")
-          .and(
-            "contain.text",
-            "The name field is required, make sure to have one."
-          );
+          .and("contain.text", "The name field is required, make sure to have one.");
 
         cy.checkA11y();
       });
@@ -88,10 +71,7 @@ describe("/dashboard/projects/[id]/environments/create", () => {
 
         cy.get(".success-box")
           .should("have.focus")
-          .and(
-            "contain.text",
-            "The environment has been successfully created."
-          );
+          .and("contain.text", "The environment has been successfully created.");
 
         cy.findByRole("link", { name: "My new env" }).should("be.visible");
 

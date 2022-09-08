@@ -65,22 +65,12 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants"
           "Progressively | Project from seeding | Production | Flags | New homepage | Variants"
         );
 
-        cy.findByRole("link", { name: "Projects" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard");
-
-        cy.findByRole("link", { name: "Project from seeding" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard/projects/1");
-
-        cy.findByRole("link", { name: "Production" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags");
-
-        cy.findByRole("link", { name: "New homepage" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags/1/variants")
-          .and("have.attr", "aria-current", "page");
+        cy.verifyBreadcrumbs([
+          ["Projects", "/dashboard"],
+          ["Project from seeding", "/dashboard/projects/1"],
+          ["Production", "/dashboard/projects/1/environments/1/flags"],
+          ["New homepage", "/dashboard/projects/1/environments/1/flags/1"],
+        ]);
 
         cy.findByRole("heading", { name: "New homepage" }).should("be.visible");
         cy.findByRole("heading", { name: "Variants" }).should("be.visible");
@@ -101,22 +91,13 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants"
           "Progressively | Project from seeding | Production | Flags | With multivariate | Variants"
         );
 
-        cy.findByRole("link", { name: "Projects" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard");
-
-        cy.findByRole("link", { name: "Project from seeding" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard/projects/1");
-
-        cy.findByRole("link", { name: "Production" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags");
-
-        cy.findByRole("link", { name: "With multivariate" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags/4/variants")
-          .and("have.attr", "aria-current", "page");
+        cy.verifyBreadcrumbs([
+          ["Projects", "/dashboard"],
+          ["Project from seeding", "/dashboard/projects/1"],
+          ["Production", "/dashboard/projects/1/environments/1/flags"],
+          ["New homepage", "/dashboard/projects/1/environments/1/flags/1"],
+          ["With multivariate", "/dashboard/projects/1/environments/1/flags/4/variants"],
+        ]);
 
         cy.findByRole("heading", { name: "With multivariate" }).should("be.visible");
         cy.findByRole("heading", { name: "Variants" }).should("be.visible");

@@ -40,45 +40,20 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
           "Progressively | Project from seeding | Production | Flags | New homepage | Scheduling"
         );
 
-        cy.findByRole("link", { name: "Projects" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard");
-
-        cy.findByRole("link", { name: "Project from seeding" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard/projects/1");
-
-        cy.findByRole("link", { name: "Production" })
-          .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/1/flags"
-          );
-
-        cy.findByRole("link", { name: "New homepage" })
-          .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/1/flags/1/scheduling"
-          );
+        cy.verifyBreadcrumbs([
+          ["Projects", "/dashboard"],
+          ["Project from seeding", "/dashboard/projects/1"],
+          ["Production", "/dashboard/projects/1/environments/1/flags"],
+          ["New homepage", "/dashboard/projects/1/environments/1/flags/1", false],
+        ]);
 
         cy.findByRole("link", { name: "Insights" })
           .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/1/flags/1/insights"
-          );
+          .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags/1/insights");
 
         cy.findByRole("link", { name: "Scheduling" })
           .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/1/flags/1/scheduling"
-          )
+          .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags/1/scheduling")
           .and("have.attr", "aria-current", "page");
 
         cy.findByRole("heading", { name: "New homepage" }).should("be.visible");
@@ -106,36 +81,22 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
 
         cy.findByRole("link", { name: "Production" })
           .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/1/flags"
-          );
+          .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags");
 
         cy.findByRole("link", { name: "Insights" })
           .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/1/flags/2/insights"
-          );
+          .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags/2/insights");
 
         cy.findByRole("link", { name: "Scheduling" })
           .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/1/flags/2/scheduling"
-          )
+          .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags/2/scheduling")
           .and("have.attr", "aria-current", "page");
 
         cy.findByRole("heading", { name: "New footer" }).should("be.visible");
         cy.findByRole("heading", { name: "Scheduling" }).should("be.visible");
 
         cy.findByText("No schedule found").should("be.visible");
-        cy.findByText("There are no scheduling for this flag.").should(
-          "be.visible"
-        );
+        cy.findByText("There are no scheduling for this flag.").should("be.visible");
 
         cy.checkA11y();
       });

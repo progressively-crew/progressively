@@ -34,18 +34,12 @@ describe("/dashboard/projects/[id]", () => {
       it("shows the project layout", () => {
         cy.title().should("eq", "Progressively | Project from seeding");
 
-        cy.findByRole("link", { name: "Projects" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard");
+        cy.verifyBreadcrumbs([
+          ["Projects", "/dashboard"],
+          ["Project from seeding", "/dashboard/projects/1"],
+        ]);
 
-        cy.findByRole("link", { name: "Project from seeding" })
-          .should("be.visible")
-          .and("have.attr", "href", "/dashboard/projects/1")
-          .and("have.attr", "aria-current", "page");
-
-        cy.findByRole("heading", { name: "Project from seeding" }).should(
-          "be.visible"
-        );
+        cy.findByRole("heading", { name: "Project from seeding" }).should("be.visible");
 
         cy.findByRole("link", { name: "Settings" })
           .should("be.visible")
@@ -57,28 +51,16 @@ describe("/dashboard/projects/[id]", () => {
 
         cy.findByRole("link", { name: "Create an environment" })
           .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/create"
-          );
+          .and("have.attr", "href", "/dashboard/projects/1/environments/create");
 
         /* verify the env list */
         cy.findByRole("link", { name: "Production" })
           .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/1/flags"
-          );
+          .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags");
 
         cy.findByRole("link", { name: "Developer" })
           .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/2/flags"
-          );
+          .and("have.attr", "href", "/dashboard/projects/1/environments/2/flags");
 
         cy.checkA11y();
       });
