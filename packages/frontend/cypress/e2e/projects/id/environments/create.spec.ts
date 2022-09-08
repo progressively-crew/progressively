@@ -73,7 +73,9 @@ describe("/dashboard/projects/[id]/environments/create", () => {
           .should("have.focus")
           .and("contain.text", "The environment has been successfully created.");
 
-        cy.findByRole("link", { name: "My new env" }).should("be.visible");
+        cy.get("main").within(() => {
+          cy.findByRole("link", { name: "My new env" }).should("be.visible");
+        });
 
         cy.url().should("include", "/dashboard/projects/1?newEnvId");
         cy.checkA11y();
