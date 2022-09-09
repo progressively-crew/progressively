@@ -4,6 +4,6 @@
   "require": {
     "ext-curl": "*",
     "ext-json": "*",
-    "progressively/sdk-php": "dev-fix-packagist"
+    "progressively/sdk-php": "dev-master"
   }
 }
