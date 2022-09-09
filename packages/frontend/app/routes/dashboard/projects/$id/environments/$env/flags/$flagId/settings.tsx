@@ -14,7 +14,6 @@ import { HideMobile } from "~/components/HideMobile";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { MetaFunction, ActionFunction } from "@remix-run/node";
 import { Card, CardContent } from "~/components/Card";
-import { Heading } from "~/components/Heading";
 import { Stack } from "~/components/Stack";
 import { TagLine } from "~/components/Tagline";
 import { FiFlag } from "react-icons/fi";
@@ -29,6 +28,7 @@ import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
+import { PageTitle } from "~/components/PageTitle";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -100,11 +100,9 @@ export default function FlagSettingPage() {
         <FlagMenu projectId={project.uuid} envId={environment.uuid} flagId={currentFlag.uuid} />
       }
     >
-      <Stack spacing={8}>
-        <Heading as={"h2"} fontSize="earth" icon={<AiOutlineSetting />}>
-          Settings
-        </Heading>
+      <PageTitle value="Settings" icon={<AiOutlineSetting />} />
 
+      <Stack spacing={8}>
         <Card>
           <CardContent>
             <Section id="general">

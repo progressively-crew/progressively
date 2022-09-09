@@ -2,7 +2,7 @@ import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { Header } from "~/components/Header";
-import { Section, SectionHeader } from "~/components/Section";
+import { Section } from "~/components/Section";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { AiOutlineSetting } from "react-icons/ai";
 import { FiLayers } from "react-icons/fi";
@@ -19,6 +19,7 @@ import { MdOutlineGroupWork } from "react-icons/md";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
+import { PageTitle } from "~/components/PageTitle";
 
 export const meta: MetaFunction = ({ parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -60,67 +61,46 @@ export default function ProjectDetailPage() {
       }
       subNav={
         <HorizontalNav label={`Project related`}>
-          <NavItem
-            to={`/dashboard/projects/${project.uuid}`}
-            icon={<FiLayers />}
-          >
+          <NavItem to={`/dashboard/projects/${project.uuid}`} icon={<FiLayers />}>
             Environments
           </NavItem>
 
-          <NavItem
-            to={`/dashboard/projects/${project.uuid}/settings`}
-            icon={<AiOutlineSetting />}
-          >
+          <NavItem to={`/dashboard/projects/${project.uuid}/settings`} icon={<AiOutlineSetting />}>
             Settings
           </NavItem>
         </HorizontalNav>
       }
       status={
         newEnvId ? (
-          <SuccessBox id="env-added">
-            The environment has been successfully created.
-          </SuccessBox>
+          <SuccessBox id="env-added">The environment has been successfully created.</SuccessBox>
         ) : envRemoved ? (
-          <SuccessBox id="env-removed">
-            The environment has been successfully deleted.
-          </SuccessBox>
+          <SuccessBox id="env-removed">The environment has been successfully deleted.</SuccessBox>
         ) : null
       }
     >
-      <Section aria-labelledby="list-env-title" id="list-env-title">
-        <SectionHeader
-          title="Environments"
-          icon={<FiLayers />}
-          action={
-            hasEnvironments && (
-              <CreateButton
-                to={`/dashboard/projects/${project.uuid}/environments/create`}
-              >
-                Create an environment
-              </CreateButton>
-            )
-          }
-        />
+      <PageTitle
+        value="Environments"
+        icon={<FiLayers />}
+        action={
+          hasEnvironments && (
+            <CreateButton to={`/dashboard/projects/${project.uuid}/environments/create`}>
+              Create an environment
+            </CreateButton>
+          )
+        }
+      />
 
+      <Section aria-label="List of environments">
         {hasEnvironments ? (
           <Card>
-            <EnvList
-              environments={project.environments}
-              projectId={project.uuid}
-            />
+            <EnvList environments={project.environments} projectId={project.uuid} />
           </Card>
         ) : (
           <EmptyState
             title="No environments found"
-            description={
-              <Typography>
-                There are no environments yet on this project.
-              </Typography>
-            }
+            description={<Typography>There are no environments yet on this project.</Typography>}
             action={
-              <CreateButton
-                to={`/dashboard/projects/${project.uuid}/environments/create`}
-              >
+              <CreateButton to={`/dashboard/projects/${project.uuid}/environments/create`}>
                 Create an environment
               </CreateButton>
             }
