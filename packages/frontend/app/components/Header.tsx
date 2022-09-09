@@ -13,6 +13,7 @@ const HeadingWrapper = styled("div", {
   display: "flex",
   flexDirection: "column-reverse",
   maxWidth: "80ch",
+  padding: "$spacing$4 0",
 });
 
 export const Header = ({ title, description, startAction, tagline }: HeaderProps) => {
@@ -20,7 +21,7 @@ export const Header = ({ title, description, startAction, tagline }: HeaderProps
     <HStack justifyContent="space-between">
       <div>
         <HeadingWrapper>
-          <H1 size="mars">{title}</H1>
+          <H1 size="earth">{title}</H1>
           {tagline}
         </HeadingWrapper>
 

@@ -21,7 +21,6 @@ import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
-import { Heading } from "~/components/Heading";
 import { Stack } from "~/components/Stack";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
 import { BarChart } from "~/components/Charts/BarChart";
@@ -31,6 +30,7 @@ import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { HStack } from "~/components/HStack";
 import { EmptyState } from "~/components/EmptyState";
 import { Typography } from "~/components/Typography";
+import { PageTitle } from "~/components/PageTitle";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -195,11 +195,9 @@ export default function FlagInsights() {
         <FlagMenu projectId={project.uuid} envId={environment.uuid} flagId={currentFlag.uuid} />
       }
     >
-      <Stack spacing={8}>
-        <Heading as={"h2"} fontSize="earth" icon={<AiOutlineBarChart />}>
-          Insights
-        </Heading>
+      <PageTitle value="Insights" icon={<AiOutlineBarChart />} />
 
+      <Stack spacing={8}>
         <Card>
           <CardContent>
             <Form action=".">

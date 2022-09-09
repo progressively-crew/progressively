@@ -13,7 +13,8 @@ import { EmptyState } from "~/components/EmptyState";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Header } from "~/components/Header";
 import { HStack } from "~/components/HStack";
-import { Section, SectionHeader } from "~/components/Section";
+import { PageTitle } from "~/components/PageTitle";
+import { Section } from "~/components/Section";
 import { Spacer } from "~/components/Spacer";
 import { Stack } from "~/components/Stack";
 import { TagLine } from "~/components/Tagline";
@@ -180,17 +181,15 @@ export default function VariantsOfFlag() {
         ) : null
       }
     >
-      <Section id="variants">
-        <SectionHeader
-          title="Variants"
-          icon={<AiOutlineAppstore />}
-          description={
-            <Typography>
-              The variants that will be shown to a portion of your population.
-            </Typography>
-          }
-        />
+      <PageTitle
+        value="Variants"
+        icon={<AiOutlineAppstore />}
+        description={
+          <Typography>The variants that will be shown to a portion of your population.</Typography>
+        }
+      />
 
+      <Section aria-label="List of variants">
         {!hasVariants && (
           <EmptyState
             title="No variants found"

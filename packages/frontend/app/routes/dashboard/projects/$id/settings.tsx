@@ -21,7 +21,6 @@ import { HideMobile } from "~/components/HideMobile";
 import { MetaFunction, ActionFunction } from "@remix-run/node";
 import { useActionData, useTransition, Form } from "@remix-run/react";
 import { Card, CardContent } from "~/components/Card";
-import { Heading } from "~/components/Heading";
 import { TagLine } from "~/components/Tagline";
 import { MdOutlineGroupWork } from "react-icons/md";
 import { HStack } from "~/components/HStack";
@@ -29,6 +28,7 @@ import { CreateButton } from "~/components/Buttons/CreateButton";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
+import { PageTitle } from "~/components/PageTitle";
 
 export const meta: MetaFunction = ({ parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -44,10 +44,7 @@ interface ActionData {
   removedCount?: number;
 }
 
-export const action: ActionFunction = async ({
-  request,
-  params,
-}): Promise<ActionData | null> => {
+export const action: ActionFunction = async ({ request, params }): Promise<ActionData | null> => {
   const session = await getSession(request.headers.get("Cookie"));
   const formData = await request.formData();
 
@@ -111,27 +108,19 @@ export default function SettingsPage() {
       }
       subNav={
         <HorizontalNav label={`Project related`}>
-          <NavItem
-            to={`/dashboard/projects/${project.uuid}`}
-            icon={<FiLayers />}
-          >
+          <NavItem to={`/dashboard/projects/${project.uuid}`} icon={<FiLayers />}>
             Environments
           </NavItem>
 
-          <NavItem
-            to={`/dashboard/projects/${project.uuid}/settings`}
-            icon={<AiOutlineSetting />}
-          >
+          <NavItem to={`/dashboard/projects/${project.uuid}/settings`} icon={<AiOutlineSetting />}>
             Settings
           </NavItem>
         </HorizontalNav>
       }
     >
-      <Stack spacing={8}>
-        <Heading as={"h2"} fontSize="earth" icon={<AiOutlineSetting />}>
-          Settings
-        </Heading>
+      <PageTitle value="Settings" icon={<AiOutlineSetting />} />
 
+      <Stack spacing={8}>
         <Card>
           <Section id="members">
             <Form method="post">
@@ -148,8 +137,7 @@ export default function SettingsPage() {
                 {data?.success && (
                   <>
                     <SuccessBox id="member-deleted">
-                      {data?.removedCount} user have been successfully removed
-                      from the project.
+                      {data?.removedCount} user have been successfully removed from the project.
                     </SuccessBox>
                     <Spacer size={4} />
                   </>
@@ -157,10 +145,7 @@ export default function SettingsPage() {
 
                 {userRole === UserRoles.Admin && (
                   <HStack spacing={4}>
-                    <CreateButton
-                      small
-                      to={`/dashboard/projects/${project.uuid}/add-member`}
-                    >
+                    <CreateButton small to={`/dashboard/projects/${project.uuid}/add-member`}>
                       Add member
                     </CreateButton>
 
@@ -194,27 +179,21 @@ export default function SettingsPage() {
                   titleAs="h3"
                   description={
                     <Typography>
-                      You can delete a project at any time, but you {`won’t`} be
-                      able to access its environments and all the related flags
-                      will be removed and be falsy in your applications. Be sure
-                      to know what {`you're`} doing before removing a project.
+                      You can delete a project at any time, but you {`won’t`} be able to access its
+                      environments and all the related flags will be removed and be falsy in your
+                      applications. Be sure to know what {`you're`} doing before removing a project.
                     </Typography>
                   }
                 />
 
                 <div>
-                  <DeleteButton
-                    to={`/dashboard/projects/${project.uuid}/delete`}
-                  >
+                  <DeleteButton to={`/dashboard/projects/${project.uuid}/delete`}>
                     <span>
                       <span aria-hidden>
-                        Delete{" "}
-                        <HideMobile>{`"${project.name}"`} forever</HideMobile>
+                        Delete <HideMobile>{`"${project.name}"`} forever</HideMobile>
                       </span>
 
-                      <VisuallyHidden>
-                        Delete {`"${project.name}"`} forever
-                      </VisuallyHidden>
+                      <VisuallyHidden>Delete {`"${project.name}"`} forever</VisuallyHidden>
                     </span>
                   </DeleteButton>
                 </div>

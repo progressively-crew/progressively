@@ -14,6 +14,7 @@ const Ol = styled("ol", {
     boxSizing: "border-box",
     color: "$hades",
     transition: "border,box-shadow 0.2s",
+    whiteSpace: "nowrap",
   },
 
   "& li:last-of-type a": {

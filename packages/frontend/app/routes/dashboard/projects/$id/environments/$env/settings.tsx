@@ -13,7 +13,6 @@ import { EnvNavBar } from "~/modules/environments/components/EnvNavbar";
 import { MetaFunction } from "@remix-run/node";
 import { Card, CardContent } from "~/components/Card";
 import { Stack } from "~/components/Stack";
-import { Heading } from "~/components/Heading";
 import { AiOutlineSetting } from "react-icons/ai";
 import { TagLine } from "~/components/Tagline";
 import { FiLayers } from "react-icons/fi";
@@ -23,6 +22,7 @@ import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
+import { PageTitle } from "~/components/PageTitle";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -66,11 +66,9 @@ export default function EnvSettingsPage() {
       }
       subNav={<EnvNavBar projectId={project.uuid} envId={environment.uuid} />}
     >
-      <Stack spacing={8}>
-        <Heading as={"h2"} fontSize="earth" icon={<AiOutlineSetting />}>
-          Settings
-        </Heading>
+      <PageTitle value="Settings" icon={<AiOutlineSetting />} />
 
+      <Stack spacing={8}>
         <Card>
           <CardContent>
             <Section id="general">

@@ -5,7 +5,7 @@ import { getSession } from "~/sessions";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { Header } from "~/components/Header";
-import { Section, SectionHeader } from "~/components/Section";
+import { Section } from "~/components/Section";
 import { EmptyState } from "~/components/EmptyState";
 import { Typography } from "~/components/Typography";
 import { CreateButton } from "~/components/Buttons/CreateButton";
@@ -23,6 +23,7 @@ import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaT
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
+import { PageTitle } from "~/components/PageTitle";
 
 export const meta: MetaFunction = ({ params, parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -105,21 +106,21 @@ export default function FlagsByEnvPage() {
         ) : null
       }
     >
-      <Section id="list-flags-title">
-        <SectionHeader
-          title="Feature flags"
-          icon={<FiFlag />}
-          action={
-            hasFlags && (
-              <CreateButton
-                to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/create`}
-              >
-                Create a feature flag
-              </CreateButton>
-            )
-          }
-        />
+      <PageTitle
+        value="Feature flags"
+        icon={<FiFlag />}
+        action={
+          hasFlags && (
+            <CreateButton
+              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/create`}
+            >
+              Create a feature flag
+            </CreateButton>
+          )
+        }
+      />
 
+      <Section aria-label="List of feature flags">
         {hasFlags ? (
           <Card>
             <FlagList flags={flagsByEnv} envId={environment.uuid} projectId={project.uuid} />

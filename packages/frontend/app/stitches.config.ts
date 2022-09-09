@@ -55,9 +55,9 @@ export const colors = {
   // New colors
   //primaries
   hades: "#0E061F",
-  hadesLight: "#231b36",
+  hadesLight: "#211836",
   nemesis: "#4B37A9",
-  nemesisLight: "#e3e0f9",
+  nemesisLight: "#eae8fa",
 
   heracles: "#f4f4f4",
   apollo: "#fff",
@@ -108,6 +108,7 @@ export const mapTokenToVariant = (
 export const { styled, css, globalCss, keyframes, getCssText, theme, createTheme, config } =
   createStitches({
     media: {
+      desktop: `(max-width: ${1450 / 16}rem)`,
       tablet: `(max-width: ${1100 / 16}rem)`,
       mobile: `(max-width: ${550 / 16}rem)`,
     },

@@ -11,6 +11,7 @@ const HorizontalNavWrapper = styled("nav", {
   },
 
   "& ul li a": {
+    whiteSpace: "nowrap",
     boxSizing: "border-box",
     height: "$cta",
     display: "flex",

@@ -10,7 +10,8 @@ import { CreateButton } from "~/components/Buttons/CreateButton";
 import { Card } from "~/components/Card";
 import { EmptyState } from "~/components/EmptyState";
 import { Header } from "~/components/Header";
-import { Section, SectionHeader } from "~/components/Section";
+import { PageTitle } from "~/components/PageTitle";
+import { Section } from "~/components/Section";
 import { Spacer } from "~/components/Spacer";
 import { TagLine } from "~/components/Tagline";
 import { Typography } from "~/components/Typography";
@@ -129,38 +130,39 @@ export default function SchedulingOfFlag() {
         ) : null
       }
     >
-      <Section id="scheduling">
-        <SectionHeader
-          title="Scheduling"
-          icon={<AiOutlineClockCircle />}
-          description={
-            <Typography>
-              The strategies that you have defined will apply at the given dates.
-            </Typography>
-          }
-          action={
-            hasScheduling && (
-              <CreateButton
-                to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/scheduling/create`}
-              >
-                Create a schedule
-              </CreateButton>
-            )
-          }
-        />
+      <PageTitle
+        value="Scheduling"
+        icon={<AiOutlineClockCircle />}
+        description={
+          <Typography>
+            The strategies that you have defined will apply at the given dates.
+          </Typography>
+        }
+        action={
+          hasScheduling && (
+            <CreateButton
+              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/scheduling/create`}
+            >
+              Create a schedule
+            </CreateButton>
+          )
+        }
+      />
 
+      <Section aria-label="List of schedules">
         {flagEnv.variants.length > 0 && (
-          <WarningBox
-            title={
-              <>
-                Only flag without variants are concerned by the scheduling. However, multi variants
-                scheduling may come in the future.
-              </>
-            }
-          />
+          <>
+            <WarningBox
+              title={
+                <>
+                  Only flag without variants are concerned by the scheduling. However, multi
+                  variants scheduling may come in the future.
+                </>
+              }
+            />
+            <Spacer size={4} />
+          </>
         )}
-
-        <Spacer size={4} />
 
         {!hasScheduling && (
           <EmptyState

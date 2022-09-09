@@ -31,12 +31,12 @@ import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
-import { Heading } from "~/components/Heading";
 import { Tag } from "~/components/Tag";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
 import { VariantList, VariantListModes } from "~/modules/variants/components/VariantList";
 import { editVariantAction } from "~/modules/variants/form-actions/editVariantAction";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
+import { PageTitle } from "~/components/PageTitle";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -174,11 +174,9 @@ export default function FlagById() {
         ) : null
       }
     >
-      <Stack spacing={8}>
-        <Heading as={"h2"} fontSize="earth" icon={<FaPowerOff />}>
-          Rollout details
-        </Heading>
+      <PageTitle value="Rollout details" icon={<FaPowerOff />} />
 
+      <Stack spacing={8}>
         <Section id="summup">
           <Card>
             <CardContent>
