@@ -57,7 +57,7 @@ export const colors = {
   hades: "#0E061F",
   hadesLight: "#211836",
   nemesis: "#4B37A9",
-  nemesisLight: "#e3e0f9",
+  nemesisLight: "#eae8fa",
 
   heracles: "#f4f4f4",
   apollo: "#fff",

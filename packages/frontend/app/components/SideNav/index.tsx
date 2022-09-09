@@ -1,5 +1,5 @@
 import { NavLink, useLocation } from "@remix-run/react";
-import { FiLayers } from "react-icons/fi";
+
 import { MdOutlineGroupWork } from "react-icons/md";
 import { useProjects } from "~/modules/projects/contexts/useProjects";
 import { User } from "~/modules/user/types";
@@ -20,7 +20,7 @@ const SideNavWrapper = styled("div", {
   },
 
   "& ul li svg": {
-    color: "$tyche",
+    color: "$nemesisLight",
   },
 
   "& ul li ul li": {
@@ -30,7 +30,7 @@ const SideNavWrapper = styled("div", {
       content: '""',
       height: "100%",
       width: "2px",
-      background: "$tyche",
+      background: "$nemesisLight",
       position: "absolute",
       left: 0,
       top: 0,
@@ -63,10 +63,11 @@ const SideNavWrapper = styled("div", {
     },
 
     "&.active": {
-      background: "$tyche",
+      background: "$nemesisLight",
+      color: "$nemesis",
     },
     "&.active svg": {
-      color: "$apollo",
+      color: "$nemesis",
     },
   },
 });

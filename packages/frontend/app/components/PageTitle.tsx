@@ -1,7 +1,7 @@
-import { H1 } from "./H1";
 import { HStack } from "./HStack";
 import { Spacer } from "./Spacer";
 import { Stack } from "./Stack";
+import { Typography } from "./Typography";
 
 export interface PageTitleProps {
   value: string;
@@ -15,12 +15,19 @@ export const PageTitle = ({ value, icon, action, description }: PageTitleProps) 
     <div>
       <HStack justifyContent="space-between">
         <Stack spacing={0}>
-          <H1 as="h2">
+          <Typography
+            size="mercury"
+            font="title"
+            color="hades"
+            fontWeight="semiBold"
+            lineHeight="title"
+            as="h2"
+          >
             <HStack spacing={3}>
               <span aria-hidden>{icon}</span>
               <span>{value}</span>
             </HStack>
-          </H1>
+          </Typography>
           {description}
         </Stack>
 
