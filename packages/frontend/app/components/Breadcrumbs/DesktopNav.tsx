@@ -9,6 +9,7 @@ const Ol = styled("ol", {
   color: "$hades",
   display: "flex",
   height: "$cta",
+  padding: "$spacing$1 0",
 
   "& li a": {
     boxSizing: "border-box",
