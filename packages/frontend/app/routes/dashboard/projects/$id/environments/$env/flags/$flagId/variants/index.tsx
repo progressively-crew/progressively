@@ -2,7 +2,6 @@ import { ActionFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { Form, useActionData, useLoaderData, useTransition } from "@remix-run/react";
 import { useEffect, useRef } from "react";
 import { AiOutlineAppstore } from "react-icons/ai";
-import { FiFlag } from "react-icons/fi";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
@@ -13,6 +12,7 @@ import { EmptyState } from "~/components/EmptyState";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Header } from "~/components/Header";
 import { HStack } from "~/components/HStack";
+import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { PageTitle } from "~/components/PageTitle";
 import { Section } from "~/components/Section";
 import { Spacer } from "~/components/Spacer";
@@ -161,7 +161,7 @@ export default function VariantsOfFlag() {
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
-          tagline={<TagLine icon={<FiFlag />}>FEATURE FLAG</TagLine>}
+          tagline={<TagLine icon={<FlagIcon />}>FEATURE FLAG</TagLine>}
           title={currentFlag.name}
           startAction={<ToggleFlag isFlagActivated={isFlagActivated} />}
         />

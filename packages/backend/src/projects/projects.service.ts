@@ -45,7 +45,17 @@ export class ProjectsService {
       },
       include: {
         project: {
-          include: { environments: true },
+          include: {
+            environments: {
+              include: {
+                flagEnvironment: {
+                  include: {
+                    flag: true,
+                  },
+                },
+              },
+            },
+          },
         },
       },
     });

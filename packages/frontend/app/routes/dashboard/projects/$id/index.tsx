@@ -5,7 +5,6 @@ import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { AiOutlineSetting } from "react-icons/ai";
-import { FiLayers } from "react-icons/fi";
 import { EmptyState } from "~/components/EmptyState";
 import { Typography } from "~/components/Typography";
 import { CreateButton } from "~/components/Buttons/CreateButton";
@@ -15,11 +14,12 @@ import { Crumbs } from "~/components/Breadcrumbs/types";
 import { EnvList } from "~/modules/environments/components/EnvList";
 import { Card } from "~/components/Card";
 import { TagLine } from "~/components/Tagline";
-import { MdOutlineGroupWork } from "react-icons/md";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
+import { ProjectIcon } from "~/components/Icons/ProjectIcon";
+import { EnvIcon } from "~/components/Icons/EnvIcon";
 
 export const meta: MetaFunction = ({ parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -54,14 +54,11 @@ export default function ProjectDetailPage() {
       user={user}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
-        <Header
-          tagline={<TagLine icon={<MdOutlineGroupWork />}>PROJECT</TagLine>}
-          title={project.name}
-        />
+        <Header tagline={<TagLine icon={<ProjectIcon />}>PROJECT</TagLine>} title={project.name} />
       }
       subNav={
         <HorizontalNav label={`Project related`}>
-          <NavItem to={`/dashboard/projects/${project.uuid}`} icon={<FiLayers />}>
+          <NavItem to={`/dashboard/projects/${project.uuid}`} icon={<EnvIcon />}>
             Environments
           </NavItem>
 
@@ -80,7 +77,7 @@ export default function ProjectDetailPage() {
     >
       <PageTitle
         value="Environments"
-        icon={<FiLayers />}
+        icon={<EnvIcon />}
         action={
           hasEnvironments && (
             <CreateButton to={`/dashboard/projects/${project.uuid}/environments/create`}>

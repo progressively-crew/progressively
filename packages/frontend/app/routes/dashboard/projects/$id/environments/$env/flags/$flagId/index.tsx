@@ -16,7 +16,6 @@ import { Crumbs } from "~/components/Breadcrumbs/types";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
 import { useSearchParams, useLoaderData, useActionData } from "@remix-run/react";
 import { TagLine } from "~/components/Tagline";
-import { FiFlag } from "react-icons/fi";
 import { StrategyList } from "~/modules/strategies/components/StrategyList";
 import { Card, CardContent } from "~/components/Card";
 import { Stack } from "~/components/Stack";
@@ -37,6 +36,7 @@ import { VariantList, VariantListModes } from "~/modules/variants/components/Var
 import { editVariantAction } from "~/modules/variants/form-actions/editVariantAction";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { PageTitle } from "~/components/PageTitle";
+import { FlagIcon } from "~/components/Icons/FlagIcon";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -150,7 +150,7 @@ export default function FlagById() {
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
-          tagline={<TagLine icon={<FiFlag />}>FEATURE FLAG</TagLine>}
+          tagline={<TagLine icon={<FlagIcon />}>FEATURE FLAG</TagLine>}
           title={currentFlag.name}
           startAction={<ToggleFlag isFlagActivated={isFlagActivated} />}
         />

@@ -7,6 +7,10 @@ import { NavProvider } from "~/components/Breadcrumbs/providers/NavProvider";
 import { InertWhenNavOpened } from "~/components/Breadcrumbs/InertWhenNavOpened";
 import { styled } from "~/stitches.config";
 import { Stack } from "~/components/Stack";
+import { LogoWithoutText } from "~/components/Logo/WithoutText";
+import { HStack } from "~/components/HStack";
+import { NavTree } from "~/modules/misc/components/NavTree";
+import { TreeToggle } from "~/modules/misc/components/TreeToggle";
 
 export interface DashboardLayoutProps {
   user?: Partial<User>;
@@ -29,6 +33,12 @@ const OverflowContainer = styled("div", {
 
 const BreadCrumbWrapper = styled("div", {
   background: "$apollo",
+
+  "& .logo": {
+    height: "$ctaSmall",
+    width: "$ctaSmall",
+    marginRight: "$spacing$4",
+  },
 });
 
 const PageWrapper = styled("div", {});
@@ -45,31 +55,34 @@ export const DashboardLayout = ({
     <NavProvider>
       <InertWhenNavOpened>
         <SkipNavLink>Skip to content</SkipNavLink>
-      </InertWhenNavOpened>
 
-      <PageWrapper>
-        <div>
-          <Stack spacing={4}>
-            {breadcrumb && (
+        <PageWrapper>
+          <div>
+            <Stack spacing={4}>
+              <BreadCrumbWrapper>
+                <Container>
+                  <HStack height="cta">
+                    <TreeToggle label="Toggle tree navigation">
+                      <LogoWithoutText />
+                    </TreeToggle>
+
+                    {breadcrumb}
+                  </HStack>
+                </Container>
+              </BreadCrumbWrapper>
+
               <div>
-                <BreadCrumbWrapper>
-                  <Container>{breadcrumb}</Container>
-                </BreadCrumbWrapper>
+                <Container>
+                  {!breadcrumb && <Spacer size={4} />}
+                  <header>{header}</header>
+                </Container>
               </div>
-            )}
 
-            <div>
-              <Container>
-                {!breadcrumb && <Spacer size={4} />}
-                <header>{header}</header>
-              </Container>
-            </div>
+              {subNav}
+            </Stack>
 
-            {subNav}
-          </Stack>
+            <Spacer size={12} />
 
-          <Spacer size={12} />
-          <InertWhenNavOpened>
             <Main>
               <Container>
                 <OverflowContainer>
@@ -84,9 +97,11 @@ export const DashboardLayout = ({
                 </OverflowContainer>
               </Container>
             </Main>
-          </InertWhenNavOpened>
-        </div>
-      </PageWrapper>
+          </div>
+        </PageWrapper>
+      </InertWhenNavOpened>
+
+      <NavTree />
     </NavProvider>
   );
 };

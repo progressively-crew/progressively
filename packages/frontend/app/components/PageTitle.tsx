@@ -6,7 +6,7 @@ import { Typography } from "./Typography";
 
 export interface PageTitleProps {
   value: string;
-  icon: React.ReactNode;
+  icon?: React.ReactNode;
   action?: React.ReactNode;
   description?: React.ReactNode;
 }

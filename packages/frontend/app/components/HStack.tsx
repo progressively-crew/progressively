@@ -1,4 +1,4 @@
-import { styled, mapTokenToVariant, spacing } from "~/stitches.config";
+import { styled, mapTokenToVariant, spacing, sizes } from "~/stitches.config";
 
 export const HStack = styled<any, any>("div", {
   display: "flex",
@@ -7,6 +7,7 @@ export const HStack = styled<any, any>("div", {
 
   variants: {
     spacing: mapTokenToVariant("gap", spacing, "$spacing"),
+    height: mapTokenToVariant("height", sizes),
     justifyContent: {
       "space-between": {
         justifyContent: "space-between",

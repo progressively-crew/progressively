@@ -1,7 +1,6 @@
 import { ActionFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { AiOutlineClockCircle } from "react-icons/ai";
-import { FiFlag } from "react-icons/fi";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { WarningBox } from "~/components/Boxes/WarningBox";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
@@ -10,6 +9,7 @@ import { CreateButton } from "~/components/Buttons/CreateButton";
 import { Card } from "~/components/Card";
 import { EmptyState } from "~/components/EmptyState";
 import { Header } from "~/components/Header";
+import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { PageTitle } from "~/components/PageTitle";
 import { Section } from "~/components/Section";
 import { Spacer } from "~/components/Spacer";
@@ -114,7 +114,7 @@ export default function SchedulingOfFlag() {
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
-          tagline={<TagLine icon={<FiFlag />}>FEATURE FLAG</TagLine>}
+          tagline={<TagLine icon={<FlagIcon />}>FEATURE FLAG</TagLine>}
           title={currentFlag.name}
           startAction={<ToggleFlag isFlagActivated={isFlagActivated} />}
         />
