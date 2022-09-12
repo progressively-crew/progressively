@@ -1,3 +1,4 @@
+import { styled } from "~/stitches.config";
 import { HStack } from "./HStack";
 import { Spacer } from "./Spacer";
 import { Stack } from "./Stack";
@@ -9,6 +10,10 @@ export interface PageTitleProps {
   action?: React.ReactNode;
   description?: React.ReactNode;
 }
+
+const IconWrapper = styled("span", {
+  color: "$nemesis",
+});
 
 export const PageTitle = ({ value, icon, action, description }: PageTitleProps) => {
   return (
@@ -24,7 +29,7 @@ export const PageTitle = ({ value, icon, action, description }: PageTitleProps) 
             as="h2"
           >
             <HStack spacing={3}>
-              <span aria-hidden>{icon}</span>
+              <IconWrapper aria-hidden>{icon}</IconWrapper>
               <span>{value}</span>
             </HStack>
           </Typography>

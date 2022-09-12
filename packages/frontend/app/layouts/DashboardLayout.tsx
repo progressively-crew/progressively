@@ -6,7 +6,6 @@ import { Spacer } from "~/components/Spacer";
 import { NavProvider } from "~/components/Breadcrumbs/providers/NavProvider";
 import { InertWhenNavOpened } from "~/components/Breadcrumbs/InertWhenNavOpened";
 import { styled } from "~/stitches.config";
-import { SideNav } from "~/components/SideNav";
 import { Stack } from "~/components/Stack";
 
 export interface DashboardLayoutProps {
@@ -32,17 +31,7 @@ const BreadCrumbWrapper = styled("div", {
   background: "$apollo",
 });
 
-const PageWrapper = styled("div", {
-  marginLeft: "300px",
-});
-
-const MenuWrapper = styled("div", {
-  height: "100%",
-  position: "fixed",
-  left: 0,
-  top: 0,
-  width: "300px",
-});
+const PageWrapper = styled("div", {});
 
 export const DashboardLayout = ({
   user,
@@ -57,10 +46,6 @@ export const DashboardLayout = ({
       <InertWhenNavOpened>
         <SkipNavLink>Skip to content</SkipNavLink>
       </InertWhenNavOpened>
-
-      <MenuWrapper>
-        <SideNav user={user} />
-      </MenuWrapper>
 
       <PageWrapper>
         <div>
@@ -83,7 +68,7 @@ export const DashboardLayout = ({
             {subNav}
           </Stack>
 
-          <Spacer size={8} />
+          <Spacer size={12} />
           <InertWhenNavOpened>
             <Main>
               <Container>
