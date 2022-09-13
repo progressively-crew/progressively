@@ -1,4 +1,6 @@
 import { NavLink } from "@remix-run/react";
+import React from "react";
+import { focusInTree } from "~/modules/misc/utils/focusInTree";
 import { styled } from "~/stitches.config";
 import { TreeItemProvider, useTreeItem } from "./TreeItemContext";
 
@@ -47,8 +49,27 @@ const TreeWrapper = styled("ul", {
 });
 
 export const Tree = ({ children, label }: TreeProps) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
+    switch (e.key) {
+      case "ArrowDown": {
+        const tree = e.currentTarget;
+
+        return focusInTree(tree, "li > a", 1);
+      }
+
+      case "ArrowUp": {
+        const tree = e.currentTarget;
+
+        return focusInTree(tree, "li > a", -1);
+      }
+
+      default:
+        return;
+    }
+  };
+
   return (
-    <TreeWrapper role="tree" aria-label={label}>
+    <TreeWrapper role="tree" aria-label={label} onKeyDown={handleKeyDown}>
       {children}
     </TreeWrapper>
   );
