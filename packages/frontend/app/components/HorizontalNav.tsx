@@ -11,9 +11,9 @@ const HorizontalNavWrapper = styled("nav", {
   },
 
   "& ul li a": {
+    height: "calc($navHeight - 8px)", // 8px is the invisible border
     whiteSpace: "nowrap",
     boxSizing: "border-box",
-    height: "$cta",
     display: "flex",
     cursor: "pointer",
     fontFamily: "$default",
@@ -38,6 +38,7 @@ const HorizontalNavWrapper = styled("nav", {
 
   "& ul li a svg": {
     color: "$nemesis",
+    fontSize: "$jupiter",
   },
 
   "@tablet": {

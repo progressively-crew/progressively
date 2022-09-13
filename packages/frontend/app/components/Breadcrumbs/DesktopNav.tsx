@@ -6,21 +6,24 @@ import { Crumbs } from "./types";
 
 const Ol = styled("ol", {
   fontFamily: "$default",
-  color: "$hades",
   display: "flex",
   height: "$cta",
   padding: "$spacing$1 0",
 
   "& li a": {
     boxSizing: "border-box",
-    color: "$hades",
+    color: "$apollo",
     transition: "border,box-shadow 0.2s",
     whiteSpace: "nowrap",
   },
 
+  "& li a:active": {
+    color: "$nemesisLight",
+  },
+
   "& li:last-of-type a": {
     fontWeight: "$bold",
-    color: "$nemesis",
+    color: "$hermes",
   },
 
   "& li": {
@@ -34,6 +37,7 @@ const Separator = styled("div", {
   margin: "0 $spacing$2",
   marginTop: "$spacing$1",
   fontSize: "$mars",
+  color: "$apollo",
 });
 
 export interface DesktopNavProps {

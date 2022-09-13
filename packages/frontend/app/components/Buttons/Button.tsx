@@ -22,6 +22,7 @@ export const RawButton = styled("button", {
   margin: 0,
   textAlign: "left",
   transition: "all 0.1s",
+  whiteSpace: "nowrap",
 
   "& svg": {
     borderRight: "1px solid currentColor",
@@ -147,12 +148,7 @@ export const Button = ({
     const linkProps = props as HTMLAttributes<HTMLAnchorElement>;
 
     return (
-      <RawButton
-        as={href ? "a" : Link}
-        to={href ? undefined : to}
-        href={href}
-        {...linkProps}
-      >
+      <RawButton as={href ? "a" : Link} to={href ? undefined : to} href={href} {...linkProps}>
         <HStack spacing={3}>
           {icon}
           {children}
