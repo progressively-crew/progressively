@@ -21,7 +21,7 @@ export const PageTitle = ({ value, icon, action, description }: PageTitleProps) 
       <HStack justifyContent="space-between">
         <Stack spacing={0}>
           <Typography
-            size="mercury"
+            size="venus"
             font="title"
             color="hades"
             fontWeight="semiBold"

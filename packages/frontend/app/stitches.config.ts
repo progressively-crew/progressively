@@ -25,8 +25,6 @@ export const spacing = {
 };
 
 export const fontWeights = {
-  slim: "300",
-  normal: "normal",
   semiBold: "600",
   bold: "800",
 };
@@ -87,14 +85,13 @@ export const colors = {
 
 export const sizes = {
   container: "1260px",
-  cardHeight: "160px",
-  notAuthenticatedCardWidth: "400px",
   cta: "48px",
   ctaSmall: "40px",
   emptyStateIconHeight: "160px",
   avatar: "40px",
   treeHeight: "60%",
   dialog: "120ch",
+  navHeight: "72px",
 };
 
 export const shadows = {

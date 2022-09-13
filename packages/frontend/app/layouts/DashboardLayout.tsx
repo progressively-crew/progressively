@@ -32,7 +32,7 @@ const OverflowContainer = styled("div", {
 });
 
 const BreadCrumbWrapper = styled("div", {
-  background: "$apollo",
+  background: "$hades",
 
   "& .logo": {
     height: "$ctaSmall",
@@ -61,7 +61,7 @@ export const DashboardLayout = ({
             <Stack spacing={4}>
               <BreadCrumbWrapper>
                 <Container>
-                  <HStack height="cta">
+                  <HStack height="navHeight">
                     <TreeToggle label="Toggle tree navigation">
                       <LogoWithoutText />
                     </TreeToggle>
