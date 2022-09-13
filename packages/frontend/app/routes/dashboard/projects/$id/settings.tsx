@@ -1,5 +1,4 @@
 import { AiOutlineSetting } from "react-icons/ai";
-import { FiLayers } from "react-icons/fi";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { Header } from "~/components/Header";
@@ -22,13 +21,14 @@ import { MetaFunction, ActionFunction } from "@remix-run/node";
 import { useActionData, useTransition, Form } from "@remix-run/react";
 import { Card, CardContent } from "~/components/Card";
 import { TagLine } from "~/components/Tagline";
-import { MdOutlineGroupWork } from "react-icons/md";
 import { HStack } from "~/components/HStack";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
+import { ProjectIcon } from "~/components/Icons/ProjectIcon";
+import { EnvIcon } from "~/components/Icons/EnvIcon";
 
 export const meta: MetaFunction = ({ parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -97,7 +97,7 @@ export default function SettingsPage() {
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
-          tagline={<TagLine icon={<MdOutlineGroupWork />}>PROJECT</TagLine>}
+          tagline={<TagLine icon={<ProjectIcon />}>PROJECT</TagLine>}
           title={
             <span>
               {project.name}
@@ -108,7 +108,7 @@ export default function SettingsPage() {
       }
       subNav={
         <HorizontalNav label={`Project related`}>
-          <NavItem to={`/dashboard/projects/${project.uuid}`} icon={<FiLayers />}>
+          <NavItem to={`/dashboard/projects/${project.uuid}`} icon={<EnvIcon />}>
             Environments
           </NavItem>
 

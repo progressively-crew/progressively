@@ -85,6 +85,23 @@ export const colors = {
   warningBorder: "#ffca28",
 };
 
+export const sizes = {
+  container: "1260px",
+  cardHeight: "160px",
+  notAuthenticatedCardWidth: "400px",
+  cta: "48px",
+  ctaSmall: "40px",
+  emptyStateIconHeight: "160px",
+  avatar: "40px",
+  treeHeight: "60%",
+  dialog: "120ch",
+};
+
+export const shadows = {
+  regular: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
+  heavy: "0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)",
+};
+
 export const mapTokenToVariant = (
   cssAttribute: string,
   partialTheme: any,
@@ -114,15 +131,7 @@ export const { styled, css, globalCss, keyframes, getCssText, theme, createTheme
     },
     theme: {
       colors,
-      sizes: {
-        container: "1260px",
-        cardHeight: "160px",
-        notAuthenticatedCardWidth: "400px",
-        cta: "48px",
-        ctaSmall: "40px",
-        emptyStateIconHeight: "160px",
-        avatar: "40px",
-      },
+      sizes,
       fontSizes,
       fonts,
       fontWeights,
@@ -132,5 +141,6 @@ export const { styled, css, globalCss, keyframes, getCssText, theme, createTheme
         small: "4px",
       },
       spacing,
+      shadows,
     },
   });

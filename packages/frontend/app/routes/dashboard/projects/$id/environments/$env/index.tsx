@@ -15,7 +15,6 @@ import { EnvNavBar } from "~/modules/environments/components/EnvNavbar";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { Card } from "~/components/Card";
-import { FiFlag, FiLayers } from "react-icons/fi";
 import { TagLine } from "~/components/Tagline";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { useUser } from "~/modules/user/contexts/useUser";
@@ -24,6 +23,8 @@ import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
 import { PageTitle } from "~/components/PageTitle";
+import { EnvIcon } from "~/components/Icons/EnvIcon";
+import { FlagIcon } from "~/components/Icons/FlagIcon";
 
 export const meta: MetaFunction = ({ params, parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -93,7 +94,7 @@ export default function FlagsByEnvPage() {
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
-          tagline={<TagLine icon={<FiLayers />}>ENVIRONMENT</TagLine>}
+          tagline={<TagLine icon={<EnvIcon />}>ENVIRONMENT</TagLine>}
           title={environment.name}
         />
       }
@@ -108,7 +109,7 @@ export default function FlagsByEnvPage() {
     >
       <PageTitle
         value="Feature flags"
-        icon={<FiFlag />}
+        icon={<FlagIcon />}
         action={
           hasFlags && (
             <CreateButton

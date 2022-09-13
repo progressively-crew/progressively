@@ -94,14 +94,14 @@ describe("/reset-password", () => {
       cy.findByLabelText("Email").type("john.doe@gmail.com");
       cy.findByLabelText("Password").type("password1");
       cy.findByRole("button", { name: "Sign in" }).click();
-      cy.findAllByText("Project from seeding").should("have.length", 1);
+      cy.findAllByText("Project from seeding").should("have.length", 2);
 
       // Connect with a user that has NOT changed their password
       cy.visit("/signin");
       cy.findByLabelText("Email").type("marvin.frachet@something.com");
       cy.findByLabelText("Password").type("password");
       cy.findByRole("button", { name: "Sign in" }).click();
-      cy.findAllByText("Project from seeding").should("have.length", 1);
+      cy.findAllByText("Project from seeding").should("have.length", 2);
     });
   });
 });

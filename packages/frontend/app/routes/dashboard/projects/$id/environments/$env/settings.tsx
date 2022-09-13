@@ -15,7 +15,6 @@ import { Card, CardContent } from "~/components/Card";
 import { Stack } from "~/components/Stack";
 import { AiOutlineSetting } from "react-icons/ai";
 import { TagLine } from "~/components/Tagline";
-import { FiLayers } from "react-icons/fi";
 import { Spacer } from "~/components/Spacer";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { useProject } from "~/modules/projects/contexts/useProject";
@@ -23,6 +22,7 @@ import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaT
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
+import { EnvIcon } from "~/components/Icons/EnvIcon";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -61,7 +61,7 @@ export default function EnvSettingsPage() {
       header={
         <Header
           title={environment.name}
-          tagline={<TagLine icon={<FiLayers />}>ENVIRONMENT</TagLine>}
+          tagline={<TagLine icon={<EnvIcon />}>ENVIRONMENT</TagLine>}
         />
       }
       subNav={<EnvNavBar projectId={project.uuid} envId={environment.uuid} />}
