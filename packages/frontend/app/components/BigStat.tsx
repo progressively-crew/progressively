@@ -31,7 +31,7 @@ export const BigStat = ({ name, count, id, unit }: BigStatProps) => {
   return (
     <Card>
       <CardContent>
-        <BigStatLabel as="h3" id={id}>
+        <BigStatLabel as="h2" id={id}>
           {name}
         </BigStatLabel>
 
