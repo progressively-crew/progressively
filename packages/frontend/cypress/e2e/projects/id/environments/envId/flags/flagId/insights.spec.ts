@@ -52,7 +52,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/insights"
           .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags/1/insights")
           .and("have.attr", "aria-current", "page");
 
-        cy.findByRole("heading", { name: "New homepage" }).should("be.visible");
+        cy.findByText("New homepage").should("be.visible");
         cy.findByRole("heading", { name: "Insights" }).should("be.visible");
 
         cy.checkA11y();

@@ -56,7 +56,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
           .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags/1/scheduling")
           .and("have.attr", "aria-current", "page");
 
-        cy.findByRole("heading", { name: "New homepage" }).should("be.visible");
+        cy.findByText("New homepage").should("be.visible");
         cy.findByRole("heading", { name: "Scheduling" }).should("be.visible");
 
         cy.checkA11y();

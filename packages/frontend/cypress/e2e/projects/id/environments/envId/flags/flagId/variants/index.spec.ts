@@ -72,7 +72,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants"
           ["New homepage", "/dashboard/projects/1/environments/1/flags/1/variants"],
         ]);
 
-        cy.findByRole("heading", { name: "New homepage" }).should("be.visible");
+        cy.findByText("New homepage").should("be.visible");
         cy.findByRole("heading", { name: "Variants" }).should("be.visible");
 
         cy.findByText("No variants found").should("be.visible");

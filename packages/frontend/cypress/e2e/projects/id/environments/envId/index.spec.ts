@@ -42,7 +42,7 @@ describe("/dashboard/projects/[id]/environments/[envId]", () => {
           ["Developer", "/dashboard/projects/1/environments/2"],
         ]);
 
-        cy.findByRole("heading", { name: "Developer" }).should("be.visible");
+        cy.findByText("Developer").should("be.visible");
         cy.findByRole("heading", { name: "No flags found" }).should("be.visible");
 
         cy.findByText("There are no flags yet on this environment.").should("be.visible");
@@ -69,7 +69,7 @@ describe("/dashboard/projects/[id]/environments/[envId]", () => {
           ["Production", "/dashboard/projects/1/environments/1"],
         ]);
 
-        cy.findByRole("heading", { name: "Production" }).should("be.visible");
+        cy.findByText("Production").should("be.visible");
         cy.findByRole("heading", { name: "Feature flags" }).should("exist");
 
         cy.findByRole("link", { name: "Feature flags" }).should("be.visible");
