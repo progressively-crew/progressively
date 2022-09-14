@@ -39,7 +39,7 @@ describe("/dashboard/projects/[id]", () => {
           ["Project from seeding", "/dashboard/projects/1"],
         ]);
 
-        cy.findByText("Project from seeding").should("be.visible");
+        cy.findAllByText("Project from seeding").should("have.length", 2);
 
         cy.findByRole("link", { name: "Settings" })
           .should("be.visible")

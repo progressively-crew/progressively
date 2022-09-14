@@ -98,7 +98,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants"
           ["With multivariate", "/dashboard/projects/1/environments/1/flags/4/variants"],
         ]);
 
-        cy.findByText("With multivariate").should("be.visible");
+        cy.findAllByText("With multivariate").should("have.length", 2);
         cy.findByRole("heading", { name: "Variants" }).should("be.visible");
 
         cy.findByRole("button", { name: "Add variant" }).should("be.visible");
