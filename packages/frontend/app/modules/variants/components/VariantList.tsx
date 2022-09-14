@@ -18,8 +18,7 @@ export enum VariantListModes {
 
 const Wrapper = styled("div", {
   display: "table",
-  padding: "0 $spacing$12",
-
+  width: "100%",
   "& .row": {
     display: "table-row",
   },
@@ -29,7 +28,7 @@ const Wrapper = styled("div", {
     display: "table-cell",
     minWidth: "80px",
     verticalAlign: "middle",
-    padding: "$spacing$4",
+    padding: "$spacing$4 $spacing$12",
   },
 });
 
