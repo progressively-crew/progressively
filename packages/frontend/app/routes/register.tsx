@@ -10,6 +10,7 @@ import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { MetaFunction, ActionFunction, LoaderFunction, redirect } from "@remix-run/node";
 import { useActionData } from "@remix-run/react";
 import { PageTitle } from "~/components/PageTitle";
+import { Card, CardContent } from "~/components/Card";
 
 export const meta: MetaFunction = () => {
   return {
@@ -39,19 +40,21 @@ export default function CreateAccountPage() {
       nav={<BackLink to="/signin">Back to signin</BackLink>}
       header={<PageTitle value="Create an account" />}
       status={
-        <>
-          {errors && Object.keys(errors).length > 0 && <ErrorBox list={errors} />}
-
-          {newUser?.uuid && (
-            <SuccessBox id="user-created">
-              The user has been created! Take a look at your inbox, there should be a link to
-              activate it :).
-            </SuccessBox>
-          )}
-        </>
+        errors && Object.keys(errors).length > 0 ? (
+          <ErrorBox list={errors} />
+        ) : newUser?.uuid ? (
+          <SuccessBox id="user-created">
+            The user has been created! Take a look at your inbox, there should be a link to activate
+            it :).
+          </SuccessBox>
+        ) : null
       }
     >
-      <RegisterForm errors={errors} />
+      <Card>
+        <CardContent>
+          <RegisterForm errors={errors} />
+        </CardContent>
+      </Card>
     </NotAuthenticatedLayout>
   );
 }

@@ -1,7 +1,7 @@
 import { Container } from "~/components/Container";
+import { HStack } from "~/components/HStack";
 import { DarkLogo } from "~/components/Logo/DarkLogo";
 import { Main } from "~/components/Main";
-import { Nav } from "~/components/Nav";
 import { Spacer } from "~/components/Spacer";
 import { Stack } from "~/components/Stack";
 import { styled } from "~/stitches.config";
@@ -13,8 +13,8 @@ export interface NotAuthenticatedLayoutProps {
   status?: React.ReactNode;
 }
 
-const Wrapper = styled("div", {
-  padding: "$spacing$10 0",
+const Nav = styled("nav", {
+  background: "$hades",
 });
 
 export const NotAuthenticatedLayout = ({
@@ -26,22 +26,23 @@ export const NotAuthenticatedLayout = ({
   return (
     <div>
       <Nav aria-label="General">
-        <DarkLogo to={"/"} />
+        <HStack height="navHeight" justifyContent="center">
+          <DarkLogo to={"/"} />
+        </HStack>
       </Nav>
 
-      <Spacer size={5} />
+      <Spacer size={12} />
+
       <Main>
-        <Container>
-          <Wrapper>
-            {nav && <div>{nav}</div>}
-            <Stack spacing={4}>
-              <Stack spacing={2}>
-                {header}
-                {status && <Stack spacing={4}>{status}</Stack>}
-              </Stack>
-              {children}
+        <Container width={"thinContainer"}>
+          {nav && <div>{nav}</div>}
+          <Stack spacing={4}>
+            <Stack spacing={2}>
+              {header}
+              {status && <Stack spacing={4}>{status}</Stack>}
             </Stack>
-          </Wrapper>
+            {children}
+          </Stack>
         </Container>
       </Main>
     </div>

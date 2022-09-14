@@ -38,7 +38,7 @@ export const EnvList = ({ environments, projectId }: EnvListProps) => {
     <RawTable>
       <thead>
         <tr>
-          <th width="70%">Name</th>
+          <th width="50%">Name</th>
           <th>Client key</th>
         </tr>
       </thead>

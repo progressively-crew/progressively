@@ -4,15 +4,15 @@ import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { TextInput } from "~/components/Fields/TextInput";
-import { Section } from "~/components/Section";
 import { Typography } from "~/components/Typography";
 import { createProject } from "~/modules/projects/services/createProject";
 import { CreateProjectDTO, UserProject } from "~/modules/projects/types";
 import { validateProjectName } from "~/modules/projects/validators/validateProjectName";
 import { getSession } from "~/sessions";
-import { DashboardLayout } from "../../layouts/DashboardLayout";
-import { useUser } from "~/modules/user/contexts/useUser";
 import { PageTitle } from "~/components/PageTitle";
+import { Card, CardContent } from "~/components/Card";
+import { FadeInSlide } from "~/components/animations/FadeInSlide";
+import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 
 export const meta = () => {
   return {
@@ -42,42 +42,46 @@ export const action: ActionFunction = async ({ request }): Promise<ActionData | 
 };
 
 export default function OnboardingPage() {
-  const { user } = useUser();
   const data = useActionData<ActionData>();
 
   const errors = data?.errors;
 
   return (
-    <DashboardLayout
-      user={user}
+    <NotAuthenticatedLayout
       header={
-        <PageTitle
-          value="Welcome aboard"
-          description={
-            <Typography>
-              Before being fully operational, you will need to create <strong>a project</strong>.
-            </Typography>
-          }
-        />
+        <FadeInSlide>
+          <PageTitle
+            value="Welcome aboard"
+            description={
+              <Typography>
+                Before being fully operational, you will need to create <strong>a project</strong>.
+              </Typography>
+            }
+          />
+        </FadeInSlide>
       }
       status={errors?.name && <ErrorBox list={errors} />}
     >
-      <Section>
-        <Form method="post">
-          <FormGroup>
-            <TextInput
-              isInvalid={Boolean(errors?.name)}
-              label="Project name"
-              name="name"
-              placeholder="e.g: My super project"
-            />
+      <FadeInSlide>
+        <Card>
+          <CardContent>
+            <Form method="post">
+              <FormGroup>
+                <TextInput
+                  isInvalid={Boolean(errors?.name)}
+                  label="Project name"
+                  name="name"
+                  placeholder="e.g: My super project"
+                />
 
-            <div>
-              <SubmitButton>Create the project</SubmitButton>
-            </div>
-          </FormGroup>
-        </Form>
-      </Section>
-    </DashboardLayout>
+                <div>
+                  <SubmitButton>Create the project</SubmitButton>
+                </div>
+              </FormGroup>
+            </Form>
+          </CardContent>
+        </Card>
+      </FadeInSlide>
+    </NotAuthenticatedLayout>
   );
 }

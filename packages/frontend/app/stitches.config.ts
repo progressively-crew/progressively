@@ -84,6 +84,7 @@ export const colors = {
 };
 
 export const sizes = {
+  thinContainer: "70ch",
   container: "1260px",
   cta: "48px",
   ctaSmall: "40px",
