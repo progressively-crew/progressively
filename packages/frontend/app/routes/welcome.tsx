@@ -1,6 +1,5 @@
 import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
 import { useActionData } from "@remix-run/react";
-import { FadeInSlide } from "~/components/animations/FadeInSlide";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { Card, CardContent } from "~/components/Card";
 import { PageTitle } from "~/components/PageTitle";
@@ -36,27 +35,23 @@ export default function WelcomePage() {
   return (
     <NotAuthenticatedLayout
       header={
-        <FadeInSlide>
-          <PageTitle
-            value="Congratulations!"
-            description={
-              <Typography>
-                {`You've`} successfully run your Progressively instance. {`It's`} time to create{" "}
-                <strong>your admin user.</strong>
-              </Typography>
-            }
-          />
-        </FadeInSlide>
+        <PageTitle
+          value="Congratulations!"
+          description={
+            <Typography>
+              {`You've`} successfully run your Progressively instance. {`It's`} time to create{" "}
+              <strong>your admin user.</strong>
+            </Typography>
+          }
+        />
       }
       status={errors && Object.keys(errors).length > 0 && <ErrorBox list={errors} />}
     >
-      <FadeInSlide>
-        <Card>
-          <CardContent>
-            <RegisterForm errors={errors} />
-          </CardContent>
-        </Card>
-      </FadeInSlide>
+      <Card>
+        <CardContent>
+          <RegisterForm errors={errors} />
+        </CardContent>
+      </Card>
     </NotAuthenticatedLayout>
   );
 }

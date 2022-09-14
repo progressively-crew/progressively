@@ -11,7 +11,6 @@ import { validateProjectName } from "~/modules/projects/validators/validateProje
 import { getSession } from "~/sessions";
 import { PageTitle } from "~/components/PageTitle";
 import { Card, CardContent } from "~/components/Card";
-import { FadeInSlide } from "~/components/animations/FadeInSlide";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 
 export const meta = () => {
@@ -49,39 +48,35 @@ export default function OnboardingPage() {
   return (
     <NotAuthenticatedLayout
       header={
-        <FadeInSlide>
-          <PageTitle
-            value="Welcome aboard"
-            description={
-              <Typography>
-                Before being fully operational, you will need to create <strong>a project</strong>.
-              </Typography>
-            }
-          />
-        </FadeInSlide>
+        <PageTitle
+          value="Welcome aboard"
+          description={
+            <Typography>
+              Before being fully operational, you will need to create <strong>a project</strong>.
+            </Typography>
+          }
+        />
       }
       status={errors?.name && <ErrorBox list={errors} />}
     >
-      <FadeInSlide>
-        <Card>
-          <CardContent>
-            <Form method="post">
-              <FormGroup>
-                <TextInput
-                  isInvalid={Boolean(errors?.name)}
-                  label="Project name"
-                  name="name"
-                  placeholder="e.g: My super project"
-                />
+      <Card>
+        <CardContent>
+          <Form method="post">
+            <FormGroup>
+              <TextInput
+                isInvalid={Boolean(errors?.name)}
+                label="Project name"
+                name="name"
+                placeholder="e.g: My super project"
+              />
 
-                <div>
-                  <SubmitButton>Create the project</SubmitButton>
-                </div>
-              </FormGroup>
-            </Form>
-          </CardContent>
-        </Card>
-      </FadeInSlide>
+              <div>
+                <SubmitButton>Create the project</SubmitButton>
+              </div>
+            </FormGroup>
+          </Form>
+        </CardContent>
+      </Card>
     </NotAuthenticatedLayout>
   );
 }
