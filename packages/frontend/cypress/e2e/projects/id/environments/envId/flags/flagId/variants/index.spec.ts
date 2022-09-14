@@ -72,7 +72,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants"
           ["New homepage", "/dashboard/projects/1/environments/1/flags/1/variants"],
         ]);
 
-        cy.findByRole("heading", { name: "New homepage" }).should("be.visible");
+        cy.findAllByText("New homepage").should("have.length", 3);
         cy.findByRole("heading", { name: "Variants" }).should("be.visible");
 
         cy.findByText("No variants found").should("be.visible");
@@ -98,7 +98,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants"
           ["With multivariate", "/dashboard/projects/1/environments/1/flags/4/variants"],
         ]);
 
-        cy.findByRole("heading", { name: "With multivariate" }).should("be.visible");
+        cy.findAllByText("With multivariate").should("have.length", 3);
         cy.findByRole("heading", { name: "Variants" }).should("be.visible");
 
         cy.findByRole("button", { name: "Add variant" }).should("be.visible");

@@ -52,7 +52,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/insights"
           .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags/1/insights")
           .and("have.attr", "aria-current", "page");
 
-        cy.findByRole("heading", { name: "New homepage" }).should("be.visible");
+        cy.findAllByText("New homepage").should("have.length", 3);
         cy.findByRole("heading", { name: "Insights" }).should("be.visible");
 
         cy.checkA11y();
@@ -72,7 +72,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/insights"
           .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags/2/insights")
           .and("have.attr", "aria-current", "page");
 
-        cy.findByRole("heading", { name: "New footer" }).should("be.visible");
+        cy.findAllByText("New footer").should("have.length", 3);
         cy.findByRole("heading", { name: "Insights" }).should("be.visible");
 
         cy.checkA11y();

@@ -5,7 +5,6 @@ import { CreateProjectDTO, UserProject } from "~/modules/projects/types";
 import { validateProjectName } from "~/modules/projects/validators/validateProjectName";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { getSession } from "~/sessions";
-import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Typography } from "~/components/Typography";
@@ -15,6 +14,7 @@ import { Crumbs } from "~/components/Breadcrumbs/types";
 import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
 import { useActionData, Form, useTransition } from "@remix-run/react";
 import { useUser } from "~/modules/user/contexts/useUser";
+import { PageTitle } from "~/components/PageTitle";
 
 export const meta: MetaFunction = () => {
   return {
@@ -26,9 +26,7 @@ interface ActionData {
   errors: Partial<CreateProjectDTO>;
 }
 
-export const action: ActionFunction = async ({
-  request,
-}): Promise<ActionData | Response> => {
+export const action: ActionFunction = async ({ request }): Promise<ActionData | Response> => {
   const formData = await request.formData();
   const projectName = formData.get("name")?.toString();
 
@@ -40,14 +38,9 @@ export const action: ActionFunction = async ({
 
   const session = await getSession(request.headers.get("Cookie"));
 
-  const userProject: UserProject = await createProject(
-    projectName!,
-    session.get("auth-cookie")
-  );
+  const userProject: UserProject = await createProject(projectName!, session.get("auth-cookie"));
 
-  return redirect(
-    `/dashboard?newProjectId=${userProject.projectId}#project-added`
-  );
+  return redirect(`/dashboard?newProjectId=${userProject.projectId}#project-added`);
 };
 
 export default function CreateProjectPage() {
@@ -72,12 +65,12 @@ export default function CreateProjectPage() {
       user={user}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
-        <Header
-          title="Create a project"
+        <PageTitle
+          value="Create a project"
           description={
             <Typography>
-              When creating a project, {`you'll`} become the administrator of it
-              and will have full control over it.
+              When creating a project, {`you'll`} become the administrator of it and will have full
+              control over it.
             </Typography>
           }
         />

@@ -26,10 +26,10 @@ export const PageTitle = ({ value, icon, action, description }: PageTitleProps) 
             color="hades"
             fontWeight="semiBold"
             lineHeight="title"
-            as="h2"
+            as="h1"
           >
             <HStack spacing={3}>
-              <IconWrapper aria-hidden>{icon}</IconWrapper>
+              {icon && <IconWrapper aria-hidden>{icon}</IconWrapper>}
               <span>{value}</span>
             </HStack>
           </Typography>

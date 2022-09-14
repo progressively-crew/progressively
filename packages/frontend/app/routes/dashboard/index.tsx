@@ -3,7 +3,6 @@ import { getProjects } from "~/modules/projects/services/getProjects";
 import { UserProject } from "~/modules/projects/types";
 import { getSession } from "~/sessions";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
 import { MetaFunction, LoaderFunction, redirect } from "@remix-run/node";
 import { useSearchParams, useLoaderData } from "@remix-run/react";
@@ -12,6 +11,7 @@ import { Spacer } from "~/components/Spacer";
 import { ProjectList } from "~/modules/projects/components/ProjectList";
 import { Card } from "~/components/Card";
 import { useUser } from "~/modules/user/contexts/useUser";
+import { PageTitle } from "~/components/PageTitle";
 
 export const meta: MetaFunction = () => {
   return {
@@ -23,9 +23,7 @@ interface LoaderData {
   projects: Array<UserProject>;
 }
 
-export const loader: LoaderFunction = async ({
-  request,
-}): Promise<LoaderData | Response> => {
+export const loader: LoaderFunction = async ({ request }): Promise<LoaderData | Response> => {
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
 
@@ -49,23 +47,17 @@ export default function DashboardRoot() {
   return (
     <DashboardLayout
       user={user}
-      header={<Header title="Projects" />}
+      header={<PageTitle value="Projects" />}
       status={
         newProjectId ? (
-          <SuccessBox id="project-added">
-            The project has been successfully created.
-          </SuccessBox>
+          <SuccessBox id="project-added">The project has been successfully created.</SuccessBox>
         ) : hasRemovedProject ? (
-          <SuccessBox id="project-removed">
-            The project has been successfully removed.
-          </SuccessBox>
+          <SuccessBox id="project-removed">The project has been successfully removed.</SuccessBox>
         ) : null
       }
     >
       <Section>
-        <CreateButton to="/dashboard/projects/create">
-          Create a project
-        </CreateButton>
+        <CreateButton to="/dashboard/projects/create">Create a project</CreateButton>
 
         <Spacer size={4} />
 

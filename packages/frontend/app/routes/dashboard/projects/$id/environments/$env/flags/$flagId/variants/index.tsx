@@ -192,6 +192,7 @@ export default function VariantsOfFlag() {
       <Section aria-label="List of variants">
         {!hasVariants && (
           <EmptyState
+            titleAs="h2"
             title="No variants found"
             description={<Typography>There are no variants found for this flag.</Typography>}
           />

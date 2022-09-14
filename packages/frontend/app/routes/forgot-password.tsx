@@ -5,12 +5,12 @@ import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { TextInput } from "~/components/Fields/TextInput";
-import { Header } from "~/components/Header";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { Typography } from "~/components/Typography";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import { validateEmail } from "~/modules/forms/utils/validateEmail";
 import { forgotPassword } from "~/modules/user/services/forgotPassword";
+import { PageTitle } from "~/components/PageTitle";
 
 export const meta: MetaFunction = () => {
   return {
@@ -23,9 +23,7 @@ interface ActionData {
   errors?: { email?: string; backendError?: string };
 }
 
-export const action: ActionFunction = async ({
-  request,
-}): Promise<ActionData> => {
+export const action: ActionFunction = async ({ request }): Promise<ActionData> => {
   const formData = await request.formData();
   const email = formData.get("email")?.toString();
 
@@ -66,8 +64,8 @@ export default function ForgotPasswordPage() {
     <NotAuthenticatedLayout
       nav={<BackLink to="/signin">Back to signin</BackLink>}
       header={
-        <Header
-          title="Password forgotten"
+        <PageTitle
+          value="Password forgotten"
           description={
             <Typography>
               Enter your email to get a recovery link and reset your password.
@@ -77,14 +75,12 @@ export default function ForgotPasswordPage() {
       }
       status={
         <>
-          {errors && Object.keys(errors).length > 0 && (
-            <ErrorBox list={errors} />
-          )}
+          {errors && Object.keys(errors).length > 0 && <ErrorBox list={errors} />}
 
           {success && (
             <SuccessBox id="password-reset">
-              An email with a link to reset your password has been set. Make
-              sure to follow the instructions.
+              An email with a link to reset your password has been set. Make sure to follow the
+              instructions.
             </SuccessBox>
           )}
         </>

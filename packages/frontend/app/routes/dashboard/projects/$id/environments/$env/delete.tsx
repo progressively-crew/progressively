@@ -7,7 +7,6 @@ import { UserRoles } from "~/modules/projects/types";
 import { User } from "~/modules/user/types";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { getSession } from "~/sessions";
-import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
 import { Button } from "~/components/Buttons/Button";
 import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
@@ -22,6 +21,7 @@ import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
+import { PageTitle } from "~/components/PageTitle";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -94,7 +94,7 @@ export default function DeleteEnvPage() {
       <DashboardLayout
         user={user}
         breadcrumb={<BreadCrumbs crumbs={crumbs} />}
-        header={<Header title="You are not allowed to delete environments." />}
+        header={<PageTitle value="You are not allowed to delete environments." />}
       >
         <Section>
           <figure>
@@ -126,7 +126,7 @@ export default function DeleteEnvPage() {
     <DeleteEntityLayout
       user={user}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
-      header={<Header title="Deleting an environment" />}
+      header={<PageTitle value="Deleting an environment" />}
       error={data?.errors && data.errors.backendError && <ErrorBox list={data.errors} />}
       cancelAction={
         <Button

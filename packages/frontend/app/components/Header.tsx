@@ -21,7 +21,7 @@ export const Header = ({ title, description, startAction, tagline }: HeaderProps
     <HStack justifyContent="space-between">
       <div>
         <HeadingWrapper>
-          <H1>{title}</H1>
+          <H1 as="p">{title}</H1>
           {tagline}
         </HeadingWrapper>
 

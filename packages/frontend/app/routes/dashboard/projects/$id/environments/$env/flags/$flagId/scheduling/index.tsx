@@ -166,6 +166,7 @@ export default function SchedulingOfFlag() {
 
         {!hasScheduling && (
           <EmptyState
+            titleAs="h2"
             title="No schedule found"
             description={<Typography>There are no scheduling for this flag.</Typography>}
             action={

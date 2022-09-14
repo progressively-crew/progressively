@@ -125,7 +125,7 @@ export default function SettingsPage() {
           <Section id="members">
             <Form method="post">
               <CardContent noBottom>
-                <SectionHeader title="Project members" titleAs="h3" />
+                <SectionHeader title="Project members" />
 
                 {data?.errors.unauthorized && (
                   <>
@@ -176,7 +176,6 @@ export default function SettingsPage() {
               <Section id="danger">
                 <SectionHeader
                   title="Danger zone"
-                  titleAs="h3"
                   description={
                     <Typography>
                       You can delete a project at any time, but you {`won’t`} be able to access its

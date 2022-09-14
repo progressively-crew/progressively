@@ -5,7 +5,6 @@ import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { TextInput } from "~/components/Fields/TextInput";
-import { Header } from "~/components/Header";
 import { Section, SectionHeader } from "~/components/Section";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
@@ -18,6 +17,7 @@ import { changePassword } from "~/modules/user/services/changePassword";
 import { User } from "~/modules/user/types";
 import { getSession } from "~/sessions";
 import { Card, CardContent } from "~/components/Card";
+import { PageTitle } from "~/components/PageTitle";
 
 export const meta: MetaFunction = () => {
   return {
@@ -95,7 +95,7 @@ export default function ProfilePage() {
             </span>
           </nav>
 
-          <Header title="My profile" />
+          <PageTitle value="My profile" />
         </>
       }
       status={

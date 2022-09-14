@@ -8,7 +8,6 @@ import { editStrategy } from "~/modules/strategies/services/editStrategy";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { StrategyAudience } from "~/modules/strategies/components/StrategyAudience";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { Header } from "~/components/Header";
 import { TextInput } from "~/components/Fields/TextInput";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { Crumbs } from "~/components/Breadcrumbs/types";
@@ -24,6 +23,7 @@ import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { useStrategy } from "~/modules/strategies/contexts/useStrategy";
 import { getStrategyMetaTitle } from "~/modules/strategies/services/getStrategyMetaTitle";
+import { PageTitle } from "~/components/PageTitle";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -128,7 +128,7 @@ export default function StrategyEditPage() {
     <DashboardLayout
       user={user}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
-      header={<Header title={`Edit ${strategy.name}`} />}
+      header={<PageTitle value={`Edit ${strategy.name}`} />}
       status={actionData?.errors && <ErrorBox list={actionData.errors} />}
     >
       <Form method="post">
