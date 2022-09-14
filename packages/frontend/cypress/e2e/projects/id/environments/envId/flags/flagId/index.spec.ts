@@ -46,7 +46,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]", () => {
           ["New homepage", "/dashboard/projects/1/environments/1/flags/1"],
         ]);
 
-        cy.findByText("New homepage").should("be.visible");
+        cy.findAllByText("New homepage").should("have.length", 2);
         cy.findByRole("heading", { name: "Rollout details" }).should("be.visible");
         cy.findByRole("heading", { name: "Sum-up" }).should("be.visible");
         cy.findByRole("heading", { name: "Percentage of the audience" }).should("be.visible");

@@ -4,12 +4,12 @@ import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { TextInput } from "~/components/Fields/TextInput";
-import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
 import { changeFullname } from "~/modules/user/services/changeFullname";
 import { validateUserFullname } from "~/modules/user/validators/validate-user-fullname";
 import { getSession } from "~/sessions";
 import { DashboardLayout } from "../../layouts/DashboardLayout";
+import { PageTitle } from "~/components/PageTitle";
 
 export const meta = () => {
   return {
@@ -23,9 +23,7 @@ interface ActionData {
   };
 }
 
-export const action: ActionFunction = async ({
-  request,
-}): Promise<ActionData | Response> => {
+export const action: ActionFunction = async ({ request }): Promise<ActionData | Response> => {
   const formData = await request.formData();
   const fullname = formData.get("fullname")?.toString() || "";
   const session = await getSession(request.headers.get("Cookie"));
@@ -47,7 +45,7 @@ export default function WhatsYourNamePage() {
 
   return (
     <DashboardLayout
-      header={<Header title="Hey, welcome around! What's your name?" />}
+      header={<PageTitle value="Hey, welcome around! What's your name?" />}
       status={errors?.fullname && <ErrorBox list={errors} />}
     >
       <Section>

@@ -4,17 +4,12 @@ import {
   registerAction,
   RegisterActionData,
 } from "~/modules/user/components/RegisterForm";
-import { Header } from "~/components/Header";
 import { BackLink } from "~/components/BackLink";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
-import {
-  MetaFunction,
-  ActionFunction,
-  LoaderFunction,
-  redirect,
-} from "@remix-run/node";
+import { MetaFunction, ActionFunction, LoaderFunction, redirect } from "@remix-run/node";
 import { useActionData } from "@remix-run/react";
+import { PageTitle } from "~/components/PageTitle";
 
 export const meta: MetaFunction = () => {
   return {
@@ -22,9 +17,7 @@ export const meta: MetaFunction = () => {
   };
 };
 
-export const action: ActionFunction = ({
-  request,
-}): Promise<RegisterActionData> => {
+export const action: ActionFunction = ({ request }): Promise<RegisterActionData> => {
   return registerAction({ request });
 };
 
@@ -44,17 +37,15 @@ export default function CreateAccountPage() {
   return (
     <NotAuthenticatedLayout
       nav={<BackLink to="/signin">Back to signin</BackLink>}
-      header={<Header title="Create an account" />}
+      header={<PageTitle value="Create an account" />}
       status={
         <>
-          {errors && Object.keys(errors).length > 0 && (
-            <ErrorBox list={errors} />
-          )}
+          {errors && Object.keys(errors).length > 0 && <ErrorBox list={errors} />}
 
           {newUser?.uuid && (
             <SuccessBox id="user-created">
-              The user has been created! Take a look at your inbox, there should
-              be a link to activate it :).
+              The user has been created! Take a look at your inbox, there should be a link to
+              activate it :).
             </SuccessBox>
           )}
         </>

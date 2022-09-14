@@ -1,9 +1,4 @@
-import {
-  MetaFunction,
-  ActionFunction,
-  redirect,
-  LoaderFunction,
-} from "@remix-run/node";
+import { MetaFunction, ActionFunction, redirect, LoaderFunction } from "@remix-run/node";
 import {
   useLoaderData,
   useSearchParams,
@@ -15,7 +10,6 @@ import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { TextInput } from "~/components/Fields/TextInput";
-import { Header } from "~/components/Header";
 import { Link } from "~/components/Link";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
@@ -27,6 +21,7 @@ import { Typography } from "~/components/Typography";
 import { HStack } from "~/components/HStack";
 import { Button } from "~/components/Buttons/Button";
 import { AiOutlineLock } from "react-icons/ai";
+import { PageTitle } from "~/components/PageTitle";
 
 export const meta: MetaFunction = () => {
   return {
@@ -38,9 +33,7 @@ interface ActionData {
   errors?: Partial<AuthCredentials & { badUser: string }>;
 }
 
-export const action: ActionFunction = async ({
-  request,
-}): Promise<ActionData | Response> => {
+export const action: ActionFunction = async ({ request }): Promise<ActionData | Response> => {
   const session = await getSession(request.headers.get("Cookie"));
   const formData = await request.formData();
   const email = formData.get("email")?.toString();
@@ -92,17 +85,13 @@ export default function Signin() {
   return (
     <NotAuthenticatedLayout
       header={
-        <Header
-          title="Signin"
+        <PageTitle
+          value="Signin"
           description={
             showRegister ? (
               <Typography>
                 If you {`don't`} have a user account yet, you can{" "}
-                <Link
-                  to="/register"
-                  color="nemesis"
-                >{`create an account`}</Link>
-                .
+                <Link to="/register" color="nemesis">{`create an account`}</Link>.
               </Typography>
             ) : null
           }
@@ -110,9 +99,7 @@ export default function Signin() {
       }
       status={
         <>
-          {(errors?.password || errors?.email || errors?.badUser) && (
-            <ErrorBox list={errors} />
-          )}
+          {(errors?.password || errors?.email || errors?.badUser) && <ErrorBox list={errors} />}
 
           {Boolean(userActivated) && (
             <SuccessBox id="user-activated">
