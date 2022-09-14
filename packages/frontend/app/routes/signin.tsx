@@ -22,6 +22,7 @@ import { HStack } from "~/components/HStack";
 import { Button } from "~/components/Buttons/Button";
 import { AiOutlineLock } from "react-icons/ai";
 import { PageTitle } from "~/components/PageTitle";
+import { Card, CardContent } from "~/components/Card";
 
 export const meta: MetaFunction = () => {
   return {
@@ -98,58 +99,59 @@ export default function Signin() {
         />
       }
       status={
-        <>
-          {(errors?.password || errors?.email || errors?.badUser) && <ErrorBox list={errors} />}
-
-          {Boolean(userActivated) && (
-            <SuccessBox id="user-activated">
-              The account has been activated, you can now log in
-            </SuccessBox>
-          )}
-          {Boolean(userCreated) && (
-            <SuccessBox id="user-created">
-              The account has been created, you can now log in
-            </SuccessBox>
-          )}
-        </>
+        errors?.password || errors?.email || errors?.badUser ? (
+          <ErrorBox list={errors} />
+        ) : userActivated ? (
+          <SuccessBox id="user-activated">
+            The account has been activated, you can now log in
+          </SuccessBox>
+        ) : userCreated ? (
+          <SuccessBox id="user-created">
+            The account has been created, you can now log in
+          </SuccessBox>
+        ) : null
       }
     >
-      <Form method="post">
-        <FormGroup>
-          <TextInput
-            isInvalid={Boolean(errors?.email)}
-            name="email"
-            label="Email"
-            placeholder="e.g: james.bond@mi6.com"
-            autoComplete="username"
-          />
+      <Card>
+        <CardContent>
+          <Form method="post">
+            <FormGroup>
+              <TextInput
+                isInvalid={Boolean(errors?.email)}
+                name="email"
+                label="Email"
+                placeholder="e.g: james.bond@mi6.com"
+                autoComplete="username"
+              />
 
-          <div>
-            <TextInput
-              isInvalid={Boolean(errors?.password)}
-              name="password"
-              label="Password"
-              type="password"
-              placeholder="************"
-              autoComplete="current-password"
-            />
-          </div>
+              <div>
+                <TextInput
+                  isInvalid={Boolean(errors?.password)}
+                  name="password"
+                  label="Password"
+                  type="password"
+                  placeholder="************"
+                  autoComplete="current-password"
+                />
+              </div>
 
-          <HStack spacing={4} direction={{ "@tablet": "column" }}>
-            <SubmitButton
-              isLoading={transition.state === "submitting"}
-              loadingText="Signin in progress, please wait..."
-            >
-              Sign in
-            </SubmitButton>
+              <HStack spacing={4} direction={{ "@tablet": "column" }}>
+                <SubmitButton
+                  isLoading={transition.state === "submitting"}
+                  loadingText="Signin in progress, please wait..."
+                >
+                  Sign in
+                </SubmitButton>
 
-            <Button
-              to="/forgot-password"
-              icon={<AiOutlineLock aria-hidden />}
-            >{`I forgot my password`}</Button>
-          </HStack>
-        </FormGroup>
-      </Form>
+                <Button
+                  to="/forgot-password"
+                  icon={<AiOutlineLock aria-hidden />}
+                >{`I forgot my password`}</Button>
+              </HStack>
+            </FormGroup>
+          </Form>
+        </CardContent>
+      </Card>
     </NotAuthenticatedLayout>
   );
 }

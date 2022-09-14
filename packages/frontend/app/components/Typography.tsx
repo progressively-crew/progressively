@@ -19,6 +19,10 @@ export const Typography = styled<any, any>("p", {
     fontWeight: "bold",
   },
 
+  "& a": {
+    height: "unset",
+  },
+
   variants: {
     fontWeight: mapTokenToVariant("fontWeight", fontWeights),
     lineHeight: mapTokenToVariant("lineHeight", lineHeights),

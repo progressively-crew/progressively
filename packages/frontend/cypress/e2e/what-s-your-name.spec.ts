@@ -21,7 +21,7 @@ describe("/dashboard/what-s-your-name", () => {
 
     it("shows an onboarding layout", () => {
       cy.title().should("eq", "Progressively | What's your name?");
-      cy.findByText("Hey, welcome around! What's your name?").should("be.visible");
+      cy.findByText("What's your name?").should("be.visible");
 
       cy.findByLabelText("Fullname").should("be.visible");
       cy.findByRole("button", { name: "Set my fullname" }).should("be.visible");

@@ -4,12 +4,12 @@ import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { TextInput } from "~/components/Fields/TextInput";
-import { Section } from "~/components/Section";
 import { changeFullname } from "~/modules/user/services/changeFullname";
 import { validateUserFullname } from "~/modules/user/validators/validate-user-fullname";
 import { getSession } from "~/sessions";
-import { DashboardLayout } from "../../layouts/DashboardLayout";
 import { PageTitle } from "~/components/PageTitle";
+import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
+import { Card, CardContent } from "~/components/Card";
 
 export const meta = () => {
   return {
@@ -44,26 +44,28 @@ export default function WhatsYourNamePage() {
   const errors = data?.errors;
 
   return (
-    <DashboardLayout
-      header={<PageTitle value="Hey, welcome around! What's your name?" />}
+    <NotAuthenticatedLayout
+      header={<PageTitle value="What's your name?" centered />}
       status={errors?.fullname && <ErrorBox list={errors} />}
     >
-      <Section>
-        <Form method="post">
-          <FormGroup>
-            <TextInput
-              isInvalid={Boolean(errors?.fullname)}
-              label="Fullname"
-              name="fullname"
-              placeholder="e.g: John Doe"
-            />
+      <Card>
+        <CardContent>
+          <Form method="post">
+            <FormGroup>
+              <TextInput
+                isInvalid={Boolean(errors?.fullname)}
+                label="Fullname"
+                name="fullname"
+                placeholder="e.g: John Doe"
+              />
 
-            <div>
-              <SubmitButton type="submit">Set my fullname</SubmitButton>
-            </div>
-          </FormGroup>
-        </Form>
-      </Section>
-    </DashboardLayout>
+              <div>
+                <SubmitButton type="submit">Set my fullname</SubmitButton>
+              </div>
+            </FormGroup>
+          </Form>
+        </CardContent>
+      </Card>
+    </NotAuthenticatedLayout>
   );
 }

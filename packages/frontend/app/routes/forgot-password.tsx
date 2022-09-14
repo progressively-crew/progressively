@@ -11,6 +11,7 @@ import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import { validateEmail } from "~/modules/forms/utils/validateEmail";
 import { forgotPassword } from "~/modules/user/services/forgotPassword";
 import { PageTitle } from "~/components/PageTitle";
+import { Card, CardContent } from "~/components/Card";
 
 export const meta: MetaFunction = () => {
   return {
@@ -74,38 +75,40 @@ export default function ForgotPasswordPage() {
         />
       }
       status={
-        <>
-          {errors && Object.keys(errors).length > 0 && <ErrorBox list={errors} />}
-
-          {success && (
-            <SuccessBox id="password-reset">
-              An email with a link to reset your password has been set. Make sure to follow the
-              instructions.
-            </SuccessBox>
-          )}
-        </>
+        errors && Object.keys(errors).length > 0 ? (
+          <ErrorBox list={errors} />
+        ) : success ? (
+          <SuccessBox id="password-reset">
+            An email with a link to reset your password has been set. Make sure to follow the
+            instructions.
+          </SuccessBox>
+        ) : null
       }
     >
-      <Form method="post">
-        <FormGroup>
-          <TextInput
-            isInvalid={Boolean(errors?.email)}
-            label="Email"
-            name="email"
-            type="email"
-            placeholder="e.g: james.bond@mi6.com"
-          />
+      <Card>
+        <CardContent>
+          <Form method="post">
+            <FormGroup>
+              <TextInput
+                isInvalid={Boolean(errors?.email)}
+                label="Email"
+                name="email"
+                type="email"
+                placeholder="e.g: james.bond@mi6.com"
+              />
 
-          <div>
-            <SubmitButton
-              isLoading={transition.state === "submitting"}
-              loadingText="Password resetting in progress, please wait..."
-            >
-              Reset password
-            </SubmitButton>
-          </div>
-        </FormGroup>
-      </Form>
+              <div>
+                <SubmitButton
+                  isLoading={transition.state === "submitting"}
+                  loadingText="Password resetting in progress, please wait..."
+                >
+                  Reset password
+                </SubmitButton>
+              </div>
+            </FormGroup>
+          </Form>
+        </CardContent>
+      </Card>
     </NotAuthenticatedLayout>
   );
 }
