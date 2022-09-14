@@ -6,7 +6,6 @@ import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { TextInput } from "~/components/Fields/TextInput";
-import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
 import { Typography } from "~/components/Typography";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
@@ -24,6 +23,7 @@ import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
+import { PageTitle } from "~/components/PageTitle";
 
 export const meta: MetaFunction = ({ params, parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -113,8 +113,8 @@ export default function CreateFlagPage() {
       user={user}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
-        <Header
-          title="Create a feature flag"
+        <PageTitle
+          value="Create a feature flag"
           description={
             <Typography>
               The new feature flag will appear in <strong>{project.name}</strong> /{" "}

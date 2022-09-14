@@ -8,7 +8,6 @@ import { createStrategy } from "~/modules/strategies/services/createStrategy";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { StrategyAudience } from "~/modules/strategies/components/StrategyAudience";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { Header } from "~/components/Header";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Typography } from "~/components/Typography";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
@@ -23,6 +22,7 @@ import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
+import { PageTitle } from "~/components/PageTitle";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -124,8 +124,8 @@ export default function StrategyCreatePage() {
       user={user}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
-        <Header
-          title="Create a strategy"
+        <PageTitle
+          value="Create a strategy"
           description={
             <Typography>
               {`You're`} about to create a strategy to <strong>{currentFlag.name}</strong> in{" "}

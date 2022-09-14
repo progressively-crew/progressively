@@ -4,7 +4,6 @@ import { UserRoles } from "~/modules/projects/types";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { getSession } from "~/sessions";
 import { User } from "~/modules/user/types";
-import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
 import { validateEmail } from "~/modules/forms/utils/validateEmail";
 import { ButtonCopy } from "~/components/ButtonCopy";
@@ -21,6 +20,7 @@ import { useActionData, Form, useTransition } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
+import { PageTitle } from "~/components/PageTitle";
 
 export const meta: MetaFunction = ({ parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -50,11 +50,7 @@ export const action: ActionFunction = async ({
   const session = await getSession(request.headers.get("Cookie"));
 
   try {
-    await addMemberToProject(
-      params.id!,
-      memberEmail!,
-      session.get("auth-cookie")
-    );
+    await addMemberToProject(params.id!, memberEmail!, session.get("auth-cookie"));
 
     return { success: true };
   } catch (e) {
@@ -98,15 +94,12 @@ export default function CreateProjectPage() {
       <DashboardLayout
         user={user}
         breadcrumb={<BreadCrumbs crumbs={crumbs} />}
-        header={
-          <Header title="You are not allowed to add members to projects." />
-        }
+        header={<PageTitle value="You are not allowed to add members to projects." />}
       >
         <Section>
           <figure>
             <Typography as="figcaption">
-              If you think this is an error, make sure to contact one of the
-              project administrators:
+              If you think this is an error, make sure to contact one of the project administrators:
             </Typography>
 
             <Ul>
@@ -131,7 +124,7 @@ export default function CreateProjectPage() {
     <DashboardLayout
       user={user}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
-      header={<Header title="Add member" />}
+      header={<PageTitle value="Add member" />}
       status={
         data?.success ? (
           <SuccessBox id="member-added">

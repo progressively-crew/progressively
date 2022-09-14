@@ -1,14 +1,10 @@
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { createEnv } from "~/modules/environments/services/createEnv";
-import {
-  CreateEnvironmentDTO,
-  Environment,
-} from "~/modules/environments/types";
+import { CreateEnvironmentDTO, Environment } from "~/modules/environments/types";
 import { validateEnvName } from "~/modules/environments/validators/validateEnvName";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { getSession } from "~/sessions";
-import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Typography } from "~/components/Typography";
@@ -20,6 +16,7 @@ import { useActionData, Form, useTransition } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
+import { PageTitle } from "~/components/PageTitle";
 
 export const meta: MetaFunction = ({ parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -49,15 +46,9 @@ export const action: ActionFunction = async ({
 
   const session = await getSession(request.headers.get("Cookie"));
 
-  const env: Environment = await createEnv(
-    projectId,
-    projectName!,
-    session.get("auth-cookie")
-  );
+  const env: Environment = await createEnv(projectId, projectName!, session.get("auth-cookie"));
 
-  return redirect(
-    `/dashboard/projects/${projectId}?newEnvId=${env.uuid}#env-added`
-  );
+  return redirect(`/dashboard/projects/${projectId}?newEnvId=${env.uuid}#env-added`);
 };
 
 export default function CreateEnvironmentPage() {
@@ -87,13 +78,12 @@ export default function CreateEnvironmentPage() {
       user={user}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
-        <Header
-          title="Create an environment"
+        <PageTitle
+          value="Create an environment"
           description={
             <Typography>
-              The new environment will appear in <strong>{project.name}</strong>
-              . After the creation of an environment, you will be able to get
-              its SDK key for application usage.
+              The new environment will appear in <strong>{project.name}</strong>. After the creation
+              of an environment, you will be able to get its SDK key for application usage.
             </Typography>
           }
         />

@@ -6,7 +6,6 @@ import { deleteProject } from "~/modules/projects/services/deleteProject";
 import { UserRoles } from "~/modules/projects/types";
 import { User } from "~/modules/user/types";
 import { getSession } from "~/sessions";
-import { Header } from "~/components/Header";
 import { Button } from "~/components/Buttons/Button";
 import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
 import { Typography } from "~/components/Typography";
@@ -18,6 +17,7 @@ import { useActionData, Form, useTransition } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
+import { PageTitle } from "~/components/PageTitle";
 
 export const meta: MetaFunction = ({ parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -87,12 +87,11 @@ export default function DeleteProjectPage() {
       <DeleteEntityLayout
         user={user}
         breadcrumb={<BreadCrumbs crumbs={crumbs} />}
-        header={<Header title="You are not allowed to delete projects." />}
+        header={<PageTitle value="You are not allowed to delete projects." />}
       >
         <figure>
           <Typography as="figcaption">
-            If you think this is an error, make sure to contact one of the
-            project administrators:
+            If you think this is an error, make sure to contact one of the project administrators:
           </Typography>
 
           <Ul>
@@ -118,17 +117,11 @@ export default function DeleteProjectPage() {
   return (
     <DeleteEntityLayout
       user={user}
-      header={<Header title="Deleting a project" />}
+      header={<PageTitle value="Deleting a project" />}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
-      error={
-        data?.errors &&
-        data.errors.backendError && <ErrorBox list={data.errors} />
-      }
+      error={data?.errors && data.errors.backendError && <ErrorBox list={data.errors} />}
       cancelAction={
-        <Button
-          to={`/dashboard/projects/${project.uuid}/settings`}
-          variant="secondary"
-        >
+        <Button to={`/dashboard/projects/${project.uuid}/settings`} variant="secondary">
           No, {`don't`} delete {project.name}
         </Button>
       }
@@ -149,9 +142,8 @@ export default function DeleteProjectPage() {
         list={warnings}
         title={
           <>
-            We really want to warn you: if you validate the project suppression,
-            you {`won't`} be able to access the <strong>{project.name}</strong>{" "}
-            project anymore. It includes:
+            We really want to warn you: if you validate the project suppression, you {`won't`} be
+            able to access the <strong>{project.name}</strong> project anymore. It includes:
           </>
         }
       />

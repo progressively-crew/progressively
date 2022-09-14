@@ -2,7 +2,6 @@ import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { WarningBox } from "~/components/Boxes/WarningBox";
 import { getSession } from "~/sessions";
-import { Header } from "~/components/Header";
 import { deleteStrategy } from "~/modules/strategies/services/deleteStrategy";
 import { Button } from "~/components/Buttons/Button";
 import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
@@ -19,6 +18,7 @@ import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { useStrategy } from "~/modules/strategies/contexts/useStrategy";
 import { getStrategyMetaTitle } from "~/modules/strategies/services/getStrategyMetaTitle";
+import { PageTitle } from "~/components/PageTitle";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -105,7 +105,7 @@ export default function DeleteStrategyPage() {
     <DeleteEntityLayout
       user={user}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
-      header={<Header title={`Deleting a strategy`} />}
+      header={<PageTitle value={`Deleting a strategy`} />}
       error={data?.errors && data.errors.backendError && <ErrorBox list={data.errors} />}
       cancelAction={
         <Button
