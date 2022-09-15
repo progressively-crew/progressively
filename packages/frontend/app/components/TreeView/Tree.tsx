@@ -22,7 +22,7 @@ const TreeWrapper = styled("ul", {
     fontWeight: "$bold",
   },
 
-  "& a:focus": {
+  "& a:focus-visible": {
     background: "$nemesisLight",
     borderLeft: "8px solid $nemesis",
     outline: "none",

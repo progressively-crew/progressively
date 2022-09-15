@@ -181,7 +181,7 @@ export default function VariantsOfFlag() {
         ) : actionData?.successCreated ? (
           <SuccessBox id="variant-deleted">The variant has been successfully created.</SuccessBox>
         ) : actionData?.successEdit ? (
-          <SuccessBox id="variant-edited">The variants have been edited created.</SuccessBox>
+          <SuccessBox id="variant-edited">The variants has been successfully edited.</SuccessBox>
         ) : null
       }
     >

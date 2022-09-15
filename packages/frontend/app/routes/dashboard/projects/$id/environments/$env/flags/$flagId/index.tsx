@@ -172,7 +172,7 @@ export default function FlagById() {
         ) : hasPercentageChanged ? (
           <SuccessBox id="percentage-changed">Percentage adjusted.</SuccessBox>
         ) : actionData?.successEdit ? (
-          <SuccessBox id="variant-edited">The variants have been edited created.</SuccessBox>
+          <SuccessBox id="variant-edited">The variants has been successfully edited.</SuccessBox>
         ) : hasErrors ? (
           <ErrorBox list={actionData?.errors || {}} />
         ) : null
