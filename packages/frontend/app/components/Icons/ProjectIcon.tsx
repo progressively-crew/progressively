@@ -1,3 +1,3 @@
-import { MdOutlineGroupWork } from "react-icons/md";
+import { FaFolder } from "react-icons/fa";
 
-export const ProjectIcon = () => <MdOutlineGroupWork />;
+export const ProjectIcon = () => <FaFolder />;

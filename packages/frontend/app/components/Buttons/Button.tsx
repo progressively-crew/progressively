@@ -118,6 +118,22 @@ export const RawButton = styled("button", {
         },
       },
     },
+    {
+      scheme: "inverse",
+      variant: "tertiary",
+      css: {
+        background: "transparent",
+        color: "$apollo",
+
+        "& svg": {
+          color: "$apollo",
+        },
+
+        "&:hover": {
+          background: "$hadesLight",
+        },
+      },
+    },
   ],
 });
 

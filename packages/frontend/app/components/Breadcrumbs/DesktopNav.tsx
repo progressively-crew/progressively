@@ -12,18 +12,25 @@ const Ol = styled("ol", {
 
   "& li a": {
     boxSizing: "border-box",
-    color: "$apollo",
+    color: "$hadesLight",
     transition: "border,box-shadow 0.2s",
     whiteSpace: "nowrap",
+    textDecoration: "none",
+  },
+
+  "& li a:hover": {
+    textDecoration: "underline",
   },
 
   "& li a:active": {
-    color: "$nemesisLight",
+    color: "$nemesis",
+    textDecoration: "underline",
   },
 
   "& li:last-of-type a": {
     fontWeight: "$bold",
-    color: "$hermes",
+    color: "$nemesis",
+    textDecoration: "underline",
   },
 
   "& li": {
@@ -37,7 +44,7 @@ const Separator = styled("div", {
   margin: "0 $spacing$2",
   marginTop: "$spacing$1",
   fontSize: "$mars",
-  color: "$apollo",
+  color: "$hades",
 });
 
 export interface DesktopNavProps {

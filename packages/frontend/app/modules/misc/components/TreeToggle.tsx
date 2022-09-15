@@ -1,24 +1,13 @@
+import { FaTree } from "react-icons/fa";
 import { useNavToggle } from "~/components/Breadcrumbs/hooks/useNavToggle";
-import { styled } from "~/stitches.config";
+import { Button } from "~/components/Buttons/Button";
 
-const RawButton = styled("button", {
-  border: "none",
-  background: "none",
-  padding: 0,
-  margin: 0,
-  cursor: "pointer",
-});
-
-export interface TreeToggleProps {
-  children: React.ReactNode;
-  label: string;
-}
-export const TreeToggle = ({ children, label }: TreeToggleProps) => {
+export const TreeToggle = () => {
   const { toggleNav } = useNavToggle();
 
   return (
-    <RawButton onClick={toggleNav} aria-label={label}>
-      {children}
-    </RawButton>
+    <Button onClick={toggleNav} icon={<FaTree />} variant="tertiary" scheme="inverse">
+      Browse
+    </Button>
   );
 };

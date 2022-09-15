@@ -11,7 +11,7 @@ const HorizontalNavWrapper = styled("nav", {
   },
 
   "& ul li a": {
-    height: "calc($navHeight - 8px)", // 8px is the invisible border
+    height: "calc($subnavHeight - 8px)", // 8px is the invisible border
     whiteSpace: "nowrap",
     boxSizing: "border-box",
     display: "flex",
@@ -24,7 +24,7 @@ const HorizontalNavWrapper = styled("nav", {
     borderTop: "4px solid transparent",
     borderBottom: "4px solid transparent",
     transition: "all 0.2s",
-    fontSize: "$jupiter",
+    fontSize: "$uranus",
   },
 
   "& ul li a:hover": {

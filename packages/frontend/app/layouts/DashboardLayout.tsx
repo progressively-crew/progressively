@@ -6,11 +6,11 @@ import { Spacer } from "~/components/Spacer";
 import { NavProvider } from "~/components/Breadcrumbs/providers/NavProvider";
 import { InertWhenNavOpened } from "~/components/Breadcrumbs/InertWhenNavOpened";
 import { styled } from "~/stitches.config";
-import { Stack } from "~/components/Stack";
-import { LogoWithoutText } from "~/components/Logo/WithoutText";
 import { HStack } from "~/components/HStack";
 import { NavTree } from "~/modules/misc/components/NavTree";
 import { TreeToggle } from "~/modules/misc/components/TreeToggle";
+import { DarkLogo } from "~/components/Logo/DarkLogo";
+import { UseDropdown } from "~/modules/user/components/UserDropdown";
 
 export interface DashboardLayoutProps {
   user?: Partial<User>;
@@ -31,7 +31,7 @@ const OverflowContainer = styled("div", {
   },
 });
 
-const BreadCrumbWrapper = styled("div", {
+const AppBar = styled("div", {
   background: "$hades",
 
   "& .logo": {
@@ -58,28 +58,27 @@ export const DashboardLayout = ({
 
         <PageWrapper>
           <div>
-            <Stack spacing={4}>
-              <BreadCrumbWrapper>
-                <Container>
-                  <HStack height="navHeight">
-                    <TreeToggle label="Toggle tree navigation">
-                      <LogoWithoutText />
-                    </TreeToggle>
-
-                    {breadcrumb}
+            <AppBar>
+              <Container>
+                <HStack height="navHeight" justifyContent="space-between">
+                  <DarkLogo />
+                  <HStack spacing={8}>
+                    <TreeToggle />
+                    <UseDropdown user={user} />
                   </HStack>
-                </Container>
-              </BreadCrumbWrapper>
+                </HStack>
+              </Container>
+            </AppBar>
 
-              <div>
-                <Container>
-                  {!breadcrumb && <Spacer size={4} />}
-                  <header>{header}</header>
-                </Container>
-              </div>
+            <div>
+              <Container>
+                {breadcrumb}
+                <Spacer size={4} />
+                <header>{header}</header>
+              </Container>
+            </div>
 
-              {subNav}
-            </Stack>
+            {subNav}
 
             <Spacer size={12} />
 

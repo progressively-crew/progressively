@@ -98,12 +98,7 @@ export default function SettingsPage() {
       header={
         <Header
           tagline={<TagLine icon={<ProjectIcon />}>PROJECT</TagLine>}
-          title={
-            <span>
-              {project.name}
-              <VisuallyHidden> settings</VisuallyHidden>
-            </span>
-          }
+          title={<span>{project.name}</span>}
         />
       }
       subNav={
