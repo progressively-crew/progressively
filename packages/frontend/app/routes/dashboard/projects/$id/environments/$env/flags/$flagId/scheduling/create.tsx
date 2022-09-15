@@ -18,6 +18,7 @@ import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { PageTitle } from "~/components/PageTitle";
+import { Card, CardContent } from "~/components/Card";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -137,9 +138,13 @@ export default function SchedulingCreatePage() {
       }
       status={actionData?.errors && <ErrorBox list={actionData.errors} />}
     >
-      <Form method="post">
-        <CreateSchedulingFrom />
-      </Form>
+      <Card>
+        <CardContent>
+          <Form method="post">
+            <CreateSchedulingFrom />
+          </Form>
+        </CardContent>
+      </Card>
     </DashboardLayout>
   );
 }

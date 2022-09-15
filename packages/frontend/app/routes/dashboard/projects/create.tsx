@@ -15,6 +15,7 @@ import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
 import { useActionData, Form, useTransition } from "@remix-run/react";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { PageTitle } from "~/components/PageTitle";
+import { Card, CardContent } from "~/components/Card";
 
 export const meta: MetaFunction = () => {
   return {
@@ -70,7 +71,7 @@ export default function CreateProjectPage() {
           value="Create a project"
           description={
             <Typography>
-              When creating a project, {`you'll`} become the administrator of it and will have full
+              When creating a project, you will become its administrator and you will have full
               control over it.
             </Typography>
           }
@@ -78,28 +79,32 @@ export default function CreateProjectPage() {
       }
       status={errors?.name && <ErrorBox list={errors} />}
     >
-      <Section>
-        <Form method="post">
-          <FormGroup>
-            <TextInput
-              isInvalid={Boolean(errors?.name)}
-              label="Project name"
-              name="name"
-              placeholder="e.g: My super project"
-            />
+      <Card>
+        <CardContent>
+          <Section>
+            <Form method="post">
+              <FormGroup>
+                <TextInput
+                  isInvalid={Boolean(errors?.name)}
+                  label="Project name"
+                  name="name"
+                  placeholder="e.g: My super project"
+                />
 
-            <div>
-              <SubmitButton
-                type="submit"
-                isLoading={transition.state === "submitting"}
-                loadingText="Creating the project, please wait..."
-              >
-                Create the project
-              </SubmitButton>
-            </div>
-          </FormGroup>
-        </Form>
-      </Section>
+                <div>
+                  <SubmitButton
+                    type="submit"
+                    isLoading={transition.state === "submitting"}
+                    loadingText="Creating the project, please wait..."
+                  >
+                    Create the project
+                  </SubmitButton>
+                </div>
+              </FormGroup>
+            </Form>
+          </Section>
+        </CardContent>
+      </Card>
     </DashboardLayout>
   );
 }

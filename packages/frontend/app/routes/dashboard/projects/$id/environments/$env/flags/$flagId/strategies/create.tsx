@@ -23,6 +23,7 @@ import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { PageTitle } from "~/components/PageTitle";
+import { Card, CardContent } from "~/components/Card";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -140,31 +141,35 @@ export default function StrategyCreatePage() {
       }
       status={actionData?.errors && <ErrorBox list={actionData.errors} />}
     >
-      <Form method="post">
-        <FormGroup>
-          <TextInput
-            name="strategy-name"
-            placeholder="e.g: Strategy 1"
-            label="Strategy name"
-            isInvalid={Boolean(errors["strategy-name"])}
-          />
+      <Card>
+        <CardContent>
+          <Form method="post">
+            <FormGroup>
+              <TextInput
+                name="strategy-name"
+                placeholder="e.g: Strategy 1"
+                label="Strategy name"
+                isInvalid={Boolean(errors["strategy-name"])}
+              />
 
-          <StrategyAudience
-            strategyType={strategyType}
-            onStrategyChange={setStrategyType}
-            errors={errors}
-          />
+              <StrategyAudience
+                strategyType={strategyType}
+                onStrategyChange={setStrategyType}
+                errors={errors}
+              />
 
-          <div>
-            <SubmitButton
-              isLoading={transition.state === "submitting"}
-              loadingText="Saving the strategy, please wait..."
-            >
-              Save the strategy
-            </SubmitButton>
-          </div>
-        </FormGroup>
-      </Form>
+              <div>
+                <SubmitButton
+                  isLoading={transition.state === "submitting"}
+                  loadingText="Saving the strategy, please wait..."
+                >
+                  Save the strategy
+                </SubmitButton>
+              </div>
+            </FormGroup>
+          </Form>
+        </CardContent>
+      </Card>
     </DashboardLayout>
   );
 }

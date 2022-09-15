@@ -30,7 +30,7 @@ describe("/dashboard/projects/create", () => {
 
       cy.findByLabelText("Project name").should("be.visible");
       cy.findByText(
-        "When creating a project, you'll become the administrator of it and will have full control over it."
+        "When creating a project, you will become its administrator and you will have full control over it."
       ).should("be.visible");
 
       cy.findByRole("button", { name: "Create the project" }).should("be.visible");
