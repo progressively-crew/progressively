@@ -94,6 +94,7 @@ export const sizes = {
   dialog: "120ch",
   navHeight: "72px",
   subnavHeight: "52px",
+  tableHeight: "500px",
 };
 
 export const shadows = {

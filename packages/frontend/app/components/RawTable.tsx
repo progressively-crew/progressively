@@ -3,6 +3,7 @@ import { styled } from "~/stitches.config";
 
 const Wrapper = styled("div", {
   overflowX: "auto",
+  overflowY: "clip",
 });
 
 const Table = styled("table", {
@@ -10,10 +11,10 @@ const Table = styled("table", {
   fontFamily: "$default",
   whiteSpace: "nowrap",
   width: "100%",
-  height: "100%",
 
   "& th": {
-    padding: "$spacing$6 $spacing$3",
+    verticalAlign: "middle",
+    height: "$cta",
     textAlign: "left",
     textTransform: "uppercase",
     fontSize: "$neptune",
@@ -21,7 +22,9 @@ const Table = styled("table", {
   },
 
   "& td": {
-    padding: "$spacing$4 $spacing$3",
+    verticalAlign: "middle",
+    height: "$cta",
+    padding: "0 $spacing$2",
     color: "$hades",
   },
 
