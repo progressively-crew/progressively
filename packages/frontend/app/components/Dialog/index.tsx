@@ -27,14 +27,14 @@ const DialogOverlay = styled("div", {
 
 const DialogInner = styled("div", {
   maxHeight: "$sizes$treeHeight",
-  maxWidth: "$sizes$dialog",
+  width: "$sizes$dialog",
   overflowY: "scroll",
 });
 
 export const DialogTitle = styled("h1", {
   fontFamily: "$title",
   padding: "$spacing$8",
-  fontSize: "$earth",
+  fontSize: "$uranus",
 });
 
 export const DialogCloseButton = styled("button", {

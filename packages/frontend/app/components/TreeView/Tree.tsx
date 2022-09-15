@@ -22,7 +22,7 @@ const TreeWrapper = styled("ul", {
     fontWeight: "$bold",
   },
 
-  "& a:focus": {
+  "& a:focus-visible": {
     background: "$nemesisLight",
     borderLeft: "8px solid $nemesis",
     outline: "none",
@@ -89,14 +89,23 @@ export interface TreeItemLinkProps {
   children: React.ReactNode;
   to: string;
   onClick?: () => void;
+  id?: string;
 }
 
-const TreeItemLink = ({ children, to, onClick }: TreeItemLinkProps) => {
+const TreeItemLink = ({ children, to, onClick, id: actualId }: TreeItemLinkProps) => {
   const expanded = false;
   const id = useTreeItem();
 
   return (
-    <NavLink end role="treeitem" aria-expanded={expanded} aria-owns={id} to={to} onClick={onClick}>
+    <NavLink
+      end
+      role="treeitem"
+      aria-expanded={expanded}
+      aria-owns={id}
+      to={to}
+      onClick={onClick}
+      id={actualId}
+    >
       {children}
     </NavLink>
   );
@@ -107,13 +116,14 @@ export interface TreeItemProps {
   group?: React.ReactNode;
   to: string;
   onClick?: () => void;
+  id?: string;
 }
 
-export const TreeItem = ({ children, group, to, onClick }: TreeItemProps) => {
+export const TreeItem = ({ children, group, to, onClick, id }: TreeItemProps) => {
   return (
     <TreeItemProvider>
       <li role="none">
-        <TreeItemLink to={to} onClick={onClick}>
+        <TreeItemLink to={to} onClick={onClick} id={id}>
           {children}
         </TreeItemLink>
       </li>

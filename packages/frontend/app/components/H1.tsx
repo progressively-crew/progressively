@@ -5,7 +5,7 @@ export const H1: React.FC<React.HTMLAttributes<HTMLHeadingElement>> = (props) =>
     <Typography
       as="h1"
       id="page-title"
-      size="mercury"
+      size="earth"
       font="title"
       color="hades"
       fontWeight="semiBold"

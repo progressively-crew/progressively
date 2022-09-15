@@ -15,7 +15,7 @@ export const NavTree = () => {
 
   return (
     <Dialog open={isNavOpened} onClose={toggleNav}>
-      <FocusTrap isActive={isNavOpened}>
+      <FocusTrap isActive={isNavOpened} initialElementSelector="project-at-index-0">
         <HStack justifyContent="space-between">
           <DialogTitle>Navigate in Progressively</DialogTitle>
 
@@ -25,8 +25,9 @@ export const NavTree = () => {
         </HStack>
 
         <Tree label="Navigate in Progressively">
-          {projects.map((up) => (
+          {projects.map((up, index) => (
             <TreeItem
+              id={`project-at-index-${index}`}
               onClick={toggleNav}
               to={`/dashboard/projects/${up.projectId}`}
               key={up.projectId}

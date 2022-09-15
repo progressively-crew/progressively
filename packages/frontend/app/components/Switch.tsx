@@ -34,7 +34,7 @@ const StyledThumb = styled("span", {
 
 const Text = styled("span", {
   fontSize: "$uranus",
-  color: "$0E061F",
+  color: "$hadesLight",
   fontFamily: "$default",
 });
 
@@ -43,7 +43,7 @@ const SwitchInnerWrapper = styled("span", {
   borderRadius: "9999px",
   width: 40,
   height: 20,
-  background: "$hades",
+  background: "$hadesLight",
 
   variants: {
     checked: {

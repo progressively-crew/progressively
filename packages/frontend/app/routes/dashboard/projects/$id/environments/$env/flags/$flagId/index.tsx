@@ -125,18 +125,22 @@ export default function FlagById() {
     {
       link: "/dashboard",
       label: "Projects",
+      isRoot: true,
     },
     {
       link: `/dashboard/projects/${project.uuid}`,
       label: project.name,
+      isProject: true,
     },
     {
       link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}`,
       label: environment.name,
+      isEnv: true,
     },
     {
       link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`,
       label: currentFlag.name,
+      isFlag: true,
     },
   ];
 
@@ -168,7 +172,7 @@ export default function FlagById() {
         ) : hasPercentageChanged ? (
           <SuccessBox id="percentage-changed">Percentage adjusted.</SuccessBox>
         ) : actionData?.successEdit ? (
-          <SuccessBox id="variant-edited">The variants have been edited created.</SuccessBox>
+          <SuccessBox id="variant-edited">The variants has been successfully edited.</SuccessBox>
         ) : hasErrors ? (
           <ErrorBox list={actionData?.errors || {}} />
         ) : null

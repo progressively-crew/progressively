@@ -118,6 +118,22 @@ export const RawButton = styled("button", {
         },
       },
     },
+    {
+      scheme: "inverse",
+      variant: "tertiary",
+      css: {
+        background: "transparent",
+        color: "$apollo",
+
+        "& svg": {
+          color: "$apollo",
+        },
+
+        "&:hover": {
+          background: "$hadesLight",
+        },
+      },
+    },
   ],
 });
 
@@ -129,7 +145,7 @@ export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   loadingText?: string;
   type?: "button" | "submit" | "reset";
   variant?: "tertiary" | "primary" | "secondary";
-  scheme?: "default" | "danger";
+  scheme?: "default" | "danger" | "inverse";
   icon?: React.ReactNode;
   small?: boolean;
 }

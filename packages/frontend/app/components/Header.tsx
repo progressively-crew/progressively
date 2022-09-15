@@ -1,6 +1,7 @@
 import { styled } from "~/stitches.config";
 import { H1 } from "./H1";
 import { HStack } from "./HStack";
+import { Spacer } from "./Spacer";
 
 export interface HeaderProps {
   title: string | React.ReactNode;
@@ -22,6 +23,7 @@ export const Header = ({ title, description, startAction, tagline }: HeaderProps
       <div>
         <HeadingWrapper>
           <H1 as="p">{title}</H1>
+          <Spacer size={2} />
           {tagline}
         </HeadingWrapper>
 

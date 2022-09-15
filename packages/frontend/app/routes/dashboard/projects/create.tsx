@@ -53,6 +53,7 @@ export default function CreateProjectPage() {
     {
       link: "/dashboard",
       label: "Projects",
+      isRoot: true,
     },
     {
       link: "/dashboard/projects/create",

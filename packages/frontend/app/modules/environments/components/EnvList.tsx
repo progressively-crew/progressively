@@ -26,7 +26,7 @@ const EnvRow = ({ env, projectId }: EnvRowProps) => {
         </Link>
       </td>
       <td>
-        <ButtonCopy toCopy={env.clientKey} small={true}>
+        <ButtonCopy toCopy={env.clientKey} small={true} variant="tertiary">
           {env.clientKey}
         </ButtonCopy>
       </td>

@@ -53,7 +53,7 @@ export const colors = {
   // New colors
   //primaries
   hades: "#0E061F",
-  hadesLight: "#211836",
+  hadesLight: "#221935",
   nemesis: "#4B37A9",
   nemesisLight: "#eae8fa",
 
@@ -89,10 +89,12 @@ export const sizes = {
   cta: "48px",
   ctaSmall: "40px",
   emptyStateIconHeight: "160px",
-  avatar: "40px",
+  avatar: "32px",
   treeHeight: "60%",
-  dialog: "120ch",
+  dialog: "80ch",
   navHeight: "72px",
+  subnavHeight: "52px",
+  tableHeight: "500px",
 };
 
 export const shadows = {

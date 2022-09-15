@@ -1,8 +1,12 @@
 import { MdChevronRight } from "react-icons/md";
+import { TbFolders } from "react-icons/tb";
 import { styled } from "~/stitches.config";
 import { HStack } from "../HStack";
+import { EnvIcon } from "../Icons/EnvIcon";
+import { FlagIcon } from "../Icons/FlagIcon";
+import { ProjectIcon } from "../Icons/ProjectIcon";
 import { Link } from "../Link";
-import { Crumbs } from "./types";
+import { Crumb, Crumbs } from "./types";
 
 const Ol = styled("ol", {
   fontFamily: "$default",
@@ -12,18 +16,25 @@ const Ol = styled("ol", {
 
   "& li a": {
     boxSizing: "border-box",
-    color: "$apollo",
+    color: "$hadesLight",
     transition: "border,box-shadow 0.2s",
     whiteSpace: "nowrap",
+    textDecoration: "none",
+  },
+
+  "& li a:hover": {
+    textDecoration: "underline",
   },
 
   "& li a:active": {
-    color: "$nemesisLight",
+    color: "$nemesis",
+    textDecoration: "underline",
   },
 
   "& li:last-of-type a": {
     fontWeight: "$bold",
-    color: "$hermes",
+    color: "$nemesis",
+    textDecoration: "underline",
   },
 
   "& li": {
@@ -37,12 +48,21 @@ const Separator = styled("div", {
   margin: "0 $spacing$2",
   marginTop: "$spacing$1",
   fontSize: "$mars",
-  color: "$apollo",
+  color: "$hades",
 });
 
 export interface DesktopNavProps {
   crumbs: Crumbs;
 }
+
+const CrumbIcon = ({ crumb }: { crumb: Crumb }) => {
+  if (crumb.isRoot) return <TbFolders />;
+  if (crumb.isEnv) return <EnvIcon />;
+  if (crumb.isFlag) return <FlagIcon />;
+  if (crumb.isProject) return <ProjectIcon />;
+
+  return null;
+};
 
 export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
   const lastItemIndex = crumbs.length - 1;
@@ -61,7 +81,7 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
                 fontSize="uranus"
               >
                 <HStack spacing={2}>
-                  {crumb.icon}
+                  <CrumbIcon crumb={crumb} />
                   {crumb.label}
                 </HStack>
               </Link>

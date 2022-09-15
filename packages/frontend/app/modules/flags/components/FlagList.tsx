@@ -39,7 +39,7 @@ const FlagRow = ({ flagEnv, projectId, envId }: FlagRowProps) => {
         </div>
       </td>
       <td>
-        <ButtonCopy toCopy={flagEnv.flag.key} small={true}>
+        <ButtonCopy toCopy={flagEnv.flag.key} small={true} variant="tertiary">
           {flagEnv.flag.key}
         </ButtonCopy>
       </td>
@@ -60,12 +60,7 @@ export const FlagList = ({ flags, projectId, envId }: FlagListProps) => {
       </thead>
       <tbody>
         {flags.map((flagEnv) => (
-          <FlagRow
-            flagEnv={flagEnv}
-            projectId={projectId}
-            envId={envId}
-            key={flagEnv.flagId}
-          />
+          <FlagRow flagEnv={flagEnv} projectId={projectId} envId={envId} key={flagEnv.flagId} />
         ))}
       </tbody>
     </RawTable>

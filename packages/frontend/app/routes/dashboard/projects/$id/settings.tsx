@@ -83,10 +83,12 @@ export default function SettingsPage() {
     {
       link: "/dashboard",
       label: "Projects",
+      isRoot: true,
     },
     {
       link: `/dashboard/projects/${project.uuid}`,
       label: project.name,
+      isProject: true,
       forceNotCurrent: true,
     },
   ];
@@ -98,12 +100,7 @@ export default function SettingsPage() {
       header={
         <Header
           tagline={<TagLine icon={<ProjectIcon />}>PROJECT</TagLine>}
-          title={
-            <span>
-              {project.name}
-              <VisuallyHidden> settings</VisuallyHidden>
-            </span>
-          }
+          title={<span>{project.name}</span>}
         />
       }
       subNav={
@@ -125,7 +122,27 @@ export default function SettingsPage() {
           <Section id="members">
             <Form method="post">
               <CardContent noBottom>
-                <SectionHeader title="Project members" />
+                <SectionHeader
+                  title="Project members"
+                  action={
+                    userRole === UserRoles.Admin && (
+                      <HStack spacing={4}>
+                        <CreateButton small to={`/dashboard/projects/${project.uuid}/add-member`}>
+                          Add member
+                        </CreateButton>
+
+                        <DeleteButton
+                          small
+                          type={"submit"}
+                          isLoading={transition.state === "submitting"}
+                          loadingText="Deleting the member(s), please wait..."
+                        >
+                          Remove from project
+                        </DeleteButton>
+                      </HStack>
+                    )
+                  }
+                />
 
                 {data?.errors.unauthorized && (
                   <>
@@ -141,23 +158,6 @@ export default function SettingsPage() {
                     </SuccessBox>
                     <Spacer size={4} />
                   </>
-                )}
-
-                {userRole === UserRoles.Admin && (
-                  <HStack spacing={4}>
-                    <CreateButton small to={`/dashboard/projects/${project.uuid}/add-member`}>
-                      Add member
-                    </CreateButton>
-
-                    <DeleteButton
-                      small
-                      type={"submit"}
-                      isLoading={transition.state === "submitting"}
-                      loadingText="Deleting the member(s), please wait..."
-                    >
-                      Remove from project
-                    </DeleteButton>
-                  </HStack>
                 )}
               </CardContent>
 

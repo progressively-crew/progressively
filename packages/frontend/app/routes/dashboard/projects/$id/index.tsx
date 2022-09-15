@@ -40,10 +40,12 @@ export default function ProjectDetailPage() {
     {
       link: "/dashboard",
       label: "Projects",
+      isRoot: true,
     },
     {
       link: `/dashboard/projects/${project.uuid}`,
       label: project.name,
+      isProject: true,
     },
   ];
 

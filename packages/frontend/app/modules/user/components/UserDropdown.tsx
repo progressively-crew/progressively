@@ -1,9 +1,6 @@
 import { User } from "~/modules/user/types";
-import { Link } from "~/components/Link";
 import { Avatar } from "~/components/Avatar";
-import { VisuallyHidden } from "~/components/VisuallyHidden";
-import { HideTablet } from "~/components/HideMobile";
-import { HStack } from "~/components/HStack";
+import { Button } from "~/components/Buttons/Button";
 
 export interface UserDropdownProps {
   user: User;
@@ -11,18 +8,13 @@ export interface UserDropdownProps {
 
 export const UseDropdown = ({ user }: UserDropdownProps) => {
   return (
-    <Link
+    <Button
       to="/profile"
-      color="heracles"
-      active="hermes"
-      style={{ textDecoration: "none" }}
-      fontSize="uranus"
+      icon={<Avatar aria-hidden>{user.fullname}</Avatar>}
+      variant="tertiary"
+      scheme="inverse"
     >
-      <HStack spacing={2}>
-        <Avatar>{user.fullname}</Avatar>
-        <VisuallyHidden>{user.fullname}</VisuallyHidden>
-        <HideTablet aria-hidden>{user.fullname}</HideTablet>
-      </HStack>
-    </Link>
+      {user.fullname}
+    </Button>
   );
 };

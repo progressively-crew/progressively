@@ -13,6 +13,8 @@ export interface PageTitleProps {
 
 const IconWrapper = styled("span", {
   color: "$nemesis",
+  fontSize: "$mercury",
+  marginTop: "$spacing$2",
 });
 
 export const PageTitle = ({ value, icon, action, description }: PageTitleProps) => {

@@ -5,7 +5,7 @@ import { HStack } from "./HStack";
 const IconWrapper = styled("span", {
   display: "flex",
   "& svg": {
-    fontSize: "$neptune",
+    fontSize: "$uranus",
     color: "$nemesis",
   },
 });

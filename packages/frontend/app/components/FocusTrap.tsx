@@ -5,10 +5,11 @@ import { KeyboardKeys } from "~/modules/a11y/utils/keyboardKeys";
 export interface FocusTrapProps {
   children: React.ReactNode;
   isActive: boolean;
+  initialElementSelector?: string;
 }
 
-export const FocusTrap = ({ children, isActive }: FocusTrapProps) => {
-  const trappedRef = useRef(null);
+export const FocusTrap = ({ children, isActive, initialElementSelector }: FocusTrapProps) => {
+  const trappedRef = useRef<HTMLElement>(null);
 
   /**
    * Restore the focus to the previously focused element (often, it's the CTA that opened the trap)
@@ -31,6 +32,15 @@ export const FocusTrap = ({ children, isActive }: FocusTrapProps) => {
 
     if (!trappedRef.current) return;
 
+    // Sends the focus to the element matching the selector if passed
+    if (initialElementSelector) {
+      const focusableElement = trappedRef.current.querySelector(`#${initialElementSelector}`);
+
+      if (focusableElement) {
+        return (focusableElement as HTMLElement).focus();
+      }
+    }
+
     const focusableChildren = getFocusableNodes(trappedRef.current);
 
     if (focusableChildren.length > 0) {
@@ -42,7 +52,7 @@ export const FocusTrap = ({ children, isActive }: FocusTrapProps) => {
         "[FocusTrap]: it seems there are no focusable elements in the focus trap tree. Make sure there s at least one."
       );
     }
-  }, [isActive]);
+  }, [isActive, initialElementSelector]);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key !== KeyboardKeys.TAB) return;

@@ -1,3 +1,3 @@
-import { MdOutlineGroupWork } from "react-icons/md";
+import { TbFolder } from "react-icons/tb";
 
-export const ProjectIcon = () => <MdOutlineGroupWork />;
+export const ProjectIcon = () => <TbFolder />;
