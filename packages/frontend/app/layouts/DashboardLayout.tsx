@@ -16,7 +16,7 @@ export interface DashboardLayoutProps {
   user?: Partial<User>;
   children: React.ReactNode;
   breadcrumb?: React.ReactNode;
-  header: React.ReactNode;
+  header?: React.ReactNode;
   subNav?: React.ReactNode;
   status?: React.ReactNode;
 }

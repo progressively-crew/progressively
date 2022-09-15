@@ -1,3 +1,3 @@
-import { FaFolder } from "react-icons/fa";
+import { TbFolder } from "react-icons/tb";
 
-export const ProjectIcon = () => <FaFolder />;
+export const ProjectIcon = () => <TbFolder />;
