@@ -71,10 +71,12 @@ export default function DeleteProjectPage() {
     {
       link: "/dashboard",
       label: "Projects",
+      isRoot: true,
     },
     {
       link: `/dashboard/projects/${project.uuid}`,
       label: project.name,
+      isProject: true,
     },
     {
       link: `/dashboard/projects/${project.uuid}/delete`,

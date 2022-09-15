@@ -73,18 +73,22 @@ export default function DeleteSchedulePage() {
     {
       link: "/dashboard",
       label: "Projects",
+      isRoot: true,
     },
     {
       link: `/dashboard/projects/${project.uuid}`,
       label: project.name,
+      isProject: true,
     },
     {
       link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}`,
       label: environment.name,
+      isEnv: true,
     },
     {
       link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`,
       label: currentFlag.name,
+      isFlag: true,
     },
     {
       link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/scheduling/${params.scheduleId}/delete`,

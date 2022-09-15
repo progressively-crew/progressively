@@ -5,6 +5,10 @@ export interface Crumb {
   label: string;
   forceNotCurrent?: boolean;
   icon?: React.ReactNode;
+  isRoot?: boolean;
+  isProject?: boolean;
+  isEnv?: boolean;
+  isFlag?: boolean;
 }
 
 export type Crumbs = Array<Crumb>;

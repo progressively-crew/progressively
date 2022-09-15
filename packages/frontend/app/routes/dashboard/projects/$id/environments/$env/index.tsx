@@ -75,14 +75,17 @@ export default function FlagsByEnvPage() {
     {
       link: "/dashboard",
       label: "Projects",
+      isRoot: true,
     },
     {
       link: `/dashboard/projects/${project.uuid}`,
       label: project.name,
+      isProject: true,
     },
     {
       link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}`,
       label: environment.name,
+      isEnv: true,
     },
   ];
 
