@@ -91,7 +91,7 @@ export const sizes = {
   emptyStateIconHeight: "160px",
   avatar: "32px",
   treeHeight: "60%",
-  dialog: "120ch",
+  dialog: "80ch",
   navHeight: "72px",
   subnavHeight: "52px",
   tableHeight: "500px",

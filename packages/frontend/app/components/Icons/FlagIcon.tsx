@@ -1,3 +1,3 @@
-import { FiFlag } from "react-icons/fi";
+import { TbFlag3 } from "react-icons/tb";
 
-export const FlagIcon = () => <FiFlag />;
+export const FlagIcon = () => <TbFlag3 />;
