@@ -17,6 +17,7 @@ import { useProject } from "~/modules/projects/contexts/useProject";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
+import { Card, CardContent } from "~/components/Card";
 
 export const meta: MetaFunction = ({ parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -92,30 +93,34 @@ export default function CreateEnvironmentPage() {
       }
       status={errors?.name && <ErrorBox list={errors} />}
     >
-      <Section>
-        <Form method="post">
-          <FormGroup>
-            <div>
-              <TextInput
-                isInvalid={Boolean(errors?.name)}
-                name="env-name"
-                placeholder="e.g: Staging"
-                label="Environment name"
-              />
-            </div>
+      <Card>
+        <CardContent>
+          <Section>
+            <Form method="post">
+              <FormGroup>
+                <div>
+                  <TextInput
+                    isInvalid={Boolean(errors?.name)}
+                    name="env-name"
+                    placeholder="e.g: Staging"
+                    label="Environment name"
+                  />
+                </div>
 
-            <div>
-              <SubmitButton
-                type="submit"
-                isLoading={transition.state === "submitting"}
-                loadingText="Creating the environment, please wait..."
-              >
-                Create the environment
-              </SubmitButton>
-            </div>
-          </FormGroup>
-        </Form>
-      </Section>
+                <div>
+                  <SubmitButton
+                    type="submit"
+                    isLoading={transition.state === "submitting"}
+                    loadingText="Creating the environment, please wait..."
+                  >
+                    Create the environment
+                  </SubmitButton>
+                </div>
+              </FormGroup>
+            </Form>
+          </Section>
+        </CardContent>
+      </Card>
     </DashboardLayout>
   );
 }

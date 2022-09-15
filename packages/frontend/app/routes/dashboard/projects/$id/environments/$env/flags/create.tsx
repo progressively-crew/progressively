@@ -17,13 +17,13 @@ import { Checkbox } from "~/components/Checkbox";
 import { Label } from "~/components/Fields/Label";
 import { HStack } from "~/components/HStack";
 import { Stack } from "~/components/Stack";
-import { Divider } from "~/components/Divider";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
+import { Card, CardContent } from "~/components/Card";
 
 export const meta: MetaFunction = ({ params, parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -129,58 +129,60 @@ export default function CreateFlagPage() {
       }
       status={(errors?.name || errors?.description) && <ErrorBox list={errors} />}
     >
-      <Section>
-        <Form method="post">
-          <FormGroup>
-            <TextInput
-              name="flag-name"
-              isInvalid={Boolean(errors?.name)}
-              label="Flag name"
-              placeholder="e.g: New Homepage"
-            />
+      <Card>
+        <CardContent>
+          <Section>
+            <Form method="post">
+              <FormGroup>
+                <TextInput
+                  name="flag-name"
+                  isInvalid={Boolean(errors?.name)}
+                  label="Flag name"
+                  placeholder="e.g: New Homepage"
+                />
 
-            <div>
-              <TextInput
-                name="flag-desc"
-                isInvalid={Boolean(errors?.description)}
-                label="Flag description"
-                placeholder="e.g: The new homepage"
-              />
-            </div>
+                <div>
+                  <TextInput
+                    name="flag-desc"
+                    isInvalid={Boolean(errors?.description)}
+                    label="Flag description"
+                    placeholder="e.g: The new homepage"
+                  />
+                </div>
 
-            <Divider background="apollo" />
+                <fieldset>
+                  <Stack spacing={2}>
+                    <Label as="legend">Create this flag for the following environments</Label>
+                    {environments.map((env) => (
+                      <HStack spacing={2} key={env.uuid}>
+                        <Checkbox
+                          id={env.uuid}
+                          value={env.uuid}
+                          name="otherEnvironments"
+                          defaultChecked={true}
+                        />
+                        <Label size="uranus" htmlFor={env.uuid} fontWeight="normal">
+                          {env.name}
+                        </Label>
+                      </HStack>
+                    ))}
+                  </Stack>
+                </fieldset>
 
-            <fieldset>
-              <Stack spacing={2}>
-                <Label as="legend">Create this flag for the following environments</Label>
-                {environments.map((env) => (
-                  <HStack spacing={2} key={env.uuid}>
-                    <Checkbox
-                      id={env.uuid}
-                      value={env.uuid}
-                      name="otherEnvironments"
-                      defaultChecked={true}
-                    />
-                    <Label size="uranus" htmlFor={env.uuid} fontWeight="normal">
-                      {env.name}
-                    </Label>
-                  </HStack>
-                ))}
-              </Stack>
-            </fieldset>
-
-            <div>
-              <SubmitButton
-                type="submit"
-                isLoading={transition.state === "submitting"}
-                loadingText="Creating the feature flag, please wait..."
-              >
-                Create the feature flag
-              </SubmitButton>
-            </div>
-          </FormGroup>
-        </Form>
-      </Section>
+                <div>
+                  <SubmitButton
+                    type="submit"
+                    isLoading={transition.state === "submitting"}
+                    loadingText="Creating the feature flag, please wait..."
+                  >
+                    Create the feature flag
+                  </SubmitButton>
+                </div>
+              </FormGroup>
+            </Form>
+          </Section>
+        </CardContent>
+      </Card>
     </DashboardLayout>
   );
 }
