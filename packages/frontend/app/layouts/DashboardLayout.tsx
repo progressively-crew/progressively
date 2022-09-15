@@ -62,7 +62,7 @@ export const DashboardLayout = ({
               <Container>
                 <HStack height="navHeight" justifyContent="space-between">
                   <DarkLogo />
-                  <HStack spacing={8}>
+                  <HStack spacing={4}>
                     <TreeToggle />
                     <UseDropdown user={user} />
                   </HStack>

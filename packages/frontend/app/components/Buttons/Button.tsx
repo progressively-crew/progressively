@@ -145,7 +145,7 @@ export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   loadingText?: string;
   type?: "button" | "submit" | "reset";
   variant?: "tertiary" | "primary" | "secondary";
-  scheme?: "default" | "danger";
+  scheme?: "default" | "danger" | "inverse";
   icon?: React.ReactNode;
   small?: boolean;
 }
