@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { NavContext } from "../context/NavContext";
 
 export interface NavProviderProps {
@@ -8,13 +8,9 @@ export interface NavProviderProps {
 export const NavProvider = ({ children }: NavProviderProps) => {
   const [isNavOpened, setIsNavOpened] = useState(false);
 
-  const toggleNav = () => {
+  const toggleNav = useCallback(() => {
     setIsNavOpened((s) => !s);
-  };
+  }, [setIsNavOpened]);
 
-  return (
-    <NavContext.Provider value={{ isNavOpened, toggleNav }}>
-      {children}
-    </NavContext.Provider>
-  );
+  return <NavContext.Provider value={{ isNavOpened, toggleNav }}>{children}</NavContext.Provider>;
 };
