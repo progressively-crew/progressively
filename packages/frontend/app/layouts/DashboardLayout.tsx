@@ -60,7 +60,12 @@ export const DashboardLayout = ({
           <div>
             <AppBar>
               <Container>
-                <HStack height="navHeight" justifyContent="space-between">
+                <HStack
+                  height="navHeight"
+                  justifyContent="space-between"
+                  as="nav"
+                  aria-label="General navigation"
+                >
                   <DarkLogo />
                   <HStack spacing={4}>
                     <TreeToggle />
