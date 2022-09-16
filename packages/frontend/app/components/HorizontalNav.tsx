@@ -4,7 +4,7 @@ import { Container } from "./Container";
 import { HStack } from "./HStack";
 
 const HorizontalNavWrapper = styled("nav", {
-  background: "$nemesisLight",
+  background: "$hypnos",
 
   "& ul": {
     display: "flex",
@@ -18,7 +18,7 @@ const HorizontalNavWrapper = styled("nav", {
     cursor: "pointer",
     fontFamily: "$default",
     textDecoration: "none",
-    color: "$hades",
+    color: "$apollo",
     paddingRight: "$spacing$6",
     paddingLeft: "$spacing$2",
     borderTop: "4px solid transparent",
@@ -28,16 +28,20 @@ const HorizontalNavWrapper = styled("nav", {
   },
 
   "& ul li a:hover": {
-    borderBottom: "4px solid $nemesis",
+    background: "$nemesis",
   },
 
   "& ul li a.active": {
-    color: "$nemesis",
-    borderBottom: "4px solid $nemesis",
+    color: "$apollo",
+    borderBottom: "4px solid $hermes",
+
+    "& svg": {
+      color: "$hermes",
+    },
   },
 
   "& ul li a svg": {
-    color: "$nemesis",
+    color: "$apollo",
     fontSize: "$jupiter",
   },
 
