@@ -17,10 +17,11 @@ export interface SelectFieldProps {
 
 const Select = styled("select", {
   appearance: "none",
-  border: "4px solid $hermes",
+  border: "2px solid $hermes",
   borderRadius: "$borderRadius$regular",
-  fontSize: "$jupiter",
-  padding: "$spacing$2 $spacing$4",
+  fontSize: "$uranus",
+  padding: "0 $spacing$4",
+  height: "$cta",
   display: "block",
   boxSizing: "border-box",
   background: "$apollo",

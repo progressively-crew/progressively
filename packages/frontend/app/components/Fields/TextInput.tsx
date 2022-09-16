@@ -19,11 +19,12 @@ export interface TextInputProps {
 }
 
 const Input = styled("input", {
-  border: "4px solid $hermes",
+  border: "2px solid $hermes",
   borderRadius: "$borderRadius$regular",
-  fontSize: "$jupiter",
+  fontSize: "$uranus",
   fontFamily: "$default",
-  padding: "$spacing$2 $spacing$4",
+  padding: "0 $spacing$4",
+  height: "$cta",
   display: "block",
   width: "100%",
   boxSizing: "border-box",
@@ -31,13 +32,13 @@ const Input = styled("input", {
   variants: {
     invalid: {
       true: {
-        border: "4px solid $errorBorder",
+        border: "2px solid $errorBorder",
       },
     },
 
     isDisabled: {
       true: {
-        border: "4px solid $heracles",
+        border: "2px solid $heracles",
         background: "$hera",
       },
     },

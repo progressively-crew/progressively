@@ -11,9 +11,9 @@ export interface TextareaInputProps {
 }
 
 const Textarea = styled("textarea", {
-  border: "4px solid $hermes",
+  border: "2px solid $hermes",
   borderRadius: "$borderRadius$regular",
-  fontSize: "$jupiter",
+  fontSize: "$uranus",
   padding: "$spacing$2 $spacing$4",
   display: "block",
   width: "100%",
@@ -25,7 +25,7 @@ const Textarea = styled("textarea", {
   variants: {
     invalid: {
       true: {
-        border: "4px solid $errorBorder",
+        border: "2px solid $errorBorder",
       },
     },
   },
