@@ -11,6 +11,7 @@ import { NavTree } from "~/modules/misc/components/NavTree";
 import { TreeToggle } from "~/modules/misc/components/TreeToggle";
 import { DarkLogo } from "~/components/Logo/DarkLogo";
 import { UseDropdown } from "~/modules/user/components/UserDropdown";
+import { Stack } from "~/components/Stack";
 
 export interface DashboardLayoutProps {
   user?: Partial<User>;
@@ -75,13 +76,12 @@ export const DashboardLayout = ({
               </Container>
             </AppBar>
 
-            <div>
-              <Container>
+            <Container>
+              <Stack spacing={4}>
                 {breadcrumb}
-                <Spacer size={4} />
                 <header>{header}</header>
-              </Container>
-            </div>
+              </Stack>
+            </Container>
 
             {subNav}
 
@@ -90,14 +90,11 @@ export const DashboardLayout = ({
             <Main>
               <Container>
                 <OverflowContainer>
-                  {status && (
-                    <>
-                      {status}
-                      <Spacer size={8} />
-                    </>
-                  )}
+                  <Stack spacing={8}>
+                    {status}
 
-                  {children}
+                    {children}
+                  </Stack>
                 </OverflowContainer>
               </Container>
             </Main>

@@ -11,3 +11,10 @@
   font-weight: 400;
   src: url("/fonts/Mulish-Medium.ttf") format("truetype");
 }
+
+@font-face {
+  font-family: "Mulish";
+  font-style: bold;
+  font-weight: 800;
+  src: url("/fonts/Mulish-ExtraBold.ttf") format("truetype");
+}

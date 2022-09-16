@@ -193,6 +193,29 @@ export default function VariantsOfFlag() {
         }
       />
 
+      <Form method="post" aria-label="Add a new variant" ref={formRef}>
+        <input type="hidden" value="add-variant" name="_type" />
+        <input type="hidden" value={remainingPercentage} name="remainingPercent" />
+        <Stack spacing={6}>
+          <HStack spacing={6} alignItems="flex-end">
+            <TextInput
+              name={"value"}
+              label={"New variant value"}
+              placeholder="e.g: Alternative"
+              isInvalid={Boolean(actionData?.errors?.value)}
+            />
+
+            <SubmitButton
+              variant={hasVariants ? "secondary" : "primary"}
+              isLoading={isAdding}
+              loadingText="Saving the variant, please wait..."
+            >
+              Add variant
+            </SubmitButton>
+          </HStack>
+        </Stack>
+      </Form>
+
       <Section aria-label="List of variants">
         {!hasVariants && (
           <EmptyState
@@ -207,31 +230,6 @@ export default function VariantsOfFlag() {
             <VariantList variants={variants} errors={actionData?.errors} />
           </Card>
         )}
-
-        <Spacer size={8} />
-
-        <Form method="post" aria-label="Add a new variant" ref={formRef}>
-          <input type="hidden" value="add-variant" name="_type" />
-          <input type="hidden" value={remainingPercentage} name="remainingPercent" />
-          <Stack spacing={6}>
-            <HStack spacing={6} alignItems="flex-end">
-              <TextInput
-                name={"value"}
-                label={"New variant value"}
-                placeholder="e.g: Alternative"
-                isInvalid={Boolean(actionData?.errors?.value)}
-              />
-
-              <SubmitButton
-                variant={hasVariants ? "secondary" : "primary"}
-                isLoading={isAdding}
-                loadingText="Saving the variant, please wait..."
-              >
-                Add variant
-              </SubmitButton>
-            </HStack>
-          </Stack>
-        </Form>
       </Section>
     </DashboardLayout>
   );

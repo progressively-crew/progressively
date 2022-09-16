@@ -22,10 +22,6 @@ describe("/profile", () => {
     it("shows the create page layout", () => {
       cy.title().should("eq", "Progressively | Profile");
 
-      cy.findByRole("link", { name: "Back to dashboard" })
-        .should("be.visible")
-        .and("have.attr", "href", "/dashboard");
-
       cy.findByRole("heading", { name: "My profile" }).should("be.visible");
       cy.findByRole("heading", { name: "Change password" }).should("be.visible");
 
