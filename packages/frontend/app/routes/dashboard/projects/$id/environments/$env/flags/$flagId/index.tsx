@@ -246,23 +246,25 @@ export default function FlagById() {
                 flagId={currentFlag.uuid}
               />
             ) : (
-              <EmptyState
-                title="No strategy found"
-                description={
-                  <Typography>
-                    There are no strategies bound to this flag yet. In this case, when the flag is
-                    activated, every user will receive the {`"true"`} variant.
-                  </Typography>
-                }
-                action={
-                  <CreateButton
-                    variant="secondary"
-                    to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
-                  >
-                    Create a strategy
-                  </CreateButton>
-                }
-              />
+              <CardContent>
+                <EmptyState
+                  title="No strategy found"
+                  description={
+                    <Typography>
+                      There are no strategies bound to this flag yet. In this case, when the flag is
+                      activated, every user will receive the {`"true"`} variant.
+                    </Typography>
+                  }
+                  action={
+                    <CreateButton
+                      variant="secondary"
+                      to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
+                    >
+                      Create a strategy
+                    </CreateButton>
+                  }
+                />
+              </CardContent>
             )}
           </Card>
         </Section>

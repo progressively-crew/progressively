@@ -7,7 +7,7 @@ import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
-import { Card } from "~/components/Card";
+import { Card, CardContent } from "~/components/Card";
 import { EmptyState } from "~/components/EmptyState";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Header } from "~/components/Header";
@@ -15,7 +15,6 @@ import { HStack } from "~/components/HStack";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { PageTitle } from "~/components/PageTitle";
 import { Section } from "~/components/Section";
-import { Spacer } from "~/components/Spacer";
 import { Stack } from "~/components/Stack";
 import { TagLine } from "~/components/Tagline";
 import { Typography } from "~/components/Typography";
@@ -218,11 +217,15 @@ export default function VariantsOfFlag() {
 
       <Section aria-label="List of variants">
         {!hasVariants && (
-          <EmptyState
-            titleAs="h2"
-            title="No variants found"
-            description={<Typography>There are no variants found for this flag.</Typography>}
-          />
+          <Card>
+            <CardContent>
+              <EmptyState
+                titleAs="h2"
+                title="No variants found"
+                description={<Typography>There are no variants found for this flag.</Typography>}
+              />
+            </CardContent>
+          </Card>
         )}
 
         {hasVariants && (

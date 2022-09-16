@@ -230,10 +230,12 @@ export default function FlagInsights() {
           {allCount > 0 ? (
             <BarChart data={organizedHits} max={max} />
           ) : (
-            <EmptyState
-              title="No hits found"
-              description={<Typography>There is no flag hit for this period.</Typography>}
-            />
+            <CardContent>
+              <EmptyState
+                title="No hits found"
+                description={<Typography>There is no flag hit for this period.</Typography>}
+              />
+            </CardContent>
           )}
         </Card>
       </Stack>

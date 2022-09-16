@@ -153,6 +153,7 @@ export const VariantList = ({ variants, errors, mode }: VariantListProps) => {
                   label={`Variant ${index + 1} value`}
                   isInvalid={Boolean(errors?.[`name-${index}`])}
                   isDisabled={isValueInputDisabled}
+                  small
                 />
               </div>
 

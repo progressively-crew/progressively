@@ -16,6 +16,7 @@ export interface TextInputProps {
   hiddenLabel?: boolean;
   id?: string;
   isDisabled?: boolean;
+  small?: boolean;
 }
 
 const Input = styled("input", {
@@ -33,6 +34,12 @@ const Input = styled("input", {
     invalid: {
       true: {
         border: "2px solid $errorBorder",
+      },
+    },
+
+    small: {
+      true: {
+        height: "$ctaSmall",
       },
     },
 
@@ -67,6 +74,7 @@ export const TextInput = ({
   hiddenLabel,
   id,
   isDisabled,
+  small,
   ...props
 }: TextInputProps) => {
   let ariaDescription: string | undefined;
@@ -100,6 +108,7 @@ export const TextInput = ({
         isDisabled={isDisabled}
         aria-disabled={isDisabled}
         readOnly={isDisabled}
+        small={small}
         {...props}
       />
 
