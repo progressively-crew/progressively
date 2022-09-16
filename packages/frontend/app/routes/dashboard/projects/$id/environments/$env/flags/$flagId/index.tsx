@@ -178,22 +178,13 @@ export default function FlagById() {
         ) : null
       }
     >
-      <PageTitle value="Rollout details" icon={<FaPowerOff />} />
+      <PageTitle
+        value="Rollout details"
+        icon={<FaPowerOff />}
+        description={<StrategyDescription flagEnv={flagEnv} hasStrategies={hasStrategies} />}
+      />
 
       <Stack spacing={8}>
-        <Section id="summup">
-          <Card>
-            <CardContent>
-              <SectionHeader
-                title="Sum-up"
-                description={
-                  <StrategyDescription flagEnv={flagEnv} hasStrategies={hasStrategies} />
-                }
-              />
-            </CardContent>
-          </Card>
-        </Section>
-
         <Section id="rollout-target">
           <Card>
             <CardContent noBottom>
