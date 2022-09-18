@@ -50,6 +50,7 @@ export class EnvironmentsController {
         body.description,
       );
     } catch (e) {
+      console.log('MOLLY', e);
       if (e instanceof FlagAlreadyExists) {
         throw new BadRequestException('Flag already exists');
       }

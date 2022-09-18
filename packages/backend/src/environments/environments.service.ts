@@ -72,23 +72,28 @@ export class EnvironmentsService {
   ) {
     const flagKey = camelcase(name);
 
-    const existingFlag = await this.prisma.flagEnvironment.findFirst({
+    const existingFlagEnv = await this.prisma.flagEnvironment.findFirst({
       where: {
         environmentId: envId,
         flag: {
           key: flagKey,
         },
       },
-      include: { environment: true },
     });
 
-    if (existingFlag) {
+    if (existingFlagEnv) {
       throw new FlagAlreadyExists();
     }
 
+    const concernedEnv = await this.prisma.environment.findFirst({
+      where: {
+        uuid: envId,
+      },
+    });
+
     const envsOfProject = await this.prisma.environment.findMany({
       where: {
-        projectId: existingFlag.environment.projectId,
+        projectId: concernedEnv.projectId,
       },
     });
 
