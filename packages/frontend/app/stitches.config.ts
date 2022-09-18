@@ -25,6 +25,7 @@ export const spacing = {
 };
 
 export const fontWeights = {
+  normal: "400",
   semiBold: "600",
   bold: "800",
 };
@@ -53,7 +54,7 @@ export const colors = {
   // New colors
   //primaries
   hades: "#0E061F",
-  hadesLight: "#221935",
+  hadesLight: "#444",
   nemesis: "#4B37A9",
   nemesisLight: "#eae8fa",
 

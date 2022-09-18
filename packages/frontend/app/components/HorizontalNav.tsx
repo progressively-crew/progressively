@@ -1,10 +1,11 @@
 import { NavLink } from "@remix-run/react";
 import { styled } from "~/stitches.config";
-import { Container } from "./Container";
 import { HStack } from "./HStack";
 
 const HorizontalNavWrapper = styled("nav", {
-  background: "$nemesisLight",
+  padding: "0 $spacing$4",
+  background: "$nemesis",
+  borderRadius: "$borderRadius$regular",
 
   "& ul": {
     display: "flex",
@@ -18,7 +19,7 @@ const HorizontalNavWrapper = styled("nav", {
     cursor: "pointer",
     fontFamily: "$default",
     textDecoration: "none",
-    color: "$hades",
+    color: "$apollo",
     paddingRight: "$spacing$6",
     paddingLeft: "$spacing$2",
     borderTop: "4px solid transparent",
@@ -28,16 +29,16 @@ const HorizontalNavWrapper = styled("nav", {
   },
 
   "& ul li a:hover": {
-    borderBottom: "4px solid $nemesis",
+    background: "$hypnos",
   },
 
   "& ul li a.active": {
-    color: "$nemesis",
-    borderBottom: "4px solid $nemesis",
+    color: "$apollo",
+    borderBottom: "4px solid $hermes",
   },
 
   "& ul li a svg": {
-    color: "$nemesis",
+    color: "$apollo",
     fontSize: "$jupiter",
   },
 
@@ -55,9 +56,7 @@ export interface HorizontalNavProps {
 export const HorizontalNav = ({ children, label }: HorizontalNavProps) => {
   return (
     <HorizontalNavWrapper aria-label={label}>
-      <Container>
-        <ul>{children}</ul>
-      </Container>
+      <ul>{children}</ul>
     </HorizontalNavWrapper>
   );
 };
@@ -71,7 +70,11 @@ export interface NavItemProps {
 export const NavItem = ({ children, to, icon }: NavItemProps) => {
   return (
     <li>
-      <NavLink to={to} end className={({ isActive }) => (isActive ? "active" : undefined)}>
+      <NavLink
+        to={to}
+        end
+        className={({ isActive }) => (isActive ? "active" : undefined)}
+      >
         <HStack spacing={2}>
           <span aria-hidden>{icon}</span>
           <span>{children}</span>

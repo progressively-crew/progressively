@@ -10,6 +10,7 @@ const SwitchButton = styled("button", {
   border: "none",
   borderRadius: "$borderRadius$regular",
   padding: "0 $spacing$3",
+  margin: "0 -$spacing$3",
 });
 
 const StyledThumb = styled("span", {
@@ -43,7 +44,7 @@ const SwitchInnerWrapper = styled("span", {
   borderRadius: "9999px",
   width: 40,
   height: 20,
-  background: "$hadesLight",
+  background: "$hades",
 
   variants: {
     checked: {

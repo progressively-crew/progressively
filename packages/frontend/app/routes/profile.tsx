@@ -1,6 +1,5 @@
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
 import { useActionData, useLoaderData, Form, useTransition } from "@remix-run/react";
-import { BackLink } from "~/components/BackLink";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { FormGroup } from "~/components/Fields/FormGroup";
@@ -18,6 +17,7 @@ import { User } from "~/modules/user/types";
 import { getSession } from "~/sessions";
 import { Card, CardContent } from "~/components/Card";
 import { PageTitle } from "~/components/PageTitle";
+import { UserIcon } from "~/components/Icons/UserIcon";
 
 export const meta: MetaFunction = () => {
   return {
@@ -87,29 +87,16 @@ export default function ProfilePage() {
   return (
     <DashboardLayout
       user={user}
-      header={
-        <>
-          <nav aria-label="Profile navigation">
-            <span>
-              <BackLink to="/dashboard">Back to dashboard</BackLink>
-            </span>
-          </nav>
-
-          <PageTitle value="My profile" />
-        </>
-      }
       status={
-        <>
-          {errors && Object.keys(errors).length > 0 && <ErrorBox list={errors} />}
-
-          {passwordUpdated && (
-            <SuccessBox id="password-changed">
-              The password has been successfully changed.
-            </SuccessBox>
-          )}
-        </>
+        errors && Object.keys(errors).length > 0 ? (
+          <ErrorBox list={errors} />
+        ) : passwordUpdated ? (
+          <SuccessBox id="password-changed">The password has been successfully changed.</SuccessBox>
+        ) : null
       }
     >
+      <PageTitle value="My profile" icon={<UserIcon />} />
+
       <Card>
         <CardContent>
           <Section>

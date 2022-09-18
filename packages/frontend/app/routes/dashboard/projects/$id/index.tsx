@@ -12,7 +12,7 @@ import { MetaFunction } from "@remix-run/node";
 import { useSearchParams } from "@remix-run/react";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { EnvList } from "~/modules/environments/components/EnvList";
-import { Card } from "~/components/Card";
+import { Card, CardContent } from "~/components/Card";
 import { TagLine } from "~/components/Tagline";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { useProject } from "~/modules/projects/contexts/useProject";
@@ -95,15 +95,21 @@ export default function ProjectDetailPage() {
             <EnvList environments={project.environments} projectId={project.uuid} />
           </Card>
         ) : (
-          <EmptyState
-            title="No environments found"
-            description={<Typography>There are no environments yet on this project.</Typography>}
-            action={
-              <CreateButton to={`/dashboard/projects/${project.uuid}/environments/create`}>
-                Create an environment
-              </CreateButton>
-            }
-          />
+          <Card>
+            <CardContent>
+              <EmptyState
+                title="No environments found"
+                description={
+                  <Typography>There are no environments yet on this project.</Typography>
+                }
+                action={
+                  <CreateButton to={`/dashboard/projects/${project.uuid}/environments/create`}>
+                    Create an environment
+                  </CreateButton>
+                }
+              />
+            </CardContent>
+          </Card>
         )}
       </Section>
     </DashboardLayout>

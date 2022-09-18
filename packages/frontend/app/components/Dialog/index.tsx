@@ -28,7 +28,7 @@ const DialogOverlay = styled("div", {
 const DialogInner = styled("div", {
   maxHeight: "$sizes$treeHeight",
   width: "$sizes$dialog",
-  overflowY: "scroll",
+  overflowY: "auto",
 });
 
 export const DialogTitle = styled("h1", {

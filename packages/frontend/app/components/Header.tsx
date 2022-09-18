@@ -17,20 +17,40 @@ const HeadingWrapper = styled("div", {
   padding: "$spacing$4 0",
 });
 
-export const Header = ({ title, description, startAction, tagline }: HeaderProps) => {
+const Separator = styled("div", {
+  width: "1px",
+  height: "1rem",
+  background: "$hadesLight",
+});
+
+const ActionWrapper = styled("div", {
+  height: "$cta",
+});
+
+export const Header = ({
+  title,
+  description,
+  startAction,
+  tagline,
+}: HeaderProps) => {
   return (
-    <HStack justifyContent="space-between">
-      <div>
-        <HeadingWrapper>
-          <H1 as="p">{title}</H1>
-          <Spacer size={2} />
-          {tagline}
-        </HeadingWrapper>
+    <div>
+      <HeadingWrapper>
+        <HStack spacing={6}>
+          <H1 as="p" fontWeight="normal">
+            {title}
+          </H1>
 
-        {description}
-      </div>
+          {startAction && <Separator aria-hidden />}
 
-      {startAction && <HStack spacing={6}>{startAction}</HStack>}
-    </HStack>
+          <ActionWrapper>{startAction}</ActionWrapper>
+        </HStack>
+
+        <Spacer size={1} />
+        {tagline}
+      </HeadingWrapper>
+
+      {description}
+    </div>
   );
 };

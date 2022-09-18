@@ -14,7 +14,7 @@ import { Crumbs } from "~/components/Breadcrumbs/types";
 import { EnvNavBar } from "~/modules/environments/components/EnvNavbar";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
-import { Card } from "~/components/Card";
+import { Card, CardContent } from "~/components/Card";
 import { TagLine } from "~/components/Tagline";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { useUser } from "~/modules/user/contexts/useUser";
@@ -130,17 +130,21 @@ export default function FlagsByEnvPage() {
             <FlagList flags={flagsByEnv} envId={environment.uuid} projectId={project.uuid} />
           </Card>
         ) : (
-          <EmptyState
-            title="No flags found"
-            description={<Typography>There are no flags yet on this environment.</Typography>}
-            action={
-              <CreateButton
-                to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/create`}
-              >
-                Create a feature flag
-              </CreateButton>
-            }
-          />
+          <Card>
+            <CardContent>
+              <EmptyState
+                title="No flags found"
+                description={<Typography>There are no flags yet on this environment.</Typography>}
+                action={
+                  <CreateButton
+                    to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/create`}
+                  >
+                    Create a feature flag
+                  </CreateButton>
+                }
+              />
+            </CardContent>
+          </Card>
         )}
       </Section>
     </DashboardLayout>

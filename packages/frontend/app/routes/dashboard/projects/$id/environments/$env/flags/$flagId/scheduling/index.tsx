@@ -6,7 +6,7 @@ import { WarningBox } from "~/components/Boxes/WarningBox";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { CreateButton } from "~/components/Buttons/CreateButton";
-import { Card } from "~/components/Card";
+import { Card, CardContent } from "~/components/Card";
 import { EmptyState } from "~/components/EmptyState";
 import { Header } from "~/components/Header";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
@@ -169,18 +169,22 @@ export default function SchedulingOfFlag() {
         )}
 
         {!hasScheduling && (
-          <EmptyState
-            titleAs="h2"
-            title="No schedule found"
-            description={<Typography>There are no scheduling for this flag.</Typography>}
-            action={
-              <CreateButton
-                to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/scheduling/create`}
-              >
-                Create a schedule
-              </CreateButton>
-            }
-          />
+          <Card>
+            <CardContent>
+              <EmptyState
+                titleAs="h2"
+                title="No schedule found"
+                description={<Typography>There are no scheduling for this flag.</Typography>}
+                action={
+                  <CreateButton
+                    to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/scheduling/create`}
+                  >
+                    Create a schedule
+                  </CreateButton>
+                }
+              />
+            </CardContent>
+          </Card>
         )}
 
         {hasScheduling && (

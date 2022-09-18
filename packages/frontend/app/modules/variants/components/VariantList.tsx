@@ -28,7 +28,8 @@ const Wrapper = styled("div", {
     display: "table-cell",
     minWidth: "80px",
     verticalAlign: "middle",
-    padding: "$spacing$4 $spacing$12",
+    padding: "0 $spacing$12",
+    height: "$cta",
   },
 });
 
@@ -152,6 +153,7 @@ export const VariantList = ({ variants, errors, mode }: VariantListProps) => {
                   label={`Variant ${index + 1} value`}
                   isInvalid={Boolean(errors?.[`name-${index}`])}
                   isDisabled={isValueInputDisabled}
+                  small
                 />
               </div>
 

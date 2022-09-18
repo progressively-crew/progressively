@@ -11,6 +11,7 @@ import { NavTree } from "~/modules/misc/components/NavTree";
 import { TreeToggle } from "~/modules/misc/components/TreeToggle";
 import { DarkLogo } from "~/components/Logo/DarkLogo";
 import { UseDropdown } from "~/modules/user/components/UserDropdown";
+import { Stack } from "~/components/Stack";
 
 export interface DashboardLayoutProps {
   user?: Partial<User>;
@@ -41,7 +42,9 @@ const AppBar = styled("div", {
   },
 });
 
-const PageWrapper = styled("div", {});
+const BreadCrumbWrapper = styled("div", {
+  background: "$apollo",
+});
 
 export const DashboardLayout = ({
   user,
@@ -56,53 +59,50 @@ export const DashboardLayout = ({
       <InertWhenNavOpened>
         <SkipNavLink>Skip to content</SkipNavLink>
 
-        <PageWrapper>
-          <div>
-            <AppBar>
-              <Container>
-                <HStack
-                  height="navHeight"
-                  justifyContent="space-between"
-                  as="nav"
-                  aria-label="General navigation"
-                >
-                  <DarkLogo />
-                  <HStack spacing={4}>
-                    <TreeToggle />
-                    <UseDropdown user={user} />
-                  </HStack>
+        <div>
+          <AppBar>
+            <Container>
+              <HStack
+                height="navHeight"
+                justifyContent="space-between"
+                as="nav"
+                aria-label="General navigation"
+              >
+                <DarkLogo />
+                <HStack spacing={4}>
+                  <TreeToggle />
+                  <UseDropdown user={user} />
                 </HStack>
-              </Container>
-            </AppBar>
+              </HStack>
+            </Container>
+          </AppBar>
 
-            <div>
-              <Container>
-                {breadcrumb}
-                <Spacer size={4} />
-                <header>{header}</header>
-              </Container>
-            </div>
+          <BreadCrumbWrapper>
+            <Container>{breadcrumb}</Container>
+          </BreadCrumbWrapper>
 
-            {subNav}
+          <Spacer size={12} />
 
-            <Spacer size={12} />
+          <Container>
+            <header>{header}</header>
+          </Container>
 
-            <Main>
-              <Container>
-                <OverflowContainer>
-                  {status && (
-                    <>
-                      {status}
-                      <Spacer size={8} />
-                    </>
-                  )}
+          <Container>{subNav}</Container>
+
+          <Spacer size={8} />
+
+          <Main>
+            <Container>
+              <OverflowContainer>
+                <Stack spacing={8}>
+                  {status}
 
                   {children}
-                </OverflowContainer>
-              </Container>
-            </Main>
-          </div>
-        </PageWrapper>
+                </Stack>
+              </OverflowContainer>
+            </Container>
+          </Main>
+        </div>
       </InertWhenNavOpened>
 
       <NavTree />

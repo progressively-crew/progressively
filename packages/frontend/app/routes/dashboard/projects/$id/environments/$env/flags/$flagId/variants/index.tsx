@@ -7,7 +7,7 @@ import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
-import { Card } from "~/components/Card";
+import { Card, CardContent } from "~/components/Card";
 import { EmptyState } from "~/components/EmptyState";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Header } from "~/components/Header";
@@ -15,7 +15,6 @@ import { HStack } from "~/components/HStack";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { PageTitle } from "~/components/PageTitle";
 import { Section } from "~/components/Section";
-import { Spacer } from "~/components/Spacer";
 import { Stack } from "~/components/Stack";
 import { TagLine } from "~/components/Tagline";
 import { Typography } from "~/components/Typography";
@@ -193,13 +192,40 @@ export default function VariantsOfFlag() {
         }
       />
 
+      <Form method="post" aria-label="Add a new variant" ref={formRef}>
+        <input type="hidden" value="add-variant" name="_type" />
+        <input type="hidden" value={remainingPercentage} name="remainingPercent" />
+        <Stack spacing={6}>
+          <HStack spacing={6} alignItems="flex-end">
+            <TextInput
+              name={"value"}
+              label={"New variant value"}
+              placeholder="e.g: Alternative"
+              isInvalid={Boolean(actionData?.errors?.value)}
+            />
+
+            <SubmitButton
+              variant={hasVariants ? "secondary" : "primary"}
+              isLoading={isAdding}
+              loadingText="Saving the variant, please wait..."
+            >
+              Add variant
+            </SubmitButton>
+          </HStack>
+        </Stack>
+      </Form>
+
       <Section aria-label="List of variants">
         {!hasVariants && (
-          <EmptyState
-            titleAs="h2"
-            title="No variants found"
-            description={<Typography>There are no variants found for this flag.</Typography>}
-          />
+          <Card>
+            <CardContent>
+              <EmptyState
+                titleAs="h2"
+                title="No variants found"
+                description={<Typography>There are no variants found for this flag.</Typography>}
+              />
+            </CardContent>
+          </Card>
         )}
 
         {hasVariants && (
@@ -207,31 +233,6 @@ export default function VariantsOfFlag() {
             <VariantList variants={variants} errors={actionData?.errors} />
           </Card>
         )}
-
-        <Spacer size={8} />
-
-        <Form method="post" aria-label="Add a new variant" ref={formRef}>
-          <input type="hidden" value="add-variant" name="_type" />
-          <input type="hidden" value={remainingPercentage} name="remainingPercent" />
-          <Stack spacing={6}>
-            <HStack spacing={6} alignItems="flex-end">
-              <TextInput
-                name={"value"}
-                label={"New variant value"}
-                placeholder="e.g: Alternative"
-                isInvalid={Boolean(actionData?.errors?.value)}
-              />
-
-              <SubmitButton
-                variant={hasVariants ? "secondary" : "primary"}
-                isLoading={isAdding}
-                loadingText="Saving the variant, please wait..."
-              >
-                Add variant
-              </SubmitButton>
-            </HStack>
-          </Stack>
-        </Form>
       </Section>
     </DashboardLayout>
   );

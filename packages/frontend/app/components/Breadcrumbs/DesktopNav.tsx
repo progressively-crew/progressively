@@ -46,9 +46,15 @@ const Ol = styled("ol", {
 const Separator = styled("div", {
   display: "flex",
   margin: "0 $spacing$2",
-  marginTop: "$spacing$1",
   fontSize: "$mars",
   color: "$hades",
+});
+
+const IconWrapper = styled("span", {
+  display: "flex",
+  "& svg": {
+    color: "$nemesis",
+  },
 });
 
 export interface DesktopNavProps {
@@ -56,10 +62,33 @@ export interface DesktopNavProps {
 }
 
 const CrumbIcon = ({ crumb }: { crumb: Crumb }) => {
-  if (crumb.isRoot) return <TbFolders />;
-  if (crumb.isEnv) return <EnvIcon />;
-  if (crumb.isFlag) return <FlagIcon />;
-  if (crumb.isProject) return <ProjectIcon />;
+  if (crumb.isRoot)
+    return (
+      <IconWrapper>
+        <TbFolders />
+      </IconWrapper>
+    );
+
+  if (crumb.isEnv)
+    return (
+      <IconWrapper>
+        <EnvIcon />
+      </IconWrapper>
+    );
+
+  if (crumb.isFlag)
+    return (
+      <IconWrapper>
+        <FlagIcon />
+      </IconWrapper>
+    );
+
+  if (crumb.isProject)
+    return (
+      <IconWrapper>
+        <ProjectIcon />
+      </IconWrapper>
+    );
 
   return null;
 };
