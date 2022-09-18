@@ -35,13 +35,34 @@ export class EnvironmentsService {
     });
   }
 
-  createEnvironment(projectId: string, environmentName: string) {
-    return this.prisma.environment.create({
+  async createEnvironment(projectId: string, environmentName: string) {
+    const allMatchingFlagEnv = await this.prisma.flagEnvironment.findMany({
+      where: {
+        environment: {
+          projectId,
+        },
+      },
+      distinct: ['flagId'],
+    });
+
+    const newEnv = await this.prisma.environment.create({
       data: {
         name: environmentName,
         projectId: projectId,
       },
     });
+
+    for (const flagEnv of allMatchingFlagEnv) {
+      await this.prisma.flagEnvironment.create({
+        data: {
+          flagId: flagEnv.flagId,
+          environmentId: newEnv.uuid,
+          rolloutPercentage: 100,
+        },
+      });
+    }
+
+    return newEnv;
   }
 
   async createFlagEnvironment(

@@ -60,7 +60,7 @@ export class SdkService {
 
       flags[nextFlag.flag.key] = flagStatusOrVariant;
 
-      this.flagService.hitFlag(
+      await this.flagService.hitFlag(
         nextFlag.environmentId,
         nextFlag.flagId,
         String(flagStatusOrVariant),
