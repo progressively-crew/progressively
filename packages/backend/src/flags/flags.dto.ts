@@ -4,7 +4,6 @@ import { Variant } from './types';
 export const FlagCreationSchema = Joi.object({
   name: Joi.string().required(),
   description: Joi.string().required(),
-  environments: Joi.array().min(1).items(Joi.string()).required(),
 });
 
 export const VariantSchema = Joi.object({
@@ -26,7 +25,6 @@ export type VariantCreationDTO = Omit<Variant, 'uuid' | 'isControl'>;
 export class FlagCreationDTO {
   name: string;
   description: string;
-  environments: Array<string>;
 }
 
 export class ActivateFlagDTO {

@@ -6,7 +6,6 @@ import {
   Get,
   Param,
   Post,
-  Request,
   UseGuards,
   UsePipes,
 } from '@nestjs/common';
@@ -43,33 +42,12 @@ export class EnvironmentsController {
   @UseGuards(HasEnvironmentAccessGuard)
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(FlagCreationSchema))
-  async createFlag(
-    @Request() req,
-    @Param('envId') envId,
-    @Body() body: FlagCreationDTO,
-  ) {
-    const environments = body.environments;
-    const user = req.user as User;
-
-    for (const env of environments) {
-      const hasAccessToEnv = await this.envService.hasPermissionOnEnv(
-        env,
-        user.uuid,
-      );
-
-      if (!hasAccessToEnv) {
-        throw new Error(
-          "You're not authorized to create a flag on this environment.",
-        );
-      }
-    }
-
+  async createFlag(@Param('envId') envId, @Body() body: FlagCreationDTO) {
     try {
       return await this.envService.createFlagEnvironment(
         envId,
         body.name,
         body.description,
-        body.environments,
       );
     } catch (e) {
       if (e instanceof FlagAlreadyExists) {

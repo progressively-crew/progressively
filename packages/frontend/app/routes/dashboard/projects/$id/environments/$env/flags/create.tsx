@@ -13,10 +13,6 @@ import { createFlag } from "~/modules/flags/services/createFlag";
 import { CreateFlagDTO, Flag } from "~/modules/flags/types";
 import { validateFlagShape } from "~/modules/flags/validators/validateFlagShape";
 import { getSession } from "~/sessions";
-import { Checkbox } from "~/components/Checkbox";
-import { Label } from "~/components/Fields/Label";
-import { HStack } from "~/components/HStack";
-import { Stack } from "~/components/Stack";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
@@ -46,7 +42,6 @@ export const action: ActionFunction = async ({
   const envId = params.env!;
   const formData = await request.formData();
   const name = formData.get("flag-name")?.toString();
-  const environments = formData.getAll("otherEnvironments");
   const description = formData.get("flag-desc")?.toString();
 
   const errors = validateFlagShape({ name, description });
@@ -62,7 +57,6 @@ export const action: ActionFunction = async ({
       envId,
       name!,
       description!,
-      environments,
       session.get("auth-cookie")
     );
 
@@ -84,8 +78,6 @@ export default function CreateFlagPage() {
   const data = useActionData<ActionData>();
   const transition = useTransition();
   const { environment } = useEnvironment();
-
-  const environments = project.environments;
 
   const errors = data?.errors;
 
@@ -120,14 +112,18 @@ export default function CreateFlagPage() {
           value="Create a feature flag"
           description={
             <Typography>
-              The new feature flag will appear in <strong>{project.name}</strong> /{" "}
-              <strong>{environment.name}</strong>. After the creation of a feature flag, you will be
-              able to get its SDK key for application usage.
+              The new feature flag will appear in{" "}
+              <strong>{project.name}</strong> /{" "}
+              <strong>{environment.name}</strong>. After the creation of a
+              feature flag, you will be able to get its SDK key for application
+              usage.
             </Typography>
           }
         />
       }
-      status={(errors?.name || errors?.description) && <ErrorBox list={errors} />}
+      status={
+        (errors?.name || errors?.description) && <ErrorBox list={errors} />
+      }
     >
       <Card>
         <CardContent>
@@ -149,25 +145,6 @@ export default function CreateFlagPage() {
                     placeholder="e.g: The new homepage"
                   />
                 </div>
-
-                <fieldset>
-                  <Stack spacing={2}>
-                    <Label as="legend">Create this flag for the following environments</Label>
-                    {environments.map((env) => (
-                      <HStack spacing={2} key={env.uuid}>
-                        <Checkbox
-                          id={env.uuid}
-                          value={env.uuid}
-                          name="otherEnvironments"
-                          defaultChecked={true}
-                        />
-                        <Label size="uranus" htmlFor={env.uuid} fontWeight="normal">
-                          {env.name}
-                        </Label>
-                      </HStack>
-                    ))}
-                  </Stack>
-                </fieldset>
 
                 <div>
                   <SubmitButton

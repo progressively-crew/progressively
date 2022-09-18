@@ -69,7 +69,6 @@ export class EnvironmentsService {
     envId: string,
     name: string,
     description: string,
-    environments: Array<string>,
   ) {
     const flagKey = camelcase(name);
 
@@ -80,11 +79,18 @@ export class EnvironmentsService {
           key: flagKey,
         },
       },
+      include: { environment: true },
     });
 
     if (existingFlag) {
       throw new FlagAlreadyExists();
     }
+
+    const envsOfProject = await this.prisma.environment.findMany({
+      where: {
+        projectId: existingFlag.environment.projectId,
+      },
+    });
 
     const flag = await this.prisma.flag.create({
       data: {
@@ -94,11 +100,11 @@ export class EnvironmentsService {
       },
     });
 
-    for (const env of environments) {
+    for (const env of envsOfProject) {
       await this.prisma.flagEnvironment.create({
         data: {
           flagId: flag.uuid,
-          environmentId: env,
+          environmentId: env.uuid,
           rolloutPercentage: 100,
         },
       });
