@@ -44,7 +44,10 @@ export const meta: MetaFunction = ({ parentsData, params }) => {
 
 type ActionDataType = null | { successChangePercentage: boolean };
 
-export const action: ActionFunction = async ({ request, params }): Promise<ActionDataType> => {
+export const action: ActionFunction = async ({
+  request,
+  params,
+}): Promise<ActionDataType> => {
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
   const formData = await request.formData();
@@ -69,7 +72,10 @@ interface LoaderData {
   endDate: string;
 }
 
-export const loader: LoaderFunction = async ({ request, params }): Promise<LoaderData> => {
+export const loader: LoaderFunction = async ({
+  request,
+  params,
+}): Promise<LoaderData> => {
   const session = await getSession(request.headers.get("Cookie"));
   const url = new URL(request.url);
   const search = new URLSearchParams(url.search);
@@ -84,13 +90,14 @@ export const loader: LoaderFunction = async ({ request, params }): Promise<Loade
   const endDate = endDateForm ? new Date(endDateForm) : new Date();
 
   const authCookie = session.get("auth-cookie");
-  const hitsPerFlags: Array<{ name: string; hits: Array<FlagHit> }> = await getFlagHits(
-    params.env!,
-    params.flagId!,
-    startDate,
-    endDate,
-    authCookie
-  );
+  const hitsPerFlags: Array<{ name: string; hits: Array<FlagHit> }> =
+    await getFlagHits(
+      params.env!,
+      params.flagId!,
+      startDate,
+      endDate,
+      authCookie
+    );
 
   const mapOfHits = new Map<string, Array<{ name: string; value: number }>>();
   let max = 0;
@@ -110,7 +117,9 @@ export const loader: LoaderFunction = async ({ request, params }): Promise<Loade
     }
   }
 
-  const organizedHits = Array.from(mapOfHits).sort(([d1], [d2]) => (d1 > d2 ? 1 : -1));
+  const organizedHits = Array.from(mapOfHits).sort(([d1], [d2]) =>
+    d1 > d2 ? 1 : -1
+  );
 
   return {
     hits: hitsPerFlags,
@@ -136,7 +145,8 @@ const formatDefaultDate = (isoDate: string) => {
 };
 
 export default function FlagInsights() {
-  const { hits, organizedHits, max, startDate, endDate } = useLoaderData<LoaderData>();
+  const { hits, organizedHits, max, startDate, endDate } =
+    useLoaderData<LoaderData>();
   const { flagEnv } = useFlagEnv();
   const { user } = useUser();
   const { project } = useProject();
@@ -196,33 +206,41 @@ export default function FlagInsights() {
         />
       }
       subNav={
-        <FlagMenu projectId={project.uuid} envId={environment.uuid} flagId={currentFlag.uuid} />
+        <FlagMenu
+          projectId={project.uuid}
+          envId={environment.uuid}
+          flagId={currentFlag.uuid}
+        />
       }
     >
-      <PageTitle value="Insights" icon={<AiOutlineBarChart />} />
+      <PageTitle
+        value="Insights"
+        icon={<AiOutlineBarChart />}
+        description={
+          <Typography>
+            Information about variants hits per date on the feature flag.
+          </Typography>
+        }
+      />
 
       <Stack spacing={8}>
-        <Card>
-          <CardContent>
-            <Form action=".">
-              <HStack spacing={4} alignItems="flex-end">
-                <TextInput
-                  type="date"
-                  name={"startDate"}
-                  label={"Start date"}
-                  defaultValue={formatDefaultDate(startDate)}
-                />
-                <TextInput
-                  type="date"
-                  name={"endDate"}
-                  label={"End date"}
-                  defaultValue={formatDefaultDate(endDate)}
-                />
-                <SubmitButton>Filter on date</SubmitButton>
-              </HStack>
-            </Form>
-          </CardContent>
-        </Card>
+        <Form action=".">
+          <HStack spacing={4} alignItems="flex-end">
+            <TextInput
+              type="date"
+              name={"startDate"}
+              label={"Start date"}
+              defaultValue={formatDefaultDate(startDate)}
+            />
+            <TextInput
+              type="date"
+              name={"endDate"}
+              label={"End date"}
+              defaultValue={formatDefaultDate(endDate)}
+            />
+            <SubmitButton>Filter on date</SubmitButton>
+          </HStack>
+        </Form>
 
         <InsightsGrid>{hitNode}</InsightsGrid>
 
@@ -233,7 +251,9 @@ export default function FlagInsights() {
             <CardContent>
               <EmptyState
                 title="No hits found"
-                description={<Typography>There is no flag hit for this period.</Typography>}
+                description={
+                  <Typography>There is no flag hit for this period.</Typography>
+                }
               />
             </CardContent>
           )}
