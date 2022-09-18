@@ -42,6 +42,10 @@ const AppBar = styled("div", {
   },
 });
 
+const BreadCrumbWrapper = styled("div", {
+  background: "$apollo",
+});
+
 export const DashboardLayout = ({
   user,
   children,
@@ -73,16 +77,19 @@ export const DashboardLayout = ({
             </Container>
           </AppBar>
 
+          <BreadCrumbWrapper>
+            <Container>{breadcrumb}</Container>
+          </BreadCrumbWrapper>
+
+          <Spacer size={12} />
+
           <Container>
-            <Stack spacing={4}>
-              {breadcrumb}
-              <header>{header}</header>
-            </Stack>
+            <header>{header}</header>
           </Container>
 
           <Container>{subNav}</Container>
 
-          <Spacer size={12} />
+          <Spacer size={8} />
 
           <Main>
             <Container>
