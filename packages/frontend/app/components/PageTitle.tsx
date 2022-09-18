@@ -16,7 +16,12 @@ const IconWrapper = styled("span", {
   marginTop: "$spacing$2",
 });
 
-export const PageTitle = ({ value, icon, action, description }: PageTitleProps) => {
+export const PageTitle = ({
+  value,
+  icon,
+  action,
+  description,
+}: PageTitleProps) => {
   return (
     <HStack justifyContent="space-between">
       <Stack spacing={0}>

@@ -42,8 +42,6 @@ const AppBar = styled("div", {
   },
 });
 
-const PageWrapper = styled("div", {});
-
 export const DashboardLayout = ({
   user,
   children,
@@ -57,49 +55,47 @@ export const DashboardLayout = ({
       <InertWhenNavOpened>
         <SkipNavLink>Skip to content</SkipNavLink>
 
-        <PageWrapper>
-          <div>
-            <AppBar>
-              <Container>
-                <HStack
-                  height="navHeight"
-                  justifyContent="space-between"
-                  as="nav"
-                  aria-label="General navigation"
-                >
-                  <DarkLogo />
-                  <HStack spacing={4}>
-                    <TreeToggle />
-                    <UseDropdown user={user} />
-                  </HStack>
-                </HStack>
-              </Container>
-            </AppBar>
-
+        <div>
+          <AppBar>
             <Container>
-              <Stack spacing={4}>
-                {breadcrumb}
-                <header>{header}</header>
-              </Stack>
+              <HStack
+                height="navHeight"
+                justifyContent="space-between"
+                as="nav"
+                aria-label="General navigation"
+              >
+                <DarkLogo />
+                <HStack spacing={4}>
+                  <TreeToggle />
+                  <UseDropdown user={user} />
+                </HStack>
+              </HStack>
             </Container>
+          </AppBar>
 
-            {subNav}
+          <Container>
+            <Stack spacing={4}>
+              {breadcrumb}
+              <header>{header}</header>
+            </Stack>
+          </Container>
 
-            <Spacer size={12} />
+          <Container>{subNav}</Container>
 
-            <Main>
-              <Container>
-                <OverflowContainer>
-                  <Stack spacing={8}>
-                    {status}
+          <Spacer size={12} />
 
-                    {children}
-                  </Stack>
-                </OverflowContainer>
-              </Container>
-            </Main>
-          </div>
-        </PageWrapper>
+          <Main>
+            <Container>
+              <OverflowContainer>
+                <Stack spacing={8}>
+                  {status}
+
+                  {children}
+                </Stack>
+              </OverflowContainer>
+            </Container>
+          </Main>
+        </div>
       </InertWhenNavOpened>
 
       <NavTree />
