@@ -44,7 +44,10 @@ export const meta: MetaFunction = ({ parentsData, params }) => {
 
 type ActionDataType = null | { successChangePercentage: boolean };
 
-export const action: ActionFunction = async ({ request, params }): Promise<ActionDataType> => {
+export const action: ActionFunction = async ({
+  request,
+  params,
+}): Promise<ActionDataType> => {
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
   const formData = await request.formData();
@@ -61,11 +64,18 @@ interface LoaderData {
   scheduling: Array<Schedule>;
 }
 
-export const loader: LoaderFunction = async ({ request, params }): Promise<LoaderData> => {
+export const loader: LoaderFunction = async ({
+  request,
+  params,
+}): Promise<LoaderData> => {
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
 
-  const scheduling: Array<Schedule> = await getScheduling(params.env!, params.flagId!, authCookie);
+  const scheduling: Array<Schedule> = await getScheduling(
+    params.env!,
+    params.flagId!,
+    authCookie
+  );
 
   return {
     scheduling,
@@ -124,13 +134,21 @@ export default function SchedulingOfFlag() {
         />
       }
       subNav={
-        <FlagMenu projectId={project.uuid} envId={environment.uuid} flagId={currentFlag.uuid} />
+        <FlagMenu
+          projectId={project.uuid}
+          envId={environment.uuid}
+          flagId={currentFlag.uuid}
+        />
       }
       status={
         isScheduleRemoved ? (
-          <SuccessBox id="schedule-updated">The schedule has been successfully removed.</SuccessBox>
+          <SuccessBox id="schedule-updated">
+            The schedule has been successfully removed.
+          </SuccessBox>
         ) : isScheduleAdded ? (
-          <SuccessBox id="schedule-added">The schedule has been successfully added.</SuccessBox>
+          <SuccessBox id="schedule-added">
+            The schedule has been successfully added.
+          </SuccessBox>
         ) : null
       }
     >
@@ -159,8 +177,8 @@ export default function SchedulingOfFlag() {
             <WarningBox
               title={
                 <>
-                  Only flag without variants are concerned by the scheduling. However, multi
-                  variants scheduling may come in the future.
+                  Only flag without variants are concerned by the scheduling.
+                  However, multi variants scheduling may come in the future.
                 </>
               }
             />
@@ -174,13 +192,19 @@ export default function SchedulingOfFlag() {
               <EmptyState
                 titleAs="h2"
                 title="No schedule found"
-                description={<Typography>There are no scheduling for this flag.</Typography>}
+                description={
+                  <Typography>
+                    There are no scheduling for this flag.
+                  </Typography>
+                }
                 action={
-                  <CreateButton
-                    to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/scheduling/create`}
-                  >
-                    Create a schedule
-                  </CreateButton>
+                  flagEnv.variants.length === 0 && (
+                    <CreateButton
+                      to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/scheduling/create`}
+                    >
+                      Create a schedule
+                    </CreateButton>
+                  )
                 }
               />
             </CardContent>
