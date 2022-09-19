@@ -78,33 +78,46 @@ describe('Environments (e2e)', () => {
         });
     });
 
-    it('gives a 200 when the user is allowed to perform the action', async () => {
+    it('gives a 200 and removes only the flags of this env', async () => {
       const access_token = await authenticate(app);
 
-      const response = await request(app.getHttpServer())
+      // Pre-create a flag to verify it still exists in other envs
+      const createdFlag = await request(app.getHttpServer())
+        .post('/environments/1/flags')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send({
+          name: 'valid name',
+          description: 'Valid description',
+        });
+
+      // Check that the removal has been done successfully
+      await request(app.getHttpServer())
         .delete('/environments/1')
-        .set('Authorization', `Bearer ${access_token}`);
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(200);
 
-      expect(response.status).toBe(200);
-      expect(response.body.name).toBe('Production');
-      expect(response.body.uuid).toBe('1');
-      expect(response.body.clientKey).toBeTruthy();
-
-      // Make sure the user can't access the project anymore
-      const getResponse = await request(app.getHttpServer())
+      // Make sure the user can't access the deleted env anymore
+      await request(app.getHttpServer())
         .get('/projects/1/environments')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(200)
+        .expect([
+          {
+            clientKey: 'valid-sdk-key-2',
+            name: 'Developer',
+            projectId: '1',
+            uuid: '2',
+          },
+        ]);
+
+      // Make sure the pre-created flag still exists in the sibling env
+      // in the project
+      const response = await request(app.getHttpServer())
+        .get('/environments/2/flags')
         .set('Authorization', `Bearer ${access_token}`);
 
-      expect(getResponse.status).toBe(200);
-      // Should not contain "production"
-      expect(getResponse.body).toEqual([
-        {
-          clientKey: 'valid-sdk-key-2',
-          name: 'Developer',
-          projectId: '1',
-          uuid: '2',
-        },
-      ]);
+      expect(response.statusCode).toBe(200);
+      expect(response.body[0].flag).toMatchObject(createdFlag.body);
     });
   });
 
