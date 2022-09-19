@@ -45,22 +45,20 @@ export class EnvironmentsService {
       distinct: ['flagId'],
     });
 
+    const flagsToCreate = allMatchingFlagEnv.map((flagEnv) => ({
+      rolloutPercentage: 100,
+      flagId: flagEnv.flagId,
+    }));
+
     const newEnv = await this.prisma.environment.create({
       data: {
         name: environmentName,
         projectId: projectId,
+        flagEnvironment: {
+          createMany: { data: flagsToCreate },
+        },
       },
     });
-
-    for (const flagEnv of allMatchingFlagEnv) {
-      await this.prisma.flagEnvironment.create({
-        data: {
-          flagId: flagEnv.flagId,
-          environmentId: newEnv.uuid,
-          rolloutPercentage: 100,
-        },
-      });
-    }
 
     return newEnv;
   }

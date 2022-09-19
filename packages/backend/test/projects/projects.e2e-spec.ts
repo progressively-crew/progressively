@@ -439,7 +439,7 @@ describe('ProjectsController (e2e)', () => {
         });
     });
 
-    it('creates an environment when authenticated and providing a good name', async () => {
+    it.only('creates an environment when authenticated and providing a good name', async () => {
       const access_token = await authenticate(app);
       const res = await request(app.getHttpServer())
         .post('/projects/1/environments')
@@ -447,6 +447,8 @@ describe('ProjectsController (e2e)', () => {
         .send({
           name: 'New env',
         });
+
+      console.log('wtf', res.body);
 
       expect(res.body.uuid).toBeTruthy();
       expect(res.body.name).toBe('New env');

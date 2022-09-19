@@ -8,6 +8,7 @@ export class AuthService {
   constructor(private prisma: PrismaService) {}
   async activateUser(rawToken: string) {
     const hashedToken = CryptoService.sha256(rawToken);
+
     const user = await this.prisma.user.findFirst({
       where: {
         activationToken: hashedToken,
