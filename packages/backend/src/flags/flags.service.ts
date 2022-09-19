@@ -188,6 +188,12 @@ export class FlagsService {
       },
     });
 
+    await this.prisma.schedule.deleteMany({
+      where: {
+        flagEnvironmentFlagId: flagId,
+      },
+    });
+
     await this.prisma.rolloutStrategy.deleteMany({
       where: {
         flagEnvironmentFlagId: flagId,
@@ -200,7 +206,7 @@ export class FlagsService {
       },
     });
 
-    return await this.prisma.flag.deleteMany({
+    return this.prisma.flag.deleteMany({
       where: {
         uuid: flagId,
       },
