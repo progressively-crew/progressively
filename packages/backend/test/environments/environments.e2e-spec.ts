@@ -237,5 +237,46 @@ describe('Environments (e2e)', () => {
           error: 'Bad Request',
         });
     });
+
+    it('gives a 200 and creates the flag in other envs', async () => {
+      const access_token = await authenticate(app);
+
+      const response = await request(app.getHttpServer())
+        .post('/environments/1/flags')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send({
+          name: 'valid name',
+          description: 'Valid description',
+        });
+
+      expect(response.statusCode).toBe(201);
+      expect(response.body).toMatchObject({
+        name: 'valid name',
+        key: 'validName',
+        description: 'Valid description',
+      });
+
+      // Verifies that the flag has been added to both the env of the project
+      const currentEnvFlags = await request(app.getHttpServer())
+        .get('/environments/1/flags')
+        .set('Authorization', `Bearer ${access_token}`);
+
+      const otherEnvFlags = await request(app.getHttpServer())
+        .get('/environments/2/flags')
+        .set('Authorization', `Bearer ${access_token}`);
+
+      const flagIdMatchesUuid = ({ flagId }) => flagId === response.body.uuid;
+
+      const isInFlagList = Boolean(
+        currentEnvFlags.body.find(flagIdMatchesUuid),
+      );
+
+      const isInOtherFlagList = Boolean(
+        otherEnvFlags.body.find(flagIdMatchesUuid),
+      );
+
+      expect(isInFlagList).toBe(true);
+      expect(isInOtherFlagList).toBe(true);
+    });
   });
 });
