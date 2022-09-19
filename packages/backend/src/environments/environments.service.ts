@@ -69,11 +69,10 @@ export class EnvironmentsService {
     envId: string,
     name: string,
     description: string,
-    environments: Array<string>,
   ) {
     const flagKey = camelcase(name);
 
-    const existingFlag = await this.prisma.flagEnvironment.findFirst({
+    const existingFlagEnv = await this.prisma.flagEnvironment.findFirst({
       where: {
         environmentId: envId,
         flag: {
@@ -82,9 +81,21 @@ export class EnvironmentsService {
       },
     });
 
-    if (existingFlag) {
+    if (existingFlagEnv) {
       throw new FlagAlreadyExists();
     }
+
+    const concernedEnv = await this.prisma.environment.findFirst({
+      where: {
+        uuid: envId,
+      },
+    });
+
+    const envsOfProject = await this.prisma.environment.findMany({
+      where: {
+        projectId: concernedEnv.projectId,
+      },
+    });
 
     const flag = await this.prisma.flag.create({
       data: {
@@ -94,11 +105,11 @@ export class EnvironmentsService {
       },
     });
 
-    for (const env of environments) {
+    for (const env of envsOfProject) {
       await this.prisma.flagEnvironment.create({
         data: {
           flagId: flag.uuid,
-          environmentId: env,
+          environmentId: env.uuid,
           rolloutPercentage: 100,
         },
       });
@@ -126,9 +137,15 @@ export class EnvironmentsService {
   }
 
   async deleteEnv(envId: string) {
-    const flagEnvs = await this.prisma.flagEnvironment.findMany({
+    const env = await this.prisma.environment.findFirst({
       where: {
-        environmentId: envId,
+        uuid: envId,
+      },
+      include: {
+        project: {
+          include: { environments: true },
+        },
+        flagEnvironment: true,
       },
     });
 
@@ -144,6 +161,12 @@ export class EnvironmentsService {
       },
     });
 
+    await this.prisma.schedule.deleteMany({
+      where: {
+        flagEnvironmentEnvironmentId: envId,
+      },
+    });
+
     // remove all the flagEnv from the given project
     await this.prisma.flagEnvironment.deleteMany({
       where: {
@@ -151,12 +174,17 @@ export class EnvironmentsService {
       },
     });
 
-    for (const flagEnv of flagEnvs) {
-      await this.prisma.flag.deleteMany({
-        where: {
-          uuid: flagEnv.flagId,
-        },
-      });
+    // If this is the last environment available in the project env list,
+    // remove the flag from the database since they won't have any link
+    // to any environments anymore
+    if (env.project.environments.length === 1) {
+      for (const flagEnv of env.flagEnvironment) {
+        await this.prisma.flag.deleteMany({
+          where: {
+            uuid: flagEnv.flagId,
+          },
+        });
+      }
     }
 
     return this.prisma.environment.delete({

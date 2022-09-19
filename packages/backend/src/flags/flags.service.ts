@@ -83,11 +83,7 @@ export class FlagsService {
     });
   }
 
-  async hitFlag(
-    environmentId: string,
-    flagId: string,
-    statusOrVariant: string,
-  ) {
+  hitFlag(environmentId: string, flagId: string, statusOrVariant: string) {
     // Make it easier to group by date, 2 is arbitrary
     const date = new Date();
     date.setHours(2);
@@ -95,7 +91,7 @@ export class FlagsService {
     date.setSeconds(2);
     date.setMilliseconds(2);
 
-    return await this.prisma.flagHit.create({
+    return this.prisma.flagHit.create({
       data: {
         flagEnvironmentFlagId: flagId,
         flagEnvironmentEnvironmentId: environmentId,
@@ -188,6 +184,12 @@ export class FlagsService {
       },
     });
 
+    await this.prisma.schedule.deleteMany({
+      where: {
+        flagEnvironmentFlagId: flagId,
+      },
+    });
+
     await this.prisma.rolloutStrategy.deleteMany({
       where: {
         flagEnvironmentFlagId: flagId,
@@ -200,7 +202,7 @@ export class FlagsService {
       },
     });
 
-    return await this.prisma.flag.deleteMany({
+    return this.prisma.flag.deleteMany({
       where: {
         uuid: flagId,
       },

@@ -4,12 +4,11 @@ export const createFlag = (
   envId: string,
   name: string,
   description: string,
-  environments: Array<string>,
   accessToken: string
 ) =>
   fetch(`${Constants.BackendUrl}/environments/${envId}/flags`, {
     method: "POST",
-    body: JSON.stringify({ name, description, environments }),
+    body: JSON.stringify({ name, description }),
     headers: {
       Authorization: `Bearer ${accessToken}`,
       "Content-Type": "application/json",
