@@ -42,9 +42,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/delete", 
         cy.findByRole("heading", {
           name: "Deleting a feature flag",
         }).should("be.visible");
-        cy.contains(
-          "We really want to warn you: if you validate the flag suppression, you won't be able to access the New homepage flag anymore. It includes:"
-        ).should("be.visible");
 
         cy.findByText(
           "All your feature flags will be turned off and removed"

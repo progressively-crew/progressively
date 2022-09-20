@@ -47,9 +47,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
         );
 
         cy.findByText("Deleting a schedule").should("be.visible");
-        cy.contains(
-          "The feature flag will not take this schedule into consideration when being evaluated."
-        ).should("be.visible");
 
         cy.findByRole("button", {
           name: "Yes, delete the schedule",

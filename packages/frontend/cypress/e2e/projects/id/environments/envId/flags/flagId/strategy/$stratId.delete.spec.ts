@@ -47,9 +47,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
         );
 
         cy.findByText("Deleting a strategy").should("be.visible");
-        cy.contains(
-          "We really want to warn you: if you validate the strategy suppression, you won't be able to access the Super strategy strategy anymore. It includes:"
-        ).should("be.visible");
 
         cy.findByText(
           "The feature flag will not take this strategy into consideration when being evaluated."

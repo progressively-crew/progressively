@@ -66,9 +66,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/delete", () => {
         cy.findByRole("heading", {
           name: "Deleting an environment",
         }).should("be.visible");
-        cy.contains(
-          "We really want to warn you: if you validate the environment suppression, you won't be able to access the Production environment anymore. It includes:"
-        ).should("be.visible");
 
         cy.findByText(
           "All your feature flags will be turned off and removed"
