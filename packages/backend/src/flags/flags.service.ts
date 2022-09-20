@@ -388,9 +388,8 @@ export class FlagsService {
   }
 
   async editVariants(envId: string, flagId: string, variants: Array<Variant>) {
-    let count: number = 0;
-    for (const variant of variants) {
-      await this.prisma.variant.updateMany({
+    const updateQueries = variants.map((variant) =>
+      this.prisma.variant.updateMany({
         where: {
           uuid: variant.uuid,
           flagEnvironmentFlagId: flagId,
@@ -401,12 +400,12 @@ export class FlagsService {
           rolloutPercentage: variant.rolloutPercentage,
           value: variant.value,
         },
-      });
+      }),
+    );
 
-      count++;
-    }
+    const result = await this.prisma.$transaction(updateQueries);
 
-    return { count };
+    return { count: result.length };
   }
 
   deleteVariantFlag(envId: string, flagId: string, variantId: string) {
