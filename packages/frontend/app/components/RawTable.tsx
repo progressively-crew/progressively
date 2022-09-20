@@ -19,6 +19,7 @@ const Table = styled("table", {
     textTransform: "uppercase",
     fontSize: "$neptune",
     fontFamily: "$title",
+    padding: "0 $spacing$2",
   },
 
   "& td": {

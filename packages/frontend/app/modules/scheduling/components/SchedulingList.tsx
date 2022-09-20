@@ -64,6 +64,7 @@ export const SchedulingList = ({
             <td>
               <DeleteButton
                 small
+                variant="tertiary"
                 to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/scheduling/${schedule.uuid}/delete`}
               >
                 Remove
