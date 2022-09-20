@@ -14,7 +14,11 @@ import { Typography } from "~/components/Typography";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
-import { useSearchParams, useLoaderData, useActionData } from "@remix-run/react";
+import {
+  useSearchParams,
+  useLoaderData,
+  useActionData,
+} from "@remix-run/react";
 import { TagLine } from "~/components/Tagline";
 import { StrategyList } from "~/modules/strategies/components/StrategyList";
 import { Card, CardContent } from "~/components/Card";
@@ -32,7 +36,10 @@ import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { Tag } from "~/components/Tag";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
-import { VariantList, VariantListModes } from "~/modules/variants/components/VariantList";
+import {
+  VariantList,
+  VariantListModes,
+} from "~/modules/variants/components/VariantList";
 import { editVariantAction } from "~/modules/variants/form-actions/editVariantAction";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { PageTitle } from "~/components/PageTitle";
@@ -54,7 +61,10 @@ type ActionDataType = null | {
   errors?: { [key: string]: string | undefined };
 };
 
-export const action: ActionFunction = async ({ request, params }): Promise<ActionDataType> => {
+export const action: ActionFunction = async ({
+  request,
+  params,
+}): Promise<ActionDataType> => {
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
   const flagId = params.flagId;
@@ -64,7 +74,11 @@ export const action: ActionFunction = async ({ request, params }): Promise<Actio
   if (type === "percentage") {
     const rolloutPercentage = formData.get("rolloutPercentage");
 
-    if (rolloutPercentage !== undefined && rolloutPercentage !== null && flagId) {
+    if (
+      rolloutPercentage !== undefined &&
+      rolloutPercentage !== null &&
+      flagId
+    ) {
       await changePercentageFlag(
         params.env!,
         flagId as string,
@@ -91,11 +105,18 @@ interface LoaderData {
   strategies: Array<StrategyRetrieveDTO>;
 }
 
-export const loader: LoaderFunction = async ({ request, params }): Promise<LoaderData> => {
+export const loader: LoaderFunction = async ({
+  request,
+  params,
+}): Promise<LoaderData> => {
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
 
-  const strategies = await getStrategies(params.env!, params.flagId!, authCookie);
+  const strategies = await getStrategies(
+    params.env!,
+    params.flagId!,
+    authCookie
+  );
 
   return {
     strategies,
@@ -160,19 +181,31 @@ export default function FlagById() {
         />
       }
       subNav={
-        <FlagMenu projectId={project.uuid} envId={environment.uuid} flagId={currentFlag.uuid} />
+        <FlagMenu
+          projectId={project.uuid}
+          envId={environment.uuid}
+          flagId={currentFlag.uuid}
+        />
       }
       status={
         isStrategyUpdated ? (
-          <SuccessBox id="strategy-updated">The strategy has been successfully updated.</SuccessBox>
+          <SuccessBox id="strategy-updated">
+            The strategy has been successfully updated.
+          </SuccessBox>
         ) : isStrategyAdded ? (
-          <SuccessBox id="strategy-added">The strategy has been successfully created.</SuccessBox>
+          <SuccessBox id="strategy-added">
+            The strategy has been successfully created.
+          </SuccessBox>
         ) : isStrategyRemoved ? (
-          <SuccessBox id="strategy-removed">The strategy has been successfully removed.</SuccessBox>
+          <SuccessBox id="strategy-removed">
+            The strategy has been successfully removed.
+          </SuccessBox>
         ) : hasPercentageChanged ? (
           <SuccessBox id="percentage-changed">Percentage adjusted.</SuccessBox>
         ) : actionData?.successEdit ? (
-          <SuccessBox id="variant-edited">The variants has been successfully edited.</SuccessBox>
+          <SuccessBox id="variant-edited">
+            The variants has been successfully edited.
+          </SuccessBox>
         ) : hasErrors ? (
           <ErrorBox list={actionData?.errors || {}} />
         ) : null
@@ -181,7 +214,12 @@ export default function FlagById() {
       <PageTitle
         value="Rollout details"
         icon={<FaPowerOff />}
-        description={<StrategyDescription flagEnv={flagEnv} hasStrategies={hasStrategies} />}
+        description={
+          <StrategyDescription
+            flagEnv={flagEnv}
+            hasStrategies={hasStrategies}
+          />
+        }
       />
 
       <Stack spacing={8}>
@@ -193,13 +231,13 @@ export default function FlagById() {
                 description={
                   isMultiVariants ? (
                     <Typography>
-                      These are the variants and their rollout percentage served to your users when
-                      the flag is activated.
+                      These are the variants and their rollout percentage served
+                      to your users when the flag is activated.
                     </Typography>
                   ) : (
                     <Typography>
-                      This is the percentage of people that will receive the variant <Tag>true</Tag>{" "}
-                      when the flag is activated.
+                      This is the percentage of people that will receive the
+                      variant <Tag>true</Tag> when the flag is activated.
                     </Typography>
                   )
                 }
@@ -207,7 +245,10 @@ export default function FlagById() {
             </CardContent>
 
             {isMultiVariants ? (
-              <VariantList variants={flagEnv.variants} mode={VariantListModes.Operational} />
+              <VariantList
+                variants={flagEnv.variants}
+                mode={VariantListModes.Operational}
+              />
             ) : (
               <CardContent>
                 <SliderFlag
@@ -251,8 +292,9 @@ export default function FlagById() {
                   title="No strategy found"
                   description={
                     <Typography>
-                      There are no strategies bound to this flag yet. In this case, when the flag is
-                      activated, every user will receive the {`"true"`} variant.
+                      There are no strategies bound to this flag yet. In this
+                      case, when the flag is activated, every user will receive
+                      the {`"true"`} variant.
                     </Typography>
                   }
                   action={
