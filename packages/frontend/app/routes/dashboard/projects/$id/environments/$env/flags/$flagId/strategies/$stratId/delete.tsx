@@ -19,6 +19,8 @@ import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { useStrategy } from "~/modules/strategies/contexts/useStrategy";
 import { getStrategyMetaTitle } from "~/modules/strategies/services/getStrategyMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
+import { Stack } from "~/components/Stack";
+import { Typography } from "~/components/Typography";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -100,17 +102,15 @@ export default function DeleteStrategyPage() {
     },
   ];
 
-  const warnings = {
-    "turned-off":
-      "The feature flag will not take this strategy into consideration when being evaluated.",
-  };
-
   return (
     <DeleteEntityLayout
       user={user}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={<PageTitle value={`Deleting a strategy`} />}
-      error={data?.errors && data.errors.backendError && <ErrorBox list={data.errors} />}
+      error={
+        data?.errors &&
+        data.errors.backendError && <ErrorBox list={data.errors} />
+      }
       cancelAction={
         <Button
           variant="secondary"
@@ -124,6 +124,7 @@ export default function DeleteStrategyPage() {
           <DeleteButton
             variant="primary"
             type="submit"
+            scheme=""
             isLoading={transition.state === "submitting"}
             loadingText="Deleting the strategy, please wait..."
           >
@@ -132,15 +133,19 @@ export default function DeleteStrategyPage() {
         </Form>
       }
     >
-      <WarningBox
-        list={warnings}
-        title={
-          <>
-            We really want to warn you: if you validate the strategy suppression, you {`won't`} be
-            able to access the {strategy.name} strategy anymore. It includes:
-          </>
-        }
-      />
+      <Stack spacing={4}>
+        <WarningBox title={<>This operation is definitive.</>} />
+
+        <Typography color="hadesLight">
+          If you validate the suppression, the strategy will be removed from the
+          feature flag.
+        </Typography>
+
+        <Typography color="hadesLight">
+          When a user will resolve a feature flag, this strategy will NOT apply
+          anymore.
+        </Typography>
+      </Stack>
     </DeleteEntityLayout>
   );
 }

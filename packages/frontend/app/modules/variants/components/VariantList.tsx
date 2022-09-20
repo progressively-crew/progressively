@@ -40,7 +40,12 @@ export interface FormSliderInputProps {
   initialPercentage: number;
 }
 
-const FormSliderInput = ({ name, label, id, initialPercentage }: FormSliderInputProps) => {
+const FormSliderInput = ({
+  name,
+  label,
+  id,
+  initialPercentage,
+}: FormSliderInputProps) => {
   const [percentage, setPercentage] = useState(initialPercentage);
 
   return (
@@ -87,13 +92,23 @@ export const VariantList = ({ variants, errors, mode }: VariantListProps) => {
         <Wrapper>
           <div className="row">
             <div className="col">
-              <Typography textTransform="uppercase" size="neptune" font="title" as="span">
+              <Typography
+                textTransform="uppercase"
+                size="neptune"
+                font="title"
+                as="span"
+              >
                 Is control
               </Typography>
             </div>
 
             <div className="col">
-              <Typography textTransform="uppercase" size="neptune" font="title" as="span">
+              <Typography
+                textTransform="uppercase"
+                size="neptune"
+                font="title"
+                as="span"
+              >
                 Variant value
               </Typography>
             </div>
@@ -139,7 +154,9 @@ export const VariantList = ({ variants, errors, mode }: VariantListProps) => {
                   name={"isControl"}
                   value={variant.uuid}
                   defaultChecked={variant.isControl}
-                  aria-label={`Is variant at position ${index + 1} the control variant?`}
+                  aria-label={`Is variant at position ${
+                    index + 1
+                  } the control variant?`}
                   readOnly
                 />
               </div>
@@ -168,7 +185,12 @@ export const VariantList = ({ variants, errors, mode }: VariantListProps) => {
 
               {showRemoveButton && (
                 <div className="col">
-                  <DeleteButton small type="submit" form={`delete-form-${variant.uuid}`}>
+                  <DeleteButton
+                    variant="tertiary"
+                    small
+                    type="submit"
+                    form={`delete-form-${variant.uuid}`}
+                  >
                     Remove
                   </DeleteButton>
                 </div>

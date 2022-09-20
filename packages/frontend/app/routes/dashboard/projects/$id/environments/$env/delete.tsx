@@ -22,6 +22,7 @@ import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaT
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
+import { Stack } from "~/components/Stack";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -56,7 +57,9 @@ export const action: ActionFunction = async ({
     return { errors: { backendError: "An error ocurred" } };
   }
 
-  return redirect(`/dashboard/projects/${projectId}?envRemoved=true#env-removed`);
+  return redirect(
+    `/dashboard/projects/${projectId}?envRemoved=true#env-removed`
+  );
 };
 
 export default function DeleteEnvPage() {
@@ -97,12 +100,15 @@ export default function DeleteEnvPage() {
       <DashboardLayout
         user={user}
         breadcrumb={<BreadCrumbs crumbs={crumbs} />}
-        header={<PageTitle value="You are not allowed to delete environments." />}
+        header={
+          <PageTitle value="You are not allowed to delete environments." />
+        }
       >
         <Section>
           <figure>
             <Typography as="figcaption">
-              If you think this is an error, make sure to contact one of the project administrators:
+              If you think this is an error, make sure to contact one of the
+              project administrators:
             </Typography>
 
             <Ul>
@@ -120,17 +126,15 @@ export default function DeleteEnvPage() {
     );
   }
 
-  const warnings = {
-    "turned-off": "All your feature flags will be turned off and removed",
-    "stats-deleted": "All the stats related to the environment will be removed",
-  };
-
   return (
     <DeleteEntityLayout
       user={user}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={<PageTitle value="Deleting an environment" />}
-      error={data?.errors && data.errors.backendError && <ErrorBox list={data.errors} />}
+      error={
+        data?.errors &&
+        data.errors.backendError && <ErrorBox list={data.errors} />
+      }
       cancelAction={
         <Button
           variant="secondary"
@@ -142,6 +146,7 @@ export default function DeleteEnvPage() {
       confirmAction={
         <Form method="post">
           <DeleteButton
+            scheme=""
             variant="primary"
             type="submit"
             isLoading={transition.state === "submitting"}
@@ -152,15 +157,22 @@ export default function DeleteEnvPage() {
         </Form>
       }
     >
-      <WarningBox
-        list={warnings}
-        title={
-          <>
-            We really want to warn you: if you validate the environment suppression, you {`won't`}{" "}
-            be able to access the {environment.name} environment anymore. It includes:
-          </>
-        }
-      />
+      <Stack spacing={4}>
+        <WarningBox title={<>This operation is definitive.</>} />
+
+        <Typography color="hadesLight">
+          If you validate the suppression, all the associated feature flags will
+          be removed.
+        </Typography>
+
+        <Typography color="hadesLight">
+          You won't have access to the flags analytics anymore.
+        </Typography>
+
+        <Typography color="hadesLight">
+          There will be no way to get the data back.
+        </Typography>
+      </Stack>
     </DeleteEntityLayout>
   );
 }

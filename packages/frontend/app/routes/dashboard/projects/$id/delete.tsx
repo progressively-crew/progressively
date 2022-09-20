@@ -18,6 +18,7 @@ import { useProject } from "~/modules/projects/contexts/useProject";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
+import { Stack } from "~/components/Stack";
 
 export const meta: MetaFunction = ({ parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -93,7 +94,8 @@ export default function DeleteProjectPage() {
       >
         <figure>
           <Typography as="figcaption">
-            If you think this is an error, make sure to contact one of the project administrators:
+            If you think this is an error, make sure to contact one of the
+            project administrators:
           </Typography>
 
           <Ul>
@@ -110,20 +112,20 @@ export default function DeleteProjectPage() {
     );
   }
 
-  const warnings = {
-    "turned-off": "All your feature flags will be turned off and removed",
-    "env-deleted": "The associated environments will be removed",
-    "stats-deleted": "All the stats related to the project will be removed",
-  };
-
   return (
     <DeleteEntityLayout
       user={user}
       header={<PageTitle value="Deleting a project" />}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
-      error={data?.errors && data.errors.backendError && <ErrorBox list={data.errors} />}
+      error={
+        data?.errors &&
+        data.errors.backendError && <ErrorBox list={data.errors} />
+      }
       cancelAction={
-        <Button to={`/dashboard/projects/${project.uuid}/settings`} variant="secondary">
+        <Button
+          to={`/dashboard/projects/${project.uuid}/settings`}
+          variant="secondary"
+        >
           No, {`don't`} delete {project.name}
         </Button>
       }
@@ -131,6 +133,7 @@ export default function DeleteProjectPage() {
         <Form method="post">
           <DeleteButton
             variant="primary"
+            scheme=""
             type="submit"
             isLoading={transition.state === "submitting"}
             loadingText="Deleting the project, please wait..."
@@ -140,15 +143,22 @@ export default function DeleteProjectPage() {
         </Form>
       }
     >
-      <WarningBox
-        list={warnings}
-        title={
-          <>
-            We really want to warn you: if you validate the project suppression, you {`won't`} be
-            able to access the <strong>{project.name}</strong> project anymore. It includes:
-          </>
-        }
-      />
+      <Stack spacing={4}>
+        <WarningBox title={<>This operation is definitive.</>} />
+
+        <Typography color="hadesLight">
+          If you validate the suppression, all the environments of the project,
+          and all the associated feature flags will be removed.
+        </Typography>
+
+        <Typography color="hadesLight">
+          You won't have access to the flags analytics anymore.
+        </Typography>
+
+        <Typography color="hadesLight">
+          There will be no way to get the data back.
+        </Typography>
+      </Stack>
     </DeleteEntityLayout>
   );
 }

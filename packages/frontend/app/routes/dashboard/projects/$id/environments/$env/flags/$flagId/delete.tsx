@@ -17,6 +17,8 @@ import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
+import { Stack } from "~/components/Stack";
+import { Typography } from "~/components/Typography";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -91,17 +93,15 @@ export default function DeleteFlagPage() {
     },
   ];
 
-  const warnings = {
-    "turned-off": "All your feature flags will be turned off and removed",
-    "stats-deleted": "All the stats related to the flag will be removed",
-  };
-
   return (
     <DeleteEntityLayout
       user={user}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={<PageTitle value="Deleting a feature flag" />}
-      error={data?.errors && data.errors.backendError && <ErrorBox list={data.errors} />}
+      error={
+        data?.errors &&
+        data.errors.backendError && <ErrorBox list={data.errors} />
+      }
       cancelAction={
         <Button
           variant="secondary"
@@ -113,6 +113,7 @@ export default function DeleteFlagPage() {
       confirmAction={
         <Form method="post">
           <DeleteButton
+            scheme=""
             variant="primary"
             type="submit"
             isLoading={transition.state === "submitting"}
@@ -123,15 +124,22 @@ export default function DeleteFlagPage() {
         </Form>
       }
     >
-      <WarningBox
-        list={warnings}
-        title={
-          <>
-            We really want to warn you: if you validate the flag suppression, you {`won't`} be able
-            to access the {currentFlag.name} flag anymore. It includes:
-          </>
-        }
-      />
+      <Stack spacing={4}>
+        <WarningBox title={<>This operation is definitive.</>} />
+
+        <Typography color="hadesLight">
+          If you validate the suppression, the flag will be removed from all the
+          environments of the <strong>{project.name}</strong> project.
+        </Typography>
+
+        <Typography color="hadesLight">
+          You won't have access to the flags analytics anymore.
+        </Typography>
+
+        <Typography color="hadesLight">
+          There will be no way to get the data back.
+        </Typography>
+      </Stack>
     </DeleteEntityLayout>
   );
 }

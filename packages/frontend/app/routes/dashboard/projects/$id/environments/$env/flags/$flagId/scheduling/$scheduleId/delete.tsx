@@ -7,7 +7,12 @@ import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
-import { useActionData, Form, useTransition, useParams } from "@remix-run/react";
+import {
+  useActionData,
+  Form,
+  useTransition,
+  useParams,
+} from "@remix-run/react";
 import { deleteSchedule } from "~/modules/scheduling/services/deleteSchedule";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { useUser } from "~/modules/user/contexts/useUser";
@@ -17,6 +22,8 @@ import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
+import { Stack } from "~/components/Stack";
+import { Typography } from "~/components/Typography";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -96,17 +103,15 @@ export default function DeleteSchedulePage() {
     },
   ];
 
-  const warnings = {
-    "turned-off":
-      "The feature flag will not take this schedule into consideration when being evaluated.",
-  };
-
   return (
     <DeleteEntityLayout
       user={user}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={<PageTitle value={`Deleting a schedule`} />}
-      error={data?.errors && data.errors.backendError && <ErrorBox list={data.errors} />}
+      error={
+        data?.errors &&
+        data.errors.backendError && <ErrorBox list={data.errors} />
+      }
       cancelAction={
         <Button
           variant="secondary"
@@ -119,6 +124,7 @@ export default function DeleteSchedulePage() {
         <Form method="post">
           <DeleteButton
             variant="primary"
+            scheme=""
             type="submit"
             isLoading={transition.state === "submitting"}
             loadingText="Deleting the schedule, please wait..."
@@ -128,15 +134,18 @@ export default function DeleteSchedulePage() {
         </Form>
       }
     >
-      <WarningBox
-        list={warnings}
-        title={
-          <>
-            We really want to warn you: if you validate the schedule suppression, it won't apply
-            anymore.
-          </>
-        }
-      />
+      <Stack spacing={4}>
+        <WarningBox title={<>This operation is definitive.</>} />
+
+        <Typography color="hadesLight">
+          If you validate the suppression, the schedule will be removed from the
+          feature flag.
+        </Typography>
+
+        <Typography color="hadesLight">
+          It will not change the flag status at the specified date anymore.
+        </Typography>
+      </Stack>
     </DeleteEntityLayout>
   );
 }
