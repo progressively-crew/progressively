@@ -15,8 +15,8 @@ export class EnvironmentsService {
     });
   }
 
-  async getFlagEnvironmentByClientKey(clientKey: string) {
-    return await this.prisma.flagEnvironment.findMany({
+  getFlagEnvironmentByClientKey(clientKey: string) {
+    return this.prisma.flagEnvironment.findMany({
       where: {
         environment: {
           clientKey,
