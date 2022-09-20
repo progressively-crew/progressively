@@ -18,7 +18,6 @@ import { Stack } from "~/components/Stack";
 import { TagLine } from "~/components/Tagline";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
 import { ButtonCopy } from "~/components/ButtonCopy";
-import { Spacer } from "~/components/Spacer";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
@@ -42,7 +41,10 @@ export const meta: MetaFunction = ({ parentsData, params }) => {
 
 type ActionDataType = null | { successChangePercentage: boolean };
 
-export const action: ActionFunction = async ({ request, params }): Promise<ActionDataType> => {
+export const action: ActionFunction = async ({
+  request,
+  params,
+}): Promise<ActionDataType> => {
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
   const formData = await request.formData();
@@ -101,7 +103,11 @@ export default function FlagSettingPage() {
         />
       }
       subNav={
-        <FlagMenu projectId={project.uuid} envId={environment.uuid} flagId={currentFlag.uuid} />
+        <FlagMenu
+          projectId={project.uuid}
+          envId={environment.uuid}
+          flagId={currentFlag.uuid}
+        />
       }
     >
       <PageTitle value="Settings" icon={<AiOutlineSetting />} />
@@ -110,13 +116,19 @@ export default function FlagSettingPage() {
         <Card>
           <CardContent>
             <Section id="general">
-              <SectionHeader title="General" />
-              <Typography>
-                The following is the flag key to use inside your application to get the flag
-                variation
-              </Typography>
-              <Spacer size={4} />
-              <ButtonCopy toCopy={currentFlag.key}>{currentFlag.key}</ButtonCopy>
+              <SectionHeader
+                title="General"
+                description={
+                  <Typography>
+                    The following is the flag key to use inside your application
+                    to get the flag variation
+                  </Typography>
+                }
+              />
+
+              <ButtonCopy toCopy={currentFlag.key}>
+                {currentFlag.key}
+              </ButtonCopy>
             </Section>
           </CardContent>
         </Card>
@@ -130,8 +142,9 @@ export default function FlagSettingPage() {
                   titleAs="h3"
                   description={
                     <Typography>
-                      You can delete a feature flag at any time, but you {`won’t`} be able to access
-                      its insights anymore and false will be served to the application using it.
+                      You can delete a feature flag at any time, but you{" "}
+                      {`won’t`} be able to access its insights anymore and false
+                      will be served to the application using it.
                     </Typography>
                   }
                 />
@@ -142,10 +155,13 @@ export default function FlagSettingPage() {
                   >
                     <span>
                       <span aria-hidden>
-                        Delete <HideMobile>{currentFlag.name} forever</HideMobile>
+                        Delete{" "}
+                        <HideMobile>{currentFlag.name} forever</HideMobile>
                       </span>
 
-                      <VisuallyHidden>Delete {currentFlag.name} forever</VisuallyHidden>
+                      <VisuallyHidden>
+                        Delete {currentFlag.name} forever
+                      </VisuallyHidden>
                     </span>
                   </DeleteButton>
                 </div>

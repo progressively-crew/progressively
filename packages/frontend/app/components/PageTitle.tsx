@@ -16,6 +16,12 @@ const IconWrapper = styled("span", {
   marginTop: "$spacing$2",
 });
 
+const DescriptionWrapper = styled("div", {
+  "& p": {
+    color: "$hadesLight",
+  },
+});
+
 export const PageTitle = ({
   value,
   icon,
@@ -38,7 +44,8 @@ export const PageTitle = ({
             <span>{value}</span>
           </HStack>
         </Typography>
-        {description}
+
+        {description && <DescriptionWrapper>{description}</DescriptionWrapper>}
       </Stack>
 
       <div>{action}</div>

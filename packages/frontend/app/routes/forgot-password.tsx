@@ -24,7 +24,9 @@ interface ActionData {
   errors?: { email?: string; backendError?: string };
 }
 
-export const action: ActionFunction = async ({ request }): Promise<ActionData> => {
+export const action: ActionFunction = async ({
+  request,
+}): Promise<ActionData> => {
   const formData = await request.formData();
   const email = formData.get("email")?.toString();
 
@@ -79,8 +81,8 @@ export default function ForgotPasswordPage() {
           <ErrorBox list={errors} />
         ) : success ? (
           <SuccessBox id="password-reset">
-            An email with a link to reset your password has been set. Make sure to follow the
-            instructions.
+            An email with a link to reset your password has been set. Make sure
+            to follow the instructions.
           </SuccessBox>
         ) : null
       }

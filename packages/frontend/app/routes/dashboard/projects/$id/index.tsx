@@ -56,24 +56,37 @@ export default function ProjectDetailPage() {
       user={user}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
-        <Header tagline={<TagLine icon={<ProjectIcon />}>PROJECT</TagLine>} title={project.name} />
+        <Header
+          tagline={<TagLine icon={<ProjectIcon />}>PROJECT</TagLine>}
+          title={project.name}
+        />
       }
       subNav={
         <HorizontalNav label={`Project related`}>
-          <NavItem to={`/dashboard/projects/${project.uuid}`} icon={<EnvIcon />}>
+          <NavItem
+            to={`/dashboard/projects/${project.uuid}`}
+            icon={<EnvIcon />}
+          >
             Environments
           </NavItem>
 
-          <NavItem to={`/dashboard/projects/${project.uuid}/settings`} icon={<AiOutlineSetting />}>
+          <NavItem
+            to={`/dashboard/projects/${project.uuid}/settings`}
+            icon={<AiOutlineSetting />}
+          >
             Settings
           </NavItem>
         </HorizontalNav>
       }
       status={
         newEnvId ? (
-          <SuccessBox id="env-added">The environment has been successfully created.</SuccessBox>
+          <SuccessBox id="env-added">
+            The environment has been successfully created.
+          </SuccessBox>
         ) : envRemoved ? (
-          <SuccessBox id="env-removed">The environment has been successfully deleted.</SuccessBox>
+          <SuccessBox id="env-removed">
+            The environment has been successfully deleted.
+          </SuccessBox>
         ) : null
       }
     >
@@ -82,7 +95,9 @@ export default function ProjectDetailPage() {
         icon={<EnvIcon />}
         action={
           hasEnvironments && (
-            <CreateButton to={`/dashboard/projects/${project.uuid}/environments/create`}>
+            <CreateButton
+              to={`/dashboard/projects/${project.uuid}/environments/create`}
+            >
               Create an environment
             </CreateButton>
           )
@@ -92,7 +107,10 @@ export default function ProjectDetailPage() {
       <Section aria-label="List of environments">
         {hasEnvironments ? (
           <Card>
-            <EnvList environments={project.environments} projectId={project.uuid} />
+            <EnvList
+              environments={project.environments}
+              projectId={project.uuid}
+            />
           </Card>
         ) : (
           <Card>
@@ -100,10 +118,14 @@ export default function ProjectDetailPage() {
               <EmptyState
                 title="No environments found"
                 description={
-                  <Typography>There are no environments yet on this project.</Typography>
+                  <Typography>
+                    There are no environments yet on this project.
+                  </Typography>
                 }
                 action={
-                  <CreateButton to={`/dashboard/projects/${project.uuid}/environments/create`}>
+                  <CreateButton
+                    to={`/dashboard/projects/${project.uuid}/environments/create`}
+                  >
                     Create an environment
                   </CreateButton>
                 }

@@ -15,7 +15,6 @@ import { Card, CardContent } from "~/components/Card";
 import { Stack } from "~/components/Stack";
 import { AiOutlineSetting } from "react-icons/ai";
 import { TagLine } from "~/components/Tagline";
-import { Spacer } from "~/components/Spacer";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
@@ -75,12 +74,19 @@ export default function EnvSettingsPage() {
         <Card>
           <CardContent>
             <Section id="general">
-              <SectionHeader title="General" />
-              <Typography>
-                The following is the client key to use inside your application to retrieve the flags
-              </Typography>
-              <Spacer size={4} />
-              <ButtonCopy toCopy={environment.clientKey}>{environment.clientKey}</ButtonCopy>
+              <SectionHeader
+                title="General"
+                description={
+                  <Typography>
+                    The following is the client key to use inside your
+                    application to retrieve the flags
+                  </Typography>
+                }
+              />
+
+              <ButtonCopy toCopy={environment.clientKey}>
+                {environment.clientKey}
+              </ButtonCopy>
             </Section>
           </CardContent>
         </Card>
@@ -94,9 +100,10 @@ export default function EnvSettingsPage() {
                   titleAs="h3"
                   description={
                     <Typography>
-                      You can delete an environment at any time, but you {`won’t`} be able to access
-                      its flags will be removed and be falsy in your applications. Be sure to know
-                      what {`you're`} doing before removing an environment.
+                      You can delete an environment at any time, but you{" "}
+                      {`won’t`} be able to access its flags will be removed and
+                      be falsy in your applications. Be sure to know what{" "}
+                      {`you're`} doing before removing an environment.
                     </Typography>
                   }
                 />
@@ -107,10 +114,15 @@ export default function EnvSettingsPage() {
                   >
                     <span>
                       <span aria-hidden>
-                        Delete <HideMobile>{`"${environment.name}"`} forever</HideMobile>
+                        Delete{" "}
+                        <HideMobile>
+                          {`"${environment.name}"`} forever
+                        </HideMobile>
                       </span>
 
-                      <VisuallyHidden>Delete {`"${environment.name}"`} forever</VisuallyHidden>
+                      <VisuallyHidden>
+                        Delete {`"${environment.name}"`} forever
+                      </VisuallyHidden>
                     </span>
                   </DeleteButton>
                 </div>
