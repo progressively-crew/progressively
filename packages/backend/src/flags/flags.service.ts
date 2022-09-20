@@ -2,12 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { StrategyService } from '../strategy/strategy.service';
 import { PrismaService } from '../database/prisma.service';
 import { FlagStatus } from './flags.status';
-import {
-  FlagHitsRetrieveDTO,
-  PopulatedFlagEnv,
-  SchedulingStatus,
-  Variant,
-} from './types';
+import { PopulatedFlagEnv, SchedulingStatus, Variant } from './types';
 import { FieldRecord } from '../strategy/types';
 import { WebsocketGateway } from '../websocket/websocket.gateway';
 import { VariantCreationDTO } from './flags.dto';
@@ -172,41 +167,44 @@ export class FlagsService {
   }
 
   async deleteFlag(flagId: string) {
-    await this.prisma.flagHit.deleteMany({
-      where: {
-        flagEnvironmentFlagId: flagId,
-      },
-    });
+    const deleteQueries = [
+      this.prisma.flagHit.deleteMany({
+        where: {
+          flagEnvironmentFlagId: flagId,
+        },
+      }),
+      this.prisma.variant.deleteMany({
+        where: {
+          flagEnvironmentFlagId: flagId,
+        },
+      }),
+      this.prisma.schedule.deleteMany({
+        where: {
+          flagEnvironmentFlagId: flagId,
+        },
+      }),
+      this.prisma.rolloutStrategy.deleteMany({
+        where: {
+          flagEnvironmentFlagId: flagId,
+        },
+      }),
+      this.prisma.flagEnvironment.deleteMany({
+        where: {
+          flagId: flagId,
+        },
+      }),
+      this.prisma.flag.deleteMany({
+        where: {
+          uuid: flagId,
+        },
+      }),
+    ];
 
-    await this.prisma.variant.deleteMany({
-      where: {
-        flagEnvironmentFlagId: flagId,
-      },
-    });
+    const [, , , , , flagRemoved] = await this.prisma.$transaction(
+      deleteQueries,
+    );
 
-    await this.prisma.schedule.deleteMany({
-      where: {
-        flagEnvironmentFlagId: flagId,
-      },
-    });
-
-    await this.prisma.rolloutStrategy.deleteMany({
-      where: {
-        flagEnvironmentFlagId: flagId,
-      },
-    });
-
-    await this.prisma.flagEnvironment.deleteMany({
-      where: {
-        flagId: flagId,
-      },
-    });
-
-    return this.prisma.flag.deleteMany({
-      where: {
-        uuid: flagId,
-      },
-    });
+    return flagRemoved;
   }
 
   async hasPermissionOnFlag(
@@ -290,7 +288,10 @@ export class FlagsService {
     };
   }
 
-  async manageScheduling(flagEnv: PopulatedFlagEnv): Promise<PopulatedFlagEnv> {
+  async manageScheduling(
+    clientKey: string,
+    flagEnv: PopulatedFlagEnv,
+  ): Promise<PopulatedFlagEnv> {
     let nextFlagEnv: PopulatedFlagEnv = flagEnv;
 
     const now = new Date();
@@ -308,42 +309,46 @@ export class FlagsService {
       },
     });
 
+    const updateQueries = [];
+
     for (const schedule of scheduling) {
-      await this.prisma.schedule.update({
-        where: {
-          uuid: schedule.uuid,
-        },
-        data: {
-          status: SchedulingStatus.HAS_RUN,
-        },
-      });
-
-      const response = await this.prisma.flagEnvironment.update({
-        where: {
-          flagId_environmentId: {
-            environmentId: flagEnv.environmentId,
-            flagId: flagEnv.flagId,
+      updateQueries.push(
+        this.prisma.schedule.update({
+          where: {
+            uuid: schedule.uuid,
           },
-        },
-        data: {
-          status: schedule.status,
-          rolloutPercentage: schedule.rolloutPercentage,
-        },
-        include: {
-          flag: true,
-          strategies: true,
-          scheduling: true,
-          environment: true,
-        },
-      });
-
-      nextFlagEnv = response as unknown as PopulatedFlagEnv;
-
-      this.wsGateway.notifyChanges(
-        nextFlagEnv.environment.clientKey,
-        nextFlagEnv,
+          data: {
+            status: SchedulingStatus.HAS_RUN,
+          },
+        }),
+        this.prisma.flagEnvironment.update({
+          where: {
+            flagId_environmentId: {
+              environmentId: flagEnv.environmentId,
+              flagId: flagEnv.flagId,
+            },
+          },
+          data: {
+            status: schedule.status,
+            rolloutPercentage: schedule.rolloutPercentage,
+          },
+          include: {
+            flag: true,
+            strategies: true,
+            scheduling: true,
+          },
+        }),
       );
     }
+
+    const result = await this.prisma.$transaction(updateQueries);
+
+    if (result.length > 0) {
+      const rawFlagEnv = result[result.length - 1];
+      nextFlagEnv = rawFlagEnv as unknown as PopulatedFlagEnv;
+    }
+
+    this.wsGateway.notifyChanges(clientKey, nextFlagEnv);
 
     return nextFlagEnv;
   }
