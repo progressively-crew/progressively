@@ -10,32 +10,21 @@ export class ProjectsService {
     const newProject = await this.prisma.project.create({
       data: {
         name,
+        userProject: {
+          create: {
+            userId,
+            role: UserRoles.Admin,
+          },
+        },
+        environments: {
+          createMany: {
+            data: [{ name: 'Production' }, { name: 'Development' }],
+          },
+        },
       },
     });
 
-    const userProject = await this.prisma.userProject.create({
-      data: {
-        projectId: newProject.uuid,
-        userId,
-        role: UserRoles.Admin,
-      },
-    });
-
-    await this.prisma.environment.create({
-      data: {
-        name: 'Production',
-        projectId: newProject.uuid,
-      },
-    });
-
-    await this.prisma.environment.create({
-      data: {
-        name: 'Development',
-        projectId: newProject.uuid,
-      },
-    });
-
-    return userProject;
+    return newProject;
   }
 
   getAll(userId: string) {

@@ -19,6 +19,7 @@ import {
   AddMemberProjectDTO,
   ProjectCreationDTO,
   ProjectCreationSchema,
+  ProjectRetrieveDTO,
 } from './projects.dto';
 import { ProjectsService } from './projects.service';
 import { UserRetrieveDTO } from 'src/users/users.dto';
@@ -36,7 +37,6 @@ import {
 import { UserStatus } from '../users/status';
 import { MailService } from '../mail/mail.service';
 import { Environment } from '../environments/types';
-import { UserProject } from './types';
 @ApiBearerAuth()
 @Controller('projects')
 export class ProjectsController {
@@ -71,7 +71,7 @@ export class ProjectsController {
   createProject(
     @Request() req,
     @Body() projectDto: ProjectCreationDTO,
-  ): Promise<UserProject> {
+  ): Promise<ProjectRetrieveDTO> {
     const user: UserRetrieveDTO = req.user;
 
     return this.projectService.createProject(projectDto.name, user.uuid);
