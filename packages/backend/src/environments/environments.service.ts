@@ -95,23 +95,21 @@ export class EnvironmentsService {
       },
     });
 
+    const flagsEnvs = envsOfProject.map((env) => ({
+      environmentId: env.uuid,
+      rolloutPercentage: 100,
+    }));
+
     const flag = await this.prisma.flag.create({
       data: {
         name,
         description,
         key: flagKey,
+        flagEnvironment: {
+          createMany: { data: flagsEnvs },
+        },
       },
     });
-
-    for (const env of envsOfProject) {
-      await this.prisma.flagEnvironment.create({
-        data: {
-          flagId: flag.uuid,
-          environmentId: env.uuid,
-          rolloutPercentage: 100,
-        },
-      });
-    }
 
     return flag;
   }
