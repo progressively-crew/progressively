@@ -49,6 +49,7 @@ export class SdkService {
 
       if (flagEnv.scheduling.length > 0) {
         nextFlag = await this.flagService.manageScheduling(
+          clientKey,
           flagEnv as unknown as PopulatedFlagEnv,
         );
       }

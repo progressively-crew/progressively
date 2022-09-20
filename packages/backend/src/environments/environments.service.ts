@@ -15,8 +15,8 @@ export class EnvironmentsService {
     });
   }
 
-  async getFlagEnvironmentByClientKey(clientKey: string) {
-    return await this.prisma.flagEnvironment.findMany({
+  getFlagEnvironmentByClientKey(clientKey: string) {
+    return this.prisma.flagEnvironment.findMany({
       where: {
         environment: {
           clientKey,
@@ -45,22 +45,20 @@ export class EnvironmentsService {
       distinct: ['flagId'],
     });
 
+    const flagsToCreate = allMatchingFlagEnv.map((flagEnv) => ({
+      rolloutPercentage: 100,
+      flagId: flagEnv.flagId,
+    }));
+
     const newEnv = await this.prisma.environment.create({
       data: {
         name: environmentName,
         projectId: projectId,
+        flagEnvironment: {
+          createMany: { data: flagsToCreate },
+        },
       },
     });
-
-    for (const flagEnv of allMatchingFlagEnv) {
-      await this.prisma.flagEnvironment.create({
-        data: {
-          flagId: flagEnv.flagId,
-          environmentId: newEnv.uuid,
-          rolloutPercentage: 100,
-        },
-      });
-    }
 
     return newEnv;
   }
@@ -97,23 +95,21 @@ export class EnvironmentsService {
       },
     });
 
+    const flagsEnvs = envsOfProject.map((env) => ({
+      environmentId: env.uuid,
+      rolloutPercentage: 100,
+    }));
+
     const flag = await this.prisma.flag.create({
       data: {
         name,
         description,
         key: flagKey,
+        flagEnvironment: {
+          createMany: { data: flagsEnvs },
+        },
       },
     });
-
-    for (const env of envsOfProject) {
-      await this.prisma.flagEnvironment.create({
-        data: {
-          flagId: flag.uuid,
-          environmentId: env.uuid,
-          rolloutPercentage: 100,
-        },
-      });
-    }
 
     return flag;
   }
@@ -149,49 +145,60 @@ export class EnvironmentsService {
       },
     });
 
-    await this.prisma.flagHit.deleteMany({
-      where: {
-        flagEnvironmentEnvironmentId: envId,
-      },
-    });
+    const deleteQueries = [
+      this.prisma.flagHit.deleteMany({
+        where: {
+          flagEnvironmentEnvironmentId: envId,
+        },
+      }),
+      this.prisma.variant.deleteMany({
+        where: {
+          flagEnvironmentEnvironmentId: envId,
+        },
+      }),
+      this.prisma.schedule.deleteMany({
+        where: {
+          flagEnvironmentEnvironmentId: envId,
+        },
+      }),
+      this.prisma.rolloutStrategy.deleteMany({
+        where: {
+          flagEnvironmentEnvironmentId: envId,
+        },
+      }),
+      this.prisma.flagEnvironment.deleteMany({
+        where: {
+          environmentId: envId,
+        },
+      }),
+    ];
 
-    await this.prisma.variant.deleteMany({
-      where: {
-        flagEnvironmentEnvironmentId: envId,
-      },
-    });
-
-    await this.prisma.schedule.deleteMany({
-      where: {
-        flagEnvironmentEnvironmentId: envId,
-      },
-    });
-
-    // remove all the flagEnv from the given project
-    await this.prisma.flagEnvironment.deleteMany({
-      where: {
-        environmentId: envId,
-      },
-    });
-
-    // If this is the last environment available in the project env list,
-    // remove the flag from the database since they won't have any link
-    // to any environments anymore
     if (env.project.environments.length === 1) {
-      for (const flagEnv of env.flagEnvironment) {
-        await this.prisma.flag.deleteMany({
+      const flagIds = env.flagEnvironment.map((flagEnv) => flagEnv.flagId);
+
+      deleteQueries.push(
+        this.prisma.flag.deleteMany({
           where: {
-            uuid: flagEnv.flagId,
+            uuid: {
+              in: flagIds,
+            },
           },
-        });
-      }
+        }),
+      );
     }
 
-    return this.prisma.environment.delete({
-      where: {
-        uuid: envId,
-      },
-    });
+    deleteQueries.push(
+      this.prisma.environment.deleteMany({
+        where: {
+          uuid: envId,
+        },
+      }),
+    );
+
+    const result = await this.prisma.$transaction(deleteQueries);
+    const envRemoved = result[result.length - 1];
+
+    return envRemoved;
   }
 
   async hasPermissionOnEnv(

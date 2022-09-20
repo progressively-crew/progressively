@@ -21,12 +21,8 @@ export class MailService {
     });
   }
 
-  async sendRegistrationMail(
-    fullname: string,
-    to: string,
-    activationToken: string,
-  ) {
-    await this.transporter.sendMail({
+  sendRegistrationMail(fullname: string, to: string, activationToken: string) {
+    return this.transporter.sendMail({
       from: '"👻" <no-reply@progressively.io>', // sender address
       to,
       subject: '[Progressively] Activate your new user', // Subject line
@@ -47,12 +43,12 @@ export class MailService {
     });
   }
 
-  async sendResetPasswordMail(
+  sendResetPasswordMail(
     fullname: string,
     to: string,
     resetPasswordToken: string,
   ) {
-    await this.transporter.sendMail({
+    return this.transporter.sendMail({
       from: '"👻" <no-reply@Progressively.io>', // sender address
       to,
       subject: '[Progressively] Reset your password', // Subject line

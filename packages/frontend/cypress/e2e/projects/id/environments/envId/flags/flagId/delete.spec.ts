@@ -1,4 +1,4 @@
-describe.only("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/delete", () => {
+describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/delete", () => {
   before(cy.seed);
   after(cy.cleanupDb);
 
@@ -46,9 +46,13 @@ describe.only("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/dele
           "We really want to warn you: if you validate the flag suppression, you won't be able to access the New homepage flag anymore. It includes:"
         ).should("be.visible");
 
-        cy.findByText("All your feature flags will be turned off and removed").should("be.visible");
+        cy.findByText(
+          "All your feature flags will be turned off and removed"
+        ).should("be.visible");
 
-        cy.findByText("All the stats related to the flag will be removed").should("be.visible");
+        cy.findByText(
+          "All the stats related to the flag will be removed"
+        ).should("be.visible");
 
         cy.findByRole("button", {
           name: "Yes, delete the flag",
@@ -56,7 +60,11 @@ describe.only("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/dele
 
         cy.contains("No, don't delete New homepage")
           .should("be.visible")
-          .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags/1/settings");
+          .and(
+            "have.attr",
+            "href",
+            "/dashboard/projects/1/environments/1/flags/1/settings"
+          );
 
         cy.checkA11y();
       });
@@ -77,7 +85,10 @@ describe.only("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/dele
           name: "Yes, delete the flag",
         }).click();
 
-        cy.url().should("contain", "/dashboard/projects/1/environments/1?flagRemoved=true");
+        cy.url().should(
+          "contain",
+          "/dashboard/projects/1/environments/1?flagRemoved=true"
+        );
 
         // Delete the second flag
         cy.visit("/dashboard/projects/1/environments/1/flags/2/delete");
@@ -85,7 +96,10 @@ describe.only("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/dele
           name: "Yes, delete the flag",
         }).click();
 
-        cy.url().should("contain", "/dashboard/projects/1/environments/1?flagRemoved=true");
+        cy.url().should(
+          "contain",
+          "/dashboard/projects/1/environments/1?flagRemoved=true"
+        );
 
         cy.get(".success-box")
           .should("have.focus")

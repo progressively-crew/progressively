@@ -2,12 +2,6 @@ import { Environment } from '../environments/types';
 import { RolloutStrategy } from '../strategy/types';
 import { FlagStatus } from './flags.status';
 
-export interface FlagHitsRetrieveDTO {
-  date: string;
-  notactivated: number;
-  activated: number;
-}
-
 export interface Flag {
   uuid: string;
   name: string;
