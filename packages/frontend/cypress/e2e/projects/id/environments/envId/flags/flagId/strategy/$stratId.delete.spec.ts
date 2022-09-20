@@ -48,10 +48,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
 
         cy.findByText("Deleting a strategy").should("be.visible");
 
-        cy.findByText(
-          "The feature flag will not take this strategy into consideration when being evaluated."
-        ).should("be.visible");
-
         cy.findByRole("button", {
           name: "Yes, delete the strategy",
         }).should("be.visible");

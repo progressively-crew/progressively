@@ -67,14 +67,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/delete", () => {
           name: "Deleting an environment",
         }).should("be.visible");
 
-        cy.findByText(
-          "All your feature flags will be turned off and removed"
-        ).should("be.visible");
-
-        cy.findByText(
-          "All the stats related to the environment will be removed"
-        ).should("be.visible");
-
         cy.findByRole("button", {
           name: "Yes, delete the environment",
         }).should("be.visible");

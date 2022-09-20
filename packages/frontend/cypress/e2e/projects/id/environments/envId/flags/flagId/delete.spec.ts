@@ -43,14 +43,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/delete", 
           name: "Deleting a feature flag",
         }).should("be.visible");
 
-        cy.findByText(
-          "All your feature flags will be turned off and removed"
-        ).should("be.visible");
-
-        cy.findByText(
-          "All the stats related to the flag will be removed"
-        ).should("be.visible");
-
         cy.findByRole("button", {
           name: "Yes, delete the flag",
         }).should("be.visible");
