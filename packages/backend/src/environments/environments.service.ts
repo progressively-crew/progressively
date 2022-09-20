@@ -145,49 +145,55 @@ export class EnvironmentsService {
       },
     });
 
-    await this.prisma.flagHit.deleteMany({
-      where: {
-        flagEnvironmentEnvironmentId: envId,
-      },
-    });
+    const deleteQueries = [
+      this.prisma.flagHit.deleteMany({
+        where: {
+          flagEnvironmentEnvironmentId: envId,
+        },
+      }),
+      this.prisma.variant.deleteMany({
+        where: {
+          flagEnvironmentEnvironmentId: envId,
+        },
+      }),
+      this.prisma.schedule.deleteMany({
+        where: {
+          flagEnvironmentEnvironmentId: envId,
+        },
+      }),
+      this.prisma.flagEnvironment.deleteMany({
+        where: {
+          environmentId: envId,
+        },
+      }),
+    ];
 
-    await this.prisma.variant.deleteMany({
-      where: {
-        flagEnvironmentEnvironmentId: envId,
-      },
-    });
-
-    await this.prisma.schedule.deleteMany({
-      where: {
-        flagEnvironmentEnvironmentId: envId,
-      },
-    });
-
-    // remove all the flagEnv from the given project
-    await this.prisma.flagEnvironment.deleteMany({
-      where: {
-        environmentId: envId,
-      },
-    });
-
-    // If this is the last environment available in the project env list,
-    // remove the flag from the database since they won't have any link
-    // to any environments anymore
     if (env.project.environments.length === 1) {
-      for (const flagEnv of env.flagEnvironment) {
-        await this.prisma.flag.deleteMany({
+      const flagIds = env.flagEnvironment.map((flagEnv) => flagEnv.flagId);
+
+      deleteQueries.push(
+        this.prisma.flag.deleteMany({
           where: {
-            uuid: flagEnv.flagId,
+            uuid: {
+              in: flagIds,
+            },
           },
-        });
-      }
+        }),
+      );
     }
 
-    return this.prisma.environment.delete({
-      where: {
-        uuid: envId,
-      },
-    });
+    deleteQueries.push(
+      this.prisma.environment.deleteMany({
+        where: {
+          uuid: envId,
+        },
+      }),
+    );
+
+    const result = await this.prisma.$transaction(deleteQueries);
+    const envRemoved = result[result.length - 1];
+
+    return envRemoved;
   }
 
   async hasPermissionOnEnv(
