@@ -161,6 +161,11 @@ export class EnvironmentsService {
           flagEnvironmentEnvironmentId: envId,
         },
       }),
+      this.prisma.rolloutStrategy.deleteMany({
+        where: {
+          flagEnvironmentEnvironmentId: envId,
+        },
+      }),
       this.prisma.flagEnvironment.deleteMany({
         where: {
           environmentId: envId,
