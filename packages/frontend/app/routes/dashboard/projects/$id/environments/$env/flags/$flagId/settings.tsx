@@ -18,7 +18,6 @@ import { Stack } from "~/components/Stack";
 import { TagLine } from "~/components/Tagline";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
 import { ButtonCopy } from "~/components/ButtonCopy";
-import { Spacer } from "~/components/Spacer";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
@@ -127,7 +126,6 @@ export default function FlagSettingPage() {
                 }
               />
 
-              <Spacer size={4} />
               <ButtonCopy toCopy={currentFlag.key}>
                 {currentFlag.key}
               </ButtonCopy>
