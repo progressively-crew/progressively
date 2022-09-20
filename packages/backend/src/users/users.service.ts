@@ -80,10 +80,10 @@ export class UsersService {
     return users.length > 0;
   }
 
-  async checkPasswordToken(rawToken: string) {
+  checkPasswordToken(rawToken: string) {
     const hashedToken = CryptoService.sha256(rawToken);
 
-    return await this.prisma.passwordResetTokens.findFirst({
+    return this.prisma.passwordResetTokens.findFirst({
       where: {
         token: hashedToken,
         dateEnd: {
@@ -96,26 +96,31 @@ export class UsersService {
   async resetUserPassword(userId: string, rawPassword: string) {
     const newHashedPassword = await CryptoService.hash(rawPassword);
 
-    await this.prisma.passwordResetTokens.deleteMany({
-      where: {
-        userUuid: userId,
-      },
-    });
+    const queries = [
+      this.prisma.passwordResetTokens.deleteMany({
+        where: {
+          userUuid: userId,
+        },
+      }),
+      this.prisma.user.update({
+        data: {
+          password: newHashedPassword,
+        },
+        where: {
+          uuid: userId,
+        },
+      }),
+    ];
 
-    return this.prisma.user.update({
-      data: {
-        password: newHashedPassword,
-      },
-      where: {
-        uuid: userId,
-      },
-    });
+    const result = await this.prisma.$transaction(queries);
+
+    return result[result.length - 1];
   }
 
   async changeUserPassword(password: string, userId: string) {
     const encryptedPassword = await CryptoService.hash(password);
 
-    return await this.prisma.user.update({
+    return this.prisma.user.update({
       data: {
         password: encryptedPassword,
       },

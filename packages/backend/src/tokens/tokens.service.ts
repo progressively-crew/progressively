@@ -16,13 +16,13 @@ export class TokensService {
     return this.jwtService.signAsync(payload, { subject });
   }
 
-  async createRefreshToken(payload: any) {
+  createRefreshToken(payload: any) {
     const { RefreshTokenExpire, RefreshTokenSecret } = jwtConstants();
     const expiration = new Date();
 
     expiration.setTime(expiration.getTime() + RefreshTokenExpire);
 
-    return await this.jwtService.signAsync(payload, {
+    return this.jwtService.signAsync(payload, {
       secret: RefreshTokenSecret,
       expiresIn: `${RefreshTokenExpire}s`,
     });
@@ -55,7 +55,7 @@ export class TokensService {
     return { accessToken: nextAccessToken, nextRefreshToken: nextRefreshToken };
   }
 
-  async decodeRefreshToken(token: string): Promise<RefreshTokenPayload> {
+  decodeRefreshToken(token: string): Promise<RefreshTokenPayload> {
     return this.jwtService.verifyAsync(token);
   }
 }
