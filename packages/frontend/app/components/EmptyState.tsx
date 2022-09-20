@@ -26,7 +26,19 @@ export interface EmptyStateProps {
   action?: React.ReactNode;
 }
 
-export const EmptyState = ({ title, description, titleAs = "h3", id, action }: EmptyStateProps) => {
+const DescriptionWrapper = styled("div", {
+  "& p": {
+    color: "$hadesLight",
+  },
+});
+
+export const EmptyState = ({
+  title,
+  description,
+  titleAs = "h3",
+  id,
+  action,
+}: EmptyStateProps) => {
   return (
     <Wrapper>
       <EmptyBoxIcon />
@@ -38,7 +50,7 @@ export const EmptyState = ({ title, description, titleAs = "h3", id, action }: E
           {title}
         </Heading>
 
-        {description}
+        <DescriptionWrapper>{description}</DescriptionWrapper>
 
         <div>{action}</div>
       </Stack>

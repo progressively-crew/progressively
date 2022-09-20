@@ -34,6 +34,12 @@ const SectionHeaderWrapper = styled("div", {
   marginBottom: "$spacing$4",
 });
 
+const DescriptionWrapper = styled("div", {
+  "& p": {
+    color: "$hadesLight",
+  },
+});
+
 export const SectionHeader = ({
   title,
   titleAs = "h2",
@@ -61,7 +67,9 @@ export const SectionHeader = ({
           {description && (
             <>
               <Spacer size={2} />
-              {description}
+              {description && (
+                <DescriptionWrapper>{description}</DescriptionWrapper>
+              )}
             </>
           )}
         </div>
