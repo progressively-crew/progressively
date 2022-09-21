@@ -19,6 +19,7 @@ export enum VariantListModes {
 const Wrapper = styled("div", {
   display: "table",
   width: "100%",
+
   "& .row": {
     display: "table-row",
   },

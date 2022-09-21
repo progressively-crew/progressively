@@ -56,10 +56,12 @@ const Table = styled("table", {
   "& tr": {
     transition: "all 0.2s",
     borderTop: "1px solid $heracles",
+    borderLeft: "4px solid transparent",
   },
 
   "& tbody tr:hover": {
     background: "$heracles",
+    borderLeft: "4px solid $nemesis",
   },
 
   "& tbody tr.clickable": {

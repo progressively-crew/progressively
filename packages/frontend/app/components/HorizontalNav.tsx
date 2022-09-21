@@ -3,7 +3,7 @@ import { styled } from "~/stitches.config";
 import { HStack } from "./HStack";
 
 const HorizontalNavWrapper = styled("nav", {
-  padding: "0 $spacing$4",
+  overflow: "hidden",
   background: "$nemesis",
   borderRadius: "$borderRadius$regular",
 

@@ -22,9 +22,14 @@ const TreeWrapper = styled("ul", {
     fontWeight: "$bold",
   },
 
+  "& a:hover": {
+    background: "$nemesisLight",
+    borderLeft: "4px solid $nemesis",
+  },
+
   "& a:focus-visible": {
     background: "$nemesisLight",
-    borderLeft: "8px solid $nemesis",
+    borderLeft: "4px solid $nemesis",
     outline: "none",
     boxShadow: "unset",
   },
@@ -40,7 +45,7 @@ const TreeWrapper = styled("ul", {
     height: "$ctaSmall",
     alignItems: "center",
     transition: "all 0.1s",
-    borderLeft: "8px solid transparent",
+    borderLeft: "4px solid transparent",
 
     "&:active": {
       color: "$nemesis",
@@ -92,7 +97,12 @@ export interface TreeItemLinkProps {
   id?: string;
 }
 
-const TreeItemLink = ({ children, to, onClick, id: actualId }: TreeItemLinkProps) => {
+const TreeItemLink = ({
+  children,
+  to,
+  onClick,
+  id: actualId,
+}: TreeItemLinkProps) => {
   const expanded = false;
   const id = useTreeItem();
 
@@ -119,7 +129,13 @@ export interface TreeItemProps {
   id?: string;
 }
 
-export const TreeItem = ({ children, group, to, onClick, id }: TreeItemProps) => {
+export const TreeItem = ({
+  children,
+  group,
+  to,
+  onClick,
+  id,
+}: TreeItemProps) => {
   return (
     <TreeItemProvider>
       <li role="none">
