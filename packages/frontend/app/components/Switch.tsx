@@ -1,3 +1,4 @@
+import { BsCheck } from "react-icons/bs";
 import { styled } from "~/stitches.config";
 
 const SwitchButton = styled("button", {
@@ -22,15 +23,19 @@ const SwitchButton = styled("button", {
 });
 
 const StyledThumb = styled("span", {
-  display: "block",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
   width: 20,
   height: "100%",
   backgroundColor: "$heracles",
   borderRadius: "9999px",
-  boxShadow: `0 2px 2px $hermes`,
   transition: "all 100ms",
   transform: "translateX(0%)",
   willChange: "transform",
+  fontSize: "$jupiter",
+  color: "$hermes",
+  boxShadow: "0 2px 6px rgba(0,0,0,.1)",
 
   variants: {
     checked: {
@@ -92,7 +97,9 @@ export const Switch = ({
     >
       <Text>{offLabel || "Off"}</Text>
       <SwitchInnerWrapper checked={checked}>
-        <StyledThumb className={className} aria-hidden checked={checked} />
+        <StyledThumb className={className} aria-hidden checked={checked}>
+          {checked && <BsCheck />}
+        </StyledThumb>
       </SwitchInnerWrapper>
       <Text>{onLabel || "On"}</Text>
     </SwitchButton>
