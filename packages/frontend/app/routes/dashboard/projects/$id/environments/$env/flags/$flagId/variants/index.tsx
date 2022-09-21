@@ -1,5 +1,10 @@
 import { ActionFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
-import { Form, useActionData, useLoaderData, useTransition } from "@remix-run/react";
+import {
+  Form,
+  useActionData,
+  useLoaderData,
+  useTransition,
+} from "@remix-run/react";
 import { useEffect, useRef } from "react";
 import { AiOutlineAppstore } from "react-icons/ai";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
@@ -53,11 +58,18 @@ interface LoaderData {
   variants: Array<Variant>;
 }
 
-export const loader: LoaderFunction = async ({ request, params }): Promise<LoaderData> => {
+export const loader: LoaderFunction = async ({
+  request,
+  params,
+}): Promise<LoaderData> => {
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
 
-  const variants: Array<Variant> = await getVariants(params.env!, params.flagId!, authCookie);
+  const variants: Array<Variant> = await getVariants(
+    params.env!,
+    params.flagId!,
+    authCookie
+  );
 
   return {
     variants,
@@ -83,7 +95,10 @@ type ActionDataType = null | {
 };
 
 /* eslint-disable sonarjs/cognitive-complexity */
-export const action: ActionFunction = async ({ request, params }): Promise<ActionDataType> => {
+export const action: ActionFunction = async ({
+  request,
+  params,
+}): Promise<ActionDataType> => {
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
   const formData = await request.formData();
@@ -170,17 +185,27 @@ export default function VariantsOfFlag() {
         />
       }
       subNav={
-        <FlagMenu projectId={project.uuid} envId={environment.uuid} flagId={currentFlag.uuid} />
+        <FlagMenu
+          projectId={project.uuid}
+          envId={environment.uuid}
+          flagId={currentFlag.uuid}
+        />
       }
       status={
         actionData?.errors ? (
           <ErrorBox list={actionData?.errors} />
         ) : actionData?.successDelete ? (
-          <SuccessBox id="variant-deleted">The variant has been successfully deleted.</SuccessBox>
+          <SuccessBox id="variant-deleted">
+            The variant has been successfully deleted.
+          </SuccessBox>
         ) : actionData?.successCreated ? (
-          <SuccessBox id="variant-deleted">The variant has been successfully created.</SuccessBox>
+          <SuccessBox id="variant-deleted">
+            The variant has been successfully created.
+          </SuccessBox>
         ) : actionData?.successEdit ? (
-          <SuccessBox id="variant-edited">The variants has been successfully edited.</SuccessBox>
+          <SuccessBox id="variant-edited">
+            The variants have been successfully edited.
+          </SuccessBox>
         ) : null
       }
     >
@@ -188,13 +213,19 @@ export default function VariantsOfFlag() {
         value="Variants"
         icon={<AiOutlineAppstore />}
         description={
-          <Typography>The variants that will be shown to a portion of your population.</Typography>
+          <Typography>
+            The variants that will be shown to a portion of your population.
+          </Typography>
         }
       />
 
       <Form method="post" aria-label="Add a new variant" ref={formRef}>
         <input type="hidden" value="add-variant" name="_type" />
-        <input type="hidden" value={remainingPercentage} name="remainingPercent" />
+        <input
+          type="hidden"
+          value={remainingPercentage}
+          name="remainingPercent"
+        />
         <Stack spacing={6}>
           <HStack spacing={6} alignItems="flex-end">
             <TextInput
@@ -222,7 +253,11 @@ export default function VariantsOfFlag() {
               <EmptyState
                 titleAs="h2"
                 title="No variants found"
-                description={<Typography>There are no variants found for this flag.</Typography>}
+                description={
+                  <Typography>
+                    There are no variants found for this flag.
+                  </Typography>
+                }
               />
             </CardContent>
           </Card>

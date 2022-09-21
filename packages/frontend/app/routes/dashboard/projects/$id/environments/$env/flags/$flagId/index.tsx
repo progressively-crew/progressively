@@ -187,29 +187,7 @@ export default function FlagById() {
           flagId={currentFlag.uuid}
         />
       }
-      status={
-        isStrategyUpdated ? (
-          <SuccessBox id="strategy-updated">
-            The strategy has been successfully updated.
-          </SuccessBox>
-        ) : isStrategyAdded ? (
-          <SuccessBox id="strategy-added">
-            The strategy has been successfully created.
-          </SuccessBox>
-        ) : isStrategyRemoved ? (
-          <SuccessBox id="strategy-removed">
-            The strategy has been successfully removed.
-          </SuccessBox>
-        ) : hasPercentageChanged ? (
-          <SuccessBox id="percentage-changed">Percentage adjusted.</SuccessBox>
-        ) : actionData?.successEdit ? (
-          <SuccessBox id="variant-edited">
-            The variants has been successfully edited.
-          </SuccessBox>
-        ) : hasErrors ? (
-          <ErrorBox list={actionData?.errors || {}} />
-        ) : null
-      }
+      status={hasErrors ? <ErrorBox list={actionData?.errors || {}} /> : null}
     >
       <PageTitle
         value="Rollout details"
@@ -241,6 +219,17 @@ export default function FlagById() {
                     </Typography>
                   )
                 }
+                status={
+                  hasPercentageChanged ? (
+                    <SuccessBox id="percentage-changed">
+                      Percentage adjusted.
+                    </SuccessBox>
+                  ) : actionData?.successEdit ? (
+                    <SuccessBox id="variant-edited">
+                      The variants have been successfully edited.
+                    </SuccessBox>
+                  ) : null
+                }
               />
             </CardContent>
 
@@ -250,9 +239,8 @@ export default function FlagById() {
                 mode={VariantListModes.Operational}
               />
             ) : (
-              <CardContent>
+              <CardContent noTop>
                 <SliderFlag
-                  labelledBy="rollout-target"
                   initialRolloutPercentage={flagEnv.rolloutPercentage}
                 />
               </CardContent>
@@ -265,6 +253,21 @@ export default function FlagById() {
             <CardContent noBottom>
               <SectionHeader
                 title="Strategies"
+                status={
+                  isStrategyUpdated ? (
+                    <SuccessBox id="strategy-updated">
+                      The strategy has been successfully updated.
+                    </SuccessBox>
+                  ) : isStrategyAdded ? (
+                    <SuccessBox id="strategy-added">
+                      The strategy has been successfully created.
+                    </SuccessBox>
+                  ) : isStrategyRemoved ? (
+                    <SuccessBox id="strategy-removed">
+                      The strategy has been successfully removed.
+                    </SuccessBox>
+                  ) : null
+                }
                 action={
                   hasStrategies && (
                     <CreateButton
