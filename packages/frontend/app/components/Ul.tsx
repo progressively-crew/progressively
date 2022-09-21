@@ -5,7 +5,7 @@ export interface UlProps {
 }
 
 export const Ul = styled("ul", {
-  paddingLeft: "$spacing$9",
+  paddingLeft: "$spacing$4",
   listStyle: "initial",
   display: "flex",
   flexDirection: "column",
@@ -22,7 +22,6 @@ export const Ul = styled("ul", {
 export interface LiProps {
   children: React.ReactNode;
   id?: string;
-  color?: string;
 }
 
 export const Li = ({ children, id }: LiProps) => {

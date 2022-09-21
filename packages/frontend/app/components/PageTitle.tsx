@@ -17,7 +17,7 @@ const IconWrapper = styled("span", {
 });
 
 const DescriptionWrapper = styled("div", {
-  "& p": {
+  "& p, & ul li, & span": {
     color: "$hadesLight",
   },
 });
