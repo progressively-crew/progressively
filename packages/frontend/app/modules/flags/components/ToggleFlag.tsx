@@ -1,4 +1,4 @@
-import { Form } from "@remix-run/react";
+import { Form, useTransition } from "@remix-run/react";
 import { Switch } from "~/components/Switch";
 import { FlagStatus } from "../types";
 
@@ -7,6 +7,15 @@ export interface ToggleFlag {
 }
 
 export const ToggleFlag = ({ isFlagActivated }: ToggleFlag) => {
+  const transition = useTransition();
+
+  const formDataInProgress = transition.submission?.formData;
+
+  const optimisticActivated =
+    formDataInProgress?.get("_type") === "toggle-flag"
+      ? formDataInProgress.get("nextStatus") === FlagStatus.ACTIVATED
+      : isFlagActivated;
+
   return (
     <Form method="post">
       <input type="hidden" name="_type" value="toggle-flag" />
@@ -21,7 +30,7 @@ export const ToggleFlag = ({ isFlagActivated }: ToggleFlag) => {
       <Switch
         label="Feature flag status"
         type="submit"
-        checked={isFlagActivated}
+        checked={optimisticActivated}
         onLabel={"Activated"}
         offLabel={"Not activated"}
       />
