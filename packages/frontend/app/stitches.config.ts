@@ -96,6 +96,7 @@ export const sizes = {
   navHeight: "72px",
   subnavHeight: "52px",
   tableHeight: "500px",
+  keyboardKey: "20px",
 };
 
 export const shadows = {
@@ -117,31 +118,41 @@ export const mapTokenToVariant = (
       [cssAttribute]: prefix ? `${prefix}$${key}` : `$${key}`,
     };
 
-    computedVariant[key] = pseudoElement ? { [`&:${pseudoElement}`]: rule } : rule;
+    computedVariant[key] = pseudoElement
+      ? { [`&:${pseudoElement}`]: rule }
+      : rule;
   }
 
   return computedVariant;
 };
 
-export const { styled, css, globalCss, keyframes, getCssText, theme, createTheme, config } =
-  createStitches({
-    media: {
-      desktop: `(max-width: ${1450 / 16}rem)`,
-      tablet: `(max-width: ${1100 / 16}rem)`,
-      mobile: `(max-width: ${550 / 16}rem)`,
+export const {
+  styled,
+  css,
+  globalCss,
+  keyframes,
+  getCssText,
+  theme,
+  createTheme,
+  config,
+} = createStitches({
+  media: {
+    desktop: `(max-width: ${1450 / 16}rem)`,
+    tablet: `(max-width: ${1100 / 16}rem)`,
+    mobile: `(max-width: ${550 / 16}rem)`,
+  },
+  theme: {
+    colors,
+    sizes,
+    fontSizes,
+    fonts,
+    fontWeights,
+    lineHeights,
+    borderRadius: {
+      regular: "8px",
+      small: "4px",
     },
-    theme: {
-      colors,
-      sizes,
-      fontSizes,
-      fonts,
-      fontWeights,
-      lineHeights,
-      borderRadius: {
-        regular: "8px",
-        small: "4px",
-      },
-      spacing,
-      shadows,
-    },
-  });
+    spacing,
+    shadows,
+  },
+});
