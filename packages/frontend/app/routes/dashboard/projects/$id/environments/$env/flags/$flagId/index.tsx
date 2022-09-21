@@ -187,7 +187,6 @@ export default function FlagById() {
           flagId={currentFlag.uuid}
         />
       }
-      status={hasErrors ? <ErrorBox list={actionData?.errors || {}} /> : null}
     >
       <PageTitle
         value="Rollout details"
@@ -228,6 +227,8 @@ export default function FlagById() {
                     <SuccessBox id="variant-edited">
                       The variants have been successfully edited.
                     </SuccessBox>
+                  ) : hasErrors ? (
+                    <ErrorBox list={actionData?.errors || {}} />
                   ) : null
                 }
               />
