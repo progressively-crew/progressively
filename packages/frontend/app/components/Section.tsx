@@ -3,6 +3,7 @@ import { Heading } from "./Heading";
 import { Spacer } from "./Spacer";
 import { styled } from "~/stitches.config";
 import { HStack } from "./HStack";
+import { Stack } from "./Stack";
 
 const SectionContext = createContext<string | undefined>(undefined);
 
@@ -28,6 +29,7 @@ export interface SectionHeaderProps extends React.HTMLAttributes<HTMLElement> {
   description?: React.ReactNode;
   icon?: React.ReactNode;
   action?: React.ReactNode;
+  status?: React.ReactNode;
 }
 
 const SectionHeaderWrapper = styled("div", {
@@ -46,6 +48,7 @@ export const SectionHeader = ({
   description,
   icon,
   action,
+  status,
   ...props
 }: SectionHeaderProps) => {
   const id = useContext(SectionContext);
@@ -54,27 +57,31 @@ export const SectionHeader = ({
 
   return (
     <SectionHeaderWrapper {...props}>
-      <HStack
-        justifyContent="space-between"
-        alignItems="flex-start"
-        direction={{ "@tablet": "column" }}
-        gap={{ "@tablet": "3" }}
-      >
-        <div>
-          <Heading as={titleAs} id={id} fontSize={fontSize} icon={icon}>
-            {title}
-          </Heading>
-          {description && (
-            <>
-              <Spacer size={2} />
-              {description && (
-                <DescriptionWrapper>{description}</DescriptionWrapper>
-              )}
-            </>
-          )}
-        </div>
-        {action}
-      </HStack>
+      <Stack spacing={4}>
+        <HStack
+          justifyContent="space-between"
+          alignItems="flex-start"
+          direction={{ "@tablet": "column" }}
+          gap={{ "@tablet": "3" }}
+        >
+          <div>
+            <Heading as={titleAs} id={id} fontSize={fontSize} icon={icon}>
+              {title}
+            </Heading>
+            {description && (
+              <>
+                <Spacer size={2} />
+                {description && (
+                  <DescriptionWrapper>{description}</DescriptionWrapper>
+                )}
+              </>
+            )}
+          </div>
+          {action}
+        </HStack>
+
+        {status}
+      </Stack>
     </SectionHeaderWrapper>
   );
 };

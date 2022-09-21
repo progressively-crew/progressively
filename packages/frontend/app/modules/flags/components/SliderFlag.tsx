@@ -7,13 +7,9 @@ import { Stack } from "~/components/Stack";
 
 export interface SliderFlagProps {
   initialRolloutPercentage: number;
-  labelledBy?: string;
 }
 
-export const SliderFlag = ({
-  labelledBy,
-  initialRolloutPercentage,
-}: SliderFlagProps) => {
+export const SliderFlag = ({ initialRolloutPercentage }: SliderFlagProps) => {
   const [rolloutPercentage, setRolloutPercentage] = useState(
     initialRolloutPercentage
   );
@@ -22,10 +18,10 @@ export const SliderFlag = ({
     <Form method="post">
       <Stack spacing={4}>
         <SliderInput
-          labelledBy={labelledBy}
           percentageValue={rolloutPercentage}
           name={"rolloutPercentage"}
           label={"Percentage of the audience"}
+          hiddenLabel
           onChange={setRolloutPercentage}
         />
 
