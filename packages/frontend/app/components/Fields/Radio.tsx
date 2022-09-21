@@ -9,7 +9,9 @@ export const Radio = styled("input", {
   height: 24,
   width: 24,
   "-webkit-appearance": "none",
+
   "&:after": {
+    transition: "all .2s",
     borderRadius: " 50%",
     content: "",
     position: "relative",
@@ -19,8 +21,14 @@ export const Radio = styled("input", {
     width: 18,
     left: 2,
     top: 2,
+    transform: "scale(0)",
+  },
+  "&:active:after": {
+    background: "$hermes",
+    transform: "scale(0.5)",
   },
   "&:checked:after": {
     background: "$hermes",
+    transform: "scale(1)",
   },
 });

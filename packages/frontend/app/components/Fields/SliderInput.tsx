@@ -36,9 +36,16 @@ const RangeInput = styled("input", {
     appearance: "none",
     marginTop: `-${(ThumbSize - TrackSize) / 2}rem`,
     borderRadius: "50%",
-    backgroundColor: "$hermes",
+    backgroundColor: "$apollo",
     height: `${ThumbSize}rem`,
     width: `${ThumbSize}rem`,
+    boxSizing: "border-box",
+    transition: "all .2s",
+    boxShadow: "0 3px 8px rgba(0, 0, 0, 0.2)",
+
+    "&:active": {
+      transform: "scale(1.4)",
+    },
   },
 
   // firefox
@@ -52,10 +59,17 @@ const RangeInput = styled("input", {
   "&::-moz-range-thumb": {
     borderRadius: "50%",
     padding: "2px",
-    border: "2px solid $hermes",
+    border: "1px solid $apollo",
     backgroundColor: "$apollo",
     height: `${ThumbSize}rem`,
     width: `${ThumbSize}rem`,
+    boxSizing: "border-box",
+    transition: "all .2s",
+    boxShadow: "0 3px 8px rgba(0, 0, 0, 0.2)",
+
+    "&:active": {
+      transform: "scale(1.4)",
+    },
   },
 });
 
