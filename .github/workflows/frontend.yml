@@ -15,13 +15,12 @@ jobs:
           cache: "npm"
           cache-dependency-path: packages/frontend/package-lock.json
 
-      - name: Install dependencies
-        working-directory: ./packages/frontend
-        run: npm ci --legacy-peer-deps
-
       - name: Preparation
         working-directory: ./packages/frontend
         run: mv .env.example .env
+
+      - name: Bootstrap projects
+        run: npm run setup:ci
 
       - name: Lint
         working-directory: ./packages/frontend
