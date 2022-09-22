@@ -1,6 +1,7 @@
 /**
  * @type {import('@remix-run/dev/config').AppConfig}
  */
+
 module.exports = {
   ignoredRouteFiles: ["**/.*"],
   // appDirectory: "app",
@@ -8,4 +9,8 @@ module.exports = {
   // serverBuildPath: "build/index.js",
   // publicPath: "/build/",
   devServerPort: 8002,
+  serverDependenciesToBundle: [/^@progressively\/ui-components.*/],
+  watchPaths: async () => {
+    return ["node_modules/@progressively/ui-components/src/**/*"];
+  },
 };

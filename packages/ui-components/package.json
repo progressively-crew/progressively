@@ -1,0 +1,20 @@
+{
+  "name": "@progressively/ui-components",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "main": "index.tsx",
+  "exports": {
+    "./*": "./src/*.tsx"
+  },
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "react": "^18.2.0"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0"
+  }
+}
