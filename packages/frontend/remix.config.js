@@ -9,8 +9,7 @@ module.exports = {
   // serverBuildPath: "build/index.js",
   // publicPath: "/build/",
   devServerPort: 8002,
-  serverDependenciesToBundle: [/^@progressively\/ui-components.*/],
   watchPaths: async () => {
-    return ["node_modules/@progressively/ui-components/src/**/*"];
+    return ["../ui-components/src/**/*"];
   },
 };
