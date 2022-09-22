@@ -5,7 +5,7 @@ import { Container } from "~/components/Container";
 import { Spacer } from "~/components/Spacer";
 import { NavProvider } from "~/components/Breadcrumbs/providers/NavProvider";
 import { InertWhenNavOpened } from "~/components/Breadcrumbs/InertWhenNavOpened";
-import { styled } from "~/stitches.config";
+import { styled } from "~/components/stitches.config";
 import { HStack } from "~/components/HStack";
 import { NavTree } from "~/modules/misc/components/NavTree";
 import { TreeToggle } from "~/modules/misc/components/TreeToggle";

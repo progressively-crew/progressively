@@ -4,7 +4,7 @@ import { DarkLogo } from "~/components/Logo/DarkLogo";
 import { Main } from "~/components/Main";
 import { Spacer } from "~/components/Spacer";
 import { Stack } from "~/components/Stack";
-import { styled } from "~/stitches.config";
+import { styled } from "~/components/stitches.config";
 
 export interface NotAuthenticatedLayoutProps {
   children: React.ReactNode;

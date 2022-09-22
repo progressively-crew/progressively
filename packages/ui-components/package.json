@@ -12,9 +12,18 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "react": "^18.2.0"
+    "@stitches/react": "^1.2.8",
+    "react": "^18.2.0",
+    "react-icons": "^4.4.0",
+    "@remix-run/react": "^1.7.0"
   },
   "peerDependencies": {
-    "react": "^18.2.0"
+    "@stitches/react": "^1.2.8",
+    "react": "^18.2.0",
+    "react-icons": "^4.4.0",
+    "@remix-run/react": "^1.7.0"
+  },
+  "dependencies": {
+    "react-copy-to-clipboard": "^5.1.0"
   }
 }

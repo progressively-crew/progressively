@@ -3,7 +3,7 @@ import { RemixServer } from "@remix-run/react";
 import { renderToString } from "react-dom/server";
 import { startMockServer } from "./mocks/mock-server";
 import { initSentryOnServer } from "./modules/sentry/server";
-import { getCssText } from "./stitches.config";
+import { getCssText } from "~/components/stitches.config";
 
 initSentryOnServer();
 

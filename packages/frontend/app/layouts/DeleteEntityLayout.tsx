@@ -1,7 +1,7 @@
 import React from "react";
 import { Section } from "~/components/Section";
 import { User } from "~/modules/user/types";
-import { styled } from "~/stitches.config";
+import { styled } from "~/components/stitches.config";
 import { DashboardLayout } from "./DashboardLayout";
 
 export interface DeleteEntityLayoutProps {

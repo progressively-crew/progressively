@@ -8,7 +8,7 @@ import { SliderInput } from "~/components/Fields/SliderInput";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Spacer } from "~/components/Spacer";
 import { Typography } from "~/components/Typography";
-import { styled } from "~/stitches.config";
+import { styled } from "~/components/stitches.config";
 import { Variant } from "../types";
 
 export enum VariantListModes {

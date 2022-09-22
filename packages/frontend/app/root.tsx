@@ -13,14 +13,14 @@ import ForbiddenPage from "./routes/403";
 import NotFoundPage from "./routes/404";
 import styles from "./styles/index.css";
 import fonts from "./styles/fonts.css";
-import { H1 } from "./components/H1";
-import { Main } from "./components/Main";
-import { Button } from "./components/Buttons/Button";
-import { Background } from "./components/Background";
+import { H1 } from "~/components/H1";
+import { Main } from "~/components/Main";
+import { Button } from "~/components/Buttons/Button";
+import { Background } from "~/components/Background";
 import { LinksFunction } from "@remix-run/node";
 import { ErrorLayout } from "./layouts/ErrorLayout";
-import { Typography } from "./components/Typography";
-import { Spacer } from "./components/Spacer";
+import { Typography } from "~/components/Typography";
+import { Spacer } from "~/components/Spacer";
 import { withSentry } from "@sentry/remix";
 
 /**

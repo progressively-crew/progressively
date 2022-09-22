@@ -4,7 +4,7 @@ import { SliderInput } from "~/components/Fields/SliderInput";
 import { HStack } from "~/components/HStack";
 import { Switch } from "~/components/Switch";
 import { Typography } from "~/components/Typography";
-import { styled } from "~/stitches.config";
+import { styled } from "~/components/stitches.config";
 
 const BrowserGrid = styled("div", {
   display: "grid",

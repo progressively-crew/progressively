@@ -1,6 +1,6 @@
 import { Container } from "~/components/Container";
 import { Main } from "~/components/Main";
-import { styled } from "~/stitches.config";
+import { styled } from "~/components/stitches.config";
 
 export interface ErrorLayoutProps {
   children: React.ReactNode;

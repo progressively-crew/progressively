@@ -1,5 +1,4 @@
 {
-  "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx"],
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2019"],
     "isolatedModules": true,
@@ -10,10 +9,6 @@
     "target": "ES2019",
     "strict": true,
     "baseUrl": ".",
-    "paths": {
-      "~/*": ["./app/*"],
-      "~/components/*": ["../ui-components/src/*"]
-    },
     "noEmit": true,
     "forceConsistentCasingInFileNames": true,
     "allowJs": true,

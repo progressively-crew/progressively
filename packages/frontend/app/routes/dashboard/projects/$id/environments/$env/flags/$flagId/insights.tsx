@@ -7,7 +7,7 @@ import { AiOutlineBarChart } from "react-icons/ai";
 import { getFlagHits } from "~/modules/flags/services/getFlagHits";
 import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
 import { BigStat } from "~/components/BigStat";
-import { styled } from "~/stitches.config";
+import { styled } from "~/components/stitches.config";
 import { Crumbs } from "~/components/Breadcrumbs/types";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
