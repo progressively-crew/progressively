@@ -58,7 +58,7 @@ export const Row = ({ children, selection, disabled, ...props }: RowProps) => {
         : null
   );
 
-  const isChecked = selections.includes(selection);
+  const isChecked = selections.indexOf(selection) > -1;
 
   const handleChange = () => {
     if (disabled) return;

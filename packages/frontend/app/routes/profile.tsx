@@ -90,9 +90,9 @@ export default function ProfilePage() {
       status={
         errors && Object.keys(errors).length > 0 ? (
           <ErrorBox list={errors} />
-        ) : (passwordUpdated ? (
+        ) : passwordUpdated ? (
           <SuccessBox id="password-changed">The password has been successfully changed.</SuccessBox>
-        ) : null)
+        ) : null
       }
     >
       <PageTitle value="My profile" icon={<UserIcon />} />

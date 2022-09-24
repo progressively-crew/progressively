@@ -83,11 +83,11 @@ export default function ProjectDetailPage() {
           <SuccessBox id="env-added">
             The environment has been successfully created.
           </SuccessBox>
-        ) : (envRemoved ? (
+        ) : envRemoved ? (
           <SuccessBox id="env-removed">
             The environment has been successfully deleted.
           </SuccessBox>
-        ) : null)
+        ) : null
       }
     >
       <PageTitle

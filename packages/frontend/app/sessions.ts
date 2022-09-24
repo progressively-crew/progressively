@@ -9,7 +9,7 @@ const { getSession, commitSession, destroySession } =
       name: "__session",
       httpOnly: true,
       secure: process.env.NODE_ENV !== "development",
-      maxAge: 86_400,
+      maxAge: 86400,
       path: "/",
       sameSite: "lax",
       secrets: [sessionSecret],

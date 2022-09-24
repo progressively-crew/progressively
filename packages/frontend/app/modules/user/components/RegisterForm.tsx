@@ -44,11 +44,11 @@ export const registerAction: ActionFunction = async ({
     const newUser: User = await createUser(fullname!, email!, password!);
 
     return { newUser };
-  } catch (error: unknown) {
-    if (error instanceof Error) {
+  } catch (err: unknown) {
+    if (err instanceof Error) {
       return {
         errors: {
-          backend: error.message,
+          backend: err.message,
         },
       };
     }

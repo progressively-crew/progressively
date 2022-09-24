@@ -105,9 +105,9 @@ export default function FlagsByEnvPage() {
       status={
         isFlagRemoved ? (
           <SuccessBox id="flag-removed">The flag has been successfully deleted.</SuccessBox>
-        ) : (newFlagId ? (
+        ) : newFlagId ? (
           <SuccessBox id="flag-added">The flag has been successfully created.</SuccessBox>
-        ) : null)
+        ) : null
       }
     >
       <PageTitle

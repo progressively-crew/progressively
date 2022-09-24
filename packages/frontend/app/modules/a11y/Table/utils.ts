@@ -12,7 +12,7 @@ export const moveToRow = (
   const closestRow = closestWithAttribute(el, "aria-rowindex");
   const rowIndex = closestRow?.getAttribute("aria-rowindex") || "0";
 
-  const nextRowIndex = Number.parseInt(rowIndex) + position;
+  const nextRowIndex = parseInt(rowIndex) + position;
 
   const nextRow = root.querySelector<HTMLElement>(
     `[aria-rowindex="${nextRowIndex}"]`
@@ -30,7 +30,7 @@ export const moveToCol = (el: HTMLElement, position: number) => {
   const colIndex = closestCol?.getAttribute("aria-colindex") || "0";
 
   const closestRow = closestWithAttribute(el, "aria-rowindex");
-  const nextColIndex = Number.parseInt(colIndex) + position;
+  const nextColIndex = parseInt(colIndex) + position;
 
   if (closestRow) {
     return closestFocusable(

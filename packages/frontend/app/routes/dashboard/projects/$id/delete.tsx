@@ -42,11 +42,11 @@ export const action: ActionFunction = async ({
 
   try {
     await deleteProject(params.id!, session.get("auth-cookie"));
-  } catch (error: unknown) {
-    if (error instanceof Error) {
+  } catch (err: unknown) {
+    if (err instanceof Error) {
       return {
         errors: {
-          backendError: error.message,
+          backendError: err.message,
         },
       };
     }

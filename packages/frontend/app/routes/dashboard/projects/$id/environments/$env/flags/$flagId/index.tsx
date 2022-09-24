@@ -1,5 +1,3 @@
-/* eslint-disable unicorn/no-nested-ternary */
-
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { FlagStatus } from "~/modules/flags/types";

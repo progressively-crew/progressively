@@ -22,7 +22,7 @@ export const Table = ({
   let colCount = 0;
   let rowCount = 0;
 
-  for (const rawNode of React.Children.toArray(children)) {
+  React.Children.toArray(children).forEach((rawNode) => {
     const node = rawNode as JSX.Element;
 
     if (node.type.name.includes("Thead")) {
@@ -32,7 +32,7 @@ export const Table = ({
       const rows = React.Children.toArray(node.props.children);
       rowCount = rows.length + 1;
     }
-  }
+  });
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTableElement>) => {
     switch (e.key) {
@@ -123,18 +123,18 @@ export const Table = ({
 
     const nextSelections: Array<string> = [];
 
-    for (const rawNode of React.Children.toArray(children)) {
+    React.Children.toArray(children).forEach((rawNode) => {
       const node = rawNode as JSX.Element;
 
       if (node.type.name.includes("Tbody")) {
         const rows = React.Children.toArray(node.props.children);
-        for (const row of rows) {
+        rows.forEach((row) => {
           if (React.isValidElement(row) && !row.props.disabled) {
             nextSelections.push(row.props.selection);
           }
-        }
+        });
       }
-    }
+    });
 
     return onSelect(nextSelections);
   };

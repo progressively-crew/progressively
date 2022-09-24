@@ -145,11 +145,11 @@ export default function SchedulingOfFlag() {
           <SuccessBox id="schedule-updated">
             The schedule has been successfully removed.
           </SuccessBox>
-        ) : (isScheduleAdded ? (
+        ) : isScheduleAdded ? (
           <SuccessBox id="schedule-added">
             The schedule has been successfully added.
           </SuccessBox>
-        ) : null)
+        ) : null
       }
     >
       <PageTitle

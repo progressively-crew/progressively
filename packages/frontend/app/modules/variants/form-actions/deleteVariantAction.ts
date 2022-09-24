@@ -15,9 +15,9 @@ export const deleteVariantAction = async (
     await deleteVariant(envId, flagId, String(uuid), authCookie);
 
     return { successDelete: true };
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      return { errors: { backendError: error.message } };
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      return { errors: { backendError: e.message } };
     }
 
     return { errors: { backendError: "An error ocurred" } };

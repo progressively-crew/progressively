@@ -44,11 +44,11 @@ export const action: ActionFunction = async ({
     await forgotPassword(email!);
 
     return { success: true };
-  } catch (error) {
-    if (error instanceof Error) {
+  } catch (err) {
+    if (err instanceof Error) {
       return {
         errors: {
-          backendError: error.message,
+          backendError: err.message,
         },
       };
     }
@@ -79,12 +79,12 @@ export default function ForgotPasswordPage() {
       status={
         errors && Object.keys(errors).length > 0 ? (
           <ErrorBox list={errors} />
-        ) : (success ? (
+        ) : success ? (
           <SuccessBox id="password-reset">
             An email with a link to reset your password has been set. Make sure
             to follow the instructions.
           </SuccessBox>
-        ) : null)
+        ) : null
       }
     >
       <Card>

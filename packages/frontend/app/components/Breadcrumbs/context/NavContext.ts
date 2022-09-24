@@ -6,6 +6,6 @@ export interface NavContextTypes {
 }
 
 export const NavContext = createContext<NavContextTypes>({
-  toggleNav: () => {},
+  toggleNav: () => undefined,
   isNavOpened: false,
 });

@@ -51,9 +51,9 @@ export const action: ActionFunction = async ({
 
   try {
     await deleteStrategy(stratId, session.get("auth-cookie"));
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      return { errors: { backendError: error.message } };
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      return { errors: { backendError: e.message } };
     }
 
     return { errors: { backendError: "An error ocurred" } };

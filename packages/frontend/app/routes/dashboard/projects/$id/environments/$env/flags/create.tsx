@@ -63,9 +63,9 @@ export const action: ActionFunction = async ({
     return redirect(
       `/dashboard/projects/${projectId}/environments/${envId}?newFlagId=${newFlag.uuid}#flag-added`
     );
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      return { errors: { name: error.message } };
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      return { errors: { name: e.message } };
     }
 
     return { errors: { name: "An error ocurred" } };

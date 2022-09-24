@@ -46,10 +46,10 @@ export const action: ActionFunction = async ({
   const flagId = params.flagId!;
 
   try {
-    await deleteFlag(envId, flagId, session.get("auth-cookie"));
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      return { errors: { backendError: error.message } };
+    await deleteFlag(flagId, session.get("auth-cookie"));
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      return { errors: { backendError: e.message } };
     }
 
     return { errors: { backendError: "An error ocurred" } };

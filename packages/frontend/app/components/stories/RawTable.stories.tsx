@@ -27,7 +27,7 @@ const DefaultTemplate: ComponentStory<typeof RawTable> = () => (
         </tr>
       </thead>
       <tbody>
-        {Array.from({length: 20})
+        {Array(20)
           .fill(null)
           .map((x, idx) => (
             <tr key={idx}>

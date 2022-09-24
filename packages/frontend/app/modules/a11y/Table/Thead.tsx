@@ -17,7 +17,11 @@ export const Thead = ({ children, disabled }: TheadProps) => {
   useEffect(() => {
     if (!checkboxRef.current) return;
 
-    checkboxRef.current.indeterminate = indeterminate ? true : false;
+    if (indeterminate) {
+      checkboxRef.current.indeterminate = true;
+    } else {
+      checkboxRef.current.indeterminate = false;
+    }
   }, [indeterminate]);
 
   const childrenClone = React.Children.toArray(children).map<ReactNode>(
