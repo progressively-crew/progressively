@@ -50,7 +50,7 @@ export class EnvironmentsService {
       flagId: flagEnv.flagId,
     }));
 
-    const newEnv = await this.prisma.environment.create({
+    return await this.prisma.environment.create({
       data: {
         name: environmentName,
         projectId: projectId,
@@ -59,8 +59,6 @@ export class EnvironmentsService {
         },
       },
     });
-
-    return newEnv;
   }
 
   async createFlagEnvironment(
@@ -100,7 +98,7 @@ export class EnvironmentsService {
       rolloutPercentage: 100,
     }));
 
-    const flag = await this.prisma.flag.create({
+    return await this.prisma.flag.create({
       data: {
         name,
         description,
@@ -110,8 +108,6 @@ export class EnvironmentsService {
         },
       },
     });
-
-    return flag;
   }
 
   flagsByEnv(environmentId: string) {
@@ -196,9 +192,7 @@ export class EnvironmentsService {
     );
 
     const result = await this.prisma.$transaction(deleteQueries);
-    const envRemoved = result[result.length - 1];
-
-    return envRemoved;
+    return result[result.length - 1];
   }
 
   async hasPermissionOnEnv(
