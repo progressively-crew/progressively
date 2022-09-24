@@ -4,7 +4,7 @@ import { styled } from "~/stitches.config";
 
 function generateColor(stringInput: string) {
   const stringUniqueHash = [...stringInput].reduce((acc, char) => {
-    return char.charCodeAt(0) + ((acc << 5) - acc);
+    return char.codePointAt(0) + ((acc << 5) - acc);
   }, 0);
 
   return `hsl(${stringUniqueHash % 360}, 95%, 35%)`;

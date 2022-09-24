@@ -53,25 +53,26 @@ const TreeWrapper = styled("ul", {
   },
 });
 
-export const Tree = ({ children, label }: TreeProps) => {
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
-    switch (e.key) {
-      case "ArrowDown": {
-        const tree = e.currentTarget;
+const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
+  switch (e.key) {
+    case "ArrowDown": {
+      const tree = e.currentTarget;
 
-        return focusInTree(tree, "li > a", 1);
-      }
-
-      case "ArrowUp": {
-        const tree = e.currentTarget;
-
-        return focusInTree(tree, "li > a", -1);
-      }
-
-      default:
-        return;
+      return focusInTree(tree, "li > a", 1);
     }
-  };
+
+    case "ArrowUp": {
+      const tree = e.currentTarget;
+
+      return focusInTree(tree, "li > a", -1);
+    }
+
+    default:
+      return;
+  }
+};
+
+export const Tree = ({ children, label }: TreeProps) => {
 
   return (
     <TreeWrapper role="tree" aria-label={label} onKeyDown={handleKeyDown}>
