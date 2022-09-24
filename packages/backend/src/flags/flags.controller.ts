@@ -190,8 +190,8 @@ export class FlagsController {
     @Param('flagId') flagId: string,
     @Body() variantsDto: Array<Variant>,
   ): Promise<any> {
-    let cumulative = 0;
-    let hasControl = false;
+    let cumulative: number = 0;
+    let hasControl: boolean = false;
 
     for (const variant of variantsDto) {
       if (variant.isControl) {
