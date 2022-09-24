@@ -16,11 +16,13 @@ export const editVariantAction = async (
   const controlId = formData.get("isControl");
   const errors: Record<string, string> = {};
 
-  names.forEach((name, index: number) => {
+  for (const [index, name] of names.entries()) {
     if (!name) {
-      errors[`name-${index}`] = `The variant value on line ${index + 1} is invalid.`;
+      errors[`name-${index}`] = `The variant value on line ${
+        index + 1
+      } is invalid.`;
     }
-  });
+  }
 
   if (Object.keys(errors).length > 0) {
     return { errors };
@@ -42,9 +44,9 @@ export const editVariantAction = async (
     await editVariant(envId, flagId, variants, authCookie);
 
     return { successEdit: true };
-  } catch (e: unknown) {
-    if (e instanceof Error) {
-      return { errors: { backendError: e.message } };
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return { errors: { backendError: error.message } };
     }
 
     return { errors: { backendError: "An error ocurred" } };

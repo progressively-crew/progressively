@@ -4,7 +4,7 @@ import { styled } from "~/stitches.config";
 
 function generateColor(stringInput: string) {
   const stringUniqueHash = [...stringInput].reduce((acc, char) => {
-    return char.charCodeAt(0) + ((acc << 5) - acc);
+    return char.codePointAt(0) + ((acc << 5) - acc);
   }, 0);
 
   return `hsl(${stringUniqueHash % 360}, 95%, 35%)`;
@@ -83,7 +83,12 @@ interface BarProps {
 const Bar = ({ size, name, value }: BarProps) => {
   return (
     <BarWrapper style={{ height: size, position: "relative" }}>
-      <Typography as="span" size="neptune" lineHeight="title" className="chart-value-title">
+      <Typography
+        as="span"
+        size="neptune"
+        lineHeight="title"
+        className="chart-value-title"
+      >
         {value}
       </Typography>
       <RawBar style={{ background: generateColor(name) }} />

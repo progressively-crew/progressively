@@ -101,7 +101,7 @@ export default function Signin() {
       status={
         errors?.password || errors?.email || errors?.badUser ? (
           <ErrorBox list={errors} />
-        ) : userActivated ? (
+        ) : (userActivated ? (
           <SuccessBox id="user-activated">
             The account has been activated, you can now log in
           </SuccessBox>
@@ -109,7 +109,7 @@ export default function Signin() {
           <SuccessBox id="user-created">
             The account has been created, you can now log in
           </SuccessBox>
-        ) : null
+        ) : null)
       }
     >
       <Card>

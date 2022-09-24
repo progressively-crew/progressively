@@ -117,7 +117,7 @@ export const loader: LoaderFunction = async ({
     }
   }
 
-  const organizedHits = Array.from(mapOfHits).sort(([d1], [d2]) =>
+  const organizedHits = [...mapOfHits].sort(([d1], [d2]) =>
     d1 > d2 ? 1 : -1
   );
 
@@ -141,7 +141,7 @@ const InsightsGrid = styled("div", {
 });
 
 const formatDefaultDate = (isoDate: string) => {
-  return isoDate.substr(0, 10);
+  return isoDate.slice(0, 10);
 };
 
 export default function FlagInsights() {

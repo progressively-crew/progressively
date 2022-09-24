@@ -7,11 +7,11 @@ export const focusInTree = (
   const childrenLi = rootNode.querySelectorAll(childrenSelector);
 
   let focusedIndex = 0;
-  childrenLi.forEach((el, index) => {
+  for (const [index, el] of childrenLi.entries()) {
     if (currentFocus === el) {
       focusedIndex = index;
     }
-  });
+  }
 
   let nextFocusable: HTMLElement;
   const lastItemIndex = childrenLi.length - 1;

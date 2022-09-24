@@ -194,7 +194,7 @@ export default function VariantsOfFlag() {
       status={
         actionData?.errors ? (
           <ErrorBox list={actionData?.errors} />
-        ) : actionData?.successDelete ? (
+        ) : (actionData?.successDelete ? (
           <SuccessBox id="variant-deleted">
             The variant has been successfully deleted.
           </SuccessBox>
@@ -206,7 +206,7 @@ export default function VariantsOfFlag() {
           <SuccessBox id="variant-edited">
             The variants have been successfully edited.
           </SuccessBox>
-        ) : null
+        ) : null)
       }
     >
       <PageTitle
