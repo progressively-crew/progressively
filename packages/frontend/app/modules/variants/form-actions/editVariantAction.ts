@@ -42,9 +42,9 @@ export const editVariantAction = async (
     await editVariant(envId, flagId, variants, authCookie);
 
     return { successEdit: true };
-  } catch (e: unknown) {
-    if (e instanceof Error) {
-      return { errors: { backendError: e.message } };
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return { errors: { backendError: error.message } };
     }
 
     return { errors: { backendError: "An error ocurred" } };

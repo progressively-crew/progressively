@@ -68,11 +68,11 @@ export const action: ActionFunction = async ({ request }): Promise<ActionData> =
     await resetPassword(password!, token);
 
     return { success: true };
-  } catch (err) {
-    if (err instanceof Error) {
+  } catch (error) {
+    if (error instanceof Error) {
       return {
         errors: {
-          backendError: err.message,
+          backendError: error.message,
         },
       };
     }
@@ -90,13 +90,7 @@ export default function ResetPasswordPage() {
   const success = data?.success;
   const errors = data?.errors;
 
-  let pageTitle: string;
-
-  if (pageType === "s") {
-    pageTitle = "Set your password";
-  } else {
-    pageTitle = "Reset password";
-  }
+  const pageTitle = pageType === "s" ? "Set your password" : "Reset password";
 
   return (
     <NotAuthenticatedLayout

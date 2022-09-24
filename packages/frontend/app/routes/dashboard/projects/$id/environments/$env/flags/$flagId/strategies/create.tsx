@@ -75,9 +75,9 @@ export const action: ActionFunction = async ({
     return redirect(
       `/dashboard/projects/${params.id}/environments/${params.env}/flags/${params.flagId}?newStrategy=true#strategy-added`
     );
-  } catch (e: unknown) {
-    if (e instanceof Error) {
-      return { errors: { backendError: e.message } };
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return { errors: { backendError: error.message } };
     }
 
     return { errors: { backendError: "An error ocurred" } };

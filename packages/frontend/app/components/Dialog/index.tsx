@@ -51,11 +51,7 @@ export interface DialogProps {
 }
 export const Dialog = ({ children, open, onClose }: DialogProps) => {
   useEffect(() => {
-    if (open) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "revert";
-    }
+    document.body.style.overflow = open ? "hidden" : "revert";
   }, [open]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDialogElement>) => {

@@ -44,11 +44,11 @@ export const action: ActionFunction = async ({
     await forgotPassword(email!);
 
     return { success: true };
-  } catch (err) {
-    if (err instanceof Error) {
+  } catch (error) {
+    if (error instanceof Error) {
       return {
         errors: {
-          backendError: err.message,
+          backendError: error.message,
         },
       };
     }
