@@ -25,6 +25,7 @@ const Select = styled("select", {
   display: "block",
   boxSizing: "border-box",
   background: "$apollo",
+  maxWidth: "40ch",
 });
 
 export const SelectField = ({

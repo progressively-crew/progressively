@@ -35,4 +35,5 @@ export interface FlagEnv {
 export interface CreateFlagDTO {
   description?: string;
   name?: string;
+  type?: FlagType;
 }
