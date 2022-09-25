@@ -15,7 +15,6 @@ import { FlagCreationDTO, FlagCreationSchema } from '../flags/flags.dto';
 import { Roles } from '../shared/decorators/Roles';
 import { ValidationPipe } from '../shared/pipes/ValidationPipe';
 import { UserRoles } from '../users/roles';
-import { User } from '../users/types';
 import { EnvironmentsService } from './environments.service';
 import { FlagAlreadyExists } from './errors';
 import { HasEnvironmentAccessGuard } from './guards/hasEnvAccess';
@@ -48,6 +47,7 @@ export class EnvironmentsController {
         envId,
         body.name,
         body.description,
+        body.type,
       );
     } catch (e) {
       if (e instanceof FlagAlreadyExists) {

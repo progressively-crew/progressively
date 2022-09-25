@@ -88,6 +88,7 @@ describe('Environments (e2e)', () => {
         .send({
           name: 'valid name',
           description: 'Valid description',
+          type: 'PERMISSION',
         });
 
       // Check that the removal has been done successfully
@@ -115,6 +116,8 @@ describe('Environments (e2e)', () => {
       const response = await request(app.getHttpServer())
         .get('/environments/2/flags')
         .set('Authorization', `Bearer ${access_token}`);
+
+      console.log('lol', response.body);
 
       expect(response.statusCode).toBe(200);
       expect(response.body[0].flag).toMatchObject(createdFlag.body);
@@ -225,6 +228,26 @@ describe('Environments (e2e)', () => {
         .set('Authorization', `Bearer ${access_token}`)
         .send({
           description: 'valid description',
+          type: 'PERMISSION',
+        })
+        .expect(400)
+        .expect({
+          statusCode: 400,
+          message: 'Validation failed',
+          error: 'Bad Request',
+        });
+    });
+
+    it('gives a 400 when the type is invalid', async () => {
+      const access_token = await authenticate(app);
+
+      return request(app.getHttpServer())
+        .post('/environments/1/flags')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send({
+          name: 'Super name',
+          description: 'valid description',
+          type: 'invalid type',
         })
         .expect(400)
         .expect({
@@ -242,6 +265,7 @@ describe('Environments (e2e)', () => {
         .set('Authorization', `Bearer ${access_token}`)
         .send({
           name: 'valid name',
+          type: 'PERMISSION',
         })
         .expect(400)
         .expect({
@@ -260,6 +284,7 @@ describe('Environments (e2e)', () => {
         .send({
           name: 'valid name',
           description: 'Valid description',
+          type: 'PERMISSION',
         });
 
       expect(response.statusCode).toBe(201);

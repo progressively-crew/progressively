@@ -1,9 +1,17 @@
 import * as Joi from 'joi';
-import { Variant } from './types';
+import { Variant, FlagType } from './types';
 
 export const FlagCreationSchema = Joi.object({
   name: Joi.string().required(),
   description: Joi.string().required(),
+  type: Joi.string()
+    .valid(
+      FlagType.EXPERIMENT,
+      FlagType.KILL_SWITCH,
+      FlagType.PERMISSION,
+      FlagType.RELEASE,
+    )
+    .required(),
 });
 
 export const VariantSchema = Joi.object({
@@ -25,6 +33,7 @@ export type VariantCreationDTO = Omit<Variant, 'uuid' | 'isControl'>;
 export class FlagCreationDTO {
   name: string;
   description: string;
+  type: FlagType;
 }
 
 export class ActivateFlagDTO {
