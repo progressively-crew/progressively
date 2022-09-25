@@ -117,8 +117,6 @@ describe('Environments (e2e)', () => {
         .get('/environments/2/flags')
         .set('Authorization', `Bearer ${access_token}`);
 
-      console.log('lol', response.body);
-
       expect(response.statusCode).toBe(200);
       expect(response.body[0].flag).toMatchObject(createdFlag.body);
     });
