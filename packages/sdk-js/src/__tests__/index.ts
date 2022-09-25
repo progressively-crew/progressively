@@ -78,6 +78,50 @@ describe("SDK", () => {
       expect(flags).toEqual({ flag: true, flag2: false });
     });
 
+    it("loads the in-memory flag when calling loadFlags and the server throws a 500", async () => {
+      worker.use(
+        rest.get(FLAG_ENDPOINT, (_, res, ctx) => {
+          return res(ctx.status(500));
+        })
+      );
+
+      const sdk = Sdk.init("client-key", {
+        websocketUrl: "ws://localhost:1234",
+        apiUrl: "http://localhost:4000",
+      });
+
+      const { flags } = await sdk.loadFlags();
+
+      expect(global.fetch).toHaveBeenCalledWith(
+        "http://localhost:4000/sdk/eyJjbGllbnRLZXkiOiJjbGllbnQta2V5In0=",
+        { credentials: "include" }
+      );
+
+      expect(flags).toEqual({});
+    });
+
+    it("loads the in-memory flag when calling client side fails", async () => {
+      worker.use(
+        rest.get(FLAG_ENDPOINT, (_, res) => {
+          return res.networkError("Failed to connect");
+        })
+      );
+
+      const sdk = Sdk.init("client-key", {
+        websocketUrl: "ws://localhost:1234",
+        apiUrl: "http://localhost:4000",
+      });
+
+      const { flags } = await sdk.loadFlags();
+
+      expect(global.fetch).toHaveBeenCalledWith(
+        "http://localhost:4000/sdk/eyJjbGllbnRLZXkiOiJjbGllbnQta2V5In0=",
+        { credentials: "include" }
+      );
+
+      expect(flags).toEqual({});
+    });
+
     it("loads the flag when calling loadFlags with fields", async () => {
       worker.use(
         rest.get(FLAG_ENDPOINT, (_, res, ctx) => {

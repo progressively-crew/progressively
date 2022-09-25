@@ -40,10 +40,17 @@ function Sdk(
     })
       .then((res) => {
         response = res;
+
+        if (!res.ok) return {};
+
         return response.json();
       })
       .then((data) => {
         flags = { ...flags, ...data };
+        return { flags, response };
+      })
+      .catch(() => {
+        // Silent catch the error, and return the actual in-memory flags
         return { flags, response };
       });
   }
