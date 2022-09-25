@@ -24,7 +24,7 @@ const Table = styled("table", {
 
   "& td": {
     verticalAlign: "middle",
-    height: "$cta",
+    minHeight: "$cta",
     padding: "0 $spacing$2",
     color: "$hades",
   },

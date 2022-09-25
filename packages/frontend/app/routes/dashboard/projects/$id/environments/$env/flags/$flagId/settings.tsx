@@ -28,6 +28,7 @@ import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
 import { PageTitle } from "~/components/PageTitle";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
+import { Form } from "@remix-run/react";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -99,7 +100,14 @@ export default function FlagSettingPage() {
         <Header
           tagline={<TagLine icon={<FlagIcon />}>FEATURE FLAG</TagLine>}
           title={currentFlag.name}
-          startAction={<ToggleFlag isFlagActivated={isFlagActivated} />}
+          startAction={
+            <Form method="post" id={`form-${currentFlag.uuid}`}>
+              <ToggleFlag
+                isFlagActivated={isFlagActivated}
+                flagId={currentFlag.uuid}
+              />
+            </Form>
+          }
         />
       }
       subNav={

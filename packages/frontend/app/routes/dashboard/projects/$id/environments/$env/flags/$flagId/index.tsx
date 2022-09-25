@@ -18,6 +18,7 @@ import {
   useSearchParams,
   useLoaderData,
   useActionData,
+  Form,
 } from "@remix-run/react";
 import { TagLine } from "~/components/Tagline";
 import { StrategyList } from "~/modules/strategies/components/StrategyList";
@@ -177,7 +178,14 @@ export default function FlagById() {
         <Header
           tagline={<TagLine icon={<FlagIcon />}>FEATURE FLAG</TagLine>}
           title={currentFlag.name}
-          startAction={<ToggleFlag isFlagActivated={isFlagActivated} />}
+          startAction={
+            <Form method="post" id={`form-${currentFlag.uuid}`}>
+              <ToggleFlag
+                isFlagActivated={isFlagActivated}
+                flagId={currentFlag.uuid}
+              />
+            </Form>
+          }
         />
       }
       subNav={

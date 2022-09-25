@@ -4,6 +4,7 @@ import {
   colors,
   fontSizes,
   mapTokenToVariant,
+  sizes,
   styled,
 } from "~/stitches.config";
 
@@ -26,6 +27,7 @@ const RawLink = styled<any, any>("a", {
     active: mapTokenToVariant("color", colors, undefined, "active"),
     color: mapTokenToVariant("color", colors),
     fontSize: mapTokenToVariant("fontSize", fontSizes),
+    height: mapTokenToVariant("height", sizes),
   },
 });
 
@@ -40,6 +42,7 @@ export interface LinkProps extends HTMLAttributes<HTMLAnchorElement> {
   active?: string;
   hover?: string;
   fontSize?: string;
+  height?: string;
 }
 export const Link = forwardRef(
   ({ to, children, href, target, rel, ...props }: LinkProps, ref: any) => {

@@ -1,9 +1,12 @@
+import { Form } from "@remix-run/react";
 import { useRef } from "react";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { Link } from "~/components/Link";
 import { RawTable, Tr } from "~/components/RawTable";
-import { FlagEnv } from "../types";
-import { FlagStatus } from "./FlagStatus";
+import { Spacer } from "~/components/Spacer";
+import { Typography } from "~/components/Typography";
+import { FlagEnv, FlagStatus } from "../types";
+import { ToggleFlag } from "./ToggleFlag";
 
 export interface FlagListProps {
   flags: Array<FlagEnv>;
@@ -23,21 +26,26 @@ const FlagRow = ({ flagEnv, projectId, envId }: FlagRowProps) => {
   return (
     <Tr onClick={() => linkRef.current?.click()}>
       <td>
+        <ToggleFlag
+          isFlagActivated={flagEnv.status === FlagStatus.ACTIVATED}
+          flagId={flagEnv.flagId}
+        />
+      </td>
+      <td>
         <Link
+          height="ctaSmall"
           ref={linkRef}
           to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}`}
         >
           {flagEnv.flag.name}
         </Link>
+        <Typography size="neptune" color="hadesLight">
+          {flagEnv.flag.description}
+        </Typography>
+
+        <Spacer size={3} />
       </td>
-      <td>
-        <div>{flagEnv.flag.description}</div>
-      </td>
-      <td>
-        <div>
-          <FlagStatus value={flagEnv.status} />
-        </div>
-      </td>
+
       <td>
         <ButtonCopy toCopy={flagEnv.flag.key} small={true} variant="tertiary">
           {flagEnv.flag.key}
@@ -49,20 +57,34 @@ const FlagRow = ({ flagEnv, projectId, envId }: FlagRowProps) => {
 
 export const FlagList = ({ flags, projectId, envId }: FlagListProps) => {
   return (
-    <RawTable>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th width="30%">Description</th>
-          <th>Status</th>
-          <th>Flag key</th>
-        </tr>
-      </thead>
-      <tbody>
-        {flags.map((flagEnv) => (
-          <FlagRow flagEnv={flagEnv} projectId={projectId} envId={envId} key={flagEnv.flagId} />
-        ))}
-      </tbody>
-    </RawTable>
+    <div>
+      {flags.map((flagEnv) => (
+        <Form
+          method="post"
+          key={`form-${flagEnv.flagId}`}
+          id={`form-${flagEnv.flagId}`}
+        />
+      ))}
+
+      <RawTable>
+        <thead>
+          <tr>
+            <th width="14%">Status</th>
+            <th>Name</th>
+            <th>Flag key</th>
+          </tr>
+        </thead>
+        <tbody>
+          {flags.map((flagEnv) => (
+            <FlagRow
+              flagEnv={flagEnv}
+              projectId={projectId}
+              envId={envId}
+              key={flagEnv.flagId}
+            />
+          ))}
+        </tbody>
+      </RawTable>
+    </div>
   );
 };

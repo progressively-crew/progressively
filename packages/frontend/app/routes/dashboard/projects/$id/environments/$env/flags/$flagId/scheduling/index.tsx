@@ -1,5 +1,5 @@
 import { ActionFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
-import { useLoaderData, useSearchParams } from "@remix-run/react";
+import { Form, useLoaderData, useSearchParams } from "@remix-run/react";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { WarningBox } from "~/components/Boxes/WarningBox";
@@ -130,7 +130,14 @@ export default function SchedulingOfFlag() {
         <Header
           tagline={<TagLine icon={<FlagIcon />}>FEATURE FLAG</TagLine>}
           title={currentFlag.name}
-          startAction={<ToggleFlag isFlagActivated={isFlagActivated} />}
+          startAction={
+            <Form method="post" id={`form-${currentFlag.uuid}`}>
+              <ToggleFlag
+                isFlagActivated={isFlagActivated}
+                flagId={currentFlag.uuid}
+              />
+            </Form>
+          }
         />
       }
       subNav={
