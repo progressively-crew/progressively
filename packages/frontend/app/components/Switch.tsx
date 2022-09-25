@@ -47,7 +47,7 @@ const StyledThumb = styled("span", {
 });
 
 const Text = styled("span", {
-  fontSize: "$uranus",
+  fontSize: "$neptune",
   color: "$hadesLight",
   fontFamily: "$default",
 });

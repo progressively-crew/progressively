@@ -4,9 +4,10 @@ import { FlagStatus } from "../types";
 
 export interface ToggleFlag {
   isFlagActivated: boolean;
+  flagId: string;
 }
 
-export const ToggleFlag = ({ isFlagActivated }: ToggleFlag) => {
+export const ToggleFlag = ({ flagId, isFlagActivated }: ToggleFlag) => {
   const transition = useTransition();
 
   const formDataInProgress = transition.submission?.formData;
@@ -18,6 +19,7 @@ export const ToggleFlag = ({ isFlagActivated }: ToggleFlag) => {
 
   return (
     <Form method="post">
+      <input type="hidden" name="flagId" value={flagId} />
       <input type="hidden" name="_type" value="toggle-flag" />
       <input
         type="hidden"

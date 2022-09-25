@@ -181,7 +181,12 @@ export default function VariantsOfFlag() {
         <Header
           tagline={<TagLine icon={<FlagIcon />}>FEATURE FLAG</TagLine>}
           title={currentFlag.name}
-          startAction={<ToggleFlag isFlagActivated={isFlagActivated} />}
+          startAction={
+            <ToggleFlag
+              isFlagActivated={isFlagActivated}
+              flagId={currentFlag.uuid}
+            />
+          }
         />
       }
       subNav={

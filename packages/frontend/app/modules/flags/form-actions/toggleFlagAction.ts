@@ -7,12 +7,17 @@ export const toggleFlagAction = async (
   params: Params<string>,
   authCookie: string
 ) => {
-  const flagId = String(params.flagId);
   const envId = String(params.env);
   const nextStatus = formData.get("nextStatus");
+  const flagId = formData.get("flagId");
 
   if (nextStatus && flagId) {
-    await activateFlag(envId, flagId, nextStatus as FlagStatus, authCookie);
+    await activateFlag(
+      envId,
+      String(flagId),
+      nextStatus as FlagStatus,
+      authCookie
+    );
   }
 
   return null;
