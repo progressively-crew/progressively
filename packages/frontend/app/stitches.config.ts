@@ -82,6 +82,12 @@ export const colors = {
   warningBg: "#ffecb3",
   warningFg: "#bf360c",
   warningBorder: "#ffca28",
+
+  // Flag types
+  experimentBg: "#006064",
+  releaseBg: "#BF360C",
+  permissionBg: "#3E2723",
+  killSwitchBg: "#1A237E",
 };
 
 export const sizes = {

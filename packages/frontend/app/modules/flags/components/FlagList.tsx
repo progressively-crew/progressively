@@ -6,6 +6,7 @@ import { RawTable, Tr } from "~/components/RawTable";
 import { Spacer } from "~/components/Spacer";
 import { Typography } from "~/components/Typography";
 import { FlagEnv, FlagStatus } from "../types";
+import { FlagTypeBadge } from "./FlagType";
 import { ToggleFlag } from "./ToggleFlag";
 
 export interface FlagListProps {
@@ -47,6 +48,10 @@ const FlagRow = ({ flagEnv, projectId, envId }: FlagRowProps) => {
       </td>
 
       <td>
+        <FlagTypeBadge type={flagEnv.flag.type} />
+      </td>
+
+      <td>
         <ButtonCopy toCopy={flagEnv.flag.key} small={true} variant="tertiary">
           {flagEnv.flag.key}
         </ButtonCopy>
@@ -71,6 +76,7 @@ export const FlagList = ({ flags, projectId, envId }: FlagListProps) => {
           <tr>
             <th width="14%">Status</th>
             <th>Name</th>
+            <th>Type</th>
             <th>Flag key</th>
           </tr>
         </thead>

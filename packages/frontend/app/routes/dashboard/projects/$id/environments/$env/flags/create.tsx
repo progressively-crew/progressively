@@ -10,7 +10,7 @@ import { Section } from "~/components/Section";
 import { Typography } from "~/components/Typography";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { createFlag } from "~/modules/flags/services/createFlag";
-import { CreateFlagDTO, Flag } from "~/modules/flags/types";
+import { CreateFlagDTO, Flag, FlagType } from "~/modules/flags/types";
 import { validateFlagShape } from "~/modules/flags/validators/validateFlagShape";
 import { getSession } from "~/sessions";
 import { useProject } from "~/modules/projects/contexts/useProject";
@@ -20,6 +20,7 @@ import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
 import { Card, CardContent } from "~/components/Card";
+import { SelectField } from "~/components/Fields/SelectField";
 
 export const meta: MetaFunction = ({ params, parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -43,6 +44,7 @@ export const action: ActionFunction = async ({
   const formData = await request.formData();
   const name = formData.get("flag-name")?.toString();
   const description = formData.get("flag-desc")?.toString();
+  const type = formData.get("type")?.toString() as FlagType;
 
   const errors = validateFlagShape({ name, description });
 
@@ -57,6 +59,7 @@ export const action: ActionFunction = async ({
       envId,
       name!,
       description!,
+      type!,
       session.get("auth-cookie")
     );
 
@@ -137,12 +140,24 @@ export default function CreateFlagPage() {
                   placeholder="e.g: New Homepage"
                 />
 
+                <TextInput
+                  name="flag-desc"
+                  isInvalid={Boolean(errors?.description)}
+                  label="Flag description"
+                  placeholder="e.g: The new homepage"
+                />
+
                 <div>
-                  <TextInput
-                    name="flag-desc"
-                    isInvalid={Boolean(errors?.description)}
-                    label="Flag description"
-                    placeholder="e.g: The new homepage"
+                  <SelectField
+                    isInvalid={Boolean(errors?.type)}
+                    name="type"
+                    label="Type"
+                    options={[
+                      { value: FlagType.RELEASE, label: "Release" },
+                      { value: FlagType.EXPERIMENT, label: "Experiment" },
+                      { value: FlagType.PERMISSION, label: "Permission" },
+                      { value: FlagType.KILL_SWITCH, label: "Kill switch" },
+                    ]}
                   />
                 </div>
 

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import camelcase from 'camelcase';
+import { FlagType } from '../flags/types';
 import { PrismaService } from '../database/prisma.service';
 import { FlagAlreadyExists } from './errors';
 
@@ -65,6 +66,7 @@ export class EnvironmentsService {
     envId: string,
     name: string,
     description: string,
+    type: FlagType,
   ) {
     const flagKey = camelcase(name);
 
@@ -103,6 +105,7 @@ export class EnvironmentsService {
         name,
         description,
         key: flagKey,
+        type,
         flagEnvironment: {
           createMany: { data: flagsEnvs },
         },

@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { FlagStatus } from '../../../src/flags/flags.status';
+import { FlagType } from '../../../src/flags/types';
 
 export const seedFlags = async (prismaClient: PrismaClient) => {
   const homePageFlag = await prismaClient.flag.create({
@@ -8,6 +9,7 @@ export const seedFlags = async (prismaClient: PrismaClient) => {
       name: 'New homepage',
       description: 'Switch the new homepage design',
       key: 'newHomepage',
+      type: FlagType.EXPERIMENT,
     },
   });
 
@@ -17,6 +19,7 @@ export const seedFlags = async (prismaClient: PrismaClient) => {
       name: 'New footer',
       description: 'Switch the new footer design',
       key: 'newFooter',
+      type: FlagType.EXPERIMENT,
     },
   });
 
@@ -26,6 +29,7 @@ export const seedFlags = async (prismaClient: PrismaClient) => {
       name: 'New aside',
       description: 'Switch the new aside design',
       key: 'newAside',
+      type: FlagType.EXPERIMENT,
     },
   });
 
@@ -35,6 +39,7 @@ export const seedFlags = async (prismaClient: PrismaClient) => {
       name: 'With multivariate',
       description: 'Switch the multivariate flag',
       key: 'multivariate',
+      type: FlagType.EXPERIMENT,
     },
   });
 

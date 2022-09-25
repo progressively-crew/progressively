@@ -2,6 +2,13 @@ import { Environment } from '../environments/types';
 import { RolloutStrategy } from '../strategy/types';
 import { FlagStatus } from './flags.status';
 
+export enum FlagType {
+  RELEASE = 'RELEASE',
+  EXPERIMENT = 'EXPERIMENT',
+  PERMISSION = 'PERMISSION',
+  KILL_SWITCH = 'KILL_SWITCH',
+}
+
 export interface Flag {
   uuid: string;
   name: string;

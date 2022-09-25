@@ -7,12 +7,20 @@ export enum FlagStatus {
   INACTIVE = "INACTIVE",
 }
 
+export enum FlagType {
+  RELEASE = "RELEASE",
+  EXPERIMENT = "EXPERIMENT",
+  PERMISSION = "PERMISSION",
+  KILL_SWITCH = "KILL_SWITCH",
+}
+
 export interface Flag {
   createdAt: string;
   description: string;
   key: string;
   name: string;
   uuid: string;
+  type: FlagType;
 }
 
 export interface FlagEnv {
@@ -28,4 +36,5 @@ export interface FlagEnv {
 export interface CreateFlagDTO {
   description?: string;
   name?: string;
+  type?: FlagType;
 }
