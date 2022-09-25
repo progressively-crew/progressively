@@ -8,15 +8,28 @@ import {
 
 export * from "./types";
 
+const isSSR = typeof window === undefined;
+
 function init(clientKey: string, options?: SDKOptions): ProgressivelySdkType {
   const fields: Fields = options?.fields || {};
   fields.clientKey = clientKey;
+
+  let resolvedFlags: FlagDict = {};
+
+  if (options?.initialFlags) {
+    resolvedFlags = options.initialFlags;
+  } else if (!isSSR) {
+    try {
+      const stringFlags = window.localStorage.getItem("p-flags");
+      resolvedFlags = stringFlags ? JSON.parse(stringFlags) : {};
+    } catch {}
+  }
 
   return Sdk(
     options?.apiUrl || "https://api.progressively.app",
     options?.websocketUrl || "wss://api.progressively.app",
     fields,
-    options?.initialFlags || {}
+    resolvedFlags
   );
 }
 

@@ -142,6 +142,105 @@ describe("SDK", () => {
         { credentials: "include" }
       );
     });
+
+    it("loads the initial flag from local storage when the network fails and no initial flags", async () => {
+      worker.use(
+        rest.get(FLAG_ENDPOINT, (_, res) => {
+          return res.networkError("Failed to connect");
+        })
+      );
+
+      window.localStorage.setItem("p-flags", JSON.stringify({ hello: true }));
+
+      const sdk = Sdk.init("client-key", {
+        websocketUrl: "ws://localhost:1234",
+        apiUrl: "http://localhost:4000",
+      });
+
+      const { flags } = await sdk.loadFlags();
+
+      expect(global.fetch).toHaveBeenCalledWith(
+        "http://localhost:4000/sdk/eyJjbGllbnRLZXkiOiJjbGllbnQta2V5In0=",
+        { credentials: "include" }
+      );
+
+      expect(flags).toEqual({ hello: true });
+    });
+
+    it("loads the initial flag from the options when the initialFlags is passed", async () => {
+      worker.use(
+        rest.get(FLAG_ENDPOINT, (_, res) => {
+          return res.networkError("Failed to connect");
+        })
+      );
+
+      const sdk = Sdk.init("client-key", {
+        websocketUrl: "ws://localhost:1234",
+        apiUrl: "http://localhost:4000",
+        initialFlags: {
+          world: true,
+        },
+      });
+
+      const { flags } = await sdk.loadFlags();
+
+      expect(global.fetch).toHaveBeenCalledWith(
+        "http://localhost:4000/sdk/eyJjbGllbnRLZXkiOiJjbGllbnQta2V5In0=",
+        { credentials: "include" }
+      );
+
+      expect(flags).toEqual({ world: true });
+    });
+
+    it("loads the initial flag from the options when the initialFlags is passed", async () => {
+      worker.use(
+        rest.get(FLAG_ENDPOINT, (_, res) => {
+          return res.networkError("Failed to connect");
+        })
+      );
+
+      const sdk = Sdk.init("client-key", {
+        websocketUrl: "ws://localhost:1234",
+        apiUrl: "http://localhost:4000",
+        initialFlags: {
+          world: true,
+        },
+      });
+
+      const { flags } = await sdk.loadFlags();
+
+      expect(global.fetch).toHaveBeenCalledWith(
+        "http://localhost:4000/sdk/eyJjbGllbnRLZXkiOiJjbGllbnQta2V5In0=",
+        { credentials: "include" }
+      );
+
+      expect(flags).toEqual({ world: true });
+    });
+
+    it("loads the initial flag from the options when the initialFlags is passed", async () => {
+      worker.use(
+        rest.get(FLAG_ENDPOINT, (_, res) => {
+          return res.networkError("Failed to connect");
+        })
+      );
+
+      const sdk = Sdk.init("client-key", {
+        websocketUrl: "ws://localhost:1234",
+        apiUrl: "http://localhost:4000",
+        initialFlags: {
+          world: true,
+        },
+      });
+
+      const { flags } = await sdk.loadFlags();
+
+      expect(global.fetch).toHaveBeenCalledWith(
+        "http://localhost:4000/sdk/eyJjbGllbnRLZXkiOiJjbGllbnQta2V5In0=",
+        { credentials: "include" }
+      );
+
+      expect(flags).toEqual({ world: true });
+    });
   });
 
   describe("sending flag updates", () => {
