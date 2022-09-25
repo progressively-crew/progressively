@@ -33,7 +33,7 @@ const getUserWithToken = (accessToken: string) => {
 export const getMe = async (session: Session) => {
   try {
     return await getUserWithToken(session.get("auth-cookie"));
-  } catch (err) {
+  } catch {
     const response = await refreshToken(session);
     const jsonResponse = await response.json();
 

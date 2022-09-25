@@ -50,13 +50,13 @@ export const action: ActionFunction = async ({ request, params }): Promise<Actio
 
   const promiseOfMembersToRemove: Array<Promise<{ statusCode: number }>> = [];
 
-  formData.forEach((d) => {
+  for (const d of formData.values()) {
     if (d !== "delete-member" && d !== "select-all") {
       promiseOfMembersToRemove.push(
         removeMember(params.id!, d.toString(), session.get("auth-cookie"))
       );
     }
-  });
+  }
 
   const result = await Promise.all(promiseOfMembersToRemove);
   const successful = result.filter((res) => res?.statusCode !== 401);

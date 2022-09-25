@@ -3,11 +3,11 @@ import { expect } from "@jest/globals";
 import { FlagEnv, FlagStatus } from "~/modules/flags/types";
 import { StrategyDescription } from "../StrategyDescription";
 
+const getText = () => document.querySelector("p")?.textContent;
+const getAllLi = () => document.querySelectorAll("li");
+
 describe("StrategyDescription", () => {
   let flagEnv: FlagEnv;
-
-  const getText = () => document.querySelector("p")?.textContent;
-  const getAllLi = () => document.querySelectorAll("li");
 
   beforeEach(() => {
     flagEnv = {

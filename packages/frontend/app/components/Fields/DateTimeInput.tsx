@@ -73,7 +73,7 @@ export const DateTimeInput = ({ isInvalid, name, label, description }: TextInput
       d.setHours(Number(hours));
       d.setMinutes(Number(minutes));
       utc = d.toISOString();
-    } catch (err: unknown) {
+    } catch {
       // silently swallow
     }
   }

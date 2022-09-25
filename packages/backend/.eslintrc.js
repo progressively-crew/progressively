@@ -4,7 +4,7 @@ module.exports = {
     project: 'tsconfig.json',
     sourceType: 'module',
   },
-  plugins: ['@typescript-eslint/eslint-plugin', 'sonarjs'],
+  plugins: ['@typescript-eslint/eslint-plugin', 'sonarjs', 'unicorn'],
   extends: [
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
@@ -22,5 +22,9 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     'sonarjs/no-duplicate-string': 'off',
+    'unicorn/filename-case': 'off',
+    'unicorn/prefer-module': 'off',
+    'unicorn/prevent-abbreviations': 'off',
+    'unicorn/no-null': 'off',
   },
 };
