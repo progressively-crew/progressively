@@ -20,6 +20,7 @@ export interface Flag {
   key: string;
   name: string;
   uuid: string;
+  type: FlagType;
 }
 
 export interface FlagEnv {

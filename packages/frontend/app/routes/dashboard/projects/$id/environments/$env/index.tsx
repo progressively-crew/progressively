@@ -67,8 +67,6 @@ export const loader: LoaderFunction = async ({
     authCookie
   );
 
-  console.log("loader");
-
   return { flagsByEnv };
 };
 

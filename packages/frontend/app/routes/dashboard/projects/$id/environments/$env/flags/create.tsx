@@ -44,6 +44,7 @@ export const action: ActionFunction = async ({
   const formData = await request.formData();
   const name = formData.get("flag-name")?.toString();
   const description = formData.get("flag-desc")?.toString();
+  const type = formData.get("type")?.toString() as FlagType;
 
   const errors = validateFlagShape({ name, description });
 
@@ -58,6 +59,7 @@ export const action: ActionFunction = async ({
       envId,
       name!,
       description!,
+      type!,
       session.get("auth-cookie")
     );
 
