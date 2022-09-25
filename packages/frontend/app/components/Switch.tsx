@@ -75,6 +75,7 @@ export interface SwitchProps {
   label: string;
   onLabel?: string;
   offLabel?: string;
+  form?: string;
 }
 
 export const Switch = ({
@@ -84,6 +85,7 @@ export const Switch = ({
   label,
   onLabel,
   offLabel,
+  form,
 }: SwitchProps) => {
   const className = checked ? "switch-thumb active" : "switch-thumb";
 
@@ -94,6 +96,7 @@ export const Switch = ({
       role="switch"
       aria-label={label}
       onClick={onClick}
+      form={form}
     >
       <Text>{offLabel || "Off"}</Text>
       <SwitchInnerWrapper checked={checked}>

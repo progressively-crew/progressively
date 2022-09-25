@@ -1,3 +1,4 @@
+import { Form } from "@remix-run/react";
 import { useRef } from "react";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { Link } from "~/components/Link";
@@ -56,24 +57,34 @@ const FlagRow = ({ flagEnv, projectId, envId }: FlagRowProps) => {
 
 export const FlagList = ({ flags, projectId, envId }: FlagListProps) => {
   return (
-    <RawTable>
-      <thead>
-        <tr>
-          <th width="24%">Status</th>
-          <th>Name</th>
-          <th>Flag key</th>
-        </tr>
-      </thead>
-      <tbody>
-        {flags.map((flagEnv) => (
-          <FlagRow
-            flagEnv={flagEnv}
-            projectId={projectId}
-            envId={envId}
-            key={flagEnv.flagId}
-          />
-        ))}
-      </tbody>
-    </RawTable>
+    <div>
+      {flags.map((flagEnv) => (
+        <Form
+          method="post"
+          key={`form-${flagEnv.flagId}`}
+          id={`form-${flagEnv.flagId}`}
+        />
+      ))}
+
+      <RawTable>
+        <thead>
+          <tr>
+            <th width="14%">Status</th>
+            <th>Name</th>
+            <th>Flag key</th>
+          </tr>
+        </thead>
+        <tbody>
+          {flags.map((flagEnv) => (
+            <FlagRow
+              flagEnv={flagEnv}
+              projectId={projectId}
+              envId={envId}
+              key={flagEnv.flagId}
+            />
+          ))}
+        </tbody>
+      </RawTable>
+    </div>
   );
 };

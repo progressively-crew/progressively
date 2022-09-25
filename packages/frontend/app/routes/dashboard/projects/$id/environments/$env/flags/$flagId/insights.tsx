@@ -203,10 +203,12 @@ export default function FlagInsights() {
           tagline={<TagLine icon={<FlagIcon />}>FEATURE FLAG</TagLine>}
           title={currentFlag.name}
           startAction={
-            <ToggleFlag
-              isFlagActivated={isFlagActivated}
-              flagId={currentFlag.uuid}
-            />
+            <Form method="post" id={`form-${currentFlag.uuid}`}>
+              <ToggleFlag
+                isFlagActivated={isFlagActivated}
+                flagId={currentFlag.uuid}
+              />
+            </Form>
           }
         />
       }
