@@ -5,6 +5,7 @@ model Flag {
     description     String
     createdAt       DateTime          @default(now())
     flagEnvironment FlagEnvironment[]
+    type            String
 }
 
 model FlagEnvironment {
@@ -18,8 +19,8 @@ model FlagEnvironment {
     strategies        RolloutStrategy[]
     rolloutPercentage Int               @default(100)
 
-    scheduling  Schedule[]
-    variants    Variant[]
+    scheduling Schedule[]
+    variants   Variant[]
 
     @@id([flagId, environmentId])
 }

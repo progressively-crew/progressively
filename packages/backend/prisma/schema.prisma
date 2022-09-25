@@ -70,6 +70,7 @@ model Flag {
   description     String
   createdAt       DateTime          @default(now())
   flagEnvironment FlagEnvironment[] @relation(name: "FlagToFlagEnvironment")
+  type            String
 }
 
 model FlagEnvironment {
