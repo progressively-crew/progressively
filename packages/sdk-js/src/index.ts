@@ -90,6 +90,8 @@ function Sdk(
     socket.onmessage = (event) => {
       flags = { ...flags, ...JSON.parse(event.data).data };
 
+      persistLocalFlags(flags);
+
       callback(flags);
     };
   }
