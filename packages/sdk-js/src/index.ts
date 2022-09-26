@@ -9,6 +9,13 @@ import {
 export * from "./types";
 
 const isSSR = typeof window === undefined;
+const LocalStorageKey = "p-flags";
+
+function persistLocalFlags(flags: FlagDict) {
+  if (!isSSR) {
+    window.localStorage.setItem(LocalStorageKey, JSON.stringify(flags));
+  }
+}
 
 function init(clientKey: string, options?: SDKOptions): ProgressivelySdkType {
   const fields: Fields = options?.fields || {};
@@ -20,7 +27,7 @@ function init(clientKey: string, options?: SDKOptions): ProgressivelySdkType {
     resolvedFlags = options.initialFlags;
   } else if (!isSSR) {
     try {
-      const stringFlags = window.localStorage.getItem("p-flags");
+      const stringFlags = window.localStorage.getItem(LocalStorageKey);
       resolvedFlags = stringFlags ? JSON.parse(stringFlags) : {};
     } catch {}
   }
@@ -60,6 +67,9 @@ function Sdk(
       })
       .then((data) => {
         flags = { ...flags, ...data };
+
+        persistLocalFlags(flags);
+
         return { flags, response };
       })
       .catch(() => {

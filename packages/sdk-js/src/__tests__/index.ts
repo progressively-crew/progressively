@@ -53,6 +53,7 @@ describe("SDK", () => {
     clearInterval(intervalId);
     wss.clients.forEach((client) => client.terminate());
     wss.close();
+    window.localStorage.clear();
   });
 
   describe("loading the flags", () => {
@@ -144,18 +145,25 @@ describe("SDK", () => {
     });
 
     it("loads the initial flag from local storage when the network fails and no initial flags", async () => {
+      const sdk = Sdk.init("client-key", {
+        websocketUrl: "ws://localhost:1234",
+        apiUrl: "http://localhost:4000",
+      });
+
+      // First request sets the flag in local storage
+      worker.use(
+        rest.get(FLAG_ENDPOINT, (_, res, ctx) => {
+          return res(ctx.json({ hello: true, world: false }));
+        })
+      );
+
+      await sdk.loadFlags();
+
       worker.use(
         rest.get(FLAG_ENDPOINT, (_, res) => {
           return res.networkError("Failed to connect");
         })
       );
-
-      window.localStorage.setItem("p-flags", JSON.stringify({ hello: true }));
-
-      const sdk = Sdk.init("client-key", {
-        websocketUrl: "ws://localhost:1234",
-        apiUrl: "http://localhost:4000",
-      });
 
       const { flags } = await sdk.loadFlags();
 
@@ -164,7 +172,7 @@ describe("SDK", () => {
         { credentials: "include" }
       );
 
-      expect(flags).toEqual({ hello: true });
+      expect(flags).toEqual({ hello: true, world: false });
     });
 
     it("loads the initial flag from the options when the initialFlags is passed", async () => {
