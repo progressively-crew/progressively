@@ -8,15 +8,35 @@ import {
 
 export * from "./types";
 
+const isSSR = typeof window === undefined;
+const LocalStorageKey = "p-flags";
+
+function persistLocalFlags(flags: FlagDict) {
+  if (!isSSR) {
+    window.localStorage.setItem(LocalStorageKey, JSON.stringify(flags));
+  }
+}
+
 function init(clientKey: string, options?: SDKOptions): ProgressivelySdkType {
   const fields: Fields = options?.fields || {};
   fields.clientKey = clientKey;
+
+  let resolvedFlags: FlagDict = {};
+
+  if (options?.initialFlags) {
+    resolvedFlags = options.initialFlags;
+  } else if (!isSSR) {
+    try {
+      const stringFlags = window.localStorage.getItem(LocalStorageKey);
+      resolvedFlags = stringFlags ? JSON.parse(stringFlags) : {};
+    } catch {}
+  }
 
   return Sdk(
     options?.apiUrl || "https://api.progressively.app",
     options?.websocketUrl || "wss://api.progressively.app",
     fields,
-    options?.initialFlags || {}
+    resolvedFlags
   );
 }
 
@@ -40,10 +60,20 @@ function Sdk(
     })
       .then((res) => {
         response = res;
+
+        if (!res.ok) return {};
+
         return response.json();
       })
       .then((data) => {
         flags = { ...flags, ...data };
+
+        persistLocalFlags(flags);
+
+        return { flags, response };
+      })
+      .catch(() => {
+        // Silent catch the error, and return the actual in-memory flags
         return { flags, response };
       });
   }
@@ -59,6 +89,8 @@ function Sdk(
 
     socket.onmessage = (event) => {
       flags = { ...flags, ...JSON.parse(event.data).data };
+
+      persistLocalFlags(flags);
 
       callback(flags);
     };
