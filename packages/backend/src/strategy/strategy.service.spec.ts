@@ -67,6 +67,7 @@ describe('StrategyService', () => {
           {
             id: 'user-id-123',
           },
+          {},
         );
 
         expect(shouldActivate).toBe(true);
@@ -79,6 +80,7 @@ describe('StrategyService', () => {
           flagEnv,
           [strategy],
           {},
+          {},
         );
 
         expect(shouldActivate).toBe(false);
@@ -90,6 +92,7 @@ describe('StrategyService', () => {
         const shouldActivate = await service.resolveStrategies(
           flagEnv,
           [strategy],
+          {},
           {},
         );
 
@@ -105,6 +108,7 @@ describe('StrategyService', () => {
           {
             id: 'user-id-123',
           },
+          {},
         );
 
         expect(shouldActivate).toBe(true);
@@ -119,6 +123,7 @@ describe('StrategyService', () => {
           {
             id: 'user-id-123',
           },
+          {},
         );
 
         expect(shouldActivate).toBe(false);
@@ -168,6 +173,7 @@ describe('StrategyService', () => {
             flagEnv,
             [strategy],
             { id },
+            {},
           );
 
           expect(shouldActivate).toBe(expectedVariant);
@@ -177,9 +183,14 @@ describe('StrategyService', () => {
 
     describe('Strategies', () => {
       it('always returns true when no strategies are found', async () => {
-        const shouldActivate = await service.resolveStrategies(flagEnv, [], {
-          id: 'user-id-123',
-        });
+        const shouldActivate = await service.resolveStrategies(
+          flagEnv,
+          [],
+          {
+            id: 'user-id-123',
+          },
+          {},
+        );
 
         expect(shouldActivate).toBe(true);
       });
@@ -197,6 +208,7 @@ describe('StrategyService', () => {
           flagEnv,
           [strategy],
           fields,
+          {},
         );
 
         expect(shouldActivate).toBe(true);
@@ -214,6 +226,7 @@ describe('StrategyService', () => {
           flagEnv,
           [strategy],
           fields,
+          {},
         );
 
         expect(shouldActivate).toBe(false);
@@ -231,6 +244,7 @@ describe('StrategyService', () => {
           flagEnv,
           [strategy],
           fields,
+          {},
         );
 
         expect(shouldActivate).toBe(false);
@@ -248,6 +262,7 @@ describe('StrategyService', () => {
             flagEnv,
             [strategy],
             fields,
+            {},
           );
 
           expect(shouldActivate).toBe(true);
@@ -264,6 +279,7 @@ describe('StrategyService', () => {
             flagEnv,
             [strategy],
             fields,
+            {},
           );
 
           expect(shouldActivate).toBe(true);

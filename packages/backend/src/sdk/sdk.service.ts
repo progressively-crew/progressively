@@ -2,9 +2,9 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { nanoid } from 'nanoid';
 import { EnvironmentsService } from '../environments/environments.service';
 import { FlagsService } from '../flags/flags.service';
-import { FlagStatus } from '../flags/flags.status';
 import { PopulatedFlagEnv } from 'src/flags/types';
 import { FieldRecord } from '../strategy/types';
+import { FlagResolutionStep } from '../shared/types';
 
 @Injectable()
 export class SdkService {
@@ -42,6 +42,10 @@ export class SdkService {
       clientKey,
     )) as unknown as Array<PopulatedFlagEnv>;
 
+    const reason: FlagResolutionStep = {
+      type: 'UNRESOLVED',
+    };
+
     const flags = {};
 
     for (const flagEnv of flagEnvs) {
@@ -57,6 +61,7 @@ export class SdkService {
       const flagStatusOrVariant = this.flagService.resolveFlagStatus(
         nextFlag as unknown as PopulatedFlagEnv,
         fields,
+        reason,
       );
 
       flags[nextFlag.flag.key] = flagStatusOrVariant;
@@ -68,6 +73,6 @@ export class SdkService {
       );
     }
 
-    return flags;
+    return { flags, reason };
   }
 }
