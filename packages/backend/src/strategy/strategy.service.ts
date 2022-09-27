@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { FlagResolutionStep } from '../shared/types';
 
 import { PrismaService } from '../database/prisma.service';
 import { Flag, FlagEnvironment } from '../flags/types';
@@ -11,12 +10,7 @@ import {
   RolloutStrategy,
   StrategyRuleType,
 } from './types';
-import {
-  genBucket,
-  getBucketThreshold,
-  getVariation,
-  isInBucket,
-} from './utils';
+import { genBucket, getVariation, isInBucket } from './utils';
 
 export interface ExtendedFlagEnv extends FlagEnvironment {
   flag: Flag;
@@ -28,20 +22,12 @@ export class StrategyService {
   private resolveFlagVariantValue(
     flagEnv: ExtendedFlagEnv,
     fields: FieldRecord,
-    _reason: FlagResolutionStep,
   ): boolean | string {
     const bucketId = genBucket(flagEnv.flag.key, fields.id as string);
     const isMultiVariate = flagEnv.variants.length > 0;
 
-    _reason.bucketPercentage = Math.round(
-      (bucketId / getBucketThreshold()) * 100,
-    );
-
     if (isMultiVariate) {
       const variant = getVariation(bucketId, flagEnv.variants);
-
-      _reason.type = 'VARIANT';
-      _reason.variantValue = variant.value;
 
       return variant.value;
     }
@@ -72,32 +58,25 @@ export class StrategyService {
     flagEnv: ExtendedFlagEnv,
     strategies: Array<RolloutStrategy>,
     fields: FieldRecord,
-    _reason: FlagResolutionStep,
   ) {
-    _reason.flagPercentage = flagEnv.rolloutPercentage;
-
-    if (flagEnv.rolloutPercentage === 100) {
-      _reason.type = 'PERCENTAGE';
-      return true;
-    }
+    if (flagEnv.rolloutPercentage === 100) return true;
 
     // No users, we can't make assumptions, should be very rare
     if (!fields?.id) return false;
 
-    const variant = this.resolveFlagVariantValue(flagEnv, fields, _reason);
+    const variant = this.resolveFlagVariantValue(flagEnv, fields);
 
     if (Boolean(variant)) {
       return variant;
     }
 
+    // Always return true when no strategies are passed
+    if (strategies.length === 0) return true;
+
     for (const strategy of strategies) {
       const isValidStrategyRule = this.isValidStrategy(strategy, fields);
 
-      if (isValidStrategyRule) {
-        _reason.type = 'STRATEGY';
-        _reason.strategy = strategy;
-        return true;
-      }
+      if (isValidStrategyRule) return true;
     }
 
     return false;

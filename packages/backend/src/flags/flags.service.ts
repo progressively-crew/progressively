@@ -6,7 +6,6 @@ import { PopulatedFlagEnv, SchedulingStatus, Variant } from './types';
 import { FieldRecord } from '../strategy/types';
 import { WebsocketGateway } from '../websocket/websocket.gateway';
 import { VariantCreationDTO } from './flags.dto';
-import { FlagResolutionStep } from '../shared/types';
 
 @Injectable()
 export class FlagsService {
@@ -265,11 +264,7 @@ export class FlagsService {
     return roles.includes(flagOfProject.role);
   }
 
-  resolveFlagStatus(
-    flagEnv: PopulatedFlagEnv,
-    fields: FieldRecord,
-    _reason: FlagResolutionStep,
-  ) {
+  resolveFlagStatus(flagEnv: PopulatedFlagEnv, fields: FieldRecord) {
     let status: boolean | string;
 
     if (flagEnv.status === FlagStatus.ACTIVATED) {
@@ -277,13 +272,20 @@ export class FlagsService {
         flagEnv,
         flagEnv.strategies,
         fields,
-        _reason,
       );
     } else {
       status = false;
     }
 
     return status;
+  }
+
+  resolveFlagStatusRecord(flagEnv: PopulatedFlagEnv, fields: FieldRecord) {
+    const flagStatusRecord = this.resolveFlagStatus(flagEnv, fields);
+
+    return {
+      [flagEnv.flag.key]: flagStatusRecord,
+    };
   }
 
   async manageScheduling(
