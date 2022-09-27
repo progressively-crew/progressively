@@ -22,7 +22,15 @@ export class SdkModule implements OnModuleInit {
   onModuleInit() {
     this.wsGateway.registerSubscriptionHandler<PopulatedFlagEnv>(
       (entity, fields: FieldRecord) => {
-        return this.flagService.resolveFlagStatusRecord(entity, fields);
+        const flagStatusRecord = this.flagService.resolveFlagStatus(
+          entity,
+          fields,
+          {},
+        );
+
+        return {
+          [entity.flag.key]: flagStatusRecord,
+        };
       },
     );
   }

@@ -31,6 +31,8 @@ export const isInBucket = (bucketId: number, rolloutPercentage: number) => {
   return bucketId < higherBoundActivationThreshold;
 };
 
+export const getBucketThreshold = () => BUCKET_COUNT;
+
 export const genBucket = (key: string, userId: string) => {
   const bucketKey = `${userId}-${key}`;
   const bucketHash: number = murmur.hash32(bucketKey, 1);

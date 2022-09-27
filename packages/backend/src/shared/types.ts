@@ -1,9 +1,16 @@
-import { FlagStatus } from '../flags/flags.status';
+import { RolloutStrategy } from '../strategy/types';
 
 export interface FlagResolutionStep {
-  status?: FlagStatus;
-  bucketValue?: number;
-  expectedRolloutPercentage?: number;
-  resolvingStrategyName?: string;
-  type?: 'PERCENTAGE' | 'STRATEGY' | 'VARIANT';
+  type?: 'PERCENTAGE' | 'STRATEGY' | 'VARIANT' | 'UNRESOLVED';
+
+  // For type Percentage and Variant
+  bucketPercentage?: number;
+
+  // For type: 'PERCENTAGE'
+  flagPercentage?: number;
+  userPercentage?: number;
+  strategy?: RolloutStrategy;
+
+  // For variant resolution;
+  variantValue?: string;
 }
