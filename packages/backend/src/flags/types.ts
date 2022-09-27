@@ -25,7 +25,7 @@ export interface FlagEnvironment {
   variants: Array<Variant>;
 }
 
-interface Schedule {
+export interface Schedule {
   uuid: string;
   utc: string;
   rolloutPercentage: number;

@@ -2,9 +2,9 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { nanoid } from 'nanoid';
 import { EnvironmentsService } from '../environments/environments.service';
 import { FlagsService } from '../flags/flags.service';
-import { FlagStatus } from '../flags/flags.status';
 import { PopulatedFlagEnv } from 'src/flags/types';
 import { FieldRecord } from '../strategy/types';
+import { FlagStatus } from '../flags/flags.status';
 
 @Injectable()
 export class SdkService {

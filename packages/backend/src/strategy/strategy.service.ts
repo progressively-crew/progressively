@@ -70,9 +70,6 @@ export class StrategyService {
       return variant;
     }
 
-    // Always return true when no strategies are passed
-    if (strategies.length === 0) return true;
-
     for (const strategy of strategies) {
       const isValidStrategyRule = this.isValidStrategy(strategy, fields);
 
