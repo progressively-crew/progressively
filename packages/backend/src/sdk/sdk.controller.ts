@@ -36,12 +36,14 @@ export class SdkController {
     fields.id = this.sdkService.resolveUserId(fields, cookieUserId);
     this._prepareCookie(response, fields.id);
 
-    return await this.sdkService.resolveSdkFlags(fields);
+    const { flags } = await this.sdkService.resolveSdkFlags(fields);
+
+    return flags;
   }
 
   /**
    * Implementation should be almost the same GET /:params
-   * The difference is that this endpint should be behind the auth wall
+   * The difference is that this endpoint should be behind the auth wall
    * with authorization, and allows to track the flag resolution
    * using the Flag console
    */
@@ -60,6 +62,6 @@ export class SdkController {
     fields.id = this.sdkService.resolveUserId(fields, cookieUserId);
     this._prepareCookie(response, fields.id);
 
-    return await this.sdkService.resolveSdkFlags(fields);
+    return this.sdkService.resolveSdkFlags(fields);
   }
 }

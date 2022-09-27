@@ -73,6 +73,6 @@ export class SdkService {
       );
     }
 
-    return flags;
+    return { flags, reason };
   }
 }
