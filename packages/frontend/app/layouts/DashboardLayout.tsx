@@ -37,7 +37,7 @@ const TopWrapper = styled("div", {
 
 const Grid = styled("div", {
   display: "grid",
-  gridTemplateColumns: "260px 1fr",
+  gridTemplateColumns: "240px 1fr",
   gap: "$spacing$12",
   variants: {
     singleColumn: {
