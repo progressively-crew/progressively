@@ -1,4 +1,4 @@
-export const LogoWithoutText = () => (
+export const LogoWithoutText = (props: any) => (
   <svg
     width="100"
     height="99"
@@ -7,6 +7,7 @@ export const LogoWithoutText = () => (
     xmlns="http://www.w3.org/2000/svg"
     aria-hidden
     className="logo"
+    {...props}
   >
     <path
       fillRule="evenodd"

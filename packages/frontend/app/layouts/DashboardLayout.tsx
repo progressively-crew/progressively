@@ -7,8 +7,6 @@ import { NavProvider } from "~/components/Breadcrumbs/providers/NavProvider";
 import { InertWhenNavOpened } from "~/components/Breadcrumbs/InertWhenNavOpened";
 import { styled } from "~/stitches.config";
 import { HStack } from "~/components/HStack";
-import { NavTree } from "~/modules/misc/components/NavTree";
-import { TreeToggle } from "~/modules/misc/components/TreeToggle";
 import { DarkLogo } from "~/components/Logo/DarkLogo";
 import { UseDropdown } from "~/modules/user/components/UserDropdown";
 import { Stack } from "~/components/Stack";
@@ -32,18 +30,22 @@ const OverflowContainer = styled("div", {
   },
 });
 
-const AppBar = styled("div", {
-  background: "$hades",
-
-  "& .logo": {
-    height: "$ctaSmall",
-    width: "$ctaSmall",
-    marginRight: "$spacing$4",
-  },
+const TopWrapper = styled("div", {
+  background: "$apollo",
+  boxShadow: "$regularBottom",
 });
 
-const BreadCrumbWrapper = styled("div", {
-  background: "$apollo",
+const Grid = styled("div", {
+  display: "grid",
+  gridTemplateColumns: "260px 1fr",
+  gap: "$spacing$12",
+  variants: {
+    singleColumn: {
+      true: {
+        gridTemplateColumns: "1fr",
+      },
+    },
+  },
 });
 
 export const DashboardLayout = ({
@@ -60,52 +62,41 @@ export const DashboardLayout = ({
         <SkipNavLink>Skip to content</SkipNavLink>
 
         <div>
-          <AppBar>
+          <TopWrapper>
             <Container>
-              <HStack
-                height="navHeight"
-                justifyContent="space-between"
-                as="nav"
-                aria-label="General navigation"
-              >
-                <DarkLogo />
-                <HStack spacing={4}>
-                  <TreeToggle />
-                  <UseDropdown user={user} />
-                </HStack>
-              </HStack>
-            </Container>
-          </AppBar>
+              <HStack justifyContent="space-between" height="cta">
+                <div>{breadcrumb}</div>
 
-          <BreadCrumbWrapper>
-            <Container>{breadcrumb}</Container>
-          </BreadCrumbWrapper>
+                <UseDropdown user={user} />
+              </HStack>
+
+              <Spacer size={2} />
+
+              <header>{header}</header>
+            </Container>
+          </TopWrapper>
 
           <Spacer size={12} />
 
           <Container>
-            <header>{header}</header>
+            <Grid singleColumn={!subNav}>
+              {subNav}
+
+              <div>
+                <Main>
+                  <OverflowContainer>
+                    <Stack spacing={8}>
+                      {status}
+
+                      {children}
+                    </Stack>
+                  </OverflowContainer>
+                </Main>
+              </div>
+            </Grid>
           </Container>
-
-          <Container>{subNav}</Container>
-
-          <Spacer size={8} />
-
-          <Main>
-            <Container>
-              <OverflowContainer>
-                <Stack spacing={8}>
-                  {status}
-
-                  {children}
-                </Stack>
-              </OverflowContainer>
-            </Container>
-          </Main>
         </div>
       </InertWhenNavOpened>
-
-      <NavTree />
     </NavProvider>
   );
 };

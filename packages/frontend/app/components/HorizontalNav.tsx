@@ -3,42 +3,39 @@ import { styled } from "~/stitches.config";
 import { HStack } from "./HStack";
 
 const HorizontalNavWrapper = styled("nav", {
-  overflow: "hidden",
-  background: "$nemesis",
-  borderRadius: "$borderRadius$regular",
-
   "& ul": {
     display: "flex",
+    flexDirection: "column",
+    gap: "$spacing$1",
   },
 
   "& ul li a": {
-    height: "calc($subnavHeight - 8px)", // 8px is the invisible border
+    borderRadius: "$borderRadius$regular",
+    height: "$cta",
     whiteSpace: "nowrap",
     boxSizing: "border-box",
     display: "flex",
     cursor: "pointer",
     fontFamily: "$default",
     textDecoration: "none",
-    color: "$apollo",
-    paddingRight: "$spacing$6",
-    paddingLeft: "$spacing$2",
-    borderTop: "4px solid transparent",
-    borderBottom: "4px solid transparent",
+    color: "$hades",
+    padding: "0 $spacing$6",
     transition: "all 0.2s",
     fontSize: "$uranus",
   },
 
   "& ul li a:hover": {
-    background: "$hypnos",
+    background: "$nemesisLight",
   },
 
   "& ul li a.active": {
-    color: "$apollo",
-    borderBottom: "4px solid $hermes",
+    fontWeight: "$bold",
+    color: "$nemesis",
+    background: "$nemesisLight",
   },
 
   "& ul li a svg": {
-    color: "$apollo",
+    color: "$nemesis",
     fontSize: "$jupiter",
   },
 

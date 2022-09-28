@@ -164,7 +164,12 @@ export const Button = ({
     const linkProps = props as HTMLAttributes<HTMLAnchorElement>;
 
     return (
-      <RawButton as={href ? "a" : Link} to={href ? undefined : to} href={href} {...linkProps}>
+      <RawButton
+        as={href ? "a" : Link}
+        to={href ? undefined : to}
+        href={href}
+        {...linkProps}
+      >
         <HStack spacing={3}>
           {icon}
           {children}

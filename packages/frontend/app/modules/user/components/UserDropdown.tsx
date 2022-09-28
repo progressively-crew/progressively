@@ -12,7 +12,6 @@ export const UseDropdown = ({ user }: UserDropdownProps) => {
       to="/profile"
       icon={<Avatar aria-hidden>{user.fullname}</Avatar>}
       variant="tertiary"
-      scheme="inverse"
     >
       {user.fullname}
     </Button>
