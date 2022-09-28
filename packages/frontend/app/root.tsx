@@ -33,7 +33,25 @@ import { withSentry } from "@sentry/remix";
  */
 export const links: LinksFunction = () => {
   return [
-    { rel: "prefetch stylesheet", href: fonts },
+    {
+      rel: "preload",
+      href: "/fonts/Catamaran-ExtraBold.ttf",
+      as: "font",
+      type: "font/ttf",
+    },
+    {
+      rel: "preload",
+      href: "/fonts/Mulish-Medium.ttf",
+      as: "font",
+      type: "font/ttf",
+    },
+    {
+      rel: "preload",
+      href: "/fonts/Mulish-ExtraBold.ttf",
+      as: "font",
+      type: "font/ttf",
+    },
+    { rel: "stylesheet", href: fonts },
     { rel: "stylesheet", href: styles },
   ];
 };
