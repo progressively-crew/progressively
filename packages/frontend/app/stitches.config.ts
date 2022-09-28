@@ -95,6 +95,7 @@ export const sizes = {
   container: "1260px",
   cta: "48px",
   ctaSmall: "40px",
+  logo: "32px",
   emptyStateIconHeight: "160px",
   avatar: "32px",
   treeHeight: "60%",

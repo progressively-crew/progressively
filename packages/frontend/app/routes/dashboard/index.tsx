@@ -22,7 +22,9 @@ interface LoaderData {
   projects: Array<UserProject>;
 }
 
-export const loader: LoaderFunction = async ({ request }): Promise<LoaderData | Response> => {
+export const loader: LoaderFunction = async ({
+  request,
+}): Promise<LoaderData | Response> => {
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
 
@@ -48,16 +50,24 @@ export default function DashboardRoot() {
       user={user}
       status={
         newProjectId ? (
-          <SuccessBox id="project-added">The project has been successfully created.</SuccessBox>
+          <SuccessBox id="project-added">
+            The project has been successfully created.
+          </SuccessBox>
         ) : hasRemovedProject ? (
-          <SuccessBox id="project-removed">The project has been successfully removed.</SuccessBox>
+          <SuccessBox id="project-removed">
+            The project has been successfully removed.
+          </SuccessBox>
         ) : null
       }
     >
       <PageTitle
         icon={<TbFolders />}
         value="Projects"
-        action={<CreateButton to="/dashboard/projects/create">Create a project</CreateButton>}
+        action={
+          <CreateButton to="/dashboard/projects/create">
+            Create a project
+          </CreateButton>
+        }
       />
 
       <Card>
