@@ -1,4 +1,3 @@
-import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { WarningBox } from "~/components/Boxes/WarningBox";
@@ -11,7 +10,6 @@ import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
 import { Typography } from "~/components/Typography";
 import { Li, Ul } from "~/components/Ul";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
-import { Crumbs } from "~/components/Breadcrumbs/types";
 import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
 import { useActionData, Form, useTransition } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
@@ -80,28 +78,10 @@ export default function DeleteProjectPage() {
     ?.filter((up) => up.role === UserRoles.Admin)
     .map((up) => up.user) as Array<User>;
 
-  const crumbs: Crumbs = [
-    {
-      link: "/dashboard",
-      label: "Projects",
-      isRoot: true,
-    },
-    {
-      link: `/dashboard/projects/${project.uuid}`,
-      label: project.name,
-      isProject: true,
-    },
-    {
-      link: `/dashboard/projects/${project.uuid}/delete`,
-      label: "Delete the project",
-    },
-  ];
-
   if (userRole !== UserRoles.Admin) {
     return (
       <DeleteEntityLayout
         user={user}
-        breadcrumb={<BreadCrumbs crumbs={crumbs} />}
         header={
           <Header
             tagline={<TagLine icon={<ProjectIcon />}>PROJECT</TagLine>}
@@ -139,7 +119,6 @@ export default function DeleteProjectPage() {
           title={project.name}
         />
       }
-      breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       error={
         data?.errors &&
         data.errors.backendError && <ErrorBox list={data.errors} />

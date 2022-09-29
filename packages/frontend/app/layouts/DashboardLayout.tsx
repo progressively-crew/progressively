@@ -15,7 +15,6 @@ import { BreadCrumbs } from "~/components/Breadcrumbs";
 export interface DashboardLayoutProps {
   user?: Partial<User>;
   children: React.ReactNode;
-  breadcrumb?: React.ReactNode;
   header?: React.ReactNode;
   subNav?: React.ReactNode;
   status?: React.ReactNode;
@@ -52,7 +51,6 @@ const Grid = styled("div", {
 export const DashboardLayout = ({
   user,
   children,
-  breadcrumb,
   header,
   subNav,
   status,
@@ -71,11 +69,8 @@ export const DashboardLayout = ({
         <div>
           <TopWrapper>
             <Container>
-              <div>
-                <BreadCrumbs crumbs={crumbs} />
-              </div>
               <HStack justifyContent="space-between" height="cta">
-                <div>{breadcrumb}</div>
+                <BreadCrumbs crumbs={crumbs} />
 
                 <UseDropdown user={user} />
               </HStack>

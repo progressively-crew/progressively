@@ -29,7 +29,7 @@ export const handle = {
     const parentMatch = matches[matches.indexOf(match) - 1];
 
     return {
-      link: `/dashboard/projects/${match.params.id}/environments/${match.params.env}/flags/${match.params.flagId}/strategies/${match.params.stratId}/delete`,
+      link: `/dashboard/projects/${match.params.id}/environments/${match.params.env}/flags/${match.params.flagId}/strategies/${match.params.stratId}/edit`,
       label: `Edit ${parentMatch.data.strategy.name}`,
     };
   },
