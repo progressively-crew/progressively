@@ -4,7 +4,9 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
 
   describe("not authenticated", () => {
     beforeEach(() => {
-      cy.visit("/dashboard/projects/1/environments/1/flags/1/scheduling/create");
+      cy.visit(
+        "/dashboard/projects/1/environments/1/flags/1/scheduling/create"
+      );
     });
 
     it("checks that the route is protected", () => {
@@ -16,9 +18,12 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
     describe("user: Jane", () => {
       beforeEach(() => {
         cy.signIn("Jane");
-        cy.visit("/dashboard/projects/1/environments/1/flags/1/scheduling/create", {
-          failOnStatusCode: false,
-        });
+        cy.visit(
+          "/dashboard/projects/1/environments/1/flags/1/scheduling/create",
+          {
+            failOnStatusCode: false,
+          }
+        );
       });
 
       it("shouldnt show anything when Jane tries to visit Marvin s project", () => {
@@ -29,7 +34,9 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
     describe("user: Marvin", () => {
       beforeEach(() => {
         cy.signIn("Marvin");
-        cy.visit("/dashboard/projects/1/environments/1/flags/1/scheduling/create");
+        cy.visit(
+          "/dashboard/projects/1/environments/1/flags/1/scheduling/create"
+        );
 
         cy.injectAxe();
       });
@@ -44,11 +51,16 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
           ["Projects", "/dashboard"],
           ["Project from seeding", "/dashboard/projects/1"],
           ["Production", "/dashboard/projects/1/environments/1"],
-          ["New homepage", "/dashboard/projects/1/environments/1/flags/1/scheduling"],
-          ["Create a scheduling", "/dashboard/projects/1/environments/1/flags/1/scheduling/create"],
+          ["New homepage", "/dashboard/projects/1/environments/1/flags/1"],
+          [
+            "Create a scheduling",
+            "/dashboard/projects/1/environments/1/flags/1/scheduling/create",
+          ],
         ]);
 
-        cy.findByRole("heading", { name: "Create a scheduling" }).should("be.visible");
+        cy.findByRole("heading", { name: "Create a scheduling" }).should(
+          "be.visible"
+        );
 
         cy.contains(
           "You're about to create a scheduling to New homepage in Project from seeding on Production."
@@ -58,12 +70,18 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
       });
 
       it("shows the form layout", () => {
-        cy.findByText("When should the flag change status").should("be.visible");
+        cy.findByText("When should the flag change status").should(
+          "be.visible"
+        );
 
         cy.findByText("What should be the next status").should("be.visible");
-        cy.findByLabelText("What should be the next rollout percentage").should("be.visible");
+        cy.findByLabelText("What should be the next rollout percentage").should(
+          "be.visible"
+        );
 
-        cy.findByRole("button", { name: "Save the schedule" }).should("be.visible");
+        cy.findByRole("button", { name: "Save the schedule" }).should(
+          "be.visible"
+        );
 
         // cy.checkA11y(); axe is yelling because of a missing label while the field is in a fieldset with legend
       });

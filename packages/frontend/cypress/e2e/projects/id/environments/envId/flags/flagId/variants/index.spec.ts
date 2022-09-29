@@ -69,10 +69,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants"
           ["Projects", "/dashboard"],
           ["Project from seeding", "/dashboard/projects/1"],
           ["Production", "/dashboard/projects/1/environments/1"],
-          [
-            "New homepage",
-            "/dashboard/projects/1/environments/1/flags/1/variants",
-          ],
+          ["New homepage", "/dashboard/projects/1/environments/1/flags/1"],
         ]);
 
         cy.findAllByText("New homepage").should("have.length", 2);
@@ -100,10 +97,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants"
           ["Projects", "/dashboard"],
           ["Project from seeding", "/dashboard/projects/1"],
           ["Production", "/dashboard/projects/1/environments/1"],
-          [
-            "With multivariate",
-            "/dashboard/projects/1/environments/1/flags/4/variants",
-          ],
+          ["With multivariate", "/dashboard/projects/1/environments/1/flags/4"],
         ]);
 
         cy.findAllByText("With multivariate").should("have.length", 2);

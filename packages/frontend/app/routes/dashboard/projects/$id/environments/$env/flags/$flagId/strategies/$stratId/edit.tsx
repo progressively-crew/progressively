@@ -19,6 +19,21 @@ import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { useStrategy } from "~/modules/strategies/contexts/useStrategy";
 import { getStrategyMetaTitle } from "~/modules/strategies/services/getStrategyMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
+import { Header } from "~/components/Header";
+import { FlagIcon } from "~/components/Icons/FlagIcon";
+import { TagLine } from "~/components/Tagline";
+import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
+
+export const handle = {
+  breadcrumb: (match: any, matches: any) => {
+    const parentMatch = matches[matches.indexOf(match) - 1];
+
+    return {
+      link: `/dashboard/projects/${match.params.id}/environments/${match.params.env}/flags/${match.params.flagId}/strategies/${match.params.stratId}/delete`,
+      label: `Edit ${parentMatch.data.strategy.name}`,
+    };
+  },
+};
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -88,6 +103,7 @@ export default function StrategyEditPage() {
   const transition = useTransition();
   const { user } = useUser();
   const { strategy } = useStrategy();
+  const { flagEnv } = useFlagEnv();
   const actionData = useActionData<ActionData>();
 
   const [strategyType, setStrategyType] = useState<StrategyRuleType>(
@@ -99,9 +115,15 @@ export default function StrategyEditPage() {
   return (
     <DashboardLayout
       user={user}
-      header={<PageTitle value={`Edit ${strategy.name}`} />}
+      header={
+        <Header
+          tagline={<TagLine icon={<FlagIcon />}>FEATURE FLAG</TagLine>}
+          title={flagEnv.flag.name}
+        />
+      }
       status={actionData?.errors && <ErrorBox list={actionData.errors} />}
     >
+      <PageTitle value={`Edit ${strategy.name}`} />
       <Form method="post">
         <FormGroup>
           <TextInput
