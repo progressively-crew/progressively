@@ -8,12 +8,14 @@ export interface UserDropdownProps {
 
 export const UseDropdown = ({ user }: UserDropdownProps) => {
   return (
-    <Button
-      to="/profile"
-      icon={<Avatar aria-hidden>{user.fullname}</Avatar>}
-      variant="tertiary"
-    >
-      {user.fullname}
-    </Button>
+    <nav aria-label="General">
+      <Button
+        to="/profile"
+        icon={<Avatar aria-hidden>{user.fullname}</Avatar>}
+        variant="tertiary"
+      >
+        {user.fullname}
+      </Button>
+    </nav>
   );
 };
