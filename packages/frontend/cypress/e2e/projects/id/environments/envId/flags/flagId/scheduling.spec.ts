@@ -44,19 +44,31 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
           ["Projects", "/dashboard"],
           ["Project from seeding", "/dashboard/projects/1"],
           ["Production", "/dashboard/projects/1/environments/1"],
-          ["New homepage", "/dashboard/projects/1/environments/1/flags/1/scheduling", false],
+          [
+            "New homepage",
+            "/dashboard/projects/1/environments/1/flags/1/scheduling",
+            false,
+          ],
         ]);
 
         cy.findByRole("link", { name: "Insights" })
           .should("be.visible")
-          .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags/1/insights");
+          .and(
+            "have.attr",
+            "href",
+            "/dashboard/projects/1/environments/1/flags/1/insights"
+          );
 
         cy.findByRole("link", { name: "Scheduling" })
           .should("be.visible")
-          .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags/1/scheduling")
+          .and(
+            "have.attr",
+            "href",
+            "/dashboard/projects/1/environments/1/flags/1/scheduling"
+          )
           .and("have.attr", "aria-current", "page");
 
-        cy.findAllByText("New homepage").should("have.length", 3);
+        cy.findAllByText("New homepage").should("have.length", 2);
         cy.findByRole("heading", { name: "Scheduling" }).should("be.visible");
 
         cy.checkA11y();
@@ -71,11 +83,13 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
           "Progressively | Project from seeding | Production | Flags | New footer | Scheduling"
         );
 
-        cy.findAllByText("New footer").should("have.length", 3);
+        cy.findAllByText("New footer").should("have.length", 2);
         cy.findByRole("heading", { name: "Scheduling" }).should("be.visible");
 
         cy.findByText("No schedule found").should("be.visible");
-        cy.findByText("There are no scheduling for this flag.").should("be.visible");
+        cy.findByText("There are no scheduling for this flag.").should(
+          "be.visible"
+        );
 
         cy.checkA11y();
       });

@@ -69,14 +69,19 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants"
           ["Projects", "/dashboard"],
           ["Project from seeding", "/dashboard/projects/1"],
           ["Production", "/dashboard/projects/1/environments/1"],
-          ["New homepage", "/dashboard/projects/1/environments/1/flags/1/variants"],
+          [
+            "New homepage",
+            "/dashboard/projects/1/environments/1/flags/1/variants",
+          ],
         ]);
 
-        cy.findAllByText("New homepage").should("have.length", 3);
+        cy.findAllByText("New homepage").should("have.length", 2);
         cy.findByRole("heading", { name: "Variants" }).should("be.visible");
 
         cy.findByText("No variants found").should("be.visible");
-        cy.findByText("There are no variants found for this flag.").should("be.visible");
+        cy.findByText("There are no variants found for this flag.").should(
+          "be.visible"
+        );
         cy.findByRole("button", { name: "Add variant" }).should("be.visible");
 
         cy.checkA11y();
@@ -95,10 +100,13 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants"
           ["Projects", "/dashboard"],
           ["Project from seeding", "/dashboard/projects/1"],
           ["Production", "/dashboard/projects/1/environments/1"],
-          ["With multivariate", "/dashboard/projects/1/environments/1/flags/4/variants"],
+          [
+            "With multivariate",
+            "/dashboard/projects/1/environments/1/flags/4/variants",
+          ],
         ]);
 
-        cy.findAllByText("With multivariate").should("have.length", 3);
+        cy.findAllByText("With multivariate").should("have.length", 2);
         cy.findByRole("heading", { name: "Variants" }).should("be.visible");
 
         cy.findByRole("button", { name: "Add variant" }).should("be.visible");
