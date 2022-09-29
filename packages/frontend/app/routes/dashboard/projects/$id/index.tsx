@@ -1,4 +1,3 @@
-import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { Header } from "~/components/Header";
@@ -10,7 +9,6 @@ import { Typography } from "~/components/Typography";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { MetaFunction } from "@remix-run/node";
 import { useSearchParams } from "@remix-run/react";
-import { Crumbs } from "~/components/Breadcrumbs/types";
 import { EnvList } from "~/modules/environments/components/EnvList";
 import { Card, CardContent } from "~/components/Card";
 import { TagLine } from "~/components/Tagline";
@@ -36,25 +34,11 @@ export default function ProjectDetailPage() {
   const newEnvId = searchParams.get("newEnvId") || undefined;
   const envRemoved = searchParams.get("envRemoved") || undefined;
 
-  const crumbs: Crumbs = [
-    {
-      link: "/dashboard",
-      label: "Projects",
-      isRoot: true,
-    },
-    {
-      link: `/dashboard/projects/${project.uuid}`,
-      label: project.name,
-      isProject: true,
-    },
-  ];
-
   const hasEnvironments = project.environments.length > 0;
 
   return (
     <DashboardLayout
       user={user}
-      breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
           tagline={<TagLine icon={<ProjectIcon />}>PROJECT</TagLine>}

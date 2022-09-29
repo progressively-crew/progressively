@@ -3,8 +3,6 @@ import { Form, useLoaderData, useSearchParams } from "@remix-run/react";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { WarningBox } from "~/components/Boxes/WarningBox";
-import { BreadCrumbs } from "~/components/Breadcrumbs";
-import { Crumbs } from "~/components/Breadcrumbs/types";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { Card, CardContent } from "~/components/Card";
 import { EmptyState } from "~/components/EmptyState";
@@ -97,35 +95,11 @@ export default function SchedulingOfFlag() {
 
   const isFlagActivated = flagEnv.status === FlagStatus.ACTIVATED;
 
-  const crumbs: Crumbs = [
-    {
-      link: "/dashboard",
-      label: "Projects",
-      isRoot: true,
-    },
-    {
-      link: `/dashboard/projects/${project.uuid}`,
-      label: project.name,
-      isProject: true,
-    },
-    {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}`,
-      label: environment.name,
-      isEnv: true,
-    },
-    {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/scheduling`,
-      label: currentFlag.name,
-      isFlag: true,
-    },
-  ];
-
   const hasScheduling = scheduling.length > 0;
 
   return (
     <DashboardLayout
       user={user}
-      breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
           tagline={<TagLine icon={<FlagIcon />}>FEATURE FLAG</TagLine>}

@@ -1,4 +1,3 @@
-import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { getFlagsByProjectEnv } from "~/modules/flags/services/getFlagsByProjectEnv";
 import { FlagEnv } from "~/modules/flags/types";
 import { getSession } from "~/sessions";
@@ -10,7 +9,6 @@ import { EmptyState } from "~/components/EmptyState";
 import { Typography } from "~/components/Typography";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { FlagList } from "~/modules/flags/components/FlagList";
-import { Crumbs } from "~/components/Breadcrumbs/types";
 import { EnvNavBar } from "~/modules/environments/components/EnvNavbar";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
@@ -80,30 +78,11 @@ export default function FlagsByEnvPage() {
   const newFlagId = searchParams.get("newFlagId") || undefined;
   const isFlagRemoved = searchParams.get("flagRemoved") || undefined;
 
-  const crumbs: Crumbs = [
-    {
-      link: "/dashboard",
-      label: "Projects",
-      isRoot: true,
-    },
-    {
-      link: `/dashboard/projects/${project.uuid}`,
-      label: project.name,
-      isProject: true,
-    },
-    {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}`,
-      label: environment.name,
-      isEnv: true,
-    },
-  ];
-
   const hasFlags = flagsByEnv.length > 0;
 
   return (
     <DashboardLayout
       user={user}
-      breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
           tagline={<TagLine icon={<EnvIcon />}>ENVIRONMENT</TagLine>}

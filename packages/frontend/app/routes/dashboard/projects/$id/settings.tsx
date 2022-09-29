@@ -1,5 +1,4 @@
 import { AiOutlineSetting } from "react-icons/ai";
-import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { Header } from "~/components/Header";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
@@ -15,7 +14,6 @@ import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { Stack } from "~/components/Stack";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { Spacer } from "~/components/Spacer";
-import { Crumbs } from "~/components/Breadcrumbs/types";
 import { HideMobile } from "~/components/HideMobile";
 import { MetaFunction, ActionFunction } from "@remix-run/node";
 import { useActionData, useTransition, Form } from "@remix-run/react";
@@ -44,7 +42,10 @@ interface ActionData {
   removedCount?: number;
 }
 
-export const action: ActionFunction = async ({ request, params }): Promise<ActionData | null> => {
+export const action: ActionFunction = async ({
+  request,
+  params,
+}): Promise<ActionData | null> => {
   const session = await getSession(request.headers.get("Cookie"));
   const formData = await request.formData();
 
@@ -79,24 +80,9 @@ export default function SettingsPage() {
   const data = useActionData<ActionData>();
   const transition = useTransition();
 
-  const crumbs: Crumbs = [
-    {
-      link: "/dashboard",
-      label: "Projects",
-      isRoot: true,
-    },
-    {
-      link: `/dashboard/projects/${project.uuid}`,
-      label: project.name,
-      isProject: true,
-      forceNotCurrent: true,
-    },
-  ];
-
   return (
     <DashboardLayout
       user={user}
-      breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
           tagline={<TagLine icon={<ProjectIcon />}>PROJECT</TagLine>}
@@ -105,11 +91,17 @@ export default function SettingsPage() {
       }
       subNav={
         <HorizontalNav label={`Project related`}>
-          <NavItem to={`/dashboard/projects/${project.uuid}`} icon={<EnvIcon />}>
+          <NavItem
+            to={`/dashboard/projects/${project.uuid}`}
+            icon={<EnvIcon />}
+          >
             Environments
           </NavItem>
 
-          <NavItem to={`/dashboard/projects/${project.uuid}/settings`} icon={<AiOutlineSetting />}>
+          <NavItem
+            to={`/dashboard/projects/${project.uuid}/settings`}
+            icon={<AiOutlineSetting />}
+          >
             Settings
           </NavItem>
         </HorizontalNav>
@@ -127,7 +119,10 @@ export default function SettingsPage() {
                   action={
                     userRole === UserRoles.Admin && (
                       <HStack spacing={4}>
-                        <CreateButton small to={`/dashboard/projects/${project.uuid}/add-member`}>
+                        <CreateButton
+                          small
+                          to={`/dashboard/projects/${project.uuid}/add-member`}
+                        >
                           Add member
                         </CreateButton>
 
@@ -154,7 +149,8 @@ export default function SettingsPage() {
                 {data?.success && (
                   <>
                     <SuccessBox id="member-deleted">
-                      {data?.removedCount} user have been successfully removed from the project.
+                      {data?.removedCount} user have been successfully removed
+                      from the project.
                     </SuccessBox>
                     <Spacer size={4} />
                   </>
@@ -178,21 +174,27 @@ export default function SettingsPage() {
                   title="Danger zone"
                   description={
                     <Typography>
-                      You can delete a project at any time, but you {`won’t`} be able to access its
-                      environments and all the related flags will be removed and be falsy in your
-                      applications. Be sure to know what {`you're`} doing before removing a project.
+                      You can delete a project at any time, but you {`won’t`} be
+                      able to access its environments and all the related flags
+                      will be removed and be falsy in your applications. Be sure
+                      to know what {`you're`} doing before removing a project.
                     </Typography>
                   }
                 />
 
                 <div>
-                  <DeleteButton to={`/dashboard/projects/${project.uuid}/delete`}>
+                  <DeleteButton
+                    to={`/dashboard/projects/${project.uuid}/delete`}
+                  >
                     <span>
                       <span aria-hidden>
-                        Delete <HideMobile>{`"${project.name}"`} forever</HideMobile>
+                        Delete{" "}
+                        <HideMobile>{`"${project.name}"`} forever</HideMobile>
                       </span>
 
-                      <VisuallyHidden>Delete {`"${project.name}"`} forever</VisuallyHidden>
+                      <VisuallyHidden>
+                        Delete {`"${project.name}"`} forever
+                      </VisuallyHidden>
                     </span>
                   </DeleteButton>
                 </div>

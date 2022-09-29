@@ -1,4 +1,3 @@
-import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { createEnv } from "~/modules/environments/services/createEnv";
 import {
@@ -13,7 +12,6 @@ import { TextInput } from "~/components/Fields/TextInput";
 import { Typography } from "~/components/Typography";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
-import { Crumbs } from "~/components/Breadcrumbs/types";
 import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
 import { useActionData, Form, useTransition } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
@@ -80,27 +78,9 @@ export default function CreateEnvironmentPage() {
   const { user } = useUser();
   const errors = data?.errors;
 
-  const crumbs: Crumbs = [
-    {
-      link: "/dashboard",
-      label: "Projects",
-      isRoot: true,
-    },
-    {
-      link: `/dashboard/projects/${project.uuid}`,
-      label: project.name,
-      isProject: true,
-    },
-    {
-      link: `/dashboard/projects/${project.uuid}/environments/create`,
-      label: "Create an environment",
-    },
-  ];
-
   return (
     <DashboardLayout
       user={user}
-      breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
           tagline={<TagLine icon={<ProjectIcon />}>PROJECT</TagLine>}

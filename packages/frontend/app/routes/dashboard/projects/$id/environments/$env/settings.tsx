@@ -1,4 +1,3 @@
-import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { Header } from "~/components/Header";
 import { Section, SectionHeader } from "~/components/Section";
@@ -6,7 +5,6 @@ import { Typography } from "~/components/Typography";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { UserRoles } from "~/modules/projects/types";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
-import { Crumbs } from "~/components/Breadcrumbs/types";
 import { HideMobile } from "~/components/HideMobile";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { EnvNavBar } from "~/modules/environments/components/EnvNavbar";
@@ -37,29 +35,9 @@ export default function EnvSettingsPage() {
   const { project, userRole } = useProject();
   const { environment } = useEnvironment();
 
-  const crumbs: Crumbs = [
-    {
-      link: "/dashboard",
-      label: "Projects",
-      isRoot: true,
-    },
-    {
-      link: `/dashboard/projects/${project.uuid}`,
-      label: project.name,
-      isProject: true,
-    },
-    {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}`,
-      label: environment.name,
-      forceNotCurrent: true,
-      isEnv: true,
-    },
-  ];
-
   return (
     <DashboardLayout
       user={user}
-      breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
           title={environment.name}

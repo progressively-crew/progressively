@@ -1,18 +1,11 @@
-import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { WarningBox } from "~/components/Boxes/WarningBox";
 import { getSession } from "~/sessions";
 import { Button } from "~/components/Buttons/Button";
 import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
-import { Crumbs } from "~/components/Breadcrumbs/types";
 import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
-import {
-  useActionData,
-  Form,
-  useTransition,
-  useParams,
-} from "@remix-run/react";
+import { useActionData, Form, useTransition } from "@remix-run/react";
 import { deleteSchedule } from "~/modules/scheduling/services/deleteSchedule";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { useUser } from "~/modules/user/contexts/useUser";
@@ -79,7 +72,6 @@ export const action: ActionFunction = async ({
 
 export default function DeleteSchedulePage() {
   const transition = useTransition();
-  const params = useParams();
   const data = useActionData<ActionData>();
   const { project } = useProject();
   const { user } = useUser();
@@ -88,37 +80,9 @@ export default function DeleteSchedulePage() {
 
   const currentFlag = flagEnv.flag;
 
-  const crumbs: Crumbs = [
-    {
-      link: "/dashboard",
-      label: "Projects",
-      isRoot: true,
-    },
-    {
-      link: `/dashboard/projects/${project.uuid}`,
-      label: project.name,
-      isProject: true,
-    },
-    {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}`,
-      label: environment.name,
-      isEnv: true,
-    },
-    {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`,
-      label: currentFlag.name,
-      isFlag: true,
-    },
-    {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/scheduling/${params.scheduleId}/delete`,
-      label: "Delete a schedule",
-    },
-  ];
-
   return (
     <DeleteEntityLayout
       user={user}
-      breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
           tagline={<TagLine icon={<FlagIcon />}>FEATURE FLAG</TagLine>}

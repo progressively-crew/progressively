@@ -1,7 +1,5 @@
 import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
 import { useActionData, Form, useTransition } from "@remix-run/react";
-import { BreadCrumbs } from "~/components/Breadcrumbs";
-import { Crumbs } from "~/components/Breadcrumbs/types";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { FormGroup } from "~/components/Fields/FormGroup";
@@ -96,32 +94,9 @@ export default function CreateFlagPage() {
 
   const errors = data?.errors;
 
-  const crumbs: Crumbs = [
-    {
-      link: "/dashboard",
-      label: "Projects",
-      isRoot: true,
-    },
-    {
-      link: `/dashboard/projects/${project.uuid}`,
-      label: project.name,
-      isProject: true,
-    },
-    {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}`,
-      label: environment.name,
-      isEnv: true,
-    },
-    {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/create`,
-      label: "Create a feature flag",
-    },
-  ];
-
   return (
     <DashboardLayout
       user={user}
-      breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
           tagline={<TagLine icon={<EnvIcon />}>ENVIRONMENT</TagLine>}
