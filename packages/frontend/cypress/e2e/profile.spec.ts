@@ -23,7 +23,9 @@ describe("/profile", () => {
       cy.title().should("eq", "Progressively | Profile");
 
       cy.findByRole("heading", { name: "My profile" }).should("be.visible");
-      cy.findByRole("heading", { name: "Change password" }).should("be.visible");
+      cy.findByRole("heading", { name: "Change password" }).should(
+        "be.visible"
+      );
 
       cy.findByLabelText("New password").should("be.visible");
       cy.findByLabelText("Confirmation password").should("be.visible");
@@ -83,14 +85,14 @@ describe("/profile", () => {
       cy.findByLabelText("Email").type("marvin.frachet@something.com");
       cy.findByLabelText("Password").type("password1");
       cy.findByRole("button", { name: "Sign in" }).click();
-      cy.findAllByText("Project from seeding").should("have.length", 2);
+      cy.findByText("Project from seeding").should("be.visible");
 
       // Connect with a user that has NOT changed their password
       cy.visit("/signin");
       cy.findByLabelText("Email").type("john.doe@gmail.com");
       cy.findByLabelText("Password").type("password");
       cy.findByRole("button", { name: "Sign in" }).click();
-      cy.findAllByText("Project from seeding").should("have.length", 2);
+      cy.findByText("Project from seeding").should("be.visible", 2);
     });
   });
 });

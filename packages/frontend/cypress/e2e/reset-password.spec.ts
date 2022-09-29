@@ -57,7 +57,9 @@ describe("/reset-password", () => {
       cy.findByLabelText("Confirmation password").type("password1");
       cy.findByRole("button", { name: "Change password" }).click();
 
-      cy.get(".error-box").should("have.focus").and("contain.text", "An information is missing");
+      cy.get(".error-box")
+        .should("have.focus")
+        .and("contain.text", "An information is missing");
     });
   });
 
@@ -71,7 +73,9 @@ describe("/reset-password", () => {
       cy.findByLabelText("Confirmation password").type("password1");
       cy.findByRole("button", { name: "Change password" }).click();
 
-      cy.get(".error-box").should("have.focus").and("contain.text", "The token is missing");
+      cy.get(".error-box")
+        .should("have.focus")
+        .and("contain.text", "The token is missing");
     });
   });
 
@@ -87,21 +91,24 @@ describe("/reset-password", () => {
 
       cy.get(".success-box")
         .should("have.focus")
-        .and("contain.text", "The password has been successfully reset. You can now connect.");
+        .and(
+          "contain.text",
+          "The password has been successfully reset. You can now connect."
+        );
 
       // Connect the person with a changed password
       cy.visit("/signin");
       cy.findByLabelText("Email").type("john.doe@gmail.com");
       cy.findByLabelText("Password").type("password1");
       cy.findByRole("button", { name: "Sign in" }).click();
-      cy.findAllByText("Project from seeding").should("have.length", 2);
+      cy.findByText("Project from seeding").should("be.visible");
 
       // Connect with a user that has NOT changed their password
       cy.visit("/signin");
       cy.findByLabelText("Email").type("marvin.frachet@something.com");
       cy.findByLabelText("Password").type("password");
       cy.findByRole("button", { name: "Sign in" }).click();
-      cy.findAllByText("Project from seeding").should("have.length", 2);
+      cy.findByText("Project from seeding").should("be.visible");
     });
   });
 });
