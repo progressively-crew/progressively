@@ -17,6 +17,15 @@ import { useUser } from "~/modules/user/contexts/useUser";
 import { PageTitle } from "~/components/PageTitle";
 import { Card, CardContent } from "~/components/Card";
 
+export const handle = {
+  breadcrumb: () => {
+    return {
+      link: "/dashboard/projects/create",
+      label: "Create a project",
+    };
+  },
+};
+
 export const meta: MetaFunction = () => {
   return {
     title: "Progressively | Create a project",

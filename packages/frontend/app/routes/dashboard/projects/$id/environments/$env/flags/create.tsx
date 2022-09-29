@@ -25,6 +25,15 @@ import { Header } from "~/components/Header";
 import { EnvIcon } from "~/components/Icons/EnvIcon";
 import { TagLine } from "~/components/Tagline";
 
+export const handle = {
+  breadcrumb: (match: { params: any }) => {
+    return {
+      link: `/dashboard/projects/${match.params.id}/environments/${match.params.env}/flags/create`,
+      label: "Create a feature flag",
+    };
+  },
+};
+
 export const meta: MetaFunction = ({ params, parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
   const envName = getEnvMetaTitle(parentsData, params.env);

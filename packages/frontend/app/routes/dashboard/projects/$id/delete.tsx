@@ -23,6 +23,15 @@ import { Header } from "~/components/Header";
 import { ProjectIcon } from "~/components/Icons/ProjectIcon";
 import { TagLine } from "~/components/Tagline";
 
+export const handle = {
+  breadcrumb: (match: { params: any }) => {
+    return {
+      link: `/dashboard/projects/${match.params.id}/delete`,
+      label: "Delete the project",
+    };
+  },
+};
+
 export const meta: MetaFunction = ({ parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
 

@@ -1,5 +1,5 @@
 import { LoaderFunction } from "@remix-run/node";
-import { Outlet, useLoaderData } from "@remix-run/react";
+import { Outlet, useLoaderData, useMatches } from "@remix-run/react";
 import { authGuard } from "~/modules/auth/services/auth-guard";
 import { ProjectsProvider } from "~/modules/projects/contexts/ProjectsProvider";
 import { getProjects } from "~/modules/projects/services/getProjects";
@@ -13,7 +13,19 @@ interface LoaderData {
   projects: Array<Project>;
 }
 
-export const loader: LoaderFunction = async ({ request }): Promise<LoaderData> => {
+export const handle = {
+  breadcrumb: () => {
+    return {
+      link: `/dashboard`,
+      label: "Projects",
+      isRoot: true,
+    };
+  },
+};
+
+export const loader: LoaderFunction = async ({
+  request,
+}): Promise<LoaderData> => {
   const user = await authGuard(request);
 
   const session = await getSession(request.headers.get("Cookie"));

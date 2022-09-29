@@ -9,6 +9,8 @@ import { styled } from "~/stitches.config";
 import { HStack } from "~/components/HStack";
 import { UseDropdown } from "~/modules/user/components/UserDropdown";
 import { Stack } from "~/components/Stack";
+import { useMatches } from "@remix-run/react";
+import { BreadCrumbs } from "~/components/Breadcrumbs";
 
 export interface DashboardLayoutProps {
   user?: Partial<User>;
@@ -55,6 +57,12 @@ export const DashboardLayout = ({
   subNav,
   status,
 }: DashboardLayoutProps) => {
+  const matches = useMatches();
+
+  const crumbs = matches
+    .filter((match) => match.handle && match.handle.breadcrumb)
+    .map((match) => match.handle.breadcrumb(match, matches));
+
   return (
     <NavProvider>
       <InertWhenNavOpened>
@@ -63,6 +71,9 @@ export const DashboardLayout = ({
         <div>
           <TopWrapper>
             <Container>
+              <div>
+                <BreadCrumbs crumbs={crumbs} />
+              </div>
               <HStack justifyContent="space-between" height="cta">
                 <div>{breadcrumb}</div>
 

@@ -10,6 +10,16 @@ interface LoaderData {
   project: Project;
 }
 
+export const handle = {
+  breadcrumb: (match: { data: LoaderData; params: any }) => {
+    return {
+      link: `/dashboard/projects/${match.params.id}`,
+      label: match.data.project.name,
+      isProject: true,
+    };
+  },
+};
+
 export const loader: LoaderFunction = async ({
   request,
   params,

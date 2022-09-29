@@ -25,6 +25,15 @@ import { Header } from "~/components/Header";
 import { ProjectIcon } from "~/components/Icons/ProjectIcon";
 import { TagLine } from "~/components/Tagline";
 
+export const handle = {
+  breadcrumb: (match: { params: any }) => {
+    return {
+      link: `/dashboard/projects/${match.params.id}/environments/create`,
+      label: "Create an environment",
+    };
+  },
+};
+
 export const meta: MetaFunction = ({ parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
 

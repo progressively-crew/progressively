@@ -27,6 +27,15 @@ import { Header } from "~/components/Header";
 import { EnvIcon } from "~/components/Icons/EnvIcon";
 import { TagLine } from "~/components/Tagline";
 
+export const handle = {
+  breadcrumb: (match: { params: any }) => {
+    return {
+      link: `/dashboard/projects/${match.params.id}/environments/${match.params.env}/delete`,
+      label: "Delete the environment",
+    };
+  },
+};
+
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
   const envName = getEnvMetaTitle(parentsData, params.env);
