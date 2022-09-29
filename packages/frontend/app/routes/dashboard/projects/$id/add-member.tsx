@@ -1,4 +1,3 @@
-import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { UserRoles } from "~/modules/projects/types";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
@@ -14,7 +13,6 @@ import { Typography } from "~/components/Typography";
 import { Li, Ul } from "~/components/Ul";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
-import { Crumbs } from "~/components/Breadcrumbs/types";
 import { MetaFunction, ActionFunction } from "@remix-run/node";
 import { useActionData, Form, useTransition } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
@@ -24,6 +22,15 @@ import { PageTitle } from "~/components/PageTitle";
 import { Header } from "~/components/Header";
 import { ProjectIcon } from "~/components/Icons/ProjectIcon";
 import { TagLine } from "~/components/Tagline";
+
+export const handle = {
+  breadcrumb: (match: { params: any }) => {
+    return {
+      link: `/dashboard/projects/${match.params.id}/add-member`,
+      label: "Add member",
+    };
+  },
+};
 
 export const meta: MetaFunction = ({ parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -81,28 +88,10 @@ export default function CreateProjectPage() {
 
   const errors = data?.errors;
 
-  const crumbs: Crumbs = [
-    {
-      link: "/dashboard",
-      label: "Projects",
-      isRoot: true,
-    },
-    {
-      link: `/dashboard/projects/${project.uuid}`,
-      label: project.name,
-      isProject: true,
-    },
-    {
-      link: `/dashboard/projects/${project.uuid}/add-member`,
-      label: "Add member",
-    },
-  ];
-
   if (userRole !== UserRoles.Admin) {
     return (
       <DashboardLayout
         user={user}
-        breadcrumb={<BreadCrumbs crumbs={crumbs} />}
         header={
           <Header
             tagline={<TagLine icon={<ProjectIcon />}>PROJECT</TagLine>}
@@ -139,7 +128,6 @@ export default function CreateProjectPage() {
   return (
     <DashboardLayout
       user={user}
-      breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
           tagline={<TagLine icon={<ProjectIcon />}>PROJECT</TagLine>}

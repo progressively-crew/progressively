@@ -9,8 +9,6 @@ import { useEffect, useRef } from "react";
 import { AiOutlineAppstore } from "react-icons/ai";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
-import { BreadCrumbs } from "~/components/Breadcrumbs";
-import { Crumbs } from "~/components/Breadcrumbs/types";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { Card, CardContent } from "~/components/Card";
 import { EmptyState } from "~/components/EmptyState";
@@ -141,29 +139,6 @@ export default function VariantsOfFlag() {
 
   const isFlagActivated = flagEnv.status === FlagStatus.ACTIVATED;
 
-  const crumbs: Crumbs = [
-    {
-      link: "/dashboard",
-      label: "Projects",
-      isRoot: true,
-    },
-    {
-      link: `/dashboard/projects/${project.uuid}`,
-      label: project.name,
-      isProject: true,
-    },
-    {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}`,
-      label: environment.name,
-      isEnv: true,
-    },
-    {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/variants`,
-      label: currentFlag.name,
-      isFlag: true,
-    },
-  ];
-
   const hasVariants = variants.length > 0;
   const remainingPercentage = getRemainingPercentage(variants);
 
@@ -176,7 +151,6 @@ export default function VariantsOfFlag() {
   return (
     <DashboardLayout
       user={user}
-      breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
           tagline={<TagLine icon={<FlagIcon />}>FEATURE FLAG</TagLine>}

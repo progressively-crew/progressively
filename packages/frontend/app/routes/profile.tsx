@@ -23,8 +23,6 @@ import { getSession } from "~/sessions";
 import { Card, CardContent } from "~/components/Card";
 import { PageTitle } from "~/components/PageTitle";
 import { UserIcon } from "~/components/Icons/UserIcon";
-import { Crumbs } from "~/components/Breadcrumbs/types";
-import { BreadCrumbs } from "~/components/Breadcrumbs";
 
 export const meta: MetaFunction = () => {
   return {
@@ -96,18 +94,9 @@ export default function ProfilePage() {
   const passwordUpdated = data?.passwordUpdated;
   const errors = data?.errors;
 
-  const crumbs: Crumbs = [
-    {
-      link: "/dashboard",
-      label: "Projects",
-      isRoot: true,
-    },
-  ];
-
   return (
     <DashboardLayout
       user={user}
-      breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       status={
         errors && Object.keys(errors).length > 0 ? (
           <ErrorBox list={errors} />

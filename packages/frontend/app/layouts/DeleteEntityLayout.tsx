@@ -7,7 +7,6 @@ import { DashboardLayout } from "./DashboardLayout";
 export interface DeleteEntityLayoutProps {
   user: User;
   children: React.ReactNode;
-  breadcrumb?: React.ReactNode;
   header: React.ReactNode;
   error?: React.ReactNode;
   confirmAction?: React.ReactNode;
@@ -31,7 +30,6 @@ const Wrapper = styled("div", {
 
 export const DeleteEntityLayout = ({
   user,
-  breadcrumb,
   header,
   children,
   error,
@@ -39,7 +37,7 @@ export const DeleteEntityLayout = ({
   cancelAction,
 }: DeleteEntityLayoutProps) => {
   return (
-    <DashboardLayout user={user} header={header} breadcrumb={breadcrumb}>
+    <DashboardLayout user={user} header={header}>
       <Wrapper>
         <Section>
           {error}

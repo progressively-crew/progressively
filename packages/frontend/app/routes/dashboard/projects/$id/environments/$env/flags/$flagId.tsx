@@ -9,6 +9,16 @@ interface LoaderData {
   flagEnv: FlagEnv;
 }
 
+export const handle = {
+  breadcrumb: (match: { data: LoaderData; params: any }) => {
+    return {
+      link: `/dashboard/projects/${match.params.id}/environments/${match.params.env}/flags/${match.params.flagId}`,
+      label: match.data.flagEnv.flag.name,
+      isFlag: true,
+    };
+  },
+};
+
 export const loader: LoaderFunction = async ({
   request,
   params,

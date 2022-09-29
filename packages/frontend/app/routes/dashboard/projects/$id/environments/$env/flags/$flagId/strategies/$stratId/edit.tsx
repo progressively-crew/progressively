@@ -5,25 +5,35 @@ import { validateStrategyForm } from "~/modules/strategies/validators/validateSt
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { StrategyCreateDTO } from "~/modules/strategies/types";
 import { editStrategy } from "~/modules/strategies/services/editStrategy";
-import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { StrategyAudience } from "~/modules/strategies/components/StrategyAudience";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { TextInput } from "~/components/Fields/TextInput";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
-import { Crumbs } from "~/components/Breadcrumbs/types";
 import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
 import { useActionData, Form } from "@remix-run/react";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { useUser } from "~/modules/user/contexts/useUser";
-import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
-import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
-import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { useStrategy } from "~/modules/strategies/contexts/useStrategy";
 import { getStrategyMetaTitle } from "~/modules/strategies/services/getStrategyMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
+import { Header } from "~/components/Header";
+import { FlagIcon } from "~/components/Icons/FlagIcon";
+import { TagLine } from "~/components/Tagline";
+import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
+
+export const handle = {
+  breadcrumb: (match: any, matches: any) => {
+    const parentMatch = matches[matches.indexOf(match) - 1];
+
+    return {
+      link: `/dashboard/projects/${match.params.id}/environments/${match.params.env}/flags/${match.params.flagId}/strategies/${match.params.stratId}/edit`,
+      label: `Edit ${parentMatch.data.strategy.name}`,
+    };
+  },
+};
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -54,13 +64,17 @@ export const action: ActionFunction = async ({
   }
 
   const strategyName = formData.get("strategy-name") as string;
-  const strategyType = formData.get("strategy-type") as StrategyCreateDTO["strategyRuleType"];
+  const strategyType = formData.get(
+    "strategy-type"
+  ) as StrategyCreateDTO["strategyRuleType"];
 
   const fieldName = (formData.get("field-name") as string) || undefined;
   const fieldValue = (formData.get("field-value") as string) || undefined;
 
   const fieldComparator =
-    (formData.get("field-comparator") as StrategyCreateDTO["fieldComparator"]) || undefined;
+    (formData.get(
+      "field-comparator"
+    ) as StrategyCreateDTO["fieldComparator"]) || undefined;
 
   const strategy: StrategyCreateDTO = {
     name: strategyName,
@@ -88,53 +102,28 @@ export const action: ActionFunction = async ({
 export default function StrategyEditPage() {
   const transition = useTransition();
   const { user } = useUser();
-  const { project } = useProject();
-  const { flagEnv } = useFlagEnv();
   const { strategy } = useStrategy();
+  const { flagEnv } = useFlagEnv();
   const actionData = useActionData<ActionData>();
 
-  const [strategyType, setStrategyType] = useState<StrategyRuleType>(strategy.strategyRuleType);
-
-  const { environment } = useEnvironment();
-
-  const currentFlag = flagEnv.flag;
-
-  const crumbs: Crumbs = [
-    {
-      link: "/dashboard",
-      label: "Projects",
-      isRoot: true,
-    },
-    {
-      link: `/dashboard/projects/${project.uuid}`,
-      label: project.name,
-      isProject: true,
-    },
-    {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}`,
-      label: environment.name,
-      isEnv: true,
-    },
-    {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`,
-      label: currentFlag.name,
-      isFlag: true,
-    },
-    {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/${strategy.uuid}/edit`,
-      label: `Edit ${strategy.name}`,
-    },
-  ];
+  const [strategyType, setStrategyType] = useState<StrategyRuleType>(
+    strategy.strategyRuleType
+  );
 
   const errors = actionData?.errors || {};
 
   return (
     <DashboardLayout
       user={user}
-      breadcrumb={<BreadCrumbs crumbs={crumbs} />}
-      header={<PageTitle value={`Edit ${strategy.name}`} />}
+      header={
+        <Header
+          tagline={<TagLine icon={<FlagIcon />}>FEATURE FLAG</TagLine>}
+          title={flagEnv.flag.name}
+        />
+      }
       status={actionData?.errors && <ErrorBox list={actionData.errors} />}
     >
+      <PageTitle value={`Edit ${strategy.name}`} />
       <Form method="post">
         <FormGroup>
           <TextInput

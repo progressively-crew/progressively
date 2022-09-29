@@ -1,4 +1,3 @@
-import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { FlagStatus } from "~/modules/flags/types";
 import { getSession } from "~/sessions";
@@ -8,7 +7,6 @@ import { getFlagHits } from "~/modules/flags/services/getFlagHits";
 import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
 import { BigStat } from "~/components/BigStat";
 import { styled } from "~/stitches.config";
-import { Crumbs } from "~/components/Breadcrumbs/types";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
 import { TagLine } from "~/components/Tagline";
@@ -117,9 +115,7 @@ export const loader: LoaderFunction = async ({
     }
   }
 
-  const organizedHits = [...mapOfHits].sort(([d1], [d2]) =>
-    d1 > d2 ? 1 : -1
-  );
+  const organizedHits = [...mapOfHits].sort(([d1], [d2]) => (d1 > d2 ? 1 : -1));
 
   return {
     hits: hitsPerFlags,
@@ -155,30 +151,6 @@ export default function FlagInsights() {
   const currentFlag = flagEnv.flag;
   const isFlagActivated = flagEnv.status === FlagStatus.ACTIVATED;
 
-  const crumbs: Crumbs = [
-    {
-      link: "/dashboard",
-      label: "Projects",
-      isRoot: true,
-    },
-    {
-      link: `/dashboard/projects/${project.uuid}`,
-      label: project.name,
-      isProject: true,
-    },
-    {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}`,
-      label: environment.name,
-      isEnv: true,
-    },
-    {
-      link: `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`,
-      label: currentFlag.name,
-      isFlag: true,
-      forceNotCurrent: true,
-    },
-  ];
-
   let allCount = 0;
   const hitNode = hits.map((hit) => {
     const count = hit.hits.reduce((acc, curr) => acc + curr._count, 0);
@@ -197,7 +169,6 @@ export default function FlagInsights() {
   return (
     <DashboardLayout
       user={user}
-      breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
         <Header
           tagline={<TagLine icon={<FlagIcon />}>FEATURE FLAG</TagLine>}
