@@ -8,7 +8,7 @@ export interface FlagTypeBadgeProps {
 export const FlagTypeBadge = ({ type }: FlagTypeBadgeProps) => {
   if (type === FlagType.RELEASE) {
     return (
-      <Tag color="apollo" background="releaseBg">
+      <Tag color="apollo" background="releaseBg" small>
         Release
       </Tag>
     );
@@ -16,7 +16,7 @@ export const FlagTypeBadge = ({ type }: FlagTypeBadgeProps) => {
 
   if (type === FlagType.EXPERIMENT) {
     return (
-      <Tag color="apollo" background="experimentBg">
+      <Tag color="apollo" background="experimentBg" small>
         Experiment
       </Tag>
     );
@@ -24,7 +24,7 @@ export const FlagTypeBadge = ({ type }: FlagTypeBadgeProps) => {
 
   if (type === FlagType.PERMISSION) {
     return (
-      <Tag color="apollo" background="permissionBg">
+      <Tag color="apollo" background="permissionBg" small>
         Permission
       </Tag>
     );
@@ -32,7 +32,7 @@ export const FlagTypeBadge = ({ type }: FlagTypeBadgeProps) => {
 
   if (type === FlagType.KILL_SWITCH) {
     return (
-      <Tag color="apollo" background="killSwitchBg">
+      <Tag color="apollo" background="killSwitchBg" small>
         Kill switch
       </Tag>
     );

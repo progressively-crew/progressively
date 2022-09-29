@@ -1,5 +1,10 @@
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
-import { useActionData, useLoaderData, Form, useTransition } from "@remix-run/react";
+import {
+  useActionData,
+  useLoaderData,
+  Form,
+  useTransition,
+} from "@remix-run/react";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { FormGroup } from "~/components/Fields/FormGroup";
@@ -18,6 +23,8 @@ import { getSession } from "~/sessions";
 import { Card, CardContent } from "~/components/Card";
 import { PageTitle } from "~/components/PageTitle";
 import { UserIcon } from "~/components/Icons/UserIcon";
+import { Crumbs } from "~/components/Breadcrumbs/types";
+import { BreadCrumbs } from "~/components/Breadcrumbs";
 
 export const meta: MetaFunction = () => {
   return {
@@ -34,14 +41,17 @@ interface ActionData {
   };
 }
 
-export const action: ActionFunction = async ({ request }): Promise<ActionData> => {
+export const action: ActionFunction = async ({
+  request,
+}): Promise<ActionData> => {
   const formData = await request.formData();
 
   const password = formData.get("password")?.toString();
   const confirmationPassword = formData.get("confirmationPassword")?.toString();
 
   const passwordError = validatePassword(password);
-  const confirmationPasswordError = validateConfirmationPassword(confirmationPassword);
+  const confirmationPasswordError =
+    validateConfirmationPassword(confirmationPassword);
 
   if (passwordError || confirmationPasswordError) {
     return {
@@ -71,7 +81,9 @@ interface LoaderData {
   user: User;
 }
 
-export const loader: LoaderFunction = async ({ request }): Promise<LoaderData | Response> => {
+export const loader: LoaderFunction = async ({
+  request,
+}): Promise<LoaderData | Response> => {
   const user = await authGuard(request);
 
   return { user };
@@ -84,14 +96,25 @@ export default function ProfilePage() {
   const passwordUpdated = data?.passwordUpdated;
   const errors = data?.errors;
 
+  const crumbs: Crumbs = [
+    {
+      link: "/dashboard",
+      label: "Projects",
+      isRoot: true,
+    },
+  ];
+
   return (
     <DashboardLayout
       user={user}
+      breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       status={
         errors && Object.keys(errors).length > 0 ? (
           <ErrorBox list={errors} />
         ) : passwordUpdated ? (
-          <SuccessBox id="password-changed">The password has been successfully changed.</SuccessBox>
+          <SuccessBox id="password-changed">
+            The password has been successfully changed.
+          </SuccessBox>
         ) : null
       }
     >

@@ -21,6 +21,9 @@ import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle
 import { PageTitle } from "~/components/PageTitle";
 import { Card, CardContent } from "~/components/Card";
 import { SelectField } from "~/components/Fields/SelectField";
+import { Header } from "~/components/Header";
+import { EnvIcon } from "~/components/Icons/EnvIcon";
+import { TagLine } from "~/components/Tagline";
 
 export const meta: MetaFunction = ({ params, parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -111,23 +114,26 @@ export default function CreateFlagPage() {
       user={user}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
-        <PageTitle
-          value="Create a feature flag"
-          description={
-            <Typography>
-              The new feature flag will appear in{" "}
-              <strong>{project.name}</strong> /{" "}
-              <strong>{environment.name}</strong>. After the creation of a
-              feature flag, you will be able to get its SDK key for application
-              usage.
-            </Typography>
-          }
+        <Header
+          tagline={<TagLine icon={<EnvIcon />}>ENVIRONMENT</TagLine>}
+          title={environment.name}
         />
       }
       status={
         (errors?.name || errors?.description) && <ErrorBox list={errors} />
       }
     >
+      <PageTitle
+        value="Create a feature flag"
+        description={
+          <Typography>
+            The new feature flag will appear in <strong>{project.name}</strong>{" "}
+            / <strong>{environment.name}</strong>. After the creation of a
+            feature flag, you will be able to get its SDK key for application
+            usage.
+          </Typography>
+        }
+      />
       <Card>
         <CardContent>
           <Section>

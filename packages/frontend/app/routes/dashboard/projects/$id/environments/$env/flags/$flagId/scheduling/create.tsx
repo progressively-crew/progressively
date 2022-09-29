@@ -19,6 +19,9 @@ import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { PageTitle } from "~/components/PageTitle";
 import { Card, CardContent } from "~/components/Card";
+import { Header } from "~/components/Header";
+import { FlagIcon } from "~/components/Icons/FlagIcon";
+import { TagLine } from "~/components/Tagline";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -43,9 +46,12 @@ export const action: ActionFunction = async ({
 
   const utc = formData.get("utc-dateTime")?.toString();
 
-  const status = (formData.get("nextStatus") as unknown as FlagStatus) || undefined;
+  const status =
+    (formData.get("nextStatus") as unknown as FlagStatus) || undefined;
 
-  const rolloutPercentage = Number(formData.get("rolloutPercentage")?.toString());
+  const rolloutPercentage = Number(
+    formData.get("rolloutPercentage")?.toString()
+  );
 
   if (!utc) {
     return {
@@ -70,7 +76,12 @@ export const action: ActionFunction = async ({
   };
 
   try {
-    await createScheduling(params.env!, params.flagId!, scheduling, session.get("auth-cookie"));
+    await createScheduling(
+      params.env!,
+      params.flagId!,
+      scheduling,
+      session.get("auth-cookie")
+    );
 
     return redirect(
       `/dashboard/projects/${params.id}/environments/${params.env}/flags/${params.flagId}/scheduling?newSchedule=true#schedule-added`
@@ -126,18 +137,24 @@ export default function SchedulingCreatePage() {
       user={user}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
-        <PageTitle
-          value="Create a scheduling"
-          description={
-            <Typography>
-              {`You're`} about to create a scheduling to <strong>{currentFlag.name}</strong> in{" "}
-              <strong>{project.name}</strong> on <strong>{environment.name}</strong>.
-            </Typography>
-          }
+        <Header
+          tagline={<TagLine icon={<FlagIcon />}>FEATURE FLAG</TagLine>}
+          title={currentFlag.name}
         />
       }
       status={actionData?.errors && <ErrorBox list={actionData.errors} />}
     >
+      <PageTitle
+        value="Create a scheduling"
+        description={
+          <Typography>
+            {`You're`} about to create a scheduling to{" "}
+            <strong>{currentFlag.name}</strong> in{" "}
+            <strong>{project.name}</strong> on{" "}
+            <strong>{environment.name}</strong>.
+          </Typography>
+        }
+      />
       <Card>
         <CardContent>
           <Form method="post">

@@ -39,7 +39,7 @@ describe("StrategyDescription", () => {
     render(<StrategyDescription flagEnv={flagEnv} hasStrategies={false} />);
 
     expect(getText()).toBe(
-      `Nobody will receive the "true" variant of the flag: it'snot activated`
+      `Nobody will receive the "true" variant of the flag: it's not activated`
     );
   });
 
@@ -132,7 +132,7 @@ describe("StrategyDescription", () => {
       render(<StrategyDescription flagEnv={flagEnv} hasStrategies={false} />);
 
       expect(getText()).toBe(
-        `Nobody will receive the "true" variant of the flag: it'snot activated`
+        `Nobody will receive the "true" variant of the flag: it's not activated`
       );
     });
 

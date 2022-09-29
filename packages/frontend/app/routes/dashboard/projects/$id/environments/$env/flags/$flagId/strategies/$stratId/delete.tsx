@@ -21,6 +21,9 @@ import { getStrategyMetaTitle } from "~/modules/strategies/services/getStrategyM
 import { PageTitle } from "~/components/PageTitle";
 import { Stack } from "~/components/Stack";
 import { Typography } from "~/components/Typography";
+import { Header } from "~/components/Header";
+import { FlagIcon } from "~/components/Icons/FlagIcon";
+import { TagLine } from "~/components/Tagline";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -106,7 +109,12 @@ export default function DeleteStrategyPage() {
     <DeleteEntityLayout
       user={user}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
-      header={<PageTitle value={`Deleting a strategy`} />}
+      header={
+        <Header
+          tagline={<TagLine icon={<FlagIcon />}>FEATURE FLAG</TagLine>}
+          title={currentFlag.name}
+        />
+      }
       error={
         data?.errors &&
         data.errors.backendError && <ErrorBox list={data.errors} />
@@ -133,6 +141,7 @@ export default function DeleteStrategyPage() {
         </Form>
       }
     >
+      <PageTitle value={`Deleting a strategy`} />
       <Stack spacing={4}>
         <WarningBox title={<>This operation is definitive.</>} />
 

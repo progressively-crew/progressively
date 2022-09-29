@@ -39,7 +39,7 @@ describe("/dashboard/projects/[id]", () => {
           ["Project from seeding", "/dashboard/projects/1"],
         ]);
 
-        cy.findAllByText("Project from seeding").should("have.length", 3);
+        cy.findAllByText("Project from seeding").should("have.length", 2);
 
         cy.findByRole("link", { name: "Settings" })
           .should("be.visible")
@@ -51,7 +51,11 @@ describe("/dashboard/projects/[id]", () => {
 
         cy.findByRole("link", { name: "Create an environment" })
           .should("be.visible")
-          .and("have.attr", "href", "/dashboard/projects/1/environments/create");
+          .and(
+            "have.attr",
+            "href",
+            "/dashboard/projects/1/environments/create"
+          );
 
         /* verify the env list */
         cy.get("main").within(() => {

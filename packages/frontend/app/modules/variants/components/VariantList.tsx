@@ -22,15 +22,40 @@ const Wrapper = styled("div", {
 
   "& .row": {
     display: "table-row",
+    borderLeft: "4px solid transparent",
+  },
+
+  "& .row:hover": {
+    background: "$heracles",
+
+    "& .col:first-of-type": {
+      borderLeft: "4px solid $nemesis",
+    },
+  },
+
+  "& .row:first-of-type:hover": {
+    background: "transparent",
+
+    "& .col:first-of-type": {
+      borderLeft: "4px solid transparent",
+    },
   },
 
   "& .col": {
     borderBottom: "1px solid $heracles",
     display: "table-cell",
-    minWidth: "80px",
     verticalAlign: "middle",
-    padding: "0 $spacing$12",
+    padding: "0 $spacing$4",
     height: "$cta",
+  },
+
+  "& .col:first-of-type": {
+    borderLeft: "4px solid transparent",
+    paddingLeft: "$spacing$12",
+  },
+
+  "& .col:last-of-type": {
+    paddingRight: "$spacing$12",
   },
 });
 

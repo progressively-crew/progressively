@@ -44,15 +44,23 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/insights"
           ["Projects", "/dashboard"],
           ["Project from seeding", "/dashboard/projects/1"],
           ["Production", "/dashboard/projects/1/environments/1"],
-          ["New homepage", "/dashboard/projects/1/environments/1/flags/1", false],
+          [
+            "New homepage",
+            "/dashboard/projects/1/environments/1/flags/1",
+            false,
+          ],
         ]);
 
         cy.findByRole("link", { name: "Insights" })
           .should("be.visible")
-          .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags/1/insights")
+          .and(
+            "have.attr",
+            "href",
+            "/dashboard/projects/1/environments/1/flags/1/insights"
+          )
           .and("have.attr", "aria-current", "page");
 
-        cy.findAllByText("New homepage").should("have.length", 3);
+        cy.findAllByText("New homepage").should("have.length", 2);
         cy.findByRole("heading", { name: "Insights" }).should("be.visible");
 
         cy.checkA11y();
@@ -69,10 +77,14 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/insights"
 
         cy.findByRole("link", { name: "Insights" })
           .should("be.visible")
-          .and("have.attr", "href", "/dashboard/projects/1/environments/1/flags/2/insights")
+          .and(
+            "have.attr",
+            "href",
+            "/dashboard/projects/1/environments/1/flags/2/insights"
+          )
           .and("have.attr", "aria-current", "page");
 
-        cy.findAllByText("New footer").should("have.length", 3);
+        cy.findAllByText("New footer").should("have.length", 2);
         cy.findByRole("heading", { name: "Insights" }).should("be.visible");
 
         cy.checkA11y();

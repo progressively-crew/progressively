@@ -27,7 +27,9 @@ interface ActionData {
   errors: Partial<CreateProjectDTO>;
 }
 
-export const action: ActionFunction = async ({ request }): Promise<ActionData | Response> => {
+export const action: ActionFunction = async ({
+  request,
+}): Promise<ActionData | Response> => {
   const formData = await request.formData();
   const projectName = formData.get("name")?.toString();
 
@@ -39,9 +41,14 @@ export const action: ActionFunction = async ({ request }): Promise<ActionData | 
 
   const session = await getSession(request.headers.get("Cookie"));
 
-  const userProject: UserProject = await createProject(projectName!, session.get("auth-cookie"));
+  const userProject: UserProject = await createProject(
+    projectName!,
+    session.get("auth-cookie")
+  );
 
-  return redirect(`/dashboard?newProjectId=${userProject.projectId}#project-added`);
+  return redirect(
+    `/dashboard?newProjectId=${userProject.projectId}#project-added`
+  );
 };
 
 export default function CreateProjectPage() {
@@ -66,19 +73,18 @@ export default function CreateProjectPage() {
     <DashboardLayout
       user={user}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
-      header={
-        <PageTitle
-          value="Create a project"
-          description={
-            <Typography>
-              When creating a project, you will become its administrator and you will have full
-              control over it.
-            </Typography>
-          }
-        />
-      }
       status={errors?.name && <ErrorBox list={errors} />}
     >
+      <PageTitle
+        value="Create a project"
+        description={
+          <Typography>
+            When creating a project, you will become its administrator and you
+            will have full control over it.
+          </Typography>
+        }
+      />
+
       <Card>
         <CardContent>
           <Section>

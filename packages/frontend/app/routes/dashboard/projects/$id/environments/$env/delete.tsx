@@ -23,6 +23,9 @@ import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
 import { Stack } from "~/components/Stack";
+import { Header } from "~/components/Header";
+import { EnvIcon } from "~/components/Icons/EnvIcon";
+import { TagLine } from "~/components/Tagline";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -101,9 +104,13 @@ export default function DeleteEnvPage() {
         user={user}
         breadcrumb={<BreadCrumbs crumbs={crumbs} />}
         header={
-          <PageTitle value="You are not allowed to delete environments." />
+          <Header
+            tagline={<TagLine icon={<EnvIcon />}>ENVIRONMENT</TagLine>}
+            title={environment.name}
+          />
         }
       >
+        <PageTitle value="You are not allowed to delete environments." />
         <Section>
           <figure>
             <Typography as="figcaption">
@@ -130,7 +137,12 @@ export default function DeleteEnvPage() {
     <DeleteEntityLayout
       user={user}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
-      header={<PageTitle value="Deleting an environment" />}
+      header={
+        <Header
+          tagline={<TagLine icon={<EnvIcon />}>ENVIRONMENT</TagLine>}
+          title={environment.name}
+        />
+      }
       error={
         data?.errors &&
         data.errors.backendError && <ErrorBox list={data.errors} />
@@ -157,6 +169,7 @@ export default function DeleteEnvPage() {
         </Form>
       }
     >
+      <PageTitle value="Deleting an environment" />
       <Stack spacing={4}>
         <WarningBox title={<>This operation is definitive.</>} />
 

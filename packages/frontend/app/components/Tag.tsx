@@ -10,5 +10,10 @@ export const Tag = styled("span", {
   variants: {
     color: mapTokenToVariant("color", colors),
     background: mapTokenToVariant("background", colors),
+    small: {
+      true: {
+        fontSize: "$neptune",
+      },
+    },
   },
 });

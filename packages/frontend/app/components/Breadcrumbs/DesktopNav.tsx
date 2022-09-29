@@ -105,7 +105,13 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
           return (
             <li key={crumb.link}>
               <Link
-                aria-current={crumb.forceNotCurrent ? undefined : currentPage ? "page" : undefined}
+                aria-current={
+                  crumb.forceNotCurrent
+                    ? undefined
+                    : currentPage
+                    ? "page"
+                    : undefined
+                }
                 to={crumb.link}
                 fontSize="uranus"
               >
