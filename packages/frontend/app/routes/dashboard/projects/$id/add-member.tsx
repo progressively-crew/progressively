@@ -21,6 +21,9 @@ import { useProject } from "~/modules/projects/contexts/useProject";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
+import { Header } from "~/components/Header";
+import { ProjectIcon } from "~/components/Icons/ProjectIcon";
+import { TagLine } from "~/components/Tagline";
 
 export const meta: MetaFunction = ({ parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -50,7 +53,11 @@ export const action: ActionFunction = async ({
   const session = await getSession(request.headers.get("Cookie"));
 
   try {
-    await addMemberToProject(params.id!, memberEmail!, session.get("auth-cookie"));
+    await addMemberToProject(
+      params.id!,
+      memberEmail!,
+      session.get("auth-cookie")
+    );
 
     return { success: true };
   } catch (error) {
@@ -96,12 +103,19 @@ export default function CreateProjectPage() {
       <DashboardLayout
         user={user}
         breadcrumb={<BreadCrumbs crumbs={crumbs} />}
-        header={<PageTitle value="You are not allowed to add members to projects." />}
+        header={
+          <Header
+            tagline={<TagLine icon={<ProjectIcon />}>PROJECT</TagLine>}
+            title={project.name}
+          />
+        }
       >
+        <PageTitle value="You are not allowed to add members to projects." />
         <Section>
           <figure>
             <Typography as="figcaption">
-              If you think this is an error, make sure to contact one of the project administrators:
+              If you think this is an error, make sure to contact one of the
+              project administrators:
             </Typography>
 
             <Ul>
@@ -126,7 +140,12 @@ export default function CreateProjectPage() {
     <DashboardLayout
       user={user}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
-      header={<PageTitle value="Add member" />}
+      header={
+        <Header
+          tagline={<TagLine icon={<ProjectIcon />}>PROJECT</TagLine>}
+          title={project.name}
+        />
+      }
       status={
         data?.success ? (
           <SuccessBox id="member-added">
@@ -137,6 +156,7 @@ export default function CreateProjectPage() {
         ) : null
       }
     >
+      <PageTitle value="Add member" />
       <Section>
         <Form method="post">
           <FormGroup>

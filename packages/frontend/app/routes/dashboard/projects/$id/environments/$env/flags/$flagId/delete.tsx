@@ -19,6 +19,9 @@ import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
 import { Stack } from "~/components/Stack";
 import { Typography } from "~/components/Typography";
+import { Header } from "~/components/Header";
+import { FlagIcon } from "~/components/Icons/FlagIcon";
+import { TagLine } from "~/components/Tagline";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -97,7 +100,12 @@ export default function DeleteFlagPage() {
     <DeleteEntityLayout
       user={user}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
-      header={<PageTitle value="Deleting a feature flag" />}
+      header={
+        <Header
+          tagline={<TagLine icon={<FlagIcon />}>FEATURE FLAG</TagLine>}
+          title={currentFlag.name}
+        />
+      }
       error={
         data?.errors &&
         data.errors.backendError && <ErrorBox list={data.errors} />
@@ -124,6 +132,7 @@ export default function DeleteFlagPage() {
         </Form>
       }
     >
+      <PageTitle value="Deleting a feature flag" />
       <Stack spacing={4}>
         <WarningBox title={<>This operation is definitive.</>} />
 

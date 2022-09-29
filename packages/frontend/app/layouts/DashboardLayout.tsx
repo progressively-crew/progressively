@@ -7,7 +7,6 @@ import { NavProvider } from "~/components/Breadcrumbs/providers/NavProvider";
 import { InertWhenNavOpened } from "~/components/Breadcrumbs/InertWhenNavOpened";
 import { styled } from "~/stitches.config";
 import { HStack } from "~/components/HStack";
-import { DarkLogo } from "~/components/Logo/DarkLogo";
 import { UseDropdown } from "~/modules/user/components/UserDropdown";
 import { Stack } from "~/components/Stack";
 

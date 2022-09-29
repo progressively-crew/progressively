@@ -19,6 +19,9 @@ import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
 import { Stack } from "~/components/Stack";
+import { Header } from "~/components/Header";
+import { ProjectIcon } from "~/components/Icons/ProjectIcon";
+import { TagLine } from "~/components/Tagline";
 
 export const meta: MetaFunction = ({ parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -90,8 +93,14 @@ export default function DeleteProjectPage() {
       <DeleteEntityLayout
         user={user}
         breadcrumb={<BreadCrumbs crumbs={crumbs} />}
-        header={<PageTitle value="You are not allowed to delete projects." />}
+        header={
+          <Header
+            tagline={<TagLine icon={<ProjectIcon />}>PROJECT</TagLine>}
+            title={project.name}
+          />
+        }
       >
+        <PageTitle value="You are not allowed to delete projects." />
         <figure>
           <Typography as="figcaption">
             If you think this is an error, make sure to contact one of the
@@ -115,7 +124,12 @@ export default function DeleteProjectPage() {
   return (
     <DeleteEntityLayout
       user={user}
-      header={<PageTitle value="Deleting a project" />}
+      header={
+        <Header
+          tagline={<TagLine icon={<ProjectIcon />}>PROJECT</TagLine>}
+          title={project.name}
+        />
+      }
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       error={
         data?.errors &&
@@ -143,6 +157,7 @@ export default function DeleteProjectPage() {
         </Form>
       }
     >
+      <PageTitle value="Deleting a project" />
       <Stack spacing={4}>
         <WarningBox title={<>This operation is definitive.</>} />
 

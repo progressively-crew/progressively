@@ -24,6 +24,9 @@ import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { PageTitle } from "~/components/PageTitle";
 import { Card, CardContent } from "~/components/Card";
+import { Header } from "~/components/Header";
+import { FlagIcon } from "~/components/Icons/FlagIcon";
+import { TagLine } from "~/components/Tagline";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -53,13 +56,17 @@ export const action: ActionFunction = async ({
   }
 
   const strategyName = formData.get("strategy-name") as string;
-  const strategyType = formData.get("strategy-type") as StrategyCreateDTO["strategyRuleType"];
+  const strategyType = formData.get(
+    "strategy-type"
+  ) as StrategyCreateDTO["strategyRuleType"];
 
   const fieldName = (formData.get("field-name") as string) || undefined;
   const fieldValue = (formData.get("field-value") as string) || undefined;
 
   const fieldComparator =
-    (formData.get("field-comparator") as StrategyCreateDTO["fieldComparator"]) || undefined;
+    (formData.get(
+      "field-comparator"
+    ) as StrategyCreateDTO["fieldComparator"]) || undefined;
 
   const strategy: StrategyCreateDTO = {
     name: strategyName,
@@ -70,7 +77,12 @@ export const action: ActionFunction = async ({
   };
 
   try {
-    await createStrategy(params.env!, params.flagId!, strategy, session.get("auth-cookie"));
+    await createStrategy(
+      params.env!,
+      params.flagId!,
+      strategy,
+      session.get("auth-cookie")
+    );
 
     return redirect(
       `/dashboard/projects/${params.id}/environments/${params.env}/flags/${params.flagId}?newStrategy=true#strategy-added`
@@ -129,18 +141,24 @@ export default function StrategyCreatePage() {
       user={user}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
-        <PageTitle
-          value="Create a strategy"
-          description={
-            <Typography>
-              {`You're`} about to create a strategy to <strong>{currentFlag.name}</strong> in{" "}
-              <strong>{project.name}</strong> on <strong>{environment.name}</strong>.
-            </Typography>
-          }
+        <Header
+          tagline={<TagLine icon={<FlagIcon />}>FEATURE FLAG</TagLine>}
+          title={currentFlag.name}
         />
       }
       status={actionData?.errors && <ErrorBox list={actionData.errors} />}
     >
+      <PageTitle
+        value="Create a strategy"
+        description={
+          <Typography>
+            {`You're`} about to create a strategy to{" "}
+            <strong>{currentFlag.name}</strong> in{" "}
+            <strong>{project.name}</strong> on{" "}
+            <strong>{environment.name}</strong>.
+          </Typography>
+        }
+      />
       <Card>
         <CardContent>
           <Form method="post">

@@ -1,7 +1,10 @@
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { createEnv } from "~/modules/environments/services/createEnv";
-import { CreateEnvironmentDTO, Environment } from "~/modules/environments/types";
+import {
+  CreateEnvironmentDTO,
+  Environment,
+} from "~/modules/environments/types";
 import { validateEnvName } from "~/modules/environments/validators/validateEnvName";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { getSession } from "~/sessions";
@@ -18,6 +21,9 @@ import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
 import { Card, CardContent } from "~/components/Card";
+import { Header } from "~/components/Header";
+import { ProjectIcon } from "~/components/Icons/ProjectIcon";
+import { TagLine } from "~/components/Tagline";
 
 export const meta: MetaFunction = ({ parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -47,9 +53,15 @@ export const action: ActionFunction = async ({
 
   const session = await getSession(request.headers.get("Cookie"));
 
-  const env: Environment = await createEnv(projectId, projectName!, session.get("auth-cookie"));
+  const env: Environment = await createEnv(
+    projectId,
+    projectName!,
+    session.get("auth-cookie")
+  );
 
-  return redirect(`/dashboard/projects/${projectId}?newEnvId=${env.uuid}#env-added`);
+  return redirect(
+    `/dashboard/projects/${projectId}?newEnvId=${env.uuid}#env-added`
+  );
 };
 
 export default function CreateEnvironmentPage() {
@@ -81,18 +93,23 @@ export default function CreateEnvironmentPage() {
       user={user}
       breadcrumb={<BreadCrumbs crumbs={crumbs} />}
       header={
-        <PageTitle
-          value="Create an environment"
-          description={
-            <Typography>
-              The new environment will appear in <strong>{project.name}</strong>. After the creation
-              of an environment, you will be able to get its SDK key for application usage.
-            </Typography>
-          }
+        <Header
+          tagline={<TagLine icon={<ProjectIcon />}>PROJECT</TagLine>}
+          title={project.name}
         />
       }
       status={errors?.name && <ErrorBox list={errors} />}
     >
+      <PageTitle
+        value="Create an environment"
+        description={
+          <Typography>
+            The new environment will appear in <strong>{project.name}</strong>.
+            After the creation of an environment, you will be able to get its
+            SDK key for application usage.
+          </Typography>
+        }
+      />
       <Card>
         <CardContent>
           <Section>

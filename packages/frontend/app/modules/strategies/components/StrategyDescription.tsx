@@ -54,6 +54,8 @@ const MultiVariantDescription = ({ flagEnv }: StrategyDescriptionProps) => {
   let cumulative = 0;
   const controlVariant = flagEnv.variants.find((variant) => variant.isControl)!;
 
+  const hasOnlyOneVariant = flagEnv.variants.length === 1;
+
   return (
     <Stack spacing={4}>
       <Ul>
@@ -71,11 +73,27 @@ const MultiVariantDescription = ({ flagEnv }: StrategyDescriptionProps) => {
         })}
       </Ul>
 
-      {cumulative < 100 && (
+      {cumulative < 100 && controlVariant && !hasOnlyOneVariant && (
         <Typography>
           The sum of the percentage is <strong>{cumulative}%</strong>. People
           that are not in these bounds will receive the{" "}
           <strong>"{controlVariant?.value}"</strong> (the control variant).
+        </Typography>
+      )}
+
+      {cumulative < 100 && controlVariant && hasOnlyOneVariant && (
+        <Typography>
+          You only have one variant, which is also the control variant. Every
+          user will receive the
+          <strong>"{controlVariant?.value}"</strong> value.
+        </Typography>
+      )}
+
+      {cumulative < 100 && !controlVariant && (
+        <Typography>
+          The sum of the percentage is <strong>{cumulative}%</strong>. You also
+          don't have a "control variant". People that are not in these bounds
+          will receive the <strong>"false"</strong> value.
         </Typography>
       )}
     </Stack>
