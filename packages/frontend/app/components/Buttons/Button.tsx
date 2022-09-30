@@ -158,6 +158,7 @@ export const Button = ({
   icon,
   isLoading,
   loadingText,
+  scheme,
   ...props
 }: ButtonProps) => {
   if (to || href) {
@@ -168,6 +169,7 @@ export const Button = ({
         as={href ? "a" : Link}
         to={href ? undefined : to}
         href={href}
+        scheme={scheme}
         {...linkProps}
       >
         <HStack spacing={3}>
@@ -181,12 +183,13 @@ export const Button = ({
   return (
     <RawButton
       type={type}
+      scheme={scheme}
       {...props}
       aria-disabled={isLoading}
       aria-label={isLoading ? loadingText : undefined}
     >
       <HStack spacing={3}>
-        {icon && isLoading && <Spinner />}
+        {icon && isLoading && <Spinner scheme={scheme} />}
         {icon && !isLoading && icon}
 
         {children}
