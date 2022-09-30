@@ -125,7 +125,7 @@ describe('Strategy (e2e)', () => {
         .set('Authorization', `Bearer ${access_token}`);
 
       expect(prev.body).toMatchInlineSnapshot(`
-        Object {
+        {
           "fieldComparator": null,
           "fieldName": null,
           "fieldValue": null,
@@ -157,7 +157,7 @@ describe('Strategy (e2e)', () => {
         .set('Authorization', `Bearer ${access_token}`);
 
       expect(after.body).toMatchInlineSnapshot(`
-        Object {
+        {
           "error": "Forbidden",
           "message": "Forbidden resource",
           "statusCode": 403,
