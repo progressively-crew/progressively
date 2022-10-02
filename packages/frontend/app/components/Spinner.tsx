@@ -9,7 +9,20 @@ export const Spinner = styled("div", {
   width: "10px",
   height: "10px",
   border: "3px solid $apollo",
-  borderRadius: " 50%",
-  borderTopColor: "$currentColor",
+  borderRadius: "50%",
   animation: `${spin} 1s ease-in-out infinite`,
+  borderTopColor: "$nemesis",
+  variants: {
+    scheme: {
+      default: {
+        borderTopColor: "$nemesis",
+      },
+      danger: {
+        borderTopColor: "$tyche",
+      },
+      inverse: {
+        borderTopColor: "$nemesis",
+      },
+    },
+  },
 });
