@@ -56,10 +56,6 @@ jobs:
       - name: Prepare the DB
         run: npm run db:prepare
 
-      - name: Force install remote @progressively/react
-        working-directory: ./packages/frontend
-        run: npm install
-
       - name: Build
         run: npm run build
 

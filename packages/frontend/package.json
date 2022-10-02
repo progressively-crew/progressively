@@ -9,12 +9,10 @@
     "lint": "eslint app --fix",
     "postinstall": "remix setup node",
     "start": "remix-serve build",
-    "test": "jest --passWithNoTests",
+    "test": "jest --passWithNoTests --maxWorkers 1",
     "test:e2e": "cypress open",
     "test:e2e:ci": "cypress run --browser chrome",
-    "test:e2e:ci:parallel": "cypress run --browser chrome --record --parallel",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "test:e2e:ci:parallel": "cypress run --browser chrome --record --parallel"
   },
   "dependencies": {
     "@remix-run/node": "^1.7.2",
@@ -31,14 +29,6 @@
   "devDependencies": {
     "@babel/core": "^7.19.3",
     "@remix-run/dev": "^1.7.2",
-    "@storybook/addon-actions": "^6.5.12",
-    "@storybook/addon-essentials": "^6.5.12",
-    "@storybook/addon-interactions": "^6.5.12",
-    "@storybook/addon-links": "^6.5.12",
-    "@storybook/builder-webpack4": "^6.5.12",
-    "@storybook/manager-webpack4": "^6.5.12",
-    "@storybook/react": "^6.5.12",
-    "@storybook/testing-library": "^0.0.13",
     "@testing-library/cypress": "^8.0.3",
     "@testing-library/react": "^13.4.0",
     "@types/jest": "^29.1.1",
