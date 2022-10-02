@@ -1,6 +1,12 @@
+import { useEffect } from "react";
 import { Logo } from "~/components/Logo";
+import Prism from "prismjs";
 
 export default function Index() {
+  useEffect(() => {
+    Prism.highlightAll();
+  }, []);
+
   return (
     <main className="background hero">
       <div className="grid section">
@@ -15,10 +21,7 @@ export default function Index() {
             propagates in real-time.
           </p>
 
-          <code>
-            <span className="highlight">$</span> npm install
-            @progressively/react
-          </code>
+          <code className="inline">$ npm install @progressively/react</code>
 
           <div>
             <a className="get-started" href="">
@@ -26,7 +29,34 @@ export default function Index() {
             </a>
           </div>
         </div>
-        <div>lol</div>
+        <div className="end-block">
+          <code className="language-js">{`import {
+  ProgressivelyProvider,
+  useFlags
+} from "@progressively/react";
+          
+const HomePage = () => {
+  const { flags } = useFlags();
+  
+  if (flags.newHomepage) {
+    return <NewHomePage />;
+  }
+
+  return <OldHomePage />;
+};
+
+const App = () => {
+  return (
+    <ProgressivelyProvider
+      clientKey="YOUR_ENVIRONMENT_CLIENT_KEY"
+      apiUrl="YOUR_API_URL"
+      websocketUrl="YOUR WEBSOCKET SERVER"
+    >
+      <HomePage />
+    </ProgressivelyProvider>
+  );
+};`}</code>
+        </div>
       </div>
     </main>
   );

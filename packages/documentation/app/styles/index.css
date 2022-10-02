@@ -37,8 +37,17 @@ code {
   background-color: var(--color-nemesisLight);
   border-radius: var(--radius-regular);
   padding: var(--space-2) var(--space-4);
-  font-size: var(--fs-jupiter);
-  letter-spacing: 2px;
+}
+
+.inline {
+  box-shadow: var(--shadow-regular);
+}
+
+code.language-js {
+  white-space: pre-wrap !important;
+  font-size: var(--fs-neptune) !important;
+  background: unset !important;
+  letter-spacing: revert;
 }
 
 .get-started {
@@ -47,11 +56,19 @@ code {
   text-decoration: unset;
   color: var(--color-hades);
   font-size: var(--fs-jupiter);
-  padding: var(--space-4);
+  padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-regular);
   background: var(--color-hermes);
 }
 
 .highlight {
   color: var(--color-tyche);
+}
+
+.end-block {
+  width: 100%;
+  background: var(--color-apollo);
+  border-radius: var(--radius-regular);
+  padding: var(--space-8);
+  box-shadow: var(--shadow-regular);
 }

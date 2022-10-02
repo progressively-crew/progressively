@@ -11,6 +11,7 @@ import font from "./styles/fonts.css";
 import reset from "./styles/reset.css";
 import index from "./styles/index.css";
 import shared from "./styles/shared.css";
+import prism from "./styles/prism.css";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
@@ -38,6 +39,7 @@ export const links: LinksFunction = () => {
       as: "font",
       type: "font/ttf",
     },
+    { rel: "stylesheet", href: prism },
     { rel: "stylesheet", href: reset },
     { rel: "stylesheet", href: font },
     { rel: "stylesheet", href: shared },
