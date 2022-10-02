@@ -1,0 +1,57 @@
+.background {
+  background: var(--color-nemesis);
+}
+
+.hero {
+  color: var(--color-apollo);
+  height: 100vh;
+  padding: var(--space-20) 0;
+}
+
+.section {
+  padding: 0 var(--space-20);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-20);
+}
+
+.catchphrase {
+  font-size: var(--fs-jupiter);
+  padding: var(--space-4) 0;
+}
+
+.logo {
+  padding-bottom: var(--space-8);
+}
+.logo svg {
+  height: 60px;
+  width: auto;
+}
+
+code {
+  color: var(--color-hades);
+  display: inline-block;
+  background-color: var(--color-nemesisLight);
+  border-radius: var(--radius-regular);
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--fs-jupiter);
+  letter-spacing: 2px;
+}
+
+.get-started {
+  margin-top: var(--space-8);
+  display: inline-block;
+  text-decoration: unset;
+  color: var(--color-hades);
+  font-size: var(--fs-jupiter);
+  padding: var(--space-4);
+  border-radius: var(--radius-regular);
+  background: var(--color-hermes);
+}
+
+.highlight {
+  color: var(--color-tyche);
+}
