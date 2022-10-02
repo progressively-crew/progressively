@@ -68,6 +68,7 @@ export const colors = {
   hypnos: "#430A8B",
 
   // Old colors
+  border: "#ccc",
   focus: "#4D90FE",
   activeBg: "hsl(340deg, 82%, 35%)",
 

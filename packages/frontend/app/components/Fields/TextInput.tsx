@@ -20,7 +20,7 @@ export interface TextInputProps {
 }
 
 const Input = styled("input", {
-  border: "2px solid $hermes",
+  border: "1px solid $border",
   borderRadius: "$borderRadius$regular",
   fontSize: "$uranus",
   fontFamily: "$default",
@@ -42,7 +42,6 @@ const Input = styled("input", {
         height: "$ctaSmall",
       },
     },
-
     isDisabled: {
       true: {
         border: "2px solid $heracles",

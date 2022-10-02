@@ -17,7 +17,7 @@ export interface SelectFieldProps {
 
 const Select = styled("select", {
   appearance: "none",
-  border: "2px solid $hermes",
+  border: "1px solid $border",
   borderRadius: "$borderRadius$regular",
   fontSize: "$uranus",
   padding: "0 $spacing$4",
