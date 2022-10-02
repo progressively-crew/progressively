@@ -44,6 +44,7 @@ jobs:
           cache: "npm"
           cache-dependency-path: |
             package-lock.json
+            packages/frontend/package-lock.json
             packages/backend/package-lock.json
 
       - name: Creating .env files
