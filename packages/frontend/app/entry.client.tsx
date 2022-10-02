@@ -1,7 +1,7 @@
 import { RemixBrowser } from "@remix-run/react";
-import { hydrate } from "react-dom";
+import { hydrateRoot } from "react-dom/client";
 import { initSentryOnClient } from "./modules/sentry/client";
 
 initSentryOnClient();
 
-hydrate(<RemixBrowser />, document);
+hydrateRoot(document, <RemixBrowser />);
