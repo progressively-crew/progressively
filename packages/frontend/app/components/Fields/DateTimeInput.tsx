@@ -14,7 +14,7 @@ export interface TextInputProps {
 }
 
 const Input = styled("input", {
-  border: "2px solid $hermes",
+  border: "1px solid $border",
   borderRadius: "$borderRadius$regular",
   fontSize: "$uranus",
   fontFamily: "$default",
@@ -47,12 +47,17 @@ const completeWithZero = (n: number) => {
 const getFormattedToday = () => {
   const now = new Date();
 
-  return `${now.getFullYear()}-${completeWithZero(now.getMonth() + 1)}-${completeWithZero(
-    now.getDate()
-  )}`;
+  return `${now.getFullYear()}-${completeWithZero(
+    now.getMonth() + 1
+  )}-${completeWithZero(now.getDate())}`;
 };
 
-export const DateTimeInput = ({ isInvalid, name, label, description }: TextInputProps) => {
+export const DateTimeInput = ({
+  isInvalid,
+  name,
+  label,
+  description,
+}: TextInputProps) => {
   const [date, setDate] = useState(getFormattedToday());
   const [time, setTime] = useState("00:00");
   let ariaDescription: string | undefined;
