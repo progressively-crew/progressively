@@ -11,10 +11,6 @@ jobs:
       - uses: actions/checkout@v2
       - uses: superfly/flyctl-actions/setup-flyctl@master
 
-      - name: Deploy backend
-        working-directory: ./packages/backend
-        run: flyctl deploy --remote-only
-
       - name: Deploy frontend
-        working-directory: ./packages/frontend
+        working-directory: ./packages/documentation
         run: flyctl deploy --remote-only
