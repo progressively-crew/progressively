@@ -15,7 +15,7 @@ import prism from "./styles/prism.css";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
-  title: "New Remix App",
+  title: "Progressively",
   viewport: "width=device-width,initial-scale=1",
 });
 
@@ -53,6 +53,7 @@ export default function App() {
       <head>
         <Meta />
         <Links />
+        <link rel="shortcut icon" type="image/jpg" href="/favicon.png" />
       </head>
       <body>
         <Outlet />
