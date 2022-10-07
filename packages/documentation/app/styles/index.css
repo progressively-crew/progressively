@@ -1,0 +1,154 @@
+.hero {
+  color: var(--color-apollo);
+  background: var(--color-nemesis);
+}
+
+.hero-hermes {
+  background: var(--color-hermes);
+}
+
+.section {
+  padding: var(--space-20);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-20);
+}
+
+.catchphrase {
+  font-size: var(--fs-jupiter);
+  padding: var(--space-4) 0;
+}
+
+.logo {
+  padding-bottom: var(--space-8);
+}
+
+.logo svg {
+  height: 60px;
+  width: auto;
+}
+
+code {
+  color: var(--color-hades);
+  display: inline-block;
+  background-color: var(--color-apollo);
+  border-radius: var(--radius-regular);
+  padding: var(--space-2) var(--space-4);
+}
+
+.inline {
+  box-shadow: var(--shadow-regular);
+  font-size: var(--fs-jupiter);
+  letter-spacing: 2px;
+  border-radius: var(--radius-small);
+}
+
+code.language-js {
+  width: 100%;
+  white-space: pre-wrap !important;
+  font-size: var(--fs-neptune) !important;
+  background: unset !important;
+  letter-spacing: revert;
+}
+
+.get-started {
+  margin-top: var(--space-8);
+  display: inline-block;
+  text-decoration: unset;
+  color: var(--color-hades);
+  font-size: var(--fs-jupiter);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-regular);
+  background: var(--color-hermes);
+  transition: all 0.1s;
+}
+
+.get-started:hover {
+  transform: scale(1.05);
+}
+
+.get-started:active {
+  opacity: 0.8;
+}
+
+.highlight {
+  color: var(--color-tyche);
+}
+
+.start-block {
+  max-width: 65ch;
+}
+
+.block {
+  background: var(--color-apollo);
+  border-radius: var(--radius-regular);
+  padding: var(--space-8);
+  box-shadow: var(--shadow-regular);
+}
+
+.features {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--space-12);
+}
+
+.features p {
+  font-size: var(--fs-jupiter);
+}
+
+.feature h2 {
+  font-size: var(--fs-earth);
+  margin-bottom: var(--space-2);
+}
+
+.feature a {
+  color: var(--color-nemesis);
+}
+
+/* tablet */
+@media (max-width: 68.5rem) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .start-block {
+    max-width: unset;
+  }
+
+  .features {
+    grid-template-columns: 1fr;
+  }
+}
+
+.browsers {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: var(--space-12);
+}
+
+.browsers h2 {
+  padding-bottom: var(--space-4);
+}
+
+.squares {
+  display: flex;
+}
+
+.square {
+  height: 80px;
+  transition: all 0.3s;
+  background: var(--color-heracles);
+  border-radius: var(--radius-small);
+  margin-left: var(--space-4);
+}
+
+.squares .square:first-of-type {
+  margin-left: unset;
+}
+
+.square.activated {
+  background: var(--color-tyche);
+}
