@@ -1,4 +1,5 @@
 import { DesktopNav } from "./DesktopNav";
+import { MobileNav } from "./MobileNav";
 import { Crumbs } from "./types";
 
 export interface BreadCrumbsProps {
@@ -6,5 +7,6 @@ export interface BreadCrumbsProps {
 }
 
 export const BreadCrumbs = ({ crumbs }: BreadCrumbsProps) => {
-  return <DesktopNav crumbs={crumbs} />;
+  return <MobileNav crumbs={crumbs} />;
+  // return <DesktopNav crumbs={crumbs} />;
 };

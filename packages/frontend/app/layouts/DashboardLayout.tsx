@@ -69,13 +69,13 @@ export const DashboardLayout = ({
         <div>
           <TopWrapper>
             <Container>
-              <HStack justifyContent="space-between" height="cta">
+              <HStack justifyContent="space-between" height="navHeight">
                 <BreadCrumbs crumbs={crumbs} />
 
                 <UseDropdown user={user} />
               </HStack>
 
-              <Spacer size={2} />
+              {header && <Spacer size={2} />}
 
               <header>{header}</header>
             </Container>

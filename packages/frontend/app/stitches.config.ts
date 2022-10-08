@@ -101,8 +101,7 @@ export const sizes = {
   avatar: "32px",
   treeHeight: "60%",
   dialog: "80ch",
-  navHeight: "72px",
-  subnavHeight: "52px",
+  navHeight: "60px",
   tableHeight: "500px",
   keyboardKey: "20px",
 };
