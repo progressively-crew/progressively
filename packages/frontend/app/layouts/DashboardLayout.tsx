@@ -47,7 +47,7 @@ const Grid = styled("div", {
     },
   },
 
-  "@mobile": {
+  "@tablet": {
     gridTemplateColumns: "1fr",
     gap: "$spacing$0",
   },
@@ -86,7 +86,7 @@ export const DashboardLayout = ({
             </Container>
           </TopWrapper>
 
-          <Spacer size={{ "@initial": 12, "@mobile": 4 }} />
+          <Spacer size={{ "@initial": 12, "@tablet": subNav ? 0 : 4 }} />
 
           <Container>
             <Grid singleColumn={!subNav}>

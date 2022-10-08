@@ -4,10 +4,23 @@ import { HStack } from "./HStack";
 
 const HorizontalNavWrapper = styled("nav", {
   paddingTop: "10px", // hack to stay fully aligned with the title of the page
+
+  "@tablet": {
+    overflow: "hidden",
+    paddingTop: 0,
+    marginTop: "2px",
+    width: "100%",
+  },
+
   "& ul": {
     display: "flex",
     flexDirection: "column",
     gap: "$spacing$1",
+
+    "@tablet": {
+      flexDirection: "row",
+      width: "100%",
+    },
   },
 
   "& ul li a": {
@@ -39,11 +52,6 @@ const HorizontalNavWrapper = styled("nav", {
     color: "$nemesis",
     fontSize: "$jupiter",
   },
-
-  "@tablet": {
-    width: "100%",
-    marginTop: "$spacing$4",
-  },
 });
 
 export interface HorizontalNavProps {
@@ -54,7 +62,7 @@ export interface HorizontalNavProps {
 export const HorizontalNav = ({ children, label }: HorizontalNavProps) => {
   return (
     <HorizontalNavWrapper aria-label={label}>
-      <ul>{children}</ul>
+      <ul style={{ overflowX: "scroll" }}>{children}</ul>
     </HorizontalNavWrapper>
   );
 };

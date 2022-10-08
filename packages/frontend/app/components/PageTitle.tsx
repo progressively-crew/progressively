@@ -37,8 +37,8 @@ export const PageTitle = ({
   return (
     <HStack
       justifyContent="space-between"
-      direction={{ "@mobile": "column" }}
-      spacing={{ "@mobile": 4 }}
+      direction={{ "@tablet": "column" }}
+      spacing={{ "@tablet": 4 }}
     >
       <Stack>
         <Typography
