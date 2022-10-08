@@ -46,6 +46,11 @@ const Grid = styled("div", {
       },
     },
   },
+
+  "@mobile": {
+    gridTemplateColumns: "1fr",
+    gap: "$spacing$0",
+  },
 });
 
 export const DashboardLayout = ({
@@ -87,17 +92,15 @@ export const DashboardLayout = ({
             <Grid singleColumn={!subNav}>
               {subNav}
 
-              <div>
+              <OverflowContainer>
                 <Main>
-                  <OverflowContainer>
-                    <Stack spacing={{ "@initial": 8, "@mobile": 4 }}>
-                      {status}
+                  <Stack spacing={{ "@initial": 8, "@mobile": 4 }}>
+                    {status}
 
-                      {children}
-                    </Stack>
-                  </OverflowContainer>
+                    {children}
+                  </Stack>
                 </Main>
-              </div>
+              </OverflowContainer>
             </Grid>
           </Container>
         </div>
