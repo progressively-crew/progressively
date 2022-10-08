@@ -4,6 +4,7 @@ import { Link } from "../Link";
 import { HStack } from "../HStack";
 import { useNavToggle } from "./hooks/useNavToggle";
 import { Button } from "../Buttons/Button";
+import { AiOutlineMenu } from "react-icons/ai";
 
 const Wrapper = styled("div", {
   position: "absolute",
@@ -13,7 +14,7 @@ const Wrapper = styled("div", {
   top: 0,
   background: "$nemesis",
   zIndex: 2,
-  padding: "$spacing$12",
+  padding: "$spacing$8",
   boxSizing: "border-box",
   transform: "translateX(-100%)",
   transition: "all 0.3s",
@@ -73,8 +74,8 @@ export const MobileNav = ({ crumbs }: DesktopNavProps) => {
 
   return (
     <div>
-      <Button onClick={toggleNav} variant="primary" small>
-        Click me
+      <Button variant="tertiary" onClick={toggleNav} aria-label="Toggle menu">
+        <AiOutlineMenu />
       </Button>
 
       <Wrapper opened={isNavOpened}>

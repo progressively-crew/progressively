@@ -81,7 +81,7 @@ export const DashboardLayout = ({
             </Container>
           </TopWrapper>
 
-          <Spacer size={12} />
+          <Spacer size={{ "@initial": 12, "@mobile": 4 }} />
 
           <Container>
             <Grid singleColumn={!subNav}>
@@ -90,7 +90,7 @@ export const DashboardLayout = ({
               <div>
                 <Main>
                   <OverflowContainer>
-                    <Stack spacing={8}>
+                    <Stack spacing={{ "@initial": 8, "@mobile": 4 }}>
                       {status}
 
                       {children}
