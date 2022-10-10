@@ -6,6 +6,7 @@ import { CardContent } from "~/components/Card";
 import { Radio } from "~/components/Fields/Radio";
 import { SliderInput } from "~/components/Fields/SliderInput";
 import { TextInput } from "~/components/Fields/TextInput";
+import { HideTablet } from "~/components/HideMobile";
 import { Spacer } from "~/components/Spacer";
 import { Typography } from "~/components/Typography";
 import { styled } from "~/stitches.config";
@@ -35,10 +36,6 @@ const Wrapper = styled("div", {
 
   "& .row:first-of-type:hover": {
     background: "transparent",
-
-    "& .col:first-of-type": {
-      borderLeft: "4px solid transparent",
-    },
   },
 
   "& .col": {
@@ -56,6 +53,37 @@ const Wrapper = styled("div", {
 
   "& .col:last-of-type": {
     paddingRight: "$spacing$12",
+  },
+
+  "@tablet": {
+    display: "block",
+
+    "& .row": {
+      padding: "0 $spacing$4",
+      display: "block",
+      borderLeft: "unset",
+      marginBottom: "$spacing$4",
+      borderBottom: "1px solid $heracles",
+
+      "&:last-of-type": {
+        marginBottom: 0,
+      },
+    },
+
+    "& .col": {
+      padding: 0,
+      display: "block",
+      borderBottom: "unset",
+    },
+
+    "& .col:first-of-type": {
+      borderLeft: "unset",
+      paddingLeft: "unset",
+    },
+
+    "& .col:last-of-type": {
+      paddingRight: "unset",
+    },
   },
 });
 
@@ -116,42 +144,19 @@ export const VariantList = ({ variants, errors, mode }: VariantListProps) => {
         <input type="hidden" name="_type" value="edit-variant" />
 
         <Wrapper>
-          <div className="row">
-            <div className="col">
-              <Typography
-                textTransform="uppercase"
-                size="neptune"
-                font="title"
-                as="span"
-              >
-                Is control
-              </Typography>
-            </div>
+          <HideTablet>
+            <div className="row">
+              <div className="col">
+                <Typography
+                  textTransform="uppercase"
+                  size="neptune"
+                  font="title"
+                  as="span"
+                >
+                  Variant value
+                </Typography>
+              </div>
 
-            <div className="col">
-              <Typography
-                textTransform="uppercase"
-                size="neptune"
-                font="title"
-                as="span"
-              >
-                Variant value
-              </Typography>
-            </div>
-
-            <div className="col">
-              <Typography
-                fontWeight="bold"
-                textTransform="uppercase"
-                size="neptune"
-                font="title"
-                as="span"
-              >
-                Rollout percentage
-              </Typography>
-            </div>
-
-            {showRemoveButton && (
               <div className="col">
                 <Typography
                   fontWeight="bold"
@@ -160,11 +165,36 @@ export const VariantList = ({ variants, errors, mode }: VariantListProps) => {
                   font="title"
                   as="span"
                 >
-                  Actions
+                  Rollout percentage
                 </Typography>
               </div>
-            )}
-          </div>
+
+              <div className="col">
+                <Typography
+                  textTransform="uppercase"
+                  size="neptune"
+                  font="title"
+                  as="span"
+                >
+                  Is control
+                </Typography>
+              </div>
+
+              {showRemoveButton && (
+                <div className="col">
+                  <Typography
+                    fontWeight="bold"
+                    textTransform="uppercase"
+                    size="neptune"
+                    font="title"
+                    as="span"
+                  >
+                    Actions
+                  </Typography>
+                </div>
+              )}
+            </div>
+          </HideTablet>
 
           <div>
             {variants.map((variant, index) => (
@@ -174,20 +204,6 @@ export const VariantList = ({ variants, errors, mode }: VariantListProps) => {
                 key={`variant-${variant.uuid}`}
                 aria-label={`Variant at position ${index + 1}`}
               >
-                <div className="col">
-                  <input type="hidden" name="uuid" value={variant.uuid} />
-                  <Radio
-                    type={"radio"}
-                    name={"isControl"}
-                    value={variant.uuid}
-                    defaultChecked={variant.isControl}
-                    aria-label={`Is variant at position ${
-                      index + 1
-                    } the control variant?`}
-                    readOnly
-                  />
-                </div>
-
                 <div className="col">
                   <TextInput
                     hiddenLabel
@@ -207,6 +223,20 @@ export const VariantList = ({ variants, errors, mode }: VariantListProps) => {
                     name={`rolloutPercentage`}
                     label={`Variant ${index + 1} rollout percentage`}
                     initialPercentage={variant.rolloutPercentage}
+                  />
+                </div>
+
+                <div className="col">
+                  <input type="hidden" name="uuid" value={variant.uuid} />
+                  <Radio
+                    type={"radio"}
+                    name={"isControl"}
+                    value={variant.uuid}
+                    defaultChecked={variant.isControl}
+                    aria-label={`Is variant at position ${
+                      index + 1
+                    } the control variant?`}
+                    readOnly
                   />
                 </div>
 

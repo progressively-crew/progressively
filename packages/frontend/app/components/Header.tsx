@@ -52,7 +52,7 @@ export const Header = ({
             </HideTablet>
           )}
 
-          <ActionWrapper>{startAction}</ActionWrapper>
+          {startAction && <ActionWrapper>{startAction}</ActionWrapper>}
         </HStack>
 
         <Spacer size={1} />
