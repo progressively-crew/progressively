@@ -11,3 +11,10 @@ export const HideTablet = styled("span", {
     display: "none",
   },
 });
+
+export const HideDesktop = styled("span", {
+  display: "none",
+  "@tablet": {
+    display: "unset",
+  },
+});

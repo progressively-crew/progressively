@@ -166,63 +166,65 @@ export const VariantList = ({ variants, errors, mode }: VariantListProps) => {
             )}
           </div>
 
-          {variants.map((variant, index) => (
-            <div
-              role="group"
-              className="row"
-              key={`variant-${variant.uuid}`}
-              aria-label={`Variant at position ${index + 1}`}
-            >
-              <div className="col">
-                <input type="hidden" name="uuid" value={variant.uuid} />
-                <Radio
-                  type={"radio"}
-                  name={"isControl"}
-                  value={variant.uuid}
-                  defaultChecked={variant.isControl}
-                  aria-label={`Is variant at position ${
-                    index + 1
-                  } the control variant?`}
-                  readOnly
-                />
-              </div>
-
-              <div className="col">
-                <TextInput
-                  hiddenLabel
-                  id={`name-${index}`}
-                  name="name"
-                  defaultValue={variant.value}
-                  label={`Variant ${index + 1} value`}
-                  isInvalid={Boolean(errors?.[`name-${index}`])}
-                  isDisabled={isValueInputDisabled}
-                  small
-                />
-              </div>
-
-              <div className="col">
-                <FormSliderInput
-                  id={`rolloutPercentage-${index}`}
-                  name={`rolloutPercentage`}
-                  label={`Variant ${index + 1} rollout percentage`}
-                  initialPercentage={variant.rolloutPercentage}
-                />
-              </div>
-
-              {showRemoveButton && (
+          <div>
+            {variants.map((variant, index) => (
+              <div
+                role="group"
+                className="row"
+                key={`variant-${variant.uuid}`}
+                aria-label={`Variant at position ${index + 1}`}
+              >
                 <div className="col">
-                  <DeleteButton
-                    variant="tertiary"
-                    small
-                    type="submit"
-                    form={`delete-form-${variant.uuid}`}
-                  >
-                    Remove
-                  </DeleteButton>
+                  <input type="hidden" name="uuid" value={variant.uuid} />
+                  <Radio
+                    type={"radio"}
+                    name={"isControl"}
+                    value={variant.uuid}
+                    defaultChecked={variant.isControl}
+                    aria-label={`Is variant at position ${
+                      index + 1
+                    } the control variant?`}
+                    readOnly
+                  />
                 </div>
-              )}
-            </div>
-          ))}
+
+                <div className="col">
+                  <TextInput
+                    hiddenLabel
+                    id={`name-${index}`}
+                    name="name"
+                    defaultValue={variant.value}
+                    label={`Variant ${index + 1} value`}
+                    isInvalid={Boolean(errors?.[`name-${index}`])}
+                    isDisabled={isValueInputDisabled}
+                    small
+                  />
+                </div>
+
+                <div className="col">
+                  <FormSliderInput
+                    id={`rolloutPercentage-${index}`}
+                    name={`rolloutPercentage`}
+                    label={`Variant ${index + 1} rollout percentage`}
+                    initialPercentage={variant.rolloutPercentage}
+                  />
+                </div>
+
+                {showRemoveButton && (
+                  <div className="col">
+                    <DeleteButton
+                      variant="tertiary"
+                      small
+                      type="submit"
+                      form={`delete-form-${variant.uuid}`}
+                    >
+                      Remove
+                    </DeleteButton>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         </Wrapper>
 
         <Spacer size={6} />

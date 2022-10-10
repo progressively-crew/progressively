@@ -11,6 +11,8 @@ import { UseDropdown } from "~/modules/user/components/UserDropdown";
 import { Stack } from "~/components/Stack";
 import { useMatches } from "@remix-run/react";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
+import { MobileNav } from "~/components/Breadcrumbs/MobileNav";
+import { HideDesktop, HideTablet } from "~/components/HideMobile";
 
 export interface DashboardLayoutProps {
   user?: Partial<User>;
@@ -88,9 +90,11 @@ export const DashboardLayout = ({
 
           <Spacer size={{ "@initial": 12, "@tablet": subNav ? 0 : 4 }} />
 
+          <HideDesktop>{subNav}</HideDesktop>
+
           <Container>
             <Grid singleColumn={!subNav}>
-              {subNav}
+              <HideTablet>{subNav}</HideTablet>
 
               <OverflowContainer>
                 <Main>

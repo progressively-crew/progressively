@@ -10,6 +10,7 @@ const HorizontalNavWrapper = styled("nav", {
     paddingTop: 0,
     marginTop: "2px",
     width: "100%",
+    background: "$nemesisLight",
   },
 
   "& ul": {

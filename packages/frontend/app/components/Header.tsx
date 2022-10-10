@@ -1,5 +1,6 @@
 import { styled } from "~/stitches.config";
 import { H1 } from "./H1";
+import { HideTablet } from "./HideMobile";
 import { HStack } from "./HStack";
 import { Spacer } from "./Spacer";
 
@@ -36,12 +37,20 @@ export const Header = ({
   return (
     <div>
       <HeadingWrapper>
-        <HStack spacing={6}>
+        <HStack
+          spacing={{ "@initial": 6, "@tablet": 2 }}
+          direction={{ "@tablet": "column" }}
+          alignItems={{ "@tablet": "flex-start" }}
+        >
           <H1 as="p" fontWeight="normal">
             {title}
           </H1>
 
-          {startAction && <Separator aria-hidden />}
+          {startAction && (
+            <HideTablet>
+              <Separator aria-hidden />
+            </HideTablet>
+          )}
 
           <ActionWrapper>{startAction}</ActionWrapper>
         </HStack>
