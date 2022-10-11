@@ -51,6 +51,7 @@ export class FlagsService {
         environment: true,
         flag: true,
         strategies: true,
+        variants: true,
       },
     });
   }
