@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { NavContext } from "../context/NavContext";
 
 export interface NavProviderProps {
@@ -12,5 +12,13 @@ export const NavProvider = ({ children }: NavProviderProps) => {
     setIsNavOpened((s) => !s);
   }, [setIsNavOpened]);
 
-  return <NavContext.Provider value={{ isNavOpened, toggleNav }}>{children}</NavContext.Provider>;
+  useEffect(() => {
+    document.body.style.overflow = isNavOpened ? "hidden" : "revert";
+  }, [isNavOpened]);
+
+  return (
+    <NavContext.Provider value={{ isNavOpened, toggleNav }}>
+      {children}
+    </NavContext.Provider>
+  );
 };

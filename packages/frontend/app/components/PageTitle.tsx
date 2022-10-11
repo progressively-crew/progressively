@@ -22,6 +22,12 @@ const DescriptionWrapper = styled("div", {
   },
 });
 
+const ActionWrapper = styled("div", {
+  "@mobile": {
+    width: "100%",
+  },
+});
+
 export const PageTitle = ({
   value,
   icon,
@@ -29,10 +35,15 @@ export const PageTitle = ({
   description,
 }: PageTitleProps) => {
   return (
-    <HStack justifyContent="space-between">
-      <Stack spacing={0}>
+    <HStack
+      justifyContent={{ "@initial": "space-between", "@tablet": "flex-start" }}
+      direction={{ "@tablet": "column" }}
+      alignItems={{ "@tablet": "flex-start" }}
+      spacing={{ "@tablet": 4 }}
+    >
+      <Stack>
         <Typography
-          size="venus"
+          size={{ "@initial": "venus", "@mobile": "earth" }}
           font="title"
           color="hades"
           fontWeight="semiBold"
@@ -48,7 +59,7 @@ export const PageTitle = ({
         {description && <DescriptionWrapper>{description}</DescriptionWrapper>}
       </Stack>
 
-      <div>{action}</div>
+      <ActionWrapper>{action}</ActionWrapper>
     </HStack>
   );
 };

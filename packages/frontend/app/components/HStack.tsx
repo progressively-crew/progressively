@@ -34,6 +34,8 @@ export const HStack = styled<any, any>("div", {
     },
 
     gap: {
+      "1": { gap: "$spacing$1" },
+      "2": { gap: "$spacing$2" },
       "3": { gap: "$spacing$3" },
     },
 

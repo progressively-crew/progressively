@@ -92,7 +92,7 @@ describe("/profile", () => {
       cy.findByLabelText("Email").type("john.doe@gmail.com");
       cy.findByLabelText("Password").type("password");
       cy.findByRole("button", { name: "Sign in" }).click();
-      cy.findByText("Project from seeding").should("be.visible", 2);
+      cy.findByText("Project from seeding").should("be.visible", 3);
     });
   });
 });

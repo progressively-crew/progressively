@@ -3,9 +3,12 @@ import { useState } from "react";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { CardContent } from "~/components/Card";
+import { Label } from "~/components/Fields/Label";
 import { Radio } from "~/components/Fields/Radio";
 import { SliderInput } from "~/components/Fields/SliderInput";
 import { TextInput } from "~/components/Fields/TextInput";
+import { HideDesktop, HideTablet } from "~/components/HideMobile";
+import { HStack } from "~/components/HStack";
 import { Spacer } from "~/components/Spacer";
 import { Typography } from "~/components/Typography";
 import { styled } from "~/stitches.config";
@@ -35,10 +38,6 @@ const Wrapper = styled("div", {
 
   "& .row:first-of-type:hover": {
     background: "transparent",
-
-    "& .col:first-of-type": {
-      borderLeft: "4px solid transparent",
-    },
   },
 
   "& .col": {
@@ -56,6 +55,40 @@ const Wrapper = styled("div", {
 
   "& .col:last-of-type": {
     paddingRight: "$spacing$12",
+  },
+
+  "@tablet": {
+    display: "block",
+
+    "& .row": {
+      padding: "$spacing$4",
+      display: "block",
+      borderLeft: "unset",
+      marginBottom: "$spacing$4",
+      borderBottom: "1px solid $heracles",
+
+      "&:last-of-type": {
+        marginBottom: 0,
+      },
+    },
+
+    "& .col": {
+      padding: 0,
+      display: "block",
+      borderBottom: "unset",
+      height: "unset",
+      marginBottom: "$spacing$2",
+    },
+
+    "& .col:first-of-type": {
+      borderLeft: "unset",
+      paddingLeft: "unset",
+    },
+
+    "& .col:last-of-type": {
+      paddingRight: "unset",
+      marginBottom: "unset",
+    },
   },
 });
 
@@ -116,42 +149,19 @@ export const VariantList = ({ variants, errors, mode }: VariantListProps) => {
         <input type="hidden" name="_type" value="edit-variant" />
 
         <Wrapper>
-          <div className="row">
-            <div className="col">
-              <Typography
-                textTransform="uppercase"
-                size="neptune"
-                font="title"
-                as="span"
-              >
-                Is control
-              </Typography>
-            </div>
+          <HideTablet>
+            <div className="row">
+              <div className="col">
+                <Typography
+                  textTransform="uppercase"
+                  size="neptune"
+                  font="title"
+                  as="span"
+                >
+                  Variant value
+                </Typography>
+              </div>
 
-            <div className="col">
-              <Typography
-                textTransform="uppercase"
-                size="neptune"
-                font="title"
-                as="span"
-              >
-                Variant value
-              </Typography>
-            </div>
-
-            <div className="col">
-              <Typography
-                fontWeight="bold"
-                textTransform="uppercase"
-                size="neptune"
-                font="title"
-                as="span"
-              >
-                Rollout percentage
-              </Typography>
-            </div>
-
-            {showRemoveButton && (
               <div className="col">
                 <Typography
                   fontWeight="bold"
@@ -160,69 +170,103 @@ export const VariantList = ({ variants, errors, mode }: VariantListProps) => {
                   font="title"
                   as="span"
                 >
-                  Actions
+                  Rollout percentage
                 </Typography>
               </div>
-            )}
-          </div>
-
-          {variants.map((variant, index) => (
-            <div
-              role="group"
-              className="row"
-              key={`variant-${variant.uuid}`}
-              aria-label={`Variant at position ${index + 1}`}
-            >
-              <div className="col">
-                <input type="hidden" name="uuid" value={variant.uuid} />
-                <Radio
-                  type={"radio"}
-                  name={"isControl"}
-                  value={variant.uuid}
-                  defaultChecked={variant.isControl}
-                  aria-label={`Is variant at position ${
-                    index + 1
-                  } the control variant?`}
-                  readOnly
-                />
-              </div>
 
               <div className="col">
-                <TextInput
-                  hiddenLabel
-                  id={`name-${index}`}
-                  name="name"
-                  defaultValue={variant.value}
-                  label={`Variant ${index + 1} value`}
-                  isInvalid={Boolean(errors?.[`name-${index}`])}
-                  isDisabled={isValueInputDisabled}
-                  small
-                />
-              </div>
-
-              <div className="col">
-                <FormSliderInput
-                  id={`rolloutPercentage-${index}`}
-                  name={`rolloutPercentage`}
-                  label={`Variant ${index + 1} rollout percentage`}
-                  initialPercentage={variant.rolloutPercentage}
-                />
+                <Typography
+                  textTransform="uppercase"
+                  size="neptune"
+                  font="title"
+                  as="span"
+                >
+                  Is control
+                </Typography>
               </div>
 
               {showRemoveButton && (
                 <div className="col">
-                  <DeleteButton
-                    variant="tertiary"
-                    small
-                    type="submit"
-                    form={`delete-form-${variant.uuid}`}
+                  <Typography
+                    fontWeight="bold"
+                    textTransform="uppercase"
+                    size="neptune"
+                    font="title"
+                    as="span"
                   >
-                    Remove
-                  </DeleteButton>
+                    Actions
+                  </Typography>
                 </div>
               )}
             </div>
-          ))}
+          </HideTablet>
+
+          <div>
+            {variants.map((variant, index) => (
+              <div
+                role="group"
+                className="row"
+                key={`variant-${variant.uuid}`}
+                aria-label={`Variant at position ${index + 1}`}
+              >
+                <div className="col">
+                  <TextInput
+                    hiddenLabel
+                    id={`name-${index}`}
+                    name="name"
+                    defaultValue={variant.value}
+                    label={`Variant ${index + 1} value`}
+                    isInvalid={Boolean(errors?.[`name-${index}`])}
+                    isDisabled={isValueInputDisabled}
+                    small
+                  />
+                </div>
+
+                <div className="col">
+                  <FormSliderInput
+                    id={`rolloutPercentage-${index}`}
+                    name={`rolloutPercentage`}
+                    label={`Variant ${index + 1} rollout percentage`}
+                    initialPercentage={variant.rolloutPercentage}
+                  />
+                </div>
+
+                <div className="col">
+                  <HStack spacing={2}>
+                    <div>
+                      <input type="hidden" name="uuid" value={variant.uuid} />
+                      <Radio
+                        type={"radio"}
+                        name={"isControl"}
+                        value={variant.uuid}
+                        defaultChecked={variant.isControl}
+                        aria-label={`Is variant at position ${
+                          index + 1
+                        } the control variant?`}
+                        readOnly
+                      />
+                    </div>
+                    <HideDesktop>
+                      <Label>Is control variant</Label>
+                    </HideDesktop>
+                  </HStack>
+                </div>
+
+                {showRemoveButton && (
+                  <div className="col">
+                    <DeleteButton
+                      variant="tertiary"
+                      small
+                      type="submit"
+                      form={`delete-form-${variant.uuid}`}
+                    >
+                      Remove
+                    </DeleteButton>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         </Wrapper>
 
         <Spacer size={6} />

@@ -18,6 +18,8 @@ const sign = async (value, secret) => {
 /** End of caution */
 
 module.exports = defineConfig({
+  viewportWidth: 1400,
+  viewportHeight: 800,
   e2e: {
     baseUrl: "http://localhost:3000",
     video: false,

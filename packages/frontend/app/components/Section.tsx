@@ -53,7 +53,8 @@ export const SectionHeader = ({
 }: SectionHeaderProps) => {
   const id = useContext(SectionContext);
 
-  const fontSize = titleAs === "h2" ? "earth" : "mars";
+  const desktopFontSize = titleAs === "h2" ? "earth" : "mars";
+  const tabletFontSize = titleAs === "h2" ? "mars" : "jupiter";
 
   return (
     <SectionHeaderWrapper {...props}>
@@ -65,7 +66,15 @@ export const SectionHeader = ({
           gap={{ "@tablet": "3" }}
         >
           <div>
-            <Heading as={titleAs} id={id} fontSize={fontSize} icon={icon}>
+            <Heading
+              as={titleAs}
+              id={id}
+              fontSize={{
+                "@initial": desktopFontSize,
+                "@tablet": tabletFontSize,
+              }}
+              icon={icon}
+            >
               {title}
             </Heading>
             {description && (

@@ -11,6 +11,7 @@ import { UseDropdown } from "~/modules/user/components/UserDropdown";
 import { Stack } from "~/components/Stack";
 import { useMatches } from "@remix-run/react";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
+import { HideDesktop, HideTablet } from "~/components/HideMobile";
 
 export interface DashboardLayoutProps {
   user?: Partial<User>;
@@ -46,6 +47,11 @@ const Grid = styled("div", {
       },
     },
   },
+
+  "@tablet": {
+    gridTemplateColumns: "1fr",
+    gap: "$spacing$0",
+  },
 });
 
 export const DashboardLayout = ({
@@ -69,35 +75,35 @@ export const DashboardLayout = ({
         <div>
           <TopWrapper>
             <Container>
-              <HStack justifyContent="space-between" height="cta">
+              <HStack justifyContent="space-between" height="navHeight">
                 <BreadCrumbs crumbs={crumbs} />
 
                 <UseDropdown user={user} />
               </HStack>
 
-              <Spacer size={2} />
+              {header && <Spacer size={2} />}
 
               <header>{header}</header>
             </Container>
           </TopWrapper>
 
-          <Spacer size={12} />
+          <Spacer size={{ "@initial": 12, "@tablet": subNav ? 0 : 4 }} />
+
+          <HideDesktop>{subNav}</HideDesktop>
 
           <Container>
             <Grid singleColumn={!subNav}>
-              {subNav}
+              <HideTablet>{subNav}</HideTablet>
 
-              <div>
+              <OverflowContainer>
                 <Main>
-                  <OverflowContainer>
-                    <Stack spacing={8}>
-                      {status}
+                  <Stack spacing={{ "@initial": 8, "@mobile": 4 }}>
+                    {status}
 
-                      {children}
-                    </Stack>
-                  </OverflowContainer>
+                    {children}
+                  </Stack>
                 </Main>
-              </div>
+              </OverflowContainer>
             </Grid>
           </Container>
         </div>

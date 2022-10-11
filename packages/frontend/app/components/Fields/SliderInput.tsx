@@ -23,6 +23,10 @@ const RangeInput = styled("input", {
   cursor: "pointer",
   height: `$cta`,
   minWidth: "16rem",
+  "@mobile": {
+    minWidth: "unset",
+    width: "100%",
+  },
 
   // chrome edge safari
   "&::-webkit-slider-runnable-track": {
