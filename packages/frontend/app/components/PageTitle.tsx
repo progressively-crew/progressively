@@ -36,8 +36,9 @@ export const PageTitle = ({
 }: PageTitleProps) => {
   return (
     <HStack
-      justifyContent="space-between"
+      justifyContent={{ "@initial": "space-between", "@tablet": "flex-start" }}
       direction={{ "@tablet": "column" }}
+      alignItems={{ "@tablet": "flex-start" }}
       spacing={{ "@tablet": 4 }}
     >
       <Stack>

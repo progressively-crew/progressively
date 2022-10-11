@@ -4,7 +4,7 @@ export const Container = styled("div", {
   padding: "0 $spacing$12",
   margin: "0 auto",
   variants: {
-    width: mapTokenToVariant("width", sizes),
+    maxWidth: mapTokenToVariant("maxWidth", sizes),
   },
 
   "@mobile": {

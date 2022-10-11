@@ -3,10 +3,12 @@ import { useState } from "react";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { CardContent } from "~/components/Card";
+import { Label } from "~/components/Fields/Label";
 import { Radio } from "~/components/Fields/Radio";
 import { SliderInput } from "~/components/Fields/SliderInput";
 import { TextInput } from "~/components/Fields/TextInput";
-import { HideTablet } from "~/components/HideMobile";
+import { HideDesktop, HideTablet } from "~/components/HideMobile";
+import { HStack } from "~/components/HStack";
 import { Spacer } from "~/components/Spacer";
 import { Typography } from "~/components/Typography";
 import { styled } from "~/stitches.config";
@@ -59,7 +61,7 @@ const Wrapper = styled("div", {
     display: "block",
 
     "& .row": {
-      padding: "0 $spacing$4",
+      padding: "$spacing$4",
       display: "block",
       borderLeft: "unset",
       marginBottom: "$spacing$4",
@@ -74,6 +76,8 @@ const Wrapper = styled("div", {
       padding: 0,
       display: "block",
       borderBottom: "unset",
+      height: "unset",
+      marginBottom: "$spacing$2",
     },
 
     "& .col:first-of-type": {
@@ -83,6 +87,7 @@ const Wrapper = styled("div", {
 
     "& .col:last-of-type": {
       paddingRight: "unset",
+      marginBottom: "unset",
     },
   },
 });
@@ -227,17 +232,24 @@ export const VariantList = ({ variants, errors, mode }: VariantListProps) => {
                 </div>
 
                 <div className="col">
-                  <input type="hidden" name="uuid" value={variant.uuid} />
-                  <Radio
-                    type={"radio"}
-                    name={"isControl"}
-                    value={variant.uuid}
-                    defaultChecked={variant.isControl}
-                    aria-label={`Is variant at position ${
-                      index + 1
-                    } the control variant?`}
-                    readOnly
-                  />
+                  <HStack spacing={2}>
+                    <div>
+                      <input type="hidden" name="uuid" value={variant.uuid} />
+                      <Radio
+                        type={"radio"}
+                        name={"isControl"}
+                        value={variant.uuid}
+                        defaultChecked={variant.isControl}
+                        aria-label={`Is variant at position ${
+                          index + 1
+                        } the control variant?`}
+                        readOnly
+                      />
+                    </div>
+                    <HideDesktop>
+                      <Label>Is control variant</Label>
+                    </HideDesktop>
+                  </HStack>
                 </div>
 
                 {showRemoveButton && (
