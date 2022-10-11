@@ -5,6 +5,7 @@ import { HStack } from "../HStack";
 import { useNavToggle } from "./hooks/useNavToggle";
 import { Button } from "../Buttons/Button";
 import { AiOutlineMenu } from "react-icons/ai";
+import { VisuallyHidden } from "../VisuallyHidden";
 
 const Wrapper = styled("div", {
   position: "absolute",
@@ -74,8 +75,9 @@ export const MobileNav = ({ crumbs }: DesktopNavProps) => {
 
   return (
     <div>
-      <Button variant="tertiary" onClick={toggleNav} aria-label="Toggle menu">
+      <Button variant="tertiary" onClick={toggleNav}>
         <AiOutlineMenu />
+        <VisuallyHidden>Toggle menu</VisuallyHidden>
       </Button>
 
       <Wrapper opened={isNavOpened}>

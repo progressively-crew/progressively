@@ -1,3 +1,4 @@
+import { HideDesktop, HideTablet } from "../HideMobile";
 import { DesktopNav } from "./DesktopNav";
 import { MobileNav } from "./MobileNav";
 import { Crumbs } from "./types";
@@ -7,6 +8,15 @@ export interface BreadCrumbsProps {
 }
 
 export const BreadCrumbs = ({ crumbs }: BreadCrumbsProps) => {
-  return <MobileNav crumbs={crumbs} />;
-  // return <DesktopNav crumbs={crumbs} />;
+  return (
+    <>
+      <HideDesktop>
+        <MobileNav crumbs={crumbs} />
+      </HideDesktop>
+
+      <HideTablet>
+        <DesktopNav crumbs={crumbs} />
+      </HideTablet>
+    </>
+  );
 };
