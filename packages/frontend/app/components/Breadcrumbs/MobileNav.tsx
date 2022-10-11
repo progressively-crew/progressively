@@ -81,7 +81,7 @@ export const MobileNav = ({ crumbs }: DesktopNavProps) => {
       </Button>
 
       <Wrapper opened={isNavOpened}>
-        <nav aria-label="Breadcrumbs">
+        <nav aria-label="Application breadcrumbs">
           <Ol>
             {crumbs.map((crumb, index) => {
               const currentPage = index === lastItemIndex;
