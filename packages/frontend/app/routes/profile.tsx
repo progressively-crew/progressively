@@ -24,6 +24,17 @@ import { Card, CardContent } from "~/components/Card";
 import { PageTitle } from "~/components/PageTitle";
 import { UserIcon } from "~/components/Icons/UserIcon";
 
+export const handle = {
+  breadcrumb: () => {
+    return {
+      link: `/dashboard`,
+      label: "Projects",
+      isRoot: true,
+      forceNotCurrent: true,
+    };
+  },
+};
+
 export const meta: MetaFunction = () => {
   return {
     title: "Progressively | Profile",

@@ -21,25 +21,46 @@ const Ol = styled("ol", {
     whiteSpace: "nowrap",
     textDecoration: "none",
   },
+});
 
-  "& li a:hover": {
+const Li = styled("li", {
+  display: "flex",
+  alignItems: "center",
+
+  "& a:hover": {
     textDecoration: "underline",
   },
 
-  "& li a:active": {
+  "& a:active": {
     color: "$nemesis",
     textDecoration: "underline",
   },
 
-  "& li:last-of-type a": {
+  "&:last-of-type a": {
     fontWeight: "$bold",
     color: "$nemesis",
     textDecoration: "underline",
   },
 
-  "& li": {
-    display: "flex",
-    alignItems: "center",
+  variants: {
+    forceNotCurrent: {
+      true: {
+        "&:last-of-type a": {
+          fontWeight: "revert",
+          color: "$hadesLight",
+          textDecoration: "none",
+        },
+
+        "&:last-of-type a:hover": {
+          textDecoration: "underline",
+        },
+
+        "&:last-of-type a:active": {
+          color: "$nemesis",
+          textDecoration: "underline",
+        },
+      },
+    },
   },
 });
 
@@ -103,7 +124,7 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
           const currentPage = index === lastItemIndex;
 
           return (
-            <li key={crumb.link}>
+            <Li key={crumb.link} forceNotCurrent={crumb.forceNotCurrent}>
               <Link
                 aria-current={
                   crumb.forceNotCurrent
@@ -126,7 +147,7 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
                   <MdChevronRight />
                 </Separator>
               )}
-            </li>
+            </Li>
           );
         })}
       </Ol>
