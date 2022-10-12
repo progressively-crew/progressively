@@ -5,7 +5,9 @@ import { HStack } from "../HStack";
 import { useNavToggle } from "./hooks/useNavToggle";
 import { Button } from "../Buttons/Button";
 import { AiOutlineMenu } from "react-icons/ai";
+import { IoMdClose } from "react-icons/io";
 import { VisuallyHidden } from "../VisuallyHidden";
+import { Spacer } from "../Spacer";
 
 const Wrapper = styled("div", {
   position: "absolute",
@@ -13,12 +15,12 @@ const Wrapper = styled("div", {
   height: "100%",
   left: 0,
   top: 0,
-  background: "$nemesis",
+  background: "$nemesisLight",
   zIndex: 2,
-  padding: "$spacing$8",
   boxSizing: "border-box",
   transform: "translateX(-100%)",
   transition: "all 0.3s",
+  padding: "$spacing$8",
 
   variants: {
     opened: {
@@ -39,7 +41,7 @@ const Ol = styled("ol", {
 
   "& li a": {
     boxSizing: "border-box",
-    color: "$apollo",
+    color: "$hadesLight",
     transition: "border,box-shadow 0.2s",
     whiteSpace: "nowrap",
     textDecoration: "none",
@@ -81,6 +83,12 @@ export const MobileNav = ({ crumbs }: DesktopNavProps) => {
       </Button>
 
       <Wrapper opened={isNavOpened}>
+        <Button variant="primary" onClick={toggleNav} icon={<IoMdClose />}>
+          Close menu
+        </Button>
+
+        <Spacer size={12} />
+
         <nav aria-label="Application breadcrumbs">
           <Ol>
             {crumbs.map((crumb, index) => {

@@ -4,6 +4,7 @@ export const HStack = styled<any, any>("div", {
   display: "flex",
   flexDirection: "row",
   alignItems: "center",
+  width: "100%",
 
   variants: {
     spacing: mapTokenToVariant("gap", spacing, "$spacing"),
@@ -26,6 +27,9 @@ export const HStack = styled<any, any>("div", {
       },
       "flex-end": {
         alignItems: "flex-end",
+      },
+      none: {
+        alignItems: "revert",
       },
     },
 

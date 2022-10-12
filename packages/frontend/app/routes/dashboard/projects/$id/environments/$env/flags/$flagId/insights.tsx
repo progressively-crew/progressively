@@ -203,7 +203,11 @@ export default function FlagInsights() {
 
       <Stack spacing={8}>
         <Form action=".">
-          <HStack spacing={4} alignItems="flex-end">
+          <HStack
+            spacing={4}
+            alignItems={{ "@initial": "flex-end", "@mobile": "none" }}
+            direction={{ "@mobile": "column" }}
+          >
             <TextInput
               type="date"
               name={"startDate"}
