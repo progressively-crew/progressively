@@ -59,6 +59,7 @@ const Ol = styled("ol", {
   "& li:last-of-type a": {
     fontWeight: "$bold",
     textDecoration: "underline",
+    color: "$nemesis",
   },
 
   "& li": {
