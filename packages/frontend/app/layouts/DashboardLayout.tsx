@@ -25,10 +25,6 @@ const OverflowContainer = styled("div", {
   overflow: "hidden", // scroll inside table elements,
   padding: "$spacing$3", // show box shadow when overflowing,
   margin: "-$spacing$3",
-
-  "@tablet": {
-    marginTop: "$spacing$3",
-  },
 });
 
 const TopWrapper = styled("div", {
@@ -90,6 +86,8 @@ export const DashboardLayout = ({
           <Spacer size={{ "@initial": 12, "@tablet": subNav ? 0 : 4 }} />
 
           <HideDesktop>{subNav}</HideDesktop>
+
+          {header && <Spacer size={6} />}
 
           <Container>
             <Grid singleColumn={!subNav}>
