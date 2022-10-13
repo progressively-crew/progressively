@@ -31,7 +31,7 @@ const ProjectRow = ({ userProject }: ProjectRowProps) => {
 };
 export const ProjectList = ({ projects }: ProjectListProps) => {
   return (
-    <RawTable>
+    <RawTable aria-label="Projects you are part of">
       <thead>
         <tr>
           <th width="80%">Name</th>

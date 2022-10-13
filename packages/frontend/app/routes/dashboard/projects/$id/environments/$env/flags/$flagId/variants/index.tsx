@@ -160,6 +160,7 @@ export default function VariantsOfFlag() {
               <ToggleFlag
                 isFlagActivated={isFlagActivated}
                 flagId={currentFlag.uuid}
+                flagName={currentFlag.name}
               />
             </Form>
           }

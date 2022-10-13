@@ -78,7 +78,7 @@ export const DashboardLayout = ({
 
             {header && <Spacer size={2} />}
 
-            <header>{header}</header>
+            {header}
           </Container>
         </TopWrapper>
 

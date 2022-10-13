@@ -103,7 +103,7 @@ export const MobileNav = ({ crumbs }: DesktopNavProps) => {
 
           <Spacer size={12} />
 
-          <nav aria-label="Application breadcrumbs">
+          <nav aria-label="Application breadcrumbs" aria-hidden={!isNavOpened}>
             <Ol>
               {crumbs.map((crumb, index) => {
                 const currentPage = index === lastItemIndex;

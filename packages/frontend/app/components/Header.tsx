@@ -11,7 +11,7 @@ export interface HeaderProps {
   tagline?: React.ReactNode;
 }
 
-const HeadingWrapper = styled("div", {
+const HeadingWrapper = styled("header", {
   display: "flex",
   flexDirection: "column-reverse",
   maxWidth: "80ch",
@@ -36,13 +36,13 @@ export const Header = ({
 }: HeaderProps) => {
   return (
     <div>
-      <HeadingWrapper>
+      <HeadingWrapper aria-labelledby="header-title">
         <HStack
           spacing={{ "@initial": 6, "@tablet": 2 }}
           direction={{ "@tablet": "column" }}
           alignItems={{ "@tablet": "flex-start" }}
         >
-          <H1 as="p" fontWeight="normal">
+          <H1 as="p" fontWeight="normal" id="header-title">
             {title}
           </H1>
 

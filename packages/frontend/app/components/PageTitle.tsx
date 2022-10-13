@@ -49,6 +49,7 @@ export const PageTitle = ({
           fontWeight="semiBold"
           lineHeight="title"
           as="h1"
+          id="page-title"
         >
           <HStack spacing={3}>
             {icon && <IconWrapper aria-hidden>{icon}</IconWrapper>}

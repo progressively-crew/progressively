@@ -109,6 +109,7 @@ export default function SchedulingOfFlag() {
               <ToggleFlag
                 isFlagActivated={isFlagActivated}
                 flagId={currentFlag.uuid}
+                flagName={currentFlag.name}
               />
             </Form>
           }

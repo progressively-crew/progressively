@@ -6,7 +6,6 @@ export const H1: React.FC<React.HTMLAttributes<HTMLHeadingElement>> = (
   return (
     <Typography
       as="h1"
-      id="page-title"
       size={{ "@initial": "earth", "@mobile": "mars" }}
       font="title"
       color="hades"

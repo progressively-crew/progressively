@@ -78,17 +78,29 @@ interface BarProps {
   name: string;
   size: string;
   value: number;
+  label: string;
 }
 
-const Bar = ({ size, name, value }: BarProps) => {
+const Bar = ({ size, name, value, label }: BarProps) => {
   return (
-    <BarWrapper style={{ height: size, position: "relative" }}>
-      <Typography as="span" size="neptune" lineHeight="title" className="chart-value-title">
+    <BarWrapper
+      style={{ height: size, position: "relative" }}
+      aria-label={label}
+    >
+      <Typography
+        aria-hidden
+        as="span"
+        size="neptune"
+        lineHeight="title"
+        className="chart-value-title"
+      >
         {value}
       </Typography>
-      <RawBar style={{ background: generateColor(name) }} />
+      <RawBar style={{ background: generateColor(name) }} aria-hidden />
 
-      <Typography size="neptune">{name}</Typography>
+      <Typography size="neptune" aria-hidden>
+        {name}
+      </Typography>
     </BarWrapper>
   );
 };
@@ -131,11 +143,14 @@ export const BarChart = ({ data, max }: BarChartProps) => {
                   size={`${(vh.value / max) * 100}%`}
                   key={`${vh.value}-${vh.name}-${date}`}
                   value={vh.value}
+                  label={`Flag evaluated with "${vh.name}"  ${
+                    vh.value
+                  } times the ${formatterRef.current.format(new Date(date))}`}
                 />
               ))}
             </div>
 
-            <div>
+            <div aria-hidden>
               <FormattedDate date={date} formatterRef={formatterRef} />
             </div>
           </div>

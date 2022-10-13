@@ -4,9 +4,14 @@ import { FlagStatus } from "../types";
 export interface ToggleFlag {
   isFlagActivated: boolean;
   flagId: string;
+  flagName: string;
 }
 
-export const ToggleFlag = ({ flagId, isFlagActivated }: ToggleFlag) => {
+export const ToggleFlag = ({
+  flagId,
+  isFlagActivated,
+  flagName,
+}: ToggleFlag) => {
   const formId = `form-${flagId}`;
 
   return (
@@ -24,7 +29,7 @@ export const ToggleFlag = ({ flagId, isFlagActivated }: ToggleFlag) => {
 
       <Switch
         form={formId}
-        label="Feature flag status"
+        label={`Toggle ${flagName} flag status`}
         type="submit"
         checked={isFlagActivated}
       />

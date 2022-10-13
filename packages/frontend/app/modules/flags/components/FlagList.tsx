@@ -30,6 +30,7 @@ const FlagRow = ({ flagEnv, projectId, envId }: FlagRowProps) => {
         <ToggleFlag
           isFlagActivated={flagEnv.status === FlagStatus.ACTIVATED}
           flagId={flagEnv.flagId}
+          flagName={flagEnv.flag.name}
         />
       </td>
       <td>
@@ -71,7 +72,7 @@ export const FlagList = ({ flags, projectId, envId }: FlagListProps) => {
         />
       ))}
 
-      <RawTable>
+      <RawTable aria-label="Flags available in the environment">
         <thead>
           <tr>
             <th width="14%">Status</th>
