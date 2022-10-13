@@ -5,23 +5,10 @@ import { HStack } from "./HStack";
 const HorizontalNavWrapper = styled("nav", {
   paddingTop: "10px", // hack to stay fully aligned with the title of the page
 
-  "@tablet": {
-    overflow: "hidden",
-    paddingTop: 0,
-    marginTop: "2px",
-    width: "100%",
-    background: "$nemesisLight",
-  },
-
   "& ul": {
     display: "flex",
     flexDirection: "column",
     gap: "$spacing$1",
-
-    "@tablet": {
-      flexDirection: "row",
-      width: "100%",
-    },
   },
 
   "& ul li a": {
@@ -52,6 +39,29 @@ const HorizontalNavWrapper = styled("nav", {
   "& ul li a svg": {
     color: "$nemesis",
     fontSize: "$jupiter",
+  },
+
+  "@tablet": {
+    overflow: "hidden",
+    paddingTop: 0,
+    marginTop: "2px",
+    width: "100%",
+    background: "$nemesisLight",
+
+    "& ul": {
+      flexDirection: "row",
+      width: "100%",
+    },
+
+    "& ul li a": {
+      borderBottom: "4px solid transparent",
+      borderTop: "4px solid transparent",
+      borderRadius: "unset",
+    },
+
+    "& ul li a.active": {
+      borderBottom: "4px solid $nemesis",
+    },
   },
 });
 

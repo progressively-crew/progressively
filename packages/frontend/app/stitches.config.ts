@@ -98,6 +98,7 @@ export const sizes = {
   ctaSmall: "40px",
   logo: "32px",
   emptyStateIconHeight: "160px",
+  emptyStateIconHeightMobile: "120px",
   avatar: "32px",
   treeHeight: "60%",
   dialog: "80ch",

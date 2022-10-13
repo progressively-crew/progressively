@@ -1,11 +1,12 @@
 import { Typography } from "./Typography";
 
-export const H1: React.FC<React.HTMLAttributes<HTMLHeadingElement>> = (props) => {
+export const H1: React.FC<React.HTMLAttributes<HTMLHeadingElement>> = (
+  props
+) => {
   return (
     <Typography
       as="h1"
-      id="page-title"
-      size="earth"
+      size={{ "@initial": "earth", "@mobile": "mars" }}
       font="title"
       color="hades"
       fontWeight="semiBold"

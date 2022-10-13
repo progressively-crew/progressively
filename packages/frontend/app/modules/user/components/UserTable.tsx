@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Cell, Col, Row, Table, Tbody, Thead } from "../../a11y/Table";
 import { UserProject } from "../../projects/types";
 import { Tag } from "~/components/Tag";
+import { ButtonCopy } from "~/components/ButtonCopy";
 
 export interface UserTableProps {
   userProjects: Array<UserProject>;
@@ -31,7 +32,15 @@ export const UserTable = ({
             disabled={!canEdit}
           >
             <Cell>{userProject.user?.fullname}</Cell>
-            <Cell>{userProject.user?.email}</Cell>
+            <Cell>
+              <ButtonCopy
+                variant="tertiary"
+                toCopy={userProject.user?.email || ""}
+                small
+              >
+                {userProject.user?.email}
+              </ButtonCopy>
+            </Cell>
             <Cell>
               <Tag>{userProject.role}</Tag>
             </Cell>

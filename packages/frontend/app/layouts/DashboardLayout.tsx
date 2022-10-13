@@ -25,10 +25,6 @@ const OverflowContainer = styled("div", {
   overflow: "hidden", // scroll inside table elements,
   padding: "$spacing$3", // show box shadow when overflowing,
   margin: "-$spacing$3",
-
-  "@tablet": {
-    marginTop: "$spacing$3",
-  },
 });
 
 const TopWrapper = styled("div", {
@@ -69,27 +65,29 @@ export const DashboardLayout = ({
 
   return (
     <NavProvider>
-      <InertWhenNavOpened>
-        <SkipNavLink>Skip to content</SkipNavLink>
+      <SkipNavLink>Skip to content</SkipNavLink>
 
-        <div>
-          <TopWrapper>
-            <Container>
-              <HStack justifyContent="space-between" height="navHeight">
-                <BreadCrumbs crumbs={crumbs} />
+      <div>
+        <TopWrapper>
+          <Container>
+            <HStack justifyContent="space-between" height="navHeight">
+              <BreadCrumbs crumbs={crumbs} />
 
-                <UseDropdown user={user} />
-              </HStack>
+              <UseDropdown user={user} />
+            </HStack>
 
-              {header && <Spacer size={2} />}
+            {header && <Spacer size={2} />}
 
-              <header>{header}</header>
-            </Container>
-          </TopWrapper>
+            {header}
+          </Container>
+        </TopWrapper>
 
+        <InertWhenNavOpened>
           <Spacer size={{ "@initial": 12, "@tablet": subNav ? 0 : 4 }} />
 
           <HideDesktop>{subNav}</HideDesktop>
+
+          {header && <Spacer size={6} />}
 
           <Container>
             <Grid singleColumn={!subNav}>
@@ -106,8 +104,8 @@ export const DashboardLayout = ({
               </OverflowContainer>
             </Grid>
           </Container>
-        </div>
-      </InertWhenNavOpened>
+        </InertWhenNavOpened>
+      </div>
     </NavProvider>
   );
 };

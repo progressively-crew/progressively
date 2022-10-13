@@ -14,9 +14,12 @@ export const Card = styled("div", {
 
 export const CardContent = styled("div", {
   padding: "$spacing$12",
-  variants: {
-    padding: mapTokenToVariant("padding", spacing, "$spacing"),
 
+  "@mobile": {
+    padding: "$spacing$6",
+  },
+
+  variants: {
     noTop: {
       true: {
         paddingTop: 0,

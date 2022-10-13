@@ -64,7 +64,9 @@ export const ButtonCopy = ({ toCopy, children, ...props }: ButtonCopyProps) => {
           {...copyToClipBoardProps}
         >
           {isCopied ? (
-            "Copied"
+            <span>
+              Copied <VisuallyHidden>{toCopy}</VisuallyHidden>
+            </span>
           ) : (
             <span>
               <VisuallyHidden>Copy </VisuallyHidden>

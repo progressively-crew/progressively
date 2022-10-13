@@ -21,7 +21,7 @@ export const StrategyList = ({
   flagId,
 }: StrategyListProps) => {
   return (
-    <RawTable>
+    <RawTable aria-label="Strategies applied on this flag">
       <thead>
         <tr>
           <th>Name</th>
@@ -48,7 +48,7 @@ export const StrategyList = ({
                   icon={<AiOutlineEdit />}
                   to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/strategies/${strat.uuid}/edit`}
                 >
-                  Edit<VisuallyHidden> {strat.name}</VisuallyHidden>
+                  Edit<VisuallyHidden> {strat.name} strategy</VisuallyHidden>
                 </Button>
 
                 <DeleteButton
@@ -56,7 +56,7 @@ export const StrategyList = ({
                   small
                   to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/strategies/${strat.uuid}/delete`}
                 >
-                  Remove<VisuallyHidden> {strat.name}</VisuallyHidden>
+                  Remove<VisuallyHidden> {strat.name} strategy</VisuallyHidden>
                 </DeleteButton>
               </HStack>
             </td>

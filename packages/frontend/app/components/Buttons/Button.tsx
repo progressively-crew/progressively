@@ -36,6 +36,11 @@ export const RawButton = styled("button", {
   "@mobile": {
     justifyContent: "center",
     width: "100%",
+
+    "& .text": {
+      flex: 1,
+      textAlign: "center",
+    },
   },
 
   variants: {
@@ -174,7 +179,7 @@ export const Button = ({
       >
         <HStack spacing={3}>
           {icon}
-          {children}
+          <span className="text">{children}</span>
         </HStack>
       </RawButton>
     );
@@ -192,7 +197,7 @@ export const Button = ({
         {icon && isLoading && <Spinner scheme={scheme} />}
         {icon && !isLoading && icon}
 
-        {children}
+        <span className={icon ? "text" : undefined}>{children}</span>
       </HStack>
     </RawButton>
   );

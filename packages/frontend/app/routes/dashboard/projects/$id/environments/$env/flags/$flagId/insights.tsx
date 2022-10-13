@@ -29,6 +29,7 @@ import { EmptyState } from "~/components/EmptyState";
 import { Typography } from "~/components/Typography";
 import { PageTitle } from "~/components/PageTitle";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
+import { VisuallyHidden } from "~/components/VisuallyHidden";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -178,6 +179,7 @@ export default function FlagInsights() {
               <ToggleFlag
                 isFlagActivated={isFlagActivated}
                 flagId={currentFlag.uuid}
+                flagName={currentFlag.name}
               />
             </Form>
           }
@@ -203,7 +205,11 @@ export default function FlagInsights() {
 
       <Stack spacing={8}>
         <Form action=".">
-          <HStack spacing={4} alignItems="flex-end">
+          <HStack
+            spacing={4}
+            alignItems={{ "@initial": "flex-end", "@mobile": "none" }}
+            direction={{ "@mobile": "column" }}
+          >
             <TextInput
               type="date"
               name={"startDate"}
@@ -222,20 +228,35 @@ export default function FlagInsights() {
 
         <InsightsGrid>{hitNode}</InsightsGrid>
 
-        <Card>
-          {allCount > 0 ? (
-            <BarChart data={organizedHits} max={max} />
-          ) : (
-            <CardContent>
-              <EmptyState
-                title="No hits found"
-                description={
-                  <Typography>There is no flag hit for this period.</Typography>
-                }
-              />
-            </CardContent>
-          )}
-        </Card>
+        <section
+          aria-label={`Hits per date and per variant (${allCount}) evaluations in the current date range`}
+        >
+          <Card>
+            {allCount > 0 ? (
+              <div>
+                <VisuallyHidden>
+                  <h2>
+                    Hits per date and per variant ({allCount}) evaluations in
+                    the current date range
+                  </h2>
+                </VisuallyHidden>
+                <BarChart data={organizedHits} max={max} />
+              </div>
+            ) : (
+              <CardContent>
+                <EmptyState
+                  titleAs="h2"
+                  title="No hits found"
+                  description={
+                    <Typography>
+                      There is no flag hit for this period.
+                    </Typography>
+                  }
+                />
+              </CardContent>
+            )}
+          </Card>
+        </section>
       </Stack>
     </DashboardLayout>
   );
