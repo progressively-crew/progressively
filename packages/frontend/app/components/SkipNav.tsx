@@ -1,4 +1,5 @@
 import { styled } from "~/stitches.config";
+import { useNavToggle } from "./Breadcrumbs/hooks/useNavToggle";
 
 const SkipNavAnchor = styled("a", {
   background: "$hades",
@@ -27,5 +28,15 @@ export interface SkipNavLinkProps {
   children: React.ReactNode;
 }
 export const SkipNavLink = ({ children }: SkipNavLinkProps) => {
-  return <SkipNavAnchor href="#content">{children}</SkipNavAnchor>;
+  const { isNavOpened } = useNavToggle();
+
+  return (
+    <SkipNavAnchor
+      href="#content"
+      tabIndex={isNavOpened ? 0 : -1}
+      aria-hidden={!isNavOpened}
+    >
+      {children}
+    </SkipNavAnchor>
+  );
 };

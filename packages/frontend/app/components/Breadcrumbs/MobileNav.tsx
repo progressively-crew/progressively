@@ -8,6 +8,7 @@ import { AiOutlineMenu } from "react-icons/ai";
 import { IoMdClose } from "react-icons/io";
 import { VisuallyHidden } from "../VisuallyHidden";
 import { Spacer } from "../Spacer";
+import { FocusTrap } from "../FocusTrap";
 
 const Wrapper = styled("div", {
   position: "absolute",
@@ -78,44 +79,59 @@ export const MobileNav = ({ crumbs }: DesktopNavProps) => {
 
   return (
     <div>
-      <Button variant="tertiary" onClick={toggleNav}>
+      <Button
+        variant="tertiary"
+        onClick={toggleNav}
+        tabIndex={isNavOpened ? -1 : 0}
+        aria-hidden={isNavOpened}
+      >
         <AiOutlineMenu />
         <VisuallyHidden>Toggle menu</VisuallyHidden>
       </Button>
 
-      <Wrapper opened={isNavOpened}>
-        <Button variant="primary" onClick={toggleNav} icon={<IoMdClose />}>
-          Close menu
-        </Button>
+      <FocusTrap isActive={isNavOpened}>
+        <Wrapper opened={isNavOpened}>
+          <Button
+            variant="primary"
+            onClick={toggleNav}
+            icon={<IoMdClose />}
+            tabIndex={isNavOpened ? 0 : -1}
+            aria-hidden={!isNavOpened}
+          >
+            Close menu
+          </Button>
 
-        <Spacer size={12} />
+          <Spacer size={12} />
 
-        <nav aria-label="Application breadcrumbs">
-          <Ol>
-            {crumbs.map((crumb, index) => {
-              const currentPage = index === lastItemIndex;
+          <nav aria-label="Application breadcrumbs">
+            <Ol>
+              {crumbs.map((crumb, index) => {
+                const currentPage = index === lastItemIndex;
 
-              return (
-                <li key={crumb.link}>
-                  <Link
-                    aria-current={
-                      crumb.forceNotCurrent
-                        ? undefined
-                        : currentPage
-                        ? "page"
-                        : undefined
-                    }
-                    to={crumb.link}
-                    fontSize="uranus"
-                  >
-                    <HStack spacing={2}>{crumb.label}</HStack>
-                  </Link>
-                </li>
-              );
-            })}
-          </Ol>
-        </nav>
-      </Wrapper>
+                return (
+                  <li key={crumb.link}>
+                    <Link
+                      tabIndex={isNavOpened ? 0 : -1}
+                      aria-hidden={!isNavOpened}
+                      aria-current={
+                        crumb.forceNotCurrent
+                          ? undefined
+                          : currentPage
+                          ? "page"
+                          : undefined
+                      }
+                      to={crumb.link}
+                      fontSize="uranus"
+                    >
+                      <HStack spacing={2}>{crumb.label}</HStack>
+                    </Link>
+                  </li>
+                );
+              })}
+            </Ol>
+          </nav>
+        </Wrapper>
+      </FocusTrap>
     </div>
   );
 };
