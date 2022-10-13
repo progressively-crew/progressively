@@ -33,7 +33,11 @@ export const UserTable = ({
           >
             <Cell>{userProject.user?.fullname}</Cell>
             <Cell>
-              <ButtonCopy toCopy={userProject.user?.email || ""} small>
+              <ButtonCopy
+                variant="tertiary"
+                toCopy={userProject.user?.email || ""}
+                small
+              >
                 {userProject.user?.email}
               </ButtonCopy>
             </Cell>

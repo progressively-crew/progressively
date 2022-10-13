@@ -2,7 +2,6 @@ import { styled } from "~/stitches.config";
 import { Heading } from "./Heading";
 import { EmptyBoxIcon } from "./Icons/EmptyBoxIcon";
 import { Spacer } from "./Spacer";
-import { Stack } from "./Stack";
 
 const Wrapper = styled("div", {
   display: "flex",
@@ -15,6 +14,12 @@ const Wrapper = styled("div", {
   "& .empty-box-icon": {
     height: "$emptyStateIconHeight",
     fill: "$nemesis",
+  },
+
+  "@mobile": {
+    "& .empty-box-icon": {
+      height: "$emptyStateIconHeightMobile",
+    },
   },
 });
 
@@ -45,19 +50,21 @@ export const EmptyState = ({
 
       <Spacer size={6} />
 
-      <Stack spacing={2}>
-        <Heading
-          as={titleAs}
-          fontSize={{ "@initial": "earth", "@tablet": "mars" }}
-          id={id}
-        >
-          {title}
-        </Heading>
+      <Heading
+        as={titleAs}
+        fontSize={{ "@initial": "earth", "@tablet": "mars" }}
+        id={id}
+      >
+        {title}
+      </Heading>
 
-        <DescriptionWrapper>{description}</DescriptionWrapper>
+      <Spacer size={2} />
 
-        <div>{action}</div>
-      </Stack>
+      <DescriptionWrapper>{description}</DescriptionWrapper>
+
+      <Spacer size={2} />
+
+      <div>{action}</div>
     </Wrapper>
   );
 };

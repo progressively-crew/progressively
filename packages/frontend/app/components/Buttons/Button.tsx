@@ -40,7 +40,6 @@ export const RawButton = styled("button", {
     "& .text": {
       flex: 1,
       textAlign: "center",
-      marginLeft: "-28px", //aproximate to make the button feeling centered
     },
   },
 

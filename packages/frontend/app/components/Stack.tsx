@@ -6,5 +6,10 @@ export const Stack = styled<any, any>("div", {
 
   variants: {
     spacing: mapTokenToVariant("gap", spacing, "$spacing"),
+    justifyContent: {
+      center: {
+        justifyContent: "center",
+      },
+    },
   },
 });

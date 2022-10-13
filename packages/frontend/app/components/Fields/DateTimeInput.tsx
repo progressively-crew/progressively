@@ -24,6 +24,10 @@ const Input = styled("input", {
   width: "100%",
   boxSizing: "border-box",
   maxWidth: "40ch",
+
+  "@mobile": {
+    maxWidth: "unset",
+  },
 });
 
 const Hint = styled(Typography, {
@@ -33,10 +37,17 @@ const Hint = styled(Typography, {
 const FieldsWrapper = styled("div", {
   '& [type="date"]': {
     width: "12rem",
+
+    "@mobile": {
+      width: "100%",
+    },
   },
 
   '& [type="time"]': {
     width: "8rem",
+    "@mobile": {
+      width: "100%",
+    },
   },
 });
 
@@ -90,7 +101,7 @@ export const DateTimeInput = ({
           <Label as="legend">{label}</Label>
 
           <FieldsWrapper>
-            <HStack spacing={4}>
+            <HStack spacing={4} direction={{ "@mobile": "column" }}>
               <Input
                 type="date"
                 name={`date-${name}`}
