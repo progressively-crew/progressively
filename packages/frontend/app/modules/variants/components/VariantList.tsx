@@ -7,93 +7,16 @@ import { Label } from "~/components/Fields/Label";
 import { Radio } from "~/components/Fields/Radio";
 import { SliderInput } from "~/components/Fields/SliderInput";
 import { TextInput } from "~/components/Fields/TextInput";
-import { HideDesktop, HideTablet } from "~/components/HideMobile";
+import { HideDesktop } from "~/components/HideMobile";
 import { HStack } from "~/components/HStack";
 import { Spacer } from "~/components/Spacer";
-import { Typography } from "~/components/Typography";
-import { styled } from "~/stitches.config";
 import { Variant } from "../types";
+import { RawTable } from "~/components/RawTable";
 
 export enum VariantListModes {
   Editing = "Editing",
   Operational = "Operational",
 }
-
-const Wrapper = styled("div", {
-  display: "table",
-  width: "100%",
-
-  "& .row": {
-    display: "table-row",
-    borderLeft: "4px solid transparent",
-  },
-
-  "& .row:hover": {
-    background: "$heracles",
-
-    "& .col:first-of-type": {
-      borderLeft: "4px solid $nemesis",
-    },
-  },
-
-  "& .row.theadings:hover": {
-    background: "transparent",
-    "& .col:first-of-type": {
-      borderLeft: "4px solid transparent",
-    },
-  },
-
-  "& .col": {
-    borderBottom: "1px solid $heracles",
-    display: "table-cell",
-    verticalAlign: "middle",
-    padding: "0 $spacing$4",
-    height: "$cta",
-  },
-
-  "& .col:first-of-type": {
-    borderLeft: "4px solid transparent",
-    paddingLeft: "$spacing$12",
-  },
-
-  "& .col:last-of-type": {
-    paddingRight: "$spacing$12",
-  },
-
-  "@tablet": {
-    display: "block",
-
-    "& .row": {
-      padding: "$spacing$4",
-      display: "block",
-      borderLeft: "unset",
-      marginBottom: "$spacing$4",
-      borderBottom: "1px solid $heracles",
-
-      "&:last-of-type": {
-        marginBottom: 0,
-      },
-    },
-
-    "& .col": {
-      padding: 0,
-      display: "block",
-      borderBottom: "unset",
-      height: "unset",
-      marginBottom: "$spacing$2",
-    },
-
-    "& .col:first-of-type": {
-      borderLeft: "unset",
-      paddingLeft: "unset",
-    },
-
-    "& .col:last-of-type": {
-      paddingRight: "unset",
-      marginBottom: "unset",
-    },
-  },
-});
 
 export interface FormSliderInputProps {
   name: string;
@@ -151,92 +74,20 @@ export const VariantList = ({ variants, errors, mode }: VariantListProps) => {
       <Form method="post" id="edit-variant">
         <input type="hidden" name="_type" value="edit-variant" />
 
-        <Wrapper>
-          <HideTablet>
-            <div className="row theadings">
-              <div className="col">
-                <Typography
-                  fontWeight="bold"
-                  textTransform="uppercase"
-                  size="neptune"
-                  font="title"
-                  as="span"
-                >
-                  Variant value
-                </Typography>
-              </div>
+        <RawTable>
+          <thead>
+            <tr>
+              <th>Is control</th>
+              <th>Variant value</th>
+              <th>Rollout percentage</th>
+              {showRemoveButton && <th>Actions</th>}
+            </tr>
+          </thead>
 
-              <div className="col">
-                <Typography
-                  fontWeight="bold"
-                  textTransform="uppercase"
-                  size="neptune"
-                  font="title"
-                  as="span"
-                >
-                  Rollout percentage
-                </Typography>
-              </div>
-
-              <div className="col">
-                <Typography
-                  fontWeight="bold"
-                  textTransform="uppercase"
-                  size="neptune"
-                  font="title"
-                  as="span"
-                >
-                  Is control
-                </Typography>
-              </div>
-
-              {showRemoveButton && (
-                <div className="col">
-                  <Typography
-                    fontWeight="bold"
-                    textTransform="uppercase"
-                    size="neptune"
-                    font="title"
-                    as="span"
-                  >
-                    Actions
-                  </Typography>
-                </div>
-              )}
-            </div>
-          </HideTablet>
-
-          <div>
+          <tbody>
             {variants.map((variant, index) => (
-              <div
-                role="group"
-                className="row"
-                key={`variant-${variant.uuid}`}
-                aria-label={`Variant at position ${index + 1}`}
-              >
-                <div className="col">
-                  <TextInput
-                    hiddenLabel
-                    id={`name-${index}`}
-                    name="name"
-                    defaultValue={variant.value}
-                    label={`Variant ${index + 1} value`}
-                    isInvalid={Boolean(errors?.[`name-${index}`])}
-                    isDisabled={isValueInputDisabled}
-                    small
-                  />
-                </div>
-
-                <div className="col">
-                  <FormSliderInput
-                    id={`rolloutPercentage-${index}`}
-                    name={`rolloutPercentage`}
-                    label={`Variant ${index + 1} rollout percentage`}
-                    initialPercentage={variant.rolloutPercentage}
-                  />
-                </div>
-
-                <div className="col">
+              <tr key={`variant-${variant.uuid}`}>
+                <td>
                   <HStack spacing={2}>
                     <div>
                       <input type="hidden" name="uuid" value={variant.uuid} />
@@ -255,10 +106,31 @@ export const VariantList = ({ variants, errors, mode }: VariantListProps) => {
                       <Label>Is control variant</Label>
                     </HideDesktop>
                   </HStack>
-                </div>
+                </td>
+                <td>
+                  <TextInput
+                    hiddenLabel
+                    id={`name-${index}`}
+                    name="name"
+                    defaultValue={variant.value}
+                    label={`Variant ${index + 1} value`}
+                    isInvalid={Boolean(errors?.[`name-${index}`])}
+                    isDisabled={isValueInputDisabled}
+                    small
+                  />
+                </td>
+
+                <td>
+                  <FormSliderInput
+                    id={`rolloutPercentage-${index}`}
+                    name={`rolloutPercentage`}
+                    label={`Variant ${index + 1} rollout percentage`}
+                    initialPercentage={variant.rolloutPercentage}
+                  />
+                </td>
 
                 {showRemoveButton && (
-                  <div className="col">
+                  <td>
                     <DeleteButton
                       variant="tertiary"
                       small
@@ -267,12 +139,12 @@ export const VariantList = ({ variants, errors, mode }: VariantListProps) => {
                     >
                       Remove
                     </DeleteButton>
-                  </div>
+                  </td>
                 )}
-              </div>
+              </tr>
             ))}
-          </div>
-        </Wrapper>
+          </tbody>
+        </RawTable>
 
         <Spacer size={6} />
 
