@@ -141,16 +141,25 @@ export class FlagsController {
   @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(StrategySchema))
-  addStrategyToFlag(
+  async addStrategyToFlag(
     @Param('envId') envId: string,
     @Param('flagId') flagId: string,
     @Body() strategyDto: StrategyCreationDTO,
   ): Promise<any> {
-    return this.strategyService.addStrategyToFlagEnv(
+    const strategy = await this.strategyService.addStrategyToFlagEnv(
       envId,
       flagId,
       strategyDto,
     );
+
+    const { FlagEnvironment: flagEnv } =
+      await this.strategyService.getStrategyFlagEnv(strategy.uuid);
+
+    if (flagEnv.status === FlagStatus.ACTIVATED) {
+      this.wsGateway.notifyChanges(flagEnv.environment.clientKey, flagEnv);
+    }
+
+    return strategy;
   }
 
   @Post('environments/:envId/flags/:flagId/scheduling')

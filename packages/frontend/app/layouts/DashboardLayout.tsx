@@ -83,15 +83,15 @@ export const DashboardLayout = ({
         </TopWrapper>
 
         <InertWhenNavOpened>
-          <Spacer size={{ "@initial": 12, "@tablet": subNav ? 0 : 4 }} />
+          <Spacer size={{ "@initial": 12, "@tablet": 0 }} />
 
-          <HideDesktop>{subNav}</HideDesktop>
+          {subNav && <HideDesktop>{subNav}</HideDesktop>}
 
-          {header && <Spacer size={6} />}
+          <Spacer size={{ "@initial": 0, "@tablet": 6 }} />
 
           <Container>
             <Grid singleColumn={!subNav}>
-              <HideTablet>{subNav}</HideTablet>
+              {subNav && <HideTablet>{subNav}</HideTablet>}
 
               <OverflowContainer>
                 <Main>
