@@ -42,7 +42,7 @@ export const Header = ({
           direction={{ "@tablet": "column" }}
           alignItems={{ "@tablet": "flex-start" }}
         >
-          <H1 as="p" fontWeight="normal" id="header-title">
+          <H1 as="p" id="header-title">
             {title}
           </H1>
 

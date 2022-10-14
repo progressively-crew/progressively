@@ -75,7 +75,7 @@ export const FlagList = ({ flags, projectId, envId }: FlagListProps) => {
       <RawTable aria-label="Flags available in the environment">
         <thead>
           <tr>
-            <th width="14%">Status</th>
+            <th width="20%">Status</th>
             <th>Name</th>
             <th>Type</th>
             <th>Flag key</th>

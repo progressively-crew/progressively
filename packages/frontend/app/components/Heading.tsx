@@ -4,6 +4,7 @@ import { HStack } from "./HStack";
 const HeadingWrapper = styled<any, any>("h2", {
   color: "$hades",
   fontFamily: "$title",
+  fontWeight: "$semiBold",
   variants: {
     fontSize: mapTokenToVariant("fontSize", fontSizes),
   },
