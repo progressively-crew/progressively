@@ -20,6 +20,8 @@ const Table = styled("table", {
     fontSize: "$neptune",
     fontFamily: "$title",
     padding: "0 $spacing$2",
+    fontWeight: "$bold",
+    color: "$hadesLight",
   },
 
   "& td": {

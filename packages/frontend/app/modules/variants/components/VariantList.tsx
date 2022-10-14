@@ -36,8 +36,11 @@ const Wrapper = styled("div", {
     },
   },
 
-  "& .row:first-of-type:hover": {
+  "& .row.theadings:hover": {
     background: "transparent",
+    "& .col:first-of-type": {
+      borderLeft: "4px solid transparent",
+    },
   },
 
   "& .col": {
@@ -150,9 +153,10 @@ export const VariantList = ({ variants, errors, mode }: VariantListProps) => {
 
         <Wrapper>
           <HideTablet>
-            <div className="row">
+            <div className="row theadings">
               <div className="col">
                 <Typography
+                  fontWeight="bold"
                   textTransform="uppercase"
                   size="neptune"
                   font="title"
@@ -176,6 +180,7 @@ export const VariantList = ({ variants, errors, mode }: VariantListProps) => {
 
               <div className="col">
                 <Typography
+                  fontWeight="bold"
                   textTransform="uppercase"
                   size="neptune"
                   font="title"

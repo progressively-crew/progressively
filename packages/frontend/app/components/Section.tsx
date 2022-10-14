@@ -34,6 +34,12 @@ export interface SectionHeaderProps extends React.HTMLAttributes<HTMLElement> {
 
 const SectionHeaderWrapper = styled("div", {
   marginBottom: "$spacing$4",
+
+  "& .actions": {
+    "@mobile": {
+      width: "100%",
+    },
+  },
 });
 
 const DescriptionWrapper = styled("div", {
@@ -86,7 +92,7 @@ export const SectionHeader = ({
               </>
             )}
           </div>
-          {action}
+          <div className="actions">{action}</div>
         </HStack>
 
         {status}

@@ -12,7 +12,6 @@ import UnauthorizedPage from "./routes/401";
 import ForbiddenPage from "./routes/403";
 import NotFoundPage from "./routes/404";
 import styles from "./styles/index.css";
-import fonts from "./styles/fonts.css";
 import { H1 } from "./components/H1";
 import { Main } from "./components/Main";
 import { Button } from "./components/Buttons/Button";
@@ -32,28 +31,7 @@ import { withSentry } from "@sentry/remix";
  * https://remix.run/api/app#links
  */
 export const links: LinksFunction = () => {
-  return [
-    {
-      rel: "preload",
-      href: "/fonts/Catamaran-ExtraBold.ttf",
-      as: "font",
-      type: "font/ttf",
-    },
-    {
-      rel: "preload",
-      href: "/fonts/Mulish-Medium.ttf",
-      as: "font",
-      type: "font/ttf",
-    },
-    {
-      rel: "preload",
-      href: "/fonts/Mulish-ExtraBold.ttf",
-      as: "font",
-      type: "font/ttf",
-    },
-    { rel: "stylesheet", href: fonts },
-    { rel: "stylesheet", href: styles },
-  ];
+  return [{ rel: "stylesheet", href: styles }];
 };
 
 /**
