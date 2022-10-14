@@ -143,10 +143,38 @@ export class StrategyService {
     });
   }
 
+  getStrategyFlagEnv(stratId: string) {
+    return this.prisma.rolloutStrategy.findFirst({
+      where: {
+        uuid: stratId,
+      },
+      include: {
+        FlagEnvironment: {
+          include: {
+            environment: true,
+            flag: true,
+            strategies: true,
+            variants: true,
+          },
+        },
+      },
+    });
+  }
+
   deleteStrategy(stratId: string) {
     return this.prisma.rolloutStrategy.delete({
       where: {
         uuid: stratId,
+      },
+      include: {
+        FlagEnvironment: {
+          include: {
+            environment: true,
+            flag: true,
+            strategies: true,
+            variants: true,
+          },
+        },
       },
     });
   }
