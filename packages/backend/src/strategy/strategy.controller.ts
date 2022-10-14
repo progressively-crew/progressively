@@ -37,15 +37,23 @@ export class StrategyController {
   @UseGuards(JwtAuthGuard)
   async deleteStrategy(@Param('stratId') stratId: string): Promise<any> {
     const deletedStrategy = await this.strategyService.deleteStrategy(stratId);
-
-    const { FlagEnvironment: flagEnv } =
-      await this.strategyService.getStrategyFlagEnv(stratId);
+    const flagEnv = deletedStrategy.FlagEnvironment;
 
     if (flagEnv.status === FlagStatus.ACTIVATED) {
       this.wsGateway.notifyChanges(flagEnv.environment.clientKey, flagEnv);
     }
 
-    return deletedStrategy;
+    return {
+      uuid: deletedStrategy.uuid,
+      name: deletedStrategy.name,
+      strategyRuleType: deletedStrategy.strategyRuleType,
+      fieldName: deletedStrategy.fieldName,
+      fieldComparator: deletedStrategy.fieldComparator,
+      fieldValue: deletedStrategy.fieldValue,
+      flagEnvironmentFlagId: deletedStrategy.flagEnvironmentFlagId,
+      flagEnvironmentEnvironmentId:
+        deletedStrategy.flagEnvironmentEnvironmentId,
+    };
   }
 
   @Put(':stratId')

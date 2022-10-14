@@ -166,6 +166,16 @@ export class StrategyService {
       where: {
         uuid: stratId,
       },
+      include: {
+        FlagEnvironment: {
+          include: {
+            environment: true,
+            flag: true,
+            strategies: true,
+            variants: true,
+          },
+        },
+      },
     });
   }
 
