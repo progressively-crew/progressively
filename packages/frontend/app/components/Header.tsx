@@ -26,6 +26,9 @@ const Separator = styled("div", {
 
 const ActionWrapper = styled("div", {
   height: "$cta",
+  "@tablet": {
+    height: "auto",
+  },
 });
 
 export const Header = ({
@@ -52,7 +55,7 @@ export const Header = ({
             </HideTablet>
           )}
 
-          {startAction && <ActionWrapper>{startAction}</ActionWrapper>}
+          <ActionWrapper>{startAction}</ActionWrapper>
         </HStack>
 
         <Spacer size={1} />
