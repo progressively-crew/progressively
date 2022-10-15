@@ -25,13 +25,15 @@ const FlagRow = ({ flagEnv, projectId, envId }: FlagRowProps) => {
   const linkRef = useRef<HTMLAnchorElement>(null);
 
   return (
-    <Tr onClick={() => linkRef.current?.click()}>
+    <tr>
       <td>
-        <ToggleFlag
-          isFlagActivated={flagEnv.status === FlagStatus.ACTIVATED}
-          flagId={flagEnv.flagId}
-          flagName={flagEnv.flag.name}
-        />
+        <Form method="post">
+          <ToggleFlag
+            isFlagActivated={flagEnv.status === FlagStatus.ACTIVATED}
+            flagId={flagEnv.flagId}
+            flagName={flagEnv.flag.name}
+          />
+        </Form>
       </td>
       <td>
         <Link
@@ -57,21 +59,13 @@ const FlagRow = ({ flagEnv, projectId, envId }: FlagRowProps) => {
           {flagEnv.flag.key}
         </ButtonCopy>
       </td>
-    </Tr>
+    </tr>
   );
 };
 
 export const FlagList = ({ flags, projectId, envId }: FlagListProps) => {
   return (
     <div>
-      {flags.map((flagEnv) => (
-        <Form
-          method="post"
-          key={`form-${flagEnv.flagId}`}
-          id={`form-${flagEnv.flagId}`}
-        />
-      ))}
-
       <RawTable aria-label="Flags available in the environment">
         <thead>
           <tr>

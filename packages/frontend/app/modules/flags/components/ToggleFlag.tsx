@@ -12,23 +12,19 @@ export const ToggleFlag = ({
   isFlagActivated,
   flagName,
 }: ToggleFlag) => {
-  const formId = `form-${flagId}`;
-
   return (
     <div>
-      <input type="hidden" name="flagId" value={flagId} form={formId} />
-      <input type="hidden" name="_type" value="toggle-flag" form={formId} />
+      <input type="hidden" name="flagId" value={flagId} />
+      <input type="hidden" name="_type" value="toggle-flag" />
       <input
         type="hidden"
         name="nextStatus"
-        form={formId}
         value={
           isFlagActivated ? FlagStatus.NOT_ACTIVATED : FlagStatus.ACTIVATED
         }
       />
 
       <Switch
-        form={formId}
         label={`Toggle ${flagName} flag status`}
         type="submit"
         checked={isFlagActivated}

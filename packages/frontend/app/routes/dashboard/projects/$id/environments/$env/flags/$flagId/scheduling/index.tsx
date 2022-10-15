@@ -105,7 +105,7 @@ export default function SchedulingOfFlag() {
           tagline={<TagLine icon={<FlagIcon />}>FEATURE FLAG</TagLine>}
           title={currentFlag.name}
           startAction={
-            <Form method="post" id={`form-${currentFlag.uuid}`}>
+            <Form method="post">
               <ToggleFlag
                 isFlagActivated={isFlagActivated}
                 flagId={currentFlag.uuid}
