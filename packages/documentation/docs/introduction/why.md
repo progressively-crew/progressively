@@ -14,11 +14,13 @@ This type of tool aims to simplify the release process of a feature: you can put
 
 ## What makes Progressively different from other tools?
 
-### Short story
+There are plenty of great tools in the feature flagging space with their own sets of features and tradeoffs. Progressively has been built by developpers that have used some of these tools.
 
-- Progressively is way smaller than its competitors (1kB for the React SDK)
-- Progressively has an accessible dashboard (and if it does not work as expected, we commit to finding other ways to use the tool)
-- Progressively comes with built-in SSR support so that the page doesn't blink when using SSR tools
+And we wanted to focus on some aspects that have not always been covered by others: **perceived performance, accessibility and privacy**.
+
+- Progressively is smaller than its competitors ([1kB for the React SDK](https://bundlephobia.com/package/@progressively/react@0.0.1-alpha.10), [see comparison](https://github.com/progressively-crew/progressively/tree/master/example/bundle-diffs))
+- Progressively has to be accessible (if the experience does not work for you, let us know, we want to improve)
+- Progressively focuses on avoiding the flickering flag thanks to built-in SSR support so that the page doesn't blink when using SSR tools
 - Realtime propagation with Websockets
 - No intrusive tracking (expect Sentry or Plausible to be added at some point so that we understand more the audience)
 - You can host it and own the data
