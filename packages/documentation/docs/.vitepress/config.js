@@ -24,6 +24,7 @@ export default {
         items: [
           { text: "JavaScript", link: "/guides/javascript" },
           { text: "Node.js", link: "/guides/node-js" },
+          { text: "React", link: "/guides/react" },
         ],
       },
     ],
