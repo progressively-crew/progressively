@@ -10,7 +10,7 @@ $ npm install --save @progressively/sdk-node
 
 ## Usage
 
-In your Node.js code, add the following snippet. Note, this will only work on server-side application. If you want to use Progressively on the client, please check the [JavaScript SDK reference](https://github.com/progressively-crew/progressively/wiki/JavaScript)
+In your Node.js code, add the following snippet. Note, this will only work on server-side application.
 
 ```javascript
 const { Progressively } = require("@progressively/sdk-node");
