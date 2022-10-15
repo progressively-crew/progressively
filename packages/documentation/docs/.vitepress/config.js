@@ -25,6 +25,8 @@ export default {
           { text: "JavaScript", link: "/guides/javascript" },
           { text: "Node.js", link: "/guides/node-js" },
           { text: "React", link: "/guides/react" },
+          { text: "PHP", link: "/guides/php" },
+          { text: "<add yours>", link: "/guides/add-your-sdk" },
         ],
       },
     ],
