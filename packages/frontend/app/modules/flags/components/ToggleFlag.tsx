@@ -5,12 +5,14 @@ export interface ToggleFlag {
   isFlagActivated: boolean;
   flagId: string;
   flagName: string;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export const ToggleFlag = ({
   flagId,
   isFlagActivated,
   flagName,
+  onClick,
 }: ToggleFlag) => {
   const formId = `form-${flagId}`;
 
@@ -32,6 +34,7 @@ export const ToggleFlag = ({
         label={`Toggle ${flagName} flag status`}
         type="submit"
         checked={isFlagActivated}
+        onClick={onClick}
       />
     </div>
   );
