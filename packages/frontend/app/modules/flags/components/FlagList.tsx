@@ -31,6 +31,7 @@ const FlagRow = ({ flagEnv, projectId, envId }: FlagRowProps) => {
           isFlagActivated={flagEnv.status === FlagStatus.ACTIVATED}
           flagId={flagEnv.flagId}
           flagName={flagEnv.flag.name}
+          onClick={(e) => e.stopPropagation()}
         />
       </td>
       <td>

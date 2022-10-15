@@ -71,7 +71,7 @@ const SwitchInnerWrapper = styled("span", {
 export interface SwitchProps {
   checked: boolean;
   type?: "reset" | "submit" | "button";
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   label: string;
   onLabel?: string;
   offLabel?: string;
