@@ -2,7 +2,7 @@
 
 By default, when a feature flag is created in the dashboard and used by an application, the underlying SDK used by this application will provide a boolean value.
 
-For example, you may have created a new fancy UI for your login page, and you want to show it to only 10% of your audience. Using Progressively, inside the codebase you will do something like:
+For example, you may have created a new fancy UI for your login page, and you want to show it to only 10% of your audience. Using Progressively, inside your application codebase you will do something like:
 
 ```jsx
 if (flags.showNewLoginPage) {
@@ -18,7 +18,7 @@ In this situation, `flags.showNewLoginPage` will give `true` or `false`: it`s ca
 
 With progressively, you can also use **Multi variant feature flags**. In order to do so, you have to create the different `Variants` at the feature flag level, and associate them with a certain percentage.
 
-For example, getting back to the new login page you may have created 2 new fancy UIs for your login page, and you want to show them respectively to 10% of your audience. Using Progressively, inside the codebase you will do something like:
+For example, getting back to the new login page you may have created 2 new fancy UIs for your login page, and you want to show them respectively to 10% of your audience. Using Progressively, inside your application codebase you will do something like:
 
 ```jsx
 if (flags.showNewLoginPage === "Variant B") {

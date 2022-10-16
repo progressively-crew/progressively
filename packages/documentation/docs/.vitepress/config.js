@@ -31,6 +31,10 @@ export default {
             text: `Single & Multi variants`,
             link: "/features/single-multi-variants",
           },
+          {
+            text: `Scheduled flag update`,
+            link: "/features/scheduled-flag-update",
+          },
         ],
       },
       {
