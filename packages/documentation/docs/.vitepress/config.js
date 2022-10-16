@@ -39,6 +39,10 @@ export default {
             text: `Feature flag strategies`,
             link: "/features/flag-strategies",
           },
+          {
+            text: `Simple insights`,
+            link: "/features/simple-insights",
+          },
         ],
       },
       {
