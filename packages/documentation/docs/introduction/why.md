@@ -22,7 +22,7 @@ And we wanted to focus on some aspects that have not always been covered by othe
 - Progressively has to be accessible (if the experience does not work for you, [let us know](https://github.com/progressively-crew/progressively/issues), we want to improve)
 - Progressively focuses on avoiding the page flickering during flag resolution thanks to SSR SDK support ([see React SDK example](/guides/react))
 - Realtime propagation with Websockets
-- No intrusive tracking (expect error moniroting or privacy first analytics tools to be added at some point to understand more the audience)
+- No intrusive tracking (expect error monitoring or privacy first analytics tools to be added at some point to understand more the audience)
 - Progressively is self-hosted: you decide where to put your data and running instances
 
 ---

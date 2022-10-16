@@ -21,6 +21,19 @@ export default {
         ],
       },
       {
+        text: "Features",
+        items: [
+          {
+            text: `Hierarchical structure`,
+            link: "/features/hierarchical-structure",
+          },
+          {
+            text: `Single & Multi variants`,
+            link: "/features/single-multi-variants",
+          },
+        ],
+      },
+      {
         text: "SDKs",
         items: [
           { text: "JavaScript", link: "/guides/javascript" },
