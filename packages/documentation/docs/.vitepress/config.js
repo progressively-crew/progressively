@@ -35,6 +35,10 @@ export default {
             text: `Scheduled flag update`,
             link: "/features/scheduled-flag-update",
           },
+          {
+            text: `Feature flag strategies`,
+            link: "/features/flag-strategies",
+          },
         ],
       },
       {
