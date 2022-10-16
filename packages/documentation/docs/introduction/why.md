@@ -18,48 +18,13 @@ There are plenty of great tools in the feature flagging space with their own set
 
 And we wanted to focus on some aspects that have not always been covered by others: **perceived performance, accessibility and privacy**.
 
-- Progressively is smaller than its competitors ([1kB for the React SDK](https://bundlephobia.com/package/@progressively/react@0.0.1-alpha.10), [see comparison](https://github.com/progressively-crew/progressively/tree/master/example/bundle-diffs))
-- Progressively has to be accessible (if the experience does not work for you, let us know, we want to improve)
-- Progressively focuses on avoiding the flickering flag thanks to built-in SSR support so that the page doesn't blink when using SSR tools
+- Progressively is smaller than its competitors ([1kB for the React SDK](https://bundlephobia.com/package/@progressively/react@0.0.1-alpha.10), [see comparison](https://github.com/progressively-crew/progressively/tree/master/example/bundle-diffs)) and does not bloat client side bundles
+- Progressively has to be accessible (if the experience does not work for you, [let us know](https://github.com/progressively-crew/progressively/issues), we want to improve)
+- Progressively focuses on avoiding the page flickering during flag resolution thanks to SSR SDK support ([see React SDK example](/guides/react))
 - Realtime propagation with Websockets
-- No intrusive tracking (expect Sentry or Plausible to be added at some point so that we understand more the audience)
-- You can host it and own the data
+- No intrusive tracking (expect error moniroting or privacy first analytics tools to be added at some point to understand more the audience)
+- Progressively is self-hosted: you decide where to put your data and running instances
 
-### Long story
+---
 
-#### A small footprint
-
-Third-party tools for transversal needs (analytics, feature flags, a/b testing, etc...) can significantly decrease the speed of web applications. It's not uncommon to hear that some mainstream analytic tools or dynamic script tags loader kill web app performances for multiple reasons:
-
-- they _may_ be blocking the network waterfall
-- they can keep the main thread busy during their execution (the bigger, the longer)
-- they can bloat the application bundle (making it longer to download and start the app later)
-
-Stepping back from this and analyzing a bit the state of the web, we don't think it's normal that tools that are supposed to help us are actually killing the speed of our products.
-
-For instance, if we take a look at the feature flagging space, there are a bunch of tools available. Here's an exhaustive list of them, and their weight included in a Nextjs application:
-
-- Launchdarkly: **14kb minified and gzipped**
-- Unleash: **7kb minified and gzipped**
-- Growthbook: **3kb minified and gzipped**
-- Flagship: **23kb minified and gzipped**
-
-You can run the audit yourself by following the steps of this repository: https://github.com/progressively-crew/progressively/tree/master/example/bundle-diffs
-
-In comparison, Progressively is **1kb minified and gzipped**.
-
-_This might be an apple to orange comparison, so take this with caution, and try the tools to make your own opinion._
-
-It's also interesting to mention that, when loading feature flagging tools on a webpage, there might be a delay between the moment the application starts, and the moment the user actually sees the flag variation they are supposed to see. This is due to the fact that the feature flagging tools make an HTTP request to resolve the flag from their server, and it can make the application blink on the screen.
-
-Progressively provides SDKs for server-side applications using tools like Remix or Nextjs to prevent this behavior and to show the good variant to the good user directly in the HTML document.
-
-#### Accessible dashboard
-
-We want the dashboard of Progressively to be accessible to as many people as possible. Everything in the dashboard should be explicit enough and clear. If something seems weird or is not clear to you, please, create an issue and help us improve the tool.
-
-#### Responsible tracking
-
-Progressively aims to be reasonable in terms of data that it gathers. By default, it only stores information defined in [this database schema](https://github.com/progressively-crew/progressively/blob/master/packages/backend/prisma/schema.prisma).
-
-Also, in the future, Progressively will rely on logging and monitoring tools (Sentry, ELK, or Datadog) in order to catch errors earlier and eventually responsible analytics tools such as [Plausible](https://plausible.io).
+If you come from a company that uses feature branches and GitFlow, you might be interested in reading [this blog post](https://mfrachet.github.io/why-i-dont-like-gitflow/)

@@ -4,6 +4,8 @@ Progressively is self-hosted. In order to match your specific customization need
 
 ## Frontend (dashboard)
 
+You can modify these values at the [root of the frontend (dashboard) project](https://github.com/progressively-crew/progressively/tree/master/packages/frontend) (`./packages/frontend/.env`).
+
 ```sh
 # The backend API URL
 BACKEND_URL=http://localhost:4000
@@ -16,6 +18,8 @@ ALLOW_REGISTRATION=true
 ```
 
 ## Backend
+
+You can modify these values at the [root of the backend project](https://github.com/progressively-crew/progressively/tree/master/packages/backend) (`./packages/backend/.env`).
 
 ```sh
 # The Postgres database string
