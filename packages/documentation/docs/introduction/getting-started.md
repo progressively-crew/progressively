@@ -12,7 +12,7 @@ $ mv ./packages/frontend/.env.example ./packages/frontend/.env
 $ docker-compose up -d
 ```
 
-You can now open <a href="http://localhost:3000/welcome" target="_blank" rel="noreferrer">http://localhost:3000/welcome</a> to create your admin user.
+You can now open <a href="http://localhost:3000/welcome" target="_blank" rel="noreferrer">the welcome page</a> to create your admin user.
 
 ## Regular setup
 
@@ -31,7 +31,7 @@ $ npm run setup
 $ npm run db:prepare
 ```
 
-You can now open <a href="http://localhost:3000/welcome" target="_blank" rel="noreferrer">http://localhost:3000/welcome</a> to create your admin user.
+You can now open <a href="http://localhost:3000/welcome" target="_blank" rel="noreferrer">the welcome page</a> to create your admin user.
 
 ## Note on the stack
 

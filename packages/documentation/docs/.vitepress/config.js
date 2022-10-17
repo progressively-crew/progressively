@@ -6,9 +6,10 @@ export default {
     siteTitle: false,
     logo: "/logo.svg",
     nav: [
-      { text: "Guide", link: "/guide" },
-      { text: "Configs", link: "/configs" },
-      { text: "Changelog", link: "https://github.com/..." },
+      {
+        text: "Github",
+        link: "https://github.com/progressively-crew/progressively",
+      },
     ],
 
     sidebar: [
@@ -60,6 +61,11 @@ export default {
     editLink: {
       pattern:
         "https://github.com/progressively-crew/progressively/edit/main/docs/:path",
+    },
+
+    footer: {
+      message: "Released under the MIT License.",
+      copyright: "Copyright © 2022-present Marvin Frachet",
     },
   },
 };

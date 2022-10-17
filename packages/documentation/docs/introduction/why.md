@@ -2,8 +2,6 @@
 
 Progressively is a minimal and self-hosted feature flagging solution that does not kill your web app performance.
 
-> Keep in mind that it is in Alpha. We need people to use it and give feedback so that we can get more confidence and fix the existing bugs.
-
 ## What problem does it aim to solve?
 
 Feature flagging is a technic allowing multiple variations of a given feature (depending on criteria) to be displayed to a specific set of users.
