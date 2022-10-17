@@ -29,6 +29,8 @@ $ mv ./packages/frontend/.env.example ./packages/frontend/.env
 $ npm install
 $ npm run setup
 $ npm run db:prepare
+$ npm run build
+$ npm run start
 ```
 
 You can now open <a href="http://localhost:3000/welcome" target="_blank" rel="noreferrer">the welcome page</a> to create your admin user.
