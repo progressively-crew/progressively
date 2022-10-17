@@ -3,7 +3,7 @@ export default {
   description: "Rollout quickly, effectively, Progressively",
 
   themeConfig: {
-    siteTitle: false,
+    siteTitle: "Progressively",
     logo: "/logo.svg",
     nav: [
       {

@@ -7,3 +7,14 @@
   --vp-button-brand-hover-bg: #430a8b;
   --vp-button-brand-active-border: #430a8b;
 }
+
+.dark {
+  --vp-home-hero-name-color: #eae8fa;
+  --vp-c-brand: #eae8fa;
+  --vp-c-brand-dark: #eae8fa;
+  --vp-button-brand-hover-border: #444;
+  --vp-button-brand-border: #4b37a9;
+  --vp-button-brand-hover-bg: #444;
+  --vp-button-brand-active-border: #444;
+  --vp-button-brand-text: #4b37a9;
+}
