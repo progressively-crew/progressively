@@ -1,4 +1,4 @@
-FROM node:18-slim AS builder
+FROM node:18 AS builder
 WORKDIR /app
 
 RUN apt-get update || : && apt-get install python -y
