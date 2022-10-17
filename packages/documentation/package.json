@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vitepress dev docs",
     "build": "vitepress build docs",
-    "serve": "vitepress serve docs"
+    "start": "vitepress serve docs --port 8080"
   },
   "keywords": [],
   "author": "",
