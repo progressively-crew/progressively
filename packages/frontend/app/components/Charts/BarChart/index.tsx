@@ -98,7 +98,7 @@ const Bar = ({ size, name, value, label }: BarProps) => {
       </Typography>
       <RawBar style={{ background: generateColor(name) }} aria-hidden />
 
-      <Typography size="neptune" aria-hidden>
+      <Typography size="neptune" aria-hidden fontWeight="bold">
         {name}
       </Typography>
     </BarWrapper>
@@ -122,7 +122,13 @@ const FormattedDate = ({ date, formatterRef }: FormattedDateProps) => {
   }, [date]);
 
   return (
-    <Typography size="uranus" as="time" dateTime={date} className="chart-label">
+    <Typography
+      size="neptune"
+      as="time"
+      dateTime={date}
+      className="chart-label"
+      color="hadesLight"
+    >
       {d}
     </Typography>
   );

@@ -9,13 +9,14 @@ const BigStatLabel = styled(Typography, {
     lineHeight: "unset",
   },
 });
+
 const BigStatValue = styled("p", {
   fontFamily: "$default",
-
   display: "inline",
   fontSize: "$venus",
   lineHeight: "unset",
   color: "$nemesis",
+  fontWeight: "$bold",
 });
 
 export interface BigStatProps {
@@ -39,7 +40,7 @@ export const BigStat = ({ name, count, id, unit }: BigStatProps) => {
           <HStack alignItems="flex-end" as="span">
             {formatterRef.current.format(count)}{" "}
             {unit && (
-              <Typography font="title" as="span">
+              <Typography font="title" as="span" color="hadesLight">
                 {unit}
               </Typography>
             )}
