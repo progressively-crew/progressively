@@ -130,7 +130,7 @@ export const loader: LoaderFunction = async ({
 const InsightsGrid = styled("div", {
   display: "grid",
   gap: "$spacing$8",
-  gridTemplateColumns: "1fr 1fr",
+  gridTemplateColumns: "1fr 1fr 1fr",
 
   "@tablet": {
     gridTemplateColumns: "1fr",
