@@ -38,3 +38,8 @@ export interface CreateFlagDTO {
   name?: string;
   type?: FlagType;
 }
+
+export interface Metric {
+  uuid: string;
+  name: string;
+}
