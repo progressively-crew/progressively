@@ -24,7 +24,9 @@ export const ProgressivelyProvider = ({
   const flagData = useFlagInit(sdkRef, initialFlags);
 
   return (
-    <ProgressivelyContext.Provider value={flagData}>
+    <ProgressivelyContext.Provider
+      value={{ ...flagData, track: sdkRef.current.track }}
+    >
       {children}
     </ProgressivelyContext.Provider>
   );

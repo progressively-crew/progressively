@@ -100,7 +100,19 @@ function Sdk(
     socket?.close();
   }
 
-  return { loadFlags, disconnect, onFlagUpdate };
+  function track(eventName: string, data?: any) {
+    return fetch(`${apiRoot}/sdk/${btoa(JSON.stringify(fields))}`, {
+      method: "POST",
+      credentials: "include",
+      body: JSON.stringify({
+        name: eventName,
+        data,
+      }),
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+
+  return { loadFlags, disconnect, onFlagUpdate, track };
 }
 
 export const Progressively = { init };

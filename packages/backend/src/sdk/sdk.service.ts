@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Body, Injectable } from '@nestjs/common';
 import { nanoid } from 'nanoid';
 import { EnvironmentsService } from '../environments/environments.service';
 import { FlagsService } from '../flags/flags.service';
@@ -94,6 +94,10 @@ export class SdkService {
         flagEnvironmentFlagId: metric.flagEnvironmentFlagId,
         flagEnvironmentEnvironmentId: metric.flagEnvironmentEnvironmentId,
         pMetricUuid: metric.uuid,
+        data:
+          typeof hit.data === 'object'
+            ? JSON.stringify(hit.data)
+            : String(hit.data),
       },
     });
   }
