@@ -15,6 +15,7 @@ import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
+import { MetricList } from "~/modules/flags/components/MetricList";
 import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
@@ -171,7 +172,16 @@ export default function Metrics() {
           </Card>
         )}
 
-        {hasMetrics && <Card>Hello world</Card>}
+        {hasMetrics && (
+          <Card>
+            <MetricList
+              metrics={metrics}
+              projectId={project.uuid}
+              envId={environment.uuid}
+              flagId={currentFlag.uuid}
+            />
+          </Card>
+        )}
       </Section>
     </DashboardLayout>
   );
