@@ -17,6 +17,7 @@ export interface ProgressivelySdkType {
     callback: (data: FlagDict) => void,
     userId?: string | null
   ) => void;
+  track: (eventName: string, data?: any) => Promise<Response>;
 }
 
 export interface LoadFlagsArgs {

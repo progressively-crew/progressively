@@ -6,7 +6,7 @@ import { ProgressivelyProvider, useFlags } from "@progressively/react";
 import { getSSRProps } from "@progressively/react/lib/ssr";
 
 const FlaggedComponent = () => {
-  const { flags } = useFlags();
+  const { flags, track } = useFlags();
 
   return (
     <main>
@@ -14,6 +14,10 @@ const FlaggedComponent = () => {
         <h1>New homepage</h1>
         {flags.newHomepage ? "New variant" : "Old variant"}
       </div>
+
+      <button onClick={() => track("A metric", { hello: "world" })}>
+        Click me
+      </button>
 
       <footer>{flags.newFooter ? "New footer" : "Old footer"}</footer>
     </main>

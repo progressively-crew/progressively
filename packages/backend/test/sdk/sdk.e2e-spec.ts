@@ -208,5 +208,32 @@ describe('SdkController (e2e)', () => {
         .send({ name: 'A metric' })
         .expect(201);
     });
+
+    it('gives a 201 when the hit is valid with number data', () => {
+      const fields = btoa(JSON.stringify({ clientKey: 'valid-sdk-key' }));
+
+      return request(app.getHttpServer())
+        .post(`/sdk/${fields}`)
+        .send({ name: 'A metric', data: 1 })
+        .expect(201);
+    });
+
+    it('gives a 201 when the hit is valid with string data', () => {
+      const fields = btoa(JSON.stringify({ clientKey: 'valid-sdk-key' }));
+
+      return request(app.getHttpServer())
+        .post(`/sdk/${fields}`)
+        .send({ name: 'A metric', data: '1' })
+        .expect(201);
+    });
+
+    it('gives a 201 when the hit is valid with object data', () => {
+      const fields = btoa(JSON.stringify({ clientKey: 'valid-sdk-key' }));
+
+      return request(app.getHttpServer())
+        .post(`/sdk/${fields}`)
+        .send({ name: 'A metric', data: { hello: 'world' } })
+        .expect(201);
+    });
   });
 });
