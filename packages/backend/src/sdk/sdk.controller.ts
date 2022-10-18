@@ -1,6 +1,16 @@
-import { Controller, Get, Param, Req, Res } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Req,
+  Res,
+} from '@nestjs/common';
 import { Response, Request } from 'express';
 import { SdkService } from './sdk.service';
+import { EventHit } from './types';
 
 export const COOKIE_KEY = 'progressively-id';
 
@@ -22,7 +32,7 @@ export class SdkController {
    * Get the flag values by client sdk key
    */
   @Get('/:params')
-  async getByClientKey(
+  getByClientKey(
     @Param('params') base64Params: string,
     @Res({ passthrough: true }) response: Response,
     @Req() request: Request,
@@ -34,6 +44,33 @@ export class SdkController {
     fields.id = this.sdkService.resolveUserId(fields, cookieUserId);
     this._prepareCookie(response, fields.id);
 
-    return await this.sdkService.resolveSdkFlags(fields);
+    return this.sdkService.resolveSdkFlags(fields);
+  }
+
+  @Post('/:params')
+  async hitEvent(
+    @Param('params') base64Params: string,
+    @Body() body: EventHit,
+  ) {
+    if (!body.name) {
+      throw new BadRequestException();
+    }
+
+    const fields = this.sdkService.parseBase64Params(base64Params);
+
+    if (!fields.clientKey) {
+      throw new BadRequestException();
+    }
+
+    const eventCreated = await this.sdkService.hitEvent(
+      fields.clientKey as string,
+      body,
+    );
+
+    if (!eventCreated) {
+      throw new BadRequestException();
+    }
+
+    return eventCreated;
   }
 }

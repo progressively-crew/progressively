@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { StrategyService } from '../strategy/strategy.service';
 import { PrismaService } from '../database/prisma.service';
 import { FlagStatus } from './flags.status';
@@ -79,7 +79,19 @@ export class FlagsService {
     });
   }
 
-  addMetricToFlagEnv(envId: string, flagId: string, metricName: string) {
+  async addMetricToFlagEnv(envId: string, flagId: string, metricName: string) {
+    const alreadyExistingMetric = await this.prisma.pMetric.findFirst({
+      where: {
+        name: metricName,
+        flagEnvironmentEnvironmentId: envId,
+        flagEnvironmentFlagId: flagId,
+      },
+    });
+
+    if (alreadyExistingMetric) {
+      throw new BadRequestException('This metric name is already used.');
+    }
+
     return this.prisma.pMetric.create({
       data: {
         name: metricName,
