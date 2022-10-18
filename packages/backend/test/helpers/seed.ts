@@ -115,6 +115,15 @@ export const seedDb = async () => {
       },
     });
 
+    await prismaClient.pMetric.create({
+      data: {
+        uuid: '1',
+        name: 'A metric',
+        flagEnvironmentEnvironmentId: multiVariateFlagEnv.environmentId,
+        flagEnvironmentFlagId: multiVariateFlagEnv.flagId,
+      },
+    });
+
     await prismaClient.variant.create({
       data: {
         uuid: '1',
@@ -222,6 +231,8 @@ export const cleanupDb = async () => {
   await prismaClient.refreshToken.deleteMany();
   await prismaClient.flagHit.deleteMany();
   await prismaClient.variant.deleteMany();
+  await prismaClient.pMetricHit.deleteMany();
+  await prismaClient.pMetric.deleteMany();
   await prismaClient.flagEnvironment.deleteMany();
   await prismaClient.flag.deleteMany();
   await prismaClient.environment.deleteMany();

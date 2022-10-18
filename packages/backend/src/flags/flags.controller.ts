@@ -25,6 +25,7 @@ import {
   ActivateFlagDTO,
   ChangePercentageDTO,
   ChangePercentageSchema,
+  MetricSchema,
   VariantCreationDTO,
   VariantSchema,
   VariantsSchema,
@@ -32,7 +33,7 @@ import {
 import { HasFlagEnvAccessGuard } from './guards/hasFlagEnvAccess';
 import { SchedulingCreationDTO, SchedulingSchema } from '../scheduling/types';
 import { SchedulingService } from '../scheduling/scheduling.service';
-import { Variant } from './types';
+import { MetricDto, Variant } from './types';
 
 @ApiBearerAuth()
 @Controller()
@@ -119,6 +120,17 @@ export class FlagsController {
     return this.flagService.deleteVariantFlag(envId, flagId, variantId);
   }
 
+  @Delete('environments/:envId/flags/:flagId/metrics/:metricId')
+  @UseGuards(HasFlagEnvAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  deleteMetricFlag(
+    @Param('envId') envId: string,
+    @Param('flagId') flagId: string,
+    @Param('metricId') metricId: string,
+  ) {
+    return this.flagService.deleteMetricFlag(envId, flagId, metricId);
+  }
+
   /**
    * Get the flag hits grouped by date
    */
@@ -178,6 +190,18 @@ export class FlagsController {
     );
   }
 
+  @Post('environments/:envId/flags/:flagId/metrics')
+  @UseGuards(HasFlagEnvAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(new ValidationPipe(MetricSchema))
+  addMetricToFlag(
+    @Param('envId') envId: string,
+    @Param('flagId') flagId: string,
+    @Body() metricDto: MetricDto,
+  ): Promise<any> {
+    return this.flagService.addMetricToFlagEnv(envId, flagId, metricDto.name);
+  }
+
   @Post('environments/:envId/flags/:flagId/variants')
   @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
@@ -233,6 +257,13 @@ export class FlagsController {
     @Param('flagId') flagId: string,
   ): Promise<any> {
     return this.strategyService.listStrategies(envId, flagId);
+  }
+
+  @Get('environments/:envId/flags/:flagId/metrics')
+  @UseGuards(HasFlagEnvAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  getMetrics(@Param('envId') envId: string, @Param('flagId') flagId: string) {
+    return this.flagService.listMetrics(envId, flagId);
   }
 
   @Get('environments/:envId/flags/:flagId/scheduling')

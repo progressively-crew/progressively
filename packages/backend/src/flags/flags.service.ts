@@ -79,6 +79,16 @@ export class FlagsService {
     });
   }
 
+  addMetricToFlagEnv(envId: string, flagId: string, metricName: string) {
+    return this.prisma.pMetric.create({
+      data: {
+        name: metricName,
+        flagEnvironmentEnvironmentId: envId,
+        flagEnvironmentFlagId: flagId,
+      },
+    });
+  }
+
   hitFlag(environmentId: string, flagId: string, statusOrVariant: string) {
     // Make it easier to group by date, 2 is arbitrary
     const date = new Date();
@@ -363,6 +373,15 @@ export class FlagsService {
     });
   }
 
+  listMetrics(envId: string, flagId: string) {
+    return this.prisma.pMetric.findMany({
+      where: {
+        flagEnvironmentEnvironmentId: envId,
+        flagEnvironmentFlagId: flagId,
+      },
+    });
+  }
+
   async createVariant(
     envId: string,
     flagId: string,
@@ -417,5 +436,28 @@ export class FlagsService {
         uuid: variantId,
       },
     });
+  }
+
+  async deleteMetricFlag(envId: string, flagId: string, metricId: string) {
+    const deleteQueries = [
+      this.prisma.pMetricHit.deleteMany({
+        where: {
+          pMetricUuid: metricId,
+          flagEnvironmentFlagId: flagId,
+          flagEnvironmentEnvironmentId: envId,
+        },
+      }),
+      this.prisma.pMetric.deleteMany({
+        where: {
+          flagEnvironmentFlagId: flagId,
+          flagEnvironmentEnvironmentId: envId,
+          uuid: metricId,
+        },
+      }),
+    ];
+
+    const [, deletedMetric] = await this.prisma.$transaction(deleteQueries);
+
+    return deletedMetric;
   }
 }
