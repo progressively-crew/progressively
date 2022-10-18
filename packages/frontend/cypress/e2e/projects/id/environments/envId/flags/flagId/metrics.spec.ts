@@ -106,7 +106,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/metrics",
         cy.findByRole("heading", { name: "Metrics" }).should("be.visible");
 
         cy.findByText("A metric").should("be.visible");
-        cy.findByText("Remove").should("be.visible");
+        cy.findByText("B metric").should("be.visible");
 
         cy.checkA11y();
       });
