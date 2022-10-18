@@ -3,7 +3,7 @@ import { styled } from "~/stitches.config";
 import { HStack } from "./HStack";
 
 const HorizontalNavWrapper = styled("nav", {
-  paddingTop: "10px", // hack to stay fully aligned with the title of the page
+  paddingTop: "12px", // hack to stay fully aligned with the title of the page
 
   "& ul": {
     display: "flex",

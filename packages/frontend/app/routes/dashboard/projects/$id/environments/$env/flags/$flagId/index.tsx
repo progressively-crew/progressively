@@ -7,7 +7,7 @@ import { StrategyRetrieveDTO } from "~/modules/strategies/types";
 import { Header } from "~/components/Header";
 import { Section, SectionHeader } from "~/components/Section";
 import { EmptyState } from "~/components/EmptyState";
-import { FaPowerOff } from "react-icons/fa";
+import { FaToggleOff } from "react-icons/fa";
 import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
 import { Typography } from "~/components/Typography";
 import { CreateButton } from "~/components/Buttons/CreateButton";
@@ -172,8 +172,8 @@ export default function FlagById() {
       }
     >
       <PageTitle
-        value="Rollout details"
-        icon={<FaPowerOff />}
+        value="Overview"
+        icon={<FaToggleOff />}
         description={
           <StrategyDescription
             flagEnv={flagEnv}
