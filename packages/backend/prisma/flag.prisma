@@ -21,6 +21,8 @@ model FlagEnvironment {
 
     scheduling Schedule[]
     variants   Variant[]
+    metrics    PMetric[]
+    metricHits PMetricHit[]
 
     @@id([flagId, environmentId])
 }
@@ -34,6 +36,26 @@ model Variant {
     FlagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
     flagEnvironmentFlagId        String?
     flagEnvironmentEnvironmentId String?
+}
+
+model PMetric {
+    uuid                         String           @id @default(uuid())
+    name                         String
+    FlagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
+    flagEnvironmentFlagId        String?
+    flagEnvironmentEnvironmentId String?
+    PMetricHit                   PMetricHit[]
+}
+
+model PMetricHit {
+    id                           Int              @id @default(autoincrement())
+    date                         DateTime         @default(now())
+    data                         String?
+    FlagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
+    flagEnvironmentFlagId        String?
+    flagEnvironmentEnvironmentId String?
+    metric                       PMetric          @relation(fields: [pMetricUuid], references: [uuid])
+    pMetricUuid                  String
 }
 
 model FlagHit {
