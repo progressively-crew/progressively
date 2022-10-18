@@ -1,6 +1,11 @@
 import { PrismaClient } from '@prisma/client';
 import { UserRoles } from '../../src/users/roles';
-import { seedFlagHits, seedFlagHitsVariants, seedFlags } from './seeds/flags';
+import {
+  seedFlagHits,
+  seedFlagHitsVariants,
+  seedFlagMetricHits,
+  seedFlags,
+} from './seeds/flags';
 import { seedProjects } from './seeds/projects';
 import { seedPasswordReset, seedUsers } from './seeds/users';
 
@@ -115,10 +120,19 @@ export const seedDb = async () => {
       },
     });
 
-    await prismaClient.pMetric.create({
+    const aMetric = await prismaClient.pMetric.create({
       data: {
         uuid: '1',
         name: 'A metric',
+        flagEnvironmentEnvironmentId: multiVariateFlagEnv.environmentId,
+        flagEnvironmentFlagId: multiVariateFlagEnv.flagId,
+      },
+    });
+
+    const bMetric = await prismaClient.pMetric.create({
+      data: {
+        uuid: '100',
+        name: 'B metric',
         flagEnvironmentEnvironmentId: multiVariateFlagEnv.environmentId,
         flagEnvironmentFlagId: multiVariateFlagEnv.flagId,
       },
@@ -184,6 +198,43 @@ export const seedDb = async () => {
     await seedFlagHits(prismaClient, flagEnv, new Date(1992, 0, 3, 1), 20);
     await seedFlagHits(prismaClient, flagEnv, new Date(1992, 0, 2, 1), 40);
     await seedFlagHits(prismaClient, flagEnv, new Date(1992, 0, 6, 1), 10);
+
+    await seedFlagMetricHits(
+      prismaClient,
+      multiVariateFlagEnv,
+      aMetric,
+      new Date(1992, 0, 1, 1),
+      10,
+    );
+
+    await seedFlagMetricHits(
+      prismaClient,
+      multiVariateFlagEnv,
+      aMetric,
+      new Date(1992, 0, 3, 1),
+      20,
+    );
+    await seedFlagMetricHits(
+      prismaClient,
+      multiVariateFlagEnv,
+      bMetric,
+      new Date(1992, 0, 2, 1),
+      40,
+    );
+    await seedFlagMetricHits(
+      prismaClient,
+      multiVariateFlagEnv,
+      aMetric,
+      new Date(1992, 0, 2, 1),
+      17,
+    );
+    await seedFlagMetricHits(
+      prismaClient,
+      multiVariateFlagEnv,
+      bMetric,
+      new Date(1992, 0, 6, 1),
+      10,
+    );
 
     await seedFlagHitsVariants(
       prismaClient,

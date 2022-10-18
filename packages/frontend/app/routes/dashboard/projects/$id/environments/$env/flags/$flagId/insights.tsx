@@ -159,7 +159,7 @@ export default function FlagInsights() {
 
     return (
       <BigStat
-        name={`Variant ${hit.name}`}
+        name={hit.name}
         key={`variant-insight-${hit.name}`}
         unit="hits"
         count={count}

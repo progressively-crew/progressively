@@ -1359,7 +1359,7 @@ describe('FlagsController (e2e)', () => {
         .set('Authorization', `Bearer ${access_token}`)
         .expect(200);
 
-      expect(prevResponse.body.length).toBe(1);
+      expect(prevResponse.body.length).toBe(2);
 
       const response = await request(app.getHttpServer())
         .delete('/environments/1/flags/4/metrics/1')
@@ -1371,7 +1371,7 @@ describe('FlagsController (e2e)', () => {
         .get('/environments/1/flags/4/metrics')
         .set('Authorization', `Bearer ${access_token}`);
 
-      expect(afterResponse.body.length).toBe(0);
+      expect(afterResponse.body.length).toBe(1);
     });
   });
 
@@ -1422,6 +1422,12 @@ describe('FlagsController (e2e)', () => {
           {
             uuid: '1',
             name: 'A metric',
+            flagEnvironmentFlagId: '4',
+            flagEnvironmentEnvironmentId: '1',
+          },
+          {
+            uuid: '100',
+            name: 'B metric',
             flagEnvironmentFlagId: '4',
             flagEnvironmentEnvironmentId: '1',
           },
