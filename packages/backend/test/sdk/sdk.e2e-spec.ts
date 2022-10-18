@@ -171,4 +171,42 @@ describe('SdkController (e2e)', () => {
       });
     }, 20000);
   });
+
+  describe('/sdk/:params (Post)', () => {
+    it('gives a 400 when the parameter is not valid', () => {
+      const fields = btoa(JSON.stringify({ clientKey: 'valid-sdk-key' }));
+
+      return request(app.getHttpServer())
+        .post(`/sdk/${fields}`)
+        .send({})
+        .expect(400);
+    });
+
+    it('gives a 400 when there is no clientkey', () => {
+      const fields = btoa(JSON.stringify({}));
+
+      return request(app.getHttpServer())
+        .post(`/sdk/${fields}invalid`)
+        .send({ name: 'hello' })
+        .expect(400);
+    });
+
+    it('gives a 400 when there s no env associated to the clientkey', () => {
+      const fields = btoa(JSON.stringify({ clientKey: 'valid-sdk-kefey' }));
+
+      return request(app.getHttpServer())
+        .post(`/sdk/${fields}`)
+        .send({ name: 'hello' })
+        .expect(400);
+    });
+
+    it('gives a 201 when the hit is valid', () => {
+      const fields = btoa(JSON.stringify({ clientKey: 'valid-sdk-key' }));
+
+      return request(app.getHttpServer())
+        .post(`/sdk/${fields}`)
+        .send({ name: 'A metric' })
+        .expect(201);
+    });
+  });
 });

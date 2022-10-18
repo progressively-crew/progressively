@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Param, Post, Req, Res } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Req,
+  Res,
+} from '@nestjs/common';
 import { Response, Request } from 'express';
 import { SdkService } from './sdk.service';
 import { EventHit } from './types';
@@ -39,9 +48,29 @@ export class SdkController {
   }
 
   @Post('/:params')
-  hitEvent(@Param('params') base64Params: string, @Body() body: EventHit) {
-    const clientKey = this.sdkService.parseBase64Params(base64Params);
+  async hitEvent(
+    @Param('params') base64Params: string,
+    @Body() body: EventHit,
+  ) {
+    if (!body.name) {
+      throw new BadRequestException();
+    }
 
-    return this.sdkService.hitEvent(clientKey, body);
+    const fields = this.sdkService.parseBase64Params(base64Params);
+
+    if (!fields.clientKey) {
+      throw new BadRequestException();
+    }
+
+    const eventCreated = await this.sdkService.hitEvent(
+      fields.clientKey as string,
+      body,
+    );
+
+    if (!eventCreated) {
+      throw new BadRequestException();
+    }
+
+    return eventCreated;
   }
 }

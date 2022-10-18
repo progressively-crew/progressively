@@ -30,7 +30,7 @@ export class SdkService {
     return nanoid();
   }
 
-  parseBase64Params(b64: string): any {
+  parseBase64Params(b64: string): FieldRecord {
     try {
       return JSON.parse(Buffer.from(b64, 'base64').toString('ascii'));
     } catch (e) {
@@ -84,6 +84,10 @@ export class SdkService {
         },
       },
     });
+
+    if (!metric) {
+      return null;
+    }
 
     return this.prisma.pMetricHit.create({
       data: {
