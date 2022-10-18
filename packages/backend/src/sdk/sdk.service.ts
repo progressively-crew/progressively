@@ -2,13 +2,15 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { nanoid } from 'nanoid';
 import { EnvironmentsService } from '../environments/environments.service';
 import { FlagsService } from '../flags/flags.service';
-import { FlagStatus } from '../flags/flags.status';
 import { PopulatedFlagEnv } from 'src/flags/types';
 import { FieldRecord } from '../strategy/types';
+import { EventHit } from './types';
+import { PrismaService } from '../database/prisma.service';
 
 @Injectable()
 export class SdkService {
   constructor(
+    private prisma: PrismaService,
     private readonly envService: EnvironmentsService,
     private readonly flagService: FlagsService,
   ) {}
@@ -28,7 +30,7 @@ export class SdkService {
     return nanoid();
   }
 
-  parseBase64Params(b64: string): FieldRecord {
+  parseBase64Params(b64: string): any {
     try {
       return JSON.parse(Buffer.from(b64, 'base64').toString('ascii'));
     } catch (e) {
@@ -69,5 +71,26 @@ export class SdkService {
     }
 
     return flags;
+  }
+
+  async hitEvent(clientKey: string, hit: EventHit) {
+    const metric = await this.prisma.pMetric.findFirst({
+      where: {
+        name: hit.name,
+        FlagEnvironment: {
+          environment: {
+            clientKey,
+          },
+        },
+      },
+    });
+
+    return this.prisma.pMetricHit.create({
+      data: {
+        flagEnvironmentFlagId: metric.flagEnvironmentFlagId,
+        flagEnvironmentEnvironmentId: metric.flagEnvironmentEnvironmentId,
+        pMetricUuid: metric.uuid,
+      },
+    });
   }
 }
