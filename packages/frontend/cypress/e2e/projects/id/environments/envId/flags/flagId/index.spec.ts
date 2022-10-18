@@ -47,9 +47,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]", () => {
         ]);
 
         cy.findAllByText("New homepage").should("have.length", 3);
-        cy.findByRole("heading", { name: "Rollout details" }).should(
-          "be.visible"
-        );
+        cy.findByRole("heading", { name: "Overview" }).should("be.visible");
         cy.findByRole("heading", { name: "Percentage of the audience" }).should(
           "be.visible"
         );
