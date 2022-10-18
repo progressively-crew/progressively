@@ -125,68 +125,37 @@ export class FlagsService {
     startDate: string,
     endDate: string,
   ) {
-    const variants = await this.prisma.variant.findMany({
+    const distincMetrics = await this.prisma.pMetricHit.findMany({
+      distinct: 'pMetricUuid',
       where: {
         flagEnvironmentEnvironmentId: envId,
         flagEnvironmentFlagId: flagId,
       },
+      include: {
+        metric: true,
+      },
     });
 
-    if (variants.length > 0) {
-      const variantHits = [];
-      for (const variant of variants) {
-        const hits = await this.prisma.flagHit.groupBy({
-          by: ['date'],
-          _count: true,
-          where: {
-            status: variant.value,
-            flagEnvironmentEnvironmentId: envId,
-            flagEnvironmentFlagId: flagId,
-            date: {
-              gte: new Date(startDate),
-              lte: new Date(endDate),
-            },
+    const hits = [];
+    for (const pMetricHit of distincMetrics) {
+      const metricHits = await this.prisma.pMetricHit.groupBy({
+        by: ['date'],
+        _count: true,
+        where: {
+          pMetricUuid: pMetricHit.pMetricUuid,
+          flagEnvironmentFlagId: flagId,
+          flagEnvironmentEnvironmentId: envId,
+          date: {
+            gte: new Date(startDate),
+            lte: new Date(endDate),
           },
-        });
+        },
+      });
 
-        variantHits.push({ name: variant.value, hits });
-      }
-
-      return variantHits;
+      hits.push({ name: pMetricHit.metric.name, hits: metricHits });
     }
 
-    const activated = await this.prisma.flagHit.groupBy({
-      by: ['date'],
-      _count: true,
-      where: {
-        status: FlagStatus.ACTIVATED,
-        flagEnvironmentEnvironmentId: envId,
-        flagEnvironmentFlagId: flagId,
-        date: {
-          gte: new Date(startDate),
-          lte: new Date(endDate),
-        },
-      },
-    });
-
-    const notActivated = await this.prisma.flagHit.groupBy({
-      by: ['date'],
-      _count: true,
-      where: {
-        status: FlagStatus.NOT_ACTIVATED,
-        flagEnvironmentEnvironmentId: envId,
-        flagEnvironmentFlagId: flagId,
-        date: {
-          gte: new Date(startDate),
-          lte: new Date(endDate),
-        },
-      },
-    });
-
-    return [
-      { name: 'Activated', hits: activated },
-      { name: 'Not activated', hits: notActivated },
-    ];
+    return hits;
   }
 
   async deleteFlag(flagId: string) {

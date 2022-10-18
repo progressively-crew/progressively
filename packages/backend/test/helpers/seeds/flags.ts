@@ -113,3 +113,27 @@ export const seedFlagHitsVariants = async (
     }
   }
 };
+
+export const seedFlagMetricHits = async (
+  prismaClient: PrismaClient,
+  flagEnv: any,
+  metric: any,
+  date: Date,
+  count = 10,
+) => {
+  date.setHours(2);
+  date.setMinutes(2);
+  date.setSeconds(2);
+  date.setMilliseconds(2);
+
+  for (let i = 0; i < count; i++) {
+    await prismaClient.pMetricHit.create({
+      data: {
+        flagEnvironmentFlagId: flagEnv.flagId,
+        flagEnvironmentEnvironmentId: flagEnv.environmentId,
+        date,
+        pMetricUuid: metric.uuid,
+      },
+    });
+  }
+};
