@@ -54,4 +54,5 @@ export interface Variant {
 
 export interface MetricDto {
   name: string;
+  variantId?: string;
 }

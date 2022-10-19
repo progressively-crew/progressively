@@ -120,25 +120,7 @@ export const seedDb = async () => {
       },
     });
 
-    const aMetric = await prismaClient.pMetric.create({
-      data: {
-        uuid: '1',
-        name: 'A metric',
-        flagEnvironmentEnvironmentId: multiVariateFlagEnv.environmentId,
-        flagEnvironmentFlagId: multiVariateFlagEnv.flagId,
-      },
-    });
-
-    const bMetric = await prismaClient.pMetric.create({
-      data: {
-        uuid: '100',
-        name: 'B metric',
-        flagEnvironmentEnvironmentId: multiVariateFlagEnv.environmentId,
-        flagEnvironmentFlagId: multiVariateFlagEnv.flagId,
-      },
-    });
-
-    await prismaClient.variant.create({
+    const firstVariant = await prismaClient.variant.create({
       data: {
         uuid: '1',
         rolloutPercentage: 12,
@@ -157,6 +139,25 @@ export const seedDb = async () => {
         value: 'Second',
         flagEnvironmentEnvironmentId: multiVariateFlagEnv.environmentId,
         flagEnvironmentFlagId: multiVariateFlagEnv.flagId,
+      },
+    });
+
+    const aMetric = await prismaClient.pMetric.create({
+      data: {
+        uuid: '1',
+        name: 'A metric',
+        flagEnvironmentEnvironmentId: multiVariateFlagEnv.environmentId,
+        flagEnvironmentFlagId: multiVariateFlagEnv.flagId,
+      },
+    });
+
+    const bMetric = await prismaClient.pMetric.create({
+      data: {
+        uuid: '100',
+        name: 'B metric',
+        flagEnvironmentEnvironmentId: multiVariateFlagEnv.environmentId,
+        flagEnvironmentFlagId: multiVariateFlagEnv.flagId,
+        variantUuid: firstVariant.uuid,
       },
     });
     // End of multi variate setup

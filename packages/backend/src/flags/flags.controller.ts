@@ -199,7 +199,12 @@ export class FlagsController {
     @Param('flagId') flagId: string,
     @Body() metricDto: MetricDto,
   ): Promise<any> {
-    return this.flagService.addMetricToFlagEnv(envId, flagId, metricDto.name);
+    return this.flagService.addMetricToFlagEnv(
+      envId,
+      flagId,
+      metricDto.name,
+      metricDto.variantId,
+    );
   }
 
   @Post('environments/:envId/flags/:flagId/variants')

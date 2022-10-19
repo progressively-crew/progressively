@@ -3,14 +3,15 @@ import { Constants } from "~/constants";
 export const createMetric = (
   envId: string,
   flagId: string,
+  accessToken: string,
   name: string,
-  accessToken: string
+  variantId?: string
 ) =>
   fetch(
     `${Constants.BackendUrl}/environments/${envId}/flags/${flagId}/metrics`,
     {
       method: "POST",
-      body: JSON.stringify({ name }),
+      body: JSON.stringify({ name, variantId }),
       headers: {
         Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",

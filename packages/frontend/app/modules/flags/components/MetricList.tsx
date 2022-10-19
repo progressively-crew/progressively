@@ -18,7 +18,8 @@ export const MetricList = ({
     <RawTable>
       <thead>
         <tr>
-          <th width="80%">Name</th>
+          <th>Name</th>
+          <th>Attached variant (optional)</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -27,6 +28,10 @@ export const MetricList = ({
           <tr key={metric.uuid}>
             <td>
               <div>{metric.name}</div>
+            </td>
+
+            <td>
+              <div>{metric.variant?.value}</div>
             </td>
 
             <td>

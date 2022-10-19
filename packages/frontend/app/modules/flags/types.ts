@@ -42,4 +42,5 @@ export interface CreateFlagDTO {
 export interface Metric {
   uuid: string;
   name: string;
+  variant?: Variant;
 }
