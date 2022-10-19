@@ -138,7 +138,11 @@ export class FlagsService {
         flagEnvironmentFlagId: flagId,
       },
       include: {
-        metric: true,
+        metric: {
+          include: {
+            variant: true,
+          },
+        },
       },
     });
 
@@ -158,7 +162,11 @@ export class FlagsService {
         },
       });
 
-      hits.push({ name: pMetricHit.metric.name, hits: metricHits });
+      hits.push({
+        name: pMetricHit.metric.name,
+        hits: metricHits,
+        variant: pMetricHit.metric.variant?.value,
+      });
     }
 
     return hits;

@@ -89,11 +89,18 @@ export class SdkService {
       return null;
     }
 
+    const date = new Date();
+    date.setHours(2);
+    date.setMinutes(2);
+    date.setSeconds(2);
+    date.setMilliseconds(2);
+
     return this.prisma.pMetricHit.create({
       data: {
         flagEnvironmentFlagId: metric.flagEnvironmentFlagId,
         flagEnvironmentEnvironmentId: metric.flagEnvironmentEnvironmentId,
         pMetricUuid: metric.uuid,
+        date,
         data:
           typeof hit.data === 'object'
             ? JSON.stringify(hit.data)
