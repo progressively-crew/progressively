@@ -50,4 +50,5 @@ export const ChangePercentageSchema = Joi.object({
 
 export const MetricSchema = Joi.object({
   name: Joi.string().required(),
+  variantId: Joi.string().optional(),
 });

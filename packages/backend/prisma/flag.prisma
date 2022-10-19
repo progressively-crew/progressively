@@ -36,6 +36,7 @@ model Variant {
     FlagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
     flagEnvironmentFlagId        String?
     flagEnvironmentEnvironmentId String?
+    PMetric                      PMetric[]
 }
 
 model PMetric {
@@ -45,6 +46,8 @@ model PMetric {
     flagEnvironmentFlagId        String?
     flagEnvironmentEnvironmentId String?
     PMetricHit                   PMetricHit[]
+    variant                      Variant?         @relation(fields: [variantUuid], references: [uuid])
+    variantUuid                  String?
 }
 
 model PMetricHit {

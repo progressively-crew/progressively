@@ -2,8 +2,18 @@ import { getSession } from "~/sessions";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { Typography } from "~/components/Typography";
-import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
-import { useActionData, Form, useTransition } from "@remix-run/react";
+import {
+  MetaFunction,
+  ActionFunction,
+  redirect,
+  LoaderFunction,
+} from "@remix-run/node";
+import {
+  useActionData,
+  Form,
+  useTransition,
+  useLoaderData,
+} from "@remix-run/react";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
@@ -21,6 +31,9 @@ import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Section } from "~/components/Section";
+import { getVariants } from "~/modules/variants/services/getVariants";
+import { SelectField } from "~/components/Fields/SelectField";
+import { Variant } from "~/modules/variants/types";
 
 export const handle = {
   breadcrumb: (match: { params: any }) => {
@@ -53,6 +66,7 @@ export const action: ActionFunction = async ({
   const session = await getSession(request.headers.get("Cookie"));
 
   const name = formData.get("name")?.toString();
+  const optionalVariant = formData.get("variant")?.toString();
 
   if (!name) {
     return {
@@ -66,8 +80,9 @@ export const action: ActionFunction = async ({
     await createMetric(
       params.env!,
       params.flagId!,
+      session.get("auth-cookie"),
       name,
-      session.get("auth-cookie")
+      optionalVariant || undefined
     );
 
     return redirect(
@@ -82,17 +97,46 @@ export const action: ActionFunction = async ({
   }
 };
 
+interface LoaderData {
+  variants: Array<Variant>;
+}
+
+export const loader: LoaderFunction = async ({
+  request,
+  params,
+}): Promise<LoaderData> => {
+  const session = await getSession(request.headers.get("Cookie"));
+  const authCookie = session.get("auth-cookie");
+
+  const variants: Array<Variant> = await getVariants(
+    params.env!,
+    params.flagId!,
+    authCookie
+  );
+
+  return {
+    variants,
+  };
+};
+
 export default function MetricCreatePage() {
   const { user } = useUser();
   const { project } = useProject();
   const { flagEnv } = useFlagEnv();
   const { environment } = useEnvironment();
+  const { variants } = useLoaderData<LoaderData>();
   const transition = useTransition();
 
   const currentFlag = flagEnv.flag;
 
   const actionData = useActionData<ActionData>();
   const errors = actionData?.errors;
+
+  const options = [{ value: "", label: "No variant" }];
+
+  for (const variant of variants) {
+    options.push({ value: variant.uuid, label: variant.value });
+  }
 
   return (
     <DashboardLayout
@@ -127,6 +171,12 @@ export default function MetricCreatePage() {
                   label="Metric name"
                   name="name"
                   placeholder="e.g: My super metric"
+                />
+
+                <SelectField
+                  name="variant"
+                  label="Variant (optional):"
+                  options={options}
                 />
 
                 <div>

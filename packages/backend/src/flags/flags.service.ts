@@ -79,7 +79,12 @@ export class FlagsService {
     });
   }
 
-  async addMetricToFlagEnv(envId: string, flagId: string, metricName: string) {
+  async addMetricToFlagEnv(
+    envId: string,
+    flagId: string,
+    metricName: string,
+    variantId?: string,
+  ) {
     const alreadyExistingMetric = await this.prisma.pMetric.findFirst({
       where: {
         name: metricName,
@@ -97,6 +102,7 @@ export class FlagsService {
         name: metricName,
         flagEnvironmentEnvironmentId: envId,
         flagEnvironmentFlagId: flagId,
+        variantUuid: variantId,
       },
     });
   }
@@ -359,6 +365,9 @@ export class FlagsService {
       where: {
         flagEnvironmentEnvironmentId: envId,
         flagEnvironmentFlagId: flagId,
+      },
+      include: {
+        variant: true,
       },
     });
   }
