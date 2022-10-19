@@ -1414,24 +1414,36 @@ describe('FlagsController (e2e)', () => {
     it('gives the metrics information when the user is authenticated and authorized', async () => {
       const access_token = await authenticate(app);
 
-      return request(app.getHttpServer())
+      const response = await request(app.getHttpServer())
         .get('/environments/1/flags/4/metrics')
         .set('Authorization', `Bearer ${access_token}`)
-        .expect(200)
-        .expect([
-          {
+        .expect(200);
+
+      expect(response.body).toMatchObject([
+        {
+          uuid: '1',
+          name: 'A metric',
+          flagEnvironmentFlagId: '4',
+          flagEnvironmentEnvironmentId: '1',
+          variantUuid: null,
+          variant: null,
+        },
+        {
+          uuid: '100',
+          name: 'B metric',
+          flagEnvironmentFlagId: '4',
+          flagEnvironmentEnvironmentId: '1',
+          variantUuid: '1',
+          variant: {
             uuid: '1',
-            name: 'A metric',
+            rolloutPercentage: 12,
+            isControl: true,
+            value: 'Control',
             flagEnvironmentFlagId: '4',
             flagEnvironmentEnvironmentId: '1',
           },
-          {
-            uuid: '100',
-            name: 'B metric',
-            flagEnvironmentFlagId: '4',
-            flagEnvironmentEnvironmentId: '1',
-          },
-        ]);
+        },
+      ]);
     });
   });
 });
