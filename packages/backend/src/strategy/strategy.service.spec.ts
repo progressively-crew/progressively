@@ -154,23 +154,81 @@ describe('StrategyService', () => {
         );
       });
 
-      [
-        ['3', 'First'],
-        ['4321', 'Second'],
-        ['789', 'Second'],
-        ['123', 'Second'],
-        ['1000', 'Second'],
-        ['10000', 'Third'],
-        ['30000', 'Third'],
-      ].forEach(([id, expectedVariant]) => {
-        it(`gives the ${expectedVariant} variant when the user ID is ${id}`, async () => {
+      (
+        [
+          [
+            '3',
+            {
+              isControl: true,
+              rolloutPercentage: 25,
+              uuid: '1',
+              value: 'First',
+            },
+          ],
+          [
+            '4321',
+            {
+              isControl: false,
+              rolloutPercentage: 50,
+              uuid: '2',
+              value: 'Second',
+            },
+          ],
+          [
+            '789',
+            {
+              isControl: false,
+              rolloutPercentage: 50,
+              uuid: '2',
+              value: 'Second',
+            },
+          ],
+          [
+            '123',
+            {
+              isControl: false,
+              rolloutPercentage: 50,
+              uuid: '2',
+              value: 'Second',
+            },
+          ],
+          [
+            '1000',
+            {
+              isControl: false,
+              rolloutPercentage: 50,
+              uuid: '2',
+              value: 'Second',
+            },
+          ],
+          [
+            '10000',
+            {
+              isControl: false,
+              rolloutPercentage: 25,
+              uuid: '3',
+              value: 'Third',
+            },
+          ],
+          [
+            '30000',
+            {
+              isControl: false,
+              rolloutPercentage: 25,
+              uuid: '3',
+              value: 'Third',
+            },
+          ],
+        ] as const
+      ).forEach(([id, expectedVariant]) => {
+        it(`gives the ${expectedVariant.value} variant when the user ID is ${id}`, async () => {
           const shouldActivate = await service.resolveStrategies(
             flagEnv,
             [strategy],
             { id },
           );
 
-          expect(shouldActivate).toBe(expectedVariant);
+          expect(shouldActivate).toEqual(expectedVariant);
         });
       });
     });
