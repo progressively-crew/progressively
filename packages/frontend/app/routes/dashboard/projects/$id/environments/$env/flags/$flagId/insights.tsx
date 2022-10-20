@@ -65,7 +65,7 @@ interface FlagHit {
 
 interface LoaderData {
   max: number;
-  hits: Array<{ name: string; hits: Array<FlagHit> }>;
+  hits: Array<{ name: string; hits: Array<FlagHit>; variant?: string }>;
   organizedHits: Array<[string, Array<{ name: string; value: number }>]>;
   startDate: string;
   endDate: string;
@@ -89,16 +89,22 @@ export const loader: LoaderFunction = async ({
   const endDate = endDateForm ? new Date(endDateForm) : new Date();
 
   const authCookie = session.get("auth-cookie");
-  const hitsPerFlags: Array<{ name: string; hits: Array<FlagHit> }> =
-    await getFlagHits(
-      params.env!,
-      params.flagId!,
-      startDate,
-      endDate,
-      authCookie
-    );
+  const hitsPerFlags: Array<{
+    name: string;
+    hits: Array<FlagHit>;
+    variant?: string;
+  }> = await getFlagHits(
+    params.env!,
+    params.flagId!,
+    startDate,
+    endDate,
+    authCookie
+  );
 
-  const mapOfHits = new Map<string, Array<{ name: string; value: number }>>();
+  const mapOfHits = new Map<
+    string,
+    Array<{ name: string; value: number; variant?: string }>
+  >();
   let max = 0;
 
   for (const hpf of hitsPerFlags) {
@@ -112,7 +118,9 @@ export const loader: LoaderFunction = async ({
         mapOfHits.set(hit.date, points);
       }
 
-      mapOfHits.get(hit.date)?.push({ name: hpf.name, value: hit._count });
+      mapOfHits
+        .get(hit.date)
+        ?.push({ name: hpf.name, value: hit._count, variant: hpf.variant });
     }
   }
 
@@ -159,7 +167,7 @@ export default function FlagInsights() {
 
     return (
       <BigStat
-        name={hit.name}
+        name={hit.variant ? `${hit.name} – ${hit.variant}` : hit.name}
         key={`variant-insight-${hit.name}`}
         unit="hits"
         count={count}

@@ -1,14 +1,10 @@
 import { useRef } from "react";
+import { MdBubbleChart } from "react-icons/md";
 import { styled } from "~/stitches.config";
 import { Card, CardContent } from "./Card";
 import { HStack } from "./HStack";
+import { Spacer } from "./Spacer";
 import { Typography } from "./Typography";
-
-const BigStatLabel = styled(Typography, {
-  "& h3": {
-    lineHeight: "unset",
-  },
-});
 
 const BigStatValue = styled("p", {
   fontFamily: "$default",
@@ -24,6 +20,7 @@ export interface BigStatProps {
   id?: string;
   unit?: string;
   count: number;
+  description?: string;
 }
 
 export const BigStat = ({ name, count, id, unit }: BigStatProps) => {
@@ -32,9 +29,15 @@ export const BigStat = ({ name, count, id, unit }: BigStatProps) => {
   return (
     <Card>
       <CardContent>
-        <BigStatLabel as="h2" id={id}>
+        <Typography
+          as="h2"
+          id={id}
+          textTransform="uppercase"
+          color="hadesLight"
+          size="neptune"
+        >
           {name}
-        </BigStatLabel>
+        </Typography>
 
         <BigStatValue>
           <HStack alignItems="flex-end" as="span">
