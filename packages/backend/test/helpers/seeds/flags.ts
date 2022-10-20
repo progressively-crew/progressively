@@ -51,6 +51,7 @@ export const seedFlagHits = async (
   flagEnv: any,
   date: Date,
   count = 10,
+  variant?: any,
 ) => {
   date.setHours(2);
   date.setMinutes(2);
@@ -64,6 +65,7 @@ export const seedFlagHits = async (
         flagEnvironmentEnvironmentId: flagEnv.environmentId,
         status: FlagStatus.ACTIVATED,
         date,
+        variantUuid: variant?.uuid,
       },
     });
 

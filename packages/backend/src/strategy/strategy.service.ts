@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 import { PrismaService } from '../database/prisma.service';
-import { Flag, FlagEnvironment } from '../flags/types';
+import { Flag, FlagEnvironment, Variant } from '../flags/types';
 import { ComparatorFactory } from './comparators/comparatorFactory';
 import { StrategyCreationDTO } from './strategy.dto';
 import {
@@ -22,14 +22,14 @@ export class StrategyService {
   private resolveFlagVariantValue(
     flagEnv: ExtendedFlagEnv,
     fields: FieldRecord,
-  ): boolean | string {
+  ): boolean | Variant {
     const bucketId = genBucket(flagEnv.flag.key, fields.id as string);
     const isMultiVariate = flagEnv.variants.length > 0;
 
     if (isMultiVariate) {
       const variant = getVariation(bucketId, flagEnv.variants);
 
-      return variant.value;
+      return variant;
     }
 
     return isInBucket(bucketId, flagEnv.rolloutPercentage);

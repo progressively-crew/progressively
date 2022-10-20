@@ -61,13 +61,24 @@ export class SdkService {
         fields,
       );
 
-      flags[nextFlag.flag.key] = flagStatusOrVariant;
+      if (typeof flagStatusOrVariant === 'boolean') {
+        flags[nextFlag.flag.key] = flagStatusOrVariant;
 
-      await this.flagService.hitFlag(
-        nextFlag.environmentId,
-        nextFlag.flagId,
-        String(flagStatusOrVariant),
-      );
+        await this.flagService.hitFlag(
+          nextFlag.environmentId,
+          nextFlag.flagId,
+          flagStatusOrVariant,
+        );
+      } else {
+        flags[nextFlag.flag.key] = flagStatusOrVariant.value;
+
+        await this.flagService.hitFlag(
+          nextFlag.environmentId,
+          nextFlag.flagId,
+          false,
+          flagStatusOrVariant,
+        );
+      }
     }
 
     return flags;

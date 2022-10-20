@@ -107,7 +107,12 @@ export class FlagsService {
     });
   }
 
-  hitFlag(environmentId: string, flagId: string, statusOrVariant: string) {
+  hitFlag(
+    environmentId: string,
+    flagId: string,
+    status: boolean,
+    variant?: Variant,
+  ) {
     // Make it easier to group by date, 2 is arbitrary
     const date = new Date();
     date.setHours(2);
@@ -119,8 +124,9 @@ export class FlagsService {
       data: {
         flagEnvironmentFlagId: flagId,
         flagEnvironmentEnvironmentId: environmentId,
-        status: statusOrVariant,
+        status: String(status),
         date,
+        variantUuid: variant?.uuid,
       },
     });
   }
@@ -271,7 +277,7 @@ export class FlagsService {
   }
 
   resolveFlagStatus(flagEnv: PopulatedFlagEnv, fields: FieldRecord) {
-    let status: boolean | string;
+    let status: boolean | Variant;
 
     if (flagEnv.status === FlagStatus.ACTIVATED) {
       status = this.strategyService.resolveStrategies(
