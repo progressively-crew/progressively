@@ -137,30 +137,21 @@ export class FlagsService {
     startDate: string,
     endDate: string,
   ) {
-    const distincMetrics = await this.prisma.pMetricHit.findMany({
-      distinct: 'pMetricUuid',
+    const variants = await this.prisma.variant.findMany({
       where: {
-        flagEnvironmentEnvironmentId: envId,
         flagEnvironmentFlagId: flagId,
-      },
-      include: {
-        metric: {
-          include: {
-            variant: true,
-          },
-        },
+        flagEnvironmentEnvironmentId: envId,
       },
     });
 
-    const hits = [];
-    for (const pMetricHit of distincMetrics) {
-      const metricHits = await this.prisma.pMetricHit.groupBy({
-        by: ['date'],
-        _count: true,
+    const evaluatedVariants = [];
+
+    for (const variant of variants) {
+      const hits = await this.prisma.flagHit.count({
         where: {
-          pMetricUuid: pMetricHit.pMetricUuid,
           flagEnvironmentFlagId: flagId,
           flagEnvironmentEnvironmentId: envId,
+          variantUuid: variant.uuid,
           date: {
             gte: new Date(startDate),
             lte: new Date(endDate),
@@ -168,14 +159,38 @@ export class FlagsService {
         },
       });
 
-      hits.push({
-        name: pMetricHit.metric.name,
-        hits: metricHits,
-        variant: pMetricHit.metric.variant?.value,
+      const rawMetrics = await this.prisma.pMetric.findMany({
+        where: {
+          flagEnvironmentFlagId: flagId,
+          flagEnvironmentEnvironmentId: envId,
+          variantUuid: variant.uuid,
+          PMetricHit: {
+            every: {
+              date: {
+                gte: new Date(startDate),
+                lte: new Date(endDate),
+              },
+            },
+          },
+        },
+        include: {
+          PMetricHit: true,
+        },
+      });
+
+      const metrics = rawMetrics.map((raw) => ({
+        count: raw.PMetricHit.length,
+        metric: raw.name,
+      }));
+
+      evaluatedVariants.push({
+        variant: variant.value,
+        evaluations: hits,
+        metrics,
       });
     }
 
-    return hits;
+    return evaluatedVariants;
   }
 
   async deleteFlag(flagId: string) {

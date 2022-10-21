@@ -2,7 +2,7 @@ import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { FlagStatus } from "~/modules/flags/types";
 import { getSession } from "~/sessions";
 import { Header } from "~/components/Header";
-import { AiOutlineBarChart } from "react-icons/ai";
+import { AiOutlineAppstore, AiOutlineBarChart } from "react-icons/ai";
 import { getFlagHits } from "~/modules/flags/services/getFlagHits";
 import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
 import { BigStat } from "~/components/BigStat";
@@ -20,7 +20,6 @@ import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { Stack } from "~/components/Stack";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
-import { BarChart } from "~/components/Charts/BarChart";
 import { Card, CardContent } from "~/components/Card";
 import { TextInput } from "~/components/Fields/TextInput";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
@@ -30,6 +29,11 @@ import { Typography } from "~/components/Typography";
 import { PageTitle } from "~/components/PageTitle";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
+import { Section, SectionHeader } from "~/components/Section";
+import React from "react";
+import { RawTable } from "~/components/RawTable";
+import { Spacer } from "~/components/Spacer";
+import { Separator } from "~/components/Separator";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -58,15 +62,14 @@ export const action: ActionFunction = async ({
 
   return null;
 };
-interface FlagHit {
-  date: string;
-  _count: number;
+interface VariantHit {
+  variant: string;
+  evaluations: number;
+  metrics: Array<{ count: number; metric: string }>;
 }
 
 interface LoaderData {
-  max: number;
-  hits: Array<{ name: string; hits: Array<FlagHit>; variant?: string }>;
-  organizedHits: Array<[string, Array<{ name: string; value: number }>]>;
+  hits: Array<VariantHit>;
   startDate: string;
   endDate: string;
 }
@@ -89,11 +92,7 @@ export const loader: LoaderFunction = async ({
   const endDate = endDateForm ? new Date(endDateForm) : new Date();
 
   const authCookie = session.get("auth-cookie");
-  const hitsPerFlags: Array<{
-    name: string;
-    hits: Array<FlagHit>;
-    variant?: string;
-  }> = await getFlagHits(
+  const hitsPerFlags: Array<VariantHit> = await getFlagHits(
     params.env!,
     params.flagId!,
     startDate,
@@ -101,35 +100,8 @@ export const loader: LoaderFunction = async ({
     authCookie
   );
 
-  const mapOfHits = new Map<
-    string,
-    Array<{ name: string; value: number; variant?: string }>
-  >();
-  let max = 0;
-
-  for (const hpf of hitsPerFlags) {
-    for (const hit of hpf.hits) {
-      if (max < hit._count) {
-        max = hit._count;
-      }
-
-      if (!mapOfHits.has(hit.date)) {
-        const points: Array<{ name: string; value: number }> = [];
-        mapOfHits.set(hit.date, points);
-      }
-
-      mapOfHits
-        .get(hit.date)
-        ?.push({ name: hpf.name, value: hit._count, variant: hpf.variant });
-    }
-  }
-
-  const organizedHits = [...mapOfHits].sort(([d1], [d2]) => (d1 > d2 ? 1 : -1));
-
   return {
     hits: hitsPerFlags,
-    organizedHits,
-    max,
     startDate: startDate.toISOString(),
     endDate: endDate.toISOString(),
   };
@@ -150,8 +122,7 @@ const formatDefaultDate = (isoDate: string) => {
 };
 
 export default function FlagInsights() {
-  const { hits, organizedHits, max, startDate, endDate } =
-    useLoaderData<LoaderData>();
+  const { hits, startDate, endDate } = useLoaderData<LoaderData>();
   const { flagEnv } = useFlagEnv();
   const { user } = useUser();
   const { project } = useProject();
@@ -159,21 +130,6 @@ export default function FlagInsights() {
 
   const currentFlag = flagEnv.flag;
   const isFlagActivated = flagEnv.status === FlagStatus.ACTIVATED;
-
-  let allCount = 0;
-  const hitNode = hits.map((hit) => {
-    const count = hit.hits.reduce((acc, curr) => acc + curr._count, 0);
-    allCount += count;
-
-    return (
-      <BigStat
-        name={hit.variant ? `${hit.name} – ${hit.variant}` : hit.name}
-        key={`variant-insight-${hit.name}`}
-        unit="hits"
-        count={count}
-      />
-    );
-  });
 
   return (
     <DashboardLayout
@@ -234,21 +190,80 @@ export default function FlagInsights() {
           </HStack>
         </Form>
 
-        <InsightsGrid>{hitNode}</InsightsGrid>
+        <Stack spacing={8}>
+          <InsightsGrid>
+            {hits.map((hit) => (
+              <Card key={hit.variant}>
+                <CardContent>
+                  <HStack spacing={1}>
+                    <Typography
+                      as="span"
+                      color="nemesis"
+                      style={{ display: "flex" }}
+                    >
+                      <AiOutlineAppstore aria-hidden />
+                    </Typography>
+
+                    <Typography
+                      fontWeight="bold"
+                      size="jupiter"
+                      color="hades"
+                      lineHeight="title"
+                    >
+                      {hit.variant}
+                    </Typography>
+                    <Typography
+                      size="neptune"
+                      as="span"
+                      color="hadesLight"
+                      lineHeight="title"
+                    >
+                      (variant)
+                    </Typography>
+                  </HStack>
+
+                  <Spacer size={4} />
+
+                  <Stack spacing={4}>
+                    <BigStat count={hit.evaluations} unit="evaluations" />
+
+                    {hit.metrics.map((metric) => (
+                      <React.Fragment key={metric.metric}>
+                        <Separator />
+
+                        <BigStat
+                          name={`${metric.metric} (metric)`}
+                          count={metric.count}
+                          unit="hits"
+                          ratio={
+                            hit.evaluations > 0
+                              ? `Ratio: ${Math.round(
+                                  (metric.count / hit.evaluations) * 100
+                                )}%`
+                              : undefined
+                          }
+                        />
+                      </React.Fragment>
+                    ))}
+                  </Stack>
+                </CardContent>
+              </Card>
+            ))}
+          </InsightsGrid>
+        </Stack>
 
         <section
-          aria-label={`Hits per date and per variant (${allCount}) evaluations in the current date range`}
+          aria-label={`Hits per date and per variant (${0}) evaluations in the current date range`}
         >
           <Card>
-            {allCount > 0 ? (
+            {hits.length > 0 ? (
               <div>
                 <VisuallyHidden>
                   <h2>
-                    Hits per date and per variant ({allCount}) evaluations in
-                    the current date range
+                    Hits per date and per variant ({0}) evaluations in the
+                    current date range
                   </h2>
                 </VisuallyHidden>
-                <BarChart data={organizedHits} max={max} />
               </div>
             ) : (
               <CardContent>

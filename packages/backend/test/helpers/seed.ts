@@ -195,22 +195,38 @@ export const seedDb = async () => {
       },
     });
 
+    await seedFlagHits(prismaClient, flagEnv, new Date(1992, 0, 1, 1), 10);
+    await seedFlagHits(prismaClient, flagEnv, new Date(1992, 0, 3, 1), 20);
+    await seedFlagHits(prismaClient, flagEnv, new Date(1992, 0, 2, 1), 40);
+    await seedFlagHits(prismaClient, flagEnv, new Date(1992, 0, 6, 1), 10);
+
     await seedFlagHits(
       prismaClient,
-      flagEnv,
+      multiVariateFlagEnv,
       new Date(1992, 0, 1, 1),
       10,
       firstVariant,
     );
-    await seedFlagHits(prismaClient, flagEnv, new Date(1992, 0, 3, 1), 20);
+
     await seedFlagHits(
       prismaClient,
-      flagEnv,
-      new Date(1992, 0, 2, 1),
-      40,
+      multiVariateFlagEnv,
+      new Date(1992, 0, 3, 1),
+      20,
       firstVariant,
     );
-    await seedFlagHits(prismaClient, flagEnv, new Date(1992, 0, 6, 1), 10);
+    await seedFlagHits(
+      prismaClient,
+      multiVariateFlagEnv,
+      new Date(1992, 0, 2, 1),
+      40,
+    );
+    await seedFlagHits(
+      prismaClient,
+      multiVariateFlagEnv,
+      new Date(1992, 0, 6, 1),
+      10,
+    );
 
     await seedFlagMetricHits(
       prismaClient,

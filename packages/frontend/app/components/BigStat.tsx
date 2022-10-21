@@ -1,9 +1,6 @@
 import { useRef } from "react";
-import { MdBubbleChart } from "react-icons/md";
 import { styled } from "~/stitches.config";
-import { Card, CardContent } from "./Card";
 import { HStack } from "./HStack";
-import { Spacer } from "./Spacer";
 import { Typography } from "./Typography";
 
 const BigStatValue = styled("p", {
@@ -16,19 +13,20 @@ const BigStatValue = styled("p", {
 });
 
 export interface BigStatProps {
-  name: string;
+  name?: string;
   id?: string;
   unit?: string;
   count: number;
   description?: string;
+  ratio?: string;
 }
 
-export const BigStat = ({ name, count, id, unit }: BigStatProps) => {
+export const BigStat = ({ name, count, id, unit, ratio }: BigStatProps) => {
   const formatterRef = useRef(new Intl.NumberFormat());
 
   return (
-    <Card>
-      <CardContent>
+    <div>
+      {name && (
         <Typography
           as="h2"
           id={id}
@@ -38,18 +36,28 @@ export const BigStat = ({ name, count, id, unit }: BigStatProps) => {
         >
           {name}
         </Typography>
+      )}
 
-        <BigStatValue>
-          <HStack alignItems="flex-end" as="span">
-            {formatterRef.current.format(count)}{" "}
-            {unit && (
-              <Typography font="title" as="span" color="hadesLight">
-                {unit}
-              </Typography>
-            )}
-          </HStack>
-        </BigStatValue>
-      </CardContent>
-    </Card>
+      <BigStatValue>
+        <HStack alignItems="flex-end" as="span">
+          {formatterRef.current.format(count)}{" "}
+          {unit && (
+            <Typography
+              font="title"
+              as="span"
+              color="hadesLight"
+              fontWeight="semiBold"
+            >
+              {unit}
+            </Typography>
+          )}
+        </HStack>
+        {ratio && (
+          <Typography color="successFg" size="neptune">
+            {ratio}
+          </Typography>
+        )}
+      </BigStatValue>
+    </div>
   );
 };
