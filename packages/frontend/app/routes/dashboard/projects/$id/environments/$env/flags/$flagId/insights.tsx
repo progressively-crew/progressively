@@ -95,16 +95,17 @@ export const loader: LoaderFunction = async ({
   const endDate = endDateForm ? new Date(endDateForm) : end;
 
   const authCookie = session.get("auth-cookie");
-  const hitsPerFlags: Array<VariantHit> = await getFlagHits(
-    params.env!,
-    params.flagId!,
-    startDate,
-    endDate,
-    authCookie
-  );
+  const { hitsPerVariant }: { hitsPerVariant: Array<VariantHit> } =
+    await getFlagHits(
+      params.env!,
+      params.flagId!,
+      startDate,
+      endDate,
+      authCookie
+    );
 
   return {
-    hits: hitsPerFlags,
+    hits: hitsPerVariant,
     startDate: startDate.toISOString(),
     endDate: endDate.toISOString(),
   };

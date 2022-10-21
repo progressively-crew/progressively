@@ -131,7 +131,7 @@ export class FlagsService {
     });
   }
 
-  async listFlagHits(
+  async flagHitsPerVariant(
     envId: string,
     flagId: string,
     startDate: string,
