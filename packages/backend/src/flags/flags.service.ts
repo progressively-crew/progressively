@@ -137,45 +137,28 @@ export class FlagsService {
     startDate: string,
     endDate: string,
   ) {
-    const distincMetrics = await this.prisma.pMetricHit.findMany({
-      distinct: 'pMetricUuid',
+    const variants = await this.prisma.variant.findMany({
       where: {
-        flagEnvironmentEnvironmentId: envId,
         flagEnvironmentFlagId: flagId,
-      },
-      include: {
-        metric: {
-          include: {
-            variant: true,
-          },
-        },
+        flagEnvironmentEnvironmentId: envId,
       },
     });
 
-    const hits = [];
-    for (const pMetricHit of distincMetrics) {
-      const metricHits = await this.prisma.pMetricHit.groupBy({
-        by: ['date'],
-        _count: true,
+    const evaluatedVariants = [];
+
+    for (const variant of variants) {
+      const hits = await this.prisma.flagHit.count({
         where: {
-          pMetricUuid: pMetricHit.pMetricUuid,
           flagEnvironmentFlagId: flagId,
           flagEnvironmentEnvironmentId: envId,
-          date: {
-            gte: new Date(startDate),
-            lte: new Date(endDate),
-          },
+          variantUuid: variant.uuid,
         },
       });
 
-      hits.push({
-        name: pMetricHit.metric.name,
-        hits: metricHits,
-        variant: pMetricHit.metric.variant?.value,
-      });
+      evaluatedVariants.push({ variant: variant.value, evaluations: hits });
     }
 
-    return hits;
+    return evaluatedVariants;
   }
 
   async deleteFlag(flagId: string) {

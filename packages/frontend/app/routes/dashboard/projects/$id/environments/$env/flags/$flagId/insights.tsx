@@ -20,7 +20,6 @@ import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { Stack } from "~/components/Stack";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
-import { BarChart } from "~/components/Charts/BarChart";
 import { Card, CardContent } from "~/components/Card";
 import { TextInput } from "~/components/Fields/TextInput";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
@@ -58,15 +57,13 @@ export const action: ActionFunction = async ({
 
   return null;
 };
-interface FlagHit {
-  date: string;
-  _count: number;
+interface VariantHit {
+  variant: string;
+  evaluations: number;
 }
 
 interface LoaderData {
-  max: number;
-  hits: Array<{ name: string; hits: Array<FlagHit>; variant?: string }>;
-  organizedHits: Array<[string, Array<{ name: string; value: number }>]>;
+  hits: Array<VariantHit>;
   startDate: string;
   endDate: string;
 }
@@ -89,11 +86,7 @@ export const loader: LoaderFunction = async ({
   const endDate = endDateForm ? new Date(endDateForm) : new Date();
 
   const authCookie = session.get("auth-cookie");
-  const hitsPerFlags: Array<{
-    name: string;
-    hits: Array<FlagHit>;
-    variant?: string;
-  }> = await getFlagHits(
+  const hitsPerFlags: Array<VariantHit> = await getFlagHits(
     params.env!,
     params.flagId!,
     startDate,
@@ -101,35 +94,8 @@ export const loader: LoaderFunction = async ({
     authCookie
   );
 
-  const mapOfHits = new Map<
-    string,
-    Array<{ name: string; value: number; variant?: string }>
-  >();
-  let max = 0;
-
-  for (const hpf of hitsPerFlags) {
-    for (const hit of hpf.hits) {
-      if (max < hit._count) {
-        max = hit._count;
-      }
-
-      if (!mapOfHits.has(hit.date)) {
-        const points: Array<{ name: string; value: number }> = [];
-        mapOfHits.set(hit.date, points);
-      }
-
-      mapOfHits
-        .get(hit.date)
-        ?.push({ name: hpf.name, value: hit._count, variant: hpf.variant });
-    }
-  }
-
-  const organizedHits = [...mapOfHits].sort(([d1], [d2]) => (d1 > d2 ? 1 : -1));
-
   return {
     hits: hitsPerFlags,
-    organizedHits,
-    max,
     startDate: startDate.toISOString(),
     endDate: endDate.toISOString(),
   };
@@ -150,8 +116,7 @@ const formatDefaultDate = (isoDate: string) => {
 };
 
 export default function FlagInsights() {
-  const { hits, organizedHits, max, startDate, endDate } =
-    useLoaderData<LoaderData>();
+  const { hits, startDate, endDate } = useLoaderData<LoaderData>();
   const { flagEnv } = useFlagEnv();
   const { user } = useUser();
   const { project } = useProject();
@@ -159,21 +124,6 @@ export default function FlagInsights() {
 
   const currentFlag = flagEnv.flag;
   const isFlagActivated = flagEnv.status === FlagStatus.ACTIVATED;
-
-  let allCount = 0;
-  const hitNode = hits.map((hit) => {
-    const count = hit.hits.reduce((acc, curr) => acc + curr._count, 0);
-    allCount += count;
-
-    return (
-      <BigStat
-        name={hit.variant ? `${hit.name} – ${hit.variant}` : hit.name}
-        key={`variant-insight-${hit.name}`}
-        unit="hits"
-        count={count}
-      />
-    );
-  });
 
   return (
     <DashboardLayout
@@ -234,21 +184,29 @@ export default function FlagInsights() {
           </HStack>
         </Form>
 
-        <InsightsGrid>{hitNode}</InsightsGrid>
+        <InsightsGrid>
+          <div></div>
+        </InsightsGrid>
 
         <section
-          aria-label={`Hits per date and per variant (${allCount}) evaluations in the current date range`}
+          aria-label={`Hits per date and per variant (${0}) evaluations in the current date range`}
         >
+          {hits.map((hit) => (
+            <Card key={hit.variant}>
+              <div>Variant: {hit.variant}</div>
+              <div>All hits: {hit.evaluations}</div>
+            </Card>
+          ))}
+
           <Card>
-            {allCount > 0 ? (
+            {hits.length > 0 ? (
               <div>
                 <VisuallyHidden>
                   <h2>
-                    Hits per date and per variant ({allCount}) evaluations in
-                    the current date range
+                    Hits per date and per variant ({0}) evaluations in the
+                    current date range
                   </h2>
                 </VisuallyHidden>
-                <BarChart data={organizedHits} max={max} />
               </div>
             ) : (
               <CardContent>
