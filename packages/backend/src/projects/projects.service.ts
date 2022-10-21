@@ -141,6 +141,24 @@ export class ProjectsService {
           },
         },
       }),
+      this.prisma.pMetricHit.deleteMany({
+        where: {
+          FlagEnvironment: {
+            environment: {
+              projectId,
+            },
+          },
+        },
+      }),
+      this.prisma.pMetric.deleteMany({
+        where: {
+          FlagEnvironment: {
+            environment: {
+              projectId,
+            },
+          },
+        },
+      }),
       this.prisma.variant.deleteMany({
         where: {
           FlagEnvironment: {
