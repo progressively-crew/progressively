@@ -36,7 +36,8 @@ function init(clientKey: string, options?: SDKOptions): ProgressivelySdkType {
     options?.apiUrl || "https://api.progressively.app",
     options?.websocketUrl || "wss://api.progressively.app",
     fields,
-    resolvedFlags
+    resolvedFlags,
+    options?.headers
   );
 }
 
@@ -44,7 +45,8 @@ function Sdk(
   apiRoot: string,
   wsRoot: string,
   fields: Fields,
-  initialFlags: FlagDict
+  initialFlags: FlagDict,
+  headers?: RequestInit["headers"]
 ): ProgressivelySdkType {
   let flags: FlagDict = initialFlags;
   let socket: WebSocket;
@@ -57,6 +59,7 @@ function Sdk(
     return fetch(`${apiRoot}/sdk/${toBase64(JSON.stringify(fields))}`, {
       credentials: "include",
       signal: args?.ctrl?.signal,
+      headers,
     })
       .then((res) => {
         response = res;

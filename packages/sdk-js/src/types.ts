@@ -6,6 +6,7 @@ export interface SDKOptions {
   apiUrl?: string;
   websocketUrl?: string;
   initialFlags?: FlagDict;
+  headers?: RequestInit["headers"];
 }
 
 export interface ProgressivelySdkType {
