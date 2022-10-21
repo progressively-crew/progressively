@@ -31,6 +31,9 @@ import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { Section, SectionHeader } from "~/components/Section";
 import React from "react";
+import { RawTable } from "~/components/RawTable";
+import { Spacer } from "~/components/Spacer";
+import { Separator } from "~/components/Separator";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -193,26 +196,53 @@ export default function FlagInsights() {
 
         <Stack spacing={8}>
           <Section id="variant-insights">
-            <SectionHeader title="Hits on metrics with variants" />
+            <SectionHeader title="Metrics & variants" />
 
-            {hits.map((hit) => (
-              <InsightsGrid key={hit.variant}>
-                <BigStat
-                  name={`${hit.variant}`}
-                  count={hit.evaluations}
-                  unit="evaluations"
-                />
+            <InsightsGrid>
+              {hits.map((hit) => (
+                <Card key={hit.variant}>
+                  <CardContent>
+                    <HStack spacing={1}>
+                      <Typography
+                        fontWeight="semiBold"
+                        size="jupiter"
+                        color="hadesLight"
+                        lineHeight="title"
+                      >
+                        {hit.variant}
+                      </Typography>
+                      <Typography
+                        size="neptune"
+                        as="span"
+                        color="hadesLight"
+                        lineHeight="title"
+                      >
+                        (variant)
+                      </Typography>
+                    </HStack>
 
-                {hit.metrics.map((metric) => (
-                  <BigStat
-                    key={metric.metric}
-                    name={`${metric.metric}`}
-                    count={metric.count}
-                    unit="hits"
-                  />
-                ))}
-              </InsightsGrid>
-            ))}
+                    <Spacer size={4} />
+
+                    <Separator />
+
+                    <Spacer size={4} />
+
+                    <Stack spacing={10}>
+                      <BigStat count={hit.evaluations} unit="evaluations" />
+
+                      {hit.metrics.map((metric) => (
+                        <BigStat
+                          key={metric.metric}
+                          name={`${metric.metric} (metric)`}
+                          count={metric.count}
+                          unit="hits"
+                        />
+                      ))}
+                    </Stack>
+                  </CardContent>
+                </Card>
+              ))}
+            </InsightsGrid>
           </Section>
         </Stack>
 
