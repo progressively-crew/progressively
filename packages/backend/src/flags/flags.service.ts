@@ -131,6 +131,39 @@ export class FlagsService {
     });
   }
 
+  async flagHitsWithoutVariant(
+    envId: string,
+    flagId: string,
+    startDate: string,
+    endDate: string,
+  ) {
+    const rawMetrics = await this.prisma.pMetric.findMany({
+      where: {
+        flagEnvironmentFlagId: flagId,
+        flagEnvironmentEnvironmentId: envId,
+        variantUuid: null,
+        PMetricHit: {
+          every: {
+            date: {
+              gte: new Date(startDate),
+              lte: new Date(endDate),
+            },
+          },
+        },
+      },
+      include: {
+        PMetricHit: true,
+      },
+    });
+
+    const metrics = rawMetrics.map((raw) => ({
+      count: raw.PMetricHit.length,
+      metric: raw.name,
+    }));
+
+    return metrics;
+  }
+
   async flagHitsPerVariant(
     envId: string,
     flagId: string,

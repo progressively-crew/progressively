@@ -62,14 +62,20 @@ export const action: ActionFunction = async ({
 
   return null;
 };
+
+interface MetricHit {
+  count: number;
+  metric: string;
+}
 interface VariantHit {
   variant: string;
   evaluations: number;
-  metrics: Array<{ count: number; metric: string }>;
+  metrics: Array<MetricHit>;
 }
 
 interface LoaderData {
   hits: Array<VariantHit>;
+  hitsWithoutVariant: Array<MetricHit>;
   startDate: string;
   endDate: string;
 }
@@ -95,17 +101,23 @@ export const loader: LoaderFunction = async ({
   const endDate = endDateForm ? new Date(endDateForm) : end;
 
   const authCookie = session.get("auth-cookie");
-  const { hitsPerVariant }: { hitsPerVariant: Array<VariantHit> } =
-    await getFlagHits(
-      params.env!,
-      params.flagId!,
-      startDate,
-      endDate,
-      authCookie
-    );
+  const {
+    hitsPerVariant,
+    hitsWithoutVariant,
+  }: {
+    hitsPerVariant: Array<VariantHit>;
+    hitsWithoutVariant: Array<MetricHit>;
+  } = await getFlagHits(
+    params.env!,
+    params.flagId!,
+    startDate,
+    endDate,
+    authCookie
+  );
 
   return {
     hits: hitsPerVariant,
+    hitsWithoutVariant,
     startDate: startDate.toISOString(),
     endDate: endDate.toISOString(),
   };
@@ -126,7 +138,8 @@ const formatDefaultDate = (isoDate: string) => {
 };
 
 export default function FlagInsights() {
-  const { hits, startDate, endDate } = useLoaderData<LoaderData>();
+  const { hits, startDate, endDate, hitsWithoutVariant } =
+    useLoaderData<LoaderData>();
   const { flagEnv } = useFlagEnv();
   const { user } = useUser();
   const { project } = useProject();

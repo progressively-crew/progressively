@@ -153,7 +153,14 @@ export class FlagsController {
       endDate,
     );
 
-    return { hitsPerVariant };
+    const hitsWithoutVariant = await this.flagService.flagHitsWithoutVariant(
+      envId,
+      flagId,
+      startDate,
+      endDate,
+    );
+
+    return { hitsPerVariant, hitsWithoutVariant };
   }
 
   @Post('environments/:envId/flags/:flagId/strategies')
