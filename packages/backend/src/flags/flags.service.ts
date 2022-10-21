@@ -152,10 +152,42 @@ export class FlagsService {
           flagEnvironmentFlagId: flagId,
           flagEnvironmentEnvironmentId: envId,
           variantUuid: variant.uuid,
+          date: {
+            gte: new Date(startDate),
+            lte: new Date(endDate),
+          },
         },
       });
 
-      evaluatedVariants.push({ variant: variant.value, evaluations: hits });
+      const rawMetrics = await this.prisma.pMetric.findMany({
+        where: {
+          flagEnvironmentFlagId: flagId,
+          flagEnvironmentEnvironmentId: envId,
+          variantUuid: variant.uuid,
+          PMetricHit: {
+            every: {
+              date: {
+                gte: new Date(startDate),
+                lte: new Date(endDate),
+              },
+            },
+          },
+        },
+        include: {
+          PMetricHit: true,
+        },
+      });
+
+      const metrics = rawMetrics.map((raw) => ({
+        count: raw.PMetricHit.length,
+        metric: raw.name,
+      }));
+
+      evaluatedVariants.push({
+        variant: variant.value,
+        evaluations: hits,
+        metrics,
+      });
     }
 
     return evaluatedVariants;

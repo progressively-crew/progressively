@@ -60,6 +60,7 @@ export const action: ActionFunction = async ({
 interface VariantHit {
   variant: string;
   evaluations: number;
+  metrics: Array<{ count: number; metric: string }>;
 }
 
 interface LoaderData {
@@ -195,6 +196,11 @@ export default function FlagInsights() {
             <Card key={hit.variant}>
               <div>Variant: {hit.variant}</div>
               <div>All hits: {hit.evaluations}</div>
+              {hit.metrics.map((metric) => (
+                <div key={metric.metric}>
+                  {metric.metric} {metric.count}
+                </div>
+              ))}
             </Card>
           ))}
 
