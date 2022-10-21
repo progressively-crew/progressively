@@ -7,7 +7,14 @@ export function getSSRProps(
   clientKey: string,
   options?: SDKOptions | undefined
 ) {
-  const sdk = Progressively.init(clientKey, options);
+  const ssrOptions: SDKOptions = {
+    headers: {
+      "X-progressively-hit": "skip",
+    },
+    ...options,
+  };
+
+  const sdk = Progressively.init(clientKey, ssrOptions);
 
   return sdk.loadFlags({ btoAFn: btoA }).then(({ flags, response }) => {
     return {

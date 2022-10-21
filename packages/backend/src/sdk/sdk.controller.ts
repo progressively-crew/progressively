@@ -7,6 +7,7 @@ import {
   Post,
   Req,
   Res,
+  Headers,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { SdkService } from './sdk.service';
@@ -36,6 +37,7 @@ export class SdkController {
     @Param('params') base64Params: string,
     @Res({ passthrough: true }) response: Response,
     @Req() request: Request,
+    @Headers() headers,
   ) {
     // User section, managing the user ID and cookies
     const cookieUserId = request?.cookies?.[COOKIE_KEY];
@@ -44,7 +46,10 @@ export class SdkController {
     fields.id = this.sdkService.resolveUserId(fields, cookieUserId);
     this._prepareCookie(response, fields.id);
 
-    return this.sdkService.resolveSdkFlags(fields);
+    return this.sdkService.resolveSdkFlags(
+      fields,
+      headers['x-progressively-hit'] === 'skip',
+    );
   }
 
   @Post('/:params')

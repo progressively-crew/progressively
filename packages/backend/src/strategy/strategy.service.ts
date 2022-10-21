@@ -59,7 +59,10 @@ export class StrategyService {
     strategies: Array<RolloutStrategy>,
     fields: FieldRecord,
   ) {
-    if (flagEnv.rolloutPercentage === 100) return true;
+    // When at least one variant is created, we cant rely on rolloutPercentage at the flag level
+    // we need to rely on the percentage at the variant level
+    if (flagEnv.variants?.length === 0 && flagEnv.rolloutPercentage === 100)
+      return true;
 
     // No users, we can't make assumptions, should be very rare
     if (!fields?.id) return false;

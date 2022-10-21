@@ -348,6 +348,7 @@ export class FlagsService {
             flag: true,
             strategies: true,
             scheduling: true,
+            variants: true,
           },
         }),
       );

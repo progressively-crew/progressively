@@ -2,7 +2,7 @@ import { BadRequestException, Body, Injectable } from '@nestjs/common';
 import { nanoid } from 'nanoid';
 import { EnvironmentsService } from '../environments/environments.service';
 import { FlagsService } from '../flags/flags.service';
-import { PopulatedFlagEnv } from 'src/flags/types';
+import { PopulatedFlagEnv, Variant } from '../flags/types';
 import { FieldRecord } from '../strategy/types';
 import { EventHit } from './types';
 import { PrismaService } from '../database/prisma.service';
@@ -38,7 +38,7 @@ export class SdkService {
     }
   }
 
-  async resolveSdkFlags(fields: FieldRecord) {
+  async resolveSdkFlags(fields: FieldRecord, skipHit: boolean) {
     const clientKey = String(fields.clientKey);
     const flagEnvs = (await this.envService.getFlagEnvironmentByClientKey(
       clientKey,
@@ -61,22 +61,23 @@ export class SdkService {
         fields,
       );
 
+      let flagVariant: Variant | undefined;
+      let flagStatus: boolean;
       if (typeof flagStatusOrVariant === 'boolean') {
-        flags[nextFlag.flag.key] = flagStatusOrVariant;
-
-        await this.flagService.hitFlag(
-          nextFlag.environmentId,
-          nextFlag.flagId,
-          flagStatusOrVariant,
-        );
+        flagStatus = flagStatusOrVariant;
+        flags[nextFlag.flag.key] = flagStatus;
       } else {
-        flags[nextFlag.flag.key] = flagStatusOrVariant.value;
+        flagVariant = flagStatusOrVariant;
+        flagStatus = false;
+        flags[nextFlag.flag.key] = flagVariant.value;
+      }
 
+      if (!skipHit) {
         await this.flagService.hitFlag(
           nextFlag.environmentId,
           nextFlag.flagId,
-          false,
-          flagStatusOrVariant,
+          flagStatus,
+          flagVariant,
         );
       }
     }
