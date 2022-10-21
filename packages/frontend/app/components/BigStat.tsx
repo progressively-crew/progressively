@@ -42,7 +42,12 @@ export const BigStat = ({ name, count, id, unit, ratio }: BigStatProps) => {
         <HStack alignItems="flex-end" as="span">
           {formatterRef.current.format(count)}{" "}
           {unit && (
-            <Typography font="title" as="span" color="hadesLight">
+            <Typography
+              font="title"
+              as="span"
+              color="hadesLight"
+              fontWeight="semiBold"
+            >
               {unit}
             </Typography>
           )}

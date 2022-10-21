@@ -2,7 +2,7 @@ import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { FlagStatus } from "~/modules/flags/types";
 import { getSession } from "~/sessions";
 import { Header } from "~/components/Header";
-import { AiOutlineBarChart } from "react-icons/ai";
+import { AiOutlineAppstore, AiOutlineBarChart } from "react-icons/ai";
 import { getFlagHits } from "~/modules/flags/services/getFlagHits";
 import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
 import { BigStat } from "~/components/BigStat";
@@ -197,9 +197,17 @@ export default function FlagInsights() {
                 <CardContent>
                   <HStack spacing={1}>
                     <Typography
-                      fontWeight="semiBold"
+                      as="span"
+                      color="nemesis"
+                      style={{ display: "flex" }}
+                    >
+                      <AiOutlineAppstore aria-hidden />
+                    </Typography>
+
+                    <Typography
+                      fontWeight="bold"
                       size="jupiter"
-                      color="hadesLight"
+                      color="hades"
                       lineHeight="title"
                     >
                       {hit.variant}
