@@ -88,8 +88,11 @@ export const loader: LoaderFunction = async ({
   const start = new Date();
   start.setDate(start.getDate() - 7);
 
+  const end = new Date();
+  end.setDate(start.getDate() + 1);
+
   const startDate = startDateForm ? new Date(startDateForm) : start;
-  const endDate = endDateForm ? new Date(endDateForm) : new Date();
+  const endDate = endDateForm ? new Date(endDateForm) : end;
 
   const authCookie = session.get("auth-cookie");
   const hitsPerFlags: Array<VariantHit> = await getFlagHits(
