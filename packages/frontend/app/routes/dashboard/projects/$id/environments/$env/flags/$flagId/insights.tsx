@@ -89,7 +89,7 @@ export const loader: LoaderFunction = async ({
   start.setDate(start.getDate() - 7);
 
   const end = new Date();
-  end.setDate(start.getDate() + 1);
+  end.setDate(end.getDate() + 1);
 
   const startDate = startDateForm ? new Date(startDateForm) : start;
   const endDate = endDateForm ? new Date(endDateForm) : end;
