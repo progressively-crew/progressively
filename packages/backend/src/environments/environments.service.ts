@@ -150,6 +150,16 @@ export class EnvironmentsService {
           flagEnvironmentEnvironmentId: envId,
         },
       }),
+      this.prisma.pMetricHit.deleteMany({
+        where: {
+          flagEnvironmentEnvironmentId: envId,
+        },
+      }),
+      this.prisma.pMetric.deleteMany({
+        where: {
+          flagEnvironmentEnvironmentId: envId,
+        },
+      }),
       this.prisma.variant.deleteMany({
         where: {
           flagEnvironmentEnvironmentId: envId,

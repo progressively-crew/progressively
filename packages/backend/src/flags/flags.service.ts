@@ -185,6 +185,16 @@ export class FlagsService {
           flagEnvironmentFlagId: flagId,
         },
       }),
+      this.prisma.pMetricHit.deleteMany({
+        where: {
+          flagEnvironmentFlagId: flagId,
+        },
+      }),
+      this.prisma.pMetric.deleteMany({
+        where: {
+          flagEnvironmentFlagId: flagId,
+        },
+      }),
       this.prisma.variant.deleteMany({
         where: {
           flagEnvironmentFlagId: flagId,
