@@ -29,6 +29,8 @@ import { Typography } from "~/components/Typography";
 import { PageTitle } from "~/components/PageTitle";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
+import { Section, SectionHeader } from "~/components/Section";
+import React from "react";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -189,21 +191,34 @@ export default function FlagInsights() {
           <div></div>
         </InsightsGrid>
 
+        <Stack spacing={8}>
+          <Section id="variant-insights">
+            <SectionHeader title="Hits on metrics with variants" />
+
+            {hits.map((hit) => (
+              <InsightsGrid key={hit.variant}>
+                <BigStat
+                  name={`${hit.variant}`}
+                  count={hit.evaluations}
+                  unit="evaluations"
+                />
+
+                {hit.metrics.map((metric) => (
+                  <BigStat
+                    key={metric.metric}
+                    name={`${metric.metric}`}
+                    count={metric.count}
+                    unit="hits"
+                  />
+                ))}
+              </InsightsGrid>
+            ))}
+          </Section>
+        </Stack>
+
         <section
           aria-label={`Hits per date and per variant (${0}) evaluations in the current date range`}
         >
-          {hits.map((hit) => (
-            <Card key={hit.variant}>
-              <div>Variant: {hit.variant}</div>
-              <div>All hits: {hit.evaluations}</div>
-              {hit.metrics.map((metric) => (
-                <div key={metric.metric}>
-                  {metric.metric} {metric.count}
-                </div>
-              ))}
-            </Card>
-          ))}
-
           <Card>
             {hits.length > 0 ? (
               <div>
