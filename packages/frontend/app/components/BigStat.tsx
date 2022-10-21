@@ -53,7 +53,7 @@ export const BigStat = ({ name, count, id, unit, ratio }: BigStatProps) => {
           )}
         </HStack>
         {ratio && (
-          <Typography color="successFg" size="neptune">
+          <Typography color="successFg" size="neptune" as="span">
             {ratio}
           </Typography>
         )}
