@@ -18,9 +18,10 @@ export interface BigStatProps {
   unit?: string;
   count: number;
   description?: string;
+  ratio?: string;
 }
 
-export const BigStat = ({ name, count, id, unit }: BigStatProps) => {
+export const BigStat = ({ name, count, id, unit, ratio }: BigStatProps) => {
   const formatterRef = useRef(new Intl.NumberFormat());
 
   return (
@@ -46,6 +47,11 @@ export const BigStat = ({ name, count, id, unit }: BigStatProps) => {
             </Typography>
           )}
         </HStack>
+        {ratio && (
+          <Typography color="successFg" size="neptune">
+            {ratio}
+          </Typography>
+        )}
       </BigStatValue>
     </div>
   );

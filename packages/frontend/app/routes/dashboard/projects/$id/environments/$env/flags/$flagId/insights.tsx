@@ -190,60 +190,58 @@ export default function FlagInsights() {
           </HStack>
         </Form>
 
-        <InsightsGrid>
-          <div></div>
-        </InsightsGrid>
-
         <Stack spacing={8}>
-          <Section id="variant-insights">
-            <SectionHeader title="Metrics & variants" />
+          <InsightsGrid>
+            {hits.map((hit) => (
+              <Card key={hit.variant}>
+                <CardContent>
+                  <HStack spacing={1}>
+                    <Typography
+                      fontWeight="semiBold"
+                      size="jupiter"
+                      color="hadesLight"
+                      lineHeight="title"
+                    >
+                      {hit.variant}
+                    </Typography>
+                    <Typography
+                      size="neptune"
+                      as="span"
+                      color="hadesLight"
+                      lineHeight="title"
+                    >
+                      (variant)
+                    </Typography>
+                  </HStack>
 
-            <InsightsGrid>
-              {hits.map((hit) => (
-                <Card key={hit.variant}>
-                  <CardContent>
-                    <HStack spacing={1}>
-                      <Typography
-                        fontWeight="semiBold"
-                        size="jupiter"
-                        color="hadesLight"
-                        lineHeight="title"
-                      >
-                        {hit.variant}
-                      </Typography>
-                      <Typography
-                        size="neptune"
-                        as="span"
-                        color="hadesLight"
-                        lineHeight="title"
-                      >
-                        (variant)
-                      </Typography>
-                    </HStack>
+                  <Spacer size={4} />
 
-                    <Spacer size={4} />
+                  <Stack spacing={4}>
+                    <BigStat count={hit.evaluations} unit="evaluations" />
 
-                    <Separator />
+                    {hit.metrics.map((metric) => (
+                      <React.Fragment key={metric.metric}>
+                        <Separator />
 
-                    <Spacer size={4} />
-
-                    <Stack spacing={10}>
-                      <BigStat count={hit.evaluations} unit="evaluations" />
-
-                      {hit.metrics.map((metric) => (
                         <BigStat
-                          key={metric.metric}
                           name={`${metric.metric} (metric)`}
                           count={metric.count}
                           unit="hits"
+                          ratio={
+                            hit.evaluations > 0
+                              ? `Ratio: ${Math.round(
+                                  (metric.count / hit.evaluations) * 100
+                                )}%`
+                              : undefined
+                          }
                         />
-                      ))}
-                    </Stack>
-                  </CardContent>
-                </Card>
-              ))}
-            </InsightsGrid>
-          </Section>
+                      </React.Fragment>
+                    ))}
+                  </Stack>
+                </CardContent>
+              </Card>
+            ))}
+          </InsightsGrid>
         </Stack>
 
         <section
