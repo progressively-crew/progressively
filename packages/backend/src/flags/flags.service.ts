@@ -211,15 +211,13 @@ export class FlagsService {
         },
       });
 
-      const metrics = rawMetrics.map((raw) => ({
-        count: raw.PMetricHit.length,
-        metric: raw.name,
-      }));
-
-      evaluatedVariants.push({
-        variant: variant.value,
-        evaluations: hits,
-        metrics,
+      rawMetrics.forEach((raw) => {
+        evaluatedVariants.push({
+          count: raw.PMetricHit.length,
+          metric: raw.name,
+          variant: variant.value,
+          variantEvalutations: hits,
+        });
       });
     }
 

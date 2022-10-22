@@ -2,10 +2,9 @@ import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { FlagStatus } from "~/modules/flags/types";
 import { getSession } from "~/sessions";
 import { Header } from "~/components/Header";
-import { AiOutlineAppstore, AiOutlineBarChart } from "react-icons/ai";
+import { AiOutlineBarChart } from "react-icons/ai";
 import { getFlagHits } from "~/modules/flags/services/getFlagHits";
 import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
-import { BigStat } from "~/components/BigStat";
 import { styled } from "~/stitches.config";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
@@ -30,10 +29,9 @@ import { PageTitle } from "~/components/PageTitle";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { Section, SectionHeader } from "~/components/Section";
-import React from "react";
 import { RawTable } from "~/components/RawTable";
-import { Spacer } from "~/components/Spacer";
-import { Separator } from "~/components/Separator";
+import { BigStat } from "~/components/BigStat";
+import { useRef } from "react";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -68,9 +66,10 @@ interface MetricHit {
   metric: string;
 }
 interface VariantHit {
+  count: number;
+  metric: string;
   variant: string;
-  evaluations: number;
-  metrics: Array<MetricHit>;
+  variantEvalutations: number;
 }
 
 interface LoaderData {
@@ -78,7 +77,27 @@ interface LoaderData {
   hitsWithoutVariant: Array<MetricHit>;
   startDate: string;
   endDate: string;
+  variantEvalutations: Array<{
+    variant: string;
+    count: number;
+  }>;
 }
+
+const TableWrapper = styled("div", {
+  "& table tbody tr td": {
+    height: "$cta",
+  },
+});
+
+const InsightsGrid = styled("div", {
+  display: "grid",
+  gap: "$spacing$8",
+  gridTemplateColumns: "1fr 1fr 1fr",
+
+  "@tablet": {
+    gridTemplateColumns: "1fr",
+  },
+});
 
 export const loader: LoaderFunction = async ({
   request,
@@ -115,7 +134,16 @@ export const loader: LoaderFunction = async ({
     authCookie
   );
 
+  const variantHitsWithDuplicates = hitsPerVariant.map((hit) => ({
+    variant: hit.variant,
+    count: hit.variantEvalutations,
+  }));
+
+  const set = new Set(variantHitsWithDuplicates);
+  const variantEvalutations = [...set];
+
   return {
+    variantEvalutations,
     hits: hitsPerVariant,
     hitsWithoutVariant,
     startDate: startDate.toISOString(),
@@ -123,22 +151,12 @@ export const loader: LoaderFunction = async ({
   };
 };
 
-const InsightsGrid = styled("div", {
-  display: "grid",
-  gap: "$spacing$8",
-  gridTemplateColumns: "1fr 1fr 1fr",
-
-  "@tablet": {
-    gridTemplateColumns: "1fr",
-  },
-});
-
 const formatDefaultDate = (isoDate: string) => {
   return isoDate.slice(0, 10);
 };
 
 export default function FlagInsights() {
-  const { hits, startDate, endDate, hitsWithoutVariant } =
+  const { hits, startDate, endDate, hitsWithoutVariant, variantEvalutations } =
     useLoaderData<LoaderData>();
   const { flagEnv } = useFlagEnv();
   const { user } = useUser();
@@ -207,67 +225,87 @@ export default function FlagInsights() {
           </HStack>
         </Form>
 
-        <Stack spacing={8}>
-          <InsightsGrid>
-            {hits.map((hit) => (
-              <Card key={hit.variant}>
-                <CardContent>
-                  <HStack spacing={1}>
-                    <Typography
-                      as="span"
-                      color="nemesis"
-                      style={{ display: "flex" }}
-                    >
-                      <AiOutlineAppstore aria-hidden />
-                    </Typography>
+        <InsightsGrid>
+          {variantEvalutations.map((variant) => (
+            <Card key={variant.variant}>
+              <CardContent>
+                <BigStat
+                  count={variant.count}
+                  unit="evalutations"
+                  name={`Variant ${variant.variant}`}
+                />
+              </CardContent>
+            </Card>
+          ))}
+        </InsightsGrid>
 
-                    <Typography
-                      fontWeight="bold"
-                      size="jupiter"
-                      color="hades"
-                      lineHeight="title"
-                    >
-                      {hit.variant}
-                    </Typography>
-                    <Typography
-                      size="neptune"
-                      as="span"
-                      color="hadesLight"
-                      lineHeight="title"
-                    >
-                      (variant)
-                    </Typography>
-                  </HStack>
+        <Card>
+          <Section id="with-variant">
+            <CardContent noBottom>
+              <SectionHeader title="Metric hits by variant" />
+            </CardContent>
 
-                  <Spacer size={4} />
+            <TableWrapper>
+              <RawTable>
+                <thead>
+                  <tr>
+                    <th>Metric</th>
+                    <th>Metric hit</th>
+                    <th>Variant</th>
+                    <th>Variant evalutations</th>
+                    <th>Ratio</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {hits.map((hit) => (
+                    <tr key={hit.metric}>
+                      <td>{hit.metric}</td>
+                      <td>{hit.count}</td>
+                      <td>{hit.variant}</td>
+                      <td>{hit.variantEvalutations}</td>
+                      <td>
+                        <Typography as="span" color="successFg" size="uranus">
+                          {hit.variantEvalutations > 0
+                            ? `${Math.round(
+                                (hit.count / hit.variantEvalutations) * 100
+                              )}%`
+                            : "N/A"}
+                        </Typography>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </RawTable>
+            </TableWrapper>
+          </Section>
+        </Card>
 
-                  <Stack spacing={4}>
-                    <BigStat count={hit.evaluations} unit="evaluations" />
+        <Card>
+          <Section id="without-variant">
+            <CardContent noBottom>
+              <SectionHeader title="Other metrics" />
+            </CardContent>
 
-                    {hit.metrics.map((metric) => (
-                      <React.Fragment key={metric.metric}>
-                        <Separator />
-
-                        <BigStat
-                          name={`${metric.metric} (metric)`}
-                          count={metric.count}
-                          unit="hits"
-                          ratio={
-                            hit.evaluations > 0
-                              ? `Ratio: ${Math.round(
-                                  (metric.count / hit.evaluations) * 100
-                                )}%`
-                              : undefined
-                          }
-                        />
-                      </React.Fragment>
-                    ))}
-                  </Stack>
-                </CardContent>
-              </Card>
-            ))}
-          </InsightsGrid>
-        </Stack>
+            <TableWrapper>
+              <RawTable>
+                <thead>
+                  <tr>
+                    <th>Metric</th>
+                    <th>Metric hit</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {hitsWithoutVariant.map((hit) => (
+                    <tr key={hit.metric}>
+                      <td>{hit.metric}</td>
+                      <td>{hit.count}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </RawTable>
+            </TableWrapper>
+          </Section>
+        </Card>
 
         <section
           aria-label={`Hits per date and per variant (${0}) evaluations in the current date range`}
