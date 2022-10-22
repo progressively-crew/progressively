@@ -2,10 +2,9 @@ import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { FlagStatus } from "~/modules/flags/types";
 import { getSession } from "~/sessions";
 import { Header } from "~/components/Header";
-import { AiOutlineAppstore, AiOutlineBarChart } from "react-icons/ai";
+import { AiOutlineBarChart } from "react-icons/ai";
 import { getFlagHits } from "~/modules/flags/services/getFlagHits";
 import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
-import { BigStat } from "~/components/BigStat";
 import { styled } from "~/stitches.config";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
@@ -30,10 +29,10 @@ import { PageTitle } from "~/components/PageTitle";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { Section, SectionHeader } from "~/components/Section";
-import React from "react";
 import { RawTable } from "~/components/RawTable";
-import { Spacer } from "~/components/Spacer";
-import { Separator } from "~/components/Separator";
+import { BigStat } from "~/components/BigStat";
+import { useRef } from "react";
+import { Tag } from "~/components/Tag";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -62,17 +61,44 @@ export const action: ActionFunction = async ({
 
   return null;
 };
+
+interface MetricHit {
+  count: number;
+  metric: string;
+}
 interface VariantHit {
+  count: number;
+  metric: string;
   variant: string;
-  evaluations: number;
-  metrics: Array<{ count: number; metric: string }>;
+  variantEvalutations: number;
 }
 
 interface LoaderData {
   hits: Array<VariantHit>;
+  hitsWithoutVariant: Array<MetricHit>;
   startDate: string;
   endDate: string;
+  variantEvalutations: Array<{
+    variant: string;
+    count: number;
+  }>;
 }
+
+const TableWrapper = styled("div", {
+  "& table tbody tr td": {
+    height: "$cta",
+  },
+});
+
+const InsightsGrid = styled("div", {
+  display: "grid",
+  gap: "$spacing$8",
+  gridTemplateColumns: "1fr 1fr 1fr",
+
+  "@tablet": {
+    gridTemplateColumns: "1fr",
+  },
+});
 
 export const loader: LoaderFunction = async ({
   request,
@@ -95,7 +121,13 @@ export const loader: LoaderFunction = async ({
   const endDate = endDateForm ? new Date(endDateForm) : end;
 
   const authCookie = session.get("auth-cookie");
-  const hitsPerFlags: Array<VariantHit> = await getFlagHits(
+  const {
+    hitsPerVariant,
+    hitsWithoutVariant,
+  }: {
+    hitsPerVariant: Array<VariantHit>;
+    hitsWithoutVariant: Array<MetricHit>;
+  } = await getFlagHits(
     params.env!,
     params.flagId!,
     startDate,
@@ -103,29 +135,37 @@ export const loader: LoaderFunction = async ({
     authCookie
   );
 
+  const variantHitsWithDuplicates = hitsPerVariant.map((hit) => ({
+    variant: hit.variant,
+    count: hit.variantEvalutations,
+  }));
+
+  const alreadyInVariants: any = {};
+
+  const variantEvalutations = variantHitsWithDuplicates.filter((item) => {
+    if (!alreadyInVariants[item.variant]) {
+      alreadyInVariants[item.variant] = true;
+      return true;
+    }
+    return false;
+  });
+
   return {
-    hits: hitsPerFlags,
+    variantEvalutations,
+    hits: hitsPerVariant,
+    hitsWithoutVariant,
     startDate: startDate.toISOString(),
     endDate: endDate.toISOString(),
   };
 };
-
-const InsightsGrid = styled("div", {
-  display: "grid",
-  gap: "$spacing$8",
-  gridTemplateColumns: "1fr 1fr 1fr",
-
-  "@tablet": {
-    gridTemplateColumns: "1fr",
-  },
-});
 
 const formatDefaultDate = (isoDate: string) => {
   return isoDate.slice(0, 10);
 };
 
 export default function FlagInsights() {
-  const { hits, startDate, endDate } = useLoaderData<LoaderData>();
+  const { hits, startDate, endDate, hitsWithoutVariant, variantEvalutations } =
+    useLoaderData<LoaderData>();
   const { flagEnv } = useFlagEnv();
   const { user } = useUser();
   const { project } = useProject();
@@ -193,67 +233,112 @@ export default function FlagInsights() {
           </HStack>
         </Form>
 
-        <Stack spacing={8}>
-          <InsightsGrid>
-            {hits.map((hit) => (
-              <Card key={hit.variant}>
-                <CardContent>
-                  <HStack spacing={1}>
-                    <Typography
-                      as="span"
-                      color="nemesis"
-                      style={{ display: "flex" }}
-                    >
-                      <AiOutlineAppstore aria-hidden />
-                    </Typography>
+        <InsightsGrid>
+          {variantEvalutations.map((variant) => (
+            <Card key={variant.variant}>
+              <CardContent>
+                <BigStat
+                  count={variant.count}
+                  unit="evalutations"
+                  name={`Variant ${variant.variant}`}
+                />
+              </CardContent>
+            </Card>
+          ))}
+        </InsightsGrid>
 
-                    <Typography
-                      fontWeight="bold"
-                      size="jupiter"
-                      color="hades"
-                      lineHeight="title"
-                    >
-                      {hit.variant}
-                    </Typography>
-                    <Typography
-                      size="neptune"
-                      as="span"
-                      color="hadesLight"
-                      lineHeight="title"
-                    >
-                      (variant)
-                    </Typography>
-                  </HStack>
+        <Card>
+          <Section id="with-variant">
+            <CardContent noBottom>
+              <SectionHeader title="Hits by variant" />
+            </CardContent>
 
-                  <Spacer size={4} />
+            <TableWrapper>
+              <RawTable>
+                <thead>
+                  <tr>
+                    <th>Metric</th>
+                    <th>Variant</th>
+                    <th>Metric hit</th>
+                    <th>Variant evalutations</th>
+                    <th>Ratio</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {hits.map((hit) => (
+                    <tr key={hit.metric}>
+                      <td>{hit.metric}</td>
+                      <td>{hit.variant}</td>
+                      <td>
+                        <Typography
+                          as="span"
+                          fontWeight="bold"
+                          fontSize="uranus"
+                        >
+                          {hit.count}
+                        </Typography>
+                      </td>
+                      <td>
+                        <Typography
+                          as="span"
+                          fontWeight="bold"
+                          color="nemesis"
+                          fontSize="uranus"
+                        >
+                          {hit.variantEvalutations}
+                        </Typography>
+                      </td>
+                      <td>
+                        <Tag color="successFg" background="successBg">
+                          {hit.variantEvalutations > 0
+                            ? `${Math.round(
+                                (hit.count / hit.variantEvalutations) * 100
+                              )}%`
+                            : "N/A"}
+                        </Tag>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </RawTable>
+            </TableWrapper>
+          </Section>
+        </Card>
 
-                  <Stack spacing={4}>
-                    <BigStat count={hit.evaluations} unit="evaluations" />
+        <Card>
+          <Section id="without-variant">
+            <CardContent noBottom>
+              <SectionHeader title="Other hits" />
+            </CardContent>
 
-                    {hit.metrics.map((metric) => (
-                      <React.Fragment key={metric.metric}>
-                        <Separator />
-
-                        <BigStat
-                          name={`${metric.metric} (metric)`}
-                          count={metric.count}
-                          unit="hits"
-                          ratio={
-                            hit.evaluations > 0
-                              ? `Ratio: ${Math.round(
-                                  (metric.count / hit.evaluations) * 100
-                                )}%`
-                              : undefined
-                          }
-                        />
-                      </React.Fragment>
-                    ))}
-                  </Stack>
-                </CardContent>
-              </Card>
-            ))}
-          </InsightsGrid>
-        </Stack>
+            <TableWrapper>
+              <RawTable>
+                <thead>
+                  <tr>
+                    <th>Metric</th>
+                    <th>Metric hit</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {hitsWithoutVariant.map((hit) => (
+                    <tr key={hit.metric}>
+                      <td>{hit.metric}</td>
+                      <td>
+                        <Typography
+                          as="span"
+                          fontWeight="bold"
+                          fontSize="uranus"
+                        >
+                          {hit.count}
+                        </Typography>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </RawTable>
+            </TableWrapper>
+          </Section>
+        </Card>
 
         <section
           aria-label={`Hits per date and per variant (${0}) evaluations in the current date range`}

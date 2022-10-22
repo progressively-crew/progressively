@@ -137,7 +137,7 @@ export class FlagsController {
   @Get('environments/:envId/flags/:flagId/hits')
   @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
-  getFlagHits(
+  async getFlagHits(
     @Param('envId') envId: string,
     @Param('flagId') flagId: string,
     @Query('startDate') startDate: string | undefined,
@@ -146,7 +146,21 @@ export class FlagsController {
     if (!endDate || !startDate) {
       throw new BadRequestException('startDate and endDate are required.');
     }
-    return this.flagService.listFlagHits(envId, flagId, startDate, endDate);
+    const hitsPerVariant = await this.flagService.flagHitsPerVariant(
+      envId,
+      flagId,
+      startDate,
+      endDate,
+    );
+
+    const hitsWithoutVariant = await this.flagService.flagHitsWithoutVariant(
+      envId,
+      flagId,
+      startDate,
+      endDate,
+    );
+
+    return { hitsPerVariant, hitsWithoutVariant };
   }
 
   @Post('environments/:envId/flags/:flagId/strategies')
