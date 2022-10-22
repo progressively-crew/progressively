@@ -32,6 +32,7 @@ import { Section, SectionHeader } from "~/components/Section";
 import { RawTable } from "~/components/RawTable";
 import { BigStat } from "~/components/BigStat";
 import { useRef } from "react";
+import { Tag } from "~/components/Tag";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -139,8 +140,15 @@ export const loader: LoaderFunction = async ({
     count: hit.variantEvalutations,
   }));
 
-  const set = new Set(variantHitsWithDuplicates);
-  const variantEvalutations = [...set];
+  const alreadyInVariants: any = {};
+
+  const variantEvalutations = variantHitsWithDuplicates.filter((item) => {
+    if (!alreadyInVariants[item.variant]) {
+      alreadyInVariants[item.variant] = true;
+      return true;
+    }
+    return false;
+  });
 
   return {
     variantEvalutations,
@@ -242,7 +250,7 @@ export default function FlagInsights() {
         <Card>
           <Section id="with-variant">
             <CardContent noBottom>
-              <SectionHeader title="Metric hits by variant" />
+              <SectionHeader title="Hits by variant" />
             </CardContent>
 
             <TableWrapper>
@@ -250,8 +258,8 @@ export default function FlagInsights() {
                 <thead>
                   <tr>
                     <th>Metric</th>
-                    <th>Metric hit</th>
                     <th>Variant</th>
+                    <th>Metric hit</th>
                     <th>Variant evalutations</th>
                     <th>Ratio</th>
                   </tr>
@@ -260,17 +268,34 @@ export default function FlagInsights() {
                   {hits.map((hit) => (
                     <tr key={hit.metric}>
                       <td>{hit.metric}</td>
-                      <td>{hit.count}</td>
                       <td>{hit.variant}</td>
-                      <td>{hit.variantEvalutations}</td>
                       <td>
-                        <Typography as="span" color="successFg" size="uranus">
+                        <Typography
+                          as="span"
+                          fontWeight="bold"
+                          fontSize="uranus"
+                        >
+                          {hit.count}
+                        </Typography>
+                      </td>
+                      <td>
+                        <Typography
+                          as="span"
+                          fontWeight="bold"
+                          color="nemesis"
+                          fontSize="uranus"
+                        >
+                          {hit.variantEvalutations}
+                        </Typography>
+                      </td>
+                      <td>
+                        <Tag color="successFg" background="successBg">
                           {hit.variantEvalutations > 0
                             ? `${Math.round(
                                 (hit.count / hit.variantEvalutations) * 100
                               )}%`
                             : "N/A"}
-                        </Typography>
+                        </Tag>
                       </td>
                     </tr>
                   ))}
@@ -283,7 +308,7 @@ export default function FlagInsights() {
         <Card>
           <Section id="without-variant">
             <CardContent noBottom>
-              <SectionHeader title="Other metrics" />
+              <SectionHeader title="Other hits" />
             </CardContent>
 
             <TableWrapper>
@@ -298,7 +323,15 @@ export default function FlagInsights() {
                   {hitsWithoutVariant.map((hit) => (
                     <tr key={hit.metric}>
                       <td>{hit.metric}</td>
-                      <td>{hit.count}</td>
+                      <td>
+                        <Typography
+                          as="span"
+                          fontWeight="bold"
+                          fontSize="uranus"
+                        >
+                          {hit.count}
+                        </Typography>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
