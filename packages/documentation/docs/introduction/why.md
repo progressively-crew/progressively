@@ -16,13 +16,13 @@ There are plenty of great tools in the feature flagging space with their own set
 
 And we wanted to focus on some aspects that have not always been covered by others: **perceived performance, accessibility and privacy**.
 
-- Progressively is smaller than its competitors ([1kB for the React SDK](https://bundlephobia.com/package/@progressively/react@0.0.1-alpha.10), [see comparison](https://github.com/progressively-crew/progressively/tree/master/example/bundle-diffs)) and does not bloat client side bundles
+- Progressively is smaller than its competitors ([1.3kB for the React SDK](https://bundlephobia.com/package/@progressively/react@0.0.1-alpha.10), [see comparison](https://github.com/progressively-crew/progressively/tree/master/example/bundle-diffs)) and does not bloat client side bundles
 - Progressively has to be accessible (if the experience does not work for you, [let us know](https://github.com/progressively-crew/progressively/issues), we want to improve)
-- Progressively focuses on avoiding the page flickering during flag resolution thanks to SSR SDK support ([see React SDK example](/guides/react))
+- Progressively provides ways to avoid the page flickering during flag resolution thanks to SSR SDK support ([see React SDK example](/guides/react))
 - Realtime propagation with Websockets
 - No intrusive tracking (expect error monitoring or privacy first analytics tools to be added at some point to understand more the audience)
 - Progressively is self-hosted: you decide where to put your data and running instances
 
 ---
 
-If you come from a company that uses feature branches and GitFlow, you might be interested in reading [this blog post](https://mfrachet.github.io/why-i-dont-like-gitflow/)
+If you come from a company that uses feature branches and GitFlow, you might be interested in reading [this blog post](https://mfrachet.github.io/why-i-dont-like-gitflow/).
