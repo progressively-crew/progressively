@@ -142,24 +142,28 @@ export class FlagsService {
         flagEnvironmentFlagId: flagId,
         flagEnvironmentEnvironmentId: envId,
         variantUuid: null,
-        PMetricHit: {
-          every: {
-            date: {
-              gte: new Date(startDate),
-              lte: new Date(endDate),
-            },
-          },
-        },
-      },
-      include: {
-        PMetricHit: true,
       },
     });
 
-    const metrics = rawMetrics.map((raw) => ({
-      count: raw.PMetricHit.length,
-      metric: raw.name,
-    }));
+    const metrics = [];
+    for (const metric of rawMetrics) {
+      const hits = await this.prisma.pMetricHit.count({
+        where: {
+          flagEnvironmentFlagId: flagId,
+          flagEnvironmentEnvironmentId: envId,
+          date: {
+            gte: new Date(startDate),
+            lte: new Date(endDate),
+          },
+          pMetricUuid: metric.uuid,
+        },
+      });
+
+      metrics.push({
+        count: hits,
+        metric: metric.name,
+      });
+    }
 
     return metrics;
   }
@@ -197,28 +201,29 @@ export class FlagsService {
           flagEnvironmentFlagId: flagId,
           flagEnvironmentEnvironmentId: envId,
           variantUuid: variant.uuid,
-          PMetricHit: {
-            every: {
-              date: {
-                gte: new Date(startDate),
-                lte: new Date(endDate),
-              },
-            },
-          },
-        },
-        include: {
-          PMetricHit: true,
         },
       });
 
-      rawMetrics.forEach((raw) => {
+      for (const metric of rawMetrics) {
+        const metricHits = await this.prisma.pMetricHit.count({
+          where: {
+            flagEnvironmentFlagId: flagId,
+            flagEnvironmentEnvironmentId: envId,
+            date: {
+              gte: new Date(startDate),
+              lte: new Date(endDate),
+            },
+            pMetricUuid: metric.uuid,
+          },
+        });
+
         evaluatedVariants.push({
-          count: raw.PMetricHit.length,
-          metric: raw.name,
+          count: metricHits,
+          metric: metric.name,
           variant: variant.value,
           variantEvalutations: hits,
         });
-      });
+      }
     }
 
     return evaluatedVariants;

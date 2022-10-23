@@ -23,16 +23,13 @@ import { Card, CardContent } from "~/components/Card";
 import { TextInput } from "~/components/Fields/TextInput";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { HStack } from "~/components/HStack";
-import { EmptyState } from "~/components/EmptyState";
 import { Typography } from "~/components/Typography";
 import { PageTitle } from "~/components/PageTitle";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
-import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { Section, SectionHeader } from "~/components/Section";
-import { RawTable } from "~/components/RawTable";
 import { BigStat } from "~/components/BigStat";
-import { useRef } from "react";
-import { Tag } from "~/components/Tag";
+import { HitByVariantList } from "~/modules/flags/components/HitByVariantList";
+import { HitWithoutVariantList } from "~/modules/flags/components/HitWithoutVariantList";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -254,53 +251,7 @@ export default function FlagInsights() {
             </CardContent>
 
             <TableWrapper>
-              <RawTable>
-                <thead>
-                  <tr>
-                    <th>Metric</th>
-                    <th>Variant</th>
-                    <th>Metric hit</th>
-                    <th>Variant evalutations</th>
-                    <th>Ratio</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {hits.map((hit) => (
-                    <tr key={hit.metric}>
-                      <td>{hit.metric}</td>
-                      <td>{hit.variant}</td>
-                      <td>
-                        <Typography
-                          as="span"
-                          fontWeight="bold"
-                          fontSize="uranus"
-                        >
-                          {hit.count}
-                        </Typography>
-                      </td>
-                      <td>
-                        <Typography
-                          as="span"
-                          fontWeight="bold"
-                          color="nemesis"
-                          fontSize="uranus"
-                        >
-                          {hit.variantEvalutations}
-                        </Typography>
-                      </td>
-                      <td>
-                        <Tag color="successFg" background="successBg">
-                          {hit.variantEvalutations > 0
-                            ? `${Math.round(
-                                (hit.count / hit.variantEvalutations) * 100
-                              )}%`
-                            : "N/A"}
-                        </Tag>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </RawTable>
+              <HitByVariantList hits={hits} />
             </TableWrapper>
           </Section>
         </Card>
@@ -312,62 +263,10 @@ export default function FlagInsights() {
             </CardContent>
 
             <TableWrapper>
-              <RawTable>
-                <thead>
-                  <tr>
-                    <th>Metric</th>
-                    <th>Metric hit</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {hitsWithoutVariant.map((hit) => (
-                    <tr key={hit.metric}>
-                      <td>{hit.metric}</td>
-                      <td>
-                        <Typography
-                          as="span"
-                          fontWeight="bold"
-                          fontSize="uranus"
-                        >
-                          {hit.count}
-                        </Typography>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </RawTable>
+              <HitWithoutVariantList hits={hitsWithoutVariant} />
             </TableWrapper>
           </Section>
         </Card>
-
-        <section
-          aria-label={`Hits per date and per variant (${0}) evaluations in the current date range`}
-        >
-          <Card>
-            {hits.length > 0 ? (
-              <div>
-                <VisuallyHidden>
-                  <h2>
-                    Hits per date and per variant ({0}) evaluations in the
-                    current date range
-                  </h2>
-                </VisuallyHidden>
-              </div>
-            ) : (
-              <CardContent>
-                <EmptyState
-                  titleAs="h2"
-                  title="No hits found"
-                  description={
-                    <Typography>
-                      There is no flag hit for this period.
-                    </Typography>
-                  }
-                />
-              </CardContent>
-            )}
-          </Card>
-        </section>
       </Stack>
     </DashboardLayout>
   );
