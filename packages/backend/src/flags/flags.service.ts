@@ -348,14 +348,6 @@ export class FlagsService {
     return status;
   }
 
-  resolveFlagStatusRecord(flagEnv: PopulatedFlagEnv, fields: FieldRecord) {
-    const flagStatusRecord = this.resolveFlagStatus(flagEnv, fields);
-
-    return {
-      [flagEnv.flag.key]: flagStatusRecord,
-    };
-  }
-
   async manageScheduling(
     clientKey: string,
     flagEnv: PopulatedFlagEnv,

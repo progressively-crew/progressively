@@ -31,7 +31,7 @@ You can now open http://localhost:3000/welcome to create your admin user.
 
 ## How is progressively different
 
-- Progressively is smaller than its competitors ([1kB for the React SDK](https://github.com/progressively-crew/progressively/tree/master/example/bundle-diffs))
+- Progressively is smaller than its competitors ([1.3kB for the React SDK](https://github.com/progressively-crew/progressively/tree/master/example/bundle-diffs))
 - Progressively has an accessible dashboard (if you face issues, please [create an issue](https://github.com/progressively-crew/progressively/issues))
 - Progressively comes with built-in SSR support so that the page don't blink when resolving the flags
 - Real-time propagation with Websockets

@@ -38,6 +38,33 @@ export class SdkService {
     }
   }
 
+  resolveFlagStatusRecord(flagEnv: PopulatedFlagEnv, fields: FieldRecord) {
+    const flagStatusRecord = this.flagService.resolveFlagStatus(
+      flagEnv,
+      fields,
+    );
+
+    let flagVariant: Variant | undefined;
+    let flagStatus: boolean;
+    if (typeof flagStatusRecord === 'boolean') {
+      flagStatus = flagStatusRecord;
+    } else {
+      flagVariant = flagStatusRecord;
+      flagStatus = false;
+    }
+
+    this.flagService.hitFlag(
+      flagEnv.environmentId,
+      flagEnv.flagId,
+      flagStatus,
+      flagVariant,
+    );
+
+    return {
+      [flagEnv.flag.key]: flagStatusRecord,
+    };
+  }
+
   async resolveSdkFlags(fields: FieldRecord, skipHit: boolean) {
     const clientKey = String(fields.clientKey);
     const flagEnvs = (await this.envService.getFlagEnvironmentByClientKey(

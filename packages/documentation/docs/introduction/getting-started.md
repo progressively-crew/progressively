@@ -40,7 +40,7 @@ You can now open <a href="http://localhost:3000/welcome" target="_blank" rel="no
 For reference, Progressively is built using:
 
 - [A frontend application called `The dashboard`](https://github.com/progressively-crew/progressively/tree/master/packages/frontend) built with [Remix.run](https://remix.run/) and [Reactjs](https://reactjs.org/)
-- [A backend application](https://github.com/progressively-crew/progressively/tree/master/packages/backend) built with [Nestjs](https://nestjs.com/) that act as the API layer, and as a Websocket server
+- [A backend application](https://github.com/progressively-crew/progressively/tree/master/packages/backend) built with [Nestjs](https://nestjs.com/) for the APIs and Websocket server
 - [Postgres](https://www.postgresql.org/) to store relational data, used with [Prisma](https://www.prisma.io/) ([see database schemas](https://github.com/progressively-crew/progressively/tree/master/packages/backend/prisma)).
 - [Redis](https://redis.io/) as a Websocket backend to make the connection scale horizontally
 - And SDKs of different languages
