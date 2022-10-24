@@ -160,7 +160,14 @@ export class FlagsController {
       endDate,
     );
 
-    return { hitsPerVariant, hitsWithoutVariant };
+    const flagEvaluationsCount = await this.flagService.flagEvaluationsCount(
+      envId,
+      flagId,
+      startDate,
+      endDate,
+    );
+
+    return { hitsPerVariant, hitsWithoutVariant, flagEvaluationsCount };
   }
 
   @Post('environments/:envId/flags/:flagId/strategies')
