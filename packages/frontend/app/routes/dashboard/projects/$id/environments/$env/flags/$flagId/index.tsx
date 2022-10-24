@@ -7,7 +7,6 @@ import { StrategyRetrieveDTO } from "~/modules/strategies/types";
 import { Header } from "~/components/Header";
 import { Section, SectionHeader } from "~/components/Section";
 import { EmptyState } from "~/components/EmptyState";
-import { FaToggleOff } from "react-icons/fa";
 import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
 import { Typography } from "~/components/Typography";
 import { CreateButton } from "~/components/Buttons/CreateButton";

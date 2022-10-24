@@ -1,5 +1,5 @@
 import { LoaderFunction } from "@remix-run/node";
-import { Outlet, useLoaderData, useMatches } from "@remix-run/react";
+import { Outlet, useLoaderData } from "@remix-run/react";
 import { authGuard } from "~/modules/auth/services/auth-guard";
 import { ProjectsProvider } from "~/modules/projects/contexts/ProjectsProvider";
 import { getProjects } from "~/modules/projects/services/getProjects";

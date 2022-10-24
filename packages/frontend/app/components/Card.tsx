@@ -1,4 +1,4 @@
-import { mapTokenToVariant, styled, spacing, shadows } from "~/stitches.config";
+import { mapTokenToVariant, styled, shadows } from "~/stitches.config";
 
 export const Card = styled("div", {
   display: "flex",
