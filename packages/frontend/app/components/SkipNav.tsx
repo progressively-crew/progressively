@@ -33,8 +33,8 @@ export const SkipNavLink = ({ children }: SkipNavLinkProps) => {
   return (
     <SkipNavAnchor
       href="#content"
-      tabIndex={isNavOpened ? 0 : -1}
-      aria-hidden={!isNavOpened}
+      tabIndex={isNavOpened ? -1 : 0}
+      aria-hidden={isNavOpened}
     >
       {children}
     </SkipNavAnchor>
