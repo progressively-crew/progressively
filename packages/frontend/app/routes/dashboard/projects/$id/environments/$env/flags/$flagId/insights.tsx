@@ -52,6 +52,7 @@ interface VariantHit {
 interface LoaderData {
   hits: Array<VariantHit>;
   hitsWithoutVariant: Array<MetricHit>;
+  flagEvaluationsCount: number;
   startDate: string;
   endDate: string;
   variantEvalutations: Array<{
@@ -100,9 +101,11 @@ export const loader: LoaderFunction = async ({
   const {
     hitsPerVariant,
     hitsWithoutVariant,
+    flagEvaluationsCount,
   }: {
     hitsPerVariant: Array<VariantHit>;
     hitsWithoutVariant: Array<MetricHit>;
+    flagEvaluationsCount: number;
   } = await getFlagHits(
     params.env!,
     params.flagId!,
@@ -130,6 +133,7 @@ export const loader: LoaderFunction = async ({
     variantEvalutations,
     hits: hitsPerVariant,
     hitsWithoutVariant,
+    flagEvaluationsCount,
     startDate: startDate.toISOString(),
     endDate: endDate.toISOString(),
   };
@@ -140,8 +144,14 @@ const formatDefaultDate = (isoDate: string) => {
 };
 
 export default function FlagInsights() {
-  const { hits, startDate, endDate, hitsWithoutVariant, variantEvalutations } =
-    useLoaderData<LoaderData>();
+  const {
+    hits,
+    startDate,
+    endDate,
+    hitsWithoutVariant,
+    variantEvalutations,
+    flagEvaluationsCount,
+  } = useLoaderData<LoaderData>();
   const { flagEnv } = useFlagEnv();
   const { user } = useUser();
   const { project } = useProject();
@@ -200,10 +210,20 @@ export default function FlagInsights() {
         </Form>
 
         <InsightsGrid>
+          <Card>
+            <CardContent>
+              <BigStat
+                count={flagEvaluationsCount}
+                unit="evalutations"
+                name={`Flag evaluations`}
+              />
+            </CardContent>
+          </Card>
           {variantEvalutations.map((variant) => (
             <Card key={variant.variant}>
               <CardContent>
                 <BigStat
+                  type="variant"
                   count={variant.count}
                   unit="evalutations"
                   name={`Variant ${variant.variant}`}
@@ -213,17 +233,22 @@ export default function FlagInsights() {
           ))}
         </InsightsGrid>
 
-        <Card>
-          <Section id="with-variant">
-            <CardContent noBottom>
-              <SectionHeader title="Hits by variant" />
-            </CardContent>
+        {hits.length > 0 && (
+          <Card>
+            <Section id="with-variant">
+              <CardContent noBottom>
+                <SectionHeader title="Hits by variant" />
+              </CardContent>
 
-            <TableWrapper>
-              <HitByVariantList hits={hits} />
-            </TableWrapper>
-          </Section>
-        </Card>
+              <TableWrapper>
+                <HitByVariantList
+                  hits={hits}
+                  flagEvaluationsCount={flagEvaluationsCount}
+                />
+              </TableWrapper>
+            </Section>
+          </Card>
+        )}
 
         <Card>
           <Section id="without-variant">
@@ -232,7 +257,10 @@ export default function FlagInsights() {
             </CardContent>
 
             <TableWrapper>
-              <HitWithoutVariantList hits={hitsWithoutVariant} />
+              <HitWithoutVariantList
+                hits={hitsWithoutVariant}
+                flagEvaluationsCount={flagEvaluationsCount}
+              />
             </TableWrapper>
           </Section>
         </Card>

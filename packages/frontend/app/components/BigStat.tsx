@@ -10,6 +10,15 @@ const BigStatValue = styled("p", {
   lineHeight: "unset",
   color: "$nemesis",
   fontWeight: "$bold",
+
+  variants: {
+    type: {
+      variant: {
+        color: "$successFg",
+        borderBottom: "20px solid red",
+      },
+    },
+  },
 });
 
 export interface BigStatProps {
@@ -17,15 +26,18 @@ export interface BigStatProps {
   id?: string;
   unit?: string;
   count: number;
+  type?: "variant";
 }
 
-export const BigStat = ({ name, count, id, unit }: BigStatProps) => {
+export const BigStat = ({ name, count, id, unit, type }: BigStatProps) => {
   const formatterRef = useRef(
     new Intl.NumberFormat("en-US", {
       notation: "compact",
       maximumFractionDigits: 1,
     })
   );
+
+  console.log("looo", type);
 
   return (
     <div>
@@ -39,7 +51,7 @@ export const BigStat = ({ name, count, id, unit }: BigStatProps) => {
         {name}
       </Typography>
 
-      <BigStatValue>
+      <BigStatValue type={type}>
         <HStack alignItems="flex-end" as="span">
           {formatterRef.current.format(count)}{" "}
           {unit && (
