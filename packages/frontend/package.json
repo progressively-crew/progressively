@@ -2,7 +2,6 @@
   "private": true,
   "name": "@progressively/frontend",
   "description": "",
-  "license": "MIT",
   "scripts": {
     "build": "remix build",
     "dev": "remix dev",
