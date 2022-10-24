@@ -6,6 +6,7 @@ import { Typography } from "./Typography";
 export interface PageTitleProps {
   value: string;
   icon?: React.ReactNode;
+  endAction?: React.ReactNode;
   action?: React.ReactNode;
   description?: React.ReactNode;
 }
@@ -33,6 +34,7 @@ export const PageTitle = ({
   icon,
   action,
   description,
+  endAction,
 }: PageTitleProps) => {
   return (
     <HStack
@@ -42,20 +44,21 @@ export const PageTitle = ({
       spacing={{ "@tablet": 4 }}
     >
       <Stack>
-        <Typography
-          size={{ "@initial": "venus", "@mobile": "earth" }}
-          font="title"
-          color="hades"
-          fontWeight="semiBold"
-          lineHeight="title"
-          as="h1"
-          id="page-title"
-        >
-          <HStack spacing={3}>
-            {icon && <IconWrapper aria-hidden>{icon}</IconWrapper>}
+        <HStack spacing={3}>
+          {icon && <IconWrapper aria-hidden>{icon}</IconWrapper>}
+          <Typography
+            size={{ "@initial": "venus", "@mobile": "earth" }}
+            font="title"
+            color="hades"
+            fontWeight="semiBold"
+            lineHeight="title"
+            as="h1"
+            id="page-title"
+          >
             <span>{value}</span>
-          </HStack>
-        </Typography>
+          </Typography>
+          {endAction}
+        </HStack>
 
         {description && <DescriptionWrapper>{description}</DescriptionWrapper>}
       </Stack>

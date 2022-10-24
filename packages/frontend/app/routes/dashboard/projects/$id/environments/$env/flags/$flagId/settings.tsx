@@ -1,16 +1,13 @@
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { FlagStatus } from "~/modules/flags/types";
 import { UserRoles } from "~/modules/projects/types";
-import { getSession } from "~/sessions";
 import { Header } from "~/components/Header";
 import { Section, SectionHeader } from "~/components/Section";
 import { AiOutlineSetting } from "react-icons/ai";
-import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
 import { Typography } from "~/components/Typography";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { HideMobile } from "~/components/HideMobile";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
-import { MetaFunction, ActionFunction } from "@remix-run/node";
+import { MetaFunction } from "@remix-run/node";
 import { Card, CardContent } from "~/components/Card";
 import { Stack } from "~/components/Stack";
 import { TagLine } from "~/components/Tagline";
@@ -23,10 +20,8 @@ import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
-import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
 import { PageTitle } from "~/components/PageTitle";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
-import { Form } from "@remix-run/react";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -38,24 +33,6 @@ export const meta: MetaFunction = ({ parentsData, params }) => {
   };
 };
 
-type ActionDataType = null | { successChangePercentage: boolean };
-
-export const action: ActionFunction = async ({
-  request,
-  params,
-}): Promise<ActionDataType> => {
-  const session = await getSession(request.headers.get("Cookie"));
-  const authCookie = session.get("auth-cookie");
-  const formData = await request.formData();
-  const type = formData.get("_type");
-
-  if (type === "toggle-flag") {
-    return toggleFlagAction(formData, params, authCookie);
-  }
-
-  return null;
-};
-
 export default function FlagSettingPage() {
   const { project, userRole } = useProject();
   const { user } = useUser();
@@ -64,7 +41,6 @@ export default function FlagSettingPage() {
   const { environment } = useEnvironment();
 
   const currentFlag = flagEnv.flag;
-  const isFlagActivated = flagEnv.status === FlagStatus.ACTIVATED;
 
   return (
     <DashboardLayout
@@ -73,15 +49,6 @@ export default function FlagSettingPage() {
         <Header
           tagline={<TagLine icon={<FlagIcon />}>FEATURE FLAG</TagLine>}
           title={currentFlag.name}
-          startAction={
-            <Form method="post" id={`form-${currentFlag.uuid}`}>
-              <ToggleFlag
-                isFlagActivated={isFlagActivated}
-                flagId={currentFlag.uuid}
-                flagName={currentFlag.name}
-              />
-            </Form>
-          }
         />
       }
       subNav={

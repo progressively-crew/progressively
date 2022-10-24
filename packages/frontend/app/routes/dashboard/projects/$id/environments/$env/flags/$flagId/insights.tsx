@@ -1,12 +1,10 @@
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { FlagStatus } from "~/modules/flags/types";
 import { getSession } from "~/sessions";
 import { Header } from "~/components/Header";
 import { AiOutlineBarChart } from "react-icons/ai";
 import { getFlagHits } from "~/modules/flags/services/getFlagHits";
-import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
 import { styled } from "~/stitches.config";
-import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
+import { MetaFunction, LoaderFunction } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
 import { TagLine } from "~/components/Tagline";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
@@ -18,7 +16,6 @@ import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { Stack } from "~/components/Stack";
-import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
 import { Card, CardContent } from "~/components/Card";
 import { TextInput } from "~/components/Fields/TextInput";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
@@ -39,24 +36,6 @@ export const meta: MetaFunction = ({ parentsData, params }) => {
   return {
     title: `Progressively | ${projectName} | ${envName} | ${flagName} | Insights`,
   };
-};
-
-type ActionDataType = null | { successChangePercentage: boolean };
-
-export const action: ActionFunction = async ({
-  request,
-  params,
-}): Promise<ActionDataType> => {
-  const session = await getSession(request.headers.get("Cookie"));
-  const authCookie = session.get("auth-cookie");
-  const formData = await request.formData();
-  const type = formData.get("_type");
-
-  if (type === "toggle-flag") {
-    return toggleFlagAction(formData, params, authCookie);
-  }
-
-  return null;
 };
 
 interface MetricHit {
@@ -169,7 +148,6 @@ export default function FlagInsights() {
   const { environment } = useEnvironment();
 
   const currentFlag = flagEnv.flag;
-  const isFlagActivated = flagEnv.status === FlagStatus.ACTIVATED;
 
   return (
     <DashboardLayout
@@ -178,15 +156,6 @@ export default function FlagInsights() {
         <Header
           tagline={<TagLine icon={<FlagIcon />}>FEATURE FLAG</TagLine>}
           title={currentFlag.name}
-          startAction={
-            <Form method="post" id={`form-${currentFlag.uuid}`}>
-              <ToggleFlag
-                isFlagActivated={isFlagActivated}
-                flagId={currentFlag.uuid}
-                flagName={currentFlag.name}
-              />
-            </Form>
-          }
         />
       }
       subNav={

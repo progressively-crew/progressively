@@ -7,7 +7,6 @@ import { StrategyRetrieveDTO } from "~/modules/strategies/types";
 import { Header } from "~/components/Header";
 import { Section, SectionHeader } from "~/components/Section";
 import { EmptyState } from "~/components/EmptyState";
-import { FaToggleOff } from "react-icons/fa";
 import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
 import { Typography } from "~/components/Typography";
 import { CreateButton } from "~/components/Buttons/CreateButton";
@@ -152,15 +151,6 @@ export default function FlagById() {
         <Header
           tagline={<TagLine icon={<FlagIcon />}>FEATURE FLAG</TagLine>}
           title={currentFlag.name}
-          startAction={
-            <Form method="post" id={`form-${currentFlag.uuid}`}>
-              <ToggleFlag
-                isFlagActivated={isFlagActivated}
-                flagId={currentFlag.uuid}
-                flagName={currentFlag.name}
-              />
-            </Form>
-          }
         />
       }
       subNav={
@@ -173,7 +163,19 @@ export default function FlagById() {
     >
       <PageTitle
         value="Overview"
-        icon={<FaToggleOff />}
+        endAction={
+          <Form
+            method="post"
+            id={`form-${currentFlag.uuid}`}
+            style={{ marginTop: 12 }}
+          >
+            <ToggleFlag
+              isFlagActivated={isFlagActivated}
+              flagId={currentFlag.uuid}
+              flagName={currentFlag.name}
+            />
+          </Form>
+        }
         description={
           <StrategyDescription
             flagEnv={flagEnv}
