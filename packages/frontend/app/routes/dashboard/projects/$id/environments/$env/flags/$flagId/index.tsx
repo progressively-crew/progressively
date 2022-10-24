@@ -162,26 +162,28 @@ export default function FlagById() {
         />
       }
     >
-      <PageTitle value="Overview" />
-
-      <Section id="flag-status">
-        <Card>
-          <CardContent>
-            <Form method="post" id={`form-${currentFlag.uuid}`}>
-              <ToggleFlag
-                isFlagActivated={isFlagActivated}
-                flagId={currentFlag.uuid}
-                flagName={currentFlag.name}
-              />
-            </Form>
-          </CardContent>
-
+      <PageTitle
+        value="Overview"
+        endAction={
+          <Form
+            method="post"
+            id={`form-${currentFlag.uuid}`}
+            style={{ marginTop: 12 }}
+          >
+            <ToggleFlag
+              isFlagActivated={isFlagActivated}
+              flagId={currentFlag.uuid}
+              flagName={currentFlag.name}
+            />
+          </Form>
+        }
+        description={
           <StrategyDescription
             flagEnv={flagEnv}
             hasStrategies={hasStrategies}
           />
-        </Card>
-      </Section>
+        }
+      />
 
       <Stack spacing={8}>
         <Section id="rollout-target">
