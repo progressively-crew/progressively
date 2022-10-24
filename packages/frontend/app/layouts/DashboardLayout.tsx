@@ -76,14 +76,16 @@ export const DashboardLayout = ({
               <UseDropdown user={user} />
             </HStack>
 
-            {header && <Spacer size={2} />}
+            <HideDesktop>
+              {header && <Spacer size={2} />}
 
-            {header}
+              {header}
+            </HideDesktop>
           </Container>
         </TopWrapper>
 
         <InertWhenNavOpened>
-          <Spacer size={{ "@initial": 12, "@tablet": 0 }} />
+          <Spacer size={{ "@initial": 8, "@tablet": 0 }} />
 
           {subNav && <HideDesktop>{subNav}</HideDesktop>}
 

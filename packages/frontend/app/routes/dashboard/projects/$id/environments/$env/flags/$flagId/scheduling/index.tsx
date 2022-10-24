@@ -17,11 +17,8 @@ import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
-import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
-import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
-import { FlagStatus } from "~/modules/flags/types";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { SchedulingList } from "~/modules/scheduling/components/SchedulingList";
@@ -38,24 +35,6 @@ export const meta: MetaFunction = ({ parentsData, params }) => {
   return {
     title: `Progressively | ${projectName} | ${envName} | Flags | ${flagName} | Scheduling`,
   };
-};
-
-type ActionDataType = null | { successChangePercentage: boolean };
-
-export const action: ActionFunction = async ({
-  request,
-  params,
-}): Promise<ActionDataType> => {
-  const session = await getSession(request.headers.get("Cookie"));
-  const authCookie = session.get("auth-cookie");
-  const formData = await request.formData();
-  const type = formData.get("_type");
-
-  if (type === "toggle-flag") {
-    return toggleFlagAction(formData, params, authCookie);
-  }
-
-  return null;
 };
 
 interface LoaderData {
@@ -93,8 +72,6 @@ export default function SchedulingOfFlag() {
 
   const currentFlag = flagEnv.flag;
 
-  const isFlagActivated = flagEnv.status === FlagStatus.ACTIVATED;
-
   const hasScheduling = scheduling.length > 0;
 
   return (
@@ -104,15 +81,6 @@ export default function SchedulingOfFlag() {
         <Header
           tagline={<TagLine icon={<FlagIcon />}>FEATURE FLAG</TagLine>}
           title={currentFlag.name}
-          startAction={
-            <Form method="post" id={`form-${currentFlag.uuid}`}>
-              <ToggleFlag
-                isFlagActivated={isFlagActivated}
-                flagId={currentFlag.uuid}
-                flagName={currentFlag.name}
-              />
-            </Form>
-          }
         />
       }
       subNav={
