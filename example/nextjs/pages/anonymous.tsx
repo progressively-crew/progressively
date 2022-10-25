@@ -2,22 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { ProgressivelyProvider, useFlags } from "@progressively/react";
-import { getSSRProps } from "@progressively/react/lib/ssr";
-
-const getProgressivelyProps = async (req: Request, res: any, fields?: any) => {
-  const { ssrProps, cookies } = await getSSRProps("valid-sdk-key", {
-    websocketUrl: "ws://localhost:4000",
-    apiUrl: "http://localhost:4000",
-    fields: {
-      id: fields?.id || (req as any).cookies?.["progressively-id"] || null,
-      ...fields,
-    },
-  });
-
-  res.setHeader("set-cookie", cookies);
-
-  return ssrProps;
-};
+import { getNextProps } from "@progressively/react/lib/next";
 
 const FlaggedComponent = () => {
   const { flags } = useFlags();
@@ -26,10 +11,10 @@ const FlaggedComponent = () => {
     <main>
       <div>
         <h1>New homepage</h1>
-        {flags.newHomepage ? "New variant" : "Old variant"}
+        {flags.newHero ? "New variant" : "Old variant"}
       </div>
 
-      <footer>{flags.newFooter ? "New footer" : "Old footer"}</footer>
+      <footer>{flags.newHero ? "New footer" : "Old footer"}</footer>
     </main>
   );
 };
@@ -57,7 +42,15 @@ export async function getServerSideProps({
   req: Request;
   res: any;
 }) {
-  const ssrProps = await getProgressivelyProps(req, res);
+  const ssrProps = await getNextProps(
+    "36e0ff59-50db-4f1e-8f0f-79cb6a0c0afa",
+    {
+      websocketUrl: "ws://localhost:4000",
+      apiUrl: "http://localhost:4000",
+    },
+    req,
+    res
+  );
 
   return {
     props: {

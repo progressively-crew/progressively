@@ -5,7 +5,8 @@
   "main": "./lib/legacy/index.js",
   "exports": {
     ".": "./lib/modern/index.js",
-    "./lib/ssr": "./lib/ssr.js"
+    "./lib/ssr": "./lib/ssr.js",
+    "./lib/next": "./lib/next.js"
   },
   "types": "./lib",
   "scripts": {
