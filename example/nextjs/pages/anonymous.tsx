@@ -11,10 +11,10 @@ const FlaggedComponent = () => {
     <main>
       <div>
         <h1>New homepage</h1>
-        {flags.newHero ? "New variant" : "Old variant"}
+        {flags.newHomepage ? "New variant" : "Old variant"}
       </div>
 
-      <footer>{flags.newHero ? "New footer" : "Old footer"}</footer>
+      <footer>{flags.newFooter ? "New footer" : "Old footer"}</footer>
     </main>
   );
 };
@@ -43,7 +43,7 @@ export async function getServerSideProps({
   res: any;
 }) {
   const ssrProps = await getNextProps(
-    "36e0ff59-50db-4f1e-8f0f-79cb6a0c0afa",
+    "valid-sdk-key",
     {
       websocketUrl: "ws://localhost:4000",
       apiUrl: "http://localhost:4000",
