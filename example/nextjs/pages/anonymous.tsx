@@ -42,7 +42,7 @@ export async function getServerSideProps({
   req: Request;
   res: any;
 }) {
-  const ssrProps = await getNextProps(
+  const { ssrProps } = await getNextProps(
     "valid-sdk-key",
     {
       websocketUrl: "ws://localhost:4000",
