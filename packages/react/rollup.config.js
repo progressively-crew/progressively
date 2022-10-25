@@ -5,9 +5,11 @@ import { nodeResolve } from "@rollup/plugin-node-resolve";
 const external = ["react"];
 const globals = { react: "react" };
 
+const ssrRootFiles = ["ssr.ts", "next.ts"];
+
 export default () => {
-  const ssr = {
-    input: "src/ssr.ts",
+  const ssrConfigs = ssrRootFiles.map((ssrRootFile) => ({
+    input: `src/${ssrRootFile}`,
     output: {
       dir: "lib",
       format: "cjs",
@@ -15,7 +17,7 @@ export default () => {
     },
     plugins: [nodeResolve(), typescript({ outDir: "lib" }), terser()],
     external,
-  };
+  }));
 
   const legacy = {
     input: "src/index.tsx",
@@ -48,5 +50,5 @@ export default () => {
     ],
     external,
   };
-  return [legacy, modern, ssr];
+  return [legacy, modern].concat(ssrConfigs);
 };
