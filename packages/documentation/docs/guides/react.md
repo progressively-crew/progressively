@@ -65,8 +65,47 @@ export async function getServerSideProps({ req, res }) {
     }
   );
 
-  // This is necessary, make sure to attach the cookie
-  res.setHeader("set-cookie", cookies);
+  return {
+    props: {
+      progressivelyProps: ssrProps,
+    },
+  };
+}
+```
+
+## Usage with SSR and sticky user id
+
+When using Progressively with a rollout percentage that is not 100%, you want your users to have a consistent experimence. In order to do so, Progressively needs a way to stick a variant to a user id.
+
+The handling of creating IDs for anonymous users is done by Progressively under the hood. However, we need an extra step on your side to make it work properly: you have to set a cookie and forward the cookie to the Progressively instance:
+
+```javascript
+import { ProgressivelyProvider, useFlags } from "@progressively/react";
+import { getSSRProps } from "@progressively/react/lib/ssr";
+
+const FlaggedComponent = () => {
+  const { flags } = useFlags();
+  /* ... */
+};
+
+const YourPage = ({ progressivelyProps }) => {
+  return (
+    <ProgressivelyProvider {...progressivelyProps}>
+      <FlaggedComponent />
+    </ProgressivelyProvider>
+  );
+};
+
+export async function getServerSideProps({ req, res }) {
+   const { ssrProps } = await getNextProps(
+    "YOUR ENVIRONMENT KEY",
+    {
+      websocketUrl: "ws://localhost:4000",
+      apiUrl: "http://localhost:4000",
+    },
+    req,
+    res
+  );
 
   return {
     props: {
@@ -74,6 +113,29 @@ export async function getServerSideProps({ req, res }) {
     },
   };
 }
+
+function getNextProps(
+  clientKey: string,
+  options: SDKOptions,
+  req: Request,
+  res: any
+) {
+  const { fields } = options;
+  return getSSRProps(clientKey, {
+    ...options,
+    fields: {
+      // Forward the cookie to the progressively instance
+      id: fields?.id || (req as any).cookies?.["progressively-id"] || null,
+      ...(fields || {}),
+    },
+  }).then((response) => {
+
+    // Stick the cookie
+    res.setHeader("set-cookie", response.cookies);
+    return response;
+  });
+}
+
 ```
 
 ## Options
