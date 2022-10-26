@@ -17,7 +17,7 @@ importers:
       '@flagship.io/react-sdk': ^3.0.7
       '@growthbook/growthbook-react': ^0.9.0
       '@next/bundle-analyzer': ^12.2.2
-      '@progressively/react': file:../../packages/react
+      '@progressively/react': ^0.0.1-alpha.11
       '@unleash/proxy-client-react': ^3.1.0
       eslint: 8.20.0
       eslint-config-next: 12.2.2
@@ -30,7 +30,7 @@ importers:
       '@flagship.io/react-sdk': 3.0.13_biqbaboplfbrettd7655fr4n2y
       '@growthbook/growthbook-react': 0.9.1_react@18.2.0
       '@next/bundle-analyzer': 12.3.1
-      '@progressively/react': file:packages/react_react@18.2.0
+      '@progressively/react': link:../../packages/react
       '@unleash/proxy-client-react': 3.4.0_unleash-proxy-client@2.3.0
       launchdarkly-react-client-sdk: 2.29.1_biqbaboplfbrettd7655fr4n2y
       next: 12.2.2_biqbaboplfbrettd7655fr4n2y
@@ -76,11 +76,11 @@ importers:
 
   example/nextjs:
     specifiers:
-      '@progressively/cypress-helpers': file:../cypress-helpers
-      '@progressively/react': file:../../packages/react
+      '@progressively/react': ^0.0.1-alpha.11
       '@types/node': 17.0.31
       '@types/react': 18.0.9
       cypress: ^9.6.0
+      cypress-helpers: 1.0.0
       eslint: 8.15.0
       eslint-config-next: 12.1.6
       next: 12.1.6
@@ -88,40 +88,40 @@ importers:
       react-dom: 18.1.0
       typescript: 4.6.4
     dependencies:
-      '@progressively/react': file:packages/react_react@18.1.0
+      '@progressively/react': link:../../packages/react
       next: 12.1.6_ef5jwxihqo6n7gxfmzogljlgcm
       react: 18.1.0
       react-dom: 18.1.0_react@18.1.0
     devDependencies:
-      '@progressively/cypress-helpers': file:example/cypress-helpers_cypress@9.7.0
       '@types/node': 17.0.31
       '@types/react': 18.0.9
       cypress: 9.7.0
+      cypress-helpers: link:../cypress-helpers
       eslint: 8.15.0
       eslint-config-next: 12.1.6_6vdljae35l7howjttefzzsim3e
       typescript: 4.6.4
 
   example/node:
     specifiers:
-      '@progressively/cypress-helpers': file:../cypress-helpers
-      '@progressively/sdk-node': file:../../packages/sdk-node
+      '@progressively/sdk-node': ^0.0.1-alpha.11
       cypress: ^9.6.1
+      cypress-helpers: 1.0.0
       typescript: ^4.7.4
     dependencies:
-      '@progressively/cypress-helpers': file:example/cypress-helpers_cypress@9.7.0
-      '@progressively/sdk-node': file:packages/sdk-node
+      '@progressively/sdk-node': link:../../packages/sdk-node
       cypress: 9.7.0
+      cypress-helpers: link:../cypress-helpers
     devDependencies:
       typescript: 4.8.4
 
   example/php:
     specifiers:
-      '@progressively/cypress-helpers': file:../cypress-helpers
       cypress: ^9.6.1
+      cypress-helpers: 1.0.0
       typescript: ^4.7.4
     dependencies:
-      '@progressively/cypress-helpers': file:example/cypress-helpers_cypress@9.7.0
       cypress: 9.7.0
+      cypress-helpers: link:../cypress-helpers
     devDependencies:
       typescript: 4.8.4
 
@@ -4746,10 +4746,6 @@ packages:
     resolution: {integrity: sha512-4t9ir2SbQQr/wMCNU4YpHWp5hU14J2m3wHUZnGJPpmBF8YtkisxyVyQsKd1e6FyLTaGq8LOLhm6VLYHKqKNm+g==}
     requiresBuild: true
 
-  /@progressively/sdk-js/0.0.1-alpha.11:
-    resolution: {integrity: sha512-HSucVxzkeWFI2RT+yhon5pkkdbKrZUKYMIGuMUyqGWNY2l3Cdewto7zkaIbiO/E7mVcFLy4xiKHAbfXtU+DbAg==}
-    dev: false
-
   /@redis/bloom/1.0.2_@redis+client@1.3.0:
     resolution: {integrity: sha512-EBw7Ag1hPgFzdznK2PBblc1kdlj5B5Cw3XwI9/oG7tSn85/HKy3X9xHy/8tm/eNXJYHLXHJL/pkwBpFMVVefkw==}
     peerDependencies:
@@ -5410,16 +5406,6 @@ packages:
       '@testing-library/dom': 8.19.0
       cypress: 10.11.0
     dev: true
-
-  /@testing-library/cypress/8.0.3_cypress@9.7.0:
-    resolution: {integrity: sha512-nY2YaSbmuPo5k6kL0iLj/pGPPfka3iwb3kpTx8QN/vOCns92Saz9wfACqB8FJzcR7+lfA4d5HUOWqmTddBzczg==}
-    engines: {node: '>=12', npm: '>=6'}
-    peerDependencies:
-      cypress: ^2.1.0 || ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0
-    dependencies:
-      '@babel/runtime': 7.19.4
-      '@testing-library/dom': 8.19.0
-      cypress: 9.7.0
 
   /@testing-library/dom/8.19.0:
     resolution: {integrity: sha512-6YWYPPpxG3e/xOo6HIWwB/58HukkwIVTOaZ0VwdMVjhRUX/01E4FtQbck9GazOOj7MXHc5RBzMrU86iBJHbI+A==}
@@ -21786,48 +21772,3 @@ packages:
   /zwitch/2.0.2:
     resolution: {integrity: sha512-JZxotl7SxAJH0j7dN4pxsTV6ZLXoLdGME+PsjkL/DaBrVryK9kTGq06GfKrwcSOqypP+fdXGoCHE36b99fWVoA==}
     dev: true
-
-  file:example/cypress-helpers_cypress@9.7.0:
-    resolution: {directory: example/cypress-helpers, type: directory}
-    id: file:example/cypress-helpers
-    name: cypress-helpers
-    version: 1.0.0
-    peerDependencies:
-      cypress: ^9.6.1
-    dependencies:
-      '@testing-library/cypress': 8.0.3_cypress@9.7.0
-      cypress: 9.7.0
-
-  file:packages/react_react@18.1.0:
-    resolution: {directory: packages/react, type: directory}
-    id: file:packages/react
-    name: '@progressively/react'
-    version: 0.0.1-alpha.11
-    peerDependencies:
-      react: '>= 17'
-    dependencies:
-      '@progressively/sdk-js': 0.0.1-alpha.11
-      react: 18.1.0
-    dev: false
-
-  file:packages/react_react@18.2.0:
-    resolution: {directory: packages/react, type: directory}
-    id: file:packages/react
-    name: '@progressively/react'
-    version: 0.0.1-alpha.11
-    peerDependencies:
-      react: '>= 17'
-    dependencies:
-      '@progressively/sdk-js': 0.0.1-alpha.11
-      react: 18.2.0
-    dev: false
-
-  file:packages/sdk-node:
-    resolution: {directory: packages/sdk-node, type: directory}
-    name: '@progressively/sdk-node'
-    version: 0.0.1-alpha.11
-    dependencies:
-      node-fetch: 2.6.7
-    transitivePeerDependencies:
-      - encoding
-    dev: false

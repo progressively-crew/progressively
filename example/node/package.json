@@ -10,8 +10,8 @@
     "test:e2e:ci": "cypress run --browser chrome"
   },
   "dependencies": {
-    "@progressively/cypress-helpers": "file:../cypress-helpers",
-    "@progressively/sdk-node": "file:../../packages/sdk-node",
+    "cypress-helpers": "1.0.0",
+    "@progressively/sdk-node": "^0.0.1-alpha.11",
     "cypress": "^9.6.1"
   },
   "keywords": [],
