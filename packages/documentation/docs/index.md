@@ -6,12 +6,12 @@ hero:
   text: Self-hosted feature flagging solution
   tagline: Simple, accessible, lightweight and OpenSource.
   actions:
-    - theme: brand
+    - theme: alt
       text: Get Started
       link: /introduction/why
-    - theme: alt
-      text: View on GitHub
-      link: https://github.com/progressively-crew/progressively
+    - theme: brand
+      text: Watch trailer
+      link: https://vimeo.com/764157550
 
 features:
   - icon: ⚡️
