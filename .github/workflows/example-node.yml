@@ -31,28 +31,38 @@ jobs:
           - 5432:5432
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: "16"
-          cache: "npm"
-          cache-dependency-path: |
-            package-lock.json
-            example/node/package-lock.json
-            packages/backend/package-lock.json
+          node-version: 16
+
+      - uses: pnpm/action-setup@v2.2.4
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 7
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
 
       - name: Creating .env files
         run: mv ./packages/backend/.env.example ./packages/backend/.env
 
-      - name: Install the cypress-helpers dependencies
-        working-directory: ./example/cypress-helpers
-        run: npm install
-
-      - name: Install dependencies on the example project
-        working-directory: ./example/node
-        run: npm install
-
-      - name: Bootstrap projects
-        run: pnpm i
+      - name: Install dependencies
+        run: pnpm install
 
       - name: Prepare the DB
         run: pnpm run db:prepare

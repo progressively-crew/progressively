@@ -64,19 +64,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Install the cypress-helpers dependencies
-        working-directory: ./example/cypress-helpers
-        run: npm install
-
-      - name: Install dependencies on the example project
-        working-directory: ./example/cra
-        run: npm install
-
-      - name: Bootstrap projects
-        run: pnpm install
-
       - name: Prepare the DB
-        run: npm run db:prepare
+        run: pnpm run db:prepare
 
       - name: Build
         run: pnpm run build
