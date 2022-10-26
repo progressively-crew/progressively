@@ -38,7 +38,10 @@ export class SdkService {
     }
   }
 
-  resolveFlagStatusRecord(flagEnv: PopulatedFlagEnv, fields: FieldRecord) {
+  async resolveFlagStatusRecord(
+    flagEnv: PopulatedFlagEnv,
+    fields: FieldRecord,
+  ) {
     const flagStatusRecord = this.flagService.resolveFlagStatus(
       flagEnv,
       fields,
@@ -53,7 +56,7 @@ export class SdkService {
       flagStatus = false;
     }
 
-    this.flagService.hitFlag(
+    await this.flagService.hitFlag(
       flagEnv.environmentId,
       flagEnv.flagId,
       flagStatus,
