@@ -3,7 +3,7 @@ import { Progressively, SDKOptions } from "@progressively/sdk-js";
 const btoA = (toTransform: string) =>
   Buffer.from(toTransform).toString("base64");
 
-export function getSSRProps(
+export function getProgressivelyProps(
   clientKey: string,
   options?: SDKOptions | undefined
 ) {
@@ -18,7 +18,7 @@ export function getSSRProps(
 
   return sdk.loadFlags({ btoAFn: btoA }).then(({ flags, response }) => {
     return {
-      ssrProps: {
+      progressivelyProps: {
         initialFlags: flags,
         clientKey,
 

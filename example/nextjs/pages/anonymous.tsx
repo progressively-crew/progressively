@@ -42,7 +42,7 @@ export async function getServerSideProps({
   req: Request;
   res: any;
 }) {
-  const { ssrProps } = await getNextProps(
+  const { progressivelyProps } = await getNextProps(
     "valid-sdk-key",
     {
       websocketUrl: "ws://localhost:4000",
@@ -54,7 +54,7 @@ export async function getServerSideProps({
 
   return {
     props: {
-      progressivelyProps: ssrProps,
+      progressivelyProps,
     },
   };
 }

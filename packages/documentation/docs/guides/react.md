@@ -41,7 +41,7 @@ In your React code, add the following snippet
 
 ```javascript
 import { ProgressivelyProvider, useFlags } from "@progressively/react";
-import { getSSRProps } from "@progressively/react/lib/ssr";
+import { getProgressivelyProps } from "@progressively/react/lib/ssr";
 
 const FlaggedComponent = () => {
   const { flags } = useFlags();
@@ -57,7 +57,7 @@ const YourPage = ({ progressivelyProps }) => {
 };
 
 export async function getServerSideProps({ req, res }) {
-  const { ssrProps, cookies } = await getSSRProps(
+  const { progressivelyProps, cookies } = await getProgressivelyProps(
     "YOUR_ENVIRONMENT_CLIENT_KEY",
     {
       apiUrl: "your url server",
@@ -70,7 +70,7 @@ export async function getServerSideProps({ req, res }) {
 
   return {
     props: {
-      progressivelyProps: ssrProps,
+      progressivelyProps,
     },
   };
 }
