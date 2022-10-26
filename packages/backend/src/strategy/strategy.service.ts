@@ -193,7 +193,7 @@ export class StrategyService {
         project: {
           environments: {
             some: {
-              flagEnvironment: {
+              FlagEnvironment: {
                 some: { strategies: { some: { uuid: stratId } } },
               },
             },

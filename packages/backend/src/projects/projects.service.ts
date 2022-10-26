@@ -35,7 +35,7 @@ export class ProjectsService {
           include: {
             environments: {
               include: {
-                flagEnvironment: {
+                FlagEnvironment: {
                   include: {
                     flag: true,
                   },

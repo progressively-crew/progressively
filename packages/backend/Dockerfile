@@ -6,10 +6,11 @@ RUN apt-get install python3-pip -y
 
 COPY package*.json ./
 COPY prisma ./prisma/
-RUN npm install
+RUN npm i -g pnpm
+RUN pnpm install
 
 COPY . .
-RUN npm run build
+RUN pnpm run build
 
 FROM node:18 AS runner
 

@@ -55,7 +55,7 @@ export class EnvironmentsService {
       data: {
         name: environmentName,
         projectId: projectId,
-        flagEnvironment: {
+        FlagEnvironment: {
           createMany: { data: flagsToCreate },
         },
       },
@@ -140,7 +140,7 @@ export class EnvironmentsService {
         project: {
           include: { environments: true },
         },
-        flagEnvironment: true,
+        FlagEnvironment: true,
       },
     });
 
@@ -183,7 +183,7 @@ export class EnvironmentsService {
     ];
 
     if (env.project.environments.length === 1) {
-      const flagIds = env.flagEnvironment.map((flagEnv) => flagEnv.flagId);
+      const flagIds = env.FlagEnvironment.map((flagEnv) => flagEnv.flagId);
 
       deleteQueries.push(
         this.prisma.flag.deleteMany({

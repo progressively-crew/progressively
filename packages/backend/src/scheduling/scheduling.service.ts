@@ -41,7 +41,7 @@ export class SchedulingService {
         project: {
           environments: {
             some: {
-              flagEnvironment: {
+              FlagEnvironment: {
                 some: { scheduling: { some: { uuid: scheduleId } } },
               },
             },

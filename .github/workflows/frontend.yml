@@ -17,7 +17,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./packages/frontend
-        run: npm ci --legacy-peer-deps
+        run: pnpm install
 
       - name: Preparation
         working-directory: ./packages/frontend
@@ -25,12 +25,12 @@ jobs:
 
       - name: Lint
         working-directory: ./packages/frontend
-        run: npm run lint
+        run: pnpm run lint
 
       - name: Tests
         working-directory: ./packages/frontend
-        run: npm run test
+        run: pnpm run test
 
       - name: Build
         working-directory: ./packages/frontend
-        run: npm run build
+        run: pnpm run build

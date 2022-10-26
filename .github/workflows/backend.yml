@@ -39,23 +39,23 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./packages/backend
-        run: npm install
+        run: pnpm install
 
       - name: Preparation
         working-directory: ./packages/backend
-        run: mv .env.example .env && npm run db:migrate:dev && npm run db:generate:schema
+        run: mv .env.example .env && pnpm run db:migrate:dev && pnpm run db:generate:schema
 
       - name: Build
         working-directory: ./packages/backend
-        run: npm run build
+        run: pnpm run build
 
       - name: Lint
         working-directory: ./packages/backend
-        run: npm run lint
+        run: pnpm run lint
 
       - name: Tests
         working-directory: ./packages/backend
-        run: npm run test
+        run: pnpm run test
 
       - name: API tests
         working-directory: ./packages/backend

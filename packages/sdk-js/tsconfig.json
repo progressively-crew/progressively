@@ -4,7 +4,7 @@
   "exclude": ["src/__tests__"],
   "compilerOptions": {
     "module": "CommonJS",
-    "importHelpers": true,
+    "importHelpers": false,
     // output .d.ts declaration files for consumers
     "declaration": true,
     // output .js.map sourcemap files for consumers

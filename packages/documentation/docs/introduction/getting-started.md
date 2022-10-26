@@ -26,11 +26,10 @@ $ git clone https://github.com/progressively-crew/progressively
 $ cd progressively
 $ mv ./packages/backend/.env.example ./packages/backend/.env
 $ mv ./packages/frontend/.env.example ./packages/frontend/.env
-$ npm install
-$ npm run setup
-$ npm run db:prepare
-$ npm run build
-$ npm run start
+$ pnpm install
+$ pnpm run db:prepare
+$ pnpm run build
+$ pnpm run start
 ```
 
 You can now open <a href="http://localhost:3000/welcome" target="_blank" rel="noreferrer">the welcome page</a> to create your admin user.

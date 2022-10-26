@@ -55,17 +55,17 @@ jobs:
         run: npm install && composer install
 
       - name: Bootstrap projects
-        run: npm run setup:ci
+        run: pnpm install
 
       - name: Prepare the DB
-        run: npm run db:prepare
+        run: pnpm run db:prepare
 
       - name: Build
-        run: npm run build
+        run: pnpm run build
 
       - name: Start the backend project
         working-directory: ./packages/backend
-        run: npm start &
+        run: pnpm start &
 
       - name: Start the Example PHP project
         working-directory: ./example/php
@@ -73,4 +73,4 @@ jobs:
 
       - name: E2E tests
         working-directory: ./example/php
-        run: npx wait-on -t 60000 tcp:4000 && npm run test:e2e:ci
+        run: npx wait-on -t 60000 tcp:4000 && pnpm run test:e2e:ci

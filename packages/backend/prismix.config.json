@@ -1,8 +1,0 @@
-{
-  "mixers": [
-    {
-      "input": ["./prisma/base.prisma", "./prisma/flag.prisma"],
-      "output": "./prisma/schema.prisma"
-    }
-  ]
-}

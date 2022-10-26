@@ -8,8 +8,8 @@ $ cp ./packages/backend/.env.example ./packages/backend/.env
 $ cp ./packages/frontend/.env.example ./packages/frontend/.env
 $ docker run --name progressively-db -e POSTGRES_PASSWORD=admin -e POSTGRES_USER=admin -e POSTGRES_DB=progressively -p 5432:5432 -d postgres
 $ docker run -it --rm --name progressively-redis -p 6379:6379 -d redis
-$ npm run setup && npm run db:prepare && npm run db:seed
-$ npm run start:dev
+$ pnpm i && pnpm run db:prepare && pnpm run db:seed
+$ pnpm run start:dev
 ```
 
 And your now ready to navigate on http://localhost:3000 (dashboard) and http://localhost:4000 (backend) :).
@@ -85,7 +85,7 @@ $  docker run -it --rm --name progressively-redis -p 6379:6379 -d redis
 The following commands install all the packages dependencies and creates lerna packages inter-dependencies.
 
 ```sh
-$ npm run setup
+$ pnpm install
 ```
 
 **5. create Postgres tables**
@@ -93,7 +93,7 @@ $ npm run setup
 This commands creates the table in Postgres (only necessary to run it one time). Note that Postgres needs to be started.
 
 ```sh
-$ npm run db:prepare
+$ pnpm run db:prepare
 ```
 
 **6. seed Postgres Data**
@@ -101,7 +101,7 @@ $ npm run db:prepare
 This commands loads a bunch of data into the database so that you can connect and start interacting.
 
 ```sh
-$ npm run db:seed
+$ pnpm run db:seed
 ```
 
 You now have access to the following users:
@@ -115,7 +115,7 @@ You now have access to the following users:
 In `./packages/backend`, run the following command to start a development server with hot reloading:
 
 ```sh
-$ npm run dev
+$ pnpm run dev
 ```
 
 **8. start the frontend**
@@ -123,7 +123,7 @@ $ npm run dev
 In `./packages/frontend`, run the following command to start a development server with hot reloading:
 
 ```sh
-$ npm run dev
+$ pnpm run dev
 ```
 
 ---

@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:analyze": "ANALYZE=true npm run build",
+    "build:analyze": "ANALYZE=true pnpm run build",
     "start": "next start",
     "lint": "next lint"
   },

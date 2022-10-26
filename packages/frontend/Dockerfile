@@ -4,12 +4,13 @@ WORKDIR /app
 
 RUN apk add g++ make py3-pip
 COPY package*.json ./
-RUN npm install
+RUN npm i -g pnpm
+RUN pnpm i
 
 ENV NODE_ENV=production
 
 COPY . .
-RUN npm run build
+RUN pnpm run build
 
 FROM node:16-alpine3.14 AS runner
 

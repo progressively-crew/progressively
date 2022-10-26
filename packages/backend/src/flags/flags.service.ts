@@ -310,7 +310,7 @@ export class FlagsService {
         userId,
         project: {
           environments: {
-            some: { flagEnvironment: { some: { flagId } } },
+            some: { FlagEnvironment: { some: { flagId } } },
           },
         },
       },
@@ -339,7 +339,7 @@ export class FlagsService {
         project: {
           environments: {
             some: {
-              flagEnvironment: { some: { flagId, environmentId: envId } },
+              FlagEnvironment: { some: { flagId, environmentId: envId } },
             },
           },
         },

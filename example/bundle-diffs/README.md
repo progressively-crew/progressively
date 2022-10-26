@@ -23,8 +23,8 @@ In your favorite terminal:
 
 ```sh
 $ git clone https://github.com/progressively-crew/progressively
-$ npm i && npm run setup && npm run build
+$ pnpm i && pnpm run build
 $ cd example/bundle-diffs
-$ npm i
-$ npm run build:analyze
+$ pnpm i
+$ pnpm run build:analyze
 ```

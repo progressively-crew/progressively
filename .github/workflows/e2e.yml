@@ -51,24 +51,24 @@ jobs:
         run: mv ./packages/frontend/.env.example ./packages/frontend/.env && mv ./packages/backend/.env.example ./packages/backend/.env
 
       - name: Bootstrap projects
-        run: npm run setup:ci
+        run: pnpm install
 
       - name: Prepare the DB
-        run: npm run db:prepare
+        run: pnpm run db:prepare
 
       - name: Build
-        run: npm run build
+        run: pnpm run build
 
       - name: Start the backend project
         working-directory: ./packages/backend
-        run: npm start &
+        run: pnpm start &
 
       - name: Start the frontend project
         working-directory: ./packages/frontend
-        run: npm start &
+        run: pnpm start &
       # Uncomment for parallel
       - name: E2E tests
-        run: npx wait-on -t 60000 tcp:4000 && npm run test:e2e:ci
+        run: npx wait-on -t 60000 tcp:4000 && pnpm run test:e2e:ci
         # env:
         #   CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
         #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
