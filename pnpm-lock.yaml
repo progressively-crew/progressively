@@ -25,35 +25,37 @@ importers:
       next: 12.2.2
       react: 18.2.0
       react-dom: 18.2.0
+      unleash-proxy-client: ^2.3.0
     dependencies:
       '@flagship.io/react-sdk': 3.0.13_biqbaboplfbrettd7655fr4n2y
       '@growthbook/growthbook-react': 0.9.1_react@18.2.0
       '@next/bundle-analyzer': 12.3.1
       '@progressively/react': file:packages/react_react@18.2.0
-      '@unleash/proxy-client-react': 3.4.0
+      '@unleash/proxy-client-react': 3.4.0_unleash-proxy-client@2.3.0
       launchdarkly-react-client-sdk: 2.29.1_biqbaboplfbrettd7655fr4n2y
       next: 12.2.2_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
+      unleash-proxy-client: 2.3.0
     devDependencies:
       eslint: 8.20.0
       eslint-config-next: 12.2.2_eslint@8.20.0
 
   example/cra:
     specifiers:
-      '@progressively/cypress-helpers': file:../cypress-helpers
-      '@progressively/react': file:../../packages/react
+      '@progressively/react': ^0.0.1-alpha.11
       '@testing-library/jest-dom': ^5.16.4
       '@testing-library/react': ^13.2.0
       '@testing-library/user-event': ^14.1.1
       cypress: ^9.6.1
+      cypress-helpers: 1.0.0
       react: ^18.1.0
       react-dom: ^18.1.0
       react-router-dom: ^6.3.0
       react-scripts: 5.0.1
       web-vitals: ^2.1.4
     dependencies:
-      '@progressively/react': file:packages/react_react@18.2.0
+      '@progressively/react': link:../../packages/react
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
       '@testing-library/user-event': 14.4.3
@@ -63,8 +65,8 @@ importers:
       react-scripts: 5.0.1_react@18.2.0
       web-vitals: 2.1.4
     devDependencies:
-      '@progressively/cypress-helpers': file:example/cypress-helpers_cypress@9.7.0
       cypress: 9.7.0
+      cypress-helpers: link:../cypress-helpers
 
   example/cypress-helpers:
     specifiers:
@@ -6290,10 +6292,12 @@ packages:
       '@typescript-eslint/types': 5.41.0
       eslint-visitor-keys: 3.3.0
 
-  /@unleash/proxy-client-react/3.4.0:
+  /@unleash/proxy-client-react/3.4.0_unleash-proxy-client@2.3.0:
     resolution: {integrity: sha512-9SWiII3KSub00fiL81fx8h3kDNrAQ7zqzyll7Sp8g+x/VC1zXINU9AIcfzqayBZCsAp5urUsQWEIz0v0XwMHbg==}
     peerDependencies:
       unleash-proxy-client: ^2.3.0
+    dependencies:
+      unleash-proxy-client: 2.3.0
     dev: false
 
   /@vitejs/plugin-vue/3.1.2_vite@3.1.8+vue@3.2.41:
@@ -20055,6 +20059,10 @@ packages:
     resolution: {integrity: sha512-eHY7nBftgThBqOyHGVN+l8gF0BucP09fMo0oO/Lb0w1OF80dJv+lDVpXG60WMQvkcxAkNybKsrEIE3ZtKGmPrA==}
     dev: false
 
+  /tiny-emitter/2.1.0:
+    resolution: {integrity: sha512-NB6Dk1A9xgQPMoGqC5CVXn123gWyte215ONT5Pp5a0yt4nlEoO1ZWeCwpncaekPHXO60i47ihFnZPiRPjRMq4Q==}
+    dev: false
+
   /tmp/0.0.33:
     resolution: {integrity: sha512-jRCJlojKnZ3addtTOjdIqoRuPEKBvNXcGYqzO6zWZX8KfKEpnGY5jfggJQ3EjKuu8D4bJRr0y+cYJFmYbImXGw==}
     engines: {node: '>=0.6.0'}
@@ -20649,6 +20657,13 @@ packages:
   /universalify/2.0.0:
     resolution: {integrity: sha512-hAZsKq7Yy11Zu1DE0OzWjw7nnLZmJZYTDZZyEFHZdUhV8FkH5MCfoU1XMaxXovpyW5nq5scPqq0ZDP9Zyl04oQ==}
     engines: {node: '>= 10.0.0'}
+
+  /unleash-proxy-client/2.3.0:
+    resolution: {integrity: sha512-UYDZjjsIF+n01LnijR8t/FXOM5XPnjZkE5K/E+SInFzBfL1SckYZHiuzii1/4QmiRo/x+vjx9LJjAzE8JRas4Q==}
+    dependencies:
+      tiny-emitter: 2.1.0
+      uuid: 8.3.2
+    dev: false
 
   /unpipe/1.0.0:
     resolution: {integrity: sha512-pjy2bYhSsufwWlKwPc+l3cN7+wuJlK6uz0YdJEOlQDbl6jo/YlPi4mb8agUkVC8BF7V8NuzeyPNqRksA3hztKQ==}
