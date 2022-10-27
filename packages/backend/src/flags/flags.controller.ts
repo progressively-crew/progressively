@@ -36,7 +36,7 @@ import { SchedulingService } from '../scheduling/scheduling.service';
 import { MetricDto, Variant } from './types';
 import { Webhook, WebhookCreationDTO, WebhookSchema } from '../webhooks/types';
 import { WebhooksService } from '../webhooks/webhooks.service';
-import { WebhooksEventsToFlagStatus } from '../webhooks/utils';
+import { post, WebhooksEventsToFlagStatus } from '../webhooks/utils';
 
 @ApiBearerAuth()
 @Controller()
@@ -79,7 +79,7 @@ export class FlagsController {
 
     for (const wh of updatedFlagEnv.webhooks) {
       if (WebhooksEventsToFlagStatus[wh.event] === status) {
-        this.webhookService.trigger(wh as Webhook);
+        post(wh as Webhook);
       }
     }
 

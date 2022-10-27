@@ -1,7 +1,16 @@
+import got from 'got';
 import { FlagStatus } from '../flags/flags.status';
-import { WebhookEvents } from './types';
+import { Webhook, WebhookEvents } from './types';
 
 export const WebhooksEventsToFlagStatus = {
   [WebhookEvents.ACTIVATION]: FlagStatus.ACTIVATED,
   [WebhookEvents.DEACTIVATION]: FlagStatus.NOT_ACTIVATED,
+};
+
+export const post = (webhook: Webhook) => {
+  return got.post(webhook.endpoint, {
+    headers: {
+      'x-progressively-secret': webhook.secret,
+    },
+  });
 };

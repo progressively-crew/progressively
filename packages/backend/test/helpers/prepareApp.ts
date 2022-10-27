@@ -6,10 +6,7 @@ import { MailService } from '../../src/mail/mail.service';
 import { AppModule } from '../../src/app.module';
 import { TestLogger } from './TestLogger';
 
-type PrepareAppArgs = {
-  HttpServiceMock?: { post: () => void };
-};
-export const prepareApp = async (opts: PrepareAppArgs = {}) => {
+export const prepareApp = async () => {
   const moduleFixture: TestingModule = await Test.createTestingModule({
     imports: [AppModule],
   })

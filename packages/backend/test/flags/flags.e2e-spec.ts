@@ -1,17 +1,22 @@
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
+import got from 'got';
 import { seedDb, cleanupDb } from '../helpers/seed';
 import { prepareApp } from '../helpers/prepareApp';
 import { verifyAuthGuard } from '../helpers/verify-auth-guard';
 import { authenticate } from '../helpers/authenticate';
 
+jest.mock('got', () => ({
+  ...jest.requireActual('got'),
+  __esModule: true,
+  default: { post: jest.fn() },
+}));
+
 describe('FlagsController (e2e)', () => {
   let app: INestApplication;
-  let HttpServiceMock;
 
   beforeAll(async () => {
-    HttpServiceMock = { post: jest.fn() };
-    app = await prepareApp(HttpServiceMock);
+    app = await prepareApp();
   });
 
   afterAll(async () => {
@@ -23,8 +28,7 @@ describe('FlagsController (e2e)', () => {
   });
 
   afterEach(async () => {
-    HttpServiceMock.post.mockClear();
-
+    jest.resetAllMocks();
     await cleanupDb();
   });
 
@@ -89,7 +93,7 @@ describe('FlagsController (e2e)', () => {
     });
 
     ['ACTIVATED', 'INACTIVE', 'NOT_ACTIVATED'].forEach((status) => {
-      it.only(`gives 200 when setting the status of a flag to "${status}"`, async () => {
+      it(`gives 200 when setting the status of a flag to "${status}"`, async () => {
         const access_token = await authenticate(
           app,
           'marvin.frachet@something.com',
@@ -121,7 +125,45 @@ describe('FlagsController (e2e)', () => {
             description: 'Switch the new homepage design',
           },
         });
+
+        expect(got.post).toBeCalledWith('');
       });
+    });
+
+    it(`calls a webhook when the flag is "ACTIVATED`, async () => {
+      const access_token = await authenticate(
+        app,
+        'marvin.frachet@something.com',
+        'password',
+      );
+
+      await request(app.getHttpServer())
+        .put('/environments/1/flags/1')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send({
+          status: 'ACTIVATED',
+        });
+
+      expect(got.post).toBeCalledWith('https://somewheere-endpoint/com', {
+        headers: { 'x-progressively-secret': 'this is secret' },
+      });
+    });
+
+    it(`does not call a webhook when the flag is "NOT_ACTIVATED`, async () => {
+      const access_token = await authenticate(
+        app,
+        'marvin.frachet@something.com',
+        'password',
+      );
+
+      await request(app.getHttpServer())
+        .put('/environments/1/flags/1')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send({
+          status: 'NOT_ACTIVATED',
+        });
+
+      expect(got.post).not.toBeCalled();
     });
   });
 

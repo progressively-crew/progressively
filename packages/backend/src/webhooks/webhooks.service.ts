@@ -2,18 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { nanoid } from 'nanoid';
 import { PrismaService } from '../database/prisma.service';
 import { Webhook, WebhookCreationDTO } from './types';
+import { post } from './utils';
 
 @Injectable()
 export class WebhooksService {
   constructor(private prisma: PrismaService) {}
-
-  trigger(webhook: Webhook) {
-    // return this.httpService.post(webhook.endpoint, {
-    //   Headers: {
-    //     'x-progressively-secret': webhook.secret,
-    //   },
-    // });
-  }
 
   deleteWebhook(uuid: string) {
     return this.prisma.webhook.deleteMany({
