@@ -5,6 +5,7 @@ import {
   AiOutlineSetting,
 } from "react-icons/ai";
 import { FaToggleOff } from "react-icons/fa";
+import { TbSend } from "react-icons/tb";
 import { MdBubbleChart } from "react-icons/md";
 import { HideTablet } from "~/components/HideMobile";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
@@ -92,6 +93,13 @@ export const FlagMenu = ({ projectId, envId, flagId }: FlagMenuProps) => {
         </Typography>
         <Spacer size={1} />
       </HideTablet>
+
+      <NavItem
+        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/webhooks`}
+        icon={<TbSend />}
+      >
+        Webhooks
+      </NavItem>
 
       <NavItem
         to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/settings`}

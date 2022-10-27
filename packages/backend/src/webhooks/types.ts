@@ -2,6 +2,7 @@ import * as Joi from 'joi';
 
 export enum WebhookEvents {
   ACTIVATION = 'ACTIVATION',
+  DEACTIVATION = 'DEACTIVATION',
 }
 
 export interface WebhookCreationDTO {
@@ -15,5 +16,7 @@ export const WebhookSchema = Joi.object({
       scheme: ['http', 'https'],
     })
     .required(),
-  event: Joi.string().valid(WebhookEvents.ACTIVATION).required(),
+  event: Joi.string()
+    .valid(WebhookEvents.ACTIVATION, WebhookEvents.DEACTIVATION)
+    .required(),
 });

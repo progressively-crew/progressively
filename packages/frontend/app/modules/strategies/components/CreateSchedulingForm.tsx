@@ -14,7 +14,10 @@ export const CreateSchedulingFrom = () => {
   const transition = useTransition();
   return (
     <FormGroup>
-      <DateTimeInput label="When should the flag change status" name="dateTime" />
+      <DateTimeInput
+        label="When should the flag change status"
+        name="dateTime"
+      />
 
       <RadioField
         title="What should be the next status"
