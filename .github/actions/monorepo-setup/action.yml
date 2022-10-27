@@ -1,0 +1,19 @@
+name: "Monorepo setup"
+description: "Resolve dependency caching and build + start the projects"
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-node@v2
+    - uses: ./.github/actions/backend-setup
+      with:
+        node-version: "16"
+        cache: "npm"
+        cache-dependency-path: |
+          package-lock.json
+          packages/frontend/package-lock.json
+          packages/backend/package-lock.json
+
+    - name: Start the frontend project
+      working-directory: ./packages/frontend
+      shell: bash
+      run: npm start &
