@@ -6,7 +6,10 @@ import { MailService } from '../../src/mail/mail.service';
 import { AppModule } from '../../src/app.module';
 import { TestLogger } from './TestLogger';
 
-export const prepareApp = async () => {
+type PrepareAppArgs = {
+  HttpServiceMock?: { post: () => void };
+};
+export const prepareApp = async (opts: PrepareAppArgs = {}) => {
   const moduleFixture: TestingModule = await Test.createTestingModule({
     imports: [AppModule],
   })
@@ -24,6 +27,7 @@ export const prepareApp = async () => {
       },
       sendResetPasswordMail: () => Promise.resolve(),
     })
+
     .compile();
 
   const app = moduleFixture.createNestApplication();

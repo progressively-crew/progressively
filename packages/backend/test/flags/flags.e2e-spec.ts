@@ -5,13 +5,13 @@ import { prepareApp } from '../helpers/prepareApp';
 import { verifyAuthGuard } from '../helpers/verify-auth-guard';
 import { authenticate } from '../helpers/authenticate';
 
-jest.mock('@nestjs/axios');
-
 describe('FlagsController (e2e)', () => {
   let app: INestApplication;
+  let HttpServiceMock;
 
   beforeAll(async () => {
-    app = await prepareApp();
+    HttpServiceMock = { post: jest.fn() };
+    app = await prepareApp(HttpServiceMock);
   });
 
   afterAll(async () => {
@@ -23,6 +23,8 @@ describe('FlagsController (e2e)', () => {
   });
 
   afterEach(async () => {
+    HttpServiceMock.post.mockClear();
+
     await cleanupDb();
   });
 
@@ -87,7 +89,7 @@ describe('FlagsController (e2e)', () => {
     });
 
     ['ACTIVATED', 'INACTIVE', 'NOT_ACTIVATED'].forEach((status) => {
-      it(`gives 200 when setting the status of a flag to "${status}"`, async () => {
+      it.only(`gives 200 when setting the status of a flag to "${status}"`, async () => {
         const access_token = await authenticate(
           app,
           'marvin.frachet@something.com',
