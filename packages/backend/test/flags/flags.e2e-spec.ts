@@ -125,8 +125,6 @@ describe('FlagsController (e2e)', () => {
             description: 'Switch the new homepage design',
           },
         });
-
-        expect(got.post).toBeCalledWith('');
       });
     });
 

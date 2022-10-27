@@ -24,7 +24,6 @@ export const prepareApp = async () => {
       },
       sendResetPasswordMail: () => Promise.resolve(),
     })
-
     .compile();
 
   const app = moduleFixture.createNestApplication();
