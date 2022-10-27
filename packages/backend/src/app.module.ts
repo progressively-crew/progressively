@@ -17,6 +17,7 @@ import { SdkModule } from './sdk/sdk.module';
 import { MailModule } from './mail/mail.module';
 import { DatabaseModule } from './database/database.module';
 import { SchedulingModule } from './scheduling/scheduling.module';
+import 'winston-daily-rotate-file';
 
 @Module({
   imports: [
@@ -28,9 +29,14 @@ import { SchedulingModule } from './scheduling/scheduling.module';
             winston.format.json(),
           ),
         }),
-        // other transports...
+        new winston.transports.DailyRotateFile({
+          filename: 'logs/progressively-backend-%DATE%.log',
+          datePattern: 'YYYY-MM-DD-HH',
+          zippedArchive: true,
+          maxSize: '20m',
+          maxFiles: '14d',
+        }),
       ],
-      // other options
     }),
     ConfigModule.forRoot(),
     TokensModule,
