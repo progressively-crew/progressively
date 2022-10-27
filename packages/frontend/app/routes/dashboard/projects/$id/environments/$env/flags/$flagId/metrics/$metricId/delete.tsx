@@ -20,6 +20,7 @@ import { Header } from "~/components/Header";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { TagLine } from "~/components/Tagline";
 import { deleteMetric } from "~/modules/flags/services/deleteMetric";
+import { Spacer } from "~/components/Spacer";
 
 export const handle = {
   breadcrumb: (match: { params: any }) => {
@@ -121,6 +122,9 @@ export default function DeleteMetricPage() {
       }
     >
       <PageTitle value={`Deleting a metric`} />
+
+      <Spacer size={4} />
+
       <Stack spacing={4}>
         <WarningBox title={<>This operation is definitive.</>} />
 

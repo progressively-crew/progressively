@@ -32,7 +32,7 @@ const RawLink = styled<any, any>("a", {
 });
 
 export interface LinkProps extends HTMLAttributes<HTMLAnchorElement> {
-  to: string;
+  to?: string;
   children: React.ReactNode;
   href?: string;
   target?: string;

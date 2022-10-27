@@ -20,6 +20,7 @@ import { Header } from "~/components/Header";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { TagLine } from "~/components/Tagline";
 import { deleteWebhook } from "~/modules/webhooks/services/deleteWebhook";
+import { Spacer } from "~/components/Spacer";
 
 export const handle = {
   breadcrumb: (match: { params: any }) => {
@@ -116,6 +117,9 @@ export default function DeleteWebhookPage() {
       }
     >
       <PageTitle value={`Deleting a webhook`} />
+
+      <Spacer size={4} />
+
       <Stack spacing={4}>
         <WarningBox title={<>This operation is definitive.</>} />
 

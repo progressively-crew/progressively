@@ -24,6 +24,7 @@ import { Stack } from "~/components/Stack";
 import { Header } from "~/components/Header";
 import { EnvIcon } from "~/components/Icons/EnvIcon";
 import { TagLine } from "~/components/Tagline";
+import { Spacer } from "~/components/Spacer";
 
 export const handle = {
   breadcrumb: (match: { params: any }) => {
@@ -153,6 +154,9 @@ export default function DeleteEnvPage() {
       }
     >
       <PageTitle value="Deleting an environment" />
+
+      <Spacer size={4} />
+
       <Stack spacing={4}>
         <WarningBox title={<>This operation is definitive.</>} />
 
