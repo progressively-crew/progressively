@@ -22,6 +22,7 @@ import { Typography } from "~/components/Typography";
 import { Header } from "~/components/Header";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { TagLine } from "~/components/Tagline";
+import { Spacer } from "~/components/Spacer";
 
 export const handle = {
   breadcrumb: (match: { params: any }) => {
@@ -121,6 +122,9 @@ export default function DeleteStrategyPage() {
       }
     >
       <PageTitle value={`Deleting a strategy`} />
+
+      <Spacer size={4} />
+
       <Stack spacing={4}>
         <WarningBox title={<>This operation is definitive.</>} />
 

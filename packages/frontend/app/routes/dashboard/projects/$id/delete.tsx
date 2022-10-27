@@ -20,6 +20,7 @@ import { Stack } from "~/components/Stack";
 import { Header } from "~/components/Header";
 import { ProjectIcon } from "~/components/Icons/ProjectIcon";
 import { TagLine } from "~/components/Tagline";
+import { Spacer } from "~/components/Spacer";
 
 export const handle = {
   breadcrumb: (match: { params: any }) => {
@@ -146,6 +147,9 @@ export default function DeleteProjectPage() {
       }
     >
       <PageTitle value="Deleting a project" />
+
+      <Spacer size={4} />
+
       <Stack spacing={4}>
         <WarningBox title={<>This operation is definitive.</>} />
 
