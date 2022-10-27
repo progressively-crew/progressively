@@ -77,6 +77,14 @@ export const seedDb = async () => {
         environmentId: production.uuid,
         flagId: homePageFlag.uuid,
         rolloutPercentage: 100,
+        webhooks: {
+          create: {
+            uuid: '1',
+            endpoint: 'https://somewheere-endpoint/com',
+            secret: 'this is secret',
+            event: 'ACTIVATION',
+          },
+        },
       },
     });
 
@@ -306,6 +314,7 @@ export const seedDb = async () => {
 
 export const cleanupDb = async () => {
   await prismaClient.$connect();
+  await prismaClient.webhook.deleteMany();
   await prismaClient.rolloutStrategy.deleteMany();
   await prismaClient.schedule.deleteMany();
   await prismaClient.refreshToken.deleteMany();

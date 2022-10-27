@@ -34,6 +34,8 @@ import { HasFlagEnvAccessGuard } from './guards/hasFlagEnvAccess';
 import { SchedulingCreationDTO, SchedulingSchema } from '../scheduling/types';
 import { SchedulingService } from '../scheduling/scheduling.service';
 import { MetricDto, Variant } from './types';
+import { WebhookCreationDTO, WebhookSchema } from '../webhooks/types';
+import { WebhooksService } from '../webhooks/webhooks.service';
 
 @ApiBearerAuth()
 @Controller()
@@ -42,6 +44,7 @@ export class FlagsController {
     private readonly strategyService: StrategyService,
     private readonly schedulingService: SchedulingService,
     private readonly flagService: FlagsService,
+    private readonly webhookService: WebhooksService,
     private readonly wsGateway: WebsocketGateway,
   ) {}
 
@@ -195,6 +198,24 @@ export class FlagsController {
     return strategy;
   }
 
+  @Post('environments/:envId/flags/:flagId/webhooks')
+  @UseGuards(HasFlagEnvAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(new ValidationPipe(WebhookSchema))
+  async addWebhookToFlagEnv(
+    @Param('envId') envId: string,
+    @Param('flagId') flagId: string,
+    @Body() webhookDto: WebhookCreationDTO,
+  ): Promise<any> {
+    const webhook = await this.webhookService.addWebhookToFlagEnv(
+      envId,
+      flagId,
+      webhookDto,
+    );
+
+    return webhook;
+  }
+
   @Post('environments/:envId/flags/:flagId/scheduling')
   @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
@@ -299,7 +320,17 @@ export class FlagsController {
     @Param('envId') envId: string,
     @Param('flagId') flagId: string,
   ): Promise<any> {
-    return this.strategyService.listScheduling(envId, flagId);
+    return this.schedulingService.listScheduling(envId, flagId);
+  }
+
+  @Get('environments/:envId/flags/:flagId/webhooks')
+  @UseGuards(HasFlagEnvAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  getWebhooks(
+    @Param('envId') envId: string,
+    @Param('flagId') flagId: string,
+  ): Promise<any> {
+    return this.webhookService.listWebhooks(envId, flagId);
   }
 
   @Get('environments/:envId/flags/:flagId/variants')

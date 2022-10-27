@@ -1446,4 +1446,172 @@ describe('FlagsController (e2e)', () => {
       ]);
     });
   });
+
+  describe('/environments/:envId/flags/:flagId/webhooks (POST)', () => {
+    it('gives a 401 when the user is not authenticated', () =>
+      verifyAuthGuard(app, '/environments/1/flags/1/webhooks', 'post'));
+
+    it('gives a 403 when trying to access a valid project but an invalid env', async () => {
+      const access_token = await authenticate(app);
+
+      const validStrategy: any = {
+        name: 'Super strategy',
+        strategyRuleType: 'default',
+      };
+
+      return request(app.getHttpServer())
+        .post('/environments/1/flags/3/webhooks')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send(validStrategy)
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('gives a 403 when the user requests a forbidden project', async () => {
+      const access_token = await authenticate(
+        app,
+        'jane.doe@gmail.com',
+        'password',
+      );
+
+      return request(app.getHttpServer())
+        .post('/environments/1/flags/1/webhooks')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send({
+          name: 'Super strategy',
+          strategyRuleType: 'field',
+          fieldName: 'email',
+          fieldComparator: 'eq',
+          fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
+        })
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    ['event', 'endpoint'].forEach((field) => {
+      it(`gives 400 when the project has a webhook without "${field}"`, async () => {
+        const access_token = await authenticate(app);
+
+        const invalidStrategy: any = {
+          name: 'Super strategy',
+          strategyRuleType: 'field',
+          [field]: undefined,
+        };
+
+        await request(app.getHttpServer())
+          .post('/environments/1/flags/1/webhooks')
+          .set('Authorization', `Bearer ${access_token}`)
+          .send(invalidStrategy)
+          .expect(400)
+          .expect({
+            statusCode: 400,
+            message: 'Validation failed',
+            error: 'Bad Request',
+          });
+      });
+    });
+
+    it('gives 400 when the endpoint is invalid', async () => {
+      const access_token = await authenticate(app);
+
+      const validWebhook: any = {
+        endpoint: 'hts:/hello.com',
+        event: 'ACTIVATION',
+      };
+
+      return request(app.getHttpServer())
+        .post('/environments/1/flags/1/webhooks')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send(validWebhook)
+        .expect(400);
+    });
+
+    it('creates a webhook', async () => {
+      const access_token = await authenticate(app);
+
+      const validWebhook: any = {
+        endpoint: 'https://hello.com',
+        event: 'ACTIVATION',
+      };
+
+      const response = await request(app.getHttpServer())
+        .post('/environments/1/flags/1/webhooks')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send(validWebhook)
+        .expect(201);
+
+      const { uuid, ...obj } = response.body;
+
+      expect(uuid).toBeDefined();
+      expect(obj).toMatchObject({
+        endpoint: 'https://hello.com',
+        event: 'ACTIVATION',
+      });
+    });
+  });
+
+  describe('/environments/1/flags/1/webhooks (GET)', () => {
+    it('gives a 401 when the user is not authenticated', () =>
+      verifyAuthGuard(app, '/environments/1/flags/1/webhooks', 'get'));
+
+    it('gives a 403 when trying to access a valid project but an invalid env', async () => {
+      const access_token = await authenticate(app);
+
+      return request(app.getHttpServer())
+        .get('/environments/1/flags/3/webhooks')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('gives a 403 when the user requests a forbidden project', async () => {
+      const access_token = await authenticate(
+        app,
+        'jane.doe@gmail.com',
+        'password',
+      );
+
+      return request(app.getHttpServer())
+        .get('/environments/1/flags/1/webhooks')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('gives the strategies information when the user is authenticated and authorized', async () => {
+      const access_token = await authenticate(app);
+
+      const response = await request(app.getHttpServer())
+        .get('/environments/1/flags/1/webhooks')
+        .set('Authorization', `Bearer ${access_token}`);
+
+      const webhook = response.body[0];
+
+      expect(response.status).toBe(200);
+      expect(webhook).toEqual({
+        endpoint: 'https://somewheere-endpoint/com',
+        event: 'ACTIVATION',
+        flagEnvironmentEnvironmentId: '1',
+        flagEnvironmentFlagId: '1',
+        secret: 'this is secret',
+        uuid: '1',
+      });
+    });
+  });
 });

@@ -145,6 +145,11 @@ export class EnvironmentsService {
     });
 
     const deleteQueries = [
+      this.prisma.webhook.deleteMany({
+        where: {
+          flagEnvironmentEnvironmentId: envId,
+        },
+      }),
       this.prisma.flagHit.deleteMany({
         where: {
           flagEnvironmentEnvironmentId: envId,

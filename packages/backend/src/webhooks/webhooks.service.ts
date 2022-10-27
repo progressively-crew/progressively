@@ -1,46 +1,47 @@
 import { Injectable } from '@nestjs/common';
+import { nanoid } from 'nanoid';
 import { PrismaService } from '../database/prisma.service';
-import { SchedulingCreationDTO } from './types';
+import { WebhookCreationDTO } from './types';
 
 @Injectable()
-export class SchedulingService {
+export class WebhooksService {
   constructor(private prisma: PrismaService) {}
 
-  addSchedulingToFlagEnv(
-    envId: string,
-    flagId: string,
-    scheduling: SchedulingCreationDTO,
-  ): Promise<any> {
-    return this.prisma.schedule.create({
-      data: {
-        utc: scheduling.utc,
-        status: scheduling.status,
-        rolloutPercentage: scheduling.rolloutPercentage,
-        flagEnvironmentFlagId: flagId,
-        flagEnvironmentEnvironmentId: envId,
-      },
-    });
-  }
-
-  listScheduling(envId: string, flagId: string) {
-    return this.prisma.schedule.findMany({
-      where: {
-        flagEnvironmentEnvironmentId: envId,
-        flagEnvironmentFlagId: flagId,
-      },
-    });
-  }
-
-  deleteSchedule(uuid: string) {
-    return this.prisma.schedule.deleteMany({
+  deleteWebhook(uuid: string) {
+    return this.prisma.webhook.deleteMany({
       where: {
         uuid,
       },
     });
   }
 
-  async hasPermissionOnSchedule(
-    scheduleId: string,
+  listWebhooks(envId: string, flagId: string) {
+    return this.prisma.webhook.findMany({
+      where: {
+        flagEnvironmentEnvironmentId: envId,
+        flagEnvironmentFlagId: flagId,
+      },
+    });
+  }
+
+  addWebhookToFlagEnv(
+    envId: string,
+    flagId: string,
+    webhook: WebhookCreationDTO,
+  ): Promise<any> {
+    return this.prisma.webhook.create({
+      data: {
+        endpoint: webhook.endpoint,
+        event: webhook.event,
+        secret: nanoid(),
+        flagEnvironmentFlagId: flagId,
+        flagEnvironmentEnvironmentId: envId,
+      },
+    });
+  }
+
+  async hasPermissionOnWebhook(
+    webhookId: string,
     userId: string,
     roles?: Array<string>,
   ) {
@@ -51,7 +52,7 @@ export class SchedulingService {
           environments: {
             some: {
               flagEnvironment: {
-                some: { scheduling: { some: { uuid: scheduleId } } },
+                some: { webhooks: { some: { uuid: webhookId } } },
               },
             },
           },
