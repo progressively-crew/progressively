@@ -5,6 +5,8 @@ import { prepareApp } from '../helpers/prepareApp';
 import { verifyAuthGuard } from '../helpers/verify-auth-guard';
 import { authenticate } from '../helpers/authenticate';
 
+jest.mock('@nestjs/axios');
+
 describe('FlagsController (e2e)', () => {
   let app: INestApplication;
 

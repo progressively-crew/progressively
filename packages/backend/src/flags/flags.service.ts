@@ -52,6 +52,7 @@ export class FlagsService {
         flag: true,
         strategies: true,
         variants: true,
+        webhooks: true,
       },
     });
   }

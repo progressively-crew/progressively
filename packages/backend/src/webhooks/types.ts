@@ -10,6 +10,13 @@ export interface WebhookCreationDTO {
   event: WebhookEvents;
 }
 
+export interface Webhook {
+  endpoint: string;
+  event: WebhookEvents;
+  secret: string;
+  uuid: string;
+}
+
 export const WebhookSchema = Joi.object({
   endpoint: Joi.string()
     .uri({
