@@ -129,15 +129,6 @@ export class StrategyService {
     });
   }
 
-  listScheduling(envId: string, flagId: string) {
-    return this.prisma.schedule.findMany({
-      where: {
-        flagEnvironmentEnvironmentId: envId,
-        flagEnvironmentFlagId: flagId,
-      },
-    });
-  }
-
   getStrategy(stratId: string) {
     return this.prisma.rolloutStrategy.findUnique({
       where: {

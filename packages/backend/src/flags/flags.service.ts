@@ -251,6 +251,11 @@ export class FlagsService {
 
   async deleteFlag(flagId: string) {
     const deleteQueries = [
+      this.prisma.webhook.deleteMany({
+        where: {
+          flagEnvironmentFlagId: flagId,
+        },
+      }),
       this.prisma.flagHit.deleteMany({
         where: {
           flagEnvironmentFlagId: flagId,

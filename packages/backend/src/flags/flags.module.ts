@@ -6,10 +6,16 @@ import { EnvironmentsModule } from '../environments/environments.module';
 import { WebsocketModule } from '../websocket/websocket.module';
 import { DatabaseModule } from '../database/database.module';
 import { SchedulingService } from '../scheduling/scheduling.service';
+import { WebhooksService } from '../webhooks/webhooks.service';
 
 @Module({
   imports: [EnvironmentsModule, WebsocketModule, DatabaseModule],
-  providers: [FlagsService, StrategyService, SchedulingService],
+  providers: [
+    FlagsService,
+    StrategyService,
+    SchedulingService,
+    WebhooksService,
+  ],
   controllers: [FlagsController],
   exports: [FlagsService],
 })

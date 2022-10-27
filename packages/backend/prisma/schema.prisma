@@ -86,8 +86,19 @@ model FlagEnvironment {
   variants          Variant[]         @relation(name: "FlagEnvironmentToVariant")
   metrics           PMetric[]         @relation(name: "FlagEnvironmentToPMetric")
   metricHits        PMetricHit[]      @relation(name: "FlagEnvironmentToPMetricHit")
+  webhooks          Webhook[]         @relation(name: "FlagEnvironmentToWebhook")
 
   @@id([flagId, environmentId])
+}
+
+model Webhook {
+  uuid                         String           @id @default(uuid())
+  endpoint                     String
+  secret                       String
+  event                        String
+  FlagEnvironment              FlagEnvironment? @relation(name: "FlagEnvironmentToWebhook", fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
+  flagEnvironmentFlagId        String?
+  flagEnvironmentEnvironmentId String?
 }
 
 model Variant {
