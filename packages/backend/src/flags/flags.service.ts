@@ -389,7 +389,7 @@ export class FlagsService {
         flagEnvironmentEnvironmentId: flagEnv.environmentId,
         schedulingStatus: SchedulingStatus.NOT_RUN,
         utc: {
-          lt: now,
+          lte: now,
         },
       },
     });
@@ -403,7 +403,7 @@ export class FlagsService {
             uuid: schedule.uuid,
           },
           data: {
-            status: SchedulingStatus.HAS_RUN,
+            schedulingStatus: SchedulingStatus.HAS_RUN,
           },
         }),
         this.prisma.flagEnvironment.update({
