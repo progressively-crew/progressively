@@ -31,20 +31,7 @@ jobs:
           - 5432:5432
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: "16"
-          cache: "npm"
-          cache-dependency-path: |
-            package-lock.json
-            example/php/package-lock.json
-            packages/backend/package-lock.json
-      - uses: shivammathur/setup-php@v2
-        with:
-          php-version: "8.1"
-
-      - name: Creating .env files
-        run: mv ./packages/backend/.env.example ./packages/backend/.env
+      - uses: ./.github/actions/backend-setup
 
       - name: Install the cypress-helpers dependencies
         working-directory: ./example/cypress-helpers
@@ -53,19 +40,6 @@ jobs:
       - name: Install dependencies on the example project
         working-directory: ./example/php
         run: npm install && composer install
-
-      - name: Bootstrap projects
-        run: npm run setup:ci
-
-      - name: Prepare the DB
-        run: npm run db:prepare
-
-      - name: Build
-        run: npm run build
-
-      - name: Start the backend project
-        working-directory: ./packages/backend
-        run: npm start &
 
       - name: Start the Example PHP project
         working-directory: ./example/php
