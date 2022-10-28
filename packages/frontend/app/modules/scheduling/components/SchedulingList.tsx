@@ -1,10 +1,10 @@
-import { AiOutlineClockCircle } from "react-icons/ai";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
+import { Clock } from "~/components/Clock";
 import { HStack } from "~/components/HStack";
 import { RawTable } from "~/components/RawTable";
 import { FlagStatus } from "~/modules/flags/components/FlagStatus";
 import { FlagStatus as FlagStatusType } from "~/modules/flags/types";
-import { Schedule } from "../types";
+import { Schedule, SchedulingStatus } from "../types";
 import { ScheduleStatus } from "./ScheduleStatus";
 
 export const formatDate = (utc: string) => {
@@ -49,7 +49,12 @@ export const SchedulingList = ({
           <tr key={`${schedule.utc}-${schedule.rolloutPercentage}-${index}`}>
             <td>
               <HStack spacing={2}>
-                <AiOutlineClockCircle />
+                <Clock
+                  date={new Date(schedule.utc)}
+                  ringable={
+                    schedule.schedulingStatus === SchedulingStatus.NOT_RUN
+                  }
+                />
                 <span>{formatDate(schedule.utc)}</span>
               </HStack>
             </td>
