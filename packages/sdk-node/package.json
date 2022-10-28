@@ -1,6 +1,6 @@
 {
   "name": "@progressively/sdk-node",
-  "version": "0.0.1-alpha.11",
+  "version": "0.0.1-alpha.14",
   "main": "lib/index.js",
   "scripts": {
     "build": "tsc"
