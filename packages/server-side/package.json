@@ -3,11 +3,8 @@
   "author": "mfrachet",
   "version": "0.0.1-alpha.11",
   "main": "./lib/legacy/index.js",
-  "exports": {
-    ".": "./lib/modern/index.js",
-    "./lib/ssr": "./lib/ssr.js"
-  },
-  "types": "./lib",
+  "module": "./lib/modern/index.js",
+  "types": "./lib/modern",
   "scripts": {
     "build": "rollup -c rollup.config.js",
     "build:dev": "npm run build -- --environment BUILD:development",
