@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { ProgressivelyProvider, useFlags } from "@progressively/react";
-import { getProgressivelyInitialData } from "@progressively/react/lib/ssr";
+import { getProgressivelyData } from "@progressively/react/lib/ssr";
 
 const FlaggedComponent = () => {
   const { flags } = useFlags();
@@ -45,23 +45,20 @@ export async function getServerSideProps({
   const userIdFromNextjsCookie =
     (req as any).cookies?.["progressively-id"] || null;
 
-  const { initialData, response } = await getProgressivelyInitialData(
-    "valid-sdk-key",
-    {
-      websocketUrl: "ws://localhost:4000",
-      apiUrl: "http://localhost:4000",
-      fields: {
-        id: userIdFromNextjsCookie,
-      },
-    }
-  );
+  const { data, response } = await getProgressivelyData("valid-sdk-key", {
+    websocketUrl: "ws://localhost:4000",
+    apiUrl: "http://localhost:4000",
+    fields: {
+      id: userIdFromNextjsCookie,
+    },
+  });
 
   const progressivelyCookie = response.headers.get("set-cookie");
   res.setHeader("set-cookie", progressivelyCookie);
 
   return {
     props: {
-      progressivelyProps: initialData,
+      progressivelyProps: data,
     },
   };
 }

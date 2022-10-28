@@ -5,7 +5,7 @@ import { nodeResolve } from "@rollup/plugin-node-resolve";
 const external = ["react"];
 const globals = { react: "react" };
 
-const ssrRootFiles = ["ssr.ts", "next.ts"];
+const ssrRootFiles = ["ssr.ts"];
 
 export default () => {
   const ssrConfigs = ssrRootFiles.map((ssrRootFile) => ({

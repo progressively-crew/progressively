@@ -12,7 +12,7 @@ export interface SDKOptions {
 const btoA = (toTransform: string) =>
   Buffer.from(toTransform).toString("base64");
 
-export function getProgressivelyInitialData(
+export function getProgressivelyData(
   clientKey: string,
   options?: SDKOptions | undefined
 ) {
@@ -35,7 +35,7 @@ export function getProgressivelyInitialData(
     })
     .then((flags: FlagDict) => {
       return {
-        initialData: {
+        data: {
           initialFlags: flags,
           clientKey,
           ...options,
