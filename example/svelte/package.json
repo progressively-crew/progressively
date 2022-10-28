@@ -7,15 +7,19 @@
     "build": "vite build",
     "preview": "vite preview  --port 3001",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+    "test:e2e": "cypress open",
+    "test:e2e:ci": "cypress run --browser chrome"
   },
   "dependencies": {
     "@progressively/sdk-js": "file:../../packages/sdk-js",
     "@progressively/server-side": "file:../../packages/server-side"
   },
   "devDependencies": {
+    "@progressively/cypress-helpers": "file:../cypress-helpers",
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/kit": "next",
+    "cypress": "^9.6.0",
     "svelte": "^3.44.0",
     "svelte-check": "^2.7.1",
     "svelte-preprocess": "^4.10.6",
