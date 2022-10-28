@@ -1,9 +1,18 @@
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
+import got from 'got';
 import { seedDb, cleanupDb } from '../helpers/seed';
 import { prepareApp } from '../helpers/prepareApp';
 import { verifyAuthGuard } from '../helpers/verify-auth-guard';
 import { authenticate } from '../helpers/authenticate';
+
+jest.mock('got', () => ({
+  ...jest.requireActual('got'),
+  __esModule: true,
+  default: {
+    post: jest.fn(() => ({ catch: (cb) => cb({ message: 'hello' }) })),
+  },
+}));
 
 describe('FlagsController (e2e)', () => {
   let app: INestApplication;
@@ -21,6 +30,7 @@ describe('FlagsController (e2e)', () => {
   });
 
   afterEach(async () => {
+    jest.resetAllMocks();
     await cleanupDb();
   });
 
@@ -118,6 +128,42 @@ describe('FlagsController (e2e)', () => {
           },
         });
       });
+    });
+
+    it(`calls a webhook when the flag is "ACTIVATED`, async () => {
+      const access_token = await authenticate(
+        app,
+        'marvin.frachet@something.com',
+        'password',
+      );
+
+      await request(app.getHttpServer())
+        .put('/environments/1/flags/1')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send({
+          status: 'ACTIVATED',
+        });
+
+      expect(got.post).toBeCalledWith('http://localhost:4000', {
+        headers: { 'x-progressively-secret': 'this is secret' },
+      });
+    });
+
+    it(`does not call a webhook when the flag is "NOT_ACTIVATED`, async () => {
+      const access_token = await authenticate(
+        app,
+        'marvin.frachet@something.com',
+        'password',
+      );
+
+      await request(app.getHttpServer())
+        .put('/environments/1/flags/1')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send({
+          status: 'NOT_ACTIVATED',
+        });
+
+      expect(got.post).not.toBeCalled();
     });
   });
 
@@ -1605,7 +1651,7 @@ describe('FlagsController (e2e)', () => {
 
       expect(response.status).toBe(200);
       expect(webhook).toEqual({
-        endpoint: 'https://somewheere-endpoint/com',
+        endpoint: 'http://localhost:4000',
         event: 'ACTIVATION',
         flagEnvironmentEnvironmentId: '1',
         flagEnvironmentFlagId: '1',

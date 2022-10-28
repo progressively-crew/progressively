@@ -4,6 +4,8 @@ import {
   Controller,
   Delete,
   Get,
+  Inject,
+  Logger,
   Param,
   Post,
   Put,
@@ -34,8 +36,10 @@ import { HasFlagEnvAccessGuard } from './guards/hasFlagEnvAccess';
 import { SchedulingCreationDTO, SchedulingSchema } from '../scheduling/types';
 import { SchedulingService } from '../scheduling/scheduling.service';
 import { MetricDto, Variant } from './types';
-import { WebhookCreationDTO, WebhookSchema } from '../webhooks/types';
+import { Webhook, WebhookCreationDTO, WebhookSchema } from '../webhooks/types';
 import { WebhooksService } from '../webhooks/webhooks.service';
+import { post, WebhooksEventsToFlagStatus } from '../webhooks/utils';
+import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 
 @ApiBearerAuth()
 @Controller()
@@ -46,6 +50,7 @@ export class FlagsController {
     private readonly flagService: FlagsService,
     private readonly webhookService: WebhooksService,
     private readonly wsGateway: WebsocketGateway,
+    @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
   ) {}
 
   /**
@@ -75,6 +80,21 @@ export class FlagsController {
       updatedFlagEnv.environment.clientKey,
       updatedFlagEnv,
     );
+
+    for (const wh of updatedFlagEnv.webhooks) {
+      if (WebhooksEventsToFlagStatus[wh.event] === status) {
+        try {
+          await post(wh as Webhook);
+        } catch (err) {
+          this.logger.log({
+            error: err.message,
+            level: 'error',
+            context: 'Webhooks',
+            url: wh.endpoint,
+          });
+        }
+      }
+    }
 
     return updatedFlagEnv;
   }
