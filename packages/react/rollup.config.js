@@ -22,20 +22,21 @@ export default () => {
     external,
   };
 
-  const modern = {
+  const esm = {
     input: "src/index.tsx",
     output: {
       name: "progressively-react",
-      dir: "lib/modern",
-      format: "umd",
+      dir: "lib/esm",
+      format: "esm",
       globals,
     },
     plugins: [
       nodeResolve(),
-      typescript({ outDir: "lib/modern", target: "ESNext" }),
+      typescript({ outDir: "lib/esm", target: "ESNext" }),
       terser(),
     ],
     external,
   };
-  return [legacy, modern];
+
+  return [legacy, esm];
 };

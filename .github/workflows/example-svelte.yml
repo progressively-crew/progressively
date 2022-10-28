@@ -1,4 +1,4 @@
-name: Example Nextjs
+name: Example Svelte
 on:
   pull_request:
     branches: ["master"]
@@ -38,17 +38,17 @@ jobs:
         run: npm install
 
       - name: Install dependencies on the example project
-        working-directory: ./example/nextjs
+        working-directory: ./example/svelte
         run: npm install
 
       - name: Build project
-        working-directory: ./example/nextjs
+        working-directory: ./example/svelte
         run: npm run build
 
-      - name: Start project
-        working-directory: ./example/nextjs
-        run: npm start &
+      - name: Start the Example Sveltekit project
+        working-directory: ./example/svelte
+        run: npm run preview &
 
       - name: E2E tests
-        working-directory: ./example/nextjs
+        working-directory: ./example/svelte
         run: npx wait-on -t 60000 tcp:4000 && npm run test:e2e:ci

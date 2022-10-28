@@ -2,9 +2,15 @@
   "name": "@progressively/server-side",
   "author": "mfrachet",
   "version": "0.0.1-alpha.11",
+  "types": "./lib/legacy",
   "main": "./lib/legacy/index.js",
-  "module": "./lib/modern/index.js",
-  "types": "./lib/modern",
+  "module": "./lib/esm/index.js",
+  "exports": {
+    ".": {
+      "require": "./lib/legacy/index.js",
+      "import": "./lib/esm/index.js"
+    }
+  },
   "scripts": {
     "build": "rollup -c rollup.config.js",
     "build:dev": "npm run build -- --environment BUILD:development",
@@ -29,7 +35,7 @@
   },
   "bundlesize": [
     {
-      "path": "./lib/modern/index.js",
+      "path": "./lib/esm/index.js",
       "maxSize": "1 kB"
     },
     {
