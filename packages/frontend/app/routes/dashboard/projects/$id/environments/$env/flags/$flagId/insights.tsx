@@ -250,20 +250,22 @@ export default function FlagInsights() {
           </Card>
         )}
 
-        <Card>
-          <Section id="without-variant">
-            <CardContent noBottom>
-              <SectionHeader title="Other hits" />
-            </CardContent>
+        {hitsWithoutVariant.length > 0 && (
+          <Card>
+            <Section id="without-variant">
+              <CardContent noBottom>
+                <SectionHeader title="Other hits" />
+              </CardContent>
 
-            <TableWrapper>
-              <HitWithoutVariantList
-                hits={hitsWithoutVariant}
-                flagEvaluationsCount={flagEvaluationsCount}
-              />
-            </TableWrapper>
-          </Section>
-        </Card>
+              <TableWrapper>
+                <HitWithoutVariantList
+                  hits={hitsWithoutVariant}
+                  flagEvaluationsCount={flagEvaluationsCount}
+                />
+              </TableWrapper>
+            </Section>
+          </Card>
+        )}
       </Stack>
     </DashboardLayout>
   );
