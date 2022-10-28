@@ -22,7 +22,7 @@ export default () => {
     external,
   };
 
-  const modern = {
+  const esm = {
     input: "src/index.tsx",
     output: {
       name: "progressively-react",
@@ -37,5 +37,6 @@ export default () => {
     ],
     external,
   };
-  return [legacy, modern];
+
+  return [legacy, esm];
 };
