@@ -7,10 +7,10 @@
   "exports": {
     ".": {
       "require": "./lib/legacy/index.js",
-      "import": "./lib/esm/index.mjs"
+      "import": "./lib/esm/index.js"
     }
   },
-  "types": "./lib/modern",
+  "types": "./lib/legacy",
   "scripts": {
     "build": "rollup -c rollup.config.js",
     "build:dev": "npm run build -- --environment BUILD:development",

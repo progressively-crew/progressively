@@ -8,7 +8,7 @@
   "exports": {
     ".": {
       "require": "./lib/legacy/index.js",
-      "import": "./lib/esm/index.mjs"
+      "import": "./lib/esm/index.js"
     }
   },
   "scripts": {
