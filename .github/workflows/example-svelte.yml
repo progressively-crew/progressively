@@ -43,7 +43,7 @@ jobs:
 
       - name: Start the Example Sveltekit project
         working-directory: ./example/svelte
-        run: npm run build && npm start &
+        run: npm run build && npm preview &
 
       - name: E2E tests
         working-directory: ./example/svelte
