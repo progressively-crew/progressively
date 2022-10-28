@@ -142,7 +142,7 @@ describe('FlagsController (e2e)', () => {
           status: 'ACTIVATED',
         });
 
-      expect(got.post).toBeCalledWith('https://somewheere-endpoint/com', {
+      expect(got.post).toBeCalledWith('http://localhost:4000', {
         headers: { 'x-progressively-secret': 'this is secret' },
       });
     });
@@ -1649,7 +1649,7 @@ describe('FlagsController (e2e)', () => {
 
       expect(response.status).toBe(200);
       expect(webhook).toEqual({
-        endpoint: 'https://somewheere-endpoint/com',
+        endpoint: 'http://localhost:4000',
         event: 'ACTIVATION',
         flagEnvironmentEnvironmentId: '1',
         flagEnvironmentFlagId: '1',

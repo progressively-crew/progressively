@@ -80,7 +80,7 @@ export const seedDb = async () => {
         webhooks: {
           create: {
             uuid: '1',
-            endpoint: 'https://somewheere-endpoint/com',
+            endpoint: 'http://localhost:4000',
             secret: 'this is secret',
             event: 'ACTIVATION',
           },
