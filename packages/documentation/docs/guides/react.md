@@ -5,7 +5,7 @@
 In your React project, run the following command:
 
 ```bash
-$ npm install --save @progressively/react
+$ npm install --save @progressively/react @progressively/server-side
 ```
 
 ## Usage client (only)
@@ -41,7 +41,7 @@ In your React code, add the following snippet
 
 ```javascript
 import { ProgressivelyProvider, useFlags } from "@progressively/react";
-import { getProgressivelyData } from "@progressively/react/lib/ssr";
+import { getProgressivelyData } from "@progressively/server-side";
 
 const FlaggedComponent = () => {
   const { flags } = useFlags();
@@ -56,18 +56,24 @@ const YourPage = ({ progressivelyProps }) => {
   );
 };
 
-export async function getServerSideProps({ req, res }) {
-  const { ssrProps, cookies } = await getProgressivelyData(
-    "YOUR_ENVIRONMENT_CLIENT_KEY",
-    {
-      apiUrl: "your url server",
-      websocketUrl: "your url server for websockets",
-    }
-  );
+export async function getServerSideProps({
+  req,
+  res,
+}: {
+  req: Request,
+  res: any,
+}) {
+  const { data, response } = await getProgressivelyData("valid-sdk-key", {
+    websocketUrl: "ws://localhost:4000",
+    apiUrl: "http://localhost:4000",
+    fields: {
+      id: userIdFromNextjsCookie,
+    },
+  });
 
   return {
     props: {
-      progressivelyProps: ssrProps,
+      progressivelyProps: data,
     },
   };
 }
@@ -81,7 +87,7 @@ The handling of creating IDs for anonymous users is done by Progressively under 
 
 ```javascript
 import { ProgressivelyProvider, useFlags } from "@progressively/react";
-import { getProgressivelyData } from "@progressively/react/lib/ssr";
+import { getProgressivelyData } from "@progressively/server-side";
 
 const FlaggedComponent = () => {
   const { flags } = useFlags();
@@ -96,44 +102,32 @@ const YourPage = ({ progressivelyProps }) => {
   );
 };
 
-export async function getServerSideProps({ req, res }) {
-   const { ssrProps } = await getNextProps(
-    "YOUR ENVIRONMENT KEY",
-    {
-      websocketUrl: "ws://localhost:4000",
-      apiUrl: "http://localhost:4000",
+export async function getServerSideProps({
+  req,
+  res,
+}: {
+  req: Request;
+  res: any;
+}) {
+  const userIdFromNextjsCookie =
+    (req as any).cookies?.["progressively-id"] || null;
+
+  const { data, response } = await getProgressivelyData("valid-sdk-key", {
+    websocketUrl: "ws://localhost:4000",
+    apiUrl: "http://localhost:4000",
+    fields: {
+      id: userIdFromNextjsCookie,
     },
-    req,
-    res
-  );
+  });
+
+  const progressivelyCookie = response.headers.get("set-cookie");
+  res.setHeader("set-cookie", progressivelyCookie);
 
   return {
     props: {
-      progressivelyProps: ssrProps,
+      progressivelyProps: data,
     },
   };
-}
-
-function getNextProps(
-  clientKey: string,
-  options: SDKOptions,
-  req: Request,
-  res: any
-) {
-  const { fields } = options;
-  return getProgressivelyData(clientKey, {
-    ...options,
-    fields: {
-      // Forward the cookie to the progressively instance
-      id: fields?.id || (req as any).cookies?.["progressively-id"] || null,
-      ...(fields || {}),
-    },
-  }).then((response) => {
-
-    // Stick the cookie
-    res.setHeader("set-cookie", response.cookies);
-    return response;
-  });
 }
 
 ```
