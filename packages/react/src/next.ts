@@ -1,5 +1,5 @@
 import { SDKOptions } from "@progressively/sdk-js";
-import { getSSRProps } from "./ssr";
+import { getProgressivelyInitialData } from "./ssr";
 
 export function getNextProps(
   clientKey: string,
@@ -8,7 +8,7 @@ export function getNextProps(
   res: any
 ) {
   const { fields } = options;
-  return getSSRProps(clientKey, {
+  return getProgressivelyInitialData(clientKey, {
     ...options,
     fields: {
       id: fields?.id || (req as any).cookies?.["progressively-id"] || null,

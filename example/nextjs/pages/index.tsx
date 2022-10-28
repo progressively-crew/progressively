@@ -3,7 +3,7 @@ import Head from "next/head";
 import React from "react";
 import styles from "../styles/Home.module.css";
 import { ProgressivelyProvider, useFlags } from "@progressively/react";
-import { getSSRProps } from "@progressively/react/lib/ssr";
+import { getProgressivelyInitialData } from "@progressively/react/lib/ssr";
 
 const FlaggedComponent = () => {
   const { flags, track } = useFlags();
@@ -47,20 +47,24 @@ export async function getServerSideProps({
   req: Request;
   res: any;
 }) {
-  const { ssrProps, cookies } = await getSSRProps("valid-sdk-key", {
-    websocketUrl: "ws://localhost:4000",
-    apiUrl: "http://localhost:4000",
-    fields: {
-      email: "marvin.frachet@something.com",
-      id: "1",
-    },
-  });
+  const { initialData, response } = await getProgressivelyInitialData(
+    "valid-sdk-key",
+    {
+      websocketUrl: "ws://localhost:4000",
+      apiUrl: "http://localhost:4000",
+      fields: {
+        email: "marvin.frachet@something.com",
+        id: "1",
+      },
+    }
+  );
 
-  res.setHeader("set-cookie", cookies);
+  const progressivelyCookie = response.headers.get("set-cookie");
+  res.setHeader("set-cookie", progressivelyCookie);
 
   return {
     props: {
-      progressivelyProps: ssrProps,
+      progressivelyProps: initialData,
     },
   };
 }

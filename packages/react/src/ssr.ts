@@ -1,30 +1,46 @@
-import { Progressively, SDKOptions } from "@progressively/sdk-js";
+export type FlagDict = { [key: string]: boolean | string };
+export type Fields = Record<string, string | number | boolean>;
+
+export interface SDKOptions {
+  fields?: Fields;
+  apiUrl?: string;
+  websocketUrl?: string;
+  initialFlags?: FlagDict;
+  shouldHit?: boolean;
+}
 
 const btoA = (toTransform: string) =>
   Buffer.from(toTransform).toString("base64");
 
-export function getSSRProps(
+export function getProgressivelyInitialData(
   clientKey: string,
   options?: SDKOptions | undefined
 ) {
-  const ssrOptions: SDKOptions = {
-    headers: {
-      "X-progressively-hit": "skip",
-    },
-    ...options,
-  };
+  const apiRoot = options?.apiUrl || "https://api.progressively.app";
+  const fields: Fields = options?.fields || {};
+  fields.clientKey = clientKey;
 
-  const sdk = Progressively.init(clientKey, ssrOptions);
-
-  return sdk.loadFlags({ btoAFn: btoA }).then(({ flags, response }) => {
-    return {
-      ssrProps: {
-        initialFlags: flags,
-        clientKey,
-
-        ...options,
-      },
-      cookies: response.headers.get("set-cookie"),
-    };
-  });
+  let response: Response;
+  return fetch(`${apiRoot}/sdk/${btoA(JSON.stringify(fields))}`, {
+    credentials: "include",
+    headers: options?.shouldHit
+      ? undefined
+      : {
+          "X-progressively-hit": "skip",
+        },
+  })
+    .then((res: Response) => {
+      response = res;
+      return response.json();
+    })
+    .then((flags: FlagDict) => {
+      return {
+        initialData: {
+          initialFlags: flags,
+          clientKey,
+          ...options,
+        },
+        response,
+      };
+    });
 }
