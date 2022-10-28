@@ -8,7 +8,9 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "test:e2e": "cypress open",
+    "test:e2e:ci": "cypress run --browser chrome"
   },
   "dependencies": {
     "@astrojs/node": "^2.0.2",
@@ -17,6 +19,8 @@
     "astro": "^1.6.0"
   },
   "devDependencies": {
+    "@progressively/cypress-helpers": "file:../cypress-helpers",
+    "cypress": "^9.6.0",
     "@astrojs/react": "^1.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
