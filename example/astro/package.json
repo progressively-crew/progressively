@@ -1,0 +1,24 @@
+{
+  "name": "@example/minimal",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/node": "^2.0.2",
+    "@progressively/react": "file:../../packages/react",
+    "@progressively/server-side": "file:../../packages/server-side",
+    "astro": "^1.6.0"
+  },
+  "devDependencies": {
+    "@astrojs/react": "^1.2.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}

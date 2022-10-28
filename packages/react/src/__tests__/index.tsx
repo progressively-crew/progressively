@@ -32,11 +32,7 @@ describe("React-sdk root", () => {
     );
 
   const FLAG_ENDPOINT = `http://localhost:4000*`;
-  const worker = setupServer(
-    rest.post(FLAG_ENDPOINT, (_, res, ctx) => {
-      return res(ctx.json({}));
-    })
-  );
+  const worker = setupServer();
   let socket: any;
 
   beforeEach(() => {
