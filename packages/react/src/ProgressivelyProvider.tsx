@@ -34,7 +34,7 @@ export const ProgressivelyProvider = ({
 
     const ctrl = new AbortController();
 
-    setTrackFn(sdk.track);
+    setTrackFn(() => sdk.track);
 
     sdk
       .loadFlags({ ctrl })
