@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@progressively/react": "file:../../packages/react",
+    "@progressively/server-side": "file:../../packages/server-side",
     "next": "12.1.6",
     "react": "18.1.0",
     "react-dom": "18.1.0"

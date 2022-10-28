@@ -9,14 +9,12 @@ export default () => {
       name: "progressively-server-side",
       dir: "lib/legacy",
       format: "umd",
-      globals,
     },
     plugins: [
       nodeResolve(),
       typescript({ outDir: "lib/legacy", target: "es5" }),
       terser(),
     ],
-    external,
   };
 
   const modern = {
@@ -25,14 +23,12 @@ export default () => {
       name: "progressively-server-side",
       dir: "lib/modern",
       format: "umd",
-      globals,
     },
     plugins: [
       nodeResolve(),
       typescript({ outDir: "lib/modern", target: "ESNext" }),
       terser(),
     ],
-    external,
   };
   return [legacy, modern];
 };

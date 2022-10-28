@@ -3,7 +3,7 @@ import Head from "next/head";
 import React from "react";
 import styles from "../styles/Home.module.css";
 import { ProgressivelyProvider, useFlags } from "@progressively/react";
-import { getProgressivelyData } from "@progressively/react/lib/ssr";
+import { getProgressivelyData } from "@progressively/server-side";
 
 const FlaggedComponent = () => {
   const { flags, track } = useFlags();
