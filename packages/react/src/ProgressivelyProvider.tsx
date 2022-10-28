@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { ProgressivelyContext } from "./ProgressivelyContext";
 import { Progressively, ProgressivelySdkType } from "@progressively/sdk-js";
 import { ProgressivelyProviderProps } from "./types";
-import { FlagDict } from "@progressively/sdk-js/dist/modern";
+import { FlagDict } from "@progressively/sdk-js";
 
 export const ProgressivelyProvider = ({
   children,

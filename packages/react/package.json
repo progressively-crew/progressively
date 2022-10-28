@@ -45,7 +45,7 @@
   },
   "bundlesize": [
     {
-      "path": "./lib/modern/index.js",
+      "path": "./lib/esm/index.js",
       "maxSize": "1.3 kB"
     },
     {
