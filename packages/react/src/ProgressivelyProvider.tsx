@@ -12,8 +12,10 @@ export const ProgressivelyProvider = ({
   websocketUrl,
   fields,
 }: ProgressivelyProviderProps) => {
-  const sdkRef = useRef<ProgressivelySdkType | undefined>();
   const alreadyConnected = useRef(false);
+  const [trackFn, setTrackFn] = useState<ProgressivelySdkType["track"]>(
+    (eventName: string, data?: any) => Promise.resolve(new Response())
+  );
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<any>();
   const [flags, setFlags] = useState<FlagDict>(initialFlags || {});
@@ -31,6 +33,8 @@ export const ProgressivelyProvider = ({
     });
 
     const ctrl = new AbortController();
+
+    setTrackFn(sdk.track);
 
     sdk
       .loadFlags({ ctrl })
@@ -54,12 +58,10 @@ export const ProgressivelyProvider = ({
     };
   }, []);
 
-  const track =
-    sdkRef.current?.track ||
-    ((eventName: string, data?: any) => Promise.resolve(new Response()));
-
   return (
-    <ProgressivelyContext.Provider value={{ flags, isLoading, error, track }}>
+    <ProgressivelyContext.Provider
+      value={{ flags, isLoading, error, track: trackFn }}
+    >
       {children}
     </ProgressivelyContext.Provider>
   );
