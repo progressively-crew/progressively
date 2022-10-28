@@ -9,7 +9,9 @@ import { authenticate } from '../helpers/authenticate';
 jest.mock('got', () => ({
   ...jest.requireActual('got'),
   __esModule: true,
-  default: { post: jest.fn(() => ({ catch: (cb) => cb() })) },
+  default: {
+    post: jest.fn(() => ({ catch: (cb) => cb({ message: 'hello' }) })),
+  },
 }));
 
 describe('FlagsController (e2e)', () => {

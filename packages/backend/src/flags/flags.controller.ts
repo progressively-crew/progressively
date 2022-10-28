@@ -83,14 +83,16 @@ export class FlagsController {
 
     for (const wh of updatedFlagEnv.webhooks) {
       if (WebhooksEventsToFlagStatus[wh.event] === status) {
-        post(wh as Webhook).catch((err) => {
+        try {
+          await post(wh as Webhook);
+        } catch (err) {
           this.logger.log({
             error: err.message,
             level: 'error',
             context: 'Webhooks',
             url: wh.endpoint,
           });
-        });
+        }
       }
     }
 
