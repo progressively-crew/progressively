@@ -9,7 +9,7 @@ import { authenticate } from '../helpers/authenticate';
 jest.mock('got', () => ({
   ...jest.requireActual('got'),
   __esModule: true,
-  default: { post: jest.fn() },
+  default: { post: jest.fn(() => ({ catch: () => {} })) },
 }));
 
 describe('FlagsController (e2e)', () => {

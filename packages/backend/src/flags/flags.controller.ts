@@ -84,6 +84,7 @@ export class FlagsController {
     for (const wh of updatedFlagEnv.webhooks) {
       if (WebhooksEventsToFlagStatus[wh.event] === status) {
         post(wh as Webhook).catch((err) => {
+          console.log('woot');
           this.logger.log({
             error: err.message,
             level: 'error',
