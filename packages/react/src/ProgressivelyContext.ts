@@ -5,7 +5,7 @@ export interface ProgressivelyContextType {
   flags: FlagDict;
   isLoading: boolean;
   error?: Error;
-  track: (eventName: string, data: any) => Promise<Response>;
+  track: (eventName: string, data: any) => Promise<void>;
 }
 
 export const ProgressivelyContext = createContext<ProgressivelyContextType>({

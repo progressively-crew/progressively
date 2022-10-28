@@ -105,7 +105,7 @@ function Sdk(
         data,
       }),
       headers: { "Content-Type": "application/json" },
-    });
+    }).then(() => undefined);
   }
 
   return { loadFlags, disconnect, onFlagUpdate, track };

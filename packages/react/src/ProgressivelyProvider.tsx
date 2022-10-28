@@ -14,7 +14,7 @@ export const ProgressivelyProvider = ({
 }: ProgressivelyProviderProps) => {
   const alreadyConnected = useRef(false);
   const [trackFn, setTrackFn] = useState<ProgressivelySdkType["track"]>(
-    (eventName: string, data?: any) => Promise.resolve(new Response())
+    (eventName: string, data?: any) => Promise.resolve(undefined)
   );
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<any>();
