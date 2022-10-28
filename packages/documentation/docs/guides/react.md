@@ -41,7 +41,7 @@ In your React code, add the following snippet
 
 ```javascript
 import { ProgressivelyProvider, useFlags } from "@progressively/react";
-import { getSSRProps } from "@progressively/react/lib/ssr";
+import { getProgressivelyData } from "@progressively/react/lib/ssr";
 
 const FlaggedComponent = () => {
   const { flags } = useFlags();
@@ -57,7 +57,7 @@ const YourPage = ({ progressivelyProps }) => {
 };
 
 export async function getServerSideProps({ req, res }) {
-  const { ssrProps, cookies } = await getSSRProps(
+  const { ssrProps, cookies } = await getProgressivelyData(
     "YOUR_ENVIRONMENT_CLIENT_KEY",
     {
       apiUrl: "your url server",
@@ -81,7 +81,7 @@ The handling of creating IDs for anonymous users is done by Progressively under 
 
 ```javascript
 import { ProgressivelyProvider, useFlags } from "@progressively/react";
-import { getSSRProps } from "@progressively/react/lib/ssr";
+import { getProgressivelyData } from "@progressively/react/lib/ssr";
 
 const FlaggedComponent = () => {
   const { flags } = useFlags();
@@ -121,7 +121,7 @@ function getNextProps(
   res: any
 ) {
   const { fields } = options;
-  return getSSRProps(clientKey, {
+  return getProgressivelyData(clientKey, {
     ...options,
     fields: {
       // Forward the cookie to the progressively instance

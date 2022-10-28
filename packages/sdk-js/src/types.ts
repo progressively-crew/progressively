@@ -18,12 +18,11 @@ export interface ProgressivelySdkType {
     callback: (data: FlagDict) => void,
     userId?: string | null
   ) => void;
-  track: (eventName: string, data?: any) => Promise<Response>;
+  track: (eventName: string, data?: any) => Promise<void>;
 }
 
 export interface LoadFlagsArgs {
   ctrl?: AbortController;
-  btoAFn?: BtoaFn;
 }
 
 export type BtoaFn = (str: string) => string;

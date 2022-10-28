@@ -1,0 +1,31 @@
+name: Server Side
+on:
+  pull_request:
+    branches: ["master"]
+  workflow_dispatch:
+
+jobs:
+  static:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+          cache: "npm"
+          cache-dependency-path: packages/server-side/package-lock.json
+
+      - name: Install dependencies
+        run: npm i
+        working-directory: ./packages/server-side
+
+      - name: Build sdk react
+        run: npm run build
+        working-directory: ./packages/server-side
+
+      - name: Bundlesize
+        working-directory: ./packages/server-side
+        run: npm run bundlesize

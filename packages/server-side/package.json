@@ -1,5 +1,5 @@
 {
-  "name": "@progressively/react",
+  "name": "@progressively/server-side",
   "author": "mfrachet",
   "version": "0.0.1-alpha.11",
   "main": "./lib/legacy/index.js",
@@ -11,40 +11,30 @@
     "test": "jest",
     "bundlesize": "bundlesize --enable-github-checks"
   },
-  "peerDependencies": {
-    "react": ">= 17"
-  },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.3.0",
     "@rollup/plugin-typescript": "^8.3.2",
     "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.3.0",
     "@types/jest": "^28.1.1",
     "@types/node-fetch": "^2.6.1",
-    "@types/react": "^18.0.12",
     "bundlesize2": "^0.0.31",
     "jest": "^28.1.1",
     "jest-environment-jsdom": "^28.1.1",
     "msw": "^0.42.1",
-    "react": ">= 17",
-    "react-dom": ">= 17",
     "rollup": "^2.75.6",
     "rollup-plugin-terser": "^7.0.2",
     "ts-jest": "^28.0.4",
     "ts-loader": "^9.3.0",
     "typescript": "^4.7.3"
   },
-  "dependencies": {
-    "@progressively/sdk-js": "^0.0.1-alpha.11"
-  },
   "bundlesize": [
     {
       "path": "./lib/modern/index.js",
-      "maxSize": "1.3 kB"
+      "maxSize": "1 kB"
     },
     {
       "path": "./lib/legacy/index.js",
-      "maxSize": "1.3 kB"
+      "maxSize": "1 kB"
     }
   ]
 }

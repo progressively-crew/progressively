@@ -8,13 +8,10 @@ import {
 
 export * from "./types";
 
-const isSSR = typeof window === undefined;
 const LocalStorageKey = "p-flags";
 
 function persistLocalFlags(flags: FlagDict) {
-  if (!isSSR) {
-    window.localStorage.setItem(LocalStorageKey, JSON.stringify(flags));
-  }
+  window.localStorage.setItem(LocalStorageKey, JSON.stringify(flags));
 }
 
 function init(clientKey: string, options?: SDKOptions): ProgressivelySdkType {
@@ -25,11 +22,9 @@ function init(clientKey: string, options?: SDKOptions): ProgressivelySdkType {
 
   if (options?.initialFlags) {
     resolvedFlags = options.initialFlags;
-  } else if (!isSSR) {
-    try {
-      const stringFlags = window.localStorage.getItem(LocalStorageKey);
-      resolvedFlags = stringFlags ? JSON.parse(stringFlags) : {};
-    } catch {}
+  } else {
+    const stringFlags = window.localStorage.getItem(LocalStorageKey);
+    resolvedFlags = stringFlags ? JSON.parse(stringFlags) : {};
   }
 
   return Sdk(
@@ -54,9 +49,7 @@ function Sdk(
   function loadFlags(args?: LoadFlagsArgs) {
     let response: Response;
 
-    const toBase64 = args?.btoAFn || btoa;
-
-    return fetch(`${apiRoot}/sdk/${toBase64(JSON.stringify(fields))}`, {
+    return fetch(`${apiRoot}/sdk/${btoa(JSON.stringify(fields))}`, {
       credentials: "include",
       signal: args?.ctrl?.signal,
       headers,
@@ -112,7 +105,7 @@ function Sdk(
         data,
       }),
       headers: { "Content-Type": "application/json" },
-    });
+    }).then(() => undefined);
   }
 
   return { loadFlags, disconnect, onFlagUpdate, track };
