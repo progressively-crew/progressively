@@ -18,8 +18,13 @@ jobs:
           cache: "npm"
           cache-dependency-path: packages/server-side/package-lock.json
 
-      - name: Bootstrap projects
-        run: npm run setup:ci
+      - name: Install dependencies
+        run: npm i
+        working-directory: ./packages/server-side
+
+      - name: Build sdk react
+        run: npm run build
+        working-directory: ./packages/server-side
 
       - name: Bundlesize
         working-directory: ./packages/server-side
