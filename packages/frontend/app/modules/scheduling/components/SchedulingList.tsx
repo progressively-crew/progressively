@@ -48,7 +48,7 @@ export const SchedulingList = ({
         {scheduling.map((schedule, index: number) => (
           <tr key={`${schedule.utc}-${schedule.rolloutPercentage}-${index}`}>
             <td>
-              <HStack spacing={2}>
+              <HStack spacing={4}>
                 <Clock
                   date={new Date(schedule.utc)}
                   ringable={
