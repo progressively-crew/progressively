@@ -13,7 +13,7 @@ export interface WarningBoxProps {
 const WarningBoxWrapper = styled("figure", {
   background: "$warningBg",
   color: "$warningFg",
-  border: "1px solid $warningBorder",
+  borderLeft: "8px solid $warningBorder",
   padding: "$spacing$6 $spacing$4",
   borderRadius: "$borderRadius$regular",
   fontFamily: "$default",
@@ -25,7 +25,7 @@ const WarningBoxWrapper = styled("figure", {
   },
 
   "& figcaption": {
-    fontWeight: "$bold",
+    fontWeight: "$normal",
     lineHeight: "$text",
   },
 

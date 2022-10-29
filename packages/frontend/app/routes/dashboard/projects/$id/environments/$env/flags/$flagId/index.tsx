@@ -16,6 +16,7 @@ import {
   useLoaderData,
   useActionData,
   Form,
+  Link,
 } from "@remix-run/react";
 import { TagLine } from "~/components/Tagline";
 import { StrategyList } from "~/modules/strategies/components/StrategyList";
@@ -193,8 +194,14 @@ export default function FlagById() {
                 description={
                   isMultiVariants ? (
                     <Typography>
-                      These are the variants and their rollout percentage served
-                      to your users when the flag is activated.
+                      These are{" "}
+                      <Link
+                        to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/variants`}
+                      >
+                        the variants
+                      </Link>{" "}
+                      and their rollout percentage served to your users when the
+                      flag is activated.
                     </Typography>
                   ) : (
                     <Typography>

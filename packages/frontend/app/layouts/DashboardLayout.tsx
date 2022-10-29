@@ -29,7 +29,7 @@ const OverflowContainer = styled("div", {
 
 const TopWrapper = styled("div", {
   background: "$apollo",
-  boxShadow: "$regularBottom",
+  borderBottom: "1px solid $border",
 });
 
 const Grid = styled("div", {
@@ -97,7 +97,7 @@ export const DashboardLayout = ({
 
               <OverflowContainer>
                 <Main>
-                  <Stack spacing={{ "@initial": 8, "@mobile": 4 }}>
+                  <Stack spacing={{ "@initial": 6, "@mobile": 4 }}>
                     {status}
 
                     {children}

@@ -2,7 +2,11 @@ import { FlagStatus } from "../../../../packages/backend/src/flags/flags.status"
 
 describe("/", () => {
   beforeEach(cy.seed);
-  afterEach(cy.cleanup);
+
+  afterEach(() => {
+    cy.wait(500);
+    cy.cleanup();
+  });
 
   beforeEach(() => {
     cy.visit("/");

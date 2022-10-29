@@ -1,8 +1,10 @@
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
+import { Clock } from "~/components/Clock";
+import { HStack } from "~/components/HStack";
 import { RawTable } from "~/components/RawTable";
 import { FlagStatus } from "~/modules/flags/components/FlagStatus";
 import { FlagStatus as FlagStatusType } from "~/modules/flags/types";
-import { Schedule } from "../types";
+import { Schedule, SchedulingStatus } from "../types";
 import { ScheduleStatus } from "./ScheduleStatus";
 
 export const formatDate = (utc: string) => {
@@ -46,7 +48,15 @@ export const SchedulingList = ({
         {scheduling.map((schedule, index: number) => (
           <tr key={`${schedule.utc}-${schedule.rolloutPercentage}-${index}`}>
             <td>
-              <div>{formatDate(schedule.utc)}</div>
+              <HStack spacing={4}>
+                <Clock
+                  date={new Date(schedule.utc)}
+                  ringable={
+                    schedule.schedulingStatus === SchedulingStatus.NOT_RUN
+                  }
+                />
+                <span>{formatDate(schedule.utc)}</span>
+              </HStack>
             </td>
             <td>
               <div>
