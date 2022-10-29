@@ -10,4 +10,4 @@ export interface LocalWebsocket extends WS {
 export type Subscriber<T> = (
   args: T,
   fields: FieldRecord,
-) => unknown | undefined;
+) => Promise<unknown | undefined>;

@@ -73,21 +73,31 @@ export class WebsocketGateway
   }
 
   initRedisSubscription(clientKey: string, connectedSocket: LocalWebsocket) {
-    this.redisService.subscribe(clientKey, (subscribedEntity: unknown) => {
-      const sockets = this.rooms.getSockets(clientKey);
-      for (const sock of sockets) {
+    this.redisService.subscribe(
+      clientKey,
+      async (subscribedEntity: unknown) => {
+        const sockets = this.rooms.getSockets(clientKey);
+
+        const nextEntities = [];
+
         for (const subscriber of this.subscribers) {
-          const nextEntity = subscriber(
+          const nextEntity = await subscriber(
             subscribedEntity,
             connectedSocket.__FIELDS,
           );
 
           if (nextEntity) {
-            this.rooms.emit(sock, nextEntity);
+            nextEntities.push(nextEntity);
           }
         }
-      }
-    });
+
+        for (const sock of sockets) {
+          nextEntities.forEach((nextEntity) =>
+            this.rooms.emit(sock, nextEntity),
+          );
+        }
+      },
+    );
   }
 
   registerSubscriptionHandler<T>(subscriber: Subscriber<T>) {
