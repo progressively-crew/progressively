@@ -32,11 +32,13 @@ export const MetricList = ({
             </td>
 
             <td>
-              <Link
-                to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/variants`}
-              >
-                {metric.variant?.value}
-              </Link>
+              {metric.variant?.value && (
+                <Link
+                  to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/variants`}
+                >
+                  {metric.variant?.value}
+                </Link>
+              )}
             </td>
 
             <td>
