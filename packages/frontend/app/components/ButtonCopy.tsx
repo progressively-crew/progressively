@@ -1,6 +1,6 @@
 import React, { HTMLAttributes, useEffect, useRef, useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { AiOutlineCopy } from "react-icons/ai";
+import { TbClipboardText, TbClipboardCheck } from "react-icons/tb";
 import { KeyboardKeys } from "~/modules/a11y/utils/keyboardKeys";
 import { useHydrated } from "~/modules/misc/hooks/useHydrated";
 import { Button, ButtonProps } from "./Buttons/Button";
@@ -58,7 +58,13 @@ export const ButtonCopy = ({ toCopy, children, ...props }: ButtonCopyProps) => {
           type="button"
           onClick={handleClick}
           aria-live="polite"
-          icon={<AiOutlineCopy aria-hidden />}
+          icon={
+            isCopied ? (
+              <TbClipboardCheck aria-hidden />
+            ) : (
+              <TbClipboardText aria-hidden />
+            )
+          }
           variant="secondary"
           onKeyDown={handleKeyDow}
           {...copyToClipBoardProps}
@@ -84,7 +90,7 @@ export const ButtonCopy = ({ toCopy, children, ...props }: ButtonCopyProps) => {
     <Button
       as={"span"}
       aria-live="polite"
-      icon={<AiOutlineCopy aria-hidden />}
+      icon={<TbClipboardText aria-hidden />}
       variant="secondary"
       {...spanProps}
     >

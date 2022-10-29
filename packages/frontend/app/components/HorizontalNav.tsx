@@ -44,7 +44,6 @@ const HorizontalNavWrapper = styled("nav", {
   "@tablet": {
     overflow: "hidden",
     paddingTop: 0,
-    marginTop: "2px",
     width: "100%",
     background: "$nemesisLight",
 

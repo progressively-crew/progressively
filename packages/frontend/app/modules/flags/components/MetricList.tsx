@@ -1,3 +1,4 @@
+import { Link } from "@remix-run/react";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { RawTable } from "~/components/RawTable";
 import { Metric } from "../types";
@@ -31,7 +32,11 @@ export const MetricList = ({
             </td>
 
             <td>
-              <div>{metric.variant?.value}</div>
+              <Link
+                to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/variants`}
+              >
+                {metric.variant?.value}
+              </Link>
             </td>
 
             <td>

@@ -42,7 +42,7 @@ const FlagRow = ({ flagEnv, projectId, envId }: FlagRowProps) => {
         >
           {flagEnv.flag.name}
         </Link>
-        <Typography size="neptune" color="hadesLight">
+        <Typography size="neptune" color="hadesLight" lineHeight="title">
           {flagEnv.flag.description}
         </Typography>
 

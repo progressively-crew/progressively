@@ -15,23 +15,6 @@ export class FlagsService {
     private readonly wsGateway: WebsocketGateway,
   ) {}
 
-  flagsByEnv(environmentId: string) {
-    return this.prisma.flagEnvironment.findMany({
-      where: {
-        environmentId,
-      },
-      include: {
-        flag: true,
-        environment: true,
-      },
-      orderBy: {
-        flag: {
-          createdAt: 'desc',
-        },
-      },
-    });
-  }
-
   changeFlagForEnvStatus(
     environmentId: string,
     flagId: string,

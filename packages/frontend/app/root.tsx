@@ -31,7 +31,11 @@ import { withSentry } from "@sentry/remix";
  * https://remix.run/api/app#links
  */
 export const links: LinksFunction = () => {
-  return [{ rel: "stylesheet", href: styles }];
+  return [
+    { rel: "preconnect", href: "https://rsms.me/" },
+    { rel: "stylesheet preload", href: "https://rsms.me/inter/inter.css" },
+    { rel: "stylesheet", href: styles },
+  ];
 };
 
 /**

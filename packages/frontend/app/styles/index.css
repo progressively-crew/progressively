@@ -137,6 +137,10 @@ html,
 body {
   height: 100%;
   font-size: 100%;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
 }
 
 input,

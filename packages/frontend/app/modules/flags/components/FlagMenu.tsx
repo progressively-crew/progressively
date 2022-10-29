@@ -26,7 +26,7 @@ export const FlagMenu = ({ projectId, envId, flagId }: FlagMenuProps) => {
           size="neptune"
           textTransform="uppercase"
           color="hadesLight"
-          fontWeight="semiBold"
+          fontWeight="bold"
         >
           Rollout details
         </Typography>
@@ -60,7 +60,7 @@ export const FlagMenu = ({ projectId, envId, flagId }: FlagMenuProps) => {
           size="neptune"
           textTransform="uppercase"
           color="hadesLight"
-          fontWeight="semiBold"
+          fontWeight="bold"
         >
           Measuring
         </Typography>
@@ -87,7 +87,7 @@ export const FlagMenu = ({ projectId, envId, flagId }: FlagMenuProps) => {
           size="neptune"
           textTransform="uppercase"
           color="hadesLight"
-          fontWeight="semiBold"
+          fontWeight="bold"
         >
           Other
         </Typography>

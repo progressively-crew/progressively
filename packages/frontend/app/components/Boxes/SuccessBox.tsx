@@ -17,7 +17,7 @@ const SuccessBoxWrapper = styled("p", {
   alignItems: "center",
   background: "$successBg",
   color: "$successFg",
-  border: "1px solid $successBorder",
+  borderLeft: "8px solid $successBorder",
   padding: "$spacing$6 $spacing$4",
   borderRadius: "$borderRadius$regular",
   fontFamily: "$default",
