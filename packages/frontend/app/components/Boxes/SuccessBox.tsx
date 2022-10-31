@@ -23,6 +23,7 @@ const SuccessBoxWrapper = styled("p", {
   fontFamily: "$default",
   display: "flex",
   gap: "$spacing$3",
+  lineHeight: "$text",
 
   animation: `${bounce} 300ms ease-in-out`,
   "@media (prefers-reduced-motion: reduce)": {
