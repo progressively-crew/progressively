@@ -17,6 +17,7 @@ export default {
         text: "Introduction",
         items: [
           { text: `Why Progressively?`, link: "/introduction/why" },
+          { text: "Demo instance", link: "/introduction/demo-instance" },
           { text: "Getting Started", link: "/introduction/getting-started" },
           { text: "Configuration", link: "/introduction/configuration" },
         ],
