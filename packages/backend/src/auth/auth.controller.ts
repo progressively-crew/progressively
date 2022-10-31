@@ -32,6 +32,12 @@ import { CryptoService } from '../crypto/crypto.service';
 import { User } from '../users/types';
 import { sleep } from '../shared/utils/sleep';
 
+const toB64 = (toTransform: string) =>
+  Buffer.from(toTransform).toString('base64');
+
+const fromB64 = (base64: string) =>
+  Buffer.from(base64, 'base64').toString('ascii');
+
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -99,7 +105,7 @@ export class AuthController {
       }
     }
 
-    const rawToken = CryptoService.sha256(uuidv4());
+    const rawToken = uuidv4();
 
     const activationToken = alreadyHasUsers
       ? CryptoService.sha256(rawToken)
@@ -121,7 +127,7 @@ export class AuthController {
       await this.mailService.sendRegistrationMail(
         userDto.fullname,
         userDto.email,
-        rawToken,
+        toB64(rawToken),
       );
     }
 
@@ -140,7 +146,7 @@ export class AuthController {
     // Mitigate brute force
     await sleep(2000);
 
-    const updatedUser = await this.authService.activateUser(rawToken);
+    const updatedUser = await this.authService.activateUser(fromB64(rawToken));
 
     if (updatedUser) {
       return res.redirect(
