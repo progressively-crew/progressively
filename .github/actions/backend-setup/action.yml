@@ -1,9 +1,6 @@
 name: "Backend setup"
 description: "Resolve dependency caching and build + start the projects"
 
-env:
-  SLEEP_DELAY: 0
-
 runs:
   using: "composite"
   steps:

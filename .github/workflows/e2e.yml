@@ -4,6 +4,9 @@ on:
     branches: ["master"]
   workflow_dispatch:
 
+env:
+  SLEEP_DELAY: 0
+
 jobs:
   static:
     env:
