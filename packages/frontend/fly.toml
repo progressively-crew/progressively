@@ -1,4 +1,4 @@
-# fly.toml file generated for frontend-progressively on 2022-07-11T15:25:48+02:00
+# fly.toml file generated for frontend-progressively on 2022-10-31T09:38:23+01:00
 
 app = "frontend-progressively"
 kill_signal = "SIGINT"
@@ -6,9 +6,9 @@ kill_timeout = 5
 processes = []
 
 [env]
-  PORT = "8080"
+  ALLOW_REGISTRATION = "true"
   BACKEND_URL = "https://api.progressively.app"
-  ALLOW_REGISTRATION = "false"
+  PORT = "8080"
   START_MOCK_SERVER = "false"
 
 [experimental]
