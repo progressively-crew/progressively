@@ -39,16 +39,20 @@ export const ProgressivelyProvider = ({
     sdk
       .loadFlags({ ctrl })
       .then((res) => {
-        setIsLoading(false);
+        throw new Error("zaezae");
         sdk.onFlagUpdate(
           setFlags,
           res.response.headers.get("X-progressively-id")
         );
         setFlags(res.flags);
-
-        console.log("im here");
+        setIsLoading(false);
       })
-      .catch(setError);
+      .then((res) => console.log("--> ", res))
+      .catch((error) => {
+        console.log(error.message);
+
+        setError(error);
+      });
 
     return () => {
       if (alreadyConnected.current) {
@@ -59,8 +63,6 @@ export const ProgressivelyProvider = ({
       }
     };
   }, []);
-
-  // console.log({ flags, isLoading });
 
   return (
     <ProgressivelyContext.Provider

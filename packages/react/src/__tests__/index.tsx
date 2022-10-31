@@ -13,9 +13,9 @@ const FlaggedComponent = () => {
 
   console.log({ flags, error, isLoading });
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  // if (isLoading) {
+  //   return <div>Loading...</div>;
+  // }
 
   if (error) {
     return <div>Error</div>;
@@ -88,8 +88,18 @@ describe("React-sdk root", () => {
       );
     });
 
-    it.skip("should render an error", () => {
+    it.only("should render an error", async () => {
+      worker.use(
+        rest.get(FLAG_ENDPOINT, (_, res, ctx) => {
+          return res(ctx.status(500));
+        })
+      );
+
       render();
+
+      await waitFor(() => {
+        expect(screen.getByText("Error")).toBeInTheDocument();
+      });
     });
   });
 
@@ -102,7 +112,7 @@ describe("React-sdk root", () => {
       );
     });
 
-    it.only("shows the initial flags after loading (newHomepage is false)", async () => {
+    it("shows the initial flags after loading (newHomepage is false)", async () => {
       render({
         initialFlags: { newHomepage: false },
         clientKey: "valid-sdk-key",
