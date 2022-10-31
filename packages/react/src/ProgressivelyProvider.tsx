@@ -39,7 +39,9 @@ export const ProgressivelyProvider = ({
     sdk
       .loadFlags({ ctrl })
       .then((res) => {
+        // To remove, this is for demo purpose
         throw new Error("zaezae");
+
         sdk.onFlagUpdate(
           setFlags,
           res.response.headers.get("X-progressively-id")
@@ -47,12 +49,7 @@ export const ProgressivelyProvider = ({
         setFlags(res.flags);
         setIsLoading(false);
       })
-      .then((res) => console.log("--> ", res))
-      .catch((error) => {
-        console.log(error.message);
-
-        setError(error);
-      });
+      .catch(setError);
 
     return () => {
       if (alreadyConnected.current) {

@@ -11,11 +11,9 @@ import { useFlags } from "../useFlags";
 const FlaggedComponent = () => {
   const { flags, error, isLoading } = useFlags();
 
-  console.log({ flags, error, isLoading });
-
-  // if (isLoading) {
-  //   return <div>Loading...</div>;
-  // }
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   if (error) {
     return <div>Error</div>;
