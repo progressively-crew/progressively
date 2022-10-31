@@ -39,12 +39,14 @@ export const ProgressivelyProvider = ({
     sdk
       .loadFlags({ ctrl })
       .then((res) => {
+        setIsLoading(false);
         sdk.onFlagUpdate(
           setFlags,
           res.response.headers.get("X-progressively-id")
         );
         setFlags(res.flags);
-        setIsLoading(false);
+
+        console.log("im here");
       })
       .catch(setError);
 
@@ -57,6 +59,8 @@ export const ProgressivelyProvider = ({
       }
     };
   }, []);
+
+  // console.log({ flags, isLoading });
 
   return (
     <ProgressivelyContext.Provider

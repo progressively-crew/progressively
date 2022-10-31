@@ -9,7 +9,17 @@ import { ProgressivelyProviderProps } from "../types";
 import { useFlags } from "../useFlags";
 
 const FlaggedComponent = () => {
-  const { flags } = useFlags();
+  const { flags, error, isLoading } = useFlags();
+
+  console.log({ flags, error, isLoading });
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error</div>;
+  }
 
   if (flags.newHomepage) {
     return <div style={{ background: "red", color: "white" }}>New variant</div>;
@@ -50,7 +60,7 @@ describe("React-sdk root", () => {
   afterAll(() => worker.close());
 
   describe("[CSR] initial loading", () => {
-    it("shows the initial flags after loading (newHomepage is false)", () => {
+    it("shows the initial flags after loading (newHomepage is false)", async () => {
       worker.use(
         rest.get(FLAG_ENDPOINT, (_, res, ctx) => {
           return res(ctx.json({ newHomepage: false }));
@@ -59,7 +69,9 @@ describe("React-sdk root", () => {
 
       render();
 
-      expect(screen.getByText("Old variant")).toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.getByText("Old variant")).toBeInTheDocument();
+      });
     });
 
     it("shows the initial flags after loading (newHomepage is true)", async () => {
@@ -75,16 +87,30 @@ describe("React-sdk root", () => {
         expect(screen.getByText("New variant")).toBeInTheDocument()
       );
     });
+
+    it.skip("should render an error", () => {
+      render();
+    });
   });
 
   describe("[SSR] initial loading", () => {
-    it("shows the initial flags after loading (newHomepage is false)", () => {
+    beforeAll(() => {
+      worker.use(
+        rest.get(FLAG_ENDPOINT, (_, res, ctx) => {
+          return res(ctx.set("X-progressively-id", "abcd"));
+        })
+      );
+    });
+
+    it.only("shows the initial flags after loading (newHomepage is false)", async () => {
       render({
         initialFlags: { newHomepage: false },
         clientKey: "valid-sdk-key",
       });
 
-      expect(screen.getByText("Old variant")).toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.getByText("Old variant")).toBeInTheDocument();
+      });
     });
 
     it("shows the initial flags after loading (newHomepage is true)", async () => {
