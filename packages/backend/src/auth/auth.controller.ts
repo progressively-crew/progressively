@@ -30,6 +30,7 @@ import { MailService } from '../mail/mail.service';
 import { AuthService } from './auth.service';
 import { CryptoService } from '../crypto/crypto.service';
 import { User } from '../users/types';
+import { sleep } from '../shared/utils/sleep';
 
 @Controller('auth')
 export class AuthController {
@@ -48,6 +49,9 @@ export class AuthController {
     /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
     @Body() _: LoginDTO,
   ) {
+    // Mitigate brute force
+    await sleep(2000);
+
     const user = req.user as User;
 
     const userDTO: UserRetrieveDTO = {
@@ -75,6 +79,8 @@ export class AuthController {
   @Post('/register')
   @UsePipes(new ValidationPipe(RegistrationSchema))
   async register(@Body() userDto: UserCreationDTO): Promise<UserRetrieveDTO> {
+    // Mitigate brute force
+    await sleep(2000);
     /**
      * When ALLOW_REGISTRATION is not activated, we still have to create an admin account.
      * Thus, we'll accept the only first user to be created that way
@@ -129,6 +135,9 @@ export class AuthController {
     @Param('token') rawToken: string,
     @Response() res: any,
   ): Promise<{ success: boolean }> {
+    // Mitigate brute force
+    await sleep(2000);
+
     const updatedUser = await this.authService.activateUser(rawToken);
 
     if (updatedUser) {

@@ -1,4 +1,8 @@
 name: Backend
+
+env:
+  SLEEP_DELAY: 0
+
 on:
   pull_request:
     branches: ["master"]

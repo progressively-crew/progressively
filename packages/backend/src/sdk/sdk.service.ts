@@ -56,7 +56,7 @@ export class SdkService {
       flagStatus = false;
     }
 
-    await this.flagService.hitFlag(
+    this.flagService.hitFlag(
       flagEnv.environmentId,
       flagEnv.flagId,
       flagStatus,
@@ -103,7 +103,7 @@ export class SdkService {
       }
 
       if (!skipHit) {
-        await this.flagService.hitFlag(
+        this.flagService.hitFlag(
           nextFlag.environmentId,
           nextFlag.flagId,
           flagStatus,
