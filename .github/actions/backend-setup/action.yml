@@ -1,5 +1,9 @@
 name: "Backend setup"
 description: "Resolve dependency caching and build + start the projects"
+
+env:
+  SLEEP_DELAY: 0
+
 runs:
   using: "composite"
   steps:
@@ -31,4 +35,4 @@ runs:
     - name: Start the backend project
       working-directory: ./packages/backend
       shell: bash
-      run: SLEEP_DELAY=0 npm start &
+      run: npm start &

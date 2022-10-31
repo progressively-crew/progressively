@@ -1,4 +1,8 @@
 name: Backend
+
+env:
+  SLEEP_DELAY: 0
+
 on:
   pull_request:
     branches: ["master"]
@@ -47,7 +51,7 @@ jobs:
 
       - name: Build
         working-directory: ./packages/backend
-        run: SLEEP_DELAY=0 npm run build
+        run: npm run build
 
       - name: Lint
         working-directory: ./packages/backend
