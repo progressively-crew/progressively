@@ -7,7 +7,7 @@ processes = []
 
 [env]
   ALLOW_REGISTRATION = "true"
-  BACKEND_URL = "https://api.progressively.app"
+  BACKEND_URL = "https://backend-progressively.fly.dev"
   PORT = "8080"
   START_MOCK_SERVER = "false"
 
