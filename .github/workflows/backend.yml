@@ -47,7 +47,7 @@ jobs:
 
       - name: Build
         working-directory: ./packages/backend
-        run: npm run build
+        run: SLEEP_DELAY=0 npm run build
 
       - name: Lint
         working-directory: ./packages/backend

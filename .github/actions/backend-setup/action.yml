@@ -31,4 +31,4 @@ runs:
     - name: Start the backend project
       working-directory: ./packages/backend
       shell: bash
-      run: npm start &
+      run: SLEEP_DELAY=0 npm start &
