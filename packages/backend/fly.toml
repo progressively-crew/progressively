@@ -11,7 +11,7 @@ processes = []
   FRONTEND_URL = "https://frontend-progressively.fly.dev"
   BACKEND_URL = "https://backend-progressively.fly.dev"
   SOCKET_TIMEOUT = 10000
-  ALLOW_REGISTRATION = true
+  ALLOW_REGISTRATION = "true"
   THROTTLING_TTL = 60
   THROTTLING_LIMIT = 10000
 

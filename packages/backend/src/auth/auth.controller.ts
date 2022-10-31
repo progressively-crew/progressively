@@ -99,8 +99,10 @@ export class AuthController {
       }
     }
 
+    const rawToken = CryptoService.sha256(uuidv4());
+
     const activationToken = alreadyHasUsers
-      ? CryptoService.sha256(uuidv4())
+      ? CryptoService.sha256(rawToken)
       : null;
 
     const user: Omit<User, 'uuid'> = {
@@ -119,7 +121,7 @@ export class AuthController {
       await this.mailService.sendRegistrationMail(
         userDto.fullname,
         userDto.email,
-        activationToken,
+        rawToken,
       );
     }
 
