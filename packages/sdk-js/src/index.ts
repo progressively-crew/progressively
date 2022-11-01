@@ -56,10 +56,13 @@ function Sdk(
     })
       .then((res) => {
         response = res;
+        console.log("before --> ", response);
 
         if (!res.ok) {
           throw new Error("Request could't succeed");
         }
+
+        console.log(response);
 
         return response.json();
       })
@@ -68,11 +71,11 @@ function Sdk(
 
         persistLocalFlags(flags);
 
-        return { flags, response };
+        return { flags, response, error: null };
       })
       .catch((error) => {
         // Silent catch the error, and return the actual in-memory flags
-        return { error, flags, response };
+        return { flags, response, error };
       });
   }
 
