@@ -56,13 +56,10 @@ function Sdk(
     })
       .then((res) => {
         response = res;
-        console.log("before --> ", response);
 
         if (!res.ok) {
-          throw new Error("Request could't succeed");
+          throw new Error("Request couldn't succeed");
         }
-
-        console.log(response);
 
         return response.json();
       })
