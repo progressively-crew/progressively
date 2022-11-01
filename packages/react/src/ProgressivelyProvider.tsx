@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ProgressivelyContext } from "./ProgressivelyContext";
 import { Progressively, ProgressivelySdkType } from "@progressively/sdk-js";
-import { ProgressivelyProviderProps } from "./types";
+import { ProgressivelyProviderProps, StateMachineConstants } from "./types";
 import { FlagDict } from "@progressively/sdk-js";
 
 export const ProgressivelyProvider = ({
@@ -16,7 +16,7 @@ export const ProgressivelyProvider = ({
   const [trackFn, setTrackFn] = useState<ProgressivelySdkType["track"]>(
     (eventName: string, data?: any) => Promise.resolve(undefined)
   );
-  const [isLoading, setIsLoading] = useState(true);
+  const [status, setStatus] = useState<StateMachineConstants>("idle");
   const [error, setError] = useState<any>(null);
   const [flags, setFlags] = useState<FlagDict>(initialFlags || {});
 
@@ -43,9 +43,10 @@ export const ProgressivelyProvider = ({
       );
       setFlags(res.flags);
 
-      setIsLoading(false);
+      setStatus("success");
 
       if (res.error) {
+        setStatus("failure");
         setError(res.error.toString());
       }
     });
@@ -60,9 +61,11 @@ export const ProgressivelyProvider = ({
     };
   }, []);
 
+  const isLoading = status === "loading";
+
   return (
     <ProgressivelyContext.Provider
-      value={{ flags, isLoading, error, track: trackFn }}
+      value={{ flags, status, isLoading, error, track: trackFn }}
     >
       {children}
     </ProgressivelyContext.Provider>
