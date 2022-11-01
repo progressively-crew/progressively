@@ -2,7 +2,7 @@ import { Form } from "@remix-run/react";
 import { useRef } from "react";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { Link } from "~/components/Link";
-import { RawTable, Tr } from "~/components/RawTable";
+import { RawTable, Td, Th, Tr } from "~/components/RawTable";
 import { Spacer } from "~/components/Spacer";
 import { Typography } from "~/components/Typography";
 import { FlagEnv, FlagStatus } from "../types";
@@ -26,15 +26,15 @@ const FlagRow = ({ flagEnv, projectId, envId }: FlagRowProps) => {
 
   return (
     <Tr onClick={() => linkRef.current?.click()}>
-      <td>
+      <Td>
         <ToggleFlag
           isFlagActivated={flagEnv.status === FlagStatus.ACTIVATED}
           flagId={flagEnv.flagId}
           flagName={flagEnv.flag.name}
           onClick={(e) => e.stopPropagation()}
         />
-      </td>
-      <td>
+      </Td>
+      <Td>
         <Link
           height="ctaSmall"
           ref={linkRef}
@@ -47,17 +47,17 @@ const FlagRow = ({ flagEnv, projectId, envId }: FlagRowProps) => {
         </Typography>
 
         <Spacer size={3} />
-      </td>
+      </Td>
 
-      <td>
+      <Td>
         <FlagTypeBadge type={flagEnv.flag.type} />
-      </td>
+      </Td>
 
-      <td>
+      <Td>
         <ButtonCopy toCopy={flagEnv.flag.key} small={true} variant="tertiary">
           {flagEnv.flag.key}
         </ButtonCopy>
-      </td>
+      </Td>
     </Tr>
   );
 };
@@ -75,12 +75,12 @@ export const FlagList = ({ flags, projectId, envId }: FlagListProps) => {
 
       <RawTable aria-label="Flags available in the environment">
         <thead>
-          <tr>
-            <th width="20%">Status</th>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Flag key</th>
-          </tr>
+          <Tr>
+            <Th>Status</Th>
+            <Th>Name</Th>
+            <Th>Type</Th>
+            <Th>Flag key</Th>
+          </Tr>
         </thead>
         <tbody>
           {flags.map((flagEnv) => (

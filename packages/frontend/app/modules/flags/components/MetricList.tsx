@@ -1,6 +1,6 @@
 import { Link } from "@remix-run/react";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
-import { RawTable } from "~/components/RawTable";
+import { RawTable, Td, Th, Tr } from "~/components/RawTable";
 import { Metric } from "../types";
 
 export interface MetricListProps {
@@ -18,20 +18,20 @@ export const MetricList = ({
   return (
     <RawTable>
       <thead>
-        <tr>
-          <th>Name</th>
-          <th>Attached variant (optional)</th>
-          <th>Actions</th>
-        </tr>
+        <Tr>
+          <Th>Name</Th>
+          <Th>Attached variant (optional)</Th>
+          <Th>Actions</Th>
+        </Tr>
       </thead>
       <tbody>
         {metrics.map((metric) => (
-          <tr key={metric.uuid}>
-            <td>
+          <Tr key={metric.uuid}>
+            <Td>
               <div>{metric.name}</div>
-            </td>
+            </Td>
 
-            <td>
+            <Td>
               {metric.variant?.value && (
                 <Link
                   to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/variants`}
@@ -39,9 +39,9 @@ export const MetricList = ({
                   {metric.variant?.value}
                 </Link>
               )}
-            </td>
+            </Td>
 
-            <td>
+            <Td>
               <DeleteButton
                 small
                 variant="tertiary"
@@ -49,8 +49,8 @@ export const MetricList = ({
               >
                 Remove
               </DeleteButton>
-            </td>
-          </tr>
+            </Td>
+          </Tr>
         ))}
       </tbody>
     </RawTable>

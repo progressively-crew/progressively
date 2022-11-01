@@ -11,7 +11,7 @@ import {
 import UnauthorizedPage from "./routes/401";
 import ForbiddenPage from "./routes/403";
 import NotFoundPage from "./routes/404";
-import styles from "./styles/index.css";
+import styles from "./styles/app.css";
 import { H1 } from "./components/H1";
 import { Main } from "./components/Main";
 import { Button } from "./components/Buttons/Button";
@@ -31,11 +31,7 @@ import { withSentry } from "@sentry/remix";
  * https://remix.run/api/app#links
  */
 export const links: LinksFunction = () => {
-  return [
-    { rel: "preconnect", href: "https://rsms.me/" },
-    { rel: "stylesheet preload", href: "https://rsms.me/inter/inter.css" },
-    { rel: "stylesheet", href: styles },
-  ];
+  return [{ rel: "stylesheet", href: styles }];
 };
 
 /**

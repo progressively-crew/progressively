@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { Link } from "~/components/Link";
-import { RawTable, Tr } from "~/components/RawTable";
+import { RawTable, Td, Th, Tr } from "~/components/RawTable";
 import { Environment } from "../types";
 import { useHydrated } from "~/modules/misc/hooks/useHydrated";
 
@@ -20,19 +20,19 @@ const EnvRow = ({ env, projectId }: EnvRowProps) => {
 
   return (
     <Tr onClick={() => linkRef.current?.click()} isClickable={isHydrated}>
-      <td>
+      <Td>
         <Link
           ref={linkRef}
           to={`/dashboard/projects/${projectId}/environments/${env.uuid}`}
         >
           {env.name}
         </Link>
-      </td>
-      <td>
+      </Td>
+      <Td>
         <ButtonCopy toCopy={env.clientKey} small={true} variant="tertiary">
           {env.clientKey}
         </ButtonCopy>
-      </td>
+      </Td>
     </Tr>
   );
 };
@@ -40,10 +40,10 @@ export const EnvList = ({ environments, projectId }: EnvListProps) => {
   return (
     <RawTable aria-label="Environments available for the project">
       <thead>
-        <tr>
-          <th width="50%">Name</th>
-          <th>Client key</th>
-        </tr>
+        <Tr>
+          <Th>Name</Th>
+          <Th>Client key</Th>
+        </Tr>
       </thead>
       <tbody>
         {environments.map((env) => (

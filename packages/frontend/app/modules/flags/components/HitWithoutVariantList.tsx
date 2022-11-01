@@ -1,5 +1,5 @@
 import { HStack } from "~/components/HStack";
-import { RawTable } from "~/components/RawTable";
+import { RawTable, Td, Th, Tr } from "~/components/RawTable";
 import { Tag } from "~/components/Tag";
 import { Typography } from "~/components/Typography";
 
@@ -20,22 +20,22 @@ export const HitWithoutVariantList = ({
   return (
     <RawTable>
       <thead>
-        <tr>
-          <th>Metric</th>
-          <th>Metric hit</th>
-          <th>Flag eval.</th>
-        </tr>
+        <Tr>
+          <Th>Metric</Th>
+          <Th>Metric hit</Th>
+          <Th>Flag eval.</Th>
+        </Tr>
       </thead>
       <tbody>
         {hits.map((hit) => (
-          <tr key={hit.metric}>
-            <td>{hit.metric}</td>
-            <td>
+          <Tr key={hit.metric}>
+            <Td>{hit.metric}</Td>
+            <Td>
               <Typography as="span" fontWeight="bold" fontSize="uranus">
                 {hit.count}
               </Typography>
-            </td>
-            <td>
+            </Td>
+            <Td>
               <HStack as="span" spacing={2}>
                 <Typography
                   as="span"
@@ -52,8 +52,8 @@ export const HitWithoutVariantList = ({
                     : "N/A"}
                 </Tag>
               </HStack>
-            </td>
-          </tr>
+            </Td>
+          </Tr>
         ))}
       </tbody>
     </RawTable>

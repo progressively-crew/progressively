@@ -1,7 +1,7 @@
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { Link } from "~/components/Link";
-import { RawTable } from "~/components/RawTable";
+import { RawTable, Td, Th, Tr } from "~/components/RawTable";
 import { Webhook } from "../types";
 import { WebhookEvent } from "./WebhookEvent";
 
@@ -20,17 +20,17 @@ export const WebhooksList = ({
   return (
     <RawTable>
       <thead>
-        <tr>
-          <th>End point</th>
-          <th>Event</th>
-          <th>Secret</th>
-          <th>Actions</th>
-        </tr>
+        <Tr>
+          <Th>End point</Th>
+          <Th>Event</Th>
+          <Th>Secret</Th>
+          <Th>Actions</Th>
+        </Tr>
       </thead>
       <tbody>
         {webhooks.map((webhook) => (
-          <tr key={webhook.uuid}>
-            <td>
+          <Tr key={webhook.uuid}>
+            <Td>
               <Link
                 href={webhook.endpoint}
                 target="blank"
@@ -38,11 +38,11 @@ export const WebhooksList = ({
               >
                 {webhook.endpoint}
               </Link>
-            </td>
-            <td>
+            </Td>
+            <Td>
               <WebhookEvent value={webhook.event} />
-            </td>
-            <td>
+            </Td>
+            <Td>
               <ButtonCopy
                 variant="tertiary"
                 toCopy={webhook.secret}
@@ -51,9 +51,9 @@ export const WebhooksList = ({
               >
                 ******
               </ButtonCopy>
-            </td>
+            </Td>
 
-            <td>
+            <Td>
               <DeleteButton
                 small
                 variant="tertiary"
@@ -61,8 +61,8 @@ export const WebhooksList = ({
               >
                 Remove
               </DeleteButton>
-            </td>
-          </tr>
+            </Td>
+          </Tr>
         ))}
       </tbody>
     </RawTable>

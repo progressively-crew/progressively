@@ -11,7 +11,7 @@ import { HideDesktop } from "~/components/HideMobile";
 import { HStack } from "~/components/HStack";
 import { Spacer } from "~/components/Spacer";
 import { Variant } from "../types";
-import { RawTable } from "~/components/RawTable";
+import { RawTable, Td, Th, Tr } from "~/components/RawTable";
 
 export enum VariantListModes {
   Editing = "Editing",
@@ -76,18 +76,18 @@ export const VariantList = ({ variants, errors, mode }: VariantListProps) => {
 
         <RawTable>
           <thead>
-            <tr>
-              <th>Is control</th>
-              <th>Variant value</th>
-              <th>Rollout percentage</th>
-              {showRemoveButton && <th>Actions</th>}
-            </tr>
+            <Tr>
+              <Th>Is control</Th>
+              <Th>Variant value</Th>
+              <Th>Rollout percentage</Th>
+              {showRemoveButton && <Th>Actions</Th>}
+            </Tr>
           </thead>
 
           <tbody>
             {variants.map((variant, index) => (
-              <tr key={`variant-${variant.uuid}`}>
-                <td>
+              <Tr key={`variant-${variant.uuid}`}>
+                <Td>
                   <HStack spacing={2}>
                     <div>
                       <input type="hidden" name="uuid" value={variant.uuid} />
@@ -106,8 +106,8 @@ export const VariantList = ({ variants, errors, mode }: VariantListProps) => {
                       <Label>Is control variant</Label>
                     </HideDesktop>
                   </HStack>
-                </td>
-                <td>
+                </Td>
+                <Td>
                   <TextInput
                     hiddenLabel
                     id={`name-${index}`}
@@ -118,19 +118,19 @@ export const VariantList = ({ variants, errors, mode }: VariantListProps) => {
                     isDisabled={isValueInputDisabled}
                     small
                   />
-                </td>
+                </Td>
 
-                <td>
+                <Td>
                   <FormSliderInput
                     id={`rolloutPercentage-${index}`}
                     name={`rolloutPercentage`}
                     label={`Variant ${index + 1} rollout percentage`}
                     initialPercentage={variant.rolloutPercentage}
                   />
-                </td>
+                </Td>
 
                 {showRemoveButton && (
-                  <td>
+                  <Td>
                     <DeleteButton
                       variant="tertiary"
                       small
@@ -139,9 +139,9 @@ export const VariantList = ({ variants, errors, mode }: VariantListProps) => {
                     >
                       Remove
                     </DeleteButton>
-                  </td>
+                  </Td>
                 )}
-              </tr>
+              </Tr>
             ))}
           </tbody>
         </RawTable>

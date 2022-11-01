@@ -11,7 +11,6 @@ import {
 const RawLink = styled<any, any>("a", {
   display: "inline-flex",
   fontSize: "$jupiter",
-  color: "$hades",
   fontFamily: "$default",
   height: "$cta",
   alignItems: "center",

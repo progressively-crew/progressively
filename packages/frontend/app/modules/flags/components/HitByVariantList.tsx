@@ -1,5 +1,5 @@
 import { HStack } from "~/components/HStack";
-import { RawTable } from "~/components/RawTable";
+import { RawTable, Td, Th, Tr } from "~/components/RawTable";
 import { Tag } from "~/components/Tag";
 import { Typography } from "~/components/Typography";
 
@@ -22,25 +22,25 @@ export const HitByVariantList = ({
   return (
     <RawTable>
       <thead>
-        <tr>
-          <th>Metric</th>
-          <th>Metric hit</th>
-          <th>Variant</th>
-          <th>Variant eval.</th>
-          <th>Flag eval.</th>
-        </tr>
+        <Tr>
+          <Th>Metric</Th>
+          <Th>Metric hit</Th>
+          <Th>Variant</Th>
+          <Th>Variant eval.</Th>
+          <Th>Flag eval.</Th>
+        </Tr>
       </thead>
       <tbody>
         {hits.map((hit) => (
-          <tr key={hit.metric}>
-            <td>{hit.metric}</td>
-            <td>
+          <Tr key={hit.metric}>
+            <Td>{hit.metric}</Td>
+            <Td>
               <Typography as="span" fontWeight="bold" fontSize="uranus">
                 {hit.count}
               </Typography>
-            </td>
-            <td>{hit.variant}</td>
-            <td>
+            </Td>
+            <Td>{hit.variant}</Td>
+            <Td>
               <HStack as="span" spacing={2}>
                 <Typography
                   as="span"
@@ -59,8 +59,8 @@ export const HitByVariantList = ({
                     : "N/A"}
                 </Tag>
               </HStack>
-            </td>
-            <td>
+            </Td>
+            <Td>
               <HStack as="span" spacing={2}>
                 <Typography
                   as="span"
@@ -77,8 +77,8 @@ export const HitByVariantList = ({
                     : "N/A"}
                 </Tag>
               </HStack>
-            </td>
-          </tr>
+            </Td>
+          </Tr>
         ))}
       </tbody>
     </RawTable>

@@ -1,6 +1,5 @@
 import { MdChevronRight } from "react-icons/md";
 import { TbFolders } from "react-icons/tb";
-import { styled } from "~/stitches.config";
 import { HStack } from "../HStack";
 import { EnvIcon } from "../Icons/EnvIcon";
 import { FlagIcon } from "../Icons/FlagIcon";
@@ -8,75 +7,13 @@ import { ProjectIcon } from "../Icons/ProjectIcon";
 import { Link } from "../Link";
 import { Crumb, Crumbs } from "./types";
 
-const Ol = styled("ol", {
-  fontFamily: "$default",
-  display: "flex",
-  height: "$cta",
-  padding: "$spacing$1 0",
+interface IconWrapperProps {
+  children: React.ReactNode;
+}
 
-  "& li a": {
-    boxSizing: "border-box",
-    color: "$hadesLight",
-    transition: "border,box-shadow 0.2s",
-    whiteSpace: "nowrap",
-    textDecoration: "none",
-  },
-});
-
-const Li = styled("li", {
-  display: "flex",
-  alignItems: "center",
-
-  "& a:hover": {
-    textDecoration: "underline",
-  },
-
-  "& a:active": {
-    color: "$nemesis",
-    textDecoration: "underline",
-  },
-
-  "&:last-of-type a": {
-    fontWeight: "$bold",
-    color: "$nemesis",
-    textDecoration: "underline",
-  },
-
-  variants: {
-    forceNotCurrent: {
-      true: {
-        "&:last-of-type a": {
-          fontWeight: "revert",
-          color: "$hadesLight",
-          textDecoration: "none",
-        },
-
-        "&:last-of-type a:hover": {
-          textDecoration: "underline",
-        },
-
-        "&:last-of-type a:active": {
-          color: "$nemesis",
-          textDecoration: "underline",
-        },
-      },
-    },
-  },
-});
-
-const Separator = styled("div", {
-  display: "flex",
-  margin: "0 $spacing$2",
-  fontSize: "$mars",
-  color: "$hades",
-});
-
-const IconWrapper = styled("span", {
-  display: "flex",
-  "& svg": {
-    color: "$nemesis",
-  },
-});
+const IconWrapper = ({ children }: IconWrapperProps) => {
+  return <span className="flex text-indigo-700">{children}</span>;
+};
 
 export interface DesktopNavProps {
   crumbs: Crumbs;
@@ -119,20 +56,19 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
 
   return (
     <nav aria-label="Breadcrumbs">
-      <Ol>
+      <ol className="flex h-10 items-center">
         {crumbs.map((crumb, index) => {
           const currentPage = index === lastItemIndex;
 
           return (
-            <Li key={crumb.link} forceNotCurrent={crumb.forceNotCurrent}>
+            <li
+              key={crumb.link}
+              className={
+                "flex items-center hover:underline last-of-type:text-indigo-700 last-of-type:font-bold last-of-type:underline"
+              }
+            >
               <Link
-                aria-current={
-                  crumb.forceNotCurrent
-                    ? undefined
-                    : currentPage
-                    ? "page"
-                    : undefined
-                }
+                aria-current={currentPage ? "page" : undefined}
                 to={crumb.link}
                 fontSize="uranus"
               >
@@ -143,14 +79,14 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
               </Link>
 
               {!currentPage && (
-                <Separator aria-hidden>
+                <div className="flex text-gray-800 px-2" aria-hidden>
                   <MdChevronRight />
-                </Separator>
+                </div>
               )}
-            </Li>
+            </li>
           );
         })}
-      </Ol>
+      </ol>
     </nav>
   );
 };

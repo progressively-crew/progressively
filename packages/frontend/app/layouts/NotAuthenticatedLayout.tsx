@@ -34,7 +34,7 @@ export const NotAuthenticatedLayout = ({
       <Spacer size={12} />
 
       <Main>
-        <Container maxWidth={"thinContainer"}>
+        <Container>
           {nav && <div>{nav}</div>}
           <Stack spacing={4}>
             <Stack spacing={2}>
