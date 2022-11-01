@@ -57,10 +57,9 @@ function Sdk(
       .then((res) => {
         response = res;
 
-        if (!res.ok)
-          return {
-            error: "SMAUG ERROR",
-          };
+        if (!res.ok) {
+          throw new Error("Request could't succeed");
+        }
 
         return response.json();
       })

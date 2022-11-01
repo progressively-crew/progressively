@@ -39,6 +39,8 @@ export const ProgressivelyProvider = ({
     sdk
       .loadFlags({ ctrl })
       .then((res) => {
+        console.log(res);
+
         sdk.onFlagUpdate(
           setFlags,
           res.response.headers.get("X-progressively-id")
