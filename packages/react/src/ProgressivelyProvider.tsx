@@ -39,9 +39,6 @@ export const ProgressivelyProvider = ({
     sdk
       .loadFlags({ ctrl })
       .then((res) => {
-        // To remove, this is for demo purpose
-        throw new Error("zaezae");
-
         sdk.onFlagUpdate(
           setFlags,
           res.response.headers.get("X-progressively-id")
