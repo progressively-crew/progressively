@@ -86,7 +86,7 @@ describe("React-sdk root", () => {
       );
     });
 
-    it.only("should render an error", async () => {
+    it("should render an error", async () => {
       worker.use(
         rest.get(FLAG_ENDPOINT, (_, res, ctx) => {
           return res(ctx.status(500));
@@ -102,10 +102,10 @@ describe("React-sdk root", () => {
   });
 
   describe("[SSR] initial loading", () => {
-    beforeAll(() => {
+    beforeEach(() => {
       worker.use(
         rest.get(FLAG_ENDPOINT, (_, res, ctx) => {
-          return res(ctx.set("X-progressively-id", "abcd"));
+          return res(ctx.json({}));
         })
       );
     });

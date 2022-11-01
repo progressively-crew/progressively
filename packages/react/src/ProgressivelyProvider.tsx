@@ -17,7 +17,7 @@ export const ProgressivelyProvider = ({
     (eventName: string, data?: any) => Promise.resolve(undefined)
   );
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<any>();
+  const [error, setError] = useState<any>(null);
   const [flags, setFlags] = useState<FlagDict>(initialFlags || {});
 
   useEffect(() => {
@@ -36,19 +36,19 @@ export const ProgressivelyProvider = ({
 
     setTrackFn(() => sdk.track);
 
-    sdk
-      .loadFlags({ ctrl })
-      .then((res) => {
-        console.log(res);
+    sdk.loadFlags({ ctrl }).then((res) => {
+      sdk.onFlagUpdate(
+        setFlags,
+        res.response.headers.get("X-progressively-id")
+      );
+      setFlags(res.flags);
 
-        sdk.onFlagUpdate(
-          setFlags,
-          res.response.headers.get("X-progressively-id")
-        );
-        setFlags(res.flags);
-        setIsLoading(false);
-      })
-      .catch(setError);
+      setIsLoading(false);
+
+      if (res.error) {
+        setError(res.error.toString());
+      }
+    });
 
     return () => {
       if (alreadyConnected.current) {
