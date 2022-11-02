@@ -18,7 +18,6 @@ import { Stack } from "~/components/Stack";
 import { Card, CardContent } from "~/components/Card";
 import { TextInput } from "~/components/Fields/TextInput";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
-import { HStack } from "~/components/HStack";
 import { Typography } from "~/components/Typography";
 import { PageTitle } from "~/components/PageTitle";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
@@ -171,7 +170,7 @@ export default function FlagInsights() {
 
       <Stack spacing={8}>
         <Form action=".">
-          <HStack spacing={4}>
+          <div className="flex gap-4 items-end">
             <TextInput
               type="date"
               name={"startDate"}
@@ -185,7 +184,7 @@ export default function FlagInsights() {
               defaultValue={formatDefaultDate(endDate)}
             />
             <SubmitButton>Filter on date</SubmitButton>
-          </HStack>
+          </div>
         </Form>
 
         <div>

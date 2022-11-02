@@ -14,7 +14,6 @@ import { Card, CardContent } from "~/components/Card";
 import { EmptyState } from "~/components/EmptyState";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Header } from "~/components/Header";
-import { HStack } from "~/components/HStack";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { PageTitle } from "~/components/PageTitle";
 import { Section } from "~/components/Section";
@@ -191,7 +190,7 @@ export default function VariantsOfFlag() {
           name="remainingPercent"
         />
         <Stack spacing={6}>
-          <HStack spacing={4}>
+          <div className="flex items-end gap-4">
             <TextInput
               name={"value"}
               label={"New variant value"}
@@ -206,7 +205,7 @@ export default function VariantsOfFlag() {
             >
               Add variant
             </SubmitButton>
-          </HStack>
+          </div>
         </Stack>
       </Form>
 
