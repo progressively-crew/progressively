@@ -186,7 +186,7 @@ export default function SettingsPage() {
 
                 <Spacer size={4} />
 
-                <div className="inline-block whitespace-nowrap">
+                <div className="inline-block">
                   <DeleteButton
                     to={`/dashboard/projects/${project.uuid}/delete`}
                   >

@@ -20,6 +20,7 @@ import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
 import { EnvIcon } from "~/components/Icons/EnvIcon";
+import { Spacer } from "~/components/Spacer";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -62,6 +63,8 @@ export default function EnvSettingsPage() {
                 }
               />
 
+              <Spacer size={4} />
+
               <ButtonCopy toCopy={environment.clientKey}>
                 {environment.clientKey}
               </ButtonCopy>
@@ -86,22 +89,20 @@ export default function EnvSettingsPage() {
                   }
                 />
 
-                <div>
+                <Spacer size={4} />
+
+                <div className="inline-block">
                   <DeleteButton
                     to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/delete`}
                   >
-                    <span>
-                      <span aria-hidden>
-                        Delete{" "}
-                        <HideMobile>
-                          {`"${environment.name}"`} forever
-                        </HideMobile>
-                      </span>
-
-                      <VisuallyHidden>
-                        Delete {`"${environment.name}"`} forever
-                      </VisuallyHidden>
+                    <span aria-hidden className="flex">
+                      Delete{" "}
+                      <HideMobile>{`"${environment.name}"`} forever</HideMobile>
                     </span>
+
+                    <VisuallyHidden>
+                      Delete {`"${environment.name}"`} forever
+                    </VisuallyHidden>
                   </DeleteButton>
                 </div>
               </Section>
