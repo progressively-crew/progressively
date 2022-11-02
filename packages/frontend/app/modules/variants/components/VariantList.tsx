@@ -130,8 +130,7 @@ export const VariantList = ({ variants, errors, mode }: VariantListProps) => {
                 {showRemoveButton && (
                   <Td>
                     <DeleteButton
-                      variant="tertiary"
-                      small
+                      variant="secondary"
                       type="submit"
                       form={`delete-form-${variant.uuid}`}
                     >

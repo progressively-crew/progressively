@@ -573,8 +573,16 @@ video {
   display: inline-block;
 }
 
+.inline {
+  display: inline;
+}
+
 .flex {
   display: flex;
+}
+
+.inline-flex {
+  display: inline-flex;
 }
 
 .table {
@@ -647,6 +655,10 @@ video {
 
 .h-14 {
   height: 3.5rem;
+}
+
+.h-20 {
+  height: 5rem;
 }
 
 .min-h-full {

@@ -53,8 +53,7 @@ export const WebhooksList = ({
 
             <Td>
               <DeleteButton
-                small
-                variant="tertiary"
+                variant="secondary"
                 to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/webhooks/${webhook.uuid}/delete`}
               >
                 Remove

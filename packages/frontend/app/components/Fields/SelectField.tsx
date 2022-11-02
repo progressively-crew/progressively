@@ -30,6 +30,7 @@ export const SelectField = ({
         id={name}
         defaultValue={defaultValue}
         aria-describedby={isInvalid ? `error-${name}` : undefined}
+        className="h-10 rounded px-4 border border-color-gray-500 bg-white"
       >
         {options.map((opt) => (
           <option key={`${name}-${opt.value}`} value={opt.value}>

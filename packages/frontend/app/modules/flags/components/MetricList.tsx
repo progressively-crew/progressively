@@ -1,5 +1,5 @@
-import { Link } from "@remix-run/react";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
+import { Link } from "~/components/Link";
 import { RawTable, Td, Th, Tr } from "~/components/RawTable";
 import { Metric } from "../types";
 
@@ -43,8 +43,7 @@ export const MetricList = ({
 
             <Td>
               <DeleteButton
-                small
-                variant="tertiary"
+                variant="secondary"
                 to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/metrics/${metric.uuid}/delete`}
               >
                 Remove

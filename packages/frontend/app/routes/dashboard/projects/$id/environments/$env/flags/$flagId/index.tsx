@@ -278,17 +278,17 @@ export default function FlagById() {
                   )
                 }
               />
-            </CardContent>
 
-            {hasStrategies ? (
-              <StrategyList
-                strategies={strategies}
-                projectId={project.uuid}
-                envId={environment.uuid}
-                flagId={currentFlag.uuid}
-              />
-            ) : (
-              <CardContent>
+              <Spacer size={4} />
+
+              {hasStrategies ? (
+                <StrategyList
+                  strategies={strategies}
+                  projectId={project.uuid}
+                  envId={environment.uuid}
+                  flagId={currentFlag.uuid}
+                />
+              ) : (
                 <EmptyState
                   title="No strategy found"
                   description={
@@ -307,8 +307,8 @@ export default function FlagById() {
                     </CreateButton>
                   }
                 />
-              </CardContent>
-            )}
+              )}
+            </CardContent>
           </Card>
         </Section>
       </Stack>

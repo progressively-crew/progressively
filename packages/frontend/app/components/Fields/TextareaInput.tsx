@@ -26,6 +26,7 @@ export const TextareaInput = ({
         defaultValue={defaultValue}
         placeholder={placeholder}
         aria-describedby={isInvalid ? `error-${name}` : undefined}
+        className="h-20 rounded px-4 border border-color-gray-500 bg-white"
       />
     </Stack>
   );
