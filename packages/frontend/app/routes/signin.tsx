@@ -99,11 +99,7 @@ export default function Signin() {
             showRegister ? (
               <Typography>
                 If you {`don't`} have a user account yet, you can{" "}
-                <Link
-                  to="/register"
-                  color="nemesis"
-                >{`create an account`}</Link>
-                .
+                <Link to="/register">{`create an account`}</Link>.
               </Typography>
             ) : null
           }

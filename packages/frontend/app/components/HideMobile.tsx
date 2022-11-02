@@ -1,23 +1,11 @@
-export interface HideDesktopProps {
-  children: React.ReactNode;
-}
-
-export const HideDesktop = ({ children }: HideDesktopProps) => {
-  return <span>{children}</span>;
+export const HideDesktop = (props: React.HTMLAttributes<HTMLElement>) => {
+  return <span {...props} />;
 };
 
-export interface HideTabletProps {
-  children: React.ReactNode;
-}
-
-export const HideTablet = ({ children }: HideTabletProps) => {
-  return <span>{children}</span>;
+export const HideTablet = (props: React.HTMLAttributes<HTMLElement>) => {
+  return <span {...props} />;
 };
 
-export interface HideMobileProps {
-  children: React.ReactNode;
-}
-
-export const HideMobile = ({ children }: HideMobileProps) => {
-  return <span>{children}</span>;
+export const HideMobile = (props: React.HTMLAttributes<HTMLElement>) => {
+  return <span {...props} />;
 };

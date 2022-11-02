@@ -31,20 +31,11 @@ export const HitWithoutVariantList = ({
           <Tr key={hit.metric}>
             <Td>{hit.metric}</Td>
             <Td>
-              <Typography as="span" fontWeight="bold" fontSize="uranus">
-                {hit.count}
-              </Typography>
+              <Typography as="span">{hit.count}</Typography>
             </Td>
             <Td>
               <HStack as="span" spacing={2}>
-                <Typography
-                  as="span"
-                  fontWeight="bold"
-                  color="nemesis"
-                  fontSize="uranus"
-                >
-                  {flagEvaluationsCount}
-                </Typography>
+                <Typography as="span">{flagEvaluationsCount}</Typography>
 
                 <Tag>
                   {flagEvaluationsCount > 0

@@ -110,10 +110,7 @@ export const StrategyDescription = ({
     return (
       <Typography>
         Nobody will receive the <strong>"true"</strong> variant of the flag:
-        it's{" "}
-        <Tag color="errorFg" background="errorBg">
-          not activated
-        </Tag>
+        it's <Tag>not activated</Tag>
       </Typography>
     );
   }

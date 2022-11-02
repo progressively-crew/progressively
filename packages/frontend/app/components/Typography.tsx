@@ -1,7 +1,7 @@
-export interface TypographyProps {
-  children: React.ReactNode;
-}
+import React from "react";
 
-export const Typography = ({ children }: TypographyProps) => {
-  return <p>{children}</p>;
+export const Typography = (
+  props: React.HTMLAttributes<HTMLParagraphElement>
+) => {
+  return <p {...props} />;
 };

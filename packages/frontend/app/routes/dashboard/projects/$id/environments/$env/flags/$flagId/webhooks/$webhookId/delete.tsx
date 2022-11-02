@@ -123,7 +123,7 @@ export default function DeleteWebhookPage() {
       <Stack spacing={4}>
         <WarningBox title={<>This operation is definitive.</>} />
 
-        <Typography color="hadesLight">
+        <Typography>
           If you validate the suppression, the webhook will not be triggered
           anymore when the associated event will occur.
         </Typography>

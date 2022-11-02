@@ -7,19 +7,11 @@ export interface FlagStatusProps {
 
 export const FlagStatus = ({ value }: FlagStatusProps) => {
   if (value === FlagStatusRaw.ACTIVATED) {
-    return (
-      <Tag color="successFg" background="successBg">
-        Activated
-      </Tag>
-    );
+    return <Tag>Activated</Tag>;
   }
 
   if (value === FlagStatusRaw.NOT_ACTIVATED) {
-    return (
-      <Tag color="errorFg" background="errorBg">
-        Not activated
-      </Tag>
-    );
+    return <Tag>Not activated</Tag>;
   }
 
   return <Tag>Inactive</Tag>;

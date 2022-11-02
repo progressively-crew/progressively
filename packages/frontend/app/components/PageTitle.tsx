@@ -20,14 +20,7 @@ export const PageTitle = ({
     <HStack spacing={4}>
       <HStack spacing={3}>
         {icon && <span aria-hidden>{icon}</span>}
-        <Typography
-          font="title"
-          color="hades"
-          fontWeight="semiBold"
-          lineHeight="title"
-          as="h1"
-          id="page-title"
-        >
+        <Typography as="h1" id="page-title">
           <span>{value}</span>
         </Typography>
         {endAction}

@@ -128,12 +128,12 @@ export default function DeleteStrategyPage() {
       <Stack spacing={4}>
         <WarningBox title={<>This operation is definitive.</>} />
 
-        <Typography color="hadesLight">
+        <Typography>
           If you validate the suppression, the strategy will be removed from the
           feature flag.
         </Typography>
 
-        <Typography color="hadesLight">
+        <Typography>
           When a user will resolve a feature flag, this strategy will NOT apply
           anymore.
         </Typography>

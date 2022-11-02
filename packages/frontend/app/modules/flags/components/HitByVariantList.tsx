@@ -35,23 +35,14 @@ export const HitByVariantList = ({
           <Tr key={hit.metric}>
             <Td>{hit.metric}</Td>
             <Td>
-              <Typography as="span" fontWeight="bold" fontSize="uranus">
-                {hit.count}
-              </Typography>
+              <Typography as="span">{hit.count}</Typography>
             </Td>
             <Td>{hit.variant}</Td>
             <Td>
               <HStack as="span" spacing={2}>
-                <Typography
-                  as="span"
-                  fontWeight="bold"
-                  color="successFg"
-                  fontSize="uranus"
-                >
-                  {hit.variantEvalutations}
-                </Typography>
+                <Typography as="span">{hit.variantEvalutations}</Typography>
 
-                <Tag color="successFg" background="successBg">
+                <Tag>
                   {hit.variantEvalutations > 0
                     ? `${Math.round(
                         (hit.count / hit.variantEvalutations) * 100
@@ -62,14 +53,7 @@ export const HitByVariantList = ({
             </Td>
             <Td>
               <HStack as="span" spacing={2}>
-                <Typography
-                  as="span"
-                  fontWeight="bold"
-                  color="nemesis"
-                  fontSize="uranus"
-                >
-                  {flagEvaluationsCount}
-                </Typography>
+                <Typography as="span">{flagEvaluationsCount}</Typography>
 
                 <Tag>
                   {flagEvaluationsCount > 0
