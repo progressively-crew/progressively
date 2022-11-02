@@ -187,24 +187,25 @@ export default function FlagInsights() {
           </div>
         </Form>
 
-        <div>
+        <div className="grid grid-cols-3 gap-8">
           <Card>
             <CardContent>
               <BigStat
                 count={flagEvaluationsCount}
-                unit="evalutations"
+                unit="eval."
                 name={`Flag evaluations`}
               />
             </CardContent>
           </Card>
+
           {variantEvalutations.map((variant) => (
             <Card key={variant.variant}>
               <CardContent>
                 <BigStat
                   type="variant"
                   count={variant.count}
-                  unit="evalutations"
-                  name={`Variant ${variant.variant}`}
+                  unit="eval."
+                  name={`Variant ${variant.variant} evaluations`}
                 />
               </CardContent>
             </Card>

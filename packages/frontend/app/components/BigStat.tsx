@@ -18,9 +18,17 @@ export const BigStat = ({ name, count, id, unit, type }: BigStatProps) => {
 
   return (
     <div>
-      <h2 id={id}>{name}</h2>
+      <h2 id={id} className="font-semibold">
+        {name}
+      </h2>
 
-      <div style={{ color: type === "variant" ? "red" : "blue" }}>
+      <div
+        className={
+          type === "variant"
+            ? "text-indigo-700 text-4xl font-bold"
+            : "text-orange-700 text-4xl font-bold"
+        }
+      >
         {formatterRef.current.format(count)} {unit && <span>{unit}</span>}
       </div>
     </div>
