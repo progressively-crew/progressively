@@ -69,6 +69,7 @@ export const DateTimeInput = ({
                 placeholder={""}
                 onChange={(e) => setDate(e.target.value)}
                 value={date}
+                className="h-10 rounded px-4 border border-color-gray-500"
               />
 
               <input
@@ -78,6 +79,7 @@ export const DateTimeInput = ({
                 placeholder={"aaaa"}
                 onChange={(e) => setTime(e.target.value)}
                 value={time}
+                className="h-10 rounded px-4 border border-color-gray-500"
               />
             </HStack>
           </div>
