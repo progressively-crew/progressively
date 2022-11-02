@@ -2,7 +2,7 @@ import { forwardRef } from "react";
 
 export const RawTable = forwardRef((props: any, ref: any) => {
   return (
-    <div className="overflow-x-auto overflow-y-clip border border-color-gray-500 rounded bg-white">
+    <div className="overflow-x-auto overflow-y-clip">
       <table ref={ref} {...props} className="w-full" />
     </div>
   );

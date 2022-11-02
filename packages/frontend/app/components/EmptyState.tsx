@@ -1,4 +1,3 @@
-import { Heading } from "./Heading";
 import { EmptyBoxIcon } from "./Icons/EmptyBoxIcon";
 import { Spacer } from "./Spacer";
 
@@ -17,15 +16,18 @@ export const EmptyState = ({
   id,
   action,
 }: EmptyStateProps) => {
+  const HeadingComponent = titleAs as any;
   return (
-    <div>
-      <EmptyBoxIcon />
+    <div className="flex flex-col items-center py-10">
+      <div className="h-40 w-40 fill-indigo-700">
+        <EmptyBoxIcon />
+      </div>
 
       <Spacer size={6} />
 
-      <Heading as={titleAs} id={id}>
+      <HeadingComponent id={id} className="text-3xl">
         {title}
-      </Heading>
+      </HeadingComponent>
 
       <Spacer size={2} />
 
@@ -33,7 +35,7 @@ export const EmptyState = ({
 
       <Spacer size={2} />
 
-      {action && <div className="action">{action}</div>}
+      {action && <div className="inline-block">{action}</div>}
     </div>
   );
 };

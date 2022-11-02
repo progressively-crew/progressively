@@ -111,9 +111,9 @@ export default function SettingsPage() {
 
       <Stack spacing={8}>
         <Card>
-          <Section id="members">
-            <Form method="post">
-              <CardContent noBottom>
+          <CardContent>
+            <Section id="members">
+              <Form method="post">
                 <SectionHeader
                   title="Project members"
                   action={
@@ -139,6 +139,8 @@ export default function SettingsPage() {
                   }
                 />
 
+                <Spacer size={8} />
+
                 {data?.errors.unauthorized && (
                   <>
                     <ErrorBox list={data.errors} />
@@ -155,15 +157,15 @@ export default function SettingsPage() {
                     <Spacer size={4} />
                   </>
                 )}
-              </CardContent>
 
-              <UserTable
-                userProjects={project.userProject || []}
-                labelledBy="members"
-                canEdit={userRole === UserRoles.Admin}
-              />
-            </Form>
-          </Section>
+                <UserTable
+                  userProjects={project.userProject || []}
+                  labelledBy="members"
+                  canEdit={userRole === UserRoles.Admin}
+                />
+              </Form>
+            </Section>
+          </CardContent>
         </Card>
 
         {userRole === UserRoles.Admin && (
@@ -182,20 +184,20 @@ export default function SettingsPage() {
                   }
                 />
 
-                <div>
+                <Spacer size={4} />
+
+                <div className="inline-block whitespace-nowrap">
                   <DeleteButton
                     to={`/dashboard/projects/${project.uuid}/delete`}
                   >
-                    <span>
-                      <span aria-hidden>
-                        Delete{" "}
-                        <HideMobile>{`"${project.name}"`} forever</HideMobile>
-                      </span>
-
-                      <VisuallyHidden>
-                        Delete {`"${project.name}"`} forever
-                      </VisuallyHidden>
+                    <span aria-hidden className="flex">
+                      Delete{" "}
+                      <HideMobile>{`"${project.name}"`} forever</HideMobile>
                     </span>
+
+                    <VisuallyHidden>
+                      Delete {`"${project.name}"`} forever
+                    </VisuallyHidden>
                   </DeleteButton>
                 </div>
               </Section>

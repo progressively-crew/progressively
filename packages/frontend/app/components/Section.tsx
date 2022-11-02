@@ -1,5 +1,4 @@
 import { createContext, useContext } from "react";
-import { Heading } from "./Heading";
 import { Spacer } from "./Spacer";
 
 import { HStack } from "./HStack";
@@ -27,7 +26,6 @@ export interface SectionHeaderProps extends React.HTMLAttributes<HTMLElement> {
   title: string;
   titleAs?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
   description?: React.ReactNode;
-  icon?: React.ReactNode;
   action?: React.ReactNode;
   status?: React.ReactNode;
 }
@@ -36,21 +34,25 @@ export const SectionHeader = ({
   title,
   titleAs = "h2",
   description,
-  icon,
   action,
   status,
   ...props
 }: SectionHeaderProps) => {
   const id = useContext(SectionContext);
+  const HeadingComponent = titleAs as any;
 
   return (
     <div {...props}>
       <Stack spacing={4}>
-        <HStack>
+        <div className="flex justify-between">
           <div>
-            <Heading as={titleAs} id={id} icon={icon}>
+            <HeadingComponent
+              as={titleAs}
+              className="text-3xl font-semibold"
+              id={id}
+            >
               {title}
-            </Heading>
+            </HeadingComponent>
             {description && (
               <>
                 <Spacer size={2} />
@@ -59,7 +61,7 @@ export const SectionHeader = ({
             )}
           </div>
           <div className="actions">{action}</div>
-        </HStack>
+        </div>
 
         {status}
       </Stack>
