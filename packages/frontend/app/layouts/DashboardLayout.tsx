@@ -40,11 +40,11 @@ export const DashboardLayout = ({
       <div>
         <div>
           <Container>
-            <HStack justifyContent="space-between" height="navHeight">
+            <div className="flex justify-between">
               <BreadCrumbs crumbs={crumbs} />
 
               <UseDropdown user={user} />
-            </HStack>
+            </div>
 
             <HideDesktop>
               {header && <Spacer size={2} />}
@@ -62,7 +62,7 @@ export const DashboardLayout = ({
           <Spacer size={8} />
 
           <Container>
-            <div>
+            <div className="grid grid-cols-[1fr] md:grid-cols-[240px_1fr] gap-12">
               {subNav && <HideTablet>{subNav}</HideTablet>}
 
               <div className="overflow-hidden">

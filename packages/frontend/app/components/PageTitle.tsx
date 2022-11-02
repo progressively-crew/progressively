@@ -1,5 +1,4 @@
 import { HStack } from "./HStack";
-import { Typography } from "./Typography";
 
 export interface PageTitleProps {
   value: string;
@@ -17,18 +16,20 @@ export const PageTitle = ({
   endAction,
 }: PageTitleProps) => {
   return (
-    <HStack spacing={4}>
-      <HStack spacing={3}>
-        {icon && <span aria-hidden>{icon}</span>}
-        <Typography as="h1" id="page-title">
-          <span>{value}</span>
-        </Typography>
-        {endAction}
-      </HStack>
+    <div className="flex justify-between">
+      <div>
+        <HStack spacing={3}>
+          {icon && <span aria-hidden>{icon}</span>}
+          <h1 className="font-bold text-6xl" id="page-title">
+            <span>{value}</span>
+          </h1>
+          {endAction}
+        </HStack>
 
-      {description && <div>{description}</div>}
+        {description && <div>{description}</div>}
+      </div>
 
       <div>{action}</div>
-    </HStack>
+    </div>
   );
 };

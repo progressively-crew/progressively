@@ -34,8 +34,8 @@ export const Button = ({
     return (
       <Component to={href ? undefined : to} href={href} {...linkProps}>
         <HStack spacing={3}>
-          {icon}
-          <span className="text">{children}</span>
+          <span>{icon}</span>
+          <span>{children}</span>
         </HStack>
       </Component>
     );

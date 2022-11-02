@@ -21,7 +21,7 @@ export const NotAuthenticatedLayout = ({
   return (
     <div>
       <nav aria-label="General">
-        <HStack height="navHeight" justifyContent="center">
+        <HStack>
           <DarkLogo to={"/"} />
         </HStack>
       </nav>

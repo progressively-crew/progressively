@@ -36,7 +36,6 @@ const FlagRow = ({ flagEnv, projectId, envId }: FlagRowProps) => {
       </Td>
       <Td>
         <Link
-          height="ctaSmall"
           ref={linkRef}
           to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}`}
         >

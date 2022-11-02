@@ -26,7 +26,11 @@ export const NavItem = ({ children, to, icon }: NavItemProps) => {
       <NavLink
         to={to}
         end
-        className={({ isActive }) => (isActive ? "active" : undefined)}
+        className={({ isActive }) =>
+          isActive
+            ? "h-10 block flex items-center rounded px-4 bg-indigo-100 text-indigo-800 font-bold"
+            : "h-10 block flex items-center rounded px-4"
+        }
       >
         <HStack spacing={2}>
           <span aria-hidden>{icon}</span>
