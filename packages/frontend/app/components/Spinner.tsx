@@ -1,3 +1,9 @@
+import { CgSpinner } from "react-icons/cg";
+
 export const Spinner = () => {
-  return <div>Loading something</div>;
+  return (
+    <div className="animate-spin">
+      <CgSpinner />
+    </div>
+  );
 };
