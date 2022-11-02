@@ -14,13 +14,13 @@ import NotFoundPage from "./routes/404";
 import styles from "./styles/app.css";
 import { H1 } from "./components/H1";
 import { Main } from "./components/Main";
-import { Button } from "./components/Buttons/Button";
 import { Background } from "./components/Background";
 import { LinksFunction } from "@remix-run/node";
 import { ErrorLayout } from "./layouts/ErrorLayout";
 import { Typography } from "./components/Typography";
 import { Spacer } from "./components/Spacer";
 import { withSentry } from "@sentry/remix";
+import { SubmitButton } from "./components/Buttons/SubmitButton";
 
 /**
  * The `links` export is a function that returns an array of objects that map to
@@ -118,7 +118,7 @@ export function ErrorBoundary({ error }: { error: Error }) {
             <Typography>{error.message}</Typography>
             <Spacer size={4} />
 
-            <Button to="/signin">Signin page</Button>
+            <SubmitButton to="/signin">Signin page</SubmitButton>
           </Main>
         </ErrorLayout>
       </Layout>

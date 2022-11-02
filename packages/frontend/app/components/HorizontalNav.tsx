@@ -28,7 +28,7 @@ export const NavItem = ({ children, to, icon }: NavItemProps) => {
         end
         className={({ isActive }) =>
           isActive
-            ? "h-10 block flex items-center rounded px-4 bg-indigo-100 text-indigo-800 font-bold"
+            ? "h-10 block flex items-center rounded px-4 bg-indigo-100 text-indigo-700 font-bold"
             : "h-10 block flex items-center rounded px-4"
         }
       >

@@ -10,11 +10,23 @@ export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean;
   loadingText?: string;
   type?: "button" | "submit" | "reset";
-  variant?: "tertiary" | "primary" | "secondary";
+  variant?: "primary" | "secondary" | "tertiary";
   scheme?: "default" | "danger" | "inverse";
   icon?: React.ReactNode;
   small?: boolean;
 }
+
+const classCombination = {
+  // primary
+  defaultprimary: "bg-indigo-700 text-white",
+  dangerprimary: "bg-red-700 text-white",
+  inverseprimary: "bg-indigo-100 text-indigo-700",
+
+  // secondary
+  defaultsecondary: "border-1 border-indigo-700",
+  dangersecondary: "bg-red-700 text-white",
+  inversesecondary: "bg-indigo-100 text-indigo-700",
+};
 
 export const Button = ({
   to,
@@ -25,14 +37,25 @@ export const Button = ({
   isLoading,
   loadingText,
   scheme,
+  variant,
   ...props
 }: ButtonProps) => {
+  const actuelScheme = scheme || "default";
+  const actualVariant = variant || "primary";
+  const combinedClassName = classCombination[actuelScheme + actualVariant];
+  const sharedButtonClass = "block rounded flex items-center h-10 px-4";
+
   if (to || href) {
     const linkProps = props as HTMLAttributes<HTMLAnchorElement>;
     const Component = href ? "a" : Link;
 
     return (
-      <Component to={href ? undefined : to} href={href} {...linkProps}>
+      <Component
+        to={href ? undefined : to}
+        href={href}
+        className={sharedButtonClass + " " + combinedClassName}
+        {...linkProps}
+      >
         <HStack spacing={3}>
           <span>{icon}</span>
           <span>{children}</span>
@@ -44,6 +67,7 @@ export const Button = ({
   return (
     <button
       type={type}
+      className={sharedButtonClass + " " + combinedClassName}
       {...props}
       aria-disabled={isLoading}
       aria-label={isLoading ? loadingText : undefined}

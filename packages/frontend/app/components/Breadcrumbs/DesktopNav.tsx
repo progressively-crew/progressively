@@ -79,7 +79,7 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
               </Link>
 
               {!currentPage && (
-                <div className="flex text-gray-800 px-2" aria-hidden>
+                <div className="flex text-gray-700 px-2" aria-hidden>
                   <MdChevronRight />
                 </div>
               )}
