@@ -60,6 +60,7 @@ export const TextInput = ({
         aria-describedby={ariaDescription}
         aria-disabled={isDisabled}
         readOnly={isDisabled}
+        className="h-10 rounded px-4 border border-color-gray-500"
         {...props}
       />
 

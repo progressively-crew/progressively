@@ -19,27 +19,31 @@ export const NotAuthenticatedLayout = ({
   status,
 }: NotAuthenticatedLayoutProps) => {
   return (
-    <div>
-      <nav aria-label="General">
-        <HStack>
-          <DarkLogo to={"/"} />
-        </HStack>
-      </nav>
+    <div className="grid grid-cols-[1fr_1fr]">
+      <div>
+        <nav aria-label="General">
+          {/* <HStack>
+            <DarkLogo to={"/"} />
+          </HStack> */}
+        </nav>
 
-      <Spacer size={12} />
+        <Spacer size={12} />
 
-      <Main>
-        <Container>
-          {nav && <div>{nav}</div>}
-          <Stack spacing={4}>
-            <Stack spacing={2}>
-              {header}
-              {status && <Stack spacing={4}>{status}</Stack>}
+        <Main>
+          <div className="w-3/5 mx-auto">
+            {nav && <div>{nav}</div>}
+            <Stack spacing={4}>
+              <Stack spacing={2}>
+                {header}
+                {status && <Stack spacing={4}>{status}</Stack>}
+              </Stack>
+              {children}
             </Stack>
-            {children}
-          </Stack>
-        </Container>
-      </Main>
+          </div>
+        </Main>
+      </div>
+
+      <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 min-h-full"></div>
     </div>
   );
 };

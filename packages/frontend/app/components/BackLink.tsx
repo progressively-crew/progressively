@@ -12,6 +12,7 @@ export const BackLink = ({ children, to }: BackLinkProps) => {
       to={to}
       icon={<HiOutlineArrowNarrowLeft aria-hidden />}
       style={{ textAlign: "left", justifyContent: "flex-start" }}
+      variant="tertiary"
     >
       {children}
     </Button>

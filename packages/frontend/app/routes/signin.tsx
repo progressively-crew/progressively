@@ -153,6 +153,7 @@ export default function Signin() {
                 <Button
                   to="/forgot-password"
                   icon={<AiOutlineLock aria-hidden />}
+                  variant="tertiary"
                 >{`I forgot my password`}</Button>
               </HStack>
             </FormGroup>

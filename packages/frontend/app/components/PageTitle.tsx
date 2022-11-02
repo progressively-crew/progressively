@@ -31,7 +31,12 @@ export const PageTitle = ({
           {endAction}
         </HStack>
 
-        {description && <div>{description}</div>}
+        {description && (
+          <div>
+            <Spacer size={2} />
+            {description}
+          </div>
+        )}
       </div>
 
       <div>{action}</div>
