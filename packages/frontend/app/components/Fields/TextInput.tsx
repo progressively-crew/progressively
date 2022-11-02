@@ -14,7 +14,6 @@ export interface TextInputProps {
   hiddenLabel?: boolean;
   id?: string;
   isDisabled?: boolean;
-  small?: boolean;
 }
 
 export const TextInput = ({
@@ -28,7 +27,6 @@ export const TextInput = ({
   hiddenLabel,
   id,
   isDisabled,
-  small,
   ...props
 }: TextInputProps) => {
   let ariaDescription: string | undefined;

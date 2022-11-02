@@ -270,7 +270,6 @@ export default function FlagById() {
                   hasStrategies && (
                     <CreateButton
                       variant="secondary"
-                      small
                       to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
                     >
                       Create a strategy

@@ -13,7 +13,6 @@ export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "tertiary";
   scheme?: "default" | "danger";
   icon?: React.ReactNode;
-  small?: boolean;
 }
 
 const classCombination = {

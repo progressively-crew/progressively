@@ -120,14 +120,12 @@ export default function SettingsPage() {
                     userRole === UserRoles.Admin && (
                       <HStack spacing={4}>
                         <CreateButton
-                          small
                           to={`/dashboard/projects/${project.uuid}/add-member`}
                         >
                           Add member
                         </CreateButton>
 
                         <DeleteButton
-                          small
                           type={"submit"}
                           isLoading={transition.state === "submitting"}
                           loadingText="Deleting the member(s), please wait..."
