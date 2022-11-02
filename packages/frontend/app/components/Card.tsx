@@ -4,9 +4,7 @@ export interface CardProps {
 
 export const Card = ({ children }: CardProps) => {
   return (
-    <div className="border border-color-gray-500 rounded bg-white">
-      {children}
-    </div>
+    <div className="border border-gray-200 rounded bg-white">{children}</div>
   );
 };
 

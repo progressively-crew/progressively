@@ -54,6 +54,10 @@ export const DateTimeInput = ({
     }
   }
 
+  const inputClasses = isInvalid
+    ? "h-10 rounded px-4 border border-red-500"
+    : "h-10 rounded px-4 border border-gray-200 bg-white";
+
   return (
     <Stack spacing={2}>
       <fieldset aria-describedby={ariaDescription}>
@@ -69,7 +73,7 @@ export const DateTimeInput = ({
                 placeholder={""}
                 onChange={(e) => setDate(e.target.value)}
                 value={date}
-                className="h-10 rounded px-4 border border-color-gray-500"
+                className={inputClasses}
               />
 
               <input
@@ -79,7 +83,7 @@ export const DateTimeInput = ({
                 placeholder={"aaaa"}
                 onChange={(e) => setTime(e.target.value)}
                 value={time}
-                className="h-10 rounded px-4 border border-color-gray-500"
+                className={inputClasses}
               />
             </HStack>
           </div>

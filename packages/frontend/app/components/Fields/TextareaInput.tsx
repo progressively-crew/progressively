@@ -16,6 +16,10 @@ export const TextareaInput = ({
   label,
   placeholder,
 }: TextareaInputProps) => {
+  const inputClasses = isInvalid
+    ? "h-20 rounded px-4 border border-red-500"
+    : "h-20 rounded px-4 border border-gray-200 bg-white";
+
   return (
     <Stack spacing={2}>
       <Label htmlFor={name}>{label}</Label>
@@ -26,7 +30,7 @@ export const TextareaInput = ({
         defaultValue={defaultValue}
         placeholder={placeholder}
         aria-describedby={isInvalid ? `error-${name}` : undefined}
-        className="h-20 rounded px-4 border border-color-gray-500 bg-white"
+        className={inputClasses}
       />
     </Stack>
   );

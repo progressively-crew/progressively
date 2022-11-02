@@ -39,6 +39,10 @@ export const TextInput = ({
     ariaDescription = `${currentId}-hint`;
   }
 
+  const inputClasses = isInvalid
+    ? "h-10 rounded px-4 border border-red-500"
+    : "h-10 rounded px-4 border border-gray-200";
+
   return (
     <Stack spacing={2}>
       {hiddenLabel ? (
@@ -58,7 +62,7 @@ export const TextInput = ({
         aria-describedby={ariaDescription}
         aria-disabled={isDisabled}
         readOnly={isDisabled}
-        className="h-10 rounded px-4 border border-color-gray-500"
+        className={inputClasses}
         {...props}
       />
 
