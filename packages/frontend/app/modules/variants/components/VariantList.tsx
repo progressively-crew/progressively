@@ -69,8 +69,6 @@ export const VariantList = ({ variants, errors, mode }: VariantListProps) => {
         </Form>
       ))}
 
-      <Spacer size={6} />
-
       <Form method="post" id="edit-variant">
         <input type="hidden" name="_type" value="edit-variant" />
 
@@ -146,14 +144,10 @@ export const VariantList = ({ variants, errors, mode }: VariantListProps) => {
           </tbody>
         </RawTable>
 
-        <Spacer size={6} />
-
         <CardContent>
           <SubmitButton form="edit-variant">Edit variants</SubmitButton>
         </CardContent>
       </Form>
-
-      <Spacer size={6} />
     </div>
   );
 };
