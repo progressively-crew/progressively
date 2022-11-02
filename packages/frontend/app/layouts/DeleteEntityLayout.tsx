@@ -1,5 +1,6 @@
 import React from "react";
 import { Section } from "~/components/Section";
+import { Spacer } from "~/components/Spacer";
 import { User } from "~/modules/user/types";
 import { DashboardLayout } from "./DashboardLayout";
 
@@ -27,7 +28,9 @@ export const DeleteEntityLayout = ({
 
         {children}
 
-        <div>
+        <Spacer size={6} />
+
+        <div className="flex gap-3">
           {cancelAction}
           {confirmAction}
         </div>
