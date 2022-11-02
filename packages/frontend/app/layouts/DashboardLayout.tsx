@@ -83,6 +83,8 @@ export const DashboardLayout = ({
             </div>
           </Container>
         </InertWhenNavOpened>
+
+        <Spacer size={10} />
       </div>
     </NavProvider>
   );

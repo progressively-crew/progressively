@@ -19,8 +19,8 @@ export const Tr = ({
       onClick={onClick}
       className={
         isClickable
-          ? "border-l-8 border-l-transparent hover:bg-gray-50 hover:border-l-indigo-500 hover:cursor-pointer active:bg-gray-100"
-          : undefined
+          ? "border-l-8 border-l-transparent hover:bg-gray-50 hover:border-l-indigo-500 hover:cursor-pointer active:bg-gray-100 border-b border-b-gray-100"
+          : "border-b border-b-gray-100"
       }
       {...props}
     />

@@ -43,11 +43,14 @@ export const SliderInput = ({
           id={currentId}
           name={name}
           onChange={(e) => onChange(Number(e.target.value))}
+          className="appearance h-10 w-52"
         />
 
         <HStack aria-hidden>
           <span className="triangle" />
-          <span className="thumnail-value">{percentageValue}%</span>
+          <span className="bg-indigo-600 text-white px-2 py-1 rounded w-14">
+            {percentageValue}%
+          </span>
         </HStack>
       </HStack>
     </Stack>

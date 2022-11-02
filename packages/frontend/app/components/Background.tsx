@@ -3,5 +3,5 @@ export interface BackgroundProps {
 }
 
 export const Background = ({ children }: BackgroundProps) => {
-  return <div className="h-full bg-gray-50">{children}</div>;
+  return <div className="min-h-full bg-gray-50">{children}</div>;
 };
