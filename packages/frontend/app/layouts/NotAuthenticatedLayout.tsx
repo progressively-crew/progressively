@@ -1,6 +1,3 @@
-import { Container } from "~/components/Container";
-import { HStack } from "~/components/HStack";
-import { DarkLogo } from "~/components/Logo/DarkLogo";
 import { Main } from "~/components/Main";
 import { Spacer } from "~/components/Spacer";
 import { Stack } from "~/components/Stack";
@@ -19,14 +16,8 @@ export const NotAuthenticatedLayout = ({
   status,
 }: NotAuthenticatedLayoutProps) => {
   return (
-    <div className="grid grid-cols-[1fr_1fr]">
-      <div>
-        <nav aria-label="General">
-          {/* <HStack>
-            <DarkLogo to={"/"} />
-          </HStack> */}
-        </nav>
-
+    <div className="flex">
+      <div className="w-3/5">
         <Spacer size={12} />
 
         <Main>
@@ -43,7 +34,7 @@ export const NotAuthenticatedLayout = ({
         </Main>
       </div>
 
-      <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 min-h-full"></div>
+      <div className="w-2/5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 min-h-full"></div>
     </div>
   );
 };
