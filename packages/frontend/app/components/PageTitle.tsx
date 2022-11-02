@@ -1,4 +1,5 @@
 import { HStack } from "./HStack";
+import { Spacer } from "./Spacer";
 
 export interface PageTitleProps {
   value: string;

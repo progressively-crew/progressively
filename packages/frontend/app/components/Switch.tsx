@@ -19,7 +19,10 @@ export const Switch = ({
   offLabel,
   form,
 }: SwitchProps) => {
-  const className = checked ? "switch-thumb active" : "switch-thumb";
+  const thumnailCheckedClasses = checked
+    ? "translate-x-full text-emerald-200 flex items-center justify-center text-md"
+    : "";
+  const wrapperCheckedClasses = checked ? "bg-emerald-200" : "";
 
   return (
     <button
@@ -29,10 +32,24 @@ export const Switch = ({
       aria-label={label}
       onClick={onClick}
       form={form}
+      className="h-10 px-1 flex items-center gap-2"
     >
       <span>{offLabel || "Off"}</span>
-      <span>
-        <span aria-hidden>{checked && <BsCheck />}</span>
+      <span
+        className={
+          "h-7 w-12 bg-gray-300 rounded-full inline-block p-1 " +
+          wrapperCheckedClasses
+        }
+      >
+        <span
+          aria-hidden
+          className={
+            "transition-transform ease-in-out duration-200 w-1/2 h-full bg-white block rounded-full " +
+            thumnailCheckedClasses
+          }
+        >
+          {checked && <BsCheck />}
+        </span>
       </span>
       <span>{onLabel || "On"}</span>
     </button>

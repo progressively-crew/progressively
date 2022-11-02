@@ -9,7 +9,7 @@ export interface HorizontalNavProps {
 export const HorizontalNav = ({ children, label }: HorizontalNavProps) => {
   return (
     <nav aria-label={label}>
-      <ul className="overflow-x-scroll flex gap-2 flex-col">{children}</ul>
+      <ul className="overflow-x-scroll flex gap-1 flex-col">{children}</ul>
     </nav>
   );
 };

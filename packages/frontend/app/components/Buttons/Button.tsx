@@ -39,6 +39,7 @@ export const Button = ({
   loadingText,
   scheme,
   variant,
+  size,
   ...props
 }: ButtonProps) => {
   const sharedButtonClass = "block rounded flex items-center h-10 px-4";
