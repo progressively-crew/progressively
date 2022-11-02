@@ -22,7 +22,8 @@ export const Switch = ({
   const thumnailCheckedClasses = checked
     ? "translate-x-full text-emerald-200 flex items-center justify-center text-md"
     : "";
-  const wrapperCheckedClasses = checked ? "bg-emerald-200" : "";
+
+  const wrapperCheckedClasses = checked ? "bg-emerald-200" : "bg-gray-300";
 
   return (
     <button
@@ -37,8 +38,7 @@ export const Switch = ({
       <span>{offLabel || "Off"}</span>
       <span
         className={
-          "h-7 w-12 bg-gray-300 rounded-full inline-block p-1 " +
-          wrapperCheckedClasses
+          "h-7 w-12 bg- rounded-full inline-block p-1 " + wrapperCheckedClasses
         }
       >
         <span
