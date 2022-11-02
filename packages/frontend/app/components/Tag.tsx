@@ -3,5 +3,5 @@ export interface TagProps {
 }
 
 export const Tag = ({ children }: TagProps) => {
-  return <span>{children}</span>;
+  return <span className="px-4 py-2 bg-gray-100 rounded">{children}</span>;
 };

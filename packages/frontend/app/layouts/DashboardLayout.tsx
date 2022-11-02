@@ -38,9 +38,9 @@ export const DashboardLayout = ({
       <SkipNavLink>Skip to content</SkipNavLink>
 
       <div>
-        <div>
+        <div className="border-b border-b-color-gray-500 bg-white">
           <Container>
-            <div className="flex justify-between">
+            <div className="flex justify-between h-14 items-center">
               <BreadCrumbs crumbs={crumbs} />
 
               <UseDropdown user={user} />
@@ -62,7 +62,13 @@ export const DashboardLayout = ({
           <Spacer size={8} />
 
           <Container>
-            <div className="grid grid-cols-[1fr] md:grid-cols-[240px_1fr] gap-12">
+            <div
+              className={
+                subNav
+                  ? "grid grid-cols-[1fr] md:grid-cols-[240px_1fr] gap-12"
+                  : "grid-cols-[1fr]"
+              }
+            >
               {subNav && <HideTablet>{subNav}</HideTablet>}
 
               <div className="overflow-hidden">
