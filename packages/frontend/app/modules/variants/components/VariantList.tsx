@@ -148,7 +148,7 @@ export const VariantList = ({ variants, errors, mode }: VariantListProps) => {
 
         <Spacer size={6} />
 
-        <CardContent noTop noBottom>
+        <CardContent>
           <SubmitButton form="edit-variant">Edit variants</SubmitButton>
         </CardContent>
       </Form>

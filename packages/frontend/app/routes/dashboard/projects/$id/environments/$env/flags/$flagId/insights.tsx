@@ -215,7 +215,7 @@ export default function FlagInsights() {
         {hits.length > 0 && (
           <Card>
             <Section id="with-variant">
-              <CardContent noBottom>
+              <CardContent>
                 <SectionHeader title="Hits by variant" />
               </CardContent>
 
@@ -230,7 +230,7 @@ export default function FlagInsights() {
         {hitsWithoutVariant.length > 0 && (
           <Card>
             <Section id="without-variant">
-              <CardContent noBottom>
+              <CardContent>
                 <SectionHeader title="Other hits" />
               </CardContent>
 
