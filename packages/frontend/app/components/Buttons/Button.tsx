@@ -17,12 +17,15 @@ export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
 }
 
 const classCombination = {
-  defaultprimary: "bg-indigo-700 text-white",
-  defaultsecondary: "bg-indigo-50 text-indigo-700 text-indigo-700",
+  defaultprimary:
+    "bg-indigo-700 text-white hover:bg-indigo-500 active:bg-indigo-600",
+  defaultsecondary:
+    "bg-indigo-100 text-indigo-700 text-indigo-700 hover:bg-indigo-50 active:bg-indigo-100",
   defaulttertiary: "text-indigo-700",
 
-  dangerprimary: "bg-red-700 text-white",
-  dangersecondary: "bg-red-50 text-red-700 text-red-700",
+  dangerprimary: "bg-red-700 text-white hover:bg-red-500 active:bg-red-600",
+  dangersecondary:
+    "bg-red-100 text-red-700 text-red-700 hover:bg-red-50 active:bg-red-100",
   dangertertiary: "text-red-700",
 };
 
