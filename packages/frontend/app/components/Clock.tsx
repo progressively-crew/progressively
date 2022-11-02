@@ -41,7 +41,7 @@ export const Clock = ({ date, ringable }: ClockProps) => {
   }, [date, ringable]);
 
   return (
-    <div isRinging={ringing && ringable}>
+    <div>
       <div className="hand hour" style={hourStyle} />
       <div className="hand minute" style={minuteStyle} />
     </div>

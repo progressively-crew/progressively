@@ -25,7 +25,6 @@ export const TextareaInput = ({
         id={name}
         defaultValue={defaultValue}
         placeholder={placeholder}
-        invalid={isInvalid}
         aria-describedby={isInvalid ? `error-${name}` : undefined}
       />
     </Stack>

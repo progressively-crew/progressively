@@ -58,19 +58,12 @@ export const TextInput = ({
         placeholder={placeholder}
         defaultValue={defaultValue}
         aria-describedby={ariaDescription}
-        invalid={isInvalid}
-        isDisabled={isDisabled}
         aria-disabled={isDisabled}
         readOnly={isDisabled}
-        small={small}
         {...props}
       />
 
-      {description && (
-        <p id={`${currentId}-hint`} invalid={isInvalid}>
-          {description}
-        </p>
-      )}
+      {description && <p id={`${currentId}-hint`}>{description}</p>}
     </Stack>
   );
 };
