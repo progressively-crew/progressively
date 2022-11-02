@@ -24,6 +24,7 @@ export const Link = forwardRef(
         to={href ? undefined : to}
         target={target}
         rel={rel}
+        className="text-black underline"
         {...props}
       >
         {children}

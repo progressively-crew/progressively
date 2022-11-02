@@ -41,7 +41,8 @@ const FlagRow = ({ flagEnv, projectId, envId }: FlagRowProps) => {
         >
           {flagEnv.flag.name}
         </Link>
-        <Typography>{flagEnv.flag.description}</Typography>
+
+        <p className="text-sm text-gray-600">{flagEnv.flag.description}</p>
 
         <Spacer size={3} />
       </Td>
