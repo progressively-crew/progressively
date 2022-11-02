@@ -32,7 +32,6 @@ export const RadioField = <T extends string>({
         {options.map((opt) => (
           <HStack key={opt.value} spacing={2}>
             <Radio
-              type="radio"
               id={opt.value}
               name={name}
               value={opt.value}

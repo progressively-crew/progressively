@@ -4,7 +4,6 @@ import { DarkLogo } from "~/components/Logo/DarkLogo";
 import { Main } from "~/components/Main";
 import { Spacer } from "~/components/Spacer";
 import { Stack } from "~/components/Stack";
-import { styled } from "~/stitches.config";
 
 export interface NotAuthenticatedLayoutProps {
   children: React.ReactNode;
@@ -12,10 +11,6 @@ export interface NotAuthenticatedLayoutProps {
   header?: React.ReactNode;
   status?: React.ReactNode;
 }
-
-const Nav = styled("nav", {
-  background: "$hades",
-});
 
 export const NotAuthenticatedLayout = ({
   children,
@@ -25,11 +20,11 @@ export const NotAuthenticatedLayout = ({
 }: NotAuthenticatedLayoutProps) => {
   return (
     <div>
-      <Nav aria-label="General">
+      <nav aria-label="General">
         <HStack height="navHeight" justifyContent="center">
           <DarkLogo to={"/"} />
         </HStack>
-      </Nav>
+      </nav>
 
       <Spacer size={12} />
 

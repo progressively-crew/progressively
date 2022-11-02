@@ -1,6 +1,4 @@
-import { styled } from "~/stitches.config";
 import { Stack } from "../Stack";
-import { Typography } from "../Typography";
 import { VisuallyHidden } from "../VisuallyHidden";
 import { Label } from "./Label";
 
@@ -18,49 +16,6 @@ export interface TextInputProps {
   isDisabled?: boolean;
   small?: boolean;
 }
-
-const Input = styled("input", {
-  border: "1px solid $border",
-  borderRadius: "$borderRadius$regular",
-  fontSize: "$uranus",
-  fontFamily: "$default",
-  padding: "0 $spacing$4",
-  height: "$cta",
-  display: "block",
-  width: "100%",
-  boxSizing: "border-box",
-  maxWidth: "40ch",
-  variants: {
-    invalid: {
-      true: {
-        border: "2px solid $errorBorder",
-      },
-    },
-
-    small: {
-      true: {
-        height: "$ctaSmall",
-      },
-    },
-    isDisabled: {
-      true: {
-        border: "2px solid $heracles",
-        background: "$hera",
-      },
-    },
-  },
-});
-
-const Hint = styled(Typography, {
-  fontSize: "$uranus",
-  variants: {
-    invalid: {
-      true: {
-        color: "$errorFg",
-      },
-    },
-  },
-});
 
 export const TextInput = ({
   isInvalid,
@@ -96,7 +51,7 @@ export const TextInput = ({
         <Label htmlFor={currentId}>{label}</Label>
       )}
 
-      <Input
+      <input
         type={type}
         name={name}
         id={currentId}
@@ -112,9 +67,9 @@ export const TextInput = ({
       />
 
       {description && (
-        <Hint id={`${currentId}-hint`} invalid={isInvalid}>
+        <p id={`${currentId}-hint`} invalid={isInvalid}>
           {description}
-        </Hint>
+        </p>
       )}
     </Stack>
   );

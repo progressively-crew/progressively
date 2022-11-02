@@ -1,7 +1,7 @@
 import { createContext, useContext } from "react";
 import { Heading } from "./Heading";
 import { Spacer } from "./Spacer";
-import { styled } from "~/stitches.config";
+
 import { HStack } from "./HStack";
 import { Stack } from "./Stack";
 
@@ -32,22 +32,6 @@ export interface SectionHeaderProps extends React.HTMLAttributes<HTMLElement> {
   status?: React.ReactNode;
 }
 
-const SectionHeaderWrapper = styled("div", {
-  marginBottom: "$spacing$4",
-
-  "& .actions": {
-    "@mobile": {
-      width: "100%",
-    },
-  },
-});
-
-const DescriptionWrapper = styled("div", {
-  "& p": {
-    color: "$hadesLight",
-  },
-});
-
 export const SectionHeader = ({
   title,
   titleAs = "h2",
@@ -63,7 +47,7 @@ export const SectionHeader = ({
   const tabletFontSize = titleAs === "h2" ? "mars" : "jupiter";
 
   return (
-    <SectionHeaderWrapper {...props}>
+    <div {...props}>
       <Stack spacing={4}>
         <HStack
           justifyContent="space-between"
@@ -86,9 +70,7 @@ export const SectionHeader = ({
             {description && (
               <>
                 <Spacer size={2} />
-                {description && (
-                  <DescriptionWrapper>{description}</DescriptionWrapper>
-                )}
+                {description && <div>{description}</div>}
               </>
             )}
           </div>
@@ -97,6 +79,6 @@ export const SectionHeader = ({
 
         {status}
       </Stack>
-    </SectionHeaderWrapper>
+    </div>
   );
 };

@@ -1,5 +1,3 @@
-import { sizes, styled, mapTokenToVariant } from "~/stitches.config";
-
 export interface ContainerProps {
   children: React.ReactNode;
 }

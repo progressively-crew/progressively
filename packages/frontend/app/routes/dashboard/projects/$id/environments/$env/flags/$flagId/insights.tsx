@@ -3,7 +3,6 @@ import { getSession } from "~/sessions";
 import { Header } from "~/components/Header";
 import { AiOutlineBarChart } from "react-icons/ai";
 import { getFlagHits } from "~/modules/flags/services/getFlagHits";
-import { styled } from "~/stitches.config";
 import { MetaFunction, LoaderFunction } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
 import { TagLine } from "~/components/Tagline";
@@ -60,22 +59,6 @@ interface LoaderData {
     count: number;
   }>;
 }
-
-const TableWrapper = styled("div", {
-  "& table tbody tr td": {
-    height: "$cta",
-  },
-});
-
-const InsightsGrid = styled("div", {
-  display: "grid",
-  gap: "$spacing$8",
-  gridTemplateColumns: "1fr 1fr 1fr",
-
-  "@tablet": {
-    gridTemplateColumns: "1fr",
-  },
-});
 
 export const loader: LoaderFunction = async ({
   request,
@@ -209,7 +192,7 @@ export default function FlagInsights() {
           </HStack>
         </Form>
 
-        <InsightsGrid>
+        <div>
           <Card>
             <CardContent>
               <BigStat
@@ -231,7 +214,7 @@ export default function FlagInsights() {
               </CardContent>
             </Card>
           ))}
-        </InsightsGrid>
+        </div>
 
         {hits.length > 0 && (
           <Card>
@@ -240,12 +223,10 @@ export default function FlagInsights() {
                 <SectionHeader title="Hits by variant" />
               </CardContent>
 
-              <TableWrapper>
-                <HitByVariantList
-                  hits={hits}
-                  flagEvaluationsCount={flagEvaluationsCount}
-                />
-              </TableWrapper>
+              <HitByVariantList
+                hits={hits}
+                flagEvaluationsCount={flagEvaluationsCount}
+              />
             </Section>
           </Card>
         )}
@@ -257,12 +238,10 @@ export default function FlagInsights() {
                 <SectionHeader title="Other hits" />
               </CardContent>
 
-              <TableWrapper>
-                <HitWithoutVariantList
-                  hits={hitsWithoutVariant}
-                  flagEvaluationsCount={flagEvaluationsCount}
-                />
-              </TableWrapper>
+              <HitWithoutVariantList
+                hits={hitsWithoutVariant}
+                flagEvaluationsCount={flagEvaluationsCount}
+              />
             </Section>
           </Card>
         )}

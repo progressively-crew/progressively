@@ -1,4 +1,3 @@
-import { styled } from "~/stitches.config";
 import { HStack } from "./HStack";
 import { Stack } from "./Stack";
 import { Typography } from "./Typography";
@@ -10,24 +9,6 @@ export interface PageTitleProps {
   action?: React.ReactNode;
   description?: React.ReactNode;
 }
-
-const IconWrapper = styled("span", {
-  color: "$nemesis",
-  fontSize: "$mercury",
-  marginTop: "$spacing$2",
-});
-
-const DescriptionWrapper = styled("div", {
-  "& p, & ul li, & span": {
-    color: "$hadesLight",
-  },
-});
-
-const ActionWrapper = styled("div", {
-  "@mobile": {
-    width: "100%",
-  },
-});
 
 export const PageTitle = ({
   value,
@@ -45,7 +26,7 @@ export const PageTitle = ({
     >
       <Stack>
         <HStack spacing={3}>
-          {icon && <IconWrapper aria-hidden>{icon}</IconWrapper>}
+          {icon && <span aria-hidden>{icon}</span>}
           <Typography
             size={{ "@initial": "venus", "@mobile": "earth" }}
             font="title"
@@ -60,10 +41,10 @@ export const PageTitle = ({
           {endAction}
         </HStack>
 
-        {description && <DescriptionWrapper>{description}</DescriptionWrapper>}
+        {description && <div>{description}</div>}
       </Stack>
 
-      <ActionWrapper>{action}</ActionWrapper>
+      <div>{action}</div>
     </HStack>
   );
 };

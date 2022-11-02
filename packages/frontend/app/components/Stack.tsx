@@ -1,15 +1,7 @@
-import { styled, mapTokenToVariant, spacing } from "~/stitches.config";
+export interface StackProps {
+  children: React.ReactNode;
+}
 
-export const Stack = styled<any, any>("div", {
-  display: "flex",
-  flexDirection: "column",
-
-  variants: {
-    spacing: mapTokenToVariant("gap", spacing, "$spacing"),
-    justifyContent: {
-      center: {
-        justifyContent: "center",
-      },
-    },
-  },
-});
+export const Stack = ({ children }: StackProps) => {
+  return <div>{children}</div>;
+};

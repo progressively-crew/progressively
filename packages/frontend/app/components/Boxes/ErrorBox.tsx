@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { MdErrorOutline } from "react-icons/md";
-import { keyframes, styled } from "~/stitches.config";
+
 import { Li, Ul } from "../Ul";
 
 export interface ErrorBoxProps {
@@ -8,39 +8,6 @@ export interface ErrorBoxProps {
     [key: string]: string;
   };
 }
-
-const bounce = keyframes({
-  "0%": { transform: "scale(0.98)", opacity: 0 },
-  "50%": { transform: "scale(1.02)" },
-  "100%": { transform: "scale(1)", opacity: 1 },
-});
-
-const ErrorBoxWrapper = styled("figure", {
-  background: "$errorBg",
-  color: "$errorFg",
-  borderLeft: "8px solid $errorBorder",
-  padding: "$spacing$6 $spacing$4",
-  borderRadius: "$borderRadius$regular",
-  fontFamily: "$default",
-
-  animation: `${bounce} 300ms ease-in-out`,
-  "@media (prefers-reduced-motion: reduce)": {
-    animation: "unset",
-  },
-
-  display: "flex",
-  gap: "$spacing$3",
-
-  "& svg": {
-    fontSize: "$mars",
-  },
-
-  "& figcaption": {
-    fontWeight: "$bold",
-    marginBottom: "$spacing$4",
-    lineHeight: "$text",
-  },
-});
 
 export const ErrorBox = ({ list }: ErrorBoxProps) => {
   const boxRef = useRef<HTMLDivElement>(null);
@@ -57,7 +24,7 @@ export const ErrorBox = ({ list }: ErrorBoxProps) => {
       : `The following ${errors.length} errors have been found:`;
 
   return (
-    <ErrorBoxWrapper ref={boxRef} tabIndex={-1} className="error-box">
+    <figure ref={boxRef} tabIndex={-1} className="error-box">
       <MdErrorOutline aria-hidden />
       <div>
         <figcaption>
@@ -72,6 +39,6 @@ export const ErrorBox = ({ list }: ErrorBoxProps) => {
           ))}
         </Ul>
       </div>
-    </ErrorBoxWrapper>
+    </figure>
   );
 };

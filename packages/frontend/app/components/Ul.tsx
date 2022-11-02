@@ -1,23 +1,10 @@
-import { styled } from "~/stitches.config";
-
 export interface UlProps {
   children: React.ReactNode;
 }
 
-export const Ul = styled("ul", {
-  paddingLeft: "$spacing$4",
-  listStyle: "initial",
-  display: "flex",
-  flexDirection: "column",
-  gap: "$spacing$2",
-  fontFamily: "$default",
-
-  "& li": { lineHeight: "$text" },
-
-  "@mobile": {
-    paddingLeft: "$spacing$4",
-  },
-});
+export const Ul = ({ children }: UlProps) => {
+  return <ul>{children}</ul>;
+};
 
 export interface LiProps {
   children: React.ReactNode;

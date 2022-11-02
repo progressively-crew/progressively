@@ -1,4 +1,3 @@
-import { styled } from "~/stitches.config";
 import { Crumbs } from "./types";
 import { Link } from "../Link";
 import { HStack } from "../HStack";
@@ -9,65 +8,6 @@ import { IoMdClose } from "react-icons/io";
 import { VisuallyHidden } from "../VisuallyHidden";
 import { Spacer } from "../Spacer";
 import { FocusTrap } from "../FocusTrap";
-
-const Wrapper = styled("div", {
-  position: "absolute",
-  width: "100%",
-  height: "100%",
-  left: 0,
-  top: 0,
-  background: "$nemesisLight",
-  zIndex: 2,
-  boxSizing: "border-box",
-  transform: "translateX(-100%)",
-  transition: "all 0.3s",
-  padding: "$spacing$8",
-
-  variants: {
-    opened: {
-      true: {
-        transform: "translateX(0%)",
-      },
-    },
-  },
-});
-
-const Ol = styled("ol", {
-  fontFamily: "$default",
-  display: "flex",
-  flexDirection: "column",
-  height: "$cta",
-  padding: "$spacing$1 0",
-  gap: "$spacing$4",
-
-  "& li a": {
-    boxSizing: "border-box",
-    color: "$hadesLight",
-    transition: "border,box-shadow 0.2s",
-    whiteSpace: "nowrap",
-    textDecoration: "none",
-    fontSize: "$jupiter",
-  },
-
-  "& li a:hover": {
-    textDecoration: "underline",
-  },
-
-  "& li a:active": {
-    textDecoration: "underline",
-  },
-
-  "& li:last-of-type a": {
-    fontWeight: "$bold",
-    textDecoration: "underline",
-    color: "$nemesis",
-  },
-
-  "& li": {
-    display: "flex",
-    alignItems: "center",
-  },
-});
 
 export interface DesktopNavProps {
   crumbs: Crumbs;
@@ -90,7 +30,7 @@ export const MobileNav = ({ crumbs }: DesktopNavProps) => {
       </Button>
 
       <FocusTrap isActive={isNavOpened}>
-        <Wrapper opened={isNavOpened}>
+        <div>
           <Button
             variant="primary"
             onClick={toggleNav}
@@ -104,7 +44,7 @@ export const MobileNav = ({ crumbs }: DesktopNavProps) => {
           <Spacer size={12} />
 
           <nav aria-label="Application breadcrumbs" aria-hidden={!isNavOpened}>
-            <Ol>
+            <ol>
               {crumbs.map((crumb, index) => {
                 const currentPage = index === lastItemIndex;
 
@@ -128,9 +68,9 @@ export const MobileNav = ({ crumbs }: DesktopNavProps) => {
                   </li>
                 );
               })}
-            </Ol>
+            </ol>
           </nav>
-        </Wrapper>
+        </div>
       </FocusTrap>
     </div>
   );

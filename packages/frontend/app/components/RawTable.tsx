@@ -3,7 +3,7 @@ import { forwardRef } from "react";
 export const RawTable = forwardRef((props: any, ref: any) => {
   return (
     <div className="overflow-x-auto overflow-y-clip">
-      <table ref={ref} {...props} />
+      <table ref={ref} {...props} className="table-auto" />
     </div>
   );
 });
@@ -27,7 +27,7 @@ export interface TdProps {
 }
 
 export const Td = ({ children }: TdProps) => {
-  return <td>{children}</td>;
+  return <td className="py-4 px-6">{children}</td>;
 };
 
 export interface ThProps {
@@ -35,7 +35,7 @@ export interface ThProps {
 }
 
 export const Th = ({ children }: ThProps) => {
-  return <th>{children}</th>;
+  return <th className="py-3 px-6 bg-gray-50">{children}</th>;
 };
 
 RawTable.displayName = "RawTable";
