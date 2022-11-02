@@ -19,7 +19,11 @@ export const PageTitle = ({
     <div className="flex justify-between">
       <div>
         <HStack spacing={3}>
-          {icon && <span aria-hidden>{icon}</span>}
+          {icon && (
+            <span aria-hidden className="text-indigo-700 text-4xl">
+              {icon}
+            </span>
+          )}
           <h1 className="font-bold text-6xl" id="page-title">
             <span>{value}</span>
           </h1>

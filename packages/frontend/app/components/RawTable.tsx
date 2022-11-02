@@ -20,7 +20,7 @@ export const Tr = ({ children, onClick }: TrProps) => {
       onClick={onClick}
       className={
         isClickable
-          ? "border-l-8 border-l-transparent hover:bg-gray-50 hover:border-l-indigo-500 hover:cursor-pointer"
+          ? "border-l-8 border-l-transparent hover:bg-gray-50 hover:border-l-indigo-500 hover:cursor-pointer active:bg-gray-100"
           : undefined
       }
     >
