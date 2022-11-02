@@ -31,7 +31,7 @@ export const EmptyState = ({
 
       <Spacer size={2} />
 
-      <div>{description}</div>
+      <div className="max-w-lg text-center">{description}</div>
 
       <Spacer size={2} />
 
