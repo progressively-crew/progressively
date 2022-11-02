@@ -1,4 +1,9 @@
-import { MetaFunction, ActionFunction, redirect, LoaderFunction } from "@remix-run/node";
+import {
+  MetaFunction,
+  ActionFunction,
+  redirect,
+  LoaderFunction,
+} from "@remix-run/node";
 import {
   useLoaderData,
   useSearchParams,
@@ -34,7 +39,9 @@ interface ActionData {
   errors?: Partial<AuthCredentials & { badUser: string }>;
 }
 
-export const action: ActionFunction = async ({ request }): Promise<ActionData | Response> => {
+export const action: ActionFunction = async ({
+  request,
+}): Promise<ActionData | Response> => {
   const session = await getSession(request.headers.get("Cookie"));
   const formData = await request.formData();
   const email = formData.get("email")?.toString();
@@ -92,7 +99,11 @@ export default function Signin() {
             showRegister ? (
               <Typography>
                 If you {`don't`} have a user account yet, you can{" "}
-                <Link to="/register" color="nemesis">{`create an account`}</Link>.
+                <Link
+                  to="/register"
+                  color="nemesis"
+                >{`create an account`}</Link>
+                .
               </Typography>
             ) : null
           }
@@ -135,7 +146,7 @@ export default function Signin() {
                 />
               </div>
 
-              <HStack spacing={4} direction={{ "@tablet": "column" }}>
+              <HStack spacing={4}>
                 <SubmitButton
                   isLoading={transition.state === "submitting"}
                   loadingText="Signin in progress, please wait..."

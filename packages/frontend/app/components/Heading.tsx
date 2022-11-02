@@ -8,7 +8,7 @@ export interface HeadingProps {
 export const Heading = ({ icon, children, ...props }: HeadingProps) => {
   return (
     <h2 {...props}>
-      <HStack spacing={2} inline>
+      <HStack spacing={2}>
         {icon && <span aria-hidden>{icon}</span>}
         {children}
       </HStack>

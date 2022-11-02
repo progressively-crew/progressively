@@ -191,11 +191,7 @@ export default function VariantsOfFlag() {
           name="remainingPercent"
         />
         <Stack spacing={6}>
-          <HStack
-            spacing={4}
-            alignItems={{ "@initial": "flex-end", "@mobile": "none" }}
-            direction={{ "@mobile": "column" }}
-          >
+          <HStack spacing={4}>
             <TextInput
               name={"value"}
               label={"New variant value"}

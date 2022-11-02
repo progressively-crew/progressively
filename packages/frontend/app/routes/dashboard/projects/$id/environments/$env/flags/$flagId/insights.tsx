@@ -171,11 +171,7 @@ export default function FlagInsights() {
 
       <Stack spacing={8}>
         <Form action=".">
-          <HStack
-            spacing={4}
-            alignItems={{ "@initial": "flex-end", "@mobile": "none" }}
-            direction={{ "@mobile": "column" }}
-          >
+          <HStack spacing={4}>
             <TextInput
               type="date"
               name={"startDate"}

@@ -23,11 +23,7 @@ export const EmptyState = ({
 
       <Spacer size={6} />
 
-      <Heading
-        as={titleAs}
-        fontSize={{ "@initial": "earth", "@tablet": "mars" }}
-        id={id}
-      >
+      <Heading as={titleAs} id={id}>
         {title}
       </Heading>
 

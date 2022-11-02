@@ -55,11 +55,11 @@ export const DashboardLayout = ({
         </div>
 
         <InertWhenNavOpened>
-          <Spacer size={{ "@initial": 8, "@tablet": 0 }} />
+          <Spacer size={8} />
 
           {subNav && <HideDesktop>{subNav}</HideDesktop>}
 
-          <Spacer size={{ "@initial": 0, "@tablet": 6 }} />
+          <Spacer size={8} />
 
           <Container>
             <div>
@@ -67,7 +67,7 @@ export const DashboardLayout = ({
 
               <div className="overflow-hidden">
                 <Main>
-                  <Stack spacing={{ "@initial": 6, "@mobile": 4 }}>
+                  <Stack spacing={6}>
                     {status}
 
                     {children}

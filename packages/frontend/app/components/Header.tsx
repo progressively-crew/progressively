@@ -12,11 +12,7 @@ export const Header = ({ title, description, tagline }: HeaderProps) => {
   return (
     <div>
       <header aria-labelledby="header-title">
-        <HStack
-          spacing={{ "@initial": 6, "@tablet": 2 }}
-          direction={{ "@tablet": "column" }}
-          alignItems={{ "@tablet": "flex-start" }}
-        >
+        <HStack spacing={6}>
           <H1 as="p" id="header-title">
             {title}
           </H1>

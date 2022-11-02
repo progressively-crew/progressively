@@ -61,7 +61,7 @@ export const DateTimeInput = ({
           <Label as="legend">{label}</Label>
 
           <div>
-            <HStack spacing={4} direction={{ "@mobile": "column" }}>
+            <HStack spacing={4}>
               <input
                 type="date"
                 name={`date-${name}`}

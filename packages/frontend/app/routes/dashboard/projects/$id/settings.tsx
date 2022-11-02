@@ -118,7 +118,7 @@ export default function SettingsPage() {
                   title="Project members"
                   action={
                     userRole === UserRoles.Admin && (
-                      <HStack spacing={4} direction={{ "@mobile": "column" }}>
+                      <HStack spacing={4}>
                         <CreateButton
                           small
                           to={`/dashboard/projects/${project.uuid}/add-member`}

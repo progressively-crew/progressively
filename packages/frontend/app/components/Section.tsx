@@ -43,28 +43,12 @@ export const SectionHeader = ({
 }: SectionHeaderProps) => {
   const id = useContext(SectionContext);
 
-  const desktopFontSize = titleAs === "h2" ? "earth" : "mars";
-  const tabletFontSize = titleAs === "h2" ? "mars" : "jupiter";
-
   return (
     <div {...props}>
       <Stack spacing={4}>
-        <HStack
-          justifyContent="space-between"
-          alignItems="flex-start"
-          direction={{ "@tablet": "column" }}
-          gap={{ "@tablet": "3" }}
-        >
+        <HStack>
           <div>
-            <Heading
-              as={titleAs}
-              id={id}
-              fontSize={{
-                "@initial": desktopFontSize,
-                "@tablet": tabletFontSize,
-              }}
-              icon={icon}
-            >
+            <Heading as={titleAs} id={id} icon={icon}>
               {title}
             </Heading>
             {description && (
