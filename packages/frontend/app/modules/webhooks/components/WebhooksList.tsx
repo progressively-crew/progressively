@@ -44,9 +44,7 @@ export const WebhooksList = ({
             </Td>
             <Td>
               <ButtonCopy
-                variant="tertiary"
                 toCopy={webhook.secret}
-                small
                 aria-label="This is a hidden secret. Press to copy."
               >
                 ******

@@ -7,7 +7,7 @@ export const Avatar = ({ children }: AvatarProps) => {
 
   return (
     <div
-      className="rounded-full uppercase flex items-center bg-indigo-600 h-10 w-10 justify-center text-white"
+      className="rounded-full uppercase flex items-center bg-indigo-600 h-8 w-8 justify-center text-white"
       aria-hidden
     >
       {firstLetter}

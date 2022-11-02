@@ -51,9 +51,7 @@ const FlagRow = ({ flagEnv, projectId, envId }: FlagRowProps) => {
       </Td>
 
       <Td>
-        <ButtonCopy toCopy={flagEnv.flag.key} small={true} variant="tertiary">
-          {flagEnv.flag.key}
-        </ButtonCopy>
+        <ButtonCopy toCopy={flagEnv.flag.key}>{flagEnv.flag.key}</ButtonCopy>
       </Td>
     </Tr>
   );
