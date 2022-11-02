@@ -111,9 +111,9 @@ export default function SettingsPage() {
 
       <Stack spacing={8}>
         <Card>
-          <CardContent>
-            <Section id="members">
-              <Form method="post">
+          <Section id="members">
+            <Form method="post">
+              <CardContent>
                 <SectionHeader
                   title="Project members"
                   action={
@@ -137,33 +137,31 @@ export default function SettingsPage() {
                   }
                 />
 
-                <Spacer size={8} />
-
                 {data?.errors.unauthorized && (
                   <>
-                    <ErrorBox list={data.errors} />
                     <Spacer size={4} />
+                    <ErrorBox list={data.errors} />
                   </>
                 )}
 
                 {data?.success && (
                   <>
+                    <Spacer size={4} />
                     <SuccessBox id="member-deleted">
                       {data?.removedCount} user have been successfully removed
                       from the project.
                     </SuccessBox>
-                    <Spacer size={4} />
                   </>
                 )}
+              </CardContent>
 
-                <UserTable
-                  userProjects={project.userProject || []}
-                  labelledBy="members"
-                  canEdit={userRole === UserRoles.Admin}
-                />
-              </Form>
-            </Section>
-          </CardContent>
+              <UserTable
+                userProjects={project.userProject || []}
+                labelledBy="members"
+                canEdit={userRole === UserRoles.Admin}
+              />
+            </Form>
+          </Section>
         </Card>
 
         {userRole === UserRoles.Admin && (
