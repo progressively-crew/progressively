@@ -16,7 +16,7 @@ export const NotAuthenticatedLayout = ({
   status,
 }: NotAuthenticatedLayoutProps) => {
   return (
-    <div className="flex">
+    <div className="flex h-full">
       <div className="w-3/5">
         <Spacer size={12} />
 
