@@ -8,6 +8,7 @@ import { IoMdClose } from "react-icons/io";
 import { VisuallyHidden } from "../VisuallyHidden";
 import { Spacer } from "../Spacer";
 import { FocusTrap } from "../FocusTrap";
+import { CrumbIcon } from "./CrumbIcon";
 
 export interface DesktopNavProps {
   crumbs: Crumbs;
@@ -72,9 +73,12 @@ export const MobileNav = ({ crumbs }: DesktopNavProps) => {
                             : undefined
                         }
                         to={crumb.link}
-                        fontSize="uranus"
+                        className="h-10 block flex items-center"
                       >
-                        <HStack spacing={2}>{crumb.label}</HStack>
+                        <HStack spacing={2}>
+                          <CrumbIcon crumb={crumb} />
+                          {crumb.label}
+                        </HStack>
                       </Link>
                     </li>
                   );

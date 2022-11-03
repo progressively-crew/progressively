@@ -11,11 +11,14 @@ export interface LinkProps extends HTMLAttributes<HTMLAnchorElement> {
   startIcon?: string;
   active?: string;
   hover?: string;
-  fontSize?: string;
   height?: string;
+  className?: string;
 }
 export const Link = forwardRef(
-  ({ to, children, href, target, rel, ...props }: LinkProps, ref: any) => {
+  (
+    { to, children, href, target, rel, className = "", ...props }: LinkProps,
+    ref: any
+  ) => {
     const Component = href ? "a" : RLink;
     return (
       <Component
@@ -24,7 +27,10 @@ export const Link = forwardRef(
         to={href ? undefined : to}
         target={target}
         rel={rel}
-        className="text-gray-800 underline hover:text-gray-600 active:text-black"
+        className={
+          "text-gray-800 underline hover:text-gray-600 active:text-black " +
+          className
+        }
         {...props}
       >
         {children}
