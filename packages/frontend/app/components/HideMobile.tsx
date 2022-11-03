@@ -1,11 +1,15 @@
-export const HideDesktop = (props: React.HTMLAttributes<HTMLElement>) => {
-  return <span className="md:hidden" {...props} />;
+export interface WithAs extends React.HTMLAttributes<HTMLElement> {
+  as?: any;
+}
+
+export const HideDesktop = ({ as: Component = "span", ...props }: WithAs) => {
+  return <Component className="md:hidden" {...props} />;
 };
 
-export const HideTablet = (props: React.HTMLAttributes<HTMLElement>) => {
-  return <span className="hidden lg:block" {...props} />;
+export const HideTablet = ({ as: Component = "span", ...props }: WithAs) => {
+  return <Component className="hidden lg:block" {...props} />;
 };
 
-export const HideMobile = (props: React.HTMLAttributes<HTMLElement>) => {
-  return <span className="hidden md:block" {...props} />;
+export const HideMobile = ({ as: Component = "span", ...props }: WithAs) => {
+  return <Component className="hidden md:block" {...props} />;
 };
