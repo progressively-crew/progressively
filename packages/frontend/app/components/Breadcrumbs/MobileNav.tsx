@@ -38,7 +38,7 @@ export const MobileNav = ({ crumbs }: DesktopNavProps) => {
         }
       >
         <FocusTrap isActive={isNavOpened}>
-          <div>
+          <div className="p-4">
             <Button
               variant="primary"
               onClick={toggleNav}
