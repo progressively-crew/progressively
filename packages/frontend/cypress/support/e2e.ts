@@ -48,29 +48,51 @@ Cypress.Commands.add("signIn", (userName?: keyof typeof AvailableUsers) => {
 });
 
 Cypress.Commands.add("checkProtectedRoute", () => {
-  cy.findByText("It looks you're trying to access this page while not being authenticated.");
+  cy.findByText(
+    "It looks you're trying to access this page while not being authenticated."
+  );
 
-  cy.findByText("To access this content, make sure to fill the authentication page form.");
+  cy.findByText(
+    "To access this content, make sure to fill the authentication page form."
+  );
 });
 
 Cypress.Commands.add("verifyBreadcrumbs", (crumbs: Array<any>) => {
   const lastIndex = crumbs.length - 1;
 
   cy.findByLabelText("Breadcrumbs").within(() => {
-    crumbs.forEach(([name, href, shouldAssertCurrent = true], index: number) => {
-      if (index === lastIndex && shouldAssertCurrent) {
-        cy.findByRole("link", { name })
-          .should("be.visible")
-          .and("have.attr", "href", href)
-          .and("have.attr", "aria-current", "page");
-      } else {
-        cy.findByRole("link", { name }).should("be.visible").and("have.attr", "href", href);
+    crumbs.forEach(
+      ([name, href, shouldAssertCurrent = true], index: number) => {
+        if (index === lastIndex && shouldAssertCurrent) {
+          cy.findByRole("link", { name })
+            .should("be.visible")
+            .and("have.attr", "href", href)
+            .and("have.attr", "aria-current", "page");
+        } else {
+          cy.findByRole("link", { name })
+            .should("be.visible")
+            .and("have.attr", "href", href);
+        }
       }
-    });
+    );
   });
 });
 
-Cypress.on(
-  "uncaught:exception",
-  (err) => !err.message.includes("ResizeObserver loop limit exceeded")
-);
+Cypress.on("uncaught:exception", (err) => {
+  if (err.message.includes("ResizeObserver loop limit exceeded")) {
+    return false;
+  }
+
+  // TODO: https://github.com/facebook/react/issues/24430
+  if (err.message.includes("There was an error while hydrating")) {
+    return false;
+  }
+
+  // eslint-disable-next-line sonarjs/prefer-single-boolean-return
+  if (err.message.includes("Hydration failed because the initial UI")) {
+    return false;
+  }
+  // END OF TODO: https://github.com/facebook/react/issues/24430
+
+  return true;
+});

@@ -1,9 +1,9 @@
 import { RemixBrowser } from "@remix-run/react";
 import { startTransition, StrictMode } from "react";
 import { hydrateRoot } from "react-dom/client";
-import { initSentryOnClient } from "./modules/sentry/client";
+// import { initSentryOnClient } from "./modules/sentry/client";
 
-initSentryOnClient();
+// initSentryOnClient();
 
 function hydrate() {
   startTransition(() => {

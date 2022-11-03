@@ -61,7 +61,6 @@ const Document = ({ children, title }: DocumentProps) => {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <link rel="shortcut icon" type="image/jpg" href="/favicon.png" />
-        {title ? <title>{title}</title> : null}
         <Meta />
         <Links />
       </head>
@@ -74,10 +73,6 @@ const Document = ({ children, title }: DocumentProps) => {
     </html>
   );
 };
-
-function Layout({ children }: React.PropsWithChildren<unknown>) {
-  return <div>{children}</div>;
-}
 
 export function CatchBoundary() {
   const caught = useCatch();
@@ -101,27 +96,23 @@ export function CatchBoundary() {
   }
 
   return (
-    <Document title={`${caught.status} ${caught.statusText}`}>
-      <Layout>{page}</Layout>
-    </Document>
+    <Document title={`${caught.status} ${caught.statusText}`}>{page}</Document>
   );
 }
 
 export function ErrorBoundary({ error }: { error: Error }) {
   return (
     <Document title="Error!">
-      <Layout>
-        <ErrorLayout>
-          <Main>
-            <H1>Outch, a wild error appeared!</H1>
+      <ErrorLayout>
+        <Main>
+          <H1>Outch, a wild error appeared!</H1>
 
-            <Typography>{error.message}</Typography>
-            <Spacer size={4} />
+          <Typography>{error.message}</Typography>
+          <Spacer size={4} />
 
-            <SubmitButton to="/signin">Signin page</SubmitButton>
-          </Main>
-        </ErrorLayout>
-      </Layout>
+          <SubmitButton to="/signin">Signin page</SubmitButton>
+        </Main>
+      </ErrorLayout>
     </Document>
   );
 }

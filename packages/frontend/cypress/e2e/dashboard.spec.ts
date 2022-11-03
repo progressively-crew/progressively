@@ -15,7 +15,7 @@ describe("/dashboard", () => {
   });
 
   describe("authenticated", () => {
-    describe("user: Marvin", () => {
+    describe.only("user: Marvin", () => {
       beforeEach(() => {
         cy.signIn("Marvin");
         cy.visit("/dashboard");
