@@ -9,7 +9,7 @@ export interface HorizontalNavProps {
 export const HorizontalNav = ({ children, label }: HorizontalNavProps) => {
   return (
     <nav aria-label={label}>
-      <ul className="overflow-x-scroll flex flex-row gap-1 md:flex-col">
+      <ul className="overflow-x-scroll flex flex-row gap-1 bg-indigo-100 lg:flex-col lg:bg-transparent">
         {children}
       </ul>
     </nav>
@@ -30,7 +30,7 @@ export const NavItem = ({ children, to, icon }: NavItemProps) => {
         end
         className={({ isActive }) =>
           isActive
-            ? "h-10 block flex items-center rounded px-4 bg-indigo-100 text-indigo-700 font-bold"
+            ? "h-10 block flex items-center rounded px-4 bg-indigo-700 text-white lg:bg-indigo-100 lg:text-indigo-700 font-bold"
             : "h-10 block flex items-center rounded px-4 hover:bg-gray-100"
         }
       >

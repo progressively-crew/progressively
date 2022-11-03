@@ -1387,12 +1387,38 @@ video {
     display: block;
   }
 
+  .lg\:hidden {
+    display: none;
+  }
+
+  .lg\:grid-cols-\[240px_1fr\] {
+    grid-template-columns: 240px 1fr;
+  }
+
   .lg\:flex-row {
     flex-direction: row;
+  }
+
+  .lg\:flex-col {
+    flex-direction: column;
+  }
+
+  .lg\:bg-transparent {
+    background-color: transparent;
+  }
+
+  .lg\:bg-indigo-100 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(224 231 255 / var(--tw-bg-opacity));
   }
 
   .lg\:px-8 {
     padding-left: 2rem;
     padding-right: 2rem;
+  }
+
+  .lg\:text-indigo-700 {
+    --tw-text-opacity: 1;
+    color: rgb(67 56 202 / var(--tw-text-opacity));
   }
 }

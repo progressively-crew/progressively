@@ -64,7 +64,7 @@ export const DashboardLayout = ({
             <div
               className={
                 subNav
-                  ? "grid grid-cols-[1fr] md:grid-cols-[240px_1fr] gap-12"
+                  ? "grid grid-cols-[1fr] lg:grid-cols-[240px_1fr] gap-12"
                   : "grid-cols-[1fr]"
               }
             >
