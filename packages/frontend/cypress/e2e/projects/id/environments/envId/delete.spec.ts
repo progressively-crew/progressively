@@ -95,7 +95,9 @@ describe("/dashboard/projects/[id]/environments/[envId]/delete", () => {
       it("removes the environment and get me back to the flags page", () => {
         cy.findByRole("button", {
           name: "Yes, delete the environment",
-        }).click();
+        })
+          .should("be.visible")
+          .click();
 
         cy.url().should("contain", "/dashboard/projects/1?envRemoved=true");
 

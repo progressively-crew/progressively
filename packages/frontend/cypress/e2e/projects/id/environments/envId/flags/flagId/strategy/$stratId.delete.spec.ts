@@ -78,7 +78,9 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
       it("removes the strat and get me back to the flags page", () => {
         cy.findByRole("button", {
           name: "Yes, delete the strategy",
-        }).click();
+        })
+          .should("be.visible")
+          .click();
 
         cy.url().should(
           "contain",

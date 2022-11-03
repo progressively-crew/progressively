@@ -24,7 +24,9 @@ describe("/forgot-password", () => {
   });
 
   it("shows an error message when the email is empty", () => {
-    cy.findByRole("button", { name: "Reset password" }).click();
+    cy.findByRole("button", { name: "Reset password" })
+      .should("be.visible")
+      .click();
 
     cy.get(".error-box")
       .should("have.focus")

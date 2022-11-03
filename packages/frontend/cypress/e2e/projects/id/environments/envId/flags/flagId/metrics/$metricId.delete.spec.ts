@@ -76,7 +76,9 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/metrics/[
       it("removes the metric and get me back to the flags page", () => {
         cy.findByRole("button", {
           name: "Yes, delete the metric",
-        }).click();
+        })
+          .should("be.visible")
+          .click();
 
         cy.url().should(
           "contain",

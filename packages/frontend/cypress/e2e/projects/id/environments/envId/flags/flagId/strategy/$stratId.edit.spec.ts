@@ -4,7 +4,9 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
 
   describe("not authenticated", () => {
     beforeEach(() => {
-      cy.visit("/dashboard/projects/1/environments/1/flags/1/strategies/1/edit");
+      cy.visit(
+        "/dashboard/projects/1/environments/1/flags/1/strategies/1/edit"
+      );
     });
 
     it("checks that the route is protected", () => {
@@ -16,9 +18,12 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
     describe("user: Jane", () => {
       beforeEach(() => {
         cy.signIn("Jane");
-        cy.visit("/dashboard/projects/1/environments/1/flags/1/strategies/1/edit", {
-          failOnStatusCode: false,
-        });
+        cy.visit(
+          "/dashboard/projects/1/environments/1/flags/1/strategies/1/edit",
+          {
+            failOnStatusCode: false,
+          }
+        );
       });
 
       it("shouldnt show anything when Jane tries to visit Marvin s project", () => {
@@ -29,7 +34,9 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
     describe("user: Marvin", () => {
       beforeEach(() => {
         cy.signIn("Marvin");
-        cy.visit("/dashboard/projects/1/environments/1/flags/1/strategies/1/edit");
+        cy.visit(
+          "/dashboard/projects/1/environments/1/flags/1/strategies/1/edit"
+        );
 
         cy.injectAxe();
       });
@@ -45,10 +52,15 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
           ["Project from seeding", "/dashboard/projects/1"],
           ["Production", "/dashboard/projects/1/environments/1"],
           ["New homepage", "/dashboard/projects/1/environments/1/flags/1"],
-          ["Edit Super strategy", "/dashboard/projects/1/environments/1/flags/1/strategies/1/edit"],
+          [
+            "Edit Super strategy",
+            "/dashboard/projects/1/environments/1/flags/1/strategies/1/edit",
+          ],
         ]);
 
-        cy.findByRole("heading", { name: "Edit Super strategy" }).should("be.visible");
+        cy.findByRole("heading", { name: "Edit Super strategy" }).should(
+          "be.visible"
+        );
 
         cy.checkA11y();
       });
@@ -59,7 +71,9 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
         cy.findByLabelText("Everybody is concerned").should("be.visible");
         cy.findByLabelText("People with a specific field").should("be.visible");
 
-        cy.findByRole("button", { name: "Save the strategy" }).should("be.visible");
+        cy.findByRole("button", { name: "Save the strategy" }).should(
+          "be.visible"
+        );
 
         cy.checkA11y();
       });
@@ -68,7 +82,9 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
         cy.findByLabelText("People with a specific field").click({
           force: true,
         });
-        cy.findByRole("button", { name: "Save the strategy" }).click();
+        cy.findByRole("button", { name: "Save the strategy" })
+          .should("be.visible")
+          .click();
 
         cy.get(".error-box")
           .should("have.focus")
@@ -81,7 +97,9 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
 
       it("updates a strategy", () => {
         cy.findByLabelText("Strategy name").type("New strategy");
-        cy.findByRole("button", { name: "Save the strategy" }).click();
+        cy.findByRole("button", { name: "Save the strategy" })
+          .should("be.visible")
+          .click();
 
         cy.url().should(
           "include",

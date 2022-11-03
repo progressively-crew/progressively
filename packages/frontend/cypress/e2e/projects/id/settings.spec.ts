@@ -69,7 +69,9 @@ describe("/dashboard/projects/[id]/settings", () => {
 
       it("shows an error message when trying to remove an admin user", () => {
         cy.get("#col-1").last().click();
-        cy.findByRole("button", { name: "Remove from project" }).click();
+        cy.findByRole("button", { name: "Remove from project" })
+          .should("be.visible")
+          .click();
 
         cy.get(".error-box")
           .should("have.focus")
@@ -83,7 +85,9 @@ describe("/dashboard/projects/[id]/settings", () => {
 
       it("shows a success message when removing a user", () => {
         cy.get("#col-2").last().click();
-        cy.findByRole("button", { name: "Remove from project" }).click();
+        cy.findByRole("button", { name: "Remove from project" })
+          .should("be.visible")
+          .click();
 
         cy.get(".success-box")
           .should("have.focus")

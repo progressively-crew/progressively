@@ -68,7 +68,9 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/create", () => {
       });
 
       it("shows an error when submitting an empty form", () => {
-        cy.findByRole("button", { name: "Create the feature flag" }).click();
+        cy.findByRole("button", { name: "Create the feature flag" })
+          .should("be.visible")
+          .click();
 
         cy.get(".error-box")
           .should("have.focus")
@@ -87,7 +89,9 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/create", () => {
       it("creates a flag ", () => {
         cy.findByLabelText("Flag name").type("My new flag");
         cy.findByLabelText("Flag description").type("My new flag description");
-        cy.findByRole("button", { name: "Create the feature flag" }).click();
+        cy.findByRole("button", { name: "Create the feature flag" })
+          .should("be.visible")
+          .click();
 
         cy.get(".success-box")
           .should("have.focus")
@@ -108,13 +112,17 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/create", () => {
         // Initial flag creation
         cy.findByLabelText("Flag name").type("My new flag");
         cy.findByLabelText("Flag description").type("My new flag description");
-        cy.findByRole("button", { name: "Create the feature flag" }).click();
+        cy.findByRole("button", { name: "Create the feature flag" })
+          .should("be.visible")
+          .click();
 
         // New flag creation
         cy.visit("/dashboard/projects/1/environments/1/flags/create");
         cy.findByLabelText("Flag name").type("My new flag");
         cy.findByLabelText("Flag description").type("My new flag description");
-        cy.findByRole("button", { name: "Create the feature flag" }).click();
+        cy.findByRole("button", { name: "Create the feature flag" })
+          .should("be.visible")
+          .click();
 
         cy.get(".error-box")
           .should("have.focus")

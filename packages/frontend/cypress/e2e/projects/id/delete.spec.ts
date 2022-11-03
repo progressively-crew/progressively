@@ -95,7 +95,9 @@ describe("/dashboard/projects/[id]/delete", () => {
     it("removes the project and get me back to the onboarding page when I dont have other projects", () => {
       cy.findByRole("button", {
         name: "Yes, delete the project",
-      }).click();
+      })
+        .should("be.visible")
+        .click();
 
       cy.url().should("contain", "/dashboard/onboarding");
     });
@@ -104,7 +106,9 @@ describe("/dashboard/projects/[id]/delete", () => {
       // Create another project as a test setup
       cy.visit("/dashboard/projects/create");
       cy.findByLabelText("Project name").type("My new project");
-      cy.findByRole("button", { name: "Create the project" }).click();
+      cy.findByRole("button", { name: "Create the project" })
+        .should("be.visible")
+        .click();
       cy.get(".success-box").should("be.visible");
 
       // Delete a project and verify that the other is still here
@@ -112,7 +116,9 @@ describe("/dashboard/projects/[id]/delete", () => {
 
       cy.findByRole("button", {
         name: "Yes, delete the project",
-      }).click();
+      })
+        .should("be.visible")
+        .click();
 
       cy.url().should("contain", "/dashboard?projectRemoved=true");
       cy.get(".success-box")

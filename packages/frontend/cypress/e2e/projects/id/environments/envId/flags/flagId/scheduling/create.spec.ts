@@ -87,7 +87,9 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
       });
 
       it("adds a schedule", () => {
-        cy.findByRole("button", { name: "Save the schedule" }).click();
+        cy.findByRole("button", { name: "Save the schedule" })
+          .should("be.visible")
+          .click();
 
         cy.url().should(
           "include",

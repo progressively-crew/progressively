@@ -78,7 +78,9 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
       it("removes the schedule and get me back to the flags page", () => {
         cy.findByRole("button", {
           name: "Yes, delete the schedule",
-        }).click();
+        })
+          .should("be.visible")
+          .click();
 
         cy.url().should(
           "contain",

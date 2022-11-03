@@ -35,7 +35,9 @@ describe("/profile", () => {
     });
 
     it("shows an error when the passwords are not set", () => {
-      cy.findByRole("button", { name: "Change password" }).click();
+      cy.findByRole("button", { name: "Change password" })
+        .should("be.visible")
+        .click();
       cy.get(".error-box").should("have.focus");
 
       cy.get(".error-box")
@@ -47,7 +49,9 @@ describe("/profile", () => {
     it("shows an error when the passwords are not long enough", () => {
       cy.findByLabelText("New password").type("p");
       cy.findByLabelText("Confirmation password").type("p");
-      cy.findByRole("button", { name: "Change password" }).click();
+      cy.findByRole("button", { name: "Change password" })
+        .should("be.visible")
+        .click();
 
       cy.get(".error-box")
         .should("have.focus")
@@ -64,7 +68,9 @@ describe("/profile", () => {
     it("shows an error when the passwords are not the same", () => {
       cy.findByLabelText("New password").type("password1");
       cy.findByLabelText("Confirmation password").type("password2");
-      cy.findByRole("button", { name: "Change password" }).click();
+      cy.findByRole("button", { name: "Change password" })
+        .should("be.visible")
+        .click();
 
       cy.get(".error-box")
         .should("have.focus")
@@ -74,7 +80,9 @@ describe("/profile", () => {
     it("shows a success message and allows to login when the password has changed", () => {
       cy.findByLabelText("New password").type("password1");
       cy.findByLabelText("Confirmation password").type("password1");
-      cy.findByRole("button", { name: "Change password" }).click();
+      cy.findByRole("button", { name: "Change password" })
+        .should("be.visible")
+        .click();
 
       cy.get(".success-box")
         .should("have.focus")
@@ -84,14 +92,14 @@ describe("/profile", () => {
       cy.visit("/signin");
       cy.findByLabelText("Email").type("marvin.frachet@something.com");
       cy.findByLabelText("Password").type("password1");
-      cy.findByRole("button", { name: "Sign in" }).click();
+      cy.findByRole("button", { name: "Sign in" }).should("be.visible").click();
       cy.findByText("Project from seeding").should("be.visible");
 
       // Connect with a user that has NOT changed their password
       cy.visit("/signin");
       cy.findByLabelText("Email").type("john.doe@gmail.com");
       cy.findByLabelText("Password").type("password");
-      cy.findByRole("button", { name: "Sign in" }).click();
+      cy.findByRole("button", { name: "Sign in" }).should("be.visible").click();
       cy.findByText("Project from seeding").should("be.visible", 3);
     });
   });

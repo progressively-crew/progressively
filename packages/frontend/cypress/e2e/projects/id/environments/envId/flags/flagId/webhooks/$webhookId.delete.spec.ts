@@ -78,7 +78,9 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/webhooks/
       it("removes the webhook and get me back to the flags page", () => {
         cy.findByRole("button", {
           name: "Yes, delete the webhook",
-        }).click();
+        })
+          .should("be.visible")
+          .click();
 
         cy.url().should(
           "contain",

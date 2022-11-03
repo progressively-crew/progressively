@@ -72,7 +72,9 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/delete", 
         cy.visit("/dashboard/projects/1/environments/1/flags/1/delete");
         cy.findByRole("button", {
           name: "Yes, delete the flag",
-        }).click();
+        })
+          .should("be.visible")
+          .click();
 
         cy.url().should(
           "contain",
@@ -83,7 +85,9 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/delete", 
         cy.visit("/dashboard/projects/1/environments/1/flags/2/delete");
         cy.findByRole("button", {
           name: "Yes, delete the flag",
-        }).click();
+        })
+          .should("be.visible")
+          .click();
 
         cy.url().should(
           "contain",
