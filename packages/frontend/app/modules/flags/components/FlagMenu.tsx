@@ -10,7 +10,6 @@ import { MdBubbleChart } from "react-icons/md";
 import { HideTablet } from "~/components/HideMobile";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { Spacer } from "~/components/Spacer";
-import { Typography } from "~/components/Typography";
 
 export interface FlagMenuProps {
   projectId: string;
@@ -21,12 +20,10 @@ export interface FlagMenuProps {
 export const FlagMenu = ({ projectId, envId, flagId }: FlagMenuProps) => {
   return (
     <HorizontalNav label={`Flag related`}>
-      <HideTablet
-        role="separator"
-        as="li"
-        className="uppercase text-black text-sm font-bold"
-      >
-        <p>Rollout details</p>
+      <HideTablet role="separator" as="li">
+        <p className="uppercase text-black text-sm font-bold">
+          Rollout details
+        </p>
         <Spacer size={1} />
       </HideTablet>
 
