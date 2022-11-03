@@ -12,14 +12,13 @@ export const Header = ({ title, description, tagline }: HeaderProps) => {
   return (
     <div>
       <header aria-labelledby="header-title">
-        <HStack spacing={6}>
-          <H1 as="p" id="header-title">
-            {title}
-          </H1>
-        </HStack>
-
-        <Spacer size={1} />
         {tagline}
+        <Spacer size={1} />
+        <HStack spacing={6}>
+          <p id="header-title" className="text-xl font-bold">
+            {title}
+          </p>
+        </HStack>
       </header>
 
       {description}

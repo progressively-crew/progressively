@@ -1,7 +1,6 @@
 import { createContext, useContext } from "react";
 import { Spacer } from "./Spacer";
 
-import { HStack } from "./HStack";
 import { Stack } from "./Stack";
 
 const SectionContext = createContext<string | undefined>(undefined);
