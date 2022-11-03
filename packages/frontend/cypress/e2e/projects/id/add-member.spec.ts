@@ -77,7 +77,7 @@ describe("/dashboard/projects/[id]/add-member", () => {
         });
 
         it("shows an error when the email is not valid", () => {
-          cy.findByLabelText("Member email").type("lol");
+          cy.findByLabelText("Member email").should("be.visible").type("lol");
           cy.findByRole("button", { name: "Add the member" })
             .should("be.visible")
             .click();
@@ -93,9 +93,9 @@ describe("/dashboard/projects/[id]/add-member", () => {
         });
 
         it("shows an error when the user is already in the project", () => {
-          cy.findByLabelText("Member email").type(
-            "marvin.frachet@something.com"
-          );
+          cy.findByLabelText("Member email")
+            .should("be.visible")
+            .type("marvin.frachet@something.com");
           cy.findByRole("button", { name: "Add the member" })
             .should("be.visible")
             .click();
@@ -114,7 +114,9 @@ describe("/dashboard/projects/[id]/add-member", () => {
          * TODO: needs to send a real email, find a way to handle it properly
          */
         it.skip("adds the user to the project by inviting them to create an account by email", () => {
-          cy.findByLabelText("Member email").type("blah.blah@gmail.com");
+          cy.findByLabelText("Member email")
+            .should("be.visible")
+            .type("blah.blah@gmail.com");
           cy.findByRole("button", { name: "Add the member" })
             .should("be.visible")
             .click();
@@ -130,7 +132,9 @@ describe("/dashboard/projects/[id]/add-member", () => {
         });
 
         it("shows a successful message when the user has been added to the project", () => {
-          cy.findByLabelText("Member email").type("jane.doe@gmail.com");
+          cy.findByLabelText("Member email")
+            .should("be.visible")
+            .type("jane.doe@gmail.com");
           cy.findByRole("button", { name: "Add the member" })
             .should("be.visible")
             .click();

@@ -105,7 +105,9 @@ describe("/dashboard/projects/[id]/delete", () => {
     it("removes the project and get me back to the project list when I have other projects", () => {
       // Create another project as a test setup
       cy.visit("/dashboard/projects/create");
-      cy.findByLabelText("Project name").type("My new project");
+      cy.findByLabelText("Project name")
+        .should("be.visible")
+        .type("My new project");
       cy.findByRole("button", { name: "Create the project" })
         .should("be.visible")
         .click();

@@ -58,7 +58,9 @@ describe("/dashboard/projects/create", () => {
     });
 
     it("creates a new project", () => {
-      cy.findByLabelText("Project name").type("My new project");
+      cy.findByLabelText("Project name")
+        .should("be.visible")
+        .type("My new project");
       cy.findByRole("button", { name: "Create the project" })
         .should("be.visible")
         .click();

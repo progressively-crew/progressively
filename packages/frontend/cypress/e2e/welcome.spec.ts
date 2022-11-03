@@ -8,7 +8,7 @@ describe("/welcome", () => {
   });
 
   it("gives feedbacks when the email is invalid (formatting level)", () => {
-    cy.findByLabelText("Email").type("invalid@email");
+    cy.findByLabelText("Email").should("be.visible").type("invalid@email");
     cy.findByRole("button", { name: "Create an account" })
       .should("be.visible")
       .click();
@@ -22,7 +22,7 @@ describe("/welcome", () => {
   });
 
   it("gives feedbacks when the password is not long enough", () => {
-    cy.findByLabelText("Password").type("1");
+    cy.findByLabelText("Password").should("be.visible").type("1");
     cy.findByRole("button", { name: "Create an account" })
       .should("be.visible")
       .click();
@@ -52,8 +52,10 @@ describe("/welcome", () => {
   });
 
   it("gives feedbacks when the two passwords are not identical", () => {
-    cy.findByLabelText("Password").type("12345678901112");
-    cy.findByLabelText("Confirm your password").type("aabcd");
+    cy.findByLabelText("Password").should("be.visible").type("12345678901112");
+    cy.findByLabelText("Confirm your password")
+      .should("be.visible")
+      .type("aabcd");
     cy.findByRole("button", { name: "Create an account" })
       .should("be.visible")
       .click();
@@ -67,10 +69,14 @@ describe("/welcome", () => {
   });
 
   it("gives a visual feedback when the email is already taken", () => {
-    cy.findByLabelText("Fullname").type("John Duff");
-    cy.findByLabelText("Email").type("marvin.frachet@something.com");
-    cy.findByLabelText("Password").type("12345678901112");
-    cy.findByLabelText("Confirm your password").type("12345678901112");
+    cy.findByLabelText("Fullname").should("be.visible").type("John Duff");
+    cy.findByLabelText("Email")
+      .should("be.visible")
+      .type("marvin.frachet@something.com");
+    cy.findByLabelText("Password").should("be.visible").type("12345678901112");
+    cy.findByLabelText("Confirm your password")
+      .should("be.visible")
+      .type("12345678901112");
     cy.findByRole("button", { name: "Create an account" })
       .should("be.visible")
       .click();

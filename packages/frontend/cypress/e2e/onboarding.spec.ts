@@ -49,7 +49,7 @@ describe("/dashboard/onboarding", () => {
     });
 
     it("creates a new project", () => {
-      cy.get("input").type("My new project");
+      cy.get("input").should("be.visible").type("My new project");
       cy.findByRole("button", { name: "Create the project" })
         .should("be.visible")
         .click();

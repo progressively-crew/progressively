@@ -94,7 +94,6 @@ Cypress.on("uncaught:exception", (err) => {
 
   // eslint-disable-next-line sonarjs/prefer-single-boolean-return
   if (err.message.includes("Minified React error")) {
-    console.log("comon");
     return false;
   }
 

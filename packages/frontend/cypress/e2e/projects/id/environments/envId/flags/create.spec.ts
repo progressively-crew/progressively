@@ -87,8 +87,12 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/create", () => {
       });
 
       it("creates a flag ", () => {
-        cy.findByLabelText("Flag name").type("My new flag");
-        cy.findByLabelText("Flag description").type("My new flag description");
+        cy.findByLabelText("Flag name")
+          .should("be.visible")
+          .type("My new flag");
+        cy.findByLabelText("Flag description")
+          .should("be.visible")
+          .type("My new flag description");
         cy.findByRole("button", { name: "Create the feature flag" })
           .should("be.visible")
           .click();
@@ -110,16 +114,24 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/create", () => {
 
       it("shows an error when trying to create a flag  with the same key", () => {
         // Initial flag creation
-        cy.findByLabelText("Flag name").type("My new flag");
-        cy.findByLabelText("Flag description").type("My new flag description");
+        cy.findByLabelText("Flag name")
+          .should("be.visible")
+          .type("My new flag");
+        cy.findByLabelText("Flag description")
+          .should("be.visible")
+          .type("My new flag description");
         cy.findByRole("button", { name: "Create the feature flag" })
           .should("be.visible")
           .click();
 
         // New flag creation
         cy.visit("/dashboard/projects/1/environments/1/flags/create");
-        cy.findByLabelText("Flag name").type("My new flag");
-        cy.findByLabelText("Flag description").type("My new flag description");
+        cy.findByLabelText("Flag name")
+          .should("be.visible")
+          .type("My new flag");
+        cy.findByLabelText("Flag description")
+          .should("be.visible")
+          .type("My new flag description");
         cy.findByRole("button", { name: "Create the feature flag" })
           .should("be.visible")
           .click();

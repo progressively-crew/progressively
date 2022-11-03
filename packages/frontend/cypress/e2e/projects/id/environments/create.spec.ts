@@ -81,7 +81,9 @@ describe("/dashboard/projects/[id]/environments/create", () => {
       });
 
       it("creates an environment", () => {
-        cy.findByLabelText("Environment name").type("My new env");
+        cy.findByLabelText("Environment name")
+          .should("be.visible")
+          .type("My new env");
         cy.findByRole("button", { name: "Create the environment" })
           .should("be.visible")
           .click();

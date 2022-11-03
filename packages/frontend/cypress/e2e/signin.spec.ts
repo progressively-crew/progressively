@@ -12,7 +12,7 @@ describe("/signin", () => {
   });
 
   it("gives feedbacks when the email is invalid (formatting level)", () => {
-    cy.findByLabelText("Email").type("invalid@email");
+    cy.findByLabelText("Email").should("be.visible").type("invalid@email");
     cy.findByRole("button", { name: "Sign in" }).should("be.visible").click();
 
     cy.get(".error-box")
@@ -24,7 +24,7 @@ describe("/signin", () => {
   });
 
   it("gives feedbacks when the password is not long enough", () => {
-    cy.findByLabelText("Password").type("1");
+    cy.findByLabelText("Password").should("be.visible").type("1");
     cy.findByRole("button", { name: "Sign in" }).should("be.visible").click();
 
     cy.get(".error-box")
@@ -48,8 +48,10 @@ describe("/signin", () => {
   });
 
   it("gives a visual feedback indicating the request is pending and an error feedback when something went wrong", () => {
-    cy.findByLabelText("Email").type("a-valid-email@domain.com");
-    cy.findByLabelText("Password").type("12345678901112");
+    cy.findByLabelText("Email")
+      .should("be.visible")
+      .type("a-valid-email@domain.com");
+    cy.findByLabelText("Password").should("be.visible").type("12345678901112");
 
     cy.findByRole("button", { name: "Sign in" }).should("be.visible").click();
 

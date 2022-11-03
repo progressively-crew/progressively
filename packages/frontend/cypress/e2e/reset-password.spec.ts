@@ -28,8 +28,10 @@ describe("/reset-password", () => {
     });
 
     it("shows an error when the passwords are not long enough", () => {
-      cy.findByLabelText("New password").type("p");
-      cy.findByLabelText("Confirmation password").type("p");
+      cy.findByLabelText("New password").should("be.visible").type("p");
+      cy.findByLabelText("Confirmation password")
+        .should("be.visible")
+        .type("p");
       cy.findByRole("button", { name: "Change password" })
         .should("be.visible")
         .click();
@@ -47,8 +49,10 @@ describe("/reset-password", () => {
     });
 
     it("shows an error when the passwords are not the same", () => {
-      cy.findByLabelText("New password").type("password1");
-      cy.findByLabelText("Confirmation password").type("password2");
+      cy.findByLabelText("New password").should("be.visible").type("password1");
+      cy.findByLabelText("Confirmation password")
+        .should("be.visible")
+        .type("password2");
       cy.findByRole("button", { name: "Change password" })
         .should("be.visible")
         .click();
@@ -59,8 +63,10 @@ describe("/reset-password", () => {
     });
 
     it("shows an error when the passwords are valid but the token is an invalid one", () => {
-      cy.findByLabelText("New password").type("password1");
-      cy.findByLabelText("Confirmation password").type("password1");
+      cy.findByLabelText("New password").should("be.visible").type("password1");
+      cy.findByLabelText("Confirmation password")
+        .should("be.visible")
+        .type("password1");
       cy.findByRole("button", { name: "Change password" })
         .should("be.visible")
         .click();
@@ -77,8 +83,10 @@ describe("/reset-password", () => {
     });
 
     it("shows an error message when the token is missing", () => {
-      cy.findByLabelText("New password").type("password1");
-      cy.findByLabelText("Confirmation password").type("password1");
+      cy.findByLabelText("New password").should("be.visible").type("password1");
+      cy.findByLabelText("Confirmation password")
+        .should("be.visible")
+        .type("password1");
       cy.findByRole("button", { name: "Change password" })
         .should("be.visible")
         .click();
@@ -95,8 +103,10 @@ describe("/reset-password", () => {
     });
 
     it("shows a success message and allows to login when the token is valid", () => {
-      cy.findByLabelText("New password").type("password1");
-      cy.findByLabelText("Confirmation password").type("password1");
+      cy.findByLabelText("New password").should("be.visible").type("password1");
+      cy.findByLabelText("Confirmation password")
+        .should("be.visible")
+        .type("password1");
       cy.findByRole("button", { name: "Change password" })
         .should("be.visible")
         .click();
@@ -110,15 +120,19 @@ describe("/reset-password", () => {
 
       // Connect the person with a changed password
       cy.visit("/signin");
-      cy.findByLabelText("Email").type("john.doe@gmail.com");
-      cy.findByLabelText("Password").type("password1");
+      cy.findByLabelText("Email")
+        .should("be.visible")
+        .type("john.doe@gmail.com");
+      cy.findByLabelText("Password").should("be.visible").type("password1");
       cy.findByRole("button", { name: "Sign in" }).should("be.visible").click();
       cy.findByText("Project from seeding").should("be.visible");
 
       // Connect with a user that has NOT changed their password
       cy.visit("/signin");
-      cy.findByLabelText("Email").type("marvin.frachet@something.com");
-      cy.findByLabelText("Password").type("password");
+      cy.findByLabelText("Email")
+        .should("be.visible")
+        .type("marvin.frachet@something.com");
+      cy.findByLabelText("Password").should("be.visible").type("password");
       cy.findByRole("button", { name: "Sign in" }).should("be.visible").click();
       cy.findByText("Project from seeding").should("be.visible");
     });

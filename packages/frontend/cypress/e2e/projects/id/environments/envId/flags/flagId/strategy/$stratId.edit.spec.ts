@@ -96,7 +96,9 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
       });
 
       it("updates a strategy", () => {
-        cy.findByLabelText("Strategy name").type("New strategy");
+        cy.findByLabelText("Strategy name")
+          .should("be.visible")
+          .type("New strategy");
         cy.findByRole("button", { name: "Save the strategy" })
           .should("be.visible")
           .click();

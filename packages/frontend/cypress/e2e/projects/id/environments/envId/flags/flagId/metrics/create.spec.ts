@@ -66,7 +66,9 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/metrics/c
       });
 
       it("adds a metric", () => {
-        cy.findByLabelText("Metric name").type("New metric");
+        cy.findByLabelText("Metric name")
+          .should("be.visible")
+          .type("New metric");
         cy.findByRole("button", { name: "Create the metric" })
           .should("be.visible")
           .click();
