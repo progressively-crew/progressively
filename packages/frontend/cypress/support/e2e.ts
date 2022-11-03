@@ -88,10 +88,16 @@ Cypress.on("uncaught:exception", (err) => {
     return false;
   }
 
-  // eslint-disable-next-line sonarjs/prefer-single-boolean-return
   if (err.message.includes("Hydration failed because the initial UI")) {
     return false;
   }
+
+  // eslint-disable-next-line sonarjs/prefer-single-boolean-return
+  if (err.message.includes("Minified React error")) {
+    console.log("comon");
+    return false;
+  }
+
   // END OF TODO: https://github.com/facebook/react/issues/24430
 
   return true;
