@@ -34,7 +34,7 @@ export const DeleteEntityLayout = ({
 
               <Spacer size={6} />
 
-              <div className="flex gap-3">
+              <div className="inline-flex flex-wrap gap-3 justify-center">
                 {cancelAction}
                 {confirmAction}
               </div>

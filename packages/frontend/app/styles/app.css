@@ -762,6 +762,10 @@ video {
   flex-direction: column;
 }
 
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
 .items-end {
   align-items: flex-end;
 }
@@ -1317,6 +1321,12 @@ video {
   color: rgb(0 0 0 / var(--tw-text-opacity));
 }
 
+@media (min-width: 640px) {
+  .sm\:flex-row {
+    flex-direction: row;
+  }
+}
+
 @media (min-width: 768px) {
   .md\:block {
     display: block;
@@ -1332,6 +1342,10 @@ video {
 
   .md\:grid-cols-\[240px_1fr\] {
     grid-template-columns: 240px 1fr;
+  }
+
+  .md\:flex-row {
+    flex-direction: row;
   }
 }
 
