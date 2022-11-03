@@ -92,6 +92,7 @@ export const RegisterForm = ({ errors }: RegisterFormProps) => {
           type="password"
           placeholder="************"
         />
+
         <div>
           <SubmitButton
             isLoading={transition.state === "submitting"}

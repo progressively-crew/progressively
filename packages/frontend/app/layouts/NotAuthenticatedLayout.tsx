@@ -18,7 +18,7 @@ export const NotAuthenticatedLayout = ({
 }: NotAuthenticatedLayoutProps) => {
   return (
     <div>
-      <div className="w-full px-8 md:w-2/5 mx-auto">
+      <div className="w-full px-4 lg:px-8 md:w-2/5 mx-auto">
         <Spacer size={12} />
 
         <Main>

@@ -16,10 +16,9 @@ interface EnvRowProps {
 }
 const EnvRow = ({ env, projectId }: EnvRowProps) => {
   const linkRef = useRef<HTMLAnchorElement>(null);
-  const isHydrated = useHydrated();
 
   return (
-    <Tr onClick={() => linkRef.current?.click()} isClickable={isHydrated}>
+    <Tr onClick={() => linkRef.current?.click()}>
       <Td>
         <Link
           ref={linkRef}

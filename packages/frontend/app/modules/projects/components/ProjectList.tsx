@@ -14,10 +14,9 @@ interface ProjectRowProps {
 }
 const ProjectRow = ({ userProject }: ProjectRowProps) => {
   const linkRef = useRef<HTMLAnchorElement>(null);
-  const isHydrated = useHydrated();
 
   return (
-    <Tr onClick={() => linkRef.current?.click()} isClickable={isHydrated}>
+    <Tr onClick={() => linkRef.current?.click()}>
       <Td>
         <Link ref={linkRef} to={`/dashboard/projects/${userProject.projectId}`}>
           {userProject.project.name}
