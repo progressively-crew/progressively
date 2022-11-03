@@ -110,9 +110,7 @@ export default function DeleteStrategyPage() {
       confirmAction={
         <Form method="post">
           <DeleteButton
-            variant="primary"
             type="submit"
-            scheme=""
             isLoading={transition.state === "submitting"}
             loadingText="Deleting the strategy, please wait..."
           >

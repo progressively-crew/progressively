@@ -105,8 +105,6 @@ export default function DeleteSchedulePage() {
       confirmAction={
         <Form method="post">
           <DeleteButton
-            variant="primary"
-            scheme=""
             type="submit"
             isLoading={transition.state === "submitting"}
             loadingText="Deleting the schedule, please wait..."

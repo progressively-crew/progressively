@@ -1,4 +1,5 @@
 import React from "react";
+import { Card, CardContent } from "~/components/Card";
 import { Section } from "~/components/Section";
 import { Spacer } from "~/components/Spacer";
 import { User } from "~/modules/user/types";
@@ -23,18 +24,24 @@ export const DeleteEntityLayout = ({
 }: DeleteEntityLayoutProps) => {
   return (
     <DashboardLayout user={user} header={header}>
-      <Section>
-        {error}
+      <div className="mx-auto max-w-2xl">
+        <Card>
+          <CardContent>
+            <Section>
+              {error}
 
-        {children}
+              {children}
 
-        <Spacer size={6} />
+              <Spacer size={6} />
 
-        <div className="flex gap-3">
-          {cancelAction}
-          {confirmAction}
-        </div>
-      </Section>
+              <div className="flex gap-3">
+                {cancelAction}
+                {confirmAction}
+              </div>
+            </Section>
+          </CardContent>
+        </Card>
+      </div>
     </DashboardLayout>
   );
 };

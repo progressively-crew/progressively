@@ -65,10 +65,10 @@ const MultiVariantDescription = ({ flagEnv }: StrategyDescriptionProps) => {
 
           return (
             <Li key={`variant-detail-${variant.uuid}`}>
-              <Typography as="span">
+              <span>
                 <strong>{variant.rolloutPercentage}%</strong> of the audience
                 will receive the <strong>"{variant.value}"</strong> variation
-              </Typography>
+              </span>
             </Li>
           );
         })}

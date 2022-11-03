@@ -25,7 +25,7 @@ export const PageTitle = ({
               {icon}
             </span>
           )}
-          <h1 className="font-bold text-6xl" id="page-title">
+          <h1 className="font-bold text-5xl" id="page-title">
             <span>{value}</span>
           </h1>
           {endAction}
