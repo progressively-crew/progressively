@@ -190,7 +190,7 @@ export default function VariantsOfFlag() {
           name="remainingPercent"
         />
         <Stack spacing={6}>
-          <div className="flex items-end gap-4">
+          <div className="flex flex-col md:flex-row gap-3 md:items-end">
             <TextInput
               name={"value"}
               label={"New variant value"}

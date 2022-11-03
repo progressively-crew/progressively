@@ -118,7 +118,7 @@ export default function SettingsPage() {
                   title="Project members"
                   action={
                     userRole === UserRoles.Admin && (
-                      <HStack spacing={4}>
+                      <div className="flex flex-col md:flex-row gap-3">
                         <CreateButton
                           to={`/dashboard/projects/${project.uuid}/add-member`}
                         >
@@ -132,7 +132,7 @@ export default function SettingsPage() {
                         >
                           Remove from project
                         </DeleteButton>
-                      </HStack>
+                      </div>
                     )
                   }
                 />
