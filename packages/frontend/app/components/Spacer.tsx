@@ -1,59 +1,38 @@
-import { styled } from "~/stitches.config";
+export interface SpacerProps {
+  size?: number;
+}
 
-export const Spacer = styled<any, any>("div", {
-  variants: {
-    size: {
-      0: {
-        height: "$spacing$0",
-      },
-      1: {
-        height: "$spacing$1",
-      },
-      2: {
-        height: "$spacing$2",
-      },
-      3: {
-        height: "$spacing$3",
-      },
-      4: {
-        height: "$spacing$4",
-      },
-      5: {
-        height: "$spacing$5",
-      },
-      6: {
-        height: "$spacing$6",
-      },
-      7: {
-        height: "$spacing$7",
-      },
-      8: {
-        height: "$spacing$8",
-      },
-      9: {
-        height: "$spacing$9",
-      },
-      10: {
-        height: "$spacing$10",
-      },
-      11: {
-        height: "$spacing$11",
-      },
-      12: {
-        height: "$spacing$12",
-      },
-      13: {
-        height: "$spacing$13",
-      },
-      14: {
-        height: "$spacing$14",
-      },
-      15: {
-        height: "$spacing$15",
-      },
-      16: {
-        height: "$spacing$16",
-      },
-    },
-  },
-});
+// eslint-disable-next-line sonarjs/cognitive-complexity
+export const Spacer = ({ size }: SpacerProps) => {
+  return (
+    <div
+      className={
+        size === 1
+          ? "h-1"
+          : size === 2
+          ? "h-2"
+          : size === 3
+          ? "h-3"
+          : size === 4
+          ? "h-4"
+          : size === 5
+          ? "h-5"
+          : size === 6
+          ? "h-6"
+          : size === 7
+          ? "h-7"
+          : size === 8
+          ? "h-8"
+          : size === 9
+          ? "h-9"
+          : size === 10
+          ? "h-10"
+          : size === 11
+          ? "h-11"
+          : size === 12
+          ? "h-12"
+          : undefined
+      }
+    />
+  );
+};

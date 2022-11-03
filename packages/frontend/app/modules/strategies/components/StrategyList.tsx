@@ -2,7 +2,7 @@ import { AiOutlineEdit } from "react-icons/ai";
 import { Button } from "~/components/Buttons/Button";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { HStack } from "~/components/HStack";
-import { RawTable } from "~/components/RawTable";
+import { RawTable, Td, Th, Tr } from "~/components/RawTable";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { StrategyRetrieveDTO } from "../types";
 import { StrategyCriteria } from "./StrategyCriteria";
@@ -23,28 +23,27 @@ export const StrategyList = ({
   return (
     <RawTable aria-label="Strategies applied on this flag">
       <thead>
-        <tr>
-          <th>Name</th>
-          <th width="50%">Criteria</th>
-          <th>Actions</th>
-        </tr>
+        <Tr>
+          <Th>Name</Th>
+          <Th>Criteria</Th>
+          <Th>Actions</Th>
+        </Tr>
       </thead>
       <tbody>
         {strategies.map((strat) => (
-          <tr key={strat.uuid}>
-            <td>
+          <Tr key={strat.uuid}>
+            <Td>
               <div>{strat.name}</div>
-            </td>
+            </Td>
 
-            <td>
+            <Td>
               <StrategyCriteria strat={strat} />
-            </td>
+            </Td>
 
-            <td>
+            <Td>
               <HStack spacing={4}>
                 <Button
-                  variant="tertiary"
-                  small
+                  variant="secondary"
                   icon={<AiOutlineEdit />}
                   to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/strategies/${strat.uuid}/edit`}
                 >
@@ -52,15 +51,14 @@ export const StrategyList = ({
                 </Button>
 
                 <DeleteButton
-                  variant="tertiary"
-                  small
+                  variant="secondary"
                   to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/strategies/${strat.uuid}/delete`}
                 >
                   Remove<VisuallyHidden> {strat.name} strategy</VisuallyHidden>
                 </DeleteButton>
               </HStack>
-            </td>
-          </tr>
+            </Td>
+          </Tr>
         ))}
       </tbody>
     </RawTable>

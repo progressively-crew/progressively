@@ -1,17 +1,11 @@
 import { User } from "~/modules/user/types";
 import { Avatar } from "~/components/Avatar";
 import { Button } from "~/components/Buttons/Button";
-import { styled } from "~/stitches.config";
+import { HideMobile } from "~/components/HideMobile";
 
 export interface UserDropdownProps {
   user: User;
 }
-
-const HiddenMobile = styled("span", {
-  "@mobile": {
-    display: "none",
-  },
-});
 
 export const UseDropdown = ({ user }: UserDropdownProps) => {
   return (
@@ -22,7 +16,7 @@ export const UseDropdown = ({ user }: UserDropdownProps) => {
         variant="tertiary"
         aria-label={user.fullname}
       >
-        <HiddenMobile>{user.fullname}</HiddenMobile>
+        <HideMobile>{user.fullname}</HideMobile>
       </Button>
     </nav>
   );

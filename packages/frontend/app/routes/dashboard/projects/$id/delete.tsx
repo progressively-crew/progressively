@@ -135,8 +135,6 @@ export default function DeleteProjectPage() {
       confirmAction={
         <Form method="post">
           <DeleteButton
-            variant="primary"
-            scheme=""
             type="submit"
             isLoading={transition.state === "submitting"}
             loadingText="Deleting the project, please wait..."
@@ -153,18 +151,16 @@ export default function DeleteProjectPage() {
       <Stack spacing={4}>
         <WarningBox title={<>This operation is definitive.</>} />
 
-        <Typography color="hadesLight">
+        <Typography>
           If you validate the suppression, all the environments of the project,
           and all the associated feature flags will be removed.
         </Typography>
 
-        <Typography color="hadesLight">
+        <Typography>
           You won't have access to the flags analytics anymore.
         </Typography>
 
-        <Typography color="hadesLight">
-          There will be no way to get the data back.
-        </Typography>
+        <Typography>There will be no way to get the data back.</Typography>
       </Stack>
     </DeleteEntityLayout>
   );

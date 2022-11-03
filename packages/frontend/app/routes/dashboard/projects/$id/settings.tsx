@@ -113,21 +113,19 @@ export default function SettingsPage() {
         <Card>
           <Section id="members">
             <Form method="post">
-              <CardContent noBottom>
+              <CardContent>
                 <SectionHeader
                   title="Project members"
                   action={
                     userRole === UserRoles.Admin && (
-                      <HStack spacing={4} direction={{ "@mobile": "column" }}>
+                      <HStack spacing={4}>
                         <CreateButton
-                          small
                           to={`/dashboard/projects/${project.uuid}/add-member`}
                         >
                           Add member
                         </CreateButton>
 
                         <DeleteButton
-                          small
                           type={"submit"}
                           isLoading={transition.state === "submitting"}
                           loadingText="Deleting the member(s), please wait..."
@@ -141,18 +139,18 @@ export default function SettingsPage() {
 
                 {data?.errors.unauthorized && (
                   <>
-                    <ErrorBox list={data.errors} />
                     <Spacer size={4} />
+                    <ErrorBox list={data.errors} />
                   </>
                 )}
 
                 {data?.success && (
                   <>
+                    <Spacer size={4} />
                     <SuccessBox id="member-deleted">
                       {data?.removedCount} user have been successfully removed
                       from the project.
                     </SuccessBox>
-                    <Spacer size={4} />
                   </>
                 )}
               </CardContent>
@@ -182,20 +180,20 @@ export default function SettingsPage() {
                   }
                 />
 
-                <div>
+                <Spacer size={4} />
+
+                <div className="inline-block">
                   <DeleteButton
                     to={`/dashboard/projects/${project.uuid}/delete`}
                   >
-                    <span>
-                      <span aria-hidden>
-                        Delete{" "}
-                        <HideMobile>{`"${project.name}"`} forever</HideMobile>
-                      </span>
-
-                      <VisuallyHidden>
-                        Delete {`"${project.name}"`} forever
-                      </VisuallyHidden>
+                    <span aria-hidden className="flex">
+                      Delete{" "}
+                      <HideMobile>{`"${project.name}"`} forever</HideMobile>
                     </span>
+
+                    <VisuallyHidden>
+                      Delete {`"${project.name}"`} forever
+                    </VisuallyHidden>
                   </DeleteButton>
                 </div>
               </Section>

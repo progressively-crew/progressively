@@ -11,16 +11,16 @@ import {
 import UnauthorizedPage from "./routes/401";
 import ForbiddenPage from "./routes/403";
 import NotFoundPage from "./routes/404";
-import styles from "./styles/index.css";
+import styles from "./styles/app.css";
 import { H1 } from "./components/H1";
 import { Main } from "./components/Main";
-import { Button } from "./components/Buttons/Button";
 import { Background } from "./components/Background";
 import { LinksFunction } from "@remix-run/node";
 import { ErrorLayout } from "./layouts/ErrorLayout";
 import { Typography } from "./components/Typography";
 import { Spacer } from "./components/Spacer";
 import { withSentry } from "@sentry/remix";
+import { SubmitButton } from "./components/Buttons/SubmitButton";
 
 /**
  * The `links` export is a function that returns an array of objects that map to
@@ -31,11 +31,7 @@ import { withSentry } from "@sentry/remix";
  * https://remix.run/api/app#links
  */
 export const links: LinksFunction = () => {
-  return [
-    { rel: "preconnect", href: "https://rsms.me/" },
-    { rel: "stylesheet preload", href: "https://rsms.me/inter/inter.css" },
-    { rel: "stylesheet", href: styles },
-  ];
+  return [{ rel: "stylesheet", href: styles }];
 };
 
 /**
@@ -60,7 +56,7 @@ interface DocumentProps {
 
 const Document = ({ children, title }: DocumentProps) => {
   return (
-    <html lang="en">
+    <html lang="en" className="h-full">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -69,7 +65,7 @@ const Document = ({ children, title }: DocumentProps) => {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="h-full">
         <Background>{children}</Background>
         <ScrollRestoration />
         <Scripts />
@@ -122,7 +118,7 @@ export function ErrorBoundary({ error }: { error: Error }) {
             <Typography>{error.message}</Typography>
             <Spacer size={4} />
 
-            <Button to="/signin">Signin page</Button>
+            <SubmitButton to="/signin">Signin page</SubmitButton>
           </Main>
         </ErrorLayout>
       </Layout>

@@ -1,19 +1,21 @@
-import { styled, mapTokenToVariant, colors } from "~/stitches.config";
+export interface TagProps {
+  children: React.ReactNode;
+  size?: "S" | "M";
+  className?: string;
+}
 
-export const Tag = styled("span", {
-  borderRadius: "$borderRadius$regular",
-  padding: "$spacing$1 $spacing$2",
-  color: "$nemesis",
-  background: "$nemesisLight",
-  fontSize: "$uranus",
+const sizeStyle = {
+  S: "px-2 py-1",
+  M: "px-4 py-2",
+};
 
-  variants: {
-    color: mapTokenToVariant("color", colors),
-    background: mapTokenToVariant("background", colors),
-    small: {
-      true: {
-        fontSize: "$neptune",
-      },
-    },
-  },
-});
+export const Tag = ({ children, size, className = "" }: TagProps) => {
+  const sharedClasses = "bg-gray-100 rounded-full";
+  const sizesClasses = sizeStyle[size || "M"];
+
+  return (
+    <span className={sharedClasses + " " + sizesClasses + " " + className}>
+      {children}
+    </span>
+  );
+};

@@ -1,39 +1,11 @@
 import { useEffect, useRef } from "react";
 import { AiOutlineCheckCircle } from "react-icons/ai";
-import { keyframes, styled } from "~/stitches.config";
+import { HStack } from "../HStack";
 
 export interface SuccessBoxProps {
   children: React.ReactNode;
   id: string;
 }
-
-const bounce = keyframes({
-  "0%": { transform: "scale(0.98)", opacity: 0 },
-  "50%": { transform: "scale(1.02)" },
-  "100%": { transform: "scale(1)", opacity: 1 },
-});
-
-const SuccessBoxWrapper = styled("p", {
-  alignItems: "center",
-  background: "$successBg",
-  color: "$successFg",
-  borderLeft: "8px solid $successBorder",
-  padding: "$spacing$6 $spacing$4",
-  borderRadius: "$borderRadius$regular",
-  fontFamily: "$default",
-  display: "flex",
-  gap: "$spacing$3",
-  lineHeight: "$text",
-
-  animation: `${bounce} 300ms ease-in-out`,
-  "@media (prefers-reduced-motion: reduce)": {
-    animation: "unset",
-  },
-
-  "& svg": {
-    fontSize: "$mars",
-  },
-});
 
 export const SuccessBox = ({ children, id, ...props }: SuccessBoxProps) => {
   const boxRef = useRef<HTMLDivElement>(null);
@@ -43,15 +15,17 @@ export const SuccessBox = ({ children, id, ...props }: SuccessBoxProps) => {
   }, []);
 
   return (
-    <SuccessBoxWrapper
+    <p
       ref={boxRef}
       tabIndex={-1}
       id={id}
-      className="success-box"
+      className="success-box p-4 bg-green-100 text-green-700 rounded border-l-8 border-l-green-600"
       {...props}
     >
-      <AiOutlineCheckCircle aria-hidden />
-      <span>{children}</span>
-    </SuccessBoxWrapper>
+      <HStack as="span" spacing={2}>
+        <AiOutlineCheckCircle aria-hidden />
+        <span>{children}</span>
+      </HStack>
+    </p>
   );
 };

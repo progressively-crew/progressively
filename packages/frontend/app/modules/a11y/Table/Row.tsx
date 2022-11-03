@@ -1,6 +1,7 @@
 import React, { ReactNode, useRef } from "react";
 import { HTMLAttributes } from "react";
 import { Checkbox } from "~/components/Checkbox";
+import { Td, Tr } from "~/components/RawTable";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { KeyboardKeys } from "../utils/keyboardKeys";
 import { useSelections } from "./TableContext";
@@ -66,13 +67,13 @@ export const Row = ({ children, selection, disabled, ...props }: RowProps) => {
   };
 
   return (
-    <tr
+    <Tr
       onClick={handleClick}
       onKeyDown={handleKeyDown}
       {...props}
       className={isChecked ? "row-selected" : undefined}
     >
-      <td aria-colindex={1}>
+      <Td aria-colindex={1}>
         <VisuallyHidden>
           <span id={`select-col-${selection}`}>Select</span>
         </VisuallyHidden>
@@ -87,9 +88,9 @@ export const Row = ({ children, selection, disabled, ...props }: RowProps) => {
           value={selection}
           disabled={disabled}
         />
-      </td>
+      </Td>
 
       {childrenClone}
-    </tr>
+    </Tr>
   );
 };

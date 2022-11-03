@@ -1,20 +1,15 @@
-import { styled } from "~/stitches.config";
+export interface WithAs extends React.HTMLAttributes<HTMLElement> {
+  as?: any;
+}
 
-export const HideMobile = styled("span", {
-  "@mobile": {
-    display: "none",
-  },
-});
+export const HideDesktop = ({ as: Component = "span", ...props }: WithAs) => {
+  return <Component className="md:hidden" {...props} />;
+};
 
-export const HideTablet = styled("span", {
-  "@tablet": {
-    display: "none",
-  },
-});
+export const HideTablet = ({ as: Component = "span", ...props }: WithAs) => {
+  return <Component className="hidden lg:block" {...props} />;
+};
 
-export const HideDesktop = styled("span", {
-  display: "none",
-  "@tablet": {
-    display: "unset",
-  },
-});
+export const HideMobile = ({ as: Component = "span", ...props }: WithAs) => {
+  return <Component className="hidden md:block" {...props} />;
+};

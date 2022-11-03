@@ -16,8 +16,8 @@ const SimpleVariantDescription = ({
   if (flagEnv.rolloutPercentage === 100) {
     return (
       <Typography>
-        <Tag>{flagEnv.rolloutPercentage}%</Tag> of the audience will resolve the{" "}
-        <strong>"true"</strong> variant of the flag.
+        <Tag size="S">{flagEnv.rolloutPercentage}%</Tag> of the audience will
+        resolve the <strong>"true"</strong> variant of the flag.
       </Typography>
     );
   }
@@ -28,15 +28,16 @@ const SimpleVariantDescription = ({
         <Typography>
           Only the user matching at least one of the following strategies will
           resolve the <strong>"true"</strong> variant of the flag since the
-          rollout percentage is <Tag>{flagEnv.rolloutPercentage}%</Tag>.
+          rollout percentage is <Tag size="S">{flagEnv.rolloutPercentage}%</Tag>
+          .
         </Typography>
       );
     }
 
     return (
       <Typography>
-        <Tag>{flagEnv.rolloutPercentage}%</Tag> of the audience AND the users
-        matching at least one of the following strategies will resolve the{" "}
+        <Tag size="S">{flagEnv.rolloutPercentage}%</Tag> of the audience AND the
+        users matching at least one of the following strategies will resolve the{" "}
         <strong>"true"</strong> variant of the flag.
       </Typography>
     );
@@ -44,8 +45,8 @@ const SimpleVariantDescription = ({
 
   return (
     <Typography>
-      <Tag>{flagEnv.rolloutPercentage}%</Tag> of the audience will resolve the{" "}
-      <strong>"true"</strong> variant of the flag.
+      <Tag size="S">{flagEnv.rolloutPercentage}%</Tag> of the audience will
+      resolve the <strong>"true"</strong> variant of the flag.
     </Typography>
   );
 };
@@ -64,10 +65,10 @@ const MultiVariantDescription = ({ flagEnv }: StrategyDescriptionProps) => {
 
           return (
             <Li key={`variant-detail-${variant.uuid}`}>
-              <Typography as="span">
+              <span>
                 <strong>{variant.rolloutPercentage}%</strong> of the audience
                 will receive the <strong>"{variant.value}"</strong> variation
-              </Typography>
+              </span>
             </Li>
           );
         })}
@@ -110,10 +111,7 @@ export const StrategyDescription = ({
     return (
       <Typography>
         Nobody will receive the <strong>"true"</strong> variant of the flag:
-        it's{" "}
-        <Tag color="errorFg" background="errorBg">
-          not activated
-        </Tag>
+        it's <Tag size="S">not activated</Tag>
       </Typography>
     );
   }

@@ -1,38 +1,7 @@
-import {
-  styled,
-  fontSizes,
-  mapTokenToVariant,
-  fonts,
-  lineHeights,
-  fontWeights,
-  colors,
-} from "~/stitches.config";
+import React from "react";
 
-export const Typography = styled<any, any>("p", {
-  color: "$hades",
-  fontSize: "$jupiter",
-  fontFamily: "$default",
-  lineHeight: "$text",
-  maxWidth: "60ch",
-
-  "& strong": {
-    fontWeight: "bold",
-  },
-
-  "& a": {
-    height: "unset",
-  },
-
-  variants: {
-    fontWeight: mapTokenToVariant("fontWeight", fontWeights),
-    lineHeight: mapTokenToVariant("lineHeight", lineHeights),
-    font: mapTokenToVariant("fontFamily", fonts),
-    size: mapTokenToVariant("fontSize", fontSizes),
-    color: mapTokenToVariant("color", colors),
-    textTransform: {
-      uppercase: {
-        textTransform: "uppercase",
-      },
-    },
-  },
-});
+export const Typography = (
+  props: React.HTMLAttributes<HTMLParagraphElement>
+) => {
+  return <p {...props} />;
+};

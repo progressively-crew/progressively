@@ -110,8 +110,6 @@ export default function DeleteMetricPage() {
       confirmAction={
         <Form method="post">
           <DeleteButton
-            variant="primary"
-            scheme=""
             type="submit"
             isLoading={transition.state === "submitting"}
             loadingText="Deleting the metric, please wait..."
@@ -128,12 +126,12 @@ export default function DeleteMetricPage() {
       <Stack spacing={4}>
         <WarningBox title={<>This operation is definitive.</>} />
 
-        <Typography color="hadesLight">
+        <Typography>
           If you validate the suppression, the metric will be removed from the
           feature flag.
         </Typography>
 
-        <Typography color="hadesLight">
+        <Typography>
           All the metric related data (including events) will be removed and not
           available anymore.
         </Typography>

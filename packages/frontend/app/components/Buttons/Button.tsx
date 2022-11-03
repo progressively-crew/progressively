@@ -1,146 +1,7 @@
 import { Link } from "@remix-run/react";
 import { HTMLAttributes } from "react";
-
-import { styled } from "~/stitches.config";
 import { HStack } from "../HStack";
 import { Spinner } from "../Spinner";
-
-export const RawButton = styled("button", {
-  boxSizing: "border-box",
-  background: "transparent",
-  borderRadius: "$borderRadius$regular",
-  padding: "0 $spacing$4",
-  color: "$hades",
-  fontSize: "$uranus",
-  fontFamily: "$default",
-  border: "2px solid transparent",
-  display: "inline-flex",
-  alignItems: "center",
-  textDecoration: "none",
-  height: "$cta",
-  cursor: "pointer",
-  margin: 0,
-  textAlign: "left",
-  transition: "all 0.1s",
-  whiteSpace: "nowrap",
-
-  "& svg": {
-    borderRight: "1px solid currentColor",
-    paddingRight: "$spacing$3",
-  },
-
-  "&:hover": {
-    transform: "scale(1.05)",
-  },
-
-  "@mobile": {
-    justifyContent: "center",
-    width: "100%",
-
-    "& .text": {
-      flex: 1,
-      textAlign: "center",
-    },
-  },
-
-  variants: {
-    small: {
-      true: {
-        borderRadius: "$borderRadius$small",
-        height: "$ctaSmall",
-        padding: "0 $spacing$2",
-
-        "& svg": {
-          paddingRight: "$spacing$2",
-        },
-      },
-    },
-    variant: {
-      secondary: {
-        background: "none",
-        border: "1px solid $nemesis",
-        color: "$nemesis",
-
-        "&:active": {
-          opacity: "0.9",
-        },
-      },
-      tertiary: {
-        background: "none",
-        border: "2px solid transparent",
-        color: "$nemesis",
-        "&:active": {
-          opacity: "0.9",
-        },
-        "&:hover": {
-          background: "$heracles",
-        },
-      },
-
-      primary: {
-        background: "$nemesis",
-        color: "$apollo",
-        "&:active": {
-          opacity: "0.8",
-        },
-      },
-    },
-
-    scheme: {
-      danger: {
-        background: "$tyche",
-        color: "$apollo",
-        "&:active": {
-          opacity: "0.9",
-        },
-      },
-    },
-  },
-
-  compoundVariants: [
-    {
-      scheme: "danger",
-      variant: "secondary",
-      css: {
-        background: "transparent",
-        border: "1px solid $tyche",
-        color: "$tyche",
-
-        "& svg": {
-          color: "$tyche",
-        },
-      },
-    },
-    {
-      scheme: "danger",
-      variant: "tertiary",
-      css: {
-        background: "transparent",
-        color: "$tyche",
-
-        "& svg": {
-          color: "$tyche",
-        },
-      },
-    },
-    {
-      scheme: "inverse",
-      variant: "tertiary",
-      css: {
-        background: "transparent",
-        color: "$apollo",
-
-        "& svg": {
-          color: "$apollo",
-        },
-
-        "&:hover": {
-          background: "$hadesLight",
-        },
-      },
-    },
-  ],
-});
 
 export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   to?: string;
@@ -149,11 +10,23 @@ export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean;
   loadingText?: string;
   type?: "button" | "submit" | "reset";
-  variant?: "tertiary" | "primary" | "secondary";
-  scheme?: "default" | "danger" | "inverse";
+  variant?: "primary" | "secondary" | "tertiary";
+  scheme?: "default" | "danger";
   icon?: React.ReactNode;
-  small?: boolean;
 }
+
+const classCombination = {
+  defaultprimary:
+    "bg-indigo-700 text-white hover:bg-indigo-500 active:bg-indigo-600",
+  defaultsecondary:
+    "bg-indigo-100 text-indigo-700 text-indigo-700 hover:bg-indigo-50 active:bg-indigo-100",
+  defaulttertiary: "text-indigo-700",
+
+  dangerprimary: "bg-red-700 text-white hover:bg-red-500 active:bg-red-600",
+  dangersecondary:
+    "bg-red-100 text-red-700 text-red-700 hover:bg-red-50 active:bg-red-100",
+  dangertertiary: "text-red-700",
+};
 
 export const Button = ({
   to,
@@ -164,41 +37,47 @@ export const Button = ({
   isLoading,
   loadingText,
   scheme,
+  variant,
   ...props
 }: ButtonProps) => {
+  const sharedButtonClass = "block rounded flex items-center h-10 px-4";
+  const actuelScheme = scheme || "default";
+  const actualVariant = variant || "primary";
+  const combinedClassName = classCombination[actuelScheme + actualVariant];
+
   if (to || href) {
     const linkProps = props as HTMLAttributes<HTMLAnchorElement>;
+    const Component = href ? "a" : Link;
 
     return (
-      <RawButton
-        as={href ? "a" : Link}
+      <Component
         to={href ? undefined : to}
         href={href}
-        scheme={scheme}
+        className={sharedButtonClass + " " + combinedClassName}
         {...linkProps}
       >
         <HStack spacing={3}>
-          {icon}
-          <span className="text">{children}</span>
+          <span>{icon}</span>
+          <span>{children}</span>
         </HStack>
-      </RawButton>
+      </Component>
     );
   }
 
   return (
-    <RawButton
+    <button
       type={type}
-      scheme={scheme}
+      className={sharedButtonClass + " " + combinedClassName}
       {...props}
       aria-disabled={isLoading}
       aria-label={isLoading ? loadingText : undefined}
     >
       <HStack spacing={3}>
-        {icon && isLoading && <Spinner scheme={scheme} />}
+        {icon && isLoading && <Spinner />}
         {icon && !isLoading && icon}
 
         <span className={icon ? "text" : undefined}>{children}</span>
       </HStack>
-    </RawButton>
+    </button>
   );
 };

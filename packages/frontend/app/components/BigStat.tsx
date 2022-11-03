@@ -1,25 +1,4 @@
 import { useRef } from "react";
-import { styled } from "~/stitches.config";
-import { HStack } from "./HStack";
-import { Typography } from "./Typography";
-
-const BigStatValue = styled("p", {
-  fontFamily: "$default",
-  display: "inline",
-  fontSize: "$venus",
-  lineHeight: "unset",
-  color: "$nemesis",
-  fontWeight: "$bold",
-
-  variants: {
-    type: {
-      variant: {
-        color: "$successFg",
-        borderBottom: "20px solid red",
-      },
-    },
-  },
-});
 
 export interface BigStatProps {
   name: string;
@@ -37,35 +16,21 @@ export const BigStat = ({ name, count, id, unit, type }: BigStatProps) => {
     })
   );
 
-  console.log("looo", type);
-
   return (
     <div>
-      <Typography
-        as="h2"
-        id={id}
-        textTransform="uppercase"
-        color="hadesLight"
-        size="neptune"
-      >
+      <h2 id={id} className="font-semibold">
         {name}
-      </Typography>
+      </h2>
 
-      <BigStatValue type={type}>
-        <HStack alignItems="flex-end" as="span">
-          {formatterRef.current.format(count)}{" "}
-          {unit && (
-            <Typography
-              font="title"
-              as="span"
-              color="hadesLight"
-              fontWeight="semiBold"
-            >
-              {unit}
-            </Typography>
-          )}
-        </HStack>
-      </BigStatValue>
+      <div
+        className={
+          type === "variant"
+            ? "text-indigo-700 text-4xl font-bold"
+            : "text-orange-700 text-4xl font-bold"
+        }
+      >
+        {formatterRef.current.format(count)} {unit && <span>{unit}</span>}
+      </div>
     </div>
   );
 };

@@ -1,7 +1,5 @@
-import { styled } from "~/stitches.config";
 import { HStack } from "./HStack";
-import { Stack } from "./Stack";
-import { Typography } from "./Typography";
+import { Spacer } from "./Spacer";
 
 export interface PageTitleProps {
   value: string;
@@ -11,24 +9,6 @@ export interface PageTitleProps {
   description?: React.ReactNode;
 }
 
-const IconWrapper = styled("span", {
-  color: "$nemesis",
-  fontSize: "$mercury",
-  marginTop: "$spacing$2",
-});
-
-const DescriptionWrapper = styled("div", {
-  "& p, & ul li, & span": {
-    color: "$hadesLight",
-  },
-});
-
-const ActionWrapper = styled("div", {
-  "@mobile": {
-    width: "100%",
-  },
-});
-
 export const PageTitle = ({
   value,
   icon,
@@ -37,33 +17,29 @@ export const PageTitle = ({
   endAction,
 }: PageTitleProps) => {
   return (
-    <HStack
-      justifyContent={{ "@initial": "space-between", "@tablet": "flex-start" }}
-      direction={{ "@tablet": "column" }}
-      alignItems={{ "@tablet": "flex-start" }}
-      spacing={{ "@tablet": 4 }}
-    >
-      <Stack>
+    <div className="flex justify-between">
+      <div>
         <HStack spacing={3}>
-          {icon && <IconWrapper aria-hidden>{icon}</IconWrapper>}
-          <Typography
-            size={{ "@initial": "venus", "@mobile": "earth" }}
-            font="title"
-            color="hades"
-            fontWeight="semiBold"
-            lineHeight="title"
-            as="h1"
-            id="page-title"
-          >
+          {icon && (
+            <span aria-hidden className="text-indigo-700 text-4xl">
+              {icon}
+            </span>
+          )}
+          <h1 className="font-bold text-5xl" id="page-title">
             <span>{value}</span>
-          </Typography>
+          </h1>
           {endAction}
         </HStack>
 
-        {description && <DescriptionWrapper>{description}</DescriptionWrapper>}
-      </Stack>
+        {description && (
+          <div>
+            <Spacer size={2} />
+            {description}
+          </div>
+        )}
+      </div>
 
-      <ActionWrapper>{action}</ActionWrapper>
-    </HStack>
+      <div>{action}</div>
+    </div>
   );
 };

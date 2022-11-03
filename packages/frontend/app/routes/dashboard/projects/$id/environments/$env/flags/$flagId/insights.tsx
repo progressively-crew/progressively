@@ -3,7 +3,6 @@ import { getSession } from "~/sessions";
 import { Header } from "~/components/Header";
 import { AiOutlineBarChart } from "react-icons/ai";
 import { getFlagHits } from "~/modules/flags/services/getFlagHits";
-import { styled } from "~/stitches.config";
 import { MetaFunction, LoaderFunction } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
 import { TagLine } from "~/components/Tagline";
@@ -19,7 +18,6 @@ import { Stack } from "~/components/Stack";
 import { Card, CardContent } from "~/components/Card";
 import { TextInput } from "~/components/Fields/TextInput";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
-import { HStack } from "~/components/HStack";
 import { Typography } from "~/components/Typography";
 import { PageTitle } from "~/components/PageTitle";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
@@ -60,22 +58,6 @@ interface LoaderData {
     count: number;
   }>;
 }
-
-const TableWrapper = styled("div", {
-  "& table tbody tr td": {
-    height: "$cta",
-  },
-});
-
-const InsightsGrid = styled("div", {
-  display: "grid",
-  gap: "$spacing$8",
-  gridTemplateColumns: "1fr 1fr 1fr",
-
-  "@tablet": {
-    gridTemplateColumns: "1fr",
-  },
-});
 
 export const loader: LoaderFunction = async ({
   request,
@@ -188,11 +170,7 @@ export default function FlagInsights() {
 
       <Stack spacing={8}>
         <Form action=".">
-          <HStack
-            spacing={4}
-            alignItems={{ "@initial": "flex-end", "@mobile": "none" }}
-            direction={{ "@mobile": "column" }}
-          >
+          <div className="flex gap-4 items-end">
             <TextInput
               type="date"
               name={"startDate"}
@@ -206,46 +184,45 @@ export default function FlagInsights() {
               defaultValue={formatDefaultDate(endDate)}
             />
             <SubmitButton>Filter on date</SubmitButton>
-          </HStack>
+          </div>
         </Form>
 
-        <InsightsGrid>
+        <div className="grid grid-cols-3 gap-8">
           <Card>
             <CardContent>
               <BigStat
                 count={flagEvaluationsCount}
-                unit="evalutations"
+                unit="eval."
                 name={`Flag evaluations`}
               />
             </CardContent>
           </Card>
+
           {variantEvalutations.map((variant) => (
             <Card key={variant.variant}>
               <CardContent>
                 <BigStat
                   type="variant"
                   count={variant.count}
-                  unit="evalutations"
-                  name={`Variant ${variant.variant}`}
+                  unit="eval."
+                  name={`Variant ${variant.variant} evaluations`}
                 />
               </CardContent>
             </Card>
           ))}
-        </InsightsGrid>
+        </div>
 
         {hits.length > 0 && (
           <Card>
             <Section id="with-variant">
-              <CardContent noBottom>
+              <CardContent>
                 <SectionHeader title="Hits by variant" />
               </CardContent>
 
-              <TableWrapper>
-                <HitByVariantList
-                  hits={hits}
-                  flagEvaluationsCount={flagEvaluationsCount}
-                />
-              </TableWrapper>
+              <HitByVariantList
+                hits={hits}
+                flagEvaluationsCount={flagEvaluationsCount}
+              />
             </Section>
           </Card>
         )}
@@ -253,16 +230,14 @@ export default function FlagInsights() {
         {hitsWithoutVariant.length > 0 && (
           <Card>
             <Section id="without-variant">
-              <CardContent noBottom>
+              <CardContent>
                 <SectionHeader title="Other hits" />
               </CardContent>
 
-              <TableWrapper>
-                <HitWithoutVariantList
-                  hits={hitsWithoutVariant}
-                  flagEvaluationsCount={flagEvaluationsCount}
-                />
-              </TableWrapper>
+              <HitWithoutVariantList
+                hits={hitsWithoutVariant}
+                flagEvaluationsCount={flagEvaluationsCount}
+              />
             </Section>
           </Card>
         )}

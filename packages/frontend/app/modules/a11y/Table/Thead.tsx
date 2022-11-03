@@ -4,6 +4,7 @@ import { useHydrated } from "~/modules/misc/hooks/useHydrated";
 import { useSelections } from "./TableContext";
 
 import { VisuallyHidden } from "~/components/VisuallyHidden";
+import { Th, Tr } from "~/components/RawTable";
 
 export interface TheadProps {
   children: React.ReactNode;
@@ -31,8 +32,8 @@ export const Thead = ({ children, disabled }: TheadProps) => {
 
   return (
     <thead>
-      <tr aria-rowindex={1}>
-        <th aria-colindex={1}>
+      <Tr aria-rowindex={1}>
+        <Th aria-colindex={1}>
           <VisuallyHidden>
             <span id="select-all">
               Select {isHydrated ? "all" : "an element"}
@@ -49,9 +50,9 @@ export const Thead = ({ children, disabled }: TheadProps) => {
             name="select-all"
             disabled={disabled}
           />
-        </th>
+        </Th>
         {childrenClone}
-      </tr>
+      </Tr>
     </thead>
   );
 };

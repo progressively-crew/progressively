@@ -43,6 +43,7 @@ import { editVariantAction } from "~/modules/variants/form-actions/editVariantAc
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { PageTitle } from "~/components/PageTitle";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
+import { Spacer } from "~/components/Spacer";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -188,7 +189,7 @@ export default function FlagById() {
       <Stack spacing={8}>
         <Section id="rollout-target">
           <Card>
-            <CardContent noBottom>
+            <CardContent>
               <SectionHeader
                 title="Percentage of the audience"
                 description={
@@ -206,7 +207,11 @@ export default function FlagById() {
                   ) : (
                     <Typography>
                       This is the percentage of people that will receive the
-                      variant <Tag>true</Tag> when the flag is activated.
+                      variant{" "}
+                      <Tag className="bg-emerald-100 text-emerald-700" size="S">
+                        true
+                      </Tag>{" "}
+                      when the flag is activated.
                     </Typography>
                   )
                 }
@@ -224,26 +229,26 @@ export default function FlagById() {
                   ) : null
                 }
               />
+
+              {!isMultiVariants && (
+                <SliderFlag
+                  initialRolloutPercentage={flagEnv.rolloutPercentage}
+                />
+              )}
             </CardContent>
 
-            {isMultiVariants ? (
+            {isMultiVariants && (
               <VariantList
                 variants={flagEnv.variants}
                 mode={VariantListModes.Operational}
               />
-            ) : (
-              <CardContent noTop>
-                <SliderFlag
-                  initialRolloutPercentage={flagEnv.rolloutPercentage}
-                />
-              </CardContent>
             )}
           </Card>
         </Section>
 
         <Section id="concerned-audience">
           <Card>
-            <CardContent noBottom>
+            <CardContent>
               <SectionHeader
                 title="Strategies"
                 status={
@@ -265,7 +270,6 @@ export default function FlagById() {
                   hasStrategies && (
                     <CreateButton
                       variant="secondary"
-                      small
                       to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
                     >
                       Create a strategy
@@ -283,26 +287,24 @@ export default function FlagById() {
                 flagId={currentFlag.uuid}
               />
             ) : (
-              <CardContent>
-                <EmptyState
-                  title="No strategy found"
-                  description={
-                    <Typography>
-                      There are no strategies bound to this flag yet. In this
-                      case, when the flag is activated, every user will receive
-                      the {`"true"`} variant.
-                    </Typography>
-                  }
-                  action={
-                    <CreateButton
-                      variant="secondary"
-                      to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
-                    >
-                      Create a strategy
-                    </CreateButton>
-                  }
-                />
-              </CardContent>
+              <EmptyState
+                title="No strategy found"
+                description={
+                  <Typography>
+                    There are no strategies bound to this flag yet. In this
+                    case, when the flag is activated, every user will receive
+                    the {`"true"`} variant.
+                  </Typography>
+                }
+                action={
+                  <CreateButton
+                    variant="secondary"
+                    to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
+                  >
+                    Create a strategy
+                  </CreateButton>
+                }
+              />
             )}
           </Card>
         </Section>

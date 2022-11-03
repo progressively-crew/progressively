@@ -24,7 +24,7 @@ const StrategyCriteriaField = ({ strat }: StrategyTargetingProps) => {
 
   return (
     <div>
-      <Typography size="uranus">
+      <Typography>
         <span>
           with <strong>{strat.fieldName}</strong>{" "}
           <strong>

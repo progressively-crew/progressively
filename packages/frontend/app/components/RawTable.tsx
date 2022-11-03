@@ -1,99 +1,42 @@
-import { forwardRef } from "react";
-import { styled } from "~/stitches.config";
-
-const Wrapper = styled("div", {
-  overflowX: "auto",
-  overflowY: "clip",
-});
-
-const Table = styled("table", {
-  color: "$hades",
-  fontFamily: "$default",
-  whiteSpace: "nowrap",
-  width: "100%",
-
-  "& th": {
-    verticalAlign: "middle",
-    height: "$cta",
-    textAlign: "left",
-    textTransform: "uppercase",
-    fontSize: "$neptune",
-    fontFamily: "$title",
-    padding: "0 $spacing$2",
-    fontWeight: "$bold",
-    color: "$hadesLight",
-  },
-
-  "& td": {
-    verticalAlign: "middle",
-    minHeight: "$cta",
-    padding: "$spacing$2",
-    color: "$hades",
-  },
-
-  "& td a": {
-    fontSize: "$uranus",
-  },
-
-  "& tr td:first-of-type": {
-    paddingLeft: "$spacing$12",
-  },
-
-  "& tr td:last-of-type": {
-    paddingLeft: "$spacing$12",
-  },
-
-  "& tr th:first-of-type": {
-    paddingLeft: "$spacing$12",
-  },
-
-  "& tr th:last-of-type": {
-    paddingLeft: "$spacing$12",
-  },
-
-  "& thead tr:first-of-type": {
-    borderTop: "none",
-  },
-
-  "& tr": {
-    transition: "all 0.2s",
-    borderTop: "1px solid $heracles",
-    borderLeft: "4px solid transparent",
-  },
-
-  "& tbody tr:hover": {
-    background: "$heracles",
-    borderLeft: "4px solid $nemesis",
-  },
-
-  "& tbody tr.clickable": {
-    cursor: "pointer",
-  },
-
-  "& tbody tr.clickable:active": {
-    background: "$hera",
-  },
-});
+import React, { forwardRef } from "react";
 
 export const RawTable = forwardRef((props: any, ref: any) => {
   return (
-    <Wrapper>
-      <Table ref={ref} {...props} />
-    </Wrapper>
+    <div className="overflow-x-auto overflow-y-clip">
+      <table ref={ref} {...props} className="w-full" />
+    </div>
   );
 });
 
-export interface TrProps {
-  onClick: () => void;
-  children: React.ReactNode;
-}
-export const Tr = ({ children, onClick }: TrProps) => {
+export const Tr = ({
+  onClick,
+  ...props
+}: React.HTMLAttributes<HTMLTableRowElement>) => {
   const isClickable = Boolean(onClick);
 
   return (
-    <tr onClick={onClick} className={isClickable ? "clickable" : undefined}>
-      {children}
-    </tr>
+    <tr
+      onClick={onClick}
+      className={
+        isClickable
+          ? "border-l-8 border-l-transparent hover:bg-gray-50 hover:border-l-indigo-500 hover:cursor-pointer active:bg-gray-100 border-b border-b-gray-100"
+          : "border-b border-b-gray-100"
+      }
+      {...props}
+    />
+  );
+};
+
+export const Td = (props: React.HTMLAttributes<HTMLTableCellElement>) => {
+  return <td className="py-4 px-6" {...props} />;
+};
+
+export const Th = (props: React.HTMLAttributes<HTMLTableCellElement>) => {
+  return (
+    <th
+      className="py-3 px-6 bg-gray-100 text-left uppercase text-sm text-gray-600 tracking-wide"
+      {...props}
+    />
   );
 };
 

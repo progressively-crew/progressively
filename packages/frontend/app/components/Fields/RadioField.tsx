@@ -32,16 +32,13 @@ export const RadioField = <T extends string>({
         {options.map((opt) => (
           <HStack key={opt.value} spacing={2}>
             <Radio
-              type="radio"
               id={opt.value}
               name={name}
               value={opt.value}
               checked={opt.value === value}
               onChange={(e) => onChange(e.target.value as T)}
             />
-            <Label size="uranus" htmlFor={opt.value} fontWeight="normal">
-              {opt.label}
-            </Label>
+            <Label htmlFor={opt.value}>{opt.label}</Label>
           </HStack>
         ))}
       </Stack>

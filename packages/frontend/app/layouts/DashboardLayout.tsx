@@ -5,7 +5,6 @@ import { Container } from "~/components/Container";
 import { Spacer } from "~/components/Spacer";
 import { NavProvider } from "~/components/Breadcrumbs/providers/NavProvider";
 import { InertWhenNavOpened } from "~/components/Breadcrumbs/InertWhenNavOpened";
-import { styled } from "~/stitches.config";
 import { HStack } from "~/components/HStack";
 import { UseDropdown } from "~/modules/user/components/UserDropdown";
 import { Stack } from "~/components/Stack";
@@ -20,35 +19,6 @@ export interface DashboardLayoutProps {
   subNav?: React.ReactNode;
   status?: React.ReactNode;
 }
-
-const OverflowContainer = styled("div", {
-  overflow: "hidden", // scroll inside table elements,
-  padding: "$spacing$3", // show box shadow when overflowing,
-  margin: "-$spacing$3",
-});
-
-const TopWrapper = styled("div", {
-  background: "$apollo",
-  borderBottom: "1px solid $border",
-});
-
-const Grid = styled("div", {
-  display: "grid",
-  gridTemplateColumns: "240px 1fr",
-  gap: "$spacing$12",
-  variants: {
-    singleColumn: {
-      true: {
-        gridTemplateColumns: "1fr",
-      },
-    },
-  },
-
-  "@tablet": {
-    gridTemplateColumns: "1fr",
-    gap: "$spacing$0",
-  },
-});
 
 export const DashboardLayout = ({
   user,
@@ -68,13 +38,13 @@ export const DashboardLayout = ({
       <SkipNavLink>Skip to content</SkipNavLink>
 
       <div>
-        <TopWrapper>
+        <div className="border-b border-b-color-gray-500 bg-white">
           <Container>
-            <HStack justifyContent="space-between" height="navHeight">
+            <div className="flex justify-between h-14 items-center">
               <BreadCrumbs crumbs={crumbs} />
 
               <UseDropdown user={user} />
-            </HStack>
+            </div>
 
             <HideDesktop>
               {header && <Spacer size={2} />}
@@ -82,31 +52,39 @@ export const DashboardLayout = ({
               {header}
             </HideDesktop>
           </Container>
-        </TopWrapper>
+        </div>
 
         <InertWhenNavOpened>
-          <Spacer size={{ "@initial": 8, "@tablet": 0 }} />
+          <Spacer size={8} />
 
           {subNav && <HideDesktop>{subNav}</HideDesktop>}
 
-          <Spacer size={{ "@initial": 0, "@tablet": 6 }} />
+          <Spacer size={8} />
 
           <Container>
-            <Grid singleColumn={!subNav}>
+            <div
+              className={
+                subNav
+                  ? "grid grid-cols-[1fr] md:grid-cols-[240px_1fr] gap-12"
+                  : "grid-cols-[1fr]"
+              }
+            >
               {subNav && <HideTablet>{subNav}</HideTablet>}
 
-              <OverflowContainer>
+              <div className="overflow-hidden">
                 <Main>
-                  <Stack spacing={{ "@initial": 6, "@mobile": 4 }}>
+                  <Stack spacing={6}>
                     {status}
 
                     {children}
                   </Stack>
                 </Main>
-              </OverflowContainer>
-            </Grid>
+              </div>
+            </div>
           </Container>
         </InertWhenNavOpened>
+
+        <Spacer size={10} />
       </div>
     </NavProvider>
   );

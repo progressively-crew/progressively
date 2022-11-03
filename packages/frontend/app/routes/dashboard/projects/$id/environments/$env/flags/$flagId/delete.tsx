@@ -96,8 +96,6 @@ export default function DeleteFlagPage() {
       confirmAction={
         <Form method="post">
           <DeleteButton
-            scheme=""
-            variant="primary"
             type="submit"
             isLoading={transition.state === "submitting"}
             loadingText="Deleting the environment, please wait..."
@@ -114,18 +112,16 @@ export default function DeleteFlagPage() {
       <Stack spacing={4}>
         <WarningBox title={<>This operation is definitive.</>} />
 
-        <Typography color="hadesLight">
+        <Typography>
           If you validate the suppression, the flag will be removed from all the
           environments of the <strong>{project.name}</strong> project.
         </Typography>
 
-        <Typography color="hadesLight">
+        <Typography>
           You won't have access to the flags analytics anymore.
         </Typography>
 
-        <Typography color="hadesLight">
-          There will be no way to get the data back.
-        </Typography>
+        <Typography>There will be no way to get the data back.</Typography>
       </Stack>
     </DeleteEntityLayout>
   );

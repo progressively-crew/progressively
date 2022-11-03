@@ -105,8 +105,6 @@ export default function DeleteSchedulePage() {
       confirmAction={
         <Form method="post">
           <DeleteButton
-            variant="primary"
-            scheme=""
             type="submit"
             isLoading={transition.state === "submitting"}
             loadingText="Deleting the schedule, please wait..."
@@ -123,12 +121,12 @@ export default function DeleteSchedulePage() {
       <Stack spacing={4}>
         <WarningBox title={<>This operation is definitive.</>} />
 
-        <Typography color="hadesLight">
+        <Typography>
           If you validate the suppression, the schedule will be removed from the
           feature flag.
         </Typography>
 
-        <Typography color="hadesLight">
+        <Typography>
           It will not change the flag status at the specified date anymore.
         </Typography>
       </Stack>

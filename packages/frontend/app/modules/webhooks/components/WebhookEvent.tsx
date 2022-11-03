@@ -7,19 +7,11 @@ export interface WebhookEventProps {
 
 export const WebhookEvent = ({ value }: WebhookEventProps) => {
   if (value === WebhookEvents.ACTIVATION) {
-    return (
-      <Tag color="successFg" background="successBg">
-        Activation
-      </Tag>
-    );
+    return <Tag>Activation</Tag>;
   }
 
   if (value === WebhookEvents.DEACTIVATION) {
-    return (
-      <Tag color="errorFg" background="errorBg">
-        Deactivation
-      </Tag>
-    );
+    return <Tag>Deactivation</Tag>;
   }
 
   return null;

@@ -1,21 +1,4 @@
-import { styled } from "~/stitches.config";
 import { useNavToggle } from "./Breadcrumbs/hooks/useNavToggle";
-
-const SkipNavAnchor = styled("a", {
-  background: "$hades",
-  color: "$heracles",
-  position: "absolute",
-  transform: "translateY(-100%)",
-  fontFamily: "$default",
-  padding: "$spacing$3",
-  borderRadius: "$borderRadius$regular",
-  zIndex: 1,
-  "&:focus": {
-    left: "$spacing$4",
-    top: "$spacing$4",
-    transform: "translateY(0%)",
-  },
-});
 
 export interface SkipNavContentProps {
   children: React.ReactNode;
@@ -31,12 +14,13 @@ export const SkipNavLink = ({ children }: SkipNavLinkProps) => {
   const { isNavOpened } = useNavToggle();
 
   return (
-    <SkipNavAnchor
+    <a
       href="#content"
       tabIndex={isNavOpened ? -1 : 0}
       aria-hidden={isNavOpened}
+      className="sr-only focus:not-sr-only focus:absolute bg-black text-white focus:p-4 rounded focus:m-4"
     >
       {children}
-    </SkipNavAnchor>
+    </a>
   );
 };

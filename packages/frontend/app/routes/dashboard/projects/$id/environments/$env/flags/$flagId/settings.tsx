@@ -22,6 +22,7 @@ import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
+import { Spacer } from "~/components/Spacer";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -75,6 +76,8 @@ export default function FlagSettingPage() {
                 }
               />
 
+              <Spacer size={4} />
+
               <ButtonCopy toCopy={currentFlag.key}>
                 {currentFlag.key}
               </ButtonCopy>
@@ -98,20 +101,19 @@ export default function FlagSettingPage() {
                   }
                 />
 
-                <div>
+                <Spacer size={4} />
+
+                <div className="inline-block">
                   <DeleteButton
                     to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/delete`}
                   >
-                    <span>
-                      <span aria-hidden>
-                        Delete{" "}
-                        <HideMobile>{currentFlag.name} forever</HideMobile>
-                      </span>
-
-                      <VisuallyHidden>
-                        Delete {currentFlag.name} forever
-                      </VisuallyHidden>
+                    <span aria-hidden className="flex">
+                      Delete <HideMobile>{currentFlag.name} forever</HideMobile>
                     </span>
+
+                    <VisuallyHidden>
+                      Delete {currentFlag.name} forever
+                    </VisuallyHidden>
                   </DeleteButton>
                 </div>
               </Section>

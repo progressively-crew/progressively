@@ -1,7 +1,6 @@
 import { createContext, useContext } from "react";
-import { Heading } from "./Heading";
 import { Spacer } from "./Spacer";
-import { styled } from "~/stitches.config";
+
 import { HStack } from "./HStack";
 import { Stack } from "./Stack";
 
@@ -27,76 +26,45 @@ export interface SectionHeaderProps extends React.HTMLAttributes<HTMLElement> {
   title: string;
   titleAs?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
   description?: React.ReactNode;
-  icon?: React.ReactNode;
   action?: React.ReactNode;
   status?: React.ReactNode;
 }
-
-const SectionHeaderWrapper = styled("div", {
-  marginBottom: "$spacing$4",
-
-  "& .actions": {
-    "@mobile": {
-      width: "100%",
-    },
-  },
-});
-
-const DescriptionWrapper = styled("div", {
-  "& p": {
-    color: "$hadesLight",
-  },
-});
 
 export const SectionHeader = ({
   title,
   titleAs = "h2",
   description,
-  icon,
   action,
   status,
   ...props
 }: SectionHeaderProps) => {
   const id = useContext(SectionContext);
-
-  const desktopFontSize = titleAs === "h2" ? "earth" : "mars";
-  const tabletFontSize = titleAs === "h2" ? "mars" : "jupiter";
+  const HeadingComponent = titleAs as any;
 
   return (
-    <SectionHeaderWrapper {...props}>
+    <div {...props}>
       <Stack spacing={4}>
-        <HStack
-          justifyContent="space-between"
-          alignItems="flex-start"
-          direction={{ "@tablet": "column" }}
-          gap={{ "@tablet": "3" }}
-        >
+        <div className="flex justify-between">
           <div>
-            <Heading
+            <HeadingComponent
               as={titleAs}
+              className="text-3xl font-semibold"
               id={id}
-              fontSize={{
-                "@initial": desktopFontSize,
-                "@tablet": tabletFontSize,
-              }}
-              icon={icon}
             >
               {title}
-            </Heading>
+            </HeadingComponent>
             {description && (
               <>
                 <Spacer size={2} />
-                {description && (
-                  <DescriptionWrapper>{description}</DescriptionWrapper>
-                )}
+                {description && <div>{description}</div>}
               </>
             )}
           </div>
           <div className="actions">{action}</div>
-        </HStack>
+        </div>
 
         {status}
       </Stack>
-    </SectionHeaderWrapper>
+    </div>
   );
 };

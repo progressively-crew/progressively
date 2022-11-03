@@ -1,7 +1,7 @@
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { Clock } from "~/components/Clock";
 import { HStack } from "~/components/HStack";
-import { RawTable } from "~/components/RawTable";
+import { RawTable, Td, Th, Tr } from "~/components/RawTable";
 import { FlagStatus } from "~/modules/flags/components/FlagStatus";
 import { FlagStatus as FlagStatusType } from "~/modules/flags/types";
 import { Schedule, SchedulingStatus } from "../types";
@@ -36,18 +36,18 @@ export const SchedulingList = ({
   return (
     <RawTable>
       <thead>
-        <tr>
-          <th>Date</th>
-          <th>Status of the flag</th>
-          <th>Rollout percentage</th>
-          <th>Has the schedule run</th>
-          <th>Actions</th>
-        </tr>
+        <Tr>
+          <Th>Date</Th>
+          <Th>Status of the flag</Th>
+          <Th>Rollout percentage</Th>
+          <Th>Has the schedule run</Th>
+          <Th>Actions</Th>
+        </Tr>
       </thead>
       <tbody>
         {scheduling.map((schedule, index: number) => (
-          <tr key={`${schedule.utc}-${schedule.rolloutPercentage}-${index}`}>
-            <td>
+          <Tr key={`${schedule.utc}-${schedule.rolloutPercentage}-${index}`}>
+            <Td>
               <HStack spacing={4}>
                 <Clock
                   date={new Date(schedule.utc)}
@@ -57,30 +57,29 @@ export const SchedulingList = ({
                 />
                 <span>{formatDate(schedule.utc)}</span>
               </HStack>
-            </td>
-            <td>
+            </Td>
+            <Td>
               <div>
                 <FlagStatus value={schedule.status as FlagStatusType} />
               </div>
-            </td>
-            <td>
+            </Td>
+            <Td>
               <div>{schedule.rolloutPercentage}%</div>
-            </td>
-            <td>
+            </Td>
+            <Td>
               <div>
                 <ScheduleStatus value={schedule.schedulingStatus} />
               </div>
-            </td>
-            <td>
+            </Td>
+            <Td>
               <DeleteButton
-                small
-                variant="tertiary"
+                variant="secondary"
                 to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/scheduling/${schedule.uuid}/delete`}
               >
                 Remove
               </DeleteButton>
-            </td>
-          </tr>
+            </Td>
+          </Tr>
         ))}
       </tbody>
     </RawTable>

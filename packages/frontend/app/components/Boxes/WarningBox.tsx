@@ -1,5 +1,5 @@
 import { AiOutlineWarning } from "react-icons/ai";
-import { styled } from "~/stitches.config";
+import { HStack } from "../HStack";
 import { Spacer } from "../Spacer";
 import { Li, Ul } from "../Ul";
 
@@ -10,41 +10,22 @@ export interface WarningBoxProps {
   };
 }
 
-const WarningBoxWrapper = styled("figure", {
-  background: "$warningBg",
-  color: "$warningFg",
-  borderLeft: "8px solid $warningBorder",
-  padding: "$spacing$6 $spacing$4",
-  borderRadius: "$borderRadius$regular",
-  fontFamily: "$default",
-  display: "flex",
-  gap: "$spacing$3",
-
-  "& svg": {
-    fontSize: "$mars",
-  },
-
-  "& figcaption": {
-    fontWeight: "$normal",
-    lineHeight: "$text",
-  },
-
-  "@mobile": {
-    flexDirection: "column",
-  },
-});
-
 export const WarningBox = ({ list, title }: WarningBoxProps) => {
   const warnings = list ? Object.keys(list) : undefined;
 
   return (
-    <WarningBoxWrapper tabIndex={-1}>
-      <AiOutlineWarning aria-hidden />
-
+    <figure
+      tabIndex={-1}
+      className="warning-box p-4 bg-orange-100 text-orange-700 rounded border-l-8 border-l-orange-600"
+    >
       <div>
-        <figcaption>
-          <strong>{title}</strong>
-        </figcaption>
+        <HStack spacing={2}>
+          <AiOutlineWarning aria-hidden />
+
+          <figcaption>
+            <strong>{title}</strong>
+          </figcaption>
+        </HStack>
 
         {warnings && list && warnings.length > 0 ? (
           <>
@@ -59,6 +40,6 @@ export const WarningBox = ({ list, title }: WarningBoxProps) => {
           </>
         ) : null}
       </div>
-    </WarningBoxWrapper>
+    </figure>
   );
 };

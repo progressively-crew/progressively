@@ -1,6 +1,4 @@
-import { styled } from "~/stitches.config";
 import { Stack } from "../Stack";
-import { Typography } from "../Typography";
 import { VisuallyHidden } from "../VisuallyHidden";
 import { Label } from "./Label";
 
@@ -16,51 +14,7 @@ export interface TextInputProps {
   hiddenLabel?: boolean;
   id?: string;
   isDisabled?: boolean;
-  small?: boolean;
 }
-
-const Input = styled("input", {
-  border: "1px solid $border",
-  borderRadius: "$borderRadius$regular",
-  fontSize: "$uranus",
-  fontFamily: "$default",
-  padding: "0 $spacing$4",
-  height: "$cta",
-  display: "block",
-  width: "100%",
-  boxSizing: "border-box",
-  maxWidth: "40ch",
-  variants: {
-    invalid: {
-      true: {
-        border: "2px solid $errorBorder",
-      },
-    },
-
-    small: {
-      true: {
-        height: "$ctaSmall",
-      },
-    },
-    isDisabled: {
-      true: {
-        border: "2px solid $heracles",
-        background: "$hera",
-      },
-    },
-  },
-});
-
-const Hint = styled(Typography, {
-  fontSize: "$uranus",
-  variants: {
-    invalid: {
-      true: {
-        color: "$errorFg",
-      },
-    },
-  },
-});
 
 export const TextInput = ({
   isInvalid,
@@ -73,7 +27,6 @@ export const TextInput = ({
   hiddenLabel,
   id,
   isDisabled,
-  small,
   ...props
 }: TextInputProps) => {
   let ariaDescription: string | undefined;
@@ -86,6 +39,10 @@ export const TextInput = ({
     ariaDescription = `${currentId}-hint`;
   }
 
+  const inputClasses = isInvalid
+    ? "h-10 rounded px-4 border border-red-500"
+    : "h-10 rounded px-4 border border-gray-200";
+
   return (
     <Stack spacing={2}>
       {hiddenLabel ? (
@@ -96,26 +53,20 @@ export const TextInput = ({
         <Label htmlFor={currentId}>{label}</Label>
       )}
 
-      <Input
+      <input
         type={type}
         name={name}
         id={currentId}
         placeholder={placeholder}
         defaultValue={defaultValue}
         aria-describedby={ariaDescription}
-        invalid={isInvalid}
-        isDisabled={isDisabled}
         aria-disabled={isDisabled}
         readOnly={isDisabled}
-        small={small}
+        className={inputClasses}
         {...props}
       />
 
-      {description && (
-        <Hint id={`${currentId}-hint`} invalid={isInvalid}>
-          {description}
-        </Hint>
-      )}
+      {description && <p id={`${currentId}-hint`}>{description}</p>}
     </Stack>
   );
 };
