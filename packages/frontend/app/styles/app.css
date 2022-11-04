@@ -580,6 +580,10 @@ video {
   margin: 0px;
 }
 
+.-m-2 {
+  margin: -0.5rem;
+}
+
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -603,6 +607,10 @@ video {
 
 .mt-6 {
   margin-top: 1.5rem;
+}
+
+.-ml-2 {
+  margin-left: -0.5rem;
 }
 
 .block {
@@ -735,6 +743,14 @@ video {
 
 .w-6 {
   width: 1.5rem;
+}
+
+.w-2\/3 {
+  width: 66.666667%;
+}
+
+.w-5 {
+  width: 1.25rem;
 }
 
 .max-w-lg {
@@ -1243,6 +1259,10 @@ video {
   text-decoration-line: underline;
 }
 
+.opacity-0 {
+  opacity: 0;
+}
+
 .filter {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
@@ -1261,8 +1281,22 @@ video {
   transition-duration: 150ms;
 }
 
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
 .duration-200 {
   transition-duration: 200ms;
+}
+
+.duration-100 {
+  transition-duration: 100ms;
+}
+
+.duration-300 {
+  transition-duration: 300ms;
 }
 
 .ease-in-out {
@@ -1526,6 +1560,34 @@ video {
   padding: 1rem;
 }
 
+.active\:-ml-2:active {
+  margin-left: -0.5rem;
+}
+
+.active\:-ml-3:active {
+  margin-left: -0.75rem;
+}
+
+.active\:-ml-10:active {
+  margin-left: -2.5rem;
+}
+
+.active\:-ml-5:active {
+  margin-left: -1.25rem;
+}
+
+.active\:-ml-6:active {
+  margin-left: -1.5rem;
+}
+
+.active\:-ml-8:active {
+  margin-left: -2rem;
+}
+
+.active\:-ml-4:active {
+  margin-left: -1rem;
+}
+
 .active\:bg-gray-100:active {
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
@@ -1575,6 +1637,30 @@ video {
   --tw-scale-x: 1.5;
   --tw-scale-y: 1.5;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.group:active .group-active\:-ml-4 {
+  margin-left: -1rem;
+}
+
+.group:active .group-active\:w-1 {
+  width: 0.25rem;
+}
+
+.group:active .group-active\:w-2\/3 {
+  width: 66.666667%;
+}
+
+.group:active .group-active\:w-6 {
+  width: 1.5rem;
+}
+
+.group:active .group-active\:w-8 {
+  width: 2rem;
+}
+
+.group:active .group-active\:w-7 {
+  width: 1.75rem;
 }
 
 @media (min-width: 768px) {
