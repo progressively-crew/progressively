@@ -120,12 +120,14 @@ export default function SettingsPage() {
                     userRole === UserRoles.Admin && (
                       <div className="flex flex-col md:flex-row gap-3">
                         <CreateButton
+                          variant="secondary"
                           to={`/dashboard/projects/${project.uuid}/add-member`}
                         >
                           Add member
                         </CreateButton>
 
                         <DeleteButton
+                          variant="secondary"
                           type={"submit"}
                           isLoading={transition.state === "submitting"}
                           loadingText="Deleting the member(s), please wait..."
@@ -184,6 +186,7 @@ export default function SettingsPage() {
 
                 <div className="inline-block">
                   <DeleteButton
+                    variant="secondary"
                     to={`/dashboard/projects/${project.uuid}/delete`}
                   >
                     <span aria-hidden className="flex">

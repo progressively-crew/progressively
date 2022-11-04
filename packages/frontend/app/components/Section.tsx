@@ -47,7 +47,7 @@ export const SectionHeader = ({
           <div>
             <HeadingComponent
               as={titleAs}
-              className="text-3xl font-semibold"
+              className="text-2xl font-medium"
               id={id}
             >
               {title}

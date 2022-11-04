@@ -68,7 +68,7 @@ export const DashboardLayout = ({
                   : "grid-cols-[1fr]"
               }
             >
-              {subNav && <HideTablet>{subNav}</HideTablet>}
+              {subNav && <HideTablet className="mt-2">{subNav}</HideTablet>}
 
               <div className="overflow-hidden">
                 <Main>

@@ -24,6 +24,7 @@ export const Switch = ({
     : "";
 
   const wrapperCheckedClasses = checked ? "bg-emerald-200" : "bg-gray-300";
+  const thumnailTransitionClasses = checked ? "group-active:-ml-4" : "";
 
   return (
     <button
@@ -33,19 +34,22 @@ export const Switch = ({
       aria-label={label}
       onClick={onClick}
       form={form}
-      className="h-10 px-1 flex items-center gap-2"
+      className="h-10 px-1 flex items-center gap-2 group"
     >
       <span>{offLabel || "Off"}</span>
       <span
         className={
-          "h-7 w-12 bg- rounded-full inline-block p-1 " + wrapperCheckedClasses
+          "transition-all ease-in-out duration-200 h-7 w-12 bg- rounded-full inline-block p-1 " +
+          wrapperCheckedClasses
         }
       >
         <span
           aria-hidden
           className={
-            "transition-transform ease-in-out duration-200 w-1/2 h-full bg-white block rounded-full " +
-            thumnailCheckedClasses
+            "transition-all ease-in-out duration-100 w-5 h-full bg-white block rounded-full group-active:w-7 " +
+            thumnailCheckedClasses +
+            " " +
+            thumnailTransitionClasses
           }
         >
           {checked && <BsCheck />}

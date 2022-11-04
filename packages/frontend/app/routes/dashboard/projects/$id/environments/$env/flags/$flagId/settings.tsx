@@ -105,6 +105,7 @@ export default function FlagSettingPage() {
 
                 <div className="inline-block">
                   <DeleteButton
+                    variant="secondary"
                     to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/delete`}
                   >
                     <span aria-hidden className="flex">

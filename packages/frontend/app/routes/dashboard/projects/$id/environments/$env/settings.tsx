@@ -93,6 +93,7 @@ export default function EnvSettingsPage() {
 
                 <div className="inline-block">
                   <DeleteButton
+                    variant="secondary"
                     to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/delete`}
                   >
                     <span aria-hidden className="flex">
