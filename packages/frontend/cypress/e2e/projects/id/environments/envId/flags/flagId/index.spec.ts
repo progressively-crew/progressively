@@ -51,8 +51,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]", () => {
         cy.findByRole("heading", { name: "Percentage of the audience" }).should(
           "be.visible"
         );
-        cy.findByRole("heading", { name: "Strategies" }).should("be.visible");
-        cy.findAllByText("Super strategy").should("be.visible");
 
         cy.checkA11y();
       });

@@ -71,7 +71,7 @@ export const action: ActionFunction = async ({
   }
 
   return redirect(
-    `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}?stratRemoved=true#strat-removed`
+    `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/strategies?stratRemoved=true#strat-removed`
   );
 };
 
@@ -102,7 +102,7 @@ export default function DeleteStrategyPage() {
       cancelAction={
         <Button
           variant="secondary"
-          to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`}
+          to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies`}
         >
           {`No, don't delete`} {strategy.name}
         </Button>
