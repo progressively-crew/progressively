@@ -12,7 +12,6 @@ import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData, useActionData, Form, Link } from "@remix-run/react";
 import { TagLine } from "~/components/Tagline";
 import { Card, CardContent } from "~/components/Card";
-import { Stack } from "~/components/Stack";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
 import { StrategyDescription } from "~/modules/strategies/components/StrategyDescription";
 import { SliderFlag } from "~/modules/flags/components/SliderFlag";
@@ -171,66 +170,64 @@ export default function FlagById() {
         }
       />
 
-      <Stack spacing={8}>
-        <Section id="rollout-target">
-          <Card>
-            <CardContent>
-              <SectionHeader
-                title="Percentage of the audience"
-                description={
-                  isMultiVariants ? (
-                    <Typography>
-                      These are{" "}
-                      <Link
-                        to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/variants`}
-                      >
-                        the variants
-                      </Link>{" "}
-                      and their rollout percentage served to your users when the
-                      flag is activated.
-                    </Typography>
-                  ) : (
-                    <Typography>
-                      This is the percentage of people that will receive the
-                      variant{" "}
-                      <Tag className="bg-emerald-100 text-emerald-700" size="S">
-                        true
-                      </Tag>{" "}
-                      when the flag is activated.
-                    </Typography>
-                  )
-                }
-                status={
-                  hasPercentageChanged ? (
-                    <SuccessBox id="percentage-changed">
-                      Percentage adjusted.
-                    </SuccessBox>
-                  ) : actionData?.successEdit ? (
-                    <SuccessBox id="variant-edited">
-                      The variants have been successfully edited.
-                    </SuccessBox>
-                  ) : hasErrors ? (
-                    <ErrorBox list={actionData?.errors || {}} />
-                  ) : null
-                }
-              />
+      <Section id="rollout-target">
+        <Card>
+          <CardContent>
+            <SectionHeader
+              title="Percentage of the audience"
+              description={
+                isMultiVariants ? (
+                  <Typography>
+                    These are{" "}
+                    <Link
+                      to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/variants`}
+                    >
+                      the variants
+                    </Link>{" "}
+                    and their rollout percentage served to your users when the
+                    flag is activated.
+                  </Typography>
+                ) : (
+                  <Typography>
+                    This is the percentage of people that will receive the
+                    variant{" "}
+                    <Tag className="bg-emerald-100 text-emerald-700" size="S">
+                      true
+                    </Tag>{" "}
+                    when the flag is activated.
+                  </Typography>
+                )
+              }
+              status={
+                hasPercentageChanged ? (
+                  <SuccessBox id="percentage-changed">
+                    Percentage adjusted.
+                  </SuccessBox>
+                ) : actionData?.successEdit ? (
+                  <SuccessBox id="variant-edited">
+                    The variants have been successfully edited.
+                  </SuccessBox>
+                ) : hasErrors ? (
+                  <ErrorBox list={actionData?.errors || {}} />
+                ) : null
+              }
+            />
 
-              {!isMultiVariants && (
-                <SliderFlag
-                  initialRolloutPercentage={flagEnv.rolloutPercentage}
-                />
-              )}
-            </CardContent>
-
-            {isMultiVariants && (
-              <VariantList
-                variants={flagEnv.variants}
-                mode={VariantListModes.Operational}
+            {!isMultiVariants && (
+              <SliderFlag
+                initialRolloutPercentage={flagEnv.rolloutPercentage}
               />
             )}
-          </Card>
-        </Section>
-      </Stack>
+          </CardContent>
+
+          {isMultiVariants && (
+            <VariantList
+              variants={flagEnv.variants}
+              mode={VariantListModes.Operational}
+            />
+          )}
+        </Card>
+      </Section>
     </DashboardLayout>
   );
 }
