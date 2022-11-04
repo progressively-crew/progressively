@@ -1,7 +1,6 @@
 import { createContext, useContext } from "react";
 import { Spacer } from "./Spacer";
 
-import { HStack } from "./HStack";
 import { Stack } from "./Stack";
 
 const SectionContext = createContext<string | undefined>(undefined);
@@ -44,7 +43,7 @@ export const SectionHeader = ({
   return (
     <div {...props}>
       <Stack spacing={4}>
-        <div className="flex justify-between">
+        <div className="flex flex-col md:flex-row md:justify-between gap-3">
           <div>
             <HeadingComponent
               as={titleAs}
@@ -60,7 +59,7 @@ export const SectionHeader = ({
               </>
             )}
           </div>
-          <div className="actions">{action}</div>
+          <div>{action}</div>
         </div>
 
         {status}

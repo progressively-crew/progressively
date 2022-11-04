@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { HStack } from "../HStack";
 import { Stack } from "../Stack";
 import { Label } from "./Label";
 
@@ -65,7 +64,7 @@ export const DateTimeInput = ({
           <Label as="legend">{label}</Label>
 
           <div>
-            <HStack spacing={4}>
+            <div className="flex flex-col md:flex-row gap-3 items-center">
               <input
                 type="date"
                 name={`date-${name}`}
@@ -85,7 +84,7 @@ export const DateTimeInput = ({
                 value={time}
                 className={inputClasses}
               />
-            </HStack>
+            </div>
           </div>
 
           <input type="hidden" name={`utc-${name}`} value={utc || ""} />

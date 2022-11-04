@@ -170,7 +170,7 @@ export default function FlagInsights() {
 
       <Stack spacing={8}>
         <Form action=".">
-          <div className="flex gap-4 items-end">
+          <div className="flex flex-col md:flex-row gap-3 md:items-end">
             <TextInput
               type="date"
               name={"startDate"}
@@ -187,7 +187,7 @@ export default function FlagInsights() {
           </div>
         </Form>
 
-        <div className="grid grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <Card>
             <CardContent>
               <BigStat

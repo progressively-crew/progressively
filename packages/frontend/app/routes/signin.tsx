@@ -23,7 +23,6 @@ import { commitSession, getSession } from "~/sessions";
 import { authenticate } from "../modules/auth/services/authenticate";
 import { validateSigninForm } from "../modules/auth/validators/validate-signin-form";
 import { Typography } from "~/components/Typography";
-import { HStack } from "~/components/HStack";
 import { Button } from "~/components/Buttons/Button";
 import { AiOutlineLock } from "react-icons/ai";
 import { PageTitle } from "~/components/PageTitle";
@@ -142,7 +141,7 @@ export default function Signin() {
                 />
               </div>
 
-              <HStack spacing={4}>
+              <div className="flex flex-col gap-4 lg:flex-row">
                 <SubmitButton
                   isLoading={transition.state === "submitting"}
                   loadingText="Signin in progress, please wait..."
@@ -155,7 +154,7 @@ export default function Signin() {
                   icon={<AiOutlineLock aria-hidden />}
                   variant="tertiary"
                 >{`I forgot my password`}</Button>
-              </HStack>
+              </div>
             </FormGroup>
           </Form>
         </CardContent>

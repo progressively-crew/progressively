@@ -3,7 +3,7 @@ export interface WithAs extends React.HTMLAttributes<HTMLElement> {
 }
 
 export const HideDesktop = ({ as: Component = "span", ...props }: WithAs) => {
-  return <Component className="md:hidden" {...props} />;
+  return <Component className="lg:hidden" {...props} />;
 };
 
 export const HideTablet = ({ as: Component = "span", ...props }: WithAs) => {

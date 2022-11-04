@@ -1,55 +1,12 @@
 import { MdChevronRight } from "react-icons/md";
-import { TbFolders } from "react-icons/tb";
 import { HStack } from "../HStack";
-import { EnvIcon } from "../Icons/EnvIcon";
-import { FlagIcon } from "../Icons/FlagIcon";
-import { ProjectIcon } from "../Icons/ProjectIcon";
 import { Link } from "../Link";
-import { Crumb, Crumbs } from "./types";
-
-interface IconWrapperProps {
-  children: React.ReactNode;
-}
-
-const IconWrapper = ({ children }: IconWrapperProps) => {
-  return <span className="flex text-indigo-700">{children}</span>;
-};
+import { CrumbIcon } from "./CrumbIcon";
+import { Crumbs } from "./types";
 
 export interface DesktopNavProps {
   crumbs: Crumbs;
 }
-
-const CrumbIcon = ({ crumb }: { crumb: Crumb }) => {
-  if (crumb.isRoot)
-    return (
-      <IconWrapper>
-        <TbFolders />
-      </IconWrapper>
-    );
-
-  if (crumb.isEnv)
-    return (
-      <IconWrapper>
-        <EnvIcon />
-      </IconWrapper>
-    );
-
-  if (crumb.isFlag)
-    return (
-      <IconWrapper>
-        <FlagIcon />
-      </IconWrapper>
-    );
-
-  if (crumb.isProject)
-    return (
-      <IconWrapper>
-        <ProjectIcon />
-      </IconWrapper>
-    );
-
-  return null;
-};
 
 export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
   const lastItemIndex = crumbs.length - 1;
@@ -70,7 +27,6 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
               <Link
                 aria-current={currentPage ? "page" : undefined}
                 to={crumb.link}
-                fontSize="uranus"
               >
                 <HStack spacing={2}>
                   <CrumbIcon crumb={crumb} />

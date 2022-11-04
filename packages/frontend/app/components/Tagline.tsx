@@ -8,7 +8,7 @@ export interface TagLineProps {
 
 export const TagLine = ({ icon, children }: TagLineProps) => {
   return (
-    <div>
+    <div className="text-sm text-indigo-700">
       <HStack spacing={1}>
         {icon && <span aria-hidden>{icon}</span>}
         <Typography>{children}</Typography>

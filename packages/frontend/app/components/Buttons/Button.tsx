@@ -40,7 +40,8 @@ export const Button = ({
   variant,
   ...props
 }: ButtonProps) => {
-  const sharedButtonClass = "block rounded flex items-center h-10 px-4";
+  const sharedButtonClass =
+    "block rounded flex items-center h-10 px-4 whitespace-nowrap";
   const actuelScheme = scheme || "default";
   const actualVariant = variant || "primary";
   const combinedClassName = classCombination[actuelScheme + actualVariant];

@@ -17,7 +17,7 @@ export const PageTitle = ({
   endAction,
 }: PageTitleProps) => {
   return (
-    <div className="flex justify-between">
+    <div className="flex flex-col md:flex-row md:justify-between gap-3">
       <div>
         <HStack spacing={3}>
           {icon && (
@@ -25,7 +25,7 @@ export const PageTitle = ({
               {icon}
             </span>
           )}
-          <h1 className="font-bold text-5xl" id="page-title">
+          <h1 className="font-bold text-4xl md:text-5xl" id="page-title">
             <span>{value}</span>
           </h1>
           {endAction}
