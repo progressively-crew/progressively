@@ -92,7 +92,7 @@ export const action: ActionFunction = async ({
     );
 
     return redirect(
-      `/dashboard/projects/${params.id}/environments/${params.env}/flags/${params.flagId}?newStrategy=true#strategy-added`
+      `/dashboard/projects/${params.id}/environments/${params.env}/flags/${params.flagId}/strategies?newStrategy=true#strategy-added`
     );
   } catch (error: unknown) {
     if (error instanceof Error) {

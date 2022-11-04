@@ -6,7 +6,7 @@ import {
 } from "react-icons/ai";
 import { FaToggleOff } from "react-icons/fa";
 import { TbSend } from "react-icons/tb";
-import { MdBubbleChart } from "react-icons/md";
+import { MdAppRegistration, MdBubbleChart } from "react-icons/md";
 import { HideTablet } from "~/components/HideMobile";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { Spacer } from "~/components/Spacer";
@@ -32,6 +32,13 @@ export const FlagMenu = ({ projectId, envId, flagId }: FlagMenuProps) => {
         icon={<FaToggleOff />}
       >
         Overview
+      </NavItem>
+
+      <NavItem
+        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/strategies`}
+        icon={<MdAppRegistration />}
+      >
+        Strategies
       </NavItem>
 
       <NavItem
