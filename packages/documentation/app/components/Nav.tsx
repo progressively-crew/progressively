@@ -5,7 +5,7 @@ export interface HorizontalNavProps {
   label: string;
 }
 
-export const HorizontalNav = ({ children, label }: HorizontalNavProps) => {
+export const Nav = ({ children, label }: HorizontalNavProps) => {
   return (
     <nav aria-label={label}>
       <ul className="overflow-x-scroll flex flex-row gap-1 bg-indigo-100 lg:flex-col lg:bg-transparent">
@@ -33,7 +33,7 @@ export const NavItem = ({ children, to, icon }: NavItemProps) => {
             : "h-10 block flex items-center rounded px-4 hover:bg-gray-100"
         }
       >
-        <div className="flex gap-2">
+        <div className="flex items-center gap-2">
           <span aria-hidden>{icon}</span>
           <span>{children}</span>
         </div>
