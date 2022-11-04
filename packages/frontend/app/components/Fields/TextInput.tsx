@@ -39,9 +39,13 @@ export const TextInput = ({
     ariaDescription = `${currentId}-hint`;
   }
 
-  const inputClasses = isInvalid
+  let inputClasses = isInvalid
     ? "h-10 rounded px-4 border border-red-500"
     : "h-10 rounded px-4 border border-gray-200";
+
+  if (isDisabled) {
+    inputClasses += " border-gray-300 text-gray-600 bg-gray-50";
+  }
 
   return (
     <Stack spacing={2}>

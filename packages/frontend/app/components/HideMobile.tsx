@@ -6,8 +6,12 @@ export const HideDesktop = ({ as: Component = "span", ...props }: WithAs) => {
   return <Component className="lg:hidden" {...props} />;
 };
 
-export const HideTablet = ({ as: Component = "span", ...props }: WithAs) => {
-  return <Component className="hidden lg:block" {...props} />;
+export const HideTablet = ({
+  as: Component = "span",
+  className,
+  ...props
+}: WithAs) => {
+  return <Component className={"hidden lg:block " + className} {...props} />;
 };
 
 export const HideMobile = ({ as: Component = "span", ...props }: WithAs) => {
