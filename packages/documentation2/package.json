@@ -1,0 +1,19 @@
+{
+  "name": "documentation",
+  "private": true,
+  "version": "0.0.1-alpha.14",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vitepress dev docs",
+    "build": "vitepress build docs",
+    "start": "vitepress serve docs --port 8080"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "vitepress": "^1.0.0-alpha.21",
+    "vue": "^3.2.41"
+  }
+}
