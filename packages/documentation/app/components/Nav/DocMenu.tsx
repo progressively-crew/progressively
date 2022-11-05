@@ -1,15 +1,7 @@
-import {
-  AiOutlineAppstore,
-  AiOutlineBarChart,
-  AiOutlineClockCircle,
-  AiOutlineSetting,
-} from "react-icons/ai";
-import { FaToggleOff } from "react-icons/fa";
-import { TbSend } from "react-icons/tb";
-import { MdAppRegistration, MdBubbleChart } from "react-icons/md";
-import { Nav, NavItem } from "~/components/Nav";
-import { Spacer } from "./Spacer";
+import { NavWrapper, NavItem } from "~/components/Nav/NavWrapper";
+import { Spacer } from "../Spacer";
 import React from "react";
+import { useNavToggle } from "./hooks/useNavToggle";
 
 const MenuItems = [
   {
@@ -88,8 +80,16 @@ const MenuItems = [
 ];
 
 export const DocMenu = () => {
+  const { toggleNav, isNavOpened } = useNavToggle();
+
+  const handleClick = () => {
+    if (isNavOpened) {
+      toggleNav();
+    }
+  };
+
   return (
-    <Nav label={`Flag related`}>
+    <NavWrapper label={`Flag related`}>
       {MenuItems.map((section, index) => (
         <React.Fragment key={section.label}>
           <li role="separator">
@@ -101,12 +101,12 @@ export const DocMenu = () => {
           </li>
 
           {section.items.map((navItem) => (
-            <NavItem key={navItem.link} to={navItem.link}>
+            <NavItem key={navItem.link} to={navItem.link} onClick={handleClick}>
               {navItem.label}
             </NavItem>
           ))}
         </React.Fragment>
       ))}
-    </Nav>
+    </NavWrapper>
   );
 };

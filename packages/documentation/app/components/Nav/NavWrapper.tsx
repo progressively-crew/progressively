@@ -5,12 +5,10 @@ export interface HorizontalNavProps {
   label: string;
 }
 
-export const Nav = ({ children, label }: HorizontalNavProps) => {
+export const NavWrapper = ({ children, label }: HorizontalNavProps) => {
   return (
     <nav aria-label={label}>
-      <ul className="overflow-x-scroll flex flex-row gap-1 bg-indigo-100 lg:flex-col lg:bg-transparent">
-        {children}
-      </ul>
+      <ul className="flex flex-col">{children}</ul>
     </nav>
   );
 };
@@ -19,14 +17,16 @@ export interface NavItemProps {
   children: React.ReactNode;
   to: string;
   icon?: React.ReactNode;
+  onClick?: any;
 }
 
-export const NavItem = ({ children, to }: NavItemProps) => {
+export const NavItem = ({ children, to, onClick }: NavItemProps) => {
   return (
     <li>
       <NavLink
         to={to}
         end
+        onClick={onClick}
         className={({ isActive }) =>
           isActive
             ? "text-sm h-8 block flex items-center rounded px-4 bg-indigo-700 text-white lg:bg-indigo-100 lg:text-indigo-700 font-bold"
