@@ -29,8 +29,8 @@ export const NavItem = ({ children, to }: NavItemProps) => {
         end
         className={({ isActive }) =>
           isActive
-            ? "h-10 block flex items-center rounded px-4 bg-indigo-700 text-white lg:bg-indigo-100 lg:text-indigo-700 font-bold"
-            : "h-10 block flex items-center rounded px-4 hover:bg-gray-100"
+            ? "text-sm h-8 block flex items-center rounded px-4 bg-indigo-700 text-white lg:bg-indigo-100 lg:text-indigo-700 font-bold"
+            : "text-sm h-8 block flex items-center rounded px-4 hover:bg-gray-100"
         }
       >
         <span>{children}</span>

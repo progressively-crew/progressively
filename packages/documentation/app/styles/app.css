@@ -1282,6 +1282,10 @@ video {
     grid-template-columns: 280px 1fr;
   }
 
+  .lg\:grid-cols-\[240px_1fr\] {
+    grid-template-columns: 240px 1fr;
+  }
+
   .lg\:flex-col {
     flex-direction: column;
   }
