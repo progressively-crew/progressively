@@ -706,16 +706,19 @@ video {
 
 .prose :where(code):not(:where([class~="not-prose"] *)) {
   color: var(--tw-prose-code);
-  font-weight: 600;
+  font-weight: normal;
   font-size: 0.875em;
+  background: rgba(175,184,193,0.2);
+  padding: .2em .4em;
+  border-radius: 6px;
 }
 
 .prose :where(code):not(:where([class~="not-prose"] *))::before {
-  content: "`";
+  content: ;
 }
 
 .prose :where(code):not(:where([class~="not-prose"] *))::after {
-  content: "`";
+  content: ;
 }
 
 .prose :where(a code):not(:where([class~="not-prose"] *)) {
@@ -762,6 +765,11 @@ video {
   padding-right: 1.1428571em;
   padding-bottom: 0.8571429em;
   padding-left: 1.1428571em;
+  background: #f6f8fa;
+}
+
+.prose :where(pre):not(:where([class~="not-prose"] *)) code {
+  background: #f6f8fa;
 }
 
 .prose :where(pre code):not(:where([class~="not-prose"] *)) {
@@ -1262,8 +1270,8 @@ video {
 }
 
 @media (min-width: 1024px) {
-  .lg\:grid-cols-\[240px_1fr\] {
-    grid-template-columns: 240px 1fr;
+  .lg\:grid-cols-\[280px_1fr\] {
+    grid-template-columns: 280px 1fr;
   }
 
   .lg\:flex-col {
