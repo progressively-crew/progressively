@@ -25,10 +25,16 @@ module.exports = {
             },
 
             "code::before": {
-              content: "",
+              content: "unset",
             },
             "code::after": {
-              content: "",
+              content: "unset",
+            },
+            "blockquote p::before": {
+              content: "unset",
+            },
+            "blockquote p::after": {
+              content: "unset",
             },
           },
         },

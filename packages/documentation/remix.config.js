@@ -6,11 +6,13 @@ module.exports = {
   // serverBuildPath: "build/index.js",
   // publicPath: "/build/",
   mdx: async (filename) => {
-    const [rehypeHighlight] = await Promise.all([
+    const [rehypeHighlight, remarkEmoji] = await Promise.all([
       import("rehype-highlight").then((mod) => mod.default),
+      import("remark-emoji").then((mod) => mod.default),
     ]);
 
     return {
+      remarkPlugins: [remarkEmoji],
       rehypePlugins: [rehypeHighlight],
     };
   },
