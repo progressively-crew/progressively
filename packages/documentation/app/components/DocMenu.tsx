@@ -61,7 +61,7 @@ const MenuItems = [
   },
 
   {
-    label: "SDKs",
+    label: "Usage",
     items: [
       {
         label: "JavaScript",
@@ -101,11 +101,7 @@ export const DocMenu = () => {
           </li>
 
           {section.items.map((navItem) => (
-            <NavItem
-              key={navItem.link}
-              to={navItem.link}
-              icon={<FaToggleOff />}
-            >
+            <NavItem key={navItem.link} to={navItem.link}>
               {navItem.label}
             </NavItem>
           ))}

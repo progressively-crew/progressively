@@ -18,10 +18,10 @@ export const Nav = ({ children, label }: HorizontalNavProps) => {
 export interface NavItemProps {
   children: React.ReactNode;
   to: string;
-  icon: React.ReactNode;
+  icon?: React.ReactNode;
 }
 
-export const NavItem = ({ children, to, icon }: NavItemProps) => {
+export const NavItem = ({ children, to }: NavItemProps) => {
   return (
     <li>
       <NavLink
@@ -33,10 +33,7 @@ export const NavItem = ({ children, to, icon }: NavItemProps) => {
             : "h-10 block flex items-center rounded px-4 hover:bg-gray-100"
         }
       >
-        <div className="flex items-center gap-2">
-          <span aria-hidden>{icon}</span>
-          <span>{children}</span>
-        </div>
+        <span>{children}</span>
       </NavLink>
     </li>
   );
