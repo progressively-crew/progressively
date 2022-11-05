@@ -1,6 +1,7 @@
 import { Outlet } from "@remix-run/react";
 import { HideDesktop } from "~/components/HideMobile";
 import { Nav } from "~/components/Nav";
+import { InertWhenNavOpened } from "~/components/Nav/InertWhenNavOpened";
 import { NavToggle } from "~/components/Nav/NavToggle";
 import { NavProvider } from "~/components/Nav/providers/NavProvider";
 
@@ -8,13 +9,15 @@ export default function DocsLayout() {
   return (
     <NavProvider>
       <div>
-        <div className="flex justify-between h-14 items-center border-b border-b-color-gray-500">
-          <div className=" max-w-screen-2xl mx-auto p-12">
-            <HideDesktop>
-              <NavToggle />
-            </HideDesktop>
+        <InertWhenNavOpened>
+          <div className="flex justify-between h-14 items-center border-b border-b-color-gray-500">
+            <div className=" max-w-screen-2xl mx-auto p-12">
+              <HideDesktop>
+                <NavToggle />
+              </HideDesktop>
+            </div>
           </div>
-        </div>
+        </InertWhenNavOpened>
 
         <div className=" max-w-screen-2xl mx-auto p-12">
           <div
@@ -22,9 +25,11 @@ export default function DocsLayout() {
           >
             <Nav />
 
-            <div className="prose lg:prose-x">
-              <Outlet />
-            </div>
+            <InertWhenNavOpened>
+              <div className="prose lg:prose-x">
+                <Outlet />
+              </div>
+            </InertWhenNavOpened>
           </div>
         </div>
       </div>
