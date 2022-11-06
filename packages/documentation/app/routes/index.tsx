@@ -1,34 +1,39 @@
-import { NavProvider } from "~/components/Nav/providers/NavProvider";
+import { Card } from "~/components/Card";
+import { Hero } from "~/components/Hero";
 
 export default function Index() {
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
-      <h1>Welcome to Remix</h1>
-      <ul>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/blog"
-            rel="noreferrer"
-          >
-            15m Quickstart Blog Tutorial
-          </a>
-        </li>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/jokes"
-            rel="noreferrer"
-          >
-            Deep Dive Jokes App Tutorial
-          </a>
-        </li>
-        <li>
-          <a target="_blank" href="https://remix.run/docs" rel="noreferrer">
-            Remix Docs
-          </a>
-        </li>
-      </ul>
+    <div className="bg-gray-50">
+      <main>
+        <Hero />
+
+        <section className="max-w-screen-xl mx-auto p-4 md:p-12 ">
+          <div className="grid grid-cols-7 gap-3">
+            <div className="col-span-2 grid gap-3">
+              <Card title="Hierarchical">
+                <p>Multiple projects, environments, feature flags and so on.</p>
+              </Card>
+
+              <Card title="Scheduling">
+                <p>Time based flag activation</p>
+              </Card>
+            </div>
+
+            <div className="col-span-3 h-full">
+              <Card title="Single & Multi variants" size="L">
+                lol
+              </Card>
+            </div>
+
+            <div className="col-span-2 grid gap-3">
+              <Card title="Strategies">
+                Rollout to only specific subsets of your audience
+              </Card>
+              <Card title="Insights">lol</Card>
+            </div>
+          </div>
+        </section>
+      </main>
     </div>
   );
 }

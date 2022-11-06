@@ -24,9 +24,9 @@ export default function DocsLayout() {
             <Nav />
 
             <InertWhenNavOpened>
-              <div className="prose lg:prose-x">
+              <main className="prose lg:prose-x">
                 <Outlet />
-              </div>
+              </main>
             </InertWhenNavOpened>
           </div>
         </div>
