@@ -765,10 +765,12 @@ video {
   padding-right: 1.1428571em;
   padding-bottom: 0.8571429em;
   padding-left: 1.1428571em;
+  white-space: no-wrap;
   background: #f6f8fa;
 }
 
 .prose :where(pre):not(:where([class~="not-prose"] *)) code {
+  width: 100%;
   background: #f6f8fa;
 }
 
@@ -1129,8 +1131,16 @@ video {
   margin-bottom: 0;
 }
 
+.fixed {
+  position: fixed;
+}
+
 .absolute {
   position: absolute;
+}
+
+.relative {
+  position: relative;
 }
 
 .top-0 {
@@ -1145,9 +1155,25 @@ video {
   left: 0px;
 }
 
+.left-4 {
+  left: 1rem;
+}
+
+.left-12 {
+  left: 3rem;
+}
+
+.top-12 {
+  top: 3rem;
+}
+
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
+}
+
+.ml-\[240px\] {
+  margin-left: 240px;
 }
 
 .block {
@@ -1226,8 +1252,24 @@ video {
   width: 100%;
 }
 
+.w-10 {
+  width: 2.5rem;
+}
+
+.w-\[240px\] {
+  width: 240px;
+}
+
 .max-w-screen-2xl {
   max-width: 1536px;
+}
+
+.flex-1 {
+  flex: 1 1 0%;
+}
+
+.shrink-0 {
+  flex-shrink: 0;
 }
 
 .translate-x-0 {
@@ -1256,20 +1298,12 @@ video {
   align-items: center;
 }
 
-.justify-between {
-  justify-content: space-between;
-}
-
 .gap-12 {
   gap: 3rem;
 }
 
-.gap-1 {
-  gap: 0.25rem;
-}
-
-.overflow-x-scroll {
-  overflow-x: scroll;
+.overflow-hidden {
+  overflow: hidden;
 }
 
 .rounded {
@@ -1289,18 +1323,9 @@ video {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
-.bg-indigo-100 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(224 231 255 / var(--tw-bg-opacity));
-}
-
 .bg-indigo-700 {
   --tw-bg-opacity: 1;
   background-color: rgb(67 56 202 / var(--tw-bg-opacity));
-}
-
-.p-12 {
-  padding: 3rem;
 }
 
 .p-4 {
@@ -1312,9 +1337,18 @@ video {
   padding-right: 1rem;
 }
 
+.pl-12 {
+  padding-left: 3rem;
+}
+
 .text-sm {
   font-size: 0.875rem;
   line-height: 1.25rem;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
 }
 
 .font-bold {
@@ -1362,11 +1396,24 @@ video {
   .md\:block {
     display: block;
   }
+
+  .md\:p-12 {
+    padding: 3rem;
+  }
+
+  .md\:px-12 {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
 }
 
 @media (min-width: 1024px) {
   .lg\:block {
     display: block;
+  }
+
+  .lg\:grid {
+    display: grid;
   }
 
   .lg\:hidden {
@@ -1377,12 +1424,8 @@ video {
     grid-template-columns: 240px 1fr;
   }
 
-  .lg\:flex-col {
-    flex-direction: column;
-  }
-
-  .lg\:bg-transparent {
-    background-color: transparent;
+  .lg\:gap-12 {
+    gap: 3rem;
   }
 
   .lg\:bg-indigo-100 {

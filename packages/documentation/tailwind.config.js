@@ -11,8 +11,10 @@ module.exports = {
         DEFAULT: {
           css: {
             pre: {
+              whiteSpace: "no-wrap",
               background: "#f6f8fa",
               code: {
+                width: "100%",
                 background: "#f6f8fa",
               },
             },

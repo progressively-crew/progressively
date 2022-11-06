@@ -13,7 +13,11 @@ export const NavProvider = ({ children }: NavProviderProps) => {
   }, [setIsNavOpened]);
 
   useEffect(() => {
-    document.body.style.overflow = isNavOpened ? "hidden" : "revert";
+    if (isNavOpened) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
   }, [isNavOpened]);
 
   return (

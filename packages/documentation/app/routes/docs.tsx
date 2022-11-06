@@ -10,8 +10,8 @@ export default function DocsLayout() {
     <NavProvider>
       <div>
         <InertWhenNavOpened>
-          <div className="flex justify-between h-14 items-center border-b border-b-color-gray-500">
-            <div className=" max-w-screen-2xl mx-auto p-12">
+          <div className="flex h-14 items-center border-b border-b-color-gray-500">
+            <div className=" max-w-screen-2xl px-4 md:px-12">
               <HideDesktop>
                 <NavToggle />
               </HideDesktop>
@@ -19,10 +19,8 @@ export default function DocsLayout() {
           </div>
         </InertWhenNavOpened>
 
-        <div className=" max-w-screen-2xl mx-auto p-12">
-          <div
-            className={"grid grid-cols-[1fr] lg:grid-cols-[240px_1fr] gap-12"}
-          >
+        <div className="max-w-screen-2xl mx-auto p-4 md:p-12">
+          <div className={"lg:grid lg:grid-cols-[240px_1fr] lg:gap-12"}>
             <Nav />
 
             <InertWhenNavOpened>
