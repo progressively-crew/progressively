@@ -45,9 +45,7 @@ export const Window = ({ children, header, inverse }: WindowProps) => {
     : "flex-1 flex items-center h-full";
 
   return (
-    <div
-      className={"rounded-md h-full relative drop-shadow-xl " + wrapperStyle}
-    >
+    <div className={"rounded-md relative drop-shadow-xl " + wrapperStyle}>
       <div
         className={
           "flex flex-row items-center h-12 px-4 gap-4 relative border-b  " +
