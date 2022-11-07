@@ -6,6 +6,7 @@ export interface CardProps {
   size?: "M" | "L";
   highlighted?: boolean;
   top?: React.ReactNode;
+  bottom?: React.ReactNode;
 }
 
 const WrapperStyles = {
@@ -29,6 +30,7 @@ export const Card = ({
   size = "M",
   highlighted,
   top,
+  bottom,
 }: CardProps) => {
   const titleStyles = TitleStyles[size];
   const wrapperStyles = WrapperStyles[size];
@@ -43,7 +45,7 @@ export const Card = ({
   return (
     <article
       className={
-        "rounded-xl px-4 py-8 h-full relative drop-shadow-xl " +
+        "rounded-xl px-4 py-8 h-full relative drop-shadow-xl overflow-hidden " +
         bgHlgt +
         " " +
         wrapperStyles
@@ -55,6 +57,7 @@ export const Card = ({
       <div className={"text-center pt-3 " + contentStyles + " " + contentHlgt}>
         {children}
       </div>
+      {bottom && <div className="pt-4">{bottom}</div>}
     </article>
   );
 };
