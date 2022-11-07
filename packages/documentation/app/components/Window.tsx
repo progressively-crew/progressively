@@ -3,7 +3,6 @@ import React from "react";
 export interface WindowProps {
   header?: React.ReactNode;
   children?: React.ReactNode;
-  inverse?: boolean;
 }
 
 export interface BarProps {
@@ -34,26 +33,14 @@ export const SearchBar = ({ children }: BarProps) => {
   );
 };
 
-export const Window = ({ children, header, inverse }: WindowProps) => {
-  const additionalTopBarStyles = inverse
-    ? "border-b-gray-800"
-    : "border-b-gray-100";
-
-  const wrapperStyle = inverse ? "bg-gray-900" : "bg-white";
-  const textInverse = inverse
-    ? "text-white flex-1 flex items-center h-full"
-    : "flex-1 flex items-center h-full";
-
+export const Window = ({ children, header }: WindowProps) => {
   return (
     <div
-      className={
-        "rounded-md relative drop-shadow-xl overflow-hidden " + wrapperStyle
-      }
+      className={"rounded-md relative drop-shadow-xl overflow-hidden bg-white"}
     >
       <div
         className={
-          "flex flex-row items-center h-12 px-4 gap-4 relative border-b  " +
-          additionalTopBarStyles
+          "flex flex-row items-center h-12 px-4 gap-4 relative border-b border-b-gray-100"
         }
       >
         <div className="flex flex-row gap-2 absolute">
@@ -62,7 +49,9 @@ export const Window = ({ children, header, inverse }: WindowProps) => {
           <div className="bg-green-500 w-3 h-3 rounded-full" />
         </div>
 
-        {header && <div className={textInverse}>{header}</div>}
+        {header && (
+          <div className={"flex-1 flex items-center h-full"}>{header}</div>
+        )}
       </div>
 
       <div className="overflow-x-auto">{children}</div>
