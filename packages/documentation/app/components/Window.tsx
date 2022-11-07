@@ -45,7 +45,11 @@ export const Window = ({ children, header, inverse }: WindowProps) => {
     : "flex-1 flex items-center h-full";
 
   return (
-    <div className={"rounded-md relative drop-shadow-xl " + wrapperStyle}>
+    <div
+      className={
+        "rounded-md relative drop-shadow-xl overflow-hidden " + wrapperStyle
+      }
+    >
       <div
         className={
           "flex flex-row items-center h-12 px-4 gap-4 relative border-b  " +
@@ -61,7 +65,7 @@ export const Window = ({ children, header, inverse }: WindowProps) => {
         {header && <div className={textInverse}>{header}</div>}
       </div>
 
-      {children}
+      <div className="overflow-x-auto">{children}</div>
     </div>
   );
 };
