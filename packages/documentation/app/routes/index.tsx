@@ -1,3 +1,4 @@
+import { Example } from "~/components/Example";
 import { Features } from "~/components/Features";
 import { Hero } from "~/components/Hero";
 
@@ -7,6 +8,7 @@ export default function Index() {
       <main>
         <Hero />
         <Features />
+        <Example />
       </main>
     </div>
   );
