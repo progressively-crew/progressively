@@ -16,8 +16,8 @@ export const Hero = () => {
           </h1>
 
           <p className="mx-auto mt-4 max-w-xl sm:text-xl sm:leading-relaxed">
-            Designed to be simple, accessible, lightweight, self-hosted and
-            OpenSource.
+            A simple, accessible, lightweight, self-hosted and OpenSource{" "}
+            <strong>feature flagging tool</strong>.
           </p>
 
           <div className="mt-8 flex flex-wrap justify-center gap-4">
