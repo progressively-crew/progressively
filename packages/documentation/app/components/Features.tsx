@@ -43,31 +43,29 @@ export const Features = () => (
       </div>
 
       <div className="col-span-2 grid gap-3 grid-rows-2">
-        <div className="row-span-1">
-          <Card
-            title="Strategies"
-            top={
-              <div className="top-0 h-4 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 absolute w-full left-0" />
-            }
-            bottom={<TbChartPie className="text-4xl text-indigo-500" />}
-          >
-            Rollout to only specific subsets of your audience
-          </Card>
-        </div>
+        <Card
+          title="Strategies"
+          top={
+            <div className="top-0 h-4 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 absolute w-full left-0" />
+          }
+          bottom={<TbChartPie className="text-4xl text-indigo-500" />}
+        >
+          Rollout to only specific subsets of your audience
+        </Card>
 
-        <div className="row-span-2">
-          <Card
-            title="Gradual rollout"
-            bottom={
-              <div className="relative">
-                <div className="h-6 w-6 rounded-full bg-indigo-700 absolute -top-2 left-2/4" />
-                <div className="w-full h-2 bg-gray-200 rounded-full" />
+        <Card
+          title="Gradual rollout"
+          bottom={
+            <div className="relative">
+              <div className="h-6 px-2 text-white rounded-full bg-indigo-700 absolute -top-2 left-2/4 text-sm font-bold flex items-center">
+                53%
               </div>
-            }
-          >
-            Target a percentage of your audience when deploying
-          </Card>
-        </div>
+              <div className="w-full h-2 bg-gray-200 rounded-full" />
+            </div>
+          }
+        >
+          Target a percentage of your audience when deploying
+        </Card>
       </div>
     </div>
   </section>
