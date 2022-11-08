@@ -1,0 +1,25 @@
+name: Documentation
+on:
+  pull_request:
+    branches: ["master"]
+  workflow_dispatch:
+
+jobs:
+  static:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+          cache: "npm"
+          cache-dependency-path: |
+            package-lock.json
+            packages/frontend/package-lock.json
+            packages/backend/package-lock.json
+
+      - name: Build the project and start
+        run: npm run build && npm start &
+
+      - name: E2E tests
+        run: npx wait-on -t 60000 tcp:3000 && npm run test:e2e:ci

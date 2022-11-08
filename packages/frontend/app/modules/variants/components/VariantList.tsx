@@ -9,7 +9,6 @@ import { SliderInput } from "~/components/Fields/SliderInput";
 import { TextInput } from "~/components/Fields/TextInput";
 import { HideDesktop } from "~/components/HideMobile";
 import { HStack } from "~/components/HStack";
-import { Spacer } from "~/components/Spacer";
 import { Variant } from "../types";
 import { RawTable, Td, Th, Tr } from "~/components/RawTable";
 
