@@ -19,7 +19,7 @@ jobs:
             packages/backend/package-lock.json
 
       - name: Install
-        run: npm install
+        run: npm ci
         working-directory: ./packages/documentation
 
       - name: Build the project and start

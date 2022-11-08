@@ -35,11 +35,11 @@ jobs:
 
       - name: Install the cypress-helpers dependencies
         working-directory: ./example/cypress-helpers
-        run: npm install
+        run: npm ci
 
       - name: Install dependencies on the example project
         working-directory: ./example/cra
-        run: npm install
+        run: npm ci
 
       - name: Start the Example CRA project
         working-directory: ./example/cra
