@@ -57,17 +57,29 @@ export const Example = () => {
   return (
     <section className="max-w-screen-xl mx-auto p-4 md:p-20">
       <h2 className="text-center text-5xl font-bold">
-        <span className="text-indigo-700">Deploy</span> the way you want it
+        <span className="text-indigo-700">Rollout and rollback</span> as you
+        want
       </h2>
 
-      <div className="py-6 pb= flex items-center justify-center">
-        <input
-          type="range"
-          aria-label="Percentage of the audience"
-          className="w-1/5"
-          onChange={(e) => setPercentage(Number(e.target.value))}
-          value={percentage}
-        />
+      <p className="text-2xl text-gray-700 px-16 pt-4 text-center">
+        Start building your feature, merge the changes, and progressively
+        rollout these changes to your audience. If you encounter unexpected
+        errors, you can simply rollback as easily as you rolled out.
+      </p>
+
+      <div className="py-6 flex items-center justify-center">
+        <div className="bg-gray-100 pl-10 pr-3 py-3 rounded-full flex flex-row gap-3">
+          <input
+            type="range"
+            aria-label="Percentage of the audience"
+            onChange={(e) => setPercentage(Number(e.target.value))}
+            value={percentage}
+          />
+
+          <div className="px-3 py-2 w-16 bg-indigo-700 text-white text-sm font-bold rounded-full text-center">
+            {percentage}%
+          </div>
+        </div>
       </div>
 
       <div className="grid grid-cols-3 gap-4">

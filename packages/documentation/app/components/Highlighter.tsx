@@ -21,7 +21,7 @@ export function Highlighter({
   }, [language, content]);
 
   return (
-    <pre className="hljs">
+    <pre className="hljs text-sm leading-6">
       <code dangerouslySetInnerHTML={{ __html: html }} />
     </pre>
   );

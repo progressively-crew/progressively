@@ -45,7 +45,7 @@ export const Card = ({
   return (
     <article
       className={
-        "rounded-xl px-4 py-8 h-full relative drop-shadow-xl overflow-hidden flex flex-col justify-center " +
+        "rounded-xl px-4 py-8 h-full relative drop-shadow-lg overflow-hidden flex flex-col justify-center " +
         bgHlgt +
         " " +
         wrapperStyles

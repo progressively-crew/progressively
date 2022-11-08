@@ -36,7 +36,7 @@ export const SearchBar = ({ children }: BarProps) => {
 export const Window = ({ children, header }: WindowProps) => {
   return (
     <div
-      className={"rounded-md relative drop-shadow-xl overflow-hidden bg-white"}
+      className={"rounded-md relative drop-shadow-lg overflow-hidden bg-white"}
     >
       <div
         className={
@@ -54,7 +54,7 @@ export const Window = ({ children, header }: WindowProps) => {
         )}
       </div>
 
-      <div className="overflow-x-auto">{children}</div>
+      <div className="overflow-x-auto mx-4">{children}</div>
     </div>
   );
 };

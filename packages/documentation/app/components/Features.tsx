@@ -1,10 +1,12 @@
+import { BsClockHistory } from "react-icons/bs";
+import { MdBubbleChart } from "react-icons/md";
+import { TbChartPie } from "react-icons/tb";
+import { AiOutlineAppstore, AiOutlineBarChart } from "react-icons/ai";
+
 import { Card } from "./Card";
 import { EnvIcon } from "./icons/EnvIcon";
 import { FlagIcon } from "./icons/FlagIcon";
 import { ProjectIcon } from "./icons/ProjectIcon";
-import { BsClockHistory } from "react-icons/bs";
-
-import { TbChartPie } from "react-icons/tb";
 
 export const Features = () => (
   <section className="max-w-screen-xl mx-auto p-4 md:p-20">
@@ -26,7 +28,7 @@ export const Features = () => (
         <Card
           title="Scheduling"
           bottom={
-            <div className="bg-gray-900 text-white p-4 rounded-3xl flex flex-row gap-4 text-sm">
+            <div className="bg-gray-900 text-white p-2 rounded-3xl flex flex-row gap-4 text-sm">
               <BsClockHistory className="text-lg" />
               <span>Flag activated at 9am tomorrow</span>
             </div>
@@ -37,8 +39,21 @@ export const Features = () => (
       </div>
 
       <div className="col-span-3 h-full">
-        <Card title="Single & Multi variants" size="L" highlighted>
-          lol
+        <Card
+          title="Single & Multi variants"
+          size="L"
+          highlighted
+          top={
+            <div className="flex gap-3 text-4xl">
+              <AiOutlineAppstore />
+              <AiOutlineBarChart />
+              <MdBubbleChart />
+            </div>
+          }
+        >
+          Create single or multi-variants for your flags, monitor their
+          evaluations, add custom metrics and understand the way your audience
+          uses your app.
         </Card>
       </div>
 
