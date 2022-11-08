@@ -12,7 +12,7 @@ import theme from "highlight.js/styles/github.css";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
-  title: "New Remix App",
+  title: "Progressively, the simple and accessible feature flagging tool",
   viewport: "width=device-width,initial-scale=1",
 });
 
@@ -32,6 +32,7 @@ export default function App() {
       <head>
         <Meta />
         <Links />
+        <link rel="shortcut icon" type="image/jpg" href="/favicon.png" />
       </head>
       <body>
         <Outlet />
