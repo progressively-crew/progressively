@@ -55,13 +55,13 @@ export const Example = () => {
   const base6 = (percentage / 100) * 6;
 
   return (
-    <section className="max-w-screen-xl mx-auto p-4 md:p-20">
-      <h2 className="text-center text-5xl font-bold">
+    <section className="max-w-screen-xl mx-auto px-4 py-12 lg:p-20">
+      <h2 className="text-center text-3xl md:text-5xl font-bold">
         <span className="text-indigo-700">Rollout and rollback</span> as you
         want
       </h2>
 
-      <p className="text-2xl text-gray-700 px-16 pt-4 text-center">
+      <p className="text-center pt-4 text-gray-700 p-4 md:px-16 md:text-xl lg:text-2xl">
         Start building your feature, merge the changes, and progressively
         rollout these changes to your audience. If you encounter unexpected
         errors, you can simply rollback as easily as you rolled out.
@@ -82,7 +82,7 @@ export const Example = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid md:grid-cols-2 grid-cols-3 gap-4">
         {browsers.map((_, index: number) => (
           <BrowserExample
             key={`browser-${index}`}

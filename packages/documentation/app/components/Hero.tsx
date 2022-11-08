@@ -6,11 +6,11 @@ export const Hero = () => {
     <div className="bg-gray-900 text-white">
       <div className="mx-auto max-w-screen-xl px-4 py-32 lg:flex lg:h-screen lg:items-center">
         <div className="mx-auto max-w-3xl text-center">
-          <div className="flex justify-center p-8">
+          <div className="flex justify-center md:p-8">
             <Logo />
           </div>
 
-          <h1 className="text-white  text-3xl font-extrabold sm:text-5xl p-1">
+          <h1 className="text-white text-3xl font-extrabold sm:text-5xl p-1">
             Rollout quickly, effectively,
             <span className="sm:block text-pink-400"> Progressively. </span>
           </h1>

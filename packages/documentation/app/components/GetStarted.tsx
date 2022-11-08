@@ -48,21 +48,21 @@ const Hero = () => {
 export const GetStarted = () => {
   return (
     <div className="bg-gray-900 text-white">
-      <section className="max-w-screen-xl mx-auto p-4 md:p-20">
-        <h2 className="text-center text-5xl font-bold">
+      <section className="max-w-screen-xl mx-auto px-4 py-12 md:p-20">
+        <h2 className="text-center text-3xl md:text-5xl font-bold">
           <span className="text-pink-500">Ready</span> to get started?
         </h2>
 
         <div className="pt-12 flex flex-col gap-12">
-          <div className="grid grid-cols-2 gap-12">
+          <div className="grid lg:grid-cols-2 gap-12">
             <div className="flex flex-col justify-center">
               <HiOutlineServerStack className="text-4xl text-pink-500" />
 
-              <h3 className="text-3xl font-bold pt-2">
+              <h3 className="text-xl font-bold pt-2 md:text-3xl">
                 Create your own instance
               </h3>
 
-              <p className="text-xl pt-6 text-gray-200">
+              <p className="md:text-xl pt-1 md:pt-6 text-gray-200">
                 Progressively is a self-hosted feature flagging tool. With the
                 following commands, you will create a running instance of
                 Progressively that you can interact with. Host it on your
@@ -83,16 +83,19 @@ export const GetStarted = () => {
               </div>
             </div>
 
-            <div className="flex items-center">
+            <div className="hidden flex items-center lg:block">
               <CliExample />
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-12">
+          <div className="grid lg:grid-cols-2 gap-12">
             <div className="flex flex-col justify-center">
               <VscTools className="text-4xl text-pink-500" />
-              <h3 className="text-3xl font-bold pt-2">Choose a SDK</h3>
-              <p className="text-xl pt-6 text-gray-200">
+              <h3 className="text-xl font-bold pt-2 md:text-3xl">
+                Choose a SDK
+              </h3>
+
+              <p className="md:text-xl pt-1 md:pt-6 text-gray-200">
                 Progressively is built to be usable on any types of application.
                 From frontend, to backend, to CLIs. Anything that can send an
                 HTTP request can use Progressively. And it supports{" "}
@@ -113,7 +116,9 @@ export const GetStarted = () => {
               </div>
             </div>
 
-            <ReactExample />
+            <div className="hidden lg:block">
+              <ReactExample />
+            </div>
           </div>
         </div>
       </section>

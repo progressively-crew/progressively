@@ -11,8 +11,8 @@ import { ProjectIcon } from "./icons/ProjectIcon";
 export const Features = () => (
   <div className="bg-gray-900">
     <section className="max-w-screen-xl mx-auto pb-4 md:pb-20">
-      <div className="grid grid-cols-7 gap-3">
-        <div className="col-span-2 grid gap-3">
+      <div className="grid px-4 lg:px-0 lg:grid-cols-7 gap-3">
+        <div className="lg:col-span-2 grid gap-3">
           <Card
             title="Hierarchical"
             top={
@@ -39,7 +39,7 @@ export const Features = () => (
           </Card>
         </div>
 
-        <div className="col-span-3 h-full">
+        <div className="lg:col-span-3 h-full">
           <Card
             title="Single & Multi variants"
             size="L"
@@ -58,7 +58,7 @@ export const Features = () => (
           </Card>
         </div>
 
-        <div className="col-span-2 grid gap-3 grid-rows-2">
+        <div className="grid gap-3 md:col-span-2 md:grid-rows-2">
           <Card
             title="Strategies"
             top={
