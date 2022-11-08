@@ -2202,6 +2202,10 @@ video {
     padding-left: 3rem;
     padding-right: 3rem;
   }
+
+  .md\:pb-20 {
+    padding-bottom: 5rem;
+  }
 }
 
 @media (min-width: 1024px) {
