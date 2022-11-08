@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://progressively.app/sitemap.xml
+Host: progressively.app
