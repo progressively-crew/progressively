@@ -18,8 +18,18 @@ jobs:
             packages/frontend/package-lock.json
             packages/backend/package-lock.json
 
+      - name: Install
+        run: npm install
+        working-directory: ./packages/documentation
+
       - name: Build the project and start
-        run: npm run build && npm start &
+        run: npm run build
+        working-directory: ./packages/documentation
+
+      - name: Start the project
+        run: npm start &
+        working-directory: ./packages/documentation
 
       - name: E2E tests
         run: npx wait-on -t 60000 tcp:3000 && npm run test:e2e:ci
+        working-directory: ./packages/documentation
