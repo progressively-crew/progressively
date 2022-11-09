@@ -6,9 +6,12 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from "@remix-run/react";
 import styles from "./styles/app.css";
 import theme from "highlight.js/styles/github.css";
+import { ProgressivelyProvider } from "@progressively/react";
+import { getProgressivelyData } from "@progressively/server-side";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
@@ -26,7 +29,25 @@ export function links() {
   ];
 }
 
+export const loader = async () => {
+  const { data, response } = await getProgressivelyData(
+    "51f0412c-8be1-48a3-97e3-5f1f59d3d392",
+    {
+      websocketUrl: "wss://backend-progressively.fly.dev",
+      apiUrl: "https://backend-progressively.fly.dev",
+    }
+  );
+
+  return {
+    progressivelyProps: data,
+  };
+};
+
 export default function App() {
+  const { progressivelyProps } = useLoaderData<typeof loader>();
+
+  console.log("lol", progressivelyProps);
+
   return (
     <html lang="en">
       <head>
@@ -35,7 +56,10 @@ export default function App() {
         <link rel="shortcut icon" type="image/jpg" href="/favicon.png" />
       </head>
       <body>
-        <Outlet />
+        <ProgressivelyProvider {...progressivelyProps}>
+          <Outlet />
+        </ProgressivelyProvider>
+
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
