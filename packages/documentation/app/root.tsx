@@ -38,17 +38,20 @@ export const loader: LoaderFunction = async ({ request }) => {
     };
   }
 
+  // Remix cookies
+  const cookieHeader = request.headers.get("Cookie");
+  const cookie = (await progressivelyCookie.parse(cookieHeader)) || {};
+
   const { data, response } = await getProgressivelyData(
     String(process.env.PROGRESSIVELY_ENV),
     {
       websocketUrl: "wss://backend-progressively.fly.dev",
       apiUrl: "https://backend-progressively.fly.dev",
+      fields: {
+        id: cookie["progressively-id"],
+      },
     }
   );
-
-  // Remix cookies
-  const cookieHeader = request.headers.get("Cookie");
-  const cookie = (await progressivelyCookie.parse(cookieHeader)) || {};
 
   // Progressively cookies
   const cookieValue = response.headers
