@@ -4,6 +4,9 @@ on:
     branches: ["master"]
   workflow_dispatch:
 
+env:
+  PROGRESSIVELY_ENV: ""
+
 jobs:
   static:
     runs-on: ubuntu-latest
@@ -18,6 +21,8 @@ jobs:
             packages/frontend/package-lock.json
             packages/backend/package-lock.json
 
+      - name: Check env variable
+        run: echo $PROGRESSIVELY_ENV
       - name: Install
         run: npm ci
         working-directory: ./packages/documentation
