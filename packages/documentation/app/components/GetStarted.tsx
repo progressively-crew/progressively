@@ -50,14 +50,14 @@ export const GetStarted = () => {
     <div>
       <section className="max-w-screen-xl mx-auto px-4 py-12 md:p-20">
         <h2 className="text-center text-3xl md:text-5xl font-bold">
-          <span className="text-pink-500">Ready</span> to get started?
+          <span className="text-indigo-500">Ready</span> to get started?
         </h2>
 
         <div className="pt-12 flex flex-col gap-12">
           <div className="grid lg:grid-cols-2 gap-12">
             <div className="flex flex-col justify-center">
               <HiOutlineServerStack
-                className="text-4xl text-pink-500"
+                className="text-4xl text-indigo-500"
                 aria-hidden
               />
 
@@ -74,7 +74,7 @@ export const GetStarted = () => {
 
               <div className="pt-4">
                 <NavLink
-                  className="text-xl rounded px-4 h-12 -ml-4 text-pink-500 font-semibold inline-flex flex-row items-center gap-2 hover:bg-gray-700 active:bg-gray-800 transition-all group"
+                  className="text-xl rounded px-4 h-12 -ml-4 text-indigo-500 font-semibold inline-flex flex-row items-center gap-2 hover:bg-gray-700 active:bg-gray-800 transition-all group"
                   to="/docs/introduction/getting-started"
                 >
                   Get started{" "}
@@ -93,7 +93,7 @@ export const GetStarted = () => {
 
           <div className="grid lg:grid-cols-2 gap-12">
             <div className="flex flex-col justify-center">
-              <VscTools className="text-4xl text-pink-500" />
+              <VscTools className="text-4xl text-indigo-500" />
               <h3 className="text-xl font-bold pt-2 md:text-3xl">
                 Choose a SDK
               </h3>
@@ -107,7 +107,7 @@ export const GetStarted = () => {
 
               <div className="pt-4">
                 <NavLink
-                  className="text-xl rounded px-4 h-12 -ml-4 text-pink-500 font-semibold inline-flex flex-row items-center gap-2 hover:bg-gray-700 active:bg-gray-800 transition-all group"
+                  className="text-xl rounded px-4 h-12 -ml-4 text-indigo-500 font-semibold inline-flex flex-row items-center gap-2 hover:bg-gray-700 active:bg-gray-800 transition-all group"
                   to="/docs/guides/react"
                 >
                   SDKs available{" "}

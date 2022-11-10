@@ -26,7 +26,7 @@ const HighKbDownload = 875000;
 
 const PerfGrid = () => {
   return (
-    <div className="grid grid-cols-[120px_1fr_auto] gap-2 pt-12 items-center max-w-screen-md mx-auto">
+    <div className="grid grid-cols-[120px_1fr_auto] gap-2 items-center">
       {toolSizes.map((toolSize) => {
         const percentageSize = (toolSize.weight / Maxima) * 100;
 
@@ -65,6 +65,7 @@ const PerfGrid = () => {
                   {timeOnSlow} <span className="text-gray-300 text-xs">ms</span>
                 </span>
               </span>
+
               <span className="flex flex-row gap-1 items-center">
                 <AiOutlineDesktop />
                 <span className="text-sm">
@@ -87,19 +88,30 @@ export const WeightComparator = () => {
           <span className="text-pink-500">Weight</span> difference
         </h2>
 
-        <p className="text-center pt-4 text-gray-200 p-4 md:px-16 md:text-xl lg:text-2xl">
+        <p className="text-center text-gray-200 p-4 md:px-16 md:text-xl lg:text-2xl">
           Start building your feature, merge the changes, and progressively
           rollout these changes to your audience. If you encounter unexpected
           errors, you can simply rollback as easily as you rolled out.
         </p>
 
-        <PerfGrid />
+        <div className="max-w-screen-md mx-auto pt-4">
+          <PerfGrid />
 
-        <p className="text-center pt-4 text-gray-200 p-4 md:px-16 md:text-xl lg:text-2xl pt-12">
-          Start building your feature, merge the changes, and progressively
-          rollout these changes to your audience. If you encounter unexpected
-          errors, you can simply rollback as easily as you rolled out.
-        </p>
+          <p className="text-center text-gray-200 text-xs pt-6">
+            Approximative numbers from the{" "}
+            <a
+              href="https://github.com/progressively-crew/progressively/tree/master/example/bundle-diffs"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline"
+            >
+              Bundle diff example Nextjs project{" "}
+            </a>
+            . Download time is calculated on the basis of{" "}
+            <strong>50kb/s</strong> for slow mobile and <strong>875kB/s</strong>{" "}
+            for high speed connections.
+          </p>
+        </div>
       </section>
     </div>
   );

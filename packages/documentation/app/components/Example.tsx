@@ -61,7 +61,7 @@ export const Example = () => {
         want
       </h2>
 
-      <p className="text-center pt-4 text-gray-700 p-4 md:px-16 md:text-xl lg:text-2xl">
+      <p className="text-center text-gray-700 p-4 md:px-16 md:text-xl lg:text-2xl">
         Start building your feature, merge the changes, and progressively
         rollout these changes to your audience. If you encounter unexpected
         errors, you can simply rollback as easily as you rolled out.
