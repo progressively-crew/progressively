@@ -1,4 +1,5 @@
 import type { LinksFunction, MetaFunction } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
 import { Example } from "~/components/Example";
 import { Features } from "~/components/Features";
 import { GetStarted } from "~/components/GetStarted";
@@ -33,7 +34,15 @@ export const links: LinksFunction = () => {
   ];
 };
 
+export const loader = () => {
+  return {
+    isProgressivelyActivated: Boolean(process.env.PROGRESSIVELY_ENV),
+  };
+};
+
 export default function Index() {
+  const { isProgressivelyActivated } = useLoaderData<typeof loader>();
+
   return (
     <div className="bg-gray-50">
       <main>
