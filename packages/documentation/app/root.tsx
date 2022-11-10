@@ -10,7 +10,7 @@ import {
   useLoaderData,
 } from "@remix-run/react";
 import styles from "./styles/app.css";
-import theme from "highlight.js/styles/github.css";
+
 import { ProgressivelyProvider } from "@progressively/react";
 import { getProgressivelyData } from "@progressively/server-side";
 import { progressivelyCookie } from "./cookies";
@@ -22,13 +22,7 @@ export const meta: MetaFunction = () => ({
 });
 
 export function links() {
-  return [
-    { rel: "stylesheet", href: styles },
-    {
-      rel: "stylesheet",
-      href: theme,
-    },
-  ];
+  return [{ rel: "stylesheet", href: styles }];
 }
 
 export const loader: LoaderFunction = async ({ request }) => {

@@ -1,9 +1,20 @@
+import { LinksFunction } from "@remix-run/node";
 import { Outlet } from "@remix-run/react";
 import { HideDesktop } from "~/components/HideMobile";
 import { Nav } from "~/components/Nav";
 import { InertWhenNavOpened } from "~/components/Nav/InertWhenNavOpened";
 import { NavToggle } from "~/components/Nav/NavToggle";
 import { NavProvider } from "~/components/Nav/providers/NavProvider";
+import theme from "highlight.js/styles/github.css";
+
+export const links: LinksFunction = () => {
+  return [
+    {
+      rel: "stylesheet",
+      href: theme,
+    },
+  ];
+};
 
 export default function DocsLayout() {
   return (
