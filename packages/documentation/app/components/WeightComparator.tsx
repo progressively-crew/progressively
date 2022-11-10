@@ -1,4 +1,5 @@
 import React from "react";
+import { AiOutlineDesktop, AiOutlineMobile } from "react-icons/ai";
 
 const toolSizes = [
   {
@@ -31,7 +32,7 @@ export const WeightComparator = () => {
           <span className="text-pink-500">Weight</span> difference
         </h2>
 
-        <div className="grid grid-cols-[120px_1fr] gap-2 pt-12 items-center max-w-screen-md mx-auto">
+        <div className="grid grid-cols-[120px_1fr_auto] gap-2 pt-12 items-center max-w-screen-md mx-auto">
           {toolSizes.map((toolSize) => {
             const percentageSize = (toolSize.weight / Maxima) * 100;
 
@@ -40,10 +41,13 @@ export const WeightComparator = () => {
                 ? "bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"
                 : "bg-gray-700";
 
-            const timeOnSlow = (
-              (toolSize.weight / SlowKbDownload) *
-              100
-            ).toFixed(2);
+            const timeOnSlow = Math.ceil(
+              (toolSize.weight / SlowKbDownload) * 100
+            );
+
+            const timeOnFast = Math.ceil(
+              (toolSize.weight / HighKbDownload) * 100
+            );
 
             return (
               <React.Fragment key={toolSize.name}>
@@ -55,10 +59,30 @@ export const WeightComparator = () => {
                       className={"h-8 rounded-sm " + color}
                       style={{ width: `${percentageSize}%` }}
                     />
-                    <div>
-                      {toolSize.weight / 1000}kB {timeOnSlow}Ms
+                    <div className="flex shrink-0 flex-row gap-4">
+                      <span>
+                        {toolSize.weight / 1000}{" "}
+                        <span className="text-gray-400 text-xs">kB</span>
+                      </span>
                     </div>
                   </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4 items-center">
+                  <span className="flex flex-row gap-1 items-center">
+                    <AiOutlineMobile />
+                    <span className="text-sm">
+                      {timeOnSlow}{" "}
+                      <span className="text-gray-300 text-xs">ms</span>
+                    </span>
+                  </span>
+                  <span className="flex flex-row gap-1 items-center">
+                    <AiOutlineDesktop />
+                    <span className="text-sm">
+                      {timeOnFast}{" "}
+                      <span className="text-gray-300 text-xs">ms</span>
+                    </span>
+                  </span>
                 </div>
               </React.Fragment>
             );
