@@ -74,7 +74,7 @@ export const GetStarted = () => {
 
               <div className="pt-4">
                 <NavLink
-                  className="text-xl rounded px-4 h-12 -ml-4 text-indigo-500 font-semibold inline-flex flex-row items-center gap-2 hover:bg-gray-700 active:bg-gray-800 transition-all group"
+                  className="text-xl rounded px-4 h-12 -ml-4 text-indigo-500 font-semibold inline-flex flex-row items-center gap-2 hover:bg-gray-200 active:bg-gray-300 transition-all group"
                   to="/docs/introduction/getting-started"
                 >
                   Get started{" "}
@@ -107,7 +107,7 @@ export const GetStarted = () => {
 
               <div className="pt-4">
                 <NavLink
-                  className="text-xl rounded px-4 h-12 -ml-4 text-indigo-500 font-semibold inline-flex flex-row items-center gap-2 hover:bg-gray-700 active:bg-gray-800 transition-all group"
+                  className="text-xl rounded px-4 h-12 -ml-4 text-indigo-500 font-semibold inline-flex flex-row items-center gap-2 hover:bg-gray-200 active:bg-gray-300 transition-all group"
                   to="/docs/guides/react"
                 >
                   SDKs available{" "}
