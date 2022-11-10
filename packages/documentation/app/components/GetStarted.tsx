@@ -56,7 +56,10 @@ export const GetStarted = () => {
         <div className="pt-12 flex flex-col gap-12">
           <div className="grid lg:grid-cols-2 gap-12">
             <div className="flex flex-col justify-center">
-              <HiOutlineServerStack className="text-4xl text-pink-500" />
+              <HiOutlineServerStack
+                className="text-4xl text-pink-500"
+                aria-hidden
+              />
 
               <h3 className="text-xl font-bold pt-2 md:text-3xl">
                 Create your own instance
