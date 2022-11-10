@@ -1,5 +1,6 @@
 import React from "react";
 import { AiOutlineDesktop, AiOutlineMobile } from "react-icons/ai";
+import { Logo } from "./Logo";
 
 const toolSizes = [
   {
@@ -26,7 +27,7 @@ const HighKbDownload = 875000;
 
 const PerfGrid = () => {
   return (
-    <div className="grid grid-cols-[120px_1fr_auto] gap-2 items-center">
+    <div className="grid grid-cols-[140px_1fr_auto] gap-x-4 gap-y-2 items-center">
       {toolSizes.map((toolSize) => {
         const percentageSize = (toolSize.weight / Maxima) * 100;
 
@@ -41,7 +42,12 @@ const PerfGrid = () => {
 
         return (
           <React.Fragment key={toolSize.name}>
-            <h3 className="font-semibold">{toolSize.name}</h3>
+            <h3 className="font-semibold flex flex-row items-center justify-end gap-2">
+              {toolSize.name === "Progressively" ? (
+                <Logo style={{ height: "auto" }} />
+              ) : null}
+              <span>{toolSize.name}</span>
+            </h3>
 
             <div className="border border-gray-600 overflow-hidden rounded p-1 pr-4">
               <div className="flex flex-row gap-4 items-center">
