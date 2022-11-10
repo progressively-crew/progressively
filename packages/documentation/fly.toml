@@ -5,6 +5,9 @@ kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
 
+[env]
+  PROGRESSIVELY_ENV = "ed90c92a-3a6b-48da-9cda-f14b95e57243"
+
 [experimental]
   allowed_public_ports = []
   auto_rollback = true
