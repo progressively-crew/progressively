@@ -16,7 +16,7 @@ export const CliBar = ({ children }: BarProps) => {
 
 export const EditorBar = ({ children }: BarProps) => {
   return (
-    <div className="flex-1 text-sm h-full ml-16">
+    <div className="flex-1 text-sm h-full ml-16" aria-hidden>
       <div className="border-l border-r border-t border-gray-900 border-t-pink-500 h-full inline-flex items-center px-4 text-white">
         {children}
       </div>
@@ -61,7 +61,7 @@ export const Window = ({ children, header, inverse }: WindowProps) => {
         )}
       </div>
 
-      <div className="overflow-x-auto mx-4" tabIndex={0}>
+      <div className="overflow-x-auto mx-4" tabIndex={inverse ? 0 : -1}>
         {children}
       </div>
     </div>

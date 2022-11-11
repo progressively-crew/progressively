@@ -14,36 +14,40 @@ const BrowserExample = ({ transitioning }: { transitioning: boolean }) => {
   const buttonStyle = transitioning ? "w-6 bg-pink-300" : "w-0 bg-pink-100";
 
   return (
-    <Window header={<SearchBar>https://your-app.com</SearchBar>}>
-      <div className="p-4">
-        <div className={"transition-all flex flex-row gap-2"}>
-          <div
-            className={
-              "rounded-md transition-all h-20 flex justify-center items-center text-3xl text-white " +
-              assetStyles
-            }
-          >
-            {transitioning ? <TbPlayerPlay /> : null}
-          </div>
-
-          <div
-            className={
-              "transition-all flex gap-1 flex-col justify-center flex-[2_2_0%]"
-            }
-          >
-            <div className={"transition-all rounded-full " + firstLineStyles} />
+    <div aria-hidden>
+      <Window header={<SearchBar>https://your-app.com</SearchBar>}>
+        <div className="p-4">
+          <div className={"transition-all flex flex-row gap-2"}>
             <div
-              className={"transition-all rounded-full w-full h-2 bg-gray-200"}
-            />
-            <div
-              className={"transition-all rounded-full w-3/4 h-2 bg-gray-200"}
-            />
+              className={
+                "rounded-md transition-all h-20 flex justify-center items-center text-3xl text-white " +
+                assetStyles
+              }
+            >
+              {transitioning ? <TbPlayerPlay /> : null}
+            </div>
 
-            <div className={"h-2 rounded-full h-2 mt-2 " + buttonStyle} />
+            <div
+              className={
+                "transition-all flex gap-1 flex-col justify-center flex-[2_2_0%]"
+              }
+            >
+              <div
+                className={"transition-all rounded-full " + firstLineStyles}
+              />
+              <div
+                className={"transition-all rounded-full w-full h-2 bg-gray-200"}
+              />
+              <div
+                className={"transition-all rounded-full w-3/4 h-2 bg-gray-200"}
+              />
+
+              <div className={"h-2 rounded-full h-2 mt-2 " + buttonStyle} />
+            </div>
           </div>
         </div>
-      </div>
-    </Window>
+      </Window>
+    </div>
   );
 };
 

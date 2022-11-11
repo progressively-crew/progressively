@@ -1,5 +1,6 @@
 import React from "react";
 import { AiOutlineDesktop, AiOutlineMobile } from "react-icons/ai";
+import { VisuallyHidden } from "./VisuallyHidden";
 
 const toolSizes = [
   {
@@ -82,7 +83,11 @@ const PerfGrid = () => {
                   style={{ width: `${percentageSize}%` }}
                 />
                 <div className="flex shrink-0 flex-row gap-4">
-                  <span>
+                  <VisuallyHidden>
+                    {`Size of ${toolSize.name}: ${toolSize.weight / 1000}kB`}
+                  </VisuallyHidden>
+
+                  <span aria-hidden>
                     {toolSize.weight / 1000}{" "}
                     <span className="text-gray-400 text-xs">kB</span>
                   </span>
@@ -92,16 +97,26 @@ const PerfGrid = () => {
 
             <div className="flex flex-row md:grid md:grid-cols-2 gap-4 items-center">
               <span className="flex flex-row gap-1 items-center">
-                <AiOutlineMobile />
-                <span className="text-sm">
+                <AiOutlineMobile aria-hidden />
+                <VisuallyHidden>
+                  {`Time to download ${toolSize.name} on 3G: ${threeG.size}
+                  ${threeG.unit}`}
+                </VisuallyHidden>
+
+                <span className="text-sm" aria-hidden>
                   {threeG.size}{" "}
                   <span className="text-gray-300 text-xs">{threeG.unit}</span>
                 </span>
               </span>
 
               <span className="flex flex-row gap-1 items-center">
-                <AiOutlineDesktop />
-                <span className="text-sm">
+                <AiOutlineDesktop aria-hidden />
+                <VisuallyHidden>
+                  {`Time to download ${toolSize.name} on 3G: ${fourG.size}
+                  ${fourG.unit}`}
+                </VisuallyHidden>
+
+                <span className="text-sm" aria-hidden>
                   {fourG.size}{" "}
                   <span className="text-gray-300 text-xs">{fourG.unit}</span>
                 </span>

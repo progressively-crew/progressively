@@ -6,6 +6,7 @@ export const Logo = (props: any) => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     className="logo"
+    aria-hidden
     {...props}
   >
     <path
