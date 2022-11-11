@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useId } from "react";
 
 export interface CardProps {
   title: string;
@@ -32,6 +32,7 @@ export const Card = ({
   top,
   bottom,
 }: CardProps) => {
+  const id = useId();
   const titleStyles = TitleStyles[size];
   const wrapperStyles = WrapperStyles[size];
   const contentStyles = ContentStyles[size];
@@ -44,6 +45,7 @@ export const Card = ({
 
   return (
     <article
+      aria-labelledby={id}
       className={
         "rounded-xl px-4 py-8 h-full relative drop-shadow-lg overflow-hidden flex flex-col justify-center " +
         bgHlgt +
@@ -52,7 +54,9 @@ export const Card = ({
       }
     >
       {top && <div className="pb-3">{top}</div>}
-      <h2 className={"font-bold text-center " + titleStyles}>{title}</h2>
+      <h2 className={"font-bold text-center " + titleStyles} id={id}>
+        {title}
+      </h2>
 
       <div className={"text-center pt-3 " + contentStyles + " " + contentHlgt}>
         {children}

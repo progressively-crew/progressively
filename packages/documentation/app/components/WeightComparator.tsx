@@ -1,5 +1,7 @@
 import React from "react";
 import { AiOutlineDesktop, AiOutlineMobile } from "react-icons/ai";
+import { Md3GMobiledata, Md4GMobiledata } from "react-icons/md";
+import { VisuallyHidden } from "./VisuallyHidden";
 
 const toolSizes = [
   {
@@ -21,20 +23,19 @@ const toolSizes = [
 ];
 
 const Maxima = 46000;
-const SlowKbDownload = 5000;
-const HighKbDownload = 875000;
 
 // Picked up from http://www.webpagetest.org/
 // Speed in KB/s
-
 const DownloadSpeed = {
   THREE_G: 400 / 8, // Slow 3G
   FOUR_G: 7000 / 8, // 4G
+  DESKTOP: 40000 / 8,
 };
 const getTimeFromSize = (sizeInBytes: number) => {
   return {
     threeG: sizeInBytes / 1024 / DownloadSpeed.THREE_G,
     fourG: sizeInBytes / 1024 / DownloadSpeed.FOUR_G,
+    desktop: sizeInBytes / 1024 / DownloadSpeed.DESKTOP,
   };
 };
 
@@ -68,6 +69,7 @@ const PerfGrid = () => {
         const size = getTimeFromSize(toolSize.weight);
         const threeG = formatTime(size.threeG);
         const fourG = formatTime(size.fourG);
+        const desktop = formatTime(size.desktop);
 
         return (
           <React.Fragment key={toolSize.name}>
@@ -82,7 +84,11 @@ const PerfGrid = () => {
                   style={{ width: `${percentageSize}%` }}
                 />
                 <div className="flex shrink-0 flex-row gap-4">
-                  <span>
+                  <VisuallyHidden>
+                    {`Size of ${toolSize.name}: ${toolSize.weight / 1000}kB`}
+                  </VisuallyHidden>
+
+                  <span aria-hidden>
                     {toolSize.weight / 1000}{" "}
                     <span className="text-gray-400 text-xs">kB</span>
                   </span>
@@ -90,20 +96,43 @@ const PerfGrid = () => {
               </div>
             </div>
 
-            <div className="flex flex-row md:grid md:grid-cols-2 gap-4 items-center">
+            <div className="flex flex-row md:grid md:grid-cols-3 gap-4 items-center">
               <span className="flex flex-row gap-1 items-center">
-                <AiOutlineMobile />
-                <span className="text-sm">
+                <Md3GMobiledata aria-hidden className="text-pink-500" />
+                <VisuallyHidden>
+                  {`Time to download ${toolSize.name} on 3G: ${threeG.size}
+                  ${threeG.unit}`}
+                </VisuallyHidden>
+
+                <span className="text-sm" aria-hidden>
                   {threeG.size}{" "}
                   <span className="text-gray-300 text-xs">{threeG.unit}</span>
                 </span>
               </span>
 
               <span className="flex flex-row gap-1 items-center">
-                <AiOutlineDesktop />
-                <span className="text-sm">
+                <Md4GMobiledata aria-hidden className="text-pink-500" />
+                <VisuallyHidden>
+                  {`Time to download ${toolSize.name} on 3G: ${fourG.size}
+                  ${fourG.unit}`}
+                </VisuallyHidden>
+
+                <span className="text-sm" aria-hidden>
                   {fourG.size}{" "}
                   <span className="text-gray-300 text-xs">{fourG.unit}</span>
+                </span>
+              </span>
+
+              <span className="flex flex-row gap-1 items-center">
+                <AiOutlineDesktop aria-hidden className="text-pink-500" />
+                <VisuallyHidden>
+                  {`Time to download ${toolSize.name} on high speed connection: ${desktop.size}
+                  ${desktop.unit}`}
+                </VisuallyHidden>
+
+                <span className="text-sm" aria-hidden>
+                  {desktop.size}{" "}
+                  <span className="text-gray-300 text-xs">{desktop.unit}</span>
                 </span>
               </span>
             </div>
@@ -143,7 +172,7 @@ export const WeightComparator = () => {
           </figcaption>
         </figure>
 
-        <div className="max-w-screen-md mx-auto pt-4 md:pt-12">
+        <div className="max-w-screen-xl mx-auto pt-4 md:pt-12">
           <PerfGrid />
 
           <div className="pt-6 md:pt-16">
@@ -158,8 +187,9 @@ export const WeightComparator = () => {
                 Bundle diff example Nextjs project{" "}
               </a>
               . Download time is calculated on the basis of{" "}
-              <strong>50kb/s</strong> for slow devices and{" "}
-              <strong>875kB/s</strong> for high speed connections.
+              <strong>50kB/s</strong> for 3G devices, <strong>875kB/s</strong>{" "}
+              for 4G devices and <strong>5MB/s</strong> for high speed
+              connection.
             </p>
           </div>
         </div>

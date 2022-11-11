@@ -21,7 +21,7 @@ const buildSiteMap = async (routes = [], root = undefined) => {
     } else {
       const lastModified = await fileModificationDate(route.file);
       const pagePath = route.index
-        ? root?.path || "/"
+        ? root?.path || ""
         : root?.path + "/" + route.path;
 
       sitemap += `  <url>
