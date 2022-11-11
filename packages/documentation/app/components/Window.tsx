@@ -61,7 +61,9 @@ export const Window = ({ children, header, inverse }: WindowProps) => {
         )}
       </div>
 
-      <div className="overflow-x-auto mx-4">{children}</div>
+      <div className="overflow-x-auto mx-4" tabIndex={0}>
+        {children}
+      </div>
     </div>
   );
 };
