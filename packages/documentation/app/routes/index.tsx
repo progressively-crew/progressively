@@ -4,6 +4,9 @@ import { Example } from "~/components/Example";
 import { Features } from "~/components/Features";
 import { GetStarted } from "~/components/GetStarted";
 import { Hero } from "~/components/Hero";
+import { WeightComparator } from "~/components/WeightComparator";
+import homeCss from "../styles/home.css";
+import theme from "highlight.js/styles/github-dark.css";
 
 const title = "Progressively, simple and accessible feature flagging tool";
 const description =
@@ -31,6 +34,11 @@ export const links: LinksFunction = () => {
       rel: "canonical",
       href: "https://progressively.app",
     },
+    {
+      rel: "stylesheet",
+      href: theme,
+    },
+    { rel: "stylesheet", href: homeCss },
   ];
 };
 
@@ -49,6 +57,7 @@ export default function Index() {
         <Hero />
         <Features />
         <Example />
+        <WeightComparator />
         <GetStarted />
       </main>
     </div>

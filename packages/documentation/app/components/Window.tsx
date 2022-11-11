@@ -3,6 +3,7 @@ import React from "react";
 export interface WindowProps {
   header?: React.ReactNode;
   children?: React.ReactNode;
+  inverse?: boolean;
 }
 
 export interface BarProps {
@@ -16,7 +17,7 @@ export const CliBar = ({ children }: BarProps) => {
 export const EditorBar = ({ children }: BarProps) => {
   return (
     <div className="flex-1 text-sm h-full ml-16">
-      <div className="border-l border-r border-t border-gray-100 border-t-pink-500 h-full inline-flex items-center px-4">
+      <div className="border-l border-r border-t border-gray-900 border-t-pink-500 h-full inline-flex items-center px-4 text-white">
         {children}
       </div>
     </div>
@@ -33,14 +34,20 @@ export const SearchBar = ({ children }: BarProps) => {
   );
 };
 
-export const Window = ({ children, header }: WindowProps) => {
+export const Window = ({ children, header, inverse }: WindowProps) => {
+  const wrapperStyle = inverse ? "bg-black" : "bg-white";
+  const headerStyle = inverse ? "border-b-gray-900" : "border-b-gray-100";
+
   return (
     <div
-      className={"rounded-md relative drop-shadow-lg overflow-hidden bg-white"}
+      className={
+        "rounded-md relative drop-shadow-lg overflow-hidden " + wrapperStyle
+      }
     >
       <div
         className={
-          "flex flex-row items-center h-12 px-4 gap-4 relative border-b border-b-gray-100"
+          "flex flex-row items-center h-12 px-4 gap-4 relative border-b " +
+          headerStyle
         }
       >
         <div className="flex flex-row gap-2 absolute">
@@ -54,7 +61,9 @@ export const Window = ({ children, header }: WindowProps) => {
         )}
       </div>
 
-      <div className="overflow-x-auto mx-4">{children}</div>
+      <div className="overflow-x-auto mx-4" tabIndex={0}>
+        {children}
+      </div>
     </div>
   );
 };
