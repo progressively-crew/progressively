@@ -421,9 +421,9 @@ export class FlagsService {
     if (result.length > 0) {
       const rawFlagEnv = result[result.length - 1];
       nextFlagEnv = rawFlagEnv as unknown as PopulatedFlagEnv;
-    }
 
-    this.wsGateway.notifyChanges(clientKey, nextFlagEnv);
+      this.wsGateway.notifyChanges(clientKey, nextFlagEnv);
+    }
 
     return nextFlagEnv;
   }
