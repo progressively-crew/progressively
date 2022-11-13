@@ -3,10 +3,11 @@ import { useLoaderData } from "@remix-run/react";
 import { Example } from "~/components/Example";
 import { Features } from "~/components/Features";
 import { GetStarted } from "~/components/GetStarted";
-import { Hero } from "~/components/Hero";
+import { Hero, HeroVariant } from "~/components/Hero";
 import { WeightComparator } from "~/components/WeightComparator";
 import homeCss from "../styles/home.css";
 import theme from "highlight.js/styles/github-dark.css";
+import { useFlags } from "@progressively/react";
 
 const title = "Progressively, simple and accessible feature flagging tool";
 const description =
@@ -48,13 +49,25 @@ export const loader = () => {
   };
 };
 
-export default function Index() {
+// if statement is an environment variable, safe to keep the condition
+const useAllFlags = () => {
   const { isProgressivelyActivated } = useLoaderData<typeof loader>();
+
+  if (isProgressivelyActivated) {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    return useFlags();
+  }
+
+  return { flags: {} } as any;
+};
+
+export default function Index() {
+  const { flags } = useAllFlags();
 
   return (
     <div className="bg-gray-50">
       <main>
-        <Hero />
+        {flags.newHero ? <Hero /> : <HeroVariant />}
         <Features />
         <Example />
         <WeightComparator />
