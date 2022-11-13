@@ -58,6 +58,32 @@ describe('StrategyService', () => {
 
   describe('resolveStrategies', () => {
     describe('Simple Variant', () => {
+      it('approximates 50% of the audience', async () => {
+        flagEnv.rolloutPercentage = 50;
+
+        let activated = 0;
+        let notActivated = 0;
+
+        for (let i = 0; i < 100; i++) {
+          const shouldActivate = await service.resolveStrategies(
+            flagEnv,
+            [strategy],
+            {
+              id: i,
+            },
+          );
+
+          if (shouldActivate) {
+            activated++;
+          } else {
+            notActivated++;
+          }
+        }
+
+        expect(activated).toBe(52);
+        expect(notActivated).toBe(48);
+      });
+
       it('returns true when the rollout percentage is 100%', async () => {
         flagEnv.rolloutPercentage = 100;
 
