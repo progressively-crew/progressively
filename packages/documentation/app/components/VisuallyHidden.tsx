@@ -15,8 +15,8 @@ export interface VisuallyHiddenProps {
 }
 export const VisuallyHidden = ({ children, id }: VisuallyHiddenProps) => {
   return (
-    <div style={vhStyles} id={id}>
+    <span style={vhStyles} id={id}>
       {children}
-    </div>
+    </span>
   );
 };

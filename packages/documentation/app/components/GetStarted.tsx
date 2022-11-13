@@ -2,8 +2,8 @@ import { BsArrowRight } from "react-icons/bs";
 import { NavLink } from "react-router-dom";
 import { Highlighter } from "./Highlighter";
 import { CliBar, EditorBar, Window } from "./Window";
-import { HiOutlineServerStack } from "react-icons/hi2";
 import { VscTools } from "react-icons/vsc";
+import { TbServer2 } from "react-icons/tb";
 
 const CliExample = () => {
   return (
@@ -56,10 +56,7 @@ export const GetStarted = () => {
         <div className="pt-12 flex flex-col gap-12">
           <div className="grid lg:grid-cols-2 gap-12">
             <div className="flex flex-col justify-center">
-              <HiOutlineServerStack
-                className="text-4xl text-indigo-700"
-                aria-hidden
-              />
+              <TbServer2 className="text-4xl text-indigo-700" aria-hidden />
 
               <h3 className="text-xl font-bold pt-2 md:text-3xl">
                 Create your own instance
