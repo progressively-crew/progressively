@@ -61,8 +61,9 @@ export class StrategyService {
   ) {
     // When at least one variant is created, we cant rely on rolloutPercentage at the flag level
     // we need to rely on the percentage at the variant level
-    if (flagEnv.variants?.length === 0 && flagEnv.rolloutPercentage === 100)
+    if (flagEnv.variants?.length === 0 && flagEnv.rolloutPercentage === 100) {
       return true;
+    }
 
     // No users, we can't make assumptions, should be very rare
     if (!fields?.id) return false;
@@ -72,9 +73,6 @@ export class StrategyService {
     if (Boolean(variant)) {
       return variant;
     }
-
-    // Always return true when no strategies are passed
-    if (strategies.length === 0) return true;
 
     for (const strategy of strategies) {
       const isValidStrategyRule = this.isValidStrategy(strategy, fields);
