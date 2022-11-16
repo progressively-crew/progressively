@@ -27,9 +27,7 @@ export class StrategyService {
     const isMultiVariate = flagEnv.variants.length > 0;
 
     if (isMultiVariate) {
-      const variant = getVariation(bucketId, flagEnv.variants);
-
-      return variant;
+      return getVariation(bucketId, flagEnv.variants);
     }
 
     return isInBucket(bucketId, flagEnv.rolloutPercentage);

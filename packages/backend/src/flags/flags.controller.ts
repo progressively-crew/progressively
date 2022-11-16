@@ -222,18 +222,12 @@ export class FlagsController {
   @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(WebhookSchema))
-  async addWebhookToFlagEnv(
+  addWebhookToFlagEnv(
     @Param('envId') envId: string,
     @Param('flagId') flagId: string,
     @Body() webhookDto: WebhookCreationDTO,
   ): Promise<any> {
-    const webhook = await this.webhookService.addWebhookToFlagEnv(
-      envId,
-      flagId,
-      webhookDto,
-    );
-
-    return webhook;
+    return this.webhookService.addWebhookToFlagEnv(envId, flagId, webhookDto);
   }
 
   @Post('environments/:envId/flags/:flagId/scheduling')
