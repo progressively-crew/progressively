@@ -16,14 +16,14 @@ export class SdkService {
   ) {}
 
   resolveUserId(params: FieldRecord, cookieUserId?: string) {
-    if (cookieUserId) {
-      // User exists, subsequent requests
-      return cookieUserId;
-    }
-
     if (params?.id) {
       // User exists, but initial request
       return String(params.id);
+    }
+
+    if (cookieUserId) {
+      // User exists, subsequent requests
+      return cookieUserId;
     }
 
     // first visit but anonymous

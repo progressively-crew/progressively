@@ -1,0 +1,51 @@
+{
+  "name": "@progressively/load-testing",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@progressively/react": "^0.0.1-alpha.14",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^14.4.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "web-vitals": "^3.0.4"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.27.1",
+    "@types/node": "^18.11.9",
+    "@types/node-fetch": "^2.6.2",
+    "chalk": "^5",
+    "node-fetch": "^2.6.7",
+    "playwright": "^1.27.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build:test": "react-scripts build",
+    "db:seed": "ts-node ./tests/helpers/seed-run.ts",
+    "test:chromium": "playwright test --project=chromium",
+    "test:firefox": "playwright test --project=chromium",
+    "test:webkit": "playwright test --project=chromium"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
