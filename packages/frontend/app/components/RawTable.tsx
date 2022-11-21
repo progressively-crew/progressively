@@ -28,13 +28,13 @@ export const Tr = ({
 };
 
 export const Td = (props: React.HTMLAttributes<HTMLTableCellElement>) => {
-  return <td className="py-4 px-6" {...props} />;
+  return <td className="py-4 px-8" {...props} />;
 };
 
 export const Th = (props: React.HTMLAttributes<HTMLTableCellElement>) => {
   return (
     <th
-      className="py-3 px-6 bg-gray-100 text-left uppercase text-sm text-gray-600 tracking-wide"
+      className="py-3 px-8 bg-gray-100 text-left uppercase text-sm text-gray-600 tracking-wide"
       {...props}
     />
   );
