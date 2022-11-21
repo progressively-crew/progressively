@@ -23,6 +23,9 @@ import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction"
 import { PageTitle } from "~/components/PageTitle";
 import { EnvIcon } from "~/components/Icons/EnvIcon";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
+import { SearchLayout } from "~/layouts/SearchLayout";
+import { SearchBar } from "~/components/SearchBar";
+import { Spacer } from "~/components/Spacer";
 
 export const meta: MetaFunction = ({ params, parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -73,8 +76,8 @@ export default function FlagsByEnvPage() {
   const { user } = useUser();
   const { project } = useProject();
   const { environment } = useEnvironment();
-
   const [searchParams] = useSearchParams();
+  const search = searchParams.get("search");
   const newFlagId = searchParams.get("newFlagId") || undefined;
   const isFlagRemoved = searchParams.get("flagRemoved") || undefined;
 
@@ -102,29 +105,34 @@ export default function FlagsByEnvPage() {
         ) : null
       }
     >
-      <PageTitle
-        value="Feature flags"
-        icon={<FlagIcon />}
-        action={
-          hasFlags && (
-            <CreateButton
-              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/create`}
-            >
-              Create a feature flag
-            </CreateButton>
-          )
-        }
-      />
+      <PageTitle value="Feature flags" icon={<FlagIcon />} />
 
       <Section aria-label="List of feature flags">
         {hasFlags ? (
-          <Card>
-            <FlagList
-              flags={flagsByEnv}
-              envId={environment.uuid}
-              projectId={project.uuid}
-            />
-          </Card>
+          <div>
+            <SearchLayout
+              actions={
+                <CreateButton
+                  to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/create`}
+                >
+                  Create a feature flag
+                </CreateButton>
+              }
+            >
+              <SearchBar label="Search for flags" placeholder="e.g: The flag" />
+            </SearchLayout>
+
+            <Spacer size={4} />
+            <Card>
+              <FlagList
+                flags={flagsByEnv.filter((flag) =>
+                  flag.flag.name.toLocaleLowerCase().includes(search || "")
+                )}
+                envId={environment.uuid}
+                projectId={project.uuid}
+              />
+            </Card>
+          </div>
         ) : (
           <Card>
             <CardContent>
