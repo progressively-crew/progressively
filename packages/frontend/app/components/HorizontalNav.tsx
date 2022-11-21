@@ -31,7 +31,7 @@ export const NavItem = ({ children, to, icon }: NavItemProps) => {
         className={({ isActive }) =>
           isActive
             ? "h-10 block flex items-center rounded px-4 bg-indigo-700 text-white lg:bg-indigo-100 lg:text-indigo-700 font-bold"
-            : "h-10 block flex items-center rounded px-4 hover:bg-gray-100"
+            : "h-10 block flex items-center rounded px-4 hover:bg-gray-100 active:bg-gray-200"
         }
       >
         <HStack spacing={2}>
