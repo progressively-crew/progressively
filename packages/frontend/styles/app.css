@@ -1,3 +1,71 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --input-range-bg: #e5e7eb;
+  --input-range-track: #4f46e5;
+}
+
+/********** Range Input Styles **********/
+/*Range Reset*/
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+/***** Chrome, Safari, Opera and Edge Chromium styles *****/
+/* slider track */
+input[type="range"]::-webkit-slider-runnable-track {
+  background-color: var(--input-range-bg);
+  border-radius: 9999px;
+  height: 0.5rem;
+}
+
+/* slider thumb */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  margin-top: -12px; /* Centers thumb on the track */
+  border-radius: 4px;
+
+  /*custom styles*/
+  background-color: var(--input-range-track);
+  height: 2rem;
+  width: 1rem;
+}
+
+/******** Firefox styles ********/
+/* slider track */
+input[type="range"]::-moz-range-track {
+  background-color: var(--input-range-bg);
+  border-radius: 9999px;
+  height: 0.5rem;
+}
+
+/* slider thumb */
+input[type="range"]::-moz-range-thumb {
+  border: none; /*Removes extra border that FF applies*/
+  border-radius: 4px; /*Removes default border-radius that FF applies*/
+
+  /*custom styles*/
+  background-color: var(--input-range-track);
+  height: 2rem;
+  width: 1rem;
+}
+
+/* input[type="range"]:focus::-moz-range-thumb {
+  border: 1px solid var(--input-range-bg);
+  outline: 3px solid var(--input-range-bg);
+  outline-offset: 0.125rem;
+} */
+
+.triangle {
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-right: 8px solid var(--input-range-track);
+}
