@@ -18,6 +18,9 @@ import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaT
 import { PageTitle } from "~/components/PageTitle";
 import { ProjectIcon } from "~/components/Icons/ProjectIcon";
 import { EnvIcon } from "~/components/Icons/EnvIcon";
+import { SearchBar } from "~/components/SearchBar";
+import { SearchLayout } from "~/layouts/SearchLayout";
+import { Spacer } from "~/components/Spacer";
 
 export const meta: MetaFunction = ({ parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -31,6 +34,7 @@ export default function ProjectDetailPage() {
   const { user } = useUser();
   const { project } = useProject();
   const [searchParams] = useSearchParams();
+  const search = searchParams.get("search");
   const newEnvId = searchParams.get("newEnvId") || undefined;
   const envRemoved = searchParams.get("envRemoved") || undefined;
 
@@ -74,28 +78,37 @@ export default function ProjectDetailPage() {
         ) : null
       }
     >
-      <PageTitle
-        value="Environments"
-        icon={<EnvIcon />}
-        action={
-          hasEnvironments && (
-            <CreateButton
-              to={`/dashboard/projects/${project.uuid}/environments/create`}
-            >
-              Create an environment
-            </CreateButton>
-          )
-        }
-      />
+      <PageTitle value="Environments" icon={<EnvIcon />} />
 
       <Section aria-label="List of environments">
         {hasEnvironments ? (
-          <Card>
-            <EnvList
-              environments={project.environments}
-              projectId={project.uuid}
-            />
-          </Card>
+          <div>
+            <SearchLayout
+              actions={
+                <CreateButton
+                  to={`/dashboard/projects/${project.uuid}/environments/create`}
+                >
+                  Create an environment
+                </CreateButton>
+              }
+            >
+              <SearchBar
+                label="Search for environments"
+                placeholder="e.g: The environment"
+              />
+            </SearchLayout>
+
+            <Spacer size={4} />
+
+            <Card>
+              <EnvList
+                environments={project.environments.filter((env) =>
+                  env.name.toLowerCase().includes(search || "")
+                )}
+                projectId={project.uuid}
+              />
+            </Card>
+          </div>
         ) : (
           <Card>
             <CardContent>

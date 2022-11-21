@@ -11,6 +11,8 @@ import { Card } from "~/components/Card";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { PageTitle } from "~/components/PageTitle";
 import { TbFolders } from "react-icons/tb";
+import { SearchBar } from "~/components/SearchBar";
+import { SearchLayout } from "~/layouts/SearchLayout";
 
 export const meta: MetaFunction = () => {
   return {
@@ -28,13 +30,19 @@ export const loader: LoaderFunction = async ({
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
 
-  const projects = await getProjects(authCookie);
+  const projects: Array<UserProject> = await getProjects(authCookie);
 
   if (projects.length === 0) {
     return redirect("/dashboard/onboarding");
   }
 
-  return { projects };
+  const url = new URL(request.url);
+  const search = url.searchParams.get("search");
+  const filteredProjects = projects.filter((project) =>
+    project.project.name.toLowerCase().includes(search || "")
+  );
+
+  return { projects: filteredProjects };
 };
 
 export default function DashboardRoot() {
@@ -60,15 +68,17 @@ export default function DashboardRoot() {
         ) : null
       }
     >
-      <PageTitle
-        icon={<TbFolders />}
-        value="Projects"
-        action={
+      <PageTitle icon={<TbFolders />} value="Projects" />
+
+      <SearchLayout
+        actions={
           <CreateButton to="/dashboard/projects/create">
             Create a project
           </CreateButton>
         }
-      />
+      >
+        <SearchBar label="Search for projects" placeholder="e.g: The project" />
+      </SearchLayout>
 
       <Card>
         <ProjectList projects={projects} />

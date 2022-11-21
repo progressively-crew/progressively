@@ -3,7 +3,6 @@ import { ButtonCopy } from "~/components/ButtonCopy";
 import { Link } from "~/components/Link";
 import { RawTable, Td, Th, Tr } from "~/components/RawTable";
 import { Environment } from "../types";
-import { useHydrated } from "~/modules/misc/hooks/useHydrated";
 
 export interface EnvListProps {
   environments: Array<Environment>;
