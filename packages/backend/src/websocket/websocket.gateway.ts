@@ -9,13 +9,14 @@ import { URL } from 'url';
 import { Rooms } from './rooms';
 import { LocalWebsocket, Subscriber } from './types';
 import { RedisService } from './redis.service';
+import { PopulatedFlagEnv } from '../flags/types';
 
 @WebSocketGateway()
 export class WebsocketGateway
   implements OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit
 {
   private rooms: Rooms;
-  private subscribers: Array<Subscriber<unknown>>;
+  private subscribers: Array<Subscriber<PopulatedFlagEnv>>;
   private heartBeatIntervalId: NodeJS.Timer;
 
   constructor(private readonly redisService: RedisService) {
@@ -68,39 +69,33 @@ export class WebsocketGateway
 
       this.rooms.join(clientKey, socket);
 
-      this.initRedisSubscription(clientKey, socket);
+      this.initRedisSubscription(clientKey);
     }
   }
 
-  initRedisSubscription(clientKey: string, connectedSocket: LocalWebsocket) {
+  initRedisSubscription(clientKey: string) {
     this.redisService.subscribe(
       clientKey,
-      async (subscribedEntity: unknown) => {
+      async (subscribedEntity: PopulatedFlagEnv) => {
         const sockets = this.rooms.getSockets(clientKey);
 
-        const nextEntities = [];
-
-        for (const subscriber of this.subscribers) {
-          const nextEntity = await subscriber(
-            subscribedEntity,
-            connectedSocket.__FIELDS,
-          );
-
-          if (nextEntity) {
-            nextEntities.push(nextEntity);
-          }
-        }
-
         for (const sock of sockets) {
-          nextEntities.forEach((nextEntity) =>
-            this.rooms.emit(sock, nextEntity),
-          );
+          for (const subscriber of this.subscribers) {
+            const nextEntity = await subscriber(
+              subscribedEntity,
+              sock.__FIELDS,
+            );
+
+            if (nextEntity) {
+              this.rooms.emit(sock, nextEntity);
+            }
+          }
         }
       },
     );
   }
 
-  registerSubscriptionHandler<T>(subscriber: Subscriber<T>) {
+  registerSubscriptionHandler(subscriber: Subscriber<PopulatedFlagEnv>) {
     this.subscribers.push(subscriber);
   }
 

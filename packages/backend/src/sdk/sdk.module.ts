@@ -6,7 +6,6 @@ import { SdkService } from './sdk.service';
 import { WebsocketModule } from '../websocket/websocket.module';
 import { WebsocketGateway } from '../websocket/websocket.gateway';
 import { FieldRecord } from '../strategy/types';
-import { PopulatedFlagEnv } from '../flags/types';
 import { DatabaseModule } from '../database/database.module';
 
 @Module({
@@ -20,7 +19,7 @@ export class SdkModule implements OnModuleInit {
     private readonly sdkService: SdkService,
   ) {}
   onModuleInit() {
-    this.wsGateway.registerSubscriptionHandler<PopulatedFlagEnv>(
+    this.wsGateway.registerSubscriptionHandler(
       (entity, fields: FieldRecord) => {
         return this.sdkService.resolveFlagStatusRecord(entity, fields);
       },
