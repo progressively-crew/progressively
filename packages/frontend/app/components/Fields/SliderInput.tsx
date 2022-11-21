@@ -47,8 +47,8 @@ export const SliderInput = ({
         />
 
         <HStack aria-hidden>
-          <span className="triangle" />
-          <span className="bg-indigo-600 text-white px-2 py-1 rounded w-14">
+          <span className="triangle mt-2" />
+          <span className="bg-indigo-600 text-white px-2 py-1 rounded w-14 text-center">
             {percentageValue}%
           </span>
         </HStack>

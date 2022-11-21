@@ -39,7 +39,7 @@ export const Switch = ({
       <span>{offLabel || "Off"}</span>
       <span
         className={
-          "transition-all ease-in-out duration-200 h-7 w-12 bg- rounded-full inline-block p-1 " +
+          "transition-all ease-in-out duration-200 h-7 w-12 bg-gray-300 rounded-full inline-block p-1 " +
           wrapperCheckedClasses
         }
       >
