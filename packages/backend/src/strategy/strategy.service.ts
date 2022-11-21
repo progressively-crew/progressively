@@ -41,7 +41,7 @@ export class StrategyService {
       const strategyFieldValues = strategy.fieldValue.split('\n');
 
       for (const fieldValue of strategyFieldValues) {
-        const clientFieldValue = fields[strategy.fieldName];
+        const clientFieldValue = fields[strategy.fieldName] || '';
 
         if (isValid(fieldValue, clientFieldValue)) {
           return true;
