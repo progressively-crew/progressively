@@ -36,7 +36,7 @@ export const Switch = ({
       form={form}
       className="h-10 px-1 flex items-center gap-2 group"
     >
-      <span>{offLabel || "Off"}</span>
+      <span className="text-gray-600">{offLabel || "Off"}</span>
       <span
         className={
           "transition-all ease-in-out duration-200 h-7 w-12 bg-gray-300 rounded-full inline-block p-1 " +
@@ -55,7 +55,7 @@ export const Switch = ({
           {checked && <BsCheck />}
         </span>
       </span>
-      <span>{onLabel || "On"}</span>
+      <span className="text-gray-600">{onLabel || "On"}</span>
     </button>
   );
 };
