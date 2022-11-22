@@ -9,8 +9,7 @@ export interface SDKOptions {
   shouldHit?: boolean;
 }
 
-const btoA = (toTransform: string) =>
-  Buffer.from(toTransform).toString("base64");
+const btoA = (toTransform: string) => btoa(toTransform);
 
 export function getProgressivelyData(
   clientKey: string,
