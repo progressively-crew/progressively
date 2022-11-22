@@ -100,6 +100,7 @@ export const seedFlagHitsVariants = async (
         flagEnvironmentEnvironmentId: flagEnv.environmentId,
         status: 'Control',
         date,
+        visitorId: '1',
       },
     });
 
@@ -110,6 +111,7 @@ export const seedFlagHitsVariants = async (
           flagEnvironmentEnvironmentId: flagEnv.environmentId,
           status: 'Second',
           date,
+          visitorId: '1',
         },
       });
     }

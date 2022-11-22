@@ -82,6 +82,7 @@ model FlagHit {
     status                       String
     variant                      Variant?        @relation(fields: [variantUuid], references: [uuid])
     variantUuid                  String?
+    visitorId                    String
 }
 
 model RolloutStrategy {

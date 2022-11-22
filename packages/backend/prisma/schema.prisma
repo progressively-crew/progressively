@@ -144,6 +144,7 @@ model FlagHit {
   status                       String
   variant                      Variant?        @relation(name: "FlagHitToVariant", fields: [variantUuid], references: [uuid])
   variantUuid                  String?
+  visitorId                    String
 }
 
 model RolloutStrategy {

@@ -59,6 +59,7 @@ export class SdkService {
     await this.flagService.hitFlag(
       flagEnv.environmentId,
       flagEnv.flagId,
+      String(fields.id),
       flagStatus,
       flagVariant,
     );
@@ -106,6 +107,7 @@ export class SdkService {
         await this.flagService.hitFlag(
           nextFlag.environmentId,
           nextFlag.flagId,
+          String(fields.id),
           flagStatus,
           flagVariant,
         );
