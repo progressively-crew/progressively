@@ -139,6 +139,7 @@ export const seedFlagMetricHits = async (
         flagEnvironmentEnvironmentId: flagEnv.environmentId,
         date,
         pMetricUuid: metric.uuid,
+        visitorId: '1',
       },
     });
   }

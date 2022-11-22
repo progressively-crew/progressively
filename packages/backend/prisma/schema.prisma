@@ -133,6 +133,7 @@ model PMetricHit {
   flagEnvironmentEnvironmentId String?
   metric                       PMetric          @relation(name: "PMetricToPMetricHit", fields: [pMetricUuid], references: [uuid])
   pMetricUuid                  String
+  visitorId                    String
 }
 
 model FlagHit {
