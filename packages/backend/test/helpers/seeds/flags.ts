@@ -66,6 +66,7 @@ export const seedFlagHits = async (
         status: FlagStatus.ACTIVATED,
         date,
         variantUuid: variant?.uuid,
+        visitorId: '1',
       },
     });
 
@@ -76,6 +77,7 @@ export const seedFlagHits = async (
           flagEnvironmentEnvironmentId: flagEnv.environmentId,
           status: FlagStatus.NOT_ACTIVATED,
           date,
+          visitorId: '1',
         },
       });
     }
