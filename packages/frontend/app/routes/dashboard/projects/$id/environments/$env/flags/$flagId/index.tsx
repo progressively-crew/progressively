@@ -162,13 +162,31 @@ export default function FlagById() {
             />
           </Form>
         }
-        description={
-          <StrategyDescription
-            flagEnv={flagEnv}
-            hasStrategies={hasStrategies}
-          />
-        }
       />
+
+      <Section id="overview-section">
+        <div
+          className={
+            isFlagActivated
+              ? "bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-1 rounded"
+              : "p-1 bg-gray-200 rounded"
+          }
+        >
+          <Card>
+            <CardContent>
+              <SectionHeader
+                title="Sum up"
+                description={
+                  <StrategyDescription
+                    flagEnv={flagEnv}
+                    hasStrategies={hasStrategies}
+                  />
+                }
+              />
+            </CardContent>
+          </Card>
+        </div>
+      </Section>
 
       <Section id="rollout-target">
         <Card>
