@@ -71,6 +71,7 @@ model PMetricHit {
     flagEnvironmentEnvironmentId String?
     metric                       PMetric          @relation(fields: [pMetricUuid], references: [uuid])
     pMetricUuid                  String
+    visitorId                    String
 }
 
 model FlagHit {
@@ -82,6 +83,7 @@ model FlagHit {
     status                       String
     variant                      Variant?        @relation(fields: [variantUuid], references: [uuid])
     variantUuid                  String?
+    visitorId                    String
 }
 
 model RolloutStrategy {

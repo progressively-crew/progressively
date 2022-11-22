@@ -59,6 +59,7 @@ export class SdkService {
     await this.flagService.hitFlag(
       flagEnv.environmentId,
       flagEnv.flagId,
+      String(fields?.id || ''),
       flagStatus,
       flagVariant,
     );
@@ -106,6 +107,7 @@ export class SdkService {
         await this.flagService.hitFlag(
           nextFlag.environmentId,
           nextFlag.flagId,
+          String(fields?.id || ''),
           flagStatus,
           flagVariant,
         );
@@ -115,7 +117,7 @@ export class SdkService {
     return flags;
   }
 
-  async hitEvent(clientKey: string, hit: EventHit) {
+  async hitEvent(clientKey: string, visitorId: string, hit: EventHit) {
     const metric = await this.prisma.pMetric.findFirst({
       where: {
         name: hit.name,
@@ -142,6 +144,7 @@ export class SdkService {
         flagEnvironmentFlagId: metric.flagEnvironmentFlagId,
         flagEnvironmentEnvironmentId: metric.flagEnvironmentEnvironmentId,
         pMetricUuid: metric.uuid,
+        visitorId,
         date,
         data:
           typeof hit.data === 'object'

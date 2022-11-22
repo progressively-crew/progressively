@@ -66,6 +66,7 @@ export const seedFlagHits = async (
         status: FlagStatus.ACTIVATED,
         date,
         variantUuid: variant?.uuid,
+        visitorId: '1',
       },
     });
 
@@ -76,6 +77,7 @@ export const seedFlagHits = async (
           flagEnvironmentEnvironmentId: flagEnv.environmentId,
           status: FlagStatus.NOT_ACTIVATED,
           date,
+          visitorId: '1',
         },
       });
     }
@@ -100,6 +102,7 @@ export const seedFlagHitsVariants = async (
         flagEnvironmentEnvironmentId: flagEnv.environmentId,
         status: 'Control',
         date,
+        visitorId: '1',
       },
     });
 
@@ -110,6 +113,7 @@ export const seedFlagHitsVariants = async (
           flagEnvironmentEnvironmentId: flagEnv.environmentId,
           status: 'Second',
           date,
+          visitorId: '1',
         },
       });
     }
@@ -135,6 +139,7 @@ export const seedFlagMetricHits = async (
         flagEnvironmentEnvironmentId: flagEnv.environmentId,
         date,
         pMetricUuid: metric.uuid,
+        visitorId: '1',
       },
     });
   }

@@ -95,6 +95,7 @@ export class FlagsService {
   hitFlag(
     environmentId: string,
     flagId: string,
+    visitorId: string,
     status: boolean,
     variant?: Variant,
   ) {
@@ -112,6 +113,7 @@ export class FlagsService {
         status: String(status),
         date,
         variantUuid: variant?.uuid,
+        visitorId,
       },
     });
   }
