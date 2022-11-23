@@ -174,8 +174,7 @@ export default function VariantsOfFlag() {
               }
               description={
                 <Typography>
-                  The variants that will be shown to a portion of your
-                  population.
+                  The variants that will be shown to a portion of your audience.
                 </Typography>
               }
               status={
