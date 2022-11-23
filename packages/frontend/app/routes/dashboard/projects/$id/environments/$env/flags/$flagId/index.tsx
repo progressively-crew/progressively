@@ -9,7 +9,13 @@ import { Section, SectionHeader } from "~/components/Section";
 import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
 import { Typography } from "~/components/Typography";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
-import { useLoaderData, useActionData, Form, Link } from "@remix-run/react";
+import {
+  useLoaderData,
+  useActionData,
+  Form,
+  Link,
+  useSearchParams,
+} from "@remix-run/react";
 import { TagLine } from "~/components/Tagline";
 import { Card, CardContent } from "~/components/Card";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
@@ -33,6 +39,9 @@ import { editVariantAction } from "~/modules/variants/form-actions/editVariantAc
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { PageTitle } from "~/components/PageTitle";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
+import { EmptyState } from "~/components/EmptyState";
+import { CreateButton } from "~/components/Buttons/CreateButton";
+import { StrategyList } from "~/modules/strategies/components/StrategyList";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -119,6 +128,7 @@ export default function FlagById() {
   const { user } = useUser();
   const { environment } = useEnvironment();
   const { flagEnv } = useFlagEnv();
+  const [searchParams] = useSearchParams();
 
   const { strategies } = useLoaderData<LoaderData>();
   const hasPercentageChanged = Boolean(actionData?.successChangePercentage);
@@ -129,6 +139,10 @@ export default function FlagById() {
   const hasStrategies = strategies.length > 0;
   const hasErrors = Object.keys(actionData?.errors || {}).length > 0;
   const isMultiVariants = flagEnv.variants.length > 0;
+
+  const isStrategyAdded = searchParams.get("newStrategy") || undefined;
+  const isStrategyUpdated = searchParams.get("strategyUpdated") || undefined;
+  const isStrategyRemoved = searchParams.get("stratRemoved") || undefined;
 
   return (
     <DashboardLayout
@@ -242,6 +256,67 @@ export default function FlagById() {
             <VariantList
               variants={flagEnv.variants}
               mode={VariantListModes.Operational}
+            />
+          )}
+        </Card>
+      </Section>
+
+      <Section id="additional-audience">
+        <Card>
+          <CardContent>
+            <SectionHeader
+              title="Additional audience"
+              description={
+                <Typography>
+                  The users matching at least one of the following condition
+                  will resolve the activated variant of the flag.
+                </Typography>
+              }
+              status={
+                isStrategyUpdated ? (
+                  <SuccessBox id="strategy-updated">
+                    The additional audience has been updated.
+                  </SuccessBox>
+                ) : isStrategyAdded ? (
+                  <SuccessBox id="strategy-added">
+                    The additional audience has been successfully set.
+                  </SuccessBox>
+                ) : isStrategyRemoved ? (
+                  <SuccessBox id="strategy-removed">
+                    The additional audience has been successfully removed.
+                  </SuccessBox>
+                ) : null
+              }
+            />
+          </CardContent>
+
+          {!hasStrategies && (
+            <CardContent>
+              <EmptyState
+                titleAs="h2"
+                title="No strategies found"
+                description={
+                  <Typography>
+                    There are no strategies for this flag.
+                  </Typography>
+                }
+                action={
+                  <CreateButton
+                    to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
+                  >
+                    Create a strategy
+                  </CreateButton>
+                }
+              />
+            </CardContent>
+          )}
+
+          {hasStrategies && (
+            <StrategyList
+              strategies={strategies}
+              projectId={project.uuid}
+              envId={environment.uuid}
+              flagId={currentFlag.uuid}
             />
           )}
         </Card>

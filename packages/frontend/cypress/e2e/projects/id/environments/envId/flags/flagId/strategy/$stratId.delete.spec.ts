@@ -82,7 +82,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
 
         cy.url().should(
           "contain",
-          "/dashboard/projects/1/environments/1/flags/1/strategies?stratRemoved=true"
+          "/dashboard/projects/1/environments/1/flags/1?stratRemoved=true"
         );
 
         cy.findByRole("heading", { name: "No strategies found" }).should(
@@ -91,7 +91,10 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
 
         cy.get(".success-box")
           .should("have.focus")
-          .and("contain.text", "The strategy has been successfully removed.");
+          .and(
+            "contain.text",
+            "The additional audience has been successfully removed."
+          );
       });
     });
   });

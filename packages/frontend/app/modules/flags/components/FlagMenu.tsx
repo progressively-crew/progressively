@@ -35,13 +35,6 @@ export const FlagMenu = ({ projectId, envId, flagId }: FlagMenuProps) => {
       </NavItem>
 
       <NavItem
-        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/strategies`}
-        icon={<MdAppRegistration />}
-      >
-        Strategies
-      </NavItem>
-
-      <NavItem
         to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/variants`}
         icon={<AiOutlineAppstore />}
       >
