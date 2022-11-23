@@ -18,6 +18,7 @@ import { MailModule } from './mail/mail.module';
 import { DatabaseModule } from './database/database.module';
 import { SchedulingModule } from './scheduling/scheduling.module';
 import { WebhooksModule } from './webhooks/webhooks.module';
+import { EligibilityModule } from './eligibility/eligibility.module';
 import 'winston-daily-rotate-file';
 
 @Module({
@@ -59,6 +60,7 @@ import 'winston-daily-rotate-file';
     DatabaseModule,
     SchedulingModule,
     WebhooksModule,
+    EligibilityModule,
   ],
   providers: [AppService],
   controllers: [],

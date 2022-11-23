@@ -19,12 +19,12 @@ model FlagEnvironment {
     strategies        RolloutStrategy[]
     rolloutPercentage Int               @default(100)
 
-    scheduling   Schedule[]
-    variants     Variant[]
-    metrics      PMetric[]
-    metricHits   PMetricHit[]
-    webhooks     Webhook[]
-    Elligibility Elligibility[]
+    scheduling  Schedule[]
+    variants    Variant[]
+    metrics     PMetric[]
+    metricHits  PMetricHit[]
+    webhooks    Webhook[]
+    Eligibility Eligibility[]
 
     @@id([flagId, environmentId])
 }
@@ -104,7 +104,7 @@ model RolloutStrategy {
     flagEnvironmentEnvironmentId String?
 }
 
-model Elligibility {
+model Eligibility {
     uuid String @id @default(uuid())
     name String
 

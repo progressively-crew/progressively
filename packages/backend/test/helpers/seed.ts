@@ -203,7 +203,7 @@ export const seedDb = async () => {
       },
     });
 
-    await prismaClient.elligibility.create({
+    await prismaClient.eligibility.create({
       data: {
         uuid: '1',
         flagEnvironmentFlagId: footerFlagEnv.flagId,
@@ -327,7 +327,7 @@ export const cleanupDb = async () => {
   await prismaClient.$connect();
   await prismaClient.webhook.deleteMany();
   await prismaClient.rolloutStrategy.deleteMany();
-  await prismaClient.elligibility.deleteMany();
+  await prismaClient.eligibility.deleteMany();
   await prismaClient.schedule.deleteMany();
   await prismaClient.refreshToken.deleteMany();
   await prismaClient.flagHit.deleteMany();
