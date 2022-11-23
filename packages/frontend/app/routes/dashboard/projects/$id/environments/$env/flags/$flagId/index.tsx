@@ -307,7 +307,7 @@ export default function FlagById() {
                 title="No additional audience"
                 description={
                   <Typography>
-                    There are no strategies for this flag.
+                    There are no additional audience for this flag.
                   </Typography>
                 }
                 action={

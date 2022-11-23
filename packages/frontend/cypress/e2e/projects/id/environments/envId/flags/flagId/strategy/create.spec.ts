@@ -63,7 +63,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
         }).should("be.visible");
 
         cy.contains(
-          "You're about to create a strategy to New homepage in Project from seeding on Production."
+          "You're about to create an additional audience to New homepage in Project from seeding on Production."
         ).should("be.visible");
 
         cy.checkA11y();

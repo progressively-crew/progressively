@@ -131,7 +131,7 @@ export default function StrategyCreatePage() {
         value="Create an additional audience"
         description={
           <Typography>
-            {`You're`} about to create a strategy to{" "}
+            {`You're`} about to create an additional audience to{" "}
             <strong>{currentFlag.name}</strong> in{" "}
             <strong>{project.name}</strong> on{" "}
             <strong>{environment.name}</strong>.
