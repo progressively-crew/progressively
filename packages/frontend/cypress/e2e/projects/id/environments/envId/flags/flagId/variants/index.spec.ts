@@ -33,7 +33,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants"
 
       it("adds a variant", () => {
         cy.visit("/dashboard/projects/1/environments/1/flags/1/variants");
-        cy.findByLabelText("New variant value").type("Alternative");
+        cy.findByLabelText("New variant").type("Alternative");
         cy.findByRole("button", { name: "Add variant" }).click();
 
         cy.findByLabelText("Variant 1 value")
@@ -43,7 +43,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants"
 
       it("edits a variant", () => {
         cy.visit("/dashboard/projects/1/environments/1/flags/1/variants");
-        cy.findByLabelText("New variant value").type("Alternative");
+        cy.findByLabelText("New variant").type("Alternative");
         cy.findByRole("button", { name: "Add variant" }).click();
 
         cy.findByLabelText("Variant 1 value").type("Variant alternative");

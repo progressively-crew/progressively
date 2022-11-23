@@ -1,7 +1,6 @@
 import { Form } from "@remix-run/react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
-import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { CardContent } from "~/components/Card";
 import { Label } from "~/components/Fields/Label";
 import { Radio } from "~/components/Fields/Radio";
@@ -48,8 +47,14 @@ export interface VariantListProps {
   variants: Array<Variant>;
   errors?: Record<string, string>;
   mode?: VariantListModes;
+  action?: React.ReactNode;
 }
-export const VariantList = ({ variants, errors, mode }: VariantListProps) => {
+export const VariantList = ({
+  variants,
+  errors,
+  mode,
+  action,
+}: VariantListProps) => {
   const currentMode = mode || VariantListModes.Editing;
 
   const isValueInputDisabled = currentMode === VariantListModes.Operational;
@@ -75,7 +80,7 @@ export const VariantList = ({ variants, errors, mode }: VariantListProps) => {
           <thead>
             <Tr>
               <Th>Is control</Th>
-              <Th>Variant value</Th>
+              <Th>Variant</Th>
               <Th>Rollout percentage</Th>
               {showRemoveButton && <Th>Actions</Th>}
             </Tr>
@@ -142,7 +147,7 @@ export const VariantList = ({ variants, errors, mode }: VariantListProps) => {
         </RawTable>
 
         <CardContent>
-          <SubmitButton form="edit-variant">Edit variants</SubmitButton>
+          <HStack>{action}</HStack>
         </CardContent>
       </Form>
     </div>

@@ -154,65 +154,47 @@ export default function VariantsOfFlag() {
           flagId={currentFlag.uuid}
         />
       }
-      status={
-        actionData?.errors ? (
-          <ErrorBox list={actionData?.errors} />
-        ) : actionData?.successDelete ? (
-          <SuccessBox id="variant-deleted">
-            The variant has been successfully deleted.
-          </SuccessBox>
-        ) : actionData?.successCreated ? (
-          <SuccessBox id="variant-deleted">
-            The variant has been successfully created.
-          </SuccessBox>
-        ) : actionData?.successEdit ? (
-          <SuccessBox id="variant-edited">
-            The variants have been successfully edited.
-          </SuccessBox>
-        ) : null
-      }
     >
-      <PageTitle
-        value="Multi-Variants"
-        icon={<AiOutlineAppstore />}
-        description={
-          <Typography>
-            The variants that will be shown to a portion of your population.
-          </Typography>
-        }
-      />
-
-      <Form method="post" aria-label="Add a new variant" ref={formRef}>
-        <input type="hidden" value="add-variant" name="_type" />
-        <input
-          type="hidden"
-          value={remainingPercentage}
-          name="remainingPercent"
-        />
-        <Stack spacing={6}>
-          <div className="flex flex-col md:flex-row gap-3 md:items-end">
-            <TextInput
-              name={"value"}
-              label={"New variant value"}
-              placeholder="e.g: Alternative"
-              isInvalid={Boolean(actionData?.errors?.value)}
-            />
-
-            <SubmitButton
-              variant={hasVariants ? "secondary" : "primary"}
-              isLoading={isAdding}
-              loadingText="Saving the variant, please wait..."
-            >
-              Add variant
-            </SubmitButton>
-          </div>
-        </Stack>
-      </Form>
+      <PageTitle value="Multi-Variants" icon={<AiOutlineAppstore />} />
 
       <Section id="variant-list">
         <Card>
           <CardContent>
-            <SectionHeader title="Variants list" />
+            <SectionHeader
+              title="Variants list"
+              action={
+                hasVariants && (
+                  <div className="flex items-center flex-row h-full">
+                    <SubmitButton form="edit-variant">
+                      Edit variants
+                    </SubmitButton>
+                  </div>
+                )
+              }
+              description={
+                <Typography>
+                  The variants that will be shown to a portion of your
+                  population.
+                </Typography>
+              }
+              status={
+                actionData?.errors ? (
+                  <ErrorBox list={actionData?.errors} />
+                ) : actionData?.successDelete ? (
+                  <SuccessBox id="variant-deleted">
+                    The variant has been successfully deleted.
+                  </SuccessBox>
+                ) : actionData?.successCreated ? (
+                  <SuccessBox id="variant-deleted">
+                    The variant has been successfully created.
+                  </SuccessBox>
+                ) : actionData?.successEdit ? (
+                  <SuccessBox id="variant-edited">
+                    The variants have been successfully edited.
+                  </SuccessBox>
+                ) : null
+              }
+            />
           </CardContent>
 
           {!hasVariants && (
@@ -230,7 +212,42 @@ export default function VariantsOfFlag() {
           )}
 
           {hasVariants && (
-            <VariantList variants={variants} errors={actionData?.errors} />
+            <VariantList
+              variants={variants}
+              errors={actionData?.errors}
+              action={
+                <Form
+                  method="post"
+                  aria-label="Add a new variant"
+                  ref={formRef}
+                >
+                  <input type="hidden" value="add-variant" name="_type" />
+                  <input
+                    type="hidden"
+                    value={remainingPercentage}
+                    name="remainingPercent"
+                  />
+                  <Stack spacing={6}>
+                    <div className="flex flex-col md:flex-row gap-3 md:items-end">
+                      <TextInput
+                        name={"value"}
+                        label={"New variant"}
+                        placeholder="e.g: Alternative"
+                        isInvalid={Boolean(actionData?.errors?.value)}
+                      />
+
+                      <SubmitButton
+                        variant={hasVariants ? "secondary" : "primary"}
+                        isLoading={isAdding}
+                        loadingText="Saving the variant, please wait..."
+                      >
+                        Add variant
+                      </SubmitButton>
+                    </div>
+                  </Stack>
+                </Form>
+              }
+            />
           )}
         </Card>
       </Section>

@@ -42,6 +42,7 @@ import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { EmptyState } from "~/components/EmptyState";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { StrategyList } from "~/modules/strategies/components/StrategyList";
+import { SubmitButton } from "~/components/Buttons/SubmitButton";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -207,6 +208,15 @@ export default function FlagById() {
           <CardContent>
             <SectionHeader
               title="Percentage of the audience"
+              action={
+                isMultiVariants && (
+                  <div className="flex items-center flex-row h-full">
+                    <SubmitButton form="edit-variant">
+                      Edit variants
+                    </SubmitButton>
+                  </div>
+                )
+              }
               description={
                 isMultiVariants ? (
                   <Typography>
