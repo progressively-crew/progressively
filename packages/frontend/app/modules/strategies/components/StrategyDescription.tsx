@@ -26,8 +26,8 @@ const SimpleVariantDescription = ({
     if (flagEnv.rolloutPercentage === 0) {
       return (
         <Typography>
-          Only the user matching at least one of the following strategies will
-          resolve the <strong>"true"</strong> variant of the flag since the
+          Only the user matching at least one rule of the additional audience
+          will resolve the <strong>"true"</strong> variant of the flag since the
           rollout percentage is <Tag size="S">{flagEnv.rolloutPercentage}%</Tag>
           .
         </Typography>
@@ -37,8 +37,8 @@ const SimpleVariantDescription = ({
     return (
       <Typography>
         <Tag size="S">{flagEnv.rolloutPercentage}%</Tag> of the audience AND the
-        users matching at least one of the following strategies will resolve the{" "}
-        <strong>"true"</strong> variant of the flag.
+        users matching at least one rule of the additional audience will resolve
+        the <strong>"true"</strong> variant of the flag.
       </Typography>
     );
   }

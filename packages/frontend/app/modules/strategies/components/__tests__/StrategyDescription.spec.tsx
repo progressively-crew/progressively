@@ -68,7 +68,7 @@ describe("StrategyDescription", () => {
       );
 
       expect(getText()).toBe(
-        `12% of the audience AND the users matching at least one of the following strategies will resolve the "true" variant of the flag.`
+        `12% of the audience AND the users matching at least one rule of the additional audience will resolve the "true" variant of the flag.`
       );
     });
 
@@ -104,7 +104,7 @@ describe("StrategyDescription", () => {
       );
 
       expect(getText()).toBe(
-        `Only the user matching at least one of the following strategies will resolve the "true" variant of the flag since the rollout percentage is 0%.`
+        `Only the user matching at least one rule of the additional audience will resolve the "true" variant of the flag since the rollout percentage is 0%.`
       );
     });
   });
