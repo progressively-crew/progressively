@@ -107,7 +107,8 @@ export default function SchedulingOfFlag() {
         icon={<AiOutlineClockCircle />}
         description={
           <Typography>
-            The strategies that you have defined will apply at the given dates.
+            The additional audience rules that you have defined will apply at
+            the given dates.
           </Typography>
         }
         action={

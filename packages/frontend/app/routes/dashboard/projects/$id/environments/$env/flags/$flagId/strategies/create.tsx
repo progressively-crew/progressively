@@ -30,7 +30,7 @@ export const handle = {
   breadcrumb: (match: { params: any }) => {
     return {
       link: `/dashboard/projects/${match.params.id}/environments/${match.params.env}/flags/${match.params.flagId}/strategies/create`,
-      label: "Create a strategy",
+      label: "Create an additional audience",
     };
   },
 };
@@ -128,10 +128,10 @@ export default function StrategyCreatePage() {
       status={actionData?.errors && <ErrorBox list={actionData.errors} />}
     >
       <PageTitle
-        value="Create a strategy"
+        value="Create an additional audience"
         description={
           <Typography>
-            {`You're`} about to create a strategy to{" "}
+            {`You're`} about to create an additional audience to{" "}
             <strong>{currentFlag.name}</strong> in{" "}
             <strong>{project.name}</strong> on{" "}
             <strong>{environment.name}</strong>.
@@ -145,7 +145,7 @@ export default function StrategyCreatePage() {
               <TextInput
                 name="strategy-name"
                 placeholder="e.g: Strategy 1"
-                label="Strategy name"
+                label="Group name"
                 isInvalid={Boolean(errors["strategy-name"])}
               />
 
@@ -160,7 +160,7 @@ export default function StrategyCreatePage() {
                   isLoading={transition.state === "submitting"}
                   loadingText="Saving the strategy, please wait..."
                 >
-                  Save the strategy
+                  Save the additional audience
                 </SubmitButton>
               </div>
             </FormGroup>
