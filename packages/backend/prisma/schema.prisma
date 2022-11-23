@@ -87,6 +87,7 @@ model FlagEnvironment {
   metrics           PMetric[]         @relation(name: "FlagEnvironmentToPMetric")
   metricHits        PMetricHit[]      @relation(name: "FlagEnvironmentToPMetricHit")
   webhooks          Webhook[]         @relation(name: "FlagEnvironmentToWebhook")
+  Elligibility      Elligibility[]    @relation(name: "ElligibilityToFlagEnvironment")
 
   @@id([flagId, environmentId])
 }
@@ -156,6 +157,17 @@ model RolloutStrategy {
   fieldComparator              String?
   fieldValue                   String?
   FlagEnvironment              FlagEnvironment? @relation(name: "FlagEnvironmentToRolloutStrategy", fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
+  flagEnvironmentFlagId        String?
+  flagEnvironmentEnvironmentId String?
+}
+
+model Elligibility {
+  uuid                         String           @id @default(uuid())
+  name                         String
+  fieldName                    String?
+  fieldComparator              String?
+  fieldValue                   String?
+  FlagEnvironment              FlagEnvironment? @relation(name: "ElligibilityToFlagEnvironment", fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
   flagEnvironmentFlagId        String?
   flagEnvironmentEnvironmentId String?
 }
