@@ -38,7 +38,7 @@ export const FlagMenu = ({ projectId, envId, flagId }: FlagMenuProps) => {
         to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/variants`}
         icon={<AiOutlineAppstore />}
       >
-        Variants
+        Multi-Variants
       </NavItem>
 
       <NavItem

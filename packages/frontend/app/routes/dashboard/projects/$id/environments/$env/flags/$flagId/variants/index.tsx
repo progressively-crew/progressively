@@ -16,7 +16,7 @@ import { TextInput } from "~/components/Fields/TextInput";
 import { Header } from "~/components/Header";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { PageTitle } from "~/components/PageTitle";
-import { Section } from "~/components/Section";
+import { Section, SectionHeader } from "~/components/Section";
 import { Stack } from "~/components/Stack";
 import { TagLine } from "~/components/Tagline";
 import { Typography } from "~/components/Typography";
@@ -44,7 +44,7 @@ export const meta: MetaFunction = ({ parentsData, params }) => {
   const flagName = getFlagMetaTitle(parentsData);
 
   return {
-    title: `Progressively | ${projectName} | ${envName} | Flags | ${flagName} | Variants`,
+    title: `Progressively | ${projectName} | ${envName} | Flags | ${flagName} | Multi-Variants`,
   };
 };
 
@@ -173,7 +173,7 @@ export default function VariantsOfFlag() {
       }
     >
       <PageTitle
-        value="Variants"
+        value="Multi-Variants"
         icon={<AiOutlineAppstore />}
         description={
           <Typography>
@@ -209,9 +209,13 @@ export default function VariantsOfFlag() {
         </Stack>
       </Form>
 
-      <Section aria-label="List of variants">
-        {!hasVariants && (
-          <Card>
+      <Section id="variant-list">
+        <Card>
+          <CardContent>
+            <SectionHeader title="Variants list" />
+          </CardContent>
+
+          {!hasVariants && (
             <CardContent>
               <EmptyState
                 titleAs="h2"
@@ -223,14 +227,12 @@ export default function VariantsOfFlag() {
                 }
               />
             </CardContent>
-          </Card>
-        )}
+          )}
 
-        {hasVariants && (
-          <Card>
+          {hasVariants && (
             <VariantList variants={variants} errors={actionData?.errors} />
-          </Card>
-        )}
+          )}
+        </Card>
       </Section>
     </DashboardLayout>
   );
