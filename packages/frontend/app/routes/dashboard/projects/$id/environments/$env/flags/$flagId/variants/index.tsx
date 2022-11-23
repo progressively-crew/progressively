@@ -17,6 +17,7 @@ import { Header } from "~/components/Header";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { PageTitle } from "~/components/PageTitle";
 import { Section, SectionHeader } from "~/components/Section";
+import { Spacer } from "~/components/Spacer";
 import { Stack } from "~/components/Stack";
 import { TagLine } from "~/components/Tagline";
 import { Typography } from "~/components/Typography";
@@ -203,9 +204,43 @@ export default function VariantsOfFlag() {
                 titleAs="h2"
                 title="No variants found"
                 description={
-                  <Typography>
-                    There are no variants found for this flag.
-                  </Typography>
+                  <div>
+                    <Typography>
+                      There are no variants found for this flag.
+                    </Typography>
+                    <Spacer size={4} />
+                    <Form
+                      method="post"
+                      aria-label="Add a new variant"
+                      ref={formRef}
+                    >
+                      <input type="hidden" value="add-variant" name="_type" />
+                      <input
+                        type="hidden"
+                        value={remainingPercentage}
+                        name="remainingPercent"
+                      />
+                      <Stack spacing={6}>
+                        <div className="flex flex-col md:flex-row gap-3 md:items-end">
+                          <TextInput
+                            name={"value"}
+                            label={"New variant"}
+                            placeholder="e.g: Alternative"
+                            isInvalid={Boolean(actionData?.errors?.value)}
+                            hiddenLabel
+                          />
+
+                          <SubmitButton
+                            variant={hasVariants ? "secondary" : "primary"}
+                            isLoading={isAdding}
+                            loadingText="Saving the variant, please wait..."
+                          >
+                            Add variant
+                          </SubmitButton>
+                        </div>
+                      </Stack>
+                    </Form>
+                  </div>
                 }
               />
             </CardContent>
