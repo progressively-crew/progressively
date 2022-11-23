@@ -66,14 +66,14 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
       });
 
       it("shows the form layout", () => {
-        cy.findByLabelText("Strategy name").should("be.visible");
+        cy.findByLabelText("Group name").should("be.visible");
 
         cy.findByLabelText("Everybody is concerned").should("be.visible");
         cy.findByLabelText("People with a specific field").should("be.visible");
 
-        cy.findByRole("button", { name: "Save the strategy" }).should(
-          "be.visible"
-        );
+        cy.findByRole("button", {
+          name: "Save the additional audience",
+        }).should("be.visible");
 
         cy.checkA11y();
       });
@@ -82,7 +82,9 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
         cy.findByLabelText("People with a specific field").click({
           force: true,
         });
-        cy.findByRole("button", { name: "Save the strategy" }).click();
+        cy.findByRole("button", {
+          name: "Save the additional audience",
+        }).click();
 
         cy.get(".error-box")
           .should("have.focus")
@@ -94,8 +96,10 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
       });
 
       it("updates a strategy", () => {
-        cy.findByLabelText("Strategy name").type("New strategy");
-        cy.findByRole("button", { name: "Save the strategy" }).click();
+        cy.findByLabelText("Group name").type("New strategy");
+        cy.findByRole("button", {
+          name: "Save the additional audience",
+        }).click();
 
         cy.url().should(
           "include",

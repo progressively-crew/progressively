@@ -129,7 +129,7 @@ export default function StrategyEditPage() {
           <TextInput
             name="strategy-name"
             placeholder="e.g: Strategy 1"
-            label="Strategy name"
+            label="Group name"
             defaultValue={strategy.name}
             isInvalid={Boolean(errors["strategy-name"])}
           />
@@ -149,7 +149,7 @@ export default function StrategyEditPage() {
               isLoading={transition.state === "submitting"}
               loadingText="Saving the strategy, please wait..."
             >
-              Save the strategy
+              Save the additional audience
             </SubmitButton>
           </div>
         </FormGroup>

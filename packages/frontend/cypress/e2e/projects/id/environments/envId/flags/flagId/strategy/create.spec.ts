@@ -53,14 +53,14 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
           ["Production", "/dashboard/projects/1/environments/1"],
           ["New homepage", "/dashboard/projects/1/environments/1/flags/1"],
           [
-            "Create a strategy",
+            "Create an additional audience",
             "/dashboard/projects/1/environments/1/flags/1/strategies/create",
           ],
         ]);
 
-        cy.findByRole("heading", { name: "Create a strategy" }).should(
-          "be.visible"
-        );
+        cy.findByRole("heading", {
+          name: "Create an additional audience",
+        }).should("be.visible");
 
         cy.contains(
           "You're about to create a strategy to New homepage in Project from seeding on Production."
@@ -70,14 +70,14 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
       });
 
       it("shows the form layout", () => {
-        cy.findByLabelText("Strategy name").should("be.visible");
+        cy.findByLabelText("Group name").should("be.visible");
 
         cy.findByLabelText("Everybody is concerned").should("be.visible");
         cy.findByLabelText("People with a specific field").should("be.visible");
 
-        cy.findByRole("button", { name: "Save the strategy" }).should(
-          "be.visible"
-        );
+        cy.findByRole("button", {
+          name: "Save the additional audience",
+        }).should("be.visible");
 
         cy.checkA11y();
       });
@@ -86,7 +86,9 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
         cy.findByLabelText("People with a specific field").click({
           force: true,
         });
-        cy.findByRole("button", { name: "Save the strategy" }).click();
+        cy.findByRole("button", {
+          name: "Save the additional audience",
+        }).click();
 
         cy.get(".error-box")
           .should("have.focus")
@@ -100,8 +102,10 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
 
       // TODO: improve E2E testing for strategies. The business covering is minimal atm
       it("adds a strategy", () => {
-        cy.findByLabelText("Strategy name").type("New strategy");
-        cy.findByRole("button", { name: "Save the strategy" }).click();
+        cy.findByLabelText("Group name").type("New strategy");
+        cy.findByRole("button", {
+          name: "Save the additional audience",
+        }).click();
 
         cy.url().should(
           "include",

@@ -304,7 +304,7 @@ export default function FlagById() {
             <CardContent>
               <EmptyState
                 titleAs="h2"
-                title="No strategies found"
+                title="No additional audience"
                 description={
                   <Typography>
                     There are no strategies for this flag.
@@ -314,7 +314,7 @@ export default function FlagById() {
                   <CreateButton
                     to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
                   >
-                    Create a strategy
+                    Create an additional audience
                   </CreateButton>
                 }
               />
