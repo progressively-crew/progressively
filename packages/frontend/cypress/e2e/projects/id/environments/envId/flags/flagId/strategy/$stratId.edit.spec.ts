@@ -99,12 +99,12 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
 
         cy.url().should(
           "include",
-          "/dashboard/projects/1/environments/1/flags/1/strategies?strategyUpdated=true"
+          "/dashboard/projects/1/environments/1/flags/1?strategyUpdated=true"
         );
 
         cy.get(".success-box")
           .should("have.focus")
-          .and("contain.text", "The strategy has been successfully updated.");
+          .and("contain.text", "The additional audience has been updated.");
 
         cy.findAllByText("Super strategyNew strategy").should("be.visible");
 

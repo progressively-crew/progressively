@@ -88,7 +88,7 @@ export const action: ActionFunction = async ({
     await editStrategy(params.stratId!, strategy, session.get("auth-cookie"));
 
     return redirect(
-      `/dashboard/projects/${params.id}/environments/${params.env}/flags/${params.flagId}/strategies?strategyUpdated=true#strategy-updated`
+      `/dashboard/projects/${params.id}/environments/${params.env}/flags/${params.flagId}?strategyUpdated=true#strategy-updated`
     );
   } catch (error: unknown) {
     if (error instanceof Error) {
