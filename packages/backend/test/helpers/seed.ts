@@ -203,6 +203,17 @@ export const seedDb = async () => {
       },
     });
 
+    await prismaClient.elligibility.create({
+      data: {
+        uuid: '1',
+        flagEnvironmentFlagId: footerFlagEnv.flagId,
+        flagEnvironmentEnvironmentId: footerFlagEnv.environmentId,
+        name: 'Elligibility gmail users',
+        fieldName: 'email',
+        fieldValue: '@gmail.com',
+      },
+    });
+
     await seedFlagHits(prismaClient, flagEnv, new Date(1992, 0, 1, 1), 10);
     await seedFlagHits(prismaClient, flagEnv, new Date(1992, 0, 3, 1), 20);
     await seedFlagHits(prismaClient, flagEnv, new Date(1992, 0, 2, 1), 40);
@@ -316,6 +327,7 @@ export const cleanupDb = async () => {
   await prismaClient.$connect();
   await prismaClient.webhook.deleteMany();
   await prismaClient.rolloutStrategy.deleteMany();
+  await prismaClient.elligibility.deleteMany();
   await prismaClient.schedule.deleteMany();
   await prismaClient.refreshToken.deleteMany();
   await prismaClient.flagHit.deleteMany();
