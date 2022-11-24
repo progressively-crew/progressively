@@ -75,7 +75,6 @@ describe('Strategy (e2e)', () => {
         flagEnvironmentEnvironmentId: '1',
         flagEnvironmentFlagId: '1',
         name: 'Super strategy',
-        strategyRuleType: 'default',
         uuid: '1',
       });
     });
@@ -132,7 +131,6 @@ describe('Strategy (e2e)', () => {
           "flagEnvironmentEnvironmentId": "1",
           "flagEnvironmentFlagId": "1",
           "name": "Super strategy",
-          "strategyRuleType": "default",
           "uuid": "1",
         }
       `);
@@ -144,7 +142,6 @@ describe('Strategy (e2e)', () => {
         .expect({
           uuid: '1',
           name: 'Super strategy',
-          strategyRuleType: 'default',
           fieldName: null,
           fieldComparator: null,
           fieldValue: null,
@@ -207,27 +204,6 @@ describe('Strategy (e2e)', () => {
 
       const invalidStrategy: any = {
         name: undefined,
-        strategyRuleType: 'default',
-      };
-
-      await request(app.getHttpServer())
-        .put('/strategies/1')
-        .set('Authorization', `Bearer ${access_token}`)
-        .send(invalidStrategy)
-        .expect(400)
-        .expect({
-          statusCode: 400,
-          message: 'Validation failed',
-          error: 'Bad Request',
-        });
-    });
-
-    it('gives 400 when the project receives a wrong strategy type', async () => {
-      const access_token = await authenticate(app);
-
-      const invalidStrategy: any = {
-        name: 'Super strategy',
-        strategyRuleType: 'invalid strategy',
       };
 
       await request(app.getHttpServer())
@@ -243,12 +219,11 @@ describe('Strategy (e2e)', () => {
     });
 
     ['fieldName', 'fieldComparator', 'fieldValue'].forEach((field) => {
-      it(`gives 400 when the project has a strategy of type "field" but no "${field}"`, async () => {
+      it(`gives 400 when the strategy has no "${field}"`, async () => {
         const access_token = await authenticate(app);
 
         const invalidStrategy: any = {
           name: 'Super strategy',
-          strategyRuleType: 'field',
           [field]: undefined,
         };
 
@@ -270,7 +245,6 @@ describe('Strategy (e2e)', () => {
 
       const validStrategy: any = {
         name: 'Super strategy 2',
-        strategyRuleType: 'default',
       };
 
       const response = await request(app.getHttpServer())
@@ -284,7 +258,6 @@ describe('Strategy (e2e)', () => {
       expect(uuid).toBeDefined();
       expect(obj).toEqual({
         name: 'Super strategy 2',
-        strategyRuleType: 'default',
         fieldName: null,
         fieldComparator: null,
         fieldValue: null,

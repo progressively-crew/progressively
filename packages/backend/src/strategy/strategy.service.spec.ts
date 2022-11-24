@@ -3,7 +3,7 @@ import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { ComparatorEnum } from '../shared/utils/comparators/types';
 import { PrismaService } from '../database/prisma.service';
 import { StrategyService } from './strategy.service';
-import { RolloutStrategy, StrategyRuleType } from './types';
+import { RolloutStrategy } from './types';
 
 describe('StrategyService', () => {
   let service: StrategyService;
@@ -34,7 +34,6 @@ describe('StrategyService', () => {
       flagEnvironmentEnvironmentId: '1',
       flagEnvironmentFlagId: '1',
       name: 'Strategy name',
-      strategyRuleType: StrategyRuleType.Default,
       uuid: '123',
     };
   });
@@ -48,8 +47,7 @@ describe('StrategyService', () => {
       expect(shouldActivate).toBe(false);
     });
 
-    it('returns true when the StrategyRuleType is field and that the field value matches', async () => {
-      strategy.strategyRuleType = StrategyRuleType.Field;
+    it('returns true when the field value matches', async () => {
       strategy.fieldName = 'email';
       strategy.fieldValue = 'marvin.frachet@something.com';
       strategy.fieldComparator = ComparatorEnum.Equals;
@@ -64,8 +62,7 @@ describe('StrategyService', () => {
       expect(shouldActivate).toBe(true);
     });
 
-    it('returns false when the StrategyRuleType is field and that the field value DOES NOT match', async () => {
-      strategy.strategyRuleType = StrategyRuleType.Field;
+    it('returns false when the field value DOES NOT match', async () => {
       strategy.fieldName = 'email';
       strategy.fieldValue = 'marvin.frachet@something.com';
 
@@ -79,8 +76,7 @@ describe('StrategyService', () => {
       expect(shouldActivate).toBe(false);
     });
 
-    it('returns false when the StrategyRuleType is field and that the field name DOES NOT match', async () => {
-      strategy.strategyRuleType = StrategyRuleType.Field;
+    it('returns false when the field name DOES NOT match', async () => {
       strategy.fieldName = 'email';
       strategy.fieldValue = 'marvin.frachet@something.com';
 
@@ -95,8 +91,7 @@ describe('StrategyService', () => {
     });
 
     describe('Comparators', () => {
-      it('returns true when the StrategyRuleType is field and that the field email contains @gmail', async () => {
-        strategy.strategyRuleType = StrategyRuleType.Field;
+      it('returns true when the field email contains @gmail', async () => {
         strategy.fieldName = 'email';
         strategy.fieldValue = '@gmail';
         strategy.fieldComparator = ComparatorEnum.Contains;

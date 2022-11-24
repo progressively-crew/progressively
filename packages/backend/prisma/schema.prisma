@@ -152,7 +152,6 @@ model FlagHit {
 model RolloutStrategy {
   uuid                         String           @id @default(uuid())
   name                         String
-  strategyRuleType             String
   fieldName                    String?
   fieldComparator              String?
   fieldValue                   String?

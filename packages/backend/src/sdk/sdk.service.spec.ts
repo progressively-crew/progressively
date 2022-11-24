@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
-import { RolloutStrategy, StrategyRuleType } from '../strategy/types';
+import { RolloutStrategy } from '../strategy/types';
 import { FlagStatus } from '../flags/flags.status';
 import { PopulatedFlagEnv, Variant } from '../flags/types';
 import { SdkService } from './sdk.service';
@@ -37,7 +37,6 @@ describe('SdkService', () => {
       flagEnvironmentEnvironmentId: '1',
       flagEnvironmentFlagId: '1',
       name: 'Strategy name',
-      strategyRuleType: StrategyRuleType.Default,
       uuid: '123',
     };
 
@@ -316,8 +315,7 @@ describe('SdkService', () => {
         expect(shouldActivate).toBe(true);
       });
 
-      it('returns true when the StrategyRuleType is field and that the field value matches', () => {
-        strategy.strategyRuleType = StrategyRuleType.Field;
+      it('returns true when the field value matches', () => {
         strategy.fieldName = 'email';
         strategy.fieldValue = 'marvin.frachet@something.com';
         strategy.fieldComparator = ComparatorEnum.Equals;
@@ -330,8 +328,7 @@ describe('SdkService', () => {
         expect(shouldActivate).toBe(true);
       });
 
-      it('returns false when the StrategyRuleType is field and that the field value DOES NOT match', () => {
-        strategy.strategyRuleType = StrategyRuleType.Field;
+      it('returns false when field value DOES NOT match', () => {
         strategy.fieldName = 'email';
         strategy.fieldValue = 'marvin.frachet@something.com';
         flagEnv.rolloutPercentage = 0;
@@ -343,8 +340,7 @@ describe('SdkService', () => {
         expect(shouldActivate).toBe(false);
       });
 
-      it('returns false when the StrategyRuleType is field and that the field name DOES NOT match', () => {
-        strategy.strategyRuleType = StrategyRuleType.Field;
+      it('returns false when the field name DOES NOT match', () => {
         strategy.fieldName = 'email';
         strategy.fieldValue = 'marvin.frachet@something.com';
         flagEnv.rolloutPercentage = 0;
@@ -357,8 +353,7 @@ describe('SdkService', () => {
       });
 
       describe('Comparators', () => {
-        it('returns true when the StrategyRuleType is field and that the field email contains @gmail', () => {
-          strategy.strategyRuleType = StrategyRuleType.Field;
+        it('returns true when the field email contains @gmail', () => {
           strategy.fieldName = 'email';
           strategy.fieldValue = '@gmail';
           strategy.fieldComparator = ComparatorEnum.Contains;
