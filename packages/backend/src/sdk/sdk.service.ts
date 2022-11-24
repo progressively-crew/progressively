@@ -83,6 +83,8 @@ export class SdkService {
     if (Boolean(userVariant)) {
       return userVariant;
     }
+
+    return false;
   }
 
   async resolveFlagStatusRecord(

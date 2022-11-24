@@ -69,15 +69,27 @@ describe('SdkService', () => {
   });
 
   describe('resolveFlagStatus', () => {
+    describe('Not activated', () => {
+      it('does not resolve the flag when not activated', () => {
+        flagEnv.status = FlagStatus.NOT_ACTIVATED;
+
+        const shouldActivate = service.resolveFlagStatus(flagEnv, {
+          id: 'user-id-123',
+        });
+
+        expect(shouldActivate).toBe(false);
+      });
+    });
+
     describe('Simple Variant', () => {
-      it('approximates 50% of the audience', async () => {
+      it('approximates 50% of the audience', () => {
         flagEnv.rolloutPercentage = 50;
 
         let activated = 0;
         let notActivated = 0;
 
         for (let i = 0; i < 100; i++) {
-          const shouldActivate = await service.resolveFlagStatus(flagEnv, {
+          const shouldActivate = service.resolveFlagStatus(flagEnv, {
             id: i,
           });
 
@@ -92,46 +104,46 @@ describe('SdkService', () => {
         expect(notActivated).toBe(48);
       });
 
-      it('returns true when the rollout percentage is 100%', async () => {
+      it('returns true when the rollout percentage is 100%', () => {
         flagEnv.rolloutPercentage = 100;
 
-        const shouldActivate = await service.resolveFlagStatus(flagEnv, {
+        const shouldActivate = service.resolveFlagStatus(flagEnv, {
           id: 'user-id-123',
         });
 
         expect(shouldActivate).toBe(true);
       });
 
-      it('returns false when the the user id is falsy', async () => {
+      it('returns false when the the user id is falsy', () => {
         flagEnv.rolloutPercentage = 99;
 
-        const shouldActivate = await service.resolveFlagStatus(flagEnv, {});
+        const shouldActivate = service.resolveFlagStatus(flagEnv, {});
 
         expect(shouldActivate).toBe(false);
       });
 
-      it('returns true when the userId is falsy BUT the percentage is 100', async () => {
+      it('returns true when the userId is falsy BUT the percentage is 100', () => {
         flagEnv.rolloutPercentage = 100;
 
-        const shouldActivate = await service.resolveFlagStatus(flagEnv, {});
+        const shouldActivate = service.resolveFlagStatus(flagEnv, {});
 
         expect(shouldActivate).toBe(true);
       });
 
-      it('returns true when the percentage is (70%) and that the user/flag combination is in the percentage range', async () => {
+      it('returns true when the percentage is (70%) and that the user/flag combination is in the percentage range', () => {
         flagEnv.rolloutPercentage = 70;
 
-        const shouldActivate = await service.resolveFlagStatus(flagEnv, {
+        const shouldActivate = service.resolveFlagStatus(flagEnv, {
           id: 'user-id-123',
         });
 
         expect(shouldActivate).toBe(true);
       });
 
-      it('returns false when the percentage is (5%) and that the user/flag combination is NOT in the percentage range', async () => {
+      it('returns false when the percentage is (5%) and that the user/flag combination is NOT in the percentage range', () => {
         flagEnv.rolloutPercentage = 5;
 
-        const shouldActivate = await service.resolveFlagStatus(flagEnv, {
+        const shouldActivate = service.resolveFlagStatus(flagEnv, {
           id: 'user-id-123',
         });
 
@@ -235,8 +247,8 @@ describe('SdkService', () => {
           ],
         ] as const
       ).forEach(([id, expectedVariant]) => {
-        it(`gives the ${expectedVariant.value} variant when the user ID is ${id}`, async () => {
-          const shouldActivate = await service.resolveFlagStatus(flagEnv, {
+        it(`gives the ${expectedVariant.value} variant when the user ID is ${id}`, () => {
+          const shouldActivate = service.resolveFlagStatus(flagEnv, {
             id,
           });
 
@@ -246,17 +258,17 @@ describe('SdkService', () => {
     });
 
     describe('Strategies', () => {
-      it('always returns true when no strategies are found', async () => {
+      it('always returns true when no strategies are found', () => {
         flagEnv.strategies = [];
 
-        const shouldActivate = await service.resolveFlagStatus(flagEnv, {
+        const shouldActivate = service.resolveFlagStatus(flagEnv, {
           id: 'user-id-123',
         });
 
         expect(shouldActivate).toBe(true);
       });
 
-      it('returns true when the StrategyRuleType is field and that the field value matches', async () => {
+      it('returns true when the StrategyRuleType is field and that the field value matches', () => {
         strategy.strategyRuleType = StrategyRuleType.Field;
         strategy.fieldName = 'email';
         strategy.fieldValue = 'marvin.frachet@something.com';
@@ -265,12 +277,12 @@ describe('SdkService', () => {
 
         const fields = { email: 'marvin.frachet@something.com', id: '1234' };
 
-        const shouldActivate = await service.resolveFlagStatus(flagEnv, fields);
+        const shouldActivate = service.resolveFlagStatus(flagEnv, fields);
 
         expect(shouldActivate).toBe(true);
       });
 
-      it('returns false when the StrategyRuleType is field and that the field value DOES NOT match', async () => {
+      it('returns false when the StrategyRuleType is field and that the field value DOES NOT match', () => {
         strategy.strategyRuleType = StrategyRuleType.Field;
         strategy.fieldName = 'email';
         strategy.fieldValue = 'marvin.frachet@something.com';
@@ -278,12 +290,12 @@ describe('SdkService', () => {
 
         const fields = { email: 'not.working@gmail.com' };
 
-        const shouldActivate = await service.resolveFlagStatus(flagEnv, fields);
+        const shouldActivate = service.resolveFlagStatus(flagEnv, fields);
 
         expect(shouldActivate).toBe(false);
       });
 
-      it('returns false when the StrategyRuleType is field and that the field name DOES NOT match', async () => {
+      it('returns false when the StrategyRuleType is field and that the field name DOES NOT match', () => {
         strategy.strategyRuleType = StrategyRuleType.Field;
         strategy.fieldName = 'email';
         strategy.fieldValue = 'marvin.frachet@something.com';
@@ -291,38 +303,32 @@ describe('SdkService', () => {
 
         const fields = { uuid: 'not.working@gmail.com' };
 
-        const shouldActivate = await service.resolveFlagStatus(flagEnv, fields);
+        const shouldActivate = service.resolveFlagStatus(flagEnv, fields);
 
         expect(shouldActivate).toBe(false);
       });
 
       describe('Comparators', () => {
-        it('returns true when the StrategyRuleType is field and that the field name DOES NOT match with the NEQ comparator', async () => {
+        it('returns true when the StrategyRuleType is field and that the field name DOES NOT match with the NEQ comparator', () => {
           strategy.strategyRuleType = StrategyRuleType.Field;
           strategy.fieldName = 'email';
           strategy.fieldValue = 'marvin.frachet@something.com';
           strategy.fieldComparator = ComparatorEnum.NotEquals;
 
           const fields = { email: 'should.workg@gmail.com' };
-          const shouldActivate = await service.resolveFlagStatus(
-            flagEnv,
-            fields,
-          );
+          const shouldActivate = service.resolveFlagStatus(flagEnv, fields);
 
           expect(shouldActivate).toBe(true);
         });
 
-        it('returns true when the StrategyRuleType is field and that the field email contains @gmail', async () => {
+        it('returns true when the StrategyRuleType is field and that the field email contains @gmail', () => {
           strategy.strategyRuleType = StrategyRuleType.Field;
           strategy.fieldName = 'email';
           strategy.fieldValue = '@gmail';
           strategy.fieldComparator = ComparatorEnum.Contains;
 
           const fields = { email: 'should.workg@gmail.com' };
-          const shouldActivate = await service.resolveFlagStatus(
-            flagEnv,
-            fields,
-          );
+          const shouldActivate = service.resolveFlagStatus(flagEnv, fields);
 
           expect(shouldActivate).toBe(true);
         });
