@@ -6,7 +6,7 @@ import { prepareApp } from '../helpers/prepareApp';
 import { verifyAuthGuard } from '../helpers/verify-auth-guard';
 import { authenticate } from '../helpers/authenticate';
 import { EligibilityCreationDTO } from '../../src/eligibility/types';
-import { ComparatorEnum } from '../shared/utils/comparators/types';
+import { ComparatorEnum } from '../../src/shared/utils/comparators/types';
 
 jest.mock('got', () => ({
   ...jest.requireActual('got'),
