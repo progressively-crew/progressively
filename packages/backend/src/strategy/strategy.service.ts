@@ -1,7 +1,12 @@
 import { Injectable } from '@nestjs/common';
 
 import { PrismaService } from '../database/prisma.service';
-import { Flag, FlagEnvironment, Variant } from '../flags/types';
+import {
+  Flag,
+  FlagEnvironment,
+  PopulatedFlagEnv,
+  Variant,
+} from '../flags/types';
 import { ComparatorFactory } from './comparators/comparatorFactory';
 import { StrategyCreationDTO } from './strategy.dto';
 import {
@@ -12,15 +17,12 @@ import {
 } from './types';
 import { genBucket, getVariation, isInBucket } from './utils';
 
-export interface ExtendedFlagEnv extends FlagEnvironment {
-  flag: Flag;
-}
 @Injectable()
 export class StrategyService {
   constructor(private prisma: PrismaService) {}
 
   private resolveFlagVariantValue(
-    flagEnv: ExtendedFlagEnv,
+    flagEnv: PopulatedFlagEnv,
     fields: FieldRecord,
   ): boolean | Variant {
     const bucketId = genBucket(flagEnv.flag.key, fields.id as string);
@@ -53,7 +55,7 @@ export class StrategyService {
   }
 
   resolveStrategies(
-    flagEnv: ExtendedFlagEnv,
+    flagEnv: PopulatedFlagEnv,
     strategies: Array<RolloutStrategy>,
     fields: FieldRecord,
   ) {

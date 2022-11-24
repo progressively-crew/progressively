@@ -2,14 +2,14 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { PrismaService } from '../database/prisma.service';
 import { FlagStatus } from '../flags/flags.status';
-import { Variant } from '../flags/types';
-import { ExtendedFlagEnv, StrategyService } from './strategy.service';
+import { PopulatedFlagEnv, Variant } from '../flags/types';
+import { StrategyService } from './strategy.service';
 import { ComparatorEnum, RolloutStrategy, StrategyRuleType } from './types';
 
 describe('StrategyService', () => {
   let service: StrategyService;
   let strategy: RolloutStrategy;
-  let flagEnv: ExtendedFlagEnv;
+  let flagEnv: PopulatedFlagEnv;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -53,6 +53,14 @@ describe('StrategyService', () => {
       status: FlagStatus.ACTIVATED,
       rolloutPercentage: 100,
       variants: [],
+      environment: {
+        uuid: '1',
+        name: 'prod',
+        projectId: '1',
+        clientKey: 'yup',
+      },
+      strategies: [strategy],
+      scheduling: [],
     };
   });
 
