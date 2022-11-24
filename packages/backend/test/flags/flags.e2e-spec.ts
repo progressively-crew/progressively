@@ -1660,4 +1660,62 @@ describe('FlagsController (e2e)', () => {
       });
     });
   });
+
+  describe('/environments/1/flags/2/eligibilities (GET)', () => {
+    it('gives a 401 when the user is not authenticated', () =>
+      verifyAuthGuard(app, '/environments/1/flags/2/eligibilities', 'get'));
+
+    it('gives a 403 when trying to access a valid project but an invalid env', async () => {
+      const access_token = await authenticate(app);
+
+      return request(app.getHttpServer())
+        .get('/environments/1/flags/3/eligibilities')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('gives a 403 when the user requests a forbidden project', async () => {
+      const access_token = await authenticate(
+        app,
+        'jane.doe@gmail.com',
+        'password',
+      );
+
+      return request(app.getHttpServer())
+        .get('/environments/1/flags/2/eligibilities')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('gives the eligibilities information when the user is authenticated and authorized', async () => {
+      const access_token = await authenticate(app);
+
+      const response = await request(app.getHttpServer())
+        .get('/environments/1/flags/2/eligibilities')
+        .set('Authorization', `Bearer ${access_token}`);
+
+      const eligibilities = response.body[0];
+
+      expect(response.status).toBe(200);
+      expect(eligibilities).toEqual({
+        fieldComparator: null,
+        fieldName: 'email',
+        fieldValue: '@gmail.com',
+        flagEnvironmentEnvironmentId: '1',
+        flagEnvironmentFlagId: '2',
+        name: 'Elligibility gmail users',
+        uuid: '1',
+      });
+    });
+  });
 });
