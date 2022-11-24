@@ -87,7 +87,7 @@ model FlagEnvironment {
   metrics           PMetric[]         @relation(name: "FlagEnvironmentToPMetric")
   metricHits        PMetricHit[]      @relation(name: "FlagEnvironmentToPMetricHit")
   webhooks          Webhook[]         @relation(name: "FlagEnvironmentToWebhook")
-  Eligibility       Eligibility[]     @relation(name: "EligibilityToFlagEnvironment")
+  eligibilities     Eligibility[]     @relation(name: "EligibilityToFlagEnvironment")
 
   @@id([flagId, environmentId])
 }

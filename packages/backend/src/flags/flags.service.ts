@@ -33,6 +33,7 @@ export class FlagsService {
         strategies: true,
         variants: true,
         webhooks: true,
+        eligibilities: true,
       },
     });
   }
@@ -57,6 +58,7 @@ export class FlagsService {
         flag: true,
         strategies: true,
         variants: true,
+        eligibilities: true,
       },
     });
   }
@@ -400,6 +402,7 @@ export class FlagsService {
             strategies: true,
             scheduling: true,
             variants: true,
+            eligibilities: true,
           },
         }),
       );

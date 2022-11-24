@@ -18,7 +18,7 @@ export class EligibilityService {
           environments: {
             some: {
               flagEnvironment: {
-                some: { Eligibility: { some: { uuid: eligibilityId } } },
+                some: { eligibilities: { some: { uuid: eligibilityId } } },
               },
             },
           },
@@ -49,6 +49,7 @@ export class EligibilityService {
             flag: true,
             strategies: true,
             variants: true,
+            eligibilities: true,
           },
         },
       },
@@ -92,6 +93,7 @@ export class EligibilityService {
             flag: true,
             strategies: true,
             variants: true,
+            eligibilities: true,
           },
         },
       },
