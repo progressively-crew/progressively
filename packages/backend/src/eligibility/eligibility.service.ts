@@ -6,6 +6,55 @@ import { EligibilityCreationDTO } from './types';
 export class EligibilityService {
   constructor(private prisma: PrismaService) {}
 
+  async hasPermissionOnEligibility(
+    eligibilityId: string,
+    userId: string,
+    roles?: Array<string>,
+  ) {
+    const flagOfProject = await this.prisma.userProject.findFirst({
+      where: {
+        userId,
+        project: {
+          environments: {
+            some: {
+              flagEnvironment: {
+                some: { Eligibility: { some: { uuid: eligibilityId } } },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!flagOfProject) {
+      return false;
+    }
+
+    if (!roles || roles.length === 0) {
+      return true;
+    }
+
+    return roles.includes(flagOfProject.role);
+  }
+
+  deleteEligibility(eligibilityId: string) {
+    return this.prisma.eligibility.delete({
+      where: {
+        uuid: eligibilityId,
+      },
+      include: {
+        FlagEnvironment: {
+          include: {
+            environment: true,
+            flag: true,
+            strategies: true,
+            variants: true,
+          },
+        },
+      },
+    });
+  }
+
   listEligibilities(envId: string, flagId: string) {
     return this.prisma.eligibility.findMany({
       where: {

@@ -63,7 +63,6 @@ import 'winston-daily-rotate-file';
     EligibilityModule,
   ],
   providers: [AppService],
-  controllers: [],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
