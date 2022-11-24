@@ -208,9 +208,9 @@ export const seedDb = async () => {
         uuid: '1',
         flagEnvironmentFlagId: footerFlagEnv.flagId,
         flagEnvironmentEnvironmentId: footerFlagEnv.environmentId,
-        name: 'Elligibility gmail users',
         fieldName: 'email',
         fieldValue: '@gmail.com',
+        fieldComparator: 'eq',
       },
     });
 

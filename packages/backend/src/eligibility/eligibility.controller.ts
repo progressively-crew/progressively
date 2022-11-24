@@ -29,7 +29,6 @@ export class EligibilityController {
 
     return {
       uuid: deletedEligibility.uuid,
-      name: deletedEligibility.name,
       fieldName: deletedEligibility.fieldName,
       fieldComparator: deletedEligibility.fieldComparator,
       fieldValue: deletedEligibility.fieldValue,

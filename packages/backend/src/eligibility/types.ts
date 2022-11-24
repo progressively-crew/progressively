@@ -7,14 +7,12 @@ export enum ComparatorEnum {
 }
 
 export class EligibilityCreationDTO {
-  name: string;
-  fieldName?: string;
-  fieldComparator?: ComparatorEnum;
-  fieldValue?: string;
+  fieldName: string;
+  fieldComparator: ComparatorEnum;
+  fieldValue: string;
 }
 
 export const EligibilitySchema = Joi.object({
-  name: Joi.string().required(),
   fieldName: Joi.string().required(),
   fieldComparator: Joi.string()
     .valid(

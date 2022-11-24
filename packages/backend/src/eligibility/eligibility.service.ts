@@ -71,7 +71,6 @@ export class EligibilityService {
   ) {
     return this.prisma.eligibility.create({
       data: {
-        name: eligibility.name,
         fieldName: eligibility.fieldName,
         fieldValue: eligibility.fieldValue,
         fieldComparator: eligibility.fieldComparator,

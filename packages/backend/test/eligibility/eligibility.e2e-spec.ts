@@ -69,9 +69,8 @@ describe('Eligibility (e2e)', () => {
         .expect(200)
         .expect({
           uuid: '1',
-          name: 'Elligibility gmail users',
           fieldName: 'email',
-          fieldComparator: null,
+          fieldComparator: 'eq',
           fieldValue: '@gmail.com',
           flagEnvironmentFlagId: '2',
           flagEnvironmentEnvironmentId: '1',

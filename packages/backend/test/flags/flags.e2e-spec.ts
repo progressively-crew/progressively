@@ -1712,12 +1712,11 @@ describe('FlagsController (e2e)', () => {
 
       expect(response.status).toBe(200);
       expect(eligibilities).toEqual({
-        fieldComparator: null,
+        fieldComparator: 'eq',
         fieldName: 'email',
         fieldValue: '@gmail.com',
         flagEnvironmentEnvironmentId: '1',
         flagEnvironmentFlagId: '2',
-        name: 'Elligibility gmail users',
         uuid: '1',
       });
     });
@@ -1730,15 +1729,16 @@ describe('FlagsController (e2e)', () => {
     it('gives a 403 when trying to access a valid project but an invalid env', async () => {
       const access_token = await authenticate(app);
 
-      const validStrategy: any = {
-        name: 'Super strategy',
-        strategyRuleType: 'default',
+      const validEligibility: EligibilityCreationDTO = {
+        fieldName: 'email',
+        fieldValue: '@gmail.com',
+        fieldComparator: ComparatorEnum.Equals,
       };
 
       return request(app.getHttpServer())
         .post('/environments/1/flags/3/eligibilities')
         .set('Authorization', `Bearer ${access_token}`)
-        .send(validStrategy)
+        .send(validEligibility)
         .expect(403)
         .expect({
           statusCode: 403,
@@ -1758,7 +1758,6 @@ describe('FlagsController (e2e)', () => {
         .post('/environments/1/flags/1/eligibilities')
         .set('Authorization', `Bearer ${access_token}`)
         .send({
-          name: 'Super eligibility',
           fieldName: 'email',
           fieldComparator: 'eq',
           fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
@@ -1771,12 +1770,11 @@ describe('FlagsController (e2e)', () => {
         });
     });
 
-    ['name', 'fieldName', 'fieldComparator', 'fieldValue'].forEach((field) => {
+    ['fieldName', 'fieldComparator', 'fieldValue'].forEach((field) => {
       it(`gives 400 when "${field}" is invalid`, async () => {
         const access_token = await authenticate(app);
 
         const invalidEligibility: any = {
-          name: 'Super eligibility',
           fieldName: 'email',
           fieldValue: '@gmail.com',
           fieldComparator: ComparatorEnum.Equals,
@@ -1800,7 +1798,6 @@ describe('FlagsController (e2e)', () => {
       const access_token = await authenticate(app);
 
       const validEligibility: EligibilityCreationDTO = {
-        name: 'Super strategy',
         fieldName: 'email',
         fieldValue: '@gmail.com',
         fieldComparator: ComparatorEnum.Equals,
@@ -1813,7 +1810,6 @@ describe('FlagsController (e2e)', () => {
         .expect(201);
 
       expect(response.body).toMatchObject({
-        name: 'Super strategy',
         fieldComparator: 'eq',
         fieldName: 'email',
         fieldValue: '@gmail.com',

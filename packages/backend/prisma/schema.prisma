@@ -163,10 +163,9 @@ model RolloutStrategy {
 
 model Eligibility {
   uuid                         String           @id @default(uuid())
-  name                         String
-  fieldName                    String?
-  fieldComparator              String?
-  fieldValue                   String?
+  fieldName                    String
+  fieldComparator              String
+  fieldValue                   String
   FlagEnvironment              FlagEnvironment? @relation(name: "EligibilityToFlagEnvironment", fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
   flagEnvironmentFlagId        String?
   flagEnvironmentEnvironmentId String?
