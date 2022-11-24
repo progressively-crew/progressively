@@ -45,7 +45,6 @@ export class StrategyController {
 
     return {
       uuid: deletedStrategy.uuid,
-      name: deletedStrategy.name,
       fieldName: deletedStrategy.fieldName,
       fieldComparator: deletedStrategy.fieldComparator,
       fieldValue: deletedStrategy.fieldValue,

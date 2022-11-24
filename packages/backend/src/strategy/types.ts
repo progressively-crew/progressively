@@ -8,7 +8,6 @@ export type FieldRecord = Record<string, string | number | boolean>;
 
 export interface RolloutStrategy {
   uuid: string;
-  name: string;
   fieldName: string;
   fieldComparator: ComparatorEnum;
   fieldValue: string;

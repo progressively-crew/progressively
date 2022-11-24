@@ -36,7 +36,6 @@ describe('SdkService', () => {
       fieldValue: '@gmail.com`',
       flagEnvironmentEnvironmentId: '1',
       flagEnvironmentFlagId: '1',
-      name: 'Strategy name',
       uuid: '123',
     };
 

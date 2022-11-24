@@ -408,9 +408,7 @@ describe('FlagsController (e2e)', () => {
     it('gives a 403 when trying to access a valid project but an invalid env', async () => {
       const access_token = await authenticate(app);
 
-      const validStrategy: any = {
-        name: 'Super strategy',
-      };
+      const validStrategy: any = {};
 
       return request(app.getHttpServer())
         .post('/environments/1/flags/3/strategies')
@@ -435,7 +433,6 @@ describe('FlagsController (e2e)', () => {
         .post('/environments/1/flags/1/strategies')
         .set('Authorization', `Bearer ${access_token}`)
         .send({
-          name: 'Super strategy',
           fieldName: 'email',
           fieldComparator: 'eq',
           fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
@@ -470,9 +467,7 @@ describe('FlagsController (e2e)', () => {
     it('gives 400 when the project receives a wrong strategy type', async () => {
       const access_token = await authenticate(app);
 
-      const invalidStrategy: any = {
-        name: 'Super strategy',
-      };
+      const invalidStrategy: any = {};
 
       await request(app.getHttpServer())
         .post('/environments/1/flags/1/strategies')
@@ -491,7 +486,6 @@ describe('FlagsController (e2e)', () => {
         const access_token = await authenticate(app);
 
         const invalidStrategy: any = {
-          name: 'Super strategy',
           [field]: undefined,
         };
 
@@ -512,7 +506,6 @@ describe('FlagsController (e2e)', () => {
       const access_token = await authenticate(app);
 
       const validStrategy: any = {
-        name: 'Super strategy',
         fieldName: 'email',
         fieldValue: '@gmail.com',
         fieldComparator: 'eq',
@@ -528,7 +521,6 @@ describe('FlagsController (e2e)', () => {
 
       expect(uuid).toBeDefined();
       expect(obj).toEqual({
-        name: 'Super strategy',
         fieldComparator: 'eq',
         fieldName: 'email',
         fieldValue: '@gmail.com',
@@ -541,7 +533,6 @@ describe('FlagsController (e2e)', () => {
       const access_token = await authenticate(app);
 
       const validStrategy: any = {
-        name: 'Super strategy',
         fieldName: 'email',
         fieldComparator: 'eq',
         fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
@@ -557,7 +548,6 @@ describe('FlagsController (e2e)', () => {
 
       expect(uuid).toBeDefined();
       expect(obj).toEqual({
-        name: 'Super strategy',
         fieldName: 'email',
         fieldComparator: 'eq',
         fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
@@ -570,7 +560,6 @@ describe('FlagsController (e2e)', () => {
       const access_token = await authenticate(app);
 
       const validStrategy: any = {
-        name: 'Super strategy',
         fieldName: 'email',
         fieldComparator: 'eq',
         fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
@@ -586,7 +575,6 @@ describe('FlagsController (e2e)', () => {
 
       expect(uuid).toBeDefined();
       expect(obj).toEqual({
-        name: 'Super strategy',
         fieldName: 'email',
         fieldComparator: 'eq',
         fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
@@ -636,7 +624,6 @@ describe('FlagsController (e2e)', () => {
       const access_token = await authenticate(app);
 
       const validStrategy: any = {
-        name: 'Super strategy',
         fieldName: 'email',
         fieldComparator: 'eq',
         fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
@@ -661,7 +648,7 @@ describe('FlagsController (e2e)', () => {
         fieldValue: '1',
         flagEnvironmentEnvironmentId: '1',
         flagEnvironmentFlagId: '1',
-        name: 'Super strategy',
+
         uuid: '1',
       });
     });
@@ -707,7 +694,6 @@ describe('FlagsController (e2e)', () => {
       const access_token = await authenticate(app);
 
       const validStrategy: any = {
-        name: 'Super strategy',
         fieldName: 'email',
         fieldComparator: 'eq',
         fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
@@ -741,9 +727,7 @@ describe('FlagsController (e2e)', () => {
     it('gives a 403 when trying to access a valid project but an invalid env', async () => {
       const access_token = await authenticate(app);
 
-      const validStrategy: any = {
-        name: 'Super strategy',
-      };
+      const validStrategy: any = {};
 
       return request(app.getHttpServer())
         .post('/environments/1/flags/3/scheduling')
@@ -768,7 +752,6 @@ describe('FlagsController (e2e)', () => {
         .post('/environments/1/flags/1/scheduling')
         .set('Authorization', `Bearer ${access_token}`)
         .send({
-          name: 'Super strategy',
           fieldName: 'email',
           fieldComparator: 'eq',
           fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
@@ -1491,9 +1474,7 @@ describe('FlagsController (e2e)', () => {
     it('gives a 403 when trying to access a valid project but an invalid env', async () => {
       const access_token = await authenticate(app);
 
-      const validStrategy: any = {
-        name: 'Super strategy',
-      };
+      const validStrategy: any = {};
 
       return request(app.getHttpServer())
         .post('/environments/1/flags/3/webhooks')
@@ -1518,7 +1499,6 @@ describe('FlagsController (e2e)', () => {
         .post('/environments/1/flags/1/webhooks')
         .set('Authorization', `Bearer ${access_token}`)
         .send({
-          name: 'Super strategy',
           fieldName: 'email',
           fieldComparator: 'eq',
           fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
@@ -1536,7 +1516,6 @@ describe('FlagsController (e2e)', () => {
         const access_token = await authenticate(app);
 
         const invalidStrategy: any = {
-          name: 'Super strategy',
           [field]: undefined,
         };
 

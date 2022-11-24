@@ -64,7 +64,6 @@ export class StrategyService {
             },
           },
         },
-        name: strategy.name,
         fieldName: strategy.fieldName,
         fieldValue: strategy.fieldValue,
         fieldComparator: strategy.fieldComparator,
