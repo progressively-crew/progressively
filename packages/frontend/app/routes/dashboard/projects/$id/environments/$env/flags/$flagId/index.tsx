@@ -284,6 +284,15 @@ export default function FlagById() {
                   </SuccessBox>
                 ) : null
               }
+              action={
+                hasEligibility && (
+                  <CreateButton
+                    to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/eligibilities/create`}
+                  >
+                    Create an eligibility restriction
+                  </CreateButton>
+                )
+              }
             />
           </CardContent>
 
@@ -346,6 +355,15 @@ export default function FlagById() {
                     The additional audience has been successfully removed.
                   </SuccessBox>
                 ) : null
+              }
+              action={
+                hasStrategies && (
+                  <CreateButton
+                    to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
+                  >
+                    Create an additional audience
+                  </CreateButton>
+                )
               }
             />
           </CardContent>

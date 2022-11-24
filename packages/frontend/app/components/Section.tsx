@@ -43,7 +43,7 @@ export const SectionHeader = ({
   return (
     <div {...props}>
       <Stack spacing={4}>
-        <div className="flex flex-col md:flex-row md:justify-between gap-3">
+        <div className="flex flex-col md:flex-row md:justify-between gap-8">
           <div>
             <HeadingComponent
               as={titleAs}
