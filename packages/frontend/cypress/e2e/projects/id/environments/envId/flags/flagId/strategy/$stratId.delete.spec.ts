@@ -46,10 +46,10 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
           "Progressively | Project from seeding | Production | New homepage | Additional audience | Delete"
         );
 
-        cy.findByText("Deleting a strategy").should("be.visible");
+        cy.findByText("Deleting an additional audience").should("be.visible");
 
         cy.findByRole("button", {
-          name: "Yes, delete the strategy",
+          name: "Yes, delete the additional audience",
         }).should("be.visible");
 
         cy.findByRole("link", { name: "No, don't delete" })
@@ -77,7 +77,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
 
       it("removes the strat and get me back to the flags page", () => {
         cy.findByRole("button", {
-          name: "Yes, delete the strategy",
+          name: "Yes, delete the additional audience",
         }).click();
 
         cy.url().should(

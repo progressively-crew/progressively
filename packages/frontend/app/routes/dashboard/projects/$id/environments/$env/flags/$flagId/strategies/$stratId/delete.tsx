@@ -26,7 +26,7 @@ export const handle = {
   breadcrumb: (match: { params: any }) => {
     return {
       link: `/dashboard/projects/${match.params.id}/environments/${match.params.env}/flags/${match.params.flagId}/strategies/${match.params.stratId}/delete`,
-      label: "Delete a strategy",
+      label: "Delete an additional audience rule",
     };
   },
 };
@@ -108,14 +108,14 @@ export default function DeleteStrategyPage() {
           <DeleteButton
             type="submit"
             isLoading={transition.state === "submitting"}
-            loadingText="Deleting the strategy, please wait..."
+            loadingText="Deleting the additional audience, please wait..."
           >
-            Yes, delete the strategy
+            Yes, delete the additional audience
           </DeleteButton>
         </Form>
       }
     >
-      <PageTitle value={`Deleting a strategy`} />
+      <PageTitle value={`Deleting an additional audience`} />
 
       <Spacer size={4} />
 
@@ -123,13 +123,13 @@ export default function DeleteStrategyPage() {
         <WarningBox title={<>This operation is definitive.</>} />
 
         <Typography>
-          If you validate the suppression, the strategy will be removed from the
-          feature flag.
+          If you validate the suppression, the additional audience will be
+          removed from the feature flag.
         </Typography>
 
         <Typography>
-          When a user will resolve a feature flag, this strategy will NOT apply
-          anymore.
+          When a user will resolve a feature flag, this additional audience rule
+          will NOT apply anymore.
         </Typography>
       </Stack>
     </DeleteEntityLayout>
