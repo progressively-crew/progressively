@@ -4,21 +4,21 @@ import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { HStack } from "~/components/HStack";
 import { RawTable, Td, Th, Tr } from "~/components/RawTable";
 import { AdditionalAudienceRetrieveDTO } from "../types";
-import { StrategyCriteria } from "./StrategyCriteria";
+import { AudienceList } from "./AudienceList";
 
-export interface StrategyListProps {
-  strategies: Array<AdditionalAudienceRetrieveDTO>;
+export interface AdditionalAudienceListProps {
+  items: Array<AdditionalAudienceRetrieveDTO>;
   projectId: string;
   envId: string;
   flagId: string;
 }
 
-export const StrategyList = ({
-  strategies,
+export const AdditionalAudienceList = ({
+  items,
   projectId,
   envId,
   flagId,
-}: StrategyListProps) => {
+}: AdditionalAudienceListProps) => {
   return (
     <RawTable aria-label="Strategies applied on this flag">
       <thead>
@@ -28,10 +28,10 @@ export const StrategyList = ({
         </Tr>
       </thead>
       <tbody>
-        {strategies.map((strat) => (
+        {items.map((strat) => (
           <Tr key={strat.uuid}>
             <Td>
-              <StrategyCriteria strat={strat} />
+              <AudienceList strat={strat} />
             </Td>
 
             <Td>

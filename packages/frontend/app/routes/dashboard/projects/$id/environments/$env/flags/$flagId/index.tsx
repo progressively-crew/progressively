@@ -41,7 +41,7 @@ import { PageTitle } from "~/components/PageTitle";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { EmptyState } from "~/components/EmptyState";
 import { CreateButton } from "~/components/Buttons/CreateButton";
-import { StrategyList } from "~/modules/strategies/components/StrategyList";
+import { AdditionalAudienceList } from "~/modules/strategies/components/AdditionalAudienceList";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
@@ -322,8 +322,8 @@ export default function FlagById() {
           )}
 
           {hasStrategies && (
-            <StrategyList
-              strategies={strategies}
+            <AdditionalAudienceList
+              items={strategies}
               projectId={project.uuid}
               envId={environment.uuid}
               flagId={currentFlag.uuid}

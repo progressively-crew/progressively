@@ -5,7 +5,7 @@ import { TextInput } from "~/components/Fields/TextInput";
 import { HStack } from "~/components/HStack";
 import { ComparatorEnum, AdditionalAudienceCreateDTO } from "../types";
 
-export interface StrategyAudienceProps {
+export interface AudienceFieldsProps {
   errors: Record<string, string>;
   initialFieldName?: AdditionalAudienceCreateDTO["fieldName"];
   initialFieldValue?: AdditionalAudienceCreateDTO["fieldValue"];
@@ -17,7 +17,7 @@ export const AudienceFields = ({
   initialFieldName,
   initialFieldValue,
   initialFieldComparator,
-}: StrategyAudienceProps) => {
+}: AudienceFieldsProps) => {
   return (
     <FormGroup>
       <FormGroup>
