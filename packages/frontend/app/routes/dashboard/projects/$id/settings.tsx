@@ -19,7 +19,6 @@ import { MetaFunction, ActionFunction } from "@remix-run/node";
 import { useActionData, useTransition, Form } from "@remix-run/react";
 import { Card, CardContent } from "~/components/Card";
 import { TagLine } from "~/components/Tagline";
-import { HStack } from "~/components/HStack";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { useUser } from "~/modules/user/contexts/useUser";

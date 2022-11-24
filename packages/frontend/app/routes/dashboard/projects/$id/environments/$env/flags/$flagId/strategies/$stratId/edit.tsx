@@ -1,4 +1,4 @@
-import { useState, useTransition } from "react";
+import { useTransition } from "react";
 import { getSession } from "~/sessions";
 import { validateStrategyForm } from "~/modules/strategies/validators/validateStrategyForm";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";

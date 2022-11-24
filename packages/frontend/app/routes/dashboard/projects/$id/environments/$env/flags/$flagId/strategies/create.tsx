@@ -1,4 +1,4 @@
-import { useState, useTransition } from "react";
+import { useTransition } from "react";
 import { getSession } from "~/sessions";
 import { validateStrategyForm } from "~/modules/strategies/validators/validateStrategyForm";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
@@ -6,7 +6,6 @@ import { StrategyCreateDTO } from "~/modules/strategies/types";
 import { createStrategy } from "~/modules/strategies/services/createStrategy";
 import { StrategyAudience } from "~/modules/strategies/components/StrategyAudience";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { TextInput } from "~/components/Fields/TextInput";
 import { Typography } from "~/components/Typography";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";

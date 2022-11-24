@@ -1,4 +1,3 @@
-import { H1 } from "./H1";
 import { HStack } from "./HStack";
 import { Spacer } from "./Spacer";
 

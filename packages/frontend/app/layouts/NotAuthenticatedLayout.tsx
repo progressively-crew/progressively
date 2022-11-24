@@ -1,7 +1,6 @@
 import { Main } from "~/components/Main";
 import { Spacer } from "~/components/Spacer";
 import { Stack } from "~/components/Stack";
-import boatSrc from "../images/boat.png";
 
 export interface NotAuthenticatedLayoutProps {
   children: React.ReactNode;

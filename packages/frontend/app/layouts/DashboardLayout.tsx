@@ -5,7 +5,6 @@ import { Container } from "~/components/Container";
 import { Spacer } from "~/components/Spacer";
 import { NavProvider } from "~/components/Breadcrumbs/providers/NavProvider";
 import { InertWhenNavOpened } from "~/components/Breadcrumbs/InertWhenNavOpened";
-import { HStack } from "~/components/HStack";
 import { UseDropdown } from "~/modules/user/components/UserDropdown";
 import { Stack } from "~/components/Stack";
 import { useMatches } from "@remix-run/react";
