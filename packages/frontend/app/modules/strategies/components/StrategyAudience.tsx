@@ -55,7 +55,6 @@ export const StrategyAudience = ({
               defaultValue={initialFieldComparator}
               options={[
                 { value: ComparatorEnum.Equals, label: "Equals" },
-                { value: ComparatorEnum.NotEquals, label: "Not equals" },
                 { value: ComparatorEnum.Contains, label: "Contains" },
               ]}
             />
