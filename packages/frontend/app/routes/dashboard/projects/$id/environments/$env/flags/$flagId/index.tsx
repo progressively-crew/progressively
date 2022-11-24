@@ -157,6 +157,8 @@ export default function FlagById() {
   const isStrategyRemoved = searchParams.get("stratRemoved") || undefined;
 
   const isEligibilityAdded = searchParams.get("newEligibility") || undefined;
+  const isEligibilityRemoved =
+    searchParams.get("eligibilityRemoved") || undefined;
 
   return (
     <DashboardLayout
@@ -272,15 +274,11 @@ export default function FlagById() {
                 </Typography>
               }
               status={
-                isStrategyUpdated ? (
-                  <SuccessBox id="eligibility-updated">
-                    The eligibility audience has been updated.
-                  </SuccessBox>
-                ) : isEligibilityAdded ? (
+                isEligibilityAdded ? (
                   <SuccessBox id="eligibility-added">
                     The eligibility audience has been successfully set.
                   </SuccessBox>
-                ) : isStrategyRemoved ? (
+                ) : isEligibilityRemoved ? (
                   <SuccessBox id="eligibility-removed">
                     The eligibility audience has been successfully removed.
                   </SuccessBox>

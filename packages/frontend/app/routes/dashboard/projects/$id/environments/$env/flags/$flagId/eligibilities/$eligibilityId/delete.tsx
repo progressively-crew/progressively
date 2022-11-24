@@ -1,7 +1,6 @@
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { WarningBox } from "~/components/Boxes/WarningBox";
 import { getSession } from "~/sessions";
-import { deleteStrategy } from "~/modules/strategies/services/deleteStrategy";
 import { Button } from "~/components/Buttons/Button";
 import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
@@ -21,12 +20,13 @@ import { Header } from "~/components/Header";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { TagLine } from "~/components/Tagline";
 import { Spacer } from "~/components/Spacer";
+import { deleteEligibility } from "~/modules/eligibility/services/deleteEligibility";
 
 export const handle = {
   breadcrumb: (match: { params: any }) => {
     return {
-      link: `/dashboard/projects/${match.params.id}/environments/${match.params.env}/flags/${match.params.flagId}/strategies/${match.params.stratId}/delete`,
-      label: "Delete a strategy",
+      link: `/dashboard/projects/${match.params.id}/environments/${match.params.env}/flags/${match.params.flagId}/eligibilities/${match.params.eligibilityId}/delete`,
+      label: "Delete an eligibility restriction",
     };
   },
 };
@@ -37,7 +37,7 @@ export const meta: MetaFunction = ({ parentsData, params }) => {
   const flagName = getFlagMetaTitle(parentsData);
 
   return {
-    title: `Progressively | ${projectName} | ${envName} | ${flagName} | Additional audience | Delete`,
+    title: `Progressively | ${projectName} | ${envName} | ${flagName} | Eligibility | Delete`,
   };
 };
 
@@ -55,10 +55,10 @@ export const action: ActionFunction = async ({
   const projectId = params.id!;
   const envId = params.env!;
   const flagId = params.flagId!;
-  const stratId = params.stratId!;
+  const eligibilityId = params.eligibilityId!;
 
   try {
-    await deleteStrategy(stratId, session.get("auth-cookie"));
+    await deleteEligibility(eligibilityId, session.get("auth-cookie"));
   } catch (error: unknown) {
     if (error instanceof Error) {
       return { errors: { backendError: error.message } };
@@ -68,11 +68,11 @@ export const action: ActionFunction = async ({
   }
 
   return redirect(
-    `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}?stratRemoved=true#strat-removed`
+    `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}?eligibilityRemoved=true#eligibility-removed`
   );
 };
 
-export default function DeleteStrategyPage() {
+export default function DeleteEligibilityPage() {
   const transition = useTransition();
   const { project } = useProject();
   const { user } = useUser();
@@ -110,12 +110,12 @@ export default function DeleteStrategyPage() {
             isLoading={transition.state === "submitting"}
             loadingText="Deleting the strategy, please wait..."
           >
-            Yes, delete the strategy
+            Yes, delete the eligibility restriction
           </DeleteButton>
         </Form>
       }
     >
-      <PageTitle value={`Deleting a strategy`} />
+      <PageTitle value={`Deleting an elegibility restriction`} />
 
       <Spacer size={4} />
 
@@ -123,13 +123,12 @@ export default function DeleteStrategyPage() {
         <WarningBox title={<>This operation is definitive.</>} />
 
         <Typography>
-          If you validate the suppression, the strategy will be removed from the
-          feature flag.
+          If you validate the suppression, the eligibility restriction will be
+          removed from the feature flag.
         </Typography>
 
         <Typography>
-          When a user will resolve a feature flag, this strategy will NOT apply
-          anymore.
+          This means that the flag resolution will become more permissive.
         </Typography>
       </Stack>
     </DeleteEntityLayout>
