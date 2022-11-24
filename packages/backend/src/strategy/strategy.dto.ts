@@ -1,5 +1,5 @@
 import * as Joi from 'joi';
-import { ComparatorEnum } from './types';
+import { ComparatorEnum } from '../shared/utils/comparators/types';
 
 export class StrategyCreationDTO {
   name: string;

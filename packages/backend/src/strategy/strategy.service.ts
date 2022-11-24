@@ -1,13 +1,10 @@
 import { Injectable } from '@nestjs/common';
+import { ComparatorFactory } from '../shared/utils/comparators/comparatorFactory';
+import { ComparatorEnum } from '../shared/utils/comparators/types';
 import { PrismaService } from '../database/prisma.service';
-import { ComparatorFactory } from './comparators/comparatorFactory';
+
 import { StrategyCreationDTO } from './strategy.dto';
-import {
-  ComparatorEnum,
-  FieldRecord,
-  RolloutStrategy,
-  StrategyRuleType,
-} from './types';
+import { FieldRecord, RolloutStrategy, StrategyRuleType } from './types';
 
 @Injectable()
 export class StrategyService {

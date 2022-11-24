@@ -1,8 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
+import { ComparatorEnum } from '../shared/utils/comparators/types';
 import { PrismaService } from '../database/prisma.service';
 import { StrategyService } from './strategy.service';
-import { ComparatorEnum, RolloutStrategy, StrategyRuleType } from './types';
+import { RolloutStrategy, StrategyRuleType } from './types';
 
 describe('StrategyService', () => {
   let service: StrategyService;

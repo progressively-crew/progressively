@@ -1,14 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
-import {
-  ComparatorEnum,
-  RolloutStrategy,
-  StrategyRuleType,
-} from '../strategy/types';
+import { RolloutStrategy, StrategyRuleType } from '../strategy/types';
 import { FlagStatus } from '../flags/flags.status';
 import { PopulatedFlagEnv, Variant } from '../flags/types';
 import { SdkService } from './sdk.service';
 import { AppModule } from '../app.module';
+import { ComparatorEnum } from '../shared/utils/comparators/types';
 
 describe('SdkService', () => {
   let service: SdkService;

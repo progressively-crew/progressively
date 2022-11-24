@@ -1,4 +1,4 @@
-import { ComparatorEnum } from '../types';
+import { ComparatorEnum } from './types';
 import { Comparator } from './comparators-types';
 import { contains } from './contains';
 import { equals } from './equals';

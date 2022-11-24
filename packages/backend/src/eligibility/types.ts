@@ -1,10 +1,5 @@
 import * as Joi from 'joi';
-
-export enum ComparatorEnum {
-  Equals = 'eq',
-  NotEquals = 'neq',
-  Contains = 'contains',
-}
+import { ComparatorEnum } from '../shared/utils/comparators/types';
 
 export class EligibilityCreationDTO {
   fieldName: string;

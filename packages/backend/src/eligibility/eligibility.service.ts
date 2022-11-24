@@ -1,6 +1,10 @@
 import { Injectable } from '@nestjs/common';
+import { PopulatedFlagEnv } from '../flags/types';
+import { FieldRecord } from '../strategy/types';
 import { PrismaService } from '../database/prisma.service';
 import { EligibilityCreationDTO } from './types';
+import { ComparatorEnum } from '../shared/utils/comparators/types';
+import { ComparatorFactory } from '../shared/utils/comparators/comparatorFactory';
 
 @Injectable()
 export class EligibilityService {
@@ -98,5 +102,27 @@ export class EligibilityService {
         },
       },
     });
+  }
+
+  isEligible(flagEnv: PopulatedFlagEnv, fields: FieldRecord) {
+    // This condition means that there are no restrictions
+    // Every body is concerned by the flag
+    if (flagEnv.eligibilities.length === 0) return true;
+
+    for (const eligibility of flagEnv.eligibilities) {
+      const fieldComparator = eligibility.fieldComparator as ComparatorEnum;
+      const isValid = ComparatorFactory.create(fieldComparator);
+      const fieldValues = eligibility.fieldValue.split('\n');
+
+      for (const fieldValue of fieldValues) {
+        const clientFieldValue = fields[eligibility.fieldName] || '';
+
+        if (isValid(fieldValue, clientFieldValue)) {
+          return true;
+        }
+      }
+    }
+
+    return false;
   }
 }

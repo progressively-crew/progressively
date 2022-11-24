@@ -1,10 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
+import { ComparatorEnum } from '../shared/utils/comparators/types';
 import { PrismaService } from '../database/prisma.service';
 import { FlagStatus } from '../flags/flags.status';
-import { PopulatedFlagEnv, Variant } from '../flags/types';
+import { PopulatedFlagEnv } from '../flags/types';
 import { EligibilityService } from './eligibility.service';
-import { ComparatorEnum, Eligibility } from './types';
+import { Eligibility } from './types';
 
 describe('EligibilityService', () => {
   let service: EligibilityService;
@@ -30,9 +31,9 @@ describe('EligibilityService', () => {
 
   beforeEach(() => {
     eligibility = {
-      fieldComparator: undefined,
-      fieldName: undefined,
-      fieldValue: undefined,
+      fieldComparator: ComparatorEnum.Contains,
+      fieldName: 'email',
+      fieldValue: '@gmail.com',
       flagEnvironmentEnvironmentId: '1',
       flagEnvironmentFlagId: '1',
       uuid: '123',
@@ -64,8 +65,30 @@ describe('EligibilityService', () => {
   });
 
   describe('isEligible', () => {
-    it('fails', () => {
-      expect(true).toBe(true);
+    it('isnt elligible when the email field is empty', () => {
+      expect(service.isEligible(flagEnv, {})).toBe(false);
+    });
+
+    it('isnt elligible when the email field does not contain @gmail.com', () => {
+      expect(
+        service.isEligible(flagEnv, {
+          email: 'marvin@something.com',
+        }),
+      ).toBe(false);
+    });
+
+    it('is elligible when the email field contains @gmail.com', () => {
+      expect(
+        service.isEligible(flagEnv, {
+          email: 'marvin@gmail.com',
+        }),
+      ).toBe(true);
+    });
+
+    it('is elligible when there are NO eligibilities (no restrictions) for the flags, meaning everybody is concerned', () => {
+      flagEnv.eligibilities = [];
+
+      expect(service.isEligible(flagEnv, {})).toBe(true);
     });
   });
 });
