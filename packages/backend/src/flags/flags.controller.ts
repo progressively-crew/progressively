@@ -23,6 +23,7 @@ import { StrategySchema, StrategyCreationDTO } from '../strategy/strategy.dto';
 import { HasFlagAccessGuard } from './guards/hasFlagAccess';
 import { ValidationPipe } from '../shared/pipes/ValidationPipe';
 import { ApiBearerAuth } from '@nestjs/swagger';
+import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import {
   ActivateFlagDTO,
   ChangePercentageDTO,
@@ -39,7 +40,12 @@ import { MetricDto, Variant } from './types';
 import { Webhook, WebhookCreationDTO, WebhookSchema } from '../webhooks/types';
 import { WebhooksService } from '../webhooks/webhooks.service';
 import { post, WebhooksEventsToFlagStatus } from '../webhooks/utils';
-import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
+
+import { EligibilityService } from '../eligibility/eligibility.service';
+import {
+  EligibilityCreationDTO,
+  EligibilitySchema,
+} from '../eligibility/types';
 
 @ApiBearerAuth()
 @Controller()
@@ -49,6 +55,7 @@ export class FlagsController {
     private readonly schedulingService: SchedulingService,
     private readonly flagService: FlagsService,
     private readonly webhookService: WebhooksService,
+    private readonly eligibilityService: EligibilityService,
     private readonly wsGateway: WebsocketGateway,
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
   ) {}
@@ -218,6 +225,31 @@ export class FlagsController {
     return strategy;
   }
 
+  @Post('environments/:envId/flags/:flagId/eligibilities')
+  @UseGuards(HasFlagEnvAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(new ValidationPipe(EligibilitySchema))
+  async addEligibilityToFlag(
+    @Param('envId') envId: string,
+    @Param('flagId') flagId: string,
+    @Body() eligibilityDto: EligibilityCreationDTO,
+  ): Promise<any> {
+    const eligibility = await this.eligibilityService.addEligibilityToFlagEnv(
+      envId,
+      flagId,
+      eligibilityDto,
+    );
+
+    const { FlagEnvironment: flagEnv } =
+      await this.eligibilityService.getEligibilityFlagEnv(eligibility.uuid);
+
+    if (flagEnv.status === FlagStatus.ACTIVATED) {
+      this.wsGateway.notifyChanges(flagEnv.environment.clientKey, flagEnv);
+    }
+
+    return eligibility;
+  }
+
   @Post('environments/:envId/flags/:flagId/webhooks')
   @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
@@ -318,6 +350,16 @@ export class FlagsController {
     @Param('flagId') flagId: string,
   ): Promise<any> {
     return this.strategyService.listStrategies(envId, flagId);
+  }
+
+  @Get('environments/:envId/flags/:flagId/eligibilities')
+  @UseGuards(HasFlagEnvAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  getEligibilities(
+    @Param('envId') envId: string,
+    @Param('flagId') flagId: string,
+  ): Promise<any> {
+    return this.eligibilityService.listEligibilities(envId, flagId);
   }
 
   @Get('environments/:envId/flags/:flagId/metrics')

@@ -7,6 +7,7 @@ import { WebsocketModule } from '../websocket/websocket.module';
 import { DatabaseModule } from '../database/database.module';
 import { SchedulingService } from '../scheduling/scheduling.service';
 import { WebhooksService } from '../webhooks/webhooks.service';
+import { EligibilityService } from '../eligibility/eligibility.service';
 
 @Module({
   imports: [EnvironmentsModule, WebsocketModule, DatabaseModule],
@@ -15,6 +16,7 @@ import { WebhooksService } from '../webhooks/webhooks.service';
     StrategyService,
     SchedulingService,
     WebhooksService,
+    EligibilityService,
   ],
   controllers: [FlagsController],
   exports: [FlagsService],

@@ -5,6 +5,10 @@ import { seedDb, cleanupDb } from '../helpers/seed';
 import { prepareApp } from '../helpers/prepareApp';
 import { verifyAuthGuard } from '../helpers/verify-auth-guard';
 import { authenticate } from '../helpers/authenticate';
+import {
+  ComparatorEnum,
+  EligibilityCreationDTO,
+} from '../../src/eligibility/types';
 
 jest.mock('got', () => ({
   ...jest.requireActual('got'),
@@ -1657,6 +1661,160 @@ describe('FlagsController (e2e)', () => {
         flagEnvironmentFlagId: '1',
         secret: 'this is secret',
         uuid: '1',
+      });
+    });
+  });
+
+  describe('/environments/1/flags/2/eligibilities (GET)', () => {
+    it('gives a 401 when the user is not authenticated', () =>
+      verifyAuthGuard(app, '/environments/1/flags/2/eligibilities', 'get'));
+
+    it('gives a 403 when trying to access a valid project but an invalid env', async () => {
+      const access_token = await authenticate(app);
+
+      return request(app.getHttpServer())
+        .get('/environments/1/flags/3/eligibilities')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('gives a 403 when the user requests a forbidden project', async () => {
+      const access_token = await authenticate(
+        app,
+        'jane.doe@gmail.com',
+        'password',
+      );
+
+      return request(app.getHttpServer())
+        .get('/environments/1/flags/2/eligibilities')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('gives the eligibilities information when the user is authenticated and authorized', async () => {
+      const access_token = await authenticate(app);
+
+      const response = await request(app.getHttpServer())
+        .get('/environments/1/flags/2/eligibilities')
+        .set('Authorization', `Bearer ${access_token}`);
+
+      const eligibilities = response.body[0];
+
+      expect(response.status).toBe(200);
+      expect(eligibilities).toEqual({
+        fieldComparator: 'eq',
+        fieldName: 'email',
+        fieldValue: '@gmail.com',
+        flagEnvironmentEnvironmentId: '1',
+        flagEnvironmentFlagId: '2',
+        uuid: '1',
+      });
+    });
+  });
+
+  describe('/environments/:envId/flags/:flagId/eligibilities (POST)', () => {
+    it('gives a 401 when the user is not authenticated', () =>
+      verifyAuthGuard(app, '/environments/1/flags/1/eligibilities', 'post'));
+
+    it('gives a 403 when trying to access a valid project but an invalid env', async () => {
+      const access_token = await authenticate(app);
+
+      const validEligibility: EligibilityCreationDTO = {
+        fieldName: 'email',
+        fieldValue: '@gmail.com',
+        fieldComparator: ComparatorEnum.Equals,
+      };
+
+      return request(app.getHttpServer())
+        .post('/environments/1/flags/3/eligibilities')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send(validEligibility)
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('gives a 403 when the user requests a forbidden project', async () => {
+      const access_token = await authenticate(
+        app,
+        'jane.doe@gmail.com',
+        'password',
+      );
+
+      return request(app.getHttpServer())
+        .post('/environments/1/flags/1/eligibilities')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send({
+          fieldName: 'email',
+          fieldComparator: 'eq',
+          fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
+        })
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    ['fieldName', 'fieldComparator', 'fieldValue'].forEach((field) => {
+      it(`gives 400 when "${field}" is invalid`, async () => {
+        const access_token = await authenticate(app);
+
+        const invalidEligibility: any = {
+          fieldName: 'email',
+          fieldValue: '@gmail.com',
+          fieldComparator: ComparatorEnum.Equals,
+          [field]: undefined,
+        };
+
+        await request(app.getHttpServer())
+          .post('/environments/1/flags/1/eligibilities')
+          .set('Authorization', `Bearer ${access_token}`)
+          .send(invalidEligibility)
+          .expect(400)
+          .expect({
+            statusCode: 400,
+            message: 'Validation failed',
+            error: 'Bad Request',
+          });
+      });
+    });
+
+    it('creates an eligibitilies', async () => {
+      const access_token = await authenticate(app);
+
+      const validEligibility: EligibilityCreationDTO = {
+        fieldName: 'email',
+        fieldValue: '@gmail.com',
+        fieldComparator: ComparatorEnum.Equals,
+      };
+
+      const response = await request(app.getHttpServer())
+        .post('/environments/1/flags/1/eligibilities')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send(validEligibility)
+        .expect(201);
+
+      expect(response.body).toMatchObject({
+        fieldComparator: 'eq',
+        fieldName: 'email',
+        fieldValue: '@gmail.com',
+        flagEnvironmentFlagId: '1',
+        flagEnvironmentEnvironmentId: '1',
       });
     });
   });

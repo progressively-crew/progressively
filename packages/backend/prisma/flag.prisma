@@ -19,11 +19,12 @@ model FlagEnvironment {
     strategies        RolloutStrategy[]
     rolloutPercentage Int               @default(100)
 
-    scheduling Schedule[]
-    variants   Variant[]
-    metrics    PMetric[]
-    metricHits PMetricHit[]
-    webhooks   Webhook[]
+    scheduling  Schedule[]
+    variants    Variant[]
+    metrics     PMetric[]
+    metricHits  PMetricHit[]
+    webhooks    Webhook[]
+    Eligibility Eligibility[]
 
     @@id([flagId, environmentId])
 }
@@ -96,6 +97,20 @@ model RolloutStrategy {
     fieldName        String?
     fieldComparator  String?
     fieldValue       String?
+
+    // Relations
+    FlagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
+    flagEnvironmentFlagId        String?
+    flagEnvironmentEnvironmentId String?
+}
+
+model Eligibility {
+    uuid String @id @default(uuid())
+
+    // related to strategy type "field"
+    fieldName       String
+    fieldComparator String
+    fieldValue      String
 
     // Relations
     FlagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
