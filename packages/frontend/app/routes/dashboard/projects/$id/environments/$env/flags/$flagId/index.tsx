@@ -3,7 +3,7 @@ import { FlagStatus } from "~/modules/flags/types";
 import { getStrategies } from "~/modules/strategies/services/getStrategies";
 import { getSession } from "~/sessions";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
-import { StrategyRetrieveDTO } from "~/modules/strategies/types";
+import { AdditionalAudienceRetrieveDTO } from "~/modules/strategies/types";
 import { Header } from "~/components/Header";
 import { Section, SectionHeader } from "~/components/Section";
 import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
@@ -101,7 +101,7 @@ export const action: ActionFunction = async ({
 };
 
 interface LoaderData {
-  strategies: Array<StrategyRetrieveDTO>;
+  strategies: Array<AdditionalAudienceRetrieveDTO>;
 }
 
 export const loader: LoaderFunction = async ({

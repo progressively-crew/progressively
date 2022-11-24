@@ -1,10 +1,10 @@
 import { Spacer } from "~/components/Spacer";
 import { Typography } from "~/components/Typography";
 import { Li, Ul } from "~/components/Ul";
-import { ComparatorEnum, StrategyRetrieveDTO } from "../types";
+import { ComparatorEnum, AdditionalAudienceRetrieveDTO } from "../types";
 
 export interface StrategyTargetingProps {
-  strat: StrategyRetrieveDTO;
+  strat: AdditionalAudienceRetrieveDTO;
 }
 
 const Comparator = ({ comparator }: { comparator: ComparatorEnum }) => {

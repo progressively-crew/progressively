@@ -1,9 +1,9 @@
-import { StrategyRetrieveDTO } from "../types";
+import { AdditionalAudienceRetrieveDTO } from "../types";
 import { StrategyContext } from "./StrategyContext";
 
 export interface StrategyProviderProps {
   children: React.ReactNode;
-  strategy: StrategyRetrieveDTO;
+  strategy: AdditionalAudienceRetrieveDTO;
 }
 
 export const StrategyProvider = ({

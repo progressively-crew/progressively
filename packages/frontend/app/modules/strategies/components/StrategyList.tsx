@@ -3,11 +3,11 @@ import { Button } from "~/components/Buttons/Button";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { HStack } from "~/components/HStack";
 import { RawTable, Td, Th, Tr } from "~/components/RawTable";
-import { StrategyRetrieveDTO } from "../types";
+import { AdditionalAudienceRetrieveDTO } from "../types";
 import { StrategyCriteria } from "./StrategyCriteria";
 
 export interface StrategyListProps {
-  strategies: Array<StrategyRetrieveDTO>;
+  strategies: Array<AdditionalAudienceRetrieveDTO>;
   projectId: string;
   envId: string;
   flagId: string;

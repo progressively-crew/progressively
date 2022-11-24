@@ -1,8 +1,8 @@
 import { createContext } from "react";
-import { StrategyRetrieveDTO } from "../types";
+import { AdditionalAudienceRetrieveDTO } from "../types";
 
 export interface StrategyContextType {
-  strategy: StrategyRetrieveDTO;
+  strategy: AdditionalAudienceRetrieveDTO;
 }
 
 export const StrategyContext = createContext<StrategyContextType>({});

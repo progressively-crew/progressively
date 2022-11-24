@@ -3,13 +3,13 @@ import { SelectField } from "~/components/Fields/SelectField";
 import { TextareaInput } from "~/components/Fields/TextareaInput";
 import { TextInput } from "~/components/Fields/TextInput";
 import { HStack } from "~/components/HStack";
-import { ComparatorEnum, StrategyCreateDTO } from "../types";
+import { ComparatorEnum, AdditionalAudienceCreateDTO } from "../types";
 
 export interface StrategyAudienceProps {
   errors: Record<string, string>;
-  initialFieldName?: StrategyCreateDTO["fieldName"];
-  initialFieldValue?: StrategyCreateDTO["fieldValue"];
-  initialFieldComparator?: StrategyCreateDTO["fieldComparator"];
+  initialFieldName?: AdditionalAudienceCreateDTO["fieldName"];
+  initialFieldValue?: AdditionalAudienceCreateDTO["fieldValue"];
+  initialFieldComparator?: AdditionalAudienceCreateDTO["fieldComparator"];
 }
 
 export const StrategyAudience = ({

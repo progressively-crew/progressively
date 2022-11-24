@@ -2,7 +2,7 @@ import { useTransition } from "react";
 import { getSession } from "~/sessions";
 import { validateStrategyForm } from "~/modules/strategies/validators/validateStrategyForm";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
-import { StrategyCreateDTO } from "~/modules/strategies/types";
+import { AdditionalAudienceCreateDTO } from "~/modules/strategies/types";
 import { editStrategy } from "~/modules/strategies/services/editStrategy";
 import { StrategyAudience } from "~/modules/strategies/components/StrategyAudience";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
@@ -63,9 +63,9 @@ export const action: ActionFunction = async ({
   const fieldComparator =
     (formData.get(
       "field-comparator"
-    ) as StrategyCreateDTO["fieldComparator"]) || undefined;
+    ) as AdditionalAudienceCreateDTO["fieldComparator"]) || undefined;
 
-  const strategy: StrategyCreateDTO = {
+  const strategy: AdditionalAudienceCreateDTO = {
     fieldComparator: fieldComparator,
     fieldName,
     fieldValue,

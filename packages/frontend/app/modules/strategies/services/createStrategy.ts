@@ -1,10 +1,10 @@
 import { Constants } from "~/constants";
-import { StrategyCreateDTO } from "../types";
+import { AdditionalAudienceCreateDTO } from "../types";
 
 export const createStrategy = (
   envId: string,
   flagId: string,
-  strategy: StrategyCreateDTO,
+  strategy: AdditionalAudienceCreateDTO,
   accessToken: string
 ) =>
   fetch(

@@ -2,11 +2,11 @@ import { LoaderFunction } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
 import { StrategyProvider } from "~/modules/strategies/contexts/StrategyProvider";
 import { getStrategy } from "~/modules/strategies/services/getStrategy";
-import { StrategyRetrieveDTO } from "~/modules/strategies/types";
+import { AdditionalAudienceRetrieveDTO } from "~/modules/strategies/types";
 import { getSession } from "~/sessions";
 
 interface LoaderData {
-  strategy: StrategyRetrieveDTO;
+  strategy: AdditionalAudienceRetrieveDTO;
 }
 
 export const loader: LoaderFunction = async ({
@@ -16,7 +16,7 @@ export const loader: LoaderFunction = async ({
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
 
-  const strategy: StrategyRetrieveDTO = await getStrategy(
+  const strategy: AdditionalAudienceRetrieveDTO = await getStrategy(
     params.stratId!,
     authCookie
   );
