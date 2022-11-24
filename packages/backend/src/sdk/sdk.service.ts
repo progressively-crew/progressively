@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { nanoid } from 'nanoid';
 import { EnvironmentsService } from '../environments/environments.service';
 import { FlagsService } from '../flags/flags.service';
@@ -6,12 +6,15 @@ import { PopulatedFlagEnv, Variant } from '../flags/types';
 import { FieldRecord } from '../strategy/types';
 import { EventHit } from './types';
 import { PrismaService } from '../database/prisma.service';
+import { StrategyService } from '../strategy/strategy.service';
+import { FlagStatus } from '../flags/flags.status';
 
 @Injectable()
 export class SdkService {
   constructor(
     private prisma: PrismaService,
     private readonly envService: EnvironmentsService,
+    private readonly strategyService: StrategyService,
     private readonly flagService: FlagsService,
   ) {}
 
@@ -38,14 +41,27 @@ export class SdkService {
     }
   }
 
+  resolveFlagStatus(flagEnv: PopulatedFlagEnv, fields: FieldRecord) {
+    let status: boolean | Variant;
+
+    if (flagEnv.status === FlagStatus.ACTIVATED) {
+      status = this.strategyService.resolveStrategies(
+        flagEnv,
+        flagEnv.strategies,
+        fields,
+      );
+    } else {
+      status = false;
+    }
+
+    return status;
+  }
+
   async resolveFlagStatusRecord(
     flagEnv: PopulatedFlagEnv,
     fields: FieldRecord,
   ) {
-    const flagStatusRecord = this.flagService.resolveFlagStatus(
-      flagEnv,
-      fields,
-    );
+    const flagStatusRecord = this.resolveFlagStatus(flagEnv, fields);
 
     let flagVariant: Variant | undefined;
     let flagStatus: boolean;
@@ -78,22 +94,17 @@ export class SdkService {
     const flags = {};
 
     for (const flagEnv of flagEnvs) {
-      let nextFlag: PopulatedFlagEnv = flagEnv;
+      let nextFlag = flagEnv;
 
       if (flagEnv.scheduling.length > 0) {
-        nextFlag = await this.flagService.manageScheduling(
-          clientKey,
-          flagEnv as unknown as PopulatedFlagEnv,
-        );
+        nextFlag = await this.flagService.manageScheduling(clientKey, flagEnv);
       }
 
-      const flagStatusOrVariant = this.flagService.resolveFlagStatus(
-        nextFlag as unknown as PopulatedFlagEnv,
-        fields,
-      );
+      const flagStatusOrVariant = this.resolveFlagStatus(nextFlag, fields);
 
       let flagVariant: Variant | undefined;
       let flagStatus: boolean;
+
       if (typeof flagStatusOrVariant === 'boolean') {
         flagStatus = flagStatusOrVariant;
         flags[nextFlag.flag.key] = flagStatus;

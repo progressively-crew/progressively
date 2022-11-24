@@ -1,9 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { StrategyService } from '../strategy/strategy.service';
 import { PrismaService } from '../database/prisma.service';
 import { FlagStatus } from './flags.status';
 import { PopulatedFlagEnv, SchedulingStatus, Variant } from './types';
-import { FieldRecord } from '../strategy/types';
 import { WebsocketGateway } from '../websocket/websocket.gateway';
 import { VariantCreationDTO } from './flags.dto';
 
@@ -11,7 +9,6 @@ import { VariantCreationDTO } from './flags.dto';
 export class FlagsService {
   constructor(
     private prisma: PrismaService,
-    private strategyService: StrategyService,
     private readonly wsGateway: WebsocketGateway,
   ) {}
 
@@ -352,22 +349,6 @@ export class FlagsService {
     }
 
     return roles.includes(flagOfProject.role);
-  }
-
-  resolveFlagStatus(flagEnv: PopulatedFlagEnv, fields: FieldRecord) {
-    let status: boolean | Variant;
-
-    if (flagEnv.status === FlagStatus.ACTIVATED) {
-      status = this.strategyService.resolveStrategies(
-        flagEnv,
-        flagEnv.strategies,
-        fields,
-      );
-    } else {
-      status = false;
-    }
-
-    return status;
   }
 
   async manageScheduling(
