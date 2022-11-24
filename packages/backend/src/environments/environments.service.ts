@@ -27,6 +27,7 @@ export class EnvironmentsService {
         flag: true,
         strategies: true,
         scheduling: true,
+        eligibilities: true,
         variants: {
           orderBy: {
             rolloutPercentage: 'asc',

@@ -1,3 +1,5 @@
+import { ComparatorEnum } from '../shared/utils/comparators/types';
+
 export interface FlagDict {
   [key: string]: boolean;
 }
@@ -9,12 +11,6 @@ export enum StrategyRuleType {
 }
 
 export type FieldRecord = Record<string, string | number | boolean>;
-
-export enum ComparatorEnum {
-  Equals = 'eq',
-  NotEquals = 'neq',
-  Contains = 'contains',
-}
 
 export interface RolloutStrategy {
   uuid: string;

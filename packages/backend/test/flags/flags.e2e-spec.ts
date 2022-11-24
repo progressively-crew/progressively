@@ -5,10 +5,8 @@ import { seedDb, cleanupDb } from '../helpers/seed';
 import { prepareApp } from '../helpers/prepareApp';
 import { verifyAuthGuard } from '../helpers/verify-auth-guard';
 import { authenticate } from '../helpers/authenticate';
-import {
-  ComparatorEnum,
-  EligibilityCreationDTO,
-} from '../../src/eligibility/types';
+import { EligibilityCreationDTO } from '../../src/eligibility/types';
+import { ComparatorEnum } from '../../src/shared/utils/comparators/types';
 
 jest.mock('got', () => ({
   ...jest.requireActual('got'),

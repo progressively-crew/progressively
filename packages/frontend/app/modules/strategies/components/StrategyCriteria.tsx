@@ -12,10 +12,6 @@ const Comparator = ({ comparator }: { comparator: ComparatorEnum }) => {
     return <span>equals</span>;
   }
 
-  if (comparator === ComparatorEnum.NotEquals) {
-    return <span>does not equal</span>;
-  }
-
   return null;
 };
 

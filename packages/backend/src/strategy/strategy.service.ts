@@ -1,37 +1,14 @@
 import { Injectable } from '@nestjs/common';
-
+import { ComparatorFactory } from '../shared/utils/comparators/comparatorFactory';
+import { ComparatorEnum } from '../shared/utils/comparators/types';
 import { PrismaService } from '../database/prisma.service';
-import { Flag, FlagEnvironment, Variant } from '../flags/types';
-import { ComparatorFactory } from './comparators/comparatorFactory';
-import { StrategyCreationDTO } from './strategy.dto';
-import {
-  ComparatorEnum,
-  FieldRecord,
-  RolloutStrategy,
-  StrategyRuleType,
-} from './types';
-import { genBucket, getVariation, isInBucket } from './utils';
 
-export interface ExtendedFlagEnv extends FlagEnvironment {
-  flag: Flag;
-}
+import { StrategyCreationDTO } from './strategy.dto';
+import { FieldRecord, RolloutStrategy, StrategyRuleType } from './types';
+
 @Injectable()
 export class StrategyService {
   constructor(private prisma: PrismaService) {}
-
-  private resolveFlagVariantValue(
-    flagEnv: ExtendedFlagEnv,
-    fields: FieldRecord,
-  ): boolean | Variant {
-    const bucketId = genBucket(flagEnv.flag.key, fields.id as string);
-    const isMultiVariate = flagEnv.variants.length > 0;
-
-    if (isMultiVariate) {
-      return getVariation(bucketId, flagEnv.variants);
-    }
-
-    return isInBucket(bucketId, flagEnv.rolloutPercentage);
-  }
 
   private isValidStrategy(strategy: RolloutStrategy, fields: FieldRecord) {
     if (strategy.strategyRuleType === StrategyRuleType.Field) {
@@ -52,26 +29,10 @@ export class StrategyService {
     return false;
   }
 
-  resolveStrategies(
-    flagEnv: ExtendedFlagEnv,
+  isAdditionalAudience(
     strategies: Array<RolloutStrategy>,
     fields: FieldRecord,
   ) {
-    // When at least one variant is created, we cant rely on rolloutPercentage at the flag level
-    // we need to rely on the percentage at the variant level
-    if (flagEnv.variants?.length === 0 && flagEnv.rolloutPercentage === 100) {
-      return true;
-    }
-
-    // No users, we can't make assumptions, should be very rare
-    if (!fields?.id) return false;
-
-    const variant = this.resolveFlagVariantValue(flagEnv, fields);
-
-    if (Boolean(variant)) {
-      return variant;
-    }
-
     for (const strategy of strategies) {
       const isValidStrategyRule = this.isValidStrategy(strategy, fields);
 
@@ -145,6 +106,7 @@ export class StrategyService {
             flag: true,
             strategies: true,
             variants: true,
+            eligibilities: true,
           },
         },
       },
@@ -163,6 +125,7 @@ export class StrategyService {
             flag: true,
             strategies: true,
             variants: true,
+            eligibilities: true,
           },
         },
       },

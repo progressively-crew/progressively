@@ -8,10 +8,17 @@ import { WebsocketGateway } from '../websocket/websocket.gateway';
 import { FieldRecord } from '../strategy/types';
 import { DatabaseModule } from '../database/database.module';
 import { StrategyService } from '../strategy/strategy.service';
+import { EligibilityModule } from '../eligibility/eligibility.module';
 
 @Module({
   controllers: [SdkController],
-  imports: [EnvironmentsModule, FlagsModule, WebsocketModule, DatabaseModule],
+  imports: [
+    EnvironmentsModule,
+    FlagsModule,
+    WebsocketModule,
+    DatabaseModule,
+    EligibilityModule,
+  ],
   providers: [SdkService, StrategyService],
 })
 export class SdkModule implements OnModuleInit {

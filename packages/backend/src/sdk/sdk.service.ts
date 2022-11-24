@@ -8,6 +8,8 @@ import { EventHit } from './types';
 import { PrismaService } from '../database/prisma.service';
 import { StrategyService } from '../strategy/strategy.service';
 import { FlagStatus } from '../flags/flags.status';
+import { genBucket, getVariation, isInBucket } from './utils';
+import { EligibilityService } from '../eligibility/eligibility.service';
 
 @Injectable()
 export class SdkService {
@@ -15,6 +17,7 @@ export class SdkService {
     private prisma: PrismaService,
     private readonly envService: EnvironmentsService,
     private readonly strategyService: StrategyService,
+    private readonly eligibilityService: EligibilityService,
     private readonly flagService: FlagsService,
   ) {}
 
@@ -41,20 +44,48 @@ export class SdkService {
     }
   }
 
-  resolveFlagStatus(flagEnv: PopulatedFlagEnv, fields: FieldRecord) {
-    let status: boolean | Variant;
-
-    if (flagEnv.status === FlagStatus.ACTIVATED) {
-      status = this.strategyService.resolveStrategies(
-        flagEnv,
-        flagEnv.strategies,
-        fields,
-      );
-    } else {
-      status = false;
+  private getUserVariant(
+    flagEnv: PopulatedFlagEnv,
+    fields: FieldRecord,
+  ): boolean | Variant {
+    // When at least one variant is created, we cant rely on rolloutPercentage at the flag level
+    // we need to rely on the percentage at the variant level
+    if (flagEnv.variants?.length === 0 && flagEnv.rolloutPercentage === 100) {
+      return true;
     }
 
-    return status;
+    // No users, we can't make assumptions, should be very rare
+    if (!fields?.id) return false;
+
+    const bucketId = genBucket(flagEnv.flag.key, fields.id as string);
+    const isMultiVariate = flagEnv.variants.length > 0;
+
+    if (isMultiVariate) {
+      return getVariation(bucketId, flagEnv.variants);
+    }
+
+    return isInBucket(bucketId, flagEnv.rolloutPercentage);
+  }
+
+  resolveFlagStatus(flagEnv: PopulatedFlagEnv, fields: FieldRecord) {
+    if (flagEnv.status !== FlagStatus.ACTIVATED) return false;
+
+    const isAdditionalAudience = this.strategyService.isAdditionalAudience(
+      flagEnv.strategies,
+      fields,
+    );
+    if (isAdditionalAudience) return isAdditionalAudience;
+
+    const isEligible = this.eligibilityService.isEligible(flagEnv, fields);
+    if (!isEligible) return false;
+
+    const userVariant = this.getUserVariant(flagEnv, fields);
+
+    if (Boolean(userVariant)) {
+      return userVariant;
+    }
+
+    return false;
   }
 
   async resolveFlagStatusRecord(

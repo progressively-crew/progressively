@@ -8,5 +8,6 @@ import { EligibilityController } from './eligibility.controller';
   imports: [DatabaseModule, WebsocketModule],
   providers: [EligibilityService],
   controllers: [EligibilityController],
+  exports: [EligibilityService],
 })
 export class EligibilityModule {}
