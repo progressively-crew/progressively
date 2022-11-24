@@ -1,5 +1,4 @@
 import { useState, useTransition } from "react";
-import { StrategyRuleType } from "~/modules/strategies/types/StrategyRule";
 import { getSession } from "~/sessions";
 import { validateStrategyForm } from "~/modules/strategies/validators/validateStrategyForm";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
@@ -64,9 +63,6 @@ export const action: ActionFunction = async ({
   }
 
   const strategyName = formData.get("strategy-name") as string;
-  const strategyType = formData.get(
-    "strategy-type"
-  ) as StrategyCreateDTO["strategyRuleType"];
 
   const fieldName = (formData.get("field-name") as string) || undefined;
   const fieldValue = (formData.get("field-value") as string) || undefined;
@@ -78,7 +74,6 @@ export const action: ActionFunction = async ({
 
   const strategy: StrategyCreateDTO = {
     name: strategyName,
-    strategyRuleType: strategyType,
     fieldComparator: fieldComparator,
     fieldName,
     fieldValue,
@@ -106,10 +101,6 @@ export default function StrategyEditPage() {
   const { flagEnv } = useFlagEnv();
   const actionData = useActionData<ActionData>();
 
-  const [strategyType, setStrategyType] = useState<StrategyRuleType>(
-    strategy.strategyRuleType
-  );
-
   const errors = actionData?.errors || {};
 
   return (
@@ -135,8 +126,6 @@ export default function StrategyEditPage() {
           />
 
           <StrategyAudience
-            strategyType={strategyType}
-            onStrategyChange={setStrategyType}
             errors={errors}
             initialFieldName={strategy.fieldName}
             initialFieldValue={strategy.fieldValue}

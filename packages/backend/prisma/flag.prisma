@@ -91,12 +91,9 @@ model RolloutStrategy {
     uuid String @id @default(uuid())
     name String
 
-    // strategy rule
-    strategyRuleType String // available values in modules/strategies/types/SrategyRule
-    // related to strategy type "field"
-    fieldName        String?
-    fieldComparator  String?
-    fieldValue       String?
+    fieldName       String
+    fieldComparator String
+    fieldValue      String
 
     // Relations
     FlagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])

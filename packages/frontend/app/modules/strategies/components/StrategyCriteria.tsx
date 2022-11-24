@@ -42,9 +42,5 @@ const StrategyCriteriaField = ({ strat }: StrategyTargetingProps) => {
 };
 
 export const StrategyCriteria = ({ strat }: StrategyTargetingProps) => {
-  if (strat.strategyRuleType === "field") {
-    return <StrategyCriteriaField strat={strat} />;
-  }
-
-  return <span>N/A</span>;
+  return <StrategyCriteriaField strat={strat} />;
 };

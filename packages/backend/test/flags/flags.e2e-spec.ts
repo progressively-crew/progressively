@@ -410,7 +410,6 @@ describe('FlagsController (e2e)', () => {
 
       const validStrategy: any = {
         name: 'Super strategy',
-        strategyRuleType: 'default',
       };
 
       return request(app.getHttpServer())
@@ -437,7 +436,6 @@ describe('FlagsController (e2e)', () => {
         .set('Authorization', `Bearer ${access_token}`)
         .send({
           name: 'Super strategy',
-          strategyRuleType: 'field',
           fieldName: 'email',
           fieldComparator: 'eq',
           fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
@@ -455,7 +453,6 @@ describe('FlagsController (e2e)', () => {
 
       const invalidStrategy: any = {
         name: undefined,
-        strategyRuleType: 'default',
       };
 
       await request(app.getHttpServer())
@@ -475,7 +472,6 @@ describe('FlagsController (e2e)', () => {
 
       const invalidStrategy: any = {
         name: 'Super strategy',
-        strategyRuleType: 'invalid strategy',
       };
 
       await request(app.getHttpServer())
@@ -496,7 +492,6 @@ describe('FlagsController (e2e)', () => {
 
         const invalidStrategy: any = {
           name: 'Super strategy',
-          strategyRuleType: 'field',
           [field]: undefined,
         };
 
@@ -518,7 +513,9 @@ describe('FlagsController (e2e)', () => {
 
       const validStrategy: any = {
         name: 'Super strategy',
-        strategyRuleType: 'default',
+        fieldName: 'email',
+        fieldValue: '@gmail.com',
+        fieldComparator: 'eq',
       };
 
       const response = await request(app.getHttpServer())
@@ -532,10 +529,9 @@ describe('FlagsController (e2e)', () => {
       expect(uuid).toBeDefined();
       expect(obj).toEqual({
         name: 'Super strategy',
-        strategyRuleType: 'default',
-        fieldName: null,
-        fieldComparator: null,
-        fieldValue: null,
+        fieldComparator: 'eq',
+        fieldName: 'email',
+        fieldValue: '@gmail.com',
         flagEnvironmentFlagId: '1',
         flagEnvironmentEnvironmentId: '1',
       });
@@ -546,7 +542,6 @@ describe('FlagsController (e2e)', () => {
 
       const validStrategy: any = {
         name: 'Super strategy',
-        strategyRuleType: 'field',
         fieldName: 'email',
         fieldComparator: 'eq',
         fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
@@ -563,7 +558,6 @@ describe('FlagsController (e2e)', () => {
       expect(uuid).toBeDefined();
       expect(obj).toEqual({
         name: 'Super strategy',
-        strategyRuleType: 'field',
         fieldName: 'email',
         fieldComparator: 'eq',
         fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
@@ -577,7 +571,6 @@ describe('FlagsController (e2e)', () => {
 
       const validStrategy: any = {
         name: 'Super strategy',
-        strategyRuleType: 'field',
         fieldName: 'email',
         fieldComparator: 'eq',
         fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
@@ -594,7 +587,6 @@ describe('FlagsController (e2e)', () => {
       expect(uuid).toBeDefined();
       expect(obj).toEqual({
         name: 'Super strategy',
-        strategyRuleType: 'field',
         fieldName: 'email',
         fieldComparator: 'eq',
         fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
@@ -645,7 +637,6 @@ describe('FlagsController (e2e)', () => {
 
       const validStrategy: any = {
         name: 'Super strategy',
-        strategyRuleType: 'field',
         fieldName: 'email',
         fieldComparator: 'eq',
         fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
@@ -664,14 +655,15 @@ describe('FlagsController (e2e)', () => {
       const newStrat = response.body[0];
 
       expect(response.status).toBe(200);
-      expect(newStrat.fieldComparator).toEqual(null);
-      expect(newStrat.fieldName).toEqual(null);
-      expect(newStrat.fieldValue).toEqual(null);
-      expect(newStrat.flagEnvironmentEnvironmentId).toEqual('1');
-      expect(newStrat.flagEnvironmentFlagId).toEqual('1');
-      expect(newStrat.name).toEqual('Super strategy');
-      expect(newStrat.strategyRuleType).toEqual('default');
-      expect(newStrat.uuid).toBeDefined();
+      expect(newStrat).toEqual({
+        fieldComparator: 'eq',
+        fieldName: 'id',
+        fieldValue: '1',
+        flagEnvironmentEnvironmentId: '1',
+        flagEnvironmentFlagId: '1',
+        name: 'Super strategy',
+        uuid: '1',
+      });
     });
   });
 
@@ -716,7 +708,6 @@ describe('FlagsController (e2e)', () => {
 
       const validStrategy: any = {
         name: 'Super strategy',
-        strategyRuleType: 'field',
         fieldName: 'email',
         fieldComparator: 'eq',
         fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
@@ -752,7 +743,6 @@ describe('FlagsController (e2e)', () => {
 
       const validStrategy: any = {
         name: 'Super strategy',
-        strategyRuleType: 'default',
       };
 
       return request(app.getHttpServer())
@@ -779,7 +769,6 @@ describe('FlagsController (e2e)', () => {
         .set('Authorization', `Bearer ${access_token}`)
         .send({
           name: 'Super strategy',
-          strategyRuleType: 'field',
           fieldName: 'email',
           fieldComparator: 'eq',
           fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
@@ -1504,7 +1493,6 @@ describe('FlagsController (e2e)', () => {
 
       const validStrategy: any = {
         name: 'Super strategy',
-        strategyRuleType: 'default',
       };
 
       return request(app.getHttpServer())
@@ -1531,7 +1519,6 @@ describe('FlagsController (e2e)', () => {
         .set('Authorization', `Bearer ${access_token}`)
         .send({
           name: 'Super strategy',
-          strategyRuleType: 'field',
           fieldName: 'email',
           fieldComparator: 'eq',
           fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
@@ -1550,7 +1537,6 @@ describe('FlagsController (e2e)', () => {
 
         const invalidStrategy: any = {
           name: 'Super strategy',
-          strategyRuleType: 'field',
           [field]: undefined,
         };
 

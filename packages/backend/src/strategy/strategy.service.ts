@@ -4,25 +4,23 @@ import { ComparatorEnum } from '../shared/utils/comparators/types';
 import { PrismaService } from '../database/prisma.service';
 
 import { StrategyCreationDTO } from './strategy.dto';
-import { FieldRecord, RolloutStrategy, StrategyRuleType } from './types';
+import { FieldRecord, RolloutStrategy } from './types';
 
 @Injectable()
 export class StrategyService {
   constructor(private prisma: PrismaService) {}
 
   private isValidStrategy(strategy: RolloutStrategy, fields: FieldRecord) {
-    if (strategy.strategyRuleType === StrategyRuleType.Field) {
-      const fieldComparator = strategy.fieldComparator as ComparatorEnum;
-      const isValid = ComparatorFactory.create(fieldComparator);
+    const fieldComparator = strategy.fieldComparator as ComparatorEnum;
+    const isValid = ComparatorFactory.create(fieldComparator);
 
-      const strategyFieldValues = strategy.fieldValue.split('\n');
+    const strategyFieldValues = strategy.fieldValue.split('\n');
 
-      for (const fieldValue of strategyFieldValues) {
-        const clientFieldValue = fields[strategy.fieldName] || '';
+    for (const fieldValue of strategyFieldValues) {
+      const clientFieldValue = fields[strategy.fieldName] || '';
 
-        if (isValid(fieldValue, clientFieldValue)) {
-          return true;
-        }
+      if (isValid(fieldValue, clientFieldValue)) {
+        return true;
       }
     }
 
@@ -67,9 +65,6 @@ export class StrategyService {
           },
         },
         name: strategy.name,
-        strategyRuleType: strategy.strategyRuleType,
-
-        // only for strategy rule type being "field"
         fieldName: strategy.fieldName,
         fieldValue: strategy.fieldValue,
         fieldComparator: strategy.fieldComparator,

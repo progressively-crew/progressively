@@ -72,9 +72,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
       it("shows the form layout", () => {
         cy.findByLabelText("Group name").should("be.visible");
 
-        cy.findByLabelText("Everybody is concerned").should("be.visible");
-        cy.findByLabelText("People with a specific field").should("be.visible");
-
         cy.findByRole("button", {
           name: "Save the additional audience",
         }).should("be.visible");
@@ -83,9 +80,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
       });
 
       it("shows a list of errors when the field are not filled", () => {
-        cy.findByLabelText("People with a specific field").click({
-          force: true,
-        });
         cy.findByRole("button", {
           name: "Save the additional audience",
         }).click();
@@ -103,6 +97,10 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
       // TODO: improve E2E testing for strategies. The business covering is minimal atm
       it("adds a strategy", () => {
         cy.findByLabelText("Group name").type("New strategy");
+        cy.findByLabelText("Field name").type("email");
+        cy.findByLabelText(
+          "Values matching the previous field (one per line)"
+        ).type("email");
         cy.findByRole("button", {
           name: "Save the additional audience",
         }).click();
