@@ -12,7 +12,7 @@ export interface StrategyAudienceProps {
   initialFieldComparator?: AdditionalAudienceCreateDTO["fieldComparator"];
 }
 
-export const StrategyAudience = ({
+export const AudienceFields = ({
   errors,
   initialFieldName,
   initialFieldValue,

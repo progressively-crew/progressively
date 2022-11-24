@@ -4,7 +4,7 @@ import { validateStrategyForm } from "~/modules/strategies/validators/validateSt
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { AdditionalAudienceCreateDTO } from "~/modules/strategies/types";
 import { createStrategy } from "~/modules/strategies/services/createStrategy";
-import { StrategyAudience } from "~/modules/strategies/components/StrategyAudience";
+import { AudienceFields } from "~/modules/strategies/components/AudienceFields";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { Typography } from "~/components/Typography";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
@@ -132,7 +132,7 @@ export default function StrategyCreatePage() {
         <CardContent>
           <Form method="post">
             <FormGroup>
-              <StrategyAudience errors={errors} />
+              <AudienceFields errors={errors} />
 
               <div>
                 <SubmitButton

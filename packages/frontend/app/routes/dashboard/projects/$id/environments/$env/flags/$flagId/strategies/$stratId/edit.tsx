@@ -4,7 +4,7 @@ import { validateStrategyForm } from "~/modules/strategies/validators/validateSt
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { AdditionalAudienceCreateDTO } from "~/modules/strategies/types";
 import { editStrategy } from "~/modules/strategies/services/editStrategy";
-import { StrategyAudience } from "~/modules/strategies/components/StrategyAudience";
+import { AudienceFields } from "~/modules/strategies/components/AudienceFields";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
@@ -109,7 +109,7 @@ export default function StrategyEditPage() {
       <PageTitle value={`Edit additional audience`} />
       <Form method="post">
         <FormGroup>
-          <StrategyAudience
+          <AudienceFields
             errors={errors}
             initialFieldName={strategy.fieldName}
             initialFieldValue={strategy.fieldValue}
