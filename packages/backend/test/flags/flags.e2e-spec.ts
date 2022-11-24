@@ -513,6 +513,9 @@ describe('FlagsController (e2e)', () => {
 
       const validStrategy: any = {
         name: 'Super strategy',
+        fieldName: 'email',
+        fieldValue: '@gmail.com',
+        fieldComparator: 'eq',
       };
 
       const response = await request(app.getHttpServer())
@@ -526,9 +529,9 @@ describe('FlagsController (e2e)', () => {
       expect(uuid).toBeDefined();
       expect(obj).toEqual({
         name: 'Super strategy',
-        fieldName: null,
-        fieldComparator: null,
-        fieldValue: null,
+        fieldComparator: 'eq',
+        fieldName: 'email',
+        fieldValue: '@gmail.com',
         flagEnvironmentFlagId: '1',
         flagEnvironmentEnvironmentId: '1',
       });

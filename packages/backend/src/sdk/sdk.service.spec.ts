@@ -31,9 +31,9 @@ describe('SdkService', () => {
 
   beforeEach(() => {
     strategy = {
-      fieldComparator: undefined,
-      fieldName: undefined,
-      fieldValue: undefined,
+      fieldComparator: ComparatorEnum.Equals,
+      fieldName: 'email',
+      fieldValue: '@gmail.com`',
       flagEnvironmentEnvironmentId: '1',
       flagEnvironmentFlagId: '1',
       name: 'Strategy name',
