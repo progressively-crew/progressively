@@ -8,3 +8,9 @@ export interface Eligibility {
   flagEnvironmentFlagId: string;
   flagEnvironmentEnvironmentId: string;
 }
+
+export interface EligibilityCreateDTO {
+  fieldName: string;
+  fieldComparator: ComparatorEnum;
+  fieldValue: string;
+}
