@@ -14,8 +14,6 @@ import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
-import { useStrategy } from "~/modules/strategies/contexts/useStrategy";
-import { getStrategyMetaTitle } from "~/modules/strategies/services/getStrategyMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
 import { Stack } from "~/components/Stack";
 import { Typography } from "~/components/Typography";
@@ -37,10 +35,9 @@ export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
   const envName = getEnvMetaTitle(parentsData, params.env);
   const flagName = getFlagMetaTitle(parentsData);
-  const strategyName = getStrategyMetaTitle(parentsData);
 
   return {
-    title: `Progressively | ${projectName} | ${envName} | ${flagName} | ${strategyName} | Delete`,
+    title: `Progressively | ${projectName} | ${envName} | ${flagName} | Additional audience | Delete`,
   };
 };
 
@@ -79,7 +76,6 @@ export default function DeleteStrategyPage() {
   const transition = useTransition();
   const { project } = useProject();
   const { user } = useUser();
-  const { strategy } = useStrategy();
   const { environment } = useEnvironment();
   const { flagEnv } = useFlagEnv();
   const data = useActionData<ActionData>();
@@ -104,7 +100,7 @@ export default function DeleteStrategyPage() {
           variant="secondary"
           to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies`}
         >
-          {`No, don't delete`} {strategy.name}
+          {`No, don't delete`}
         </Button>
       }
       confirmAction={

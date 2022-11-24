@@ -1,12 +1,11 @@
-import { useState, useTransition } from "react";
+import { useTransition } from "react";
 import { getSession } from "~/sessions";
 import { validateStrategyForm } from "~/modules/strategies/validators/validateStrategyForm";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
-import { StrategyCreateDTO } from "~/modules/strategies/types";
+import { AdditionalAudienceCreateDTO } from "~/modules/strategies/types";
 import { createStrategy } from "~/modules/strategies/services/createStrategy";
-import { StrategyAudience } from "~/modules/strategies/components/StrategyAudience";
+import { AudienceFields } from "~/modules/strategies/components/AudienceFields";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { TextInput } from "~/components/Fields/TextInput";
 import { Typography } from "~/components/Typography";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
@@ -61,18 +60,15 @@ export const action: ActionFunction = async ({
     return { errors };
   }
 
-  const strategyName = formData.get("strategy-name") as string;
-
   const fieldName = (formData.get("field-name") as string) || undefined;
   const fieldValue = (formData.get("field-value") as string) || undefined;
 
   const fieldComparator =
     (formData.get(
       "field-comparator"
-    ) as StrategyCreateDTO["fieldComparator"]) || undefined;
+    ) as AdditionalAudienceCreateDTO["fieldComparator"]) || undefined;
 
-  const strategy: StrategyCreateDTO = {
-    name: strategyName,
+  const strategy: AdditionalAudienceCreateDTO = {
     fieldComparator: fieldComparator,
     fieldName,
     fieldValue,
@@ -136,14 +132,7 @@ export default function StrategyCreatePage() {
         <CardContent>
           <Form method="post">
             <FormGroup>
-              <TextInput
-                name="strategy-name"
-                placeholder="e.g: Strategy 1"
-                label="Group name"
-                isInvalid={Boolean(errors["strategy-name"])}
-              />
-
-              <StrategyAudience errors={errors} />
+              <AudienceFields errors={errors} />
 
               <div>
                 <SubmitButton

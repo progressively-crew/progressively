@@ -43,7 +43,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
       it("shows the layout of the page", () => {
         cy.title().should(
           "eq",
-          "Progressively | Project from seeding | Production | New homepage | Super strategy | Delete"
+          "Progressively | Project from seeding | Production | New homepage | Additional audience | Delete"
         );
 
         cy.findByText("Deleting a strategy").should("be.visible");
@@ -52,7 +52,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
           name: "Yes, delete the strategy",
         }).should("be.visible");
 
-        cy.findByRole("link", { name: "No, don't delete Super strategy" })
+        cy.findByRole("link", { name: "No, don't delete" })
           .should("be.visible")
           .and(
             "have.attr",

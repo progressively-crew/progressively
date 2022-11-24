@@ -3,41 +3,35 @@ import { Button } from "~/components/Buttons/Button";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { HStack } from "~/components/HStack";
 import { RawTable, Td, Th, Tr } from "~/components/RawTable";
-import { VisuallyHidden } from "~/components/VisuallyHidden";
-import { StrategyRetrieveDTO } from "../types";
-import { StrategyCriteria } from "./StrategyCriteria";
+import { AdditionalAudienceRetrieveDTO } from "../types";
+import { AudienceList } from "./AudienceList";
 
-export interface StrategyListProps {
-  strategies: Array<StrategyRetrieveDTO>;
+export interface AdditionalAudienceListProps {
+  items: Array<AdditionalAudienceRetrieveDTO>;
   projectId: string;
   envId: string;
   flagId: string;
 }
 
-export const StrategyList = ({
-  strategies,
+export const AdditionalAudienceList = ({
+  items,
   projectId,
   envId,
   flagId,
-}: StrategyListProps) => {
+}: AdditionalAudienceListProps) => {
   return (
     <RawTable aria-label="Strategies applied on this flag">
       <thead>
         <Tr>
-          <Th>Name</Th>
           <Th>Criteria</Th>
           <Th>Actions</Th>
         </Tr>
       </thead>
       <tbody>
-        {strategies.map((strat) => (
+        {items.map((strat) => (
           <Tr key={strat.uuid}>
             <Td>
-              <div>{strat.name}</div>
-            </Td>
-
-            <Td>
-              <StrategyCriteria strat={strat} />
+              <AudienceList strat={strat} />
             </Td>
 
             <Td>
@@ -47,14 +41,14 @@ export const StrategyList = ({
                   icon={<AiOutlineEdit />}
                   to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/strategies/${strat.uuid}/edit`}
                 >
-                  Edit<VisuallyHidden> {strat.name} strategy</VisuallyHidden>
+                  Edit
                 </Button>
 
                 <DeleteButton
                   variant="secondary"
                   to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/strategies/${strat.uuid}/delete`}
                 >
-                  Remove<VisuallyHidden> {strat.name} strategy</VisuallyHidden>
+                  Remove
                 </DeleteButton>
               </HStack>
             </Td>

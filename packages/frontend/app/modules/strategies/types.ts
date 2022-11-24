@@ -3,13 +3,13 @@ export enum ComparatorEnum {
   Contains = "contains",
 }
 
-export interface StrategyCreateDTO {
-  name: string;
+export interface AdditionalAudienceCreateDTO {
   fieldName?: string;
   fieldComparator?: ComparatorEnum;
   fieldValue?: string;
 }
 
-export interface StrategyRetrieveDTO extends StrategyCreateDTO {
+export interface AdditionalAudienceRetrieveDTO
+  extends AdditionalAudienceCreateDTO {
   uuid: string;
 }

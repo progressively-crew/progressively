@@ -1,9 +1,9 @@
 import { Constants } from "~/constants";
-import { StrategyCreateDTO } from "../types";
+import { AdditionalAudienceCreateDTO } from "../types";
 
 export const editStrategy = (
   stratId: string,
-  strategy: StrategyCreateDTO,
+  strategy: AdditionalAudienceCreateDTO,
   accessToken: string
 ) =>
   fetch(`${Constants.BackendUrl}/strategies/${stratId}`, {

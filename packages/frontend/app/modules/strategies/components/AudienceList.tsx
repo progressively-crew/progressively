@@ -1,10 +1,10 @@
 import { Spacer } from "~/components/Spacer";
 import { Typography } from "~/components/Typography";
 import { Li, Ul } from "~/components/Ul";
-import { ComparatorEnum, StrategyRetrieveDTO } from "../types";
+import { ComparatorEnum, AdditionalAudienceRetrieveDTO } from "../types";
 
-export interface StrategyTargetingProps {
-  strat: StrategyRetrieveDTO;
+export interface AudienceListProps {
+  strat: AdditionalAudienceRetrieveDTO;
 }
 
 const Comparator = ({ comparator }: { comparator: ComparatorEnum }) => {
@@ -15,7 +15,7 @@ const Comparator = ({ comparator }: { comparator: ComparatorEnum }) => {
   return null;
 };
 
-const StrategyCriteriaField = ({ strat }: StrategyTargetingProps) => {
+export const AudienceList = ({ strat }: AudienceListProps) => {
   const targets = strat.fieldValue?.split("\n");
 
   return (
@@ -39,8 +39,4 @@ const StrategyCriteriaField = ({ strat }: StrategyTargetingProps) => {
       </Ul>
     </div>
   );
-};
-
-export const StrategyCriteria = ({ strat }: StrategyTargetingProps) => {
-  return <StrategyCriteriaField strat={strat} />;
 };

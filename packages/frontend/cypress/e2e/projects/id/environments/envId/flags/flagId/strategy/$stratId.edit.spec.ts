@@ -44,7 +44,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
       it("shows the layout", () => {
         cy.title().should(
           "eq",
-          "Progressively | Project from seeding | Production | Flags | New homepage | Super strategy | Edit"
+          "Progressively | Project from seeding | Production | Flags | New homepage | Additional audience | Edit"
         );
 
         cy.verifyBreadcrumbs([
@@ -53,12 +53,12 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
           ["Production", "/dashboard/projects/1/environments/1"],
           ["New homepage", "/dashboard/projects/1/environments/1/flags/1"],
           [
-            "Edit Super strategy",
+            "Edit additional audience",
             "/dashboard/projects/1/environments/1/flags/1/strategies/1/edit",
           ],
         ]);
 
-        cy.findByRole("heading", { name: "Edit Super strategy" }).should(
+        cy.findByRole("heading", { name: "Edit additional audience" }).should(
           "be.visible"
         );
 
@@ -66,8 +66,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
       });
 
       it("shows the form layout", () => {
-        cy.findByLabelText("Group name").should("be.visible");
-
         cy.findByRole("button", {
           name: "Save the additional audience",
         }).should("be.visible");
@@ -76,7 +74,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
       });
 
       it("shows a list of errors when the field are not filled", () => {
-        cy.findByLabelText("Group name").clear();
         cy.findByLabelText("Field name").clear();
         cy.findByLabelText(
           "Values matching the previous field (one per line)"
@@ -87,8 +84,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
 
         cy.get(".error-box")
           .should("have.focus")
-          .and("contain.text", "The following 3 errors have been found:")
-          .and("contain.text", "The strategy name is required.")
+          .and("contain.text", "The following 2 errors have been found:")
           .and("contain.text", "The field name is required.")
           .and("contain.text", "The field values are required.");
 
@@ -96,7 +92,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
       });
 
       it("updates a strategy", () => {
-        cy.findByLabelText("Group name").type("New strategy");
         cy.findByRole("button", {
           name: "Save the additional audience",
         }).click();
@@ -109,8 +104,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
         cy.get(".success-box")
           .should("have.focus")
           .and("contain.text", "The additional audience has been updated.");
-
-        cy.findAllByText("Super strategyNew strategy").should("be.visible");
 
         cy.checkA11y();
       });

@@ -33,7 +33,6 @@ describe('StrategyService', () => {
       fieldValue: undefined,
       flagEnvironmentEnvironmentId: '1',
       flagEnvironmentFlagId: '1',
-      name: 'Strategy name',
       uuid: '123',
     };
   });

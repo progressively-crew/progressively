@@ -70,7 +70,6 @@ describe('Strategy (e2e)', () => {
       expect(response.status).toBe(200);
       expect(response.body).toEqual({
         uuid: '1',
-        name: 'Super strategy',
         fieldName: 'id',
         fieldComparator: 'eq',
         fieldValue: '1',
@@ -130,7 +129,6 @@ describe('Strategy (e2e)', () => {
           "fieldValue": "1",
           "flagEnvironmentEnvironmentId": "1",
           "flagEnvironmentFlagId": "1",
-          "name": "Super strategy",
           "uuid": "1",
         }
       `);
@@ -141,7 +139,6 @@ describe('Strategy (e2e)', () => {
         .expect(200)
         .expect({
           uuid: '1',
-          name: 'Super strategy',
           fieldName: 'id',
           fieldComparator: 'eq',
           fieldValue: '1',
@@ -202,9 +199,7 @@ describe('Strategy (e2e)', () => {
     it('gives 400 when the project has noname', async () => {
       const access_token = await authenticate(app);
 
-      const invalidStrategy: any = {
-        name: undefined,
-      };
+      const invalidStrategy: any = {};
 
       await request(app.getHttpServer())
         .put('/strategies/1')
@@ -223,7 +218,6 @@ describe('Strategy (e2e)', () => {
         const access_token = await authenticate(app);
 
         const invalidStrategy: any = {
-          name: 'Super strategy',
           [field]: undefined,
         };
 
@@ -244,7 +238,6 @@ describe('Strategy (e2e)', () => {
       const access_token = await authenticate(app);
 
       const validStrategy: any = {
-        name: 'Super strategy 2',
         fieldName: 'email',
         fieldValue: 'gmail.com',
         fieldComparator: 'eq',
@@ -260,7 +253,6 @@ describe('Strategy (e2e)', () => {
 
       expect(uuid).toBeDefined();
       expect(obj).toEqual({
-        name: 'Super strategy 2',
         fieldComparator: 'eq',
         fieldName: 'email',
         fieldValue: 'gmail.com',
