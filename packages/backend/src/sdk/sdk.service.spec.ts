@@ -6,6 +6,7 @@ import { PopulatedFlagEnv, Variant } from '../flags/types';
 import { SdkService } from './sdk.service';
 import { AppModule } from '../app.module';
 import { ComparatorEnum } from '../shared/utils/comparators/types';
+import { Eligibility } from '../eligibility/types';
 
 describe('SdkService', () => {
   let service: SdkService;
@@ -254,7 +255,57 @@ describe('SdkService', () => {
       });
     });
 
-    describe('Strategies', () => {
+    describe('Eligibilities', () => {
+      it('returns true when no eligibilities', () => {
+        const shouldActivate = service.resolveFlagStatus(flagEnv, {
+          id: 'user-id-123',
+        });
+
+        expect(shouldActivate).toBe(true);
+      });
+
+      it('returns true when the user matches eligibilities', () => {
+        const eligility: Eligibility = {
+          uuid: '1',
+          fieldName: 'name',
+          fieldComparator: ComparatorEnum.Equals,
+          fieldValue: 'john\njane\nmarvin',
+          flagEnvironmentFlagId: '1',
+          flagEnvironmentEnvironmentId: '1',
+        };
+
+        flagEnv.eligibilities = [eligility];
+
+        const shouldActivate = service.resolveFlagStatus(flagEnv, {
+          id: 'user-id-123',
+          name: 'jane',
+        });
+
+        expect(shouldActivate).toBe(true);
+      });
+
+      it('returns false when the user does not match eligibilities', () => {
+        const eligility: Eligibility = {
+          uuid: '1',
+          fieldName: 'name',
+          fieldComparator: ComparatorEnum.Equals,
+          fieldValue: 'john\njane\nmarvin',
+          flagEnvironmentFlagId: '1',
+          flagEnvironmentEnvironmentId: '1',
+        };
+
+        flagEnv.eligibilities = [eligility];
+
+        const shouldActivate = service.resolveFlagStatus(flagEnv, {
+          id: 'user-id-123',
+          name: 'laeti',
+        });
+
+        expect(shouldActivate).toBe(false);
+      });
+    });
+
+    describe('Additional audience', () => {
       it('always returns true when no strategies are found', () => {
         flagEnv.strategies = [];
 
@@ -306,18 +357,6 @@ describe('SdkService', () => {
       });
 
       describe('Comparators', () => {
-        it('returns true when the StrategyRuleType is field and that the field name DOES NOT match with the NEQ comparator', () => {
-          strategy.strategyRuleType = StrategyRuleType.Field;
-          strategy.fieldName = 'email';
-          strategy.fieldValue = 'marvin.frachet@something.com';
-          strategy.fieldComparator = ComparatorEnum.NotEquals;
-
-          const fields = { email: 'should.workg@gmail.com' };
-          const shouldActivate = service.resolveFlagStatus(flagEnv, fields);
-
-          expect(shouldActivate).toBe(true);
-        });
-
         it('returns true when the StrategyRuleType is field and that the field email contains @gmail', () => {
           strategy.strategyRuleType = StrategyRuleType.Field;
           strategy.fieldName = 'email';

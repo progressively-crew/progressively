@@ -9,6 +9,7 @@ import { PrismaService } from '../database/prisma.service';
 import { StrategyService } from '../strategy/strategy.service';
 import { FlagStatus } from '../flags/flags.status';
 import { genBucket, getVariation, isInBucket } from './utils';
+import { EligibilityService } from '../eligibility/eligibility.service';
 
 @Injectable()
 export class SdkService {
@@ -16,6 +17,7 @@ export class SdkService {
     private prisma: PrismaService,
     private readonly envService: EnvironmentsService,
     private readonly strategyService: StrategyService,
+    private readonly eligibilityService: EligibilityService,
     private readonly flagService: FlagsService,
   ) {}
 
@@ -72,11 +74,10 @@ export class SdkService {
       flagEnv.strategies,
       fields,
     );
+    if (isAdditionalAudience) return isAdditionalAudience;
 
-    // TODO: might be eventually a variant at some points
-    if (isAdditionalAudience) {
-      return isAdditionalAudience;
-    }
+    const isEligible = this.eligibilityService.isEligible(flagEnv, fields);
+    if (!isEligible) return false;
 
     const userVariant = this.getUserVariant(flagEnv, fields);
 

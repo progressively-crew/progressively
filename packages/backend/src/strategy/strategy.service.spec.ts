@@ -95,21 +95,6 @@ describe('StrategyService', () => {
     });
 
     describe('Comparators', () => {
-      it('returns true when the StrategyRuleType is field and that the field name DOES NOT match with the NEQ comparator', async () => {
-        strategy.strategyRuleType = StrategyRuleType.Field;
-        strategy.fieldName = 'email';
-        strategy.fieldValue = 'marvin.frachet@something.com';
-        strategy.fieldComparator = ComparatorEnum.NotEquals;
-
-        const fields = { email: 'should.workg@gmail.com' };
-        const shouldActivate = await service.isAdditionalAudience(
-          [strategy],
-          fields,
-        );
-
-        expect(shouldActivate).toBe(true);
-      });
-
       it('returns true when the StrategyRuleType is field and that the field email contains @gmail', async () => {
         strategy.strategyRuleType = StrategyRuleType.Field;
         strategy.fieldName = 'email';

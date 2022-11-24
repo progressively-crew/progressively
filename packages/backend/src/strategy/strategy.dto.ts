@@ -19,11 +19,7 @@ export const StrategySchema = Joi.object({
     switch: [{ is: 'field', then: Joi.required() }],
   }),
   fieldComparator: Joi.string()
-    .valid(
-      ComparatorEnum.Equals,
-      ComparatorEnum.NotEquals,
-      ComparatorEnum.Contains,
-    )
+    .valid(ComparatorEnum.Equals, ComparatorEnum.Contains)
     .when('strategyRuleType', {
       switch: [{ is: 'field', then: Joi.required() }],
     }),

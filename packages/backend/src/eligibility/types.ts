@@ -19,11 +19,7 @@ export class Eligibility {
 export const EligibilitySchema = Joi.object({
   fieldName: Joi.string().required(),
   fieldComparator: Joi.string()
-    .valid(
-      ComparatorEnum.Equals,
-      ComparatorEnum.NotEquals,
-      ComparatorEnum.Contains,
-    )
+    .valid(ComparatorEnum.Equals, ComparatorEnum.Contains)
     .required(),
   fieldValue: Joi.string().required(),
 });
