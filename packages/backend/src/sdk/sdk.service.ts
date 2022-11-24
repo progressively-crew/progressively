@@ -94,22 +94,17 @@ export class SdkService {
     const flags = {};
 
     for (const flagEnv of flagEnvs) {
-      let nextFlag: PopulatedFlagEnv = flagEnv;
+      let nextFlag = flagEnv;
 
       if (flagEnv.scheduling.length > 0) {
-        nextFlag = await this.flagService.manageScheduling(
-          clientKey,
-          flagEnv as unknown as PopulatedFlagEnv,
-        );
+        nextFlag = await this.flagService.manageScheduling(clientKey, flagEnv);
       }
 
-      const flagStatusOrVariant = this.resolveFlagStatus(
-        nextFlag as unknown as PopulatedFlagEnv,
-        fields,
-      );
+      const flagStatusOrVariant = this.resolveFlagStatus(nextFlag, fields);
 
       let flagVariant: Variant | undefined;
       let flagStatus: boolean;
+
       if (typeof flagStatusOrVariant === 'boolean') {
         flagStatus = flagStatusOrVariant;
         flags[nextFlag.flag.key] = flagStatus;
