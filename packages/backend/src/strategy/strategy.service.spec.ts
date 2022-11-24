@@ -61,6 +61,7 @@ describe('StrategyService', () => {
       },
       strategies: [strategy],
       scheduling: [],
+      eligibilities: [],
     };
   });
 

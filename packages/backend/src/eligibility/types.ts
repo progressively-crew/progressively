@@ -12,6 +12,15 @@ export class EligibilityCreationDTO {
   fieldValue: string;
 }
 
+export class Eligibility {
+  uuid: string;
+  fieldName: string;
+  fieldComparator: ComparatorEnum;
+  fieldValue: string;
+  flagEnvironmentFlagId: string;
+  flagEnvironmentEnvironmentId: string;
+}
+
 export const EligibilitySchema = Joi.object({
   fieldName: Joi.string().required(),
   fieldComparator: Joi.string()
