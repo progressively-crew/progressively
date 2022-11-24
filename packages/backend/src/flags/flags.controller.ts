@@ -42,6 +42,10 @@ import { WebhooksService } from '../webhooks/webhooks.service';
 import { post, WebhooksEventsToFlagStatus } from '../webhooks/utils';
 
 import { EligibilityService } from '../eligibility/eligibility.service';
+import {
+  EligibilityCreationDTO,
+  EligibilitySchema,
+} from '../eligibility/types';
 
 @ApiBearerAuth()
 @Controller()
@@ -219,6 +223,31 @@ export class FlagsController {
     }
 
     return strategy;
+  }
+
+  @Post('environments/:envId/flags/:flagId/eligibilities')
+  @UseGuards(HasFlagEnvAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(new ValidationPipe(EligibilitySchema))
+  async addEligibilityToFlag(
+    @Param('envId') envId: string,
+    @Param('flagId') flagId: string,
+    @Body() eligibilityDto: EligibilityCreationDTO,
+  ): Promise<any> {
+    const eligibility = await this.eligibilityService.addEligibilityToFlagEnv(
+      envId,
+      flagId,
+      eligibilityDto,
+    );
+
+    const { FlagEnvironment: flagEnv } =
+      await this.eligibilityService.getEligibilityFlagEnv(eligibility.uuid);
+
+    if (flagEnv.status === FlagStatus.ACTIVATED) {
+      this.wsGateway.notifyChanges(flagEnv.environment.clientKey, flagEnv);
+    }
+
+    return eligibility;
   }
 
   @Post('environments/:envId/flags/:flagId/webhooks')

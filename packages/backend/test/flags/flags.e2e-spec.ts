@@ -5,6 +5,10 @@ import { seedDb, cleanupDb } from '../helpers/seed';
 import { prepareApp } from '../helpers/prepareApp';
 import { verifyAuthGuard } from '../helpers/verify-auth-guard';
 import { authenticate } from '../helpers/authenticate';
+import {
+  ComparatorEnum,
+  EligibilityCreationDTO,
+} from '../../src/eligibility/types';
 
 jest.mock('got', () => ({
   ...jest.requireActual('got'),
@@ -1715,6 +1719,106 @@ describe('FlagsController (e2e)', () => {
         flagEnvironmentFlagId: '2',
         name: 'Elligibility gmail users',
         uuid: '1',
+      });
+    });
+  });
+
+  describe('/environments/:envId/flags/:flagId/eligibilities (POST)', () => {
+    it('gives a 401 when the user is not authenticated', () =>
+      verifyAuthGuard(app, '/environments/1/flags/1/eligibilities', 'post'));
+
+    it('gives a 403 when trying to access a valid project but an invalid env', async () => {
+      const access_token = await authenticate(app);
+
+      const validStrategy: any = {
+        name: 'Super strategy',
+        strategyRuleType: 'default',
+      };
+
+      return request(app.getHttpServer())
+        .post('/environments/1/flags/3/eligibilities')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send(validStrategy)
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('gives a 403 when the user requests a forbidden project', async () => {
+      const access_token = await authenticate(
+        app,
+        'jane.doe@gmail.com',
+        'password',
+      );
+
+      return request(app.getHttpServer())
+        .post('/environments/1/flags/1/eligibilities')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send({
+          name: 'Super eligibility',
+          fieldName: 'email',
+          fieldComparator: 'eq',
+          fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
+        })
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    ['name', 'fieldName', 'fieldComparator', 'fieldValue'].forEach((field) => {
+      it(`gives 400 when "${field}" is invalid`, async () => {
+        const access_token = await authenticate(app);
+
+        const invalidEligibility: any = {
+          name: 'Super eligibility',
+          fieldName: 'email',
+          fieldValue: '@gmail.com',
+          fieldComparator: ComparatorEnum.Equals,
+          [field]: undefined,
+        };
+
+        await request(app.getHttpServer())
+          .post('/environments/1/flags/1/eligibilities')
+          .set('Authorization', `Bearer ${access_token}`)
+          .send(invalidEligibility)
+          .expect(400)
+          .expect({
+            statusCode: 400,
+            message: 'Validation failed',
+            error: 'Bad Request',
+          });
+      });
+    });
+
+    it('creates an eligibitilies', async () => {
+      const access_token = await authenticate(app);
+
+      const validEligibility: EligibilityCreationDTO = {
+        name: 'Super strategy',
+        fieldName: 'email',
+        fieldValue: '@gmail.com',
+        fieldComparator: ComparatorEnum.Equals,
+      };
+
+      const response = await request(app.getHttpServer())
+        .post('/environments/1/flags/1/eligibilities')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send(validEligibility)
+        .expect(201);
+
+      expect(response.body).toMatchObject({
+        name: 'Super strategy',
+        fieldComparator: 'eq',
+        fieldName: 'email',
+        fieldValue: '@gmail.com',
+        flagEnvironmentFlagId: '1',
+        flagEnvironmentEnvironmentId: '1',
       });
     });
   });
