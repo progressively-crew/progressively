@@ -19,7 +19,6 @@ import {
 import { TagLine } from "~/components/Tagline";
 import { Card, CardContent } from "~/components/Card";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
-import { StrategyDescription } from "~/modules/strategies/components/StrategyDescription";
 import { SliderFlag } from "~/modules/flags/components/SliderFlag";
 import { changePercentageFlag } from "~/modules/flags/services/changePercentageFlag";
 import { useProject } from "~/modules/projects/contexts/useProject";
@@ -43,6 +42,9 @@ import { EmptyState } from "~/components/EmptyState";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { AdditionalAudienceList } from "~/modules/strategies/components/AdditionalAudienceList";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
+import { getEligibilities } from "~/modules/eligibility/services/getEligibilities";
+import { Eligibility } from "~/modules/eligibility/types";
+import { EligibilityList } from "~/modules/eligibility/components/EligibilityList";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -102,6 +104,7 @@ export const action: ActionFunction = async ({
 
 interface LoaderData {
   strategies: Array<AdditionalAudienceRetrieveDTO>;
+  eligibilities: Array<Eligibility>;
 }
 
 export const loader: LoaderFunction = async ({
@@ -117,8 +120,15 @@ export const loader: LoaderFunction = async ({
     authCookie
   );
 
+  const eligibilities = await getEligibilities(
+    params.env!,
+    params.flagId!,
+    authCookie
+  );
+
   return {
     strategies,
+    eligibilities,
   };
 };
 
@@ -131,19 +141,24 @@ export default function FlagById() {
   const { flagEnv } = useFlagEnv();
   const [searchParams] = useSearchParams();
 
-  const { strategies } = useLoaderData<LoaderData>();
+  const { strategies, eligibilities } = useLoaderData<LoaderData>();
   const hasPercentageChanged = Boolean(actionData?.successChangePercentage);
 
   const currentFlag = flagEnv.flag;
   const isFlagActivated = flagEnv.status === FlagStatus.ACTIVATED;
 
   const hasStrategies = strategies.length > 0;
+  const hasEligibility = eligibilities.length > 0;
   const hasErrors = Object.keys(actionData?.errors || {}).length > 0;
   const isMultiVariants = flagEnv.variants.length > 0;
 
   const isStrategyAdded = searchParams.get("newStrategy") || undefined;
   const isStrategyUpdated = searchParams.get("strategyUpdated") || undefined;
   const isStrategyRemoved = searchParams.get("stratRemoved") || undefined;
+
+  const isEligibilityAdded = searchParams.get("newEligibility") || undefined;
+  const isEligibilityRemoved =
+    searchParams.get("eligibilityRemoved") || undefined;
 
   return (
     <DashboardLayout
@@ -178,30 +193,6 @@ export default function FlagById() {
           </Form>
         }
       />
-
-      <Section id="overview-section">
-        <div
-          className={
-            isFlagActivated
-              ? "bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-1 rounded"
-              : "p-1 bg-gray-200 rounded"
-          }
-        >
-          <Card>
-            <CardContent>
-              <SectionHeader
-                title="Sum up"
-                description={
-                  <StrategyDescription
-                    flagEnv={flagEnv}
-                    hasStrategies={hasStrategies}
-                  />
-                }
-              />
-            </CardContent>
-          </Card>
-        </div>
-      </Section>
 
       <Section id="rollout-target">
         <Card>
@@ -271,6 +262,64 @@ export default function FlagById() {
         </Card>
       </Section>
 
+      <Section id="eligibility">
+        <Card>
+          <CardContent>
+            <SectionHeader
+              title="Audience eligibility"
+              description={
+                <Typography>
+                  Only people matching at least one of the following rules (and
+                  the additional audience) will resolve the flag.
+                </Typography>
+              }
+              status={
+                isEligibilityAdded ? (
+                  <SuccessBox id="eligibility-added">
+                    The eligibility audience has been successfully set.
+                  </SuccessBox>
+                ) : isEligibilityRemoved ? (
+                  <SuccessBox id="eligibility-removed">
+                    The eligibility audience has been successfully removed.
+                  </SuccessBox>
+                ) : null
+              }
+            />
+          </CardContent>
+
+          {!hasEligibility && (
+            <CardContent>
+              <EmptyState
+                titleAs="h2"
+                title="No restrictions"
+                description={
+                  <Typography>
+                    There are no eligibility restrictions. Every users will
+                    resolve the flag.
+                  </Typography>
+                }
+                action={
+                  <CreateButton
+                    to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/eligibilities/create`}
+                  >
+                    Create an eligibility restriction
+                  </CreateButton>
+                }
+              />
+            </CardContent>
+          )}
+
+          {hasEligibility && (
+            <EligibilityList
+              items={eligibilities}
+              projectId={project.uuid}
+              envId={environment.uuid}
+              flagId={currentFlag.uuid}
+            />
+          )}
+        </Card>
+      </Section>
+
       <Section id="additional-audience">
         <Card>
           <CardContent>
@@ -279,7 +328,8 @@ export default function FlagById() {
               description={
                 <Typography>
                   The users matching at least one of the following condition
-                  will resolve the activated variant of the flag.
+                  will resolve the flag even if they are not targeted because of
+                  the eligibility restrictions
                 </Typography>
               }
               status={

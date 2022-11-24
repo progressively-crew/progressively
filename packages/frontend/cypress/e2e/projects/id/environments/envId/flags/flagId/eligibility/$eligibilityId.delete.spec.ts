@@ -1,11 +1,11 @@
-describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategies/[stratId]/delete", () => {
+describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/eligibilities/[eligibilityId]/delete", () => {
   before(cy.seed);
   after(cy.cleanupDb);
 
   describe("not authenticated", () => {
     beforeEach(() => {
       cy.visit(
-        "/dashboard/projects/1/environments/1/flags/1/strategies/1/delete"
+        "/dashboard/projects/1/environments/1/flags/1/eligibilities/1/delete"
       );
     });
 
@@ -19,7 +19,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
       beforeEach(() => {
         cy.signIn("Jane");
         cy.visit(
-          "/dashboard/projects/1/environments/1/flags/1/strategies/1/delete",
+          "/dashboard/projects/1/environments/1/flags/1/eligibilities/1/delete",
           {
             failOnStatusCode: false,
           }
@@ -35,7 +35,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
       beforeEach(() => {
         cy.signIn("Marvin");
         cy.visit(
-          "/dashboard/projects/1/environments/1/flags/1/strategies/1/delete"
+          "/dashboard/projects/1/environments/1/flags/2/eligibilities/1/delete"
         );
         cy.injectAxe();
       });
@@ -43,13 +43,15 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
       it("shows the layout of the page", () => {
         cy.title().should(
           "eq",
-          "Progressively | Project from seeding | Production | New homepage | Additional audience | Delete"
+          "Progressively | Project from seeding | Production | New footer | Eligibility | Delete"
         );
 
-        cy.findByText("Deleting an additional audience").should("be.visible");
+        cy.findByText("Deleting an elegibility restriction").should(
+          "be.visible"
+        );
 
         cy.findByRole("button", {
-          name: "Yes, delete the additional audience",
+          name: "Yes, delete the eligibility restriction",
         }).should("be.visible");
 
         cy.findByRole("link", { name: "No, don't delete" })
@@ -57,35 +59,35 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
           .and(
             "have.attr",
             "href",
-            "/dashboard/projects/1/environments/1/flags/1"
+            "/dashboard/projects/1/environments/1/flags/2"
           );
 
         cy.checkA11y();
       });
     });
 
-    describe("removing strategy (needs reseeding after each test)", () => {
+    describe("removing eligibility (needs reseeding after each test)", () => {
       beforeEach(cy.seed);
       afterEach(cy.cleanupDb);
 
       beforeEach(() => {
         cy.signIn("Marvin");
         cy.visit(
-          "/dashboard/projects/1/environments/1/flags/1/strategies/1/delete"
+          "/dashboard/projects/1/environments/1/flags/2/eligibilities/1/delete"
         );
       });
 
       it("removes the strat and get me back to the flags page", () => {
         cy.findByRole("button", {
-          name: "Yes, delete the additional audience",
+          name: "Yes, delete the eligibility restriction",
         }).click();
 
         cy.url().should(
           "contain",
-          "/dashboard/projects/1/environments/1/flags/1?stratRemoved=true"
+          "/dashboard/projects/1/environments/1/flags/2?eligibilityRemoved=true#eligibility-removed"
         );
 
-        cy.findByRole("heading", { name: "No additional audience" }).should(
+        cy.findByRole("heading", { name: "No restrictions" }).should(
           "be.visible"
         );
 
@@ -93,7 +95,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
           .should("have.focus")
           .and(
             "contain.text",
-            "The additional audience has been successfully removed."
+            "The eligibility audience has been successfully removed."
           );
       });
     });
