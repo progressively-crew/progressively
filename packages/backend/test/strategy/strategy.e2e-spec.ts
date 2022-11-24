@@ -69,13 +69,13 @@ describe('Strategy (e2e)', () => {
 
       expect(response.status).toBe(200);
       expect(response.body).toEqual({
-        fieldComparator: null,
-        fieldName: null,
-        fieldValue: null,
-        flagEnvironmentEnvironmentId: '1',
-        flagEnvironmentFlagId: '1',
-        name: 'Super strategy',
         uuid: '1',
+        name: 'Super strategy',
+        fieldName: 'id',
+        fieldComparator: 'eq',
+        fieldValue: '1',
+        flagEnvironmentFlagId: '1',
+        flagEnvironmentEnvironmentId: '1',
       });
     });
   });
@@ -125,9 +125,9 @@ describe('Strategy (e2e)', () => {
 
       expect(prev.body).toMatchInlineSnapshot(`
         {
-          "fieldComparator": null,
-          "fieldName": null,
-          "fieldValue": null,
+          "fieldComparator": "eq",
+          "fieldName": "id",
+          "fieldValue": "1",
           "flagEnvironmentEnvironmentId": "1",
           "flagEnvironmentFlagId": "1",
           "name": "Super strategy",
@@ -142,9 +142,9 @@ describe('Strategy (e2e)', () => {
         .expect({
           uuid: '1',
           name: 'Super strategy',
-          fieldName: null,
-          fieldComparator: null,
-          fieldValue: null,
+          fieldName: 'id',
+          fieldComparator: 'eq',
+          fieldValue: '1',
           flagEnvironmentFlagId: '1',
           flagEnvironmentEnvironmentId: '1',
         });
@@ -245,6 +245,9 @@ describe('Strategy (e2e)', () => {
 
       const validStrategy: any = {
         name: 'Super strategy 2',
+        fieldName: 'email',
+        fieldValue: 'gmail.com',
+        fieldComparator: 'eq',
       };
 
       const response = await request(app.getHttpServer())
@@ -258,9 +261,9 @@ describe('Strategy (e2e)', () => {
       expect(uuid).toBeDefined();
       expect(obj).toEqual({
         name: 'Super strategy 2',
-        fieldName: null,
-        fieldComparator: null,
-        fieldValue: null,
+        fieldComparator: 'eq',
+        fieldName: 'email',
+        fieldValue: 'gmail.com',
         flagEnvironmentFlagId: '1',
         flagEnvironmentEnvironmentId: '1',
       });

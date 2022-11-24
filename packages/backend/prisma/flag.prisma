@@ -91,9 +91,9 @@ model RolloutStrategy {
     uuid String @id @default(uuid())
     name String
 
-    fieldName       String?
-    fieldComparator String?
-    fieldValue      String?
+    fieldName       String
+    fieldComparator String
+    fieldValue      String
 
     // Relations
     FlagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])

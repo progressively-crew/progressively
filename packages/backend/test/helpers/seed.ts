@@ -176,6 +176,9 @@ export const seedDb = async () => {
         flagEnvironmentFlagId: flagEnv.flagId,
         flagEnvironmentEnvironmentId: flagEnv.environmentId,
         name: 'Super strategy',
+        fieldName: 'id',
+        fieldComparator: 'eq',
+        fieldValue: '1',
       },
     });
 
@@ -197,6 +200,9 @@ export const seedDb = async () => {
         flagEnvironmentFlagId: otherFlagEnv.flagId,
         flagEnvironmentEnvironmentId: otherFlagEnv.environmentId,
         name: 'Super strategy',
+        fieldComparator: 'eq',
+        fieldName: 'email',
+        fieldValue: '@gmail.com',
       },
     });
 
