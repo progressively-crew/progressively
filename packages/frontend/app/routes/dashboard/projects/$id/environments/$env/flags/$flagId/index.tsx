@@ -19,7 +19,6 @@ import {
 import { TagLine } from "~/components/Tagline";
 import { Card, CardContent } from "~/components/Card";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
-import { StrategyDescription } from "~/modules/strategies/components/StrategyDescription";
 import { SliderFlag } from "~/modules/flags/components/SliderFlag";
 import { changePercentageFlag } from "~/modules/flags/services/changePercentageFlag";
 import { useProject } from "~/modules/projects/contexts/useProject";
@@ -192,30 +191,6 @@ export default function FlagById() {
           </Form>
         }
       />
-
-      <Section id="overview-section">
-        <div
-          className={
-            isFlagActivated
-              ? "bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-1 rounded"
-              : "p-1 bg-gray-200 rounded"
-          }
-        >
-          <Card>
-            <CardContent>
-              <SectionHeader
-                title="Sum up"
-                description={
-                  <StrategyDescription
-                    flagEnv={flagEnv}
-                    hasStrategies={hasStrategies}
-                  />
-                }
-              />
-            </CardContent>
-          </Card>
-        </div>
-      </Section>
 
       <Section id="rollout-target">
         <Card>
