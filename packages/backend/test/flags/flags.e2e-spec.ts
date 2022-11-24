@@ -655,13 +655,15 @@ describe('FlagsController (e2e)', () => {
       const newStrat = response.body[0];
 
       expect(response.status).toBe(200);
-      expect(newStrat.fieldComparator).toEqual(null);
-      expect(newStrat.fieldName).toEqual(null);
-      expect(newStrat.fieldValue).toEqual(null);
-      expect(newStrat.flagEnvironmentEnvironmentId).toEqual('1');
-      expect(newStrat.flagEnvironmentFlagId).toEqual('1');
-      expect(newStrat.name).toEqual('Super strategy');
-      expect(newStrat.uuid).toBeDefined();
+      expect(newStrat).toEqual({
+        fieldComparator: 'eq',
+        fieldName: 'id',
+        fieldValue: '1',
+        flagEnvironmentEnvironmentId: '1',
+        flagEnvironmentFlagId: '1',
+        name: 'Super strategy',
+        uuid: '1',
+      });
     });
   });
 

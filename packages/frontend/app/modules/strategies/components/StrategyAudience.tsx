@@ -24,7 +24,7 @@ export const StrategyAudience = ({
         <HStack spacing={4}>
           <TextInput
             isInvalid={Boolean(errors["field-name"])}
-            label="Field name:"
+            label="Field name"
             placeholder="e.g: email"
             defaultValue={initialFieldName}
             name="field-name"
@@ -33,7 +33,7 @@ export const StrategyAudience = ({
           <SelectField
             isInvalid={Boolean(errors["field-comparator"])}
             name="field-comparator"
-            label="Field comparator:"
+            label="Field comparator"
             defaultValue={initialFieldComparator}
             options={[
               { value: ComparatorEnum.Equals, label: "Equals" },
@@ -44,7 +44,7 @@ export const StrategyAudience = ({
 
         <TextareaInput
           isInvalid={Boolean(errors["field-value"])}
-          label="Values matching the previous field (one per line):"
+          label="Values matching the previous field (one per line)"
           name="field-value"
           defaultValue={initialFieldValue}
           placeholder="e.g: marvin.frachet@something.com"
