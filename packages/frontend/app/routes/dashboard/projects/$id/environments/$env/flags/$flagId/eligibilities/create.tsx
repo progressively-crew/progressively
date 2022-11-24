@@ -2,8 +2,6 @@ import { useTransition } from "react";
 import { getSession } from "~/sessions";
 import { validateStrategyForm } from "~/modules/strategies/validators/validateStrategyForm";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
-import { AdditionalAudienceCreateDTO } from "~/modules/strategies/types";
-import { createStrategy } from "~/modules/strategies/services/createStrategy";
 import { AudienceFields } from "~/modules/strategies/components/AudienceFields";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { Typography } from "~/components/Typography";
@@ -29,8 +27,8 @@ import { createEligibility } from "~/modules/eligibility/services/createEligibil
 export const handle = {
   breadcrumb: (match: { params: any }) => {
     return {
-      link: `/dashboard/projects/${match.params.id}/environments/${match.params.env}/flags/${match.params.flagId}/strategies/create`,
-      label: "Create an additional audience",
+      link: `/dashboard/projects/${match.params.id}/environments/${match.params.env}/flags/${match.params.flagId}/eligibilities/create`,
+      label: "Create an eligibility restriction",
     };
   },
 };
@@ -41,7 +39,7 @@ export const meta: MetaFunction = ({ parentsData, params }) => {
   const flagName = getFlagMetaTitle(parentsData);
 
   return {
-    title: `Progressively | ${projectName} | ${envName} | Flags | ${flagName} | Strategies | Create`,
+    title: `Progressively | ${projectName} | ${envName} | Flags | ${flagName} | Eligibility | Create`,
   };
 };
 
@@ -120,10 +118,10 @@ export default function StrategyCreatePage() {
       status={actionData?.errors && <ErrorBox list={actionData.errors} />}
     >
       <PageTitle
-        value="Create an additional audience"
+        value="Create an eligibility restriction"
         description={
           <Typography>
-            {`You're`} about to create an additional audience to{" "}
+            {`You're`} about to create an eligibility restriction to{" "}
             <strong>{currentFlag.name}</strong> in{" "}
             <strong>{project.name}</strong> on{" "}
             <strong>{environment.name}</strong>.
