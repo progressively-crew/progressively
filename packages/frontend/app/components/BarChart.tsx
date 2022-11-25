@@ -36,13 +36,16 @@ export const BarChart = ({ data, yLabel }: BarChartProps) => {
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis
           dataKey="name"
-          label={{ value: "Metrics", position: "insideBottomRight", offset: 0 }}
+          label={{
+            value: "Metrics (variants)",
+            position: "insideBottomRight",
+            offset: 0,
+          }}
         />
         <YAxis
           label={{ value: yLabel, angle: -90, position: "insideBottomLeft" }}
         />
         <Tooltip />
-        <Legend />
 
         <Bar dataKey="value" fill="#82ca9d" unit="%">
           {data.map((entry, index) => (
