@@ -2,8 +2,11 @@ import { NavLink } from "@remix-run/react";
 import { Logo } from "./Logo";
 import imageSrc from "./images/page.png";
 import { SearchBar, Window } from "./Window";
+import { useFlags } from "@progressively/react";
 
 export const Hero = () => {
+  const { track } = useFlags();
+
   return (
     <div className="bg-gray-900 text-white">
       <div className="mx-auto max-w-screen-xl px-4 py-32 lg:flex lg:h-screen lg:items-center">
@@ -26,6 +29,7 @@ export const Hero = () => {
             <NavLink
               className="block w-full rounded bg-indigo-700 px-12 py-3 text-sm font-medium text-white hover:bg-indigo-600 active:bg-indigo-800 sm:w-auto"
               to="/docs/introduction/why"
+              onClick={() => track("Get started A", {})}
             >
               Get Started
             </NavLink>
@@ -44,6 +48,8 @@ export const Hero = () => {
 };
 
 export const HeroVariant = () => {
+  const { track } = useFlags();
+
   return (
     <div className="bg-gray-900 text-white">
       <div className="mx-auto max-w-screen-2xl px-16 py-32 lg:flex lg:h-screen lg:items-center">
@@ -67,6 +73,7 @@ export const HeroVariant = () => {
               <NavLink
                 className="block w-full rounded bg-indigo-700 px-12 py-3 text-sm font-medium text-white hover:bg-indigo-600 active:bg-indigo-800 sm:w-auto"
                 to="/docs/introduction/why"
+                onClick={() => track("Get started B", {})}
               >
                 Get Started
               </NavLink>
