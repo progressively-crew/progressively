@@ -1,5 +1,7 @@
 import { RawTable, Tr, Th, Td } from "~/components/RawTable";
+import { Tag } from "~/components/Tag";
 import { Typography } from "~/components/Typography";
+import { stringToColor } from "../misc/utils/stringToColor";
 
 interface MetricHit {
   metric: string;
@@ -28,13 +30,31 @@ export const MetricPerVariantList = ({ items }: MetricPerVariantListProps) => {
         {items.map((mHit) => (
           <Tr key={mHit.metric}>
             <Td>{mHit.metric}</Td>
-            <Td>{mHit.variant}</Td>
-            <Td>{mHit.count}</Td>
-            <Td>{mHit.variantCount}</Td>
             <Td>
-              {mHit.variantCount
-                ? `${((mHit.count / mHit.variantCount) * 100).toFixed(2)}%`
-                : null}
+              {mHit.variant && (
+                <Tag
+                  style={{
+                    background: stringToColor(mHit.variant, 90),
+                    color: stringToColor(mHit.variant, 25),
+                  }}
+                >
+                  {mHit.variant}
+                </Tag>
+              )}
+            </Td>
+            <Td>
+              <strong>{mHit.count}</strong>
+            </Td>
+            <Td>
+              <strong>{mHit.variantCount}</strong>
+            </Td>
+            <Td>
+              {mHit.variantCount ? (
+                <Tag variant="SUCCESS">{`${(
+                  (mHit.count / mHit.variantCount) *
+                  100
+                ).toFixed(2)}%`}</Tag>
+              ) : null}
             </Td>
           </Tr>
         ))}

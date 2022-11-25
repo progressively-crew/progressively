@@ -28,6 +28,7 @@ import { Spacer } from "~/components/Spacer";
 import { PieChart } from "~/components/PieChart";
 import { Tag } from "~/components/Tag";
 import { FlagEvalList } from "~/modules/flags/FlagEvalList";
+import { stringToColor } from "~/modules/misc/utils/stringToColor";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -59,6 +60,7 @@ interface LoaderData {
   barChartData: Array<{
     name: string;
     value: number;
+    color: string;
   }>;
   pieChartData: Array<{
     name: string;
@@ -116,7 +118,9 @@ export const loader: LoaderFunction = async ({
     .filter((mbv) => Boolean(mbv.variantCount))
     .map((mbv) => ({
       name: `${mbv.metric} (${mbv.variant})`,
-      value: (mbv.count / Number(mbv.variantCount)) * 100,
+      value:
+        Math.round((mbv.count / Number(mbv.variantCount)) * 100 * 100) / 100,
+      color: stringToColor(mbv.variant),
     }));
 
   const pieChartData = hitsPerVariant.map((hpv) => ({
@@ -176,6 +180,25 @@ export default function FlagInsights() {
       <PageTitle
         value="Insights"
         icon={<AiOutlineBarChart />}
+        action={
+          <Form action=".">
+            <div className="flex flex-col md:flex-row gap-3 md:items-end">
+              <TextInput
+                type="date"
+                name={"startDate"}
+                label={"Start date"}
+                defaultValue={formatDefaultDate(startDate)}
+              />
+              <TextInput
+                type="date"
+                name={"endDate"}
+                label={"End date"}
+                defaultValue={formatDefaultDate(endDate)}
+              />
+              <SubmitButton>Filter</SubmitButton>
+            </div>
+          </Form>
+        }
         description={
           <Typography>
             Information about variants hits per date on the feature flag.
@@ -184,24 +207,6 @@ export default function FlagInsights() {
       />
 
       <Stack spacing={8}>
-        <Form action=".">
-          <div className="flex flex-col md:flex-row gap-3 md:items-end">
-            <TextInput
-              type="date"
-              name={"startDate"}
-              label={"Start date"}
-              defaultValue={formatDefaultDate(startDate)}
-            />
-            <TextInput
-              type="date"
-              name={"endDate"}
-              label={"End date"}
-              defaultValue={formatDefaultDate(endDate)}
-            />
-            <SubmitButton>Filter on date</SubmitButton>
-          </div>
-        </Form>
-
         <Section id="all-evalutations">
           <Card>
             <CardContent>
@@ -209,12 +214,13 @@ export default function FlagInsights() {
                 title="Flag evaluations"
                 description="Repartition of the flag evaluations."
                 action={
-                  <Tag className="bg-indigo-100 text-indigo-700">
+                  <Tag variant="PRIMARY">
                     Flag evaluated <strong>{flagEvaluationsCount}</strong> times
                   </Tag>
                 }
               />
             </CardContent>
+
             <Spacer size={8} />
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

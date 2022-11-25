@@ -1,4 +1,6 @@
 import { RawTable, Tr, Th, Td } from "~/components/RawTable";
+import { Tag } from "~/components/Tag";
+import { stringToColor } from "../misc/utils/stringToColor";
 
 interface FlagHit {
   variant: string;
@@ -23,9 +25,24 @@ export const FlagEvalList = ({ items, evalCount }: FlagEvalListProps) => {
       <tbody>
         {items.map((hit) => (
           <Tr key={hit.variant}>
-            <Td>{hit.variant}</Td>
-            <Td>{hit.count}</Td>
-            <Td> {((hit.count / evalCount) * 100).toFixed(2)}%</Td>
+            <Td>
+              <Tag
+                style={{
+                  background: stringToColor(hit.variant, 90),
+                  color: stringToColor(hit.variant, 25),
+                }}
+              >
+                {hit.variant}
+              </Tag>
+            </Td>
+            <Td>
+              <strong>{hit.count}</strong>
+            </Td>
+            <Td>
+              <Tag variant="SUCCESS">
+                {((hit.count / evalCount) * 100).toFixed(2)}%
+              </Tag>
+            </Td>
           </Tr>
         ))}
       </tbody>
