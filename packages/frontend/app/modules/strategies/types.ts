@@ -4,12 +4,19 @@ export enum ComparatorEnum {
 }
 
 export interface AdditionalAudienceCreateDTO {
-  fieldName?: string;
-  fieldComparator?: ComparatorEnum;
-  fieldValue?: string;
+  fieldName: string;
+  fieldComparator: ComparatorEnum;
+  fieldValue: string;
+  valueToServeType: string;
+  valueToServe: string;
 }
 
 export interface AdditionalAudienceRetrieveDTO
   extends AdditionalAudienceCreateDTO {
   uuid: string;
+}
+
+export enum StrategyValueToServe {
+  Boolean = "Boolean",
+  String = "String",
 }

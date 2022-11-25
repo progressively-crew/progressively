@@ -2,7 +2,10 @@ import { useTransition } from "react";
 import { getSession } from "~/sessions";
 import { validateStrategyForm } from "~/modules/strategies/validators/validateStrategyForm";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
-import { AdditionalAudienceCreateDTO } from "~/modules/strategies/types";
+import {
+  AdditionalAudienceCreateDTO,
+  StrategyValueToServe,
+} from "~/modules/strategies/types";
 import { createStrategy } from "~/modules/strategies/services/createStrategy";
 import { AudienceFields } from "~/modules/strategies/components/AudienceFields";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
@@ -60,8 +63,13 @@ export const action: ActionFunction = async ({
     return { errors };
   }
 
-  const fieldName = (formData.get("field-name") as string) || undefined;
-  const fieldValue = (formData.get("field-value") as string) || undefined;
+  const fieldName = (formData.get("field-name") as string) || "";
+  const fieldValue = (formData.get("field-value") as string) || "";
+  const valueToServeType =
+    (formData.get("value-to-serve-type") as string) ||
+    StrategyValueToServe.Boolean;
+
+  const valueToServe = (formData.get("value-to-serve") as string) || "false"; // keep it as a string, it will be stored in DB like this
 
   const fieldComparator =
     (formData.get(
@@ -72,6 +80,8 @@ export const action: ActionFunction = async ({
     fieldComparator: fieldComparator,
     fieldName,
     fieldValue,
+    valueToServeType,
+    valueToServe,
   };
 
   try {

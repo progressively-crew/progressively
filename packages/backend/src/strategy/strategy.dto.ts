@@ -11,7 +11,7 @@ export class StrategyCreationDTO {
 
 export enum StrategyValueToServe {
   Boolean = 'Boolean',
-  Variant = 'Variant',
+  String = 'String',
 }
 
 export const StrategySchema = Joi.object({
@@ -21,7 +21,7 @@ export const StrategySchema = Joi.object({
     .required(),
   fieldValue: Joi.string().required(),
   valueToServeType: Joi.string()
-    .valid(StrategyValueToServe.Boolean, StrategyValueToServe.Variant)
+    .valid(StrategyValueToServe.Boolean, StrategyValueToServe.String)
     .required(),
   valueToServe: Joi.string().required(),
 });
