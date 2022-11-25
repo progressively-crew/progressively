@@ -180,6 +180,25 @@ export default function FlagInsights() {
       <PageTitle
         value="Insights"
         icon={<AiOutlineBarChart />}
+        action={
+          <Form action=".">
+            <div className="flex flex-col md:flex-row gap-3 md:items-end">
+              <TextInput
+                type="date"
+                name={"startDate"}
+                label={"Start date"}
+                defaultValue={formatDefaultDate(startDate)}
+              />
+              <TextInput
+                type="date"
+                name={"endDate"}
+                label={"End date"}
+                defaultValue={formatDefaultDate(endDate)}
+              />
+              <SubmitButton>Filter</SubmitButton>
+            </div>
+          </Form>
+        }
         description={
           <Typography>
             Information about variants hits per date on the feature flag.
@@ -188,24 +207,6 @@ export default function FlagInsights() {
       />
 
       <Stack spacing={8}>
-        <Form action=".">
-          <div className="flex flex-col md:flex-row gap-3 md:items-end">
-            <TextInput
-              type="date"
-              name={"startDate"}
-              label={"Start date"}
-              defaultValue={formatDefaultDate(startDate)}
-            />
-            <TextInput
-              type="date"
-              name={"endDate"}
-              label={"End date"}
-              defaultValue={formatDefaultDate(endDate)}
-            />
-            <SubmitButton>Filter on date</SubmitButton>
-          </div>
-        </Form>
-
         <Section id="all-evalutations">
           <Card>
             <CardContent>
@@ -219,6 +220,7 @@ export default function FlagInsights() {
                 }
               />
             </CardContent>
+
             <Spacer size={8} />
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
