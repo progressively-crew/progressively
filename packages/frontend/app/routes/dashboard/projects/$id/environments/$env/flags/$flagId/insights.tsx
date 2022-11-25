@@ -28,6 +28,7 @@ import { Spacer } from "~/components/Spacer";
 import { PieChart } from "~/components/PieChart";
 import { Tag } from "~/components/Tag";
 import { FlagEvalList } from "~/modules/flags/FlagEvalList";
+import { stringToColor } from "~/modules/misc/utils/stringToColor";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -59,6 +60,7 @@ interface LoaderData {
   barChartData: Array<{
     name: string;
     value: number;
+    color: string;
   }>;
   pieChartData: Array<{
     name: string;
@@ -116,7 +118,9 @@ export const loader: LoaderFunction = async ({
     .filter((mbv) => Boolean(mbv.variantCount))
     .map((mbv) => ({
       name: `${mbv.metric} (${mbv.variant})`,
-      value: (mbv.count / Number(mbv.variantCount)) * 100,
+      value:
+        Math.round((mbv.count / Number(mbv.variantCount)) * 100 * 100) / 100,
+      color: stringToColor(mbv.variant),
     }));
 
   const pieChartData = hitsPerVariant.map((hpv) => ({
@@ -209,7 +213,7 @@ export default function FlagInsights() {
                 title="Flag evaluations"
                 description="Repartition of the flag evaluations."
                 action={
-                  <Tag className="bg-indigo-100 text-indigo-700">
+                  <Tag variant="PRIMARY">
                     Flag evaluated <strong>{flagEvaluationsCount}</strong> times
                   </Tag>
                 }

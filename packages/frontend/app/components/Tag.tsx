@@ -1,7 +1,8 @@
-export interface TagProps {
+export interface TagProps extends React.HTMLAttributes<HTMLElement> {
   children: React.ReactNode;
   size?: "S" | "M";
   className?: string;
+  variant?: "PRIMARY" | "DEFAULT" | "SUCCESS";
 }
 
 const sizeStyle = {
@@ -9,12 +10,27 @@ const sizeStyle = {
   M: "px-4 py-2",
 };
 
-export const Tag = ({ children, size, className = "" }: TagProps) => {
-  const sharedClasses = "bg-gray-100 rounded-full";
+const variants = {
+  DEFAULT: "bg-gray-100 rounded-full",
+  PRIMARY: "bg-indigo-100 text-indigo-700 rounded-full",
+  SUCCESS: "bg-green-100 text-green-700 rounded-full",
+};
+
+export const Tag = ({
+  children,
+  size,
+  className = "",
+  variant,
+  ...props
+}: TagProps) => {
+  const sharedClasses = variants[variant || "DEFAULT"];
   const sizesClasses = sizeStyle[size || "M"];
 
   return (
-    <span className={sharedClasses + " " + sizesClasses + " " + className}>
+    <span
+      className={className + " " + sharedClasses + " " + sizesClasses}
+      {...props}
+    >
       {children}
     </span>
   );

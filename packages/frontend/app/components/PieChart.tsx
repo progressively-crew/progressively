@@ -3,8 +3,8 @@ import {
   Pie,
   Cell,
   ResponsiveContainer,
-  PieLabel,
 } from "recharts";
+import { stringToColor } from "~/modules/misc/utils/stringToColor";
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
@@ -30,7 +30,10 @@ export const PieChart = ({ data }: PieChartProps) => {
           )}
         >
           {data.map((_, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            <Cell
+              key={`cell-${index}`}
+              fill={stringToColor(data[index].name)}
+            />
           ))}
         </Pie>
       </RPieChart>

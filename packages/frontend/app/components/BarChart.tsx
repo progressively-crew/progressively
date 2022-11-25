@@ -7,12 +7,14 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  Cell,
 } from "recharts";
 
 export interface BarChartProps {
   data: Array<{
     name: string;
     value: number;
+    color: string;
   }>;
   yLabel: string;
 }
@@ -42,7 +44,11 @@ export const BarChart = ({ data, yLabel }: BarChartProps) => {
         <Tooltip />
         <Legend />
 
-        <Bar dataKey="value" fill="#82ca9d" unit="%" />
+        <Bar dataKey="value" fill="#82ca9d" unit="%">
+          {data.map((entry, index) => (
+            <Cell fill={data[index].color} key={entry.value} />
+          ))}
+        </Bar>
       </RBarChart>
     </ResponsiveContainer>
   );
