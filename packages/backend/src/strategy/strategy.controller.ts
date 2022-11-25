@@ -1,19 +1,8 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Put,
-  UseGuards,
-  UsePipes,
-} from '@nestjs/common';
+import { Controller, Delete, Get, Param, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
 import { StrategyService } from './strategy.service';
 import { HasStrategyAccessGuard } from './guards/hasStrategyAccess';
-import { ValidationPipe } from '../shared/pipes/ValidationPipe';
-import { StrategyCreationDTO, StrategySchema } from './strategy.dto';
 import { WebsocketGateway } from '../websocket/websocket.gateway';
 import { FlagStatus } from '../flags/flags.status';
 

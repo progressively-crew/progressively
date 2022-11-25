@@ -56,7 +56,7 @@ export class AuthController {
     @Body() _: LoginDTO,
   ) {
     // Mitigate brute force
-    await sleep(2000);
+    await sleep();
 
     const user = req.user as User;
 
@@ -86,7 +86,7 @@ export class AuthController {
   @UsePipes(new ValidationPipe(RegistrationSchema))
   async register(@Body() userDto: UserCreationDTO): Promise<UserRetrieveDTO> {
     // Mitigate brute force
-    await sleep(2000);
+    await sleep();
     /**
      * When ALLOW_REGISTRATION is not activated, we still have to create an admin account.
      * Thus, we'll accept the only first user to be created that way
@@ -144,7 +144,7 @@ export class AuthController {
     @Response() res: any,
   ): Promise<{ success: boolean }> {
     // Mitigate brute force
-    await sleep(2000);
+    await sleep();
 
     const updatedUser = await this.authService.activateUser(fromB64(rawToken));
 
