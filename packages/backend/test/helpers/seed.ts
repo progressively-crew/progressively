@@ -230,7 +230,6 @@ export const seedDb = async () => {
       multiVariateFlagEnv,
       new Date(1992, 0, 1, 1),
       10,
-      firstVariant,
     );
 
     await seedFlagHits(
@@ -238,7 +237,6 @@ export const seedDb = async () => {
       multiVariateFlagEnv,
       new Date(1992, 0, 3, 1),
       20,
-      firstVariant,
     );
     await seedFlagHits(
       prismaClient,

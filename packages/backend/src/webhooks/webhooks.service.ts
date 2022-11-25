@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { nanoid } from 'nanoid';
 import { PrismaService } from '../database/prisma.service';
-import { Webhook, WebhookCreationDTO } from './types';
-import { post } from './utils';
+import { WebhookCreationDTO } from './types';
 
 @Injectable()
 export class WebhooksService {

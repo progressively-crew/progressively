@@ -13,4 +13,6 @@ export interface RolloutStrategy {
   fieldValue: string;
   flagEnvironmentFlagId?: string;
   flagEnvironmentEnvironmentId?: string;
+  valueToServeType: string;
+  valueToServe: string;
 }

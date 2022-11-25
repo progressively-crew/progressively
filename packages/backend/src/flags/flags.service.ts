@@ -121,7 +121,7 @@ export class FlagsService {
     startDate: string,
     endDate: string,
   ) {
-    const flagHits = await this.prisma.flagHit.count({
+    return await this.prisma.flagHit.count({
       where: {
         flagEnvironmentFlagId: flagId,
         flagEnvironmentEnvironmentId: envId,
@@ -131,8 +131,6 @@ export class FlagsService {
         },
       },
     });
-
-    return flagHits;
   }
 
   async flagHitsWithoutVariant(

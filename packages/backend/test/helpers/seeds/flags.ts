@@ -1,5 +1,4 @@
 import { PrismaClient } from '@prisma/client';
-import { FlagStatus } from '../../../src/flags/flags.status';
 import { FlagType } from '../../../src/flags/types';
 
 export const seedFlags = async (prismaClient: PrismaClient) => {
@@ -51,7 +50,6 @@ export const seedFlagHits = async (
   flagEnv: any,
   date: Date,
   count = 10,
-  variant?: any,
 ) => {
   date.setHours(2);
   date.setMinutes(2);

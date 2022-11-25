@@ -77,7 +77,7 @@ export class UsersController {
   @Post('/forgot-password')
   async forgotPassword(@Body() body: ForgotPasswordDTO) {
     // Mitigate brute force
-    await sleep(2000);
+    await sleep();
 
     if (!body.email) {
       throw new BadRequestException('Email is missing');
@@ -104,7 +104,7 @@ export class UsersController {
   @UsePipes(new ValidationPipe(ResetPasswordSchema))
   async resetPassword(@Body() body: ResetPasswordDTO) {
     // Mitigate brute force
-    await sleep(2000);
+    await sleep();
 
     const hashedPassword = await this.userService.checkPasswordToken(
       body.token,

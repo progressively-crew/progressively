@@ -37,6 +37,8 @@ describe('SdkService', () => {
       flagEnvironmentEnvironmentId: '1',
       flagEnvironmentFlagId: '1',
       uuid: '123',
+      valueToServe: 'true',
+      valueToServeType: 'Boolean',
     };
 
     flagEnv = {
