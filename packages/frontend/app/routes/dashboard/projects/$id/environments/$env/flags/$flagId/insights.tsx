@@ -21,10 +21,13 @@ import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { Typography } from "~/components/Typography";
 import { PageTitle } from "~/components/PageTitle";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
+import { MetricPerVariantList } from "~/modules/flags/MetricPerVariantList";
 import { Section, SectionHeader } from "~/components/Section";
-import { BigStat } from "~/components/BigStat";
-import { HitByVariantList } from "~/modules/flags/components/HitByVariantList";
-import { HitWithoutVariantList } from "~/modules/flags/components/HitWithoutVariantList";
+import { BarChart } from "~/components/BarChart";
+import { Spacer } from "~/components/Spacer";
+import { PieChart } from "~/components/PieChart";
+import { Tag } from "~/components/Tag";
+import { FlagEvalList } from "~/modules/flags/FlagEvalList";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -36,27 +39,32 @@ export const meta: MetaFunction = ({ parentsData, params }) => {
   };
 };
 
-interface MetricHit {
+interface FlagHit {
+  variant: string;
   count: number;
-  metric: string;
 }
-interface VariantHit {
-  count: number;
+
+interface MetricHit {
   metric: string;
   variant: string;
-  variantEvalutations: number;
+  variantCount?: number;
+  count: number;
 }
 
 interface LoaderData {
-  hits: Array<VariantHit>;
-  hitsWithoutVariant: Array<MetricHit>;
   flagEvaluationsCount: number;
   startDate: string;
   endDate: string;
-  variantEvalutations: Array<{
-    variant: string;
-    count: number;
+  metricsByVariantCount: Array<MetricHit>;
+  barChartData: Array<{
+    name: string;
+    value: number;
   }>;
+  pieChartData: Array<{
+    name: string;
+    value: number;
+  }>;
+  hitsPerVariant: Array<FlagHit>;
 }
 
 export const loader: LoaderFunction = async ({
@@ -82,12 +90,12 @@ export const loader: LoaderFunction = async ({
   const authCookie = session.get("auth-cookie");
   const {
     hitsPerVariant,
-    hitsWithoutVariant,
     flagEvaluationsCount,
+    metricsByVariantCount,
   }: {
-    hitsPerVariant: Array<VariantHit>;
-    hitsWithoutVariant: Array<MetricHit>;
+    hitsPerVariant: Array<FlagHit>;
     flagEvaluationsCount: number;
+    metricsByVariantCount: Array<Omit<MetricHit, "variantCount">>;
   } = await getFlagHits(
     params.env!,
     params.flagId!,
@@ -96,26 +104,32 @@ export const loader: LoaderFunction = async ({
     authCookie
   );
 
-  const variantHitsWithDuplicates = hitsPerVariant.map((hit) => ({
-    variant: hit.variant,
-    count: hit.variantEvalutations,
+  const computedMetricsByVariantCout = metricsByVariantCount.map((nbv) => ({
+    count: nbv.count,
+    metric: nbv.metric,
+    variant: nbv.variant,
+    variantCount: hitsPerVariant.find((hpv) => hpv.variant === nbv.variant)
+      ?.count,
   }));
 
-  const alreadyInVariants: any = {};
+  const barChartData = computedMetricsByVariantCout
+    .filter((mbv) => Boolean(mbv.variantCount))
+    .map((mbv) => ({
+      name: `${mbv.metric} (${mbv.variant})`,
+      value: (mbv.count / Number(mbv.variantCount)) * 100,
+    }));
 
-  const variantEvalutations = variantHitsWithDuplicates.filter((item) => {
-    if (!alreadyInVariants[item.variant]) {
-      alreadyInVariants[item.variant] = true;
-      return true;
-    }
-    return false;
-  });
+  const pieChartData = hitsPerVariant.map((hpv) => ({
+    name: hpv.variant,
+    value: hpv.count,
+  }));
 
   return {
-    variantEvalutations,
-    hits: hitsPerVariant,
-    hitsWithoutVariant,
+    hitsPerVariant,
+    pieChartData,
+    barChartData,
     flagEvaluationsCount,
+    metricsByVariantCount: computedMetricsByVariantCout,
     startDate: startDate.toISOString(),
     endDate: endDate.toISOString(),
   };
@@ -127,12 +141,13 @@ const formatDefaultDate = (isoDate: string) => {
 
 export default function FlagInsights() {
   const {
-    hits,
     startDate,
     endDate,
-    hitsWithoutVariant,
-    variantEvalutations,
+    metricsByVariantCount,
     flagEvaluationsCount,
+    barChartData,
+    pieChartData,
+    hitsPerVariant,
   } = useLoaderData<LoaderData>();
   const { flagEnv } = useFlagEnv();
   const { user } = useUser();
@@ -187,60 +202,54 @@ export default function FlagInsights() {
           </div>
         </Form>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <Section id="all-evalutations">
           <Card>
             <CardContent>
-              <BigStat
-                count={flagEvaluationsCount}
-                unit="eval."
-                name={`Flag evaluations`}
+              <SectionHeader
+                title="Flag evaluations"
+                description="Repartition of the flag evaluations."
+                action={
+                  <Tag className="bg-indigo-100 text-indigo-700">
+                    Flag evaluated <strong>{flagEvaluationsCount}</strong> times
+                  </Tag>
+                }
               />
             </CardContent>
-          </Card>
+            <Spacer size={8} />
 
-          {variantEvalutations.map((variant) => (
-            <Card key={variant.variant}>
-              <CardContent>
-                <BigStat
-                  type="variant"
-                  count={variant.count}
-                  unit="eval."
-                  name={`Variant ${variant.variant} evaluations`}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div style={{ height: 260 }}>
+                <PieChart data={pieChartData} />
+              </div>
+
+              <div className="border-l border-t border-l-gray-200 border-t-gray-200">
+                <FlagEvalList
+                  evalCount={flagEvaluationsCount}
+                  items={hitsPerVariant}
                 />
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {hits.length > 0 && (
-          <Card>
-            <Section id="with-variant">
-              <CardContent>
-                <SectionHeader title="Hits by variant" />
-              </CardContent>
-
-              <HitByVariantList
-                hits={hits}
-                flagEvaluationsCount={flagEvaluationsCount}
-              />
-            </Section>
+              </div>
+            </div>
           </Card>
-        )}
+        </Section>
 
-        {hitsWithoutVariant.length > 0 && (
+        <Section id="metrics-variant">
           <Card>
-            <Section id="without-variant">
-              <CardContent>
-                <SectionHeader title="Other hits" />
-              </CardContent>
-
-              <HitWithoutVariantList
-                hits={hitsWithoutVariant}
-                flagEvaluationsCount={flagEvaluationsCount}
+            <CardContent>
+              <SectionHeader
+                title="Hit on metrics"
+                description="These are the number of hit on each metrics and the associated variant (if applicable). The chart shows the ratio between the variant evaluation and the metric hit."
               />
-            </Section>
+            </CardContent>
+
+            <div className="w-full" style={{ height: 200 }}>
+              <BarChart data={barChartData} yLabel="Percentage" />
+            </div>
+
+            <Spacer size={4} />
+
+            <MetricPerVariantList items={metricsByVariantCount} />
           </Card>
-        )}
+        </Section>
       </Stack>
     </DashboardLayout>
   );
