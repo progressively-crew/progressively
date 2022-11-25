@@ -133,23 +133,26 @@ export class FlagsService {
     });
   }
 
-  async flagHitsWithoutVariant(
+  async metricsByVariantCount(
     envId: string,
     flagId: string,
     startDate: string,
     endDate: string,
   ) {
-    const rawMetrics = await this.prisma.pMetric.findMany({
+    const metrics = await this.prisma.pMetric.findMany({
       where: {
         flagEnvironmentFlagId: flagId,
         flagEnvironmentEnvironmentId: envId,
-        variantUuid: null,
+      },
+      include: {
+        variant: true,
       },
     });
 
-    const metrics = [];
-    for (const metric of rawMetrics) {
-      const hits = await this.prisma.pMetricHit.count({
+    const metricsHit = [];
+
+    for (const metric of metrics) {
+      const count = await this.prisma.pMetricHit.count({
         where: {
           flagEnvironmentFlagId: flagId,
           flagEnvironmentEnvironmentId: envId,
@@ -161,13 +164,14 @@ export class FlagsService {
         },
       });
 
-      metrics.push({
-        count: hits,
+      metricsHit.push({
         metric: metric.name,
+        variant: metric.variant?.value,
+        count,
       });
     }
 
-    return metrics;
+    return metricsHit;
   }
 
   async flagHitsPerVariant(
@@ -176,16 +180,21 @@ export class FlagsService {
     startDate: string,
     endDate: string,
   ) {
-    const variants = await this.prisma.variant.findMany({
+    const disctintHitValue = await this.prisma.flagHit.findMany({
+      distinct: ['valueResolved'],
       where: {
         flagEnvironmentFlagId: flagId,
         flagEnvironmentEnvironmentId: envId,
+        date: {
+          gte: new Date(startDate),
+          lte: new Date(endDate),
+        },
       },
     });
 
     const evaluatedVariants = [];
 
-    for (const variant of variants) {
+    for (const dhv of disctintHitValue) {
       const hits = await this.prisma.flagHit.count({
         where: {
           flagEnvironmentFlagId: flagId,
@@ -194,37 +203,16 @@ export class FlagsService {
             gte: new Date(startDate),
             lte: new Date(endDate),
           },
+          valueResolved: dhv.valueResolved,
         },
       });
 
-      const rawMetrics = await this.prisma.pMetric.findMany({
-        where: {
-          flagEnvironmentFlagId: flagId,
-          flagEnvironmentEnvironmentId: envId,
-          variantUuid: variant.uuid,
-        },
-      });
+      const evaluatedMetric = {
+        variant: dhv.valueResolved,
+        count: hits,
+      };
 
-      for (const metric of rawMetrics) {
-        const metricHits = await this.prisma.pMetricHit.count({
-          where: {
-            flagEnvironmentFlagId: flagId,
-            flagEnvironmentEnvironmentId: envId,
-            date: {
-              gte: new Date(startDate),
-              lte: new Date(endDate),
-            },
-            pMetricUuid: metric.uuid,
-          },
-        });
-
-        evaluatedVariants.push({
-          count: metricHits,
-          metric: metric.name,
-          variant: variant.value,
-          variantEvalutations: hits,
-        });
-      }
+      evaluatedVariants.push(evaluatedMetric);
     }
 
     return evaluatedVariants;

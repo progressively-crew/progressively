@@ -183,13 +183,6 @@ export class FlagsController {
       endDate,
     );
 
-    const hitsWithoutVariant = await this.flagService.flagHitsWithoutVariant(
-      envId,
-      flagId,
-      startDate,
-      endDate,
-    );
-
     const flagEvaluationsCount = await this.flagService.flagEvaluationsCount(
       envId,
       flagId,
@@ -197,7 +190,14 @@ export class FlagsController {
       endDate,
     );
 
-    return { hitsPerVariant, hitsWithoutVariant, flagEvaluationsCount };
+    const metricsByVariantCount = await this.flagService.metricsByVariantCount(
+      envId,
+      flagId,
+      startDate,
+      endDate,
+    );
+
+    return { hitsPerVariant, flagEvaluationsCount, metricsByVariantCount };
   }
 
   @Post('environments/:envId/flags/:flagId/strategies')
