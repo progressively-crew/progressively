@@ -132,11 +132,17 @@ export class SdkService {
       }
 
       if (!skipHit) {
+        let valueResolved = '';
+        if (typeof flagStatusOrVariant === 'object') {
+          valueResolved = flagStatusOrVariant.value;
+        } else {
+          valueResolved = String(flagStatusOrVariant);
+        }
         await this.flagService.hitFlag(
           nextFlag.environmentId,
           nextFlag.flagId,
           String(fields?.id || ''),
-          String(flagStatusOrVariant),
+          valueResolved,
         );
       }
     }
