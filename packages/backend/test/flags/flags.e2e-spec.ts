@@ -666,7 +666,8 @@ describe('FlagsController (e2e)', () => {
         fieldValue: '1',
         flagEnvironmentEnvironmentId: '1',
         flagEnvironmentFlagId: '1',
-
+        valueToServe: 'true',
+        valueToServeType: 'Boolean',
         uuid: '1',
       });
     });

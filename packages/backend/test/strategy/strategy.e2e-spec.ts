@@ -75,6 +75,8 @@ describe('Strategy (e2e)', () => {
         fieldValue: '1',
         flagEnvironmentFlagId: '1',
         flagEnvironmentEnvironmentId: '1',
+        valueToServe: 'true',
+        valueToServeType: 'Boolean',
       });
     });
   });
@@ -130,6 +132,8 @@ describe('Strategy (e2e)', () => {
           "flagEnvironmentEnvironmentId": "1",
           "flagEnvironmentFlagId": "1",
           "uuid": "1",
+          "valueToServe": "true",
+          "valueToServeType": "Boolean",
         }
       `);
 
