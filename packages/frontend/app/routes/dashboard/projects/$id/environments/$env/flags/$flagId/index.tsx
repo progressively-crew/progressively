@@ -287,6 +287,7 @@ export default function FlagById() {
               action={
                 hasEligibility && (
                   <CreateButton
+                    variant="secondary"
                     to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/eligibilities/create`}
                   >
                     Create an eligibility restriction
@@ -310,6 +311,7 @@ export default function FlagById() {
                 action={
                   <CreateButton
                     to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/eligibilities/create`}
+                    variant="secondary"
                   >
                     Create an eligibility restriction
                   </CreateButton>
@@ -359,6 +361,7 @@ export default function FlagById() {
               action={
                 hasStrategies && (
                   <CreateButton
+                    variant="secondary"
                     to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
                   >
                     Create an additional audience
@@ -380,6 +383,7 @@ export default function FlagById() {
                 }
                 action={
                   <CreateButton
+                    variant="secondary"
                     to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
                   >
                     Create an additional audience
