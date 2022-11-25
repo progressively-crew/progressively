@@ -67,7 +67,7 @@ export default function Index() {
   return (
     <div className="bg-gray-50">
       <main>
-        {flags.newHero ? <Hero /> : <HeroVariant />}
+        {flags.newHero === "A" ? <Hero /> : <HeroVariant />}
         <Features />
         <Example />
         <WeightComparator />
