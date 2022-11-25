@@ -95,8 +95,7 @@ export class FlagsService {
     environmentId: string,
     flagId: string,
     visitorId: string,
-    status: boolean,
-    variant?: Variant,
+    valueResolved: string,
   ) {
     // Make it easier to group by date, 2 is arbitrary
     const date = new Date();
@@ -109,9 +108,8 @@ export class FlagsService {
       data: {
         flagEnvironmentFlagId: flagId,
         flagEnvironmentEnvironmentId: environmentId,
-        status: String(status),
+        valueResolved,
         date,
-        variantUuid: variant?.uuid,
         visitorId,
       },
     });
@@ -194,7 +192,6 @@ export class FlagsService {
         where: {
           flagEnvironmentFlagId: flagId,
           flagEnvironmentEnvironmentId: envId,
-          variantUuid: variant.uuid,
           date: {
             gte: new Date(startDate),
             lte: new Date(endDate),

@@ -111,7 +111,6 @@ model Variant {
   flagEnvironmentFlagId        String?
   flagEnvironmentEnvironmentId String?
   PMetric                      PMetric[]        @relation(name: "PMetricToVariant")
-  FlagHit                      FlagHit[]        @relation(name: "FlagHitToVariant")
 }
 
 model PMetric {
@@ -143,9 +142,7 @@ model FlagHit {
   flagEnvironment              FlagEnvironment @relation(name: "FlagEnvironmentToFlagHit", fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
   flagEnvironmentFlagId        String
   flagEnvironmentEnvironmentId String
-  status                       String
-  variant                      Variant?        @relation(name: "FlagHitToVariant", fields: [variantUuid], references: [uuid])
-  variantUuid                  String?
+  valueResolved                String
   visitorId                    String
 }
 
