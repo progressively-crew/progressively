@@ -94,21 +94,11 @@ export class SdkService {
   ) {
     const flagStatusRecord = this.resolveFlagStatus(flagEnv, fields);
 
-    let flagVariant: Variant | undefined;
-    let flagStatus: boolean;
-    if (typeof flagStatusRecord === 'boolean') {
-      flagStatus = flagStatusRecord;
-    } else {
-      flagVariant = flagStatusRecord;
-      flagStatus = false;
-    }
-
     await this.flagService.hitFlag(
       flagEnv.environmentId,
       flagEnv.flagId,
       String(fields?.id || ''),
-      flagStatus,
-      flagVariant,
+      String(flagStatusRecord),
     );
 
     return {
@@ -133,16 +123,10 @@ export class SdkService {
 
       const flagStatusOrVariant = this.resolveFlagStatus(nextFlag, fields);
 
-      let flagVariant: Variant | undefined;
-      let flagStatus: boolean;
-
       if (typeof flagStatusOrVariant === 'boolean') {
-        flagStatus = flagStatusOrVariant;
-        flags[nextFlag.flag.key] = flagStatus;
+        flags[nextFlag.flag.key] = flagStatusOrVariant;
       } else {
-        flagVariant = flagStatusOrVariant;
-        flagStatus = false;
-        flags[nextFlag.flag.key] = flagVariant.value;
+        flags[nextFlag.flag.key] = flagStatusOrVariant.value;
       }
 
       if (!skipHit) {
@@ -150,8 +134,7 @@ export class SdkService {
           nextFlag.environmentId,
           nextFlag.flagId,
           String(fields?.id || ''),
-          flagStatus,
-          flagVariant,
+          String(flagStatusOrVariant),
         );
       }
     }

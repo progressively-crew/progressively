@@ -63,9 +63,8 @@ export const seedFlagHits = async (
       data: {
         flagEnvironmentFlagId: flagEnv.flagId,
         flagEnvironmentEnvironmentId: flagEnv.environmentId,
-        status: FlagStatus.ACTIVATED,
+        valueResolved: 'true',
         date,
-        variantUuid: variant?.uuid,
         visitorId: '1',
       },
     });
@@ -75,7 +74,7 @@ export const seedFlagHits = async (
         data: {
           flagEnvironmentFlagId: flagEnv.flagId,
           flagEnvironmentEnvironmentId: flagEnv.environmentId,
-          status: FlagStatus.NOT_ACTIVATED,
+          valueResolved: 'false',
           date,
           visitorId: '1',
         },
@@ -100,7 +99,7 @@ export const seedFlagHitsVariants = async (
       data: {
         flagEnvironmentFlagId: flagEnv.flagId,
         flagEnvironmentEnvironmentId: flagEnv.environmentId,
-        status: 'Control',
+        valueResolved: 'Control',
         date,
         visitorId: '1',
       },
@@ -111,7 +110,7 @@ export const seedFlagHitsVariants = async (
         data: {
           flagEnvironmentFlagId: flagEnv.flagId,
           flagEnvironmentEnvironmentId: flagEnv.environmentId,
-          status: 'Second',
+          valueResolved: 'Second',
           date,
           visitorId: '1',
         },
