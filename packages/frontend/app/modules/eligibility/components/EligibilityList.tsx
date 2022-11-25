@@ -1,7 +1,4 @@
-import { AiOutlineEdit } from "react-icons/ai";
-import { Button } from "~/components/Buttons/Button";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
-import { HStack } from "~/components/HStack";
 import { RawTable, Td, Th, Tr } from "~/components/RawTable";
 import { Eligibility } from "../types";
 import { RestrictionList } from "./RestrictionList";
@@ -35,22 +32,14 @@ export const EligibilityList = ({
             </Td>
 
             <Td>
-              <HStack spacing={4}>
-                <Button
-                  variant="secondary"
-                  icon={<AiOutlineEdit />}
-                  to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/eligibilities/${eligibility.uuid}/edit`}
-                >
-                  Edit
-                </Button>
-
+              <div className="inline-block">
                 <DeleteButton
                   variant="secondary"
                   to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/eligibilities/${eligibility.uuid}/delete`}
                 >
                   Remove
                 </DeleteButton>
-              </HStack>
+              </div>
             </Td>
           </Tr>
         ))}
