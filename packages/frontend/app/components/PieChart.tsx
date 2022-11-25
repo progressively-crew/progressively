@@ -6,8 +6,6 @@ import {
 } from "recharts";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
-
 export interface PieChartProps {
   data: Array<{ name: string; value: number }>;
 }
@@ -24,7 +22,11 @@ export const PieChart = ({ data }: PieChartProps) => {
           paddingAngle={5}
           dataKey="value"
           label={({ index, ...props }) => (
-            <text {...props} dominantBaseline="central">
+            <text
+              {...props}
+              dominantBaseline="central"
+              fill={stringToColor(data[index].name, 25)}
+            >
               {data[index].name} ({data[index].value})
             </text>
           )}

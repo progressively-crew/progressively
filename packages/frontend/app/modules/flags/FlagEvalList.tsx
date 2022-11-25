@@ -29,6 +29,7 @@ export const FlagEvalList = ({ items, evalCount }: FlagEvalListProps) => {
               <Tag
                 style={{
                   background: stringToColor(hit.variant, 90),
+                  color: stringToColor(hit.variant, 25),
                 }}
               >
                 {hit.variant}

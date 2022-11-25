@@ -35,6 +35,7 @@ export const MetricPerVariantList = ({ items }: MetricPerVariantListProps) => {
                 <Tag
                   style={{
                     background: stringToColor(mHit.variant, 90),
+                    color: stringToColor(mHit.variant, 25),
                   }}
                 >
                   {mHit.variant}
