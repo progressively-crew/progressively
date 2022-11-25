@@ -481,7 +481,13 @@ describe('FlagsController (e2e)', () => {
         });
     });
 
-    ['fieldName', 'fieldComparator', 'fieldValue'].forEach((field) => {
+    [
+      'fieldName',
+      'fieldComparator',
+      'fieldValue',
+      'valueToServe',
+      'valueToServeType',
+    ].forEach((field) => {
       it(`gives 400 when the project has a strategy of type "field" but no "${field}"`, async () => {
         const access_token = await authenticate(app);
 
@@ -509,6 +515,8 @@ describe('FlagsController (e2e)', () => {
         fieldName: 'email',
         fieldValue: '@gmail.com',
         fieldComparator: 'eq',
+        valueToServe: 'true',
+        valueToServeType: 'Boolean',
       };
 
       const response = await request(app.getHttpServer())
@@ -526,6 +534,8 @@ describe('FlagsController (e2e)', () => {
         fieldValue: '@gmail.com',
         flagEnvironmentFlagId: '1',
         flagEnvironmentEnvironmentId: '1',
+        valueToServe: 'true',
+        valueToServeType: 'Boolean',
       });
     });
 
@@ -536,6 +546,8 @@ describe('FlagsController (e2e)', () => {
         fieldName: 'email',
         fieldComparator: 'eq',
         fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
+        valueToServe: 'true',
+        valueToServeType: 'Boolean',
       };
 
       const response = await request(app.getHttpServer())
@@ -553,6 +565,8 @@ describe('FlagsController (e2e)', () => {
         fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
         flagEnvironmentFlagId: '1',
         flagEnvironmentEnvironmentId: '1',
+        valueToServe: 'true',
+        valueToServeType: 'Boolean',
       });
     });
 
@@ -563,6 +577,8 @@ describe('FlagsController (e2e)', () => {
         fieldName: 'email',
         fieldComparator: 'eq',
         fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
+        valueToServe: 'true',
+        valueToServeType: 'Boolean',
       };
 
       const response = await request(app.getHttpServer())
@@ -580,6 +596,8 @@ describe('FlagsController (e2e)', () => {
         fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
         flagEnvironmentFlagId: '1',
         flagEnvironmentEnvironmentId: '1',
+        valueToServe: 'true',
+        valueToServeType: 'Boolean',
       });
     });
   });

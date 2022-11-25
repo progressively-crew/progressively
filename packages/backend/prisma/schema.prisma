@@ -154,6 +154,8 @@ model RolloutStrategy {
   fieldName                    String
   fieldComparator              String
   fieldValue                   String
+  valueToServeType             String
+  valueToServe                 String
   FlagEnvironment              FlagEnvironment? @relation(name: "FlagEnvironmentToRolloutStrategy", fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
   flagEnvironmentFlagId        String?
   flagEnvironmentEnvironmentId String?

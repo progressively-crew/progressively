@@ -67,6 +67,8 @@ export class StrategyService {
         fieldName: strategy.fieldName,
         fieldValue: strategy.fieldValue,
         fieldComparator: strategy.fieldComparator,
+        valueToServe: strategy.valueToServe,
+        valueToServeType: strategy.valueToServeType,
       },
     });
   }
