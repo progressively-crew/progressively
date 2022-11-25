@@ -42,12 +42,14 @@ export const MetricList = ({
             </Td>
 
             <Td>
-              <DeleteButton
-                variant="secondary"
-                to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/metrics/${metric.uuid}/delete`}
-              >
-                Remove
-              </DeleteButton>
+              <div className="inline-block">
+                <DeleteButton
+                  variant="secondary"
+                  to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/metrics/${metric.uuid}/delete`}
+                >
+                  Remove
+                </DeleteButton>
+              </div>
             </Td>
           </Tr>
         ))}

@@ -67,7 +67,6 @@ export const ButtonCopy = ({ toCopy, children, ...props }: ButtonCopyProps) => {
           }
           variant="secondary"
           onKeyDown={handleKeyDow}
-          size="S"
           {...copyToClipBoardProps}
         >
           {isCopied ? (

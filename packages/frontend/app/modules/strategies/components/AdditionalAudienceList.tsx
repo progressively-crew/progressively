@@ -1,5 +1,3 @@
-import { AiOutlineEdit } from "react-icons/ai";
-import { Button } from "~/components/Buttons/Button";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { HStack } from "~/components/HStack";
 import { RawTable, Td, Th, Tr } from "~/components/RawTable";
@@ -35,22 +33,14 @@ export const AdditionalAudienceList = ({
             </Td>
 
             <Td>
-              <HStack spacing={4}>
-                <Button
-                  variant="secondary"
-                  icon={<AiOutlineEdit />}
-                  to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/strategies/${strat.uuid}/edit`}
-                >
-                  Edit
-                </Button>
-
+              <div className="inline-block">
                 <DeleteButton
                   variant="secondary"
                   to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/strategies/${strat.uuid}/delete`}
                 >
                   Remove
                 </DeleteButton>
-              </HStack>
+              </div>
             </Td>
           </Tr>
         ))}

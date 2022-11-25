@@ -53,27 +53,4 @@ export class StrategyController {
         deletedStrategy.flagEnvironmentEnvironmentId,
     };
   }
-
-  @Put(':stratId')
-  @UseGuards(HasStrategyAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  @UsePipes(new ValidationPipe(StrategySchema))
-  async editStrategy(
-    @Param('stratId') stratId: string,
-    @Body() strategyDto: StrategyCreationDTO,
-  ): Promise<any> {
-    const editedStrategy = this.strategyService.editStrategy(
-      stratId,
-      strategyDto,
-    );
-
-    const { FlagEnvironment: flagEnv } =
-      await this.strategyService.getStrategyFlagEnv(stratId);
-
-    if (flagEnv.status === FlagStatus.ACTIVATED) {
-      this.wsGateway.notifyChanges(flagEnv.environment.clientKey, flagEnv);
-    }
-
-    return editedStrategy;
-  }
 }

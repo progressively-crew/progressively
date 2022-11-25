@@ -38,6 +38,7 @@ export const Button = ({
   loadingText,
   scheme,
   variant,
+  className,
   ...props
 }: ButtonProps) => {
   const sharedButtonClass =
@@ -54,7 +55,9 @@ export const Button = ({
       <Component
         to={href ? undefined : to}
         href={href}
-        className={sharedButtonClass + " " + combinedClassName}
+        className={
+          sharedButtonClass + " " + combinedClassName + " " + className
+        }
         {...linkProps}
       >
         <HStack spacing={3}>
@@ -68,7 +71,7 @@ export const Button = ({
   return (
     <button
       type={type}
-      className={sharedButtonClass + " " + combinedClassName}
+      className={sharedButtonClass + " " + combinedClassName + " " + className}
       {...props}
       aria-disabled={isLoading}
       aria-label={isLoading ? loadingText : undefined}

@@ -40,15 +40,6 @@ export class StrategyService {
     return false;
   }
 
-  editStrategy(stratId: string, strategy: StrategyCreationDTO) {
-    return this.prisma.rolloutStrategy.update({
-      data: strategy,
-      where: {
-        uuid: stratId,
-      },
-    });
-  }
-
   addStrategyToFlagEnv(
     envId: string,
     flagId: string,
@@ -67,6 +58,8 @@ export class StrategyService {
         fieldName: strategy.fieldName,
         fieldValue: strategy.fieldValue,
         fieldComparator: strategy.fieldComparator,
+        valueToServe: strategy.valueToServe,
+        valueToServeType: strategy.valueToServeType,
       },
     });
   }

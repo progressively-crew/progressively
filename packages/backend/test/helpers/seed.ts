@@ -178,6 +178,8 @@ export const seedDb = async () => {
         fieldName: 'id',
         fieldComparator: 'eq',
         fieldValue: '1',
+        valueToServe: 'true',
+        valueToServeType: 'Boolean',
       },
     });
 
@@ -189,6 +191,8 @@ export const seedDb = async () => {
         fieldName: 'id',
         fieldComparator: 'eq',
         fieldValue: '1',
+        valueToServe: 'true',
+        valueToServeType: 'Boolean',
       },
     });
 
@@ -200,6 +204,8 @@ export const seedDb = async () => {
         fieldComparator: 'eq',
         fieldName: 'email',
         fieldValue: '@gmail.com',
+        valueToServe: 'true',
+        valueToServeType: 'Boolean',
       },
     });
 
