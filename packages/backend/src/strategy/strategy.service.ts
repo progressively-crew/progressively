@@ -3,7 +3,7 @@ import { ComparatorFactory } from '../shared/utils/comparators/comparatorFactory
 import { ComparatorEnum } from '../shared/utils/comparators/types';
 import { PrismaService } from '../database/prisma.service';
 
-import { StrategyCreationDTO } from './strategy.dto';
+import { StrategyCreationDTO, StrategyValueToServe } from './strategy.dto';
 import { FieldRecord, RolloutStrategy } from './types';
 
 @Injectable()
@@ -27,14 +27,20 @@ export class StrategyService {
     return false;
   }
 
-  isAdditionalAudience(
+  resolveAdditionalAudienceValue(
     strategies: Array<RolloutStrategy>,
     fields: FieldRecord,
   ) {
     for (const strategy of strategies) {
       const isValidStrategyRule = this.isValidStrategy(strategy, fields);
 
-      if (isValidStrategyRule) return true;
+      if (isValidStrategyRule) {
+        if (strategy.valueToServeType === StrategyValueToServe.Boolean) {
+          return strategy.valueToServe === 'true';
+        }
+
+        return strategy.valueToServe;
+      }
     }
 
     return false;

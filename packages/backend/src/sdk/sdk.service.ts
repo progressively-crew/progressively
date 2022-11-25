@@ -70,11 +70,13 @@ export class SdkService {
   resolveFlagStatus(flagEnv: PopulatedFlagEnv, fields: FieldRecord) {
     if (flagEnv.status !== FlagStatus.ACTIVATED) return false;
 
-    const isAdditionalAudience = this.strategyService.isAdditionalAudience(
-      flagEnv.strategies,
-      fields,
-    );
-    if (isAdditionalAudience) return isAdditionalAudience;
+    const additionalAudienceValue =
+      this.strategyService.resolveAdditionalAudienceValue(
+        flagEnv.strategies,
+        fields,
+      );
+
+    if (additionalAudienceValue) return additionalAudienceValue;
 
     const isEligible = this.eligibilityService.isEligible(flagEnv, fields);
     if (!isEligible) return false;
@@ -123,10 +125,10 @@ export class SdkService {
 
       const flagStatusOrVariant = this.resolveFlagStatus(nextFlag, fields);
 
-      if (typeof flagStatusOrVariant === 'boolean') {
-        flags[nextFlag.flag.key] = flagStatusOrVariant;
-      } else {
+      if (typeof flagStatusOrVariant === 'object') {
         flags[nextFlag.flag.key] = flagStatusOrVariant.value;
+      } else {
+        flags[nextFlag.flag.key] = flagStatusOrVariant;
       }
 
       if (!skipHit) {
