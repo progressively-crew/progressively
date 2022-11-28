@@ -1,8 +1,6 @@
 import { useTransition } from "react";
 import { getSession } from "~/sessions";
-import { validateStrategyForm } from "~/modules/strategies/validators/validateStrategyForm";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
-import { AudienceFields } from "~/modules/strategies/components/AudienceFields";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { Typography } from "~/components/Typography";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
@@ -23,6 +21,8 @@ import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { TagLine } from "~/components/Tagline";
 import { EligibilityCreateDTO } from "~/modules/eligibility/types";
 import { createEligibility } from "~/modules/eligibility/services/createEligibility";
+import { EligibilityForm } from "~/modules/eligibility/components/EligibilityForm";
+import { validateEligibilityForm } from "~/modules/eligibility/validators/validateEligibilityForm";
 
 export const handle = {
   breadcrumb: (match: { params: any }) => {
@@ -54,7 +54,7 @@ export const action: ActionFunction = async ({
   const formData = await request.formData();
   const session = await getSession(request.headers.get("Cookie"));
 
-  const errors = validateStrategyForm(formData);
+  const errors = validateEligibilityForm(formData);
 
   if (Object.keys(errors).length > 0) {
     return { errors };
@@ -132,14 +132,14 @@ export default function StrategyCreatePage() {
         <CardContent>
           <Form method="post">
             <FormGroup>
-              <AudienceFields errors={errors} />
+              <EligibilityForm errors={errors} />
 
               <div>
                 <SubmitButton
                   isLoading={transition.state === "submitting"}
-                  loadingText="Saving the strategy, please wait..."
+                  loadingText="Saving the eligibility restriction, please wait..."
                 >
-                  Save the additional audience
+                  Save the eligibility restriction
                 </SubmitButton>
               </div>
             </FormGroup>
