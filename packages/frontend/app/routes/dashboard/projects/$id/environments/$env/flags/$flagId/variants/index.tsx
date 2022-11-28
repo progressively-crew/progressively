@@ -45,7 +45,7 @@ export const meta: MetaFunction = ({ parentsData, params }) => {
   const flagName = getFlagMetaTitle(parentsData);
 
   return {
-    title: `Progressively | ${projectName} | ${envName} | Flags | ${flagName} | Multi-Variants`,
+    title: `Progressively | ${projectName} | ${envName} | Flags | ${flagName} | Variants`,
   };
 };
 
@@ -156,7 +156,7 @@ export default function VariantsOfFlag() {
         />
       }
     >
-      <PageTitle value="Multi-Variants" icon={<AiOutlineAppstore />} />
+      <PageTitle value="Variants" icon={<AiOutlineAppstore />} />
 
       <Section id="variant-list">
         <Card>
