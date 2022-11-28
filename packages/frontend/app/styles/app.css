@@ -687,6 +687,10 @@ video {
   width: 3.5rem;
 }
 
+.w-auto {
+  width: auto;
+}
+
 .max-w-screen-2xl {
   max-width: 1536px;
 }

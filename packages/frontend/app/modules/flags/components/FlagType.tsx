@@ -1,3 +1,7 @@
+import { ExperimentIcon } from "~/components/Icons/ExperimentIcon";
+import { KillSwitchIcon } from "~/components/Icons/KillSwitchIcon";
+import { PermissionIcon } from "~/components/Icons/PermissionIcon";
+import { ReleaseIcon } from "~/components/Icons/ReleaseIcon";
 import { Tag } from "~/components/Tag";
 import { FlagType } from "../types";
 
@@ -7,19 +11,47 @@ export interface FlagTypeBadgeProps {
 
 export const FlagTypeBadge = ({ type }: FlagTypeBadgeProps) => {
   if (type === FlagType.RELEASE) {
-    return <Tag className="bg-violet-100 text-violet-700">Release</Tag>;
+    return (
+      <div className="inline-block">
+        <Tag className="bg-violet-100 text-violet-700 flex flex-row gap-2 items-center">
+          <ReleaseIcon aria-hidden />
+          Release
+        </Tag>
+      </div>
+    );
   }
 
   if (type === FlagType.EXPERIMENT) {
-    return <Tag className="bg-teal-100 text-teal-700">Experiment</Tag>;
+    return (
+      <div className="inline-block">
+        <Tag className="bg-teal-100 text-teal-700 flex flex-row gap-2 items-center">
+          <ExperimentIcon aria-hidden />
+          Experiment
+        </Tag>
+      </div>
+    );
   }
 
   if (type === FlagType.PERMISSION) {
-    return <Tag className="bg-orange-100 text-orange-700">Permission</Tag>;
+    return (
+      <div className="inline-block">
+        <Tag className="bg-orange-100 text-orange-700 flex flex-row gap-2 items-center">
+          <PermissionIcon aria-hidden />
+          Permission
+        </Tag>
+      </div>
+    );
   }
 
   if (type === FlagType.KILL_SWITCH) {
-    return <Tag className="bg-stone-100 text-stone-700">Kill switch</Tag>;
+    return (
+      <div className="inline-block">
+        <Tag className="bg-stone-100 text-stone-700 flex flex-row gap-2 items-center">
+          <KillSwitchIcon aria-hidden />
+          Kill switch
+        </Tag>
+      </div>
+    );
   }
 
   return null;
