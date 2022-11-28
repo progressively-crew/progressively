@@ -8,11 +8,15 @@ import {
 } from "~/modules/strategies/types";
 import { createStrategy } from "~/modules/strategies/services/createStrategy";
 import { AudienceFields } from "~/modules/strategies/components/AudienceFields";
-import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { Typography } from "~/components/Typography";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
-import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
-import { useActionData, Form } from "@remix-run/react";
+import {
+  MetaFunction,
+  ActionFunction,
+  redirect,
+  LoaderFunction,
+} from "@remix-run/node";
+import { useActionData, Form, useLoaderData } from "@remix-run/react";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { useUser } from "~/modules/user/contexts/useUser";
@@ -26,6 +30,9 @@ import { Card, CardContent } from "~/components/Card";
 import { Header } from "~/components/Header";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { TagLine } from "~/components/Tagline";
+import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
+import { getVariants } from "~/modules/variants/services/getVariants";
+import { Variant } from "~/modules/variants/types";
 
 export const handle = {
   breadcrumb: (match: { params: any }) => {
@@ -46,6 +53,28 @@ export const meta: MetaFunction = ({ parentsData, params }) => {
   };
 };
 
+interface LoaderData {
+  variants: Array<Variant>;
+}
+
+export const loader: LoaderFunction = async ({
+  request,
+  params,
+}): Promise<LoaderData> => {
+  const session = await getSession(request.headers.get("Cookie"));
+  const authCookie = session.get("auth-cookie");
+
+  const variants: Array<Variant> = await getVariants(
+    params.env!,
+    params.flagId!,
+    authCookie
+  );
+
+  return {
+    variants,
+  };
+};
+
 interface ActionData {
   errors?: { [key: string]: string };
 }
@@ -54,6 +83,7 @@ export const action: ActionFunction = async ({
   request,
   params,
 }): Promise<ActionData | Response> => {
+  console.log("passing");
   const formData = await request.formData();
   const session = await getSession(request.headers.get("Cookie"));
 
@@ -66,8 +96,10 @@ export const action: ActionFunction = async ({
   const fieldName = (formData.get("field-name") as string) || "";
   const fieldValue = (formData.get("field-value") as string) || "";
   const valueToServeType =
-    (formData.get("value-to-serve-type") as string) ||
-    StrategyValueToServe.Boolean;
+    formData.get("value-to-serve-type")?.toString() ===
+    StrategyValueToServe.Boolean
+      ? StrategyValueToServe.Boolean
+      : StrategyValueToServe.String;
 
   const valueToServe = (formData.get("value-to-serve") as string) || "false"; // keep it as a string, it will be stored in DB like this
 
@@ -105,6 +137,7 @@ export const action: ActionFunction = async ({
 };
 
 export default function StrategyCreatePage() {
+  const { variants } = useLoaderData<LoaderData>();
   const transition = useTransition();
   const { flagEnv } = useFlagEnv();
   const { project } = useProject();
@@ -117,7 +150,7 @@ export default function StrategyCreatePage() {
   const errors = actionData?.errors || {};
 
   return (
-    <DashboardLayout
+    <CreateEntityLayout
       user={user}
       header={
         <Header
@@ -126,23 +159,25 @@ export default function StrategyCreatePage() {
         />
       }
       status={actionData?.errors && <ErrorBox list={actionData.errors} />}
+      title={
+        <PageTitle
+          value="Create an additional audience"
+          description={
+            <Typography>
+              {`You're`} about to create an additional audience to{" "}
+              <strong>{currentFlag.name}</strong> in{" "}
+              <strong>{project.name}</strong> on{" "}
+              <strong>{environment.name}</strong>.
+            </Typography>
+          }
+        />
+      }
     >
-      <PageTitle
-        value="Create an additional audience"
-        description={
-          <Typography>
-            {`You're`} about to create an additional audience to{" "}
-            <strong>{currentFlag.name}</strong> in{" "}
-            <strong>{project.name}</strong> on{" "}
-            <strong>{environment.name}</strong>.
-          </Typography>
-        }
-      />
       <Card>
         <CardContent>
           <Form method="post">
             <FormGroup>
-              <AudienceFields errors={errors} />
+              <AudienceFields errors={errors} variants={variants} />
 
               <div>
                 <SubmitButton
@@ -156,6 +191,6 @@ export default function StrategyCreatePage() {
           </Form>
         </CardContent>
       </Card>
-    </DashboardLayout>
+    </CreateEntityLayout>
   );
 }

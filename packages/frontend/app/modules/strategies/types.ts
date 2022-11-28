@@ -19,4 +19,5 @@ export interface AdditionalAudienceRetrieveDTO
 export enum StrategyValueToServe {
   Boolean = "Boolean",
   String = "String",
+  Variant = "Variant",
 }

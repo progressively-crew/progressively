@@ -28,7 +28,7 @@ export const RadioField = <T extends string>({
     <fieldset>
       <Label as="legend">{title}</Label>
       <Spacer size={2} />
-      <Stack spacing={2}>
+      <HStack spacing={2}>
         {options.map((opt) => (
           <HStack key={opt.value} spacing={2}>
             <Radio
@@ -43,7 +43,7 @@ export const RadioField = <T extends string>({
             </Label>
           </HStack>
         ))}
-      </Stack>
+      </HStack>
     </fieldset>
   );
 };

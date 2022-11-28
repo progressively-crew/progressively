@@ -5,6 +5,7 @@ import { SelectField } from "~/components/Fields/SelectField";
 import { TextareaInput } from "~/components/Fields/TextareaInput";
 import { TextInput } from "~/components/Fields/TextInput";
 import { HStack } from "~/components/HStack";
+import { Variant } from "~/modules/variants/types";
 import {
   ComparatorEnum,
   AdditionalAudienceCreateDTO,
@@ -16,6 +17,7 @@ export interface AudienceFieldsProps {
   initialFieldName?: AdditionalAudienceCreateDTO["fieldName"];
   initialFieldValue?: AdditionalAudienceCreateDTO["fieldValue"];
   initialFieldComparator?: AdditionalAudienceCreateDTO["fieldComparator"];
+  variants: Array<Variant>;
 }
 
 export const AudienceFields = ({
@@ -23,8 +25,22 @@ export const AudienceFields = ({
   initialFieldName,
   initialFieldValue,
   initialFieldComparator,
+  variants,
 }: AudienceFieldsProps) => {
   const [status, setStatus] = useState(StrategyValueToServe.Boolean);
+
+  const valueOptions = [
+    { value: StrategyValueToServe.Boolean, label: "A boolean" },
+    { value: StrategyValueToServe.String, label: "A string" },
+  ];
+
+  if (variants.length > 0) {
+    valueOptions.push({
+      value: StrategyValueToServe.Variant,
+      label: "A variant value",
+    });
+  }
+
   return (
     <FormGroup>
       <FormGroup>
@@ -59,14 +75,21 @@ export const AudienceFields = ({
 
         <RadioField
           title="What value to you want to serve?"
-          options={[
-            { value: StrategyValueToServe.Boolean, label: "A boolean" },
-            { value: StrategyValueToServe.String, label: "A string" },
-          ]}
+          options={valueOptions}
           name={"value-to-serve-type"}
           value={status}
           onChange={setStatus}
         />
+
+        {status === StrategyValueToServe.Variant && (
+          <SelectField
+            isInvalid={Boolean(errors["value-to-serve"])}
+            name="value-to-serve"
+            label="Variant value to serve"
+            defaultValue={variants[0].value}
+            options={variants.map((v) => ({ label: v.value, value: v.value }))}
+          />
+        )}
 
         {status === StrategyValueToServe.Boolean && (
           <SelectField

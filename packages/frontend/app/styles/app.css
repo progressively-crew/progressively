@@ -687,10 +687,6 @@ video {
   width: 3.5rem;
 }
 
-.w-auto {
-  width: auto;
-}
-
 .max-w-screen-2xl {
   max-width: 1536px;
 }
@@ -982,6 +978,10 @@ video {
   background-color: rgb(185 28 28 / var(--tw-bg-opacity));
 }
 
+.bg-transparent {
+  background-color: transparent;
+}
+
 .bg-emerald-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(209 250 229 / var(--tw-bg-opacity));
@@ -1002,10 +1002,6 @@ video {
   background-color: rgb(245 245 244 / var(--tw-bg-opacity));
 }
 
-.bg-transparent {
-  background-color: transparent;
-}
-
 .fill-indigo-700 {
   fill: #4338ca;
 }
@@ -1024,10 +1020,6 @@ video {
 
 .p-2 {
   padding: 0.5rem;
-}
-
-.p-0 {
-  padding: 0px;
 }
 
 .px-12 {
