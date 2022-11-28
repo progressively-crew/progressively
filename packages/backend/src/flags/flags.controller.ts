@@ -327,6 +327,8 @@ export class FlagsController {
       cumulative += variant.rolloutPercentage;
     }
 
+    console.log('lol', variantsDto);
+
     if (cumulative > 100) {
       throw new BadRequestException(
         `The cumulated percentage of the variants is ${cumulative}% which is over 100%.`,

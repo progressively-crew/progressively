@@ -30,10 +30,6 @@ import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { Tag } from "~/components/Tag";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
-import {
-  VariantList,
-  VariantListModes,
-} from "~/modules/variants/components/VariantList";
 import { editVariantAction } from "~/modules/variants/form-actions/editVariantAction";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { PageTitle } from "~/components/PageTitle";
@@ -45,6 +41,7 @@ import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { getEligibilities } from "~/modules/eligibility/services/getEligibilities";
 import { Eligibility } from "~/modules/eligibility/types";
 import { EligibilityList } from "~/modules/eligibility/components/EligibilityList";
+import { VariantTable } from "~/modules/variants/components/VariantTable";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -202,9 +199,7 @@ export default function FlagById() {
               action={
                 isMultiVariants && (
                   <div className="flex items-center flex-row h-full">
-                    <SubmitButton form="edit-variant">
-                      Edit variants
-                    </SubmitButton>
+                    <SubmitButton form="edit-variant">Adjust</SubmitButton>
                   </div>
                 )
               }
@@ -253,12 +248,7 @@ export default function FlagById() {
             )}
           </CardContent>
 
-          {isMultiVariants && (
-            <VariantList
-              variants={flagEnv.variants}
-              mode={VariantListModes.Operational}
-            />
-          )}
+          {isMultiVariants && <VariantTable variants={flagEnv.variants} />}
         </Card>
       </Section>
 

@@ -11,11 +11,6 @@ import { HStack } from "~/components/HStack";
 import { Variant } from "../types";
 import { RawTable, Td, Th, Tr } from "~/components/RawTable";
 
-export enum VariantListModes {
-  Editing = "Editing",
-  Operational = "Operational",
-}
-
 export interface FormSliderInputProps {
   name: string;
   label: string;
@@ -46,20 +41,14 @@ const FormSliderInput = ({
 export interface VariantListProps {
   variants: Array<Variant>;
   errors?: Record<string, string>;
-  mode?: VariantListModes;
   action?: React.ReactNode;
 }
 export const VariantList = ({
   variants,
   errors,
-  mode,
+
   action,
 }: VariantListProps) => {
-  const currentMode = mode || VariantListModes.Editing;
-
-  const isValueInputDisabled = currentMode === VariantListModes.Operational;
-  const showRemoveButton = currentMode === VariantListModes.Editing;
-
   return (
     <div>
       {variants.map((variant) => (
@@ -79,16 +68,36 @@ export const VariantList = ({
         <RawTable>
           <thead>
             <Tr>
-              <Th>Is control</Th>
               <Th>Variant</Th>
               <Th>Rollout percentage</Th>
-              {showRemoveButton && <Th>Actions</Th>}
+              <Th>Is control</Th>
+              <Th>Actions</Th>
             </Tr>
           </thead>
 
           <tbody>
             {variants.map((variant, index) => (
               <Tr key={`variant-${variant.uuid}`}>
+                <Td>
+                  <TextInput
+                    hiddenLabel
+                    id={`name-${index}`}
+                    name="name"
+                    defaultValue={variant.value}
+                    label={`Variant ${index + 1} value`}
+                    isInvalid={Boolean(errors?.[`name-${index}`])}
+                  />
+                </Td>
+
+                <Td>
+                  <FormSliderInput
+                    id={`rolloutPercentage-${index}`}
+                    name={`rolloutPercentage`}
+                    label={`Variant ${index + 1} rollout percentage`}
+                    initialPercentage={variant.rolloutPercentage}
+                  />
+                </Td>
+
                 <Td>
                   <HStack spacing={2}>
                     <div>
@@ -109,38 +118,16 @@ export const VariantList = ({
                     </HideDesktop>
                   </HStack>
                 </Td>
-                <Td>
-                  <TextInput
-                    hiddenLabel
-                    id={`name-${index}`}
-                    name="name"
-                    defaultValue={variant.value}
-                    label={`Variant ${index + 1} value`}
-                    isInvalid={Boolean(errors?.[`name-${index}`])}
-                    isDisabled={isValueInputDisabled}
-                  />
-                </Td>
 
                 <Td>
-                  <FormSliderInput
-                    id={`rolloutPercentage-${index}`}
-                    name={`rolloutPercentage`}
-                    label={`Variant ${index + 1} rollout percentage`}
-                    initialPercentage={variant.rolloutPercentage}
-                  />
+                  <DeleteButton
+                    variant="secondary"
+                    type="submit"
+                    form={`delete-form-${variant.uuid}`}
+                  >
+                    Remove
+                  </DeleteButton>
                 </Td>
-
-                {showRemoveButton && (
-                  <Td>
-                    <DeleteButton
-                      variant="secondary"
-                      type="submit"
-                      form={`delete-form-${variant.uuid}`}
-                    >
-                      Remove
-                    </DeleteButton>
-                  </Td>
-                )}
               </Tr>
             ))}
           </tbody>

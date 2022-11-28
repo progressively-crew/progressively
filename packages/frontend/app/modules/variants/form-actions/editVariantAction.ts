@@ -14,11 +14,14 @@ export const editVariantAction = async (
   const names = formData.getAll("name");
   const rolloutPercentages = formData.getAll("rolloutPercentage");
   const controlId = formData.get("isControl");
+
   const errors: Record<string, string> = {};
 
   for (const [index, name] of names.entries()) {
     if (!name) {
-      errors[`name-${index}`] = `The variant value on line ${index + 1} is invalid.`;
+      errors[`name-${index}`] = `The variant value on line ${
+        index + 1
+      } is invalid.`;
     }
   }
 

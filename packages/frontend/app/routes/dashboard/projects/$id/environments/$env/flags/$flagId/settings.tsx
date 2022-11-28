@@ -5,7 +5,6 @@ import { Section, SectionHeader } from "~/components/Section";
 import { AiOutlineSetting } from "react-icons/ai";
 import { Typography } from "~/components/Typography";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
-import { HideMobile } from "~/components/HideMobile";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { MetaFunction } from "@remix-run/node";
 import { Card, CardContent } from "~/components/Card";
@@ -108,12 +107,15 @@ export default function FlagSettingPage() {
                     variant="secondary"
                     to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/delete`}
                   >
-                    <span aria-hidden className="flex">
-                      Delete <HideMobile>{currentFlag.name} forever</HideMobile>
+                    <span aria-hidden>
+                      <span>Delete </span>
+                      <span className="hidden md:inline">
+                        {currentFlag.name} forever
+                      </span>
                     </span>
 
                     <VisuallyHidden>
-                      Delete {currentFlag.name} forever
+                      {`Delete ${currentFlag.name} forever`}
                     </VisuallyHidden>
                   </DeleteButton>
                 </div>

@@ -29,6 +29,7 @@ import { PieChart } from "~/components/PieChart";
 import { Tag } from "~/components/Tag";
 import { FlagEvalList } from "~/modules/flags/FlagEvalList";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
+import { EmptyState } from "~/components/EmptyState";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -223,18 +224,32 @@ export default function FlagInsights() {
 
             <Spacer size={8} />
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div style={{ height: 260 }}>
-                <PieChart data={pieChartData} />
-              </div>
+            {pieChartData.length === 0 && (
+              <EmptyState
+                title="No hits found"
+                description={
+                  <Typography>
+                    Progressively has not recorded evaluations for this feature
+                    flag on the selected period.
+                  </Typography>
+                }
+              />
+            )}
 
-              <div className="border-l border-t border-l-gray-200 border-t-gray-200">
-                <FlagEvalList
-                  evalCount={flagEvaluationsCount}
-                  items={hitsPerVariant}
-                />
+            {pieChartData.length > 0 && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div style={{ height: 260 }}>
+                  <PieChart data={pieChartData} />
+                </div>
+
+                <div className="border-l border-t border-l-gray-200 border-t-gray-200">
+                  <FlagEvalList
+                    evalCount={flagEvaluationsCount}
+                    items={hitsPerVariant}
+                  />
+                </div>
               </div>
-            </div>
+            )}
           </Card>
         </Section>
 
@@ -247,9 +262,11 @@ export default function FlagInsights() {
               />
             </CardContent>
 
-            <div className="w-full" style={{ height: 200 }}>
-              <BarChart data={barChartData} yLabel="Percentage" />
-            </div>
+            {barChartData.length > 0 && (
+              <div className="w-full" style={{ height: 200 }}>
+                <BarChart data={barChartData} yLabel="Percentage" />
+              </div>
+            )}
 
             <Spacer size={4} />
 
