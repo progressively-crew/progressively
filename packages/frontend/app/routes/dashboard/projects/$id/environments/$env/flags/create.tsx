@@ -6,7 +6,6 @@ import { FormGroup } from "~/components/Fields/FormGroup";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Section } from "~/components/Section";
 import { Typography } from "~/components/Typography";
-import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { createFlag } from "~/modules/flags/services/createFlag";
 import { CreateFlagDTO, Flag, FlagType } from "~/modules/flags/types";
 import { validateFlagShape } from "~/modules/flags/validators/validateFlagShape";
@@ -26,6 +25,7 @@ import { ReleaseIcon } from "~/components/Icons/ReleaseIcon";
 import { ExperimentIcon } from "~/components/Icons/ExperimentIcon";
 import { PermissionIcon } from "~/components/Icons/PermissionIcon";
 import { KillSwitchIcon } from "~/components/Icons/KillSwitchIcon";
+import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 
 export const handle = {
   breadcrumb: (match: { params: any }) => {
@@ -99,7 +99,7 @@ export default function CreateFlagPage() {
   const errors = data?.errors;
 
   return (
-    <DashboardLayout
+    <CreateEntityLayout
       user={user}
       header={
         <Header
@@ -110,18 +110,21 @@ export default function CreateFlagPage() {
       status={
         (errors?.name || errors?.description) && <ErrorBox list={errors} />
       }
+      title={
+        <PageTitle
+          value="Create a feature flag"
+          description={
+            <Typography>
+              The new feature flag will appear in{" "}
+              <strong>{project.name}</strong> /{" "}
+              <strong>{environment.name}</strong>. After the creation of a
+              feature flag, you will be able to get its SDK key for application
+              usage.
+            </Typography>
+          }
+        />
+      }
     >
-      <PageTitle
-        value="Create a feature flag"
-        description={
-          <Typography>
-            The new feature flag will appear in <strong>{project.name}</strong>{" "}
-            / <strong>{environment.name}</strong>. After the creation of a
-            feature flag, you will be able to get its SDK key for application
-            usage.
-          </Typography>
-        }
-      />
       <Card>
         <CardContent>
           <Section>
@@ -185,6 +188,6 @@ export default function CreateFlagPage() {
           </Section>
         </CardContent>
       </Card>
-    </DashboardLayout>
+    </CreateEntityLayout>
   );
 }

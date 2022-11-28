@@ -5,7 +5,6 @@ import {
   Environment,
 } from "~/modules/environments/types";
 import { validateEnvName } from "~/modules/environments/validators/validateEnvName";
-import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { getSession } from "~/sessions";
 import { Section } from "~/components/Section";
 import { TextInput } from "~/components/Fields/TextInput";
@@ -22,6 +21,7 @@ import { Card, CardContent } from "~/components/Card";
 import { Header } from "~/components/Header";
 import { ProjectIcon } from "~/components/Icons/ProjectIcon";
 import { TagLine } from "~/components/Tagline";
+import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 
 export const handle = {
   breadcrumb: (match: { params: any }) => {
@@ -79,7 +79,7 @@ export default function CreateEnvironmentPage() {
   const errors = data?.errors;
 
   return (
-    <DashboardLayout
+    <CreateEntityLayout
       user={user}
       header={
         <Header
@@ -88,17 +88,19 @@ export default function CreateEnvironmentPage() {
         />
       }
       status={errors?.name && <ErrorBox list={errors} />}
+      title={
+        <PageTitle
+          value="Create an environment"
+          description={
+            <Typography>
+              The new environment will appear in <strong>{project.name}</strong>
+              . After the creation of an environment, you will be able to get
+              its SDK key for application usage.
+            </Typography>
+          }
+        />
+      }
     >
-      <PageTitle
-        value="Create an environment"
-        description={
-          <Typography>
-            The new environment will appear in <strong>{project.name}</strong>.
-            After the creation of an environment, you will be able to get its
-            SDK key for application usage.
-          </Typography>
-        }
-      />
       <Card>
         <CardContent>
           <Section>
@@ -127,6 +129,6 @@ export default function CreateEnvironmentPage() {
           </Section>
         </CardContent>
       </Card>
-    </DashboardLayout>
+    </CreateEntityLayout>
   );
 }
