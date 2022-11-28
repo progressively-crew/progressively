@@ -1,11 +1,11 @@
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
+import { Checkbox } from "~/components/Checkbox";
 import { SliderInput } from "~/components/Fields/SliderInput";
 import { RawTable, Td, Th, Tr } from "~/components/RawTable";
+import { Switch } from "~/components/Switch";
 import { Typography } from "~/components/Typography";
-import { FlagStatus } from "~/modules/flags/components/FlagStatus";
 import { FlagStatus as FlagStatusType } from "~/modules/flags/types";
-import { Schedule } from "../types";
-import { ScheduleStatus } from "./ScheduleStatus";
+import { Schedule, SchedulingStatus } from "../types";
 
 export const formatDate = (utc: string) => {
   const options = {
@@ -53,7 +53,11 @@ export const SchedulingList = ({
               </Typography>
             </Td>
             <Td>
-              <FlagStatus value={schedule.status as FlagStatusType} />
+              <Switch
+                label="Next flag status"
+                type="submit"
+                checked={schedule.status === FlagStatusType.ACTIVATED}
+              />
             </Td>
             <Td>
               <SliderInput
@@ -61,11 +65,16 @@ export const SchedulingList = ({
                 percentageValue={schedule.rolloutPercentage}
                 label={""}
                 hiddenLabel
-                name={"not-important"}
+                name={"not-important-" + index}
               />
             </Td>
             <Td>
-              <ScheduleStatus value={schedule.schedulingStatus} />
+              <Checkbox
+                name="not-important"
+                aria-label="Has the flag already run?"
+                value=""
+                checked={schedule.schedulingStatus === SchedulingStatus.HAS_RUN}
+              />
             </Td>
             <Td>
               <DeleteButton
