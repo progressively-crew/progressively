@@ -22,6 +22,10 @@ import { SelectField } from "~/components/Fields/SelectField";
 import { Header } from "~/components/Header";
 import { EnvIcon } from "~/components/Icons/EnvIcon";
 import { TagLine } from "~/components/Tagline";
+import { ReleaseIcon } from "~/components/Icons/ReleaseIcon";
+import { ExperimentIcon } from "~/components/Icons/ExperimentIcon";
+import { PermissionIcon } from "~/components/Icons/PermissionIcon";
+import { KillSwitchIcon } from "~/components/Icons/KillSwitchIcon";
 
 export const handle = {
   breadcrumb: (match: { params: any }) => {
@@ -143,10 +147,26 @@ export default function CreateFlagPage() {
                     name="type"
                     label="Type"
                     options={[
-                      { value: FlagType.RELEASE, label: "Release" },
-                      { value: FlagType.EXPERIMENT, label: "Experiment" },
-                      { value: FlagType.PERMISSION, label: "Permission" },
-                      { value: FlagType.KILL_SWITCH, label: "Kill switch" },
+                      {
+                        value: FlagType.RELEASE,
+                        label: "Release",
+                        icon: <ReleaseIcon />,
+                      },
+                      {
+                        value: FlagType.EXPERIMENT,
+                        label: "Experiment",
+                        icon: <ExperimentIcon />,
+                      },
+                      {
+                        value: FlagType.PERMISSION,
+                        label: "Permission",
+                        icon: <PermissionIcon />,
+                      },
+                      {
+                        value: FlagType.KILL_SWITCH,
+                        label: "Kill switch",
+                        icon: <KillSwitchIcon />,
+                      },
                     ]}
                   />
                 </div>
