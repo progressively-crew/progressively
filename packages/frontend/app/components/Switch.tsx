@@ -1,10 +1,11 @@
+import { HTMLAttributes } from "react";
 import { BsCheck } from "react-icons/bs";
 
-export interface SwitchProps {
+export interface SwitchProps extends HTMLAttributes<HTMLButtonElement> {
   checked: boolean;
   type?: "reset" | "submit" | "button";
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  label: string;
+  label?: string;
   onLabel?: string;
   offLabel?: string;
   form?: string;
@@ -18,6 +19,7 @@ export const Switch = ({
   onLabel,
   offLabel,
   form,
+  ...props
 }: SwitchProps) => {
   const thumnailCheckedClasses = checked
     ? "translate-x-full text-emerald-200 flex items-center justify-center text-md"
@@ -35,6 +37,7 @@ export const Switch = ({
       onClick={onClick}
       form={form}
       className="h-10 px-1 flex items-center gap-2 group"
+      {...props}
     >
       <span className="text-gray-600">{offLabel || "Off"}</span>
       <span

@@ -20,6 +20,7 @@ import { Card, CardContent } from "~/components/Card";
 import { Header } from "~/components/Header";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { TagLine } from "~/components/Tagline";
+import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 
 export const handle = {
   breadcrumb: (match: { params: any }) => {
@@ -113,7 +114,7 @@ export default function SchedulingCreatePage() {
   const actionData = useActionData<ActionData>();
 
   return (
-    <DashboardLayout
+    <CreateEntityLayout
       user={user}
       header={
         <Header
@@ -122,18 +123,20 @@ export default function SchedulingCreatePage() {
         />
       }
       status={actionData?.errors && <ErrorBox list={actionData.errors} />}
+      title={
+        <PageTitle
+          value="Create a scheduling"
+          description={
+            <Typography>
+              {`You're`} about to create a scheduling to{" "}
+              <strong>{currentFlag.name}</strong> in{" "}
+              <strong>{project.name}</strong> on{" "}
+              <strong>{environment.name}</strong>.
+            </Typography>
+          }
+        />
+      }
     >
-      <PageTitle
-        value="Create a scheduling"
-        description={
-          <Typography>
-            {`You're`} about to create a scheduling to{" "}
-            <strong>{currentFlag.name}</strong> in{" "}
-            <strong>{project.name}</strong> on{" "}
-            <strong>{environment.name}</strong>.
-          </Typography>
-        }
-      />
       <Card>
         <CardContent>
           <Form method="post">
@@ -141,6 +144,6 @@ export default function SchedulingCreatePage() {
           </Form>
         </CardContent>
       </Card>
-    </DashboardLayout>
+    </CreateEntityLayout>
   );
 }
