@@ -1,5 +1,7 @@
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
+import { SliderInput } from "~/components/Fields/SliderInput";
 import { RawTable, Td, Th, Tr } from "~/components/RawTable";
+import { Typography } from "~/components/Typography";
 import { FlagStatus } from "~/modules/flags/components/FlagStatus";
 import { FlagStatus as FlagStatusType } from "~/modules/flags/types";
 import { Schedule } from "../types";
@@ -36,9 +38,9 @@ export const SchedulingList = ({
       <thead>
         <Tr>
           <Th>Date</Th>
-          <Th>Status of the flag</Th>
-          <Th>Rollout percentage</Th>
-          <Th>Has the schedule run</Th>
+          <Th>Flag status</Th>
+          <Th>Percentage</Th>
+          <Th>Has run</Th>
           <Th>Actions</Th>
         </Tr>
       </thead>
@@ -46,20 +48,24 @@ export const SchedulingList = ({
         {scheduling.map((schedule, index: number) => (
           <Tr key={`${schedule.utc}-${schedule.rolloutPercentage}-${index}`}>
             <Td>
-              <div>{formatDate(schedule.utc)}</div>
+              <Typography className="text-sm">
+                {formatDate(schedule.utc)}
+              </Typography>
             </Td>
             <Td>
-              <div>
-                <FlagStatus value={schedule.status as FlagStatusType} />
-              </div>
+              <FlagStatus value={schedule.status as FlagStatusType} />
             </Td>
             <Td>
-              <div>{schedule.rolloutPercentage}%</div>
+              <SliderInput
+                onChange={() => {}}
+                percentageValue={schedule.rolloutPercentage}
+                label={""}
+                hiddenLabel
+                name={"not-important"}
+              />
             </Td>
             <Td>
-              <div>
-                <ScheduleStatus value={schedule.schedulingStatus} />
-              </div>
+              <ScheduleStatus value={schedule.schedulingStatus} />
             </Td>
             <Td>
               <DeleteButton

@@ -1,4 +1,6 @@
+import { Checkbox } from "~/components/Checkbox";
 import { Tag } from "~/components/Tag";
+import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { SchedulingStatus } from "../types";
 
 export interface ScheduleStatusProps {
@@ -6,13 +8,19 @@ export interface ScheduleStatusProps {
 }
 
 export const ScheduleStatus = ({ value }: ScheduleStatusProps) => {
-  if (value === SchedulingStatus.HAS_RUN) {
-    return <Tag className="bg-indigo-100 text-indigo-700">Already run</Tag>;
-  }
+  return (
+    <div>
+      <div aria-hidden>
+        <Checkbox
+          name="not-important"
+          value=""
+          checked={value === SchedulingStatus.HAS_RUN}
+        />
+      </div>
 
-  if (value === SchedulingStatus.NOT_RUN) {
-    return <Tag className="bg-red-100 text-red-700">Not run yet</Tag>;
-  }
-
-  return null;
+      <VisuallyHidden>
+        {value === SchedulingStatus.HAS_RUN ? "Yes" : "No"}
+      </VisuallyHidden>
+    </div>
+  );
 };
