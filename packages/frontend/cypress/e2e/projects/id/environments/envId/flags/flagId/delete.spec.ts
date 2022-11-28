@@ -44,7 +44,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/delete", 
         }).should("be.visible");
 
         cy.findByRole("button", {
-          name: "Yes, delete the flag",
+          name: "Delete",
         }).should("be.visible");
 
         cy.contains("No, don't delete New homepage")
@@ -71,7 +71,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/delete", 
         // Delete the first flag
         cy.visit("/dashboard/projects/1/environments/1/flags/1/delete");
         cy.findByRole("button", {
-          name: "Yes, delete the flag",
+          name: "Delete",
         }).click();
 
         cy.url().should(
@@ -82,7 +82,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/delete", 
         // Delete the second flag
         cy.visit("/dashboard/projects/1/environments/1/flags/2/delete");
         cy.findByRole("button", {
-          name: "Yes, delete the flag",
+          name: "Delete",
         }).click();
 
         cy.url().should(

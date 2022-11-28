@@ -100,7 +100,7 @@ export default function DeleteFlagPage() {
             isLoading={transition.state === "submitting"}
             loadingText="Deleting the environment, please wait..."
           >
-            Yes, delete the flag
+            Delete
           </DeleteButton>
         </Form>
       }

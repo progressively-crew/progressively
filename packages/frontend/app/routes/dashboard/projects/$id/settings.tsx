@@ -14,7 +14,6 @@ import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { Stack } from "~/components/Stack";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { Spacer } from "~/components/Spacer";
-import { HideMobile } from "~/components/HideMobile";
 import { MetaFunction, ActionFunction } from "@remix-run/node";
 import { useActionData, useTransition, Form } from "@remix-run/react";
 import { Card, CardContent } from "~/components/Card";
@@ -188,9 +187,11 @@ export default function SettingsPage() {
                     variant="secondary"
                     to={`/dashboard/projects/${project.uuid}/delete`}
                   >
-                    <span aria-hidden className="flex">
+                    <span aria-hidden>
                       Delete{" "}
-                      <HideMobile>{`"${project.name}"`} forever</HideMobile>
+                      <span className="hidden md:inline">
+                        {`"${project.name}"`} forever
+                      </span>
                     </span>
 
                     <VisuallyHidden>

@@ -96,9 +96,11 @@ export default function EnvSettingsPage() {
                     variant="secondary"
                     to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/delete`}
                   >
-                    <span aria-hidden className="flex">
+                    <span aria-hidden>
                       Delete{" "}
-                      <HideMobile>{`"${environment.name}"`} forever</HideMobile>
+                      <span className="hidden md:inline">
+                        {`"${environment.name}"`} forever
+                      </span>
                     </span>
 
                     <VisuallyHidden>

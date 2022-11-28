@@ -199,9 +199,7 @@ export default function FlagById() {
               action={
                 isMultiVariants && (
                   <div className="flex items-center flex-row h-full">
-                    <SubmitButton form="edit-variant">
-                      Edit variants
-                    </SubmitButton>
+                    <SubmitButton form="edit-variant">Adjust</SubmitButton>
                   </div>
                 )
               }
