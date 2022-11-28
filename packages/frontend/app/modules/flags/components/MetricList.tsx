@@ -1,6 +1,8 @@
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { Link } from "~/components/Link";
 import { RawTable, Td, Th, Tr } from "~/components/RawTable";
+import { Tag } from "~/components/Tag";
+import { stringToColor } from "~/modules/misc/utils/stringToColor";
 import { Metric } from "../types";
 
 export interface MetricListProps {
@@ -36,7 +38,16 @@ export const MetricList = ({
                 <Link
                   to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/variants`}
                 >
-                  {metric.variant?.value}
+                  {metric.variant?.value && (
+                    <Tag
+                      style={{
+                        background: stringToColor(metric.variant.value, 90),
+                        color: stringToColor(metric.variant.value, 25),
+                      }}
+                    >
+                      {metric.variant.value}
+                    </Tag>
+                  )}
                 </Link>
               )}
             </Td>

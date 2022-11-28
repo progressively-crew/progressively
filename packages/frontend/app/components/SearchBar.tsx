@@ -9,7 +9,7 @@ export interface SearchBarProps {
 
 export const SearchBar = ({ placeholder, label }: SearchBarProps) => {
   return (
-    <div>
+    <div className="max-w-md">
       <VisuallyHidden>
         <label htmlFor="search">{label}</label>
       </VisuallyHidden>
