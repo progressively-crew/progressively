@@ -2,7 +2,6 @@ import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { createProject } from "~/modules/projects/services/createProject";
 import { CreateProjectDTO, UserProject } from "~/modules/projects/types";
 import { validateProjectName } from "~/modules/projects/validators/validateProjectName";
-import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { getSession } from "~/sessions";
 import { Section } from "~/components/Section";
 import { TextInput } from "~/components/Fields/TextInput";
@@ -14,6 +13,7 @@ import { useActionData, Form, useTransition } from "@remix-run/react";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { PageTitle } from "~/components/PageTitle";
 import { Card, CardContent } from "~/components/Card";
+import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 
 export const handle = {
   breadcrumb: () => {
@@ -65,20 +65,21 @@ export default function CreateProjectPage() {
   const errors = data?.errors;
 
   return (
-    <DashboardLayout
+    <CreateEntityLayout
       user={user}
       status={errors?.name && <ErrorBox list={errors} />}
+      title={
+        <PageTitle
+          value="Create a project"
+          description={
+            <Typography>
+              When creating a project, you will become its administrator and you
+              will have full control over it.
+            </Typography>
+          }
+        />
+      }
     >
-      <PageTitle
-        value="Create a project"
-        description={
-          <Typography>
-            When creating a project, you will become its administrator and you
-            will have full control over it.
-          </Typography>
-        }
-      />
-
       <Card>
         <CardContent>
           <Section>
@@ -105,6 +106,6 @@ export default function CreateProjectPage() {
           </Section>
         </CardContent>
       </Card>
-    </DashboardLayout>
+    </CreateEntityLayout>
   );
 }

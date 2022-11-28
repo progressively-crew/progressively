@@ -1,6 +1,5 @@
 import { getSession } from "~/sessions";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
-import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { Typography } from "~/components/Typography";
 import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
 import { useActionData, Form, useTransition } from "@remix-run/react";
@@ -22,6 +21,7 @@ import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { SelectField } from "~/components/Fields/SelectField";
 import { TextInput } from "~/components/Fields/TextInput";
+import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 
 export const handle = {
   breadcrumb: (match: { params: any }) => {
@@ -110,7 +110,7 @@ export default function CreateWebhookPage() {
   const actionData = useActionData<ActionData>();
 
   return (
-    <DashboardLayout
+    <CreateEntityLayout
       user={user}
       header={
         <Header
@@ -119,18 +119,20 @@ export default function CreateWebhookPage() {
         />
       }
       status={actionData?.errors && <ErrorBox list={actionData.errors} />}
+      title={
+        <PageTitle
+          value="Create a webhook"
+          description={
+            <Typography>
+              {`You're`} about to create a webhook to{" "}
+              <strong>{currentFlag.name}</strong> in{" "}
+              <strong>{project.name}</strong> on{" "}
+              <strong>{environment.name}</strong>.
+            </Typography>
+          }
+        />
+      }
     >
-      <PageTitle
-        value="Create a webhook"
-        description={
-          <Typography>
-            {`You're`} about to create a webhook to{" "}
-            <strong>{currentFlag.name}</strong> in{" "}
-            <strong>{project.name}</strong> on{" "}
-            <strong>{environment.name}</strong>.
-          </Typography>
-        }
-      />
       <Card>
         <CardContent>
           <Form method="post">
@@ -165,6 +167,6 @@ export default function CreateWebhookPage() {
           </Form>
         </CardContent>
       </Card>
-    </DashboardLayout>
+    </CreateEntityLayout>
   );
 }
