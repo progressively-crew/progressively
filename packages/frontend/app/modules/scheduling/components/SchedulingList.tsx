@@ -1,9 +1,11 @@
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
+import { Checkbox } from "~/components/Checkbox";
+import { SliderInput } from "~/components/Fields/SliderInput";
 import { RawTable, Td, Th, Tr } from "~/components/RawTable";
-import { FlagStatus } from "~/modules/flags/components/FlagStatus";
+import { Switch } from "~/components/Switch";
+import { Typography } from "~/components/Typography";
 import { FlagStatus as FlagStatusType } from "~/modules/flags/types";
-import { Schedule } from "../types";
-import { ScheduleStatus } from "./ScheduleStatus";
+import { Schedule, SchedulingStatus } from "../types";
 
 export const formatDate = (utc: string) => {
   const options = {
@@ -36,9 +38,9 @@ export const SchedulingList = ({
       <thead>
         <Tr>
           <Th>Date</Th>
-          <Th>Status of the flag</Th>
-          <Th>Rollout percentage</Th>
-          <Th>Has the schedule run</Th>
+          <Th>Flag status</Th>
+          <Th>Percentage</Th>
+          <Th>Has run</Th>
           <Th>Actions</Th>
         </Tr>
       </thead>
@@ -46,20 +48,33 @@ export const SchedulingList = ({
         {scheduling.map((schedule, index: number) => (
           <Tr key={`${schedule.utc}-${schedule.rolloutPercentage}-${index}`}>
             <Td>
-              <div>{formatDate(schedule.utc)}</div>
+              <Typography className="text-sm">
+                {formatDate(schedule.utc)}
+              </Typography>
             </Td>
             <Td>
-              <div>
-                <FlagStatus value={schedule.status as FlagStatusType} />
-              </div>
+              <Switch
+                label="Next flag status"
+                type="submit"
+                checked={schedule.status === FlagStatusType.ACTIVATED}
+              />
             </Td>
             <Td>
-              <div>{schedule.rolloutPercentage}%</div>
+              <SliderInput
+                onChange={() => {}}
+                percentageValue={schedule.rolloutPercentage}
+                label={""}
+                hiddenLabel
+                name={"not-important-" + index}
+              />
             </Td>
             <Td>
-              <div>
-                <ScheduleStatus value={schedule.schedulingStatus} />
-              </div>
+              <Checkbox
+                name="not-important"
+                aria-label="Has the flag already run?"
+                value=""
+                checked={schedule.schedulingStatus === SchedulingStatus.HAS_RUN}
+              />
             </Td>
             <Td>
               <DeleteButton
