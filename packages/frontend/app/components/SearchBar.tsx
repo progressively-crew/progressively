@@ -14,7 +14,7 @@ export const SearchBar = ({ placeholder, label }: SearchBarProps) => {
         <label htmlFor="search">{label}</label>
       </VisuallyHidden>
 
-      <Form>
+      <Form role="search">
         <div className="flex flex-row items-center h-10 rounded pl-4 border border-gray-200 gap-2 bg-white overflow-hidden w-full">
           <IoIosSearch className="text-xl text-gray-500" />
 
