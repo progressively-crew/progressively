@@ -2,9 +2,9 @@ import type { EntryContext } from "@remix-run/node";
 import { RemixServer } from "@remix-run/react";
 import { renderToString } from "react-dom/server";
 import { startMockServer } from "./mocks/mock-server";
-import { initSentryOnServer } from "./modules/sentry/server";
+// import { initSentryOnServer } from "./modules/sentry/server";
 
-initSentryOnServer();
+// initSentryOnServer();
 
 export default function handleRequest(
   request: Request,

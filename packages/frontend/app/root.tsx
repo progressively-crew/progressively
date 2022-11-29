@@ -19,7 +19,7 @@ import { LinksFunction } from "@remix-run/node";
 import { ErrorLayout } from "./layouts/ErrorLayout";
 import { Typography } from "./components/Typography";
 import { Spacer } from "./components/Spacer";
-import { withSentry } from "@sentry/remix";
+//import { withSentry } from "@sentry/remix";
 import { SubmitButton } from "./components/Buttons/SubmitButton";
 
 /**
@@ -47,7 +47,8 @@ function App() {
   );
 }
 
-export default withSentry(App);
+// export default withSentry(App);
+export default App;
 
 interface DocumentProps {
   children: React.ReactNode;

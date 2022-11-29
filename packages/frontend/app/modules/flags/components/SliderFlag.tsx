@@ -18,7 +18,6 @@ export const SliderFlag = ({ initialRolloutPercentage }: SliderFlagProps) => {
     setRolloutPercentage(initialRolloutPercentage);
   }, [initialRolloutPercentage]);
 
-  console.log("llool");
   return (
     <Form method="post">
       <Stack spacing={4}>
