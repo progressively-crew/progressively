@@ -2,7 +2,8 @@ import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { RawTable, Td, Th, Tr } from "~/components/RawTable";
 import { Tag } from "~/components/Tag";
 import { Typography } from "~/components/Typography";
-import { AdditionalAudienceRetrieveDTO, ComparatorEnum } from "../types";
+import { Comparator } from "~/modules/misc/components/Comparator";
+import { AdditionalAudienceRetrieveDTO } from "../types";
 
 export interface AdditionalAudienceListProps {
   items: Array<AdditionalAudienceRetrieveDTO>;
@@ -10,18 +11,6 @@ export interface AdditionalAudienceListProps {
   envId: string;
   flagId: string;
 }
-
-const Comparator = ({ comparator }: { comparator: ComparatorEnum }) => {
-  if (comparator === ComparatorEnum.Equals) {
-    return <span>equals</span>;
-  }
-
-  if (comparator === ComparatorEnum.Contains) {
-    return <span>contains</span>;
-  }
-
-  return null;
-};
 
 export const AdditionalAudienceList = ({
   items,
@@ -36,6 +25,7 @@ export const AdditionalAudienceList = ({
           <Th>Field</Th>
           <Th>Comparator</Th>
           <Th>Field value (one of them)</Th>
+          <Th>Value to serve</Th>
           <Th>Actions</Th>
         </Tr>
       </thead>
@@ -62,6 +52,10 @@ export const AdditionalAudienceList = ({
                   </Tag>
                 ))}
               </div>
+            </Td>
+
+            <Td>
+              <Tag>{strat.valueToServe}</Tag>
             </Td>
 
             <Td>
