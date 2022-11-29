@@ -6,37 +6,46 @@ import { Crumb } from "./types";
 
 interface IconWrapperProps {
   children: React.ReactNode;
+  color?: string;
 }
 
-const IconWrapper = ({ children }: IconWrapperProps) => {
-  return <span className="flex text-indigo-700">{children}</span>;
+const IconWrapper = ({ children, color }: IconWrapperProps) => {
+  return (
+    <span className={`flex ${color || "text-indigo-700"}`}>{children}</span>
+  );
 };
 
-export const CrumbIcon = ({ crumb, ...props }: { crumb: Crumb }) => {
+export const CrumbIcon = ({
+  crumb,
+  color,
+}: {
+  crumb: Crumb;
+  color?: string;
+}) => {
   if (crumb.isRoot)
     return (
-      <IconWrapper>
+      <IconWrapper color={color}>
         <TbFolders />
       </IconWrapper>
     );
 
   if (crumb.isEnv)
     return (
-      <IconWrapper>
+      <IconWrapper color={color}>
         <EnvIcon />
       </IconWrapper>
     );
 
   if (crumb.isFlag)
     return (
-      <IconWrapper>
+      <IconWrapper color={color}>
         <FlagIcon />
       </IconWrapper>
     );
 
   if (crumb.isProject)
     return (
-      <IconWrapper>
+      <IconWrapper color={color}>
         <ProjectIcon />
       </IconWrapper>
     );

@@ -41,7 +41,7 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
                   style={{ color, background }}
                 >
                   <HStack spacing={2}>
-                    <CrumbIcon crumb={crumb} />
+                    <CrumbIcon crumb={crumb} color={color} />
                     {crumb.label}
                   </HStack>
                 </div>
