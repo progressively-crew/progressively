@@ -10,18 +10,19 @@ export const RawTable = forwardRef((props: any, ref: any) => {
 
 export const Tr = ({
   onClick,
+  className,
   ...props
 }: React.HTMLAttributes<HTMLTableRowElement>) => {
   const isClickable = Boolean(onClick);
 
+  const classNameTr = isClickable
+    ? "border-l-8 border-l-transparent hover:bg-gray-50 hover:border-l-indigo-500 hover:cursor-pointer active:bg-gray-100 border-b border-b-gray-100"
+    : "border-b border-b-gray-100";
+
   return (
     <tr
       onClick={onClick}
-      className={
-        isClickable
-          ? "border-l-8 border-l-transparent hover:bg-gray-50 hover:border-l-indigo-500 hover:cursor-pointer active:bg-gray-100 border-b border-b-gray-100"
-          : "border-b border-b-gray-100"
-      }
+      className={classNameTr + " " + className || ""}
       {...props}
     />
   );

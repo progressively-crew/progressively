@@ -1,8 +1,9 @@
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
-import { HStack } from "~/components/HStack";
 import { RawTable, Td, Th, Tr } from "~/components/RawTable";
+import { Tag } from "~/components/Tag";
+import { Typography } from "~/components/Typography";
+import { Comparator } from "~/modules/misc/components/Comparator";
 import { AdditionalAudienceRetrieveDTO } from "../types";
-import { AudienceList } from "./AudienceList";
 
 export interface AdditionalAudienceListProps {
   items: Array<AdditionalAudienceRetrieveDTO>;
@@ -21,7 +22,10 @@ export const AdditionalAudienceList = ({
     <RawTable aria-label="Strategies applied on this flag">
       <thead>
         <Tr>
-          <Th>Criteria</Th>
+          <Th>Field</Th>
+          <Th>Comparator</Th>
+          <Th>Field value (one of them)</Th>
+          <Th>Value to serve</Th>
           <Th>Actions</Th>
         </Tr>
       </thead>
@@ -29,7 +33,29 @@ export const AdditionalAudienceList = ({
         {items.map((strat) => (
           <Tr key={strat.uuid}>
             <Td>
-              <AudienceList strat={strat} />
+              <Typography>{strat.fieldName}</Typography>
+            </Td>
+            <Td>
+              <Typography>
+                <Comparator comparator={strat.fieldComparator} />
+              </Typography>
+            </Td>
+            <Td>
+              <div className="flex flex-row gap-2 flex-wrap">
+                {strat.fieldValue.split("\n").map((entry, index: number) => (
+                  <Tag
+                    variant="PRIMARY"
+                    size="S"
+                    key={`${strat.uuid}-${entry}-${index}`}
+                  >
+                    {entry}
+                  </Tag>
+                ))}
+              </div>
+            </Td>
+
+            <Td>
+              <Tag>{strat.valueToServe}</Tag>
             </Td>
 
             <Td>

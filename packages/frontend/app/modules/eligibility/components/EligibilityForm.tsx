@@ -1,3 +1,5 @@
+import { FaEquals } from "react-icons/fa";
+import { TbBox } from "react-icons/tb";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { SelectField } from "~/components/Fields/SelectField";
 import { TextareaInput } from "~/components/Fields/TextareaInput";
@@ -37,8 +39,16 @@ export const EligibilityForm = ({
             label="Field comparator"
             defaultValue={initialFieldComparator}
             options={[
-              { value: ComparatorEnum.Equals, label: "Equals" },
-              { value: ComparatorEnum.Contains, label: "Contains" },
+              {
+                value: ComparatorEnum.Equals,
+                label: "Equals",
+                icon: <FaEquals />,
+              },
+              {
+                value: ComparatorEnum.Contains,
+                label: "Contains",
+                icon: <TbBox />,
+              },
             ]}
           />
         </HStack>

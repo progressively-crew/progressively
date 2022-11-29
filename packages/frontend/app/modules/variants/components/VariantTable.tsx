@@ -91,6 +91,8 @@ export const VariantTable = ({ variants, action }: VariantTableProps) => {
                       checked={Boolean(variant.uuid)}
                       value={variant.uuid}
                       name={"isControl"}
+                      onChange={() => {}}
+                      readOnly
                     />
                   )}
                 </Td>

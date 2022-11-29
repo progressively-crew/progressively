@@ -1,7 +1,6 @@
 import { useTransition } from "react";
 import { getSession } from "~/sessions";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
-import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { Typography } from "~/components/Typography";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
@@ -23,6 +22,7 @@ import { EligibilityCreateDTO } from "~/modules/eligibility/types";
 import { createEligibility } from "~/modules/eligibility/services/createEligibility";
 import { EligibilityForm } from "~/modules/eligibility/components/EligibilityForm";
 import { validateEligibilityForm } from "~/modules/eligibility/validators/validateEligibilityForm";
+import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 
 export const handle = {
   breadcrumb: (match: { params: any }) => {
@@ -107,7 +107,7 @@ export default function StrategyCreatePage() {
   const errors = actionData?.errors || {};
 
   return (
-    <DashboardLayout
+    <CreateEntityLayout
       user={user}
       header={
         <Header
@@ -116,18 +116,20 @@ export default function StrategyCreatePage() {
         />
       }
       status={actionData?.errors && <ErrorBox list={actionData.errors} />}
+      title={
+        <PageTitle
+          value="Create an eligibility restriction"
+          description={
+            <Typography>
+              {`You're`} about to create an eligibility restriction to{" "}
+              <strong>{currentFlag.name}</strong> in{" "}
+              <strong>{project.name}</strong> on{" "}
+              <strong>{environment.name}</strong>.
+            </Typography>
+          }
+        />
+      }
     >
-      <PageTitle
-        value="Create an eligibility restriction"
-        description={
-          <Typography>
-            {`You're`} about to create an eligibility restriction to{" "}
-            <strong>{currentFlag.name}</strong> in{" "}
-            <strong>{project.name}</strong> on{" "}
-            <strong>{environment.name}</strong>.
-          </Typography>
-        }
-      />
       <Card>
         <CardContent>
           <Form method="post">
@@ -146,6 +148,6 @@ export default function StrategyCreatePage() {
           </Form>
         </CardContent>
       </Card>
-    </DashboardLayout>
+    </CreateEntityLayout>
   );
 }
