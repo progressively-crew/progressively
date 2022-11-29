@@ -35,7 +35,11 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
                 </HStack>
               </Link>
 
-              {crumb.menuItems ? <MenuButton items={crumb.menuItems} /> : null}
+              {crumb.menuItems ? (
+                <div className="pl-2">
+                  <MenuButton items={crumb.menuItems} />
+                </div>
+              ) : null}
 
               {!currentPage && (
                 <div className="flex text-gray-300 px-4" aria-hidden>

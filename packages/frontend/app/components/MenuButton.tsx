@@ -16,9 +16,14 @@ export const MenuButton = ({ items }: MenuButtonProps) => {
   return (
     <div className="relative">
       <Menu>
-        <Menu.Button className={"w-6 h-8 flex justify-center items-center"}>
+        <Menu.Button
+          className={
+            "w-8 h-8 -ml-2 flex justify-center items-center hover:bg-gray-100 transition-all rounded text-gray-700"
+          }
+        >
           <MdOutlineKeyboardArrowDown />
         </Menu.Button>
+
         <Transition
           as={Fragment}
           enter="transition ease-out duration-100"
@@ -28,17 +33,19 @@ export const MenuButton = ({ items }: MenuButtonProps) => {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5">
             {items.map((item) => (
               <Menu.Item key={item.href}>
-                <NavLink
-                  className={
-                    "flex w-full items-center rounded-md px-2 py-2 text-sm text-indigo-700"
-                  }
-                  to={item.href}
-                >
-                  {item.label}
-                </NavLink>
+                {({ active }) => (
+                  <NavLink
+                    className={`flex w-full items-center first:rounded-t-md last:rounded-b-md px-3 py-3 text-sm text-gray-700 font-normal focus:bg-gray-100 text-gray-700 ${
+                      active ? "bg-gray-100" : ""
+                    }`}
+                    to={item.href}
+                  >
+                    {item.label}
+                  </NavLink>
+                )}
               </Menu.Item>
             ))}
           </Menu.Items>
