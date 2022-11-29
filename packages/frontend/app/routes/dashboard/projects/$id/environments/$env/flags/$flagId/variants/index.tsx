@@ -6,7 +6,6 @@ import {
   useTransition,
 } from "@remix-run/react";
 import { useEffect, useRef } from "react";
-import { AiOutlineAppstore } from "react-icons/ai";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
@@ -15,6 +14,7 @@ import { EmptyState } from "~/components/EmptyState";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Header } from "~/components/Header";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
+import { VariantIcon } from "~/components/Icons/VariantIcon";
 import { PageTitle } from "~/components/PageTitle";
 import { Section, SectionHeader } from "~/components/Section";
 import { Spacer } from "~/components/Spacer";
@@ -156,7 +156,7 @@ export default function VariantsOfFlag() {
         />
       }
     >
-      <PageTitle value="Variants" icon={<AiOutlineAppstore />} />
+      <PageTitle value="Variants" icon={<VariantIcon />} />
 
       <Section id="variant-list">
         <Card>
