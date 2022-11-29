@@ -1579,20 +1579,8 @@ input[type="range"]::-moz-range-thumb {
     display: none;
   }
 
-  .lg\:grid-cols-\[240px_1fr\] {
-    grid-template-columns: 240px 1fr;
-  }
-
   .lg\:grid-cols-\[200px_1fr\] {
     grid-template-columns: 200px 1fr;
-  }
-
-  .lg\:grid-cols-\[160px_1fr\] {
-    grid-template-columns: 160px 1fr;
-  }
-
-  .lg\:grid-cols-\[1200px_1fr\] {
-    grid-template-columns: 1200px 1fr;
   }
 
   .lg\:flex-row {
