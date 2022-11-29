@@ -1,3 +1,1 @@
-import { FiLayers } from "react-icons/fi";
-
-export const EnvIcon = () => <FiLayers />;
+export { FiLayers as EnvIcon } from "react-icons/fi";

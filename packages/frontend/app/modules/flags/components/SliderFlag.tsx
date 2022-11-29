@@ -1,5 +1,5 @@
 import { Form } from "@remix-run/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { SliderInput } from "~/components/Fields/SliderInput";
 
@@ -13,6 +13,10 @@ export const SliderFlag = ({ initialRolloutPercentage }: SliderFlagProps) => {
   const [rolloutPercentage, setRolloutPercentage] = useState(
     initialRolloutPercentage
   );
+
+  useEffect(() => {
+    setRolloutPercentage(initialRolloutPercentage);
+  }, [initialRolloutPercentage]);
 
   return (
     <Form method="post">
