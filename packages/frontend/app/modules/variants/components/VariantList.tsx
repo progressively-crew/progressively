@@ -10,12 +10,15 @@ import { HideDesktop } from "~/components/HideMobile";
 import { HStack } from "~/components/HStack";
 import { Variant } from "../types";
 import { RawTable, Td, Th, Tr } from "~/components/RawTable";
+import { stringToColor } from "~/modules/misc/utils/stringToColor";
 
 export interface FormSliderInputProps {
   name: string;
   label: string;
   id: string;
   initialPercentage: number;
+  bgColor?: string;
+  fgColor?: string;
 }
 
 const FormSliderInput = ({
@@ -23,6 +26,8 @@ const FormSliderInput = ({
   label,
   id,
   initialPercentage,
+  bgColor,
+  fgColor,
 }: FormSliderInputProps) => {
   const [percentage, setPercentage] = useState(initialPercentage);
 
@@ -34,6 +39,8 @@ const FormSliderInput = ({
       percentageValue={percentage}
       onChange={setPercentage}
       label={label}
+      bgColor={bgColor}
+      fgColor={fgColor}
     />
   );
 };
@@ -76,63 +83,70 @@ export const VariantList = ({
           </thead>
 
           <tbody>
-            {variants.map((variant, index) => (
-              <Tr
-                key={`variant-${variant.uuid}`}
-                className={variant.isControl ? "bg-gray-50" : undefined}
-              >
-                <Td>
-                  <TextInput
-                    hiddenLabel
-                    id={`name-${index}`}
-                    name="name"
-                    defaultValue={variant.value}
-                    label={`Variant ${index + 1} value`}
-                    isInvalid={Boolean(errors?.[`name-${index}`])}
-                  />
-                </Td>
+            {variants.map((variant, index) => {
+              const background = stringToColor(variant.value, 90);
+              const color = stringToColor(variant.value, 25);
 
-                <Td>
-                  <FormSliderInput
-                    id={`rolloutPercentage-${index}`}
-                    name={`rolloutPercentage`}
-                    label={`Variant ${index + 1} rollout percentage`}
-                    initialPercentage={variant.rolloutPercentage}
-                  />
-                </Td>
+              return (
+                <Tr
+                  key={`variant-${variant.uuid}`}
+                  className={variant.isControl ? "bg-gray-50" : undefined}
+                >
+                  <Td>
+                    <TextInput
+                      hiddenLabel
+                      id={`name-${index}`}
+                      name="name"
+                      defaultValue={variant.value}
+                      label={`Variant ${index + 1} value`}
+                      isInvalid={Boolean(errors?.[`name-${index}`])}
+                    />
+                  </Td>
 
-                <Td>
-                  <HStack spacing={2}>
-                    <div>
-                      <input type="hidden" name="uuid" value={variant.uuid} />
-                      <Radio
-                        type={"radio"}
-                        name={"isControl"}
-                        value={variant.uuid}
-                        defaultChecked={variant.isControl}
-                        aria-label={`Is variant at position ${
-                          index + 1
-                        } the control variant?`}
-                        readOnly
-                      />
-                    </div>
-                    <HideDesktop>
-                      <Label>Is control variant</Label>
-                    </HideDesktop>
-                  </HStack>
-                </Td>
+                  <Td>
+                    <FormSliderInput
+                      id={`rolloutPercentage-${index}`}
+                      name={`rolloutPercentage`}
+                      label={`Variant ${index + 1} rollout percentage`}
+                      initialPercentage={variant.rolloutPercentage}
+                      bgColor={background}
+                      fgColor={color}
+                    />
+                  </Td>
 
-                <Td>
-                  <DeleteButton
-                    variant="secondary"
-                    type="submit"
-                    form={`delete-form-${variant.uuid}`}
-                  >
-                    Remove
-                  </DeleteButton>
-                </Td>
-              </Tr>
-            ))}
+                  <Td>
+                    <HStack spacing={2}>
+                      <div>
+                        <input type="hidden" name="uuid" value={variant.uuid} />
+                        <Radio
+                          type={"radio"}
+                          name={"isControl"}
+                          value={variant.uuid}
+                          defaultChecked={variant.isControl}
+                          aria-label={`Is variant at position ${
+                            index + 1
+                          } the control variant?`}
+                          readOnly
+                        />
+                      </div>
+                      <HideDesktop>
+                        <Label>Is control variant</Label>
+                      </HideDesktop>
+                    </HStack>
+                  </Td>
+
+                  <Td>
+                    <DeleteButton
+                      variant="secondary"
+                      type="submit"
+                      form={`delete-form-${variant.uuid}`}
+                    >
+                      Remove
+                    </DeleteButton>
+                  </Td>
+                </Tr>
+              );
+            })}
           </tbody>
         </RawTable>
 
