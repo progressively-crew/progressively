@@ -17,14 +17,24 @@ export const handle = {
       link: `/dashboard/projects/${match.params.id}/environments/${match.params.env}`,
       label: environment.name,
       isEnv: true,
-      menuItems: parentProjectMatch.data.project.environments.map((env) => ({
-        label: env.name,
-        href: currentPath.replace(
+      menuItems: parentProjectMatch.data.project.environments.map((env) => {
+        const nextPath = currentPath.replace(
           `/environments/${match.params.env}`,
           `/environments/${env.uuid}`
-        ),
-      })),
+        );
+
+        const href =
+          nextPath[nextPath.length - 1] === "/"
+            ? nextPath.slice(0, -1)
+            : nextPath;
+
+        return {
+          label: env.name,
+          href,
+        };
+      }),
       menuLabel: `Change environment`,
+      colorize: true,
     };
   },
 };

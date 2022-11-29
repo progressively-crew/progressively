@@ -14,6 +14,8 @@ export interface FormSliderInputProps {
   label: string;
   id: string;
   initialPercentage: number;
+  bgColor?: string;
+  fgColor?: string;
 }
 
 const FormSliderInput = ({
@@ -21,6 +23,8 @@ const FormSliderInput = ({
   label,
   id,
   initialPercentage,
+  bgColor,
+  fgColor,
 }: FormSliderInputProps) => {
   const [percentage, setPercentage] = useState(initialPercentage);
 
@@ -32,6 +36,8 @@ const FormSliderInput = ({
       percentageValue={percentage}
       onChange={setPercentage}
       label={label}
+      bgColor={bgColor}
+      fgColor={fgColor}
     />
   );
 };
@@ -59,48 +65,55 @@ export const VariantTable = ({ variants, action }: VariantTableProps) => {
           </thead>
 
           <tbody>
-            {variants.map((variant, index) => (
-              <Tr
-                key={`variant-${variant.uuid}`}
-                className={variant.isControl ? "bg-gray-50" : undefined}
-              >
-                <Td>
-                  <input type="hidden" value={variant.value} name={"name"} />
+            {variants.map((variant, index) => {
+              const background = stringToColor(variant.value, 90);
+              const color = stringToColor(variant.value, 25);
 
-                  <Tag
-                    style={{
-                      background: stringToColor(variant.value, 90),
-                      color: stringToColor(variant.value, 25),
-                    }}
-                  >
-                    {variant.value}
-                  </Tag>
-                </Td>
+              return (
+                <Tr
+                  key={`variant-${variant.uuid}`}
+                  className={variant.isControl ? "bg-gray-50" : undefined}
+                >
+                  <Td>
+                    <input type="hidden" value={variant.value} name={"name"} />
 
-                <Td>
-                  <FormSliderInput
-                    id={`rolloutPercentage-${index}`}
-                    name={`rolloutPercentage`}
-                    label={`Variant ${index + 1} rollout percentage`}
-                    initialPercentage={variant.rolloutPercentage}
-                  />
-                </Td>
-                <Td className="text-center py-4 px-8">
-                  <input type="hidden" name="uuid" value={variant.uuid} />
+                    <Tag
+                      style={{
+                        background,
+                        color,
+                      }}
+                    >
+                      {variant.value}
+                    </Tag>
+                  </Td>
 
-                  {variant.isControl && (
-                    <Checkbox
-                      disabled
-                      checked={Boolean(variant.uuid)}
-                      value={variant.uuid}
-                      name={"isControl"}
-                      onChange={() => {}}
-                      readOnly
+                  <Td>
+                    <FormSliderInput
+                      id={`rolloutPercentage-${index}`}
+                      name={`rolloutPercentage`}
+                      label={`Variant ${index + 1} rollout percentage`}
+                      initialPercentage={variant.rolloutPercentage}
+                      bgColor={background}
+                      fgColor={color}
                     />
-                  )}
-                </Td>
-              </Tr>
-            ))}
+                  </Td>
+                  <Td className="text-center py-4 px-8">
+                    <input type="hidden" name="uuid" value={variant.uuid} />
+
+                    {variant.isControl && (
+                      <Checkbox
+                        disabled
+                        checked={Boolean(variant.uuid)}
+                        value={variant.uuid}
+                        name={"isControl"}
+                        onChange={() => {}}
+                        readOnly
+                      />
+                    )}
+                  </Td>
+                </Tr>
+              );
+            })}
           </tbody>
         </RawTable>
 
