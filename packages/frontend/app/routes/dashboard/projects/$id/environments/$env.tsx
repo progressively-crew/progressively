@@ -4,10 +4,14 @@ import { useProject } from "~/modules/projects/contexts/useProject";
 
 export const handle = {
   breadcrumb: (match, matches: any) => {
-    const parentProjectMatch = matches[matches.indexOf(match) - 1];
+    const parentProjectMatch = matches.find(
+      (d: any) => d.id === "routes/dashboard/projects/$id"
+    );
     const environment = parentProjectMatch.data.project.environments.find(
       (env) => env.uuid === match.params.env
     )!;
+
+    const currentPath = matches[matches.length - 1].pathname;
 
     return {
       link: `/dashboard/projects/${match.params.id}/environments/${match.params.env}`,
@@ -15,7 +19,10 @@ export const handle = {
       isEnv: true,
       menuItems: parentProjectMatch.data.project.environments.map((env) => ({
         label: env.name,
-        href: `/dashboard/projects/${match.params.id}/environments/${env.uuid}`,
+        href: currentPath.replace(
+          `/environments/${match.params.env}`,
+          `/environments/${env.uuid}`
+        ),
       })),
       menuLabel: `Change environment`,
     };
