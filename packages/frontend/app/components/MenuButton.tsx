@@ -1,11 +1,12 @@
 import { Menu, Transition } from "@headlessui/react";
 import { NavLink } from "@remix-run/react";
-import { Fragment } from "react";
+import React, { Fragment } from "react";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 
 interface MenuItem {
   label: string;
   href: string;
+  icon?: React.ReactNode;
 }
 
 export interface MenuButtonProps {
@@ -19,7 +20,7 @@ export const MenuButton = ({ items, label }: MenuButtonProps) => {
       <Menu>
         <Menu.Button
           className={
-            "w-8 h-8 -mx-2 flex justify-center items-center hover:bg-gray-100 transition-all rounded text-gray-700"
+            "w-8 h-8 flex justify-center items-center hover:bg-gray-100 transition-all rounded text-gray-700"
           }
         >
           <MdOutlineKeyboardArrowDown aria-label={label} />
@@ -39,11 +40,12 @@ export const MenuButton = ({ items, label }: MenuButtonProps) => {
               <Menu.Item key={item.href}>
                 {({ active }) => (
                   <NavLink
-                    className={`flex w-full items-center first:rounded-t-md last:rounded-b-md px-3 py-3 text-sm text-gray-700 font-normal focus:bg-gray-100 text-gray-700 ${
+                    className={`flex gap-2 w-full items-center first:rounded-t-md last:rounded-b-md px-3 py-3 text-sm text-gray-700 font-normal focus:bg-gray-100 text-gray-700 ${
                       active ? "bg-gray-100" : ""
                     }`}
                     to={item.href}
                   >
+                    {item.icon}
                     {item.label}
                   </NavLink>
                 )}

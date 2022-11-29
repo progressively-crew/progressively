@@ -1,3 +1,1 @@
-import { TbFolder } from "react-icons/tb";
-
-export const ProjectIcon = () => <TbFolder />;
+export { TbFolder as ProjectIcon } from "react-icons/tb";
