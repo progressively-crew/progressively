@@ -14,6 +14,7 @@ export interface Crumb {
     href: string;
   }>;
   menuLabel?: string;
+  colorize?: boolean;
 }
 
 export type Crumbs = Array<Crumb>;

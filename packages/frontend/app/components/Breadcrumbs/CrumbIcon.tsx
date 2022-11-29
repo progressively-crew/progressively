@@ -12,7 +12,7 @@ const IconWrapper = ({ children }: IconWrapperProps) => {
   return <span className="flex text-indigo-700">{children}</span>;
 };
 
-export const CrumbIcon = ({ crumb }: { crumb: Crumb }) => {
+export const CrumbIcon = ({ crumb, ...props }: { crumb: Crumb }) => {
   if (crumb.isRoot)
     return (
       <IconWrapper>
