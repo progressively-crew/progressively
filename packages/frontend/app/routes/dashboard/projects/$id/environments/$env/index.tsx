@@ -137,6 +137,7 @@ export default function FlagsByEnvPage() {
           <Card>
             <CardContent>
               <EmptyState
+                titleAs="h2"
                 title="No flags found"
                 description={
                   <Typography>

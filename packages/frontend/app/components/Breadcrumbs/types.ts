@@ -9,6 +9,11 @@ export interface Crumb {
   isProject?: boolean;
   isEnv?: boolean;
   isFlag?: boolean;
+  menuItems?: Array<{
+    label: string;
+    href: string;
+  }>;
+  menuLabel?: string;
 }
 
 export type Crumbs = Array<Crumb>;

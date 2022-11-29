@@ -3,7 +3,7 @@ import { EnvProvider } from "~/modules/environments/contexts/EnvProvider";
 import { useProject } from "~/modules/projects/contexts/useProject";
 
 export const handle = {
-  breadcrumb: (match, matches) => {
+  breadcrumb: (match, matches: any) => {
     const parentProjectMatch = matches[matches.indexOf(match) - 1];
     const environment = parentProjectMatch.data.project.environments.find(
       (env) => env.uuid === match.params.env
@@ -13,6 +13,11 @@ export const handle = {
       link: `/dashboard/projects/${match.params.id}/environments/${match.params.env}`,
       label: environment.name,
       isEnv: true,
+      menuItems: parentProjectMatch.data.project.environments.map((env) => ({
+        label: env.name,
+        href: `/dashboard/projects/${match.params.id}/environments/${env.uuid}`,
+      })),
+      menuLabel: `Change environment`,
     };
   },
 };

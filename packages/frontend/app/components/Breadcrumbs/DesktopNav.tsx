@@ -1,6 +1,6 @@
-import { MdChevronRight } from "react-icons/md";
 import { HStack } from "../HStack";
 import { Link } from "../Link";
+import { MenuButton } from "../MenuButton";
 import { CrumbIcon } from "./CrumbIcon";
 import { Crumbs } from "./types";
 
@@ -35,9 +35,18 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
                 </HStack>
               </Link>
 
+              {crumb.menuItems ? (
+                <div className="pl-2">
+                  <MenuButton
+                    items={crumb.menuItems}
+                    label={crumb.menuLabel!}
+                  />
+                </div>
+              ) : null}
+
               {!currentPage && (
-                <div className="flex text-gray-700 px-2" aria-hidden>
-                  <MdChevronRight />
+                <div className="flex text-gray-300 px-4" aria-hidden>
+                  {"/"}
                 </div>
               )}
             </li>

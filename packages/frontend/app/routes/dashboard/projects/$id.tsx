@@ -11,11 +11,20 @@ interface LoaderData {
 }
 
 export const handle = {
-  breadcrumb: (match: { data: LoaderData; params: any }) => {
+  breadcrumb: (match: { data: LoaderData; params: any }, allData: any) => {
+    const routeWithProjects = allData.find(
+      (d: any) => d.id === "routes/dashboard"
+    );
+
     return {
       link: `/dashboard/projects/${match.params.id}`,
       label: match.data.project.name,
       isProject: true,
+      menuItems: routeWithProjects.data.projects.map((p: any) => ({
+        href: `/dashboard/projects/${p.project.uuid}`,
+        label: p.project.name,
+      })),
+      menuLabel: `Change project`,
     };
   },
 };
