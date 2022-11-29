@@ -10,9 +10,10 @@ interface MenuItem {
 
 export interface MenuButtonProps {
   items: Array<MenuItem>;
+  label: string;
 }
 
-export const MenuButton = ({ items }: MenuButtonProps) => {
+export const MenuButton = ({ items, label }: MenuButtonProps) => {
   return (
     <div className="relative">
       <Menu>
@@ -21,7 +22,7 @@ export const MenuButton = ({ items }: MenuButtonProps) => {
             "w-8 h-8 -mx-2 flex justify-center items-center hover:bg-gray-100 transition-all rounded text-gray-700"
           }
         >
-          <MdOutlineKeyboardArrowDown />
+          <MdOutlineKeyboardArrowDown aria-label={label} />
         </Menu.Button>
 
         <Transition

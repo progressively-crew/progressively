@@ -37,7 +37,10 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
 
               {crumb.menuItems ? (
                 <div className="pl-2">
-                  <MenuButton items={crumb.menuItems} />
+                  <MenuButton
+                    items={crumb.menuItems}
+                    label={crumb.menuLabel!}
+                  />
                 </div>
               ) : null}
 

@@ -17,6 +17,7 @@ export const handle = {
         label: env.name,
         href: `/dashboard/projects/${match.params.id}/environments/${env.uuid}`,
       })),
+      menuLabel: `Change environment`,
     };
   },
 };

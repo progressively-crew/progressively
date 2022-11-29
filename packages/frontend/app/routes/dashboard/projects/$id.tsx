@@ -24,6 +24,7 @@ export const handle = {
         href: `/dashboard/projects/${p.project.uuid}`,
         label: p.project.name,
       })),
+      menuLabel: `Change project`,
     };
   },
 };

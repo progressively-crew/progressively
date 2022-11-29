@@ -13,6 +13,7 @@ export interface Crumb {
     label: string;
     href: string;
   }>;
+  menuLabel?: string;
 }
 
 export type Crumbs = Array<Crumb>;
