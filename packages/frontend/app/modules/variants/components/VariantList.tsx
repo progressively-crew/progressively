@@ -77,7 +77,10 @@ export const VariantList = ({
 
           <tbody>
             {variants.map((variant, index) => (
-              <Tr key={`variant-${variant.uuid}`}>
+              <Tr
+                key={`variant-${variant.uuid}`}
+                className={variant.isControl ? "bg-gray-500" : undefined}
+              >
                 <Td>
                   <TextInput
                     hiddenLabel
