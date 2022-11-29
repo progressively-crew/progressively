@@ -18,7 +18,7 @@ export const MenuButton = ({ items }: MenuButtonProps) => {
       <Menu>
         <Menu.Button
           className={
-            "w-8 h-8 -ml-2 flex justify-center items-center hover:bg-gray-100 transition-all rounded text-gray-700"
+            "w-8 h-8 -mx-2 flex justify-center items-center hover:bg-gray-100 transition-all rounded text-gray-700"
           }
         >
           <MdOutlineKeyboardArrowDown />
