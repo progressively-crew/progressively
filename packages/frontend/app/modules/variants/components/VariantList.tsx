@@ -79,7 +79,7 @@ export const VariantList = ({
             {variants.map((variant, index) => (
               <Tr
                 key={`variant-${variant.uuid}`}
-                className={variant.isControl ? "bg-gray-500" : undefined}
+                className={variant.isControl ? "bg-gray-50" : undefined}
               >
                 <Td>
                   <TextInput

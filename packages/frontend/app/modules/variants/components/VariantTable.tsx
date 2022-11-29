@@ -60,7 +60,10 @@ export const VariantTable = ({ variants, action }: VariantTableProps) => {
 
           <tbody>
             {variants.map((variant, index) => (
-              <Tr key={`variant-${variant.uuid}`}>
+              <Tr
+                key={`variant-${variant.uuid}`}
+                className={variant.isControl ? "bg-gray-50" : undefined}
+              >
                 <Td>
                   <input type="hidden" value={variant.value} name={"name"} />
 
