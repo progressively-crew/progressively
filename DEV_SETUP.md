@@ -22,7 +22,7 @@ This is the stack, in a nutshell, and the links to the various documentation of 
 
 - **frontend (dashboard)**: built with [Remix.run](https://remix.run/)
 - **backend (API/Websockets)** built with [Nestjs](https://nestjs.com/)
-- **database access/migrations** built with [Prisma](https://www.prisma.io/) and [Prismix](https://github.com/jamiepine/prismix)
+- **database access/migrations** built with [Prisma](https://www.prisma.io/)
 - **databases**: [Postgres](https://www.postgresql.org/) and [Redis](https://redis.io/) (for websocket backend)
 
 All of the packages are written in [TypeScript](https://www.typescriptlang.org/).
