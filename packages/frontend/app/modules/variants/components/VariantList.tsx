@@ -149,11 +149,11 @@ export const VariantList = ({
             })}
           </tbody>
         </RawTable>
-
-        <CardContent>
-          <HStack>{action}</HStack>
-        </CardContent>
       </Form>
+
+      <CardContent>
+        <HStack>{action}</HStack>
+      </CardContent>
     </div>
   );
 };
