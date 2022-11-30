@@ -20,7 +20,7 @@ export interface FlagMenuProps {
 export const FlagMenu = ({ projectId, envId, flagId }: FlagMenuProps) => {
   return (
     <HorizontalNav label={`Flag related`}>
-      <HideTablet as="li">
+      <HideTablet role="separator" as="li">
         <p className="uppercase text-black text-sm font-bold">
           Rollout details
         </p>
@@ -48,7 +48,7 @@ export const FlagMenu = ({ projectId, envId, flagId }: FlagMenuProps) => {
         Scheduling
       </NavItem>
 
-      <HideTablet as="li">
+      <HideTablet role="separator" as="li">
         <Spacer size={4} />
         <p className="uppercase text-black text-sm font-bold">Measuring</p>
         <Spacer size={1} />
@@ -68,7 +68,7 @@ export const FlagMenu = ({ projectId, envId, flagId }: FlagMenuProps) => {
         Metrics
       </NavItem>
 
-      <HideTablet as="li">
+      <HideTablet role="separator" as="li">
         <Spacer size={4} />
         <p className="uppercase text-black text-sm font-bold">Other</p>
         <Spacer size={1} />
