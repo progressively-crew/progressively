@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   PieChart as RPieChart,
   Pie,
@@ -21,7 +22,22 @@ export const PieChart = ({ data }: PieChartProps) => {
           fill="#8884d8"
           paddingAngle={5}
           dataKey="value"
-          label={({ index, ...props }) => (
+          // the props are destructured since they are not supposed to be spread to the child element.
+          label={({
+            index,
+            endAngle,
+            cornerRadius,
+            paddingAngle,
+            startAngle,
+            maxRadius,
+            outerRadius,
+            innerRadius,
+            tooltipPosition,
+            middleRadius,
+            midAngle,
+            tooltipPayload,
+            ...props
+          }) => (
             <text
               {...props}
               dominantBaseline="central"

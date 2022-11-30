@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { Checkbox } from "~/components/Checkbox";
 import { SliderInput } from "~/components/Fields/SliderInput";
@@ -19,6 +20,18 @@ export const formatDate = (utc: string) => {
   };
 
   return new Intl.DateTimeFormat("default", options).format(new Date(utc));
+};
+
+const DateCell = ({ utc }: { utc: string }) => {
+  const [formatted, setFormatted] = useState<string>();
+
+  useEffect(() => {
+    setFormatted(formatDate(utc));
+  }, []);
+
+  if (!formatted) return null;
+
+  return <Typography className="text-sm">{formatted}</Typography>;
 };
 
 export interface SchedulingListProps {
@@ -47,10 +60,8 @@ export const SchedulingList = ({
       <tbody>
         {scheduling.map((schedule, index: number) => (
           <Tr key={`${schedule.utc}-${schedule.rolloutPercentage}-${index}`}>
-            <Td>
-              <Typography className="text-sm">
-                {formatDate(schedule.utc)}
-              </Typography>
+            <Td width="20%">
+              <DateCell utc={schedule.utc} />
             </Td>
             <Td>
               <Switch
@@ -74,6 +85,8 @@ export const SchedulingList = ({
                 aria-label="Has the flag already run?"
                 value=""
                 checked={schedule.schedulingStatus === SchedulingStatus.HAS_RUN}
+                onChange={() => {}}
+                readOnly
               />
             </Td>
             <Td>
