@@ -15,6 +15,11 @@ import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import { Spacer } from "~/components/Spacer";
 import { Stack } from "~/components/Stack";
 import { ProjectIcon } from "~/components/Icons/ProjectIcon";
+import { TipBox } from "~/components/Boxes/TipBox";
+import { Li, Ul } from "~/components/Ul";
+import { HStack } from "~/components/HStack";
+import { EnvIcon } from "~/components/Icons/EnvIcon";
+import { FlagIcon } from "~/components/Icons/FlagIcon";
 
 export const meta = () => {
   return {
@@ -65,7 +70,8 @@ export default function OnboardingPage() {
             </h1>
             <Typography>
               Before being fully operational, you will need to create{" "}
-              <strong>a project</strong>.
+              <strong>a project</strong>. In general, a project is the name of
+              your application.
             </Typography>
           </div>
 
@@ -95,6 +101,64 @@ export default function OnboardingPage() {
             </Form>
           </div>
         </Stack>
+      </div>
+
+      <Spacer size={2} />
+
+      <div
+        className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"
+        style={{
+          animationDelay: "800ms",
+        }}
+      >
+        <TipBox
+          title={
+            <Typography className="font-bold text-inherit">
+              The welcome tips
+            </Typography>
+          }
+        >
+          <Typography className="text-inherit">
+            Progressively is built with 3 main entities:
+          </Typography>
+
+          <Ul>
+            <Li>
+              <HStack spacing={2}>
+                <ProjectIcon />
+                <span>Projects</span>
+              </HStack>
+            </Li>
+            <Li>
+              <HStack spacing={2}>
+                <EnvIcon />
+                <span>Environments</span>
+              </HStack>
+            </Li>
+            <Li>
+              <HStack spacing={2}>
+                <FlagIcon />
+                <span>Feature flags</span>
+              </HStack>
+            </Li>
+          </Ul>
+
+          <Spacer size={2} />
+
+          <Typography className="text-inherit">
+            You can recognize them in the application with their icons. You can
+            learn more on{" "}
+            <a
+              href="https://progressively.app/docs/features/hierarchical-structure"
+              target={"_blank"}
+              rel="noopener noreferrer"
+              className="underline"
+            >
+              the associated documentation page
+            </a>
+            .
+          </Typography>
+        </TipBox>
       </div>
     </NotAuthenticatedLayout>
   );
