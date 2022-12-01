@@ -1,6 +1,8 @@
 <div align="center">
  <img src="https://user-images.githubusercontent.com/3874873/182601482-09575409-cc78-4965-878c-9a44ffec893f.png" alt="Progressively" />
  <p><strong>Rollout quickly, effectively, progressively</strong></p>
+ 
+ <a href="https://progressively.app/" target="_blank" rel="noopener noreferrer">https://progressively.app/</a>
 </div>
 
 <br />
