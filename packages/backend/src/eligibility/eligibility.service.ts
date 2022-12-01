@@ -47,7 +47,7 @@ export class EligibilityService {
         uuid: eligibilityId,
       },
       include: {
-        FlagEnvironment: {
+        flagEnvironment: {
           include: {
             environment: true,
             flag: true,
@@ -91,7 +91,7 @@ export class EligibilityService {
         uuid: eligibilityId,
       },
       include: {
-        FlagEnvironment: {
+        flagEnvironment: {
           include: {
             environment: true,
             flag: true,

@@ -154,7 +154,7 @@ export class SdkService {
     const metric = await this.prisma.pMetric.findFirst({
       where: {
         name: hit.name,
-        FlagEnvironment: {
+        flagEnvironment: {
           environment: {
             clientKey,
           },
