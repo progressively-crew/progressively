@@ -6,7 +6,11 @@ import { FormGroup } from "~/components/Fields/FormGroup";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Typography } from "~/components/Typography";
 import { createProject } from "~/modules/projects/services/createProject";
-import { CreateProjectDTO, UserProject } from "~/modules/projects/types";
+import {
+  CreateProjectDTO,
+  Project,
+  UserProject,
+} from "~/modules/projects/types";
 import { validateProjectName } from "~/modules/projects/validators/validateProjectName";
 import { getSession } from "~/sessions";
 import { PageTitle } from "~/components/PageTitle";
@@ -45,14 +49,12 @@ export const action: ActionFunction = async ({
 
   const session = await getSession(request.headers.get("Cookie"));
 
-  const userProject: UserProject = await createProject(
+  const project: Project = await createProject(
     projectName!,
     session.get("auth-cookie")
   );
 
-  return redirect(
-    `/dashboard?newProjectId=${userProject.projectId}#project-added`
-  );
+  return redirect(`/dashboard?newProjectId=${project.uuid}#project-added`);
 };
 
 export default function OnboardingPage() {
