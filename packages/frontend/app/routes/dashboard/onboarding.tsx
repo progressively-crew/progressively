@@ -62,7 +62,7 @@ export default function OnboardingPage() {
 
   return (
     <NotAuthenticatedLayout>
-      <div className=" mt-8 md:mt-40">
+      <div className=" mt-8 md:mt-36">
         <Stack spacing={4}>
           <div className="text-center motion-safe:animate-fade-enter-top">
             <h1 className="font-bold text-4xl md:text-5xl" id="page-title">
@@ -86,6 +86,7 @@ export default function OnboardingPage() {
             <Form method="post">
               <div className="flex flex-col md:flex-row gap-4 items-center">
                 <ProjectIcon className="text-indigo-600" />
+
                 <div className="flex-1">
                   <TextInput
                     isInvalid={Boolean(errors?.name)}

@@ -13,7 +13,7 @@ export const TipBox = ({ children, title, ...props }: SuccessBoxProps) => {
       {...props}
     >
       <div className="flex flex-row gap-2">
-        <MdOutlineTipsAndUpdates aria-hidden className="mt-1" />
+        <MdOutlineTipsAndUpdates aria-hidden className="-mt-1 h-8 w-8" />
 
         <div>
           {title}
