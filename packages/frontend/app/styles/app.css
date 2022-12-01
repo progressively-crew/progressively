@@ -567,6 +567,14 @@ video {
   margin-top: 0.5rem;
 }
 
+.mt-40 {
+  margin-top: 10rem;
+}
+
+.mt-8 {
+  margin-top: 2rem;
+}
+
 .block {
   display: block;
 }
@@ -1270,6 +1278,11 @@ video {
   color: rgb(68 64 60 / var(--tw-text-opacity));
 }
 
+.text-indigo-600 {
+  --tw-text-opacity: 1;
+  color: rgb(79 70 229 / var(--tw-text-opacity));
+}
+
 .underline {
   text-decoration-line: underline;
 }
@@ -1682,6 +1695,10 @@ input[type="range"]::-moz-range-thumb {
 }
 
 @media (min-width: 768px) {
+  .md\:mt-40 {
+    margin-top: 10rem;
+  }
+
   .md\:block {
     display: block;
   }

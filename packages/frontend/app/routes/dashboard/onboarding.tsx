@@ -12,6 +12,9 @@ import { getSession } from "~/sessions";
 import { PageTitle } from "~/components/PageTitle";
 import { Card, CardContent } from "~/components/Card";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
+import { Spacer } from "~/components/Spacer";
+import { Stack } from "~/components/Stack";
+import { ProjectIcon } from "~/components/Icons/ProjectIcon";
 
 export const meta = () => {
   return {
@@ -53,44 +56,45 @@ export default function OnboardingPage() {
   const errors = data?.errors;
 
   return (
-    <NotAuthenticatedLayout
-      header={
-        <div className="text-center motion-safe:animate-fade-enter-top">
-          <h1 className="font-bold text-4xl md:text-5xl" id="page-title">
-            Welcome aboard
-          </h1>
-          <Typography>
-            Before being fully operational, you will need to create{" "}
-            <strong>a project</strong>.
-          </Typography>
-        </div>
-      }
-      status={errors?.name && <ErrorBox list={errors} />}
-    >
-      <div
-        className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"
-        style={{
-          animationDelay: "500ms",
-        }}
-      >
-        <Card>
-          <CardContent>
-            <Form method="post">
-              <FormGroup>
-                <TextInput
-                  isInvalid={Boolean(errors?.name)}
-                  label="Project name"
-                  name="name"
-                  placeholder="e.g: My super project"
-                />
+    <NotAuthenticatedLayout>
+      <div className=" mt-8 md:mt-40">
+        <Stack spacing={4}>
+          <div className="text-center motion-safe:animate-fade-enter-top">
+            <h1 className="font-bold text-4xl md:text-5xl" id="page-title">
+              Welcome aboard
+            </h1>
+            <Typography>
+              Before being fully operational, you will need to create{" "}
+              <strong>a project</strong>.
+            </Typography>
+          </div>
 
-                <div>
-                  <SubmitButton>Create the project</SubmitButton>
+          {errors?.name && <ErrorBox list={errors} />}
+
+          <div
+            className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"
+            style={{
+              animationDelay: "500ms",
+            }}
+          >
+            <Form method="post">
+              <div className="flex flex-col md:flex-row gap-4 items-center">
+                <ProjectIcon className="text-indigo-600" />
+                <div className="flex-1">
+                  <TextInput
+                    isInvalid={Boolean(errors?.name)}
+                    label="Project name"
+                    name="name"
+                    placeholder="e.g: My super project"
+                    hiddenLabel
+                  />
                 </div>
-              </FormGroup>
+
+                <SubmitButton>Create the project</SubmitButton>
+              </div>
             </Form>
-          </CardContent>
-        </Card>
+          </div>
+        </Stack>
       </div>
     </NotAuthenticatedLayout>
   );
