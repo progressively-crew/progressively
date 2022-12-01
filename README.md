@@ -35,7 +35,7 @@ You can now open http://localhost:3000/welcome to create your admin user.
 - Progressively has an accessible dashboard (if you face issues, please [create an issue](https://github.com/progressively-crew/progressively/issues))
 - Progressively comes with built-in SSR support so that the page don't blink when resolving the flags
 - Real-time propagation with Websockets
-- No intrusive tracking (expect [Sentry](sentry.io/) or [Plausible](https://plausible.io/) to be added at some point so that we understand more the audience)
+- No intrusive tracking
 - Self-hosted so that you own the data
 
 ## Contribution
