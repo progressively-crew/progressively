@@ -21,7 +21,7 @@ export class EligibilityController {
     const deletedEligibility = await this.eligibilityService.deleteEligibility(
       eligibilityId,
     );
-    const flagEnv = deletedEligibility.FlagEnvironment;
+    const flagEnv = deletedEligibility.flagEnvironment;
 
     if (flagEnv.status === FlagStatus.ACTIVATED) {
       this.wsGateway.notifyChanges(flagEnv.environment.clientKey, flagEnv);

@@ -215,7 +215,7 @@ export class FlagsController {
       strategyDto,
     );
 
-    const { FlagEnvironment: flagEnv } =
+    const { flagEnvironment: flagEnv } =
       await this.strategyService.getStrategyFlagEnv(strategy.uuid);
 
     if (flagEnv.status === FlagStatus.ACTIVATED) {
@@ -240,7 +240,7 @@ export class FlagsController {
       eligibilityDto,
     );
 
-    const { FlagEnvironment: flagEnv } =
+    const { flagEnvironment: flagEnv } =
       await this.eligibilityService.getEligibilityFlagEnv(eligibility.uuid);
 
     if (flagEnv.status === FlagStatus.ACTIVATED) {

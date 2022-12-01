@@ -134,7 +134,7 @@ export class ProjectsService {
     const deleteQueries = [
       this.prisma.webhook.deleteMany({
         where: {
-          FlagEnvironment: {
+          flagEnvironment: {
             environment: {
               projectId,
             },
@@ -152,7 +152,7 @@ export class ProjectsService {
       }),
       this.prisma.pMetricHit.deleteMany({
         where: {
-          FlagEnvironment: {
+          flagEnvironment: {
             environment: {
               projectId,
             },
@@ -161,7 +161,7 @@ export class ProjectsService {
       }),
       this.prisma.pMetric.deleteMany({
         where: {
-          FlagEnvironment: {
+          flagEnvironment: {
             environment: {
               projectId,
             },
@@ -170,7 +170,7 @@ export class ProjectsService {
       }),
       this.prisma.variant.deleteMany({
         where: {
-          FlagEnvironment: {
+          flagEnvironment: {
             environment: {
               projectId,
             },
@@ -179,14 +179,14 @@ export class ProjectsService {
       }),
       this.prisma.schedule.deleteMany({
         where: {
-          FlagEnvironment: {
+          flagEnvironment: {
             environment: { projectId },
           },
         },
       }),
       this.prisma.rolloutStrategy.deleteMany({
         where: {
-          FlagEnvironment: {
+          flagEnvironment: {
             environment: {
               projectId,
             },
@@ -195,7 +195,7 @@ export class ProjectsService {
       }),
       this.prisma.eligibility.deleteMany({
         where: {
-          FlagEnvironment: {
+          flagEnvironment: {
             environment: {
               projectId,
             },

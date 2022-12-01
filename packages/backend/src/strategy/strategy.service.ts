@@ -53,7 +53,7 @@ export class StrategyService {
   ) {
     return this.prisma.rolloutStrategy.create({
       data: {
-        FlagEnvironment: {
+        flagEnvironment: {
           connect: {
             flagId_environmentId: {
               environmentId: envId,
@@ -93,7 +93,7 @@ export class StrategyService {
         uuid: stratId,
       },
       include: {
-        FlagEnvironment: {
+        flagEnvironment: {
           include: {
             environment: true,
             flag: true,
@@ -112,7 +112,7 @@ export class StrategyService {
         uuid: stratId,
       },
       include: {
-        FlagEnvironment: {
+        flagEnvironment: {
           include: {
             environment: true,
             flag: true,
