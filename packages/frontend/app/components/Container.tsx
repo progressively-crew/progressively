@@ -3,5 +3,5 @@ export interface ContainerProps {
 }
 
 export const Container = ({ children }: ContainerProps) => {
-  return <div className="max-w-screen-2xl mx-auto px-12">{children}</div>;
+  return <div className="px-12">{children}</div>;
 };

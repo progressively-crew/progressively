@@ -27,25 +27,35 @@ module.exports = defineConfig({
     specPattern: "cypress/e2e/**/*.spec.{ts,tsx}",
 
     setupNodeEvents(on, config) {
-      on("task", {
-        seed: () => {
-          return seedDb().then(() => null);
-        },
-        cleanupDb: () => {
-          return cleanupDb().then(() => null);
-        },
-        serverLogin: (accessToken) => {
-          return getSession()
-            .then((session) => {
-              session.set("auth-cookie", accessToken);
-              return commitSession(session);
-            })
-            .catch((e) => {
-              console.error(e);
-              return e;
-            });
-        },
-      });
+      on("before:browser:launch", (browser, launchOptions) => {
+        const REDUCE = 1;
+        if (browser.family === "firefox") {
+          launchOptions.preferences["ui.prefersReducedMotion"] = REDUCE;
+        }
+        if (browser.family === "chromium") {
+          launchOptions.args.push("--force-prefers-reduced-motion");
+        }
+        return launchOptions;
+      }),
+        on("task", {
+          seed: () => {
+            return seedDb().then(() => null);
+          },
+          cleanupDb: () => {
+            return cleanupDb().then(() => null);
+          },
+          serverLogin: (accessToken) => {
+            return getSession()
+              .then((session) => {
+                session.set("auth-cookie", accessToken);
+                return commitSession(session);
+              })
+              .catch((e) => {
+                console.error(e);
+                return e;
+              });
+          },
+        });
     },
   },
 });

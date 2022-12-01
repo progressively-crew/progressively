@@ -567,6 +567,18 @@ video {
   margin-top: 0.5rem;
 }
 
+.mt-40 {
+  margin-top: 10rem;
+}
+
+.mt-8 {
+  margin-top: 2rem;
+}
+
+.mt-1 {
+  margin-top: 0.25rem;
+}
+
 .block {
   display: block;
 }
@@ -701,10 +713,6 @@ video {
 
 .w-14 {
   width: 3.5rem;
-}
-
-.max-w-screen-2xl {
-  max-width: 1536px;
 }
 
 .max-w-lg {
@@ -964,6 +972,16 @@ video {
   border-top-color: rgb(229 231 235 / var(--tw-border-opacity));
 }
 
+.border-l-blue-600 {
+  --tw-border-opacity: 1;
+  border-left-color: rgb(37 99 235 / var(--tw-border-opacity));
+}
+
+.border-l-blue-500 {
+  --tw-border-opacity: 1;
+  border-left-color: rgb(59 130 246 / var(--tw-border-opacity));
+}
+
 .bg-indigo-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(79 70 229 / var(--tw-bg-opacity));
@@ -1051,6 +1069,16 @@ video {
 .bg-stone-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(245 245 244 / var(--tw-bg-opacity));
+}
+
+.bg-blue-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(219 234 254 / var(--tw-bg-opacity));
+}
+
+.bg-blue-50 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(239 246 255 / var(--tw-bg-opacity));
 }
 
 .fill-indigo-700 {
@@ -1274,6 +1302,20 @@ video {
   color: rgb(68 64 60 / var(--tw-text-opacity));
 }
 
+.text-indigo-600 {
+  --tw-text-opacity: 1;
+  color: rgb(79 70 229 / var(--tw-text-opacity));
+}
+
+.text-blue-700 {
+  --tw-text-opacity: 1;
+  color: rgb(29 78 216 / var(--tw-text-opacity));
+}
+
+.text-inherit {
+  color: inherit;
+}
+
 .underline {
   text-decoration-line: underline;
 }
@@ -1333,6 +1375,10 @@ video {
   transition-property: transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
+}
+
+.delay-1000 {
+  transition-delay: 1000ms;
 }
 
 .duration-100 {
@@ -1643,7 +1689,49 @@ input[type="range"]::-moz-range-thumb {
   width: 1.75rem;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes fade-enter-top {
+    0% {
+      transform: translateY(-1rem);
+      opacity: 0;
+    }
+
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .motion-safe\:animate-fade-enter-top {
+    animation: fade-enter-top 500ms ease-in-out forwards;
+  }
+
+  @keyframes fade-enter-bottom {
+    0% {
+      transform: translateY(1rem);
+      opacity: 0;
+    }
+
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .motion-safe\:animate-fade-enter-bottom {
+    animation: fade-enter-bottom 500ms ease-in-out forwards;
+  }
+
+  .motion-safe\:opacity-0 {
+    opacity: 0;
+  }
+}
+
 @media (min-width: 768px) {
+  .md\:mt-40 {
+    margin-top: 10rem;
+  }
+
   .md\:block {
     display: block;
   }

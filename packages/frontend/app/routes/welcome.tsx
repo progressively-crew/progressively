@@ -6,7 +6,10 @@ import { PageTitle } from "~/components/PageTitle";
 import { Typography } from "~/components/Typography";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import { AuthCredentials } from "~/modules/auth/types";
-import { registerAction, RegisterForm } from "~/modules/user/components/RegisterForm";
+import {
+  registerAction,
+  RegisterForm,
+} from "~/modules/user/components/RegisterForm";
 
 export const meta: MetaFunction = () => {
   return {
@@ -18,7 +21,9 @@ interface ActionData {
   errors?: Partial<AuthCredentials & { badUser: string }>;
 }
 
-export const action: ActionFunction = async ({ request }): Promise<ActionData | Response> => {
+export const action: ActionFunction = async ({
+  request,
+}): Promise<ActionData | Response> => {
   const data: ActionData = await registerAction({ request });
 
   if (data?.errors) {
@@ -39,17 +44,19 @@ export default function WelcomePage() {
           value="Congratulations!"
           description={
             <Typography>
-              {`You've`} successfully run your Progressively instance. {`It's`} time to create{" "}
-              <strong>your admin user.</strong>
+              {`You've`} successfully run your Progressively instance. {`It's`}{" "}
+              time to create <strong>your admin user.</strong>
             </Typography>
           }
         />
       }
-      status={errors && Object.keys(errors).length > 0 && <ErrorBox list={errors} />}
+      status={
+        errors && Object.keys(errors).length > 0 && <ErrorBox list={errors} />
+      }
     >
       <Card>
         <CardContent>
-          <RegisterForm errors={errors} />
+          <RegisterForm errors={errors} actionLabel="Create my admin user" />
         </CardContent>
       </Card>
     </NotAuthenticatedLayout>

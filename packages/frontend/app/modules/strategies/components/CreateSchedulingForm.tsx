@@ -28,7 +28,7 @@ export const CreateSchedulingFrom = () => {
         <Spacer size={1} />
 
         <Switch
-          aria-labelledBy="next-schedule"
+          aria-labelledby="next-schedule"
           type="button"
           checked={FlagStatus.ACTIVATED === nextStatus}
           onClick={() =>

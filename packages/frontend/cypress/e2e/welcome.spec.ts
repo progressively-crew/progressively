@@ -9,7 +9,7 @@ describe("/welcome", () => {
 
   it("gives feedbacks when the email is invalid (formatting level)", () => {
     cy.findByLabelText("Email").type("invalid@email");
-    cy.findByRole("button", { name: "Create an account" }).click();
+    cy.findByRole("button", { name: "Create my admin user" }).click();
 
     cy.get(".error-box")
       .should("have.focus")
@@ -21,7 +21,7 @@ describe("/welcome", () => {
 
   it("gives feedbacks when the password is not long enough", () => {
     cy.findByLabelText("Password").type("1");
-    cy.findByRole("button", { name: "Create an account" }).click();
+    cy.findByRole("button", { name: "Create my admin user" }).click();
 
     cy.get(".error-box")
       .should("have.focus")
@@ -32,7 +32,7 @@ describe("/welcome", () => {
   });
 
   it("gives feedbacks when the required fields are not filled", () => {
-    cy.findByRole("button", { name: "Create an account" }).click();
+    cy.findByRole("button", { name: "Create my admin user" }).click();
 
     cy.get(".error-box")
       .should("have.focus")
@@ -48,7 +48,7 @@ describe("/welcome", () => {
   it("gives feedbacks when the two passwords are not identical", () => {
     cy.findByLabelText("Password").type("12345678901112");
     cy.findByLabelText("Confirm your password").type("aabcd");
-    cy.findByRole("button", { name: "Create an account" }).click();
+    cy.findByRole("button", { name: "Create my admin user" }).click();
 
     cy.get(".error-box")
       .should("have.focus")
@@ -63,7 +63,7 @@ describe("/welcome", () => {
     cy.findByLabelText("Email").type("marvin.frachet@something.com");
     cy.findByLabelText("Password").type("12345678901112");
     cy.findByLabelText("Confirm your password").type("12345678901112");
-    cy.findByRole("button", { name: "Create an account" }).click();
+    cy.findByRole("button", { name: "Create my admin user" }).click();
 
     cy.get(".error-box")
       .should("have.focus")
