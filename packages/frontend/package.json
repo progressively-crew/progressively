@@ -43,7 +43,7 @@
     "axe-core": "^4.5.2",
     "babel-loader": "^9.1.0",
     "concurrently": "^7.6.0",
-    "cypress": "^11.2.0",
+    "cypress": "^10.9.0",
     "cypress-axe": "^1.0.0",
     "eslint": "^8.28.0",
     "eslint-plugin-react": "^7.31.11",
