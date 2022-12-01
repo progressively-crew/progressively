@@ -567,16 +567,12 @@ video {
   margin-top: 0.5rem;
 }
 
-.mt-1 {
-  margin-top: 0.25rem;
+.-mt-1 {
+  margin-top: -0.25rem;
 }
 
 .mt-8 {
   margin-top: 2rem;
-}
-
-.-mt-1 {
-  margin-top: -0.25rem;
 }
 
 .block {
@@ -1183,11 +1179,6 @@ video {
   line-height: 2rem;
 }
 
-.text-lg {
-  font-size: 1.125rem;
-  line-height: 1.75rem;
-}
-
 .font-semibold {
   font-weight: 600;
 }
@@ -1714,10 +1705,6 @@ input[type="range"]::-moz-range-thumb {
 }
 
 @media (min-width: 768px) {
-  .md\:mt-40 {
-    margin-top: 10rem;
-  }
-
   .md\:mt-36 {
     margin-top: 9rem;
   }

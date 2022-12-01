@@ -3,6 +3,7 @@ import { useActionData } from "@remix-run/react";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { Card, CardContent } from "~/components/Card";
 import { PageTitle } from "~/components/PageTitle";
+import { Stack } from "~/components/Stack";
 import { Typography } from "~/components/Typography";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import { AuthCredentials } from "~/modules/auth/types";
@@ -38,27 +39,36 @@ export default function WelcomePage() {
   const errors = data?.errors;
 
   return (
-    <NotAuthenticatedLayout
-      header={
-        <PageTitle
-          value="Congratulations!"
-          description={
-            <Typography>
-              {`You've`} successfully run your Progressively instance. {`It's`}{" "}
-              time to create <strong>your admin user.</strong>
-            </Typography>
-          }
-        />
-      }
-      status={
-        errors && Object.keys(errors).length > 0 && <ErrorBox list={errors} />
-      }
-    >
-      <Card>
-        <CardContent>
-          <RegisterForm errors={errors} actionLabel="Create my admin user" />
-        </CardContent>
-      </Card>
+    <NotAuthenticatedLayout>
+      <Stack spacing={4}>
+        <div className="text-center motion-safe:animate-fade-enter-top">
+          <h1 className="font-bold text-4xl md:text-5xl" id="page-title">
+            Congratulations!
+          </h1>
+          <Typography>
+            {`You've`} successfully run your Progressively instance. {`It's`}{" "}
+            time to create <strong>your admin user.</strong>
+          </Typography>
+        </div>
+
+        {errors && Object.keys(errors).length > 0 && <ErrorBox list={errors} />}
+
+        <div
+          className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"
+          style={{
+            animationDelay: "500ms",
+          }}
+        >
+          <Card>
+            <CardContent>
+              <RegisterForm
+                errors={errors}
+                actionLabel="Create my admin user"
+              />
+            </CardContent>
+          </Card>
+        </div>
+      </Stack>
     </NotAuthenticatedLayout>
   );
 }
