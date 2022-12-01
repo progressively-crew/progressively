@@ -703,10 +703,6 @@ video {
   width: 3.5rem;
 }
 
-.max-w-screen-2xl {
-  max-width: 1536px;
-}
-
 .max-w-lg {
   max-width: 32rem;
 }
@@ -1335,6 +1331,10 @@ video {
   transition-duration: 150ms;
 }
 
+.delay-1000 {
+  transition-delay: 1000ms;
+}
+
 .duration-100 {
   transition-duration: 100ms;
 }
@@ -1641,6 +1641,44 @@ input[type="range"]::-moz-range-thumb {
 
 .group:active .group-active\:w-7 {
   width: 1.75rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes fade-enter-top {
+    0% {
+      transform: translateY(-1rem);
+      opacity: 0;
+    }
+
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .motion-safe\:animate-fade-enter-top {
+    animation: fade-enter-top 500ms ease-in-out forwards;
+  }
+
+  @keyframes fade-enter-bottom {
+    0% {
+      transform: translateY(1rem);
+      opacity: 0;
+    }
+
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .motion-safe\:animate-fade-enter-bottom {
+    animation: fade-enter-bottom 500ms ease-in-out forwards;
+  }
+
+  .motion-safe\:opacity-0 {
+    opacity: 0;
+  }
 }
 
 @media (min-width: 768px) {

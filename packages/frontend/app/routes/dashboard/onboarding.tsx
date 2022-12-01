@@ -23,7 +23,9 @@ interface ActionData {
   errors: Partial<CreateProjectDTO>;
 }
 
-export const action: ActionFunction = async ({ request }): Promise<ActionData | Response> => {
+export const action: ActionFunction = async ({
+  request,
+}): Promise<ActionData | Response> => {
   const formData = await request.formData();
   const projectName = formData.get("name")?.toString();
 
@@ -35,9 +37,14 @@ export const action: ActionFunction = async ({ request }): Promise<ActionData | 
 
   const session = await getSession(request.headers.get("Cookie"));
 
-  const userProject: UserProject = await createProject(projectName!, session.get("auth-cookie"));
+  const userProject: UserProject = await createProject(
+    projectName!,
+    session.get("auth-cookie")
+  );
 
-  return redirect(`/dashboard?newProjectId=${userProject.projectId}#project-added`);
+  return redirect(
+    `/dashboard?newProjectId=${userProject.projectId}#project-added`
+  );
 };
 
 export default function OnboardingPage() {
@@ -48,35 +55,43 @@ export default function OnboardingPage() {
   return (
     <NotAuthenticatedLayout
       header={
-        <PageTitle
-          value="Welcome aboard"
-          description={
-            <Typography>
-              Before being fully operational, you will need to create <strong>a project</strong>.
-            </Typography>
-          }
-        />
+        <div className="text-center motion-safe:animate-fade-enter-top">
+          <h1 className="font-bold text-4xl md:text-5xl" id="page-title">
+            Welcome aboard
+          </h1>
+          <Typography>
+            Before being fully operational, you will need to create{" "}
+            <strong>a project</strong>.
+          </Typography>
+        </div>
       }
       status={errors?.name && <ErrorBox list={errors} />}
     >
-      <Card>
-        <CardContent>
-          <Form method="post">
-            <FormGroup>
-              <TextInput
-                isInvalid={Boolean(errors?.name)}
-                label="Project name"
-                name="name"
-                placeholder="e.g: My super project"
-              />
+      <div
+        className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"
+        style={{
+          animationDelay: "500ms",
+        }}
+      >
+        <Card>
+          <CardContent>
+            <Form method="post">
+              <FormGroup>
+                <TextInput
+                  isInvalid={Boolean(errors?.name)}
+                  label="Project name"
+                  name="name"
+                  placeholder="e.g: My super project"
+                />
 
-              <div>
-                <SubmitButton>Create the project</SubmitButton>
-              </div>
-            </FormGroup>
-          </Form>
-        </CardContent>
-      </Card>
+                <div>
+                  <SubmitButton>Create the project</SubmitButton>
+                </div>
+              </FormGroup>
+            </Form>
+          </CardContent>
+        </Card>
+      </div>
     </NotAuthenticatedLayout>
   );
 }

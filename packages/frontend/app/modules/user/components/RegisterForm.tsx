@@ -9,6 +9,7 @@ import { validateRegistrationForm } from "../validators/validate-registration-fo
 
 export interface RegisterFormProps {
   errors?: Partial<RegisterCredentials & { backend?: string }>;
+  actionLabel?: string;
 }
 
 export interface RegisterActionData extends RegisterFormProps {
@@ -57,7 +58,7 @@ export const registerAction: ActionFunction = async ({
   }
 };
 
-export const RegisterForm = ({ errors }: RegisterFormProps) => {
+export const RegisterForm = ({ errors, actionLabel }: RegisterFormProps) => {
   const transition = useTransition();
 
   return (
@@ -98,7 +99,7 @@ export const RegisterForm = ({ errors }: RegisterFormProps) => {
             isLoading={transition.state === "submitting"}
             loadingText="Creation in progress, please wait..."
           >
-            Create an account
+            {actionLabel || "Create an account"}
           </SubmitButton>
         </div>
       </FormGroup>
