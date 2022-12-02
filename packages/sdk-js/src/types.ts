@@ -14,7 +14,10 @@ export interface ProgressivelySdkType {
     args?: LoadFlagsArgs
   ) => Promise<{ flags: FlagDict; response: Response; error?: string }>;
   disconnect: () => void;
-  onFlagUpdate: (callback: (data: FlagDict) => void, userId?: string) => void;
+  onFlagUpdate: (
+    callback: (data: FlagDict) => void,
+    userId?: string | null
+  ) => void;
   track: (eventName: string, data?: any) => Promise<void>;
 }
 
