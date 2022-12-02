@@ -68,7 +68,7 @@ function Sdk(
 
         persistLocalFlags(flags);
 
-        return { flags, response, error: null };
+        return { flags, response };
       })
       .catch((error) => {
         // Silent catch the error, and return the actual in-memory flags

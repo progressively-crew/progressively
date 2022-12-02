@@ -17,7 +17,7 @@ export const ProgressivelyProvider = ({
     (eventName: string, data?: any) => Promise.resolve(undefined)
   );
   const [status, setStatus] = useState<StateMachineConstants>("idle");
-  const [error, setError] = useState<any>(null);
+  const [error, setError] = useState<any>();
   const [flags, setFlags] = useState<FlagDict>(initialFlags || {});
 
   useEffect(() => {
@@ -47,7 +47,7 @@ export const ProgressivelyProvider = ({
 
       if (res.error) {
         setStatus("failure");
-        setError(res.error.toString());
+        setError(res.error);
       }
     });
 

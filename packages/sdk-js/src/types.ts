@@ -12,12 +12,9 @@ export interface SDKOptions {
 export interface ProgressivelySdkType {
   loadFlags: (
     args?: LoadFlagsArgs
-  ) => Promise<{ flags: FlagDict; response: Response; error: string | null }>;
+  ) => Promise<{ flags: FlagDict; response: Response; error?: string }>;
   disconnect: () => void;
-  onFlagUpdate: (
-    callback: (data: FlagDict) => void,
-    userId?: string | null
-  ) => void;
+  onFlagUpdate: (callback: (data: FlagDict) => void, userId?: string) => void;
   track: (eventName: string, data?: any) => Promise<void>;
 }
 
