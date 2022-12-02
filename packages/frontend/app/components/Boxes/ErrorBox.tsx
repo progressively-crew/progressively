@@ -26,8 +26,8 @@ export const ErrorBox = ({ list }: ErrorBoxProps) => {
       : `The following ${errors.length} errors have been found:`;
 
   return (
-    <div className="error-box p-4 bg-red-100 text-red-700 rounded border-l-8 border-l-red-600 flex flex-row justify-between">
-      <figure ref={boxRef} tabIndex={-1}>
+    <div className="p-4 bg-red-100 text-red-700 rounded border-l-8 border-l-red-600 flex flex-row justify-between">
+      <figure ref={boxRef} tabIndex={-1} className="error-box">
         <div>
           <HStack spacing={2}>
             <MdErrorOutline aria-hidden />
