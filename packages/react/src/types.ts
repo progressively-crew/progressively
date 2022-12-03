@@ -9,3 +9,5 @@ export interface ProgressivelyProviderProps {
   websocketUrl?: string;
   children?: React.ReactNode;
 }
+
+export type StateMachineConstants = "idle" | "loading" | "success" | "failure";

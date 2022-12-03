@@ -57,7 +57,9 @@ function Sdk(
       .then((res) => {
         response = res;
 
-        if (!res.ok) return {};
+        if (!res.ok) {
+          throw new Error("Request couldn't succeed");
+        }
 
         return response.json();
       })
@@ -68,9 +70,9 @@ function Sdk(
 
         return { flags, response };
       })
-      .catch(() => {
+      .catch((error) => {
         // Silent catch the error, and return the actual in-memory flags
-        return { flags, response };
+        return { flags, response, error };
       });
   }
 
