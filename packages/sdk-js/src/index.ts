@@ -45,7 +45,6 @@ function Sdk(
 ): ProgressivelySdkType {
   let flags: FlagDict = initialFlags;
   let socket: WebSocket;
-  let socketConnected: boolean = false;
 
   function loadFlags(args?: LoadFlagsArgs) {
     let response: Response;
@@ -81,12 +80,10 @@ function Sdk(
     callback: (data: FlagDict) => void,
     userId?: string | null
   ) {
-    if (socketConnected) return;
     // Mutating is okay, load has been done before hands
     if (userId) fields.id = userId;
 
     socket = new WebSocket(`${wsRoot}?opts=${btoa(JSON.stringify(fields))}`);
-    socketConnected = true;
 
     socket.onmessage = (event) => {
       flags = { ...flags, ...JSON.parse(event.data).data };
@@ -95,10 +92,6 @@ function Sdk(
 
       callback(flags);
     };
-  }
-
-  function isConnected() {
-    return isConnected;
   }
 
   function disconnect() {
@@ -114,10 +107,12 @@ function Sdk(
         data,
       }),
       headers: { "Content-Type": "application/json" },
-    }).then(() => undefined);
+    })
+      .then(() => undefined)
+      .catch(() => undefined);
   }
 
-  return { loadFlags, disconnect, onFlagUpdate, track, isConnected };
+  return { loadFlags, disconnect, onFlagUpdate, track };
 }
 
 export const Progressively = { init };

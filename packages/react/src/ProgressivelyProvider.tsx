@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ProgressivelyContext } from "./ProgressivelyContext";
 import { Progressively, ProgressivelySdkType } from "@progressively/sdk-js";
 import { ProgressivelyProviderProps, StateMachineConstants } from "./types";
@@ -12,7 +12,6 @@ export const ProgressivelyProvider = ({
   websocketUrl,
   fields,
 }: ProgressivelyProviderProps) => {
-  const alreadyConnected = useRef(false);
   const [trackFn, setTrackFn] = useState<ProgressivelySdkType["track"]>(
     (eventName: string, data?: any) => Promise.resolve(undefined)
   );
@@ -21,10 +20,6 @@ export const ProgressivelyProvider = ({
   const [flags, setFlags] = useState<FlagDict>(initialFlags || {});
 
   useEffect(() => {
-    // React 18 fires effects twice in strict / dev mode, this one prevent the second call
-    // from connecting the socket another time and break it
-    if (alreadyConnected.current) return;
-
     const sdk = Progressively.init(clientKey, {
       fields: fields || {},
       apiUrl,
@@ -52,12 +47,8 @@ export const ProgressivelyProvider = ({
     });
 
     return () => {
-      if (alreadyConnected.current) {
-        sdk.disconnect();
-        ctrl.abort();
-      } else {
-        alreadyConnected.current = true;
-      }
+      sdk.disconnect();
+      ctrl.abort();
     };
   }, []);
 

@@ -19,7 +19,6 @@ export interface ProgressivelySdkType {
     userId?: string | null
   ) => void;
   track: (eventName: string, data?: any) => Promise<void>;
-  isConnected: () => boolean;
 }
 
 export interface LoadFlagsArgs {
