@@ -1,5 +1,5 @@
 import React from "react";
-import { AiOutlineDesktop, AiOutlineMobile } from "react-icons/ai";
+import { AiOutlineDesktop } from "react-icons/ai";
 import { Md3GMobiledata, Md4GMobiledata } from "react-icons/md";
 import { VisuallyHidden } from "./VisuallyHidden";
 
@@ -11,6 +11,10 @@ const toolSizes = [
   {
     name: "Growthbook",
     weight: 3800,
+  },
+  {
+    name: "Unleash (React)",
+    weight: 11000,
   },
   {
     name: "Launchdarkly",
