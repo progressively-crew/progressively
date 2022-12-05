@@ -96,15 +96,22 @@ export class SdkService {
   ) {
     const flagStatusRecord = this.resolveFlagStatus(flagEnv, fields);
 
+    let valueResolved;
+    if (typeof flagStatusRecord === 'object') {
+      valueResolved = flagStatusRecord.value;
+    } else {
+      valueResolved = flagStatusRecord;
+    }
+
     await this.flagService.hitFlag(
       flagEnv.environmentId,
       flagEnv.flagId,
       String(fields?.id || ''),
-      String(flagStatusRecord),
+      String(valueResolved),
     );
 
     return {
-      [flagEnv.flag.key]: flagStatusRecord,
+      [flagEnv.flag.key]: valueResolved,
     };
   }
 
