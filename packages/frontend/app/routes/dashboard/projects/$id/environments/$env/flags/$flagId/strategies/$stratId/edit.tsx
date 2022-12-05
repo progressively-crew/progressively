@@ -6,7 +6,6 @@ import { StrategyCreateDTO } from "~/modules/strategies/types";
 import { editStrategy } from "~/modules/strategies/services/editStrategy";
 import { StrategyAudience } from "~/modules/strategies/components/StrategyAudience";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { TextInput } from "~/components/Fields/TextInput";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
 import { useActionData, Form } from "@remix-run/react";
@@ -16,7 +15,6 @@ import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaT
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { useStrategy } from "~/modules/strategies/contexts/useStrategy";
-import { getStrategyMetaTitle } from "~/modules/strategies/services/getStrategyMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
 import { Header } from "~/components/Header";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
@@ -24,12 +22,10 @@ import { TagLine } from "~/components/Tagline";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 
 export const handle = {
-  breadcrumb: (match: any, matches: any) => {
-    const parentMatch = matches[matches.indexOf(match) - 1];
-
+  breadcrumb: (match: any) => {
     return {
       link: `/dashboard/projects/${match.params.id}/environments/${match.params.env}/flags/${match.params.flagId}/strategies/${match.params.stratId}/edit`,
-      label: `Edit ${parentMatch.data.strategy.name}`,
+      label: `Edit additional audience`,
     };
   },
 };
@@ -38,10 +34,9 @@ export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
   const envName = getEnvMetaTitle(parentsData, params.env);
   const flagName = getFlagMetaTitle(parentsData);
-  const strategyName = getStrategyMetaTitle(parentsData);
 
   return {
-    title: `Progressively | ${projectName} | ${envName} | Flags | ${flagName} | ${strategyName} | Edit`,
+    title: `Progressively | ${projectName} | ${envName} | Flags | ${flagName} | Additional audience | Edit`,
   };
 };
 
@@ -62,8 +57,6 @@ export const action: ActionFunction = async ({
     return { errors };
   }
 
-  const strategyName = formData.get("strategy-name") as string;
-
   const fieldName = (formData.get("field-name") as string) || undefined;
   const fieldValue = (formData.get("field-value") as string) || undefined;
 
@@ -73,7 +66,6 @@ export const action: ActionFunction = async ({
     ) as StrategyCreateDTO["fieldComparator"]) || undefined;
 
   const strategy: StrategyCreateDTO = {
-    name: strategyName,
     fieldComparator: fieldComparator,
     fieldName,
     fieldValue,
@@ -114,17 +106,9 @@ export default function StrategyEditPage() {
       }
       status={actionData?.errors && <ErrorBox list={actionData.errors} />}
     >
-      <PageTitle value={`Edit ${strategy.name}`} />
+      <PageTitle value={`Edit additional audience`} />
       <Form method="post">
         <FormGroup>
-          <TextInput
-            name="strategy-name"
-            placeholder="e.g: Strategy 1"
-            label="Group name"
-            defaultValue={strategy.name}
-            isInvalid={Boolean(errors["strategy-name"])}
-          />
-
           <StrategyAudience
             errors={errors}
             initialFieldName={strategy.fieldName}

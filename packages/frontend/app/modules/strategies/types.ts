@@ -4,7 +4,6 @@ export enum ComparatorEnum {
 }
 
 export interface StrategyCreateDTO {
-  name: string;
   fieldName?: string;
   fieldComparator?: ComparatorEnum;
   fieldValue?: string;

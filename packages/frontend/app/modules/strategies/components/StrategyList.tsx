@@ -3,7 +3,6 @@ import { Button } from "~/components/Buttons/Button";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { HStack } from "~/components/HStack";
 import { RawTable, Td, Th, Tr } from "~/components/RawTable";
-import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { StrategyRetrieveDTO } from "../types";
 import { StrategyCriteria } from "./StrategyCriteria";
 
@@ -24,7 +23,6 @@ export const StrategyList = ({
     <RawTable aria-label="Strategies applied on this flag">
       <thead>
         <Tr>
-          <Th>Name</Th>
           <Th>Criteria</Th>
           <Th>Actions</Th>
         </Tr>
@@ -32,10 +30,6 @@ export const StrategyList = ({
       <tbody>
         {strategies.map((strat) => (
           <Tr key={strat.uuid}>
-            <Td>
-              <div>{strat.name}</div>
-            </Td>
-
             <Td>
               <StrategyCriteria strat={strat} />
             </Td>
@@ -47,14 +41,14 @@ export const StrategyList = ({
                   icon={<AiOutlineEdit />}
                   to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/strategies/${strat.uuid}/edit`}
                 >
-                  Edit<VisuallyHidden> {strat.name} strategy</VisuallyHidden>
+                  Edit
                 </Button>
 
                 <DeleteButton
                   variant="secondary"
                   to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/strategies/${strat.uuid}/delete`}
                 >
-                  Remove<VisuallyHidden> {strat.name} strategy</VisuallyHidden>
+                  Remove
                 </DeleteButton>
               </HStack>
             </Td>

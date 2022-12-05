@@ -61,8 +61,6 @@ export const action: ActionFunction = async ({
     return { errors };
   }
 
-  const strategyName = formData.get("strategy-name") as string;
-
   const fieldName = (formData.get("field-name") as string) || undefined;
   const fieldValue = (formData.get("field-value") as string) || undefined;
 
@@ -72,7 +70,6 @@ export const action: ActionFunction = async ({
     ) as StrategyCreateDTO["fieldComparator"]) || undefined;
 
   const strategy: StrategyCreateDTO = {
-    name: strategyName,
     fieldComparator: fieldComparator,
     fieldName,
     fieldValue,
@@ -136,13 +133,6 @@ export default function StrategyCreatePage() {
         <CardContent>
           <Form method="post">
             <FormGroup>
-              <TextInput
-                name="strategy-name"
-                placeholder="e.g: Strategy 1"
-                label="Group name"
-                isInvalid={Boolean(errors["strategy-name"])}
-              />
-
               <StrategyAudience errors={errors} />
 
               <div>
