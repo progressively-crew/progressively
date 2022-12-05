@@ -28,6 +28,9 @@ export class SchedulingService {
         flagEnvironmentEnvironmentId: envId,
         flagEnvironmentFlagId: flagId,
       },
+      orderBy: {
+        utc: 'asc',
+      },
     });
   }
 
