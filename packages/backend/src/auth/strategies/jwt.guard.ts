@@ -3,7 +3,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { OktaService } from '../okta.service';
 
 const guards = OktaService.getOktaConfig().isOktaActivated
-  ? ['jwt', 'bearer']
+  ? ['bearer', 'jwt']
   : 'jwt';
 
 @Injectable()
