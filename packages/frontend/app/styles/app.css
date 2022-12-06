@@ -1778,6 +1778,10 @@ input[type="range"]::-moz-range-thumb {
     grid-template-columns: 200px 1fr;
   }
 
+  .lg\:flex-row {
+    flex-direction: row;
+  }
+
   .lg\:flex-col {
     flex-direction: column;
   }
