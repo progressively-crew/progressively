@@ -1,5 +1,10 @@
 import { MetaFunction, ActionFunction } from "@remix-run/node";
-import { useActionData, useSearchParams, Form, useTransition } from "@remix-run/react";
+import {
+  useActionData,
+  useSearchParams,
+  Form,
+  useTransition,
+} from "@remix-run/react";
 import { BackLink } from "~/components/BackLink";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
@@ -30,14 +35,17 @@ interface ActionData {
   };
 }
 
-export const action: ActionFunction = async ({ request }): Promise<ActionData> => {
+export const action: ActionFunction = async ({
+  request,
+}): Promise<ActionData> => {
   const formData = await request.formData();
   const token = formData.get("token")?.toString();
   const password = formData.get("password")?.toString();
   const confirmationPassword = formData.get("confirmationPassword")?.toString();
 
   const passwordError = validatePassword(password);
-  const confirmationPasswordError = validateConfirmationPassword(confirmationPassword);
+  const confirmationPasswordError =
+    validateConfirmationPassword(confirmationPassword);
 
   if (!token) {
     return {
@@ -94,11 +102,14 @@ export default function ResetPasswordPage() {
 
   return (
     <NotAuthenticatedLayout
+      size="S"
       header={<PageTitle value={pageTitle} />}
       nav={<BackLink to="/signin">Back to signin</BackLink>}
       status={
         <>
-          {errors && Object.keys(errors).length > 0 && <ErrorBox list={errors} />}
+          {errors && Object.keys(errors).length > 0 && (
+            <ErrorBox list={errors} />
+          )}
 
           {success && (
             <SuccessBox id="password-reset">
