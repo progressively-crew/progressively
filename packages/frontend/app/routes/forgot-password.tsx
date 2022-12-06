@@ -65,6 +65,7 @@ export default function ForgotPasswordPage() {
 
   return (
     <NotAuthenticatedLayout
+      size="S"
       nav={<BackLink to="/signin">Back to signin</BackLink>}
       header={
         <PageTitle
