@@ -30,6 +30,7 @@ import { Card, CardContent } from "~/components/Card";
 import { getOktaConfig } from "~/modules/auth/services/get-okta-config";
 import { useOkta } from "~/modules/auth/hooks/useOkta";
 import { Stack } from "~/components/Stack";
+import { useEffect } from "react";
 
 export const meta: MetaFunction = () => {
   return {
@@ -80,6 +81,7 @@ export interface LoaderData {
   showRegister: boolean;
   oktaConfig: OktaConfig;
 }
+
 export const loader: LoaderFunction = (): LoaderData => {
   return {
     showRegister: process.env.ALLOW_REGISTRATION === "true",
