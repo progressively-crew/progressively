@@ -1,19 +1,29 @@
+import { AiOutlineLogin } from "react-icons/ai";
 import { Button } from "~/components/Buttons/Button";
-import { H1 } from "~/components/H1";
 import { Spacer } from "~/components/Spacer";
 import { Typography } from "~/components/Typography";
-import { ErrorLayout } from "~/layouts/ErrorLayout";
 
 export default function NotFoundPage() {
   return (
-    <ErrorLayout>
-      <H1>{`Woops! This page does not exist.`}</H1>
+    <main className="p-8">
+      <Typography as="h1" className="font-bold text-lg">
+        {`Woops! This page does not exist.`}
+      </Typography>
+      <Typography>
+        {`It looks you're trying to access a content that does not exist.`}
+      </Typography>
 
-      <Typography>{`It looks you're trying to access a content that does not exist.`}</Typography>
+      <Spacer size={2} />
 
-      <Spacer size={4} />
-
-      <Button to="/signin">Signin page</Button>
-    </ErrorLayout>
+      <div className="inline-block">
+        <Button
+          to="/signin"
+          variant="secondary"
+          icon={<AiOutlineLogin aria-hidden />}
+        >
+          Signin page
+        </Button>
+      </div>
+    </main>
   );
 }

@@ -1,13 +1,14 @@
+import { AiOutlineLogin } from "react-icons/ai";
 import { Button } from "~/components/Buttons/Button";
-import { H1 } from "~/components/H1";
 import { Spacer } from "~/components/Spacer";
 import { Typography } from "~/components/Typography";
-import { ErrorLayout } from "~/layouts/ErrorLayout";
 
 export default function ForbiddenPage() {
   return (
-    <ErrorLayout>
-      <H1>{`Woops! You're not authorized to see this content`}</H1>
+    <main className="p-8">
+      <Typography as="h1" className="font-bold text-lg">
+        {`Woops! You're not authorized to see this content`}
+      </Typography>
 
       <Typography>
         {`It looks you're trying to access this page while not being
@@ -18,9 +19,17 @@ export default function ForbiddenPage() {
         To access this content, make sure to fill the authentication page form.
       </Typography>
 
-      <Spacer size={4} />
+      <Spacer size={2} />
 
-      <Button to="/signin">Signin page</Button>
-    </ErrorLayout>
+      <div className="inline-block">
+        <Button
+          to="/signin"
+          variant="secondary"
+          icon={<AiOutlineLogin aria-hidden />}
+        >
+          Signin page
+        </Button>
+      </div>
+    </main>
   );
 }
