@@ -18,15 +18,18 @@ import { TextInput } from "~/components/Fields/TextInput";
 import { Link } from "~/components/Link";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
-import { AuthCredentials } from "~/modules/auth/types";
+import { AuthCredentials, OktaConfig } from "~/modules/auth/types";
 import { commitSession, getSession } from "~/sessions";
 import { authenticate } from "../modules/auth/services/authenticate";
 import { validateSigninForm } from "../modules/auth/validators/validate-signin-form";
 import { Typography } from "~/components/Typography";
 import { Button } from "~/components/Buttons/Button";
-import { AiOutlineLock } from "react-icons/ai";
+import { SiOkta } from "react-icons/si";
 import { PageTitle } from "~/components/PageTitle";
 import { Card, CardContent } from "~/components/Card";
+import { getOktaConfig } from "~/modules/auth/services/get-okta-config";
+import { useOkta } from "~/modules/auth/hooks/useOkta";
+import { Stack } from "~/components/Stack";
 
 export const meta: MetaFunction = () => {
   return {
@@ -75,13 +78,18 @@ export const action: ActionFunction = async ({
 
 export interface LoaderData {
   showRegister: boolean;
+  oktaConfig: OktaConfig;
 }
 export const loader: LoaderFunction = (): LoaderData => {
-  return { showRegister: process.env.ALLOW_REGISTRATION === "true" };
+  return {
+    showRegister: process.env.ALLOW_REGISTRATION === "true",
+    oktaConfig: getOktaConfig(),
+  };
 };
 
 export default function Signin() {
-  const { showRegister } = useLoaderData<LoaderData>();
+  const { showRegister, oktaConfig } = useLoaderData<LoaderData>();
+  const okta = useOkta(oktaConfig);
   const transition = useTransition();
   const [searchParams] = useSearchParams();
   const userActivated = searchParams.get("userActivated");
@@ -91,6 +99,7 @@ export default function Signin() {
 
   return (
     <NotAuthenticatedLayout
+      size="S"
       header={
         <PageTitle
           value="Signin"
@@ -139,22 +148,36 @@ export default function Signin() {
                   placeholder="************"
                   autoComplete="current-password"
                 />
+
+                <div className="pt-1 flex justify-end">
+                  <Link
+                    to="/forgot-password"
+                    className="text-xs"
+                  >{`I forgot my password`}</Link>
+                </div>
               </div>
 
-              <div className="flex flex-col gap-4 lg:flex-row">
+              <Stack spacing={2}>
                 <SubmitButton
+                  className="justify-center"
                   isLoading={transition.state === "submitting"}
                   loadingText="Signin in progress, please wait..."
                 >
                   Sign in
                 </SubmitButton>
 
-                <Button
-                  to="/forgot-password"
-                  icon={<AiOutlineLock aria-hidden />}
-                  variant="tertiary"
-                >{`I forgot my password`}</Button>
-              </div>
+                {oktaConfig.isOktaActivated && (
+                  <Button
+                    type="button"
+                    className="justify-center"
+                    variant="secondary"
+                    icon={<SiOkta />}
+                    onClick={okta?.openLoginPage}
+                  >
+                    Sign in with Okta
+                  </Button>
+                )}
+              </Stack>
             </FormGroup>
           </Form>
         </CardContent>
