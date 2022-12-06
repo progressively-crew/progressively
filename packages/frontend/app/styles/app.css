@@ -977,6 +977,11 @@ video {
   border-top-color: rgb(229 231 235 / var(--tw-border-opacity));
 }
 
+.border-l-gray-100 {
+  --tw-border-opacity: 1;
+  border-left-color: rgb(243 244 246 / var(--tw-border-opacity));
+}
+
 .bg-indigo-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(79 70 229 / var(--tw-bg-opacity));
@@ -1776,10 +1781,6 @@ input[type="range"]::-moz-range-thumb {
 
   .lg\:grid-cols-\[200px_1fr\] {
     grid-template-columns: 200px 1fr;
-  }
-
-  .lg\:flex-row {
-    flex-direction: row;
   }
 
   .lg\:flex-col {

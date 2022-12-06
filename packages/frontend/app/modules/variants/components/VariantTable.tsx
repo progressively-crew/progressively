@@ -100,16 +100,14 @@ export const VariantTable = ({ variants, action }: VariantTableProps) => {
                   <Td className="text-center py-4 px-8">
                     <input type="hidden" name="uuid" value={variant.uuid} />
 
-                    {variant.isControl && (
-                      <Checkbox
-                        disabled
-                        checked={Boolean(variant.uuid)}
-                        value={variant.uuid}
-                        name={"isControl"}
-                        onChange={() => {}}
-                        readOnly
-                      />
-                    )}
+                    <Checkbox
+                      disabled
+                      checked={Boolean(variant.isControl)}
+                      value={variant.uuid}
+                      name={"isControl"}
+                      onChange={() => {}}
+                      readOnly
+                    />
                   </Td>
                 </Tr>
               );
