@@ -172,7 +172,7 @@ export default function Signin() {
                     type="button"
                     className="justify-center"
                     variant="secondary"
-                    icon={<SiOkta />}
+                    icon={<SiOkta aria-hidden />}
                     onClick={okta?.openLoginPage}
                   >
                     Sign in with Okta
