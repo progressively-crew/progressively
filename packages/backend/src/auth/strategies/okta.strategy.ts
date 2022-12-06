@@ -1,4 +1,4 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-http-bearer';
 import { OktaService } from '../okta.service';
@@ -9,14 +9,11 @@ export class OktaStrategy extends PassportStrategy(Strategy) {
     super();
   }
 
-  async validate(
-    token: string,
-    done: (error: HttpException, value: boolean | string) => any,
-  ) {
+  async validate(token: string) {
     try {
       return await this.authService.validateToken(token);
     } catch (error) {
-      done(error, 'The token is not valid');
+      return false;
     }
   }
 }
