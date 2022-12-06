@@ -7,6 +7,7 @@ export interface NotAuthenticatedLayoutProps {
   nav?: React.ReactNode;
   header?: React.ReactNode;
   status?: React.ReactNode;
+  size?: "S" | "M";
 }
 
 export const NotAuthenticatedLayout = ({
@@ -14,10 +15,12 @@ export const NotAuthenticatedLayout = ({
   nav,
   header,
   status,
+  size,
 }: NotAuthenticatedLayoutProps) => {
+  const containerSize = size === "S" ? "md:max-w-[480px]" : "md:w-2/5";
   return (
     <div>
-      <div className="w-full px-4 lg:px-8 md:w-2/5 mx-auto">
+      <div className={"w-full px-4 lg:px-8 mx-auto " + containerSize}>
         <Spacer size={12} />
 
         <Main>

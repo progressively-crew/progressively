@@ -12,7 +12,10 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(username: string, password: string): Promise<UserRetrieveDTO> {
-    const user = await this.userService.validateUser(username, password);
+    const user = await this.userService.validateBasicEmailPasswordUser(
+      username,
+      password,
+    );
 
     if (!user || user.status === UserStatus.Pending) {
       throw new UnauthorizedException();

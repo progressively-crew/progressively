@@ -343,6 +343,7 @@ export const cleanupDb = async () => {
   await prismaClient.environment.deleteMany();
   await prismaClient.passwordResetTokens.deleteMany();
   await prismaClient.userProject.deleteMany();
+  await prismaClient.userOfProvider.deleteMany();
   await prismaClient.user.deleteMany();
   await prismaClient.project.deleteMany();
   await prismaClient.$disconnect();

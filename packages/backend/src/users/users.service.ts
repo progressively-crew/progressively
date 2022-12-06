@@ -3,15 +3,20 @@ import { PrismaService } from '../database/prisma.service';
 import { CryptoService } from '../crypto/crypto.service';
 import { v4 as uuidv4 } from 'uuid';
 import { User } from './types';
+import { UserStatus } from './status';
+import { AuthProviders } from '../auth/types';
 
 @Injectable()
 export class UsersService {
   constructor(private prisma: PrismaService) {}
 
-  async validateUser(email: string, password: string): Promise<User> {
+  async validateBasicEmailPasswordUser(
+    email: string,
+    password: string,
+  ): Promise<User> {
     const user = await this.findByEmail(email);
 
-    if (!user) {
+    if (!user || !user.password) {
       return null;
     }
 
@@ -31,6 +36,41 @@ export class UsersService {
     user.password = await CryptoService.hash(user.password);
 
     return this.prisma.user.create({ data: user });
+  }
+
+  async createUserFromProvider(
+    uuid: string,
+    email: string,
+    authProvider: AuthProviders,
+  ): Promise<User> {
+    const existingUser = await this.prisma.userOfProvider.findFirst({
+      where: {
+        uuid,
+      },
+      include: {
+        User: true,
+      },
+    });
+
+    if (existingUser) {
+      return existingUser.User;
+    }
+
+    return this.prisma.user.create({
+      data: {
+        fullname: '',
+        email,
+        password: '',
+        activationToken: '',
+        status: UserStatus.Active,
+        authProviders: {
+          create: {
+            uuid,
+            provider: authProvider,
+          },
+        },
+      },
+    });
   }
 
   changeFullname(userId: string, fullname: string): Promise<User> {
@@ -66,7 +106,7 @@ export class UsersService {
     });
   }
 
-  findByEmail(email: string): Promise<User> {
+  findByEmail(email: string) {
     return this.prisma.user.findUnique({
       where: {
         email,

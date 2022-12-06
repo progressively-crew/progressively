@@ -14,6 +14,13 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model UserOfProvider {
+  uuid     String  @id
+  provider String
+  User     User?   @relation(fields: [userUuid], references: [uuid])
+  userUuid String?
+}
+
 model User {
   uuid                String                @id @default(uuid())
   fullname            String
@@ -21,6 +28,7 @@ model User {
   password            String
   userProject         UserProject[]
   activationToken     String?
+  authProviders       UserOfProvider[]
   // the values set in users/status.ts
   status              String
   RefreshToken        RefreshToken[]

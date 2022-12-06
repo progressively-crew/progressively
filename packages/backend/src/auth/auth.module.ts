@@ -10,6 +10,8 @@ import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard } from '@nestjs/throttler';
 import { MailModule } from '../mail/mail.module';
 import { DatabaseModule } from '../database/database.module';
+import { OktaStrategy } from './strategies/okta.strategy';
+import { OktaService } from './okta.service';
 
 @Module({
   imports: [
@@ -22,7 +24,9 @@ import { DatabaseModule } from '../database/database.module';
   providers: [
     LocalStrategy,
     JwtStrategy,
+    OktaStrategy,
     AuthService,
+    OktaService,
     {
       provide: APP_GUARD,
       useClass: ThrottlerGuard,

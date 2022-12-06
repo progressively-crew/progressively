@@ -30,3 +30,14 @@ export const ChangePasswordSchema = Joi.object({
 export const ChangeFullnameSchema = Joi.object({
   fullname: Joi.string().min(1).required(),
 });
+
+export interface OktaConfig {
+  issuer: string;
+  clientId: string;
+  isOktaActivated: boolean;
+}
+
+export enum AuthProviders {
+  Default = 'Default',
+  Okta = 'Okta',
+}
