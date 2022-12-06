@@ -1,7 +1,13 @@
 import { OktaAuth, OktaAuthOptions, TokenParams } from "@okta/okta-auth-js";
 import { OktaConfig } from "../types";
 
-export const OktaserviceClientSide = ({ issuer, clientId }: OktaConfig) => {
+export const OktaserviceClientSide = ({
+  issuer,
+  clientId,
+  isOktaActivated,
+}: OktaConfig) => {
+  if (!isOktaActivated) return;
+
   const config: OktaAuthOptions = {
     issuer,
     clientId,
