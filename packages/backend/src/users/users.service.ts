@@ -20,10 +20,6 @@ export class UsersService {
       return null;
     }
 
-    if (user.authProvider !== AuthProviders.Default) {
-      return null;
-    }
-
     const isValidPassword = await CryptoService.isHashEqual(
       password,
       user.password,
@@ -58,13 +54,17 @@ export class UsersService {
 
     return this.prisma.user.create({
       data: {
-        uuid,
         fullname: '',
         email: '',
         password: '',
         activationToken: '',
         status: UserStatus.Active,
-        authProvider,
+        authProviders: {
+          create: {
+            uuid,
+            provider: authProvider,
+          },
+        },
       },
     });
   }

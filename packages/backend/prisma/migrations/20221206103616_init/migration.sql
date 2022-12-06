@@ -1,4 +1,13 @@
 -- CreateTable
+CREATE TABLE "UserOfProvider" (
+    "uuid" TEXT NOT NULL,
+    "provider" TEXT NOT NULL,
+    "userUuid" TEXT,
+
+    CONSTRAINT "UserOfProvider_pkey" PRIMARY KEY ("uuid")
+);
+
+-- CreateTable
 CREATE TABLE "User" (
     "uuid" TEXT NOT NULL,
     "fullname" TEXT NOT NULL,
@@ -123,6 +132,7 @@ CREATE TABLE "PMetricHit" (
     "flagEnvironmentFlagId" TEXT,
     "flagEnvironmentEnvironmentId" TEXT,
     "pMetricUuid" TEXT NOT NULL,
+    "visitorId" TEXT NOT NULL,
 
     CONSTRAINT "PMetricHit_pkey" PRIMARY KEY ("id")
 );
@@ -133,8 +143,8 @@ CREATE TABLE "FlagHit" (
     "date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "flagEnvironmentFlagId" TEXT NOT NULL,
     "flagEnvironmentEnvironmentId" TEXT NOT NULL,
-    "status" TEXT NOT NULL,
-    "variantUuid" TEXT,
+    "valueResolved" TEXT NOT NULL,
+    "visitorId" TEXT NOT NULL,
 
     CONSTRAINT "FlagHit_pkey" PRIMARY KEY ("id")
 );
@@ -142,15 +152,27 @@ CREATE TABLE "FlagHit" (
 -- CreateTable
 CREATE TABLE "RolloutStrategy" (
     "uuid" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
-    "strategyRuleType" TEXT NOT NULL,
-    "fieldName" TEXT,
-    "fieldComparator" TEXT,
-    "fieldValue" TEXT,
+    "fieldName" TEXT NOT NULL,
+    "fieldComparator" TEXT NOT NULL,
+    "fieldValue" TEXT NOT NULL,
+    "valueToServeType" TEXT NOT NULL,
+    "valueToServe" TEXT NOT NULL,
     "flagEnvironmentFlagId" TEXT,
     "flagEnvironmentEnvironmentId" TEXT,
 
     CONSTRAINT "RolloutStrategy_pkey" PRIMARY KEY ("uuid")
+);
+
+-- CreateTable
+CREATE TABLE "Eligibility" (
+    "uuid" TEXT NOT NULL,
+    "fieldName" TEXT NOT NULL,
+    "fieldComparator" TEXT NOT NULL,
+    "fieldValue" TEXT NOT NULL,
+    "flagEnvironmentFlagId" TEXT,
+    "flagEnvironmentEnvironmentId" TEXT,
+
+    CONSTRAINT "Eligibility_pkey" PRIMARY KEY ("uuid")
 );
 
 -- CreateTable
@@ -168,6 +190,9 @@ CREATE TABLE "Schedule" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- AddForeignKey
+ALTER TABLE "UserOfProvider" ADD CONSTRAINT "UserOfProvider_userUuid_fkey" FOREIGN KEY ("userUuid") REFERENCES "User"("uuid") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "UserProject" ADD CONSTRAINT "UserProject_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("uuid") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -212,10 +237,10 @@ ALTER TABLE "PMetricHit" ADD CONSTRAINT "PMetricHit_pMetricUuid_fkey" FOREIGN KE
 ALTER TABLE "FlagHit" ADD CONSTRAINT "FlagHit_flagEnvironmentFlagId_flagEnvironmentEnvironmentId_fkey" FOREIGN KEY ("flagEnvironmentFlagId", "flagEnvironmentEnvironmentId") REFERENCES "FlagEnvironment"("flagId", "environmentId") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "FlagHit" ADD CONSTRAINT "FlagHit_variantUuid_fkey" FOREIGN KEY ("variantUuid") REFERENCES "Variant"("uuid") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "RolloutStrategy" ADD CONSTRAINT "RolloutStrategy_flagEnvironmentFlagId_flagEnvironmentEnvir_fkey" FOREIGN KEY ("flagEnvironmentFlagId", "flagEnvironmentEnvironmentId") REFERENCES "FlagEnvironment"("flagId", "environmentId") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "RolloutStrategy" ADD CONSTRAINT "RolloutStrategy_flagEnvironmentFlagId_flagEnvironmentEnvir_fkey" FOREIGN KEY ("flagEnvironmentFlagId", "flagEnvironmentEnvironmentId") REFERENCES "FlagEnvironment"("flagId", "environmentId") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Eligibility" ADD CONSTRAINT "Eligibility_flagEnvironmentFlagId_flagEnvironmentEnvironme_fkey" FOREIGN KEY ("flagEnvironmentFlagId", "flagEnvironmentEnvironmentId") REFERENCES "FlagEnvironment"("flagId", "environmentId") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Schedule" ADD CONSTRAINT "Schedule_flagEnvironmentFlagId_flagEnvironmentEnvironmentI_fkey" FOREIGN KEY ("flagEnvironmentFlagId", "flagEnvironmentEnvironmentId") REFERENCES "FlagEnvironment"("flagId", "environmentId") ON DELETE SET NULL ON UPDATE CASCADE;
