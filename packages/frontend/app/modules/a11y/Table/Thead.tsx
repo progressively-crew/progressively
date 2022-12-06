@@ -33,24 +33,25 @@ export const Thead = ({ children, disabled }: TheadProps) => {
   return (
     <thead>
       <Tr aria-rowindex={1}>
-        <Th aria-colindex={1}>
-          <VisuallyHidden>
-            <span id="select-all">
-              Select {isHydrated ? "all" : "an element"}
-            </span>
-          </VisuallyHidden>
+        {!disabled && (
+          <Th aria-colindex={1}>
+            <VisuallyHidden>
+              <span id="select-all">
+                Select {isHydrated ? "all" : "an element"}
+              </span>
+            </VisuallyHidden>
 
-          <Checkbox
-            ref={checkboxRef}
-            checked={selections.length > 0}
-            aria-labelledby={"select-all"}
-            tabIndex={0}
-            onChange={onSelectAll}
-            value="select-all"
-            name="select-all"
-            disabled={disabled}
-          />
-        </Th>
+            <Checkbox
+              ref={checkboxRef}
+              checked={selections.length > 0}
+              aria-labelledby={"select-all"}
+              tabIndex={0}
+              onChange={onSelectAll}
+              value="select-all"
+              name="select-all"
+            />
+          </Th>
+        )}
         {childrenClone}
       </Tr>
     </thead>

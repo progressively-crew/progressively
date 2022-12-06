@@ -73,22 +73,23 @@ export const Row = ({ children, selection, disabled, ...props }: RowProps) => {
       {...props}
       className={isChecked ? "row-selected" : undefined}
     >
-      <Td aria-colindex={1}>
-        <VisuallyHidden>
-          <span id={`select-col-${selection}`}>Select</span>
-        </VisuallyHidden>
+      {!disabled && (
+        <Td aria-colindex={1}>
+          <VisuallyHidden>
+            <span id={`select-col-${selection}`}>Select</span>
+          </VisuallyHidden>
 
-        <Checkbox
-          name={`checkbox-${selection}`}
-          ref={checkboxRef}
-          aria-labelledby={`select-col-${selection} ${labelledby}`}
-          tabIndex={-1}
-          checked={isChecked}
-          onChange={handleChange}
-          value={selection}
-          disabled={disabled}
-        />
-      </Td>
+          <Checkbox
+            name={`checkbox-${selection}`}
+            ref={checkboxRef}
+            aria-labelledby={`select-col-${selection} ${labelledby}`}
+            tabIndex={-1}
+            checked={isChecked}
+            onChange={handleChange}
+            value={selection}
+          />
+        </Td>
+      )}
 
       {childrenClone}
     </Tr>

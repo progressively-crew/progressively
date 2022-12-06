@@ -3,6 +3,7 @@ import { Cell, Col, Row, Table, Tbody, Thead } from "../../a11y/Table";
 import { UserProject } from "../../projects/types";
 import { Tag } from "~/components/Tag";
 import { ButtonCopy } from "~/components/ButtonCopy";
+import { Typography } from "~/components/Typography";
 
 export interface UserTableProps {
   userProjects: Array<UserProject>;
@@ -31,7 +32,9 @@ export const UserTable = ({
             key={userProject.userId}
             disabled={!canEdit}
           >
-            <Cell>{userProject.user?.fullname}</Cell>
+            <Cell>
+              <Typography as="span">{userProject.user?.fullname}</Typography>
+            </Cell>
             <Cell>
               <ButtonCopy toCopy={userProject.user?.email || ""}>
                 {userProject.user?.email}
