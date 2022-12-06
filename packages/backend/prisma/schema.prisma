@@ -21,6 +21,7 @@ model User {
   password            String
   userProject         UserProject[]
   activationToken     String?
+  authProvider        String                @default("Default")
   // the values set in users/status.ts
   status              String
   RefreshToken        RefreshToken[]

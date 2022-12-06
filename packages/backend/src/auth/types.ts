@@ -36,3 +36,8 @@ export interface OktaConfig {
   clientId: string;
   isOktaActivated: boolean;
 }
+
+export enum AuthProviders {
+  Default = 'Default',
+  Okta = 'Okta',
+}
