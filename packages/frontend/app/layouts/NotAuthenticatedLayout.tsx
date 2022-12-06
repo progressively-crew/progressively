@@ -17,7 +17,7 @@ export const NotAuthenticatedLayout = ({
   status,
   size,
 }: NotAuthenticatedLayoutProps) => {
-  const containerSize = size === "S" ? "md:w-1/3" : "md:w-2/5";
+  const containerSize = size === "S" ? "md:max-w-[480px]" : "md:w-2/5";
   return (
     <div>
       <div className={"w-full px-4 lg:px-8 mx-auto " + containerSize}>

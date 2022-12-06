@@ -1730,12 +1730,12 @@ input[type="range"]::-moz-range-thumb {
     display: inline;
   }
 
-  .md\:w-1\/3 {
-    width: 33.333333%;
-  }
-
   .md\:w-2\/5 {
     width: 40%;
+  }
+
+  .md\:max-w-\[480px\] {
+    max-width: 480px;
   }
 
   .md\:grid-cols-2 {
