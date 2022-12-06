@@ -12,15 +12,13 @@ import UnauthorizedPage from "./routes/401";
 import ForbiddenPage from "./routes/403";
 import NotFoundPage from "./routes/404";
 import styles from "./styles/app.css";
-import { H1 } from "./components/H1";
-import { Main } from "./components/Main";
 import { Background } from "./components/Background";
 import { LinksFunction } from "@remix-run/node";
-import { ErrorLayout } from "./layouts/ErrorLayout";
 import { Typography } from "./components/Typography";
 import { Spacer } from "./components/Spacer";
 //import { withSentry } from "@sentry/remix";
-import { SubmitButton } from "./components/Buttons/SubmitButton";
+import { AiOutlineLogin } from "react-icons/ai";
+import { Button } from "./components/Buttons/Button";
 
 /**
  * The `links` export is a function that returns an array of objects that map to
@@ -112,16 +110,25 @@ export function ErrorBoundary({ error }: { error: Error }) {
   return (
     <Document title="Error!">
       <Layout>
-        <ErrorLayout>
-          <Main>
-            <H1>Outch, a wild error appeared!</H1>
+        <main className="p-8">
+          <Typography as="h1" className="font-bold text-lg">
+            Outch, a wild error appeared!
+          </Typography>
 
-            <Typography>{error.message}</Typography>
-            <Spacer size={4} />
+          <Typography>{error.message}</Typography>
 
-            <SubmitButton to="/signin">Signin page</SubmitButton>
-          </Main>
-        </ErrorLayout>
+          <Spacer size={2} />
+
+          <div className="inline-block">
+            <Button
+              to="/signin"
+              variant="secondary"
+              icon={<AiOutlineLogin aria-hidden />}
+            >
+              Signin page
+            </Button>
+          </div>
+        </main>
       </Layout>
     </Document>
   );
