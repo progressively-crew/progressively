@@ -20,6 +20,7 @@ export class OktaStrategy extends PassportStrategy(Strategy) {
 
       return this.userService.createUserFromProvider(
         tokenMeta.claims.uid,
+        tokenMeta.claims.sub,
         AuthProviders.Okta,
       );
     } catch (error) {

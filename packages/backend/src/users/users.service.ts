@@ -16,7 +16,7 @@ export class UsersService {
   ): Promise<User> {
     const user = await this.findByEmail(email);
 
-    if (!user) {
+    if (!user || !user.password) {
       return null;
     }
 
@@ -40,6 +40,7 @@ export class UsersService {
 
   async createUserFromProvider(
     uuid: string,
+    email: string,
     authProvider: AuthProviders,
   ): Promise<User> {
     const existingUser = await this.prisma.userOfProvider.findFirst({
@@ -58,7 +59,7 @@ export class UsersService {
     return this.prisma.user.create({
       data: {
         fullname: '',
-        email: '',
+        email,
         password: '',
         activationToken: '',
         status: UserStatus.Active,

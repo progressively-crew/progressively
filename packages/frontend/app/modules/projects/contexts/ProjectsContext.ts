@@ -1,8 +1,10 @@
 import { createContext } from "react";
-import { UserProject } from "../types";
+import { Project } from "../types";
 
 export interface ProjectsContextType {
-  projects: Array<UserProject>;
+  projects: Array<Project>;
 }
 
-export const ProjectsContext = createContext<ProjectsContextType>({ projects: [] });
+export const ProjectsContext = createContext<ProjectsContextType>({
+  projects: [],
+});

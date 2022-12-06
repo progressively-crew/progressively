@@ -95,6 +95,7 @@ export default function Signin() {
   const [searchParams] = useSearchParams();
   const userActivated = searchParams.get("userActivated");
   const userCreated = searchParams.get("userCreated");
+  const oauthFailed = searchParams.get("oauthFailed");
   const data = useActionData<ActionData>();
   const errors = data?.errors;
 
@@ -115,7 +116,14 @@ export default function Signin() {
         />
       }
       status={
-        errors?.password || errors?.email || errors?.badUser ? (
+        oauthFailed ? (
+          <ErrorBox
+            list={{
+              oauth:
+                "An error appeared during the authentication. Please try again or contact your system administrator.",
+            }}
+          />
+        ) : errors?.password || errors?.email || errors?.badUser ? (
           <ErrorBox list={errors} />
         ) : userActivated ? (
           <SuccessBox id="user-activated">
