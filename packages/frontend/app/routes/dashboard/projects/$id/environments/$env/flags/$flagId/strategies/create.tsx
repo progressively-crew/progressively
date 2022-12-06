@@ -83,7 +83,6 @@ export const action: ActionFunction = async ({
   request,
   params,
 }): Promise<ActionData | Response> => {
-  console.log("passing");
   const formData = await request.formData();
   const session = await getSession(request.headers.get("Cookie"));
 

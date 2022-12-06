@@ -42,14 +42,17 @@ export class UsersService {
     uuid: string,
     authProvider: AuthProviders,
   ): Promise<User> {
-    const existingUser = await this.prisma.user.findFirst({
+    const existingUser = await this.prisma.userOfProvider.findFirst({
       where: {
         uuid,
+      },
+      include: {
+        User: true,
       },
     });
 
     if (existingUser) {
-      return null;
+      return existingUser.User;
     }
 
     return this.prisma.user.create({

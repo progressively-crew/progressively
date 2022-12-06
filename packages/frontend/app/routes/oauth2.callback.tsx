@@ -1,9 +1,11 @@
-import { LoaderFunction } from "@remix-run/node";
-import { useLoaderData, useNavigate } from "@remix-run/react";
+import { ActionFunction, LoaderFunction, redirect } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
 import { useEffect } from "react";
+import { useFetcher } from "@remix-run/react";
 import { useOkta } from "~/modules/auth/hooks/useOkta";
 import { getOktaConfig } from "~/modules/auth/services/get-okta-config";
 import { OktaConfig } from "~/modules/auth/types";
+import { commitSession, getSession } from "~/sessions";
 
 export interface LoaderData {
   oktaConfig: OktaConfig;
@@ -15,17 +17,38 @@ export const loader: LoaderFunction = (): LoaderData => {
   };
 };
 
+export const action: ActionFunction = async ({
+  request,
+}): Promise<Response> => {
+  const session = await getSession(request.headers.get("Cookie"));
+  const accessToken = (await request.formData()).get("accessToken");
+
+  session.set("auth-cookie", accessToken);
+
+  return redirect("/dashboard", {
+    headers: {
+      "Set-Cookie": await commitSession(session),
+    },
+  });
+};
+
 export default function OauthCallback() {
-  const navigate = useNavigate();
   const { oktaConfig } = useLoaderData<LoaderData>();
   const okta = useOkta(oktaConfig);
+  const fetcher = useFetcher();
 
   useEffect(() => {
-    (async () => {
-      await okta?.setTokensFromUrl();
-      navigate("/signin");
-    })();
-  }, [navigate, okta]);
+    if (!okta) return;
+    const handleLogin = async () => {
+      const accessToken = await okta?.setTokensFromUrl();
 
-  return null;
+      if (accessToken) {
+        fetcher.submit({ accessToken }, { method: "post" });
+      }
+    };
+
+    handleLogin();
+  }, [okta]);
+
+  return <div className="p-8">You will be redirected in a few moment.</div>;
 }

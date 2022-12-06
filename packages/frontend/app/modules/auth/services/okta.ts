@@ -1,4 +1,9 @@
-import { OktaAuth, OktaAuthOptions, TokenParams } from "@okta/okta-auth-js";
+import {
+  canProceed,
+  OktaAuth,
+  OktaAuthOptions,
+  TokenParams,
+} from "@okta/okta-auth-js";
 import { OktaConfig } from "../types";
 
 export const OktaserviceClientSide = ({
@@ -40,6 +45,8 @@ export const OktaserviceClientSide = ({
       if (tokens.accessToken) {
         authClient.tokenManager.add("access_token", tokens.accessToken);
       }
+
+      return tokens?.accessToken?.accessToken;
     } catch {
       throw new Error("Authentication failed.");
     }
