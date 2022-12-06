@@ -21,7 +21,8 @@ export const action: ActionFunction = async ({
   request,
 }): Promise<Response> => {
   const session = await getSession(request.headers.get("Cookie"));
-  const accessToken = (await request.formData()).get("accessToken");
+  const formData = await request.formData();
+  const accessToken = formData.get("accessToken");
 
   session.set("auth-cookie", accessToken);
 
