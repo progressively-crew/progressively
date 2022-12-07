@@ -4,8 +4,15 @@ export interface InertWhenNavOpenedProps {
   children: React.ReactNode;
 }
 
-export const InertWhenNavOpened = ({ children }: InertWhenNavOpenedProps) => {
+export const InertWhenNavOpened = ({
+  children,
+  ...props
+}: InertWhenNavOpenedProps) => {
   const { isNavOpened } = useNavToggle();
 
-  return <div aria-hidden={isNavOpened}>{children}</div>;
+  return (
+    <div aria-hidden={isNavOpened} {...props}>
+      {children}
+    </div>
+  );
 };

@@ -36,56 +36,55 @@ export const DashboardLayout = ({
     <NavProvider>
       <SkipNavLink>Skip to content</SkipNavLink>
 
-      <div>
-        <div className="border-b border-b-color-gray-500 bg-white">
-          <Container>
-            <div className="flex justify-between h-14 items-center">
-              <BreadCrumbs crumbs={crumbs} />
+      <div className="border-b border-b-color-gray-500 bg-white lg:sticky top-0">
+        <Container>
+          <div className="flex justify-between h-14 items-center ">
+            <BreadCrumbs crumbs={crumbs} />
 
-              <UseDropdown user={user} />
-            </div>
+            <UseDropdown user={user} />
+          </div>
 
-            <HideDesktop>
-              {header && <Spacer size={2} />}
+          <HideDesktop>
+            {header && <Spacer size={2} />}
 
-              {header}
-              {header && <Spacer size={2} />}
-            </HideDesktop>
-          </Container>
-        </div>
-
-        <InertWhenNavOpened>
-          {subNav && <HideDesktop>{subNav}</HideDesktop>}
-
-          <Spacer size={8} />
-
-          <Container>
-            <div
-              className={
-                subNav
-                  ? "grid grid-cols-[1fr] lg:grid-cols-[200px_1fr] gap-12"
-                  : "grid-cols-[1fr]"
-              }
-            >
-              {subNav && <HideTablet className="mt-2">{subNav}</HideTablet>}
-
-              <div className="max-w-6xl w-full mx-auto">
-                <div className="overflow-hidden">
-                  <Main>
-                    <Stack spacing={6}>
-                      {status}
-
-                      {children}
-                    </Stack>
-                  </Main>
-                </div>
-              </div>
-            </div>
-          </Container>
-        </InertWhenNavOpened>
-
-        <Spacer size={10} />
+            {header}
+            {header && <Spacer size={2} />}
+          </HideDesktop>
+        </Container>
       </div>
+
+      <InertWhenNavOpened className="h-full">
+        {subNav && <HideDesktop>{subNav}</HideDesktop>}
+
+        <div className="px-4 md:px-12 lg:px-0 h-full">
+          <div
+            className={
+              subNav
+                ? "grid grid-cols-[1fr] lg:grid-cols-[300px_1fr] gap-12 h-full"
+                : "grid-cols-[1fr]"
+            }
+          >
+            {subNav && (
+              <HideTablet as="div" className="lg:h-full">
+                {subNav}
+              </HideTablet>
+            )}
+
+            <div className="overflow-hidden max-w-6xl w-full mx-auto">
+              <Spacer size={8} />
+              <Main>
+                <Stack spacing={6}>
+                  {status}
+
+                  {children}
+                </Stack>
+              </Main>
+            </div>
+          </div>
+        </div>
+      </InertWhenNavOpened>
+
+      <Spacer size={10} />
     </NavProvider>
   );
 };

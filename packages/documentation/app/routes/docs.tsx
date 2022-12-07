@@ -21,7 +21,7 @@ export default function DocsLayout() {
     <NavProvider>
       <div>
         <InertWhenNavOpened>
-          <div className="flex h-14 items-center border-b border-b-color-gray-500">
+          <div className="flex h-14 items-center border-b border-color-gray-500">
             <div className=" max-w-screen-2xl px-4 md:px-12">
               <HideDesktop>
                 <NavToggle />
