@@ -69,14 +69,16 @@ export const DashboardLayout = ({
             >
               {subNav && <HideTablet className="mt-2">{subNav}</HideTablet>}
 
-              <div className="overflow-hidden">
-                <Main>
-                  <Stack spacing={6}>
-                    {status}
+              <div className="max-w-6xl w-full mx-auto">
+                <div className="overflow-hidden">
+                  <Main>
+                    <Stack spacing={6}>
+                      {status}
 
-                    {children}
-                  </Stack>
-                </Main>
+                      {children}
+                    </Stack>
+                  </Main>
+                </div>
               </div>
             </div>
           </Container>
