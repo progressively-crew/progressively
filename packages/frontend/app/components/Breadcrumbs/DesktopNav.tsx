@@ -17,7 +17,7 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
     <nav aria-label="Breadcrumbs">
       <ol className="flex h-12 items-center">
         <li className="flex items-center">
-          <LogoWithoutText />
+          <LogoWithoutText aria-label="Progressively" />
 
           <div className="flex text-gray-300 px-2s" aria-hidden>
             {"/"}
