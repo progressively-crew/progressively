@@ -152,7 +152,7 @@ export const WeightComparator = () => {
     <div className="bg-gray-900 text-white">
       <section className="max-w-screen-xl mx-auto px-4 py-12 md:p-20">
         <h2 className="text-center text-3xl md:text-5xl font-bold">
-          <span className="text-pink-500">Weight</span> difference
+          <span className="text-pink-500">Performance</span> difference
         </h2>
 
         <figure>

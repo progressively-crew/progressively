@@ -33,13 +33,17 @@ export const Features = () => (
           <Card
             title="Scheduling"
             bottom={
-              <p className="bg-gray-900 text-white p-2 rounded-3xl flex flex-row gap-4 text-sm">
-                <BsClockHistory className="text-lg" aria-hidden />
-                <span>
-                  <VisuallyHidden>Example:</VisuallyHidden> Flag activated at
-                  9am tomorrow
-                </span>
-              </p>
+              <div className="flex justify-center">
+                <div className="inline-block">
+                  <p className="bg-gray-900 text-white p-2 rounded-3xl flex flex-row gap-4 text-sm">
+                    <BsClockHistory className="text-lg" aria-hidden />
+                    <span>
+                      <VisuallyHidden>Example:</VisuallyHidden> Flag activated
+                      at 9am tomorrow
+                    </span>
+                  </p>
+                </div>
+              </div>
             }
           >
             <p>Activate or deactivate your flags at a given time</p>
@@ -67,7 +71,7 @@ export const Features = () => (
 
         <div className="grid gap-3 md:col-span-2 md:grid-rows-2">
           <Card
-            title="Strategies"
+            title="Audience Eligibility"
             top={
               <div
                 aria-hidden
