@@ -72,7 +72,11 @@ export const DashboardLayout = ({
               </div>
             )}
 
-            <div className="overflow-hidden max-w-6xl w-full mx-auto lg:pr-12">
+            <div
+              className={`overflow-hidden max-w-6xl w-full mx-auto ${
+                subNav ? "lg:pr-12" : ""
+              }`}
+            >
               <Spacer size={8} />
               <Main>
                 <Stack spacing={6}>
