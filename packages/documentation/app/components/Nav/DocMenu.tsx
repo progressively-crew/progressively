@@ -42,12 +42,16 @@ const MenuItems = [
         link: "/docs/features/scheduled-flag-update",
       },
       {
-        label: "Feature flags strategies",
-        link: "/docs/features/flag-strategies",
+        label: "Audience eligibility",
+        link: "/docs/features/audience-eligibility",
       },
       {
-        label: "Simple insights",
-        link: "/docs/features/simple-insights",
+        label: "Additional audience",
+        link: "/docs/features/additional-audience",
+      },
+      {
+        label: "Insights",
+        link: "/docs/features/insights",
       },
     ],
   },

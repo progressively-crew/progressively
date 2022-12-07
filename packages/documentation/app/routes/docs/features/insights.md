@@ -1,4 +1,4 @@
-# Simple insights
+# Insights
 
 Progressively is privacy first. We don't have access to anything related to the users.
 

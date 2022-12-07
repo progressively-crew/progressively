@@ -15,6 +15,10 @@ SESSION_SECRET=abcd
 
 # Do you allow people to create accounts from the registration page? Even when false, you can add people through the "Add member" feature
 ALLOW_REGISTRATION=true
+
+# If you want to connect to Progressively using your Okta instance, fill this environment variable and a button will appear on the signin page.
+OKTA_ISSUER="YOUR_OKTA_ISSUER"
+OKTA_CLIENT_ID="YOUR_OKTA_CLIENT_ID"
 ```
 
 ## Backend
@@ -66,4 +70,8 @@ THROTTLING_TTL=60
 
 # Throttling Limit in Nestjs
 THROTTLING_LIMIT=10000
+
+# Fill these two in addition to the one set in the frontend to activate Okta authentication in Progressively
+OKTA_ISSUER="YOUR_OKTA_ISSUER"
+OKTA_CLIENT_ID="YOUR_OKTA_CLIENT_ID"
 ```

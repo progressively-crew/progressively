@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://progressively.app/</loc>
-    <lastmod>Fri Nov 11 2022 07:36:09 GMT+0100 (Central European Standard Time)</lastmod>
+    <lastmod>Wed Dec 07 2022 16:18:40 GMT+0100 (Central European Standard Time)</lastmod>
   </url>
   <url>
     <loc>https://progressively.app/docs/features/hierarchical-structure</loc>
@@ -17,28 +17,32 @@
     <lastmod>Tue Nov 08 2022 11:44:04 GMT+0100 (Central European Standard Time)</lastmod>
   </url>
   <url>
+    <loc>https://progressively.app/docs/features/audience-eligibility</loc>
+    <lastmod>Wed Dec 07 2022 16:28:47 GMT+0100 (Central European Standard Time)</lastmod>
+  </url>
+  <url>
+    <loc>https://progressively.app/docs/features/additional-audience</loc>
+    <lastmod>Wed Dec 07 2022 16:32:43 GMT+0100 (Central European Standard Time)</lastmod>
+  </url>
+  <url>
     <loc>https://progressively.app/docs/introduction/getting-started</loc>
     <lastmod>Tue Nov 08 2022 11:44:04 GMT+0100 (Central European Standard Time)</lastmod>
   </url>
   <url>
     <loc>https://progressively.app/docs/introduction/configuration</loc>
-    <lastmod>Tue Nov 08 2022 11:44:04 GMT+0100 (Central European Standard Time)</lastmod>
+    <lastmod>Wed Dec 07 2022 16:22:36 GMT+0100 (Central European Standard Time)</lastmod>
   </url>
   <url>
     <loc>https://progressively.app/docs/introduction/demo-instance</loc>
     <lastmod>Tue Nov 08 2022 11:44:04 GMT+0100 (Central European Standard Time)</lastmod>
   </url>
   <url>
-    <loc>https://progressively.app/docs/features/flag-strategies</loc>
-    <lastmod>Tue Nov 08 2022 11:44:04 GMT+0100 (Central European Standard Time)</lastmod>
-  </url>
-  <url>
-    <loc>https://progressively.app/docs/features/simple-insights</loc>
-    <lastmod>Tue Nov 08 2022 11:44:04 GMT+0100 (Central European Standard Time)</lastmod>
-  </url>
-  <url>
     <loc>https://progressively.app/docs/guides/add-your-sdk</loc>
     <lastmod>Tue Nov 08 2022 11:44:04 GMT+0100 (Central European Standard Time)</lastmod>
+  </url>
+  <url>
+    <loc>https://progressively.app/docs/features/insights</loc>
+    <lastmod>Wed Dec 07 2022 16:35:05 GMT+0100 (Central European Standard Time)</lastmod>
   </url>
   <url>
     <loc>https://progressively.app/docs/guides/javascript</loc>
