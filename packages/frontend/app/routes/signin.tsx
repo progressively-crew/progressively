@@ -25,11 +25,15 @@ import { validateSigninForm } from "../modules/auth/validators/validate-signin-f
 import { Typography } from "~/components/Typography";
 import { Button } from "~/components/Buttons/Button";
 import { SiOkta } from "react-icons/si";
-import { PageTitle } from "~/components/PageTitle";
 import { Card, CardContent } from "~/components/Card";
 import { getOktaConfig } from "~/modules/auth/services/get-okta-config";
 import { useOkta } from "~/modules/auth/hooks/useOkta";
 import { Stack } from "~/components/Stack";
+import { Separator } from "~/components/Separator";
+import { Spacer } from "~/components/Spacer";
+import { LogoWithoutText } from "~/components/Logo/WithoutText";
+import { H1Logo } from "~/components/H1Logo";
+import { HStack } from "~/components/HStack";
 
 export const meta: MetaFunction = () => {
   return {
@@ -102,19 +106,6 @@ export default function Signin() {
   return (
     <NotAuthenticatedLayout
       size="S"
-      header={
-        <PageTitle
-          value="Signin"
-          description={
-            showRegister ? (
-              <Typography>
-                If you {`don't`} have a user account yet, you can{" "}
-                <Link to="/register">{`create an account`}</Link>.
-              </Typography>
-            ) : null
-          }
-        />
-      }
       status={
         oauthFailed ? (
           <ErrorBox
@@ -138,6 +129,20 @@ export default function Signin() {
     >
       <Card>
         <CardContent>
+          <div className="flex flex-row justify-between">
+            <H1Logo>Signin</H1Logo>
+
+            {showRegister && (
+              <Button
+                className="justify-center"
+                to="/register"
+                variant="tertiary"
+              >{`Sign up`}</Button>
+            )}
+          </div>
+
+          <Spacer size={16} />
+
           <Form method="post">
             <FormGroup>
               <TextInput
@@ -166,29 +171,39 @@ export default function Signin() {
                 </div>
               </div>
 
-              <Stack spacing={2}>
-                <SubmitButton
-                  className="justify-center"
-                  isLoading={transition.state === "submitting"}
-                  loadingText="Signin in progress, please wait..."
-                >
-                  Sign in
-                </SubmitButton>
-
-                {oktaConfig.isOktaActivated && (
-                  <Button
-                    type="button"
-                    className="justify-center"
-                    variant="secondary"
-                    icon={<SiOkta aria-hidden />}
-                    onClick={okta?.openLoginPage}
-                  >
-                    Sign in with Okta
-                  </Button>
-                )}
-              </Stack>
+              <SubmitButton
+                className="justify-center"
+                isLoading={transition.state === "submitting"}
+                loadingText="Signin in progress, please wait..."
+              >
+                Sign in
+              </SubmitButton>
             </FormGroup>
           </Form>
+
+          {oktaConfig.isOktaActivated && (
+            <div>
+              <Spacer size={12} />
+              <Separator />
+
+              <div className="flex justify-center -mt-3">
+                <Typography className="text-sm px-3 bg-white">
+                  Or signin with
+                </Typography>
+              </div>
+
+              <Spacer size={4} />
+              <Button
+                type="button"
+                className="justify-center w-full"
+                variant="secondary"
+                icon={<SiOkta aria-hidden />}
+                onClick={okta?.openLoginPage}
+              >
+                Sign in with Okta
+              </Button>
+            </div>
+          )}
         </CardContent>
       </Card>
     </NotAuthenticatedLayout>

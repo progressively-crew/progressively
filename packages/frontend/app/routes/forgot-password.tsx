@@ -12,6 +12,8 @@ import { validateEmail } from "~/modules/forms/utils/validateEmail";
 import { forgotPassword } from "~/modules/user/services/forgotPassword";
 import { PageTitle } from "~/components/PageTitle";
 import { Card, CardContent } from "~/components/Card";
+import { H1Logo } from "~/components/H1Logo";
+import { Spacer } from "~/components/Spacer";
 
 export const meta: MetaFunction = () => {
   return {
@@ -67,16 +69,6 @@ export default function ForgotPasswordPage() {
     <NotAuthenticatedLayout
       size="S"
       nav={<BackLink to="/signin">Back to signin</BackLink>}
-      header={
-        <PageTitle
-          value="Password forgotten"
-          description={
-            <Typography>
-              Enter your email to get a recovery link and reset your password.
-            </Typography>
-          }
-        />
-      }
       status={
         errors && Object.keys(errors).length > 0 ? (
           <ErrorBox list={errors} />
@@ -90,6 +82,15 @@ export default function ForgotPasswordPage() {
     >
       <Card>
         <CardContent>
+          <H1Logo>Password forgotten</H1Logo>
+          <Spacer size={4} />
+
+          <Typography>
+            Enter your email to get a recovery link and reset your password.
+          </Typography>
+
+          <Spacer size={4} />
+
           <Form method="post">
             <FormGroup>
               <TextInput
@@ -100,14 +101,13 @@ export default function ForgotPasswordPage() {
                 placeholder="e.g: james.bond@mi6.com"
               />
 
-              <div>
-                <SubmitButton
-                  isLoading={transition.state === "submitting"}
-                  loadingText="Password resetting in progress, please wait..."
-                >
-                  Reset password
-                </SubmitButton>
-              </div>
+              <SubmitButton
+                className="justify-center w-full"
+                isLoading={transition.state === "submitting"}
+                loadingText="Password resetting in progress, please wait..."
+              >
+                Reset password
+              </SubmitButton>
             </FormGroup>
           </Form>
         </CardContent>

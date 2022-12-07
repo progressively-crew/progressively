@@ -3,6 +3,7 @@ import { useActionData } from "@remix-run/react";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { Card, CardContent } from "~/components/Card";
 import { PageTitle } from "~/components/PageTitle";
+import { Spacer } from "~/components/Spacer";
 import { Stack } from "~/components/Stack";
 import { Typography } from "~/components/Typography";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
@@ -45,6 +46,7 @@ export default function WelcomePage() {
           <h1 className="font-bold text-4xl md:text-5xl" id="page-title">
             Congratulations!
           </h1>
+          <Spacer size={2} />
           <Typography>
             {`You've`} successfully run your Progressively instance. {`It's`}{" "}
             time to create <strong>your admin user.</strong>
