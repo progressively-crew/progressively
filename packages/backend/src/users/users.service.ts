@@ -43,17 +43,31 @@ export class UsersService {
     email: string,
     authProvider: AuthProviders,
   ): Promise<User> {
-    const existingUser = await this.prisma.userOfProvider.findFirst({
+    const existingUser = await this.prisma.user.findFirst({
       where: {
-        uuid,
+        email,
       },
       include: {
-        User: true,
+        authProviders: true,
       },
     });
 
     if (existingUser) {
-      return existingUser.User;
+      const hasAlreadyAprovider = existingUser.authProviders.find(
+        (p) => p.uuid === uuid,
+      );
+
+      if (!hasAlreadyAprovider) {
+        await this.prisma.userOfProvider.create({
+          data: {
+            uuid,
+            provider: authProvider,
+            userUuid: existingUser.uuid,
+          },
+        });
+      }
+
+      return existingUser;
     }
 
     return this.prisma.user.create({
