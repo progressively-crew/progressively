@@ -3,7 +3,11 @@ import React, { forwardRef } from "react";
 export const RawTable = forwardRef((props: any, ref: any) => {
   return (
     <div className="overflow-x-auto overflow-y-clip">
-      <table ref={ref} {...props} className="w-full" />
+      <table
+        ref={ref}
+        {...props}
+        className="w-full border-separate border-spacing-0"
+      />
     </div>
   );
 });

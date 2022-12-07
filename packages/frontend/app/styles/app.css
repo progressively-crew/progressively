@@ -763,6 +763,16 @@ video {
   flex: 1 1 0%;
 }
 
+.border-separate {
+  border-collapse: separate;
+}
+
+.border-spacing-0 {
+  --tw-border-spacing-x: 0px;
+  --tw-border-spacing-y: 0px;
+  border-spacing: var(--tw-border-spacing-x) var(--tw-border-spacing-y);
+}
+
 .origin-top-right {
   transform-origin: top right;
 }
@@ -1873,6 +1883,14 @@ input[type="range"]::-moz-range-thumb {
 
   .lg\:sticky {
     position: sticky;
+  }
+
+  .lg\:mt-14 {
+    margin-top: 3.5rem;
+  }
+
+  .lg\:mt-16 {
+    margin-top: 4rem;
   }
 
   .lg\:block {
