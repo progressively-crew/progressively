@@ -28,7 +28,7 @@ export const PageTitle = ({
           <h1 className="font-bold text-4xl md:text-5xl" id="page-title">
             <span>{value}</span>
           </h1>
-          {endAction}
+          <div className="h-12">{endAction}</div>
         </HStack>
 
         {description && (

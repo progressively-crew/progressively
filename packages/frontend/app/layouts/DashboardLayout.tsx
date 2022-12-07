@@ -36,7 +36,7 @@ export const DashboardLayout = ({
     <NavProvider>
       <SkipNavLink>Skip to content</SkipNavLink>
 
-      <div className="border-b border-b-color-gray-500 bg-white lg:sticky top-0">
+      <div className="border-b border-b-color-gray-500 bg-white z-10 lg:sticky top-0">
         <Container>
           <div className="flex justify-between h-14 items-center ">
             <BreadCrumbs crumbs={crumbs} />
@@ -65,14 +65,16 @@ export const DashboardLayout = ({
             }
           >
             {subNav && (
-              <div>
-                <HideTablet as="div" className="lg:h-full fixed lg:w-[300px]">
-                  {subNav}
-                </HideTablet>
-              </div>
+              <HideTablet as="div">
+                <div className="lg:h-full lg:fixed lg:w-[300px]">{subNav}</div>
+              </HideTablet>
             )}
 
-            <div className="overflow-hidden max-w-6xl w-full mx-auto">
+            <div
+              className={`overflow-hidden max-w-6xl w-full mx-auto ${
+                subNav ? "lg:pr-12" : ""
+              }`}
+            >
               <Spacer size={8} />
               <Main>
                 <Stack spacing={6}>
