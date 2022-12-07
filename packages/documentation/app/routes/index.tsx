@@ -8,6 +8,7 @@ import { WeightComparator } from "~/components/WeightComparator";
 import homeCss from "../styles/home.css";
 import theme from "highlight.js/styles/github-dark.css";
 import { useFlags } from "@progressively/react";
+import { SiteNav } from "~/components/SiteNav";
 
 const title = "Progressively, simple and accessible feature flagging tool";
 const description =
@@ -66,8 +67,9 @@ export default function Index() {
 
   return (
     <div className="bg-gray-50">
+      <SiteNav />
       <main>
-        {flags.newHero === "A" ? <Hero /> : <HeroVariant />}
+        {flags.newHero === "A" ? <HeroVariant /> : <Hero />}
         <Features />
         <Example />
         <WeightComparator />
