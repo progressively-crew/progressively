@@ -36,7 +36,7 @@ export const DashboardLayout = ({
     <NavProvider>
       <SkipNavLink>Skip to content</SkipNavLink>
 
-      <div className="border-b border-b-color-gray-500 bg-white lg:sticky top-0">
+      <div className="border-b border-b-color-gray-500 bg-white z-10 lg:sticky top-0">
         <Container>
           <div className="flex justify-between h-14 items-center ">
             <BreadCrumbs crumbs={crumbs} />
