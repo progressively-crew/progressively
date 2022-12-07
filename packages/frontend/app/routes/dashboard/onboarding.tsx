@@ -2,19 +2,12 @@ import { ActionFunction, redirect } from "@remix-run/node";
 import { useActionData, Form } from "@remix-run/react";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
-import { FormGroup } from "~/components/Fields/FormGroup";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Typography } from "~/components/Typography";
 import { createProject } from "~/modules/projects/services/createProject";
-import {
-  CreateProjectDTO,
-  Project,
-  UserProject,
-} from "~/modules/projects/types";
+import { CreateProjectDTO, Project } from "~/modules/projects/types";
 import { validateProjectName } from "~/modules/projects/validators/validateProjectName";
 import { getSession } from "~/sessions";
-import { PageTitle } from "~/components/PageTitle";
-import { Card, CardContent } from "~/components/Card";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import { Spacer } from "~/components/Spacer";
 import { Stack } from "~/components/Stack";
@@ -64,12 +57,13 @@ export default function OnboardingPage() {
 
   return (
     <NotAuthenticatedLayout>
-      <div className=" mt-8 md:mt-36">
+      <div className="mt-8 md:mt-36">
         <Stack spacing={4}>
           <div className="text-center motion-safe:animate-fade-enter-top">
             <h1 className="font-bold text-4xl md:text-5xl" id="page-title">
               Welcome aboard
             </h1>
+            <Spacer size={2} />
             <Typography>
               Before being fully operational, you will need to create{" "}
               <strong>a project</strong>. In general, a project is the name of

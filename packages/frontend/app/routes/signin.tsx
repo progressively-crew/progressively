@@ -172,7 +172,6 @@ export default function Signin() {
               </div>
 
               <SubmitButton
-                icon={undefined}
                 className="justify-center"
                 isLoading={transition.state === "submitting"}
                 loadingText="Signin in progress, please wait..."

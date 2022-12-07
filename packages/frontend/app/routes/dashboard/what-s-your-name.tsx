@@ -7,9 +7,9 @@ import { TextInput } from "~/components/Fields/TextInput";
 import { changeFullname } from "~/modules/user/services/changeFullname";
 import { validateUserFullname } from "~/modules/user/validators/validate-user-fullname";
 import { getSession } from "~/sessions";
-import { PageTitle } from "~/components/PageTitle";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import { Card, CardContent } from "~/components/Card";
+import { Stack } from "~/components/Stack";
 
 export const meta = () => {
   return {
@@ -23,7 +23,9 @@ interface ActionData {
   };
 }
 
-export const action: ActionFunction = async ({ request }): Promise<ActionData | Response> => {
+export const action: ActionFunction = async ({
+  request,
+}): Promise<ActionData | Response> => {
   const formData = await request.formData();
   const fullname = formData.get("fullname")?.toString() || "";
   const session = await getSession(request.headers.get("Cookie"));
@@ -44,28 +46,41 @@ export default function WhatsYourNamePage() {
   const errors = data?.errors;
 
   return (
-    <NotAuthenticatedLayout
-      header={<PageTitle value="What's your name?" centered />}
-      status={errors?.fullname && <ErrorBox list={errors} />}
-    >
-      <Card>
-        <CardContent>
-          <Form method="post">
-            <FormGroup>
-              <TextInput
-                isInvalid={Boolean(errors?.fullname)}
-                label="Fullname"
-                name="fullname"
-                placeholder="e.g: John Doe"
-              />
+    <NotAuthenticatedLayout>
+      <div className="mt-8 md:mt-36">
+        <Stack spacing={4}>
+          <div className="text-center motion-safe:animate-fade-enter-top">
+            <h1 className="font-bold text-4xl md:text-5xl" id="page-title">
+              What's your name?
+            </h1>
+          </div>
 
-              <div>
+          {errors?.fullname && <ErrorBox list={errors} />}
+
+          <div
+            className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"
+            style={{
+              animationDelay: "500ms",
+            }}
+          >
+            <Form method="post">
+              <div className="flex flex-col md:flex-row gap-4 items-center">
+                <div className="flex-1">
+                  <TextInput
+                    isInvalid={Boolean(errors?.fullname)}
+                    label="Fullname"
+                    name="fullname"
+                    placeholder="e.g: John Doe"
+                    hiddenLabel
+                  />
+                </div>
+
                 <SubmitButton type="submit">Set my fullname</SubmitButton>
               </div>
-            </FormGroup>
-          </Form>
-        </CardContent>
-      </Card>
+            </Form>
+          </div>
+        </Stack>
+      </div>
     </NotAuthenticatedLayout>
   );
 }

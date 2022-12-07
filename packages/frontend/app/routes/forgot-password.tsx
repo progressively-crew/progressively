@@ -105,7 +105,6 @@ export default function ForgotPasswordPage() {
                 className="justify-center w-full"
                 isLoading={transition.state === "submitting"}
                 loadingText="Password resetting in progress, please wait..."
-                icon={undefined}
               >
                 Reset password
               </SubmitButton>

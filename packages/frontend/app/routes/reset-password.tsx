@@ -155,7 +155,6 @@ export default function ResetPasswordPage() {
                   className="justify-center w-full"
                   isLoading={transition.state === "submitting"}
                   loadingText="Password changing in progress, please wait..."
-                  icon={undefined}
                 >
                   Change password
                 </SubmitButton>
