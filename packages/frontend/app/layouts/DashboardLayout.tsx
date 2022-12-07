@@ -65,9 +65,11 @@ export const DashboardLayout = ({
             }
           >
             {subNav && (
-              <HideTablet as="div" className="lg:h-full">
-                {subNav}
-              </HideTablet>
+              <div>
+                <HideTablet as="div" className="lg:h-full fixed lg:w-[300px]">
+                  {subNav}
+                </HideTablet>
+              </div>
             )}
 
             <div className="overflow-hidden max-w-6xl w-full mx-auto">
@@ -79,12 +81,12 @@ export const DashboardLayout = ({
                   {children}
                 </Stack>
               </Main>
+
+              <Spacer size={10} />
             </div>
           </div>
         </div>
       </InertWhenNavOpened>
-
-      <Spacer size={10} />
     </NavProvider>
   );
 };
