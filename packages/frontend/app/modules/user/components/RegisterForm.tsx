@@ -94,14 +94,14 @@ export const RegisterForm = ({ errors, actionLabel }: RegisterFormProps) => {
           placeholder="************"
         />
 
-        <div>
-          <SubmitButton
-            isLoading={transition.state === "submitting"}
-            loadingText="Creation in progress, please wait..."
-          >
-            {actionLabel || "Create an account"}
-          </SubmitButton>
-        </div>
+        <SubmitButton
+          className="w-full justify-center"
+          isLoading={transition.state === "submitting"}
+          loadingText="Creation in progress, please wait..."
+          icon={undefined}
+        >
+          {actionLabel || "Sign up"}
+        </SubmitButton>
       </FormGroup>
     </Form>
   );

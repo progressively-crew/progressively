@@ -61,7 +61,7 @@ export const Button = ({
         {...linkProps}
       >
         <HStack spacing={3}>
-          <span>{icon}</span>
+          {icon && <span>{icon}</span>}
           <span>{children}</span>
         </HStack>
       </Component>

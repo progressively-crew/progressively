@@ -18,6 +18,9 @@ import {
 } from "~/modules/forms/utils/validatePassword";
 import { resetPassword } from "~/modules/user/services/resetPassword";
 import { PageTitle } from "~/components/PageTitle";
+import { Card, CardContent } from "~/components/Card";
+import { H1Logo } from "~/components/H1Logo";
+import { Spacer } from "~/components/Spacer";
 
 export const meta: MetaFunction = () => {
   return {
@@ -103,7 +106,6 @@ export default function ResetPasswordPage() {
   return (
     <NotAuthenticatedLayout
       size="S"
-      header={<PageTitle value={pageTitle} />}
       nav={<BackLink to="/signin">Back to signin</BackLink>}
       status={
         <>
@@ -119,36 +121,49 @@ export default function ResetPasswordPage() {
         </>
       }
     >
-      <Form method="post">
-        <input type="hidden" name="token" id="token" value={urlToken || ""} />
+      <Card>
+        <CardContent>
+          <H1Logo>{pageTitle}</H1Logo>
+          <Spacer size={16} />
+          <Form method="post">
+            <input
+              type="hidden"
+              name="token"
+              id="token"
+              value={urlToken || ""}
+            />
 
-        <FormGroup>
-          <TextInput
-            isInvalid={Boolean(errors?.password)}
-            label="New password"
-            name="password"
-            placeholder="**********"
-            type="password"
-          />
+            <FormGroup>
+              <TextInput
+                isInvalid={Boolean(errors?.password)}
+                label="New password"
+                name="password"
+                placeholder="**********"
+                type="password"
+              />
 
-          <TextInput
-            isInvalid={Boolean(errors?.confirmationPassword)}
-            label="Confirmation password"
-            name="confirmationPassword"
-            placeholder="**********"
-            type="password"
-          />
+              <TextInput
+                isInvalid={Boolean(errors?.confirmationPassword)}
+                label="Confirmation password"
+                name="confirmationPassword"
+                placeholder="**********"
+                type="password"
+              />
 
-          <div>
-            <SubmitButton
-              isLoading={transition.state === "submitting"}
-              loadingText="Password changing in progress, please wait..."
-            >
-              Change password
-            </SubmitButton>
-          </div>
-        </FormGroup>
-      </Form>
+              <div>
+                <SubmitButton
+                  className="justify-center w-full"
+                  isLoading={transition.state === "submitting"}
+                  loadingText="Password changing in progress, please wait..."
+                  icon={undefined}
+                >
+                  Change password
+                </SubmitButton>
+              </div>
+            </FormGroup>
+          </Form>
+        </CardContent>
+      </Card>
     </NotAuthenticatedLayout>
   );
 }

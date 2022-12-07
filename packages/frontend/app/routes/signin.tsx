@@ -32,6 +32,8 @@ import { Stack } from "~/components/Stack";
 import { Separator } from "~/components/Separator";
 import { Spacer } from "~/components/Spacer";
 import { LogoWithoutText } from "~/components/Logo/WithoutText";
+import { H1Logo } from "~/components/H1Logo";
+import { HStack } from "~/components/HStack";
 
 export const meta: MetaFunction = () => {
   return {
@@ -127,24 +129,19 @@ export default function Signin() {
     >
       <Card>
         <CardContent>
-          <div className="flex flex-row items-center gap-2">
-            <LogoWithoutText
-              className="h-10 w-10 motion-safe:animate-fade-enter-left motion-safe:opacity-0"
-              aria-hidden
-            />
-            <h1
-              id="page-title"
-              className="text-3xl font-bold text-center tracking-wide motion-safe:animate-fade-enter-left motion-safe:opacity-0"
-              style={{
-                animationDelay: "300ms",
-              }}
-            >
-              Signin
-            </h1>
+          <div className="flex flex-row justify-between">
+            <H1Logo>Signin</H1Logo>
+
+            {showRegister && (
+              <Button
+                className="justify-center"
+                to="/register"
+                variant="tertiary"
+              >{`Sign up`}</Button>
+            )}
           </div>
 
-          <Spacer size={12} />
-          <Spacer size={4} />
+          <Spacer size={16} />
 
           <Form method="post">
             <FormGroup>
@@ -174,24 +171,14 @@ export default function Signin() {
                 </div>
               </div>
 
-              <Stack spacing={2}>
-                <SubmitButton
-                  icon={undefined}
-                  className="justify-center"
-                  isLoading={transition.state === "submitting"}
-                  loadingText="Signin in progress, please wait..."
-                >
-                  Sign in
-                </SubmitButton>
-
-                {showRegister && (
-                  <Button
-                    className="justify-center"
-                    to="/register"
-                    variant="tertiary"
-                  >{`Create an account`}</Button>
-                )}
-              </Stack>
+              <SubmitButton
+                icon={undefined}
+                className="justify-center"
+                isLoading={transition.state === "submitting"}
+                loadingText="Signin in progress, please wait..."
+              >
+                Sign in
+              </SubmitButton>
             </FormGroup>
           </Form>
 

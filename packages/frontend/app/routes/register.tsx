@@ -14,12 +14,13 @@ import {
   redirect,
 } from "@remix-run/node";
 import { useActionData } from "@remix-run/react";
-import { PageTitle } from "~/components/PageTitle";
 import { Card, CardContent } from "~/components/Card";
+import { H1Logo } from "~/components/H1Logo";
+import { Spacer } from "~/components/Spacer";
 
 export const meta: MetaFunction = () => {
   return {
-    title: "Progressively| Create an account",
+    title: "Progressively| Sign up",
   };
 };
 
@@ -46,7 +47,6 @@ export default function CreateAccountPage() {
     <NotAuthenticatedLayout
       size="S"
       nav={<BackLink to="/signin">Back to signin</BackLink>}
-      header={<PageTitle value="Create an account" />}
       status={
         errors && Object.keys(errors).length > 0 ? (
           <ErrorBox list={errors} />
@@ -60,6 +60,9 @@ export default function CreateAccountPage() {
     >
       <Card>
         <CardContent>
+          <H1Logo>Sign up</H1Logo>
+
+          <Spacer size={16} />
           <RegisterForm errors={errors} />
         </CardContent>
       </Card>

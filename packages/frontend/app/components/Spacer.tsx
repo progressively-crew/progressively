@@ -31,6 +31,10 @@ export const Spacer = ({ size }: SpacerProps) => {
           ? "h-11"
           : size === 12
           ? "h-12"
+          : size === 14
+          ? "h-14"
+          : size === 16
+          ? "h-16"
           : undefined
       }
     />
