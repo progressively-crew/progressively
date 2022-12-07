@@ -23,6 +23,10 @@ import { getSession } from "~/sessions";
 import { Card, CardContent } from "~/components/Card";
 import { PageTitle } from "~/components/PageTitle";
 import { UserIcon } from "~/components/Icons/UserIcon";
+import { UserMenu } from "~/modules/user/components/UserMenu";
+import { Typography } from "~/components/Typography";
+import { Button } from "~/components/Buttons/Button";
+import { Spacer } from "~/components/Spacer";
 
 export const handle = {
   breadcrumb: () => {
@@ -108,6 +112,7 @@ export default function ProfilePage() {
   return (
     <DashboardLayout
       user={user}
+      subNav={<UserMenu />}
       status={
         errors && Object.keys(errors).length > 0 ? (
           <ErrorBox list={errors} />
@@ -120,10 +125,10 @@ export default function ProfilePage() {
     >
       <PageTitle value="My profile" icon={<UserIcon />} />
 
-      <Card>
-        <CardContent>
-          <Section>
-            <SectionHeader title="Change password" />
+      <Section>
+        <Card>
+          <CardContent>
+            <SectionHeader title="Change password" name="password" />
 
             <Form method="post">
               <FormGroup>
@@ -145,6 +150,7 @@ export default function ProfilePage() {
 
                 <div>
                   <SubmitButton
+                    variant="secondary"
                     isLoading={transition.state === "submitting"}
                     loadingText="Password changing in progress, please wait..."
                   >
@@ -153,9 +159,33 @@ export default function ProfilePage() {
                 </div>
               </FormGroup>
             </Form>
-          </Section>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </Section>
+
+      <Section>
+        <Card>
+          <CardContent>
+            <SectionHeader
+              title="Logout"
+              name="logout"
+              description={
+                <Typography>
+                  Click the following link to disconnect from the application
+                  and to get back to the sign in page.
+                </Typography>
+              }
+            />
+
+            <Spacer size={4} />
+            <div className="inline-block">
+              <Button variant="secondary" to="/logout">
+                Logout
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </Section>
     </DashboardLayout>
   );
 }

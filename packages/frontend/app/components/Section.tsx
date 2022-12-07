@@ -27,6 +27,7 @@ export interface SectionHeaderProps extends React.HTMLAttributes<HTMLElement> {
   description?: React.ReactNode;
   action?: React.ReactNode;
   status?: React.ReactNode;
+  name?: string;
 }
 
 export const SectionHeader = ({
@@ -35,6 +36,7 @@ export const SectionHeader = ({
   description,
   action,
   status,
+  name,
   ...props
 }: SectionHeaderProps) => {
   const id = useContext(SectionContext);
@@ -49,6 +51,7 @@ export const SectionHeader = ({
               as={titleAs}
               className="text-2xl font-medium"
               id={id}
+              name={name}
             >
               {title}
             </HeadingComponent>

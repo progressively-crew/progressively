@@ -667,12 +667,12 @@ video {
   height: 3.5rem;
 }
 
-.h-20 {
-  height: 5rem;
-}
-
 .h-16 {
   height: 4rem;
+}
+
+.h-20 {
+  height: 5rem;
 }
 
 .min-h-full {
@@ -691,6 +691,10 @@ video {
   width: 10rem;
 }
 
+.w-10 {
+  width: 2.5rem;
+}
+
 .w-56 {
   width: 14rem;
 }
@@ -705,10 +709,6 @@ video {
 
 .w-5 {
   width: 1.25rem;
-}
-
-.w-10 {
-  width: 2.5rem;
 }
 
 .w-6 {
@@ -836,12 +836,12 @@ video {
   justify-content: space-between;
 }
 
-.gap-1 {
-  gap: 0.25rem;
-}
-
 .gap-2 {
   gap: 0.5rem;
+}
+
+.gap-1 {
+  gap: 0.25rem;
 }
 
 .gap-3 {
@@ -1702,6 +1702,22 @@ input[type="range"]::-moz-range-thumb {
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  @keyframes fade-enter-left {
+    0% {
+      transform: translateX(1rem);
+      opacity: 0;
+    }
+
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  .motion-safe\:animate-fade-enter-left {
+    animation: fade-enter-left 500ms ease-in-out forwards;
+  }
+
   @keyframes fade-enter-top {
     0% {
       transform: translateY(-1rem);
@@ -1732,22 +1748,6 @@ input[type="range"]::-moz-range-thumb {
 
   .motion-safe\:animate-fade-enter-bottom {
     animation: fade-enter-bottom 500ms ease-in-out forwards;
-  }
-
-  @keyframes fade-enter-left {
-    0% {
-      transform: translateX(1rem);
-      opacity: 0;
-    }
-
-    100% {
-      transform: translateX(0);
-      opacity: 1;
-    }
-  }
-
-  .motion-safe\:animate-fade-enter-left {
-    animation: fade-enter-left 500ms ease-in-out forwards;
   }
 
   .motion-safe\:opacity-0 {
