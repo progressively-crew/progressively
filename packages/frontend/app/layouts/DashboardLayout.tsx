@@ -65,11 +65,9 @@ export const DashboardLayout = ({
             }
           >
             {subNav && (
-              <div>
-                <HideTablet as="div" className="lg:h-full fixed lg:w-[300px]">
-                  {subNav}
-                </HideTablet>
-              </div>
+              <HideTablet as="div">
+                <div className="lg:h-full lg:fixed lg:w-[300px]">{subNav}</div>
+              </HideTablet>
             )}
 
             <div
