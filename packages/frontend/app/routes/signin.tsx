@@ -25,14 +25,12 @@ import { validateSigninForm } from "../modules/auth/validators/validate-signin-f
 import { Typography } from "~/components/Typography";
 import { Button } from "~/components/Buttons/Button";
 import { SiOkta } from "react-icons/si";
-import { PageTitle } from "~/components/PageTitle";
 import { Card, CardContent } from "~/components/Card";
 import { getOktaConfig } from "~/modules/auth/services/get-okta-config";
 import { useOkta } from "~/modules/auth/hooks/useOkta";
 import { Stack } from "~/components/Stack";
 import { Separator } from "~/components/Separator";
 import { Spacer } from "~/components/Spacer";
-import { DarkLogo } from "~/components/Logo/DarkLogo";
 import { LogoWithoutText } from "~/components/Logo/WithoutText";
 
 export const meta: MetaFunction = () => {
@@ -130,10 +128,16 @@ export default function Signin() {
       <Card>
         <CardContent>
           <div className="flex flex-row items-center gap-2">
-            <LogoWithoutText className="h-10 w-10" aria-hidden />
+            <LogoWithoutText
+              className="h-10 w-10 motion-safe:animate-fade-enter-left motion-safe:opacity-0"
+              aria-hidden
+            />
             <h1
               id="page-title"
-              className="text-3xl font-bold text-center tracking-wide"
+              className="text-3xl font-bold text-center tracking-wide motion-safe:animate-fade-enter-left motion-safe:opacity-0"
+              style={{
+                animationDelay: "300ms",
+              }}
             >
               Signin
             </h1>
