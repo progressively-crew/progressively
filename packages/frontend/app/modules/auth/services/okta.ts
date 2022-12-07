@@ -1,9 +1,4 @@
-import {
-  canProceed,
-  OktaAuth,
-  OktaAuthOptions,
-  TokenParams,
-} from "@okta/okta-auth-js";
+import { OktaAuth, OktaAuthOptions, TokenParams } from "@okta/okta-auth-js";
 import { OktaConfig } from "../types";
 
 export const OktaserviceClientSide = ({
@@ -52,30 +47,35 @@ export const OktaserviceClientSide = ({
     }
   };
 
+  const logout = async () => {
+    const token = await getIdToken();
+
+    if (token) {
+      const idToken = token.idToken;
+      authClient.tokenManager.clear();
+
+      return (
+        issuer +
+        "/v1/logout?client_id=" +
+        clientId +
+        "&id_token_hint=" +
+        idToken +
+        "&post_logout_redirect_uri=" +
+        window.location.origin
+      );
+    }
+
+    return window.location.origin;
+  };
+
   return {
     openLoginPage,
     getIdToken,
     getAccessToken,
     getUser,
     setTokensFromUrl,
+    logout,
   };
 };
 
-// export function logout() {
-//   getIdToken().then(function (token) {
-//     if (token) {
-//       var idToken = token.idToken;
-//       oktaAuth.tokenManager.clear();
-//       window.location.href =
-//         ISSUER +
-//         "/v1/logout?client_id=" +
-//         CLIENT_ID +
-//         "&id_token_hint=" +
-//         idToken +
-//         "&post_logout_redirect_uri=" +
-//         window.location.origin;
-//     } else {
-//       router.push("/");
-//     }
-//   });
-// }
+export function logout() {}

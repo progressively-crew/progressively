@@ -17,6 +17,7 @@ import { Li, Ul } from "~/components/Ul";
 import { HStack } from "~/components/HStack";
 import { EnvIcon } from "~/components/Icons/EnvIcon";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
+import { useUser } from "~/modules/user/contexts/useUser";
 
 export const meta = () => {
   return {
@@ -52,6 +53,7 @@ export const action: ActionFunction = async ({
 
 export default function OnboardingPage() {
   const data = useActionData<ActionData>();
+  const { user } = useUser();
 
   const errors = data?.errors;
 
@@ -61,7 +63,9 @@ export default function OnboardingPage() {
         <Stack spacing={4}>
           <div className="text-center motion-safe:animate-fade-enter-top">
             <h1 className="font-bold text-4xl md:text-5xl" id="page-title">
-              Welcome aboard
+              <span>Welcome aboard</span>
+              <Spacer size={2} />
+              <span className="text-indigo-700">{user.fullname}</span>
             </h1>
             <Spacer size={2} />
             <Typography>

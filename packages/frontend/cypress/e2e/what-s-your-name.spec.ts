@@ -34,7 +34,10 @@ describe("/dashboard/what-s-your-name", () => {
 
       cy.get(".error-box")
         .should("have.focus")
-        .and("contain.text", "The fullname field is required, make sure to have one.");
+        .and(
+          "contain.text",
+          "The fullname field is required, make sure to have one."
+        );
 
       cy.checkA11y();
     });
@@ -42,7 +45,9 @@ describe("/dashboard/what-s-your-name", () => {
     it("changes the fullname", () => {
       cy.get("input").type("Linda");
       cy.findByRole("button", { name: "Set my fullname" }).click();
-      cy.findByRole("heading", { name: "Welcome aboard" }).should("be.visible");
+      cy.findByRole("heading", { name: "Welcome aboard Linda" }).should(
+        "be.visible"
+      );
       cy.findByText("Welcome aboard").should("be.visible");
       // cy.findAllByText("Linda").should("be.visible");
     });
