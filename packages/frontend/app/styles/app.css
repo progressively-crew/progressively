@@ -1862,6 +1862,10 @@ input[type="range"]::-moz-range-thumb {
     padding: 2rem;
   }
 
+  .lg\:p-12 {
+    padding: 3rem;
+  }
+
   .lg\:px-0 {
     padding-left: 0px;
     padding-right: 0px;
