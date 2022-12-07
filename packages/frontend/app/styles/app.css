@@ -1230,6 +1230,10 @@ video {
   padding-right: 1rem;
 }
 
+.pr-12 {
+  padding-right: 3rem;
+}
+
 .text-left {
   text-align: left;
 }
@@ -1929,6 +1933,10 @@ input[type="range"]::-moz-range-thumb {
   .lg\:px-8 {
     padding-left: 2rem;
     padding-right: 2rem;
+  }
+
+  .lg\:pr-12 {
+    padding-right: 3rem;
   }
 
   .lg\:text-indigo-700 {
