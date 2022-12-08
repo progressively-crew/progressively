@@ -14,6 +14,7 @@ import { CardContent, SimpleCard } from "~/components/SimpleCard";
 interface LoaderData {
   pageData: RecipePostDocument<string>;
   html: string;
+  ingredients: Array<string>;
 }
 
 export const loader: LoaderFunction = async ({
@@ -50,11 +51,17 @@ export const loader: LoaderFunction = async ({
     };
 
     const html = asHTML(pageData.data.content, null, htmlSerializer);
+    const ingredients = pageData.data.ingredients.map((ing) =>
+      asHTML(ing?.name, null, htmlSerializer)
+    );
+
+    pageData.data.ingredients = [];
     pageData.data.content = [];
 
     return {
       pageData,
       html,
+      ingredients,
     };
   } catch {
     throw redirect("/404");
@@ -62,7 +69,7 @@ export const loader: LoaderFunction = async ({
 };
 
 export default function RecipePost() {
-  const { pageData, html } = useLoaderData<LoaderData>();
+  const { pageData, html, ingredients } = useLoaderData<LoaderData>();
 
   useEffect(() => {
     hljs.highlightAll();
@@ -91,10 +98,12 @@ export default function RecipePost() {
                 <aside>
                   <h2 className="font-semibold">Ingredients</h2>
                   <ul className="list-disc list-inside pt-4">
-                    {pageData.data.ingredients.map((ing) => (
-                      <li key={ing.name[0]?.text} className="text-xs py-1">
-                        {ing.name[0]?.text}
-                      </li>
+                    {ingredients.map((ing) => (
+                      <li
+                        key={ing}
+                        className="text-xs py-1"
+                        dangerouslySetInnerHTML={{ __html: ing }}
+                      />
                     ))}
                   </ul>
                 </aside>
@@ -110,10 +119,7 @@ export default function RecipePost() {
                   <ul className="pt-4">
                     {pageData.data.directions.map((ing, index: number) => (
                       <li key={ing.name[0]?.text} className="text-xs py-1">
-                        <Link
-                          to={`#heading-${index}`}
-                          className="text-indigo-700 underline hover:text-indigo-600 active:text-indigo-800"
-                        >
+                        <Link to={`#heading-${index}`}>
                           {ing.name[0]?.text}
                         </Link>
                       </li>
