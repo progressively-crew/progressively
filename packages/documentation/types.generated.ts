@@ -55,6 +55,17 @@ export type BlogPostDocument<Lang extends string = string> = prismicT.PrismicDoc
 /** Content for Recipe post documents */
 interface RecipePostDocumentData {
     /**
+     * cover field in *Recipe post*
+     *
+     * - **Field Type**: Image
+     * - **Placeholder**: *None*
+     * - **API ID Path**: recipe_post.cover
+     * - **Tab**: Main
+     * - **Documentation**: https://prismic.io/docs/core-concepts/image
+     *
+     */
+    cover: prismicT.ImageField<never>;
+    /**
      * title field in *Recipe post*
      *
      * - **Field Type**: Title

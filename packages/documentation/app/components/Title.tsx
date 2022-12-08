@@ -5,5 +5,9 @@ export interface TitleProps {
 }
 
 export const Title = ({ value }: TitleProps) => {
-  return <h1>{value[0]?.text}</h1>;
+  return (
+    <h1 className="font-bold leading-tight text-5xl max-w-screen-md">
+      {value[0]?.text}
+    </h1>
+  );
 };

@@ -1,6 +1,7 @@
 import { LoaderFunction, redirect } from "@remix-run/node";
 import type { HTMLFunctionSerializer } from "@prismicio/helpers";
 import { asHTML } from "@prismicio/helpers";
+import { GiCook } from "react-icons/gi";
 import { client } from "~/modules/prismic/client";
 import type { RecipePostDocument } from "types.generated";
 import { useLoaderData } from "@remix-run/react";
@@ -51,10 +52,23 @@ export default function RecipePost() {
     hljs.highlightAll();
   }, []);
 
+  const imgUrl = pageData.data.cover?.url;
+
   return (
     <Background>
-      <div className="py-4 md:py-12 mx-auto max-w-screen-2xl px-8">
-        <div className="grid grid-cols-[300px_1fr] gap-8 items-start">
+      <div className="py-4 md:py-12 max-w-screen-2xl mx-auto px-4 md:px-0">
+        <div>
+          <div className="inline-block">
+            <p className="flex flex-row gap-2 bg-indigo-100 text-indigo-700 rounded-full px-4 py-2 items-center">
+              <GiCook aria-hidden />
+              <span>Recipe</span>
+            </p>
+          </div>
+
+          <Title value={pageData.data.title} />
+        </div>
+
+        <div className="grid grid-cols-[300px_1fr] gap-8 items-start pt-8">
           <div className="sticky top-8">
             <SimpleCard>
               <CardContent>
@@ -91,7 +105,14 @@ export default function RecipePost() {
 
           <main className="prose lg:prose-x">
             <div>
-              <Title value={pageData.data.title} />
+              {imgUrl && (
+                <img
+                  src={imgUrl}
+                  alt={pageData.data.title[0]?.text}
+                  className="mt-0"
+                  style={{ height: 264 }}
+                />
+              )}
               <div dangerouslySetInnerHTML={{ __html: html }} />
             </div>
           </main>
