@@ -60,17 +60,45 @@ export default function BlogHome() {
           <SiteNav />
 
           <InertWhenNavOpened>
-            <main className="py-4 xl:p-12">
+            <main className="p-4 xl:p-12">
               <div>
                 <h1 className="font-bold leading-tight text-5xl max-w-screen-md pb-12">
                   Blog
                 </h1>
 
-                <div className="grid grid-cols-2">
+                <div className="grid lg:grid-cols-2 gap-4">
                   <section>
                     <h2 className="font-semibold text-3xl leading-normal">
                       Posts
                     </h2>
+
+                    <ul className="pt-4">
+                      {recipes.map((recipe) => (
+                        <li
+                          key={recipe.link}
+                          className="flex flex-row gap-4 items-center"
+                        >
+                          <img
+                            src={recipe.image}
+                            alt=""
+                            className="object-cover"
+                            width="150px"
+                            height="70px"
+                            style={{
+                              height: 70,
+                            }}
+                          />
+
+                          <div className="leading-relaxed">
+                            <Link to={recipe.link}>{recipe.title}</Link>
+                            <div className="text-gray-600 text-sm">
+                              Published the{" "}
+                              <time dateTime={recipe.time}>{recipe.time}</time>
+                            </div>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
                   </section>
 
                   <section>
