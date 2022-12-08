@@ -20,6 +20,17 @@ interface BlogPostDocumentData {
      */
     title: prismicT.TitleField;
     /**
+     * cover field in *Blog post*
+     *
+     * - **Field Type**: Image
+     * - **Placeholder**: *None*
+     * - **API ID Path**: blog_post.cover
+     * - **Tab**: Main
+     * - **Documentation**: https://prismic.io/docs/core-concepts/image
+     *
+     */
+    cover: prismicT.ImageField<never>;
+    /**
      * publishedAt field in *Blog post*
      *
      * - **Field Type**: Date
@@ -51,7 +62,7 @@ interface BlogPostDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type BlogPostDocument<Lang extends string = string> = prismicT.PrismicDocumentWithoutUID<Simplify<BlogPostDocumentData>, "blog_post", Lang>;
+export type BlogPostDocument<Lang extends string = string> = prismicT.PrismicDocumentWithUID<Simplify<BlogPostDocumentData>, "blog_post", Lang>;
 /** Content for Recipe post documents */
 interface RecipePostDocumentData {
     /**

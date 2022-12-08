@@ -44,14 +44,21 @@ export const loader: LoaderFunction = async (): Promise<LoaderData> => {
     time: String(recipe.data.publishedat),
   }));
 
+  const posts = rawPosts.map((post) => ({
+    link: `/blog/${post.uid}`,
+    title: post.data.title[0]?.text || "",
+    image: post.data.cover.url || "",
+    time: String(post.data.publishedat),
+  }));
+
   return {
     recipes,
-    posts: [],
+    posts,
   };
 };
 
 export default function BlogHome() {
-  const { recipes } = useLoaderData<LoaderData>();
+  const { recipes, posts } = useLoaderData<LoaderData>();
 
   return (
     <Background>
@@ -73,13 +80,13 @@ export default function BlogHome() {
                     </h2>
 
                     <ul className="pt-4">
-                      {recipes.map((recipe) => (
+                      {posts.map((post) => (
                         <li
-                          key={recipe.link}
+                          key={post.link}
                           className="flex flex-row gap-4 items-center"
                         >
                           <img
-                            src={recipe.image}
+                            src={post.image}
                             alt=""
                             className="object-cover"
                             width="150px"
@@ -90,10 +97,10 @@ export default function BlogHome() {
                           />
 
                           <div className="leading-relaxed">
-                            <Link to={recipe.link}>{recipe.title}</Link>
+                            <Link to={post.link}>{post.title}</Link>
                             <div className="text-gray-600 text-sm">
                               Published the{" "}
-                              <time dateTime={recipe.time}>{recipe.time}</time>
+                              <time dateTime={post.time}>{post.time}</time>
                             </div>
                           </div>
                         </li>

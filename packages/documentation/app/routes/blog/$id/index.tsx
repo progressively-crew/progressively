@@ -25,8 +25,13 @@ export const loader: LoaderFunction = async ({
       text,
       children
     ) => {
-      if (type === "preformatted")
-        return `<pre><code class="hljs language-js">${children}</code></pre>`;
+      if (type === "preformatted") {
+        const className =
+          children[0] === "$" ? "hljs language-shell" : "hljs language-ts";
+
+        return `<pre><code class="${className}">${children}</code></pre>`;
+      }
+
       return null;
     };
 
