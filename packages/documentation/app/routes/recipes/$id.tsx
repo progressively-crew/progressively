@@ -7,6 +7,8 @@ import { useLoaderData } from "@remix-run/react";
 import { Title } from "~/components/Title";
 import hljs from "highlight.js";
 import { useEffect } from "react";
+import { Background } from "~/components/Background";
+import { CardContent, SimpleCard } from "~/components/SimpleCard";
 
 interface LoaderData {
   pageData: RecipePostDocument<string>;
@@ -50,22 +52,51 @@ export default function RecipePost() {
   }, []);
 
   return (
-    <div className="py-4 md:py-12 px-4 md:px-0">
-      <div className="flex flex-row gap-8">
-        <nav className="px-8">
-          <ul>
-            {pageData.data.ingredients.map((ing) => (
-              <li key={ing.name[0]?.text}>{ing.name[0]?.text}</li>
-            ))}
-          </ul>
-        </nav>
-        <main className="prose lg:prose-x mx-auto">
-          <div>
-            <Title value={pageData.data.title} />
-            <div dangerouslySetInnerHTML={{ __html: html }} />
+    <Background>
+      <div className="py-4 md:py-12 mx-auto max-w-screen-2xl px-8">
+        <div className="grid grid-cols-[300px_1fr] gap-8 items-start">
+          <div className="sticky top-8">
+            <SimpleCard>
+              <CardContent>
+                <aside>
+                  <h2 className="font-semibold">Ingredients</h2>
+                  <ul className="list-disc list-inside pt-4">
+                    {pageData.data.ingredients.map((ing) => (
+                      <li key={ing.name[0]?.text} className="text-xs py-1">
+                        {ing.name[0]?.text}
+                      </li>
+                    ))}
+                  </ul>
+                </aside>
+              </CardContent>
+            </SimpleCard>
+
+            <div className="h-8" />
+
+            <SimpleCard>
+              <CardContent>
+                <aside>
+                  <h2 className="font-semibold">Directions</h2>
+                  <ul className="pt-4">
+                    {pageData.data.directions.map((ing) => (
+                      <li key={ing.name[0]?.text} className="text-xs py-1">
+                        {ing.name[0]?.text}
+                      </li>
+                    ))}
+                  </ul>
+                </aside>
+              </CardContent>
+            </SimpleCard>
           </div>
-        </main>
+
+          <main className="prose lg:prose-x">
+            <div>
+              <Title value={pageData.data.title} />
+              <div dangerouslySetInnerHTML={{ __html: html }} />
+            </div>
+          </main>
+        </div>
       </div>
-    </div>
+    </Background>
   );
 }
