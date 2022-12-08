@@ -89,7 +89,7 @@ export default function RecipePost() {
   return (
     <Background>
       <div className="py-4 xl:py-12 max-w-screen-2xl mx-auto px-4 xl:px-12">
-        <div>
+        <div className="pb-8">
           <div className="inline-block">
             <p className="flex flex-row gap-2 bg-indigo-100 text-indigo-700 rounded-full px-4 py-2 items-center">
               <GiCook aria-hidden />
@@ -99,6 +99,15 @@ export default function RecipePost() {
 
           <Title value={pageData.data.title} />
         </div>
+
+        {imgUrl && (
+          <img
+            src={imgUrl}
+            alt={pageData.data.title[0]?.text}
+            className="mt-0 object-cover"
+            height="400px"
+          />
+        )}
 
         <div className="lg:grid lg:grid-cols-[360px_1fr] xl:grid-cols-[360px_1fr_360px] gap-8 items-start pt-8">
           <div className="xl:sticky top-8">
@@ -142,17 +151,7 @@ export default function RecipePost() {
           </div>
 
           <main className="prose xl:prose-x overflow-hidden max-w-none">
-            <div>
-              {imgUrl && (
-                <img
-                  src={imgUrl}
-                  alt={pageData.data.title[0]?.text}
-                  className="mt-0 object-cover"
-                  height="400px"
-                />
-              )}
-              <div dangerouslySetInnerHTML={{ __html: html }} />
-            </div>
+            <div dangerouslySetInnerHTML={{ __html: html }} />
           </main>
 
           <div className="hidden xl:block xl:sticky top-8">

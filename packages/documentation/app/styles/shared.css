@@ -11,3 +11,7 @@ a {
 li > p {
   display: inline;
 }
+
+.prose h2:first-of-type {
+  margin-top: 0px;
+}
