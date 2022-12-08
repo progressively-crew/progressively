@@ -72,6 +72,7 @@ export default function RecipePost() {
   const { pageData, html, ingredients } = useLoaderData<LoaderData>();
 
   useEffect(() => {
+    hljs.configure({ ignoreUnescapedHTML: true });
     hljs.highlightAll();
   }, []);
 
@@ -148,11 +149,21 @@ export default function RecipePost() {
             <SimpleCard>
               <CardContent>
                 <aside>
-                  <h2 className="font-semibold">Meta</h2>
-                  <ul className="list-disc list-inside pt-4">
-                    {pageData.data.ingredients.map((ing) => (
-                      <li key={ing.name[0]?.text} className="text-xs py-1">
-                        {ing.name[0]?.text}
+                  <h2 className="font-semibold">Useful links</h2>
+                  <ul className="list-inside pt-4">
+                    {pageData.data.links.map((link) => (
+                      <li key={link.href} className="text-sm py-1">
+                        <a
+                          href={link.href || "/"}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex flex-row gap-2 items-center"
+                        >
+                          {link?.icon?.url && (
+                            <img src={link.icon.url} alt="" />
+                          )}
+                          <span>{link.children}</span>
+                        </a>
                       </li>
                     ))}
                   </ul>

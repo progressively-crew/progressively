@@ -120,6 +120,17 @@ interface RecipePostDocumentData {
      *
      */
     directions: prismicT.GroupField<Simplify<RecipePostDocumentDataDirectionsItem>>;
+    /**
+     * links field in *Recipe post*
+     *
+     * - **Field Type**: Group
+     * - **Placeholder**: *None*
+     * - **API ID Path**: recipe_post.links[]
+     * - **Tab**: Main
+     * - **Documentation**: https://prismic.io/docs/core-concepts/group
+     *
+     */
+    links: prismicT.GroupField<Simplify<RecipePostDocumentDataLinksItem>>;
 }
 /**
  * Item in Recipe post → ingredients
@@ -154,6 +165,42 @@ export interface RecipePostDocumentDataDirectionsItem {
     name: prismicT.RichTextField;
 }
 /**
+ * Item in Recipe post → links
+ *
+ */
+export interface RecipePostDocumentDataLinksItem {
+    /**
+     * icon field in *Recipe post → links*
+     *
+     * - **Field Type**: Image
+     * - **Placeholder**: *None*
+     * - **API ID Path**: recipe_post.links[].icon
+     * - **Documentation**: https://prismic.io/docs/core-concepts/image
+     *
+     */
+    icon: prismicT.ImageField<never>;
+    /**
+     * children field in *Recipe post → links*
+     *
+     * - **Field Type**: Text
+     * - **Placeholder**: *None*
+     * - **API ID Path**: recipe_post.links[].children
+     * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
+     *
+     */
+    children: prismicT.KeyTextField;
+    /**
+     * href field in *Recipe post → links*
+     *
+     * - **Field Type**: Text
+     * - **Placeholder**: *None*
+     * - **API ID Path**: recipe_post.links[].href
+     * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
+     *
+     */
+    href: prismicT.KeyTextField;
+}
+/**
  * Recipe post document from Prismic
  *
  * - **API ID**: `recipe_post`
@@ -169,6 +216,6 @@ declare module "@prismicio/client" {
         (repositoryNameOrEndpoint: string, options?: prismic.ClientConfig): prismic.Client<AllDocumentTypes>;
     }
     namespace Content {
-        export type { BlogPostDocumentData, BlogPostDocument, RecipePostDocumentData, RecipePostDocumentDataIngredientsItem, RecipePostDocumentDataDirectionsItem, RecipePostDocument, AllDocumentTypes };
+        export type { BlogPostDocumentData, BlogPostDocument, RecipePostDocumentData, RecipePostDocumentDataIngredientsItem, RecipePostDocumentDataDirectionsItem, RecipePostDocumentDataLinksItem, RecipePostDocument, AllDocumentTypes };
     }
 }
