@@ -25,7 +25,7 @@ interface Entry {
   link: string;
   title: string;
   image: string;
-  time: Date;
+  time: string;
 }
 
 interface LoaderData {
@@ -41,7 +41,7 @@ export const loader: LoaderFunction = async (): Promise<LoaderData> => {
     link: `/recipes/${recipe.uid}`,
     title: recipe.data.title[0]?.text || "",
     image: recipe.data.cover.url || "",
-    time: new Date(String(recipe.data.publishedat)),
+    time: String(recipe.data.publishedat),
   }));
 
   return {
@@ -62,7 +62,7 @@ export default function BlogHome() {
           <InertWhenNavOpened>
             <main className="py-4 xl:p-12">
               <div>
-                <h1 className="font-bold leading-tight text-5xl max-w-screen-md">
+                <h1 className="font-bold leading-tight text-5xl max-w-screen-md pb-12">
                   Blog
                 </h1>
 
@@ -78,7 +78,7 @@ export default function BlogHome() {
                       Recipes
                     </h2>
 
-                    <ul>
+                    <ul className="pt-4">
                       {recipes.map((recipe) => (
                         <li
                           key={recipe.link}
@@ -95,9 +95,12 @@ export default function BlogHome() {
                             }}
                           />
 
-                          <div>
+                          <div className="leading-relaxed">
                             <Link to={recipe.link}>{recipe.title}</Link>
-                            <time className="block">{recipe.time}</time>
+                            <div className="text-gray-600 text-sm">
+                              Published the{" "}
+                              <time dateTime={recipe.time}>{recipe.time}</time>
+                            </div>
                           </div>
                         </li>
                       ))}

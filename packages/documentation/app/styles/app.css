@@ -1679,6 +1679,18 @@ video {
   padding-top: 2rem;
 }
 
+.pb-2 {
+  padding-bottom: 0.5rem;
+}
+
+.pb-8 {
+  padding-bottom: 2rem;
+}
+
+.pb-12 {
+  padding-bottom: 3rem;
+}
+
 .text-center {
   text-align: center;
 }
@@ -1758,6 +1770,10 @@ video {
 
 .leading-normal {
   line-height: 1.5;
+}
+
+.leading-relaxed {
+  line-height: 1.625;
 }
 
 .text-white {
@@ -2190,6 +2206,10 @@ video {
     grid-template-columns: 300px 1fr;
   }
 
+  .lg\:grid-cols-\[360px_1fr\] {
+    grid-template-columns: 360px 1fr;
+  }
+
   .lg\:flex-row {
     flex-direction: row;
   }
@@ -2256,6 +2276,14 @@ video {
 
   .xl\:grid-cols-\[300px_1fr_300px\] {
     grid-template-columns: 300px 1fr 300px;
+  }
+
+  .xl\:grid-cols-\[360px_1fr_300px\] {
+    grid-template-columns: 360px 1fr 300px;
+  }
+
+  .xl\:grid-cols-\[360px_1fr_360px\] {
+    grid-template-columns: 360px 1fr 360px;
   }
 
   .xl\:p-12 {

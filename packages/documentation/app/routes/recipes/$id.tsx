@@ -100,7 +100,7 @@ export default function RecipePost() {
           <Title value={pageData.data.title} />
         </div>
 
-        <div className="lg:grid lg:grid-cols-[300px_1fr] xl:grid-cols-[300px_1fr_300px] gap-8 items-start pt-8">
+        <div className="lg:grid lg:grid-cols-[360px_1fr] xl:grid-cols-[360px_1fr_360px] gap-8 items-start pt-8">
           <div className="xl:sticky top-8">
             <SimpleCard>
               <CardContent>
@@ -110,7 +110,7 @@ export default function RecipePost() {
                     {ingredients.map((ing) => (
                       <li
                         key={ing}
-                        className="text-xs py-1"
+                        className="text-sm py-1"
                         dangerouslySetInnerHTML={{ __html: ing }}
                       />
                     ))}
@@ -127,7 +127,7 @@ export default function RecipePost() {
                   <h2 className="font-semibold">Directions</h2>
                   <ul className="pt-4">
                     {pageData.data.directions.map((ing, index: number) => (
-                      <li key={ing.name[0]?.text} className="text-xs py-1">
+                      <li key={ing.name[0]?.text} className="text-sm py-1">
                         <Link to={`#heading-${index}`}>
                           {ing.name[0]?.text}
                         </Link>
@@ -160,7 +160,7 @@ export default function RecipePost() {
               <CardContent>
                 <aside>
                   <h2 className="font-semibold">Useful links</h2>
-                  <ul className="list-inside pt-4">
+                  <ul className="pt-4">
                     {pageData.data.links.map((link) => (
                       <li key={link.href} className="text-sm py-1">
                         <a
