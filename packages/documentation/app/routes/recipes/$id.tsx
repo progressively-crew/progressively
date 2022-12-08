@@ -31,8 +31,12 @@ export const loader: LoaderFunction = async ({
       text,
       children
     ) => {
-      if (type === "preformatted")
-        return `<pre><code class="hljs language-js">${children}</code></pre>`;
+      if (type === "preformatted") {
+        const className =
+          children[0] === "$" ? "hljs language-shell" : "hljs language-ts";
+
+        return `<pre><code class="${className}">${children}</code></pre>`;
+      }
 
       let nextId = "";
 
@@ -72,7 +76,11 @@ export default function RecipePost() {
   const { pageData, html, ingredients } = useLoaderData<LoaderData>();
 
   useEffect(() => {
-    hljs.configure({ ignoreUnescapedHTML: true });
+    hljs.addPlugin({
+      "before:highlightElement": ({ el }) => {
+        el.textContent = el.innerText;
+      },
+    });
     hljs.highlightAll();
   }, []);
 
@@ -80,7 +88,7 @@ export default function RecipePost() {
 
   return (
     <Background>
-      <div className="py-4 md:py-12 max-w-screen-2xl mx-auto px-4 md:px-0">
+      <div className="py-4 xl:py-12 max-w-screen-2xl mx-auto px-4 xl:px-12">
         <div>
           <div className="inline-block">
             <p className="flex flex-row gap-2 bg-indigo-100 text-indigo-700 rounded-full px-4 py-2 items-center">
@@ -92,8 +100,8 @@ export default function RecipePost() {
           <Title value={pageData.data.title} />
         </div>
 
-        <div className="grid grid-cols-[300px_1fr_300px] gap-8 items-start pt-8">
-          <div className="sticky top-8">
+        <div className="lg:grid lg:grid-cols-[300px_1fr] xl:grid-cols-[300px_1fr_300px] gap-8 items-start pt-8">
+          <div className="xl:sticky top-8">
             <SimpleCard>
               <CardContent>
                 <aside>
@@ -129,9 +137,11 @@ export default function RecipePost() {
                 </aside>
               </CardContent>
             </SimpleCard>
+
+            <div className="h-8 xl:h-0" />
           </div>
 
-          <main className="prose lg:prose-x overflow-hidden max-w-none">
+          <main className="prose xl:prose-x overflow-hidden max-w-none">
             <div>
               {imgUrl && (
                 <img
@@ -145,7 +155,7 @@ export default function RecipePost() {
             </div>
           </main>
 
-          <div className="sticky top-8">
+          <div className="hidden xl:block xl:sticky top-8">
             <SimpleCard>
               <CardContent>
                 <aside>
