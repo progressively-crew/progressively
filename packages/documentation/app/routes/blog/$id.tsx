@@ -28,7 +28,7 @@ export default function BlogPostLayout() {
           <SiteNav />
 
           <InertWhenNavOpened>
-            <div className="py-4 xl:py-12 max-w-screen-2xl mx-auto px-4 xl:px-12">
+            <div className="py-4 xl:py-12 px-4 xl:px-12">
               <main className="prose lg:prose-x mx-auto">
                 <Outlet />
               </main>

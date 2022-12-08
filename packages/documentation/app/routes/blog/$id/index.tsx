@@ -51,12 +51,29 @@ export default function BlogPost() {
   const { pageData, html } = useLoaderData<LoaderData>();
 
   useEffect(() => {
+    hljs.addPlugin({
+      "before:highlightElement": ({ el }) => {
+        el.textContent = el.innerText;
+      },
+    });
     hljs.highlightAll();
   }, []);
+
+  const imgUrl = pageData.data.cover?.url;
 
   return (
     <div>
       <Title value={pageData.data.title} />
+
+      {imgUrl && (
+        <img
+          src={imgUrl}
+          alt={pageData.data.title[0]?.text}
+          className="mt-0 object-cover"
+          height="400px"
+        />
+      )}
+
       <div dangerouslySetInnerHTML={{ __html: html }} />
     </div>
   );
