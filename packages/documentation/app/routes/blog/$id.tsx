@@ -1,58 +1,41 @@
-import { LoaderFunction, redirect } from "@remix-run/node";
-import type { HTMLFunctionSerializer } from "@prismicio/helpers";
-import { asHTML } from "@prismicio/helpers";
-import { client } from "~/modules/prismic/client";
-import type { BlogPostDocument } from "types.generated";
-import { useLoaderData } from "@remix-run/react";
-import { Title } from "~/components/Title";
-import hljs from "highlight.js";
-import { useEffect } from "react";
+import { LinksFunction } from "@remix-run/node";
+import { Outlet } from "@remix-run/react";
+import { InertWhenNavOpened } from "~/components/Nav/InertWhenNavOpened";
+import { NavProvider } from "~/components/Nav/providers/NavProvider";
+import theme from "highlight.js/styles/github.css";
+import shared from "../../styles/shared.css";
+import { SiteNav } from "~/components/SiteNav";
+import { Background } from "~/components/Background";
 
-interface LoaderData {
-  pageData: BlogPostDocument<string>;
-  html: string;
-}
-
-export const loader: LoaderFunction = async ({
-  params,
-}): Promise<LoaderData> => {
-  try {
-    const pageData = await client.getByUID("blog_post", params.id!);
-
-    const htmlSerializer: HTMLFunctionSerializer = (
-      type,
-      element,
-      text,
-      children
-    ) => {
-      if (type === "preformatted")
-        return `<pre><code class="hljs language-js">${children}</code></pre>`;
-      return null;
-    };
-
-    const html = asHTML(pageData.data.content, null, htmlSerializer);
-    pageData.data.content = [];
-
-    return {
-      pageData,
-      html,
-    };
-  } catch {
-    throw redirect("/404");
-  }
+export const links: LinksFunction = () => {
+  return [
+    {
+      rel: "stylesheet",
+      href: theme,
+    },
+    {
+      rel: "stylesheet",
+      href: shared,
+    },
+  ];
 };
 
-export default function BlogPost() {
-  const { pageData, html } = useLoaderData<LoaderData>();
-
-  useEffect(() => {
-    hljs.highlightAll();
-  }, []);
-
+export default function BlogPostLayout() {
   return (
-    <div>
-      <Title value={pageData.data.title} />
-      <div dangerouslySetInnerHTML={{ __html: html }} />
-    </div>
+    <Background>
+      <NavProvider>
+        <div>
+          <SiteNav />
+
+          <InertWhenNavOpened>
+            <div className="py-4 xl:py-12 max-w-screen-2xl mx-auto px-4 xl:px-12">
+              <main className="prose lg:prose-x mx-auto">
+                <Outlet />
+              </main>
+            </div>
+          </InertWhenNavOpened>
+        </div>
+      </NavProvider>
+    </Background>
   );
 }

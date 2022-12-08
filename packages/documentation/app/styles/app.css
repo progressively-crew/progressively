@@ -1270,6 +1270,10 @@ video {
   grid-template-columns: 1fr;
 }
 
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .flex-row {
   flex-direction: row;
 }
@@ -1750,6 +1754,10 @@ video {
 
 .leading-tight {
   line-height: 1.25;
+}
+
+.leading-normal {
+  line-height: 1.5;
 }
 
 .text-white {
@@ -2248,6 +2256,10 @@ video {
 
   .xl\:grid-cols-\[300px_1fr_300px\] {
     grid-template-columns: 300px 1fr 300px;
+  }
+
+  .xl\:p-12 {
+    padding: 3rem;
   }
 
   .xl\:py-12 {

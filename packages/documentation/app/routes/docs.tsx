@@ -36,7 +36,7 @@ export default function DocsLayout() {
             }
           />
 
-          <div className="max-w-screen-2xl mx-auto py-4 md:py-12 px-4 md:px-0">
+          <div className="py-4 xl:py-12 max-w-screen-2xl mx-auto px-4 xl:px-12">
             <div className={"lg:grid lg:grid-cols-[240px_1fr] lg:gap-12"}>
               <Nav />
 
