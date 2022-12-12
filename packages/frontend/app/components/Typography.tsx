@@ -2,7 +2,9 @@ import React from "react";
 
 export const Typography = ({
   className,
+  as: asHTML,
   ...props
 }: React.HTMLAttributes<HTMLParagraphElement>) => {
-  return <p {...props} className={"text-gray-500 " + (className || "")} />;
+  const Root = asHTML || "p";
+  return <Root {...props} className={"text-gray-500 " + (className || "")} />;
 };
