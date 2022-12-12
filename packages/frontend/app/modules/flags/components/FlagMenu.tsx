@@ -20,27 +20,18 @@ export interface FlagMenuProps {
 export const FlagMenu = ({ projectId, envId, flagId }: FlagMenuProps) => {
   return (
     <HorizontalNav label={`Flag related`}>
-      <HideTablet as="li">
-        <p className="uppercase text-black text-sm font-bold">
-          Rollout details
-        </p>
-        <Spacer size={1} />
-      </HideTablet>
-
       <NavItem
         to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}`}
         icon={<FaToggleOff />}
       >
         Overview
       </NavItem>
-
       <NavItem
         to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/variants`}
         icon={<VariantIcon />}
       >
         Variants
       </NavItem>
-
       <NavItem
         to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/scheduling`}
         icon={<AiOutlineClockCircle />}
@@ -48,39 +39,24 @@ export const FlagMenu = ({ projectId, envId, flagId }: FlagMenuProps) => {
         Scheduling
       </NavItem>
 
-      <HideTablet as="li">
-        <Spacer size={4} />
-        <p className="uppercase text-black text-sm font-bold">Measuring</p>
-        <Spacer size={1} />
-      </HideTablet>
-
       <NavItem
         to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/insights`}
         icon={<AiOutlineBarChart />}
       >
         Insights
       </NavItem>
-
       <NavItem
         to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/metrics`}
         icon={<MdBubbleChart />}
       >
         Metrics
       </NavItem>
-
-      <HideTablet as="li">
-        <Spacer size={4} />
-        <p className="uppercase text-black text-sm font-bold">Other</p>
-        <Spacer size={1} />
-      </HideTablet>
-
       <NavItem
         to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/webhooks`}
         icon={<TbSend />}
       >
         Webhooks
       </NavItem>
-
       <NavItem
         to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/settings`}
         icon={<AiOutlineSetting />}

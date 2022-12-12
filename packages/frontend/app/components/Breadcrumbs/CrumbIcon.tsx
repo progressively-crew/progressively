@@ -10,9 +10,7 @@ interface IconWrapperProps {
 }
 
 const IconWrapper = ({ children, color }: IconWrapperProps) => {
-  return (
-    <span className={`flex ${color || "text-indigo-700"}`}>{children}</span>
-  );
+  return <span className={`flex ${color || ""}`}>{children}</span>;
 };
 
 export const CrumbIcon = ({

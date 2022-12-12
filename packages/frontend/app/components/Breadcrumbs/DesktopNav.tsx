@@ -38,14 +38,19 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
               <Link
                 aria-current={currentPage ? "page" : undefined}
                 to={crumb.link}
-                className="transition-all px-2 -mx-1 py-1 rounded hover:text-black hover:bg-gray-100 active:bg-gray-200 active:text-indigo-700 no-underline text-sm"
+                className={`transition-all px-2 -mx-1 py-1 rounded hover:text-black hover:bg-gray-100 active:bg-gray-200 active:text-indigo-700 no-underline text-sm ${
+                  currentPage ? "text-black" : "text-gray-500"
+                }`}
               >
                 <div
                   className={"rounded px-2 -mx-1 py-1"}
                   style={{ color, background }}
                 >
                   <HStack spacing={2}>
-                    <CrumbIcon crumb={crumb} color={color} />
+                    <CrumbIcon
+                      crumb={crumb}
+                      color={currentPage ? color || "text-indigo-700" : ""}
+                    />
                     {crumb.label}
                   </HStack>
                 </div>
