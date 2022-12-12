@@ -1,6 +1,5 @@
 import { HStack } from "../HStack";
 import { Spacer } from "../Spacer";
-import { Stack } from "../Stack";
 import { Label } from "./Label";
 import { Radio } from "./Radio";
 

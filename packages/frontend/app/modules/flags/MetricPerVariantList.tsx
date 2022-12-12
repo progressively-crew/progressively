@@ -1,6 +1,5 @@
 import { RawTable, Tr, Th, Td } from "~/components/RawTable";
 import { Tag } from "~/components/Tag";
-import { Typography } from "~/components/Typography";
 import { stringToColor } from "../misc/utils/stringToColor";
 
 interface MetricHit {

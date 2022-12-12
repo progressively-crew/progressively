@@ -5,7 +5,6 @@ import { Typography } from "~/components/Typography";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { UserRoles } from "~/modules/projects/types";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
-import { HideMobile } from "~/components/HideMobile";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { EnvNavBar } from "~/modules/environments/components/EnvNavbar";
 import { MetaFunction } from "@remix-run/node";

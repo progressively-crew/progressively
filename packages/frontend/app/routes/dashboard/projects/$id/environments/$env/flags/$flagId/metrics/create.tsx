@@ -12,7 +12,6 @@ import {
   useTransition,
   useLoaderData,
 } from "@remix-run/react";
-import { useUser } from "~/modules/user/contexts/useUser";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
@@ -105,7 +104,6 @@ export const loader: LoaderFunction = async ({
 };
 
 export default function MetricCreatePage() {
-  const { user } = useUser();
   const { project } = useProject();
   const { flagEnv } = useFlagEnv();
   const { environment } = useEnvironment();

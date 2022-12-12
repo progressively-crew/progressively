@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { HStack } from "../HStack";
 import { Stack } from "../Stack";
 import { Label } from "./Label";
 

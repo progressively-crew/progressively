@@ -28,12 +28,9 @@ import { SiOkta } from "react-icons/si";
 import { Card, CardContent } from "~/components/Card";
 import { getOktaConfig } from "~/modules/auth/services/get-okta-config";
 import { useOkta } from "~/modules/auth/hooks/useOkta";
-import { Stack } from "~/components/Stack";
 import { Separator } from "~/components/Separator";
 import { Spacer } from "~/components/Spacer";
-import { LogoWithoutText } from "~/components/Logo/WithoutText";
 import { H1Logo } from "~/components/H1Logo";
-import { HStack } from "~/components/HStack";
 
 export const meta: MetaFunction = () => {
   return {

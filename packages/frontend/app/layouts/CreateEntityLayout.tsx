@@ -1,9 +1,6 @@
 import React from "react";
 import { Card, CardContent } from "~/components/Card";
-import { Section } from "~/components/Section";
 import { Spacer } from "~/components/Spacer";
-import { User } from "~/modules/user/types";
-import { DashboardLayout } from "./DashboardLayout";
 
 export interface CreateEntityLayoutProps {
   children: React.ReactNode;
