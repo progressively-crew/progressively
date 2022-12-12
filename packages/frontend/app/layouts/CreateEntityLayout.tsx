@@ -6,42 +6,32 @@ import { User } from "~/modules/user/types";
 import { DashboardLayout } from "./DashboardLayout";
 
 export interface CreateEntityLayoutProps {
-  user: User;
   children: React.ReactNode;
-  header?: React.ReactNode;
   error?: React.ReactNode;
   status?: React.ReactNode;
-  title: React.ReactNode;
 }
 
 export const CreateEntityLayout = ({
-  user,
-  header,
   children,
   error,
   status,
-  title,
 }: CreateEntityLayoutProps) => {
   return (
-    <DashboardLayout user={user} header={header}>
-      <div className="mx-auto max-w-lg">
-        {error}
+    <div className="mx-auto max-w-2xl">
+      {error}
 
-        {title}
+      <Spacer size={4} />
 
-        <Spacer size={4} />
+      {status && (
+        <div>
+          {status}
+          <Spacer size={4} />
+        </div>
+      )}
 
-        {status && (
-          <div>
-            {status}
-            <Spacer size={4} />
-          </div>
-        )}
+      {children}
 
-        {children}
-
-        <Spacer size={6} />
-      </div>
-    </DashboardLayout>
+      <Spacer size={6} />
+    </div>
   );
 };

@@ -166,7 +166,7 @@ export default function Signin() {
                 <div className="pt-1 flex justify-end">
                   <Link
                     to="/forgot-password"
-                    className="text-xs"
+                    className="text-xs text-gray-500"
                   >{`I forgot my password`}</Link>
                 </div>
               </div>

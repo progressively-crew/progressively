@@ -15,7 +15,7 @@ export const Label = ({
   const Component = asComponent || "label";
 
   return (
-    <Component htmlFor={htmlFor} className="font-semibold" {...props}>
+    <Component htmlFor={htmlFor} className="text-gray-500" {...props}>
       {children}
     </Component>
   );
