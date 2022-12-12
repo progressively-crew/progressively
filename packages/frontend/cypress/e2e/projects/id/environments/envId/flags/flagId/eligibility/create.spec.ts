@@ -77,9 +77,14 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/eligibili
       });
 
       // TODO: improve E2E testing for strategies. The business covering is minimal atm
-      it("adds a strategy", () => {
+      it("adds a eligibility", () => {
         cy.findByLabelText("Field name").type("email");
         cy.findByLabelText("Values matching the previous field").type("email");
+
+        cy.findByRole("button", {
+          name: "Add value",
+        }).click();
+
         cy.findByRole("button", {
           name: "Save the restriction",
         }).click();
