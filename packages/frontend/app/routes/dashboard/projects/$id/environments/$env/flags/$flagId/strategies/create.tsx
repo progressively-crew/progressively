@@ -8,7 +8,6 @@ import {
 } from "~/modules/strategies/types";
 import { createStrategy } from "~/modules/strategies/services/createStrategy";
 import { AudienceFields } from "~/modules/strategies/components/AudienceFields";
-import { Typography } from "~/components/Typography";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import {
   MetaFunction,
@@ -19,29 +18,15 @@ import {
 import { useActionData, Form, useLoaderData } from "@remix-run/react";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { useProject } from "~/modules/projects/contexts/useProject";
-import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
-import { PageTitle } from "~/components/PageTitle";
-import { Card, CardContent } from "~/components/Card";
-import { Header } from "~/components/Header";
-import { FlagIcon } from "~/components/Icons/FlagIcon";
-import { TagLine } from "~/components/Tagline";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { getVariants } from "~/modules/variants/services/getVariants";
 import { Variant } from "~/modules/variants/types";
-
-export const handle = {
-  breadcrumb: (match: { params: any }) => {
-    return {
-      link: `/dashboard/projects/${match.params.id}/environments/${match.params.env}/flags/${match.params.flagId}/strategies/create`,
-      label: "Create an additional audience",
-    };
-  },
-};
+import { BackLink } from "~/components/BackLink";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -140,7 +125,6 @@ export default function StrategyCreatePage() {
   const transition = useTransition();
   const { flagEnv } = useFlagEnv();
   const { project } = useProject();
-  const { user } = useUser();
   const { environment } = useEnvironment();
   const actionData = useActionData<ActionData>();
 
@@ -149,47 +133,34 @@ export default function StrategyCreatePage() {
   const errors = actionData?.errors || {};
 
   return (
-    <CreateEntityLayout
-      user={user}
-      header={
-        <Header
-          tagline={<TagLine icon={<FlagIcon />}>FEATURE FLAG</TagLine>}
-          title={currentFlag.name}
-        />
-      }
-      status={actionData?.errors && <ErrorBox list={actionData.errors} />}
-      title={
-        <PageTitle
-          value="Create an additional audience"
-          description={
-            <Typography>
-              {`You're`} about to create an additional audience to{" "}
-              <strong>{currentFlag.name}</strong> in{" "}
-              <strong>{project.name}</strong> on{" "}
-              <strong>{environment.name}</strong>.
-            </Typography>
-          }
-        />
-      }
-    >
-      <Card>
-        <CardContent>
-          <Form method="post">
-            <FormGroup>
-              <AudienceFields errors={errors} variants={variants} />
-
-              <div>
-                <SubmitButton
-                  isLoading={transition.state === "submitting"}
-                  loadingText="Saving the strategy, please wait..."
-                >
-                  Save the additional audience
-                </SubmitButton>
-              </div>
-            </FormGroup>
-          </Form>
-        </CardContent>
-      </Card>
-    </CreateEntityLayout>
+    <Form method="post">
+      <CreateEntityLayout
+        status={actionData?.errors && <ErrorBox list={actionData.errors} />}
+        titleSlot={
+          <h1 className="text-3xl font-semibold" id="page-title">
+            Create an additional audience
+          </h1>
+        }
+        submitSlot={
+          <SubmitButton
+            isLoading={transition.state === "submitting"}
+            loadingText="Saving the strategy, please wait..."
+          >
+            Save the additional audience
+          </SubmitButton>
+        }
+        backLinkSlot={
+          <BackLink
+            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`}
+          >
+            Back to flag
+          </BackLink>
+        }
+      >
+        <FormGroup>
+          <AudienceFields errors={errors} variants={variants} />
+        </FormGroup>
+      </CreateEntityLayout>
+    </Form>
   );
 }

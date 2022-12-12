@@ -1,37 +1,21 @@
 import { useTransition } from "react";
 import { getSession } from "~/sessions";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
-import { Typography } from "~/components/Typography";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
 import { useActionData, Form } from "@remix-run/react";
-import { FormGroup } from "~/components/Fields/FormGroup";
 import { useProject } from "~/modules/projects/contexts/useProject";
-import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
-import { PageTitle } from "~/components/PageTitle";
-import { Card, CardContent } from "~/components/Card";
-import { Header } from "~/components/Header";
-import { FlagIcon } from "~/components/Icons/FlagIcon";
-import { TagLine } from "~/components/Tagline";
 import { EligibilityCreateDTO } from "~/modules/eligibility/types";
 import { createEligibility } from "~/modules/eligibility/services/createEligibility";
 import { EligibilityForm } from "~/modules/eligibility/components/EligibilityForm";
 import { validateEligibilityForm } from "~/modules/eligibility/validators/validateEligibilityForm";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
-
-export const handle = {
-  breadcrumb: (match: { params: any }) => {
-    return {
-      link: `/dashboard/projects/${match.params.id}/environments/${match.params.env}/flags/${match.params.flagId}/eligibilities/create`,
-      label: "Create an eligibility restriction",
-    };
-  },
-};
+import { BackLink } from "~/components/BackLink";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -53,6 +37,8 @@ export const action: ActionFunction = async ({
 }): Promise<ActionData | Response> => {
   const formData = await request.formData();
   const session = await getSession(request.headers.get("Cookie"));
+  const fieldValues = formData.getAll("field-value");
+  const fieldValue = fieldValues.join("\n");
 
   const errors = validateEligibilityForm(formData);
 
@@ -61,7 +47,6 @@ export const action: ActionFunction = async ({
   }
 
   const fieldName = formData.get("field-name")?.toString() || "";
-  const fieldValue = formData.get("field-value")?.toString() || "";
 
   const fieldComparator =
     (formData.get(
@@ -98,7 +83,6 @@ export default function StrategyCreatePage() {
   const transition = useTransition();
   const { flagEnv } = useFlagEnv();
   const { project } = useProject();
-  const { user } = useUser();
   const { environment } = useEnvironment();
   const actionData = useActionData<ActionData>();
 
@@ -108,46 +92,32 @@ export default function StrategyCreatePage() {
 
   return (
     <CreateEntityLayout
-      user={user}
-      header={
-        <Header
-          tagline={<TagLine icon={<FlagIcon />}>FEATURE FLAG</TagLine>}
-          title={currentFlag.name}
-        />
+      backLinkSlot={
+        <BackLink
+          to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`}
+        >
+          Back to flag
+        </BackLink>
       }
       status={actionData?.errors && <ErrorBox list={actionData.errors} />}
-      title={
-        <PageTitle
-          value="Create an eligibility restriction"
-          description={
-            <Typography>
-              {`You're`} about to create an eligibility restriction to{" "}
-              <strong>{currentFlag.name}</strong> in{" "}
-              <strong>{project.name}</strong> on{" "}
-              <strong>{environment.name}</strong>.
-            </Typography>
-          }
-        />
+      titleSlot={
+        <h1 className="text-3xl font-semibold" id="page-title">
+          Create an eligibility restriction
+        </h1>
+      }
+      submitSlot={
+        <SubmitButton
+          form="eligibility-form"
+          isLoading={transition.state === "submitting"}
+          loadingText="Saving the eligibility restriction, please wait..."
+        >
+          Save the restriction
+        </SubmitButton>
       }
     >
-      <Card>
-        <CardContent>
-          <Form method="post">
-            <FormGroup>
-              <EligibilityForm errors={errors} />
+      <Form method="post" id="eligibility-form"></Form>
 
-              <div>
-                <SubmitButton
-                  isLoading={transition.state === "submitting"}
-                  loadingText="Saving the eligibility restriction, please wait..."
-                >
-                  Save the eligibility restriction
-                </SubmitButton>
-              </div>
-            </FormGroup>
-          </Form>
-        </CardContent>
-      </Card>
+      <EligibilityForm errors={errors} />
     </CreateEntityLayout>
   );
 }

@@ -63,9 +63,9 @@ export const action: ActionFunction = async ({
   return {
     errors: {
       unauthorized:
-        successful.length !== result.length
-          ? "You have attempted to remove an admin user! No worries, we got your back!"
-          : undefined,
+        successful.length === result.length
+          ? undefined
+          : "You have attempted to remove an admin user! No worries, we got your back!",
     },
     success: successful.length > 0,
     removedCount: successful.length,

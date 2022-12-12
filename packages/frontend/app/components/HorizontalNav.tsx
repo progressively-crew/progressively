@@ -10,7 +10,7 @@ export const HorizontalNav = ({ children, label }: HorizontalNavProps) => {
   return (
     <nav
       aria-label={label}
-      className="w-full h-full bg-indigo-100 lg:bg-white border-r border-color-gray-500 lg:p-8"
+      className="w-full h-full bg-indigo-100 lg:bg-white border-r border-r-gray-100 lg:p-8"
     >
       <ul className="overflow-x-scroll flex flex-row gap-3 lg:flex-col">
         {children}

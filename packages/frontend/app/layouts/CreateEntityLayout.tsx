@@ -1,47 +1,63 @@
 import React from "react";
 import { Card, CardContent } from "~/components/Card";
-import { Section } from "~/components/Section";
 import { Spacer } from "~/components/Spacer";
-import { User } from "~/modules/user/types";
-import { DashboardLayout } from "./DashboardLayout";
 
 export interface CreateEntityLayoutProps {
-  user: User;
   children: React.ReactNode;
-  header?: React.ReactNode;
   error?: React.ReactNode;
   status?: React.ReactNode;
-  title: React.ReactNode;
+  titleSlot: React.ReactNode;
+  submitSlot: React.ReactNode;
+  backLinkSlot: React.ReactNode;
 }
 
 export const CreateEntityLayout = ({
-  user,
-  header,
   children,
   error,
   status,
-  title,
+  titleSlot,
+  submitSlot,
+  backLinkSlot,
 }: CreateEntityLayoutProps) => {
   return (
-    <DashboardLayout user={user} header={header}>
-      <div className="mx-auto max-w-lg">
-        {error}
+    <main className="mx-auto max-w-2xl lg:pt-28" aria-labelledby="page-title">
+      {error}
 
-        {title}
+      <Spacer size={4} />
 
-        <Spacer size={4} />
+      {status && (
+        <div>
+          {status}
+          <Spacer size={4} />
+        </div>
+      )}
 
-        {status && (
-          <div>
-            {status}
-            <Spacer size={4} />
-          </div>
-        )}
-
-        {children}
-
-        <Spacer size={6} />
+      <div className="inline-block motion-safe:animate-fade-enter-bottom motion-safe:opacity-0">
+        {backLinkSlot}
       </div>
-    </DashboardLayout>
+
+      <Spacer size={2} />
+
+      <div
+        className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"
+        style={{
+          animationDelay: "300ms",
+        }}
+      >
+        <Card>
+          <CardContent>
+            {titleSlot}
+            <Spacer size={8} />
+            {children}
+          </CardContent>
+
+          <div className="flex justify-end px-8 py-4 bg-gray-100">
+            {submitSlot}
+          </div>
+        </Card>
+      </div>
+
+      <Spacer size={6} />
+    </main>
   );
 };

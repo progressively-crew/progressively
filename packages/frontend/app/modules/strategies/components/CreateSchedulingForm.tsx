@@ -1,6 +1,4 @@
-import { useTransition } from "@remix-run/react";
 import { useState } from "react";
-import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { DateTimeInput } from "~/components/Fields/DateTimeInput";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { Label } from "~/components/Fields/Label";
@@ -13,7 +11,6 @@ export const CreateSchedulingFrom = () => {
   const [percentage, setPercentage] = useState(100);
   const [nextStatus, setNextStatus] = useState(FlagStatus.NOT_ACTIVATED);
 
-  const transition = useTransition();
   return (
     <FormGroup>
       <DateTimeInput
@@ -49,15 +46,6 @@ export const CreateSchedulingFrom = () => {
         label={"What should be the next rollout percentage"}
         name={"rolloutPercentage"}
       />
-
-      <div>
-        <SubmitButton
-          isLoading={transition.state === "submitting"}
-          loadingText="Saving the scheduling, please wait..."
-        >
-          Save the schedule
-        </SubmitButton>
-      </div>
     </FormGroup>
   );
 };

@@ -2,7 +2,6 @@ import { useRef } from "react";
 import { Link } from "~/components/Link";
 import { RawTable, Td, Th, Tr } from "~/components/RawTable";
 import { Tag } from "~/components/Tag";
-import { useHydrated } from "~/modules/misc/hooks/useHydrated";
 import { UserProject } from "../types";
 
 export interface ProjectListProps {

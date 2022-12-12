@@ -2,13 +2,11 @@ import { ActionFunction, redirect } from "@remix-run/node";
 import { useActionData, Form } from "@remix-run/react";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
-import { FormGroup } from "~/components/Fields/FormGroup";
 import { TextInput } from "~/components/Fields/TextInput";
 import { changeFullname } from "~/modules/user/services/changeFullname";
 import { validateUserFullname } from "~/modules/user/validators/validate-user-fullname";
 import { getSession } from "~/sessions";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
-import { Card, CardContent } from "~/components/Card";
 import { Stack } from "~/components/Stack";
 
 export const meta = () => {

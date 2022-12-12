@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { HStack } from "../HStack";
 import { Stack } from "../Stack";
 import { Label } from "./Label";
 
@@ -23,6 +22,7 @@ export const SelectField = ({
   defaultValue,
   label,
   options,
+  ...props
 }: SelectFieldProps) => {
   const [selected, setSelected] = useState(options[0]?.value || "");
   const inputClasses = isInvalid
@@ -46,6 +46,7 @@ export const SelectField = ({
             aria-describedby={isInvalid ? `error-${name}` : undefined}
             className="w-full h-full bg-transparent text-gray-600"
             onChange={(e) => setSelected(e.target.value)}
+            {...props}
           >
             {options.map((opt) => (
               <option key={`${name}-${opt.value}`} value={opt.value}>

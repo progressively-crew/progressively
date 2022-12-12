@@ -28,12 +28,9 @@ import { SiOkta } from "react-icons/si";
 import { Card, CardContent } from "~/components/Card";
 import { getOktaConfig } from "~/modules/auth/services/get-okta-config";
 import { useOkta } from "~/modules/auth/hooks/useOkta";
-import { Stack } from "~/components/Stack";
 import { Separator } from "~/components/Separator";
 import { Spacer } from "~/components/Spacer";
-import { LogoWithoutText } from "~/components/Logo/WithoutText";
 import { H1Logo } from "~/components/H1Logo";
-import { HStack } from "~/components/HStack";
 
 export const meta: MetaFunction = () => {
   return {
@@ -166,7 +163,7 @@ export default function Signin() {
                 <div className="pt-1 flex justify-end">
                   <Link
                     to="/forgot-password"
-                    className="text-xs"
+                    className="text-xs text-gray-500"
                   >{`I forgot my password`}</Link>
                 </div>
               </div>

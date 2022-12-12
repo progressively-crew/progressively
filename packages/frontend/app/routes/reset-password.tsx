@@ -17,7 +17,6 @@ import {
   validatePassword,
 } from "~/modules/forms/utils/validatePassword";
 import { resetPassword } from "~/modules/user/services/resetPassword";
-import { PageTitle } from "~/components/PageTitle";
 import { Card, CardContent } from "~/components/Card";
 import { H1Logo } from "~/components/H1Logo";
 import { Spacer } from "~/components/Spacer";

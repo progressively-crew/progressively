@@ -87,12 +87,14 @@ export function CatchBoundary() {
       page = <ForbiddenPage />;
       break;
     }
-    case 401:
+    case 401: {
       page = <UnauthorizedPage />;
       break;
-    case 404:
+    }
+    case 404: {
       page = <NotFoundPage />;
       break;
+    }
 
     default: {
       throw new Error(caught.data || caught.statusText);

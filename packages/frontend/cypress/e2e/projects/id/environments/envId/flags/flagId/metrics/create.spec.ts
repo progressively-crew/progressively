@@ -43,24 +43,9 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/metrics/c
           "Progressively | Project from seeding | Production | Flags | New homepage | Metrics | Create"
         );
 
-        cy.verifyBreadcrumbs([
-          ["Projects", "/dashboard"],
-          ["Project from seeding", "/dashboard/projects/1"],
-          ["Production", "/dashboard/projects/1/environments/1"],
-          ["New homepage", "/dashboard/projects/1/environments/1/flags/1"],
-          [
-            "Create a metric",
-            "/dashboard/projects/1/environments/1/flags/1/metrics/create",
-          ],
-        ]);
-
         cy.findByRole("heading", { name: "Create a metric" }).should(
           "be.visible"
         );
-
-        cy.contains(
-          "You're about to create a metric to New homepage in Project from seeding on Production."
-        ).should("be.visible");
 
         cy.checkA11y();
       });

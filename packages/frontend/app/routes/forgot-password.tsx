@@ -10,7 +10,6 @@ import { Typography } from "~/components/Typography";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import { validateEmail } from "~/modules/forms/utils/validateEmail";
 import { forgotPassword } from "~/modules/user/services/forgotPassword";
-import { PageTitle } from "~/components/PageTitle";
 import { Card, CardContent } from "~/components/Card";
 import { H1Logo } from "~/components/H1Logo";
 import { Spacer } from "~/components/Spacer";

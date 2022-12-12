@@ -21,19 +21,15 @@ describe("/dashboard/projects/create", () => {
 
     it("shows the create page layout", () => {
       cy.title().should("eq", "Progressively | Create a project");
-      cy.findByRole("heading", { name: "Create a project" }).should("be.visible");
-
-      cy.verifyBreadcrumbs([
-        ["Projects", "/dashboard"],
-        ["Create a project", "/dashboard/projects/create"],
-      ]);
+      cy.findByRole("heading", { name: "Create a project" }).should(
+        "be.visible"
+      );
 
       cy.findByLabelText("Project name").should("be.visible");
-      cy.findByText(
-        "When creating a project, you will become its administrator and you will have full control over it."
-      ).should("be.visible");
 
-      cy.findByRole("button", { name: "Create the project" }).should("be.visible");
+      cy.findByRole("button", { name: "Create the project" }).should(
+        "be.visible"
+      );
 
       cy.checkA11y();
     });
@@ -43,7 +39,10 @@ describe("/dashboard/projects/create", () => {
 
       cy.get(".error-box")
         .should("have.focus")
-        .and("contain.text", "The name field is required, make sure to have one.");
+        .and(
+          "contain.text",
+          "The name field is required, make sure to have one."
+        );
 
       cy.checkA11y();
     });

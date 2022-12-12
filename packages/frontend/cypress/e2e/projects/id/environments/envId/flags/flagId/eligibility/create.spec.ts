@@ -47,31 +47,16 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/eligibili
           "Progressively | Project from seeding | Production | Flags | New homepage | Eligibility | Create"
         );
 
-        cy.verifyBreadcrumbs([
-          ["Projects", "/dashboard"],
-          ["Project from seeding", "/dashboard/projects/1"],
-          ["Production", "/dashboard/projects/1/environments/1"],
-          ["New homepage", "/dashboard/projects/1/environments/1/flags/1"],
-          [
-            "Create an eligibility restriction",
-            "/dashboard/projects/1/environments/1/flags/1/eligibilities/create",
-          ],
-        ]);
-
         cy.findByRole("heading", {
           name: "Create an eligibility restriction",
         }).should("be.visible");
-
-        cy.contains(
-          "You're about to create an eligibility restriction to New homepage in Project from seeding on Production."
-        ).should("be.visible");
 
         cy.checkA11y();
       });
 
       it("shows the form layout", () => {
         cy.findByRole("button", {
-          name: "Save the eligibility restriction",
+          name: "Save the restriction",
         }).should("be.visible");
 
         cy.checkA11y();
@@ -79,7 +64,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/eligibili
 
       it("shows a list of errors when the field are not filled", () => {
         cy.findByRole("button", {
-          name: "Save the eligibility restriction",
+          name: "Save the restriction",
         }).click();
 
         cy.get(".error-box")
@@ -92,13 +77,16 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/eligibili
       });
 
       // TODO: improve E2E testing for strategies. The business covering is minimal atm
-      it("adds a strategy", () => {
+      it("adds a eligibility", () => {
         cy.findByLabelText("Field name").type("email");
-        cy.findByLabelText(
-          "Values matching the previous field (one per line)"
-        ).type("email");
+        cy.findByLabelText("Values matching the previous field").type("email");
+
         cy.findByRole("button", {
-          name: "Save the eligibility restriction",
+          name: "Add value",
+        }).click();
+
+        cy.findByRole("button", {
+          name: "Save the restriction",
         }).click();
 
         cy.url().should(

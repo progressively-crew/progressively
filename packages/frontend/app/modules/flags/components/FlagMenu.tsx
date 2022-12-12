@@ -6,9 +6,7 @@ import {
 import { FaToggleOff } from "react-icons/fa";
 import { TbSend } from "react-icons/tb";
 import { MdBubbleChart } from "react-icons/md";
-import { HideTablet } from "~/components/HideMobile";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
-import { Spacer } from "~/components/Spacer";
 import { VariantIcon } from "~/components/Icons/VariantIcon";
 
 export interface FlagMenuProps {

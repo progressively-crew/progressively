@@ -39,23 +39,9 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/create", () => {
           "Progressively | Project from seeding | Production | Flags | Create"
         );
 
-        cy.verifyBreadcrumbs([
-          ["Projects", "/dashboard"],
-          ["Project from seeding", "/dashboard/projects/1"],
-          ["Production", "/dashboard/projects/1/environments/1"],
-          [
-            "Create a feature flag",
-            "/dashboard/projects/1/environments/1/flags/create",
-          ],
-        ]);
-
         cy.findByRole("heading", { name: "Create a feature flag" }).should(
           "be.visible"
         );
-
-        cy.contains(
-          "The new feature flag will appear in Project from seeding / Production."
-        ).should("be.visible");
 
         cy.findByLabelText("Flag name").should("be.visible");
         cy.findByLabelText("Flag description").should("be.visible");
