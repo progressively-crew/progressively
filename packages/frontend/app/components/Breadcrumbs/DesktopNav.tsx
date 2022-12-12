@@ -61,7 +61,7 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
               ) : null}
 
               {!currentPage && (
-                <div className="flex text-gray-300 px-2" aria-hidden>
+                <div className="flex text-gray-200 px-2" aria-hidden>
                   {"/"}
                 </div>
               )}
