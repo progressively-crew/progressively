@@ -51,10 +51,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/eligibili
           name: "Create an eligibility restriction",
         }).should("be.visible");
 
-        cy.contains(
-          "You're about to create an eligibility restriction to New homepage in Project from seeding on Production."
-        ).should("be.visible");
-
         cy.checkA11y();
       });
 
@@ -83,9 +79,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/eligibili
       // TODO: improve E2E testing for strategies. The business covering is minimal atm
       it("adds a strategy", () => {
         cy.findByLabelText("Field name").type("email");
-        cy.findByLabelText(
-          "Values matching the previous field (one per line)"
-        ).type("email");
+        cy.findByLabelText("Values matching the previous field").type("email");
         cy.findByRole("button", {
           name: "Save the restriction",
         }).click();

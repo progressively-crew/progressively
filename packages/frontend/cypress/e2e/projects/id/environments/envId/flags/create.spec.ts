@@ -43,10 +43,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/create", () => {
           "be.visible"
         );
 
-        cy.contains(
-          "The new feature flag will appear in Project from seeding / Production."
-        ).should("be.visible");
-
         cy.findByLabelText("Flag name").should("be.visible");
         cy.findByLabelText("Flag description").should("be.visible");
 
