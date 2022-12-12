@@ -20,6 +20,8 @@ import { EligibilityForm } from "~/modules/eligibility/components/EligibilityFor
 import { validateEligibilityForm } from "~/modules/eligibility/validators/validateEligibilityForm";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { Spacer } from "~/components/Spacer";
+import { Link } from "~/components/Link";
+import { BackLink } from "~/components/BackLink";
 
 export const handle = {
   breadcrumb: (match: { params: any }) => {
@@ -107,30 +109,46 @@ export default function StrategyCreatePage() {
     <CreateEntityLayout
       status={actionData?.errors && <ErrorBox list={actionData.errors} />}
     >
-      <Card>
-        <CardContent>
-          <h1 className="text-3xl font-semibold">
-            Create an eligibility restriction
-          </h1>
+      <div className="inline-block motion-safe:animate-fade-enter-bottom motion-safe:opacity-0">
+        <BackLink
+          to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`}
+        >
+          Back to flag
+        </BackLink>
+      </div>
 
-          <Spacer size={8} />
+      <Spacer size={2} />
 
-          <Form method="post" id="eligibility-form"></Form>
-          <FormGroup>
+      <div
+        className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"
+        style={{
+          animationDelay: "300ms",
+        }}
+      >
+        <Card>
+          <CardContent>
+            <h1 className="text-3xl font-semibold" id="page-title">
+              Create an eligibility restriction
+            </h1>
+
+            <Spacer size={8} />
+
+            <Form method="post" id="eligibility-form"></Form>
+
             <EligibilityForm errors={errors} />
+          </CardContent>
 
-            <div>
-              <SubmitButton
-                form="eligibility-form"
-                isLoading={transition.state === "submitting"}
-                loadingText="Saving the eligibility restriction, please wait..."
-              >
-                Save the eligibility restriction
-              </SubmitButton>
-            </div>
-          </FormGroup>
-        </CardContent>
-      </Card>
+          <div className="flex justify-end px-8 py-4 bg-gray-100">
+            <SubmitButton
+              form="eligibility-form"
+              isLoading={transition.state === "submitting"}
+              loadingText="Saving the eligibility restriction, please wait..."
+            >
+              Save the restriction
+            </SubmitButton>
+          </div>
+        </Card>
+      </div>
     </CreateEntityLayout>
   );
 }

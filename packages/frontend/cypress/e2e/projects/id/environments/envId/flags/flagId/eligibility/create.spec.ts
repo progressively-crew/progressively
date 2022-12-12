@@ -71,7 +71,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/eligibili
 
       it("shows the form layout", () => {
         cy.findByRole("button", {
-          name: "Save the eligibility restriction",
+          name: "Save the restriction",
         }).should("be.visible");
 
         cy.checkA11y();
@@ -79,7 +79,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/eligibili
 
       it("shows a list of errors when the field are not filled", () => {
         cy.findByRole("button", {
-          name: "Save the eligibility restriction",
+          name: "Save the restriction",
         }).click();
 
         cy.get(".error-box")
@@ -98,7 +98,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/eligibili
           "Values matching the previous field (one per line)"
         ).type("email");
         cy.findByRole("button", {
-          name: "Save the eligibility restriction",
+          name: "Save the restriction",
         }).click();
 
         cy.url().should(

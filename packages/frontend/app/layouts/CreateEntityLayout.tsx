@@ -17,7 +17,7 @@ export const CreateEntityLayout = ({
   status,
 }: CreateEntityLayoutProps) => {
   return (
-    <div className="mx-auto max-w-2xl">
+    <main className="mx-auto max-w-2xl lg:pt-28" aria-labelledby="page-title">
       {error}
 
       <Spacer size={4} />
@@ -32,6 +32,6 @@ export const CreateEntityLayout = ({
       {children}
 
       <Spacer size={6} />
-    </div>
+    </main>
   );
 };

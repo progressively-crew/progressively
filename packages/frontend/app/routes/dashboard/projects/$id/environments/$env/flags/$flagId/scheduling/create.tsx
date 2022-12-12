@@ -1,7 +1,6 @@
 import { FlagStatus } from "~/modules/flags/types";
 import { getSession } from "~/sessions";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
-import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { Typography } from "~/components/Typography";
 import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
 import { useActionData, Form } from "@remix-run/react";
