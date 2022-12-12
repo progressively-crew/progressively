@@ -52,12 +52,14 @@ export const WebhooksList = ({
             </Td>
 
             <Td>
-              <DeleteButton
-                variant="secondary"
-                to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/webhooks/${webhook.uuid}/delete`}
-              >
-                Remove
-              </DeleteButton>
+              <div className="inline-block">
+                <DeleteButton
+                  variant="secondary"
+                  to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/webhooks/${webhook.uuid}/delete`}
+                >
+                  Remove
+                </DeleteButton>
+              </div>
             </Td>
           </Tr>
         ))}
