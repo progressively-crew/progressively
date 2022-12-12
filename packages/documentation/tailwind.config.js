@@ -12,10 +12,11 @@ module.exports = {
           css: {
             pre: {
               whiteSpace: "no-wrap",
-              background: "#f6f8fa",
+              background: "#fff",
+              border: "1px solid #eee",
               code: {
                 width: "100%",
-                background: "#f6f8fa",
+                background: "#fff",
               },
             },
 

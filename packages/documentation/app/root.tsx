@@ -10,10 +10,11 @@ import {
   useLoaderData,
 } from "@remix-run/react";
 import styles from "./styles/app.css";
-
 import { ProgressivelyProvider } from "@progressively/react";
 import { getProgressivelyData } from "@progressively/server-side";
 import { progressivelyCookie } from "./cookies";
+import { PrismicProvider } from "@prismicio/react";
+import { client } from "./modules/prismic/client";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
@@ -80,13 +81,15 @@ export default function App() {
         <link rel="shortcut icon" type="image/jpg" href="/favicon.png" />
       </head>
       <body>
-        {progressivelyProps ? (
-          <ProgressivelyProvider {...progressivelyProps}>
+        <PrismicProvider client={client}>
+          {progressivelyProps ? (
+            <ProgressivelyProvider {...progressivelyProps}>
+              <Outlet />
+            </ProgressivelyProvider>
+          ) : (
             <Outlet />
-          </ProgressivelyProvider>
-        ) : (
-          <Outlet />
-        )}
+          )}
+        </PrismicProvider>
 
         <ScrollRestoration />
         <Scripts />
