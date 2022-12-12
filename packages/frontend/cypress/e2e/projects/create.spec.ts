@@ -25,11 +25,6 @@ describe("/dashboard/projects/create", () => {
         "be.visible"
       );
 
-      cy.verifyBreadcrumbs([
-        ["Projects", "/dashboard"],
-        ["Create a project", "/dashboard/projects/create"],
-      ]);
-
       cy.findByLabelText("Project name").should("be.visible");
 
       cy.findByRole("button", { name: "Create the project" }).should(

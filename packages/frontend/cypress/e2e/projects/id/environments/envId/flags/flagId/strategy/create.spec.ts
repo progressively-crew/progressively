@@ -47,17 +47,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
           "Progressively | Project from seeding | Production | Flags | New homepage | Strategies | Create"
         );
 
-        cy.verifyBreadcrumbs([
-          ["Projects", "/dashboard"],
-          ["Project from seeding", "/dashboard/projects/1"],
-          ["Production", "/dashboard/projects/1/environments/1"],
-          ["New homepage", "/dashboard/projects/1/environments/1/flags/1"],
-          [
-            "Create an additional audience",
-            "/dashboard/projects/1/environments/1/flags/1/strategies/create",
-          ],
-        ]);
-
         cy.findByRole("heading", {
           name: "Create an additional audience",
         }).should("be.visible");

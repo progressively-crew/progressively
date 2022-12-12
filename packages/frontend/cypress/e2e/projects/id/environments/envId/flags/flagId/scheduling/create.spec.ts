@@ -47,17 +47,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
           "Progressively | Project from seeding | Production | Flags | New homepage | Scheduling | Create"
         );
 
-        cy.verifyBreadcrumbs([
-          ["Projects", "/dashboard"],
-          ["Project from seeding", "/dashboard/projects/1"],
-          ["Production", "/dashboard/projects/1/environments/1"],
-          ["New homepage", "/dashboard/projects/1/environments/1/flags/1"],
-          [
-            "Create a scheduling",
-            "/dashboard/projects/1/environments/1/flags/1/scheduling/create",
-          ],
-        ]);
-
         cy.findByRole("heading", { name: "Create a scheduling" }).should(
           "be.visible"
         );

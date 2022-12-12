@@ -39,15 +39,6 @@ describe("/dashboard/projects/[id]/environments/create", () => {
           "Progressively | Project from seeding | Create an environment"
         );
 
-        cy.verifyBreadcrumbs([
-          ["Projects", "/dashboard"],
-          ["Project from seeding", "/dashboard/projects/1"],
-          [
-            "Create an environment",
-            "/dashboard/projects/1/environments/create",
-          ],
-        ]);
-
         cy.findByRole("heading", { name: "Create an environment" }).should(
           "be.visible"
         );

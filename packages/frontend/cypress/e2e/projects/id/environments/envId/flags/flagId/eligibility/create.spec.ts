@@ -47,17 +47,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/eligibili
           "Progressively | Project from seeding | Production | Flags | New homepage | Eligibility | Create"
         );
 
-        cy.verifyBreadcrumbs([
-          ["Projects", "/dashboard"],
-          ["Project from seeding", "/dashboard/projects/1"],
-          ["Production", "/dashboard/projects/1/environments/1"],
-          ["New homepage", "/dashboard/projects/1/environments/1/flags/1"],
-          [
-            "Create an eligibility restriction",
-            "/dashboard/projects/1/environments/1/flags/1/eligibilities/create",
-          ],
-        ]);
-
         cy.findByRole("heading", {
           name: "Create an eligibility restriction",
         }).should("be.visible");
