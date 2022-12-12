@@ -1,35 +1,17 @@
-import { ButtonCopy } from "~/components/ButtonCopy";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { WarningBox } from "~/components/Boxes/WarningBox";
 import { deleteProject } from "~/modules/projects/services/deleteProject";
-import { UserRoles } from "~/modules/projects/types";
-import { User } from "~/modules/user/types";
 import { getSession } from "~/sessions";
 import { Button } from "~/components/Buttons/Button";
 import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
 import { Typography } from "~/components/Typography";
-import { Li, Ul } from "~/components/Ul";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
 import { useActionData, Form, useTransition } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
-import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
-import { PageTitle } from "~/components/PageTitle";
 import { Stack } from "~/components/Stack";
-import { Header } from "~/components/Header";
-import { ProjectIcon } from "~/components/Icons/ProjectIcon";
-import { TagLine } from "~/components/Tagline";
-import { Spacer } from "~/components/Spacer";
-
-export const handle = {
-  breadcrumb: (match: { params: any }) => {
-    return {
-      link: `/dashboard/projects/${match.params.id}/delete`,
-      label: "Delete the project",
-    };
-  },
-};
+import { BackLink } from "~/components/BackLink";
 
 export const meta: MetaFunction = ({ parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -70,64 +52,26 @@ export const action: ActionFunction = async ({
 
 export default function DeleteProjectPage() {
   const transition = useTransition();
-  const { project, userRole } = useProject();
-  const { user } = useUser();
+  const { project } = useProject();
 
   const data = useActionData<ActionData>();
 
-  const adminOfProject = (project?.userProject || [])
-    ?.filter((up) => up.role === UserRoles.Admin)
-    .map((up) => up.user) as Array<User>;
-
-  if (userRole !== UserRoles.Admin) {
-    return (
-      <DeleteEntityLayout
-        user={user}
-        header={
-          <Header
-            tagline={<TagLine icon={<ProjectIcon />}>PROJECT</TagLine>}
-            title={project.name}
-          />
-        }
-      >
-        <PageTitle value="You are not allowed to delete projects." />
-        <figure>
-          <Typography as="figcaption">
-            If you think this is an error, make sure to contact one of the
-            project administrators:
-          </Typography>
-
-          <Ul>
-            {adminOfProject.map((user) => (
-              <Li key={user.uuid}>
-                <Typography as="span">{user.fullname}</Typography>
-
-                <ButtonCopy toCopy={user.email}>{user.email}</ButtonCopy>
-              </Li>
-            ))}
-          </Ul>
-        </figure>
-      </DeleteEntityLayout>
-    );
-  }
-
   return (
     <DeleteEntityLayout
-      user={user}
-      header={
-        <Header
-          tagline={<TagLine icon={<ProjectIcon />}>PROJECT</TagLine>}
-          title={project.name}
-        />
-      }
       error={
         data?.errors &&
         data.errors.backendError && <ErrorBox list={data.errors} />
       }
+      titleSlot={
+        <h1 className="text-3xl font-semibold" id="page-title">
+          Deleting a project
+        </h1>
+      }
       cancelAction={
         <Button
           to={`/dashboard/projects/${project.uuid}/settings`}
-          variant="secondary"
+          variant="tertiary"
+          scheme="danger"
         >
           No, {`don't`} delete {project.name}
         </Button>
@@ -143,11 +87,8 @@ export default function DeleteProjectPage() {
           </DeleteButton>
         </Form>
       }
+      backLinkSlot={<BackLink to={`/dashboard`}>Back to projects</BackLink>}
     >
-      <PageTitle value="Deleting a project" />
-
-      <Spacer size={4} />
-
       <Stack spacing={4}>
         <WarningBox title={<>This operation is definitive.</>} />
 
