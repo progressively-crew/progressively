@@ -1747,22 +1747,6 @@ input[type="range"]::-moz-range-thumb {
     animation: fade-enter-left 500ms ease-in-out forwards;
   }
 
-  @keyframes fade-enter-top {
-    0% {
-      transform: translateY(-1rem);
-      opacity: 0;
-    }
-
-    100% {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-
-  .motion-safe\:animate-fade-enter-top {
-    animation: fade-enter-top 500ms ease-in-out forwards;
-  }
-
   @keyframes fade-enter-bottom {
     0% {
       transform: translateY(1rem);
@@ -1777,6 +1761,22 @@ input[type="range"]::-moz-range-thumb {
 
   .motion-safe\:animate-fade-enter-bottom {
     animation: fade-enter-bottom 500ms ease-in-out forwards;
+  }
+
+  @keyframes fade-enter-top {
+    0% {
+      transform: translateY(-1rem);
+      opacity: 0;
+    }
+
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .motion-safe\:animate-fade-enter-top {
+    animation: fade-enter-top 500ms ease-in-out forwards;
   }
 
   .motion-safe\:opacity-0 {
