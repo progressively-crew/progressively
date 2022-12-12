@@ -58,10 +58,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/metrics/c
           "be.visible"
         );
 
-        cy.contains(
-          "You're about to create a metric to New homepage in Project from seeding on Production."
-        ).should("be.visible");
-
         cy.checkA11y();
       });
 

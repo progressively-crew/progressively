@@ -1,25 +1,20 @@
 import { FlagStatus } from "~/modules/flags/types";
 import { getSession } from "~/sessions";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
-import { Typography } from "~/components/Typography";
 import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
-import { useActionData, Form } from "@remix-run/react";
+import { useActionData, Form, useTransition } from "@remix-run/react";
 import { CreateSchedulingFrom } from "~/modules/strategies/components/CreateSchedulingForm";
 import { SchedulingCreateDTO } from "~/modules/scheduling/types";
 import { createScheduling } from "~/modules/scheduling/services/createScheduling";
-import { useUser } from "~/modules/user/contexts/useUser";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
-import { PageTitle } from "~/components/PageTitle";
-import { Card, CardContent } from "~/components/Card";
-import { Header } from "~/components/Header";
-import { FlagIcon } from "~/components/Icons/FlagIcon";
-import { TagLine } from "~/components/Tagline";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
+import { SubmitButton } from "~/components/Buttons/SubmitButton";
+import { BackLink } from "~/components/BackLink";
 
 export const handle = {
   breadcrumb: (match: { params: any }) => {
@@ -103,46 +98,42 @@ export const action: ActionFunction = async ({
 };
 
 export default function SchedulingCreatePage() {
-  const { user } = useUser();
   const { project } = useProject();
   const { flagEnv } = useFlagEnv();
   const { environment } = useEnvironment();
+  const transition = useTransition();
 
   const currentFlag = flagEnv.flag;
 
   const actionData = useActionData<ActionData>();
 
   return (
-    <CreateEntityLayout
-      user={user}
-      header={
-        <Header
-          tagline={<TagLine icon={<FlagIcon />}>FEATURE FLAG</TagLine>}
-          title={currentFlag.name}
-        />
-      }
-      status={actionData?.errors && <ErrorBox list={actionData.errors} />}
-      title={
-        <PageTitle
-          value="Create a scheduling"
-          description={
-            <Typography>
-              {`You're`} about to create a scheduling to{" "}
-              <strong>{currentFlag.name}</strong> in{" "}
-              <strong>{project.name}</strong> on{" "}
-              <strong>{environment.name}</strong>.
-            </Typography>
-          }
-        />
-      }
-    >
-      <Card>
-        <CardContent>
-          <Form method="post">
-            <CreateSchedulingFrom />
-          </Form>
-        </CardContent>
-      </Card>
-    </CreateEntityLayout>
+    <Form method="post">
+      <CreateEntityLayout
+        status={actionData?.errors && <ErrorBox list={actionData.errors} />}
+        titleSlot={
+          <h1 className="text-3xl font-semibold" id="page-title">
+            Create a scheduling
+          </h1>
+        }
+        submitSlot={
+          <SubmitButton
+            isLoading={transition.state === "submitting"}
+            loadingText="Saving the scheduling, please wait..."
+          >
+            Save the schedule
+          </SubmitButton>
+        }
+        backLinkSlot={
+          <BackLink
+            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/scheduling`}
+          >
+            Back to scheduling
+          </BackLink>
+        }
+      >
+        <CreateSchedulingFrom />
+      </CreateEntityLayout>
+    </Form>
   );
 }

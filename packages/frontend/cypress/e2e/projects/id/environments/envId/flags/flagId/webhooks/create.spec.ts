@@ -59,10 +59,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/webhooks/
         cy.findByRole("heading", { name: "Create a webhook" }).should(
           "be.visible"
         );
-
-        cy.contains(
-          "You're about to create a webhook to New homepage in Project from seeding on Production."
-        ).should("be.visible");
       });
 
       it("creates a webhook", () => {

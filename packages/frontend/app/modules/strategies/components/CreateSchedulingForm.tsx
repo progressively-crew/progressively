@@ -13,7 +13,6 @@ export const CreateSchedulingFrom = () => {
   const [percentage, setPercentage] = useState(100);
   const [nextStatus, setNextStatus] = useState(FlagStatus.NOT_ACTIVATED);
 
-  const transition = useTransition();
   return (
     <FormGroup>
       <DateTimeInput
@@ -49,15 +48,6 @@ export const CreateSchedulingFrom = () => {
         label={"What should be the next rollout percentage"}
         name={"rolloutPercentage"}
       />
-
-      <div>
-        <SubmitButton
-          isLoading={transition.state === "submitting"}
-          loadingText="Saving the scheduling, please wait..."
-        >
-          Save the schedule
-        </SubmitButton>
-      </div>
     </FormGroup>
   );
 };

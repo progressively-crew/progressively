@@ -62,10 +62,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
           "be.visible"
         );
 
-        cy.contains(
-          "You're about to create a scheduling to New homepage in Project from seeding on Production."
-        ).should("be.visible");
-
         // cy.checkA11y(); axe is yelling because of a missing label while the field is in a fieldset with legend
       });
 
