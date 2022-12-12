@@ -1,4 +1,5 @@
-import { LoaderFunction, redirect } from "@remix-run/node";
+import type { LinksFunction, LoaderFunction } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
 import type { HTMLFunctionSerializer } from "@prismicio/helpers";
 import { asHTML } from "@prismicio/helpers";
 import { GiCook } from "react-icons/gi";
@@ -10,6 +11,23 @@ import hljs from "highlight.js";
 import { useEffect } from "react";
 import { Background } from "~/components/Background";
 import { CardContent, SimpleCard } from "~/components/SimpleCard";
+import { InertWhenNavOpened } from "~/components/Nav/InertWhenNavOpened";
+import { NavProvider } from "~/components/Nav/providers/NavProvider";
+import theme from "highlight.js/styles/github.css";
+import shared from "../../styles/shared.css";
+import { SiteNav } from "~/components/SiteNav";
+export const links: LinksFunction = () => {
+  return [
+    {
+      rel: "stylesheet",
+      href: theme,
+    },
+    {
+      rel: "stylesheet",
+      href: shared,
+    },
+  ];
+};
 
 interface LoaderData {
   pageData: RecipePostDocument<string>;
@@ -87,101 +105,107 @@ export default function RecipePost() {
   const imgUrl = pageData.data.cover?.url;
 
   return (
-    <Background>
-      <div className="py-4 xl:py-12 max-w-screen-2xl mx-auto px-4 xl:px-12">
-        <div className="pb-8">
-          <div className="inline-block">
-            <p className="flex flex-row gap-2 bg-indigo-100 text-indigo-700 rounded-full px-4 py-2 items-center">
-              <GiCook aria-hidden />
-              <span>Recipe</span>
-            </p>
+    <NavProvider>
+      <SiteNav />
+
+      <InertWhenNavOpened>
+        <Background>
+          <div className="py-4 xl:py-12 max-w-screen-2xl mx-auto px-4 xl:px-12">
+            <div className="pb-8">
+              <div className="inline-block">
+                <p className="flex flex-row gap-2 bg-indigo-100 text-indigo-700 rounded-full px-4 py-2 items-center">
+                  <GiCook aria-hidden />
+                  <span>Recipe</span>
+                </p>
+              </div>
+
+              <Title value={pageData.data.title} />
+            </div>
+
+            {imgUrl && (
+              <img
+                src={imgUrl}
+                alt={pageData.data.title[0]?.text}
+                className="mt-0 object-cover"
+                height="400px"
+              />
+            )}
+
+            <div className="lg:grid lg:grid-cols-[360px_1fr] xl:grid-cols-[360px_1fr_360px] gap-8 items-start pt-8">
+              <div className="xl:sticky top-8">
+                <SimpleCard>
+                  <CardContent>
+                    <aside>
+                      <h2 className="font-semibold">Ingredients</h2>
+                      <ul className="list-disc list-inside pt-4">
+                        {ingredients.map((ing) => (
+                          <li
+                            key={ing}
+                            className="text-sm py-1"
+                            dangerouslySetInnerHTML={{ __html: ing }}
+                          />
+                        ))}
+                      </ul>
+                    </aside>
+                  </CardContent>
+                </SimpleCard>
+
+                <div className="h-8" />
+
+                <SimpleCard>
+                  <CardContent>
+                    <aside>
+                      <h2 className="font-semibold">Directions</h2>
+                      <ul className="pt-4">
+                        {pageData.data.directions.map((ing, index: number) => (
+                          <li key={ing.name[0]?.text} className="text-sm py-1">
+                            <Link to={`#heading-${index}`}>
+                              {ing.name[0]?.text}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </aside>
+                  </CardContent>
+                </SimpleCard>
+
+                <div className="h-8 xl:h-0" />
+              </div>
+
+              <main className="prose xl:prose-x overflow-hidden max-w-none">
+                <div dangerouslySetInnerHTML={{ __html: html }} />
+              </main>
+
+              <div className="hidden xl:block xl:sticky top-8">
+                <SimpleCard>
+                  <CardContent>
+                    <aside>
+                      <h2 className="font-semibold">Useful links</h2>
+                      <ul className="pt-4">
+                        {pageData.data.links.map((link) => (
+                          <li key={link.href} className="text-sm py-1">
+                            <a
+                              href={link.href || "/"}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex flex-row gap-2 items-center"
+                            >
+                              {link?.icon?.url && (
+                                <img src={link.icon.url} alt="" />
+                              )}
+                              <span>{link.children}</span>
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </aside>
+                  </CardContent>
+                </SimpleCard>
+              </div>
+            </div>
           </div>
-
-          <Title value={pageData.data.title} />
-        </div>
-
-        {imgUrl && (
-          <img
-            src={imgUrl}
-            alt={pageData.data.title[0]?.text}
-            className="mt-0 object-cover"
-            height="400px"
-          />
-        )}
-
-        <div className="lg:grid lg:grid-cols-[360px_1fr] xl:grid-cols-[360px_1fr_360px] gap-8 items-start pt-8">
-          <div className="xl:sticky top-8">
-            <SimpleCard>
-              <CardContent>
-                <aside>
-                  <h2 className="font-semibold">Ingredients</h2>
-                  <ul className="list-disc list-inside pt-4">
-                    {ingredients.map((ing) => (
-                      <li
-                        key={ing}
-                        className="text-sm py-1"
-                        dangerouslySetInnerHTML={{ __html: ing }}
-                      />
-                    ))}
-                  </ul>
-                </aside>
-              </CardContent>
-            </SimpleCard>
-
-            <div className="h-8" />
-
-            <SimpleCard>
-              <CardContent>
-                <aside>
-                  <h2 className="font-semibold">Directions</h2>
-                  <ul className="pt-4">
-                    {pageData.data.directions.map((ing, index: number) => (
-                      <li key={ing.name[0]?.text} className="text-sm py-1">
-                        <Link to={`#heading-${index}`}>
-                          {ing.name[0]?.text}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </aside>
-              </CardContent>
-            </SimpleCard>
-
-            <div className="h-8 xl:h-0" />
-          </div>
-
-          <main className="prose xl:prose-x overflow-hidden max-w-none">
-            <div dangerouslySetInnerHTML={{ __html: html }} />
-          </main>
-
-          <div className="hidden xl:block xl:sticky top-8">
-            <SimpleCard>
-              <CardContent>
-                <aside>
-                  <h2 className="font-semibold">Useful links</h2>
-                  <ul className="pt-4">
-                    {pageData.data.links.map((link) => (
-                      <li key={link.href} className="text-sm py-1">
-                        <a
-                          href={link.href || "/"}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex flex-row gap-2 items-center"
-                        >
-                          {link?.icon?.url && (
-                            <img src={link.icon.url} alt="" />
-                          )}
-                          <span>{link.children}</span>
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </aside>
-              </CardContent>
-            </SimpleCard>
-          </div>
-        </div>
-      </div>
-    </Background>
+        </Background>
+      </InertWhenNavOpened>
+    </NavProvider>
   );
 }

@@ -73,7 +73,7 @@ export default function BlogHome() {
                   Blog
                 </h1>
 
-                <div className="grid lg:grid-cols-2 gap-4">
+                <div className="grid lg:grid-cols-2 gap-8">
                   <section>
                     <h2 className="font-semibold text-3xl leading-normal">
                       Posts
