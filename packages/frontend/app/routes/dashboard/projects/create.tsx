@@ -3,26 +3,12 @@ import { createProject } from "~/modules/projects/services/createProject";
 import { CreateProjectDTO, UserProject } from "~/modules/projects/types";
 import { validateProjectName } from "~/modules/projects/validators/validateProjectName";
 import { getSession } from "~/sessions";
-import { Section } from "~/components/Section";
 import { TextInput } from "~/components/Fields/TextInput";
-import { Typography } from "~/components/Typography";
-import { FormGroup } from "~/components/Fields/FormGroup";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
 import { useActionData, Form, useTransition } from "@remix-run/react";
-import { useUser } from "~/modules/user/contexts/useUser";
-import { PageTitle } from "~/components/PageTitle";
-import { Card, CardContent } from "~/components/Card";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
-
-export const handle = {
-  breadcrumb: () => {
-    return {
-      link: "/dashboard/projects/create",
-      label: "Create a project",
-    };
-  },
-};
+import { BackLink } from "~/components/BackLink";
 
 export const meta: MetaFunction = () => {
   return {
@@ -61,51 +47,35 @@ export const action: ActionFunction = async ({
 export default function CreateProjectPage() {
   const data = useActionData<ActionData>();
   const transition = useTransition();
-  const { user } = useUser();
   const errors = data?.errors;
 
   return (
-    <CreateEntityLayout
-      user={user}
-      status={errors?.name && <ErrorBox list={errors} />}
-      title={
-        <PageTitle
-          value="Create a project"
-          description={
-            <Typography>
-              When creating a project, you will become its administrator and you
-              will have full control over it.
-            </Typography>
-          }
+    <Form method="post">
+      <CreateEntityLayout
+        status={errors?.name && <ErrorBox list={errors} />}
+        titleSlot={
+          <h1 className="text-3xl font-semibold" id="page-title">
+            Create a project
+          </h1>
+        }
+        submitSlot={
+          <SubmitButton
+            type="submit"
+            isLoading={transition.state === "submitting"}
+            loadingText="Creating the project, please wait..."
+          >
+            Create the project
+          </SubmitButton>
+        }
+        backLinkSlot={<BackLink to={`/dashboard`}>Back to projects</BackLink>}
+      >
+        <TextInput
+          isInvalid={Boolean(errors?.name)}
+          label="Project name"
+          name="name"
+          placeholder="e.g: My super project"
         />
-      }
-    >
-      <Card>
-        <CardContent>
-          <Section>
-            <Form method="post">
-              <FormGroup>
-                <TextInput
-                  isInvalid={Boolean(errors?.name)}
-                  label="Project name"
-                  name="name"
-                  placeholder="e.g: My super project"
-                />
-
-                <div>
-                  <SubmitButton
-                    type="submit"
-                    isLoading={transition.state === "submitting"}
-                    loadingText="Creating the project, please wait..."
-                  >
-                    Create the project
-                  </SubmitButton>
-                </div>
-              </FormGroup>
-            </Form>
-          </Section>
-        </CardContent>
-      </Card>
-    </CreateEntityLayout>
+      </CreateEntityLayout>
+    </Form>
   );
 }
