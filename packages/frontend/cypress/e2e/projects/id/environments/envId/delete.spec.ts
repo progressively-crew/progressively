@@ -35,15 +35,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/delete", () => {
 
       it("does not show actions only allowed by the admin (john is a regular user)", () => {
         cy.findByRole("heading", {
-          name: "You are not allowed to delete environments.",
-        }).should("be.visible");
-
-        cy.findByText(
-          "If you think this is an error, make sure to contact one of the project administrators:"
-        ).should("be.visible");
-
-        cy.findByRole("button", {
-          name: "Copy marvin.frachet@something.com",
+          name: "Woops! You're not authorized to see this content",
         }).should("be.visible");
 
         cy.checkA11y();

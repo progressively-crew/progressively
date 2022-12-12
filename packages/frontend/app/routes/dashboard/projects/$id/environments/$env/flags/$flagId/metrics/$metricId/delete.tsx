@@ -7,29 +7,15 @@ import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
 import { useActionData, Form, useTransition } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
-import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
-import { PageTitle } from "~/components/PageTitle";
 import { Stack } from "~/components/Stack";
 import { Typography } from "~/components/Typography";
-import { Header } from "~/components/Header";
-import { FlagIcon } from "~/components/Icons/FlagIcon";
-import { TagLine } from "~/components/Tagline";
 import { deleteMetric } from "~/modules/flags/services/deleteMetric";
-import { Spacer } from "~/components/Spacer";
-
-export const handle = {
-  breadcrumb: (match: { params: any }) => {
-    return {
-      link: `/dashboard/projects/${match.params.id}/environments/${match.params.env}/flags/${match.params.flagId}/metrics/${match.params.metricId}/delete`,
-      label: "Delete a metric",
-    };
-  },
-};
+import { BackLink } from "~/components/BackLink";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -80,7 +66,6 @@ export default function DeleteMetricPage() {
   const transition = useTransition();
   const data = useActionData<ActionData>();
   const { project } = useProject();
-  const { user } = useUser();
   const { environment } = useEnvironment();
   const { flagEnv } = useFlagEnv();
 
@@ -88,20 +73,19 @@ export default function DeleteMetricPage() {
 
   return (
     <DeleteEntityLayout
-      user={user}
-      header={
-        <Header
-          tagline={<TagLine icon={<FlagIcon />}>FEATURE FLAG</TagLine>}
-          title={currentFlag.name}
-        />
-      }
       error={
         data?.errors &&
         data.errors.backendError && <ErrorBox list={data.errors} />
       }
+      titleSlot={
+        <h1 className="text-3xl font-semibold" id="page-title">
+          Deleting a metric
+        </h1>
+      }
       cancelAction={
         <Button
-          variant="secondary"
+          variant="tertiary"
+          scheme="danger"
           to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/metrics`}
         >
           {`No, don't delete`}
@@ -118,11 +102,14 @@ export default function DeleteMetricPage() {
           </DeleteButton>
         </Form>
       }
+      backLinkSlot={
+        <BackLink
+          to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/metrics`}
+        >
+          Back to metrics
+        </BackLink>
+      }
     >
-      <PageTitle value={`Deleting a metric`} />
-
-      <Spacer size={4} />
-
       <Stack spacing={4}>
         <WarningBox title={<>This operation is definitive.</>} />
 
