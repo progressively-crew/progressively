@@ -28,8 +28,7 @@ export const Link = forwardRef(
         target={target}
         rel={rel}
         className={
-          "text-gray-800 underline hover:text-gray-600 active:text-black " +
-          className
+          "underline hover:text-gray-600 active:text-black " + className
         }
         {...props}
       >

@@ -60,18 +60,18 @@ export const DashboardLayout = ({
           <div
             className={
               subNav
-                ? "grid grid-cols-[1fr] lg:grid-cols-[300px_1fr] gap-12 h-full"
+                ? "grid grid-cols-[1fr] lg:grid-cols-[240px_1fr] gap-12 h-full"
                 : "grid-cols-[1fr]"
             }
           >
             {subNav && (
               <HideTablet as="div">
-                <div className="lg:h-full lg:fixed lg:w-[300px]">{subNav}</div>
+                <div className="lg:h-full lg:fixed lg:w-[240px]">{subNav}</div>
               </HideTablet>
             )}
 
             <div
-              className={`overflow-hidden max-w-6xl w-full mx-auto ${
+              className={`overflow-hidden max-w-7xl w-full mx-auto ${
                 subNav ? "lg:pr-12" : ""
               }`}
             >

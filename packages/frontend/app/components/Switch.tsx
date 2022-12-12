@@ -39,7 +39,7 @@ export const Switch = ({
       className="h-10 px-1 flex items-center gap-2 group"
       {...props}
     >
-      <span className="text-gray-600">{offLabel || "Off"}</span>
+      <span className="text-gray-500 text-sm">{offLabel || "Off"}</span>
       <span
         className={
           "transition-all ease-in-out duration-200 h-7 w-12 rounded-full inline-block p-1 " +
@@ -58,7 +58,7 @@ export const Switch = ({
           {checked && <BsCheck />}
         </span>
       </span>
-      <span className="text-gray-600">{onLabel || "On"}</span>
+      <span className="text-gray-500 text-sm">{onLabel || "On"}</span>
     </button>
   );
 };
