@@ -40,7 +40,7 @@ export const SearchBar = ({ placeholder, label, count }: SearchBarProps) => {
 
       {count === undefined ? null : <Spacer size={1} />}
 
-      <Typography aria-live="polite">
+      <Typography aria-live="polite" aria-atomic="true" aria-relevant="all">
         {count === undefined ? null : `${count} results for this search`}
       </Typography>
     </div>
