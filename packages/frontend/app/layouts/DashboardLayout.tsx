@@ -10,7 +10,6 @@ import { Stack } from "~/components/Stack";
 import { useMatches } from "@remix-run/react";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { HideDesktop, HideTablet } from "~/components/HideMobile";
-import { toggleTheme } from "~/modules/misc/utils/toggleTheme";
 
 export interface DashboardLayoutProps {
   user?: Partial<User>;
@@ -42,7 +41,6 @@ export const DashboardLayout = ({
           <div className="flex justify-between h-14 items-center ">
             <BreadCrumbs crumbs={crumbs} />
 
-            <button onClick={toggleTheme}>Toggle theme</button>
             <UseDropdown user={user} />
           </div>
 

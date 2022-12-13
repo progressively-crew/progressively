@@ -15,6 +15,7 @@ import { Stack } from "~/components/Stack";
 import { Typography } from "~/components/Typography";
 import { deleteWebhook } from "~/modules/webhooks/services/deleteWebhook";
 import { BackLink } from "~/components/BackLink";
+import { DeleteEntityTitle } from "~/layouts/DeleteEntityTitle";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -67,11 +68,7 @@ export default function DeleteWebhookPage() {
 
   return (
     <DeleteEntityLayout
-      titleSlot={
-        <h1 className="text-2xl font-semibold" id="page-title">
-          Deleting a webhook
-        </h1>
-      }
+      titleSlot={<DeleteEntityTitle>Deleting a webhook</DeleteEntityTitle>}
       error={
         data?.errors &&
         data.errors.backendError && <ErrorBox list={data.errors} />

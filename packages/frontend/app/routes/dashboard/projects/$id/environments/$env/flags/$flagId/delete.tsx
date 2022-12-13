@@ -15,6 +15,7 @@ import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { Stack } from "~/components/Stack";
 import { Typography } from "~/components/Typography";
 import { BackLink } from "~/components/BackLink";
+import { DeleteEntityTitle } from "~/layouts/DeleteEntityTitle";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -72,11 +73,13 @@ export default function DeleteFlagPage() {
         data.errors.backendError && <ErrorBox list={data.errors} />
       }
       titleSlot={
-        <h1 className="text-2xl font-semibold" id="page-title">
+        <DeleteEntityTitle>
           Are you sure you want to delete{" "}
-          <span className="text-red-700 font-semibold">{currentFlag.name}</span>
+          <span className="text-red-700 font-semibold dark:text-red-400">
+            {currentFlag.name}
+          </span>
           ?
-        </h1>
+        </DeleteEntityTitle>
       }
       cancelAction={
         <Button
