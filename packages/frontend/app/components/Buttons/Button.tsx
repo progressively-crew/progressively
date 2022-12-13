@@ -26,7 +26,7 @@ const classCombination = {
   dangerprimary: "bg-red-700 text-white hover:bg-red-500 active:bg-red-600",
   dangersecondary:
     "bg-red-100 text-red-700 text-red-700 hover:bg-red-50 active:bg-red-100",
-  dangertertiary: "text-red-700",
+  dangertertiary: "text-red-700 dark:text-red-400",
 };
 
 export const Button = ({
