@@ -80,6 +80,11 @@ export default function FlagsByEnvPage() {
   const search = searchParams.get("search");
   const newFlagId = searchParams.get("newFlagId") || undefined;
   const isFlagRemoved = searchParams.get("flagRemoved") || undefined;
+  const isSearching = Boolean(searchParams.get("search") || undefined);
+
+  const filteredFlags = flagsByEnv.filter((flag) =>
+    flag.flag.name.toLocaleLowerCase().includes(search || "")
+  );
 
   const hasFlags = flagsByEnv.length > 0;
 
@@ -119,15 +124,17 @@ export default function FlagsByEnvPage() {
                 </CreateButton>
               }
             >
-              <SearchBar label="Search for flags" placeholder="e.g: The flag" />
+              <SearchBar
+                label="Search for flags"
+                placeholder="e.g: The flag"
+                count={isSearching ? filteredFlags.length : undefined}
+              />
             </SearchLayout>
 
             <Spacer size={4} />
             <Card>
               <FlagList
-                flags={flagsByEnv.filter((flag) =>
-                  flag.flag.name.toLocaleLowerCase().includes(search || "")
-                )}
+                flags={filteredFlags}
                 envId={environment.uuid}
                 projectId={project.uuid}
               />

@@ -42,6 +42,7 @@ import { getEligibilities } from "~/modules/eligibility/services/getEligibilitie
 import { Eligibility } from "~/modules/eligibility/types";
 import { EligibilityList } from "~/modules/eligibility/components/EligibilityList";
 import { VariantTable } from "~/modules/variants/components/VariantTable";
+import { Spacer } from "~/components/Spacer";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -203,29 +204,6 @@ export default function FlagById() {
                   </div>
                 )
               }
-              description={
-                isMultiVariants ? (
-                  <Typography>
-                    These are{" "}
-                    <Link
-                      to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/variants`}
-                    >
-                      the variants
-                    </Link>{" "}
-                    and their rollout percentage served to your users when the
-                    flag is activated.
-                  </Typography>
-                ) : (
-                  <Typography>
-                    This is the percentage of people that will receive the
-                    variant{" "}
-                    <Tag className="bg-emerald-100 text-emerald-700" size="S">
-                      true
-                    </Tag>{" "}
-                    when the flag is activated.
-                  </Typography>
-                )
-              }
               status={
                 hasPercentageChanged ? (
                   <SuccessBox id="percentage-changed">
@@ -242,9 +220,12 @@ export default function FlagById() {
             />
 
             {!isMultiVariants && (
-              <SliderFlag
-                initialRolloutPercentage={flagEnv.rolloutPercentage}
-              />
+              <>
+                <Spacer size={2} />
+                <SliderFlag
+                  initialRolloutPercentage={flagEnv.rolloutPercentage}
+                />
+              </>
             )}
           </CardContent>
 
@@ -258,10 +239,12 @@ export default function FlagById() {
             <SectionHeader
               title="Audience eligibility"
               description={
-                <Typography>
-                  Only people matching at least one of the following rules (and
-                  the additional audience) will resolve the flag.
-                </Typography>
+                !hasEligibility && (
+                  <Typography>
+                    Only people matching at least one of the following rules
+                    (and the additional audience) will resolve the flag.
+                  </Typography>
+                )
               }
               status={
                 isEligibilityAdded ? (
@@ -327,11 +310,13 @@ export default function FlagById() {
             <SectionHeader
               title="Additional audience"
               description={
-                <Typography>
-                  The users matching at least one of the following condition
-                  will resolve the flag even if they are not targeted because of
-                  the eligibility restrictions
-                </Typography>
+                !hasStrategies && (
+                  <Typography>
+                    The users matching at least one of the following condition
+                    will resolve the flag even if they are not targeted because
+                    of the eligibility restrictions
+                  </Typography>
+                )
               }
               status={
                 isStrategyUpdated ? (

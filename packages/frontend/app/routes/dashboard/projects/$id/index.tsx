@@ -37,8 +37,13 @@ export default function ProjectDetailPage() {
   const search = searchParams.get("search");
   const newEnvId = searchParams.get("newEnvId") || undefined;
   const envRemoved = searchParams.get("envRemoved") || undefined;
+  const isSearching = Boolean(searchParams.get("search") || undefined);
 
   const hasEnvironments = project.environments.length > 0;
+
+  const filteredEnvironments = project.environments.filter((env) =>
+    env.name.toLowerCase().includes(search || "")
+  );
 
   return (
     <DashboardLayout
@@ -95,6 +100,7 @@ export default function ProjectDetailPage() {
               <SearchBar
                 label="Search for environments"
                 placeholder="e.g: The environment"
+                count={isSearching ? filteredEnvironments.length : undefined}
               />
             </SearchLayout>
 
@@ -102,9 +108,7 @@ export default function ProjectDetailPage() {
 
             <Card>
               <EnvList
-                environments={project.environments.filter((env) =>
-                  env.name.toLowerCase().includes(search || "")
-                )}
+                environments={filteredEnvironments}
                 projectId={project.uuid}
               />
             </Card>

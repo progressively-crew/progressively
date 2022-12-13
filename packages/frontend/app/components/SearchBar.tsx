@@ -1,13 +1,16 @@
 import { Form } from "@remix-run/react";
 import { IoIosSearch } from "react-icons/io";
+import { Spacer } from "./Spacer";
+import { Typography } from "./Typography";
 import { VisuallyHidden } from "./VisuallyHidden";
 
 export interface SearchBarProps {
   placeholder: string;
   label: string;
+  count?: number;
 }
 
-export const SearchBar = ({ placeholder, label }: SearchBarProps) => {
+export const SearchBar = ({ placeholder, label, count }: SearchBarProps) => {
   return (
     <div className="max-w-md">
       <VisuallyHidden>
@@ -34,6 +37,12 @@ export const SearchBar = ({ placeholder, label }: SearchBarProps) => {
           </button>
         </div>
       </Form>
+
+      {count === undefined ? null : <Spacer size={1} />}
+
+      <Typography aria-live="polite" aria-atomic="true" aria-relevant="all">
+        {count === undefined ? null : `${count} results for this search`}
+      </Typography>
     </div>
   );
 };
