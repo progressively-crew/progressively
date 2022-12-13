@@ -82,3 +82,13 @@ Cypress.on(
   "uncaught:exception",
   (err) => !err.message.includes("ResizeObserver loop limit exceeded")
 );
+
+if (Cypress.env("DARK_THEME")) {
+  Cypress.on("window:before:load", (win) => {
+    cy.stub(win, "matchMedia")
+      .withArgs("(prefers-color-scheme: dark)")
+      .returns({
+        matches: true,
+      });
+  });
+}

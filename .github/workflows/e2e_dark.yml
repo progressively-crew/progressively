@@ -1,0 +1,52 @@
+name: E2E Dark
+on:
+  pull_request:
+    branches: ["master"]
+  workflow_dispatch:
+
+env:
+  SLEEP_DELAY: 0
+
+jobs:
+  static:
+    env:
+      ALLOW_REGISTRATION: true
+      START_MOCK_SERVER: true
+    runs-on: ubuntu-latest
+    # Uncomment for parallel
+    # strategy:
+    #   matrix:
+    #     job: [0, 1, 2, 3]
+    services:
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_DB: progressively
+          POSTGRES_USER: admin
+          POSTGRES_PASSWORD: admin
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/monorepo-setup
+
+      # Uncomment for parallel
+      - name: E2E tests
+        run: npx wait-on -t 60000 tcp:4000 && npm run test:e2e:ci:dark
+        working-directory: ./packages/frontend
+        # env:
+        #   CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+        #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
