@@ -13,7 +13,7 @@ export const H1Logo = ({ children }: H1LogoProps) => {
       />
       <h1
         id="page-title"
-        className="text-3xl font-bold text-center tracking-wide motion-safe:animate-fade-enter-left motion-safe:opacity-0"
+        className="text-3xl font-bold text-center tracking-wide motion-safe:animate-fade-enter-left motion-safe:opacity-0 dark:text-slate-100"
         style={{
           animationDelay: "300ms",
         }}

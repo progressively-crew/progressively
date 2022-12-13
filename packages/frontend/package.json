@@ -12,6 +12,7 @@
     "start": "remix-serve build",
     "test": "jest --passWithNoTests --maxWorkers 1",
     "test:e2e": "cypress open",
+    "test:e2e:dark": "DARK_THEME=true cypress open",
     "test:e2e:ci": "cypress run --browser chrome",
     "test:e2e:ci:parallel": "cypress run --browser chrome --record --parallel"
   },
