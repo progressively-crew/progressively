@@ -1,4 +1,4 @@
-describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/webhooks/[stratId]/delete", () => {
+describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/webhooks/[webhookId]/delete", () => {
   before(cy.seed);
   after(cy.cleanupDb);
 
