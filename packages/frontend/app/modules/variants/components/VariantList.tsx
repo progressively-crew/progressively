@@ -77,7 +77,9 @@ export const VariantList = ({
             <Tr>
               <Th>Variant</Th>
               <Th>Rollout percentage</Th>
-              <Th>Is control</Th>
+              <Th className="py-3 px-8 bg-gray-100 text-center uppercase text-sm text-gray-600 tracking-wide">
+                Is control
+              </Th>
               <Th>Actions</Th>
             </Tr>
           </thead>
@@ -114,25 +116,18 @@ export const VariantList = ({
                     />
                   </Td>
 
-                  <Td>
-                    <HStack spacing={2}>
-                      <div>
-                        <input type="hidden" name="uuid" value={variant.uuid} />
-                        <Radio
-                          type={"radio"}
-                          name={"isControl"}
-                          value={variant.uuid}
-                          defaultChecked={variant.isControl}
-                          aria-label={`Is variant at position ${
-                            index + 1
-                          } the control variant?`}
-                          readOnly
-                        />
-                      </div>
-                      <HideDesktop>
-                        <Label>Is control variant</Label>
-                      </HideDesktop>
-                    </HStack>
+                  <Td className="text-center py-4 px-8 flex justify-center">
+                    <input type="hidden" name="uuid" value={variant.uuid} />
+                    <Radio
+                      type={"radio"}
+                      name={"isControl"}
+                      value={variant.uuid}
+                      defaultChecked={variant.isControl}
+                      aria-label={`Is variant at position ${
+                        index + 1
+                      } the control variant?`}
+                      readOnly
+                    />
                   </Td>
 
                   <Td>

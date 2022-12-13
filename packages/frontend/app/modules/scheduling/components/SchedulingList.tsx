@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { AiFillCheckCircle } from "react-icons/ai";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { Checkbox } from "~/components/Checkbox";
 import { SliderInput } from "~/components/Fields/SliderInput";
@@ -79,15 +80,13 @@ export const SchedulingList = ({
                 name={"not-important-" + index}
               />
             </Td>
-            <Td>
-              <Checkbox
-                name="not-important"
-                aria-label="Has the flag already run?"
-                value=""
-                checked={schedule.schedulingStatus === SchedulingStatus.HAS_RUN}
-                onChange={() => {}}
-                readOnly
-              />
+            <Td className="text-center py-4 px-8 flex justify-center">
+              {schedule.schedulingStatus !== SchedulingStatus.HAS_RUN && (
+                <AiFillCheckCircle
+                  aria-label="The scheduled update has already run"
+                  className="text-2xl text-indigo-500"
+                />
+              )}
             </Td>
             <Td>
               <div className="inline-block">

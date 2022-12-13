@@ -15,6 +15,8 @@ export const editVariantAction = async (
   const rolloutPercentages = formData.getAll("rolloutPercentage");
   const controlId = formData.get("isControl");
 
+  console.log("lol", controlId);
+
   const errors: Record<string, string> = {};
 
   for (const [index, name] of names.entries()) {
