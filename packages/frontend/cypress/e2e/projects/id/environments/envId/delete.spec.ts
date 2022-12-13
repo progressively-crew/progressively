@@ -63,7 +63,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/delete", () => {
           name: "Yes, delete the environment",
         }).should("be.visible");
 
-        cy.findByRole("link", { name: "No, don't delete Production" })
+        cy.findByRole("link", { name: "Cancel" })
           .should("be.visible")
           .and(
             "have.attr",
