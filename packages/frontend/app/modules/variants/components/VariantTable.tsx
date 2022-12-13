@@ -1,8 +1,6 @@
 import { Form } from "@remix-run/react";
-import React, { useState } from "react";
-import { CardContent } from "~/components/Card";
+import { useState } from "react";
 import { SliderInput } from "~/components/Fields/SliderInput";
-import { HStack } from "~/components/HStack";
 import { Variant } from "../types";
 import { RawTable, Td, Th, Tr } from "~/components/RawTable";
 import { Tag } from "~/components/Tag";
@@ -45,9 +43,8 @@ const FormSliderInput = ({
 export interface VariantTableProps {
   variants: Array<Variant>;
   errors?: Record<string, string>;
-  action?: React.ReactNode;
 }
-export const VariantTable = ({ variants, action }: VariantTableProps) => {
+export const VariantTable = ({ variants }: VariantTableProps) => {
   return (
     <div>
       <Form method="post" id="edit-variant">
@@ -121,10 +118,6 @@ export const VariantTable = ({ variants, action }: VariantTableProps) => {
             })}
           </tbody>
         </RawTable>
-
-        <CardContent>
-          <HStack>{action}</HStack>
-        </CardContent>
       </Form>
     </div>
   );

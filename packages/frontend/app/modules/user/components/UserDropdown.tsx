@@ -12,6 +12,7 @@ export const UseDropdown = ({ user }: UserDropdownProps) => {
     <nav aria-label="User related">
       <Button
         to="/profile"
+        className="text-sm"
         icon={<Avatar aria-hidden>{user.fullname}</Avatar>}
         variant="tertiary"
         aria-label={user.fullname}

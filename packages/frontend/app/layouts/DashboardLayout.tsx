@@ -42,7 +42,7 @@ export const DashboardLayout = ({
           <div className="flex justify-between h-14 items-center ">
             <BreadCrumbs crumbs={crumbs} />
 
-            <div className="flex flex-row gap-4">
+            <div className="flex flex-row gap-2">
               <ThemeSwitch />
               <UseDropdown user={user} />
             </div>
