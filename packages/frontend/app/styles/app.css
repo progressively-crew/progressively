@@ -1900,6 +1900,25 @@ input[type="range"]::-moz-range-thumb {
   color: rgb(0 0 0 / var(--tw-text-opacity));
 }
 
+.dark .dark\:text-indigo-400 {
+  --tw-text-opacity: 1;
+  color: rgb(129 140 248 / var(--tw-text-opacity));
+}
+
+.dark .dark\:text-blue-600 {
+  --tw-text-opacity: 1;
+  color: rgb(37 99 235 / var(--tw-text-opacity));
+}
+
+.dark .dark\:text-inherit {
+  color: inherit;
+}
+
+.dark .dark\:text-red-200 {
+  --tw-text-opacity: 1;
+  color: rgb(254 202 202 / var(--tw-text-opacity));
+}
+
 .dark .hover\:dark\:bg-slate-700:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(51 65 85 / var(--tw-bg-opacity));
