@@ -1,5 +1,4 @@
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
-import { WarningBox } from "~/components/Boxes/WarningBox";
 import { getSession } from "~/sessions";
 import { deleteFlag } from "~/modules/flags/services/deleteFlag";
 import { Button } from "~/components/Buttons/Button";
@@ -73,8 +72,10 @@ export default function DeleteFlagPage() {
         data.errors.backendError && <ErrorBox list={data.errors} />
       }
       titleSlot={
-        <h1 className="text-3xl font-semibold" id="page-title">
-          Deleting a feature flag
+        <h1 className="text-2xl font-semibold" id="page-title">
+          Are you sure you want to delete{" "}
+          <span className="text-red-700 font-semibold">{currentFlag.name}</span>
+          ?
         </h1>
       }
       cancelAction={
@@ -106,15 +107,13 @@ export default function DeleteFlagPage() {
       }
     >
       <Stack spacing={4}>
-        <WarningBox title={<>This operation is definitive.</>} />
-
         <Typography>
-          If you validate the suppression, the flag will be removed from all the
-          environments of the <strong>{project.name}</strong> project.
+          The flag will be removed from all the <strong>environments</strong> of
+          the <strong>{project.name}</strong> project.
         </Typography>
 
         <Typography>
-          You won't have access to the flags analytics anymore.
+          You won't have access to the <strong>flags analytics</strong> anymore.
         </Typography>
 
         <Typography>There will be no way to get the data back.</Typography>

@@ -47,7 +47,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/delete", 
           name: "Delete",
         }).should("be.visible");
 
-        cy.contains("No, don't delete New homepage")
+        cy.contains("Cancel")
           .should("be.visible")
           .and(
             "have.attr",

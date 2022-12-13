@@ -99,8 +99,7 @@ export default function DeleteEnvPage() {
     >
       <Stack spacing={4}>
         <Typography>
-          If you validate the suppression, all the associated{" "}
-          <strong>feature flags</strong> will be removed.
+          All the associated <strong>feature flags</strong> will be removed.
         </Typography>
 
         <Typography>
