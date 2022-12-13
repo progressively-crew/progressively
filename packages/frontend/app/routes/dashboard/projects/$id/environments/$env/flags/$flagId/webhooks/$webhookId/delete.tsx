@@ -1,5 +1,4 @@
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
-import { WarningBox } from "~/components/Boxes/WarningBox";
 import { getSession } from "~/sessions";
 import { Button } from "~/components/Buttons/Button";
 import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
@@ -69,7 +68,7 @@ export default function DeleteWebhookPage() {
   return (
     <DeleteEntityLayout
       titleSlot={
-        <h1 className="text-3xl font-semibold" id="page-title">
+        <h1 className="text-2xl font-semibold" id="page-title">
           Deleting a webhook
         </h1>
       }
@@ -83,7 +82,7 @@ export default function DeleteWebhookPage() {
           scheme="danger"
           to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/webhooks`}
         >
-          {`No, don't delete`}
+          {`Cancel`}
         </Button>
       }
       confirmAction={
@@ -106,11 +105,9 @@ export default function DeleteWebhookPage() {
       }
     >
       <Stack spacing={4}>
-        <WarningBox title={<>This operation is definitive.</>} />
-
         <Typography>
-          If you validate the suppression, the webhook will not be triggered
-          anymore when the associated event will occur.
+          The webhook will not be triggered anymore when the associated event
+          will occur.
         </Typography>
       </Stack>
     </DeleteEntityLayout>

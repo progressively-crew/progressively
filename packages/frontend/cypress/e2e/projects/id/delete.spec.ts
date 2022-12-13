@@ -55,7 +55,7 @@ describe("/dashboard/projects/[id]/delete", () => {
           );
 
           cy.findByRole("heading", {
-            name: "Deleting a project",
+            name: "Are you sure you want to delete Project from seeding?",
           }).should("be.visible");
 
           cy.findByRole("button", {
@@ -63,7 +63,7 @@ describe("/dashboard/projects/[id]/delete", () => {
           }).should("be.visible");
 
           cy.findByRole("link", {
-            name: "No, don't delete Project from seeding",
+            name: "Cancel",
           })
             .should("be.visible")
             .and("have.attr", "href", "/dashboard/projects/1/settings");

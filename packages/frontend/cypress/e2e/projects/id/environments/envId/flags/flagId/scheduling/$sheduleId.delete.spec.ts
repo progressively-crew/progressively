@@ -52,7 +52,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
           name: "Yes, delete the schedule",
         }).should("be.visible");
 
-        cy.findByRole("link", { name: "No, don't delete" })
+        cy.findByRole("link", { name: "Cancel" })
           .should("be.visible")
           .and(
             "have.attr",

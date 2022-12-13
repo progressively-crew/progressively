@@ -1,5 +1,4 @@
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
-import { WarningBox } from "~/components/Boxes/WarningBox";
 import { getSession } from "~/sessions";
 import { Button } from "~/components/Buttons/Button";
 import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
@@ -70,7 +69,7 @@ export default function DeleteEligibilityPage() {
   return (
     <DeleteEntityLayout
       titleSlot={
-        <h1 className="text-3xl font-semibold" id="page-title">
+        <h1 className="text-2xl font-semibold" id="page-title">
           Deleting an elegibility restriction
         </h1>
       }
@@ -84,7 +83,7 @@ export default function DeleteEligibilityPage() {
           scheme="danger"
           to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`}
         >
-          {`No, don't delete`}
+          {`Cancel`}
         </Button>
       }
       confirmAction={
@@ -107,11 +106,8 @@ export default function DeleteEligibilityPage() {
       }
     >
       <Stack spacing={4}>
-        <WarningBox title={<>This operation is definitive.</>} />
-
         <Typography>
-          If you validate the suppression, the eligibility restriction will be
-          removed from the feature flag.
+          The eligibility restriction will be removed from the feature flag.
         </Typography>
 
         <Typography>

@@ -54,7 +54,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/eligibili
           name: "Yes, delete the eligibility restriction",
         }).should("be.visible");
 
-        cy.findByRole("link", { name: "No, don't delete" })
+        cy.findByRole("link", { name: "Cancel" })
           .should("be.visible")
           .and(
             "have.attr",

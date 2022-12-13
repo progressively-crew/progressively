@@ -1,5 +1,4 @@
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
-import { WarningBox } from "~/components/Boxes/WarningBox";
 import { deleteEnvironment } from "~/modules/environments/services/deleteEnvironment";
 import { getSession } from "~/sessions";
 import { Button } from "~/components/Buttons/Button";
@@ -62,8 +61,10 @@ export default function DeleteEnvPage() {
   return (
     <DeleteEntityLayout
       titleSlot={
-        <h1 className="text-3xl font-semibold" id="page-title">
-          Deleting an environment
+        <h1 className="text-2xl font-semibold" id="page-title">
+          Are you sure you want to delete{" "}
+          <span className="text-red-700 font-semibold">{environment.name}</span>
+          ?
         </h1>
       }
       error={
@@ -76,7 +77,7 @@ export default function DeleteEnvPage() {
           scheme="danger"
           to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/settings`}
         >
-          No, {`don't`} delete {environment.name}
+          Cancel
         </Button>
       }
       confirmAction={
@@ -97,15 +98,12 @@ export default function DeleteEnvPage() {
       }
     >
       <Stack spacing={4}>
-        <WarningBox title={<>This operation is definitive.</>} />
-
         <Typography>
-          If you validate the suppression, all the associated feature flags will
-          be removed.
+          All the associated <strong>feature flags</strong> will be removed.
         </Typography>
 
         <Typography>
-          You won't have access to the flags analytics anymore.
+          You won't have access to the <strong>flags analytics</strong> anymore.
         </Typography>
 
         <Typography>There will be no way to get the data back.</Typography>

@@ -1,5 +1,4 @@
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
-import { WarningBox } from "~/components/Boxes/WarningBox";
 import { getSession } from "~/sessions";
 import { Button } from "~/components/Buttons/Button";
 import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
@@ -69,7 +68,7 @@ export default function DeleteSchedulePage() {
   return (
     <DeleteEntityLayout
       titleSlot={
-        <h1 className="text-3xl font-semibold" id="page-title">
+        <h1 className="text-2xl font-semibold" id="page-title">
           Deleting a schedule
         </h1>
       }
@@ -83,7 +82,7 @@ export default function DeleteSchedulePage() {
           scheme="danger"
           to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/scheduling`}
         >
-          {`No, don't delete`}
+          {`Cancel`}
         </Button>
       }
       confirmAction={
@@ -106,11 +105,8 @@ export default function DeleteSchedulePage() {
       }
     >
       <Stack spacing={4}>
-        <WarningBox title={<>This operation is definitive.</>} />
-
         <Typography>
-          If you validate the suppression, the schedule will be removed from the
-          feature flag.
+          The schedule will be removed from the <strong>feature flag</strong>.
         </Typography>
 
         <Typography>

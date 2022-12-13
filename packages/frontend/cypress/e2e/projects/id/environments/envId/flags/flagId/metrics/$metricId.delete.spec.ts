@@ -50,7 +50,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/metrics/[
           name: "Yes, delete the metric",
         }).should("be.visible");
 
-        cy.findByRole("link", { name: "No, don't delete" })
+        cy.findByRole("link", { name: "Cancel" })
           .should("be.visible")
           .and(
             "have.attr",
