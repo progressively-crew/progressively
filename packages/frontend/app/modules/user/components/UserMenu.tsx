@@ -13,10 +13,10 @@ export const UserMenu = () => {
   return (
     <HorizontalNav label={`Flag related`}>
       <NavItem to={`#password`} icon={<FaToggleOff />}>
-        Change password
+        Password
       </NavItem>
 
-      <NavItem to={`/`} icon={<VariantIcon />}>
+      <NavItem to={`#logout`} icon={<VariantIcon />}>
         Logout
       </NavItem>
     </HorizontalNav>

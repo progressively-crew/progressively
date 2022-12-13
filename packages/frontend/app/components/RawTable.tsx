@@ -39,7 +39,7 @@ export const Td = (props: React.HTMLAttributes<HTMLTableCellElement>) => {
 export const Th = (props: React.HTMLAttributes<HTMLTableCellElement>) => {
   return (
     <th
-      className="py-3 px-8 bg-gray-100 text-left uppercase text-sm text-gray-600 tracking-wide border-l-8 border-l-gray-100"
+      className="py-4 px-8 bg-gray-100 text-left uppercase text-sm text-gray-600 tracking-wide"
       {...props}
     />
   );

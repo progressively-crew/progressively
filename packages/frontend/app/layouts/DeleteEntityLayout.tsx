@@ -30,7 +30,7 @@ export const DeleteEntityLayout = ({
   }
 
   return (
-    <main className="mx-auto max-w-2xl lg:pt-28" aria-labelledby="page-title">
+    <main className="mx-auto max-w-2xl lg:pt-20" aria-labelledby="page-title">
       {error}
       <Spacer size={4} />
 

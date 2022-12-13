@@ -7,7 +7,7 @@ import { Variant } from "../types";
 import { RawTable, Td, Th, Tr } from "~/components/RawTable";
 import { Tag } from "~/components/Tag";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
-import { Checkbox } from "~/components/Checkbox";
+import { AiFillCheckCircle } from "react-icons/ai";
 
 export interface FormSliderInputProps {
   name: string;
@@ -97,17 +97,22 @@ export const VariantTable = ({ variants, action }: VariantTableProps) => {
                       fgColor={color}
                     />
                   </Td>
-                  <Td className="text-center py-4 px-8">
+                  <Td className="text-center py-4 px-8 flex justify-center">
                     <input type="hidden" name="uuid" value={variant.uuid} />
+                    {variant.isControl && (
+                      <input
+                        type="hidden"
+                        name="isControl"
+                        value={variant.uuid}
+                      />
+                    )}
 
-                    <Checkbox
-                      disabled
-                      checked={Boolean(variant.isControl)}
-                      value={variant.uuid}
-                      name={"isControl"}
-                      onChange={() => {}}
-                      readOnly
-                    />
+                    {variant.isControl && (
+                      <AiFillCheckCircle
+                        aria-label="This is the control version"
+                        className="text-2xl text-indigo-500"
+                      />
+                    )}
                   </Td>
                 </Tr>
               );
