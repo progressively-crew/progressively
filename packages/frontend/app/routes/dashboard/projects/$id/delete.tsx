@@ -1,5 +1,4 @@
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
-import { WarningBox } from "~/components/Boxes/WarningBox";
 import { deleteProject } from "~/modules/projects/services/deleteProject";
 import { getSession } from "~/sessions";
 import { Button } from "~/components/Buttons/Button";
@@ -63,8 +62,9 @@ export default function DeleteProjectPage() {
         data.errors.backendError && <ErrorBox list={data.errors} />
       }
       titleSlot={
-        <h1 className="text-3xl font-semibold" id="page-title">
-          Deleting a project
+        <h1 className="text-2xl font-semibold" id="page-title">
+          Are you sure you want to delete{" "}
+          <span className="text-red-700 font-semibold">{project.name}</span>?
         </h1>
       }
       cancelAction={
@@ -73,7 +73,7 @@ export default function DeleteProjectPage() {
           variant="tertiary"
           scheme="danger"
         >
-          No, {`don't`} delete {project.name}
+          Cancel
         </Button>
       }
       confirmAction={
@@ -90,15 +90,13 @@ export default function DeleteProjectPage() {
       backLinkSlot={<BackLink to={`/dashboard`}>Back to projects</BackLink>}
     >
       <Stack spacing={4}>
-        <WarningBox title={<>This operation is definitive.</>} />
-
         <Typography>
-          If you validate the suppression, all the environments of the project,
-          and all the associated feature flags will be removed.
+          All the <strong>environments</strong> of the project, and all the
+          associated <strong>feature flags</strong> will be removed.
         </Typography>
 
         <Typography>
-          You won't have access to the flags analytics anymore.
+          You won't have access to the <strong>flags analytics</strong> anymore.
         </Typography>
 
         <Typography>There will be no way to get the data back.</Typography>
