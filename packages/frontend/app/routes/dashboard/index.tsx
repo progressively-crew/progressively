@@ -52,6 +52,7 @@ export default function DashboardRoot() {
 
   const newProjectId = searchParams.get("newProjectId") || undefined;
   const hasRemovedProject = searchParams.get("projectRemoved") || undefined;
+  const isSearching = Boolean(searchParams.get("search") || undefined);
 
   return (
     <DashboardLayout
@@ -77,7 +78,11 @@ export default function DashboardRoot() {
           </CreateButton>
         }
       >
-        <SearchBar label="Search for projects" placeholder="e.g: The project" />
+        <SearchBar
+          label="Search for projects"
+          placeholder="e.g: The project"
+          count={isSearching ? projects.length : undefined}
+        />
       </SearchLayout>
 
       <Card>
