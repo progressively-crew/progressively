@@ -2,6 +2,7 @@ import { User } from "~/modules/user/types";
 import { Avatar } from "~/components/Avatar";
 import { Button } from "~/components/Buttons/Button";
 import { HideMobile } from "~/components/HideMobile";
+import { ThemeSwitch } from "~/components/ThemeSwitch";
 
 export interface UserDropdownProps {
   user: User;
@@ -9,7 +10,8 @@ export interface UserDropdownProps {
 
 export const UseDropdown = ({ user }: UserDropdownProps) => {
   return (
-    <nav aria-label="User related">
+    <nav aria-label="User related" className="flex flex-row gap-2">
+      <ThemeSwitch />
       <Button
         to="/profile"
         className="text-sm"
