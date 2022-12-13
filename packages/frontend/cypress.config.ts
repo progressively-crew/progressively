@@ -32,9 +32,11 @@ module.exports = defineConfig({
         if (browser.family === "firefox") {
           launchOptions.preferences["ui.prefersReducedMotion"] = REDUCE;
         }
+
         if (browser.family === "chromium") {
           launchOptions.args.push("--force-prefers-reduced-motion");
         }
+
         return launchOptions;
       }),
         on("task", {

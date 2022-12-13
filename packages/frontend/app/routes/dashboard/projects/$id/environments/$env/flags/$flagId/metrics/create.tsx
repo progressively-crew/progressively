@@ -27,6 +27,7 @@ import { SelectField } from "~/components/Fields/SelectField";
 import { Variant } from "~/modules/variants/types";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { BackLink } from "~/components/BackLink";
+import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -125,11 +126,7 @@ export default function MetricCreatePage() {
     <Form method="post">
       <CreateEntityLayout
         status={actionData?.errors && <ErrorBox list={actionData.errors} />}
-        titleSlot={
-          <h1 className="text-3xl font-semibold" id="page-title">
-            Create a metric
-          </h1>
-        }
+        titleSlot={<CreateEntityTitle>Create a metric</CreateEntityTitle>}
         submitSlot={
           <SubmitButton
             type="submit"

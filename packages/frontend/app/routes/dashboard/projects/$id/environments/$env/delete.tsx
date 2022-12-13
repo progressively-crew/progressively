@@ -13,6 +13,7 @@ import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { Stack } from "~/components/Stack";
 import { BackLink } from "~/components/BackLink";
+import { DeleteEntityTitle } from "~/layouts/DeleteEntityTitle";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -61,11 +62,13 @@ export default function DeleteEnvPage() {
   return (
     <DeleteEntityLayout
       titleSlot={
-        <h1 className="text-2xl font-semibold" id="page-title">
+        <DeleteEntityTitle>
           Are you sure you want to delete{" "}
-          <span className="text-red-700 font-semibold">{environment.name}</span>
+          <span className="text-red-700 font-semibold dark:text-red-400">
+            {environment.name}
+          </span>
           ?
-        </h1>
+        </DeleteEntityTitle>
       }
       error={
         data?.errors &&

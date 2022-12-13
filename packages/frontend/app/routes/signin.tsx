@@ -163,7 +163,7 @@ export default function Signin() {
                 <div className="pt-1 flex justify-end">
                   <Link
                     to="/forgot-password"
-                    className="text-xs text-gray-500"
+                    className="text-xs text-gray-500 dark:text-slate-300"
                   >{`I forgot my password`}</Link>
                 </div>
               </div>
@@ -184,7 +184,7 @@ export default function Signin() {
               <Separator />
 
               <div className="flex justify-center -mt-3">
-                <Typography className="text-sm px-3 bg-white">
+                <Typography className="text-sm px-3 bg-white dark:bg-slate-800">
                   Or signin with
                 </Typography>
               </div>

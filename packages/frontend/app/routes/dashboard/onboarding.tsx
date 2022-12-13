@@ -63,9 +63,11 @@ export default function OnboardingPage() {
         <Stack spacing={4}>
           <div className="text-center motion-safe:animate-fade-enter-top">
             <h1 className="font-bold text-4xl md:text-5xl" id="page-title">
-              <span>Welcome aboard</span>
+              <span className="dark:text-slate-100">Welcome aboard</span>
               <Spacer size={2} />
-              <span className="text-indigo-700">{user.fullname}</span>
+              <span className="text-indigo-700 dark:text-indigo-400">
+                {user.fullname}
+              </span>
             </h1>
             <Spacer size={2} />
             <Typography>
@@ -114,12 +116,12 @@ export default function OnboardingPage() {
       >
         <TipBox
           title={
-            <Typography className="font-bold text-inherit">
+            <Typography className="font-bold text-inherit dark:text-inherit">
               The welcome tips
             </Typography>
           }
         >
-          <Typography className="text-inherit">
+          <Typography className="text-inherit dark:text-inherit">
             Progressively is built with 3 main entities:
           </Typography>
 
@@ -146,7 +148,7 @@ export default function OnboardingPage() {
 
           <Spacer size={2} />
 
-          <Typography className="text-inherit">
+          <Typography className="text-inherit dark:text-inherit">
             You can recognize them in the application with their icons. You can
             learn more on{" "}
             <a

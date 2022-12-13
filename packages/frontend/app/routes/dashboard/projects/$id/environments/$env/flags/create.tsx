@@ -19,6 +19,7 @@ import { PermissionIcon } from "~/components/Icons/PermissionIcon";
 import { KillSwitchIcon } from "~/components/Icons/KillSwitchIcon";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { BackLink } from "~/components/BackLink";
+import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 
 export const meta: MetaFunction = ({ params, parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -87,11 +88,7 @@ export default function CreateFlagPage() {
         status={
           (errors?.name || errors?.description) && <ErrorBox list={errors} />
         }
-        titleSlot={
-          <h1 className="text-3xl font-semibold" id="page-title">
-            Create a feature flag
-          </h1>
-        }
+        titleSlot={<CreateEntityTitle>Create a feature flag</CreateEntityTitle>}
         submitSlot={
           <SubmitButton
             type="submit"

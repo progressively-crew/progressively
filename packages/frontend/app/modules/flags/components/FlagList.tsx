@@ -4,6 +4,7 @@ import { ButtonCopy } from "~/components/ButtonCopy";
 import { Link } from "~/components/Link";
 import { RawTable, Td, Th, Tr } from "~/components/RawTable";
 import { Spacer } from "~/components/Spacer";
+import { Typography } from "~/components/Typography";
 import { FlagEnv, FlagStatus } from "../types";
 import { FlagTypeBadge } from "./FlagType";
 import { ToggleFlag } from "./ToggleFlag";
@@ -41,7 +42,7 @@ const FlagRow = ({ flagEnv, projectId, envId }: FlagRowProps) => {
           {flagEnv.flag.name}
         </Link>
 
-        <p className="text-sm text-gray-500">{flagEnv.flag.description}</p>
+        <Typography className="text-sm">{flagEnv.flag.description}</Typography>
 
         <Spacer size={3} />
       </Td>

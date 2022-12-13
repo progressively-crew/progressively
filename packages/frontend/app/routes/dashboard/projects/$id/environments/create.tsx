@@ -14,6 +14,7 @@ import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { BackLink } from "~/components/BackLink";
+import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 
 export const meta: MetaFunction = ({ parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -65,11 +66,7 @@ export default function CreateEnvironmentPage() {
     <Form method="post">
       <CreateEntityLayout
         status={errors?.name && <ErrorBox list={errors} />}
-        titleSlot={
-          <h1 className="text-3xl font-semibold" id="page-title">
-            Create an environment
-          </h1>
-        }
+        titleSlot={<CreateEntityTitle>Create an environment</CreateEntityTitle>}
         submitSlot={
           <SubmitButton
             type="submit"

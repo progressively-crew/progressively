@@ -15,6 +15,7 @@ import { Stack } from "~/components/Stack";
 import { Typography } from "~/components/Typography";
 import { deleteMetric } from "~/modules/flags/services/deleteMetric";
 import { BackLink } from "~/components/BackLink";
+import { DeleteEntityTitle } from "~/layouts/DeleteEntityTitle";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -76,11 +77,7 @@ export default function DeleteMetricPage() {
         data?.errors &&
         data.errors.backendError && <ErrorBox list={data.errors} />
       }
-      titleSlot={
-        <h1 className="text-2xl font-semibold" id="page-title">
-          Deleting a metric
-        </h1>
-      }
+      titleSlot={<DeleteEntityTitle>Deleting a metric</DeleteEntityTitle>}
       cancelAction={
         <Button
           variant="tertiary"

@@ -42,7 +42,10 @@ export default function WelcomePage() {
     <NotAuthenticatedLayout>
       <Stack spacing={4}>
         <div className="text-center motion-safe:animate-fade-enter-top">
-          <h1 className="font-bold text-4xl md:text-5xl" id="page-title">
+          <h1
+            className="font-bold text-4xl md:text-5xl dark:text-slate-100"
+            id="page-title"
+          >
             Congratulations!
           </h1>
           <Spacer size={2} />

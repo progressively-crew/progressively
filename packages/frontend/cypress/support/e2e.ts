@@ -48,25 +48,33 @@ Cypress.Commands.add("signIn", (userName?: keyof typeof AvailableUsers) => {
 });
 
 Cypress.Commands.add("checkProtectedRoute", () => {
-  cy.findByText("It looks you're trying to access this page while not being authenticated.");
+  cy.findByText(
+    "It looks you're trying to access this page while not being authenticated."
+  );
 
-  cy.findByText("To access this content, make sure to fill the authentication page form.");
+  cy.findByText(
+    "To access this content, make sure to fill the authentication page form."
+  );
 });
 
 Cypress.Commands.add("verifyBreadcrumbs", (crumbs: Array<any>) => {
   const lastIndex = crumbs.length - 1;
 
   cy.findByLabelText("Breadcrumbs").within(() => {
-    crumbs.forEach(([name, href, shouldAssertCurrent = true], index: number) => {
-      if (index === lastIndex && shouldAssertCurrent) {
-        cy.findByRole("link", { name })
-          .should("be.visible")
-          .and("have.attr", "href", href)
-          .and("have.attr", "aria-current", "page");
-      } else {
-        cy.findByRole("link", { name }).should("be.visible").and("have.attr", "href", href);
+    crumbs.forEach(
+      ([name, href, shouldAssertCurrent = true], index: number) => {
+        if (index === lastIndex && shouldAssertCurrent) {
+          cy.findByRole("link", { name })
+            .should("be.visible")
+            .and("have.attr", "href", href)
+            .and("have.attr", "aria-current", "page");
+        } else {
+          cy.findByRole("link", { name })
+            .should("be.visible")
+            .and("have.attr", "href", href);
+        }
       }
-    });
+    );
   });
 });
 
@@ -74,3 +82,13 @@ Cypress.on(
   "uncaught:exception",
   (err) => !err.message.includes("ResizeObserver loop limit exceeded")
 );
+
+if (Cypress.env("DARK_THEME")) {
+  Cypress.on("window:before:load", (win) => {
+    cy.stub(win, "matchMedia")
+      .withArgs("(prefers-color-scheme: dark)")
+      .returns({
+        matches: true,
+      });
+  });
+}

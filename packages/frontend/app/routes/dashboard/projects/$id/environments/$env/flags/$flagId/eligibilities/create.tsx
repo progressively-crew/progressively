@@ -16,6 +16,7 @@ import { EligibilityForm } from "~/modules/eligibility/components/EligibilityFor
 import { validateEligibilityForm } from "~/modules/eligibility/validators/validateEligibilityForm";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { BackLink } from "~/components/BackLink";
+import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -101,9 +102,7 @@ export default function StrategyCreatePage() {
       }
       status={actionData?.errors && <ErrorBox list={actionData.errors} />}
       titleSlot={
-        <h1 className="text-3xl font-semibold" id="page-title">
-          Create an eligibility restriction
-        </h1>
+        <CreateEntityTitle>Create an eligibility restriction</CreateEntityTitle>
       }
       submitSlot={
         <SubmitButton

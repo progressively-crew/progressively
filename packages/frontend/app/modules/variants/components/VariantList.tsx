@@ -77,9 +77,7 @@ export const VariantList = ({
             <Tr>
               <Th>Variant</Th>
               <Th>Rollout percentage</Th>
-              <Th className="py-3 px-8 bg-gray-100 text-center uppercase text-sm text-gray-600 tracking-wide">
-                Is control
-              </Th>
+              <Th className="text-center">Is control</Th>
               <Th>Actions</Th>
             </Tr>
           </thead>
@@ -92,7 +90,11 @@ export const VariantList = ({
               return (
                 <Tr
                   key={`variant-${variant.uuid}`}
-                  className={variant.isControl ? "bg-gray-50" : undefined}
+                  className={
+                    variant.isControl
+                      ? "bg-gray-50 dark:bg-slate-700"
+                      : undefined
+                  }
                 >
                   <Td>
                     <TextInput

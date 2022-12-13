@@ -37,6 +37,7 @@ export const MetricList = ({
               {metric.variant?.value && (
                 <Link
                   to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/variants`}
+                  className="no-underline"
                 >
                   {metric.variant?.value && (
                     <Tag

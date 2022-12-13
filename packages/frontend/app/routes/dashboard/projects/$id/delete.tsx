@@ -11,6 +11,7 @@ import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { Stack } from "~/components/Stack";
 import { BackLink } from "~/components/BackLink";
+import { DeleteEntityTitle } from "~/layouts/DeleteEntityTitle";
 
 export const meta: MetaFunction = ({ parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -62,10 +63,13 @@ export default function DeleteProjectPage() {
         data.errors.backendError && <ErrorBox list={data.errors} />
       }
       titleSlot={
-        <h1 className="text-2xl font-semibold" id="page-title">
+        <DeleteEntityTitle>
           Are you sure you want to delete{" "}
-          <span className="text-red-700 font-semibold">{project.name}</span>?
-        </h1>
+          <span className="text-red-700 dark:text-red-400 font-semibold">
+            {project.name}
+          </span>
+          ?
+        </DeleteEntityTitle>
       }
       cancelAction={
         <Button
