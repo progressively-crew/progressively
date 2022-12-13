@@ -10,6 +10,7 @@ import { Stack } from "~/components/Stack";
 import { useMatches } from "@remix-run/react";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { HideDesktop, HideTablet } from "~/components/HideMobile";
+import { ThemeSwitch } from "~/components/ThemeSwitch";
 
 export interface DashboardLayoutProps {
   user?: Partial<User>;
@@ -41,7 +42,10 @@ export const DashboardLayout = ({
           <div className="flex justify-between h-14 items-center ">
             <BreadCrumbs crumbs={crumbs} />
 
-            <UseDropdown user={user} />
+            <div className="flex flex-row gap-4">
+              <ThemeSwitch />
+              <UseDropdown user={user} />
+            </div>
           </div>
 
           <HideDesktop>
