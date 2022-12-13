@@ -40,7 +40,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/delete", 
         );
 
         cy.findByRole("heading", {
-          name: "Deleting a feature flag",
+          name: "Are you sure you want to delete New homepage?",
         }).should("be.visible");
 
         cy.findByRole("button", {

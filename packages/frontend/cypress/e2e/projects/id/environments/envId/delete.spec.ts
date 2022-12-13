@@ -56,7 +56,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/delete", () => {
         );
 
         cy.findByRole("heading", {
-          name: "Deleting an environment",
+          name: "Are you sure you want to delete Production?",
         }).should("be.visible");
 
         cy.findByRole("button", {

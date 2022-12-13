@@ -84,7 +84,7 @@ export default function DeleteFlagPage() {
           scheme="danger"
           to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/settings`}
         >
-          No, {`don't`} delete {currentFlag.name}
+          Cancel
         </Button>
       }
       confirmAction={
