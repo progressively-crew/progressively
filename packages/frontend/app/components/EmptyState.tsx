@@ -19,13 +19,13 @@ export const EmptyState = ({
   const HeadingComponent = titleAs as any;
   return (
     <div className="flex flex-col items-center py-10">
-      <div className="h-40 w-40 fill-indigo-700">
+      <div className="h-32 w-32 fill-gray-200">
         <EmptyBoxIcon />
       </div>
 
       <Spacer size={6} />
 
-      <HeadingComponent id={id} className="text-3xl">
+      <HeadingComponent id={id} className="text-2xl text-gray-500">
         {title}
       </HeadingComponent>
 
