@@ -20,7 +20,7 @@ export const Tr = ({
   const isClickable = Boolean(onClick);
 
   const classNameTr = isClickable
-    ? "border-l-8 border-l-transparent hover:bg-gray-50 hover:border-l-indigo-500 hover:cursor-pointer active:bg-gray-100 border-b border-b-gray-100"
+    ? "border-l-8 border-l-transparent hover:bg-gray-50 hover:dark:bg-slate-700 hover:border-l-indigo-500 hover:cursor-pointer active:bg-gray-100 border-b border-b-gray-100"
     : "border-b border-b-gray-100";
 
   return (
@@ -33,13 +33,19 @@ export const Tr = ({
 };
 
 export const Td = (props: React.HTMLAttributes<HTMLTableCellElement>) => {
-  return <td className="py-4 px-8" {...props} />;
+  return <td className="py-4 px-8 dark:text-gray-200" {...props} />;
 };
 
-export const Th = (props: React.HTMLAttributes<HTMLTableCellElement>) => {
+export const Th = ({
+  className = "",
+  ...props
+}: React.HTMLAttributes<HTMLTableCellElement>) => {
   return (
     <th
-      className="py-4 px-8 bg-gray-100 text-left uppercase text-sm text-gray-600 tracking-wide"
+      className={
+        "py-4 px-8 bg-gray-100 dark:bg-slate-600 text-left uppercase text-sm text-gray-600 dark:text-gray-200 tracking-wide " +
+        className
+      }
       {...props}
     />
   );

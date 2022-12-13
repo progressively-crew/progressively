@@ -16,6 +16,7 @@ import { SelectField } from "~/components/Fields/SelectField";
 import { TextInput } from "~/components/Fields/TextInput";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { BackLink } from "~/components/BackLink";
+import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -97,11 +98,7 @@ export default function CreateWebhookPage() {
     <Form method="post">
       <CreateEntityLayout
         status={actionData?.errors && <ErrorBox list={actionData.errors} />}
-        titleSlot={
-          <h1 className="text-3xl font-semibold" id="page-title">
-            Create a webhook
-          </h1>
-        }
+        titleSlot={<CreateEntityTitle>Create a webhook</CreateEntityTitle>}
         submitSlot={
           <SubmitButton
             isLoading={transition.state === "submitting"}

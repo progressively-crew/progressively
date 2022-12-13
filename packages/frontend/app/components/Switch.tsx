@@ -1,5 +1,6 @@
 import { HTMLAttributes } from "react";
 import { BsCheck } from "react-icons/bs";
+import { Typography } from "./Typography";
 
 export interface SwitchProps extends HTMLAttributes<HTMLButtonElement> {
   checked: boolean;
@@ -39,7 +40,9 @@ export const Switch = ({
       className="h-10 px-1 flex items-center gap-2 group"
       {...props}
     >
-      <span className="text-gray-500 text-sm">{offLabel || "Off"}</span>
+      <Typography as="span" className="text-sm">
+        {offLabel || "Off"}
+      </Typography>
       <span
         className={
           "transition-all ease-in-out duration-200 h-7 w-12 rounded-full inline-block p-1 " +
@@ -58,7 +61,9 @@ export const Switch = ({
           {checked && <BsCheck />}
         </span>
       </span>
-      <span className="text-gray-500 text-sm">{onLabel || "On"}</span>
+      <Typography as="span" className="text-sm">
+        {onLabel || "On"}
+      </Typography>
     </button>
   );
 };

@@ -38,8 +38,10 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
               <Link
                 aria-current={currentPage ? "page" : undefined}
                 to={crumb.link}
-                className={`transition-all px-2 -mx-1 py-1 rounded hover:text-black hover:bg-gray-100 active:bg-gray-200 active:text-indigo-700 no-underline text-sm ${
-                  currentPage ? "text-black" : "text-gray-500"
+                className={`transition-all px-2 -mx-1 py-1 rounded hover:text-black hover:dark:text-slate-200 hover:bg-gray-100 dark:hover:bg-slate-900 active:bg-gray-200 dark:active:bg-slate-700 active:text-indigo-700 no-underline text-sm ${
+                  currentPage
+                    ? "text-black dark:text-white"
+                    : "text-gray-500 dark:text-slate-200"
                 }`}
               >
                 <div
@@ -49,7 +51,11 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
                   <HStack spacing={2}>
                     <CrumbIcon
                       crumb={crumb}
-                      color={currentPage ? color || "text-indigo-700" : ""}
+                      color={
+                        currentPage
+                          ? color || "text-indigo-700 dark:text-indigo-300"
+                          : ""
+                      }
                     />
                     {crumb.label}
                   </HStack>
@@ -61,7 +67,10 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
               ) : null}
 
               {!currentPage && (
-                <div className="flex text-gray-200 px-2" aria-hidden>
+                <div
+                  className="flex text-gray-200 dark:text-slate-200 px-2"
+                  aria-hidden
+                >
                   {"/"}
                 </div>
               )}

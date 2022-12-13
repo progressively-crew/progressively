@@ -27,6 +27,7 @@ import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { getVariants } from "~/modules/variants/services/getVariants";
 import { Variant } from "~/modules/variants/types";
 import { BackLink } from "~/components/BackLink";
+import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -137,9 +138,7 @@ export default function StrategyCreatePage() {
       <CreateEntityLayout
         status={actionData?.errors && <ErrorBox list={actionData.errors} />}
         titleSlot={
-          <h1 className="text-3xl font-semibold" id="page-title">
-            Create an additional audience
-          </h1>
+          <CreateEntityTitle>Create an additional audience</CreateEntityTitle>
         }
         submitSlot={
           <SubmitButton

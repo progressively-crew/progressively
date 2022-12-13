@@ -9,6 +9,7 @@ import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
 import { useActionData, Form, useTransition } from "@remix-run/react";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { BackLink } from "~/components/BackLink";
+import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 
 export const meta: MetaFunction = () => {
   return {
@@ -53,11 +54,7 @@ export default function CreateProjectPage() {
     <Form method="post">
       <CreateEntityLayout
         status={errors?.name && <ErrorBox list={errors} />}
-        titleSlot={
-          <h1 className="text-3xl font-semibold" id="page-title">
-            Create a project
-          </h1>
-        }
+        titleSlot={<CreateEntityTitle>Create a project</CreateEntityTitle>}
         submitSlot={
           <SubmitButton
             type="submit"

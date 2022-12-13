@@ -51,7 +51,7 @@ export const CreateEntityLayout = ({
             {children}
           </CardContent>
 
-          <div className="flex justify-end px-8 py-4 bg-gray-100">
+          <div className="flex justify-end px-8 py-4 bg-gray-100 dark:bg-slate-700">
             {submitSlot}
           </div>
         </Card>

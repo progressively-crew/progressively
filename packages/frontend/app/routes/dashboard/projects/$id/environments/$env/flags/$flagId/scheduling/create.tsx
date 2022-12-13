@@ -15,6 +15,7 @@ import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { BackLink } from "~/components/BackLink";
+import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 
 export const handle = {
   breadcrumb: (match: { params: any }) => {
@@ -111,11 +112,7 @@ export default function SchedulingCreatePage() {
     <Form method="post">
       <CreateEntityLayout
         status={actionData?.errors && <ErrorBox list={actionData.errors} />}
-        titleSlot={
-          <h1 className="text-3xl font-semibold" id="page-title">
-            Create a scheduling
-          </h1>
-        }
+        titleSlot={<CreateEntityTitle>Create a scheduling</CreateEntityTitle>}
         submitSlot={
           <SubmitButton
             isLoading={transition.state === "submitting"}

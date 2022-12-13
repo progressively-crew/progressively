@@ -20,7 +20,8 @@ const classCombination = {
     "bg-indigo-700 text-white hover:bg-indigo-500 active:bg-indigo-600",
   defaultsecondary:
     "bg-indigo-100 text-indigo-700 text-indigo-700 hover:bg-indigo-50 active:bg-indigo-100",
-  defaulttertiary: "text-indigo-700 hover:bg-gray-50 active:bg-gray-100",
+  defaulttertiary:
+    "text-indigo-700 dark:text-indigo-200 hover:bg-gray-50 hover:dark:bg-slate-700 active:bg-gray-100 active:dark:bg-slate-800",
 
   dangerprimary: "bg-red-700 text-white hover:bg-red-500 active:bg-red-600",
   dangersecondary:
