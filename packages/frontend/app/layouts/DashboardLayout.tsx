@@ -6,7 +6,6 @@ import { Spacer } from "~/components/Spacer";
 import { NavProvider } from "~/components/Breadcrumbs/providers/NavProvider";
 import { InertWhenNavOpened } from "~/components/Breadcrumbs/InertWhenNavOpened";
 import { UseDropdown } from "~/modules/user/components/UserDropdown";
-import { Stack } from "~/components/Stack";
 import { useMatches } from "@remix-run/react";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { HideDesktop, HideTablet } from "~/components/HideMobile";
@@ -45,10 +44,10 @@ export const DashboardLayout = ({
           </div>
 
           <HideDesktop>
-            {header && <Spacer size={2} />}
+            {header && <Spacer size={4} />}
 
             {header}
-            {header && <Spacer size={2} />}
+            {header && <Spacer size={4} />}
           </HideDesktop>
         </Container>
       </div>
@@ -77,11 +76,11 @@ export const DashboardLayout = ({
             >
               <Spacer size={8} />
               <Main>
-                <Stack spacing={6}>
+                <div className="flex flex-col gap-2 md:gap-6">
                   {status}
 
                   {children}
-                </Stack>
+                </div>
               </Main>
 
               <Spacer size={10} />
