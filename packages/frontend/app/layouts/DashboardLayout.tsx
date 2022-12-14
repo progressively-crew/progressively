@@ -38,7 +38,7 @@ export const DashboardLayout = ({
 
       <div className="border-b border-b-gray-100 dark:border-b-slate-700 bg-white dark:bg-slate-800 z-10 lg:sticky top-0">
         <Container>
-          <div className="flex justify-between h-14 items-center ">
+          <div className="flex justify-between h-14 items-center">
             <BreadCrumbs crumbs={crumbs} />
 
             <UseDropdown user={user} />

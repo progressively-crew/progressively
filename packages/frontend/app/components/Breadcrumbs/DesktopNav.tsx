@@ -53,7 +53,7 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
                       crumb={crumb}
                       color={
                         currentPage
-                          ? color || "text-indigo-700 dark:text-indigo-300"
+                          ? color || "text-indigo-700 dark:text-indigo-400"
                           : ""
                       }
                     />

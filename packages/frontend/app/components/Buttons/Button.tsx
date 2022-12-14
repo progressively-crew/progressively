@@ -63,7 +63,7 @@ export const Button = ({
       >
         <HStack spacing={3}>
           {icon && <span>{icon}</span>}
-          <span>{children}</span>
+          {children}
         </HStack>
       </Component>
     );

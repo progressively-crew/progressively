@@ -18,7 +18,7 @@ export const EmptyState = ({
 }: EmptyStateProps) => {
   const HeadingComponent = titleAs as any;
   return (
-    <div className="flex flex-col items-center py-10">
+    <div className="flex flex-col items-center lg:py-10">
       <div className="h-32 w-32 fill-gray-200">
         <EmptyBoxIcon />
       </div>

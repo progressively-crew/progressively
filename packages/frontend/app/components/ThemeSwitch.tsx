@@ -1,26 +1,10 @@
-import { useEffect, useState } from "react";
-import { BsCheck, BsSun } from "react-icons/bs";
+import { BsSun } from "react-icons/bs";
 import { FiMoon } from "react-icons/fi";
+import { useTheme } from "~/modules/theme/useTheme";
 import { Typography } from "./Typography";
 
 export const ThemeSwitch = () => {
-  const [theme, setTheme] = useState<"dark" | "light" | undefined>();
-
-  useEffect(() => {
-    const isDark =
-      localStorage.theme === "dark" ||
-      (!("theme" in localStorage) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches);
-
-    setTheme(isDark ? "dark" : "light");
-  }, []);
-
-  const toggleTheme = () => {
-    document.documentElement.classList.toggle("dark");
-    localStorage.theme = localStorage.theme === "dark" ? "light" : "dark";
-
-    setTheme(localStorage.theme);
-  };
+  const { theme, toggleTheme } = useTheme();
 
   if (!theme) return null;
 

@@ -34,7 +34,7 @@ export const MobileNav = ({ crumbs }: DesktopNavProps) => {
 
       <div
         className={
-          "absolute h-full w-full bg-white top-0 bottom-0 left-0 transition-transform ease-in-out duration-200 " +
+          "absolute z-20 h-full w-full bg-white dark:bg-slate-800 top-0 bottom-0 left-0 transition-transform ease-in-out duration-200 " +
           translateClass
         }
       >
@@ -73,7 +73,7 @@ export const MobileNav = ({ crumbs }: DesktopNavProps) => {
                             : undefined
                         }
                         to={crumb.link}
-                        className="h-10 block flex items-center"
+                        className="h-10 block flex items-center dark:text-slate-200 text-xl"
                       >
                         <HStack spacing={2}>
                           <CrumbIcon crumb={crumb} />
