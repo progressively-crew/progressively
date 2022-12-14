@@ -242,7 +242,7 @@ export default function FlagInsights() {
                   <PieChart data={pieChartData} />
                 </div>
 
-                <div className="border-l border-t border-l-gray-200 border-t-gray-200">
+                <div className="border-l border-t border-l-gray-200 border-t-gray-200 dark:border-l-slate-700 border-t-gray-700">
                   <FlagEvalList
                     evalCount={flagEvaluationsCount}
                     items={hitsPerVariant}

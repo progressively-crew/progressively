@@ -8,6 +8,7 @@ import {
   ResponsiveContainer,
   Cell,
 } from "recharts";
+import { useTheme } from "~/modules/theme/useTheme";
 
 export interface BarChartProps {
   data: Array<{
@@ -19,6 +20,10 @@ export interface BarChartProps {
 }
 
 export const BarChart = ({ data, yLabel }: BarChartProps) => {
+  const { theme } = useTheme();
+
+  const legendColor = theme === "dark" ? "white" : "black";
+
   return (
     <ResponsiveContainer width="100%" height="100%">
       <RBarChart
@@ -39,10 +44,20 @@ export const BarChart = ({ data, yLabel }: BarChartProps) => {
             value: "Metrics (variants)",
             position: "insideBottomRight",
             offset: 0,
+            fill: legendColor,
           }}
+          tick={{ fill: legendColor }}
+          tickLine={{ stroke: legendColor }}
         />
         <YAxis
-          label={{ value: yLabel, angle: -90, position: "insideBottomLeft" }}
+          label={{
+            value: yLabel,
+            angle: -90,
+            position: "insideBottomLeft",
+            fill: legendColor,
+          }}
+          tick={{ fill: legendColor }}
+          tickLine={{ stroke: legendColor }}
         />
         <Tooltip />
 

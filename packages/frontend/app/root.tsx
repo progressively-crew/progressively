@@ -19,6 +19,7 @@ import { Spacer } from "./components/Spacer";
 //import { withSentry } from "@sentry/remix";
 import { AiOutlineLogin } from "react-icons/ai";
 import { Button } from "./components/Buttons/Button";
+import { ThemeProvider } from "./modules/theme/ThemeProvider";
 
 /**
  * The `links` export is a function that returns an array of objects that map to
@@ -40,7 +41,9 @@ export const links: LinksFunction = () => {
 function App() {
   return (
     <Document>
-      <Outlet />
+      <ThemeProvider>
+        <Outlet />
+      </ThemeProvider>
     </Document>
   );
 }
@@ -78,6 +81,7 @@ document.documentElement.classList.remove('dark')
       </head>
       <body className="h-full">
         <Background>{children}</Background>
+
         <ScrollRestoration />
         <Scripts />
         <LiveReload />

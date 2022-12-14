@@ -23,7 +23,7 @@ export const PageTitle = ({
           {icon && (
             <span
               aria-hidden
-              className="text-indigo-700 dark:text-indigo-300 text-4xl"
+              className="text-indigo-700 dark:text-indigo-400 text-4xl"
             >
               {icon}
             </span>

@@ -14,7 +14,10 @@ export const Header = ({ title, description, tagline }: HeaderProps) => {
         {tagline}
         <Spacer size={1} />
         <HStack spacing={6}>
-          <p id="header-title" className="text-xl font-bold">
+          <p
+            id="header-title"
+            className="text-xl font-bold dark:text-slate-100"
+          >
             {title}
           </p>
         </HStack>

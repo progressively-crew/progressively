@@ -1,4 +1,4 @@
-import { LogoWithoutText } from "./Logo/WithoutText";
+import { Logo } from "./Logo/Logo";
 
 export interface H1LogoProps {
   children: React.ReactNode;
@@ -7,7 +7,7 @@ export interface H1LogoProps {
 export const H1Logo = ({ children }: H1LogoProps) => {
   return (
     <div className="flex flex-row items-center gap-2">
-      <LogoWithoutText
+      <Logo
         className="h-10 w-10 motion-safe:animate-fade-enter-left motion-safe:opacity-0"
         aria-hidden
       />

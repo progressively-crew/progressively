@@ -6,12 +6,15 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
+import { useTheme } from "~/modules/theme/useTheme";
 
 export interface PieChartProps {
   data: Array<{ name: string; value: number }>;
 }
 
 export const PieChart = ({ data }: PieChartProps) => {
+  const { theme } = useTheme();
+
   return (
     <ResponsiveContainer width="100%" height="100%">
       <RPieChart height={160}>
@@ -41,7 +44,7 @@ export const PieChart = ({ data }: PieChartProps) => {
             <text
               {...props}
               dominantBaseline="central"
-              fill={stringToColor(data[index].name, 25)}
+              fill={stringToColor(data[index].name, theme === "dark" ? 75 : 25)}
             >
               {data[index].name} ({data[index].value})
             </text>

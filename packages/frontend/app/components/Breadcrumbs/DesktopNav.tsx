@@ -1,7 +1,7 @@
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
 import { HStack } from "../HStack";
 import { Link } from "../Link";
-import { LogoWithoutText } from "../Logo/WithoutText";
+import { Logo } from "../Logo/Logo";
 import { MenuButton } from "../MenuButton";
 import { CrumbIcon } from "./CrumbIcon";
 import { Crumbs } from "./types";
@@ -17,7 +17,7 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
     <nav aria-label="Breadcrumbs">
       <ol className="flex h-12 items-center">
         <li className="flex items-center mr-3">
-          <LogoWithoutText aria-label="Progressively" />
+          <Logo aria-label="Progressively" />
         </li>
         {crumbs.map((crumb, index) => {
           const currentPage = index === lastItemIndex;
@@ -53,7 +53,7 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
                       crumb={crumb}
                       color={
                         currentPage
-                          ? color || "text-indigo-700 dark:text-indigo-300"
+                          ? color || "text-indigo-700 dark:text-indigo-400"
                           : ""
                       }
                     />
