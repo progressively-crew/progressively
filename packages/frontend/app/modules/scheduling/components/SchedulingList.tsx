@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
-import { Checkbox } from "~/components/Checkbox";
 import { SliderInput } from "~/components/Fields/SliderInput";
 import { RawTable, Td, Th, Tr } from "~/components/RawTable";
 import { Switch } from "~/components/Switch";
@@ -84,7 +83,7 @@ export const SchedulingList = ({
               {schedule.schedulingStatus !== SchedulingStatus.HAS_RUN && (
                 <AiFillCheckCircle
                   aria-label="The scheduled update has already run"
-                  className="text-2xl text-indigo-500"
+                  className="text-2xl text-indigo-500 dark:text-indigo-20"
                 />
               )}
             </Td>

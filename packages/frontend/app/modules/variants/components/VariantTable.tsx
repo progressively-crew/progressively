@@ -109,7 +109,7 @@ export const VariantTable = ({ variants }: VariantTableProps) => {
                     {variant.isControl && (
                       <AiFillCheckCircle
                         aria-label="This is the control version"
-                        className="text-2xl text-indigo-500"
+                        className="text-2xl text-indigo-500 dark:text-indigo-200"
                       />
                     )}
                   </Td>
