@@ -1,4 +1,3 @@
-import { ButtonCopy } from "~/components/ButtonCopy";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { Link } from "~/components/Link";
 import { RawTable, Td, Th, Tr } from "~/components/RawTable";
@@ -23,7 +22,6 @@ export const WebhooksList = ({
         <Tr>
           <Th>End point</Th>
           <Th>Event</Th>
-          <Th>Secret</Th>
           <Th>Actions</Th>
         </Tr>
       </thead>
@@ -41,14 +39,6 @@ export const WebhooksList = ({
             </Td>
             <Td>
               <WebhookEvent value={webhook.event} />
-            </Td>
-            <Td>
-              <ButtonCopy
-                toCopy={webhook.secret}
-                aria-label="This is a hidden secret. Press to copy."
-              >
-                ******
-              </ButtonCopy>
             </Td>
 
             <Td>

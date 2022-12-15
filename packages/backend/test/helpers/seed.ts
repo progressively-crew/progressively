@@ -81,7 +81,6 @@ export const seedDb = async () => {
           create: {
             uuid: '1',
             endpoint: 'http://localhost:4000',
-            secret: 'this is secret',
             event: 'ACTIVATION',
           },
         },
