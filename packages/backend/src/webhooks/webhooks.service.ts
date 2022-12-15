@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { nanoid } from 'nanoid';
 import { PrismaService } from '../database/prisma.service';
 import { WebhookCreationDTO } from './types';
 
@@ -33,7 +32,6 @@ export class WebhooksService {
       data: {
         endpoint: webhook.endpoint,
         event: webhook.event,
-        secret: nanoid(),
         flagEnvironmentFlagId: flagId,
         flagEnvironmentEnvironmentId: envId,
       },

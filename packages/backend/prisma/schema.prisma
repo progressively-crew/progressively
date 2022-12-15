@@ -115,7 +115,6 @@ model FlagEnvironment {
 model Webhook {
   uuid                         String           @id @default(uuid())
   endpoint                     String
-  secret                       String
   event                        String
   flagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
   flagEnvironmentFlagId        String?
