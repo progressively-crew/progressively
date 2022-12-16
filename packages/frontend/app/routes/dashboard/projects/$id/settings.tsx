@@ -157,7 +157,6 @@ export default function SettingsPage() {
 
               <UserTable
                 userProjects={project.userProject || []}
-                labelledBy="members"
                 canEdit={userRole === UserRoles.Admin}
               />
             </Form>

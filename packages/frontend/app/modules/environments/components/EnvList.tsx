@@ -34,7 +34,7 @@ const EnvRow = ({ env, projectId }: EnvRowProps) => {
 };
 export const EnvList = ({ environments, projectId }: EnvListProps) => {
   return (
-    <RawTable aria-label="Environments available for the project">
+    <RawTable caption="Environments available for the project">
       <thead>
         <Tr>
           <Th>Name</Th>

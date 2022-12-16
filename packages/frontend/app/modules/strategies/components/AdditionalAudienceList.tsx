@@ -19,7 +19,7 @@ export const AdditionalAudienceList = ({
   flagId,
 }: AdditionalAudienceListProps) => {
   return (
-    <RawTable aria-label="Strategies applied on this flag">
+    <RawTable caption="Strategies applied on this flag">
       <thead>
         <Tr>
           <Th>Field</Th>

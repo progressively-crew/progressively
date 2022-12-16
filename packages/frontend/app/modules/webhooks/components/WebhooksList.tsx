@@ -17,7 +17,7 @@ export const WebhooksList = ({
   flagId,
 }: WebhooksListProps) => {
   return (
-    <RawTable>
+    <RawTable caption="Webhook list">
       <thead>
         <Tr>
           <Th>End point</Th>

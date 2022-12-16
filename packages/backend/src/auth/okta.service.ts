@@ -36,11 +36,6 @@ export class OktaService {
       throw new Error('Authentication type not suppored.');
     }
 
-    const jwt = await this.oktaVerifier.verifyAccessToken(
-      token,
-      'api://default',
-    );
-
-    return jwt;
+    return await this.oktaVerifier.verifyAccessToken(token, 'api://default');
   }
 }

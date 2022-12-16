@@ -1,16 +1,27 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef, HTMLAttributes } from "react";
 
-export const RawTable = forwardRef((props: any, ref: any) => {
-  return (
-    <div className="overflow-x-auto overflow-y-clip">
-      <table
-        ref={ref}
-        {...props}
-        className="w-full border-separate border-spacing-0"
-      />
-    </div>
-  );
-});
+export interface RawTableProps extends HTMLAttributes<HTMLTableElement> {
+  children: React.ReactNode;
+  caption: string;
+  role?: string;
+}
+
+export const RawTable = forwardRef(
+  ({ children, caption, ...props }: RawTableProps, ref: any) => {
+    return (
+      <div className="overflow-x-auto overflow-y-clip">
+        <table
+          ref={ref}
+          className="w-full border-separate border-spacing-0"
+          {...props}
+        >
+          <caption className="sr-only">{caption}</caption>
+          {children}
+        </table>
+      </div>
+    );
+  }
+);
 
 export const Tr = ({
   onClick,

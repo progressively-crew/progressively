@@ -18,7 +18,7 @@ export const MetricList = ({
   flagId,
 }: MetricListProps) => {
   return (
-    <RawTable>
+    <RawTable caption="Metrics list">
       <thead>
         <Tr>
           <Th>Name</Th>

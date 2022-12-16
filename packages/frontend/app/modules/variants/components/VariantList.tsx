@@ -72,7 +72,7 @@ export const VariantList = ({
       <Form method="post" id="edit-variant">
         <input type="hidden" name="_type" value="edit-variant" />
 
-        <RawTable>
+        <RawTable caption="Variant list">
           <thead>
             <Tr>
               <Th>Variant</Th>
