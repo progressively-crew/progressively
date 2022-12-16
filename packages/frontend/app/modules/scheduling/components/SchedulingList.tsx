@@ -47,7 +47,7 @@ export const SchedulingList = ({
   flagId,
 }: SchedulingListProps) => {
   return (
-    <RawTable>
+    <RawTable caption="Scheduling list">
       <thead>
         <Tr>
           <Th>Date</Th>

@@ -6,16 +6,16 @@ import { moveToCol, moveToRow } from "./utils";
 
 export interface TableProps {
   children: React.ReactNode;
-  labelledBy: string;
   onSelect: (nextSelection: Array<string>) => void;
   selected: Array<string>;
+  caption: string;
 }
 
 export const Table = ({
   children,
-  labelledBy,
   onSelect,
   selected,
+  caption,
 }: TableProps) => {
   const tableRef = useRef<HTMLTableElement>(null);
 
@@ -151,7 +151,7 @@ export const Table = ({
         role="grid"
         aria-rowcount={rowCount}
         aria-colcount={colCount}
-        aria-labelledby={labelledBy}
+        caption={caption}
         onKeyDown={handleKeyDown}
       >
         {children}

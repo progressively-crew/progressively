@@ -7,19 +7,18 @@ import { Typography } from "~/components/Typography";
 
 export interface UserTableProps {
   userProjects: Array<UserProject>;
-  labelledBy: string;
   canEdit: boolean;
 }
 
-export const UserTable = ({
-  userProjects,
-  labelledBy,
-  canEdit,
-}: UserTableProps) => {
+export const UserTable = ({ userProjects, canEdit }: UserTableProps) => {
   const [selected, setSelected] = useState<Array<string>>([]);
 
   return (
-    <Table labelledBy={labelledBy} onSelect={setSelected} selected={selected}>
+    <Table
+      caption={"Members of the project"}
+      onSelect={setSelected}
+      selected={selected}
+    >
       <Thead disabled={!canEdit}>
         <Col>Full name</Col>
         <Col>Email</Col>

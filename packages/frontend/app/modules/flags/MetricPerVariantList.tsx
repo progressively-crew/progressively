@@ -15,7 +15,7 @@ export interface MetricPerVariantListProps {
 
 export const MetricPerVariantList = ({ items }: MetricPerVariantListProps) => {
   return (
-    <RawTable>
+    <RawTable caption="Metrics per variant list">
       <thead>
         <Tr>
           <Th>Metric</Th>

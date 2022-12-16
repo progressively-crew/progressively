@@ -14,7 +14,7 @@ export interface FlagEvalListProps {
 
 export const FlagEvalList = ({ items, evalCount }: FlagEvalListProps) => {
   return (
-    <RawTable>
+    <RawTable caption="Flag evaluation list">
       <thead>
         <Tr>
           <Th>Value</Th>
