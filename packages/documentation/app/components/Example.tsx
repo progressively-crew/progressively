@@ -15,8 +15,8 @@ const BrowserExample = ({ transitioning }: { transitioning: boolean }) => {
 
   return (
     <div aria-hidden>
-      <Window header={<SearchBar>https://your-app.com</SearchBar>}>
-        <div className="p-4">
+      <Window header={<SearchBar>/</SearchBar>}>
+        <div className="p-2">
           <div className={"transition-all flex flex-row gap-2"}>
             <div
               className={
@@ -51,26 +51,16 @@ const BrowserExample = ({ transitioning }: { transitioning: boolean }) => {
   );
 };
 
+const BROWSER_COUNT = 4;
 export const Example = () => {
   const [percentage, setPercentage] = useState(0);
 
-  const browsers = Array(6).fill(null);
+  const browsers = Array(BROWSER_COUNT).fill(null);
 
-  const base6 = (percentage / 100) * 6;
+  const base6 = (percentage / 100) * BROWSER_COUNT;
 
   return (
-    <section className="max-w-screen-xl mx-auto px-4 py-12 lg:p-20">
-      <h2 className="text-center text-3xl md:text-5xl font-bold">
-        <span className="text-indigo-700">Rollout and rollback</span> as you
-        want
-      </h2>
-
-      <p className="text-center text-gray-700 p-4 md:px-16 md:text-xl lg:text-2xl">
-        Start building your feature, merge the changes, and progressively
-        rollout these changes to your audience. If you encounter unexpected
-        errors, you can simply rollback as easily as you rolled out.
-      </p>
-
+    <div>
       <div className="py-6 flex items-center justify-center">
         <div className="bg-gray-100 pl-10 pr-3 py-3 rounded-full flex flex-row gap-3">
           <input
@@ -86,7 +76,7 @@ export const Example = () => {
         </div>
       </div>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 gap-6">
         {browsers.map((_, index: number) => (
           <BrowserExample
             key={`browser-${index}`}
@@ -94,6 +84,6 @@ export const Example = () => {
           />
         ))}
       </div>
-    </section>
+    </div>
   );
 };

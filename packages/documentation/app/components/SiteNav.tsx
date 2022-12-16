@@ -1,6 +1,6 @@
 import { Link } from "@remix-run/react";
 import { HideTablet } from "./HideMobile";
-import { LogoWithoutText } from "./icons/WithoutText";
+import { Logo } from "./Logo";
 import { InertWhenNavOpened } from "./Nav/InertWhenNavOpened";
 
 const NavLink = ({
@@ -39,13 +39,13 @@ export interface SiteNavProps {
 export const SiteNav = ({ navToggleSlot }: SiteNavProps) => {
   return (
     <InertWhenNavOpened>
-      <nav className="h-14 border-b border-color-gray-500 px-4 md:px-12">
+      <nav className="h-14 border-b border-b-gray-100 px-4 md:px-12 bg-white">
         <div className="max-w-screen-2xl mx-auto h-full">
           <div className="flex flex-row items-center h-full justify-between">
             <div>
               <HideTablet>
                 <Link to="/">
-                  <LogoWithoutText aria-label="Progressively" />
+                  <Logo aria-label="Progressively" className="h-8 w-8" />
                 </Link>
               </HideTablet>
 

@@ -68,7 +68,7 @@ const PerfGrid = () => {
         const color =
           toolSize.name === "Progressively"
             ? "bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"
-            : "bg-gray-700";
+            : "bg-gray-300";
 
         const size = getTimeFromSize(toolSize.weight);
         const threeG = formatTime(size.threeG);
@@ -81,7 +81,7 @@ const PerfGrid = () => {
               <span>{toolSize.name}</span>
             </h3>
 
-            <div className="border border-gray-600 overflow-hidden rounded p-1 pr-4">
+            <div className="border border-gray-300 overflow-hidden rounded p-1 pr-4">
               <div className="flex flex-row gap-4 items-center">
                 <div
                   className={"h-8 rounded-sm " + color}
@@ -94,7 +94,7 @@ const PerfGrid = () => {
 
                   <span aria-hidden>
                     {toolSize.weight / 1000}{" "}
-                    <span className="text-gray-400 text-xs">kB</span>
+                    <span className="text-gray-700 text-xs">kB</span>
                   </span>
                 </div>
               </div>
@@ -110,7 +110,7 @@ const PerfGrid = () => {
 
                 <span className="text-sm" aria-hidden>
                   {threeG.size}{" "}
-                  <span className="text-gray-300 text-xs">{threeG.unit}</span>
+                  <span className="text-gray-700 text-xs">{threeG.unit}</span>
                 </span>
               </span>
 
@@ -123,7 +123,7 @@ const PerfGrid = () => {
 
                 <span className="text-sm" aria-hidden>
                   {fourG.size}{" "}
-                  <span className="text-gray-300 text-xs">{fourG.unit}</span>
+                  <span className="text-gray-700 text-xs">{fourG.unit}</span>
                 </span>
               </span>
 
@@ -136,7 +136,7 @@ const PerfGrid = () => {
 
                 <span className="text-sm" aria-hidden>
                   {desktop.size}{" "}
-                  <span className="text-gray-300 text-xs">{desktop.unit}</span>
+                  <span className="text-gray-700 text-xs">{desktop.unit}</span>
                 </span>
               </span>
             </div>
@@ -149,15 +149,15 @@ const PerfGrid = () => {
 
 export const WeightComparator = () => {
   return (
-    <div className="bg-gray-900 text-white">
-      <section className="max-w-screen-xl mx-auto px-4 py-12 md:p-20">
-        <h2 className="text-center text-3xl md:text-5xl font-bold">
+    <div>
+      <section className="max-w-screen-xl mx-auto px-4">
+        <h2 className="text-center text-3xl md:text-6xl font-bold">
           <span className="text-pink-500">Performance</span> difference
         </h2>
 
         <figure>
           <blockquote cite="https://www.thinkwithgoogle.com/intl/en-ca/marketing-strategies/app-and-mobile/mobile-page-speed-new-industry-benchmarks/">
-            <p className="text-center text-gray-200 p-4 md:px-16 md:text-xl lg:text-2xl before:content-['\201C'] after:content-['\201D']">
+            <p className="text-center text-gray-700 p-4 md:px-16 md:text-xl lg:text-2xl before:content-['\201C'] after:content-['\201D']">
               As page load time goes from <strong>one second</strong> to{" "}
               <strong>seven seconds</strong>, the probability of a mobile site
               visitor <strong>bouncing increases 113%</strong>.
@@ -180,7 +180,7 @@ export const WeightComparator = () => {
           <PerfGrid />
 
           <div className="pt-6 md:pt-16">
-            <p className="text-center text-gray-200 text-xs">
+            <p className="text-center text-gray-700 text-xs">
               Approximative numbers from the{" "}
               <a
                 href="https://github.com/progressively-crew/progressively/tree/master/example/bundle-diffs"

@@ -1,5 +1,5 @@
 import { Link } from "@remix-run/react";
-import { HTMLAttributes } from "react";
+import type { HTMLAttributes } from "react";
 
 export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   to?: string;
