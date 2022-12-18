@@ -12,8 +12,6 @@ const CliExample = () => {
         content={`
 $ git clone https://github.com/progressively-crew/progressively
 $ cd progressively
-$ mv ./packages/backend/.env.example ./packages/backend/.env
-$ mv ./packages/frontend/.env.example ./packages/frontend/.env
 $ docker-compose up -d
     `}
         language="shell"
