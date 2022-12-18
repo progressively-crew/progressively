@@ -24,8 +24,6 @@
 ```sh
 $ git clone https://github.com/progressively-crew/progressively
 $ cd progressively
-$ mv ./packages/backend/.env.example ./packages/backend/.env
-$ mv ./packages/frontend/.env.example ./packages/frontend/.env
 $ docker-compose up -d
 ```
 
@@ -39,9 +37,3 @@ You can now open http://localhost:3000/welcome to create your admin user.
 - Real-time propagation with Websockets
 - No intrusive tracking
 - Self-hosted so that you own the data
-
-## Contribution
-
-Contributions of any kind are very much appreciated :blush:. Thanks for your help!
-
-If you're interested in modifying code, make sure to follow [the development setup](./DEV_SETUP.md). Otherwise, make sure be kind and respectful with the community on the different discussion channels :heart:

@@ -2,21 +2,38 @@ version: "3.9"
 services:
   progressively-frontend:
     build: ./packages/frontend
-    env_file: ./packages/frontend/.env
     ports:
       - "3000:3000"
     environment:
       BACKEND_URL: http://progressively-backend:4000
+      SESSION_SECRET: "abcd"
+      ALLOW_REGISTRATION: true
+      OKTA_ISSUER:
+      OKTA_CLIENT_ID:
     depends_on:
       - progressively-backend
   progressively-backend:
     build: ./packages/backend
-    env_file: ./packages/backend/.env
     ports:
       - "4000:4000"
     environment:
       DATABASE_URL: postgresql://admin:admin@db/progressively
       REDIS_URL: redis://redis-cache
+      ACCESS_TOKEN_SECRET: abcd
+      REFRESH_TOKEN_SECRET: efgh
+      REFRESH_TOKEN_EXPIRES: 84600
+      SMTP_HOST: smtp.ethereal.email
+      SMTP_PORT: 587
+      SMTP_USER:
+      SMTP_PASSWORD:
+      FRONTEND_URL: http://localhost:3000
+      BACKEND_URL: http://localhost:4000
+      SOCKET_TIMEOUT: 10000
+      ALLOW_REGISTRATION: true
+      THROTTLING_TTL: 60
+      THROTTLING_LIMIT: 10000
+      OKTA_ISSUER:
+      OKTA_CLIENT_ID:
     depends_on:
       - db
     command: scripts/docker-compose-init.sh
