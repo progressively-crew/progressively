@@ -17,7 +17,6 @@ import { useActionData } from "@remix-run/react";
 import { Card, CardContent } from "~/components/Card";
 import { H1Logo } from "~/components/H1Logo";
 import { Spacer } from "~/components/Spacer";
-import { Constants } from "~/constants";
 
 export const meta: MetaFunction = () => {
   return {
@@ -32,7 +31,7 @@ export const action: ActionFunction = ({
 };
 
 export const loader: LoaderFunction = () => {
-  if (Constants.AllowRegistration === "true") {
+  if (process.env.ALLOW_REGISTRATION === "true") {
     return null;
   }
 

@@ -1,7 +1,6 @@
 import type { EntryContext } from "@remix-run/node";
 import { RemixServer } from "@remix-run/react";
 import { renderToString } from "react-dom/server";
-import { Constants } from "./constants";
 import { startMockServer } from "./mocks/mock-server";
 // import { initSentryOnServer } from "./modules/sentry/server";
 
@@ -13,8 +12,11 @@ export default function handleRequest(
   responseHeaders: Headers,
   remixContext: EntryContext
 ) {
-  if (Constants.StartMockServer === "true") {
-    console.log("[Mock server initiated] Value is:", Constants.StartMockServer);
+  if (process.env.START_MOCK_SERVER === "true") {
+    console.log(
+      "[Mock server initiated] Value is:",
+      process.env.START_MOCK_SERVER
+    );
     startMockServer();
   }
 

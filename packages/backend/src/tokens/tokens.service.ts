@@ -1,7 +1,7 @@
 import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '../database/prisma.service';
-import { getEnvVars } from '../envVariable';
+import { jwtConstants } from '../jwtConstants';
 import { RefreshTokenPayload } from './types';
 import { UserRetrieveDTO } from '../users/users.dto';
 
@@ -17,7 +17,7 @@ export class TokensService {
   }
 
   createRefreshToken(payload: any) {
-    const { RefreshTokenExpire, RefreshTokenSecret } = getEnvVars();
+    const { RefreshTokenExpire, RefreshTokenSecret } = jwtConstants();
     const expiration = new Date();
 
     expiration.setTime(expiration.getTime() + RefreshTokenExpire);
