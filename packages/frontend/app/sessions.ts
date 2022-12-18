@@ -1,6 +1,5 @@
 import { createCookieSessionStorage } from "@remix-run/node";
-
-const sessionSecret = process.env.SESSION_SECRET || "abcd";
+import { Constants } from "./constants";
 
 const { getSession, commitSession, destroySession } =
   createCookieSessionStorage({
@@ -8,11 +7,11 @@ const { getSession, commitSession, destroySession } =
     cookie: {
       name: "__session",
       httpOnly: true,
-      secure: process.env.NODE_ENV !== "development",
+      secure: Constants.NodeEnv !== "development",
       maxAge: 86_400,
       path: "/",
       sameSite: "lax",
-      secrets: [sessionSecret],
+      secrets: [Constants.SessionSecret],
     },
   });
 

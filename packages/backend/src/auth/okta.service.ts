@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import * as OktaJwtVerifier from '@okta/jwt-verifier';
+import { getEnvVars } from '../envVariable';
 import { OktaConfig } from './types';
 
 @Injectable()
@@ -7,12 +8,11 @@ export class OktaService {
   private oktaVerifier: OktaJwtVerifier | undefined;
 
   static getOktaConfig() {
+    const env = getEnvVars();
     const oktaConfig: OktaConfig = {
-      issuer: String(process.env.OKTA_ISSUER),
-      clientId: String(process.env.OKTA_CLIENT_ID),
-      isOktaActivated: Boolean(
-        process.env.OKTA_ISSUER && process.env.OKTA_CLIENT_ID,
-      ),
+      issuer: env.OktaIssuer,
+      clientId: env.OktaClientId,
+      isOktaActivated: Boolean(env.OktaIssuer && env.OktaClientId),
     };
 
     return oktaConfig;
@@ -23,8 +23,8 @@ export class OktaService {
 
     if (config.isOktaActivated) {
       this.oktaVerifier = new OktaJwtVerifier({
-        issuer: process.env.OKTA_ISSUER,
-        clientId: process.env.OKTA_CLIENT_ID,
+        issuer: config.issuer,
+        clientId: config.clientId,
       });
     }
   }

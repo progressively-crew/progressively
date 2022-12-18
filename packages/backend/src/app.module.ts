@@ -20,7 +20,9 @@ import { SchedulingModule } from './scheduling/scheduling.module';
 import { WebhooksModule } from './webhooks/webhooks.module';
 import { EligibilityModule } from './eligibility/eligibility.module';
 import 'winston-daily-rotate-file';
+import { getEnvVars } from './envVariable';
 
+const env = getEnvVars();
 @Module({
   imports: [
     WinstonModule.forRoot({
@@ -47,10 +49,8 @@ import 'winston-daily-rotate-file';
     UsersModule,
     AuthModule,
     ThrottlerModule.forRoot({
-      ttl: process.env.THROTTLING_TTL ? Number(process.env.THROTTLING_TTL) : 60,
-      limit: process.env.THROTTLING_LIMIT
-        ? Number(process.env.THROTTLING_LIMIT)
-        : 10,
+      ttl: env.ThrottlingTtl,
+      limit: env.ThrottlingLimit,
     }),
     WebsocketModule,
     EnvironmentsModule,

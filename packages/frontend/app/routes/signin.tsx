@@ -31,6 +31,7 @@ import { useOkta } from "~/modules/auth/hooks/useOkta";
 import { Separator } from "~/components/Separator";
 import { Spacer } from "~/components/Spacer";
 import { H1Logo } from "~/components/H1Logo";
+import { Constants } from "~/constants";
 
 export const meta: MetaFunction = () => {
   return {
@@ -84,7 +85,7 @@ export interface LoaderData {
 
 export const loader: LoaderFunction = (): LoaderData => {
   return {
-    showRegister: process.env.ALLOW_REGISTRATION === "true",
+    showRegister: Constants.AllowRegistration === "true",
     oktaConfig: getOktaConfig(),
   };
 };
