@@ -1,6 +1,5 @@
 import { Injectable, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import { createClient, RedisClientType } from 'redis';
-import { getEnvVars } from '../envVariable';
 
 @Injectable()
 export class RedisService implements OnModuleInit, OnModuleDestroy {
@@ -9,7 +8,7 @@ export class RedisService implements OnModuleInit, OnModuleDestroy {
   private alreadySubscribedChannels: { [key: string]: boolean };
 
   constructor() {
-    const redisUrl = getEnvVars().RedisUrl;
+    const redisUrl = process.env.REDIS_URL;
     this.alreadySubscribedChannels = {};
 
     this.publisher = createClient({ url: redisUrl });

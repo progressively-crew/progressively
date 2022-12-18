@@ -1,7 +1,7 @@
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
-import { getEnvVars } from '../../envVariable';
+import { jwtConstants } from '../../jwtConstants';
 import { UserRetrieveDTO } from '../../users/users.dto';
 
 @Injectable()
@@ -10,7 +10,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: getEnvVars().AccessTokenSecret,
+      secretOrKey: jwtConstants().AccessTokenSecret,
     });
   }
 

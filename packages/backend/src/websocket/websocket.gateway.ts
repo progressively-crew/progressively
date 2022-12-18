@@ -10,7 +10,6 @@ import { Rooms } from './rooms';
 import { LocalWebsocket, Subscriber } from './types';
 import { RedisService } from './redis.service';
 import { PopulatedFlagEnv } from '../flags/types';
-import { getEnvVars } from '../envVariable';
 
 @WebSocketGateway()
 export class WebsocketGateway
@@ -30,8 +29,7 @@ export class WebsocketGateway
       clearInterval(this.heartBeatIntervalId);
     });
 
-    const env = getEnvVars();
-    const timeout = env.SocketTimeout;
+    const timeout = Number(process.env.SOCKET_TIMEOUT || 10000);
 
     this.heartBeatIntervalId = setInterval(function ping() {
       server.clients.forEach(function each(ws: LocalWebsocket) {

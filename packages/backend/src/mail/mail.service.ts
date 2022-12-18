@@ -1,21 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import * as nodemailer from 'nodemailer';
-import { getEnvVars } from '../envVariable';
+import { Smtp } from './smtp-constants';
 
 @Injectable()
 export class MailService {
   private transporter: any;
 
   constructor() {
-    const env = getEnvVars();
-
     this.transporter = nodemailer.createTransport({
-      host: env.SmtpHost,
-      port: env.SmtpPort,
+      host: Smtp.host,
+      port: Smtp.port,
       secure: false,
       auth: {
-        user: env.SmtpUser,
-        pass: env.SmtpPassword,
+        user: Smtp.user,
+        pass: Smtp.password,
       },
       tls: {
         ciphers: 'SSLv3',
@@ -24,8 +22,6 @@ export class MailService {
   }
 
   sendRegistrationMail(fullname: string, to: string, activationToken: string) {
-    const env = getEnvVars();
-
     return this.transporter.sendMail({
       from: '"👻" <no-reply@progressively.io>', // sender address
       to,
@@ -36,11 +32,11 @@ export class MailService {
           <p>
             In order for it to be activated, you would need to follow this link:
             <a
-              href="${env.BackendUrl}/auth/activate/${activationToken}"
+              href="${process.env.BACKEND_URL}/auth/activate/${activationToken}"
               target="_blank"
               rel="noopener noreferrer"
             >
-              ${env.BackendUrl}/auth/activate/${activationToken}</a
+              ${process.env.BACKEND_URL}/auth/activate/${activationToken}</a
             >
           </p>
         </div>`,
@@ -52,8 +48,6 @@ export class MailService {
     to: string,
     resetPasswordToken: string,
   ) {
-    const env = getEnvVars();
-
     return this.transporter.sendMail({
       from: '"👻" <no-reply@Progressively.io>', // sender address
       to,
@@ -64,11 +58,11 @@ export class MailService {
         <p>
           In order for it to be done, you would need to follow this link:
           <a
-            href=" ${env.FrontendUrl}/reset-password?token=${resetPasswordToken}&p=s"
+            href=" ${process.env.FRONTEND_URL}/reset-password?token=${resetPasswordToken}&p=s"
             target="_blank"
             rel="noopener noreferrer"
           >
-          ${env.FrontendUrl}/reset-password?token=${resetPasswordToken}&p=s</a
+          ${process.env.FRONTEND_URL}/reset-password?token=${resetPasswordToken}&p=s</a
           >
         </p>
         <p style="color:red;">This link will be valid for 15mns.</p>

@@ -31,7 +31,6 @@ import { AuthService } from './auth.service';
 import { CryptoService } from '../crypto/crypto.service';
 import { User } from '../users/types';
 import { sleep } from '../shared/utils/sleep';
-import { getEnvVars } from '../envVariable';
 
 const toB64 = (toTransform: string) =>
   Buffer.from(toTransform).toString('base64');
@@ -94,8 +93,7 @@ export class AuthController {
      */
     const alreadyHasUsers = await this.userService.hasUsers();
 
-    const env = getEnvVars();
-    if (env.AllowRegistration === 'true') {
+    if (process.env.ALLOW_REGISTRATION === 'true') {
       const existingUser = await this.userService.findByEmail(userDto.email);
 
       if (existingUser) {
@@ -151,8 +149,9 @@ export class AuthController {
     const updatedUser = await this.authService.activateUser(fromB64(rawToken));
 
     if (updatedUser) {
-      const env = getEnvVars();
-      return res.redirect(`${env.FrontendUrl}/signin?userActivated=true`);
+      return res.redirect(
+        `${process.env.FRONTEND_URL}/signin?userActivated=true`,
+      );
     }
 
     throw new UnauthorizedException();
