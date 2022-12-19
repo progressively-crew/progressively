@@ -16,7 +16,7 @@ export const Features = () => (
         bottom={
           <div className="flex justify-center">
             <div className="inline-block">
-              <p className="bg-gray-900 text-white p-2 rounded-3xl flex flex-row gap-4 text-sm">
+              <p className="bg-gray-900 dark:bg-slate-900 text-white p-2 rounded-3xl flex flex-row gap-4 text-sm">
                 <BsClockHistory className="text-lg" aria-hidden />
                 <span>
                   <VisuallyHidden>Example:</VisuallyHidden> Flag activated at

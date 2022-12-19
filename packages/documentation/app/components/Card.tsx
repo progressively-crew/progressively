@@ -37,17 +37,24 @@ export const Card = ({
     <article
       aria-labelledby={id}
       className={
-        "bg-white rounded-xl px-4 py-16 h-full relative drop-shadow-lg overflow-hidden flex flex-col justify-center " +
+        "bg-white dark:bg-slate-800 rounded-xl px-4 py-16 h-full relative drop-shadow-lg overflow-hidden flex flex-col justify-center " +
         " " +
         wrapperStyles
       }
     >
-      {top && <div className="pb-4">{top}</div>}
-      <h3 className={"font-bold text-center " + titleStyles} id={id}>
+      {top && <div className="pb-4 dark:text-slate-100">{top}</div>}
+      <h3
+        className={"font-bold text-center dark:text-slate-100 " + titleStyles}
+        id={id}
+      >
         {title}
       </h3>
 
-      <div className={"text-center pt-2 text-gray-600 " + contentStyles}>
+      <div
+        className={
+          "text-center pt-2 text-gray-600 dark:text-slate-200 " + contentStyles
+        }
+      >
         {children}
       </div>
 
