@@ -7,7 +7,7 @@ services:
     environment:
       BACKEND_URL: http://progressively-backend:4000
       SESSION_SECRET: "abcd"
-      ALLOW_REGISTRATION: true
+      ALLOW_REGISTRATION: "true"
       OKTA_ISSUER:
       OKTA_CLIENT_ID:
     depends_on:
@@ -29,7 +29,7 @@ services:
       FRONTEND_URL: http://localhost:3000
       BACKEND_URL: http://localhost:4000
       SOCKET_TIMEOUT: 10000
-      ALLOW_REGISTRATION: true
+      ALLOW_REGISTRATION: "true"
       THROTTLING_TTL: 60
       THROTTLING_LIMIT: 10000
       OKTA_ISSUER:
