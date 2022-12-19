@@ -4,7 +4,8 @@ import { Features } from "~/components/Features";
 import { Hero } from "~/components/Hero";
 import { WeightComparator } from "~/components/WeightComparator";
 import homeCss from "../styles/home.css";
-import theme from "highlight.js/styles/github-dark.css";
+import darkTheme from "highlight.js/styles/github-dark.css";
+import lightTheme from "highlight.js/styles/github.css";
 import { useFlags } from "@progressively/react";
 import { SiteNav } from "~/components/SiteNav";
 import { Timeline, TimelineStep } from "~/components/Timeline";
@@ -44,8 +45,14 @@ export const links: LinksFunction = () => {
     },
     {
       rel: "stylesheet",
-      href: theme,
+      href: darkTheme,
     },
+    {
+      rel: "stylesheet",
+      href: lightTheme,
+      media: "(prefers-color-scheme: dark)",
+    },
+
     { rel: "stylesheet", href: homeCss },
   ];
 };

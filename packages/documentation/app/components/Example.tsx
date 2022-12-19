@@ -62,7 +62,7 @@ export const Example = () => {
   return (
     <div className="hidden md:block">
       <div className="py-6 flex items-center justify-center">
-        <div className="bg-gray-100 pl-10 pr-3 py-3 rounded-full flex flex-row gap-3">
+        <div className="bg-gray-100 dark:bg-slate-800 pl-10 pr-3 py-3 rounded-full flex flex-row gap-3">
           <input
             type="range"
             aria-label="Percentage of the audience"

@@ -40,9 +40,8 @@ export const Features = () => (
           </div>
         }
       >
-        Create single or multi-variants for your flags, monitor their
-        evaluations, add custom metrics and understand the way your audience
-        uses your app.
+        Create single or multi-variants, monitor their evaluations and add
+        custom metrics to analyze conversion
       </Card>
 
       <Card
