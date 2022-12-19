@@ -8,7 +8,7 @@ export const Installation = () => {
   return (
     <div className="flex flex-col justify-center">
       <div>
-        <div className="bg-slate-800 text-3xl text-white rounded-lg inline-block p-2">
+        <div className="bg-gray-100 border border-gray-200 text-3xl text-gray-500 rounded-lg inline-block p-2">
           <TbServer2 />
         </div>
       </div>
@@ -49,8 +49,6 @@ export const InstallationCli = () => {
           content={`
 	$ git clone https://github.com/progressively-crew/progressively
 	$ cd progressively
-	$ mv ./packages/backend/.env.example ./packages/backend/.env
-	$ mv ./packages/frontend/.env.example ./packages/frontend/.env
 	$ docker-compose up -d
 		`}
           language="shell"

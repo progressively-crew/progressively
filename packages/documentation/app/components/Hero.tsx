@@ -7,7 +7,7 @@ export const Hero = () => {
   const { track } = useFlags();
 
   return (
-    <div className="max-w-screen-xl mx-auto px-4 md:px-0 py-32 w-full grid grid-cols-[3fr_2fr] gap-8">
+    <div className="max-w-screen-xl mx-auto px-4 md:px-0 py-12 md:py-32 w-full grid md:grid-cols-[3fr_2fr] gap-8">
       <div>
         <div className="md:pb-8">
           <Logo className="h-16 w-16" />

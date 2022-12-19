@@ -43,9 +43,9 @@ export const Card = ({
       }
     >
       {top && <div className="pb-4">{top}</div>}
-      <h2 className={"font-bold text-center " + titleStyles} id={id}>
+      <h3 className={"font-bold text-center " + titleStyles} id={id}>
         {title}
-      </h2>
+      </h3>
 
       <div className={"text-center pt-2 text-gray-600 " + contentStyles}>
         {children}

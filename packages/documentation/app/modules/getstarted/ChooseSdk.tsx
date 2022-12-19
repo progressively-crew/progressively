@@ -8,7 +8,7 @@ export const ChooseSdk = () => {
   return (
     <div className="flex flex-col justify-center">
       <div>
-        <div className="bg-slate-800 text-3xl text-white rounded-lg inline-block p-2">
+        <div className="bg-gray-100 border border-gray-200 text-3xl text-gray-500 rounded-lg inline-block p-2">
           <VscTools />
         </div>
       </div>

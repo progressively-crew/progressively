@@ -60,7 +60,7 @@ export const Example = () => {
   const base6 = (percentage / 100) * BROWSER_COUNT;
 
   return (
-    <div>
+    <div className="hidden md:block">
       <div className="py-6 flex items-center justify-center">
         <div className="bg-gray-100 pl-10 pr-3 py-3 rounded-full flex flex-row gap-3">
           <input
@@ -76,7 +76,7 @@ export const Example = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid md:grid-cols-2 gap-6">
         {browsers.map((_, index: number) => (
           <BrowserExample
             key={`browser-${index}`}

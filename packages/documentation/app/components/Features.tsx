@@ -25,7 +25,7 @@ export const Features = () => (
           </div>
         }
       >
-        <p>Activate or deactivate your flags at a given time</p>
+        <p>Activate or deactivate your flags at any given time</p>
       </Card>
 
       <Card
@@ -51,7 +51,8 @@ export const Features = () => (
           </div>
         }
       >
-        Rollout to only specific subsets of your audience
+        Rollout to only specific subsets of your audience based on qualitative
+        criteria
       </Card>
 
       <Card

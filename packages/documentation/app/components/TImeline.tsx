@@ -12,15 +12,15 @@ export interface TimelineStepProps {
 }
 export const TimelineStep = ({ left, right, position }: TimelineStepProps) => {
   return (
-    <li className="max-w-screen-xl mx-auto px-4 md:px-0 py-20 relative">
-      <div className="grid grid-cols-[1fr_auto_1fr] gap-20 items-center">
-        {left}
+    <li className="max-w-screen-xl mx-auto px-4 md:px-0 py-8 md:py-20 relative">
+      <div className="grid md:grid-cols-[1fr_auto_1fr] md:gap-20 items-center">
+        {left && <div className="hidden md:block">{left}</div>}
 
         <div>
-          <div className="h-full absolute bg-transparent w-[1px] top-0 ml-[16px] border-r border-gray-500 border-dashed" />
+          <div className="hidden md:block h-full absolute bg-transparent w-[1px] top-0 ml-[16px] border-r border-gray-500 border-dashed" />
 
-          <div className="py-4 bg-gray-50 z-10 relative">
-            <div className="rounded-full w-8 h-8 border-2 border-indigo-100 bg-white text-sm text-indigo-700 items-center justify-center flex ">
+          <div className="py-4 bg-gray-50 z-10 relative hidden md:block">
+            <div className="hidden md:flex rounded-full w-8 h-8 border-2 border-gray-200 bg-white text-sm text-gray-700 items-center justify-center">
               {position}
             </div>
           </div>

@@ -66,9 +66,7 @@ const PerfGrid = () => {
         const percentageSize = (toolSize.weight / Maxima) * 100;
 
         const color =
-          toolSize.name === "Progressively"
-            ? "bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"
-            : "bg-gray-300";
+          toolSize.name === "Progressively" ? "bg-indigo-500" : "bg-gray-300";
 
         const size = getTimeFromSize(toolSize.weight);
         const threeG = formatTime(size.threeG);
@@ -81,7 +79,7 @@ const PerfGrid = () => {
               <span>{toolSize.name}</span>
             </h3>
 
-            <div className="border border-gray-300 overflow-hidden rounded p-1 pr-4">
+            <div className="border border-gray-300 rounded p-1 pr-4 drop-shadow-md">
               <div className="flex flex-row gap-4 items-center">
                 <div
                   className={"h-8 rounded-sm " + color}
@@ -102,7 +100,7 @@ const PerfGrid = () => {
 
             <div className="flex flex-row md:grid md:grid-cols-3 gap-4 items-center">
               <span className="flex flex-row gap-1 items-center">
-                <Md3GMobiledata aria-hidden className="text-pink-500" />
+                <Md3GMobiledata aria-hidden className="text-indigo-700" />
                 <VisuallyHidden>
                   {`Time to download ${toolSize.name} on 3G: ${threeG.size}
                   ${threeG.unit}`}
@@ -115,7 +113,7 @@ const PerfGrid = () => {
               </span>
 
               <span className="flex flex-row gap-1 items-center">
-                <Md4GMobiledata aria-hidden className="text-pink-500" />
+                <Md4GMobiledata aria-hidden className="text-indigo-700" />
                 <VisuallyHidden>
                   {`Time to download ${toolSize.name} on 3G: ${fourG.size}
                   ${fourG.unit}`}
@@ -128,7 +126,7 @@ const PerfGrid = () => {
               </span>
 
               <span className="flex flex-row gap-1 items-center">
-                <AiOutlineDesktop aria-hidden className="text-pink-500" />
+                <AiOutlineDesktop aria-hidden className="text-indigo-700" />
                 <VisuallyHidden>
                   {`Time to download ${toolSize.name} on high speed connection: ${desktop.size}
                   ${desktop.unit}`}
@@ -149,55 +147,52 @@ const PerfGrid = () => {
 
 export const WeightComparator = () => {
   return (
-    <div>
-      <section className="max-w-screen-xl mx-auto px-4">
-        <h2 className="text-center text-3xl md:text-6xl font-bold">
-          <span className="text-pink-500">Performance</span> difference
-        </h2>
+    <section>
+      <h2 className="text-center text-3xl md:text-6xl font-bold">
+        <span className="text-indigo-700">Performance</span> difference
+      </h2>
 
-        <figure>
-          <blockquote cite="https://www.thinkwithgoogle.com/intl/en-ca/marketing-strategies/app-and-mobile/mobile-page-speed-new-industry-benchmarks/">
-            <p className="text-center text-gray-700 p-4 md:px-16 md:text-xl lg:text-2xl before:content-['\201C'] after:content-['\201D']">
-              As page load time goes from <strong>one second</strong> to{" "}
-              <strong>seven seconds</strong>, the probability of a mobile site
-              visitor <strong>bouncing increases 113%</strong>.
-            </p>
-          </blockquote>
-          <figcaption className="text-center">
-            —{" "}
+      <figure>
+        <blockquote cite="https://www.thinkwithgoogle.com/intl/en-ca/marketing-strategies/app-and-mobile/mobile-page-speed-new-industry-benchmarks/">
+          <p className="text-center text-gray-700 p-4 md:px-16 md:text-xl lg:text-2xl before:content-['\201C'] after:content-['\201D']">
+            As page load time goes from <strong>one second</strong> to{" "}
+            <strong>seven seconds</strong>, the probability of a mobile site
+            visitor <strong>bouncing increases 113%</strong>.
+          </p>
+        </blockquote>
+        <figcaption className="text-center">
+          —{" "}
+          <a
+            href="https://www.thinkwithgoogle.com/intl/en-ca/marketing-strategies/app-and-mobile/mobile-page-speed-new-industry-benchmarks/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline"
+          >
+            ThinkwithGoogle
+          </a>
+        </figcaption>
+      </figure>
+
+      <div className="max-w-screen-xl mx-auto pt-4 md:pt-8">
+        <PerfGrid />
+
+        <div className="pt-6 md:pt-8">
+          <p className="text-center text-gray-700 text-xs">
+            Approximative numbers from the{" "}
             <a
-              href="https://www.thinkwithgoogle.com/intl/en-ca/marketing-strategies/app-and-mobile/mobile-page-speed-new-industry-benchmarks/"
+              href="https://github.com/progressively-crew/progressively/tree/master/example/bundle-diffs"
               target="_blank"
               rel="noopener noreferrer"
               className="underline"
             >
-              ThinkwithGoogle
+              Bundle diff example Nextjs project{" "}
             </a>
-          </figcaption>
-        </figure>
-
-        <div className="max-w-screen-xl mx-auto pt-4 md:pt-12">
-          <PerfGrid />
-
-          <div className="pt-6 md:pt-16">
-            <p className="text-center text-gray-700 text-xs">
-              Approximative numbers from the{" "}
-              <a
-                href="https://github.com/progressively-crew/progressively/tree/master/example/bundle-diffs"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline"
-              >
-                Bundle diff example Nextjs project{" "}
-              </a>
-              . Download time is calculated on the basis of{" "}
-              <strong>50kB/s</strong> for 3G devices, <strong>875kB/s</strong>{" "}
-              for 4G devices and <strong>5MB/s</strong> for high speed
-              connection.
-            </p>
-          </div>
+            . Download time is calculated on the basis of{" "}
+            <strong>50kB/s</strong> for 3G devices, <strong>875kB/s</strong> for
+            4G devices and <strong>5MB/s</strong> for high speed connection.
+          </p>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 };
