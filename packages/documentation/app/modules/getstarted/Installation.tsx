@@ -13,9 +13,11 @@ export const Installation = () => {
         </div>
       </div>
 
-      <h3 className="font-bold pt-2 text-xl">Create your own instance</h3>
+      <h3 className="font-bold pt-2 text-xl dark:text-slate-100">
+        Create your own instance
+      </h3>
 
-      <p className="pt-1 md:pt-2 text-gray-700">
+      <p className="pt-1 md:pt-2 text-gray-700 dark:text-slate-200">
         Progressively is a self-hosted feature flagging tool. With the following
         commands, you will create a running instance of Progressively that you
         can interact with. Host it on your server, own your data.

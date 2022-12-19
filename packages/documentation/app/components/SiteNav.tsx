@@ -39,7 +39,7 @@ export interface SiteNavProps {
 export const SiteNav = ({ navToggleSlot }: SiteNavProps) => {
   return (
     <InertWhenNavOpened>
-      <nav className="h-14 border-b border-b-gray-100 px-4 md:px-12 bg-white">
+      <nav className="h-14 border-b border-b-gray-100 px-4 md:px-12 bg-white dark:bg-slate-800 dark:border-b-slate-700">
         <div className="max-w-screen-2xl mx-auto h-full">
           <div className="flex flex-row items-center h-full justify-between">
             <div>

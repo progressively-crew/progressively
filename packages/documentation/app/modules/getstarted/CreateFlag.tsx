@@ -13,9 +13,11 @@ export const CreateFlag = () => {
         </div>
       </div>
 
-      <h3 className="font-bold pt-2 text-xl">Create a feature flag</h3>
+      <h3 className="font-bold pt-2 text-xl dark:text-slate-100">
+        Create a feature flag
+      </h3>
 
-      <p className="pt-1 md:pt-2 text-gray-700">
+      <p className="pt-1 md:pt-2 text-gray-700 dark:text-slate-200">
         Progressively is built to be usable on any types of application. From
         frontend, to backend, to CLIs. Anything that can send an HTTP request
         can use Progressively. And it supports{" "}

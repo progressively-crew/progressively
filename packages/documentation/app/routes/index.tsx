@@ -72,7 +72,7 @@ export default function Index() {
   useAllFlags();
 
   return (
-    <div className="bg-gray-50">
+    <div className="bg-gray-50 dark:bg-slate-900">
       <SiteNav />
       <main>
         <div className="flex flex-col gap-20">

@@ -1,5 +1,4 @@
 import React from "react";
-import { AiOutlineDesktop } from "react-icons/ai";
 import { Md3GMobiledata, Md4GMobiledata } from "react-icons/md";
 import { VisuallyHidden } from "./VisuallyHidden";
 
@@ -135,8 +134,11 @@ const PerfGrid = () => {
 export const WeightComparator = () => {
   return (
     <section>
-      <h2 className="text-center text-3xl md:text-6xl font-bold">
-        <span className="text-indigo-700">Performance</span> difference
+      <h2 className="text-center text-3xl md:text-6xl font-bold dark:text-white">
+        <span className="text-indigo-700 dark:text-indigo-400">
+          Performance
+        </span>{" "}
+        difference
       </h2>
 
       <figure>

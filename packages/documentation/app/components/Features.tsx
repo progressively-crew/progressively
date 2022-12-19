@@ -7,7 +7,9 @@ import { VisuallyHidden } from "./VisuallyHidden";
 
 export const Features = () => (
   <section className="max-w-screen-xl mx-auto">
-    <h2 className="text-center text-3xl md:text-6xl font-bold">Operate</h2>
+    <h2 className="text-center text-3xl md:text-6xl font-bold dark:text-white">
+      Operate
+    </h2>
     <div className="grid px-4 lg:px-0 lg:grid-cols-4 gap-6 pt-12">
       <Card
         title="Scheduling"

@@ -13,12 +13,15 @@ export const Hero = () => {
           <Logo className="h-16 w-16" />
         </div>
 
-        <h1 className="text-black text-3xl font-extrabold sm:text-5xl p-1">
+        <h1 className="text-black text-3xl dark:text-white font-extrabold sm:text-5xl p-1">
           Rollout quickly, effectively,
-          <span className="sm:block text-indigo-700"> Progressively. </span>
+          <span className="sm:block dark:text-indigo-400 text-indigo-700">
+            {" "}
+            Progressively.{" "}
+          </span>
         </h1>
 
-        <p className="mt-4 max-w-xl sm:text-xl sm:leading-relaxed text-gray-600">
+        <p className="mt-4 max-w-xl sm:text-xl sm:leading-relaxed text-gray-600 dark:text-slate-200">
           A simple, accessible, lightweight, self-hosted and OpenSource{" "}
           <strong>feature flagging tool</strong>.
         </p>
