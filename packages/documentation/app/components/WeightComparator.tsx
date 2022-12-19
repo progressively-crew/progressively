@@ -98,7 +98,7 @@ const PerfGrid = () => {
               </div>
             </div>
 
-            <div className="flex flex-row md:grid md:grid-cols-3 gap-4 items-center">
+            <div className="flex flex-row md:grid md:grid-cols-2 gap-4 items-center">
               <span className="flex flex-row gap-1 items-center">
                 <Md3GMobiledata aria-hidden className="text-indigo-700" />
                 <VisuallyHidden>
@@ -122,19 +122,6 @@ const PerfGrid = () => {
                 <span className="text-sm" aria-hidden>
                   {fourG.size}{" "}
                   <span className="text-gray-700 text-xs">{fourG.unit}</span>
-                </span>
-              </span>
-
-              <span className="flex flex-row gap-1 items-center">
-                <AiOutlineDesktop aria-hidden className="text-indigo-700" />
-                <VisuallyHidden>
-                  {`Time to download ${toolSize.name} on high speed connection: ${desktop.size}
-                  ${desktop.unit}`}
-                </VisuallyHidden>
-
-                <span className="text-sm" aria-hidden>
-                  {desktop.size}{" "}
-                  <span className="text-gray-700 text-xs">{desktop.unit}</span>
                 </span>
               </span>
             </div>
@@ -176,7 +163,7 @@ export const WeightComparator = () => {
       <div className="max-w-screen-xl mx-auto pt-4 md:pt-8">
         <PerfGrid />
 
-        <div className="pt-6 md:pt-8">
+        <div className="pt-6">
           <p className="text-center text-gray-700 text-xs">
             Approximative numbers from the{" "}
             <a
@@ -187,9 +174,6 @@ export const WeightComparator = () => {
             >
               Bundle diff example Nextjs project{" "}
             </a>
-            . Download time is calculated on the basis of{" "}
-            <strong>50kB/s</strong> for 3G devices, <strong>875kB/s</strong> for
-            4G devices and <strong>5MB/s</strong> for high speed connection.
           </p>
         </div>
       </div>
