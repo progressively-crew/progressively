@@ -2048,6 +2048,11 @@ video {
     --tw-text-opacity: 1;
     color: rgb(148 163 184 / var(--tw-text-opacity));
   }
+
+  .active\:dark\:text-slate-50:active {
+    --tw-text-opacity: 1;
+    color: rgb(248 250 252 / var(--tw-text-opacity));
+  }
 }
 
 @media (min-width: 640px) {
