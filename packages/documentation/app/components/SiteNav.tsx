@@ -1,6 +1,6 @@
 import { Link } from "@remix-run/react";
 import { HideTablet } from "./HideMobile";
-import { LogoWithoutText } from "./icons/WithoutText";
+import { Logo } from "./Logo";
 import { InertWhenNavOpened } from "./Nav/InertWhenNavOpened";
 
 const NavLink = ({
@@ -13,7 +13,7 @@ const NavLink = ({
   href?: string;
 }) => {
   const className =
-    "font-semibold hover:underline text-gray-800 active:text-gray-600";
+    "font-semibold hover:underline text-gray-800 active:text-gray-600 dark:text-slate-200 active:dark:text-slate-50";
   if (href) {
     return (
       <a
@@ -39,13 +39,13 @@ export interface SiteNavProps {
 export const SiteNav = ({ navToggleSlot }: SiteNavProps) => {
   return (
     <InertWhenNavOpened>
-      <nav className="h-14 border-b border-color-gray-500 px-4 md:px-12">
+      <nav className="h-14 border-b border-b-gray-100 px-4 md:px-12 bg-white dark:bg-slate-800 dark:border-b-slate-700">
         <div className="max-w-screen-2xl mx-auto h-full">
           <div className="flex flex-row items-center h-full justify-between">
             <div>
               <HideTablet>
                 <Link to="/">
-                  <LogoWithoutText aria-label="Progressively" />
+                  <Logo aria-label="Progressively" className="h-8 w-8" />
                 </Link>
               </HideTablet>
 
@@ -59,7 +59,7 @@ export const SiteNav = ({ navToggleSlot }: SiteNavProps) => {
               <li>
                 <NavLink to="/docs/introduction/why">Documentation</NavLink>
               </li>
-              <li>
+              <li className="hidden md:block">
                 <NavLink href="https://frontend-progressively.fly.dev/signin">
                   Demo instance
                 </NavLink>

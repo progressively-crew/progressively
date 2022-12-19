@@ -1,5 +1,4 @@
 import React from "react";
-import { AiOutlineDesktop } from "react-icons/ai";
 import { Md3GMobiledata, Md4GMobiledata } from "react-icons/md";
 import { VisuallyHidden } from "./VisuallyHidden";
 
@@ -67,8 +66,8 @@ const PerfGrid = () => {
 
         const color =
           toolSize.name === "Progressively"
-            ? "bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"
-            : "bg-gray-700";
+            ? "bg-indigo-500"
+            : "bg-gray-300 dark:bg-slate-600";
 
         const size = getTimeFromSize(toolSize.weight);
         const threeG = formatTime(size.threeG);
@@ -77,66 +76,59 @@ const PerfGrid = () => {
 
         return (
           <React.Fragment key={toolSize.name}>
-            <h3 className="font-semibold flex flex-row items-center md:justify-end pt-4 md:pt-0">
+            <h3 className="font-semibold flex flex-row items-center md:justify-end pt-4 md:pt-0 dark:text-slate-200">
               <span>{toolSize.name}</span>
             </h3>
 
-            <div className="border border-gray-600 overflow-hidden rounded p-1 pr-4">
+            <div className="border border-gray-300 dark:border-slate-600 rounded p-1 pr-4 drop-shadow-md">
               <div className="flex flex-row gap-4 items-center">
                 <div
                   className={"h-8 rounded-sm " + color}
                   style={{ width: `${percentageSize}%` }}
                 />
-                <div className="flex shrink-0 flex-row gap-4">
+                <div className="flex shrink-0 flex-row gap-4 dark:text-slate-200">
                   <VisuallyHidden>
                     {`Size of ${toolSize.name}: ${toolSize.weight / 1000}kB`}
                   </VisuallyHidden>
 
                   <span aria-hidden>
                     {toolSize.weight / 1000}{" "}
-                    <span className="text-gray-400 text-xs">kB</span>
+                    <span className="text-gray-700 dark:text-slate-400 text-xs">
+                      kB
+                    </span>
                   </span>
                 </div>
               </div>
             </div>
 
-            <div className="flex flex-row md:grid md:grid-cols-3 gap-4 items-center">
+            <div className="flex flex-row md:grid md:grid-cols-2 gap-4 items-center">
               <span className="flex flex-row gap-1 items-center">
-                <Md3GMobiledata aria-hidden className="text-pink-500" />
+                <Md3GMobiledata aria-hidden className="text-indigo-700" />
                 <VisuallyHidden>
                   {`Time to download ${toolSize.name} on 3G: ${threeG.size}
                   ${threeG.unit}`}
                 </VisuallyHidden>
 
-                <span className="text-sm" aria-hidden>
+                <span className="text-sm dark:text-slate-200" aria-hidden>
                   {threeG.size}{" "}
-                  <span className="text-gray-300 text-xs">{threeG.unit}</span>
+                  <span className="text-gray-700 text-xs dark:text-slate-400">
+                    {threeG.unit}
+                  </span>
                 </span>
               </span>
 
               <span className="flex flex-row gap-1 items-center">
-                <Md4GMobiledata aria-hidden className="text-pink-500" />
+                <Md4GMobiledata aria-hidden className="text-indigo-700" />
                 <VisuallyHidden>
                   {`Time to download ${toolSize.name} on 3G: ${fourG.size}
                   ${fourG.unit}`}
                 </VisuallyHidden>
 
-                <span className="text-sm" aria-hidden>
+                <span className="text-sm dark:text-slate-200" aria-hidden>
                   {fourG.size}{" "}
-                  <span className="text-gray-300 text-xs">{fourG.unit}</span>
-                </span>
-              </span>
-
-              <span className="flex flex-row gap-1 items-center">
-                <AiOutlineDesktop aria-hidden className="text-pink-500" />
-                <VisuallyHidden>
-                  {`Time to download ${toolSize.name} on high speed connection: ${desktop.size}
-                  ${desktop.unit}`}
-                </VisuallyHidden>
-
-                <span className="text-sm" aria-hidden>
-                  {desktop.size}{" "}
-                  <span className="text-gray-300 text-xs">{desktop.unit}</span>
+                  <span className="text-gray-700 dark:text-slate-400 text-xs">
+                    {fourG.unit}
+                  </span>
                 </span>
               </span>
             </div>
@@ -149,55 +141,52 @@ const PerfGrid = () => {
 
 export const WeightComparator = () => {
   return (
-    <div className="bg-gray-900 text-white">
-      <section className="max-w-screen-xl mx-auto px-4 py-12 md:p-20">
-        <h2 className="text-center text-3xl md:text-5xl font-bold">
-          <span className="text-pink-500">Performance</span> difference
-        </h2>
+    <section>
+      <h2 className="text-center text-3xl md:text-6xl font-bold dark:text-white">
+        <span className="text-indigo-700 dark:text-indigo-400">
+          Performance
+        </span>{" "}
+        difference
+      </h2>
 
-        <figure>
-          <blockquote cite="https://www.thinkwithgoogle.com/intl/en-ca/marketing-strategies/app-and-mobile/mobile-page-speed-new-industry-benchmarks/">
-            <p className="text-center text-gray-200 p-4 md:px-16 md:text-xl lg:text-2xl before:content-['\201C'] after:content-['\201D']">
-              As page load time goes from <strong>one second</strong> to{" "}
-              <strong>seven seconds</strong>, the probability of a mobile site
-              visitor <strong>bouncing increases 113%</strong>.
-            </p>
-          </blockquote>
-          <figcaption className="text-center">
-            —{" "}
+      <figure>
+        <blockquote cite="https://www.thinkwithgoogle.com/intl/en-ca/marketing-strategies/app-and-mobile/mobile-page-speed-new-industry-benchmarks/">
+          <p className="text-center text-gray-700 dark:text-slate-200 p-4 md:px-16 md:text-xl lg:text-2xl before:content-['\201C'] after:content-['\201D']">
+            As page load time goes from <strong>one second</strong> to{" "}
+            <strong>seven seconds</strong>, the probability of a mobile site
+            visitor <strong>bouncing increases 113%</strong>.
+          </p>
+        </blockquote>
+        <figcaption className="text-center dark:text-slate-200">
+          —{" "}
+          <a
+            href="https://www.thinkwithgoogle.com/intl/en-ca/marketing-strategies/app-and-mobile/mobile-page-speed-new-industry-benchmarks/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline"
+          >
+            ThinkwithGoogle
+          </a>
+        </figcaption>
+      </figure>
+
+      <div className="max-w-screen-xl mx-auto pt-4 md:pt-8">
+        <PerfGrid />
+
+        <div className="pt-6">
+          <p className="text-center text-gray-700 text-xs dark:text-slate-200">
+            Approximative numbers from the{" "}
             <a
-              href="https://www.thinkwithgoogle.com/intl/en-ca/marketing-strategies/app-and-mobile/mobile-page-speed-new-industry-benchmarks/"
+              href="https://github.com/progressively-crew/progressively/tree/master/example/bundle-diffs"
               target="_blank"
               rel="noopener noreferrer"
               className="underline"
             >
-              ThinkwithGoogle
+              Bundle diff example Nextjs project{" "}
             </a>
-          </figcaption>
-        </figure>
-
-        <div className="max-w-screen-xl mx-auto pt-4 md:pt-12">
-          <PerfGrid />
-
-          <div className="pt-6 md:pt-16">
-            <p className="text-center text-gray-200 text-xs">
-              Approximative numbers from the{" "}
-              <a
-                href="https://github.com/progressively-crew/progressively/tree/master/example/bundle-diffs"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline"
-              >
-                Bundle diff example Nextjs project{" "}
-              </a>
-              . Download time is calculated on the basis of{" "}
-              <strong>50kB/s</strong> for 3G devices, <strong>875kB/s</strong>{" "}
-              for 4G devices and <strong>5MB/s</strong> for high speed
-              connection.
-            </p>
-          </div>
+          </p>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 };
