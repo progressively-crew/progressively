@@ -19,10 +19,8 @@ export const CreateFlag = () => {
       </h3>
 
       <p className="pt-1 md:pt-2 text-gray-700 dark:text-slate-200">
-        Progressively is built to be usable on any types of application. From
-        frontend, to backend, to CLIs. Anything that can send an HTTP request
-        can use Progressively. And it supports{" "}
-        <strong>Server Side Rendering without flickering</strong>.
+        Start the dashboard, follow the instructions and create your first
+        feature flag. It will be available for usage with SDKs.
       </p>
 
       <div>
