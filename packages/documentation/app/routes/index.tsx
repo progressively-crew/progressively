@@ -8,7 +8,6 @@ import darkTheme from "highlight.js/styles/github-dark.css";
 import lightTheme from "highlight.js/styles/github.css";
 import { useFlags } from "@progressively/react";
 import { SiteNav } from "~/components/SiteNav";
-import { Timeline, TimelineStep } from "~/components/Timeline";
 import {
   Installation,
   InstallationCli,
@@ -16,6 +15,7 @@ import {
 import { ChooseSdk, ChooseSdkCode } from "~/modules/getstarted/ChooseSdk";
 import { CreateFlag, CreateFlagImg } from "~/modules/getstarted/CreateFlag";
 import { AiOutlineArrowDown } from "react-icons/ai";
+import { Timeline, TimelineStep } from "~/components/TImeline";
 
 const title = "Progressively, simple and accessible feature flagging tool";
 const description =
