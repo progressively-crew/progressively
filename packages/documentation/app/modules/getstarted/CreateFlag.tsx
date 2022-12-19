@@ -48,7 +48,7 @@ export const CreateFlag = () => {
 export const CreateFlagImg = () => {
   return (
     <div className="drop-shadow-xl">
-      <Window inverse header={<SearchBar dark>index.js</SearchBar>}>
+      <Window inverse header={<SearchBar dark>{"/"}</SearchBar>}>
         <img src={dark} alt="Progressively dashboard" className="dark:hidden" />
         <img
           src={light}
