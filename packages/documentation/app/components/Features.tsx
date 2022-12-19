@@ -6,7 +6,7 @@ import { Card } from "./Card";
 import { VisuallyHidden } from "./VisuallyHidden";
 
 export const Features = () => (
-  <section className="max-w-screen-xl mx-auto">
+  <section>
     <h2 className="text-center text-3xl md:text-6xl font-bold dark:text-white">
       Operate
     </h2>

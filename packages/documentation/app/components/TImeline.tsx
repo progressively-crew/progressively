@@ -12,7 +12,7 @@ export interface TimelineStepProps {
 }
 export const TimelineStep = ({ left, right, position }: TimelineStepProps) => {
   return (
-    <li className="max-w-screen-xl mx-auto px-4 md:px-0 py-8 md:py-20 relative">
+    <li className="px-4 md:px-0 py-8 md:py-20 relative">
       <div className="grid md:grid-cols-[1fr_auto_1fr] md:gap-20 items-center">
         {left && <div className="hidden md:block">{left}</div>}
 

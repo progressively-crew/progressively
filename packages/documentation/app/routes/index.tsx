@@ -85,7 +85,7 @@ export default function Index() {
         <div className="flex flex-col gap-20">
           <Hero />
 
-          <div>
+          <div className="max-w-screen-xl mx-auto">
             <section className="pb-4">
               <h2 className="sr-only">
                 Prepare your instance of Progressively

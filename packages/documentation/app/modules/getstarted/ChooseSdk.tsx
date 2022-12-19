@@ -46,7 +46,7 @@ export const ChooseSdk = () => {
 
 export const ChooseSdkCode = () => {
   return (
-    <div className="drop-shadow-2xl">
+    <div className="drop-shadow-xl">
       <Window inverse header={<EditorBar>index.js</EditorBar>}>
         <Highlighter
           content={`

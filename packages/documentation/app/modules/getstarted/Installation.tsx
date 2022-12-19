@@ -45,7 +45,7 @@ export const Installation = () => {
 
 export const InstallationCli = () => {
   return (
-    <div className="drop-shadow-2xl">
+    <div className="drop-shadow-xl">
       <Window inverse header={<CliBar>{"~/jane"}</CliBar>}>
         <Highlighter
           content={`

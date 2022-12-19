@@ -50,20 +50,18 @@ export const Window = ({ children, header, inverse }: WindowProps) => {
   const wrapperStyle = inverse
     ? "bg-slate-900 text-white dark:bg-white"
     : "bg-white";
+
   const headerStyle = inverse
     ? "border-b-gray-900 dark:border-b-gray-100"
     : "border-b-gray-100";
 
   return (
     <div
-      className={
-        "rounded-2xl relative drop-shadow-lg overflow-hidden " + wrapperStyle
-      }
+      className={"rounded-2xl drop-shadow-lg overflow-hidden " + wrapperStyle}
     >
       <div
         className={
-          "flex flex-row items-center h-12 px-4 gap-4 relative border-b " +
-          headerStyle
+          "flex flex-row items-center h-12 px-4 gap-4 border-b " + headerStyle
         }
       >
         <div className="flex flex-row gap-2">
@@ -73,7 +71,7 @@ export const Window = ({ children, header, inverse }: WindowProps) => {
         </div>
 
         {header && (
-          <div className={"flex-1 flex items-center h-full -ml-16"}>
+          <div className={"flex-1 flex items-center -ml-16 h-full"}>
             {header}
           </div>
         )}
