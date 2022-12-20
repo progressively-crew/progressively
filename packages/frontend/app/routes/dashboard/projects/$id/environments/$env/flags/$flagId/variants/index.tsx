@@ -1,24 +1,20 @@
 import { ActionFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
 import {
-  Form,
   useActionData,
   useLoaderData,
-  useTransition,
+  useSearchParams,
 } from "@remix-run/react";
-import { useEffect, useRef } from "react";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
+import { CreateButton } from "~/components/Buttons/CreateButton";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { Card, CardContent } from "~/components/Card";
 import { EmptyState } from "~/components/EmptyState";
-import { TextInput } from "~/components/Fields/TextInput";
 import { Header } from "~/components/Header";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { VariantIcon } from "~/components/Icons/VariantIcon";
 import { PageTitle } from "~/components/PageTitle";
 import { Section } from "~/components/Section";
-import { Spacer } from "~/components/Spacer";
-import { Stack } from "~/components/Stack";
 import { TagLine } from "~/components/Tagline";
 import { Typography } from "~/components/Typography";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
@@ -31,12 +27,10 @@ import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { VariantList } from "~/modules/variants/components/VariantList";
-import { addVariantAction } from "~/modules/variants/form-actions/addVariantAction";
 import { deleteVariantAction } from "~/modules/variants/form-actions/deleteVariantAction";
 import { editVariantAction } from "~/modules/variants/form-actions/editVariantAction";
-
 import { getVariants } from "~/modules/variants/services/getVariants";
-import { Variant, VariantCreateDTO } from "~/modules/variants/types";
+import { Variant } from "~/modules/variants/types";
 import { getSession } from "~/sessions";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
@@ -71,20 +65,9 @@ export const loader: LoaderFunction = async ({
   };
 };
 
-const getRemainingPercentage = (variants: Array<VariantCreateDTO>) => {
-  let cumulative = 0;
-
-  for (const variant of variants) {
-    cumulative += variant.rolloutPercentage;
-  }
-
-  return Math.max(100 - cumulative, 0);
-};
-
 type ActionDataType = null | {
   successChangePercentage?: boolean;
   successDelete?: boolean;
-  successCreated?: boolean;
   successEdit?: boolean;
   errors?: { [key: string]: string | undefined };
 };
@@ -107,37 +90,23 @@ export const action: ActionFunction = async ({
     return deleteVariantAction(formData, params, authCookie);
   }
 
-  if (type === "add-variant") {
-    return addVariantAction(formData, params, authCookie);
-  }
-
   return null;
 };
 
 export default function VariantsOfFlag() {
-  const formRef = useRef<HTMLFormElement>(null);
   const { user } = useUser();
   const { project } = useProject();
   const { environment } = useEnvironment();
   const { flagEnv } = useFlagEnv();
   const { variants } = useLoaderData<LoaderData>();
-  const transition = useTransition();
-  const isAdding =
-    transition.state === "submitting" &&
-    transition.submission?.formData.get("_type") === "add-variant";
+  const [searchParams] = useSearchParams();
+  const isVariantAdded = searchParams.get("newVariant") || undefined;
 
   const actionData = useActionData<ActionDataType>();
 
   const currentFlag = flagEnv.flag;
 
   const hasVariants = variants.length > 0;
-  const remainingPercentage = getRemainingPercentage(variants);
-
-  useEffect(() => {
-    if (!isAdding) {
-      formRef?.current?.reset();
-    }
-  }, [isAdding]);
 
   return (
     <DashboardLayout
@@ -162,8 +131,8 @@ export default function VariantsOfFlag() {
           <SuccessBox id="variant-deleted">
             The variant has been successfully deleted.
           </SuccessBox>
-        ) : actionData?.successCreated ? (
-          <SuccessBox id="variant-deleted">
+        ) : isVariantAdded ? (
+          <SuccessBox id="variant-added">
             The variant has been successfully created.
           </SuccessBox>
         ) : actionData?.successEdit ? (
@@ -191,43 +160,14 @@ export default function VariantsOfFlag() {
                 titleAs="h2"
                 title="No variants found"
                 description={
-                  <div>
-                    <Typography>
-                      There are no variants found for this flag.
-                    </Typography>
-                    <Spacer size={4} />
-                    <Form
-                      method="post"
-                      aria-label="Add a new variant"
-                      ref={formRef}
-                    >
-                      <input type="hidden" value="add-variant" name="_type" />
-                      <input
-                        type="hidden"
-                        value={remainingPercentage}
-                        name="remainingPercent"
-                      />
-                      <Stack spacing={6}>
-                        <div className="flex flex-col md:flex-row gap-3 md:items-end">
-                          <TextInput
-                            name={"value"}
-                            label={"New variant"}
-                            placeholder="e.g: Alternative"
-                            isInvalid={Boolean(actionData?.errors?.value)}
-                            hiddenLabel
-                          />
-
-                          <SubmitButton
-                            variant={hasVariants ? "secondary" : "primary"}
-                            isLoading={isAdding}
-                            loadingText="Saving the variant, please wait..."
-                          >
-                            Add variant
-                          </SubmitButton>
-                        </div>
-                      </Stack>
-                    </Form>
-                  </div>
+                  <Typography>
+                    There are no variants found for this flag.
+                  </Typography>
+                }
+                action={
+                  <CreateButton to={`create`} variant="primary">
+                    Create a variant
+                  </CreateButton>
                 }
               />
             </CardContent>
@@ -236,45 +176,15 @@ export default function VariantsOfFlag() {
           {hasVariants && (
             <div>
               <div className="px-8 py-4 flex justify-end">
-                <SubmitButton form="edit-variant">Edit variants</SubmitButton>
+                <div className="flex flex-row gap-4">
+                  <CreateButton to={`create`} variant="secondary">
+                    Create a variant
+                  </CreateButton>
+                  <SubmitButton form="edit-variant">Edit variants</SubmitButton>
+                </div>
               </div>
 
-              <VariantList
-                variants={variants}
-                errors={actionData?.errors}
-                action={
-                  <Form
-                    method="post"
-                    aria-label="Add a new variant"
-                    ref={formRef}
-                  >
-                    <input type="hidden" value="add-variant" name="_type" />
-                    <input
-                      type="hidden"
-                      value={remainingPercentage}
-                      name="remainingPercent"
-                    />
-                    <Stack spacing={6}>
-                      <div className="flex flex-col md:flex-row gap-3 md:items-end">
-                        <TextInput
-                          name={"value"}
-                          label={"New variant"}
-                          placeholder="e.g: Alternative"
-                          isInvalid={Boolean(actionData?.errors?.value)}
-                        />
-
-                        <SubmitButton
-                          variant={hasVariants ? "secondary" : "primary"}
-                          isLoading={isAdding}
-                          loadingText="Saving the variant, please wait..."
-                        >
-                          Add variant
-                        </SubmitButton>
-                      </div>
-                    </Stack>
-                  </Form>
-                }
-              />
+              <VariantList variants={variants} errors={actionData?.errors} />
             </div>
           )}
         </Card>

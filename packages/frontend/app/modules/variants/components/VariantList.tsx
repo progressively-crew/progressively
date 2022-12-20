@@ -1,13 +1,9 @@
 import { Form } from "@remix-run/react";
-import React, { useState } from "react";
+import { useState } from "react";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
-import { CardContent } from "~/components/Card";
-import { Label } from "~/components/Fields/Label";
 import { Radio } from "~/components/Fields/Radio";
 import { SliderInput } from "~/components/Fields/SliderInput";
 import { TextInput } from "~/components/Fields/TextInput";
-import { HideDesktop } from "~/components/HideMobile";
-import { HStack } from "~/components/HStack";
 import { Variant } from "../types";
 import { RawTable, Td, Th, Tr } from "~/components/RawTable";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
@@ -48,14 +44,8 @@ const FormSliderInput = ({
 export interface VariantListProps {
   variants: Array<Variant>;
   errors?: Record<string, string>;
-  action?: React.ReactNode;
 }
-export const VariantList = ({
-  variants,
-  errors,
-
-  action,
-}: VariantListProps) => {
+export const VariantList = ({ variants, errors }: VariantListProps) => {
   return (
     <div>
       {variants.map((variant) => (
@@ -147,10 +137,6 @@ export const VariantList = ({
           </tbody>
         </RawTable>
       </Form>
-
-      <CardContent>
-        <HStack>{action}</HStack>
-      </CardContent>
     </div>
   );
 };
