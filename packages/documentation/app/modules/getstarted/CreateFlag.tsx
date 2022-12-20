@@ -1,6 +1,4 @@
-import { BsArrowRight } from "react-icons/bs";
 import { VscTools } from "react-icons/vsc";
-import { Button } from "~/components/Button";
 import { SearchBar, Window } from "~/components/Window";
 import dark from "./dark.png";
 import light from "./light.png";
@@ -22,23 +20,6 @@ export const CreateFlag = () => {
         Start the dashboard, follow the instructions and create your first
         feature flag. It will be available for usage with SDKs.
       </p>
-
-      <div>
-        <div className="pt-4 inline-block">
-          <Button
-            variant="secondary"
-            to="/docs/guides/react"
-            icon={
-              <BsArrowRight
-                aria-hidden
-                className="transition-all group-hover:translate-x-1/4"
-              />
-            }
-          >
-            SDKs available
-          </Button>
-        </div>
-      </div>
     </div>
   );
 };
