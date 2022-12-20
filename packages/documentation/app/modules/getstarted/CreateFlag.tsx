@@ -1,4 +1,4 @@
-import { VscTools } from "react-icons/vsc";
+import { TbFlag3 } from "react-icons/tb";
 import { SearchBar, Window } from "~/components/Window";
 import dark from "./dark.png";
 import light from "./light.png";
@@ -8,7 +8,7 @@ export const CreateFlag = () => {
     <div className="flex flex-col justify-center">
       <div>
         <div className="bg-gray-100 border border-gray-200 text-3xl text-gray-500 rounded-lg inline-block p-2 dark:text-slate-300 dark:bg-slate-800 dark:border-slate-700">
-          <VscTools />
+          <TbFlag3 />
         </div>
       </div>
 
