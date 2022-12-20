@@ -1113,7 +1113,12 @@ input[type="range"]::-moz-range-thumb {
   --tw-border-opacity: 1;
   border-color: rgb(99 102 241 / var(--tw-border-opacity));
 }
+<<<<<<< HEAD
 .checked\:before\:h-4:checked:before {
+=======
+
+.checked\:before\:h-4:checked::before {
+>>>>>>> 843f0eb8 (wip)
   content: var(--tw-content);
   height: 1rem;
 }
@@ -1126,6 +1131,10 @@ input[type="range"]::-moz-range-thumb {
   --tw-bg-opacity: 1;
   background-color: rgb(99 102 241 / var(--tw-bg-opacity));
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 843f0eb8 (wip)
 .hover\:cursor-pointer:hover {
   cursor: pointer;
 }
