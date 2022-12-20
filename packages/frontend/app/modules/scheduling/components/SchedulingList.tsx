@@ -80,7 +80,7 @@ export const SchedulingList = ({
               />
             </Td>
             <Td className="text-center py-4 px-8 flex justify-center">
-              {schedule.schedulingStatus !== SchedulingStatus.HAS_RUN && (
+              {schedule.schedulingStatus === SchedulingStatus.HAS_RUN && (
                 <AiFillCheckCircle
                   aria-label="The scheduled update has already run"
                   className="text-2xl text-indigo-500 dark:text-indigo-20"
