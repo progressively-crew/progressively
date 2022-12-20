@@ -45,7 +45,7 @@ All of the packages are written in [TypeScript](https://www.typescriptlang.org/)
 
 The project repository is a mono-repo managed by [Lerna](https://lerna.js.org/). You can find all the available packages at `./packages` from the root.
 
-There are four of them for the moment:
+It is composed of different pieces:
 
 - **backend**: the API, business logic and websocket servers
 - **frontend**: the dashboard server for managing feature flags
@@ -54,7 +54,7 @@ There are four of them for the moment:
 
 #### Initializing the project
 
-The project needs a bunch of things before being ready to start:
+In order for the project to start, we have to do the following steps:
 
 1. create `.env` files in **backend** and **frontend**
 2. start Postgres
@@ -64,8 +64,6 @@ The project needs a bunch of things before being ready to start:
 6. seed Postgres Data
 7. start the **backend**
 8. start the **frontend**
-
-Let's go this.
 
 **1. create `.env` files in backend and frontend**
 
