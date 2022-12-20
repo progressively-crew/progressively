@@ -2,7 +2,7 @@
 
 This section will help you spawn a new Progressively instance you can interact with.
 
-## Quick start (with `docker-compose`)
+## Quick start (demo purpose, with `docker-compose`)
 
 ```bash
 $ git clone https://github.com/progressively-crew/progressively
@@ -12,7 +12,7 @@ $ docker-compose up -d
 
 You can now open <a href="http://localhost:3000/welcome" target="_blank" rel="noreferrer">the welcome page</a> to create your admin user.
 
-## Medium start
+## Medium start (local development)
 
 Progressively requires 2 databases: <a href="https://www.postgresql.org/" target="_blank" rel="noreferrer">Postgres</a> and <a href="https://redis.io/" target="_blank" rel="noreferrer">Redis</a>. It's up to you to choose how to install them, but for the sake of simplicity in this section, we'll use <a href="https://www.docker.com/" target="_blank" rel="noreferrer">Docker</a>.
 
@@ -28,7 +28,7 @@ $ npm run start:dev
 
 You can now open <a href="http://localhost:3000/welcome" target="_blank" rel="noreferrer">the welcome page</a> to create your admin user.
 
-## Long start (explanation, step by step)
+## Long start (explanations, step by step)
 
 ### The stack
 
