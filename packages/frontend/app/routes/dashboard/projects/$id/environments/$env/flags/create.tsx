@@ -20,6 +20,10 @@ import { KillSwitchIcon } from "~/components/Icons/KillSwitchIcon";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { BackLink } from "~/components/BackLink";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
+import { Tag } from "~/components/Tag";
+import { useState } from "react";
+import camelcase from "camelcase";
+import { ButtonCopy } from "~/components/ButtonCopy";
 
 export const meta: MetaFunction = ({ params, parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -75,12 +79,15 @@ export const action: ActionFunction = async ({
 };
 
 export default function CreateFlagPage() {
+  const [value, setValue] = useState("");
   const { project } = useProject();
   const data = useActionData<ActionData>();
   const transition = useTransition();
   const { environment } = useEnvironment();
 
   const errors = data?.errors;
+
+  const camelValue = camelcase(value);
 
   return (
     <Form method="post">
@@ -107,12 +114,25 @@ export default function CreateFlagPage() {
         }
       >
         <FormGroup>
-          <TextInput
-            name="flag-name"
-            isInvalid={Boolean(errors?.name)}
-            label="Flag name"
-            placeholder="e.g: New Homepage"
-          />
+          <div className="flex flex-row gap-4">
+            <TextInput
+              name="flag-name"
+              isInvalid={Boolean(errors?.name)}
+              label="Flag name"
+              placeholder="e.g: New Homepage"
+              onChange={(e) => setValue(e.target.value)}
+            />
+
+            <div className="text-gray-500 dark:text-slate-200 flex gap-2 flex-col">
+              <div>Flag key</div>
+
+              <div>
+                <ButtonCopy toCopy={camelValue}>
+                  {camelValue || "N/A"}
+                </ButtonCopy>
+              </div>
+            </div>
+          </div>
 
           <TextInput
             name="flag-desc"

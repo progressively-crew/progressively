@@ -28,7 +28,7 @@ export const meta: MetaFunction = () => {
     "og:url": "https://progressively.app",
     "og:title": title,
     "og:description": description,
-    "og:image": "https://progressively.app/logo.png",
+    "og:image": "https://progressively.app/logo-with-background.jpg",
     "og:type": "website",
     "og:site_name": "Progressively",
     "twitter:card": "summary_large_image",

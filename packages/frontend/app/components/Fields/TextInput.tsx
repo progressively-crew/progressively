@@ -1,8 +1,9 @@
+import { HTMLAttributes } from "react";
 import { Stack } from "../Stack";
 import { VisuallyHidden } from "../VisuallyHidden";
 import { Label } from "./Label";
 
-export interface TextInputProps {
+export interface TextInputProps extends HTMLAttributes<HTMLInputElement> {
   isInvalid?: boolean;
   name: string;
   defaultValue?: string;

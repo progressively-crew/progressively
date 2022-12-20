@@ -29,7 +29,7 @@ export class SchedulingService {
         flagEnvironmentFlagId: flagId,
       },
       orderBy: {
-        utc: 'asc',
+        utc: 'desc',
       },
     });
   }
