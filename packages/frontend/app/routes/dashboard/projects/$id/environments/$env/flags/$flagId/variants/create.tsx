@@ -1,17 +1,7 @@
 import { getSession } from "~/sessions";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
-import {
-  MetaFunction,
-  ActionFunction,
-  redirect,
-  LoaderFunction,
-} from "@remix-run/node";
-import {
-  useActionData,
-  Form,
-  useTransition,
-  useLoaderData,
-} from "@remix-run/react";
+import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
+import { useActionData, Form, useTransition } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
@@ -20,8 +10,6 @@ import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { TextInput } from "~/components/Fields/TextInput";
-import { getVariants } from "~/modules/variants/services/getVariants";
-import { Variant } from "~/modules/variants/types";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { BackLink } from "~/components/BackLink";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
@@ -61,45 +49,16 @@ export const action: ActionFunction = async ({
   );
 };
 
-interface LoaderData {
-  variants: Array<Variant>;
-}
-
-export const loader: LoaderFunction = async ({
-  request,
-  params,
-}): Promise<LoaderData> => {
-  const session = await getSession(request.headers.get("Cookie"));
-  const authCookie = session.get("auth-cookie");
-
-  const variants: Array<Variant> = await getVariants(
-    params.env!,
-    params.flagId!,
-    authCookie
-  );
-
-  return {
-    variants,
-  };
-};
-
 export default function CteateVariantPage() {
   const { project } = useProject();
   const { flagEnv } = useFlagEnv();
   const { environment } = useEnvironment();
-  const { variants } = useLoaderData<LoaderData>();
   const transition = useTransition();
 
   const currentFlag = flagEnv.flag;
 
   const actionData = useActionData<ActionData>();
   const errors = actionData?.errors;
-
-  const options = [{ value: "", label: "No variant" }];
-
-  for (const variant of variants) {
-    options.push({ value: variant.uuid, label: variant.value });
-  }
 
   return (
     <Form method="post">
