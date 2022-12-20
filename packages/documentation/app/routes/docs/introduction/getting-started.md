@@ -22,7 +22,7 @@ $ cp ./packages/backend/.env.example ./packages/backend/.env
 $ cp ./packages/frontend/.env.example ./packages/frontend/.env
 $ docker run --name progressively-db -e POSTGRES_PASSWORD=admin -e POSTGRES_USER=admin -e POSTGRES_DB=progressively -p 5432:5432 -d postgres
 $ docker run -it --rm --name progressively-redis -p 6379:6379 -d redis
-$ npm run setup && npm run db:prepare && npm run db:seed
+$ npm run setup && npm run db:prepare
 $ npm run start:dev
 ```
 
