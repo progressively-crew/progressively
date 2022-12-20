@@ -29,19 +29,19 @@ function init(clientKey: string, options?: SDKOptions): ProgressivelySdkType {
 
   return Sdk(
     options?.apiUrl || "https://api.progressively.app",
-    options?.websocketUrl || "wss://api.progressively.app",
     fields,
     resolvedFlags,
-    options?.headers
+    options?.headers,
+    options?.websocketUrl
   );
 }
 
 function Sdk(
   apiRoot: string,
-  wsRoot: string,
   fields: Fields,
   initialFlags: FlagDict,
-  headers?: RequestInit["headers"]
+  headers?: RequestInit["headers"],
+  wsRoot?: string
 ): ProgressivelySdkType {
   let flags: FlagDict = initialFlags;
   let socket: WebSocket;
@@ -80,6 +80,7 @@ function Sdk(
     callback: (data: FlagDict) => void,
     userId?: string | null
   ) {
+    if (!wsRoot) return;
     // Mutating is okay, load has been done before hands
     if (userId) fields.id = userId;
 
