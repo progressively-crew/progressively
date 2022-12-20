@@ -1,6 +1,5 @@
 import { ActionFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
 import {
-  Form,
   useActionData,
   useLoaderData,
   useSearchParams,
@@ -11,14 +10,11 @@ import { CreateButton } from "~/components/Buttons/CreateButton";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { Card, CardContent } from "~/components/Card";
 import { EmptyState } from "~/components/EmptyState";
-import { TextInput } from "~/components/Fields/TextInput";
 import { Header } from "~/components/Header";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { VariantIcon } from "~/components/Icons/VariantIcon";
 import { PageTitle } from "~/components/PageTitle";
 import { Section } from "~/components/Section";
-import { Spacer } from "~/components/Spacer";
-import { Stack } from "~/components/Stack";
 import { TagLine } from "~/components/Tagline";
 import { Typography } from "~/components/Typography";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
@@ -33,9 +29,8 @@ import { useUser } from "~/modules/user/contexts/useUser";
 import { VariantList } from "~/modules/variants/components/VariantList";
 import { deleteVariantAction } from "~/modules/variants/form-actions/deleteVariantAction";
 import { editVariantAction } from "~/modules/variants/form-actions/editVariantAction";
-
 import { getVariants } from "~/modules/variants/services/getVariants";
-import { Variant, VariantCreateDTO } from "~/modules/variants/types";
+import { Variant } from "~/modules/variants/types";
 import { getSession } from "~/sessions";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
@@ -68,16 +63,6 @@ export const loader: LoaderFunction = async ({
   return {
     variants,
   };
-};
-
-const getRemainingPercentage = (variants: Array<VariantCreateDTO>) => {
-  let cumulative = 0;
-
-  for (const variant of variants) {
-    cumulative += variant.rolloutPercentage;
-  }
-
-  return Math.max(100 - cumulative, 0);
 };
 
 type ActionDataType = null | {
@@ -122,7 +107,6 @@ export default function VariantsOfFlag() {
   const currentFlag = flagEnv.flag;
 
   const hasVariants = variants.length > 0;
-  const remainingPercentage = getRemainingPercentage(variants);
 
   return (
     <DashboardLayout
@@ -176,39 +160,14 @@ export default function VariantsOfFlag() {
                 titleAs="h2"
                 title="No variants found"
                 description={
-                  <div>
-                    <Typography>
-                      There are no variants found for this flag.
-                    </Typography>
-                    <Spacer size={4} />
-                    <Form method="post" aria-label="Add a new variant">
-                      <input type="hidden" value="add-variant" name="_type" />
-                      <input
-                        type="hidden"
-                        value={remainingPercentage}
-                        name="remainingPercent"
-                      />
-                      <Stack spacing={6}>
-                        <div className="flex flex-col md:flex-row gap-3 md:items-end">
-                          <TextInput
-                            name={"value"}
-                            label={"New variant"}
-                            placeholder="e.g: Alternative"
-                            isInvalid={Boolean(actionData?.errors?.value)}
-                            hiddenLabel
-                          />
-
-                          <SubmitButton
-                            variant={hasVariants ? "secondary" : "primary"}
-                            isLoading={isAdding}
-                            loadingText="Saving the variant, please wait..."
-                          >
-                            Add variant
-                          </SubmitButton>
-                        </div>
-                      </Stack>
-                    </Form>
-                  </div>
+                  <Typography>
+                    There are no variants found for this flag.
+                  </Typography>
+                }
+                action={
+                  <CreateButton to={`create`} variant="primary">
+                    Create a variant
+                  </CreateButton>
                 }
               />
             </CardContent>

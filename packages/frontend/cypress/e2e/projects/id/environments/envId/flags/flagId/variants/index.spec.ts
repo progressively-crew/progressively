@@ -31,20 +31,21 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants"
         cy.signIn("Marvin");
       });
 
-      it("adds a variant", () => {
-        cy.visit("/dashboard/projects/1/environments/1/flags/1/variants");
-        cy.findByLabelText("New variant").type("Alternative");
-        cy.findByRole("button", { name: "Add variant" }).click();
-
-        cy.findByLabelText("Variant 1 value")
-          .should("be.visible")
-          .and("have.attr", "value", "Alternative");
-      });
-
       it("edits a variant", () => {
+        // create the variant
+        cy.visit(
+          "/dashboard/projects/1/environments/1/flags/1/variants/create"
+        );
+        cy.findByLabelText("Variant name").type("Variant 1 value");
+        cy.findByRole("button", { name: "Create the variant" }).click();
+
+        cy.url().should(
+          "include",
+          "/dashboard/projects/1/environments/1/flags/1/variants?newVariant=true"
+        );
+
+        // edit the variant
         cy.visit("/dashboard/projects/1/environments/1/flags/1/variants");
-        cy.findByLabelText("New variant").type("Alternative");
-        cy.findByRole("button", { name: "Add variant" }).click();
 
         cy.findByLabelText("Variant 1 value").type("Variant alternative");
         cy.findByRole("button", { name: "Edit variants" }).click();
@@ -52,8 +53,8 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants"
         cy.reload();
 
         cy.findByLabelText("Variant 1 value")
-          .should("be.visible")
-          .and("have.attr", "value", "AlternativeVariant alternative");
+          .should("exist")
+          .and("have.attr", "value", "Variant 1 valueVariant alternative");
       });
 
       it("shows the layout — (empty)", () => {
@@ -79,7 +80,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants"
         cy.findByText("There are no variants found for this flag.").should(
           "be.visible"
         );
-        cy.findByRole("button", { name: "Add variant" }).should("be.visible");
 
         cy.checkA11y();
       });
@@ -102,8 +102,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants"
 
         cy.findAllByText("With multivariate").should("have.length", 3);
         cy.findByRole("heading", { name: "Variants" }).should("be.visible");
-
-        cy.findByRole("button", { name: "Add variant" }).should("be.visible");
 
         cy.checkA11y();
       });
