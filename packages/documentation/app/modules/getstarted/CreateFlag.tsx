@@ -1,6 +1,4 @@
-import { BsArrowRight } from "react-icons/bs";
-import { VscTools } from "react-icons/vsc";
-import { Button } from "~/components/Button";
+import { TbFlag3 } from "react-icons/tb";
 import { SearchBar, Window } from "~/components/Window";
 import dark from "./dark.png";
 import light from "./light.png";
@@ -10,7 +8,7 @@ export const CreateFlag = () => {
     <div className="flex flex-col justify-center">
       <div>
         <div className="bg-gray-100 border border-gray-200 text-3xl text-gray-500 rounded-lg inline-block p-2 dark:text-slate-300 dark:bg-slate-800 dark:border-slate-700">
-          <VscTools />
+          <TbFlag3 />
         </div>
       </div>
 
@@ -22,23 +20,6 @@ export const CreateFlag = () => {
         Start the dashboard, follow the instructions and create your first
         feature flag. It will be available for usage with SDKs.
       </p>
-
-      <div>
-        <div className="pt-4 inline-block">
-          <Button
-            variant="secondary"
-            to="/docs/guides/react"
-            icon={
-              <BsArrowRight
-                aria-hidden
-                className="transition-all group-hover:translate-x-1/4"
-              />
-            }
-          >
-            SDKs available
-          </Button>
-        </div>
-      </div>
     </div>
   );
 };
