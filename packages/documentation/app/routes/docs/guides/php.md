@@ -49,14 +49,6 @@ Fields is an option that allows to pass data about your users to create targetin
 
 ## Methods
 
-### loadFlags
-
-Loads the flag on the server.
-
-```php
-$sdk->loadFlags();
-```
-
 ### isActivated
 
 Check if a given flag is activated.
