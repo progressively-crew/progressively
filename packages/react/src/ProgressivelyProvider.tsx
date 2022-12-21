@@ -37,10 +37,7 @@ export const ProgressivelyProvider = ({
     setTrackFn(() => sdk.track);
 
     sdk.loadFlags({ ctrl }).then((res) => {
-      sdk.onFlagUpdate(
-        setFlags,
-        res.response.headers.get("X-progressively-id")
-      );
+      sdk.onFlagUpdate(setFlags, res.userId);
       setFlags(res.flags);
 
       setStatus("success");

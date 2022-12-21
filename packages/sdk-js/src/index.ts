@@ -64,15 +64,16 @@ function Sdk(
         return response.json();
       })
       .then((data) => {
+        const userId = response?.headers?.get("X-progressively-id") || "";
         flags = { ...flags, ...data };
 
         persistLocalFlags(flags);
 
-        return { flags, response };
+        return { flags, response, userId };
       })
       .catch((error) => {
         // Silent catch the error, and return the actual in-memory flags
-        return { flags, response, error };
+        return { flags, response, error, userId: "" };
       });
   }
 

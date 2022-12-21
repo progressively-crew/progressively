@@ -7,6 +7,7 @@ export interface SDKOptions {
   websocketUrl?: string;
   initialFlags?: FlagDict;
   shouldHit?: boolean;
+  safeValueWhenFailing?: boolean;
 }
 
 const btoA = (toTransform: string) => btoa(toTransform);
@@ -19,7 +20,7 @@ export function getProgressivelyData(
   const fields: Fields = options?.fields || {};
   fields.clientKey = clientKey;
 
-  let response: Response;
+  let response: Response | undefined;
   return fetch(`${apiRoot}/sdk/${btoA(JSON.stringify(fields))}`, {
     credentials: "include",
     headers: options?.shouldHit
@@ -36,6 +37,16 @@ export function getProgressivelyData(
       return {
         data: {
           initialFlags: flags,
+          clientKey,
+          ...options,
+        },
+        response,
+      };
+    })
+    .catch(() => {
+      return {
+        data: {
+          initialFlags: options?.safeValueWhenFailing ? {} : null,
           clientKey,
           ...options,
         },
