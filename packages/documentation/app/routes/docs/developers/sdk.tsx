@@ -17,7 +17,7 @@ const SdkCard = ({ title, href, description, icon }: SdkCardProps) => {
   return (
     <div
       tabIndex={-1}
-      className="bg-white hover:bg-gray-50 active:bg-gray-100 dark:bg-slate-800 dark:hover:bg-slate-700 dark:active:bg-slate-600 rounded p-4 py-8 h-full relative drop-shadow cursor-pointer"
+      className="relative z-10 bg-white hover:bg-gray-50 active:bg-gray-100 dark:bg-slate-800 dark:hover:bg-slate-700 dark:active:bg-slate-600 rounded p-4 py-8 h-full drop-shadow cursor-pointer"
       onClick={() => linkRef?.current?.click()}
     >
       <span className="text-4xl">{icon}</span>

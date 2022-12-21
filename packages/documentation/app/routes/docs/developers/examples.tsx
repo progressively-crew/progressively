@@ -17,7 +17,7 @@ const Example = ({ title, href, icon }: ExampleProps) => {
   return (
     <div
       tabIndex={-1}
-      className="bg-white hover:bg-gray-50 active:bg-gray-100 dark:bg-slate-800 dark:hover:bg-slate-700 dark:active:bg-slate-600 rounded p-4 py-8 h-full relative drop-shadow cursor-pointer"
+      className="relative z-10 bg-white hover:bg-gray-50 active:bg-gray-100 dark:bg-slate-800 dark:hover:bg-slate-700 dark:active:bg-slate-600 rounded p-4 py-8 h-full relative drop-shadow cursor-pointer"
       onClick={() => linkRef?.current?.click()}
     >
       <span className="text-4xl">{icon}</span>
@@ -56,7 +56,7 @@ const ExamplePage = () => {
       <section>
         <h2>Frontend</h2>
 
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <Example
             icon={<IoLogoVercel />}
             title="Next.js"
@@ -92,7 +92,7 @@ const ExamplePage = () => {
       <section className="pt-8">
         <h2>Backend</h2>
 
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <Example
             icon={<IoLogoNodejs style={{ color: "#3c873a" }} />}
             title="Node.js"
