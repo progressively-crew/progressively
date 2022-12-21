@@ -7,6 +7,7 @@ export interface SDKOptions {
   websocketUrl?: string;
   initialFlags?: FlagDict;
   shouldHit?: boolean;
+  safeValueWhenFailing?: boolean;
 }
 
 const btoA = (toTransform: string) => btoa(toTransform);
@@ -45,7 +46,7 @@ export function getProgressivelyData(
     .catch(() => {
       return {
         data: {
-          initialFlags: {},
+          initialFlags: options?.safeValueWhenFailing ? {} : null,
           clientKey,
           ...options,
         },
