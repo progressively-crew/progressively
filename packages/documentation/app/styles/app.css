@@ -1083,6 +1083,14 @@ video {
   margin-bottom: 0px;
 }
 
+.mt-1 {
+  margin-top: 0.25rem;
+}
+
+.mt-\[2px\] {
+  margin-top: 2px;
+}
+
 .block {
   display: block;
 }
@@ -1219,6 +1227,10 @@ video {
   width: 2.25rem;
 }
 
+.w-12 {
+  width: 3rem;
+}
+
 .max-w-screen-xl {
   max-width: 1280px;
 }
@@ -1262,6 +1274,11 @@ video {
 
 .-translate-x-full {
   --tw-translate-x: -100%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.rotate-180 {
+  --tw-rotate: 180deg;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 

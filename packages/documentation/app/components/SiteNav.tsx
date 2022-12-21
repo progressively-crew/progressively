@@ -60,9 +60,7 @@ export const SiteNav = ({ navToggleSlot }: SiteNavProps) => {
                 <NavLink to="/docs/introduction/why">Documentation</NavLink>
               </li>
               <li className="hidden md:block">
-                <NavLink href="https://frontend-progressively.fly.dev/signin">
-                  Demo instance
-                </NavLink>
+                <NavLink to="/demo-instance">Demo instance</NavLink>
               </li>
               <li>
                 <NavLink href="https://github.com/progressively-crew/progressively">
