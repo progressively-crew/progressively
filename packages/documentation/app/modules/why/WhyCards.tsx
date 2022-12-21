@@ -66,8 +66,49 @@ export const WhyCards = () => {
     <div className="flex gap-4 flex-col">
       <WhyCard title="Progressively is smaller than its competitors">
         <p>
-          Progressively is smaller than its competitor by moving most of the
-          logic on the server. It does not bloat client side bundles.
+          Third party tools used on the frontend are known to slow down websites
+          and applications. Having heavy libraries means there is more code to
+          download, parse and execute in the browser.{" "}
+        </p>
+        <p>
+          By shifting most of the computations to the server, Progressively is
+          order of magnitude smaller than its competitors.
+        </p>
+        <p>
+          According to Bundlephobia (
+          <a
+            href="https://bundlephobia.com/package/@progressively/react@0.0.1-alpha.19"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+          >
+            Progressively
+          </a>
+          ,{" "}
+          <a
+            href="https://bundlephobia.com/package/launchdarkly-react-client-sdk@3.0.1"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+          >
+            LaunchDarkly
+          </a>
+          ), Progressively is{" "}
+          <strong className="text-pink-600">20x smaller</strong> than
+          LaunchDarkly concerning the React SDK.
+        </p>
+        <p>
+          And if you prefer to see the comparison in a real NextJs application,
+          you can check the{" "}
+          <a
+            href="https://github.com/progressively-crew/progressively/tree/master/example/bundle-diffs"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+          >
+            bundle-diff example
+          </a>{" "}
+          available in the Github repository.
         </p>
       </WhyCard>
 

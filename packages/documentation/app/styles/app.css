@@ -1829,6 +1829,16 @@ video {
   color: rgb(67 56 202 / var(--tw-text-opacity)) !important;
 }
 
+.text-indigo-600 {
+  --tw-text-opacity: 1;
+  color: rgb(79 70 229 / var(--tw-text-opacity));
+}
+
+.text-pink-600 {
+  --tw-text-opacity: 1;
+  color: rgb(219 39 119 / var(--tw-text-opacity));
+}
+
 .underline {
   text-decoration-line: underline;
 }
