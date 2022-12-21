@@ -19,7 +19,7 @@ export function getProgressivelyData(
   const fields: Fields = options?.fields || {};
   fields.clientKey = clientKey;
 
-  let response: Response;
+  let response: Response | undefined;
   return fetch(`${apiRoot}/sdk/${btoA(JSON.stringify(fields))}`, {
     credentials: "include",
     headers: options?.shouldHit
@@ -36,6 +36,16 @@ export function getProgressivelyData(
       return {
         data: {
           initialFlags: flags,
+          clientKey,
+          ...options,
+        },
+        response,
+      };
+    })
+    .catch(() => {
+      return {
+        data: {
+          initialFlags: {},
           clientKey,
           ...options,
         },
