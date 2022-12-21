@@ -36,11 +36,11 @@
   "bundlesize": [
     {
       "path": "./lib/esm/index.js",
-      "maxSize": "1 kB"
+      "maxSize": "1.1 kB"
     },
     {
       "path": "./lib/legacy/index.js",
-      "maxSize": "1 kB"
+      "maxSize": "1.1 kB"
     }
   ]
 }
