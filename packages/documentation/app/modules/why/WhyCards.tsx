@@ -33,7 +33,10 @@ const WhyCard = ({ title, children }: WhyCardProps) => {
           <button
             ref={buttonRef}
             className="text-base font-semibold mb-0"
-            onClick={toggle}
+            onClick={(e) => {
+              e.stopPropagation();
+              toggle();
+            }}
             id={triggerId}
             aria-controls={sectionId}
             aria-expanded={expanded}
@@ -50,6 +53,7 @@ const WhyCard = ({ title, children }: WhyCardProps) => {
         role="region"
         aria-labelledby={triggerId}
         className="text-gray-600 dark:text-slate-300 text-sm dark:text-slate-100"
+        hidden={!expanded}
       >
         {children}
       </div>
