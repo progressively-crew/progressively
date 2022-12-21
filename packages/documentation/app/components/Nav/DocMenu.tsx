@@ -57,31 +57,15 @@ const MenuItems = [
   },
 
   {
-    label: "Usage",
+    label: "Developers",
     items: [
       {
-        label: "JavaScript",
-        link: "/docs/guides/javascript",
+        label: "SDKs",
+        link: "/docs/developers/sdk",
       },
       {
-        label: "Node.js",
-        link: "/docs/guides/node-js",
-      },
-      {
-        label: "React",
-        link: "/docs/guides/react",
-      },
-      {
-        label: "PHP",
-        link: "/docs/guides/php",
-      },
-      {
-        label: "Go",
-        link: "/docs/guides/go",
-      },
-      {
-        label: "Add yours",
-        link: "/docs/guides/add-your-sdk",
+        label: "Examples",
+        link: "/docs/developers/examples",
       },
     ],
   },
@@ -102,7 +86,7 @@ export const DocMenu = () => {
         <React.Fragment key={section.label}>
           <li role="separator">
             {index > 0 && <Spacer size={4} />}
-            <p className="uppercase text-black text-sm font-bold">
+            <p className="uppercase text-black text-sm font-bold dark:text-slate-300">
               {section.label}
             </p>
             <Spacer size={1} />

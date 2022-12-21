@@ -1,13 +1,17 @@
 import { Link } from "@remix-run/react";
 import { useRef } from "react";
+import { IoLogoJavascript, IoLogoNodejs } from "react-icons/io5";
+import { FaPhp, FaReact } from "react-icons/fa";
+import { SiGoland } from "react-icons/si";
 
 interface SdkCardProps {
   title: string;
   href: string;
   description: React.ReactNode;
+  icon: React.ReactNode;
 }
 
-const SdkCard = ({ title, href, description }: SdkCardProps) => {
+const SdkCard = ({ title, href, description, icon }: SdkCardProps) => {
   const linkRef = useRef<HTMLAnchorElement>(null);
 
   return (
@@ -16,7 +20,8 @@ const SdkCard = ({ title, href, description }: SdkCardProps) => {
       className="bg-white hover:bg-gray-50 active:bg-gray-100 dark:bg-slate-800 dark:hover:bg-slate-700 dark:active:bg-slate-600 rounded p-4 py-8 h-full relative drop-shadow cursor-pointer"
       onClick={() => linkRef?.current?.click()}
     >
-      <h2 className="text-base font-semibold mb-0 pb-2">
+      <span className="text-4xl">{icon}</span>
+      <h2 className="text-base font-semibold mb-0 py-2">
         <Link
           to={href}
           ref={linkRef}
@@ -40,8 +45,9 @@ const SdkPage = () => {
 
       <div className="grid grid-cols-2 gap-4">
         <SdkCard
+          icon={<IoLogoJavascript style={{ color: "#f0db4f" }} />}
           title="JavaScript"
-          href="/docs/guides/javascript"
+          href="/docs/developers/javascript"
           description={
             <p className="m-0">
               The <strong className="dark:text-slate-100">Client Side</strong>{" "}
@@ -51,8 +57,9 @@ const SdkPage = () => {
         />
 
         <SdkCard
+          icon={<IoLogoNodejs style={{ color: "#3c873a" }} />}
           title="Node.js"
-          href="/docs/guides/node-js"
+          href="/docs/developers/node-js"
           description={
             <p className="m-0">
               The <strong className="dark:text-slate-100">Server Side</strong>{" "}
@@ -62,8 +69,9 @@ const SdkPage = () => {
         />
 
         <SdkCard
+          icon={<FaReact style={{ color: "#61DBFB" }} />}
           title="React"
-          href="/docs/guides/react"
+          href="/docs/developers/react"
           description={
             <p className="m-0">
               The <strong className="dark:text-slate-100">React</strong> SDK.
@@ -73,8 +81,9 @@ const SdkPage = () => {
         />
 
         <SdkCard
+          icon={<FaPhp style={{ color: "#232531" }} />}
           title="PHP"
-          href="/docs/guides/php"
+          href="/docs/developers/php"
           description={
             <p className="m-0">
               The <strong className="dark:text-slate-100">PHP</strong> SDK.
@@ -83,8 +92,9 @@ const SdkPage = () => {
         />
 
         <SdkCard
+          icon={<SiGoland style={{ color: "#29BEB0" }} />}
           title="Go"
-          href="/docs/guides/go"
+          href="/docs/developers/go"
           description={
             <p className="m-0">
               The <strong className="dark:text-slate-100">Go</strong> SDK.
