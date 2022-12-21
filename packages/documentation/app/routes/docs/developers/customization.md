@@ -1,4 +1,4 @@
-# Configuration
+# Customization
 
 Progressively is self-hosted. In order to match your specific customization needs, you can override the following environment variables.
 

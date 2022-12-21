@@ -34,7 +34,7 @@ export const Hero = () => {
 
           <div className="mt-8 flex flex-wrap gap-4">
             <Button
-              to="/docs/introduction/why"
+              to="/docs/introduction/getting-started"
               onClick={() => track("Get started A", {})}
             >
               Get Started
