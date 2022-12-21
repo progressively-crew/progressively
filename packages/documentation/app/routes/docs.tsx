@@ -1,4 +1,4 @@
-import { LinksFunction } from "@remix-run/node";
+import type { LinksFunction } from "@remix-run/node";
 import { Outlet } from "@remix-run/react";
 import { HideDesktop } from "~/components/HideMobile";
 import { Nav } from "~/components/Nav";
@@ -41,7 +41,7 @@ export default function DocsLayout() {
               <Nav />
 
               <InertWhenNavOpened>
-                <main className="prose lg:prose-x">
+                <main className="prose lg:prose-x dark:prose-invert">
                   <Outlet />
                 </main>
               </InertWhenNavOpened>

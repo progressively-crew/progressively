@@ -14,7 +14,7 @@ export const MobileNav = () => {
     <div>
       <div
         className={
-          "fixed h-full w-full bg-white top-0 bottom-0 left-0 transition-transform ease-in-out duration-200 " +
+          "z-30 fixed h-full w-full bg-white top-0 bottom-0 left-0 transition-transform ease-in-out duration-200 " +
           translateClass
         }
       >

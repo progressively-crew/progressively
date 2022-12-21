@@ -11,4 +11,4 @@ For example, it's possible to create audience eligibility rules that will allow 
 
 **:warning: It's important to understand that if the user requesting the flag matches AT LEAST ONE of the audience eligibility rule, they will receive the activated variant of the flag (if they are in the range of the rollout)**.
 
-It's up to you to configure which field you want to rely on to create them. Also, since it uses data that is outside the scope of Progressively, [you are reponsible to provide them through SDKs](/guides/javascript.html#fields).
+It's up to you to configure which field you want to rely on to create them. Also, since it uses data that is outside the scope of Progressively, you are reponsible to provide them through SDKs.

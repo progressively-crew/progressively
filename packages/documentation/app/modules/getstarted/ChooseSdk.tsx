@@ -28,7 +28,7 @@ export const ChooseSdk = () => {
         <div className="pt-4 inline-block">
           <Button
             variant="secondary"
-            to="/docs/guides/react"
+            to="/docs/developers/sdk"
             icon={
               <BsArrowRight
                 aria-hidden
