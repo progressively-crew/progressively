@@ -76,6 +76,10 @@ const MenuItems = [
         link: "/docs/guides/php",
       },
       {
+        label: "Go",
+        link: "/docs/guides/go",
+      },
+      {
         label: "Add yours",
         link: "/docs/guides/add-your-sdk",
       },
