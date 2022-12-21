@@ -65,35 +65,35 @@ export const WhyCards = () => {
   return (
     <div className="flex gap-4 flex-col">
       <WhyCard title="Progressively is smaller than its competitors">
-        <p className="m-0">
+        <p>
           Progressively is smaller than its competitor by moving most of the
           logic on the server. It does not bloat client side bundles.
         </p>
       </WhyCard>
 
       <WhyCard title="Progressively has to be accessible">
-        <p className="m-0">
+        <p>
           Progressively is smaller than its competitor by moving most of the
           logic on the server. It does not bloat client side bundles.
         </p>
       </WhyCard>
 
       <WhyCard title="Progressively is self hosted">
-        <p className="m-0">
+        <p>
           Progressively is smaller than its competitor by moving most of the
           logic on the server. It does not bloat client side bundles.
         </p>
       </WhyCard>
 
       <WhyCard title="Progressively is Open Source">
-        <p className="m-0">
+        <p>
           Progressively is smaller than its competitor by moving most of the
           logic on the server. It does not bloat client side bundles.
         </p>
       </WhyCard>
 
       <WhyCard title="Progressively is privacy aware">
-        <p className="m-0">
+        <p>
           Progressively is smaller than its competitor by moving most of the
           logic on the server. It does not bloat client side bundles.
         </p>
