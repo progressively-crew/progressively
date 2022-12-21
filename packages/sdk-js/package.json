@@ -1,7 +1,7 @@
 {
   "name": "@progressively/sdk-js",
   "author": "mfrachet",
-  "version": "0.0.1-alpha.18",
+  "version": "0.0.1-alpha.19",
   "main": "./dist/legacy/index.js",
   "exports": "./dist/modern/index.js",
   "types": "./dist/modern",
