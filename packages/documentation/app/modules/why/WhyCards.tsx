@@ -29,7 +29,7 @@ const WhyCard = ({ title, children }: WhyCardProps) => {
           <IoChevronDownOutline aria-hidden className="mt-[2px]" />
         </span>
 
-        <h3 className="m-0">
+        <h2 className="m-0">
           <button
             ref={buttonRef}
             className="text-base font-semibold mb-0"
@@ -45,7 +45,7 @@ const WhyCard = ({ title, children }: WhyCardProps) => {
               {title}
             </span>
           </button>
-        </h3>
+        </h2>
       </div>
 
       <div
@@ -114,8 +114,27 @@ export const WhyCards = () => {
 
       <WhyCard title="Progressively has to be accessible">
         <p>
-          Progressively is smaller than its competitor by moving most of the
-          logic on the server. It does not bloat client side bundles.
+          We strongly believe in human and human rights. And we want anyone to
+          be able to use the tool the way they want.
+        </p>
+        <p>
+          In order to catch issues the sooner, the dashboard is audited by
+          automated tool on every modifications.
+        </p>
+
+        <p>
+          Of course, we don't have all the world's knowledge, neither the tool
+          we use, and we make mistakes. So if you face any issue while browsing
+          in Progressively, please,{" "}
+          <a
+            href="https://github.com/progressively-crew/progressively/issues/new?assignees=&labels=&template=bug_report.md&title="
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+          >
+            fill an issue
+          </a>{" "}
+          and help us improve the tool.
         </p>
       </WhyCard>
 
