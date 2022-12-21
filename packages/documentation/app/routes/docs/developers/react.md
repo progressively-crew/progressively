@@ -120,7 +120,7 @@ export async function getServerSideProps({
     },
   });
 
-  const progressivelyCookie = response.headers.get("set-cookie");
+  const progressivelyCookie = response?.headers?.get("set-cookie");
   res.setHeader("set-cookie", progressivelyCookie);
 
   return {
