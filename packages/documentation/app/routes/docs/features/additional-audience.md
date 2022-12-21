@@ -6,4 +6,4 @@ However, you may also want to provide "joker" access to a subset of your users. 
 
 The "Additional audience" is the "joker" access: if the users matches at least one the rule, they are granted access to the activated variant of the flag. This feature is mostly to use with the person that work inside your company. It's like a "private access" to a feature that will be rollout in the future.
 
-It's up to you to configure which field you want to rely on to create them. Also, since it uses data that is outside the scope of Progressively, [you are reponsible to provide them through SDKs](/guides/javascript.html#fields).
+It's up to you to configure which field you want to rely on to create them. Also, since it uses data that is outside the scope of Progressively, you are reponsible to provide them through SDKs.
