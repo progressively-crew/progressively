@@ -12,10 +12,6 @@ const MenuItems = [
         link: "/docs/introduction/why",
       },
       {
-        label: "Demo instance",
-        link: "/docs/introduction/demo-instance",
-      },
-      {
         label: "Getting started",
         link: "/docs/introduction/getting-started",
       },

@@ -13,7 +13,7 @@ export const Hero = () => {
           <Logo className="h-16 w-16" />
         </div>
 
-        <h1 className="text-black text-3xl dark:text-white font-extrabold sm:text-5xl p-1">
+        <h1 className="text-black text-3xl dark:text-white font-extrabold sm:text-5xl p-1 motion-safe:animate-fade-enter-top">
           Rollout quickly, effectively,
           <span className="sm:block dark:text-indigo-400 text-indigo-700">
             {" "}
@@ -21,22 +21,29 @@ export const Hero = () => {
           </span>
         </h1>
 
-        <p className="mt-4 max-w-xl sm:text-xl sm:leading-relaxed text-gray-600 dark:text-slate-200">
-          A simple, accessible, lightweight, self-hosted and OpenSource{" "}
-          <strong>feature flagging tool</strong>.
-        </p>
+        <div
+          className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"
+          style={{
+            animationDelay: "500ms",
+          }}
+        >
+          <p className="mt-4 max-w-xl sm:text-xl sm:leading-relaxed text-gray-600 dark:text-slate-200">
+            A simple, accessible, lightweight, self-hosted and OpenSource{" "}
+            <strong>feature flagging tool</strong>.
+          </p>
 
-        <div className="mt-8 flex flex-wrap gap-4">
-          <Button
-            to="/docs/introduction/why"
-            onClick={() => track("Get started A", {})}
-          >
-            Get Started
-          </Button>
+          <div className="mt-8 flex flex-wrap gap-4">
+            <Button
+              to="/docs/introduction/why"
+              onClick={() => track("Get started A", {})}
+            >
+              Get Started
+            </Button>
 
-          <Button variant="secondary" to="/docs/introduction/demo-instance">
-            Demo instance
-          </Button>
+            <Button variant="secondary" to="/demo-instance">
+              Demo instance
+            </Button>
+          </div>
         </div>
       </div>
 

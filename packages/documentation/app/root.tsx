@@ -37,30 +37,30 @@ export const loader: LoaderFunction = async ({ request }) => {
   const cookieHeader = request.headers.get("Cookie");
   const cookie = (await progressivelyCookie.parse(cookieHeader)) || {};
 
-  const { data, response } = await getProgressivelyData(
-    String(process.env.PROGRESSIVELY_ENV),
-    {
-      websocketUrl: "wss://backend-progressively.fly.dev",
-      apiUrl: "https://backend-progressively.fly.dev",
-      fields: {
-        id: cookie["progressively-id"],
-      },
-    }
-  );
+  // const { data, response } = await getProgressivelyData(
+  //   String(process.env.PROGRESSIVELY_ENV),
+  //   {
+  //     websocketUrl: "wss://backend-progressively.fly.dev",
+  //     apiUrl: "https://backend-progressively.fly.dev",
+  //     fields: {
+  //       id: cookie["progressively-id"],
+  //     },
+  //   }
+  // );
 
-  // Progressively cookies
-  const cookieValue = response.headers
-    .get("set-cookie")
-    ?.split(";")
-    ?.find((str) => str.includes("progressively-id"))
-    ?.split("=")?.[1];
+  // // Progressively cookies
+  // const cookieValue = response.headers
+  //   .get("set-cookie")
+  //   ?.split(";")
+  //   ?.find((str) => str.includes("progressively-id"))
+  //   ?.split("=")?.[1];
 
-  // Assigning progessively cookie to remix cookie
-  cookie["progressively-id"] = cookieValue;
+  // // Assigning progessively cookie to remix cookie
+  // cookie["progressively-id"] = cookieValue;
 
   return json(
     {
-      progressivelyProps: data,
+      progressivelyProps: {},
     },
     {
       headers: {
