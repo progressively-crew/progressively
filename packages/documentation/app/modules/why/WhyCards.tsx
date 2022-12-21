@@ -20,15 +20,7 @@ const WhyCard = ({ title, children }: WhyCardProps) => {
       tabIndex={-1}
       onClick={() => buttonRef?.current?.click()}
     >
-      <div className="flex flex-row gap-4 items-center">
-        <span
-          className={`border border-gray-200 rounded-full text-gray-400 p-1 h-6 w-6 flex items-center transition-all ${
-            expanded ? "rotate-180" : ""
-          }`}
-        >
-          <IoChevronDownOutline aria-hidden className="mt-[2px]" />
-        </span>
-
+      <div className="flex flex-row gap-4 items-center justify-between">
         <h2 className="m-0">
           <button
             ref={buttonRef}
@@ -46,6 +38,14 @@ const WhyCard = ({ title, children }: WhyCardProps) => {
             </span>
           </button>
         </h2>
+
+        <span
+          className={`border border-gray-200 rounded-full text-gray-400 p-1 h-6 w-6 flex items-center transition-all ${
+            expanded ? "rotate-180" : ""
+          }`}
+        >
+          <IoChevronDownOutline aria-hidden className="mt-[2px]" />
+        </span>
       </div>
 
       <div
@@ -140,22 +140,40 @@ export const WhyCards = () => {
 
       <WhyCard title="Progressively is self hosted">
         <p>
-          Progressively is smaller than its competitor by moving most of the
-          logic on the server. It does not bloat client side bundles.
+          Progressively is self-hosted. It means that you have to run the tool
+          on your own server, on your own databases.
+        </p>
+        <p>
+          It means that you own the data and that nobody has access to them.
         </p>
       </WhyCard>
 
       <WhyCard title="Progressively is Open Source">
         <p>
-          Progressively is smaller than its competitor by moving most of the
-          logic on the server. It does not bloat client side bundles.
+          <strong>
+            Progressively's codebase is open source and will always be.
+          </strong>
+        </p>
+        <p>
+          We strongly believe in the power of the community, and we want to hear
+          from you. Let us know your experience with the tool, how it can become
+          better to solve your problems and what are your expectations for the
+          future.
         </p>
       </WhyCard>
 
       <WhyCard title="Progressively is privacy aware">
         <p>
-          Progressively is smaller than its competitor by moving most of the
-          logic on the server. It does not bloat client side bundles.
+          As simple as it is, Progressively does not know anything about your
+          users. It does not store anything related to them.
+        </p>
+        <p>
+          And as simple as it is, we don't know anything about you, nor about
+          the usage of the tool :).
+        </p>
+        <p>
+          We don't need analytics numbers, but we need your explicit support,
+          spread the word around!
         </p>
       </WhyCard>
     </div>
