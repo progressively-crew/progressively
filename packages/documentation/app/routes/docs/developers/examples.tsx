@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { IoLogoNodejs, IoLogoVercel } from "react-icons/io5";
-import { FaPhp, FaReact } from "react-icons/fa";
+import { FaPhp, FaPython, FaReact } from "react-icons/fa";
 import { SiGoland, SiSvelte } from "react-icons/si";
 import { AstroIcon } from "~/components/icons/AstroIcon";
 import { RemixIcon } from "~/components/icons/RemixIcon";
@@ -108,6 +108,12 @@ const ExamplePage = () => {
             icon={<SiGoland style={{ color: "#29BEB0" }} />}
             title="Go"
             href="https://github.com/progressively-crew/sdk-go"
+          />
+
+          <Example
+            icon={<FaPython style={{ color: "#4B8BBE" }} />}
+            title="Python"
+            href="https://github.com/progressively-crew/sdk-python"
           />
         </div>
       </section>

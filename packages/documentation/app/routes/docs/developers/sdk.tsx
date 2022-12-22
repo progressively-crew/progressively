@@ -1,7 +1,7 @@
 import { Link } from "@remix-run/react";
 import { useRef } from "react";
 import { IoLogoJavascript, IoLogoNodejs } from "react-icons/io5";
-import { FaPhp, FaReact } from "react-icons/fa";
+import { FaPhp, FaReact, FaPython } from "react-icons/fa";
 import { SiGoland } from "react-icons/si";
 
 interface SdkCardProps {
@@ -98,6 +98,17 @@ const SdkPage = () => {
           description={
             <p className="m-0">
               The <strong className="dark:text-slate-100">Go</strong> SDK.
+            </p>
+          }
+        />
+
+        <SdkCard
+          icon={<FaPython style={{ color: "#4B8BBE" }} />}
+          title="Python"
+          href="/docs/developers/python"
+          description={
+            <p className="m-0">
+              The <strong className="dark:text-slate-100">Python</strong> SDK.
             </p>
           }
         />
