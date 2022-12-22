@@ -14,14 +14,14 @@ export const MobileNav = () => {
     <div>
       <div
         className={
-          "z-30 fixed h-full w-full bg-white top-0 bottom-0 left-0 transition-transform ease-in-out duration-200 " +
+          "z-30 fixed h-full w-full bg-white dark:bg-slate-800 top-0 bottom-0 left-0 transition-transform ease-in-out duration-200 " +
           translateClass
         }
       >
         <FocusTrap isActive={isNavOpened}>
           <div className="p-4">
             <button
-              className="h-10 w-10 text-2xl"
+              className="h-10 w-10 text-2xl dark:text-slate-300"
               onClick={toggleNav}
               tabIndex={isNavOpened ? 0 : -1}
               aria-hidden={!isNavOpened}

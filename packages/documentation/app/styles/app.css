@@ -527,7 +527,7 @@ video {
 }
 
 .prose :where(a):not(:where([class~="not-prose"] *)) {
-  color: var(--tw-prose-links);
+  color: #4338ca;
   text-decoration: underline;
   font-weight: 500;
 }
@@ -1075,20 +1075,16 @@ video {
   margin-left: -4rem;
 }
 
-.mt-0 {
-  margin-top: 0px;
-}
-
 .mb-0 {
   margin-bottom: 0px;
 }
 
-.mt-1 {
-  margin-top: 0.25rem;
-}
-
 .mt-\[2px\] {
   margin-top: 2px;
+}
+
+.mt-0 {
+  margin-top: 0px;
 }
 
 .block {
@@ -1225,10 +1221,6 @@ video {
 
 .w-9 {
   width: 2.25rem;
-}
-
-.w-12 {
-  width: 3rem;
 }
 
 .max-w-screen-xl {
@@ -1829,14 +1821,14 @@ video {
   color: rgb(67 56 202 / var(--tw-text-opacity)) !important;
 }
 
-.text-indigo-600 {
-  --tw-text-opacity: 1;
-  color: rgb(79 70 229 / var(--tw-text-opacity));
-}
-
 .text-pink-600 {
   --tw-text-opacity: 1;
   color: rgb(219 39 119 / var(--tw-text-opacity));
+}
+
+.text-red-500 {
+  --tw-text-opacity: 1;
+  color: rgb(239 68 68 / var(--tw-text-opacity));
 }
 
 .underline {
@@ -2077,25 +2069,6 @@ video {
     background-color: rgb(255 255 255 / var(--tw-bg-opacity));
   }
 
-  .dark\:prose-invert {
-    --tw-prose-body: var(--tw-prose-invert-body);
-    --tw-prose-headings: var(--tw-prose-invert-headings);
-    --tw-prose-lead: var(--tw-prose-invert-lead);
-    --tw-prose-links: var(--tw-prose-invert-links);
-    --tw-prose-bold: var(--tw-prose-invert-bold);
-    --tw-prose-counters: var(--tw-prose-invert-counters);
-    --tw-prose-bullets: var(--tw-prose-invert-bullets);
-    --tw-prose-hr: var(--tw-prose-invert-hr);
-    --tw-prose-quotes: var(--tw-prose-invert-quotes);
-    --tw-prose-quote-borders: var(--tw-prose-invert-quote-borders);
-    --tw-prose-captions: var(--tw-prose-invert-captions);
-    --tw-prose-code: var(--tw-prose-invert-code);
-    --tw-prose-pre-code: var(--tw-prose-invert-pre-code);
-    --tw-prose-pre-bg: var(--tw-prose-invert-pre-bg);
-    --tw-prose-th-borders: var(--tw-prose-invert-th-borders);
-    --tw-prose-td-borders: var(--tw-prose-invert-td-borders);
-  }
-
   .dark\:text-slate-100 {
     --tw-text-opacity: 1;
     color: rgb(241 245 249 / var(--tw-text-opacity));
@@ -2139,6 +2112,59 @@ video {
   .dark\:\!text-slate-100 {
     --tw-text-opacity: 1 !important;
     color: rgb(241 245 249 / var(--tw-text-opacity)) !important;
+  }
+
+  .dark\:prose-dark {
+    color: #d1d5db;
+  }
+
+  .dark\:prose-dark :where([class~="lead"]):not(:where([class~="not-prose"] *)) {
+    color: #9ca3af;
+  }
+
+  .dark\:prose-dark :where(a):not(:where([class~="not-prose"] *)) {
+    color: #818cf8;
+  }
+
+  .dark\:prose-dark :where(strong):not(:where([class~="not-prose"] *)) {
+    color: #f3f4f6;
+  }
+
+  .dark\:prose-dark :where(ul > li):not(:where([class~="not-prose"] *))::before {
+    background-color: #374151;
+  }
+
+  .dark\:prose-dark :where(hr):not(:where([class~="not-prose"] *)) {
+    border-color: #1f2937;
+  }
+
+  .dark\:prose-dark :where(blockquote):not(:where([class~="not-prose"] *)) {
+    color: #f3f4f6;
+    border-left-color: #1f2937;
+  }
+
+  .dark\:prose-dark :where(h1):not(:where([class~="not-prose"] *)) {
+    color: #f3f4f6;
+  }
+
+  .dark\:prose-dark :where(h2):not(:where([class~="not-prose"] *)) {
+    color: #f3f4f6;
+  }
+
+  .dark\:prose-dark :where(h3):not(:where([class~="not-prose"] *)) {
+    color: #f3f4f6;
+  }
+
+  .dark\:prose-dark :where(h4):not(:where([class~="not-prose"] *)) {
+    color: #f3f4f6;
+  }
+
+  .dark\:prose-dark :where(code):not(:where([class~="not-prose"] *)) {
+    color: #f3f4f6;
+  }
+
+  .dark\:prose-dark :where(a code):not(:where([class~="not-prose"] *)) {
+    color: #f3f4f6;
   }
 
   .hover\:dark\:bg-slate-700:hover {

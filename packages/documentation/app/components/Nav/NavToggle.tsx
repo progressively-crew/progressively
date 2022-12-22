@@ -7,7 +7,7 @@ export const NavToggle = () => {
 
   return (
     <button
-      className="h-10 w-10 text-2xl"
+      className="h-10 w-10 text-2xl dark:text-slate-300"
       onClick={toggleNav}
       tabIndex={isNavOpened ? -1 : 0}
       aria-hidden={isNavOpened}
