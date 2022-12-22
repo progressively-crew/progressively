@@ -12,16 +12,8 @@ const MenuItems = [
         link: "/docs/introduction/why",
       },
       {
-        label: "Demo instance",
-        link: "/docs/introduction/demo-instance",
-      },
-      {
         label: "Getting started",
         link: "/docs/introduction/getting-started",
-      },
-      {
-        label: "Configuration",
-        link: "/docs/introduction/configuration",
       },
     ],
   },
@@ -66,6 +58,10 @@ const MenuItems = [
       {
         label: "Examples",
         link: "/docs/developers/examples",
+      },
+      {
+        label: "Customization",
+        link: "/docs/developers/customization",
       },
     ],
   },

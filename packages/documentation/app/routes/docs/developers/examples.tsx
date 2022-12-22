@@ -48,8 +48,8 @@ const ExamplePage = () => {
         >
           Progressively's pipeline{" "}
         </a>
-        owns a bunch of E2e tests running on applications built with the
-        different SDKs. They can be used as minimal example of Progressively
+        owns a bunch of E2E tests running on applications built with the
+        different SDKs. They can be used as minimal examples of Progressively
         usage.
       </p>
 
