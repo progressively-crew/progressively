@@ -14,7 +14,7 @@ export default defineConfig({
         }
 
         return launchOptions;
-      }),
+      });
     },
   },
 });
