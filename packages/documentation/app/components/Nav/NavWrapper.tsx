@@ -29,7 +29,7 @@ export const NavItem = ({ children, to, onClick }: NavItemProps) => {
         onClick={onClick}
         className={({ isActive }) =>
           isActive
-            ? "h-8 block flex items-center lg:rounded px-4 bg-indigo-700 font-bold text-white lg:bg-indigo-100 lg:text-indigo-700 lg:dark:bg-slate-600 lg:dark:text-white text-sm"
+            ? "h-8 block flex items-center lg:rounded px-4 bg-indigo-700 font-bold text-white lg:bg-indigo-100 lg:text-indigo-700 dark:bg-slate-600 lg:dark:text-white text-sm"
             : "h-8 block flex items-center lg:rounded px-4 hover:bg-gray-100 hover:dark:bg-slate-700 active:bg-gray-200 active:dark:bg-slate-700 text-gray-500 dark:text-gray-300 text-sm"
         }
       >

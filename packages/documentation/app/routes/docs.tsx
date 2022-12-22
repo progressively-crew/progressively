@@ -41,7 +41,7 @@ export default function DocsLayout() {
               <Nav />
 
               <InertWhenNavOpened>
-                <main className="prose lg:prose-x dark:prose-invert">
+                <main className="prose lg:prose-x dark:prose-dark">
                   <Outlet />
                 </main>
               </InertWhenNavOpened>
