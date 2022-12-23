@@ -16,18 +16,6 @@ export interface LineChartProps {
   data: Array<{ [key: string]: number } & { date: string }>;
 }
 
-const CustomLine = ({ progressivelyDataKey, ...props }: any) => {
-  return (
-    <Line
-      type="monotone"
-      dataKey={progressivelyDataKey}
-      stroke="red"
-      activeDot={{ r: 8 }}
-      {...props}
-    />
-  );
-};
-
 export const LineChart = ({ data }: LineChartProps) => {
   const { theme } = useTheme();
 
@@ -48,10 +36,9 @@ export const LineChart = ({ data }: LineChartProps) => {
         height={300}
         data={data}
         margin={{
-          top: 5,
-          right: 30,
-          left: 20,
-          bottom: 5,
+          top: 10,
+          right: 10,
+          bottom: 40,
         }}
       >
         <XAxis dataKey="date" allowDuplicatedCategory={false} />
@@ -64,7 +51,7 @@ export const LineChart = ({ data }: LineChartProps) => {
             key={key}
             type="monotone"
             dataKey={key}
-            stroke="red"
+            stroke={stringToColor(key, 75)}
             activeDot={{ r: 8 }}
           />
         ))}

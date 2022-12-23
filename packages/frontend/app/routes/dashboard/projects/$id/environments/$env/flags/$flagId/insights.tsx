@@ -228,17 +228,13 @@ export default function FlagInsights() {
 
             {hitsPerVariant.length > 0 && (
               <div>
-                <div style={{ height: 260 }}>
+                <FlagEvalList evalCount={flagEvaluationsCount} items={[]} />
+
+                <div
+                  className="w-full bg-slate-700 pt-8 pb-6"
+                  style={{ height: 300 }}
+                >
                   <LineChart data={hitsPerVariant} />
-                </div>
-
-                <Spacer size={4} />
-
-                <div className="border-l border-t border-l-gray-200 border-t-gray-200 dark:border-l-slate-700 border-t-gray-700">
-                  {/* <FlagEvalList
-                    evalCount={flagEvaluationsCount}
-                    items={hitsPerVariant}
-                  /> */}
                 </div>
               </div>
             )}
