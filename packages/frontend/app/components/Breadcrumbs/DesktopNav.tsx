@@ -38,7 +38,7 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
               <Link
                 aria-current={currentPage ? "page" : undefined}
                 to={crumb.link}
-                className={`transition-all px-2 -mx-1 py-1 rounded hover:text-black hover:dark:text-slate-200 hover:bg-gray-100 dark:hover:bg-slate-900 active:bg-gray-200 dark:active:bg-slate-700 active:text-indigo-700 no-underline text-sm ${
+                className={`transition-all px-2 -mx-1 py-1 rounded hover:text-black hover:dark:text-slate-200 hover:bg-gray-100 dark:hover:bg-slate-800 active:bg-gray-200 dark:active:bg-slate-700 active:text-indigo-700 no-underline text-xs ${
                   currentPage
                     ? "text-black dark:text-white"
                     : "text-gray-500 dark:text-slate-200"

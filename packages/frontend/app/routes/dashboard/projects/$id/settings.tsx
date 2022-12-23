@@ -83,7 +83,7 @@ export default function SettingsPage() {
       user={user}
       header={
         <Header
-          tagline={<TagLine icon={<ProjectIcon />}>PROJECT</TagLine>}
+          tagline={<TagLine icon={<ProjectIcon />}>Project</TagLine>}
           title={<span>{project.name}</span>}
         />
       }

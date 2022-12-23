@@ -93,7 +93,7 @@ export default function FlagsByEnvPage() {
       user={user}
       header={
         <Header
-          tagline={<TagLine icon={<EnvIcon />}>ENVIRONMENT</TagLine>}
+          tagline={<TagLine icon={<EnvIcon />}>Environment</TagLine>}
           title={environment.name}
         />
       }

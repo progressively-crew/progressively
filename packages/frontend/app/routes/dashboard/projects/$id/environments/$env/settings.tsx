@@ -41,7 +41,7 @@ export default function EnvSettingsPage() {
       header={
         <Header
           title={environment.name}
-          tagline={<TagLine icon={<EnvIcon />}>ENVIRONMENT</TagLine>}
+          tagline={<TagLine icon={<EnvIcon />}>Environment</TagLine>}
         />
       }
       subNav={<EnvNavBar projectId={project.uuid} envId={environment.uuid} />}
