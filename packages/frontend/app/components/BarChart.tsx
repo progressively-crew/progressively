@@ -3,7 +3,6 @@ import {
   Bar,
   XAxis,
   YAxis,
-  CartesianGrid,
   Tooltip,
   ResponsiveContainer,
   Cell,
@@ -37,7 +36,6 @@ export const BarChart = ({ data, yLabel }: BarChartProps) => {
           bottom: 5,
         }}
       >
-        <CartesianGrid strokeDasharray="3 3" />
         <XAxis
           dataKey="name"
           label={{

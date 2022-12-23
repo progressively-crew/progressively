@@ -8,10 +8,10 @@ import {
   XAxis,
   YAxis,
   Line,
-  Label,
 } from "recharts";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
 import { useTheme } from "~/modules/theme/useTheme";
+import { Spacer } from "./Spacer";
 
 export interface LineChartProps {
   data: Array<{ [key: string]: number } & { date: string }>;
@@ -35,9 +35,47 @@ const CustomizedAxisTick = ({ color, ...props }: any) => {
   );
 };
 
+const CustomTooltip = ({ active, payload, label }: any) => {
+  const formatter = new Intl.DateTimeFormat();
+
+  if (active && payload && payload.length > 0) {
+    return (
+      <div className="bg-white text-black p-4 rounded-md">
+        <span className="text-xs text-gray-600 font-semibold">
+          {label ? formatter.format(new Date(label)) : ""}
+        </span>
+
+        <Spacer size={2} />
+
+        <div>
+          {payload.map((pld: any) => (
+            <div key={`${label}-${pld.value}-${pld.dataKey}`}>
+              <span className="flex flex-row gap-3 items-center">
+                <span
+                  aria-hidden
+                  style={{ background: stringToColor(pld.dataKey, 75) }}
+                  className="h-4 w-4 block rounded"
+                />
+                <span className="text-gray-700">{pld.dataKey}:</span>
+                <span
+                  style={{ color: stringToColor(pld.dataKey, 75) }}
+                  className="font-semibold"
+                >
+                  {pld.value}
+                </span>
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  return null;
+};
+
 export const LineChart = ({ data }: LineChartProps) => {
   const { theme } = useTheme();
-  const formatter = new Intl.DateTimeFormat();
 
   const legendColor = theme === "dark" ? "white" : "black";
   const glowEffect = (key: string) =>
@@ -70,7 +108,7 @@ export const LineChart = ({ data }: LineChartProps) => {
           tick={<CustomizedAxisTick color={legendColor} />}
         />
         <YAxis tick={{ stroke: legendColor }} />
-        <Tooltip />
+        <Tooltip content={<CustomTooltip />} />
         <Legend
           wrapperStyle={{
             paddingTop: "40px",
