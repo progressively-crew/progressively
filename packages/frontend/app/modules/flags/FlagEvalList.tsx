@@ -26,14 +26,14 @@ export const FlagEvalList = ({ items, evalCount }: FlagEvalListProps) => {
         {items.map((hit) => (
           <Tr key={hit.variant}>
             <Td>
-              <Tag
-                style={{
-                  background: stringToColor(hit.variant, 90),
-                  color: stringToColor(hit.variant, 25),
-                }}
-              >
+              <span className="flex flex-row gap-3 items-center">
+                <span
+                  aria-hidden
+                  style={{ background: stringToColor(hit.variant, 75) }}
+                  className="h-4 w-4 block rounded"
+                />
                 {hit.variant}
-              </Tag>
+              </span>
             </Td>
             <Td>
               <strong>{hit.count}</strong>

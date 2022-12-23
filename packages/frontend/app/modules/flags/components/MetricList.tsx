@@ -1,7 +1,6 @@
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { Link } from "~/components/Link";
 import { RawTable, Td, Th, Tr } from "~/components/RawTable";
-import { Tag } from "~/components/Tag";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
 import { Metric } from "../types";
 
@@ -39,16 +38,16 @@ export const MetricList = ({
                   to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/variants`}
                   className="no-underline"
                 >
-                  {metric.variant?.value && (
-                    <Tag
+                  <span className="flex flex-row gap-3 items-center">
+                    <span
+                      aria-hidden
                       style={{
-                        background: stringToColor(metric.variant.value, 90),
-                        color: stringToColor(metric.variant.value, 25),
+                        background: stringToColor(metric.variant.value, 75),
                       }}
-                    >
-                      {metric.variant.value}
-                    </Tag>
-                  )}
+                      className="h-4 w-4 block rounded"
+                    />
+                    {metric.variant.value}
+                  </span>
                 </Link>
               )}
             </Td>

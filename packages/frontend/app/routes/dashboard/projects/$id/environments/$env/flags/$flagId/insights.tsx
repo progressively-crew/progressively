@@ -262,15 +262,18 @@ export default function FlagInsights() {
               />
             </CardContent>
 
-            {barChartData.length > 0 && (
-              <div className="w-full" style={{ height: 200 }}>
-                <BarChart data={barChartData} yLabel="Percentage" />
-              </div>
-            )}
+            <MetricPerVariantList items={metricsByVariantCount} />
 
             <Spacer size={4} />
 
-            <MetricPerVariantList items={metricsByVariantCount} />
+            {barChartData.length > 0 && (
+              <div
+                className="w-full bg-slate-700 pt-8 pb-6"
+                style={{ height: 300 }}
+              >
+                <BarChart data={barChartData} yLabel="Percentage" />
+              </div>
+            )}
           </Card>
         </Section>
       </Stack>

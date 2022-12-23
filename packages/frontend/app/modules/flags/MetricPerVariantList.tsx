@@ -31,14 +31,14 @@ export const MetricPerVariantList = ({ items }: MetricPerVariantListProps) => {
             <Td>{mHit.metric}</Td>
             <Td>
               {mHit.variant && (
-                <Tag
-                  style={{
-                    background: stringToColor(mHit.variant, 90),
-                    color: stringToColor(mHit.variant, 25),
-                  }}
-                >
+                <span className="flex flex-row gap-3 items-center">
+                  <span
+                    aria-hidden
+                    style={{ background: stringToColor(mHit.variant, 75) }}
+                    className="h-4 w-4 block rounded"
+                  />
                   {mHit.variant}
-                </Tag>
+                </span>
               )}
             </Td>
             <Td>
