@@ -50,7 +50,7 @@ export default function ProjectDetailPage() {
       user={user}
       header={
         <Header
-          tagline={<TagLine icon={<ProjectIcon />}>PROJECT</TagLine>}
+          tagline={<TagLine icon={<ProjectIcon />}>Project</TagLine>}
           title={project.name}
         />
       }

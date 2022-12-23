@@ -8,7 +8,6 @@ import { InertWhenNavOpened } from "~/components/Breadcrumbs/InertWhenNavOpened"
 import { UseDropdown } from "~/modules/user/components/UserDropdown";
 import { useMatches } from "@remix-run/react";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
-import { HideDesktop, HideTablet } from "~/components/HideMobile";
 
 export interface DashboardLayoutProps {
   user?: Partial<User>;
@@ -35,46 +34,34 @@ export const DashboardLayout = ({
     <NavProvider>
       <SkipNavLink>Skip to content</SkipNavLink>
 
-      <div className="border-b border-b-gray-100 dark:border-b-slate-700 bg-white dark:bg-slate-800 z-10 lg:sticky top-0">
+      <div className="bg-gray-50 dark:bg-slate-900 z-10 lg:sticky top-0">
         <Container>
           <div className="flex justify-between h-14 items-center">
             <BreadCrumbs crumbs={crumbs} />
 
             <UseDropdown user={user} />
           </div>
-
-          <HideDesktop>
-            {header && <Spacer size={4} />}
-
-            {header}
-            {header && <Spacer size={4} />}
-          </HideDesktop>
         </Container>
       </div>
 
       <InertWhenNavOpened className="h-full">
-        {subNav && <HideDesktop>{subNav}</HideDesktop>}
-
         <div className="px-4 md:px-12 lg:px-0 h-full">
-          <div
-            className={
-              subNav
-                ? "grid grid-cols-[1fr] lg:grid-cols-[240px_1fr] gap-12 h-full"
-                : "grid-cols-[1fr]"
-            }
-          >
-            {subNav && (
-              <HideTablet as="div">
-                <div className="lg:h-full lg:fixed lg:w-[240px]">{subNav}</div>
-              </HideTablet>
-            )}
+          <div>
+            <div className={`max-w-7xl w-full mx-auto`}>
+              {header && (
+                <div>
+                  <Spacer size={12} />
+                  {header}
+                  <Spacer size={4} />
+                </div>
+              )}
 
-            <div
-              className={`overflow-hidden max-w-7xl w-full mx-auto ${
-                subNav ? "lg:pr-12" : ""
-              }`}
-            >
+              <div className="lg:sticky lg:top-16 drop-shadow-xl z-10">
+                {subNav}
+              </div>
+
               <Spacer size={8} />
+
               <Main>
                 <div className="flex flex-col gap-2 md:gap-6">
                   {status}

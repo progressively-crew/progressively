@@ -77,7 +77,7 @@ export default function Metrics() {
       user={user}
       header={
         <Header
-          tagline={<TagLine icon={<FlagIcon />}>FEATURE FLAG</TagLine>}
+          tagline={<TagLine icon={<FlagIcon />}>Feature flag</TagLine>}
           title={currentFlag.name}
         />
       }
