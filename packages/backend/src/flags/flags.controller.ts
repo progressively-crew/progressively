@@ -176,12 +176,13 @@ export class FlagsController {
     if (!endDate || !startDate) {
       throw new BadRequestException('startDate and endDate are required.');
     }
-    const hitsPerVariant = await this.flagService.flagHitsPerVariantPerDate(
-      envId,
-      flagId,
-      startDate,
-      endDate,
-    );
+    const hitsPerVariantPerDate =
+      await this.flagService.flagHitsPerVariantPerDate(
+        envId,
+        flagId,
+        startDate,
+        endDate,
+      );
 
     const flagEvaluationsCount = await this.flagService.flagEvaluationsCount(
       envId,
@@ -197,7 +198,19 @@ export class FlagsController {
       endDate,
     );
 
-    return { hitsPerVariant, flagEvaluationsCount, metricsByVariantCount };
+    const flagEvaluations = await this.flagService.flagEvaluations(
+      envId,
+      flagId,
+      startDate,
+      endDate,
+    );
+
+    return {
+      hitsPerVariantPerDate,
+      flagEvaluationsCount,
+      metricsByVariantCount,
+      flagEvaluations,
+    };
   }
 
   @Post('environments/:envId/flags/:flagId/strategies')

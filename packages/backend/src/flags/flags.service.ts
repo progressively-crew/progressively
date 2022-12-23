@@ -174,6 +174,26 @@ export class FlagsService {
     return metricsHit;
   }
 
+  async flagEvaluations(
+    envId: string,
+    flagId: string,
+    startDate: string,
+    endDate: string,
+  ) {
+    return this.prisma.flagHit.groupBy({
+      by: ['valueResolved'],
+      _count: true,
+      where: {
+        flagEnvironmentFlagId: flagId,
+        flagEnvironmentEnvironmentId: envId,
+        date: {
+          gte: new Date(startDate),
+          lte: new Date(endDate),
+        },
+      },
+    });
+  }
+
   async flagHitsPerVariantPerDate(
     envId: string,
     flagId: string,

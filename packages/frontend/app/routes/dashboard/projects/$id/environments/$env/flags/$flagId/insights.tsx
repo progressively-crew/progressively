@@ -52,6 +52,11 @@ interface MetricHit {
   count: number;
 }
 
+interface FlagEvaluation {
+  valueResolved: string;
+  _count: number;
+}
+
 interface LoaderData {
   flagEvaluationsCount: number;
   startDate: string;
@@ -62,7 +67,8 @@ interface LoaderData {
     value: number;
     color: string;
   }>;
-  hitsPerVariant: Array<FlagHit>;
+  hitsPerVariantPerDate: Array<FlagHit>;
+  flagEvaluations: Array<FlagEvaluation>;
 }
 
 export const loader: LoaderFunction = async ({
@@ -87,13 +93,15 @@ export const loader: LoaderFunction = async ({
 
   const authCookie = session.get("auth-cookie");
   const {
-    hitsPerVariant,
+    hitsPerVariantPerDate,
     flagEvaluationsCount,
     metricsByVariantCount,
+    flagEvaluations,
   }: {
-    hitsPerVariant: Array<FlagHit>;
+    hitsPerVariantPerDate: Array<FlagHit>;
     flagEvaluationsCount: number;
     metricsByVariantCount: Array<Omit<MetricHit, "variantCount">>;
+    flagEvaluations: Array<FlagEvaluation>;
   } = await getFlagHits(
     params.env!,
     params.flagId!,
@@ -102,16 +110,16 @@ export const loader: LoaderFunction = async ({
     authCookie
   );
 
-  const computedMetricsByVariantCout = metricsByVariantCount
-    .filter((nbv) => Boolean(nbv.variant))
-    .map((nbv) => ({
-      count: nbv.count,
-      metric: nbv.metric,
-      variant: nbv.variant,
-      variantCount: 1,
-    }));
+  const computedMetricsByVariantCount = metricsByVariantCount.map((nbv) => ({
+    count: nbv.count,
+    metric: nbv.metric,
+    variant: nbv.variant,
+    // eslint-disable-next-line unicorn/no-array-reduce
+    variantCount: flagEvaluations.find((f) => f.valueResolved === nbv.variant)
+      ?._count,
+  }));
 
-  const barChartData = computedMetricsByVariantCout
+  const barChartData = computedMetricsByVariantCount
     .filter((mbv) => Boolean(mbv.variantCount))
     .map((mbv) => ({
       name: `${mbv.metric} (${mbv.variant})`,
@@ -121,10 +129,11 @@ export const loader: LoaderFunction = async ({
     }));
 
   return {
-    hitsPerVariant,
+    flagEvaluations,
+    hitsPerVariantPerDate,
     barChartData,
     flagEvaluationsCount,
-    metricsByVariantCount: computedMetricsByVariantCout,
+    metricsByVariantCount: computedMetricsByVariantCount,
     startDate: startDate.toISOString(),
     endDate: endDate.toISOString(),
   };
@@ -141,8 +150,8 @@ export default function FlagInsights() {
     metricsByVariantCount,
     flagEvaluationsCount,
     barChartData,
-
-    hitsPerVariant,
+    hitsPerVariantPerDate,
+    flagEvaluations,
   } = useLoaderData<LoaderData>();
   const { flagEnv } = useFlagEnv();
   const { user } = useUser();
@@ -214,7 +223,7 @@ export default function FlagInsights() {
 
             <Spacer size={8} />
 
-            {hitsPerVariant.length === 0 && (
+            {hitsPerVariantPerDate.length === 0 && (
               <EmptyState
                 title="No hits found"
                 description={
@@ -226,15 +235,18 @@ export default function FlagInsights() {
               />
             )}
 
-            {hitsPerVariant.length > 0 && (
+            {hitsPerVariantPerDate.length > 0 && (
               <div>
-                <FlagEvalList evalCount={flagEvaluationsCount} items={[]} />
+                <FlagEvalList
+                  evalCount={flagEvaluationsCount}
+                  items={flagEvaluations}
+                />
 
                 <div
-                  className="w-full dark:bg-slate-700 pt-8 pb-6"
+                  className="w-full bg-gray-50 dark:bg-slate-700 pt-8 pb-6"
                   style={{ height: 300 }}
                 >
-                  <LineChart data={hitsPerVariant} />
+                  <LineChart data={hitsPerVariantPerDate} />
                 </div>
               </div>
             )}
@@ -256,7 +268,7 @@ export default function FlagInsights() {
 
             {barChartData.length > 0 && (
               <div
-                className="w-full dark:bg-slate-700 pt-8 pb-6"
+                className="w-full bg-gray-50 dark:bg-slate-700 pt-8 pb-6"
                 style={{ height: 300 }}
               >
                 <BarChart data={barChartData} yLabel="Percentage" />
