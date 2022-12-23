@@ -88,7 +88,6 @@ describe('Environments (e2e)', () => {
         .send({
           name: 'valid name',
           description: 'Valid description',
-          type: 'PERMISSION',
         });
 
       // Check that the removal has been done successfully
@@ -226,7 +225,6 @@ describe('Environments (e2e)', () => {
         .set('Authorization', `Bearer ${access_token}`)
         .send({
           description: 'valid description',
-          type: 'PERMISSION',
         })
         .expect(400)
         .expect({
@@ -245,7 +243,6 @@ describe('Environments (e2e)', () => {
         .send({
           name: 'Super name',
           description: 'valid description',
-          type: 'invalid type',
         })
         .expect(400)
         .expect({
@@ -263,7 +260,6 @@ describe('Environments (e2e)', () => {
         .set('Authorization', `Bearer ${access_token}`)
         .send({
           name: 'valid name',
-          type: 'PERMISSION',
         })
         .expect(400)
         .expect({
@@ -282,7 +278,6 @@ describe('Environments (e2e)', () => {
         .send({
           name: 'valid name',
           description: 'Valid description',
-          type: 'PERMISSION',
         });
 
       expect(response.statusCode).toBe(201);
