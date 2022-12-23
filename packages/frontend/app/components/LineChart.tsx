@@ -17,8 +17,6 @@ export interface LineChartProps {
 }
 
 export const LineChart = ({ data }: LineChartProps) => {
-  const { theme } = useTheme();
-
   const keysDict: { [key: string]: boolean } = {};
   for (const d of data) {
     for (const k of Object.keys(d)) {

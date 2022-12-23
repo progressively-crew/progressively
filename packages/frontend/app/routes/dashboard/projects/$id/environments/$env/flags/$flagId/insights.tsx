@@ -231,7 +231,7 @@ export default function FlagInsights() {
                 <FlagEvalList evalCount={flagEvaluationsCount} items={[]} />
 
                 <div
-                  className="w-full bg-slate-700 pt-8 pb-6"
+                  className="w-full dark:bg-slate-700 pt-8 pb-6"
                   style={{ height: 300 }}
                 >
                   <LineChart data={hitsPerVariant} />
@@ -256,7 +256,7 @@ export default function FlagInsights() {
 
             {barChartData.length > 0 && (
               <div
-                className="w-full bg-slate-700 pt-8 pb-6"
+                className="w-full dark:bg-slate-700 pt-8 pb-6"
                 style={{ height: 300 }}
               >
                 <BarChart data={barChartData} yLabel="Percentage" />
