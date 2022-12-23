@@ -68,7 +68,7 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
 
               {!currentPage && (
                 <div
-                  className="flex text-gray-200 dark:text-slate-200 px-2"
+                  className="flex text-gray-200 dark:text-slate-500 px-2"
                   aria-hidden
                 >
                   {"/"}

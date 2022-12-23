@@ -56,7 +56,9 @@ export const DashboardLayout = ({
                 </div>
               )}
 
-              <div className="lg:sticky lg:top-16 drop-shadow-xl">{subNav}</div>
+              <div className="lg:sticky lg:top-16 drop-shadow-xl z-10">
+                {subNav}
+              </div>
 
               <Spacer size={8} />
 
