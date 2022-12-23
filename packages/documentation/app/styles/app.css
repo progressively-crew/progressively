@@ -1175,6 +1175,10 @@ video {
   height: 3rem;
 }
 
+.h-32 {
+  height: 8rem;
+}
+
 .min-h-full {
   min-height: 100%;
 }
@@ -1688,6 +1692,10 @@ video {
 
 .pb-8 {
   padding-bottom: 2rem;
+}
+
+.pt-20 {
+  padding-top: 5rem;
 }
 
 .text-center {
@@ -2333,6 +2341,10 @@ video {
 
   .lg\:grid-cols-\[360px_1fr\] {
     grid-template-columns: 360px 1fr;
+  }
+
+  .lg\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .lg\:gap-12 {

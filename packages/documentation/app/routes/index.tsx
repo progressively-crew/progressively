@@ -16,6 +16,7 @@ import { ChooseSdk, ChooseSdkCode } from "~/modules/getstarted/ChooseSdk";
 import { CreateFlag, CreateFlagImg } from "~/modules/getstarted/CreateFlag";
 import { AiOutlineArrowDown } from "react-icons/ai";
 import { Timeline, TimelineStep } from "~/components/TImeline";
+import { GetInsights } from "~/components/GetInsights";
 
 const title = "Progressively, simple and accessible feature flagging tool";
 const description =
@@ -82,45 +83,54 @@ export default function Index() {
     <div className="bg-gray-50 dark:bg-slate-900">
       <SiteNav />
       <main>
-        <div className="flex flex-col gap-20">
-          <Hero />
+        <Hero />
 
-          <div className="max-w-screen-xl mx-auto">
-            <section className="pb-4">
-              <h2 className="sr-only">
-                Prepare your instance of Progressively
-              </h2>
-              <div className="flex justify-center text-gray-400 text-4xl pb-4">
-                <AiOutlineArrowDown />
-              </div>
+        <div className="max-w-screen-xl mx-auto">
+          <section className="pb-4">
+            <h2 className="sr-only">Prepare your instance of Progressively</h2>
+            <div className="flex justify-center text-gray-400 text-4xl pb-4">
+              <AiOutlineArrowDown />
+            </div>
 
-              <Timeline>
-                <TimelineStep
-                  left={<InstallationCli />}
-                  right={<Installation />}
-                  position={"1"}
-                />
-                <TimelineStep
-                  left={<CreateFlagImg />}
-                  right={<CreateFlag />}
-                  position={"2"}
-                />
-                <TimelineStep
-                  left={<ChooseSdkCode />}
-                  right={<ChooseSdk />}
-                  position={"3"}
-                />
-              </Timeline>
+            <Timeline>
+              <TimelineStep
+                left={<InstallationCli />}
+                right={<Installation />}
+                position={"1"}
+              />
+              <TimelineStep
+                left={<CreateFlagImg />}
+                right={<CreateFlag />}
+                position={"2"}
+              />
+              <TimelineStep
+                left={<ChooseSdkCode />}
+                right={<ChooseSdk />}
+                position={"3"}
+              />
+            </Timeline>
 
-              <div className="flex justify-center text-gray-400 text-4xl pt-4">
-                <AiOutlineArrowDown />
-              </div>
-            </section>
+            <div className="flex justify-center text-gray-400 text-4xl pt-4">
+              <AiOutlineArrowDown />
+            </div>
+          </section>
 
+          <div className="pb-12">
             <Features />
           </div>
 
-          <div className="max-w-screen-lg mx-auto px-4 md:px-0 py-20 relative">
+          <div className="flex items-center text-gray-400 text-4xl flex-col pb-4">
+            <div className="hidden md:block h-32 bg-transparent w-[1px] top-0 border-r border-gray-500 border-dashed" />
+            <div className="pt-4">
+              <AiOutlineArrowDown />
+            </div>
+          </div>
+
+          <div className="pb-12">
+            <GetInsights />
+          </div>
+
+          <div className="px-4 md:px-0">
             <WeightComparator />
           </div>
         </div>
