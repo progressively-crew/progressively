@@ -170,12 +170,7 @@ export default function SettingsPage() {
                 <SectionHeader
                   title="Danger zone"
                   description={
-                    <Typography>
-                      You can delete a project at any time, but you {`won’t`} be
-                      able to access its environments and all the related flags
-                      will be removed and be falsy in your applications. Be sure
-                      to know what {`you're`} doing before removing a project.
-                    </Typography>
+                    "You can delete a project at any time, but you won't be able to access its environments and all the related flags will be removed and be falsy in your applications. Be sure to know what you're doing before removing a project."
                   }
                 />
 

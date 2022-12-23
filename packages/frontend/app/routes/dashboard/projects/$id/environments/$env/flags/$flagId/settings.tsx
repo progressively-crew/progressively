@@ -68,10 +68,7 @@ export default function FlagSettingPage() {
               <SectionHeader
                 title="General"
                 description={
-                  <Typography>
-                    The following is the flag key to use inside your application
-                    to get the flag variation
-                  </Typography>
+                  "The following is the flag key to use inside your application to get the flag variation"
                 }
               />
 
@@ -92,11 +89,7 @@ export default function FlagSettingPage() {
                   title="Danger zone"
                   titleAs="h3"
                   description={
-                    <Typography>
-                      You can delete a feature flag at any time, but you{" "}
-                      {`won’t`} be able to access its insights anymore and false
-                      will be served to the application using it.
-                    </Typography>
+                    "You can delete a feature flag at any time, but you  won't be able to access its insights anymore and false will be served to the application using it."
                   }
                 />
 
