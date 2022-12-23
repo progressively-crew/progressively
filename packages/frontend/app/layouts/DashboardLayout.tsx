@@ -8,7 +8,6 @@ import { InertWhenNavOpened } from "~/components/Breadcrumbs/InertWhenNavOpened"
 import { UseDropdown } from "~/modules/user/components/UserDropdown";
 import { useMatches } from "@remix-run/react";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
-import { HideDesktop, HideTablet } from "~/components/HideMobile";
 
 export interface DashboardLayoutProps {
   user?: Partial<User>;
@@ -35,7 +34,7 @@ export const DashboardLayout = ({
     <NavProvider>
       <SkipNavLink>Skip to content</SkipNavLink>
 
-      <div className="dark:bg-slate-900 z-10 lg:sticky top-0">
+      <div className="bg-gray-50 dark:bg-slate-900 z-10 lg:sticky top-0">
         <Container>
           <div className="flex justify-between h-14 items-center">
             <BreadCrumbs crumbs={crumbs} />
@@ -46,22 +45,18 @@ export const DashboardLayout = ({
       </div>
 
       <InertWhenNavOpened className="h-full">
-        {subNav && <HideDesktop>{subNav}</HideDesktop>}
-
         <div className="px-4 md:px-12 lg:px-0 h-full">
           <div>
-            <div className={`overflow-hidden max-w-7xl w-full mx-auto`}>
-              {header && <Spacer size={12} />}
-              {header}
-              {header && <Spacer size={4} />}
-
-              {subNav && (
-                <>
-                  <HideTablet as="div">
-                    <div className="lg:h-full">{subNav}</div>
-                  </HideTablet>
-                </>
+            <div className={`max-w-7xl w-full mx-auto`}>
+              {header && (
+                <div>
+                  <Spacer size={12} />
+                  {header}
+                  <Spacer size={4} />
+                </div>
               )}
+
+              <div className="lg:sticky lg:top-16 drop-shadow-xl">{subNav}</div>
 
               <Spacer size={8} />
 
