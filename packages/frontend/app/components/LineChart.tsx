@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Fragment } from "react";
+import { useEffect, useState } from "react";
 import {
   LineChart as RLineChart,
   ResponsiveContainer,
@@ -8,6 +8,7 @@ import {
   XAxis,
   YAxis,
   Line,
+  Label,
 } from "recharts";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
 import { useTheme } from "~/modules/theme/useTheme";
@@ -16,7 +17,30 @@ export interface LineChartProps {
   data: Array<{ [key: string]: number } & { date: string }>;
 }
 
+const CustomizedAxisTick = ({ color, ...props }: any) => {
+  const { x, y, payload } = props;
+  const [date, setDate] = useState("");
+
+  useEffect(() => {
+    const formatter = new Intl.DateTimeFormat();
+    setDate(formatter.format(new Date(payload.value)));
+  }, [payload.value]);
+
+  return (
+    <g transform={`translate(${x},${y})`}>
+      <text x={0} y={0} dy={16} textAnchor="middle" fill={color}>
+        {date}
+      </text>
+    </g>
+  );
+};
+
 export const LineChart = ({ data }: LineChartProps) => {
+  const { theme } = useTheme();
+  const formatter = new Intl.DateTimeFormat();
+
+  const legendColor = theme === "dark" ? "white" : "black";
+
   const keysDict: { [key: string]: boolean } = {};
   for (const d of data) {
     for (const k of Object.keys(d)) {
@@ -39,10 +63,20 @@ export const LineChart = ({ data }: LineChartProps) => {
           bottom: 40,
         }}
       >
-        <XAxis dataKey="date" allowDuplicatedCategory={false} />
-        <YAxis />
+        <XAxis
+          dataKey="date"
+          tick={<CustomizedAxisTick color={legendColor} />}
+        />
+        <YAxis tick={{ stroke: legendColor }} />
         <Tooltip />
-        <Legend />
+        <Legend
+          wrapperStyle={{
+            paddingTop: "40px",
+          }}
+          formatter={(value, entry, index) => (
+            <span className={stringToColor(lineKeys[index], 75)}>{value}</span>
+          )}
+        />
 
         {lineKeys.map((key) => (
           <Line
