@@ -40,6 +40,8 @@ export const LineChart = ({ data }: LineChartProps) => {
   const formatter = new Intl.DateTimeFormat();
 
   const legendColor = theme === "dark" ? "white" : "black";
+  const glowEffect = (key: string) =>
+    theme === "dark" ? stringToColor(key, 25) : stringToColor(key, 90);
 
   const keysDict: { [key: string]: boolean } = {};
   for (const d of data) {
@@ -58,7 +60,7 @@ export const LineChart = ({ data }: LineChartProps) => {
         height={300}
         data={data}
         margin={{
-          top: 10,
+          top: 20,
           right: 10,
           bottom: 40,
         }}
@@ -78,13 +80,23 @@ export const LineChart = ({ data }: LineChartProps) => {
           )}
         />
 
+        <defs>
+          <filter id="shadow" height="200%">
+            <feDropShadow dx="0" dy="10" stdDeviation="10" />
+          </filter>
+        </defs>
+
         {lineKeys.map((key) => (
           <Line
+            style={{
+              filter: `drop-shadow(0px 0px 14px ${glowEffect(key)})`,
+            }}
             key={key}
             type="monotone"
             dataKey={key}
             stroke={stringToColor(key, 75)}
             activeDot={{ r: 8 }}
+            strokeWidth={4}
           />
         ))}
       </RLineChart>
