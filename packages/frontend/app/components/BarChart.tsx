@@ -7,7 +7,7 @@ import {
   ResponsiveContainer,
   Cell,
 } from "recharts";
-import { stringToColor } from "~/modules/misc/utils/stringToColor";
+
 import { useTheme } from "~/modules/theme/useTheme";
 import { Spacer } from "./Spacer";
 
@@ -17,7 +17,6 @@ export interface BarChartProps {
     value: number;
     color: string;
   }>;
-  yLabel: string;
 }
 
 const CustomTooltip = ({ active, payload, label }: any) => {
@@ -48,8 +47,9 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   return null;
 };
 
-export const BarChart = ({ data, yLabel }: BarChartProps) => {
+export const BarChart = ({ data }: BarChartProps) => {
   const { theme } = useTheme();
+  console.log("lol", data);
 
   const legendColor = theme === "dark" ? "white" : "black";
 
@@ -67,12 +67,6 @@ export const BarChart = ({ data, yLabel }: BarChartProps) => {
       >
         <XAxis
           dataKey="name"
-          label={{
-            value: "Metrics (variants)",
-            position: "insideBottomRight",
-            offset: 0,
-            fill: legendColor,
-          }}
           tick={{ fill: legendColor }}
           tickLine={{ stroke: legendColor }}
         />
@@ -80,7 +74,7 @@ export const BarChart = ({ data, yLabel }: BarChartProps) => {
           tick={{ fill: legendColor }}
           tickLine={{ stroke: legendColor }}
         />
-        <Tooltip content={<CustomTooltip />} />
+        <Tooltip content={<CustomTooltip />} cursor={false} />
 
         <Bar dataKey="value" unit="%">
           {data.map((entry, index) => (

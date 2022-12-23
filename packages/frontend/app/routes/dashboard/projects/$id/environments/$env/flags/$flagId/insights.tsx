@@ -267,7 +267,7 @@ export default function FlagInsights() {
                 className="w-full bg-gray-50 dark:bg-slate-700 pt-8 pb-6"
                 style={{ height: 300 }}
               >
-                <BarChart data={barChartData} yLabel="Percentage" />
+                <BarChart data={barChartData} />
               </div>
             )}
           </Card>
