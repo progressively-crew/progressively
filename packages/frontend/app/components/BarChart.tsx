@@ -49,7 +49,6 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 
 export const BarChart = ({ data }: BarChartProps) => {
   const { theme } = useTheme();
-  console.log("lol", data);
 
   const legendColor = theme === "dark" ? "white" : "black";
 
