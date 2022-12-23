@@ -5,22 +5,16 @@ import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { TextInput } from "~/components/Fields/TextInput";
 import { createFlag } from "~/modules/flags/services/createFlag";
-import { CreateFlagDTO, Flag, FlagType } from "~/modules/flags/types";
+import { CreateFlagDTO, Flag } from "~/modules/flags/types";
 import { validateFlagShape } from "~/modules/flags/validators/validateFlagShape";
 import { getSession } from "~/sessions";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
-import { SelectField } from "~/components/Fields/SelectField";
-import { ReleaseIcon } from "~/components/Icons/ReleaseIcon";
-import { ExperimentIcon } from "~/components/Icons/ExperimentIcon";
-import { PermissionIcon } from "~/components/Icons/PermissionIcon";
-import { KillSwitchIcon } from "~/components/Icons/KillSwitchIcon";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { BackLink } from "~/components/BackLink";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
-import { Tag } from "~/components/Tag";
 import { useState } from "react";
 import camelcase from "camelcase";
 import { ButtonCopy } from "~/components/ButtonCopy";
@@ -47,7 +41,6 @@ export const action: ActionFunction = async ({
   const formData = await request.formData();
   const name = formData.get("flag-name")?.toString();
   const description = formData.get("flag-desc")?.toString();
-  const type = formData.get("type")?.toString() as FlagType;
 
   const errors = validateFlagShape({ name, description });
 
@@ -62,7 +55,6 @@ export const action: ActionFunction = async ({
       envId,
       name!,
       description!,
-      type!,
       session.get("auth-cookie")
     );
 
@@ -139,34 +131,6 @@ export default function CreateFlagPage() {
             isInvalid={Boolean(errors?.description)}
             label="Flag description"
             placeholder="e.g: The new homepage"
-          />
-
-          <SelectField
-            isInvalid={Boolean(errors?.type)}
-            name="type"
-            label="Type"
-            options={[
-              {
-                value: FlagType.RELEASE,
-                label: "Release",
-                icon: <ReleaseIcon />,
-              },
-              {
-                value: FlagType.EXPERIMENT,
-                label: "Experiment",
-                icon: <ExperimentIcon />,
-              },
-              {
-                value: FlagType.PERMISSION,
-                label: "Permission",
-                icon: <PermissionIcon />,
-              },
-              {
-                value: FlagType.KILL_SWITCH,
-                label: "Kill switch",
-                icon: <KillSwitchIcon />,
-              },
-            ]}
           />
         </FormGroup>
       </CreateEntityLayout>
