@@ -56,7 +56,7 @@ export const Th = ({
   return (
     <th
       className={
-        "py-3 px-8 bg-gray-100 dark:bg-slate-600 text-left text-sm text-gray-600 dark:text-gray-200 tracking-wide whitespace-nowrap " +
+        "py-3 px-8 bg-gray-100 dark:bg-slate-700 text-left text-sm text-gray-600 dark:text-slate-200 tracking-wide whitespace-nowrap " +
         className
       }
       {...props}
