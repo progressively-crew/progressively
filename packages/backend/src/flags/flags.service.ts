@@ -174,7 +174,7 @@ export class FlagsService {
     return metricsHit;
   }
 
-  async flagHitsPerVariant(
+  async flagHitsPerVariantPerDate(
     envId: string,
     flagId: string,
     startDate: string,
@@ -192,10 +192,12 @@ export class FlagsService {
       },
     });
 
-    const evaluatedVariants = [];
+    const dictByDates = {};
 
     for (const dhv of disctintHitValue) {
-      const hits = await this.prisma.flagHit.count({
+      const hitsByDate = await this.prisma.flagHit.groupBy({
+        _count: true,
+        by: ['date'],
         where: {
           flagEnvironmentFlagId: flagId,
           flagEnvironmentEnvironmentId: envId,
@@ -205,17 +207,26 @@ export class FlagsService {
           },
           valueResolved: dhv.valueResolved,
         },
+        orderBy: {
+          date: 'asc',
+        },
       });
 
-      const evaluatedMetric = {
-        variant: dhv.valueResolved,
-        count: hits,
-      };
+      hitsByDate.forEach((hbd) => {
+        const isoDate = hbd.date.toISOString();
 
-      evaluatedVariants.push(evaluatedMetric);
+        if (!dictByDates[isoDate]) {
+          dictByDates[isoDate] = {};
+        }
+
+        dictByDates[isoDate]['date'] = isoDate;
+        dictByDates[isoDate][dhv.valueResolved] = hbd._count;
+      });
     }
 
-    return evaluatedVariants;
+    const hitsPerDates = Object.values(dictByDates);
+
+    return hitsPerDates;
   }
 
   async deleteFlag(flagId: string) {

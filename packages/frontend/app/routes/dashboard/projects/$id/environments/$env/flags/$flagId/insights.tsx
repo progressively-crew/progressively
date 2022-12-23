@@ -25,11 +25,11 @@ import { MetricPerVariantList } from "~/modules/flags/MetricPerVariantList";
 import { Section, SectionHeader } from "~/components/Section";
 import { BarChart } from "~/components/BarChart";
 import { Spacer } from "~/components/Spacer";
-import { PieChart } from "~/components/PieChart";
 import { Tag } from "~/components/Tag";
 import { FlagEvalList } from "~/modules/flags/FlagEvalList";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
 import { EmptyState } from "~/components/EmptyState";
+import { LineChart } from "~/components/LineChart";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -41,10 +41,9 @@ export const meta: MetaFunction = ({ parentsData, params }) => {
   };
 };
 
-interface FlagHit {
-  variant: string;
-  count: number;
-}
+type FlagHit = {
+  [key: string]: number;
+} & { date: string };
 
 interface MetricHit {
   metric: string;
@@ -62,10 +61,6 @@ interface LoaderData {
     name: string;
     value: number;
     color: string;
-  }>;
-  pieChartData: Array<{
-    name: string;
-    value: number;
   }>;
   hitsPerVariant: Array<FlagHit>;
 }
@@ -107,13 +102,14 @@ export const loader: LoaderFunction = async ({
     authCookie
   );
 
-  const computedMetricsByVariantCout = metricsByVariantCount.map((nbv) => ({
-    count: nbv.count,
-    metric: nbv.metric,
-    variant: nbv.variant,
-    variantCount: hitsPerVariant.find((hpv) => hpv.variant === nbv.variant)
-      ?.count,
-  }));
+  const computedMetricsByVariantCout = metricsByVariantCount
+    .filter((nbv) => Boolean(nbv.variant))
+    .map((nbv) => ({
+      count: nbv.count,
+      metric: nbv.metric,
+      variant: nbv.variant,
+      variantCount: 1,
+    }));
 
   const barChartData = computedMetricsByVariantCout
     .filter((mbv) => Boolean(mbv.variantCount))
@@ -124,14 +120,8 @@ export const loader: LoaderFunction = async ({
       color: stringToColor(mbv.variant),
     }));
 
-  const pieChartData = hitsPerVariant.map((hpv) => ({
-    name: hpv.variant,
-    value: hpv.count,
-  }));
-
   return {
     hitsPerVariant,
-    pieChartData,
     barChartData,
     flagEvaluationsCount,
     metricsByVariantCount: computedMetricsByVariantCout,
@@ -151,7 +141,7 @@ export default function FlagInsights() {
     metricsByVariantCount,
     flagEvaluationsCount,
     barChartData,
-    pieChartData,
+
     hitsPerVariant,
   } = useLoaderData<LoaderData>();
   const { flagEnv } = useFlagEnv();
@@ -224,7 +214,7 @@ export default function FlagInsights() {
 
             <Spacer size={8} />
 
-            {pieChartData.length === 0 && (
+            {hitsPerVariant.length === 0 && (
               <EmptyState
                 title="No hits found"
                 description={
@@ -236,17 +226,19 @@ export default function FlagInsights() {
               />
             )}
 
-            {pieChartData.length > 0 && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {hitsPerVariant.length > 0 && (
+              <div>
                 <div style={{ height: 260 }}>
-                  <PieChart data={pieChartData} />
+                  <LineChart data={hitsPerVariant} />
                 </div>
 
+                <Spacer size={4} />
+
                 <div className="border-l border-t border-l-gray-200 border-t-gray-200 dark:border-l-slate-700 border-t-gray-700">
-                  <FlagEvalList
+                  {/* <FlagEvalList
                     evalCount={flagEvaluationsCount}
                     items={hitsPerVariant}
-                  />
+                  /> */}
                 </div>
               </div>
             )}
