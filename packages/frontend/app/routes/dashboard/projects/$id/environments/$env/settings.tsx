@@ -55,10 +55,7 @@ export default function EnvSettingsPage() {
               <SectionHeader
                 title="General"
                 description={
-                  <Typography>
-                    The following is the client key to use inside your
-                    application to retrieve the flags
-                  </Typography>
+                  "The following is the client key to use inside your application to retrieve the flags"
                 }
               />
 
@@ -79,12 +76,7 @@ export default function EnvSettingsPage() {
                   title="Danger zone"
                   titleAs="h3"
                   description={
-                    <Typography>
-                      You can delete an environment at any time, but you{" "}
-                      {`won’t`} be able to access its flags will be removed and
-                      be falsy in your applications. Be sure to know what{" "}
-                      {`you're`} doing before removing an environment.
-                    </Typography>
+                    "You can delete an environment at any time, but you won't be able to access its flags will be removed and be falsy in your applications. Be sure to know what you're doing before removing an environment."
                   }
                 />
 

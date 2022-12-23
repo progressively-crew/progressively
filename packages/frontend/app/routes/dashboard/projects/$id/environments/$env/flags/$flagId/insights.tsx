@@ -25,11 +25,11 @@ import { MetricPerVariantList } from "~/modules/flags/MetricPerVariantList";
 import { Section, SectionHeader } from "~/components/Section";
 import { BarChart } from "~/components/BarChart";
 import { Spacer } from "~/components/Spacer";
-import { PieChart } from "~/components/PieChart";
 import { Tag } from "~/components/Tag";
 import { FlagEvalList } from "~/modules/flags/FlagEvalList";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
 import { EmptyState } from "~/components/EmptyState";
+import { LineChart } from "~/components/LineChart";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -41,16 +41,20 @@ export const meta: MetaFunction = ({ parentsData, params }) => {
   };
 };
 
-interface FlagHit {
-  variant: string;
-  count: number;
-}
+type FlagHit = {
+  [key: string]: number;
+} & { date: string };
 
 interface MetricHit {
   metric: string;
   variant: string;
   variantCount?: number;
   count: number;
+}
+
+interface FlagEvaluation {
+  valueResolved: string;
+  _count: number;
 }
 
 interface LoaderData {
@@ -63,11 +67,8 @@ interface LoaderData {
     value: number;
     color: string;
   }>;
-  pieChartData: Array<{
-    name: string;
-    value: number;
-  }>;
-  hitsPerVariant: Array<FlagHit>;
+  hitsPerVariantPerDate: Array<FlagHit>;
+  flagEvaluations: Array<FlagEvaluation>;
 }
 
 export const loader: LoaderFunction = async ({
@@ -92,13 +93,15 @@ export const loader: LoaderFunction = async ({
 
   const authCookie = session.get("auth-cookie");
   const {
-    hitsPerVariant,
+    hitsPerVariantPerDate,
     flagEvaluationsCount,
     metricsByVariantCount,
+    flagEvaluations,
   }: {
-    hitsPerVariant: Array<FlagHit>;
+    hitsPerVariantPerDate: Array<FlagHit>;
     flagEvaluationsCount: number;
     metricsByVariantCount: Array<Omit<MetricHit, "variantCount">>;
+    flagEvaluations: Array<FlagEvaluation>;
   } = await getFlagHits(
     params.env!,
     params.flagId!,
@@ -107,15 +110,16 @@ export const loader: LoaderFunction = async ({
     authCookie
   );
 
-  const computedMetricsByVariantCout = metricsByVariantCount.map((nbv) => ({
+  const computedMetricsByVariantCount = metricsByVariantCount.map((nbv) => ({
     count: nbv.count,
     metric: nbv.metric,
     variant: nbv.variant,
-    variantCount: hitsPerVariant.find((hpv) => hpv.variant === nbv.variant)
-      ?.count,
+    // eslint-disable-next-line unicorn/no-array-reduce
+    variantCount: flagEvaluations.find((f) => f.valueResolved === nbv.variant)
+      ?._count,
   }));
 
-  const barChartData = computedMetricsByVariantCout
+  const barChartData = computedMetricsByVariantCount
     .filter((mbv) => Boolean(mbv.variantCount))
     .map((mbv) => ({
       name: `${mbv.metric} (${mbv.variant})`,
@@ -124,17 +128,12 @@ export const loader: LoaderFunction = async ({
       color: stringToColor(mbv.variant),
     }));
 
-  const pieChartData = hitsPerVariant.map((hpv) => ({
-    name: hpv.variant,
-    value: hpv.count,
-  }));
-
   return {
-    hitsPerVariant,
-    pieChartData,
+    flagEvaluations,
+    hitsPerVariantPerDate,
     barChartData,
     flagEvaluationsCount,
-    metricsByVariantCount: computedMetricsByVariantCout,
+    metricsByVariantCount: computedMetricsByVariantCount,
     startDate: startDate.toISOString(),
     endDate: endDate.toISOString(),
   };
@@ -151,8 +150,8 @@ export default function FlagInsights() {
     metricsByVariantCount,
     flagEvaluationsCount,
     barChartData,
-    pieChartData,
-    hitsPerVariant,
+    hitsPerVariantPerDate,
+    flagEvaluations,
   } = useLoaderData<LoaderData>();
   const { flagEnv } = useFlagEnv();
   const { user } = useUser();
@@ -222,9 +221,7 @@ export default function FlagInsights() {
               />
             </CardContent>
 
-            <Spacer size={8} />
-
-            {pieChartData.length === 0 && (
+            {hitsPerVariantPerDate.length === 0 && (
               <EmptyState
                 title="No hits found"
                 description={
@@ -236,17 +233,18 @@ export default function FlagInsights() {
               />
             )}
 
-            {pieChartData.length > 0 && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div style={{ height: 260 }}>
-                  <PieChart data={pieChartData} />
-                </div>
+            {hitsPerVariantPerDate.length > 0 && (
+              <div>
+                <FlagEvalList
+                  evalCount={flagEvaluationsCount}
+                  items={flagEvaluations}
+                />
 
-                <div className="border-l border-t border-l-gray-200 border-t-gray-200 dark:border-l-slate-700 border-t-gray-700">
-                  <FlagEvalList
-                    evalCount={flagEvaluationsCount}
-                    items={hitsPerVariant}
-                  />
+                <div
+                  className="w-full bg-gray-50 dark:bg-slate-700 pt-8 pb-6"
+                  style={{ height: 300 }}
+                >
+                  <LineChart data={hitsPerVariantPerDate} />
                 </div>
               </div>
             )}
@@ -262,15 +260,16 @@ export default function FlagInsights() {
               />
             </CardContent>
 
+            <MetricPerVariantList items={metricsByVariantCount} />
+
             {barChartData.length > 0 && (
-              <div className="w-full" style={{ height: 200 }}>
-                <BarChart data={barChartData} yLabel="Percentage" />
+              <div
+                className="w-full bg-gray-50 dark:bg-slate-700 pt-8 pb-6"
+                style={{ height: 300 }}
+              >
+                <BarChart data={barChartData} />
               </div>
             )}
-
-            <Spacer size={4} />
-
-            <MetricPerVariantList items={metricsByVariantCount} />
           </Card>
         </Section>
       </Stack>

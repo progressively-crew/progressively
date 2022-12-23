@@ -3,12 +3,13 @@ import {
   Bar,
   XAxis,
   YAxis,
-  CartesianGrid,
   Tooltip,
   ResponsiveContainer,
   Cell,
 } from "recharts";
+
 import { useTheme } from "~/modules/theme/useTheme";
+import { Spacer } from "./Spacer";
 
 export interface BarChartProps {
   data: Array<{
@@ -16,10 +17,37 @@ export interface BarChartProps {
     value: number;
     color: string;
   }>;
-  yLabel: string;
 }
 
-export const BarChart = ({ data, yLabel }: BarChartProps) => {
+const CustomTooltip = ({ active, payload, label }: any) => {
+  if (active && payload && payload.length > 0) {
+    return (
+      <div
+        className="bg-white text-black p-4 rounded-md"
+        style={{ background: payload[0].fill }}
+      >
+        <span className="text-xs text-gray-600 font-semibold">{label}</span>
+
+        <Spacer size={2} />
+
+        <div>
+          {payload.map((pld: any) => (
+            <div key={`${label}-${pld.value}-${pld.dataKey}`}>
+              <span className="flex flex-row gap-3 items-center">
+                <span className="text-gray-700">{pld.dataKey}:</span>
+                <span className="font-semibold">{pld.value}</span>
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  return null;
+};
+
+export const BarChart = ({ data }: BarChartProps) => {
   const { theme } = useTheme();
 
   const legendColor = theme === "dark" ? "white" : "black";
@@ -31,39 +59,31 @@ export const BarChart = ({ data, yLabel }: BarChartProps) => {
         height={300}
         data={data}
         margin={{
-          top: 5,
-          right: 30,
-          left: 20,
-          bottom: 5,
+          top: 20,
+          right: 10,
+          bottom: 40,
         }}
       >
-        <CartesianGrid strokeDasharray="3 3" />
         <XAxis
           dataKey="name"
-          label={{
-            value: "Metrics (variants)",
-            position: "insideBottomRight",
-            offset: 0,
-            fill: legendColor,
-          }}
           tick={{ fill: legendColor }}
           tickLine={{ stroke: legendColor }}
         />
         <YAxis
-          label={{
-            value: yLabel,
-            angle: -90,
-            position: "insideBottomLeft",
-            fill: legendColor,
-          }}
           tick={{ fill: legendColor }}
           tickLine={{ stroke: legendColor }}
         />
-        <Tooltip />
+        <Tooltip content={<CustomTooltip />} cursor={false} />
 
-        <Bar dataKey="value" fill="#82ca9d" unit="%">
+        <Bar dataKey="value" unit="%">
           {data.map((entry, index) => (
-            <Cell fill={data[index].color} key={entry.value} />
+            <Cell
+              fill={data[index].color}
+              key={entry.value}
+              style={{
+                filter: `drop-shadow(0px 0px 14px ${data[index].color})`,
+              }}
+            />
           ))}
         </Bar>
       </RBarChart>

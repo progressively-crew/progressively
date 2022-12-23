@@ -61,7 +61,7 @@ export const VariantTable = ({ variants }: VariantTableProps) => {
 
           <tbody>
             {variants.map((variant, index) => {
-              const background = stringToColor(variant.value, 90);
+              const background = stringToColor(variant.value, 75);
               const color = stringToColor(variant.value, 25);
 
               return (
@@ -76,14 +76,14 @@ export const VariantTable = ({ variants }: VariantTableProps) => {
                   <Td>
                     <input type="hidden" value={variant.value} name={"name"} />
 
-                    <Tag
-                      style={{
-                        background,
-                        color,
-                      }}
-                    >
+                    <span className="flex flex-row gap-3 items-center">
+                      <span
+                        aria-hidden
+                        style={{ background }}
+                        className="h-4 w-4 block rounded"
+                      />
                       {variant.value}
-                    </Tag>
+                    </span>
                   </Td>
 
                   <Td>

@@ -237,12 +237,8 @@ export default function FlagById() {
             <SectionHeader
               title="Audience eligibility"
               description={
-                !hasEligibility && (
-                  <Typography>
-                    Only people matching at least one of the following rules
-                    (and the additional audience) will resolve the flag.
-                  </Typography>
-                )
+                !hasEligibility &&
+                "Only people matching at least one of the following rules (and the additional audience) will resolve the flag."
               }
               status={
                 isEligibilityAdded ? (
@@ -308,13 +304,8 @@ export default function FlagById() {
             <SectionHeader
               title="Additional audience"
               description={
-                !hasStrategies && (
-                  <Typography>
-                    The users matching at least one of the following condition
-                    will resolve the flag even if they are not targeted because
-                    of the eligibility restrictions
-                  </Typography>
-                )
+                !hasStrategies &&
+                "The users matching at least one of the following condition will resolve the flag even if they are not targeted because of the eligibility restrictions"
               }
               status={
                 isStrategyUpdated ? (
