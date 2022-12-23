@@ -6,7 +6,6 @@ import { RawTable, Td, Th, Tr } from "~/components/RawTable";
 import { Spacer } from "~/components/Spacer";
 import { Typography } from "~/components/Typography";
 import { FlagEnv, FlagStatus } from "../types";
-import { FlagTypeBadge } from "./FlagType";
 import { ToggleFlag } from "./ToggleFlag";
 
 export interface FlagListProps {
@@ -27,14 +26,6 @@ const FlagRow = ({ flagEnv, projectId, envId }: FlagRowProps) => {
   return (
     <Tr onClick={() => linkRef.current?.click()}>
       <Td>
-        <ToggleFlag
-          isFlagActivated={flagEnv.status === FlagStatus.ACTIVATED}
-          flagId={flagEnv.flagId}
-          flagName={flagEnv.flag.name}
-          onClick={(e) => e.stopPropagation()}
-        />
-      </Td>
-      <Td>
         <Link
           ref={linkRef}
           to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}`}
@@ -43,12 +34,14 @@ const FlagRow = ({ flagEnv, projectId, envId }: FlagRowProps) => {
         </Link>
 
         <Typography className="text-sm">{flagEnv.flag.description}</Typography>
-
-        <Spacer size={3} />
       </Td>
-
       <Td>
-        <FlagTypeBadge type={flagEnv.flag.type} />
+        <ToggleFlag
+          isFlagActivated={flagEnv.status === FlagStatus.ACTIVATED}
+          flagId={flagEnv.flagId}
+          flagName={flagEnv.flag.name}
+          onClick={(e) => e.stopPropagation()}
+        />
       </Td>
 
       <Td>
@@ -72,9 +65,8 @@ export const FlagList = ({ flags, projectId, envId }: FlagListProps) => {
       <RawTable caption="Flags available in the environment">
         <thead>
           <Tr>
-            <Th>Status</Th>
             <Th>Name</Th>
-            <Th>Type</Th>
+            <Th className="px-14">Status</Th>
             <Th>Flag key</Th>
           </Tr>
         </thead>

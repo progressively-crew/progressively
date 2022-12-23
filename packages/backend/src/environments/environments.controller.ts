@@ -47,7 +47,6 @@ export class EnvironmentsController {
         envId,
         body.name,
         body.description,
-        body.type,
       );
     } catch (e) {
       if (e instanceof FlagAlreadyExists) {
