@@ -17,6 +17,7 @@ import { CreateFlag, CreateFlagImg } from "~/modules/getstarted/CreateFlag";
 import { AiOutlineArrowDown } from "react-icons/ai";
 import { Timeline, TimelineStep } from "~/components/TImeline";
 import { GetInsights } from "~/components/GetInsights";
+import { Spacer } from "~/components/Spacer";
 
 const title = "Progressively, simple and accessible feature flagging tool";
 const description =
@@ -118,7 +119,7 @@ export default function Index() {
           <div className="pb-12">
             <Features />
           </div>
-
+          {/* 
           <div className="flex items-center text-gray-400 text-4xl flex-col pb-4">
             <div className="hidden md:block h-32 bg-transparent w-[1px] top-0 border-r border-gray-500 border-dashed" />
             <div className="pt-4">
@@ -128,11 +129,14 @@ export default function Index() {
 
           <div className="pb-12">
             <GetInsights />
-          </div>
+          </div> */}
+
+          <Spacer size={12} />
 
           <div className="px-4 md:px-0">
             <WeightComparator />
           </div>
+          <Spacer size={12} />
         </div>
       </main>
     </div>
