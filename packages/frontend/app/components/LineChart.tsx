@@ -118,12 +118,6 @@ export const LineChart = ({ data }: LineChartProps) => {
           )}
         />
 
-        <defs>
-          <filter id="shadow" height="200%">
-            <feDropShadow dx="0" dy="10" stdDeviation="10" />
-          </filter>
-        </defs>
-
         {lineKeys.map((key) => (
           <Line
             style={{

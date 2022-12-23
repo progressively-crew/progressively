@@ -221,8 +221,6 @@ export default function FlagInsights() {
               />
             </CardContent>
 
-            <Spacer size={8} />
-
             {hitsPerVariantPerDate.length === 0 && (
               <EmptyState
                 title="No hits found"
@@ -263,8 +261,6 @@ export default function FlagInsights() {
             </CardContent>
 
             <MetricPerVariantList items={metricsByVariantCount} />
-
-            <Spacer size={4} />
 
             {barChartData.length > 0 && (
               <div
