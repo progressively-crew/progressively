@@ -234,24 +234,6 @@ describe('Environments (e2e)', () => {
         });
     });
 
-    it('gives a 400 when the type is invalid', async () => {
-      const access_token = await authenticate(app);
-
-      return request(app.getHttpServer())
-        .post('/environments/1/flags')
-        .set('Authorization', `Bearer ${access_token}`)
-        .send({
-          name: 'Super name',
-          description: 'valid description',
-        })
-        .expect(400)
-        .expect({
-          statusCode: 400,
-          message: 'Validation failed',
-          error: 'Bad Request',
-        });
-    });
-
     it("gives a 400 when there's no description field", async () => {
       const access_token = await authenticate(app);
 
