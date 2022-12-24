@@ -7,7 +7,6 @@ import { AdditionalAudienceRetrieveDTO } from "~/modules/strategies/types";
 import { Header } from "~/components/Header";
 import { Section, SectionHeader } from "~/components/Section";
 import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
-import { Typography } from "~/components/Typography";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
 import {
   useLoaderData,
@@ -270,10 +269,7 @@ export default function FlagById() {
                 titleAs="h2"
                 title="No restrictions"
                 description={
-                  <Typography>
-                    There are no eligibility restrictions. Every users will
-                    resolve the flag.
-                  </Typography>
+                  "There are no eligibility restrictions. Every users will resolve the flag."
                 }
                 action={
                   <CreateButton
@@ -340,11 +336,7 @@ export default function FlagById() {
               <EmptyState
                 titleAs="h2"
                 title="No additional audience"
-                description={
-                  <Typography>
-                    There are no additional audience for this flag.
-                  </Typography>
-                }
+                description={"There are no additional audience for this flag."}
                 action={
                   <CreateButton
                     variant="secondary"

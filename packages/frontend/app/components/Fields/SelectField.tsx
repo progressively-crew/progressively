@@ -26,8 +26,8 @@ export const SelectField = ({
 }: SelectFieldProps) => {
   const [selected, setSelected] = useState(options[0]?.value || "");
   const inputClasses = isInvalid
-    ? "h-10 rounded px-4 border border-red-500"
-    : "h-10 rounded px-4 border border-gray-200 bg-white";
+    ? "h-10 rounded px-4 border border-red-500 dark:text-slate-100 dark:bg-slate-700"
+    : "h-10 rounded px-4 border border-gray-200 bg-white dark:border-slate-700 dark:text-slate-100 dark:bg-slate-700";
 
   const icon = options.find((opt) => opt.value === selected);
 
@@ -44,7 +44,7 @@ export const SelectField = ({
             id={name}
             defaultValue={defaultValue}
             aria-describedby={isInvalid ? `error-${name}` : undefined}
-            className="w-full h-full bg-transparent text-gray-600"
+            className="w-full h-full bg-transparent text-gray-600 dark:text-slate-100 px-2"
             onChange={(e) => setSelected(e.target.value)}
             {...props}
           >

@@ -24,7 +24,7 @@ export const handle = {
       menuItems: routeWithProjects.data.projects.map((p: any) => ({
         href: `/dashboard/projects/${p.project.uuid}`,
         label: p.project.name,
-        icon: <ProjectIcon className="text-indigo-700" />,
+        icon: <ProjectIcon className="text-indigo-700 dark:text-indigo-400" />,
       })),
       menuLabel: `Change project`,
     };

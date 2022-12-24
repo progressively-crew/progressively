@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 :root {
-  --input-range-bg: #e5e7eb;
   --input-range-track: #4f46e5;
 }
 

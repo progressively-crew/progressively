@@ -126,9 +126,7 @@ export default function Metrics() {
               <EmptyState
                 titleAs="h2"
                 title="No metrics found"
-                description={
-                  <Typography>There are no metrics for this flag.</Typography>
-                }
+                description={"There are no metrics for this flag."}
                 action={
                   <CreateButton
                     to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/metrics/create`}

@@ -143,11 +143,7 @@ export default function SchedulingOfFlag() {
               <EmptyState
                 titleAs="h2"
                 title="No schedule found"
-                description={
-                  <Typography>
-                    There are no scheduling for this flag.
-                  </Typography>
-                }
+                description={"There are no scheduling for this flag."}
                 action={
                   flagEnv.variants.length === 0 && (
                     <CreateButton

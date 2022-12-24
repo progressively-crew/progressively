@@ -116,16 +116,18 @@ export const AudienceFields = ({
         )}
 
         {status === StrategyValueToServe.Boolean && (
-          <SelectField
-            isInvalid={Boolean(errors["value-to-serve"])}
-            name="value-to-serve"
-            label="Boolean value to serve"
-            defaultValue={initialFieldComparator}
-            options={[
-              { value: "true", label: "True", icon: <IoMdSwitch /> },
-              { value: "false", label: "False", icon: <IoMdSwitch /> },
-            ]}
-          />
+          <div className="flex">
+            <SelectField
+              isInvalid={Boolean(errors["value-to-serve"])}
+              name="value-to-serve"
+              label="Boolean value to serve"
+              defaultValue={initialFieldComparator}
+              options={[
+                { value: "true", label: "True", icon: <IoMdSwitch /> },
+                { value: "false", label: "False", icon: <IoMdSwitch /> },
+              ]}
+            />
+          </div>
         )}
 
         {status === StrategyValueToServe.String && (

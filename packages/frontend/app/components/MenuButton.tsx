@@ -20,7 +20,7 @@ export const MenuButton = ({ items, label }: MenuButtonProps) => {
       <Menu>
         <Menu.Button
           className={
-            "w-8 h-8 flex justify-center items-center hover:bg-gray-100 hover:dark:bg-slate-900 transition-all rounded text-gray-700 dark:text-slate-200"
+            "w-8 h-8 flex justify-center items-center hover:bg-gray-100 hover:dark:bg-slate-800 transition-all rounded text-gray-700 dark:text-slate-200"
           }
         >
           <MdOutlineKeyboardArrowDown aria-label={label} />
@@ -41,7 +41,7 @@ export const MenuButton = ({ items, label }: MenuButtonProps) => {
                 {({ active }) => (
                   <NavLink
                     className={`flex gap-2 w-full items-center first:rounded-t-md last:rounded-b-md px-3 py-3 text-sm text-gray-700 dark:text-slate-200 font-normal focus:bg-gray-100 ${
-                      active ? "bg-gray-100 dark:bg-slate-900" : ""
+                      active ? "bg-gray-100 dark:bg-slate-700" : ""
                     }`}
                     to={item.href}
                   >

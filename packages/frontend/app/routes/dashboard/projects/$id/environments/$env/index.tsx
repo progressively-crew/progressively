@@ -6,7 +6,6 @@ import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
 import { EmptyState } from "~/components/EmptyState";
-import { Typography } from "~/components/Typography";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { FlagList } from "~/modules/flags/components/FlagList";
 import { EnvNavBar } from "~/modules/environments/components/EnvNavbar";
@@ -146,11 +145,7 @@ export default function FlagsByEnvPage() {
               <EmptyState
                 titleAs="h2"
                 title="No flags found"
-                description={
-                  <Typography>
-                    There are no flags yet on this environment.
-                  </Typography>
-                }
+                description={"There are no flags yet on this environment."}
                 action={
                   <CreateButton
                     to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/create`}

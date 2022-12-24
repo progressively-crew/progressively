@@ -5,7 +5,6 @@ import { Section } from "~/components/Section";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { AiOutlineSetting } from "react-icons/ai";
 import { EmptyState } from "~/components/EmptyState";
-import { Typography } from "~/components/Typography";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { MetaFunction } from "@remix-run/node";
 import { useSearchParams } from "@remix-run/react";
@@ -118,11 +117,7 @@ export default function ProjectDetailPage() {
             <CardContent>
               <EmptyState
                 title="No environments found"
-                description={
-                  <Typography>
-                    There are no environments yet on this project.
-                  </Typography>
-                }
+                description={"There are no environments yet on this project."}
                 action={
                   <CreateButton
                     to={`/dashboard/projects/${project.uuid}/environments/create`}

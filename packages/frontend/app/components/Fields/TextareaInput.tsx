@@ -17,8 +17,8 @@ export const TextareaInput = ({
   placeholder,
 }: TextareaInputProps) => {
   const inputClasses = isInvalid
-    ? "h-20 rounded px-4 border border-red-500"
-    : "h-20 rounded px-4 border border-gray-200 bg-white";
+    ? "h-20 rounded px-4 border border-red-500 dark:text-slate-100 dark:bg-slate-700"
+    : "h-20 rounded px-4 border border-gray-200 bg-white dark:border-slate-700 dark:text-slate-100 dark:bg-slate-700";
 
   return (
     <Stack spacing={2}>

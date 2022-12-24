@@ -159,11 +159,7 @@ export default function VariantsOfFlag() {
               <EmptyState
                 titleAs="h2"
                 title="No variants found"
-                description={
-                  <Typography>
-                    There are no variants found for this flag.
-                  </Typography>
-                }
+                description={"There are no variants found for this flag."}
                 action={
                   <CreateButton to={`create`} variant="primary">
                     Create a variant
