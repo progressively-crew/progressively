@@ -62,7 +62,7 @@ export default function OauthCallback() {
   return (
     <main className="p-8">
       <HStack spacing={4}>
-        <div>
+        <div className="text-gray-600 dark:text-slate-400">
           <Spinner />
         </div>
         <div>
