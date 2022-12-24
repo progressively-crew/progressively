@@ -65,21 +65,7 @@ export const loader = () => {
   };
 };
 
-// if statement is an environment variable, safe to keep the condition
-const useAllFlags = () => {
-  const { isProgressivelyActivated } = useLoaderData<typeof loader>();
-
-  if (isProgressivelyActivated) {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    return useFlags();
-  }
-
-  return { flags: {} } as any;
-};
-
 export default function Index() {
-  useAllFlags();
-
   return (
     <div className="bg-gray-50 dark:bg-slate-900">
       <SiteNav />
