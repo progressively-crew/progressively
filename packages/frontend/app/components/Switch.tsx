@@ -26,7 +26,9 @@ export const Switch = ({
     ? "translate-x-full text-emerald-200 flex items-center justify-center text-md"
     : "";
 
-  const wrapperCheckedClasses = checked ? "bg-emerald-300" : "bg-gray-300";
+  const wrapperCheckedClasses = checked
+    ? "bg-emerald-300"
+    : "bg-gray-300 dark:bg-slate-700";
   const thumnailTransitionClasses = checked ? "group-active:-ml-4" : "";
 
   return (
