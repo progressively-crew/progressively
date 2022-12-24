@@ -28,7 +28,7 @@ export const Switch = ({
 
   const wrapperCheckedClasses = checked
     ? "bg-emerald-300"
-    : "bg-gray-300 dark:bg-slate-700";
+    : "bg-gray-300 dark:bg-slate-600";
   const thumnailTransitionClasses = checked ? "group-active:-ml-4" : "";
 
   return (

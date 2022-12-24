@@ -1,3 +1,4 @@
+import { useTheme } from "~/modules/theme/useTheme";
 import { HStack } from "../HStack";
 import { Stack } from "../Stack";
 import { VisuallyHidden } from "../VisuallyHidden";
@@ -24,14 +25,19 @@ export const SliderInput = ({
   bgColor,
   fgColor,
 }: SliderInputProps) => {
+  const { theme } = useTheme();
   const currentId = id || name;
 
-  const style = bgColor
+  const wrapperStyle = bgColor
     ? ({ "--input-range-track": bgColor } as React.CSSProperties)
     : undefined;
 
+  const inputStyles = {
+    "--input-range-bg": theme === "dark" ? "#64748b" : "#e5e7eb",
+  };
+
   return (
-    <div style={style}>
+    <div style={wrapperStyle}>
       <Stack spacing={2}>
         {hiddenLabel ? (
           <VisuallyHidden>
@@ -53,6 +59,7 @@ export const SliderInput = ({
             name={name}
             onChange={(e) => onChange(Number(e.target.value))}
             className="appearance h-10 w-52"
+            style={inputStyles}
           />
 
           <HStack aria-hidden>
