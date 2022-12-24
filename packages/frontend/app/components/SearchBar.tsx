@@ -31,7 +31,7 @@ export const SearchBar = ({ placeholder, label, count }: SearchBarProps) => {
 
           <button
             type="submit"
-            className="bg-indigo-100 text-indigo-700 text-indigo-700 hover:bg-indigo-50 active:bg-indigo-100 h-full px-4 dark:bg-slate-700 text-slate-100 dark:active:bg-slate-800"
+            className="bg-indigo-100 text-indigo-700 text-indigo-700 hover:bg-indigo-50 active:bg-indigo-100 h-full px-4 dark:bg-slate-700 dark:text-slate-100 dark:active:bg-slate-800"
           >
             Search
           </button>
