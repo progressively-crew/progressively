@@ -3,8 +3,44 @@ import { useFlags } from "@progressively/react";
 import { Button } from "./Button";
 import { Example } from "./Example";
 
+const Catchphrase = () => {
+  const { flags } = useFlags();
+
+  if (flags.newHero === "A") {
+    return (
+      <p className="mt-4 max-w-xl sm:text-xl sm:leading-relaxed text-gray-600 dark:text-slate-200">
+        The self-hosted and OpenSource <strong>feature flagging tool</strong>.
+      </p>
+    );
+  } else if (flags.newHero === "B") {
+    return (
+      <p className="mt-4 max-w-xl sm:text-xl sm:leading-relaxed text-gray-600 dark:text-slate-200">
+        The <strong>feature flagging tool</strong> that does not skill your
+        websites performances.
+      </p>
+    );
+  } else if (flags.newHero === "C") {
+    return (
+      <p className="mt-4 max-w-xl sm:text-xl sm:leading-relaxed text-gray-600 dark:text-slate-200">
+        The next generation <strong>feature flagging tool</strong>.
+      </p>
+    );
+  } else {
+    return (
+      <p className="mt-4 max-w-xl sm:text-xl sm:leading-relaxed text-gray-600 dark:text-slate-200">
+        A simple, accessible, lightweight, self-hosted and OpenSource{" "}
+        <strong>feature flagging tool</strong>.
+      </p>
+    );
+  }
+};
+
 export const Hero = () => {
-  const { track } = useFlags();
+  const { track, flags } = useFlags();
+
+  const trackConversion = () => {
+    track(`Get started ${flags.newHero}`, {});
+  };
 
   return (
     <div className="max-w-screen-xl mx-auto px-4 md:px-0 py-12 md:py-32 w-full grid md:grid-cols-[3fr_2fr] gap-8">
@@ -27,15 +63,12 @@ export const Hero = () => {
             animationDelay: "500ms",
           }}
         >
-          <p className="mt-4 max-w-xl sm:text-xl sm:leading-relaxed text-gray-600 dark:text-slate-200">
-            A simple, accessible, lightweight, self-hosted and OpenSource{" "}
-            <strong>feature flagging tool</strong>.
-          </p>
+          <Catchphrase />
 
           <div className="mt-8 flex flex-wrap gap-4">
             <Button
               to="/docs/introduction/getting-started"
-              onClick={() => track("Get started A", {})}
+              onClick={trackConversion}
             >
               Get Started
             </Button>

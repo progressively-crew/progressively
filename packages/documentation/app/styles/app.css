@@ -1227,12 +1227,12 @@ video {
   width: 2.25rem;
 }
 
-.max-w-screen-xl {
-  max-width: 1280px;
-}
-
 .max-w-xl {
   max-width: 36rem;
+}
+
+.max-w-screen-xl {
+  max-width: 1280px;
 }
 
 .max-w-screen-2xl {
@@ -2184,14 +2184,14 @@ video {
     display: block;
   }
 
-  .sm\:text-5xl {
-    font-size: 3rem;
-    line-height: 1;
-  }
-
   .sm\:text-xl {
     font-size: 1.25rem;
     line-height: 1.75rem;
+  }
+
+  .sm\:text-5xl {
+    font-size: 3rem;
+    line-height: 1;
   }
 
   .sm\:leading-relaxed {
@@ -2355,9 +2355,9 @@ video {
   }
 
   @media (prefers-color-scheme: dark) {
-    .lg\:dark\:text-white {
+    .lg\:dark\:text-slate-100 {
       --tw-text-opacity: 1;
-      color: rgb(255 255 255 / var(--tw-text-opacity));
+      color: rgb(241 245 249 / var(--tw-text-opacity));
     }
   }
 }
