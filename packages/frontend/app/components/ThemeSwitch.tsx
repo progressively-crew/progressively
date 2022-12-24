@@ -14,7 +14,7 @@ export const ThemeSwitch = () => {
     ? "translate-x-full text-slate-900 bg-slate-200"
     : "text-orange-400 bg-white";
 
-  const wrapperCheckedClasses = checked ? "bg-slate-900" : "bg-orange-200";
+  const wrapperCheckedClasses = checked ? "bg-slate-700" : "bg-orange-200";
   const thumnailTransitionClasses = checked ? "group-active:-ml-4" : "";
 
   return (

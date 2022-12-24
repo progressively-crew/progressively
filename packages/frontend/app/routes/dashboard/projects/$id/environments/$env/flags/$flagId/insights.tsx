@@ -24,7 +24,6 @@ import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { MetricPerVariantList } from "~/modules/flags/MetricPerVariantList";
 import { Section, SectionHeader } from "~/components/Section";
 import { BarChart } from "~/components/BarChart";
-import { Spacer } from "~/components/Spacer";
 import { Tag } from "~/components/Tag";
 import { FlagEvalList } from "~/modules/flags/FlagEvalList";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
@@ -225,10 +224,7 @@ export default function FlagInsights() {
               <EmptyState
                 title="No hits found"
                 description={
-                  <Typography>
-                    Progressively has not recorded evaluations for this feature
-                    flag on the selected period.
-                  </Typography>
+                  "Progressively has not recorded evaluations for this feature flag on the selected period."
                 }
               />
             )}

@@ -16,9 +16,6 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
   return (
     <nav aria-label="Breadcrumbs">
       <ol className="flex h-12 items-center">
-        <li className="flex items-center mr-3">
-          <Logo aria-label="Progressively" />
-        </li>
         {crumbs.map((crumb, index) => {
           const currentPage = index === lastItemIndex;
           const background = crumb.colorize
@@ -40,7 +37,7 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
                 to={crumb.link}
                 className={`transition-all px-2 -mx-1 py-1 rounded hover:text-black hover:dark:text-slate-200 hover:bg-gray-100 dark:hover:bg-slate-800 active:bg-gray-200 dark:active:bg-slate-700 active:text-indigo-700 no-underline text-xs ${
                   currentPage
-                    ? "text-black dark:text-white"
+                    ? "text-black dark:text-slate-100"
                     : "text-gray-500 dark:text-slate-200"
                 }`}
               >
@@ -49,15 +46,21 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
                   style={{ color, background }}
                 >
                   <HStack spacing={2}>
-                    <CrumbIcon
-                      crumb={crumb}
-                      color={
-                        currentPage
-                          ? color || "text-indigo-700 dark:text-indigo-400"
-                          : ""
-                      }
-                    />
-                    {crumb.label}
+                    {crumb.isRoot ? (
+                      <Logo aria-label={crumb.label} />
+                    ) : (
+                      <>
+                        <CrumbIcon
+                          crumb={crumb}
+                          color={
+                            currentPage
+                              ? color || "text-indigo-700 dark:text-indigo-400"
+                              : ""
+                          }
+                        />
+                        {crumb.label}
+                      </>
+                    )}
                   </HStack>
                 </div>
               </Link>

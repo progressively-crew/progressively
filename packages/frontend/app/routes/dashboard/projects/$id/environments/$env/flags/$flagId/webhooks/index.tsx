@@ -127,9 +127,7 @@ export default function WebhooksPage() {
               <EmptyState
                 titleAs="h2"
                 title="No webhooks found"
-                description={
-                  <Typography>There are no webhooks for this flag.</Typography>
-                }
+                description={"There are no webhooks for this flag."}
                 action={
                   <CreateButton
                     to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/webhooks/create`}

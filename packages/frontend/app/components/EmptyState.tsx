@@ -1,9 +1,10 @@
 import { EmptyBoxIcon } from "./Icons/EmptyBoxIcon";
 import { Spacer } from "./Spacer";
+import { Typography } from "./Typography";
 
 export interface EmptyStateProps {
   title: string;
-  description: React.ReactNode;
+  description: string;
   titleAs?: string;
   id?: string;
   action?: React.ReactNode;
@@ -34,7 +35,11 @@ export const EmptyState = ({
 
       <Spacer size={2} />
 
-      <div className="max-w-lg text-center">{description}</div>
+      <div className="max-w-lg text-center">
+        <Typography className="text-gray-500 dark:text-slate-400">
+          {description}
+        </Typography>
+      </div>
 
       <Spacer size={2} />
 
