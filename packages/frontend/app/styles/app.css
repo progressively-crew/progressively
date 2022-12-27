@@ -1089,6 +1089,10 @@ video {
   background-color: rgb(209 250 229 / var(--tw-bg-opacity));
 }
 
+.bg-gray-50\/95 {
+  background-color: rgb(249 250 251 / 0.95);
+}
+
 .fill-gray-200 {
   fill: #e5e7eb;
 }
@@ -1814,6 +1818,18 @@ input[type="range"]::-moz-range-thumb {
 .dark .dark\:bg-slate-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(71 85 105 / var(--tw-bg-opacity));
+}
+
+.dark .dark\:bg-slate-900\/75 {
+  background-color: rgb(15 23 42 / 0.75);
+}
+
+.dark .dark\:bg-slate-900\/90 {
+  background-color: rgb(15 23 42 / 0.9);
+}
+
+.dark .dark\:bg-slate-900\/95 {
+  background-color: rgb(15 23 42 / 0.95);
 }
 
 .dark .dark\:text-slate-200 {
