@@ -3,7 +3,7 @@ import { getSession } from "~/sessions";
 import { Header } from "~/components/Header";
 import { AiOutlineBarChart } from "react-icons/ai";
 import { getFlagHits } from "~/modules/flags/services/getFlagHits";
-import { MetaFunction, LoaderFunction } from "@remix-run/node";
+import { MetaFunction, LoaderFunction, ActionFunction } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
 import { TagLine } from "~/components/Tagline";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
@@ -29,6 +29,9 @@ import { FlagEvalList } from "~/modules/flags/FlagEvalList";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
 import { EmptyState } from "~/components/EmptyState";
 import { LineChart } from "~/components/LineChart";
+import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
+import { FlagStatus } from "~/modules/flags/types";
+import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -142,6 +145,26 @@ const formatDefaultDate = (isoDate: string) => {
   return isoDate.slice(0, 10);
 };
 
+type ActionDataType = null | {
+  errors?: { [key: string]: string | undefined };
+};
+
+export const action: ActionFunction = async ({
+  request,
+  params,
+}): Promise<ActionDataType> => {
+  const session = await getSession(request.headers.get("Cookie"));
+  const authCookie = session.get("auth-cookie");
+  const formData = await request.formData();
+  const type = formData.get("_type");
+
+  if (type === "toggle-flag") {
+    return toggleFlagAction(formData, params, authCookie);
+  }
+
+  return null;
+};
+
 export default function FlagInsights() {
   const {
     startDate,
@@ -159,6 +182,8 @@ export default function FlagInsights() {
 
   const currentFlag = flagEnv.flag;
 
+  const isFlagActivated = flagEnv.status === FlagStatus.ACTIVATED;
+
   return (
     <DashboardLayout
       user={user}
@@ -166,6 +191,19 @@ export default function FlagInsights() {
         <Header
           tagline={<TagLine icon={<FlagIcon />}>Feature flag</TagLine>}
           title={currentFlag.name}
+          action={
+            <Form
+              method="post"
+              id={`form-${currentFlag.uuid}`}
+              style={{ marginTop: 12 }}
+            >
+              <ToggleFlag
+                isFlagActivated={isFlagActivated}
+                flagId={currentFlag.uuid}
+                flagName={currentFlag.name}
+              />
+            </Form>
+          }
         />
       }
       subNav={

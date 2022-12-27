@@ -6,7 +6,7 @@ import { AiOutlineSetting } from "react-icons/ai";
 import { Typography } from "~/components/Typography";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
-import { MetaFunction } from "@remix-run/node";
+import { ActionFunction, MetaFunction } from "@remix-run/node";
 import { Card, CardContent } from "~/components/Card";
 import { Stack } from "~/components/Stack";
 import { TagLine } from "~/components/Tagline";
@@ -22,6 +22,11 @@ import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { Spacer } from "~/components/Spacer";
+import { Form } from "@remix-run/react";
+import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
+import { FlagStatus } from "~/modules/flags/types";
+import { getSession } from "~/sessions";
+import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -33,6 +38,26 @@ export const meta: MetaFunction = ({ parentsData, params }) => {
   };
 };
 
+type ActionDataType = null | {
+  errors?: { [key: string]: string | undefined };
+};
+
+export const action: ActionFunction = async ({
+  request,
+  params,
+}): Promise<ActionDataType> => {
+  const session = await getSession(request.headers.get("Cookie"));
+  const authCookie = session.get("auth-cookie");
+  const formData = await request.formData();
+  const type = formData.get("_type");
+
+  if (type === "toggle-flag") {
+    return toggleFlagAction(formData, params, authCookie);
+  }
+
+  return null;
+};
+
 export default function FlagSettingPage() {
   const { project, userRole } = useProject();
   const { user } = useUser();
@@ -42,6 +67,8 @@ export default function FlagSettingPage() {
 
   const currentFlag = flagEnv.flag;
 
+  const isFlagActivated = flagEnv.status === FlagStatus.ACTIVATED;
+
   return (
     <DashboardLayout
       user={user}
@@ -49,6 +76,19 @@ export default function FlagSettingPage() {
         <Header
           tagline={<TagLine icon={<FlagIcon />}>Feature flag</TagLine>}
           title={currentFlag.name}
+          action={
+            <Form
+              method="post"
+              id={`form-${currentFlag.uuid}`}
+              style={{ marginTop: 12 }}
+            >
+              <ToggleFlag
+                isFlagActivated={isFlagActivated}
+                flagId={currentFlag.uuid}
+                flagName={currentFlag.name}
+              />
+            </Form>
+          }
         />
       }
       subNav={

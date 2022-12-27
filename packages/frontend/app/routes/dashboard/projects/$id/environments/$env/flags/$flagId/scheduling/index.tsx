@@ -1,5 +1,5 @@
-import { LoaderFunction, MetaFunction } from "@remix-run/node";
-import { useLoaderData, useSearchParams } from "@remix-run/react";
+import { ActionFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
+import { Form, useLoaderData, useSearchParams } from "@remix-run/react";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { WarningBox } from "~/components/Boxes/WarningBox";
@@ -17,8 +17,11 @@ import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
+import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
+import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
+import { FlagStatus } from "~/modules/flags/types";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { SchedulingList } from "~/modules/scheduling/components/SchedulingList";
@@ -59,6 +62,26 @@ export const loader: LoaderFunction = async ({
   };
 };
 
+type ActionDataType = null | {
+  errors?: { [key: string]: string | undefined };
+};
+
+export const action: ActionFunction = async ({
+  request,
+  params,
+}): Promise<ActionDataType> => {
+  const session = await getSession(request.headers.get("Cookie"));
+  const authCookie = session.get("auth-cookie");
+  const formData = await request.formData();
+  const type = formData.get("_type");
+
+  if (type === "toggle-flag") {
+    return toggleFlagAction(formData, params, authCookie);
+  }
+
+  return null;
+};
+
 export default function SchedulingOfFlag() {
   const [searchParams] = useSearchParams();
   const { user } = useUser();
@@ -74,6 +97,8 @@ export default function SchedulingOfFlag() {
 
   const hasScheduling = scheduling.length > 0;
 
+  const isFlagActivated = flagEnv.status === FlagStatus.ACTIVATED;
+
   return (
     <DashboardLayout
       user={user}
@@ -81,6 +106,19 @@ export default function SchedulingOfFlag() {
         <Header
           tagline={<TagLine icon={<FlagIcon />}>Feature flag</TagLine>}
           title={currentFlag.name}
+          action={
+            <Form
+              method="post"
+              id={`form-${currentFlag.uuid}`}
+              style={{ marginTop: 12 }}
+            >
+              <ToggleFlag
+                isFlagActivated={isFlagActivated}
+                flagId={currentFlag.uuid}
+                flagName={currentFlag.name}
+              />
+            </Form>
+          }
         />
       }
       subNav={

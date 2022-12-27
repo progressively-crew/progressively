@@ -162,6 +162,19 @@ export default function FlagById() {
         <Header
           tagline={<TagLine icon={<FlagIcon />}>Feature flag</TagLine>}
           title={currentFlag.name}
+          action={
+            <Form
+              method="post"
+              id={`form-${currentFlag.uuid}`}
+              style={{ marginTop: 12 }}
+            >
+              <ToggleFlag
+                isFlagActivated={isFlagActivated}
+                flagId={currentFlag.uuid}
+                flagName={currentFlag.name}
+              />
+            </Form>
+          }
         />
       }
       subNav={
@@ -172,22 +185,7 @@ export default function FlagById() {
         />
       }
     >
-      <PageTitle
-        value="Overview"
-        endAction={
-          <Form
-            method="post"
-            id={`form-${currentFlag.uuid}`}
-            style={{ marginTop: 12 }}
-          >
-            <ToggleFlag
-              isFlagActivated={isFlagActivated}
-              flagId={currentFlag.uuid}
-              flagName={currentFlag.name}
-            />
-          </Form>
-        }
-      />
+      <PageTitle value="Audience" />
 
       <Section id="rollout-target">
         <Card>

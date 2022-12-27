@@ -22,19 +22,7 @@ export const FlagMenu = ({ projectId, envId, flagId }: FlagMenuProps) => {
         to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}`}
         icon={<FaToggleOff />}
       >
-        Overview
-      </NavItem>
-      <NavItem
-        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/variants`}
-        icon={<VariantIcon />}
-      >
-        Variants
-      </NavItem>
-      <NavItem
-        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/scheduling`}
-        icon={<AiOutlineClockCircle />}
-      >
-        Scheduling
+        Audience
       </NavItem>
 
       <NavItem
@@ -43,12 +31,28 @@ export const FlagMenu = ({ projectId, envId, flagId }: FlagMenuProps) => {
       >
         Insights
       </NavItem>
+
+      <NavItem
+        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/variants`}
+        icon={<VariantIcon />}
+      >
+        Variants
+      </NavItem>
+
       <NavItem
         to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/metrics`}
         icon={<MdBubbleChart />}
       >
         Metrics
       </NavItem>
+
+      <NavItem
+        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/scheduling`}
+        icon={<AiOutlineClockCircle />}
+      >
+        Scheduling
+      </NavItem>
+
       <NavItem
         to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/webhooks`}
         icon={<TbSend />}

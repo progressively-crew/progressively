@@ -1,5 +1,6 @@
 import { ActionFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
 import {
+  Form,
   useActionData,
   useLoaderData,
   useSearchParams,
@@ -21,8 +22,11 @@ import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
+import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
+import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
+import { FlagStatus } from "~/modules/flags/types";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { useUser } from "~/modules/user/contexts/useUser";
@@ -90,6 +94,10 @@ export const action: ActionFunction = async ({
     return deleteVariantAction(formData, params, authCookie);
   }
 
+  if (type === "toggle-flag") {
+    return toggleFlagAction(formData, params, authCookie);
+  }
+
   return null;
 };
 
@@ -108,6 +116,8 @@ export default function VariantsOfFlag() {
 
   const hasVariants = variants.length > 0;
 
+  const isFlagActivated = flagEnv.status === FlagStatus.ACTIVATED;
+
   return (
     <DashboardLayout
       user={user}
@@ -115,6 +125,19 @@ export default function VariantsOfFlag() {
         <Header
           tagline={<TagLine icon={<FlagIcon />}>Feature flag</TagLine>}
           title={currentFlag.name}
+          action={
+            <Form
+              method="post"
+              id={`form-${currentFlag.uuid}`}
+              style={{ marginTop: 12 }}
+            >
+              <ToggleFlag
+                isFlagActivated={isFlagActivated}
+                flagId={currentFlag.uuid}
+                flagName={currentFlag.name}
+              />
+            </Form>
+          }
         />
       }
       subNav={
