@@ -6,7 +6,7 @@ export const Logo = (props: any) => {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <rect width="32" height="32" rx="4" fill="#1e293b" />
+      <rect width="32" height="32" rx="4" fill="#0f172a" />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
