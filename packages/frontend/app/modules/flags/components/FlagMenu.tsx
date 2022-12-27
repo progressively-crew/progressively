@@ -3,6 +3,7 @@ import {
   AiOutlineClockCircle,
   AiOutlineSetting,
 } from "react-icons/ai";
+import { BiGroup } from "react-icons/bi";
 import { FaToggleOff } from "react-icons/fa";
 import { TbSend } from "react-icons/tb";
 import { MdBubbleChart } from "react-icons/md";
@@ -20,7 +21,7 @@ export const FlagMenu = ({ projectId, envId, flagId }: FlagMenuProps) => {
     <HorizontalNav label={`Flag related`}>
       <NavItem
         to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}`}
-        icon={<FaToggleOff />}
+        icon={<BiGroup />}
       >
         Audience
       </NavItem>
