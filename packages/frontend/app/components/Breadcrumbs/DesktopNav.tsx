@@ -1,4 +1,3 @@
-import { stringToColor } from "~/modules/misc/utils/stringToColor";
 import { HStack } from "../HStack";
 import { Link } from "../Link";
 import { Logo } from "../Logo/Logo";
@@ -18,12 +17,6 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
       <ol className="flex h-12 items-center">
         {crumbs.map((crumb, index) => {
           const currentPage = index === lastItemIndex;
-          const background = crumb.colorize
-            ? stringToColor(crumb.label, 90)
-            : undefined;
-          const color = crumb.colorize
-            ? stringToColor(crumb.label, 25)
-            : undefined;
 
           return (
             <li
@@ -41,10 +34,7 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
                     : "text-gray-500 dark:text-slate-200"
                 }`}
               >
-                <div
-                  className={"rounded px-2 -mx-1 py-1"}
-                  style={{ color, background }}
-                >
+                <div className={"rounded px-2 -mx-1 py-1"}>
                   <HStack spacing={2}>
                     {crumb.isRoot ? (
                       <Logo aria-label={crumb.label} />
@@ -54,7 +44,7 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
                           crumb={crumb}
                           color={
                             currentPage
-                              ? color || "text-indigo-700 dark:text-indigo-400"
+                              ? "text-indigo-700 dark:text-indigo-400"
                               : ""
                           }
                         />

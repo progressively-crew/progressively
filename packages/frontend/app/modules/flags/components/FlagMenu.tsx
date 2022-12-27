@@ -4,7 +4,7 @@ import {
   AiOutlineSetting,
 } from "react-icons/ai";
 import { BiGroup } from "react-icons/bi";
-import { FaToggleOff } from "react-icons/fa";
+
 import { TbSend } from "react-icons/tb";
 import { MdBubbleChart } from "react-icons/md";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";

@@ -37,7 +37,6 @@ export const handle = {
         };
       }),
       menuLabel: `Change environment`,
-      colorize: true,
     };
   },
 };
