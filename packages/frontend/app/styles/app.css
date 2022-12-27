@@ -1113,6 +1113,10 @@ video {
   fill: #e5e7eb;
 }
 
+.fill-red-500 {
+  fill: #ef4444;
+}
+
 .p-8 {
   padding: 2rem;
 }
@@ -1353,6 +1357,11 @@ video {
 .text-indigo-500 {
   --tw-text-opacity: 1;
   color: rgb(99 102 241 / var(--tw-text-opacity));
+}
+
+.text-red-500 {
+  --tw-text-opacity: 1;
+  color: rgb(239 68 68 / var(--tw-text-opacity));
 }
 
 .underline {

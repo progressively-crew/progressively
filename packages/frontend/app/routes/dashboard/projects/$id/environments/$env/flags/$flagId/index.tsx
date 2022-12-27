@@ -1,3 +1,4 @@
+import { BiGroup } from "react-icons/bi";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { FlagStatus } from "~/modules/flags/types";
 import { getStrategies } from "~/modules/strategies/services/getStrategies";
@@ -185,7 +186,7 @@ export default function FlagById() {
         />
       }
     >
-      <PageTitle value="Audience" />
+      <PageTitle value="Audience" icon={<BiGroup />} />
 
       <Section id="rollout-target">
         <Card>
