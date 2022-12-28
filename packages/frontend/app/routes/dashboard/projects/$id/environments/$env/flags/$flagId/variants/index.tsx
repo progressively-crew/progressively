@@ -150,6 +150,10 @@ export default function VariantsOfFlag() {
       status={
         actionData?.errors ? (
           <ErrorBox list={actionData?.errors} />
+        ) : actionData?.successEdit ? (
+          <SuccessBox id="variant-edited">
+            The variants have been successfully edited.
+          </SuccessBox>
         ) : actionData?.successDelete ? (
           <SuccessBox id="variant-deleted">
             The variant has been successfully deleted.
@@ -157,10 +161,6 @@ export default function VariantsOfFlag() {
         ) : isVariantAdded ? (
           <SuccessBox id="variant-added">
             The variant has been successfully created.
-          </SuccessBox>
-        ) : actionData?.successEdit ? (
-          <SuccessBox id="variant-edited">
-            The variants have been successfully edited.
           </SuccessBox>
         ) : null
       }

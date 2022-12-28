@@ -18,7 +18,7 @@ export const SuccessBox = ({ children, id, ...props }: SuccessBoxProps) => {
   }, []);
 
   return (
-    <div className="p-4 bg-green-100 text-green-700 rounded border-l-8 border-l-green-600 flex flex-row justify-between">
+    <div className="p-4 bg-green-100 text-green-700 rounded border-l-8 border-l-green-600 flex flex-row justify-between motion-safe:animate-fade-enter-top">
       <p ref={boxRef} tabIndex={-1} id={id} {...props} className="success-box">
         <HStack as="span" spacing={2}>
           <AiOutlineCheckCircle aria-hidden />
