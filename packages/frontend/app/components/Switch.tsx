@@ -23,12 +23,13 @@ export const Switch = ({
   ...props
 }: SwitchProps) => {
   const thumnailCheckedClasses = checked
-    ? "translate-x-full text-emerald-200 flex items-center justify-center text-md"
+    ? "translate-x-full text-emerald-200"
     : "";
 
   const wrapperCheckedClasses = checked
     ? "bg-emerald-300"
     : "bg-gray-300 dark:bg-slate-600";
+
   const thumnailTransitionClasses = checked ? "group-active:-ml-4" : "";
 
   return (
@@ -54,13 +55,16 @@ export const Switch = ({
         <span
           aria-hidden
           className={
-            "transition-all ease-in-out duration-100 w-5 h-full bg-white block rounded-full group-active:w-7 " +
+            "transition-all ease-in-out duration-100 w-5 h-full bg-white block rounded-full group-active:w-7 flex items-center justify-center text-md " +
             thumnailCheckedClasses +
             " " +
             thumnailTransitionClasses
           }
         >
-          {checked && <BsCheck />}
+          <BsCheck
+            aria-hidden
+            className={`transition-all ${checked ? "opacity-1" : "opacity-0"}`}
+          />
         </span>
       </span>
       <Typography as="span" className="text-sm">

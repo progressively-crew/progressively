@@ -3,7 +3,8 @@ import {
   AiOutlineClockCircle,
   AiOutlineSetting,
 } from "react-icons/ai";
-import { FaToggleOff } from "react-icons/fa";
+import { BiGroup } from "react-icons/bi";
+
 import { TbSend } from "react-icons/tb";
 import { MdBubbleChart } from "react-icons/md";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
@@ -20,21 +21,9 @@ export const FlagMenu = ({ projectId, envId, flagId }: FlagMenuProps) => {
     <HorizontalNav label={`Flag related`}>
       <NavItem
         to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}`}
-        icon={<FaToggleOff />}
+        icon={<BiGroup />}
       >
-        Overview
-      </NavItem>
-      <NavItem
-        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/variants`}
-        icon={<VariantIcon />}
-      >
-        Variants
-      </NavItem>
-      <NavItem
-        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/scheduling`}
-        icon={<AiOutlineClockCircle />}
-      >
-        Scheduling
+        Audience
       </NavItem>
 
       <NavItem
@@ -43,12 +32,28 @@ export const FlagMenu = ({ projectId, envId, flagId }: FlagMenuProps) => {
       >
         Insights
       </NavItem>
+
+      <NavItem
+        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/variants`}
+        icon={<VariantIcon />}
+      >
+        Variants
+      </NavItem>
+
       <NavItem
         to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/metrics`}
         icon={<MdBubbleChart />}
       >
         Metrics
       </NavItem>
+
+      <NavItem
+        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/scheduling`}
+        icon={<AiOutlineClockCircle />}
+      >
+        Scheduling
+      </NavItem>
+
       <NavItem
         to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/webhooks`}
         icon={<TbSend />}
