@@ -16,24 +16,22 @@ export const Header = ({
   action,
 }: HeaderProps) => {
   return (
-    <div className="flex flex-row gap-4">
+    <header className="flex flex-row gap-4" aria-labelledby="header-title">
       <div>
-        <header aria-labelledby="header-title">
-          {tagline}
-          <Spacer size={1} />
-          <HStack spacing={6}>
-            <p
-              id="header-title"
-              className="text-xl font-bold dark:text-slate-100"
-            >
-              {title}
-            </p>
-          </HStack>
-        </header>
+        {tagline}
+        <Spacer size={1} />
+        <HStack spacing={6}>
+          <p
+            id="header-title"
+            className="text-xl font-bold dark:text-slate-100"
+          >
+            {title}
+          </p>
+        </HStack>
 
         {description}
       </div>
       {action}
-    </div>
+    </header>
   );
 };
