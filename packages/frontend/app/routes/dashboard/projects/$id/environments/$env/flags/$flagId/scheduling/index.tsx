@@ -130,7 +130,7 @@ export default function SchedulingOfFlag() {
       }
       status={
         isScheduleRemoved ? (
-          <SuccessBox id="schedule-updated">
+          <SuccessBox id="schedule-removed">
             The schedule has been successfully removed.
           </SuccessBox>
         ) : isScheduleAdded ? (
