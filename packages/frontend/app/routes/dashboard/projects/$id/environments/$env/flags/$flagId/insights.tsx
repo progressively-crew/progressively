@@ -1,7 +1,6 @@
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { getSession } from "~/sessions";
 import { Header } from "~/components/Header";
-import { AiOutlineBarChart } from "react-icons/ai";
 import { getFlagHits } from "~/modules/flags/services/getFlagHits";
 import { MetaFunction, LoaderFunction, ActionFunction } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
@@ -14,8 +13,7 @@ import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
-import { Stack } from "~/components/Stack";
-import { Card, CardContent } from "~/components/Card";
+import { Card } from "~/components/Card";
 import { TextInput } from "~/components/Fields/TextInput";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { Typography } from "~/components/Typography";
@@ -24,14 +22,15 @@ import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { MetricPerVariantList } from "~/modules/flags/MetricPerVariantList";
 import { Section, SectionHeader } from "~/components/Section";
 import { BarChart } from "~/components/BarChart";
-import { Tag } from "~/components/Tag";
-import { FlagEvalList } from "~/modules/flags/FlagEvalList";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
 import { EmptyState } from "~/components/EmptyState";
 import { LineChart } from "~/components/LineChart";
 import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
 import { FlagStatus } from "~/modules/flags/types";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
+import { VariantCard } from "~/modules/insights/components/VariantCard";
+import { EvalCard } from "~/modules/insights/components/EvalCard";
+import { Spacer } from "~/components/Spacer";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -214,99 +213,99 @@ export default function FlagInsights() {
         />
       }
     >
-      <PageTitle
-        value="Insights"
-        icon={<AiOutlineBarChart />}
-        action={
-          <Form action=".">
-            <div className="flex flex-col md:flex-row gap-3 md:items-end">
-              <TextInput
-                type="date"
-                name={"startDate"}
-                label={"Start date"}
-                defaultValue={formatDefaultDate(startDate)}
-              />
-              <TextInput
-                type="date"
-                name={"endDate"}
-                label={"End date"}
-                defaultValue={formatDefaultDate(endDate)}
-              />
-              <SubmitButton>Filter</SubmitButton>
-            </div>
-          </Form>
-        }
-        description={
-          <Typography>
-            Information about variants hits per date on the feature flag.
-          </Typography>
-        }
-      />
+      <div className="sr-only">
+        <PageTitle
+          value="Insights"
+          description={
+            <Typography>
+              Information about variants hits per date on the feature flag.
+            </Typography>
+          }
+        />
+      </div>
 
-      <Stack spacing={8}>
-        <Section id="all-evalutations">
-          <Card>
-            <CardContent>
-              <SectionHeader
-                title="Flag evaluations"
-                description="Repartition of the flag evaluations."
-                action={
-                  <Tag variant="PRIMARY">
-                    Flag evaluated <strong>{flagEvaluationsCount}</strong> times
-                  </Tag>
-                }
-              />
-            </CardContent>
+      <Form action=".">
+        <div className="flex flex-col md:flex-row gap-3 md:items-end">
+          <TextInput
+            type="date"
+            name={"startDate"}
+            label={"Start date"}
+            defaultValue={formatDefaultDate(startDate)}
+          />
+          <TextInput
+            type="date"
+            name={"endDate"}
+            label={"End date"}
+            defaultValue={formatDefaultDate(endDate)}
+          />
+          <SubmitButton>Filter</SubmitButton>
+        </div>
+      </Form>
 
-            {hitsPerVariantPerDate.length === 0 && (
+      <Section id="variants-hits">
+        <SectionHeader
+          title="Flag evaluations"
+          description="These are the number of hit on each metrics and the associated variant (if applicable). The chart shows the ratio between the variant evaluation and the metric hit."
+        />
+
+        <Spacer size={4} />
+
+        <div className="grid grid-cols-4 gap-8">
+          <EvalCard count={flagEvaluationsCount} />
+
+          <div
+            className="w-full col-span-3 border border-gray-100 rounded-md bg-white dark:border-slate-700 dark:bg-slate-800 pr-6"
+            style={{ height: 300 }}
+          >
+            {hitsPerVariantPerDate.length > 0 ? (
+              <LineChart data={hitsPerVariantPerDate} />
+            ) : (
               <EmptyState
-                title="No hits found"
-                description={
-                  "Progressively has not recorded evaluations for this feature flag on the selected period."
-                }
+                title="No data"
+                description={"There are no flag evaluations for this period."}
               />
             )}
+          </div>
 
-            {hitsPerVariantPerDate.length > 0 && (
-              <div>
-                <FlagEvalList
-                  evalCount={flagEvaluationsCount}
-                  items={flagEvaluations}
-                />
+          {flagEvaluations.map((fe) => (
+            <VariantCard
+              key={`variant-card-${fe.valueResolved}`}
+              variant={fe.valueResolved}
+              hit={fe._count}
+              ratio={
+                Math.round((fe._count / flagEvaluationsCount) * 10_000) / 100
+              }
+            />
+          ))}
+        </div>
+      </Section>
 
-                <div
-                  className="w-full bg-gray-50 dark:bg-slate-700 pt-8 pb-6"
-                  style={{ height: 300 }}
-                >
-                  <LineChart data={hitsPerVariantPerDate} />
-                </div>
-              </div>
-            )}
-          </Card>
-        </Section>
+      <Section id="metrics-variant">
+        <SectionHeader
+          title="Hit on metrics"
+          description="These are the number of hit on each metrics and the associated variant (if applicable). The chart shows the ratio between the variant evaluation and the metric hit."
+        />
 
-        <Section id="metrics-variant">
-          <Card>
-            <CardContent>
-              <SectionHeader
-                title="Hit on metrics"
-                description="These are the number of hit on each metrics and the associated variant (if applicable). The chart shows the ratio between the variant evaluation and the metric hit."
+        <Spacer size={4} />
+
+        <Card>
+          <MetricPerVariantList items={metricsByVariantCount} />
+
+          <div
+            className="w-full bg-gray-50 dark:bg-slate-700 pt-8 pb-6"
+            style={{ height: 300 }}
+          >
+            {barChartData.length > 0 ? (
+              <BarChart data={barChartData} />
+            ) : (
+              <EmptyState
+                title="No data"
+                description={"There are no metric hits for this period."}
               />
-            </CardContent>
-
-            <MetricPerVariantList items={metricsByVariantCount} />
-
-            {barChartData.length > 0 && (
-              <div
-                className="w-full bg-gray-50 dark:bg-slate-700 pt-8 pb-6"
-                style={{ height: 300 }}
-              >
-                <BarChart data={barChartData} />
-              </div>
             )}
-          </Card>
-        </Section>
-      </Stack>
+          </div>
+        </Card>
+      </Section>
     </DashboardLayout>
   );
 }
