@@ -8,6 +8,7 @@ import {
   XAxis,
   YAxis,
   Line,
+  CartesianGrid,
 } from "recharts";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
 import { useTheme } from "~/modules/theme/useTheme";
@@ -77,7 +78,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 export const LineChart = ({ data }: LineChartProps) => {
   const { theme } = useTheme();
 
-  const legendColor = theme === "dark" ? "white" : "black";
+  const legendColor = theme === "dark" ? "#ccc" : "#aaa";
   const glowEffect = (key: string) =>
     theme === "dark" ? stringToColor(key, 25) : stringToColor(key, 90);
 
@@ -103,20 +104,28 @@ export const LineChart = ({ data }: LineChartProps) => {
           bottom: 40,
         }}
       >
-        <XAxis
-          dataKey="date"
-          tick={<CustomizedAxisTick color={legendColor} />}
-        />
-        <YAxis tick={{ stroke: legendColor }} />
-        <Tooltip content={<CustomTooltip />} />
+        <CartesianGrid vertical={false} stroke={legendColor} />
         <Legend
+          verticalAlign="top"
           wrapperStyle={{
-            paddingTop: "40px",
+            paddingTop: "16px",
+            paddingBottom: "20px",
           }}
           formatter={(value, entry, index) => (
             <span className={stringToColor(lineKeys[index], 75)}>{value}</span>
           )}
         />
+        <XAxis
+          dataKey="date"
+          axisLine={false}
+          tick={<CustomizedAxisTick color={legendColor} />}
+        />
+        <YAxis
+          tick={{ stroke: legendColor }}
+          axisLine={false}
+          tickLine={false}
+        />
+        <Tooltip content={<CustomTooltip />} />
 
         {lineKeys.map((key) => (
           <Line

@@ -32,6 +32,8 @@ import { LineChart } from "~/components/LineChart";
 import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
 import { FlagStatus } from "~/modules/flags/types";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
+import { VariantCard } from "~/modules/insights/components/VariantCard";
+import { EvalCard } from "~/modules/insights/components/EvalCard";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -243,48 +245,29 @@ export default function FlagInsights() {
         }
       />
 
+      <div className="grid grid-cols-4 gap-8">
+        <EvalCard count={flagEvaluationsCount} />
+
+        <div
+          className="w-full col-span-3 border border-gray-100 rounded-md bg-white dark:border-slate-700 dark:bg-slate-800 pr-6"
+          style={{ height: 300 }}
+        >
+          <LineChart data={hitsPerVariantPerDate} />
+        </div>
+
+        {flagEvaluations.map((fe) => (
+          <VariantCard
+            key={`variant-card-${fe.valueResolved}`}
+            variant={fe.valueResolved}
+            hit={fe._count}
+            ratio={
+              Math.round((fe._count / flagEvaluationsCount) * 10_000) / 100
+            }
+          />
+        ))}
+      </div>
+
       <Stack spacing={8}>
-        <Section id="all-evalutations">
-          <Card>
-            <CardContent>
-              <SectionHeader
-                title="Flag evaluations"
-                description="Repartition of the flag evaluations."
-                action={
-                  <Tag variant="PRIMARY">
-                    Flag evaluated <strong>{flagEvaluationsCount}</strong> times
-                  </Tag>
-                }
-              />
-            </CardContent>
-
-            {hitsPerVariantPerDate.length === 0 && (
-              <EmptyState
-                title="No hits found"
-                description={
-                  "Progressively has not recorded evaluations for this feature flag on the selected period."
-                }
-              />
-            )}
-
-            {hitsPerVariantPerDate.length > 0 && (
-              <div>
-                <FlagEvalList
-                  evalCount={flagEvaluationsCount}
-                  items={flagEvaluations}
-                />
-
-                <div
-                  className="w-full bg-gray-50 dark:bg-slate-700 pt-8 pb-6"
-                  style={{ height: 300 }}
-                >
-                  <LineChart data={hitsPerVariantPerDate} />
-                </div>
-              </div>
-            )}
-          </Card>
-        </Section>
-
         <Section id="metrics-variant">
           <Card>
             <CardContent>
