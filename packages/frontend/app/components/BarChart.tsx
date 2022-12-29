@@ -36,7 +36,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
             <div key={`${label}-${pld.value}-${pld.dataKey}`}>
               <span className="flex flex-row gap-3 items-center">
                 <span className="text-gray-700">{pld.dataKey}:</span>
-                <span className="font-semibold">{pld.value}</span>
+                <span className="font-semibold">{pld.value}%</span>
               </span>
             </div>
           ))}

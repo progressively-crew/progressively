@@ -9,6 +9,7 @@ export interface VariantCardProps {
 
 export const VariantCard = ({ variant, hit, ratio }: VariantCardProps) => {
   const color = stringToColor(variant, 75);
+  const formatter = Intl.NumberFormat("en", { notation: "compact" });
 
   return (
     <div className="border border-gray-100 rounded-md bg-white dark:border-slate-700 dark:bg-slate-800 p-4">
@@ -18,7 +19,7 @@ export const VariantCard = ({ variant, hit, ratio }: VariantCardProps) => {
       </div>
 
       <div className="dark:text-white text-slate-900 pb-4">
-        <span className="text-6xl font-bold">{hit}</span>
+        <span className="text-6xl font-bold">{formatter.format(hit)}</span>
         <span className="dark:text-slate-300 text-slate-900 pl-2">eval.</span>
       </div>
 
