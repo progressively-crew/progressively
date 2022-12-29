@@ -6,6 +6,7 @@ import {
   Tooltip,
   ResponsiveContainer,
   Cell,
+  CartesianGrid,
 } from "recharts";
 
 import { useTheme } from "~/modules/theme/useTheme";
@@ -50,7 +51,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 export const BarChart = ({ data }: BarChartProps) => {
   const { theme } = useTheme();
 
-  const legendColor = theme === "dark" ? "white" : "black";
+  const legendColor = theme === "dark" ? "#ccc" : "#aaa";
 
   return (
     <ResponsiveContainer width="100%" height="100%">
@@ -64,15 +65,14 @@ export const BarChart = ({ data }: BarChartProps) => {
           bottom: 40,
         }}
       >
+        <CartesianGrid vertical={false} stroke={legendColor} />
         <XAxis
+          axisLine={false}
           dataKey="name"
           tick={{ fill: legendColor }}
           tickLine={{ stroke: legendColor }}
         />
-        <YAxis
-          tick={{ fill: legendColor }}
-          tickLine={{ stroke: legendColor }}
-        />
+        <YAxis axisLine={false} tick={{ fill: legendColor }} tickLine={false} />
         <Tooltip content={<CustomTooltip />} cursor={false} />
 
         <Bar dataKey="value" unit="%">
