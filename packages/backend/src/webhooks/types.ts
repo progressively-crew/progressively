@@ -13,6 +13,7 @@ export interface WebhookCreationDTO {
 export interface Webhook {
   endpoint: string;
   event: WebhookEvents;
+  secret: string;
   uuid: string;
 }
 
