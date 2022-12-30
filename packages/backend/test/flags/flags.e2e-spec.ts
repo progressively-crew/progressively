@@ -1639,6 +1639,7 @@ describe('FlagsController (e2e)', () => {
         event: 'ACTIVATION',
         flagEnvironmentEnvironmentId: '1',
         flagEnvironmentFlagId: '1',
+        secret: 'this is secret',
         uuid: '1',
       });
     });
