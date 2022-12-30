@@ -16,6 +16,7 @@ import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { VariantIcon } from "~/components/Icons/VariantIcon";
 import { PageTitle } from "~/components/PageTitle";
 import { Section } from "~/components/Section";
+import { Spacer } from "~/components/Spacer";
 import { TagLine } from "~/components/Tagline";
 import { Typography } from "~/components/Typography";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
@@ -173,6 +174,11 @@ export default function VariantsOfFlag() {
             The variants that will be shown to a portion of your audience.
           </Typography>
         }
+        action={
+          <CreateButton to={`create`} variant="secondary">
+            Create a variant
+          </CreateButton>
+        }
       />
 
       <Section aria-label="List of variants">
@@ -193,20 +199,15 @@ export default function VariantsOfFlag() {
           )}
 
           {hasVariants && (
-            <div>
-              <div className="px-8 py-4 flex justify-end">
-                <div className="flex flex-row gap-4">
-                  <CreateButton to={`create`} variant="secondary">
-                    Create a variant
-                  </CreateButton>
-                  <SubmitButton form="edit-variant">Edit variants</SubmitButton>
-                </div>
-              </div>
-
-              <VariantList variants={variants} errors={actionData?.errors} />
-            </div>
+            <VariantList variants={variants} errors={actionData?.errors} />
           )}
         </Card>
+
+        <Spacer size={8} />
+
+        <div className="flex justify-end">
+          <SubmitButton form="edit-variant">Edit variants</SubmitButton>
+        </div>
       </Section>
     </DashboardLayout>
   );
