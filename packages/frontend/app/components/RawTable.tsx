@@ -43,9 +43,17 @@ export const Tr = ({
   );
 };
 
-export const Td = (props: React.HTMLAttributes<HTMLTableCellElement>) => {
+export const Td = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLTableCellElement>) => {
   return (
-    <td className="py-4 px-8 dark:text-gray-200 whitespace-nowrap" {...props} />
+    <td
+      className={`py-4 px-8 dark:text-gray-200 whitespace-nowrap ${
+        className || ""
+      }`}
+      {...props}
+    />
   );
 };
 

@@ -65,15 +65,17 @@ export const VariantTable = ({ variants }: VariantTableProps) => {
               const color = stringToColor(variant.value, 25);
 
               return (
-                <Tr
-                  key={`variant-${variant.uuid}`}
-                  className={
-                    variant.isControl
-                      ? "bg-gray-50 dark:bg-slate-700"
-                      : undefined
-                  }
-                >
-                  <Td>
+                <Tr key={`variant-${variant.uuid}`}>
+                  <Td
+                    className={`border-l-8 ${
+                      variant.isControl ? "" : "border-l-transparent"
+                    }`}
+                    style={
+                      variant.isControl
+                        ? { borderColor: background }
+                        : undefined
+                    }
+                  >
                     <input type="hidden" value={variant.value} name={"name"} />
 
                     <span className="flex flex-row gap-3 items-center">
@@ -96,7 +98,7 @@ export const VariantTable = ({ variants }: VariantTableProps) => {
                       fgColor={color}
                     />
                   </Td>
-                  <Td className="text-center py-4 px-8 flex justify-center">
+                  <Td>
                     <input type="hidden" name="uuid" value={variant.uuid} />
                     {variant.isControl && (
                       <input
@@ -107,10 +109,13 @@ export const VariantTable = ({ variants }: VariantTableProps) => {
                     )}
 
                     {variant.isControl && (
-                      <AiFillCheckCircle
-                        aria-label="This is the control version"
-                        className="text-2xl text-indigo-500 dark:text-indigo-200"
-                      />
+                      <div className="flex justify-center">
+                        <AiFillCheckCircle
+                          aria-label="This is the control version"
+                          className="text-2xl"
+                          style={{ color: background }}
+                        />
+                      </div>
                     )}
                   </Td>
                 </Tr>

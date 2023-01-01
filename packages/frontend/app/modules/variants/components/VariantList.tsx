@@ -78,15 +78,17 @@ export const VariantList = ({ variants, errors }: VariantListProps) => {
               const color = stringToColor(variant.value, 25);
 
               return (
-                <Tr
-                  key={`variant-${variant.uuid}`}
-                  className={
-                    variant.isControl
-                      ? "bg-gray-50 dark:bg-slate-700"
-                      : undefined
-                  }
-                >
-                  <Td>
+                <Tr key={`variant-${variant.uuid}`}>
+                  <Td
+                    className={`border-l-8 ${
+                      variant.isControl ? "" : "border-l-transparent"
+                    }`}
+                    style={
+                      variant.isControl
+                        ? { borderColor: background }
+                        : undefined
+                    }
+                  >
                     <TextInput
                       hiddenLabel
                       id={`name-${index}`}
@@ -108,18 +110,20 @@ export const VariantList = ({ variants, errors }: VariantListProps) => {
                     />
                   </Td>
 
-                  <Td className="text-center py-4 px-8 flex justify-center">
+                  <Td>
                     <input type="hidden" name="uuid" value={variant.uuid} />
-                    <Radio
-                      type={"radio"}
-                      name={"isControl"}
-                      value={variant.uuid}
-                      defaultChecked={variant.isControl}
-                      aria-label={`Is variant at position ${
-                        index + 1
-                      } the control variant?`}
-                      readOnly
-                    />
+                    <div className="flex justify-center">
+                      <Radio
+                        type={"radio"}
+                        name={"isControl"}
+                        value={variant.uuid}
+                        defaultChecked={variant.isControl}
+                        aria-label={`Is variant at position ${
+                          index + 1
+                        } the control variant?`}
+                        readOnly
+                      />
+                    </div>
                   </Td>
 
                   <Td>
