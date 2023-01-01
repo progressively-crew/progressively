@@ -146,7 +146,9 @@ describe('FlagsController (e2e)', () => {
           status: 'ACTIVATED',
         });
 
-      expect(got.post).toBeCalledWith('http://localhost:4000');
+      expect(got.post).toBeCalledWith('http://localhost:4000', {
+        headers: { 'x-progressively-secret': 'this is secret' },
+      });
     });
 
     it(`does not call a webhook when the flag is "NOT_ACTIVATED`, async () => {
@@ -1639,6 +1641,7 @@ describe('FlagsController (e2e)', () => {
         event: 'ACTIVATION',
         flagEnvironmentEnvironmentId: '1',
         flagEnvironmentFlagId: '1',
+        secret: 'this is secret',
         uuid: '1',
       });
     });

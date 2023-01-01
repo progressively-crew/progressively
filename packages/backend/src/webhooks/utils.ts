@@ -8,5 +8,9 @@ export const WebhooksEventsToFlagStatus = {
 };
 
 export const post = (webhook: Webhook) => {
-  return got.post(webhook.endpoint);
+  return got.post(webhook.endpoint, {
+    headers: {
+      'x-progressively-secret': webhook.secret,
+    },
+  });
 };

@@ -20,9 +20,8 @@ use Progressively\Progressively;
     );
 
     $sdk = Progressively::create("valid-sdk-key", $option);
-    $flags = $sdk->loadFlags();
 
-    if ($flags->isActivated('newHomepage')) {
+    if ($sdk->isActivated('newHomepage')) {
         echo "<p>New variant</p>";
     } else {
         echo "<p>Old variant</p>";
