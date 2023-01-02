@@ -47,7 +47,7 @@ export const DashboardLayout = ({
       <InertWhenNavOpened className="h-full">
         <div className="px-4 md:px-12 h-full">
           <div>
-            <div className={`max-w-5xl w-full mx-auto`}>
+            <div className={`max-w-6xl w-full mx-auto`}>
               {header && (
                 <div>
                   <Spacer size={12} />

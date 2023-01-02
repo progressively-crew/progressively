@@ -4,11 +4,10 @@ import {
   AiOutlineSetting,
 } from "react-icons/ai";
 import { BiGroup } from "react-icons/bi";
-
 import { TbSend } from "react-icons/tb";
-import { MdBubbleChart } from "react-icons/md";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { VariantIcon } from "~/components/Icons/VariantIcon";
+import { MetricIcon } from "~/components/Icons/MetricIcon";
 
 export interface FlagMenuProps {
   projectId: string;
@@ -42,7 +41,7 @@ export const FlagMenu = ({ projectId, envId, flagId }: FlagMenuProps) => {
 
       <NavItem
         to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/metrics`}
-        icon={<MdBubbleChart />}
+        icon={<MetricIcon />}
       >
         Metrics
       </NavItem>

@@ -58,6 +58,7 @@ export const EligibilityList = ({
             <Td>
               <div className="inline-block">
                 <DeleteButton
+                  size="S"
                   variant="secondary"
                   to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/eligibilities/${eligibility.uuid}/delete`}
                 >

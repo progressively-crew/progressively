@@ -55,6 +55,7 @@ export const ButtonCopy = ({ toCopy, children, ...props }: ButtonCopyProps) => {
     return (
       <CopyToClipboard text={toCopy}>
         <Button
+          size="S"
           type="button"
           onClick={handleClick}
           aria-live="polite"
@@ -88,6 +89,7 @@ export const ButtonCopy = ({ toCopy, children, ...props }: ButtonCopyProps) => {
 
   return (
     <Button
+      size="S"
       as={"span"}
       aria-live="polite"
       icon={<TbClipboardText aria-hidden />}

@@ -1,6 +1,7 @@
 import { RawTable, Tr, Th, Td } from "~/components/RawTable";
 import { Tag } from "~/components/Tag";
 import { stringToColor } from "../misc/utils/stringToColor";
+import { VariantDot } from "./components/VariantDot";
 
 interface MetricHit {
   metric: string;
@@ -32,11 +33,7 @@ export const MetricPerVariantList = ({ items }: MetricPerVariantListProps) => {
             <Td>
               {mHit.variant && (
                 <span className="flex flex-row gap-3 items-center">
-                  <span
-                    aria-hidden
-                    style={{ background: stringToColor(mHit.variant, 75) }}
-                    className="h-4 w-4 block rounded"
-                  />
+                  <VariantDot variant={mHit.variant} />
                   {mHit.variant}
                 </span>
               )}
