@@ -14,7 +14,7 @@ export interface ProgressivelySdkType {
     flags: FlagDict;
     response?: Response;
     error?: string;
-    userId: string;
+    userId: string | null;
   }>;
   disconnect: () => void;
   onFlagUpdate: (

@@ -18,14 +18,9 @@ function init(clientKey: string, options: SDKOptions): ProgressivelySdkType {
   const fields: Fields = options?.fields || {};
   fields.clientKey = clientKey;
 
-  let resolvedFlags: FlagDict = {};
-
-  if (options?.initialFlags) {
-    resolvedFlags = options.initialFlags;
-  } else {
-    const stringFlags = window.localStorage.getItem(LocalStorageKey);
-    resolvedFlags = stringFlags ? JSON.parse(stringFlags) : {};
-  }
+  const resolvedFlags: FlagDict =
+    options.initialFlags ||
+    JSON.parse(window.localStorage.getItem(LocalStorageKey) || "{}");
 
   return Sdk(
     options.apiUrl,
@@ -64,7 +59,7 @@ function Sdk(
         return response.json();
       })
       .then((data) => {
-        const userId = response?.headers?.get("X-progressively-id") || "";
+        const userId = response?.headers?.get("X-progressively-id");
         flags = { ...flags, ...data };
 
         persistLocalFlags(flags);
