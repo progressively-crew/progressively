@@ -244,7 +244,9 @@ export class FlagsService {
       });
     }
 
-    const hitsPerDates = Object.values(dictByDates);
+    const hitsPerDates = Object.keys(dictByDates)
+      .sort()
+      .map((k) => dictByDates[k]);
 
     return hitsPerDates;
   }
