@@ -1,4 +1,5 @@
 import { Tag } from "~/components/Tag";
+import { VariantDot } from "~/modules/flags/components/VariantDot";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
 
 export interface VariantCardProps {
@@ -14,7 +15,7 @@ export const VariantCard = ({ variant, hit, ratio }: VariantCardProps) => {
   return (
     <div className="border border-gray-100 rounded-md bg-white dark:border-slate-700 dark:bg-slate-800 p-4">
       <div className="flex flex-row items-center gap-2 font-bold pb-2">
-        <div className="h-6 w-6 rounded" style={{ background: color }} />
+        <VariantDot variant={variant} size="L" />
         <p style={{ color }}>{variant}</p>
       </div>
 

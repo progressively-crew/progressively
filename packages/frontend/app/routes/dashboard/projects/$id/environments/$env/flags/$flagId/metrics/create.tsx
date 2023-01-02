@@ -23,11 +23,12 @@ import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { TextInput } from "~/components/Fields/TextInput";
 import { getVariants } from "~/modules/variants/services/getVariants";
-import { SelectField } from "~/components/Fields/SelectField";
+import { SelectField, SelectOption } from "~/components/Fields/SelectField";
 import { Variant } from "~/modules/variants/types";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { BackLink } from "~/components/BackLink";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
+import { VariantDot } from "~/modules/flags/components/VariantDot";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -84,6 +85,7 @@ export const action: ActionFunction = async ({
 
 interface LoaderData {
   variants: Array<Variant>;
+  initialVariantUuid?: string;
 }
 
 export const loader: LoaderFunction = async ({
@@ -92,6 +94,8 @@ export const loader: LoaderFunction = async ({
 }): Promise<LoaderData> => {
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
+  const url = new URL(request.url);
+  const search = new URLSearchParams(url.search);
 
   const variants: Array<Variant> = await getVariants(
     params.env!,
@@ -101,6 +105,7 @@ export const loader: LoaderFunction = async ({
 
   return {
     variants,
+    initialVariantUuid: search.get("variant") || undefined,
   };
 };
 
@@ -108,7 +113,7 @@ export default function MetricCreatePage() {
   const { project } = useProject();
   const { flagEnv } = useFlagEnv();
   const { environment } = useEnvironment();
-  const { variants } = useLoaderData<LoaderData>();
+  const { variants, initialVariantUuid } = useLoaderData<LoaderData>();
   const transition = useTransition();
 
   const currentFlag = flagEnv.flag;
@@ -116,10 +121,16 @@ export default function MetricCreatePage() {
   const actionData = useActionData<ActionData>();
   const errors = actionData?.errors;
 
-  const options = [{ value: "", label: "No variant" }];
+  const options: Array<SelectOption> = [
+    { value: "", label: "No variant", icon: undefined },
+  ];
 
   for (const variant of variants) {
-    options.push({ value: variant.uuid, label: variant.value });
+    options.push({
+      value: variant.uuid,
+      label: variant.value,
+      icon: <VariantDot variant={variant.value} />,
+    });
   }
 
   return (
@@ -156,6 +167,7 @@ export default function MetricCreatePage() {
             name="variant"
             label="Variant (optional):"
             options={options}
+            defaultValue={initialVariantUuid}
           />
         </FormGroup>
       </CreateEntityLayout>

@@ -1,6 +1,5 @@
 import { Link } from "@remix-run/react";
 import { HTMLAttributes } from "react";
-import { HStack } from "../HStack";
 import { Spinner } from "../Spinner";
 
 export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
@@ -13,6 +12,7 @@ export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "tertiary";
   scheme?: "default" | "danger";
   icon?: React.ReactNode;
+  size?: "S" | "M";
 }
 
 const classCombination = {
@@ -29,6 +29,11 @@ const classCombination = {
     "text-red-700 dark:text-red-200 hover:dark:bg-slate-800 active:dark:bg-slate-700 hover:bg-red-100 active:bg-red-50",
 };
 
+const sizeClasses = {
+  S: "h-8 px-2 text-sm gap-2",
+  M: "h-10 px-4 gap-4",
+};
+
 export const Button = ({
   to,
   href,
@@ -40,13 +45,14 @@ export const Button = ({
   scheme,
   variant,
   className,
+  size = "M",
   ...props
 }: ButtonProps) => {
-  const sharedButtonClass =
-    "block rounded flex items-center h-10 px-4 whitespace-nowrap";
+  const sharedButtonClass = "block rounded flex items-center whitespace-nowrap";
   const actuelScheme = scheme || "default";
   const actualVariant = variant || "primary";
   const combinedClassName = classCombination[actuelScheme + actualVariant];
+  const sizeClass = sizeClasses[size];
 
   if (to || href) {
     const linkProps = props as HTMLAttributes<HTMLAnchorElement>;
@@ -57,14 +63,18 @@ export const Button = ({
         to={href ? undefined : to}
         href={href}
         className={
-          sharedButtonClass + " " + combinedClassName + " " + className
+          sharedButtonClass +
+          " " +
+          combinedClassName +
+          " " +
+          className +
+          " " +
+          sizeClass
         }
         {...linkProps}
       >
-        <HStack spacing={3}>
-          {icon && <span>{icon}</span>}
-          {children}
-        </HStack>
+        {icon && <span>{icon}</span>}
+        {children}
       </Component>
     );
   }
@@ -72,17 +82,23 @@ export const Button = ({
   return (
     <button
       type={type}
-      className={sharedButtonClass + " " + combinedClassName + " " + className}
+      className={
+        sharedButtonClass +
+        " " +
+        combinedClassName +
+        " " +
+        className +
+        " " +
+        sizeClass
+      }
       {...props}
       aria-disabled={isLoading}
       aria-label={isLoading ? loadingText : undefined}
     >
-      <HStack spacing={3}>
-        {icon && isLoading && <Spinner />}
-        {icon && !isLoading && icon}
+      {icon && isLoading && <Spinner />}
+      {icon && !isLoading && icon}
 
-        <span className={icon ? "text" : undefined}>{children}</span>
-      </HStack>
+      <span className={icon ? "text" : undefined}>{children}</span>
     </button>
   );
 };

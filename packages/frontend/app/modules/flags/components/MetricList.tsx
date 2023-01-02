@@ -1,8 +1,8 @@
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { Link } from "~/components/Link";
 import { RawTable, Td, Th, Tr } from "~/components/RawTable";
-import { stringToColor } from "~/modules/misc/utils/stringToColor";
 import { Metric } from "../types";
+import { VariantDot } from "./VariantDot";
 
 export interface MetricListProps {
   metrics: Array<Metric>;
@@ -39,13 +39,7 @@ export const MetricList = ({
                   className="no-underline"
                 >
                   <span className="flex flex-row gap-3 items-center">
-                    <span
-                      aria-hidden
-                      style={{
-                        background: stringToColor(metric.variant.value, 75),
-                      }}
-                      className="h-4 w-4 block rounded"
-                    />
+                    <VariantDot variant={metric.variant.value} />
                     {metric.variant.value}
                   </span>
                 </Link>
@@ -55,6 +49,7 @@ export const MetricList = ({
             <Td>
               <div className="inline-block">
                 <DeleteButton
+                  size="S"
                   variant="secondary"
                   to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/metrics/${metric.uuid}/delete`}
                 >

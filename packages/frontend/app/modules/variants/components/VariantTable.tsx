@@ -3,9 +3,9 @@ import { useState } from "react";
 import { SliderInput } from "~/components/Fields/SliderInput";
 import { Variant } from "../types";
 import { RawTable, Td, Th, Tr } from "~/components/RawTable";
-import { Tag } from "~/components/Tag";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
 import { AiFillCheckCircle } from "react-icons/ai";
+import { VariantDot } from "~/modules/flags/components/VariantDot";
 
 export interface FormSliderInputProps {
   name: string;
@@ -67,7 +67,7 @@ export const VariantTable = ({ variants }: VariantTableProps) => {
               return (
                 <Tr key={`variant-${variant.uuid}`}>
                   <Td
-                    className={`border-l-8 ${
+                    className={`border-l-8 pl-6 ${
                       variant.isControl ? "" : "border-l-transparent"
                     }`}
                     style={
@@ -79,11 +79,7 @@ export const VariantTable = ({ variants }: VariantTableProps) => {
                     <input type="hidden" value={variant.value} name={"name"} />
 
                     <span className="flex flex-row gap-3 items-center">
-                      <span
-                        aria-hidden
-                        style={{ background }}
-                        className="h-4 w-4 block rounded"
-                      />
+                      <VariantDot variant={variant.value} />
                       {variant.value}
                     </span>
                   </Td>

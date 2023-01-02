@@ -7,6 +7,8 @@ import { TextInput } from "~/components/Fields/TextInput";
 import { Variant } from "../types";
 import { RawTable, Td, Th, Tr } from "~/components/RawTable";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
+import { Button } from "~/components/Buttons/Button";
+import { MetricIcon } from "~/components/Icons/MetricIcon";
 
 export interface FormSliderInputProps {
   name: string;
@@ -80,7 +82,7 @@ export const VariantList = ({ variants, errors }: VariantListProps) => {
               return (
                 <Tr key={`variant-${variant.uuid}`}>
                   <Td
-                    className={`border-l-8 ${
+                    className={`border-l-8 pl-6 ${
                       variant.isControl ? "" : "border-l-transparent"
                     }`}
                     style={
@@ -127,13 +129,25 @@ export const VariantList = ({ variants, errors }: VariantListProps) => {
                   </Td>
 
                   <Td>
-                    <DeleteButton
-                      variant="secondary"
-                      type="submit"
-                      form={`delete-form-${variant.uuid}`}
-                    >
-                      Remove
-                    </DeleteButton>
+                    <div className="flex flex-row gap-4">
+                      <Button
+                        variant="secondary"
+                        size="S"
+                        icon={<MetricIcon />}
+                        to={`../metrics/create?variant=${variant.uuid}`}
+                      >
+                        Attach metric
+                      </Button>
+
+                      <DeleteButton
+                        size="S"
+                        variant="secondary"
+                        type="submit"
+                        form={`delete-form-${variant.uuid}`}
+                      >
+                        Remove
+                      </DeleteButton>
+                    </div>
                   </Td>
                 </Tr>
               );

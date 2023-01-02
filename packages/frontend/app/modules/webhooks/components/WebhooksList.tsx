@@ -54,6 +54,7 @@ export const WebhooksList = ({
             <Td>
               <div className="inline-block">
                 <DeleteButton
+                  size="S"
                   variant="secondary"
                   to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/webhooks/${webhook.uuid}/delete`}
                 >

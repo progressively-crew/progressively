@@ -90,6 +90,7 @@ export const SchedulingList = ({
             <Td>
               <div className="inline-block">
                 <DeleteButton
+                  size="S"
                   variant="secondary"
                   to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/scheduling/${schedule.uuid}/delete`}
                 >
