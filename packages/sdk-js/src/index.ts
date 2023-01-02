@@ -16,7 +16,7 @@ function persistLocalFlags(flags: FlagDict) {
 
 function init(clientKey: string, options: SDKOptions): ProgressivelySdkType {
   // safe checks
-  const fields: Fields = options?.fields || {};
+  const fields: Fields = options.fields || {};
   fields.clientKey = clientKey;
 
   // initiate SDK
