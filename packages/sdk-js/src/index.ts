@@ -96,6 +96,10 @@ function Sdk(
     };
   }
 
+  function disconnect() {
+    socket?.close();
+  }
+
   function track(eventName: string) {
     return fetch(`${apiRoot}/sdk/${btoa(JSON.stringify(fields))}`, {
       method: "POST",
@@ -107,7 +111,7 @@ function Sdk(
     }).then(() => undefined);
   }
 
-  return { loadFlags, onFlagUpdate, track };
+  return { loadFlags, disconnect, onFlagUpdate, track };
 }
 
 export const Progressively = { init };
