@@ -65,7 +65,7 @@ function init(clientKey: string, options: SDKOptions): ProgressivelySdkType {
   ) {
     if (!wsRoot) return;
     // Mutating is okay, load has been done before hands
-    if (userId) fields.id = userId;
+    fields.id = userId;
 
     socket = new WebSocket(`${wsRoot}?opts=${btoa(JSON.stringify(fields))}`);
 
