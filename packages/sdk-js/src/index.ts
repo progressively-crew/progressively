@@ -15,31 +15,18 @@ function persistLocalFlags(flags: FlagDict) {
 }
 
 function init(clientKey: string, options: SDKOptions): ProgressivelySdkType {
+  // safe checks
   const fields: Fields = options?.fields || {};
   fields.clientKey = clientKey;
 
-  const resolvedFlags: FlagDict =
+  // initiate SDK
+  let flags: FlagDict =
     options.initialFlags ||
     JSON.parse(window.localStorage.getItem(LocalStorageKey) || "{}");
 
-  return Sdk(
-    options.apiUrl,
-    fields,
-    resolvedFlags,
-    options?.headers,
-    options?.websocketUrl
-  );
-}
-
-function Sdk(
-  apiRoot: string,
-  fields: Fields,
-  initialFlags: FlagDict,
-  headers?: RequestInit["headers"],
-  wsRoot?: string
-): ProgressivelySdkType {
-  let flags: FlagDict = initialFlags;
   let socket: WebSocket;
+  const apiRoot = options.apiUrl;
+  const wsRoot = options.websocketUrl;
 
   function loadFlags(args?: LoadFlagsArgs) {
     let response: Response;
@@ -47,7 +34,7 @@ function Sdk(
     return fetch(`${apiRoot}/sdk/${btoa(JSON.stringify(fields))}`, {
       credentials: "include",
       signal: args?.ctrl?.signal,
-      headers,
+      headers: options.headers,
     })
       .then((res) => {
         response = res;
@@ -91,10 +78,6 @@ function Sdk(
     };
   }
 
-  function disconnect() {
-    socket?.close();
-  }
-
   function track(eventName: string) {
     return fetch(`${apiRoot}/sdk/${btoa(JSON.stringify(fields))}`, {
       method: "POST",
@@ -104,6 +87,10 @@ function Sdk(
       }),
       headers: { "Content-Type": "application/json" },
     }).then(() => undefined);
+  }
+
+  function disconnect() {
+    socket?.close();
   }
 
   return { loadFlags, disconnect, onFlagUpdate, track };
