@@ -15,11 +15,9 @@ function persistLocalFlags(flags: FlagDict) {
 }
 
 function init(clientKey: string, options: SDKOptions): ProgressivelySdkType {
-  // safe checks
   const fields: Fields = options.fields || {};
   fields.clientKey = clientKey;
 
-  // initiate SDK
   let flags: FlagDict =
     options.initialFlags ||
     JSON.parse(window.localStorage.getItem(LocalStorageKey) || "{}");
@@ -47,6 +45,8 @@ function init(clientKey: string, options: SDKOptions): ProgressivelySdkType {
       })
       .then((data) => {
         const userId = response?.headers?.get("X-progressively-id");
+        fields.id = userId;
+
         flags = { ...flags, ...data };
 
         persistLocalFlags(flags);
@@ -54,7 +54,6 @@ function init(clientKey: string, options: SDKOptions): ProgressivelySdkType {
         return { flags, response, userId };
       })
       .catch((error) => {
-        // Silent catch the error, and return the actual in-memory flags
         return { flags, response, error };
       });
   }
@@ -64,7 +63,6 @@ function init(clientKey: string, options: SDKOptions): ProgressivelySdkType {
     userId?: string | null
   ) {
     if (!wsRoot) return;
-    // Mutating is okay, load has been done before hands
     fields.id = userId;
 
     socket = new WebSocket(`${wsRoot}?opts=${btoa(JSON.stringify(fields))}`);
