@@ -14,7 +14,7 @@ function persistLocalFlags(flags: FlagDict) {
   window.localStorage.setItem(LocalStorageKey, JSON.stringify(flags));
 }
 
-function init(clientKey: string, options?: SDKOptions): ProgressivelySdkType {
+function init(clientKey: string, options: SDKOptions): ProgressivelySdkType {
   const fields: Fields = options?.fields || {};
   fields.clientKey = clientKey;
 
@@ -28,7 +28,7 @@ function init(clientKey: string, options?: SDKOptions): ProgressivelySdkType {
   }
 
   return Sdk(
-    options?.apiUrl || "https://api.progressively.app",
+    options.apiUrl,
     fields,
     resolvedFlags,
     options?.headers,
@@ -96,23 +96,18 @@ function Sdk(
     };
   }
 
-  function disconnect() {
-    socket?.close();
-  }
-
-  function track(eventName: string, data?: any) {
+  function track(eventName: string) {
     return fetch(`${apiRoot}/sdk/${btoa(JSON.stringify(fields))}`, {
       method: "POST",
       credentials: "include",
       body: JSON.stringify({
         name: eventName,
-        data,
       }),
       headers: { "Content-Type": "application/json" },
     }).then(() => undefined);
   }
 
-  return { loadFlags, disconnect, onFlagUpdate, track };
+  return { loadFlags, onFlagUpdate, track };
 }
 
 export const Progressively = { init };
