@@ -27,7 +27,7 @@ const FlaggedComponent = () => {
 };
 
 describe("React-sdk root", () => {
-  const render = (props?: ProgressivelyProviderProps) =>
+  const render = (props?: Partial<ProgressivelyProviderProps>) =>
     renderTL(
       <ProgressivelyProvider
         {...(props || {})}
