@@ -16,8 +16,8 @@ export interface ProgressivelySdkType {
   loadFlags: (args?: LoadFlagsArgs) => Promise<{
     flags: FlagDict;
     response?: Response;
-    error?: string;
-    userId: string | null;
+    error?: Error;
+    userId?: string | null;
   }>;
   disconnect: () => void;
   onFlagUpdate: (

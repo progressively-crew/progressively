@@ -55,7 +55,7 @@ function init(clientKey: string, options: SDKOptions): ProgressivelySdkType {
       })
       .catch((error) => {
         // Silent catch the error, and return the actual in-memory flags
-        return { flags, response, error, userId: "" };
+        return { flags, response, error };
       });
   }
 
