@@ -10,9 +10,7 @@ const FlaggedComponent = () => {
         {flags.newHomepage ? "New variant" : "Old variant"}
       </div>
 
-      <button onClick={() => track("A metric", { hello: "world" })}>
-        Click me
-      </button>
+      <button onClick={() => track("A metric")}>Click me</button>
 
       <footer>{flags.newFooter ? "New footer" : "Old footer"}</footer>
     </main>
