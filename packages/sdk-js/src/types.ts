@@ -13,7 +13,7 @@ export interface SDKOptions {
 }
 
 export interface ProgressivelySdkType {
-  loadFlags: (args?: LoadFlagsArgs) => Promise<{
+  loadFlags: (ctrl?: AbortController) => Promise<{
     flags: FlagDict;
     response?: Response;
     error?: Error;
@@ -25,10 +25,7 @@ export interface ProgressivelySdkType {
     userId?: string | null
   ) => void;
   track: (eventName: string) => Promise<void>;
-}
-
-export interface LoadFlagsArgs {
-  ctrl?: AbortController;
+  setFields: (fields: Fields) => void;
 }
 
 export type BtoaFn = (str: string) => string;

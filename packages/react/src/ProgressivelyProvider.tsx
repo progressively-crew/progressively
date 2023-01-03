@@ -22,6 +22,9 @@ export const ProgressivelyProvider = ({
   );
   const [state, setState] = useState<Status>({ status: "idle" });
   const [flags, setFlags] = useState<FlagDict>(initialFlags || {});
+  const [setFields, setSetFields] = useState<ProgressivelySdkType["setFields"]>(
+    () => {}
+  );
 
   useEffect(() => {
     const sdk = Progressively.init(clientKey, {
@@ -34,8 +37,9 @@ export const ProgressivelyProvider = ({
     const ctrl = new AbortController();
 
     setTrackFn(() => sdk.track);
+    setSetFields(() => sdk.setFields);
 
-    sdk.loadFlags({ ctrl }).then((res) => {
+    sdk.loadFlags(ctrl).then((res) => {
       sdk.onFlagUpdate(setFlags, res.userId);
 
       setFlags(res.flags);
@@ -58,6 +62,7 @@ export const ProgressivelyProvider = ({
         isLoading,
         error: state.error,
         track: trackFn,
+        setFields,
       }}
     >
       {children}

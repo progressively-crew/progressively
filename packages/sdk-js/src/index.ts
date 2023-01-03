@@ -1,10 +1,4 @@
-import {
-  Fields,
-  FlagDict,
-  LoadFlagsArgs,
-  ProgressivelySdkType,
-  SDKOptions,
-} from "./types";
+import { Fields, FlagDict, ProgressivelySdkType, SDKOptions } from "./types";
 
 export * from "./types";
 
@@ -26,12 +20,12 @@ function init(clientKey: string, options: SDKOptions): ProgressivelySdkType {
   const apiRoot = options.apiUrl;
   const wsRoot = options.websocketUrl;
 
-  function loadFlags(args?: LoadFlagsArgs) {
+  function loadFlags(ctrl?: AbortController) {
     let response: Response;
 
     return fetch(`${apiRoot}/sdk/${btoa(JSON.stringify(fields))}`, {
       credentials: "include",
-      signal: args?.ctrl?.signal,
+      signal: ctrl?.signal,
       headers: options.headers,
     })
       .then((res) => {
@@ -91,7 +85,13 @@ function init(clientKey: string, options: SDKOptions): ProgressivelySdkType {
     socket?.close();
   }
 
-  return { loadFlags, disconnect, onFlagUpdate, track };
+  function setFields(fields: Fields) {
+    if (socket) {
+      socket.send(JSON.stringify({ fields }));
+    }
+  }
+
+  return { loadFlags, disconnect, onFlagUpdate, track, setFields };
 }
 
 export const Progressively = { init };

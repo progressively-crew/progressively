@@ -10,6 +10,7 @@ import { Rooms } from './rooms';
 import { LocalWebsocket, Subscriber } from './types';
 import { RedisService } from './redis.service';
 import { PopulatedFlagEnv } from '../flags/types';
+import { FieldRecord } from '../strategy/types';
 
 @WebSocketGateway()
 export class WebsocketGateway
@@ -54,6 +55,8 @@ export class WebsocketGateway
     });
     // End of heart-beating
 
+    socket.on('message', (data: Buffer) => this.handleEvent(socket, data));
+
     const useLessPrefix = `http://localhost`; // just to be able to rely on the URL class
     const searchParams = new URL(`${useLessPrefix}${req.url}`).searchParams;
 
@@ -70,6 +73,15 @@ export class WebsocketGateway
       this.rooms.join(clientKey, socket);
 
       this.initRedisSubscription(clientKey);
+    }
+  }
+
+  handleEvent(socket: LocalWebsocket, buffer: Buffer) {
+    try {
+      const json: { fields: FieldRecord } = JSON.parse(buffer.toString());
+      socket.__FIELDS = json?.fields || {};
+    } catch (err: any) {
+      // silent catch if someone else is trying to fake the server
     }
   }
 
