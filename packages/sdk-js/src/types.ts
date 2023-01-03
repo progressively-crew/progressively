@@ -25,6 +25,7 @@ export interface ProgressivelySdkType {
     userId?: string | null
   ) => void;
   track: (eventName: string) => Promise<void>;
+  setFields: (newFields: Fields, ctrl?: AbortController) => void;
 }
 
 export interface LoadFlagsArgs {
