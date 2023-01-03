@@ -12,11 +12,8 @@ export interface SDKOptions {
 
 const btoA = (toTransform: string) => btoa(toTransform);
 
-export function getProgressivelyData(
-  clientKey: string,
-  options?: SDKOptions | undefined
-) {
-  const apiRoot = options?.apiUrl || "https://api.progressively.app";
+export function getProgressivelyData(clientKey: string, options: SDKOptions) {
+  const apiRoot = options.apiUrl;
   const fields: Fields = options?.fields || {};
   fields.clientKey = clientKey;
 

@@ -300,7 +300,7 @@ describe("SDK", () => {
 
       sdk.onFlagUpdate(() => {});
       expect((global as any).WebSocket).toHaveBeenCalledWith(
-        "ws://localhost:1234?opts=eyJlbWFpbCI6ImpvaG4uZG9lQGdtYWlsLmNvbSIsImlkIjoic29tZS1zdXBlci1jb29sLWlkIiwiY2xpZW50S2V5IjoiY2xpZW50LWtleSJ9"
+        "ws://localhost:1234?opts=eyJlbWFpbCI6ImpvaG4uZG9lQGdtYWlsLmNvbSIsImNsaWVudEtleSI6ImNsaWVudC1rZXkifQ=="
       );
     });
 

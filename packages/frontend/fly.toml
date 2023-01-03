@@ -9,7 +9,6 @@ processes = []
   ALLOW_REGISTRATION = "true"
   BACKEND_URL = "https://backend-progressively.fly.dev"
   PORT = "8080"
-  START_MOCK_SERVER = "false"
 
 [experimental]
   allowed_public_ports = []

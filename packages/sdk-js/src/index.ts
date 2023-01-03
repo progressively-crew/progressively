@@ -14,37 +14,17 @@ function persistLocalFlags(flags: FlagDict) {
   window.localStorage.setItem(LocalStorageKey, JSON.stringify(flags));
 }
 
-function init(clientKey: string, options?: SDKOptions): ProgressivelySdkType {
-  const fields: Fields = options?.fields || {};
+function init(clientKey: string, options: SDKOptions): ProgressivelySdkType {
+  const fields: Fields = options.fields || {};
   fields.clientKey = clientKey;
 
-  let resolvedFlags: FlagDict = {};
+  let flags: FlagDict =
+    options.initialFlags ||
+    JSON.parse(window.localStorage.getItem(LocalStorageKey) || "{}");
 
-  if (options?.initialFlags) {
-    resolvedFlags = options.initialFlags;
-  } else {
-    const stringFlags = window.localStorage.getItem(LocalStorageKey);
-    resolvedFlags = stringFlags ? JSON.parse(stringFlags) : {};
-  }
-
-  return Sdk(
-    options?.apiUrl || "https://api.progressively.app",
-    fields,
-    resolvedFlags,
-    options?.headers,
-    options?.websocketUrl
-  );
-}
-
-function Sdk(
-  apiRoot: string,
-  fields: Fields,
-  initialFlags: FlagDict,
-  headers?: RequestInit["headers"],
-  wsRoot?: string
-): ProgressivelySdkType {
-  let flags: FlagDict = initialFlags;
   let socket: WebSocket;
+  const apiRoot = options.apiUrl;
+  const wsRoot = options.websocketUrl;
 
   function loadFlags(args?: LoadFlagsArgs) {
     let response: Response;
@@ -52,7 +32,7 @@ function Sdk(
     return fetch(`${apiRoot}/sdk/${btoa(JSON.stringify(fields))}`, {
       credentials: "include",
       signal: args?.ctrl?.signal,
-      headers,
+      headers: options.headers,
     })
       .then((res) => {
         response = res;
@@ -64,7 +44,9 @@ function Sdk(
         return response.json();
       })
       .then((data) => {
-        const userId = response?.headers?.get("X-progressively-id") || "";
+        const userId = response?.headers?.get("X-progressively-id");
+        fields.id = userId;
+
         flags = { ...flags, ...data };
 
         persistLocalFlags(flags);
@@ -72,8 +54,7 @@ function Sdk(
         return { flags, response, userId };
       })
       .catch((error) => {
-        // Silent catch the error, and return the actual in-memory flags
-        return { flags, response, error, userId: "" };
+        return { flags, response, error };
       });
   }
 
@@ -82,8 +63,7 @@ function Sdk(
     userId?: string | null
   ) {
     if (!wsRoot) return;
-    // Mutating is okay, load has been done before hands
-    if (userId) fields.id = userId;
+    fields.id = userId;
 
     socket = new WebSocket(`${wsRoot}?opts=${btoa(JSON.stringify(fields))}`);
 
@@ -96,20 +76,19 @@ function Sdk(
     };
   }
 
-  function disconnect() {
-    socket?.close();
-  }
-
-  function track(eventName: string, data?: any) {
+  function track(eventName: string) {
     return fetch(`${apiRoot}/sdk/${btoa(JSON.stringify(fields))}`, {
       method: "POST",
       credentials: "include",
       body: JSON.stringify({
         name: eventName,
-        data,
       }),
       headers: { "Content-Type": "application/json" },
     }).then(() => undefined);
+  }
+
+  function disconnect() {
+    socket?.close();
   }
 
   return { loadFlags, disconnect, onFlagUpdate, track };

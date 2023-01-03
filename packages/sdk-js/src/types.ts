@@ -1,29 +1,30 @@
 export type FlagDict = { [key: string]: boolean | string };
 
-export type Fields = Record<string, string | number | boolean>;
+export type Fields = Record<
+  string,
+  string | number | boolean | null | undefined
+>;
 export interface SDKOptions {
   fields?: Fields;
-  apiUrl?: string;
+  apiUrl: string;
   websocketUrl?: string;
   initialFlags?: FlagDict;
   headers?: RequestInit["headers"];
 }
 
 export interface ProgressivelySdkType {
-  loadFlags: (
-    args?: LoadFlagsArgs
-  ) => Promise<{
+  loadFlags: (args?: LoadFlagsArgs) => Promise<{
     flags: FlagDict;
     response?: Response;
-    error?: string;
-    userId: string;
+    error?: Error;
+    userId?: string | null;
   }>;
   disconnect: () => void;
   onFlagUpdate: (
     callback: (data: FlagDict) => void,
     userId?: string | null
   ) => void;
-  track: (eventName: string, data?: any) => Promise<void>;
+  track: (eventName: string) => Promise<void>;
 }
 
 export interface LoadFlagsArgs {

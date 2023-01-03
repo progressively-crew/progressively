@@ -14,10 +14,10 @@ export const ProgressivelyProvider = ({
 }: ProgressivelyProviderProps) => {
   const alreadyConnected = useRef(false);
   const [trackFn, setTrackFn] = useState<ProgressivelySdkType["track"]>(
-    (eventName: string, data?: any) => Promise.resolve(undefined)
+    (eventName: string) => Promise.resolve(undefined)
   );
   const [status, setStatus] = useState<StateMachineConstants>("idle");
-  const [error, setError] = useState<any>();
+  const [error, setError] = useState<Error>();
   const [flags, setFlags] = useState<FlagDict>(initialFlags || {});
 
   useEffect(() => {

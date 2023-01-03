@@ -7,7 +7,7 @@ export interface ProgressivelyContextType {
   isLoading: boolean;
   status: StateMachineConstants;
   error?: Error;
-  track: (eventName: string, data?: any) => Promise<void>;
+  track: (eventName: string) => Promise<void>;
 }
 
 export const ProgressivelyContext = createContext<ProgressivelyContextType>({
