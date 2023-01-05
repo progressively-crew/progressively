@@ -6,8 +6,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test:e2e": "cypress open",
-    "test:e2e:ci": "cypress run --browser chrome"
+    "test:e2e": "PROJECT_ROOT=$(pwd) npm run test:e2e --prefix node_modules/@progressively/cypress-helpers",
+    "test:e2e:ci": "PROJECT_ROOT=$(pwd) npm run test:e2e:ci --prefix node_modules/@progressively/cypress-helpers"
   },
   "dependencies": {
     "@progressively/react": "file:../../packages/react",
@@ -20,7 +20,6 @@
     "@progressively/cypress-helpers": "file:../cypress-helpers",
     "@types/node": "17.0.31",
     "@types/react": "18.0.9",
-    "cypress": "^9.6.0",
     "eslint": "8.15.0",
     "eslint-config-next": "12.1.6",
     "typescript": "4.6.4"
