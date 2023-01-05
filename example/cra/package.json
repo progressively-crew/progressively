@@ -14,16 +14,15 @@
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
-    "@progressively/cypress-helpers": "file:../cypress-helpers",
-    "cypress": "^9.6.1"
+    "@progressively/cypress-helpers": "file:../cypress-helpers"
   },
   "scripts": {
     "start": "rm -rf ../../packages/react/node_modules && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "test:e2e": "cypress open",
-    "test:e2e:ci": "cypress run --browser chrome"
+    "test:e2e": "PROJECT_ROOT=$(pwd) npm run test:e2e --prefix node_modules/@progressively/cypress-helpers",
+    "test:e2e:ci": "PROJECT_ROOT=$(pwd) npm run test:e2e:ci --prefix node_modules/@progressively/cypress-helpers"
   },
   "eslintConfig": {
     "extends": [
