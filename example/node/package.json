@@ -6,13 +6,12 @@
   "private": true,
   "scripts": {
     "start": "node index.js",
-    "test:e2e": "cypress open",
-    "test:e2e:ci": "cypress run --browser chrome"
+    "test:e2e": "PROJECT_ROOT=$(pwd) npm run test:e2e --prefix node_modules/@progressively/cypress-helpers",
+    "test:e2e:ci": "PROJECT_ROOT=$(pwd) npm run test:e2e:ci --prefix node_modules/@progressively/cypress-helpers"
   },
   "dependencies": {
     "@progressively/cypress-helpers": "file:../cypress-helpers",
-    "@progressively/sdk-node": "file:../../packages/sdk-node",
-    "cypress": "^9.6.1"
+    "@progressively/sdk-node": "file:../../packages/sdk-node"
   },
   "keywords": [],
   "author": "",
