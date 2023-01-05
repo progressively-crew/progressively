@@ -1,4 +1,4 @@
-import { FlagDict } from "@progressively/sdk-js";
+import { Fields, FlagDict } from "@progressively/sdk-js";
 import React from "react";
 
 export interface ProgressivelyProviderProps {
@@ -11,3 +11,5 @@ export interface ProgressivelyProviderProps {
 }
 
 export type StateMachineConstants = "idle" | "loading" | "success" | "failure";
+
+export type SetFieldsType = (fields: Fields) => void;
