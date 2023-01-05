@@ -1,4 +1,4 @@
-import { FlagDict } from "@progressively/sdk-js";
+import { Fields, FlagDict } from "@progressively/sdk-js";
 import { createContext } from "react";
 import { StateMachineConstants } from "./types";
 
@@ -8,6 +8,7 @@ export interface ProgressivelyContextType {
   status: StateMachineConstants;
   error?: Error;
   track: (eventName: string) => Promise<void>;
+  setFields: (newFields: Fields, ctrl?: AbortController | undefined) => void;
 }
 
 export const ProgressivelyContext = createContext<ProgressivelyContextType>({
@@ -17,5 +18,8 @@ export const ProgressivelyContext = createContext<ProgressivelyContextType>({
   error: undefined,
   track: () => {
     return {} as any;
+  },
+  setFields: () => {
+    return {};
   },
 });

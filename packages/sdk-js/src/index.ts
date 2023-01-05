@@ -15,7 +15,7 @@ function persistLocalFlags(flags: FlagDict) {
 }
 
 function init(clientKey: string, options: SDKOptions): ProgressivelySdkType {
-  const fields: Fields = options.fields || {};
+  let fields: Fields = options.fields || {};
   fields.clientKey = clientKey;
 
   let flags: FlagDict =
@@ -23,6 +23,8 @@ function init(clientKey: string, options: SDKOptions): ProgressivelySdkType {
     JSON.parse(window.localStorage.getItem(LocalStorageKey) || "{}");
 
   let socket: WebSocket;
+  let _callback: (data: FlagDict) => void;
+
   const apiRoot = options.apiUrl;
   const wsRoot = options.websocketUrl;
 
@@ -60,9 +62,10 @@ function init(clientKey: string, options: SDKOptions): ProgressivelySdkType {
 
   function onFlagUpdate(
     callback: (data: FlagDict) => void,
-    userId?: string | null
+    userId?: string | number | boolean | null | undefined
   ) {
     if (!wsRoot) return;
+    _callback = callback;
     fields.id = userId;
 
     socket = new WebSocket(`${wsRoot}?opts=${btoa(JSON.stringify(fields))}`);
@@ -72,7 +75,7 @@ function init(clientKey: string, options: SDKOptions): ProgressivelySdkType {
 
       persistLocalFlags(flags);
 
-      callback(flags);
+      _callback(flags);
     };
   }
 
@@ -87,11 +90,22 @@ function init(clientKey: string, options: SDKOptions): ProgressivelySdkType {
     }).then(() => undefined);
   }
 
+  function setFields(newFields: Fields, ctrl?: AbortController) {
+    disconnect();
+
+    fields = newFields;
+    fields.clientKey = clientKey;
+
+    onFlagUpdate(_callback, fields.id);
+
+    return loadFlags({ ctrl });
+  }
+
   function disconnect() {
     socket?.close();
   }
 
-  return { loadFlags, disconnect, onFlagUpdate, track };
+  return { loadFlags, disconnect, onFlagUpdate, track, setFields };
 }
 
 export const Progressively = { init };

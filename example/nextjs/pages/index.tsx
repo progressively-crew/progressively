@@ -6,7 +6,7 @@ import { ProgressivelyProvider, useFlags } from "@progressively/react";
 import { getProgressivelyData } from "@progressively/server-side";
 
 const FlaggedComponent = () => {
-  const { flags, track } = useFlags();
+  const { flags, setFields, track } = useFlags();
 
   return (
     <main>
@@ -16,6 +16,10 @@ const FlaggedComponent = () => {
       </div>
 
       <button onClick={() => track("A metric")}>Click me</button>
+
+      <button onClick={() => setFields({ id: "2" })}>
+        Remove from audience
+      </button>
 
       <footer>{flags.newFooter ? "New footer" : "Old footer"}</footer>
     </main>
