@@ -3,13 +3,17 @@
   "version": "1.0.0",
   "description": "",
   "private": true,
-  "scripts": {},
+  "scripts": {
+    "test:e2e": "cypress open",
+    "test:e2e:ci": "cypress run --browser chrome"
+  },
   "keywords": [],
   "author": "",
   "dependencies": {
-    "@testing-library/cypress": "^8.0.2"
+    "@testing-library/cypress": "^9.0.0",
+    "cypress": "^12.3.0"
   },
-  "peerDependencies": {
-    "cypress": "^9.6.1"
+  "devDependencies": {
+    "typescript": "^4.9.4"
   }
 }

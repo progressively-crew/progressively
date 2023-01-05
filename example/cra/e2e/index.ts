@@ -1,6 +1,6 @@
-import { FlagStatus } from "../../../../packages/backend/src/flags/flags.status";
+import { FlagStatus } from "../../../packages/backend/src/flags/flags.status";
 
-describe("/anonymous", () => {
+describe("/", () => {
   beforeEach(cy.seed);
   afterEach(() => {
     cy.wait(500);
@@ -8,15 +8,21 @@ describe("/anonymous", () => {
   });
 
   beforeEach(() => {
-    cy.visit("/anonymous");
+    cy.visit("/");
+  });
+
+  it("forwards the cookie from the backend, to nextjs server, to the client", () => {
+    cy.wait(500);
+    // 1 is the user id set in nextjs getServerSideProps
+    cy.getCookie("progressively-id").should("have.property", "value", "1");
   });
 
   it("shows the old variant when the flag is not activated", () => {
-    // The footer flag is activated by default in the seeding data
-    // but only for users with 'id' 1 which is
-    // marvin.frachet@something.com in the seeding data
     cy.findByText("Old variant").should("be.visible");
-    cy.findByText("Old footer").should("be.visible");
+    cy.findByText("New variant").should("not.exist");
+
+    cy.findByText("New footer").should("be.visible");
+    cy.findByText("Old footer").should("not.exist");
   });
 
   it("shows the new variant when the flag is activated for homepage", () => {
@@ -43,32 +49,5 @@ describe("/anonymous", () => {
     cy.reload();
     cy.findByText("New footer").should("not.exist");
     cy.findByText("Old footer").should("be.visible");
-  });
-
-  it("uses the same cookie for anonymous users after page reload", () => {
-    cy.wait(500);
-    // Refreshing 3 times to "make sure" it's consistent
-    cy.getCookie("progressively-id").then((previousCookie) => {
-      cy.reload();
-
-      cy.wait(500);
-      cy.getCookie("progressively-id").then((nextCookie) => {
-        expect(previousCookie.value).to.equal(nextCookie.value);
-      });
-
-      cy.reload();
-
-      cy.wait(500);
-      cy.getCookie("progressively-id").then((nextCookie) => {
-        expect(previousCookie.value).to.equal(nextCookie.value);
-      });
-
-      cy.reload();
-
-      cy.wait(500);
-      cy.getCookie("progressively-id").then((nextCookie) => {
-        expect(previousCookie.value).to.equal(nextCookie.value);
-      });
-    });
   });
 });

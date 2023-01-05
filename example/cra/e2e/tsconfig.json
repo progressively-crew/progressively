@@ -1,0 +1,3 @@
+{
+  "extends": "@progressively/cypress-helpers/cypress/tsconfig.json"
+}
