@@ -23,5 +23,4 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-// @ts-ignore
 import "@progressively/cypress-helpers/commands";

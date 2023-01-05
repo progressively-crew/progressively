@@ -1,5 +1,5 @@
 // ***********************************************************
-// This example support/index.js is processed and
+// This example support/e2e.js is processed and
 // loaded automatically before your test files.
 //
 // This is a great place to put global configuration and
@@ -14,31 +14,7 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-/// <reference types="cypress" />
-import "./commands";
-
-declare global {
-  namespace Cypress {
-    interface Chainable {
-      /**
-       * Seed the database for testing purpose
-       * @example cy.seed()
-       */
-      seed(): void;
-
-      /**
-       * Cleanup the database for testing purpose
-       * @example cy.seed()
-       */
-      cleanup(): void;
-
-      /**
-       * Change the flag status
-       */
-      changeFlagStatus(envId: string, flagId: string, status: string): void;
-    }
-  }
-}
+import './commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
