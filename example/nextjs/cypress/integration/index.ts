@@ -50,4 +50,14 @@ describe("/", () => {
     cy.findByText("New footer").should("not.exist");
     cy.findByText("Old footer").should("be.visible");
   });
+
+  it("deactivates the footer for the current user when their config changes", () => {
+    cy.findByText("Old footer").should("not.exist");
+    cy.findByText("New footer").should("be.visible");
+
+    cy.findByText("Remove from audience").click();
+
+    cy.findByText("New footer").should("not.exist");
+    cy.findByText("Old footer").should("be.visible");
+  });
 });
