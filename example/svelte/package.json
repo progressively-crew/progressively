@@ -3,13 +3,13 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "vite dev --port 3001",
+    "dev": "vite dev --port 3000",
     "build": "vite build",
-    "preview": "vite preview  --port 3001",
+    "preview": "vite preview  --port 3000",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-    "test:e2e": "cypress open",
-    "test:e2e:ci": "cypress run --browser chrome"
+    "test:e2e": "PROJECT_ROOT=$(pwd) npm run test:e2e --prefix node_modules/@progressively/cypress-helpers",
+    "test:e2e:ci": "PROJECT_ROOT=$(pwd) npm run test:e2e:ci --prefix node_modules/@progressively/cypress-helpers"
   },
   "dependencies": {
     "@progressively/sdk-js": "file:../../packages/sdk-js",
