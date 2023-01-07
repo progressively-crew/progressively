@@ -111,6 +111,7 @@ export default function SchedulingCreatePage() {
   return (
     <Form method="post">
       <CreateEntityLayout
+        size="L"
         status={actionData?.errors && <ErrorBox list={actionData.errors} />}
         titleSlot={<CreateEntityTitle>Create a scheduling</CreateEntityTitle>}
         submitSlot={

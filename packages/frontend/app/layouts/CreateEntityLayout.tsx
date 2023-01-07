@@ -9,6 +9,7 @@ export interface CreateEntityLayoutProps {
   titleSlot: React.ReactNode;
   submitSlot: React.ReactNode;
   backLinkSlot: React.ReactNode;
+  size?: "M" | "L";
 }
 
 export const CreateEntityLayout = ({
@@ -18,9 +19,15 @@ export const CreateEntityLayout = ({
   titleSlot,
   submitSlot,
   backLinkSlot,
+  size = "M",
 }: CreateEntityLayoutProps) => {
   return (
-    <main className="mx-auto max-w-2xl lg:pt-20" aria-labelledby="page-title">
+    <main
+      className={`mx-auto  lg:pt-20 lg:pb-20 ${
+        size === "M" ? "max-w-2xl" : "max-w-4xl"
+      }`}
+      aria-labelledby="page-title"
+    >
       {error}
 
       <Spacer size={4} />
