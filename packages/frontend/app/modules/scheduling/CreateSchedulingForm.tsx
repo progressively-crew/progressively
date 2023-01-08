@@ -6,7 +6,6 @@ import { SelectField } from "~/components/Fields/SelectField";
 import { SliderInput } from "~/components/Fields/SliderInput";
 import { Spacer } from "~/components/Spacer";
 import { Switch } from "~/components/Switch";
-import { Typography } from "~/components/Typography";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { FlagStatus } from "~/modules/flags/types";
 import { SchedulingAction } from "./types";
@@ -51,33 +50,33 @@ export const CreateSchedulingFrom = () => {
 
       <input type="hidden" name={"nextStatus"} value={nextStatus} />
 
-      <SliderInput
-        onChange={setPercentage}
-        percentageValue={percentage}
-        label={"What should be the next rollout percentage"}
-        name={"rolloutPercentage"}
+      <SelectField
+        name="action-select"
+        label="Action to perform"
+        defaultValue={actionSelected}
+        onValueChange={(nextValue) =>
+          setActionSelected(nextValue as SchedulingAction)
+        }
+        options={[
+          {
+            value: SchedulingAction.UpdateRolloutPercentage,
+            label: "Update the global rollout percentage",
+          },
+          {
+            value: SchedulingAction.UpdateVariant,
+            label: "Update a variant percentage",
+          },
+        ]}
       />
 
-      <div>
-        <SelectField
-          name="action-select"
-          label="Action to perform"
-          defaultValue={actionSelected}
-          onValueChange={(nextValue) =>
-            setActionSelected(nextValue as SchedulingAction)
-          }
-          options={[
-            {
-              value: SchedulingAction.UpdateRolloutPercentage,
-              label: "Update the global rollout percentage",
-            },
-            {
-              value: SchedulingAction.UpdateVariant,
-              label: "Update a variant percentage",
-            },
-          ]}
+      {actionSelected === SchedulingAction.UpdateRolloutPercentage ? (
+        <SliderInput
+          onChange={setPercentage}
+          percentageValue={percentage}
+          label={"What should be the next rollout percentage"}
+          name={"rolloutPercentage"}
         />
-      </div>
+      ) : null}
     </FormGroup>
   );
 };
