@@ -10,6 +10,7 @@ import { StrategyService } from '../strategy/strategy.service';
 import { FlagStatus } from '../flags/flags.status';
 import { genBucket, getVariation, isInBucket } from './utils';
 import { EligibilityService } from '../eligibility/eligibility.service';
+import { SchedulingService } from '../scheduling/scheduling.service';
 
 @Injectable()
 export class SdkService {
@@ -17,6 +18,7 @@ export class SdkService {
     private prisma: PrismaService,
     private readonly envService: EnvironmentsService,
     private readonly strategyService: StrategyService,
+    private readonly scheduleService: SchedulingService,
     private readonly eligibilityService: EligibilityService,
     private readonly flagService: FlagsService,
   ) {}
@@ -127,7 +129,10 @@ export class SdkService {
       let nextFlag = flagEnv;
 
       if (flagEnv.scheduling.length > 0) {
-        nextFlag = await this.flagService.manageScheduling(clientKey, flagEnv);
+        nextFlag = await this.scheduleService.manageScheduling(
+          clientKey,
+          flagEnv,
+        );
       }
 
       const flagStatusOrVariant = this.resolveFlagStatus(nextFlag, fields);

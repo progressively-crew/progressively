@@ -1,10 +1,15 @@
 import { Injectable } from '@nestjs/common';
+import { WebsocketGateway } from '../websocket/websocket.gateway';
 import { PrismaService } from '../database/prisma.service';
 import { SchedulingCreationDTO, SchedulingType } from './types';
+import { PopulatedFlagEnv, SchedulingStatus } from '../flags/types';
 
 @Injectable()
 export class SchedulingService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private readonly wsGateway: WebsocketGateway,
+  ) {}
 
   addSchedulingToFlagEnv(
     envId: string,
@@ -72,5 +77,71 @@ export class SchedulingService {
     }
 
     return roles.includes(flagOfProject.role);
+  }
+
+  async manageScheduling(
+    clientKey: string,
+    flagEnv: PopulatedFlagEnv,
+  ): Promise<PopulatedFlagEnv> {
+    let nextFlagEnv: PopulatedFlagEnv = flagEnv;
+
+    const now = new Date();
+    const scheduling = await this.prisma.schedule.findMany({
+      orderBy: {
+        utc: 'asc',
+      },
+      where: {
+        flagEnvironmentFlagId: flagEnv.flagId,
+        flagEnvironmentEnvironmentId: flagEnv.environmentId,
+        schedulingStatus: SchedulingStatus.NOT_RUN,
+        utc: {
+          lte: now,
+        },
+      },
+    });
+
+    const updateQueries = [];
+
+    for (const schedule of scheduling) {
+      updateQueries.push(
+        this.prisma.schedule.update({
+          where: {
+            uuid: schedule.uuid,
+          },
+          data: {
+            schedulingStatus: SchedulingStatus.HAS_RUN,
+          },
+        }),
+        this.prisma.flagEnvironment.update({
+          where: {
+            flagId_environmentId: {
+              environmentId: flagEnv.environmentId,
+              flagId: flagEnv.flagId,
+            },
+          },
+          data: {
+            status: schedule.status,
+          },
+          include: {
+            flag: true,
+            strategies: true,
+            scheduling: true,
+            variants: true,
+            eligibilities: true,
+          },
+        }),
+      );
+    }
+
+    const result = await this.prisma.$transaction(updateQueries);
+
+    if (result.length > 0) {
+      const rawFlagEnv = result[result.length - 1];
+      nextFlagEnv = rawFlagEnv as unknown as PopulatedFlagEnv;
+
+      this.wsGateway.notifyChanges(clientKey, nextFlagEnv);
+    }
+
+    return nextFlagEnv;
   }
 }
