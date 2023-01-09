@@ -79,14 +79,10 @@ export class SchedulingService {
     return roles.includes(flagOfProject.role);
   }
 
-  async manageScheduling(
-    clientKey: string,
-    flagEnv: PopulatedFlagEnv,
-  ): Promise<PopulatedFlagEnv> {
-    let nextFlagEnv: PopulatedFlagEnv = flagEnv;
-
+  listAllNotRunScheduling(flagEnv: PopulatedFlagEnv) {
     const now = new Date();
-    const scheduling = await this.prisma.schedule.findMany({
+
+    return this.prisma.schedule.findMany({
       orderBy: {
         utc: 'asc',
       },
@@ -99,6 +95,15 @@ export class SchedulingService {
         },
       },
     });
+  }
+
+  async manageFlagScheduling(
+    clientKey: string,
+    flagEnv: PopulatedFlagEnv,
+  ): Promise<PopulatedFlagEnv> {
+    let nextFlagEnv: PopulatedFlagEnv = flagEnv;
+
+    const scheduling = await this.listAllNotRunScheduling(flagEnv);
 
     const updateQueries = [];
 

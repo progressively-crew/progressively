@@ -129,7 +129,7 @@ export class SdkService {
       let nextFlag = flagEnv;
 
       if (flagEnv.scheduling.length > 0) {
-        nextFlag = await this.scheduleService.manageScheduling(
+        nextFlag = await this.scheduleService.manageFlagScheduling(
           clientKey,
           flagEnv,
         );
