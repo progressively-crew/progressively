@@ -3,6 +3,7 @@ import { WebsocketGateway } from '../websocket/websocket.gateway';
 import { PrismaService } from '../database/prisma.service';
 import { SchedulingCreationDTO, SchedulingType } from './types';
 import { PopulatedFlagEnv, SchedulingStatus } from '../flags/types';
+import { Schedule } from '@prisma/client';
 
 @Injectable()
 export class SchedulingService {
@@ -97,6 +98,27 @@ export class SchedulingService {
     });
   }
 
+  makeUpdateQuery(flagEnv: PopulatedFlagEnv,schedule: Schedule) {
+    this.prisma.flagEnvironment.update({
+      where: {
+        flagId_environmentId: {
+          environmentId: flagEnv.environmentId,
+          flagId: flagEnv.flagId,
+        },
+      },
+      data: {
+        status: schedule.status,
+      },
+      include: {
+        flag: true,
+        strategies: true,
+        scheduling: true,
+        variants: true,
+        eligibilities: true,
+      },
+    }),
+  }
+
   async manageFlagScheduling(
     clientKey: string,
     flagEnv: PopulatedFlagEnv,
@@ -117,24 +139,7 @@ export class SchedulingService {
             schedulingStatus: SchedulingStatus.HAS_RUN,
           },
         }),
-        this.prisma.flagEnvironment.update({
-          where: {
-            flagId_environmentId: {
-              environmentId: flagEnv.environmentId,
-              flagId: flagEnv.flagId,
-            },
-          },
-          data: {
-            status: schedule.status,
-          },
-          include: {
-            flag: true,
-            strategies: true,
-            scheduling: true,
-            variants: true,
-            eligibilities: true,
-          },
-        }),
+        this.makeUpdateQuery(flagEnv, schedule)
       );
     }
 
