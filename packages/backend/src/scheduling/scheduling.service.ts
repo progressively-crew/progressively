@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
-import { SchedulingCreationDTO } from './types';
+import { SchedulingCreationDTO, SchedulingType } from './types';
 
 @Injectable()
 export class SchedulingService {
@@ -15,9 +15,10 @@ export class SchedulingService {
       data: {
         utc: scheduling.utc,
         status: scheduling.status,
-        rolloutPercentage: scheduling.rolloutPercentage,
         flagEnvironmentFlagId: flagId,
         flagEnvironmentEnvironmentId: envId,
+        type: SchedulingType.UpdatePercentage,
+        data: {},
       },
     });
   }

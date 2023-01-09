@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { SchedulingType } from '../../src/scheduling/types';
 import { UserRoles } from '../../src/users/roles';
 import {
   seedFlagHits,
@@ -94,10 +95,13 @@ export const seedDb = async () => {
       data: {
         uuid: '1',
         utc: d,
-        rolloutPercentage: 100,
         flagEnvironmentFlagId: flagEnv.flagId,
         flagEnvironmentEnvironmentId: flagEnv.environmentId,
         status: 'ACTIVATED',
+        type: SchedulingType.UpdatePercentage,
+        data: {
+          rolloutPercentage: 100,
+        },
       },
     });
 
