@@ -751,10 +751,6 @@ video {
   max-width: 72rem;
 }
 
-.max-w-4xl {
-  max-width: 56rem;
-}
-
 .flex-1 {
   flex: 1 1 0%;
 }
@@ -2097,9 +2093,5 @@ input[type="range"]::-moz-range-thumb {
 
   .lg\:pt-20 {
     padding-top: 5rem;
-  }
-
-  .lg\:pb-20 {
-    padding-bottom: 5rem;
   }
 }

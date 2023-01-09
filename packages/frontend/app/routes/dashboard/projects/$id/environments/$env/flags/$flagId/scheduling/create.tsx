@@ -3,7 +3,7 @@ import { getSession } from "~/sessions";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
 import { useActionData, Form, useTransition } from "@remix-run/react";
-import { CreateSchedulingFrom } from "~/modules/scheduling/CreateSchedulingForm";
+import { CreateSchedulingFrom } from "~/modules/strategies/components/CreateSchedulingForm";
 import { SchedulingCreateDTO } from "~/modules/scheduling/types";
 import { createScheduling } from "~/modules/scheduling/services/createScheduling";
 import { useProject } from "~/modules/projects/contexts/useProject";
@@ -111,7 +111,6 @@ export default function SchedulingCreatePage() {
   return (
     <Form method="post">
       <CreateEntityLayout
-        size="L"
         status={actionData?.errors && <ErrorBox list={actionData.errors} />}
         titleSlot={<CreateEntityTitle>Create a scheduling</CreateEntityTitle>}
         submitSlot={

@@ -18,8 +18,3 @@ export interface SchedulingCreateDTO {
   rolloutPercentage: number;
   status: FlagStatus;
 }
-
-export enum SchedulingAction {
-  UpdateRolloutPercentage = "UpdateRolloutPercentage",
-  UpdateVariant = "UpdateVariant",
-}
