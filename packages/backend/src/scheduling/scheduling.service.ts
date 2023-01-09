@@ -98,7 +98,7 @@ export class SchedulingService {
     });
   }
 
-  makeUpdateQuery(flagEnv: PopulatedFlagEnv,schedule: Schedule) {
+  makeUpdateQuery(flagEnv: PopulatedFlagEnv, schedule: Schedule) {
     this.prisma.flagEnvironment.update({
       where: {
         flagId_environmentId: {
@@ -116,7 +116,7 @@ export class SchedulingService {
         variants: true,
         eligibilities: true,
       },
-    }),
+    });
   }
 
   async manageFlagScheduling(
@@ -139,7 +139,7 @@ export class SchedulingService {
             schedulingStatus: SchedulingStatus.HAS_RUN,
           },
         }),
-        this.makeUpdateQuery(flagEnv, schedule)
+        this.makeUpdateQuery(flagEnv, schedule),
       );
     }
 
