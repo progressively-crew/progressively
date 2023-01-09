@@ -99,24 +99,31 @@ export class SchedulingService {
   }
 
   makeUpdateQuery(flagEnv: PopulatedFlagEnv, schedule: Schedule) {
-    this.prisma.flagEnvironment.update({
-      where: {
-        flagId_environmentId: {
-          environmentId: flagEnv.environmentId,
-          flagId: flagEnv.flagId,
-        },
-      },
-      data: {
-        status: schedule.status,
-      },
-      include: {
-        flag: true,
-        strategies: true,
-        scheduling: true,
-        variants: true,
-        eligibilities: true,
-      },
-    });
+    switch (schedule.type) {
+      default:
+        break;
+
+      case SchedulingType.UpdatePercentage: {
+        return this.prisma.flagEnvironment.update({
+          where: {
+            flagId_environmentId: {
+              environmentId: flagEnv.environmentId,
+              flagId: flagEnv.flagId,
+            },
+          },
+          data: {
+            status: schedule.status,
+          },
+          include: {
+            flag: true,
+            strategies: true,
+            scheduling: true,
+            variants: true,
+            eligibilities: true,
+          },
+        });
+      }
+    }
   }
 
   async manageFlagScheduling(
@@ -126,7 +133,6 @@ export class SchedulingService {
     let nextFlagEnv: PopulatedFlagEnv = flagEnv;
 
     const scheduling = await this.listAllNotRunScheduling(flagEnv);
-
     const updateQueries = [];
 
     for (const schedule of scheduling) {
