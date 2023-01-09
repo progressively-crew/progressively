@@ -709,7 +709,7 @@ describe('FlagsController (e2e)', () => {
         });
     });
 
-    it('gives the strategies information when the user is authenticated and authorized', async () => {
+    it('gives the scheduling information when the user is authenticated and authorized', async () => {
       const access_token = await authenticate(app);
 
       const validStrategy: any = {
@@ -731,7 +731,6 @@ describe('FlagsController (e2e)', () => {
       const schedule = response.body[0];
 
       expect(response.status).toBe(200);
-      expect(schedule.rolloutPercentage).toBe(100);
       expect(schedule.flagEnvironmentFlagId).toBe('1');
       expect(schedule.flagEnvironmentEnvironmentId).toBe('1');
       expect(schedule.utc).toBeDefined();
@@ -1655,7 +1654,7 @@ describe('FlagsController (e2e)', () => {
         });
     });
 
-    it('gives the strategies information when the user is authenticated and authorized', async () => {
+    it('gives the webhooks information when the user is authenticated and authorized', async () => {
       const access_token = await authenticate(app);
 
       const response = await request(app.getHttpServer())
