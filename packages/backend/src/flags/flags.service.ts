@@ -240,11 +240,9 @@ export class FlagsService {
       });
     }
 
-    const hitsPerDates = Object.keys(dictByDates)
+    return Object.keys(dictByDates)
       .sort()
       .map((k) => dictByDates[k]);
-
-    return hitsPerDates;
   }
 
   async deleteFlag(flagId: string) {
