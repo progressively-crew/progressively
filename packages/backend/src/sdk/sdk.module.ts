@@ -9,6 +9,8 @@ import { FieldRecord } from '../strategy/types';
 import { DatabaseModule } from '../database/database.module';
 import { StrategyService } from '../strategy/strategy.service';
 import { EligibilityModule } from '../eligibility/eligibility.module';
+import { SchedulingModule } from '../scheduling/scheduling.module';
+import { SchedulingService } from '../scheduling/scheduling.service';
 
 @Module({
   controllers: [SdkController],
@@ -16,10 +18,11 @@ import { EligibilityModule } from '../eligibility/eligibility.module';
     EnvironmentsModule,
     FlagsModule,
     WebsocketModule,
+    SchedulingModule,
     DatabaseModule,
     EligibilityModule,
   ],
-  providers: [SdkService, StrategyService],
+  providers: [SdkService, StrategyService, SchedulingService],
 })
 export class SdkModule implements OnModuleInit {
   constructor(

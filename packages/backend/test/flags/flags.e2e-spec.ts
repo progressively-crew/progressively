@@ -709,7 +709,7 @@ describe('FlagsController (e2e)', () => {
         });
     });
 
-    it('gives the strategies information when the user is authenticated and authorized', async () => {
+    it('gives the scheduling information when the user is authenticated and authorized', async () => {
       const access_token = await authenticate(app);
 
       const validStrategy: any = {
@@ -731,7 +731,6 @@ describe('FlagsController (e2e)', () => {
       const schedule = response.body[0];
 
       expect(response.status).toBe(200);
-      expect(schedule.rolloutPercentage).toBe(100);
       expect(schedule.flagEnvironmentFlagId).toBe('1');
       expect(schedule.flagEnvironmentEnvironmentId).toBe('1');
       expect(schedule.utc).toBeDefined();
@@ -825,13 +824,40 @@ describe('FlagsController (e2e)', () => {
         });
     });
 
-    it('gives 400 when the scheduling has a wrong rolloutPercentage', async () => {
+    it('gives 400 when the scheduling has a wrong type', async () => {
       const access_token = await authenticate(app);
 
       const invalidScheduling: any = {
         utc: new Date('1992-06-21'),
         status: 'ACTIVATED',
-        rolloutPercentage: 1000,
+        type: 'Invalid type',
+        data: {
+          rolloutPercentage: 100,
+        },
+      };
+
+      await request(app.getHttpServer())
+        .post('/environments/1/flags/1/scheduling')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send(invalidScheduling)
+        .expect(400)
+        .expect({
+          statusCode: 400,
+          message: 'Validation failed',
+          error: 'Bad Request',
+        });
+    });
+
+    it('gives 400 when the scheduling has a wrong data object', async () => {
+      const access_token = await authenticate(app);
+
+      const invalidScheduling: any = {
+        utc: new Date('1992-06-21'),
+        status: 'ACTIVATED',
+        type: 'UpdatePercentage',
+        data: {
+          invalidData: 100,
+        },
       };
 
       await request(app.getHttpServer())
@@ -852,7 +878,10 @@ describe('FlagsController (e2e)', () => {
       const validScheduling: any = {
         utc: new Date('1992-06-21'),
         status: 'ACTIVATED',
-        rolloutPercentage: 89,
+        type: 'UpdatePercentage',
+        data: {
+          rolloutPercentage: 100,
+        },
       };
 
       const response = await request(app.getHttpServer())
@@ -862,7 +891,6 @@ describe('FlagsController (e2e)', () => {
         .expect(201);
 
       expect(response.body).toMatchObject({
-        rolloutPercentage: 89,
         status: 'ACTIVATED',
         utc: '1992-06-21T00:00:00.000Z',
       });
@@ -1626,7 +1654,7 @@ describe('FlagsController (e2e)', () => {
         });
     });
 
-    it('gives the strategies information when the user is authenticated and authorized', async () => {
+    it('gives the webhooks information when the user is authenticated and authorized', async () => {
       const access_token = await authenticate(app);
 
       const response = await request(app.getHttpServer())

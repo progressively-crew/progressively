@@ -198,8 +198,9 @@ model Eligibility {
 
 model Schedule {
   uuid                         String           @id @default(uuid())
+  type                         String
+  data                         Json
   utc                          DateTime
-  rolloutPercentage            Int
   status                       String
   flagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
   schedulingStatus             String           @default("NOT_RUN")

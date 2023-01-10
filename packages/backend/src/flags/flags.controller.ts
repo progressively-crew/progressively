@@ -279,7 +279,7 @@ export class FlagsController {
   @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(SchedulingSchema))
-  addSchedulingToFlag(
+  async addSchedulingToFlag(
     @Param('envId') envId: string,
     @Param('flagId') flagId: string,
     @Body() schedulingDto: SchedulingCreationDTO,
