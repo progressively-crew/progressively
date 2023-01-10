@@ -6,6 +6,7 @@ import { SliderInput } from "~/components/Fields/SliderInput";
 import { Spacer } from "~/components/Spacer";
 import { Switch } from "~/components/Switch";
 import { FlagStatus } from "~/modules/flags/types";
+import { SchedulingType } from "~/modules/scheduling/types";
 
 export const CreateSchedulingFrom = () => {
   const [percentage, setPercentage] = useState(100);
@@ -45,6 +46,12 @@ export const CreateSchedulingFrom = () => {
         percentageValue={percentage}
         label={"What should be the next rollout percentage"}
         name={"rolloutPercentage"}
+      />
+
+      <input
+        type="hidden"
+        name="type"
+        value={SchedulingType.UpdatePercentage}
       />
     </FormGroup>
   );

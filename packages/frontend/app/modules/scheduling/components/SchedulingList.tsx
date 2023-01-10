@@ -59,7 +59,9 @@ export const SchedulingList = ({
       </thead>
       <tbody>
         {scheduling.map((schedule, index: number) => (
-          <Tr key={`${schedule.utc}-${schedule.rolloutPercentage}-${index}`}>
+          <Tr
+            key={`${schedule.utc}-${schedule.data?.rolloutPercentage}-${index}`}
+          >
             <Td width="20%">
               <DateCell utc={schedule.utc} />
             </Td>
@@ -73,7 +75,7 @@ export const SchedulingList = ({
             <Td>
               <SliderInput
                 onChange={() => {}}
-                percentageValue={schedule.rolloutPercentage}
+                percentageValue={schedule.data?.rolloutPercentage || 0}
                 label={""}
                 hiddenLabel
                 name={"not-important-" + index}

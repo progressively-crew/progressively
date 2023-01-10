@@ -19,7 +19,7 @@ export type SchedulingCreationDTO = {
       type: SchedulingType.UpdatePercentage;
       data: SchedulingUpdatePercentageData;
     }
-  | { type: SchedulingType.UpdateVariantPercentage }
+  | { type: SchedulingType.UpdateVariantPercentage; data: any }
 );
 
 export const SchedulingSchema = Joi.object({

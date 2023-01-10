@@ -4,7 +4,12 @@ import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
 import { useActionData, Form, useTransition } from "@remix-run/react";
 import { CreateSchedulingFrom } from "~/modules/strategies/components/CreateSchedulingForm";
-import { SchedulingCreateDTO } from "~/modules/scheduling/types";
+import {
+  SchedulingCreateDTO,
+  SchedulingStatus,
+  SchedulingType,
+  SchedulingTypes,
+} from "~/modules/scheduling/types";
 import { createScheduling } from "~/modules/scheduling/services/createScheduling";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
@@ -16,6 +21,7 @@ import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { BackLink } from "~/components/BackLink";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
+import { validateScheduling } from "~/modules/scheduling/validators/validateScheduling";
 
 export const handle = {
   breadcrumb: (match: { params: any }) => {
@@ -37,7 +43,7 @@ export const meta: MetaFunction = ({ parentsData, params }) => {
 };
 
 interface ActionData {
-  errors?: { [key: string]: string };
+  errors: { [key: string]: string };
 }
 
 export const action: ActionFunction = async ({
@@ -48,34 +54,36 @@ export const action: ActionFunction = async ({
   const session = await getSession(request.headers.get("Cookie"));
 
   const utc = formData.get("utc-dateTime")?.toString();
+  const type = formData.get("type")?.toString() as SchedulingType | undefined;
 
   const status =
     (formData.get("nextStatus") as unknown as FlagStatus) || undefined;
 
-  const rolloutPercentage = Number(
-    formData.get("rolloutPercentage")?.toString()
-  );
+  const rolloutPercentageFormData = formData
+    .get("rolloutPercentage")
+    ?.toString();
+  const rolloutPercentage = rolloutPercentageFormData
+    ? Number(rolloutPercentageFormData)
+    : undefined;
 
-  if (!utc) {
-    return {
-      errors: {
-        utc: "The provided date is invalid",
-      },
-    };
-  }
+  const createSchedulingDto: Partial<SchedulingCreateDTO> = {
+    utc,
+    status,
+    data: { rolloutPercentage },
+    type,
+  };
 
-  if (rolloutPercentage === undefined || rolloutPercentage === null) {
-    return {
-      errors: {
-        utc: "The rollout percentage is invalid",
-      },
-    };
+  const errors = validateScheduling(createSchedulingDto);
+
+  if (Object.keys(errors).length > 0) {
+    return { errors };
   }
 
   const scheduling: SchedulingCreateDTO = {
-    utc,
+    utc: utc!,
     status,
-    rolloutPercentage,
+    data: { rolloutPercentage },
+    type: type!,
   };
 
   try {

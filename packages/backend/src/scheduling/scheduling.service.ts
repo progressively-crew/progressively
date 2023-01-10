@@ -24,7 +24,7 @@ export class SchedulingService {
         flagEnvironmentFlagId: flagId,
         flagEnvironmentEnvironmentId: envId,
         type: SchedulingType.UpdatePercentage,
-        data: {},
+        data: scheduling.data,
       },
     });
   }
