@@ -74,7 +74,6 @@ CREATE TABLE "Flag" (
     "key" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "type" TEXT NOT NULL,
 
     CONSTRAINT "Flag_pkey" PRIMARY KEY ("uuid")
 );
@@ -178,8 +177,9 @@ CREATE TABLE "Eligibility" (
 -- CreateTable
 CREATE TABLE "Schedule" (
     "uuid" TEXT NOT NULL,
+    "type" TEXT NOT NULL,
+    "data" JSONB NOT NULL,
     "utc" TIMESTAMP(3) NOT NULL,
-    "rolloutPercentage" INTEGER NOT NULL,
     "status" TEXT NOT NULL,
     "schedulingStatus" TEXT NOT NULL DEFAULT 'NOT_RUN',
     "flagEnvironmentFlagId" TEXT,
