@@ -132,6 +132,27 @@ export const seedDb = async () => {
       },
     });
 
+    await prismaClient.schedule.create({
+      data: {
+        uuid: '2',
+        utc: d,
+        flagEnvironmentFlagId: multiVariateFlagEnv.flagId,
+        flagEnvironmentEnvironmentId: multiVariateFlagEnv.environmentId,
+        status: 'ACTIVATED',
+        type: SchedulingType.UpdateVariantPercentage,
+        data: [
+          {
+            variantId: '1',
+            variantNewPercentage: 30,
+          },
+          {
+            variantId: '2',
+            variantNewPercentage: 70,
+          },
+        ],
+      },
+    });
+
     const firstVariant = await prismaClient.variant.create({
       data: {
         uuid: '1',
@@ -333,22 +354,20 @@ export const seedDb = async () => {
 
 export const cleanupDb = async () => {
   await prismaClient.$connect();
-  await prismaClient.webhook.deleteMany();
-  await prismaClient.rolloutStrategy.deleteMany();
-  await prismaClient.eligibility.deleteMany();
-  await prismaClient.schedule.deleteMany();
-  await prismaClient.refreshToken.deleteMany();
-  await prismaClient.flagHit.deleteMany();
-  await prismaClient.variant.deleteMany();
-  await prismaClient.pMetricHit.deleteMany();
-  await prismaClient.pMetric.deleteMany();
-  await prismaClient.flagEnvironment.deleteMany();
-  await prismaClient.flag.deleteMany();
-  await prismaClient.environment.deleteMany();
-  await prismaClient.passwordResetTokens.deleteMany();
-  await prismaClient.userProject.deleteMany();
-  await prismaClient.userOfProvider.deleteMany();
-  await prismaClient.user.deleteMany();
-  await prismaClient.project.deleteMany();
+  const tablenames = await prismaClient.$queryRaw<
+    Array<{ tablename: string }>
+  >`SELECT tablename FROM pg_tables WHERE schemaname='public'`;
+
+  const tables = tablenames
+    .map(({ tablename }) => tablename)
+    .filter((name) => name !== '_prisma_migrations')
+    .map((name) => `"public"."${name}"`)
+    .join(', ');
+
+  try {
+    await prismaClient.$executeRawUnsafe(`TRUNCATE TABLE ${tables} CASCADE;`);
+  } catch (error) {
+    console.log({ error });
+  }
   await prismaClient.$disconnect();
 };

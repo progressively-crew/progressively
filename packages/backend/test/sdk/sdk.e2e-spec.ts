@@ -167,7 +167,7 @@ describe('SdkController (e2e)', () => {
       expect(response2.body).toEqual({
         newHomepage: true,
         newFooter: false,
-        multivariate: false,
+        multivariate: 'Second',
       });
     }, 20000);
   });
