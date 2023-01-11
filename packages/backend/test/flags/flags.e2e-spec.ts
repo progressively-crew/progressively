@@ -872,7 +872,7 @@ describe('FlagsController (e2e)', () => {
         });
     });
 
-    it('creates a scheduling', async () => {
+    it('creates a scheduling for a single variant flag', async () => {
       const access_token = await authenticate(app);
 
       const validScheduling: any = {
@@ -882,6 +882,55 @@ describe('FlagsController (e2e)', () => {
         data: {
           rolloutPercentage: 100,
         },
+      };
+
+      const response = await request(app.getHttpServer())
+        .post('/environments/1/flags/1/scheduling')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send(validScheduling)
+        .expect(201);
+
+      expect(response.body).toMatchObject({
+        status: 'ACTIVATED',
+        utc: '1992-06-21T00:00:00.000Z',
+      });
+    });
+
+    it('gives 400 when the scheduling has a wrong data object for ', async () => {
+      const access_token = await authenticate(app);
+
+      const invalidScheduling: any = {
+        utc: new Date('1992-06-21'),
+        status: 'ACTIVATED',
+        type: 'UpdateVariantPercentage',
+        data: {
+          invalidData: 100,
+        },
+      };
+
+      await request(app.getHttpServer())
+        .post('/environments/1/flags/1/scheduling')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send(invalidScheduling)
+        .expect(400)
+        .expect({
+          statusCode: 400,
+          message: 'Validation failed',
+          error: 'Bad Request',
+        });
+    });
+
+    it('creates a scheduling for a multi variant flag', async () => {
+      const access_token = await authenticate(app);
+
+      const validScheduling: any = {
+        utc: new Date('1992-06-21'),
+        status: 'ACTIVATED',
+        type: 'UpdateVariantPercentage',
+        data: [
+          { variantId: '1', variantNewPercentage: 52 },
+          { variantId: '2', variantNewPercentage: 48 },
+        ],
       };
 
       const response = await request(app.getHttpServer())

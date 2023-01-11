@@ -20,7 +20,7 @@ describe('SdkController (e2e)', () => {
 
   beforeEach(async () => {
     await seedDb();
-  });
+  }, 20000);
 
   afterEach(async () => {
     await cleanupDb();
@@ -167,7 +167,7 @@ describe('SdkController (e2e)', () => {
       expect(response2.body).toEqual({
         newHomepage: true,
         newFooter: false,
-        multivariate: false,
+        multivariate: 'Second',
       });
     }, 20000);
   });
