@@ -20,7 +20,7 @@ describe('SdkController (e2e)', () => {
 
   beforeEach(async () => {
     await seedDb();
-  }, 20000);
+  });
 
   afterEach(async () => {
     await cleanupDb();
