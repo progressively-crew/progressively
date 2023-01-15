@@ -23,7 +23,6 @@ import { Button } from "./components/Buttons/Button";
 import { ThemeProvider } from "./modules/theme/ThemeProvider";
 import { withSentry } from "@sentry/remix";
 import { LoaderFunction } from "@sentry/remix/types/utils/types";
-import { SENTRY_DSN } from "./modules/sentry/constants";
 
 /**
  * The `links` export is a function that returns an array of objects that map to
@@ -69,7 +68,8 @@ interface DocumentProps {
 }
 
 const Document = ({ children, title }: DocumentProps) => {
-  const { sentryDSN } = useLoaderData<LoaderData>();
+  const loaderData = useLoaderData<LoaderData>();
+
   return (
     <html lang="en" className="h-full">
       <head>
@@ -91,10 +91,10 @@ document.documentElement.classList.remove('dark')
 `,
           }}
         ></script>
-        {sentryDSN && (
+        {loaderData?.sentryDSN && (
           <script
             dangerouslySetInnerHTML={{
-              __html: `window.SENTRY_DSN = "${sentryDSN}"`,
+              __html: `window.SENTRY_DSN = "${loaderData.sentryDSN}"`,
             }}
           />
         )}
