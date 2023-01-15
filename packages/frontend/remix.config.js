@@ -1,6 +1,21 @@
 /**
  * @type {import('@remix-run/dev/config').AppConfig}
  */
+
+const vercelSpecificConfig =
+  process.env.IS_VERCEL === "true"
+    ? {
+        serverBuildTarget: "vercel",
+        server: "./server.js",
+      }
+    : {};
+
+console.log(
+  "???",
+  vercelSpecificConfig,
+  process.env.IS_VERCEL,
+  typeof process.env.IS_VERCEL
+);
 module.exports = {
   ignoredRouteFiles: ["**/.*"],
   // appDirectory: "app",
@@ -8,9 +23,5 @@ module.exports = {
   // serverBuildPath: "build/index.js",
   // publicPath: "/build/",
   devServerPort: 8002,
-
-  // vercel specific
-  serverBuildTarget: process.env.IS_VERCEL === true ? "vercel" : undefined,
-  server: process.env.IS_VERCEL === true ? "./server.js" : undefined,
-  // end of vercel specific
+  ...vercelSpecificConfig,
 };
