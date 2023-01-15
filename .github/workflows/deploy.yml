@@ -24,13 +24,3 @@ jobs:
       - name: Deploy backend
         working-directory: ./packages/backend
         run: flyctl deploy --remote-only
-
-  deploy-frontend:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: superfly/flyctl-actions/setup-flyctl@master
-
-      - name: Deploy frontend
-        working-directory: ./packages/frontend
-        run: flyctl deploy --remote-only
