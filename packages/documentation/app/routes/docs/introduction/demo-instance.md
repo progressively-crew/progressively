@@ -2,7 +2,7 @@
 
 It is now possible to play with Progressively in a demo instance, without the need to install anything :tada: .
 
-You can now create an account on [https://frontend-progressively.fly.dev/](https://frontend-progressively.fly.dev/) and connect your application using one of the SDKs to get a taste of the tool.
+You can now create an account on [https://progressively.vercel.app/](https://progressively.vercel.app/) and connect your application using one of the SDKs to get a taste of the tool.
 
 Enjoy, and let us know what you think of it :blush:.
 

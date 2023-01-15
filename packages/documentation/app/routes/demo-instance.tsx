@@ -67,7 +67,7 @@ export default function Index() {
               </p>
 
               <div className="inline-block pt-8">
-                <Button href="https://frontend-progressively.fly.dev/signin">
+                <Button href="https://progressively.vercel.app/signin">
                   Enter the demo instance
                 </Button>
               </div>
