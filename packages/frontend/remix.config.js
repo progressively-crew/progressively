@@ -10,10 +10,7 @@ module.exports = {
   devServerPort: 8002,
 
   // vercel specific
-  serverBuildTarget: "vercel",
-  server:
-    process.env.NODE_ENV === "development" || process.env.IS_TESTING_ENV === "true"
-      ? undefined
-      : "./server.js",
+  serverBuildTarget: process.env.IS_VERCEL === "true" ? "vercel" : undefined,
+  server: process.env.IS_VERCEL === "true" ? "./server.js" : undefined,
   // end of vercel specific
 };
