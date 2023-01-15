@@ -4,6 +4,8 @@ import { useEffect } from "react";
 import { SENTRY_DSN } from "./constants";
 
 export const initSentryOnClient = () => {
+  if (process.env.IS_IN_CI) return;
+
   Sentry.init({
     dsn: SENTRY_DSN,
     tracesSampleRate: 1,
