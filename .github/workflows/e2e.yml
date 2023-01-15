@@ -12,6 +12,7 @@ jobs:
     env:
       ALLOW_REGISTRATION: true
       START_MOCK_SERVER: true
+
     runs-on: ubuntu-latest
     # Uncomment for parallel
     # strategy:

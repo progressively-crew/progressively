@@ -7,6 +7,7 @@ import {
   Scripts,
   ScrollRestoration,
   useCatch,
+  useLoaderData,
 } from "@remix-run/react";
 import UnauthorizedPage from "./routes/401";
 import ForbiddenPage from "./routes/403";
@@ -21,6 +22,7 @@ import { AiOutlineLogin } from "react-icons/ai";
 import { Button } from "./components/Buttons/Button";
 import { ThemeProvider } from "./modules/theme/ThemeProvider";
 import { withSentry } from "@sentry/remix";
+import { LoaderFunction } from "@sentry/remix/types/utils/types";
 
 /**
  * The `links` export is a function that returns an array of objects that map to
@@ -32,6 +34,15 @@ import { withSentry } from "@sentry/remix";
  */
 export const links: LinksFunction = () => {
   return [{ rel: "stylesheet", href: styles }];
+};
+
+interface LoaderData {
+  sentryDSN?: string;
+}
+export const loader: LoaderFunction = () => {
+  return {
+    sentryDSN: process.env.SENTRY_DSN,
+  };
 };
 
 /**
@@ -57,6 +68,8 @@ interface DocumentProps {
 }
 
 const Document = ({ children, title }: DocumentProps) => {
+  const loaderData = useLoaderData<LoaderData>();
+
   return (
     <html lang="en" className="h-full">
       <head>
@@ -78,6 +91,13 @@ document.documentElement.classList.remove('dark')
 `,
           }}
         ></script>
+        {loaderData?.sentryDSN && (
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `window.SENTRY_DSN = "${loaderData.sentryDSN}"`,
+            }}
+          />
+        )}
       </head>
       <body className="h-full">
         <Background>{children}</Background>
