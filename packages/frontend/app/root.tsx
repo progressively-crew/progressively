@@ -20,6 +20,7 @@ import { Spacer } from "./components/Spacer";
 import { AiOutlineLogin } from "react-icons/ai";
 import { Button } from "./components/Buttons/Button";
 import { ThemeProvider } from "./modules/theme/ThemeProvider";
+import { withSentry } from "@sentry/remix";
 
 /**
  * The `links` export is a function that returns an array of objects that map to
@@ -48,8 +49,7 @@ function App() {
   );
 }
 
-// export default withSentry(App);
-export default App;
+export default withSentry(App);
 
 interface DocumentProps {
   children: React.ReactNode;
