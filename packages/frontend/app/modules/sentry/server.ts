@@ -1,11 +1,10 @@
 import * as Sentry from "@sentry/remix";
-import { SENTRY_DSN } from "./constants";
 
 export const initSentryOnServer = () => {
-  if (process.env.IS_IN_CI) return;
+  if (!process.env.SENTRY_DSN) return;
 
   Sentry.init({
-    dsn: SENTRY_DSN,
+    dsn: process.env.SENTRY_DSN,
     tracesSampleRate: 1,
     integrations: [],
     // eslint-disable-next-line unicorn/better-regex

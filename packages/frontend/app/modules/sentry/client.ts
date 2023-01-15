@@ -1,13 +1,12 @@
 import { useLocation, useMatches } from "@remix-run/react";
 import * as Sentry from "@sentry/remix";
 import { useEffect } from "react";
-import { SENTRY_DSN } from "./constants";
 
 export const initSentryOnClient = () => {
-  if (process.env.IS_IN_CI) return;
+  if (!(window as any).SENTRY_DSN) return;
 
   Sentry.init({
-    dsn: SENTRY_DSN,
+    dsn: (window as any).SENTRY_DSN,
     tracesSampleRate: 1,
     integrations: [
       new Sentry.BrowserTracing({
