@@ -10,12 +10,6 @@ const vercelSpecificConfig =
       }
     : {};
 
-console.log(
-  "???",
-  vercelSpecificConfig,
-  process.env.IS_VERCEL,
-  typeof process.env.IS_VERCEL
-);
 module.exports = {
   ignoredRouteFiles: ["**/.*"],
   // appDirectory: "app",
