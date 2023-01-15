@@ -6,6 +6,7 @@ export const initSentryOnServer = () => {
     dsn: SENTRY_DSN,
     tracesSampleRate: 1,
     integrations: [],
-    denyUrls: ["localhost"],
+    // eslint-disable-next-line unicorn/better-regex
+    denyUrls: [/^https?:\/\/\w+(\.\w+)*(:[0-9]+)?(\/.*)?$/],
   });
 };
