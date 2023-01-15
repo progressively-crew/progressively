@@ -12,7 +12,8 @@ datasource POSTGRES_DATASOURCE {
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider   = "prisma-client-js"
+  engineType = "binary"
 }
 
 model UserOfProvider {
