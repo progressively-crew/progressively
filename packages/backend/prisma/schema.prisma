@@ -3,8 +3,9 @@
 // Make the check at the code level, not at the DB level
 
 datasource POSTGRES_DATASOURCE {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 // This is your Prisma schema file,
