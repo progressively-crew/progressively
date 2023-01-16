@@ -1,14 +1,11 @@
 import { ActionFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
-import { Form, useLoaderData, useSearchParams } from "@remix-run/react";
+import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { Card, CardContent } from "~/components/Card";
 import { EmptyState } from "~/components/EmptyState";
-import { Header } from "~/components/Header";
-import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { PageTitle } from "~/components/PageTitle";
 import { Section } from "~/components/Section";
-import { TagLine } from "~/components/Tagline";
 import { Typography } from "~/components/Typography";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
@@ -24,8 +21,6 @@ import { Webhook } from "~/modules/webhooks/types";
 import { getSession } from "~/sessions";
 import { WebhooksList } from "~/modules/webhooks/components/WebhooksList";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
-import { FlagStatus } from "~/modules/flags/types";
-import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -94,30 +89,9 @@ export default function WebhooksPage() {
 
   const hasWebhooks = webhooks.length > 0;
 
-  const isFlagActivated = flagEnv.status === FlagStatus.ACTIVATED;
-
   return (
     <DashboardLayout
       user={user}
-      header={
-        <Header
-          tagline={<TagLine icon={<FlagIcon />}>Feature flag</TagLine>}
-          title={currentFlag.name}
-          action={
-            <Form
-              method="post"
-              id={`form-${currentFlag.uuid}`}
-              style={{ marginTop: 12 }}
-            >
-              <ToggleFlag
-                isFlagActivated={isFlagActivated}
-                flagId={currentFlag.uuid}
-                flagName={currentFlag.name}
-              />
-            </Form>
-          }
-        />
-      }
       subNav={
         <FlagMenu
           projectId={project.uuid}

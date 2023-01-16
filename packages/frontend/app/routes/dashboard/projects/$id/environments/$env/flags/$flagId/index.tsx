@@ -4,17 +4,13 @@ import { getStrategies } from "~/modules/strategies/services/getStrategies";
 import { getSession } from "~/sessions";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { AdditionalAudienceRetrieveDTO } from "~/modules/strategies/types";
-import { Header } from "~/components/Header";
 import { Section, SectionHeader } from "~/components/Section";
-import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
 import {
   useLoaderData,
   useActionData,
-  Form,
   useSearchParams,
 } from "@remix-run/react";
-import { TagLine } from "~/components/Tagline";
 import { Card, CardContent } from "~/components/Card";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
 import { SliderFlag } from "~/modules/flags/components/SliderFlag";
@@ -30,7 +26,6 @@ import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction"
 import { editVariantAction } from "~/modules/variants/form-actions/editVariantAction";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { PageTitle } from "~/components/PageTitle";
-import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { EmptyState } from "~/components/EmptyState";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { AdditionalAudienceList } from "~/modules/strategies/components/AdditionalAudienceList";
@@ -158,25 +153,6 @@ export default function FlagById() {
   return (
     <DashboardLayout
       user={user}
-      header={
-        <Header
-          tagline={<TagLine icon={<FlagIcon />}>Feature flag</TagLine>}
-          title={currentFlag.name}
-          action={
-            <Form
-              method="post"
-              id={`form-${currentFlag.uuid}`}
-              style={{ marginTop: 12 }}
-            >
-              <ToggleFlag
-                isFlagActivated={isFlagActivated}
-                flagId={currentFlag.uuid}
-                flagName={currentFlag.name}
-              />
-            </Form>
-          }
-        />
-      }
       subNav={
         <FlagMenu
           projectId={project.uuid}

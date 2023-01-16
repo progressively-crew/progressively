@@ -1,13 +1,11 @@
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { UserRoles } from "~/modules/projects/types";
-import { Header } from "~/components/Header";
 import { Section, SectionHeader } from "~/components/Section";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { ActionFunction, MetaFunction } from "@remix-run/node";
 import { Card, CardContent } from "~/components/Card";
 import { Stack } from "~/components/Stack";
-import { TagLine } from "~/components/Tagline";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { useProject } from "~/modules/projects/contexts/useProject";
@@ -18,11 +16,7 @@ import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
-import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { Spacer } from "~/components/Spacer";
-import { Form } from "@remix-run/react";
-import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
-import { FlagStatus } from "~/modules/flags/types";
 import { getSession } from "~/sessions";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
 
@@ -65,30 +59,9 @@ export default function FlagSettingPage() {
 
   const currentFlag = flagEnv.flag;
 
-  const isFlagActivated = flagEnv.status === FlagStatus.ACTIVATED;
-
   return (
     <DashboardLayout
       user={user}
-      header={
-        <Header
-          tagline={<TagLine icon={<FlagIcon />}>Feature flag</TagLine>}
-          title={currentFlag.name}
-          action={
-            <Form
-              method="post"
-              id={`form-${currentFlag.uuid}`}
-              style={{ marginTop: 12 }}
-            >
-              <ToggleFlag
-                isFlagActivated={isFlagActivated}
-                flagId={currentFlag.uuid}
-                flagName={currentFlag.name}
-              />
-            </Form>
-          }
-        />
-      }
       subNav={
         <FlagMenu
           projectId={project.uuid}
