@@ -125,7 +125,7 @@ export default function SchedulingOfFlag() {
         <FlagMenu
           projectId={project.uuid}
           envId={environment.uuid}
-          flagId={currentFlag.uuid}
+          flagEnv={flagEnv}
         />
       }
       status={
@@ -142,7 +142,6 @@ export default function SchedulingOfFlag() {
     >
       <PageTitle
         value="Scheduling"
-        icon={<AiOutlineClockCircle />}
         description={
           <Typography>
             The additional audience rules that you have defined will apply at

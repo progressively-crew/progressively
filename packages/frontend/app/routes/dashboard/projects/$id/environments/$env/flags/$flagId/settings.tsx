@@ -95,11 +95,11 @@ export default function FlagSettingPage() {
         <FlagMenu
           projectId={project.uuid}
           envId={environment.uuid}
-          flagId={currentFlag.uuid}
+          flagEnv={flagEnv}
         />
       }
     >
-      <PageTitle value="Settings" icon={<AiOutlineSetting />} />
+      <PageTitle value="Settings" />
 
       <Stack spacing={8}>
         <Card>

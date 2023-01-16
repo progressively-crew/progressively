@@ -122,7 +122,7 @@ export default function Metrics() {
         <FlagMenu
           projectId={project.uuid}
           envId={environment.uuid}
-          flagId={currentFlag.uuid}
+          flagEnv={flagEnv}
         />
       }
       status={
@@ -139,7 +139,6 @@ export default function Metrics() {
     >
       <PageTitle
         value="Metrics"
-        icon={<MdBubbleChart />}
         description={
           <Typography>
             The metrics that you have to measure the impact of your flags.

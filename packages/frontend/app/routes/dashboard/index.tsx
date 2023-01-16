@@ -69,7 +69,7 @@ export default function DashboardRoot() {
         ) : null
       }
     >
-      <PageTitle icon={<TbFolders />} value="Projects" />
+      <PageTitle value="Projects" />
 
       <SearchLayout
         actions={

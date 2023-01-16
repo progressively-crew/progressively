@@ -18,8 +18,6 @@ import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
-import { TbSend } from "react-icons/tb";
-
 import { useUser } from "~/modules/user/contexts/useUser";
 import { getWebhooks } from "~/modules/webhooks/services/getWebhooks";
 import { Webhook } from "~/modules/webhooks/types";
@@ -124,7 +122,7 @@ export default function WebhooksPage() {
         <FlagMenu
           projectId={project.uuid}
           envId={environment.uuid}
-          flagId={currentFlag.uuid}
+          flagEnv={flagEnv}
         />
       }
       status={
@@ -141,7 +139,6 @@ export default function WebhooksPage() {
     >
       <PageTitle
         value="Webhooks"
-        icon={<TbSend />}
         description={
           <Typography>
             The different webhooks to request when specific events occur.

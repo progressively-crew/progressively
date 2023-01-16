@@ -28,8 +28,8 @@ export const NavItem = ({ children, to, icon }: NavItemProps) => {
         end
         className={({ isActive }) =>
           isActive
-            ? "h-8 block flex items-center rounded px-3 bg-indigo-100 text-indigo-700 dark:bg-slate-600 dark:text-slate-50 text-sm"
-            : "h-8 block flex items-center rounded px-3 hover:bg-gray-100 hover:dark:bg-slate-700 active:bg-gray-200 active:dark:bg-slate-600 text-gray-500 dark:text-gray-300 text-sm"
+            ? "h-10 block flex items-center rounded px-3 bg-indigo-100 text-indigo-700 dark:bg-slate-600 dark:text-slate-50 text-sm"
+            : "h-10 block flex items-center rounded px-3 hover:bg-gray-100 hover:dark:bg-slate-700 active:bg-gray-200 active:dark:bg-slate-600 text-gray-500 dark:text-gray-300 text-sm"
         }
       >
         <HStack spacing={2}>

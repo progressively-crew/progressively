@@ -182,11 +182,11 @@ export default function FlagById() {
         <FlagMenu
           projectId={project.uuid}
           envId={environment.uuid}
-          flagId={currentFlag.uuid}
+          flagEnv={flagEnv}
         />
       }
     >
-      <PageTitle value="Audience" icon={<BiGroup />} />
+      <PageTitle value="Audience" />
 
       <Section id="rollout-target">
         <Card>

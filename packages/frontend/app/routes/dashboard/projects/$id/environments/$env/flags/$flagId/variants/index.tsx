@@ -145,7 +145,7 @@ export default function VariantsOfFlag() {
         <FlagMenu
           projectId={project.uuid}
           envId={environment.uuid}
-          flagId={currentFlag.uuid}
+          flagEnv={flagEnv}
         />
       }
       status={
@@ -168,7 +168,6 @@ export default function VariantsOfFlag() {
     >
       <PageTitle
         value="Variants"
-        icon={<VariantIcon />}
         description={
           <Typography>
             The variants that will be shown to a portion of your audience.

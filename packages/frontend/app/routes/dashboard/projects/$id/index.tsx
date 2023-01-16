@@ -73,7 +73,7 @@ export default function ProjectDetailPage() {
         ) : null
       }
     >
-      <PageTitle value="Environments" icon={<EnvIcon />} />
+      <PageTitle value="Environments" />
 
       <Section aria-label="List of environments">
         {hasEnvironments ? (

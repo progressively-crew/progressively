@@ -100,7 +100,7 @@ export default function FlagsByEnvPage() {
         ) : null
       }
     >
-      <PageTitle value="Feature flags" icon={<FlagIcon />} />
+      <PageTitle value="Feature flags" />
 
       <Section aria-label="List of feature flags">
         {hasFlags ? (

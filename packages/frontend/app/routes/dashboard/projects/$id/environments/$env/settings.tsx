@@ -36,7 +36,7 @@ export default function EnvSettingsPage() {
       user={user}
       subNav={<EnvNavBar projectId={project.uuid} envId={environment.uuid} />}
     >
-      <PageTitle value="Settings" icon={<AiOutlineSetting />} />
+      <PageTitle value="Settings" />
 
       <Stack spacing={8}>
         <Card>

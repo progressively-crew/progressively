@@ -95,7 +95,7 @@ export default function SettingsPage() {
         </HorizontalNav>
       }
     >
-      <PageTitle value="Settings" icon={<AiOutlineSetting />} />
+      <PageTitle value="Settings" />
 
       <Stack spacing={8}>
         <Card>
