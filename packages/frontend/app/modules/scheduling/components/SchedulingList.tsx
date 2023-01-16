@@ -7,6 +7,7 @@ import { SliderInput } from "~/components/Fields/SliderInput";
 import { RawTable, Td, Th, Tr } from "~/components/RawTable";
 import { Switch } from "~/components/Switch";
 import { Typography } from "~/components/Typography";
+import { FlagStatus } from "~/modules/flags/components/FlagStatus";
 import { FlagStatus as FlagStatusType } from "~/modules/flags/types";
 import { Schedule, SchedulingStatus } from "../types";
 
@@ -33,7 +34,7 @@ const DateCell = ({ utc }: { utc: string }) => {
 
   if (!formatted) return null;
 
-  return <p className="font-bold">{formatted}</p>;
+  return <p className="font-bold dark:text-slate-50">{formatted}</p>;
 };
 
 export interface SchedulingListProps {
@@ -51,39 +52,53 @@ export const SchedulingList = ({
   return (
     <div>
       <Card>
-        {scheduling.map((schedule, index: number) => (
-          <div
-            className="px-6 py-4"
-            key={`${schedule.utc}-${schedule.data?.rolloutPercentage}-${index}`}
-          >
-            <div className="flex flex-row gap-2">
-              {schedule.schedulingStatus === SchedulingStatus.HAS_RUN ? (
-                <>
-                  <AiFillCheckCircle
-                    aria-hidden
-                    className="text-emerald-500 mt-1"
-                  />
-                  <div>
-                    <DateCell utc={schedule.utc} />
-                    <Typography className="text-sm">
-                      The schedule has already run
-                    </Typography>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <TbCircle aria-hidden className="text-gray-300 mt-1" />
-                  <div>
-                    <DateCell utc={schedule.utc} />
-                    <Typography className="text-sm">
-                      The schedule has not run yet
-                    </Typography>
-                  </div>
-                </>
-              )}
+        {scheduling.map((schedule, index: number) => {
+          return (
+            <div
+              className="px-6 py-4 grid grid-cols-3"
+              key={`${schedule.utc}-${schedule.data?.rolloutPercentage}-${index}`}
+            >
+              <div className="flex flex-row gap-2">
+                {schedule.schedulingStatus === SchedulingStatus.HAS_RUN ? (
+                  <>
+                    <AiFillCheckCircle
+                      aria-hidden
+                      className="text-emerald-500 mt-1"
+                    />
+                    <div>
+                      <DateCell utc={schedule.utc} />
+                      <Typography className="text-sm">
+                        The schedule has already run
+                      </Typography>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <TbCircle aria-hidden className="text-gray-300 mt-1" />
+                    <div>
+                      <DateCell utc={schedule.utc} />
+                      <Typography className="text-sm">
+                        The schedule has not run yet
+                      </Typography>
+                    </div>
+                  </>
+                )}
+              </div>
+
+              <div>
+                <Typography className="text-sm">
+                  Updating status to <FlagStatus value={schedule.status} />
+                </Typography>
+                <Typography className="text-sm">
+                  Updating rollout percentage to:{" "}
+                  <strong className="text-black dark:text-slate-50">
+                    {schedule.data.rolloutPercentage}%
+                  </strong>
+                </Typography>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </Card>
 
       <RawTable caption="Scheduling list">
