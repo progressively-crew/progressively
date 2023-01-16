@@ -3,7 +3,6 @@ import { useRef } from "react";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { Link } from "~/components/Link";
 import { RawTable, Td, Th, Tr } from "~/components/RawTable";
-import { Spacer } from "~/components/Spacer";
 import { Typography } from "~/components/Typography";
 import { FlagEnv, FlagStatus } from "../types";
 import { ToggleFlag } from "./ToggleFlag";

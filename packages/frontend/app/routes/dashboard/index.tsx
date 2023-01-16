@@ -10,7 +10,6 @@ import { ProjectList } from "~/modules/projects/components/ProjectList";
 import { Card } from "~/components/Card";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { PageTitle } from "~/components/PageTitle";
-import { TbFolders } from "react-icons/tb";
 import { SearchBar } from "~/components/SearchBar";
 import { SearchLayout } from "~/layouts/SearchLayout";
 

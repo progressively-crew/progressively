@@ -22,7 +22,6 @@ import { User } from "~/modules/user/types";
 import { getSession } from "~/sessions";
 import { Card, CardContent } from "~/components/Card";
 import { PageTitle } from "~/components/PageTitle";
-import { UserIcon } from "~/components/Icons/UserIcon";
 import { UserMenu } from "~/modules/user/components/UserMenu";
 import { Typography } from "~/components/Typography";
 import { Button } from "~/components/Buttons/Button";

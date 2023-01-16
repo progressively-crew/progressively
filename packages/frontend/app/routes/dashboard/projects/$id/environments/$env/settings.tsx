@@ -8,7 +8,6 @@ import { EnvNavBar } from "~/modules/environments/components/EnvNavbar";
 import { MetaFunction } from "@remix-run/node";
 import { Card, CardContent } from "~/components/Card";
 import { Stack } from "~/components/Stack";
-import { AiOutlineSetting } from "react-icons/ai";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";

@@ -13,7 +13,6 @@ import { Card, CardContent } from "~/components/Card";
 import { EmptyState } from "~/components/EmptyState";
 import { Header } from "~/components/Header";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
-import { VariantIcon } from "~/components/Icons/VariantIcon";
 import { PageTitle } from "~/components/PageTitle";
 import { Section } from "~/components/Section";
 import { Spacer } from "~/components/Spacer";

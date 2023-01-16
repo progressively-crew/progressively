@@ -1,4 +1,3 @@
-import { BiGroup } from "react-icons/bi";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { FlagStatus } from "~/modules/flags/types";
 import { getStrategies } from "~/modules/strategies/services/getStrategies";

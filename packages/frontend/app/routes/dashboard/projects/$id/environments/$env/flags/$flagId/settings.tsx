@@ -2,8 +2,6 @@ import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { UserRoles } from "~/modules/projects/types";
 import { Header } from "~/components/Header";
 import { Section, SectionHeader } from "~/components/Section";
-import { AiOutlineSetting } from "react-icons/ai";
-import { Typography } from "~/components/Typography";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { ActionFunction, MetaFunction } from "@remix-run/node";

@@ -6,9 +6,7 @@ import { useActionData, Form, useTransition } from "@remix-run/react";
 import { CreateSchedulingFrom } from "~/modules/strategies/components/CreateSchedulingForm";
 import {
   SchedulingCreateDTO,
-  SchedulingStatus,
   SchedulingType,
-  SchedulingTypes,
 } from "~/modules/scheduling/types";
 import { createScheduling } from "~/modules/scheduling/services/createScheduling";
 import { useProject } from "~/modules/projects/contexts/useProject";

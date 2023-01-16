@@ -1,6 +1,5 @@
 import { ActionFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { Form, useLoaderData, useSearchParams } from "@remix-run/react";
-import { MdBubbleChart } from "react-icons/md";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { Card, CardContent } from "~/components/Card";

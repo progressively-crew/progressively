@@ -18,7 +18,6 @@ import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
 import { PageTitle } from "~/components/PageTitle";
-import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { SearchLayout } from "~/layouts/SearchLayout";
 import { SearchBar } from "~/components/SearchBar";
 import { Spacer } from "~/components/Spacer";
