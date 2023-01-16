@@ -31,7 +31,7 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
                 className={`transition-all px-2 py-1 rounded hover:text-black hover:dark:text-slate-200 hover:bg-gray-100 dark:hover:bg-slate-700 active:bg-gray-200 dark:active:bg-slate-600 active:text-indigo-700 no-underline text-sm ${
                   currentPage
                     ? "text-black dark:text-slate-100"
-                    : "text-gray-500 dark:text-slate-200"
+                    : "text-gray-500 dark:text-slate-400"
                 }`}
               >
                 <div className={"rounded px-2 py-1"}>

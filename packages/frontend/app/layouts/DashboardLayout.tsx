@@ -34,13 +34,14 @@ export const DashboardLayout = ({
     <NavProvider>
       <SkipNavLink>Skip to content</SkipNavLink>
 
-      <div className="bg-white border-gray-100 dark:bg-slate-800 dark:border-slate-700 border-b z-10 lg:sticky top-0">
+      <div className="bg-white border-gray-100 dark:bg-slate-800 dark:border-slate-700 border-b z-10 lg:sticky top-0 drop-shadow-xl">
         <Container>
           <div className="flex justify-between h-14 items-center">
             <BreadCrumbs crumbs={crumbs} />
-
             <UseDropdown user={user} />
           </div>
+
+          {subNav}
         </Container>
       </div>
 
@@ -55,10 +56,6 @@ export const DashboardLayout = ({
                   <Spacer size={4} />
                 </div>
               )}
-
-              <div className="lg:sticky lg:top-16 drop-shadow-xl z-10">
-                {subNav}
-              </div>
 
               <Spacer size={8} />
 
