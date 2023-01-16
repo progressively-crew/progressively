@@ -52,25 +52,43 @@ export const action: ActionFunction = async ({
   const formData = await request.formData();
   const session = await getSession(request.headers.get("Cookie"));
 
+  // Shared fields between single and multi variants
   const utc = formData.get("utc-dateTime")?.toString();
   const type = formData.get("type")?.toString() as SchedulingType | undefined;
-
   const status =
     (formData.get("nextStatus") as unknown as FlagStatus) || undefined;
 
-  const rolloutPercentageFormData = formData
-    .get("rolloutPercentage")
-    ?.toString();
-  const rolloutPercentage = rolloutPercentageFormData
-    ? Number(rolloutPercentageFormData)
-    : undefined;
+  let createSchedulingDto: Partial<SchedulingCreateDTO> = {};
 
-  const createSchedulingDto: Partial<SchedulingCreateDTO> = {
-    utc,
-    status,
-    data: { rolloutPercentage },
-    type,
-  };
+  if (type === SchedulingType.UpdatePercentage) {
+    const rolloutPercentageFormData = formData
+      .get("rolloutPercentage")
+      ?.toString();
+
+    const rolloutPercentage = rolloutPercentageFormData
+      ? Number(rolloutPercentageFormData)
+      : undefined;
+
+    createSchedulingDto = {
+      utc,
+      status,
+      data: { rolloutPercentage },
+      type,
+    };
+  } else if (SchedulingType.UpdateVariantPercentage) {
+    const variants = formData.getAll("variantId");
+    const rolloutPercentages = formData.getAll("rolloutPercentage");
+
+    createSchedulingDto = {
+      utc,
+      status,
+      data: variants.map((variantId, index: number) => ({
+        variantId,
+        variantNewPercentage: rolloutPercentages[index],
+      })),
+      type,
+    };
+  }
 
   const errors = validateScheduling(createSchedulingDto);
 
@@ -78,18 +96,11 @@ export const action: ActionFunction = async ({
     return { errors };
   }
 
-  const scheduling: SchedulingCreateDTO = {
-    utc: utc!,
-    status,
-    data: { rolloutPercentage },
-    type: type!,
-  };
-
   try {
     await createScheduling(
       params.env!,
       params.flagId!,
-      scheduling,
+      createSchedulingDto,
       session.get("auth-cookie")
     );
 
@@ -136,7 +147,7 @@ export default function SchedulingCreatePage() {
           </BackLink>
         }
       >
-        <CreateSchedulingFrom />
+        <CreateSchedulingFrom flagEnv={flagEnv} />
       </CreateEntityLayout>
     </Form>
   );

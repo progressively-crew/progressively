@@ -14,12 +14,29 @@ export interface Schedule {
   type: SchedulingType;
 }
 
-export interface SchedulingCreateDTO {
+export interface SchedulingUpdateVariantEntry {
+  variantId: string;
+  variantNewPercentage: number;
+}
+
+export interface SchedulingUpdatePercentageData {
+  rolloutPercentage: number;
+}
+
+export type SchedulingCreateDTO = {
   utc: string;
-  data: { rolloutPercentage?: number };
   status: FlagStatus;
   type: SchedulingType;
-}
+} & (
+  | {
+      type: SchedulingType.UpdatePercentage;
+      data: SchedulingUpdatePercentageData;
+    }
+  | {
+      type: SchedulingType.UpdateVariantPercentage;
+      data: Array<SchedulingUpdateVariantEntry>;
+    }
+);
 
 export enum SchedulingType {
   UpdatePercentage = "UpdatePercentage",
