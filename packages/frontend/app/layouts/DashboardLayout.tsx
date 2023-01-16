@@ -32,15 +32,17 @@ export const DashboardLayout = ({
     <NavProvider>
       <SkipNavLink>Skip to content</SkipNavLink>
 
-      <div className="bg-white border-gray-100 dark:bg-slate-800 dark:border-slate-700 border-b z-10 lg:sticky top-0 drop-shadow-xl">
+      <div className="bg-white dark:bg-slate-800">
         <Container>
           <div className="flex justify-between h-14 items-center">
             <BreadCrumbs crumbs={crumbs} />
             <UseDropdown user={user} />
           </div>
-
-          {subNav}
         </Container>
+      </div>
+
+      <div className="bg-white dark:bg-slate-800 lg:sticky top-0 drop-shadow-md border-b border-gray-100 dark:border-slate-700 z-10">
+        <Container>{subNav}</Container>
       </div>
 
       <InertWhenNavOpened className="h-full">

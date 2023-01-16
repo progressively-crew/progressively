@@ -40,7 +40,7 @@ export const Switch = ({
       aria-label={label}
       onClick={onClick}
       form={form}
-      className="h-10 px-1 flex items-center gap-2 group"
+      className="h-8 px-1 flex items-center gap-2 group"
       {...props}
     >
       <Typography as="span" className="text-sm">
