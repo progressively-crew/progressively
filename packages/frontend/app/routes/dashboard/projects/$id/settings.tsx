@@ -1,6 +1,5 @@
 import { AiOutlineSetting } from "react-icons/ai";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
-import { Header } from "~/components/Header";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { Section, SectionHeader } from "~/components/Section";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
@@ -9,7 +8,6 @@ import { removeMember } from "~/modules/projects/services/removeMember";
 import { UserRoles } from "~/modules/projects/types";
 import { UserTable } from "~/modules/user/components/UserTable";
 import { getSession } from "~/sessions";
-import { Typography } from "~/components/Typography";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { Stack } from "~/components/Stack";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
@@ -17,13 +15,11 @@ import { Spacer } from "~/components/Spacer";
 import { MetaFunction, ActionFunction } from "@remix-run/node";
 import { useActionData, useTransition, Form } from "@remix-run/react";
 import { Card, CardContent } from "~/components/Card";
-import { TagLine } from "~/components/Tagline";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
-import { ProjectIcon } from "~/components/Icons/ProjectIcon";
 import { EnvIcon } from "~/components/Icons/EnvIcon";
 
 export const meta: MetaFunction = ({ parentsData }) => {
@@ -81,12 +77,6 @@ export default function SettingsPage() {
   return (
     <DashboardLayout
       user={user}
-      header={
-        <Header
-          tagline={<TagLine icon={<ProjectIcon />}>Project</TagLine>}
-          title={<span>{project.name}</span>}
-        />
-      }
       subNav={
         <HorizontalNav label={`Project related`}>
           <NavItem

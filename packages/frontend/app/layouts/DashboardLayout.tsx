@@ -12,7 +12,6 @@ import { BreadCrumbs } from "~/components/Breadcrumbs";
 export interface DashboardLayoutProps {
   user?: Partial<User>;
   children: React.ReactNode;
-  header?: React.ReactNode;
   subNav?: React.ReactNode;
   status?: React.ReactNode;
 }
@@ -20,7 +19,6 @@ export interface DashboardLayoutProps {
 export const DashboardLayout = ({
   user,
   children,
-  header,
   subNav,
   status,
 }: DashboardLayoutProps) => {
@@ -49,15 +47,7 @@ export const DashboardLayout = ({
         <div className="px-4 md:px-12 h-full">
           <div>
             <div className={`max-w-6xl w-full mx-auto`}>
-              {header && (
-                <div>
-                  <Spacer size={12} />
-                  {header}
-                  <Spacer size={4} />
-                </div>
-              )}
-
-              <Spacer size={8} />
+              <Spacer size={12} />
 
               <Main>
                 <div className="flex flex-col gap-2 md:gap-6">

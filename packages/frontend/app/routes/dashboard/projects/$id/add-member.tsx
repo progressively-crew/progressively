@@ -19,9 +19,6 @@ import { useProject } from "~/modules/projects/contexts/useProject";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
-import { Header } from "~/components/Header";
-import { ProjectIcon } from "~/components/Icons/ProjectIcon";
-import { TagLine } from "~/components/Tagline";
 
 export const handle = {
   breadcrumb: (match: { params: any }) => {
@@ -90,15 +87,7 @@ export default function CreateProjectPage() {
 
   if (userRole !== UserRoles.Admin) {
     return (
-      <DashboardLayout
-        user={user}
-        header={
-          <Header
-            tagline={<TagLine icon={<ProjectIcon />}>Project</TagLine>}
-            title={project.name}
-          />
-        }
-      >
+      <DashboardLayout user={user}>
         <PageTitle value="You are not allowed to add members to projects." />
         <Section>
           <figure>
@@ -128,12 +117,6 @@ export default function CreateProjectPage() {
   return (
     <DashboardLayout
       user={user}
-      header={
-        <Header
-          tagline={<TagLine icon={<ProjectIcon />}>Project</TagLine>}
-          title={project.name}
-        />
-      }
       status={
         data?.success ? (
           <SuccessBox id="member-added">

@@ -213,16 +213,14 @@ export default function FlagInsights() {
         />
       }
     >
-      <div className="sr-only">
-        <PageTitle
-          value="Insights"
-          description={
-            <Typography>
-              Information about variants hits per date on the feature flag.
-            </Typography>
-          }
-        />
-      </div>
+      <PageTitle
+        value="Insights"
+        description={
+          <Typography>
+            Information about variants hits per date on the feature flag.
+          </Typography>
+        }
+      />
 
       <Form action=".">
         <div className="flex flex-col md:flex-row gap-3 md:items-end">

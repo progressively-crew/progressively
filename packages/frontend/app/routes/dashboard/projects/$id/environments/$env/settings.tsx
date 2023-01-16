@@ -1,7 +1,5 @@
 import { ButtonCopy } from "~/components/ButtonCopy";
-import { Header } from "~/components/Header";
 import { Section, SectionHeader } from "~/components/Section";
-import { Typography } from "~/components/Typography";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { UserRoles } from "~/modules/projects/types";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
@@ -11,14 +9,12 @@ import { MetaFunction } from "@remix-run/node";
 import { Card, CardContent } from "~/components/Card";
 import { Stack } from "~/components/Stack";
 import { AiOutlineSetting } from "react-icons/ai";
-import { TagLine } from "~/components/Tagline";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
-import { EnvIcon } from "~/components/Icons/EnvIcon";
 import { Spacer } from "~/components/Spacer";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
@@ -38,12 +34,6 @@ export default function EnvSettingsPage() {
   return (
     <DashboardLayout
       user={user}
-      header={
-        <Header
-          title={environment.name}
-          tagline={<TagLine icon={<EnvIcon />}>Environment</TagLine>}
-        />
-      }
       subNav={<EnvNavBar projectId={project.uuid} envId={environment.uuid} />}
     >
       <PageTitle value="Settings" icon={<AiOutlineSetting />} />
