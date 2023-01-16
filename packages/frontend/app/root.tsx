@@ -13,11 +13,11 @@ import UnauthorizedPage from "./routes/401";
 import ForbiddenPage from "./routes/403";
 import NotFoundPage from "./routes/404";
 import styles from "./styles/app.css";
+
 import { Background } from "./components/Background";
 import { LinksFunction } from "@remix-run/node";
 import { Typography } from "./components/Typography";
 import { Spacer } from "./components/Spacer";
-//import { withSentry } from "@sentry/remix";
 import { AiOutlineLogin } from "react-icons/ai";
 import { Button } from "./components/Buttons/Button";
 import { ThemeProvider } from "./modules/theme/ThemeProvider";
@@ -33,7 +33,14 @@ import { LoaderFunction } from "@sentry/remix/types/utils/types";
  * https://remix.run/api/app#links
  */
 export const links: LinksFunction = () => {
-  return [{ rel: "stylesheet", href: styles }];
+  return [
+    { rel: "stylesheet", href: styles },
+    {
+      as: "style",
+      href: "https://rsms.me/inter/inter.css",
+      rel: "preload",
+    },
+  ];
 };
 
 interface LoaderData {

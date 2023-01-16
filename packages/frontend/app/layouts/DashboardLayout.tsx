@@ -12,7 +12,6 @@ import { BreadCrumbs } from "~/components/Breadcrumbs";
 export interface DashboardLayoutProps {
   user?: Partial<User>;
   children: React.ReactNode;
-  header?: React.ReactNode;
   subNav?: React.ReactNode;
   status?: React.ReactNode;
 }
@@ -20,7 +19,6 @@ export interface DashboardLayoutProps {
 export const DashboardLayout = ({
   user,
   children,
-  header,
   subNav,
   status,
 }: DashboardLayoutProps) => {
@@ -34,33 +32,24 @@ export const DashboardLayout = ({
     <NavProvider>
       <SkipNavLink>Skip to content</SkipNavLink>
 
-      <div className="bg-gray-50/95 dark:bg-slate-900/95 z-10 lg:sticky top-0">
+      <div className="bg-white dark:bg-slate-800">
         <Container>
           <div className="flex justify-between h-14 items-center">
             <BreadCrumbs crumbs={crumbs} />
-
             <UseDropdown user={user} />
           </div>
         </Container>
+      </div>
+
+      <div className="bg-white dark:bg-slate-800 lg:sticky top-0 drop-shadow-md border-b border-gray-100 dark:border-slate-700 z-10">
+        <Container>{subNav}</Container>
       </div>
 
       <InertWhenNavOpened className="h-full">
         <div className="px-4 md:px-12 h-full">
           <div>
             <div className={`max-w-6xl w-full mx-auto`}>
-              {header && (
-                <div>
-                  <Spacer size={12} />
-                  {header}
-                  <Spacer size={4} />
-                </div>
-              )}
-
-              <div className="lg:sticky lg:top-16 drop-shadow-xl z-10">
-                {subNav}
-              </div>
-
-              <Spacer size={8} />
+              <Spacer size={12} />
 
               <Main>
                 <div className="flex flex-col gap-2 md:gap-6">

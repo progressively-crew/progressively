@@ -1,9 +1,15 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const defaultTheme = require("tailwindcss/defaultTheme");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: "class",
   content: ["./app/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["Inter var", ...defaultTheme.fontFamily.sans],
+      },
       keyframes: {
         "fade-enter-top": {
           "0%": { transform: "translateY(-1rem)", opacity: 0 },

@@ -1,6 +1,5 @@
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { AiOutlineSetting } from "react-icons/ai";
@@ -10,12 +9,10 @@ import { MetaFunction } from "@remix-run/node";
 import { useSearchParams } from "@remix-run/react";
 import { EnvList } from "~/modules/environments/components/EnvList";
 import { Card, CardContent } from "~/components/Card";
-import { TagLine } from "~/components/Tagline";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
-import { ProjectIcon } from "~/components/Icons/ProjectIcon";
 import { EnvIcon } from "~/components/Icons/EnvIcon";
 import { SearchBar } from "~/components/SearchBar";
 import { SearchLayout } from "~/layouts/SearchLayout";
@@ -47,12 +44,6 @@ export default function ProjectDetailPage() {
   return (
     <DashboardLayout
       user={user}
-      header={
-        <Header
-          tagline={<TagLine icon={<ProjectIcon />}>Project</TagLine>}
-          title={project.name}
-        />
-      }
       subNav={
         <HorizontalNav label={`Project related`}>
           <NavItem
@@ -82,7 +73,7 @@ export default function ProjectDetailPage() {
         ) : null
       }
     >
-      <PageTitle value="Environments" icon={<EnvIcon />} />
+      <PageTitle value="Environments" />
 
       <Section aria-label="List of environments">
         {hasEnvironments ? (

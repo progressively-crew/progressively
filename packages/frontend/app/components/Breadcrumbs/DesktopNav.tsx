@@ -28,13 +28,13 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
               <Link
                 aria-current={currentPage ? "page" : undefined}
                 to={crumb.link}
-                className={`transition-all px-2 -mx-1 py-1 rounded hover:text-black hover:dark:text-slate-200 hover:bg-gray-100 dark:hover:bg-slate-800 active:bg-gray-200 dark:active:bg-slate-700 active:text-indigo-700 no-underline text-xs ${
+                className={`transition-all px-2 py-1 rounded hover:text-black hover:dark:text-slate-200 hover:bg-gray-100 dark:hover:bg-slate-700 active:bg-gray-200 dark:active:bg-slate-600 active:text-indigo-700 no-underline text-sm ${
                   currentPage
                     ? "text-black dark:text-slate-100"
-                    : "text-gray-500 dark:text-slate-200"
+                    : "text-gray-500 dark:text-slate-400"
                 }`}
               >
-                <div className={"rounded px-2 -mx-1 py-1"}>
+                <div className={"rounded px-2 py-1"}>
                   <HStack spacing={2}>
                     {crumb.isRoot ? (
                       <Logo aria-label={crumb.label} />
@@ -61,10 +61,13 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
 
               {!currentPage && (
                 <div
-                  className="flex text-gray-200 dark:text-slate-500 px-2"
+                  className="flex text-gray-200 dark:text-slate-500 px-4"
                   aria-hidden
                 >
-                  {"/"}
+                  <div
+                    className="h-6 bg-gray-200 dark:bg-slate-700 w-[2px]"
+                    style={{ transform: "rotateZ(30deg)" }}
+                  />
                 </div>
               )}
             </li>

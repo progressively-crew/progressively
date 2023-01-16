@@ -1,10 +1,8 @@
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { getSession } from "~/sessions";
-import { Header } from "~/components/Header";
 import { getFlagHits } from "~/modules/flags/services/getFlagHits";
 import { MetaFunction, LoaderFunction, ActionFunction } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
-import { TagLine } from "~/components/Tagline";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { useProject } from "~/modules/projects/contexts/useProject";
@@ -18,15 +16,12 @@ import { TextInput } from "~/components/Fields/TextInput";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { Typography } from "~/components/Typography";
 import { PageTitle } from "~/components/PageTitle";
-import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { MetricPerVariantList } from "~/modules/flags/MetricPerVariantList";
 import { Section, SectionHeader } from "~/components/Section";
 import { BarChart } from "~/components/BarChart";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
 import { EmptyState } from "~/components/EmptyState";
 import { LineChart } from "~/components/LineChart";
-import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
-import { FlagStatus } from "~/modules/flags/types";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
 import { VariantCard } from "~/modules/insights/components/VariantCard";
 import { EvalCard } from "~/modules/insights/components/EvalCard";
@@ -179,50 +174,25 @@ export default function FlagInsights() {
   const { project } = useProject();
   const { environment } = useEnvironment();
 
-  const currentFlag = flagEnv.flag;
-
-  const isFlagActivated = flagEnv.status === FlagStatus.ACTIVATED;
-
   return (
     <DashboardLayout
       user={user}
-      header={
-        <Header
-          tagline={<TagLine icon={<FlagIcon />}>Feature flag</TagLine>}
-          title={currentFlag.name}
-          action={
-            <Form
-              method="post"
-              id={`form-${currentFlag.uuid}`}
-              style={{ marginTop: 12 }}
-            >
-              <ToggleFlag
-                isFlagActivated={isFlagActivated}
-                flagId={currentFlag.uuid}
-                flagName={currentFlag.name}
-              />
-            </Form>
-          }
-        />
-      }
       subNav={
         <FlagMenu
           projectId={project.uuid}
           envId={environment.uuid}
-          flagId={currentFlag.uuid}
+          flagEnv={flagEnv}
         />
       }
     >
-      <div className="sr-only">
-        <PageTitle
-          value="Insights"
-          description={
-            <Typography>
-              Information about variants hits per date on the feature flag.
-            </Typography>
-          }
-        />
-      </div>
+      <PageTitle
+        value="Insights"
+        description={
+          <Typography>
+            Information about variants hits per date on the feature flag.
+          </Typography>
+        }
+      />
 
       <Form action=".">
         <div className="flex flex-col md:flex-row gap-3 md:items-end">

@@ -1,6 +1,5 @@
 import { RawTable, Tr, Th, Td } from "~/components/RawTable";
 import { Tag } from "~/components/Tag";
-import { stringToColor } from "../misc/utils/stringToColor";
 import { VariantDot } from "./components/VariantDot";
 
 interface MetricHit {

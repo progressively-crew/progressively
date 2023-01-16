@@ -3,7 +3,6 @@ import { FlagEnv } from "~/modules/flags/types";
 import { getSession } from "~/sessions";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { Header } from "~/components/Header";
 import { Section } from "~/components/Section";
 import { EmptyState } from "~/components/EmptyState";
 import { CreateButton } from "~/components/Buttons/CreateButton";
@@ -12,7 +11,6 @@ import { EnvNavBar } from "~/modules/environments/components/EnvNavbar";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { Card, CardContent } from "~/components/Card";
-import { TagLine } from "~/components/Tagline";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
@@ -20,8 +18,6 @@ import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
 import { PageTitle } from "~/components/PageTitle";
-import { EnvIcon } from "~/components/Icons/EnvIcon";
-import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { SearchLayout } from "~/layouts/SearchLayout";
 import { SearchBar } from "~/components/SearchBar";
 import { Spacer } from "~/components/Spacer";
@@ -90,12 +86,6 @@ export default function FlagsByEnvPage() {
   return (
     <DashboardLayout
       user={user}
-      header={
-        <Header
-          tagline={<TagLine icon={<EnvIcon />}>Environment</TagLine>}
-          title={environment.name}
-        />
-      }
       subNav={<EnvNavBar projectId={project.uuid} envId={environment.uuid} />}
       status={
         isFlagRemoved ? (
@@ -109,7 +99,7 @@ export default function FlagsByEnvPage() {
         ) : null
       }
     >
-      <PageTitle value="Feature flags" icon={<FlagIcon />} />
+      <PageTitle value="Feature flags" />
 
       <Section aria-label="List of feature flags">
         {hasFlags ? (

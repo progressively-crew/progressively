@@ -68,7 +68,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/metrics",
           )
           .and("have.attr", "aria-current", "page");
 
-        cy.findAllByText("New homepage").should("have.length", 3);
+        cy.findAllByText("New homepage").should("have.length", 2);
         cy.findByRole("heading", { name: "Metrics" }).should("be.visible");
 
         cy.checkA11y();
@@ -83,7 +83,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/metrics",
           "Progressively | Project from seeding | Production | Flags | New footer | Metrics"
         );
 
-        cy.findAllByText("New footer").should("have.length", 3);
+        cy.findAllByText("New footer").should("have.length", 2);
         cy.findByRole("heading", { name: "Metrics" }).should("be.visible");
 
         cy.findByText("No metrics found").should("be.visible");
