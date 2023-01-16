@@ -5,7 +5,7 @@ import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { Card } from "~/components/Card";
 import { Typography } from "~/components/Typography";
 import { FlagStatus } from "~/modules/flags/components/FlagStatus";
-import { Schedule, SchedulingStatus } from "../types";
+import { Schedule, SchedulingStatus, SchedulingType } from "../types";
 
 export const formatDate = (utc: string) => {
   const options = {
@@ -30,7 +30,9 @@ const DateCell = ({ utc }: { utc: string }) => {
 
   if (!formatted) return null;
 
-  return <p className="font-bold dark:text-slate-50">{formatted}</p>;
+  return (
+    <p className="font-semibold dark:text-slate-50 text-sm">{formatted}</p>
+  );
 };
 
 export interface SchedulingListProps {
@@ -49,6 +51,8 @@ export const SchedulingList = ({
     <div>
       <Card>
         {scheduling.map((schedule, index: number) => {
+          const isMultiVariate = Array.isArray(schedule.data);
+
           return (
             <div
               className="px-6 py-4 grid grid-cols-3"
@@ -85,12 +89,15 @@ export const SchedulingList = ({
                 <Typography className="text-sm">
                   Updating status to <FlagStatus value={schedule.status} />
                 </Typography>
-                <Typography className="text-sm">
-                  Updating rollout percentage to:{" "}
-                  <strong className="text-black dark:text-slate-50">
-                    {schedule.data.rolloutPercentage}%
-                  </strong>
-                </Typography>
+
+                {isMultiVariate ? null : (
+                  <Typography className="text-sm">
+                    Updating rollout percentage to:{" "}
+                    <strong className="text-black dark:text-slate-50">
+                      {schedule.data.rolloutPercentage}%
+                    </strong>
+                  </Typography>
+                )}
               </div>
 
               <div className="flex justify-end items-center">
