@@ -1,7 +1,7 @@
 import { Menu, Transition } from "@headlessui/react";
 import { NavLink } from "@remix-run/react";
 import React, { Fragment } from "react";
-import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import { RxCaretSort } from "react-icons/rx";
 
 interface MenuItem {
   label: string;
@@ -20,10 +20,10 @@ export const MenuButton = ({ items, label }: MenuButtonProps) => {
       <Menu>
         <Menu.Button
           className={
-            "w-8 h-8 flex justify-center items-center hover:bg-gray-100 hover:dark:bg-slate-800 transition-all rounded text-gray-700 dark:text-slate-200"
+            "w-6 h-8 flex justify-center items-center hover:bg-gray-100 hover:dark:bg-slate-700 active:dark:bg-slate-600 transition-all rounded text-gray-700 dark:text-slate-200 text-lg"
           }
         >
-          <MdOutlineKeyboardArrowDown aria-label={label} />
+          <RxCaretSort aria-label={label} />
         </Menu.Button>
 
         <Transition
