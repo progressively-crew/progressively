@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { AiFillCheckCircle } from "react-icons/ai";
+import { TbCircle } from "react-icons/tb";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
+import { Card } from "~/components/Card";
 import { SliderInput } from "~/components/Fields/SliderInput";
 import { RawTable, Td, Th, Tr } from "~/components/RawTable";
 import { Switch } from "~/components/Switch";
@@ -31,7 +33,7 @@ const DateCell = ({ utc }: { utc: string }) => {
 
   if (!formatted) return null;
 
-  return <Typography className="text-sm">{formatted}</Typography>;
+  return <p className="font-bold">{formatted}</p>;
 };
 
 export interface SchedulingListProps {
@@ -47,62 +49,100 @@ export const SchedulingList = ({
   flagId,
 }: SchedulingListProps) => {
   return (
-    <RawTable caption="Scheduling list">
-      <thead>
-        <Tr>
-          <Th>Date</Th>
-          <Th>Flag status</Th>
-          <Th>Percentage</Th>
-          <Th>Has run</Th>
-          <Th>Actions</Th>
-        </Tr>
-      </thead>
-      <tbody>
+    <div>
+      <Card>
         {scheduling.map((schedule, index: number) => (
-          <Tr
+          <div
+            className="px-6 py-4"
             key={`${schedule.utc}-${schedule.data?.rolloutPercentage}-${index}`}
           >
-            <Td width="20%">
-              <DateCell utc={schedule.utc} />
-            </Td>
-            <Td>
-              <Switch
-                label="Next flag status"
-                type="submit"
-                checked={schedule.status === FlagStatusType.ACTIVATED}
-              />
-            </Td>
-            <Td>
-              <SliderInput
-                onChange={() => {}}
-                percentageValue={schedule.data?.rolloutPercentage || 0}
-                label={""}
-                hiddenLabel
-                name={"not-important-" + index}
-              />
-            </Td>
-            <Td className="text-center py-4 px-8 flex justify-center">
-              {schedule.schedulingStatus === SchedulingStatus.HAS_RUN && (
-                <AiFillCheckCircle
-                  aria-label="The scheduled update has already run"
-                  className="text-2xl text-indigo-500 dark:text-indigo-20"
-                />
+            <div className="flex flex-row gap-2">
+              {schedule.schedulingStatus === SchedulingStatus.HAS_RUN ? (
+                <>
+                  <AiFillCheckCircle
+                    aria-hidden
+                    className="text-emerald-500 mt-1"
+                  />
+                  <div>
+                    <DateCell utc={schedule.utc} />
+                    <Typography className="text-sm">
+                      The schedule has already run
+                    </Typography>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <TbCircle aria-hidden className="text-gray-300 mt-1" />
+                  <div>
+                    <DateCell utc={schedule.utc} />
+                    <Typography className="text-sm">
+                      The schedule has not run yet
+                    </Typography>
+                  </div>
+                </>
               )}
-            </Td>
-            <Td>
-              <div className="inline-block">
-                <DeleteButton
-                  size="S"
-                  variant="secondary"
-                  to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/scheduling/${schedule.uuid}/delete`}
-                >
-                  Remove
-                </DeleteButton>
-              </div>
-            </Td>
-          </Tr>
+            </div>
+          </div>
         ))}
-      </tbody>
-    </RawTable>
+      </Card>
+
+      <RawTable caption="Scheduling list">
+        <thead>
+          <Tr>
+            <Th>Date</Th>
+            <Th>Flag status</Th>
+            <Th>Percentage</Th>
+            <Th>Has run</Th>
+            <Th>Actions</Th>
+          </Tr>
+        </thead>
+        <tbody>
+          {scheduling.map((schedule, index: number) => (
+            <Tr
+              key={`${schedule.utc}-${schedule.data?.rolloutPercentage}-${index}`}
+            >
+              <Td width="20%">
+                <DateCell utc={schedule.utc} />
+              </Td>
+              <Td>
+                <Switch
+                  label="Next flag status"
+                  type="submit"
+                  checked={schedule.status === FlagStatusType.ACTIVATED}
+                />
+              </Td>
+              <Td>
+                <SliderInput
+                  onChange={() => {}}
+                  percentageValue={schedule.data?.rolloutPercentage || 0}
+                  label={""}
+                  hiddenLabel
+                  name={"not-important-" + index}
+                />
+              </Td>
+              <Td className="text-center py-4 px-8 flex justify-center">
+                {schedule.schedulingStatus === SchedulingStatus.HAS_RUN && (
+                  <AiFillCheckCircle
+                    aria-label="The scheduled update has already run"
+                    className="text-2xl text-indigo-500 dark:text-indigo-20"
+                  />
+                )}
+              </Td>
+              <Td>
+                <div className="inline-block">
+                  <DeleteButton
+                    size="S"
+                    variant="secondary"
+                    to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/scheduling/${schedule.uuid}/delete`}
+                  >
+                    Remove
+                  </DeleteButton>
+                </div>
+              </Td>
+            </Tr>
+          ))}
+        </tbody>
+      </RawTable>
+    </div>
   );
 };
