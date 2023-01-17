@@ -8,7 +8,7 @@ processes = []
 [env]
   SMTP_PORT = 587
   REFRESH_TOKEN_EXPIRES = 84600
-  FRONTEND_URL = "https://progressively.vercel.app"
+  FRONTEND_URL = "https://dashboard.progressively.app"
   BACKEND_URL = "https://backend-progressively.fly.dev"
   SOCKET_TIMEOUT = 10000
   ALLOW_REGISTRATION = "true"
