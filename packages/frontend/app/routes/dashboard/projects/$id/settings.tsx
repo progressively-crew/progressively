@@ -1,4 +1,3 @@
-import { AiOutlineSetting } from "react-icons/ai";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { Section, SectionHeader } from "~/components/Section";
@@ -20,7 +19,6 @@ import { useProject } from "~/modules/projects/contexts/useProject";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
-import { EnvIcon } from "~/components/Icons/EnvIcon";
 
 export const meta: MetaFunction = ({ parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -79,17 +77,11 @@ export default function SettingsPage() {
       user={user}
       subNav={
         <HorizontalNav label={`Project related`}>
-          <NavItem
-            to={`/dashboard/projects/${project.uuid}`}
-            icon={<EnvIcon />}
-          >
+          <NavItem to={`/dashboard/projects/${project.uuid}`}>
             Environments
           </NavItem>
 
-          <NavItem
-            to={`/dashboard/projects/${project.uuid}/settings`}
-            icon={<AiOutlineSetting />}
-          >
+          <NavItem to={`/dashboard/projects/${project.uuid}/settings`}>
             Settings
           </NavItem>
         </HorizontalNav>

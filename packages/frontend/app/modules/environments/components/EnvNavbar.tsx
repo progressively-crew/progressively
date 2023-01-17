@@ -1,6 +1,4 @@
-import { AiOutlineSetting } from "react-icons/ai";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
-import { FlagIcon } from "~/components/Icons/FlagIcon";
 
 export interface EnvNavBarProps {
   projectId: string;
@@ -12,13 +10,9 @@ export const EnvNavBar = ({ projectId, envId }: EnvNavBarProps) => {
 
   return (
     <HorizontalNav label={`Environment related`}>
-      <NavItem to={`${rootEnvPath}`} icon={<FlagIcon />}>
-        Feature flags
-      </NavItem>
+      <NavItem to={`${rootEnvPath}`}>Feature flags</NavItem>
 
-      <NavItem to={`${rootEnvPath}/settings`} icon={<AiOutlineSetting />}>
-        Settings
-      </NavItem>
+      <NavItem to={`${rootEnvPath}/settings`}>Settings</NavItem>
     </HorizontalNav>
   );
 };

@@ -2,7 +2,6 @@ import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { Section } from "~/components/Section";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
-import { AiOutlineSetting } from "react-icons/ai";
 import { EmptyState } from "~/components/EmptyState";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { MetaFunction } from "@remix-run/node";
@@ -13,7 +12,6 @@ import { useUser } from "~/modules/user/contexts/useUser";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
-import { EnvIcon } from "~/components/Icons/EnvIcon";
 import { SearchBar } from "~/components/SearchBar";
 import { SearchLayout } from "~/layouts/SearchLayout";
 import { Spacer } from "~/components/Spacer";
@@ -46,17 +44,11 @@ export default function ProjectDetailPage() {
       user={user}
       subNav={
         <HorizontalNav label={`Project related`}>
-          <NavItem
-            to={`/dashboard/projects/${project.uuid}`}
-            icon={<EnvIcon />}
-          >
+          <NavItem to={`/dashboard/projects/${project.uuid}`}>
             Environments
           </NavItem>
 
-          <NavItem
-            to={`/dashboard/projects/${project.uuid}/settings`}
-            icon={<AiOutlineSetting />}
-          >
+          <NavItem to={`/dashboard/projects/${project.uuid}/settings`}>
             Settings
           </NavItem>
         </HorizontalNav>
