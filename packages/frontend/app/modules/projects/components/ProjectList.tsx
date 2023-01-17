@@ -1,7 +1,10 @@
 import { useRef } from "react";
+import { Card, CardContent } from "~/components/Card";
 import { Link } from "~/components/Link";
-import { RawTable, Td, Th, Tr } from "~/components/RawTable";
+import { Spacer } from "~/components/Spacer";
 import { Tag } from "~/components/Tag";
+import { Typography } from "~/components/Typography";
+import { stringToColor } from "~/modules/misc/utils/stringToColor";
 import { UserProject } from "../types";
 
 export interface ProjectListProps {
@@ -11,36 +14,52 @@ export interface ProjectListProps {
 interface ProjectRowProps {
   userProject: UserProject;
 }
-const ProjectRow = ({ userProject }: ProjectRowProps) => {
+const ProjectCard = ({ userProject }: ProjectRowProps) => {
   const linkRef = useRef<HTMLAnchorElement>(null);
 
   return (
-    <Tr onClick={() => linkRef.current?.click()}>
-      <Td>
-        <Link ref={linkRef} to={`/dashboard/projects/${userProject.projectId}`}>
-          {userProject.project.name}
-        </Link>
-      </Td>
-      <Td>
-        <Tag>{userProject.role}</Tag>
-      </Td>
-    </Tr>
+    <div onClick={() => linkRef.current?.click()} className="cursor-pointer">
+      <Card>
+        <CardContent>
+          <div className="flex flex-row gap-4 items-center">
+            <div
+              className="w-12 h-12 text-xl rounded flex items-center justify-center"
+              aria-hidden
+              style={{
+                color: stringToColor(userProject.project.name, 25),
+                background: stringToColor(userProject.project.name, 90),
+              }}
+            >
+              {userProject.project.name[0]}
+            </div>
+
+            <div className="">
+              <Link
+                ref={linkRef}
+                to={`/dashboard/projects/${userProject.projectId}`}
+                className="dark:text-slate-100"
+              >
+                {userProject.project.name}
+              </Link>
+
+              <Spacer size={2} />
+
+              <Typography className="dark:text-slate-300 text-sm">
+                Role in the project: <Tag size="S">{userProject.role}</Tag>
+              </Typography>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   );
 };
 export const ProjectList = ({ projects }: ProjectListProps) => {
   return (
-    <RawTable caption="Projects you are part of">
-      <thead>
-        <Tr>
-          <Th>Name</Th>
-          <Th>Role</Th>
-        </Tr>
-      </thead>
-      <tbody>
-        {projects.map((userProject) => (
-          <ProjectRow key={userProject.projectId} userProject={userProject} />
-        ))}
-      </tbody>
-    </RawTable>
+    <div className="grid grid-cols-3 gap-8">
+      {projects.map((userProject) => (
+        <ProjectCard key={userProject.projectId} userProject={userProject} />
+      ))}
+    </div>
   );
 };
