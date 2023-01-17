@@ -1,3 +1,11 @@
+const vercelSpecificConfig =
+  process.env.IS_VERCEL === "true"
+    ? {
+        serverBuildTarget: "vercel",
+        server: "./server.js",
+      }
+    : {};
+
 /** @type {import('@remix-run/dev').AppConfig} */
 module.exports = {
   ignoredRouteFiles: ["**/.*"],
@@ -19,4 +27,5 @@ module.exports = {
       rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings, rehypeHighlight],
     };
   },
+  ...vercelSpecificConfig,
 };
