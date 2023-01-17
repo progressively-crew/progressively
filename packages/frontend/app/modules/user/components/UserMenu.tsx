@@ -1,7 +1,4 @@
-import { FaToggleOff } from "react-icons/fa";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
-
-import { VariantIcon } from "~/components/Icons/VariantIcon";
 
 export interface FlagMenuProps {
   projectId: string;
@@ -12,13 +9,9 @@ export interface FlagMenuProps {
 export const UserMenu = () => {
   return (
     <HorizontalNav label={`Flag related`}>
-      <NavItem to={`#password`} icon={<FaToggleOff />}>
-        Password
-      </NavItem>
+      <NavItem to={`#password`}>Password</NavItem>
 
-      <NavItem to={`#logout`} icon={<VariantIcon />}>
-        Logout
-      </NavItem>
+      <NavItem to={`#logout`}>Logout</NavItem>
     </HorizontalNav>
   );
 };

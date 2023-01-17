@@ -12,13 +12,13 @@ export interface SearchBarProps {
 
 export const SearchBar = ({ placeholder, label, count }: SearchBarProps) => {
   return (
-    <div className="max-w-md">
+    <div>
       <VisuallyHidden>
         <label htmlFor="search">{label}</label>
       </VisuallyHidden>
 
       <Form role="search">
-        <div className="flex flex-row items-center h-10 rounded-full pl-4 border border-gray-200 gap-2 bg-white overflow-hidden w-full dark:border-slate-700 dark:bg-slate-800 pr-1">
+        <div className="flex flex-row items-center h-10 rounded pl-4 border border-gray-200 gap-2 bg-white overflow-hidden w-full dark:border-slate-700 dark:bg-slate-800 pr-1">
           <input
             type="text"
             name="search"
@@ -30,7 +30,7 @@ export const SearchBar = ({ placeholder, label, count }: SearchBarProps) => {
           <button
             type="submit"
             aria-label="Search"
-            className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 text-indigo-700 hover:bg-indigo-50 active:bg-indigo-100 dark:bg-slate-700 dark:text-slate-100 dark:hover:bg-slate-600 dark:active:bg-slate-500 flex items-center justify-center"
+            className="w-8 h-8 rounded bg-indigo-100 text-indigo-700 text-indigo-700 hover:bg-indigo-50 active:bg-indigo-100 dark:bg-slate-700 dark:text-slate-100 dark:hover:bg-slate-600 dark:active:bg-slate-500 flex items-center justify-center"
           >
             <AiOutlineSearch />
           </button>

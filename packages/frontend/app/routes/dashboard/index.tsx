@@ -84,9 +84,7 @@ export default function DashboardRoot() {
         />
       </SearchLayout>
 
-      <Card>
-        <ProjectList projects={projects} />
-      </Card>
+      <ProjectList projects={projects} />
     </DashboardLayout>
   );
 }

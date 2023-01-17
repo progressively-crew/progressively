@@ -17,10 +17,9 @@ export const HorizontalNav = ({ children, label }: HorizontalNavProps) => {
 export interface NavItemProps {
   children: React.ReactNode;
   to: string;
-  icon: React.ReactNode;
 }
 
-export const NavItem = ({ children, to, icon }: NavItemProps) => {
+export const NavItem = ({ children, to }: NavItemProps) => {
   return (
     <li>
       <NavLink
@@ -32,10 +31,7 @@ export const NavItem = ({ children, to, icon }: NavItemProps) => {
             : "h-8 block flex items-center rounded px-3 hover:bg-gray-100 hover:dark:bg-slate-700 active:bg-gray-200 active:dark:bg-slate-600 text-gray-500 dark:text-gray-300 text-sm"
         }
       >
-        <HStack spacing={2}>
-          <span aria-hidden>{icon}</span>
-          <span>{children}</span>
-        </HStack>
+        {children}
       </NavLink>
     </li>
   );

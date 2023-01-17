@@ -594,6 +594,10 @@ video {
   margin-top: 0.25rem;
 }
 
+.mr-4 {
+  margin-right: 1rem;
+}
+
 .block {
   display: block;
 }
@@ -642,6 +646,10 @@ video {
   height: 3rem;
 }
 
+.h-5 {
+  height: 1.25rem;
+}
+
 .h-1 {
   height: 0.25rem;
 }
@@ -652,10 +660,6 @@ video {
 
 .h-3 {
   height: 0.75rem;
-}
-
-.h-5 {
-  height: 1.25rem;
 }
 
 .h-6 {
@@ -710,20 +714,20 @@ video {
   width: 100%;
 }
 
-.w-6 {
-  width: 1.5rem;
-}
-
-.w-56 {
-  width: 14rem;
-}
-
 .w-12 {
   width: 3rem;
 }
 
 .w-5 {
   width: 1.25rem;
+}
+
+.w-6 {
+  width: 1.5rem;
+}
+
+.w-56 {
+  width: 14rem;
 }
 
 .w-\[2px\] {
@@ -740,10 +744,6 @@ video {
 
 .max-w-lg {
   max-width: 32rem;
-}
-
-.max-w-md {
-  max-width: 28rem;
 }
 
 .max-w-2xl {
@@ -811,6 +811,10 @@ video {
 
 .animate-spin {
   animation: spin 1s linear infinite;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
 
 .select-all {
@@ -1672,14 +1676,14 @@ input[type="range"]::-moz-range-thumb {
   border-left-color: rgb(99 102 241 / var(--tw-border-opacity));
 }
 
-.hover\:bg-gray-100:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(243 244 246 / var(--tw-bg-opacity));
-}
-
 .hover\:bg-gray-50:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(249 250 251 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-gray-100:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(243 244 246 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-indigo-50:hover {
@@ -1752,14 +1756,14 @@ input[type="range"]::-moz-range-thumb {
   padding: 1rem;
 }
 
-.active\:bg-gray-200:active {
-  --tw-bg-opacity: 1;
-  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
-}
-
 .active\:bg-gray-100:active {
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
+}
+
+.active\:bg-gray-200:active {
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
 }
 
 .active\:bg-indigo-100:active {
@@ -1961,11 +1965,6 @@ input[type="range"]::-moz-range-thumb {
   color: rgb(203 213 225 / var(--tw-text-opacity));
 }
 
-.dark .dark\:text-indigo-400 {
-  --tw-text-opacity: 1;
-  color: rgb(129 140 248 / var(--tw-text-opacity));
-}
-
 .dark .dark\:text-slate-500 {
   --tw-text-opacity: 1;
   color: rgb(100 116 139 / var(--tw-text-opacity));
@@ -1979,6 +1978,11 @@ input[type="range"]::-moz-range-thumb {
 .dark .dark\:text-red-200 {
   --tw-text-opacity: 1;
   color: rgb(254 202 202 / var(--tw-text-opacity));
+}
+
+.dark .dark\:text-indigo-400 {
+  --tw-text-opacity: 1;
+  color: rgb(129 140 248 / var(--tw-text-opacity));
 }
 
 .dark .dark\:text-inherit {
