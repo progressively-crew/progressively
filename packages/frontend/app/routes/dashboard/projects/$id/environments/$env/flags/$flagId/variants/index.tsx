@@ -151,14 +151,8 @@ export default function VariantsOfFlag() {
       />
 
       <Section aria-label="List of variants">
-        <Card
-          footer={
-            <div className="flex flex-row justify-end">
-              <SubmitButton form="edit-variant">Edit variants</SubmitButton>
-            </div>
-          }
-        >
-          {!hasVariants && (
+        {!hasVariants && (
+          <Card>
             <CardContent>
               <EmptyState
                 titleAs="h2"
@@ -171,12 +165,22 @@ export default function VariantsOfFlag() {
                 }
               />
             </CardContent>
-          )}
+          </Card>
+        )}
 
-          {hasVariants && (
+        {hasVariants && (
+          <Card
+            footer={
+              hasVariants && (
+                <div className="flex flex-row justify-end">
+                  <SubmitButton form="edit-variant">Edit variants</SubmitButton>
+                </div>
+              )
+            }
+          >
             <VariantList variants={variants} errors={actionData?.errors} />
-          )}
-        </Card>
+          </Card>
+        )}
       </Section>
     </DashboardLayout>
   );

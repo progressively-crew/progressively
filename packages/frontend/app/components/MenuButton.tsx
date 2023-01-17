@@ -38,7 +38,7 @@ export const MenuButton = ({ items, label }: MenuButtonProps) => {
         >
           <Menu.Items className="z-20 absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 dark:divide-slate-700 rounded-md bg-white dark:bg-slate-800 shadow-lg ring-1 ring-black ring-opacity-5">
             {items.map((item) => (
-              <Menu.Item key={item.href}>
+              <Menu.Item key={item.label}>
                 {({ active }) => (
                   <NavLink
                     as={item.onClick ? "button" : undefined}
