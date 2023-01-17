@@ -39,10 +39,10 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
                     {crumb.isRoot ? (
                       <Logo aria-label={crumb.label} />
                     ) : (
-                      <div className="flex flex-row items-center gap-2">
+                      <HStack spacing={2}>
                         <InitialBox content={crumb.label} size="S" />
                         {crumb.label}
-                      </div>
+                      </HStack>
                     )}
                   </HStack>
                 </div>
