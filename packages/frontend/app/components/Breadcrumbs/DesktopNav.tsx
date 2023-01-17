@@ -1,8 +1,8 @@
 import { HStack } from "../HStack";
+import { InitialBox } from "../InitialBox";
 import { Link } from "../Link";
 import { Logo } from "../Logo/Logo";
 import { MenuButton } from "../MenuButton";
-import { CrumbIcon } from "./CrumbIcon";
 import { Crumbs } from "./types";
 
 export interface DesktopNavProps {
@@ -39,17 +39,10 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
                     {crumb.isRoot ? (
                       <Logo aria-label={crumb.label} />
                     ) : (
-                      <>
-                        <CrumbIcon
-                          crumb={crumb}
-                          color={
-                            currentPage
-                              ? "text-indigo-700 dark:text-indigo-400"
-                              : ""
-                          }
-                        />
+                      <div className="flex flex-row items-center gap-2">
+                        <InitialBox content={crumb.label} size="S" />
                         {crumb.label}
-                      </>
+                      </div>
                     )}
                   </HStack>
                 </div>
