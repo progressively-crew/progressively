@@ -1,28 +1,23 @@
 import { Injectable, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
-import { createClient, RedisClientType } from 'redis';
+import { Redis } from 'ioredis';
 
 @Injectable()
-export class RedisService implements OnModuleInit, OnModuleDestroy {
-  private publisher: RedisClientType;
-  private subscriber: RedisClientType;
+export class RedisService implements OnModuleDestroy {
+  private publisher: Redis;
+  private subscriber: Redis;
   private alreadySubscribedChannels: { [key: string]: boolean };
 
   constructor() {
     const redisUrl = process.env.REDIS_URL;
     this.alreadySubscribedChannels = {};
 
-    this.publisher = createClient({ url: redisUrl });
-    this.subscriber = this.publisher.duplicate();
+    this.publisher = new Redis(redisUrl);
+    this.subscriber = new Redis(redisUrl);
   }
 
   async onModuleDestroy() {
     await this.publisher.disconnect();
     await this.subscriber.disconnect();
-  }
-
-  async onModuleInit() {
-    await this.publisher.connect();
-    await this.subscriber.connect();
   }
 
   notifyChannel(channel: string, message: any) {
@@ -34,8 +29,12 @@ export class RedisService implements OnModuleInit, OnModuleDestroy {
     if (this.alreadySubscribedChannels[channel]) return;
     this.alreadySubscribedChannels[channel] = true;
 
-    this.subscriber.subscribe(channel, (message: string) =>
-      callback(JSON.parse(message)),
-    );
+    this.subscriber.subscribe(channel);
+
+    this.subscriber.on('message', (channelName: string, message: string) => {
+      if (channelName === channel) {
+        callback(JSON.parse(message));
+      }
+    });
   }
 }
