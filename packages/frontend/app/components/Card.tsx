@@ -19,7 +19,9 @@ export const Card = ({ children, footer, onClick }: CardProps) => {
       {children}
 
       {footer && (
-        <div className="bg-gray-50 px-6 py-4 dark:bg-slate-700">{footer}</div>
+        <div className="bg-gray-50 px-6 py-4 dark:bg-slate-700 flex">
+          {footer}
+        </div>
       )}
     </div>
   );

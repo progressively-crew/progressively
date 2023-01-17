@@ -96,12 +96,10 @@ export default function ProjectDetailPage() {
 
             <Spacer size={4} />
 
-            <Card>
-              <EnvList
-                environments={filteredEnvironments}
-                projectId={project.uuid}
-              />
-            </Card>
+            <EnvList
+              environments={filteredEnvironments}
+              projectId={project.uuid}
+            />
           </div>
         ) : (
           <Card>
