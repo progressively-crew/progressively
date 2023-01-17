@@ -5,16 +5,6 @@ on:
 env:
   FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 jobs:
-  deploy-documentation:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: superfly/flyctl-actions/setup-flyctl@master
-
-      - name: Deploy frontend
-        working-directory: ./packages/documentation
-        run: flyctl deploy --remote-only
-
   deploy-backend:
     runs-on: ubuntu-latest
     steps:
