@@ -1,5 +1,5 @@
 import { Form } from "@remix-run/react";
-import { IoIosSearch } from "react-icons/io";
+import { AiOutlineSearch } from "react-icons/ai";
 import { Spacer } from "./Spacer";
 import { Typography } from "./Typography";
 import { VisuallyHidden } from "./VisuallyHidden";
@@ -18,9 +18,7 @@ export const SearchBar = ({ placeholder, label, count }: SearchBarProps) => {
       </VisuallyHidden>
 
       <Form role="search">
-        <div className="flex flex-row items-center h-10 rounded pl-4 border border-gray-200 gap-2 bg-white overflow-hidden w-full dark:border-slate-800 dark:bg-slate-800">
-          <IoIosSearch className="text-xl text-gray-500 dark:text-slate-300" />
-
+        <div className="flex flex-row items-center h-10 rounded-full pl-4 border border-gray-200 gap-2 bg-white overflow-hidden w-full dark:border-slate-700 dark:bg-slate-800 pr-1">
           <input
             type="text"
             name="search"
@@ -31,9 +29,10 @@ export const SearchBar = ({ placeholder, label, count }: SearchBarProps) => {
 
           <button
             type="submit"
-            className="bg-indigo-100 text-indigo-700 text-indigo-700 hover:bg-indigo-50 active:bg-indigo-100 h-full px-4 dark:bg-slate-700 dark:text-slate-100 dark:active:bg-slate-800"
+            aria-label="Search"
+            className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 text-indigo-700 hover:bg-indigo-50 active:bg-indigo-100 dark:bg-slate-700 dark:text-slate-100 dark:hover:bg-slate-600 dark:active:bg-slate-500 flex items-center justify-center"
           >
-            Search
+            <AiOutlineSearch />
           </button>
         </div>
       </Form>

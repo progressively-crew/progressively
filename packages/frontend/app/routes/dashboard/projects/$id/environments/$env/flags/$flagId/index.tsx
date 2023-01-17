@@ -164,17 +164,18 @@ export default function FlagById() {
       <PageTitle value="Audience" />
 
       <Section id="rollout-target">
-        <Card>
+        <Card
+          footer={
+            isMultiVariants && (
+              <div className="flex items-center justify-end flex-row h-full">
+                <SubmitButton form="edit-variant">Adjust</SubmitButton>
+              </div>
+            )
+          }
+        >
           <CardContent>
             <SectionHeader
               title="Percentage of the audience"
-              action={
-                isMultiVariants && (
-                  <div className="flex items-center flex-row h-full">
-                    <SubmitButton form="edit-variant">Adjust</SubmitButton>
-                  </div>
-                )
-              }
               status={
                 hasPercentageChanged ? (
                   <SuccessBox id="percentage-changed">

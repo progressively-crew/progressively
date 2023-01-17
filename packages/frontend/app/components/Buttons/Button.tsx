@@ -19,7 +19,7 @@ const classCombination = {
   defaultprimary:
     "bg-indigo-700 text-white hover:bg-indigo-500 active:bg-indigo-600",
   defaultsecondary:
-    "bg-indigo-100 text-indigo-700 text-indigo-700 hover:bg-indigo-50 active:bg-indigo-100",
+    "border border-indigo-500 text-indigo-700 text-indigo-700 hover:border-indigo-700 transition-all dark:border-indigo-200 dark:text-indigo-200",
   defaulttertiary:
     "text-indigo-700 dark:text-indigo-200 hover:bg-gray-50 hover:dark:bg-slate-700 active:bg-gray-100 active:dark:bg-slate-800",
 

@@ -19,7 +19,7 @@ export const PageTitle = ({
       <div>
         <HStack spacing={3}>
           <h1
-            className="font-bold text-4xl md:text-5xl dark:text-white"
+            className="font-semibold text-4xl md:text-5xl dark:text-white"
             id="page-title"
           >
             <span>{value}</span>

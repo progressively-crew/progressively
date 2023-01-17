@@ -41,7 +41,7 @@ export const DashboardLayout = ({
         </Container>
       </div>
 
-      <div className="bg-white dark:bg-slate-800 lg:sticky top-0 drop-shadow-md border-b border-gray-100 dark:border-slate-700 z-10">
+      <div className="bg-white dark:bg-slate-800 lg:sticky top-0 border-b border-gray-200 dark:border-slate-700 z-10">
         <Container>{subNav}</Container>
       </div>
 
