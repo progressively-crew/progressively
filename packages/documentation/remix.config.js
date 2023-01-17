@@ -27,5 +27,6 @@ module.exports = {
       rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings, rehypeHighlight],
     };
   },
+
   ...vercelSpecificConfig,
 };
