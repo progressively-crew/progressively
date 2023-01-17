@@ -7,11 +7,11 @@ export interface WebhookEventProps {
 
 export const WebhookEvent = ({ value }: WebhookEventProps) => {
   if (value === WebhookEvents.ACTIVATION) {
-    return <Tag>Activation</Tag>;
+    return <Tag size="S">Flag activation</Tag>;
   }
 
   if (value === WebhookEvents.DEACTIVATION) {
-    return <Tag>Deactivation</Tag>;
+    return <Tag size="S">Flag deactivation</Tag>;
   }
 
   return null;

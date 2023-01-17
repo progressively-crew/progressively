@@ -5,8 +5,9 @@ import { RxCaretSort } from "react-icons/rx";
 
 interface MenuItem {
   label: string;
-  href: string;
+  href?: string;
   icon?: React.ReactNode;
+  onClick?: () => void;
 }
 
 export interface MenuButtonProps {
@@ -40,10 +41,12 @@ export const MenuButton = ({ items, label }: MenuButtonProps) => {
               <Menu.Item key={item.href}>
                 {({ active }) => (
                   <NavLink
+                    as={item.onClick ? "button" : undefined}
                     className={`flex gap-2 w-full items-center first:rounded-t-md last:rounded-b-md px-3 py-3 text-sm text-gray-700 dark:text-slate-200 font-normal focus:bg-gray-100 ${
                       active ? "bg-gray-100 dark:bg-slate-700" : ""
                     }`}
-                    to={item.href}
+                    to={item.href || ""}
+                    onClick={item.onClick}
                   >
                     {item.icon}
                     {item.label}
