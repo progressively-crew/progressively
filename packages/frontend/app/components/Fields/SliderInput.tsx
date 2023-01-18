@@ -29,7 +29,7 @@ export const SliderInput = ({
   const currentId = id || name;
 
   const wrapperStyle = bgColor
-    ? ({ "--input-range-track": bgColor } as React.CSSProperties)
+    ? ({ "--primary": bgColor } as React.CSSProperties)
     : undefined;
 
   const inputStyles = {

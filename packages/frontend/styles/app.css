@@ -3,8 +3,15 @@
 @tailwind utilities;
 
 :root {
-  --input-range-track: #4f46e5;
+  --primary: #4f46e5;
 }
+
+/* Radio */
+.custom-radio:checked::before {
+  background: var(--primary);
+  border: 1px solid var(--primary);
+}
+/* End ofRadio */
 
 /********** Range Input Styles **********/
 /*Range Reset*/
@@ -31,7 +38,7 @@ input[type="range"]::-webkit-slider-thumb {
   border-radius: 4px;
 
   /*custom styles*/
-  background-color: var(--input-range-track);
+  background-color: var(--primary);
   height: 2rem;
   width: 1rem;
 }
@@ -50,7 +57,7 @@ input[type="range"]::-moz-range-thumb {
   border-radius: 4px; /*Removes default border-radius that FF applies*/
 
   /*custom styles*/
-  background-color: var(--input-range-track);
+  background-color: var(--primary);
   height: 2rem;
   width: 1rem;
 }
@@ -66,5 +73,5 @@ input[type="range"]::-moz-range-thumb {
   height: 0;
   border-top: 8px solid transparent;
   border-bottom: 8px solid transparent;
-  border-right: 8px solid var(--input-range-track);
+  border-right: 8px solid var(--primary);
 }
