@@ -1,4 +1,4 @@
-import { Injectable, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
+import { Injectable, OnModuleDestroy } from '@nestjs/common';
 import { Redis } from 'ioredis';
 
 @Injectable()
@@ -14,10 +14,19 @@ export class RedisService implements OnModuleDestroy {
     this.publisher = new Redis(redisUrl);
     this.subscriber = new Redis(redisUrl);
   }
-
   async onModuleDestroy() {
-    await this.publisher.disconnect();
-    await this.subscriber.disconnect();
+    await this.close();
+  }
+
+  async close() {
+    const teardown = async (redis: Redis) => {
+      await new Promise((resolve) => {
+        redis.quit();
+        redis.on('end', resolve);
+      });
+    };
+
+    await Promise.all([teardown(this.publisher), teardown(this.subscriber)]);
   }
 
   notifyChannel(channel: string, message: any) {
