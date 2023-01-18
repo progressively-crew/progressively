@@ -1515,9 +1515,12 @@ video {
 
 /* Radio */
 
+.custom-radio:checked {
+  border: 1px solid var(--primary);
+}
+
 .custom-radio:checked::before {
   background: var(--primary);
-  border: 1px solid var(--primary);
 }
 
 /* End ofRadio */
