@@ -1,5 +1,4 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { RolloutStrategy } from '../strategy/types';
 import { FlagStatus } from '../flags/flags.status';
 import { PopulatedFlagEnv, Variant } from '../flags/types';
@@ -7,26 +6,25 @@ import { SdkService } from './sdk.service';
 import { AppModule } from '../app.module';
 import { ComparatorEnum } from '../shared/utils/comparators/types';
 import { Eligibility } from '../eligibility/types';
+import { RedisService } from '../websocket/redis.service';
 
 describe('SdkService', () => {
   let service: SdkService;
   let strategy: RolloutStrategy;
   let flagEnv: PopulatedFlagEnv;
+  let redisService: RedisService;
 
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
-      providers: [
-        {
-          provide: WINSTON_MODULE_PROVIDER,
-          useValue: {
-            log: jest.fn(),
-          },
-        },
-      ],
     }).compile();
 
     service = module.get<SdkService>(SdkService);
+    redisService = module.get<RedisService>(RedisService);
+  });
+
+  afterAll(async () => {
+    await redisService.close();
   });
 
   beforeEach(() => {
