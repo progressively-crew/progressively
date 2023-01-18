@@ -6,6 +6,7 @@ import { Variant } from "../types";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
 import { MenuButton } from "~/components/MenuButton";
 import { Radio } from "~/components/Fields/Radio";
+import { Typography } from "~/components/Typography";
 
 export interface FormSliderInputProps {
   name: string;
@@ -68,29 +69,31 @@ export const VariantList = ({ variants, errors }: VariantListProps) => {
           return (
             <div key={variant.uuid}>
               <input type="hidden" name="uuid" value={variant.uuid} />
-              <div className="px-6 py-4 grid grid-cols-3 last:border-b-0 border-b border-gray-200 dark:border-slate-700 gap-6">
-                <div className="flex flex-row items-center gap-4">
-                  <Radio
-                    type={"radio"}
-                    name={"isControl"}
-                    value={variant.uuid}
-                    defaultChecked={variant.isControl}
-                    aria-label={`Is variant at position ${
-                      index + 1
-                    } the control variant?`}
-                    readOnly
-                    checkColor={color}
-                  />
+              <div
+                className={`px-6 py-4 flex flex-row last:border-b-0 border-b border-gray-200 dark:border-slate-700 gap-6 items-center ${
+                  variant.isControl ? "bg-gray-50 dark:bg-slate-800" : ""
+                }`}
+              >
+                <Radio
+                  type={"radio"}
+                  name={"isControl"}
+                  value={variant.uuid}
+                  defaultChecked={variant.isControl}
+                  aria-label={`Is variant at position ${
+                    index + 1
+                  } the control variant?`}
+                  readOnly
+                  checkColor={color}
+                />
 
-                  <TextInput
-                    hiddenLabel
-                    id={`name-${index}`}
-                    name="name"
-                    defaultValue={variant.value}
-                    label={`Variant ${index + 1} value`}
-                    isInvalid={Boolean(errors?.[`name-${index}`])}
-                  />
-                </div>
+                <TextInput
+                  hiddenLabel
+                  id={`name-${index}`}
+                  name="name"
+                  defaultValue={variant.value}
+                  label={`Variant ${index + 1} value`}
+                  isInvalid={Boolean(errors?.[`name-${index}`])}
+                />
 
                 <FormSliderInput
                   id={`rolloutPercentage-${index}`}
@@ -101,26 +104,30 @@ export const VariantList = ({ variants, errors }: VariantListProps) => {
                   fgColor={color}
                 />
 
-                <div className="flex justify-end items-center">
-                  <MenuButton
-                    items={[
-                      {
-                        label: "Attach metric",
-                        href: `../metrics/create?variant=${variant.uuid}`,
+                <MenuButton
+                  items={[
+                    {
+                      label: "Attach metric",
+                      href: `../metrics/create?variant=${variant.uuid}`,
+                    },
+                    {
+                      label: "Remove",
+                      onClick: () => {
+                        const formEl = document.querySelector(
+                          `#delete-form-${variant.uuid}`
+                        ) as HTMLFormElement | undefined;
+                        formEl?.submit();
                       },
-                      {
-                        label: "Remove",
-                        onClick: () => {
-                          const formEl = document.querySelector(
-                            `#delete-form-${variant.uuid}`
-                          ) as HTMLFormElement | undefined;
-                          formEl?.submit();
-                        },
-                      },
-                    ]}
-                    label={"Actions on variant"}
-                  />
-                </div>
+                    },
+                  ]}
+                  label={"Actions on variant"}
+                />
+
+                {variant.isControl && (
+                  <Typography className="text-xs dark:text-slate-300 text-gray-600">
+                    This is the control variant
+                  </Typography>
+                )}
               </div>
             </div>
           );

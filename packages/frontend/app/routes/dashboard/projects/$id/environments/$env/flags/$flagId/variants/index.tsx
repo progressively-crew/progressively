@@ -169,17 +169,15 @@ export default function VariantsOfFlag() {
         )}
 
         {hasVariants && (
-          <Card
-            footer={
-              hasVariants && (
-                <div className="flex flex-row justify-end">
-                  <SubmitButton form="edit-variant">Edit variants</SubmitButton>
-                </div>
-              )
-            }
-          >
-            <VariantList variants={variants} errors={actionData?.errors} />
-          </Card>
+          <div>
+            <Card
+              footer={
+                <SubmitButton form="edit-variant">Edit variants</SubmitButton>
+              }
+            >
+              <VariantList variants={variants} errors={actionData?.errors} />
+            </Card>
+          </div>
         )}
       </Section>
     </DashboardLayout>
