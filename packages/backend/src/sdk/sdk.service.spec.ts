@@ -13,7 +13,7 @@ describe('SdkService', () => {
   let strategy: RolloutStrategy;
   let flagEnv: PopulatedFlagEnv;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
       providers: [
