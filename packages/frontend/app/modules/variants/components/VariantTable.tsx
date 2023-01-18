@@ -2,10 +2,9 @@ import { Form } from "@remix-run/react";
 import { useState } from "react";
 import { SliderInput } from "~/components/Fields/SliderInput";
 import { Variant } from "../types";
-import { RawTable, Td, Th, Tr } from "~/components/RawTable";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
-import { AiFillCheckCircle } from "react-icons/ai";
 import { VariantDot } from "~/modules/flags/components/VariantDot";
+import { Typography } from "~/components/Typography";
 
 export interface FormSliderInputProps {
   name: string;
@@ -50,75 +49,46 @@ export const VariantTable = ({ variants }: VariantTableProps) => {
       <Form method="post" id="edit-variant">
         <input type="hidden" name="_type" value="edit-variant" />
 
-        <RawTable caption="Variant list">
-          <thead>
-            <Tr>
-              <Th>Variant</Th>
-              <Th>Rollout percentage</Th>
-              <Th className="text-center">Is control</Th>
-            </Tr>
-          </thead>
+        {variants.map((variant, index) => {
+          const background = stringToColor(variant.value, 90);
+          const color = stringToColor(variant.value, 25);
 
-          <tbody>
-            {variants.map((variant, index) => {
-              const background = stringToColor(variant.value, 75);
-              const color = stringToColor(variant.value, 25);
+          return (
+            <div key={variant.uuid}>
+              <input type="hidden" name="uuid" value={variant.uuid} />
+              <input type="hidden" value={variant.value} name={"name"} />
+              {variant.isControl && (
+                <input type="hidden" name="isControl" value={variant.uuid} />
+              )}
 
-              return (
-                <Tr key={`variant-${variant.uuid}`}>
-                  <Td
-                    className={`border-l-8 pl-6 ${
-                      variant.isControl ? "" : "border-l-transparent"
-                    }`}
-                    style={
-                      variant.isControl
-                        ? { borderColor: background }
-                        : undefined
-                    }
-                  >
-                    <input type="hidden" value={variant.value} name={"name"} />
+              <div
+                className={`px-6 py-4 last:border-b-0 border-b border-gray-200 dark:border-slate-700 grid grid-cols-3 gap-6 items-center ${
+                  variant.isControl ? "bg-gray-50 dark:bg-slate-800" : ""
+                }`}
+              >
+                <span className="flex flex-row gap-3 items-center text-gray-700">
+                  <VariantDot variant={variant.value} />
+                  {variant.value}
+                </span>
 
-                    <span className="flex flex-row gap-3 items-center">
-                      <VariantDot variant={variant.value} />
-                      {variant.value}
-                    </span>
-                  </Td>
+                <FormSliderInput
+                  id={`rolloutPercentage-${index}`}
+                  name={`rolloutPercentage`}
+                  label={`Variant ${index + 1} rollout percentage`}
+                  initialPercentage={variant.rolloutPercentage}
+                  bgColor={background}
+                  fgColor={color}
+                />
 
-                  <Td>
-                    <FormSliderInput
-                      id={`rolloutPercentage-${index}`}
-                      name={`rolloutPercentage`}
-                      label={`Variant ${index + 1} rollout percentage`}
-                      initialPercentage={variant.rolloutPercentage}
-                      bgColor={background}
-                      fgColor={color}
-                    />
-                  </Td>
-                  <Td>
-                    <input type="hidden" name="uuid" value={variant.uuid} />
-                    {variant.isControl && (
-                      <input
-                        type="hidden"
-                        name="isControl"
-                        value={variant.uuid}
-                      />
-                    )}
-
-                    {variant.isControl && (
-                      <div className="flex justify-center">
-                        <AiFillCheckCircle
-                          aria-label="This is the control version"
-                          className="text-2xl"
-                          style={{ color: background }}
-                        />
-                      </div>
-                    )}
-                  </Td>
-                </Tr>
-              );
-            })}
-          </tbody>
-        </RawTable>
+                {variant.isControl && (
+                  <Typography className="text-xs dark:text-slate-300 text-gray-600">
+                    This is the control variant
+                  </Typography>
+                )}
+              </div>
+            </div>
+          );
+        })}
       </Form>
     </div>
   );
