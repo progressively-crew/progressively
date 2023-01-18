@@ -167,7 +167,7 @@ export default function FlagById() {
         <Card
           footer={
             isMultiVariants && (
-              <div className="flex items-center justify-end flex-row h-full">
+              <div className="flex items-center flex-row h-full">
                 <SubmitButton form="edit-variant">Adjust</SubmitButton>
               </div>
             )
