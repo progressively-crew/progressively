@@ -16,7 +16,6 @@ import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
-import { Spacer } from "~/components/Spacer";
 import { getSession } from "~/sessions";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
 
@@ -73,7 +72,13 @@ export default function FlagSettingPage() {
       <PageTitle value="Settings" />
 
       <Stack spacing={8}>
-        <Card>
+        <Card
+          footer={
+            <ButtonCopy toCopy={currentFlag.key} size="M">
+              {currentFlag.key}
+            </ButtonCopy>
+          }
+        >
           <CardContent>
             <Section id="general">
               <SectionHeader
@@ -82,18 +87,31 @@ export default function FlagSettingPage() {
                   "The following is the flag key to use inside your application to get the flag variation"
                 }
               />
-
-              <Spacer size={4} />
-
-              <ButtonCopy toCopy={currentFlag.key}>
-                {currentFlag.key}
-              </ButtonCopy>
             </Section>
           </CardContent>
         </Card>
 
         {userRole === UserRoles.Admin && (
-          <Card>
+          <Card
+            footer={
+              <div className="inline-block">
+                <DeleteButton
+                  to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/delete`}
+                >
+                  <span aria-hidden>
+                    <span>Delete </span>
+                    <span className="hidden md:inline">
+                      {currentFlag.name} forever
+                    </span>
+                  </span>
+
+                  <VisuallyHidden>
+                    {`Delete ${currentFlag.name} forever`}
+                  </VisuallyHidden>
+                </DeleteButton>
+              </div>
+            }
+          >
             <CardContent>
               <Section id="danger">
                 <SectionHeader
@@ -103,26 +121,6 @@ export default function FlagSettingPage() {
                     "You can delete a feature flag at any time, but you  won't be able to access its insights anymore and false will be served to the application using it."
                   }
                 />
-
-                <Spacer size={4} />
-
-                <div className="inline-block">
-                  <DeleteButton
-                    variant="secondary"
-                    to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/delete`}
-                  >
-                    <span aria-hidden>
-                      <span>Delete </span>
-                      <span className="hidden md:inline">
-                        {currentFlag.name} forever
-                      </span>
-                    </span>
-
-                    <VisuallyHidden>
-                      {`Delete ${currentFlag.name} forever`}
-                    </VisuallyHidden>
-                  </DeleteButton>
-                </div>
               </Section>
             </CardContent>
           </Card>

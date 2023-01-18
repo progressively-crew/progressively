@@ -1,14 +1,12 @@
 import { Form } from "@remix-run/react";
 import { useState } from "react";
-import { DeleteButton } from "~/components/Buttons/DeleteButton";
-import { Radio } from "~/components/Fields/Radio";
 import { SliderInput } from "~/components/Fields/SliderInput";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Variant } from "../types";
-import { RawTable, Td, Th, Tr } from "~/components/RawTable";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
-import { Button } from "~/components/Buttons/Button";
-import { MetricIcon } from "~/components/Icons/MetricIcon";
+import { MenuButton } from "~/components/MenuButton";
+import { Radio } from "~/components/Fields/Radio";
+import { Typography } from "~/components/Typography";
 
 export interface FormSliderInputProps {
   name: string;
@@ -50,110 +48,90 @@ export interface VariantListProps {
 export const VariantList = ({ variants, errors }: VariantListProps) => {
   return (
     <div>
-      {variants.map((variant) => (
-        <Form
-          key={`delete-form-variant-${variant.uuid}`}
-          method="post"
-          id={`delete-form-${variant.uuid}`}
-        >
-          <input type="hidden" name="uuid" value={variant.uuid} />
-          <input type="hidden" name="_type" value="delete-variant" />
-        </Form>
-      ))}
-
       <Form method="post" id="edit-variant">
         <input type="hidden" name="_type" value="edit-variant" />
 
-        <RawTable caption="Variant list">
-          <thead>
-            <Tr>
-              <Th>Variant</Th>
-              <Th>Rollout percentage</Th>
-              <Th className="text-center">Is control</Th>
-              <Th>Actions</Th>
-            </Tr>
-          </thead>
+        {variants.map((variant) => (
+          <Form
+            key={`delete-form-variant-${variant.uuid}`}
+            method="post"
+            id={`delete-form-${variant.uuid}`}
+          >
+            <input type="hidden" name="uuid" value={variant.uuid} />
+            <input type="hidden" name="_type" value="delete-variant" />
+          </Form>
+        ))}
 
-          <tbody>
-            {variants.map((variant, index) => {
-              const background = stringToColor(variant.value, 90);
-              const color = stringToColor(variant.value, 25);
+        {variants.map((variant, index: number) => {
+          const background = stringToColor(variant.value, 90);
+          const color = stringToColor(variant.value, 25);
 
-              return (
-                <Tr key={`variant-${variant.uuid}`}>
-                  <Td
-                    className={`border-l-8 pl-6 ${
-                      variant.isControl ? "" : "border-l-transparent"
-                    }`}
-                    style={
-                      variant.isControl
-                        ? { borderColor: background }
-                        : undefined
-                    }
-                  >
-                    <TextInput
-                      hiddenLabel
-                      id={`name-${index}`}
-                      name="name"
-                      defaultValue={variant.value}
-                      label={`Variant ${index + 1} value`}
-                      isInvalid={Boolean(errors?.[`name-${index}`])}
-                    />
-                  </Td>
+          return (
+            <div key={variant.uuid}>
+              <input type="hidden" name="uuid" value={variant.uuid} />
+              <div
+                className={`px-6 py-4 flex flex-row last:border-b-0 border-b border-gray-200 dark:border-slate-700 gap-6 items-center ${
+                  variant.isControl ? "bg-gray-50 dark:bg-slate-800" : ""
+                }`}
+              >
+                <Radio
+                  type={"radio"}
+                  name={"isControl"}
+                  value={variant.uuid}
+                  defaultChecked={variant.isControl}
+                  aria-label={`Is variant at position ${
+                    index + 1
+                  } the control variant?`}
+                  readOnly
+                  checkColor={color}
+                />
 
-                  <Td>
-                    <FormSliderInput
-                      id={`rolloutPercentage-${index}`}
-                      name={`rolloutPercentage`}
-                      label={`Variant ${index + 1} rollout percentage`}
-                      initialPercentage={variant.rolloutPercentage}
-                      bgColor={background}
-                      fgColor={color}
-                    />
-                  </Td>
+                <TextInput
+                  hiddenLabel
+                  id={`name-${index}`}
+                  name="name"
+                  defaultValue={variant.value}
+                  label={`Variant ${index + 1} value`}
+                  isInvalid={Boolean(errors?.[`name-${index}`])}
+                />
 
-                  <Td>
-                    <input type="hidden" name="uuid" value={variant.uuid} />
-                    <div className="flex justify-center">
-                      <Radio
-                        type={"radio"}
-                        name={"isControl"}
-                        value={variant.uuid}
-                        defaultChecked={variant.isControl}
-                        aria-label={`Is variant at position ${
-                          index + 1
-                        } the control variant?`}
-                        readOnly
-                      />
-                    </div>
-                  </Td>
+                <FormSliderInput
+                  id={`rolloutPercentage-${index}`}
+                  name={`rolloutPercentage`}
+                  label={`Variant ${index + 1} rollout percentage`}
+                  initialPercentage={variant.rolloutPercentage}
+                  bgColor={background}
+                  fgColor={color}
+                />
 
-                  <Td>
-                    <div className="flex flex-row gap-4">
-                      <Button
-                        variant="secondary"
-                        size="S"
-                        icon={<MetricIcon />}
-                        to={`../metrics/create?variant=${variant.uuid}`}
-                      >
-                        Attach metric
-                      </Button>
+                <MenuButton
+                  items={[
+                    {
+                      label: "Attach metric",
+                      href: `../metrics/create?variant=${variant.uuid}`,
+                    },
+                    {
+                      label: "Remove",
+                      onClick: () => {
+                        const formEl = document.querySelector(
+                          `#delete-form-${variant.uuid}`
+                        ) as HTMLFormElement | undefined;
+                        formEl?.submit();
+                      },
+                    },
+                  ]}
+                  label={"Actions on variant"}
+                />
 
-                      <DeleteButton
-                        size="S"
-                        variant="secondary"
-                        type="submit"
-                        form={`delete-form-${variant.uuid}`}
-                      >
-                        Remove
-                      </DeleteButton>
-                    </div>
-                  </Td>
-                </Tr>
-              );
-            })}
-          </tbody>
-        </RawTable>
+                {variant.isControl && (
+                  <Typography className="text-xs dark:text-slate-300 text-gray-600">
+                    This is the control variant
+                  </Typography>
+                )}
+              </div>
+            </div>
+          );
+        })}
       </Form>
     </div>
   );

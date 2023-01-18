@@ -38,7 +38,13 @@ export default function EnvSettingsPage() {
       <PageTitle value="Settings" />
 
       <Stack spacing={8}>
-        <Card>
+        <Card
+          footer={
+            <ButtonCopy toCopy={environment.clientKey} size="M">
+              {environment.clientKey}
+            </ButtonCopy>
+          }
+        >
           <CardContent>
             <Section id="general">
               <SectionHeader
@@ -47,18 +53,31 @@ export default function EnvSettingsPage() {
                   "The following is the client key to use inside your application to retrieve the flags"
                 }
               />
-
-              <Spacer size={4} />
-
-              <ButtonCopy toCopy={environment.clientKey}>
-                {environment.clientKey}
-              </ButtonCopy>
             </Section>
           </CardContent>
         </Card>
 
         {userRole === UserRoles.Admin && (
-          <Card>
+          <Card
+            footer={
+              <div className="inline-block">
+                <DeleteButton
+                  to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/delete`}
+                >
+                  <span aria-hidden>
+                    Delete{" "}
+                    <span className="hidden md:inline">
+                      {`"${environment.name}"`} forever
+                    </span>
+                  </span>
+
+                  <VisuallyHidden>
+                    Delete {`"${environment.name}"`} forever
+                  </VisuallyHidden>
+                </DeleteButton>
+              </div>
+            }
+          >
             <CardContent>
               <Section id="danger">
                 <SectionHeader
@@ -70,24 +89,6 @@ export default function EnvSettingsPage() {
                 />
 
                 <Spacer size={4} />
-
-                <div className="inline-block">
-                  <DeleteButton
-                    variant="secondary"
-                    to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/delete`}
-                  >
-                    <span aria-hidden>
-                      Delete{" "}
-                      <span className="hidden md:inline">
-                        {`"${environment.name}"`} forever
-                      </span>
-                    </span>
-
-                    <VisuallyHidden>
-                      Delete {`"${environment.name}"`} forever
-                    </VisuallyHidden>
-                  </DeleteButton>
-                </div>
               </Section>
             </CardContent>
           </Card>

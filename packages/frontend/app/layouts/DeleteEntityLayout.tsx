@@ -46,17 +46,20 @@ export const DeleteEntityLayout = ({
           animationDelay: "300ms",
         }}
       >
-        <Card>
+        <Card
+          scheme="ERROR"
+          footer={
+            <div className="flex justify-between gap-8">
+              {cancelAction}
+              {confirmAction}
+            </div>
+          }
+        >
           <CardContent>
             {titleSlot}
             <Spacer size={8} />
             {children}
           </CardContent>
-
-          <div className="flex justify-between px-8 py-4 bg-red-50 gap-8 dark:bg-slate-700">
-            {cancelAction}
-            {confirmAction}
-          </div>
         </Card>
       </div>
     </main>

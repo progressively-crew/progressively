@@ -48,71 +48,69 @@ export const SchedulingList = ({
   flagId,
 }: SchedulingListProps) => {
   return (
-    <div>
-      <Card>
-        {scheduling.map((schedule, index: number) => {
-          const isMultiVariate = Array.isArray(schedule.data);
+    <Card>
+      {scheduling.map((schedule, index: number) => {
+        const isMultiVariate = Array.isArray(schedule.data);
 
-          return (
-            <div
-              className="px-6 py-4 grid grid-cols-3"
-              key={`${schedule.utc}-${schedule.data?.rolloutPercentage}-${index}`}
-            >
-              <div className="flex flex-row gap-2">
-                {schedule.schedulingStatus === SchedulingStatus.HAS_RUN ? (
-                  <>
-                    <AiFillCheckCircle
-                      aria-hidden
-                      className="text-emerald-500 mt-1"
-                    />
-                    <div>
-                      <DateCell utc={schedule.utc} />
-                      <Typography className="text-sm">
-                        The schedule has already run
-                      </Typography>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <TbCircle aria-hidden className="text-gray-300 mt-1" />
-                    <div>
-                      <DateCell utc={schedule.utc} />
-                      <Typography className="text-sm">
-                        The schedule has not run yet
-                      </Typography>
-                    </div>
-                  </>
-                )}
-              </div>
-
-              <div>
-                <Typography className="text-sm">
-                  Updating status to <FlagStatus value={schedule.status} />
-                </Typography>
-
-                {isMultiVariate ? null : (
-                  <Typography className="text-sm">
-                    Updating rollout percentage to:{" "}
-                    <strong className="text-black dark:text-slate-50">
-                      {schedule.data.rolloutPercentage}%
-                    </strong>
-                  </Typography>
-                )}
-              </div>
-
-              <div className="flex justify-end items-center">
-                <DeleteButton
-                  size="S"
-                  variant="secondary"
-                  to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/scheduling/${schedule.uuid}/delete`}
-                >
-                  Remove
-                </DeleteButton>
-              </div>
+        return (
+          <div
+            className="px-6 py-4 grid grid-cols-3 last:border-b-0 border-b border-gray-200 dark:border-slate-700"
+            key={`${schedule.utc}-${schedule.data?.rolloutPercentage}-${index}`}
+          >
+            <div className="flex flex-row gap-2">
+              {schedule.schedulingStatus === SchedulingStatus.HAS_RUN ? (
+                <>
+                  <AiFillCheckCircle
+                    aria-hidden
+                    className="text-emerald-500 mt-1"
+                  />
+                  <div>
+                    <DateCell utc={schedule.utc} />
+                    <Typography className="text-sm">
+                      The schedule has already run
+                    </Typography>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <TbCircle aria-hidden className="text-gray-300 mt-1" />
+                  <div>
+                    <DateCell utc={schedule.utc} />
+                    <Typography className="text-sm">
+                      The schedule has not run yet
+                    </Typography>
+                  </div>
+                </>
+              )}
             </div>
-          );
-        })}
-      </Card>
-    </div>
+
+            <div>
+              <Typography className="text-sm">
+                Updating status to <FlagStatus value={schedule.status} />
+              </Typography>
+
+              {isMultiVariate ? null : (
+                <Typography className="text-sm">
+                  Updating rollout percentage to:{" "}
+                  <strong className="text-black dark:text-slate-50">
+                    {schedule.data.rolloutPercentage}%
+                  </strong>
+                </Typography>
+              )}
+            </div>
+
+            <div className="flex justify-end items-center">
+              <DeleteButton
+                size="S"
+                variant="secondary"
+                to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/scheduling/${schedule.uuid}/delete`}
+              >
+                Remove
+              </DeleteButton>
+            </div>
+          </div>
+        );
+      })}
+    </Card>
   );
 };
