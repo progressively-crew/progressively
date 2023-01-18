@@ -48,19 +48,18 @@ export interface VariantListProps {
 export const VariantList = ({ variants, errors }: VariantListProps) => {
   return (
     <div>
+      {variants.map((variant) => (
+        <Form
+          key={`delete-form-variant-${variant.uuid}`}
+          method="post"
+          id={`delete-form-${variant.uuid}`}
+        >
+          <input type="hidden" name="uuid" value={variant.uuid} />
+          <input type="hidden" name="_type" value="delete-variant" />
+        </Form>
+      ))}
       <Form method="post" id="edit-variant">
         <input type="hidden" name="_type" value="edit-variant" />
-
-        {variants.map((variant) => (
-          <Form
-            key={`delete-form-variant-${variant.uuid}`}
-            method="post"
-            id={`delete-form-${variant.uuid}`}
-          >
-            <input type="hidden" name="uuid" value={variant.uuid} />
-            <input type="hidden" name="_type" value="delete-variant" />
-          </Form>
-        ))}
 
         {variants.map((variant, index: number) => {
           const background = stringToColor(variant.value, 90);
