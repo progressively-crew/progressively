@@ -146,7 +146,24 @@ export default function SettingsPage() {
         </Card>
 
         {userRole === UserRoles.Admin && (
-          <Card>
+          <Card
+            footer={
+              <div className="inline-block">
+                <DeleteButton to={`/dashboard/projects/${project.uuid}/delete`}>
+                  <span aria-hidden>
+                    Delete{" "}
+                    <span className="hidden md:inline">
+                      {`"${project.name}"`} forever
+                    </span>
+                  </span>
+
+                  <VisuallyHidden>
+                    Delete {`"${project.name}"`} forever
+                  </VisuallyHidden>
+                </DeleteButton>
+              </div>
+            }
+          >
             <CardContent>
               <Section id="danger">
                 <SectionHeader
@@ -155,26 +172,6 @@ export default function SettingsPage() {
                     "You can delete a project at any time, but you won't be able to access its environments and all the related flags will be removed and be falsy in your applications. Be sure to know what you're doing before removing a project."
                   }
                 />
-
-                <Spacer size={4} />
-
-                <div className="inline-block">
-                  <DeleteButton
-                    variant="secondary"
-                    to={`/dashboard/projects/${project.uuid}/delete`}
-                  >
-                    <span aria-hidden>
-                      Delete{" "}
-                      <span className="hidden md:inline">
-                        {`"${project.name}"`} forever
-                      </span>
-                    </span>
-
-                    <VisuallyHidden>
-                      Delete {`"${project.name}"`} forever
-                    </VisuallyHidden>
-                  </DeleteButton>
-                </div>
               </Section>
             </CardContent>
           </Card>
