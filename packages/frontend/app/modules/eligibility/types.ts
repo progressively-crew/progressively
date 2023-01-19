@@ -9,8 +9,10 @@ export interface Eligibility {
   flagEnvironmentEnvironmentId: string;
 }
 
-export interface EligibilityCreateDTO {
+export interface UpsertEligibilityDTO {
   fieldName: string;
   fieldComparator: ComparatorEnum;
   fieldValue: string;
+  uuid: string;
+  hasToBeCreated?: boolean;
 }

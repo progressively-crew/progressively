@@ -1,5 +1,4 @@
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { FlagStatus } from "~/modules/flags/types";
 import { getStrategies } from "~/modules/strategies/services/getStrategies";
 import { getSession } from "~/sessions";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
@@ -10,6 +9,7 @@ import {
   useLoaderData,
   useActionData,
   useSearchParams,
+  Form,
 } from "@remix-run/react";
 import { Card, CardContent } from "~/components/Card";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
@@ -32,9 +32,10 @@ import { AdditionalAudienceList } from "~/modules/strategies/components/Addition
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { getEligibilities } from "~/modules/eligibility/services/getEligibilities";
 import { Eligibility } from "~/modules/eligibility/types";
-import { EligibilityList } from "~/modules/eligibility/components/EligibilityList";
 import { VariantTable } from "~/modules/variants/components/VariantTable";
 import { Spacer } from "~/components/Spacer";
+import { FormEligibility } from "~/modules/eligibility/components/FormEligibility";
+import { createEligibility } from "~/modules/eligibility/services/createEligibility";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -49,6 +50,7 @@ export const meta: MetaFunction = ({ parentsData, params }) => {
 type ActionDataType = null | {
   successChangePercentage?: boolean;
   successEdit?: boolean;
+  successEligibilityCreated?: boolean;
   errors?: { [key: string]: string | undefined };
 };
 
@@ -61,6 +63,11 @@ export const action: ActionFunction = async ({
   const flagId = params.flagId;
   const formData = await request.formData();
   const type = formData.get("_type");
+
+  if (type === "create-eligibility") {
+    await createEligibility(params.env!, flagId as string, authCookie);
+    return { successEligibilityCreated: true };
+  }
 
   if (type === "percentage") {
     const rolloutPercentage = formData.get("rolloutPercentage");
@@ -135,7 +142,6 @@ export default function FlagById() {
   const hasPercentageChanged = Boolean(actionData?.successChangePercentage);
 
   const currentFlag = flagEnv.flag;
-  const isFlagActivated = flagEnv.status === FlagStatus.ACTIVATED;
 
   const hasStrategies = strategies.length > 0;
   const hasEligibility = eligibilities.length > 0;
@@ -211,7 +217,6 @@ export default function FlagById() {
             <SectionHeader
               title="Audience eligibility"
               description={
-                !hasEligibility &&
                 "Only people matching at least one of the following rules (and the additional audience) will resolve the flag."
               }
               status={
@@ -224,16 +229,6 @@ export default function FlagById() {
                     The eligibility audience has been successfully removed.
                   </SuccessBox>
                 ) : null
-              }
-              action={
-                hasEligibility && (
-                  <CreateButton
-                    variant="secondary"
-                    to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/eligibilities/create`}
-                  >
-                    Create an eligibility restriction
-                  </CreateButton>
-                )
               }
             />
           </CardContent>
@@ -259,12 +254,27 @@ export default function FlagById() {
           )}
 
           {hasEligibility && (
-            <EligibilityList
-              items={eligibilities}
-              projectId={project.uuid}
-              envId={environment.uuid}
-              flagId={currentFlag.uuid}
-            />
+            <CardContent>
+              <FormEligibility
+                initialEligibilites={eligibilities}
+                projectId={project.uuid}
+                envId={environment.uuid}
+                flagId={currentFlag.uuid}
+              />
+
+              <Spacer size={4} />
+
+              <Form method="post">
+                <input type="hidden" name="_type" value="create-eligibility" />
+
+                <button
+                  type="submit"
+                  className="p-2 border rounded border-dashed border-gray-300 text-center w-full text-gray-600 active:bg-gray-100 hover:bg-gray-50 dark:text-slate-200 dark:active:bg-slate-600 dark:hover:bg-slate-700"
+                >
+                  Add a new rule
+                </button>
+              </Form>
+            </CardContent>
           )}
         </Card>
       </Section>

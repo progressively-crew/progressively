@@ -15,6 +15,7 @@ export interface TextInputProps extends HTMLAttributes<HTMLInputElement> {
   hiddenLabel?: boolean;
   id?: string;
   isDisabled?: boolean;
+  className?: string;
 }
 
 export const TextInput = ({
@@ -28,6 +29,7 @@ export const TextInput = ({
   hiddenLabel,
   id,
   isDisabled,
+  className,
   ...props
 }: TextInputProps) => {
   let ariaDescription: string | undefined;
@@ -46,6 +48,10 @@ export const TextInput = ({
 
   if (isDisabled) {
     inputClasses += " border-gray-300 text-gray-600 bg-gray-50";
+  }
+
+  if (className) {
+    inputClasses += ` ${className}`;
   }
 
   return (

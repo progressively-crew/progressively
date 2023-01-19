@@ -14,6 +14,7 @@ export interface SelectFieldProps {
   defaultValue?: string;
   label: string;
   options: Array<SelectOption>;
+  hiddenLabel?: boolean;
 }
 
 export const SelectField = ({
@@ -22,6 +23,7 @@ export const SelectField = ({
   defaultValue,
   label,
   options,
+  hiddenLabel,
   ...props
 }: SelectFieldProps) => {
   const [selected, setSelected] = useState(options[0]?.value || "");
@@ -33,7 +35,9 @@ export const SelectField = ({
 
   return (
     <Stack spacing={2}>
-      <Label htmlFor={name}>{label}</Label>
+      <Label htmlFor={name} className={hiddenLabel ? "sr-only" : undefined}>
+        {label}
+      </Label>
 
       <div className={inputClasses}>
         <div className="flex flex-row gap-2 h-full items-center">

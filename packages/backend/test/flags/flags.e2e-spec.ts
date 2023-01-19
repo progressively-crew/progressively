@@ -5,8 +5,6 @@ import { seedDb, cleanupDb } from '../helpers/seed';
 import { prepareApp } from '../helpers/prepareApp';
 import { verifyAuthGuard } from '../helpers/verify-auth-guard';
 import { authenticate } from '../helpers/authenticate';
-import { EligibilityCreationDTO } from '../../src/eligibility/types';
-import { ComparatorEnum } from '../../src/shared/utils/comparators/types';
 
 jest.mock('got', () => ({
   ...jest.requireActual('got'),
@@ -1788,16 +1786,9 @@ describe('FlagsController (e2e)', () => {
     it('gives a 403 when trying to access a valid project but an invalid env', async () => {
       const access_token = await authenticate(app);
 
-      const validEligibility: EligibilityCreationDTO = {
-        fieldName: 'email',
-        fieldValue: '@gmail.com',
-        fieldComparator: ComparatorEnum.Equals,
-      };
-
       return request(app.getHttpServer())
         .post('/environments/1/flags/3/eligibilities')
         .set('Authorization', `Bearer ${access_token}`)
-        .send(validEligibility)
         .expect(403)
         .expect({
           statusCode: 403,
@@ -1816,11 +1807,6 @@ describe('FlagsController (e2e)', () => {
       return request(app.getHttpServer())
         .post('/environments/1/flags/1/eligibilities')
         .set('Authorization', `Bearer ${access_token}`)
-        .send({
-          fieldName: 'email',
-          fieldComparator: 'eq',
-          fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
-        })
         .expect(403)
         .expect({
           statusCode: 403,
@@ -1829,49 +1815,18 @@ describe('FlagsController (e2e)', () => {
         });
     });
 
-    ['fieldName', 'fieldComparator', 'fieldValue'].forEach((field) => {
-      it(`gives 400 when "${field}" is invalid`, async () => {
-        const access_token = await authenticate(app);
-
-        const invalidEligibility: any = {
-          fieldName: 'email',
-          fieldValue: '@gmail.com',
-          fieldComparator: ComparatorEnum.Equals,
-          [field]: undefined,
-        };
-
-        await request(app.getHttpServer())
-          .post('/environments/1/flags/1/eligibilities')
-          .set('Authorization', `Bearer ${access_token}`)
-          .send(invalidEligibility)
-          .expect(400)
-          .expect({
-            statusCode: 400,
-            message: 'Validation failed',
-            error: 'Bad Request',
-          });
-      });
-    });
-
     it('creates an eligibitilies', async () => {
       const access_token = await authenticate(app);
-
-      const validEligibility: EligibilityCreationDTO = {
-        fieldName: 'email',
-        fieldValue: '@gmail.com',
-        fieldComparator: ComparatorEnum.Equals,
-      };
 
       const response = await request(app.getHttpServer())
         .post('/environments/1/flags/1/eligibilities')
         .set('Authorization', `Bearer ${access_token}`)
-        .send(validEligibility)
         .expect(201);
 
       expect(response.body).toMatchObject({
         fieldComparator: 'eq',
-        fieldName: 'email',
-        fieldValue: '@gmail.com',
+        fieldName: '',
+        fieldValue: '',
         flagEnvironmentFlagId: '1',
         flagEnvironmentEnvironmentId: '1',
       });

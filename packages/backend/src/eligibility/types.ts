@@ -1,7 +1,7 @@
 import * as Joi from 'joi';
 import { ComparatorEnum } from '../shared/utils/comparators/types';
 
-export class EligibilityCreationDTO {
+export class EligibilityUpdateDTO {
   fieldName: string;
   fieldComparator: ComparatorEnum;
   fieldValue: string;

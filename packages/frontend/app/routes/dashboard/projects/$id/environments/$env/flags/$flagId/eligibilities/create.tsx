@@ -10,9 +10,9 @@ import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
-import { EligibilityCreateDTO } from "~/modules/eligibility/types";
+import { UpsertEligibilityDTO } from "~/modules/eligibility/types";
 import { createEligibility } from "~/modules/eligibility/services/createEligibility";
-import { EligibilityForm } from "~/modules/eligibility/components/EligibilityForm";
+
 import { validateEligibilityForm } from "~/modules/eligibility/validators/validateEligibilityForm";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { BackLink } from "~/components/BackLink";
@@ -52,12 +52,13 @@ export const action: ActionFunction = async ({
   const fieldComparator =
     (formData.get(
       "field-comparator"
-    ) as EligibilityCreateDTO["fieldComparator"]) || undefined;
+    ) as UpsertEligibilityDTO["fieldComparator"]) || undefined;
 
-  const eligibility: EligibilityCreateDTO = {
+  const eligibility: UpsertEligibilityDTO = {
     fieldComparator: fieldComparator,
     fieldName,
     fieldValue,
+    action: "create",
   };
 
   try {
@@ -115,8 +116,6 @@ export default function StrategyCreatePage() {
       }
     >
       <Form method="post" id="eligibility-form"></Form>
-
-      <EligibilityForm errors={errors} />
     </CreateEntityLayout>
   );
 }

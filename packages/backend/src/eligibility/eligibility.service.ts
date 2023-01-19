@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PopulatedFlagEnv } from '../flags/types';
 import { FieldRecord } from '../strategy/types';
 import { PrismaService } from '../database/prisma.service';
-import { EligibilityCreationDTO } from './types';
+import { EligibilityUpdateDTO } from './types';
 import { ComparatorEnum } from '../shared/utils/comparators/types';
 import { ComparatorFactory } from '../shared/utils/comparators/comparatorFactory';
 
@@ -60,6 +60,30 @@ export class EligibilityService {
     });
   }
 
+  updateEligibility(uuid: string, eligibility: EligibilityUpdateDTO) {
+    return this.prisma.eligibility.update({
+      where: {
+        uuid,
+      },
+      data: {
+        fieldComparator: eligibility.fieldComparator,
+        fieldValue: eligibility.fieldValue,
+        fieldName: eligibility.fieldName,
+      },
+      include: {
+        flagEnvironment: {
+          include: {
+            environment: true,
+            flag: true,
+            strategies: true,
+            variants: true,
+            eligibilities: true,
+          },
+        },
+      },
+    });
+  }
+
   listEligibilities(envId: string, flagId: string) {
     return this.prisma.eligibility.findMany({
       where: {
@@ -72,7 +96,7 @@ export class EligibilityService {
   addEligibilityToFlagEnv(
     envId: string,
     flagId: string,
-    eligibility: EligibilityCreationDTO,
+    eligibility: EligibilityUpdateDTO,
   ) {
     return this.prisma.eligibility.create({
       data: {
