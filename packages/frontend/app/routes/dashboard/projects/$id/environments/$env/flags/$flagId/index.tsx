@@ -184,7 +184,6 @@ export default function FlagById() {
   const isStrategyUpdated = searchParams.get("strategyUpdated") || undefined;
   const isStrategyRemoved = searchParams.get("stratRemoved") || undefined;
 
-  const isEligibilityAdded = searchParams.get("newEligibility") || undefined;
   const isEligibilityRemoved =
     searchParams.get("eligibilityRemoved") || undefined;
 
@@ -256,9 +255,9 @@ export default function FlagById() {
                 "Only people matching at least one of the following rules (and the additional audience) will resolve the flag."
               }
               status={
-                isEligibilityAdded ? (
-                  <SuccessBox id="eligibility-added">
-                    The eligibility audience has been successfully set.
+                actionData?.successEligibilityUpdated ? (
+                  <SuccessBox id="eligibility-updated">
+                    Eligibility audience updated.
                   </SuccessBox>
                 ) : isEligibilityRemoved ? (
                   <SuccessBox id="eligibility-removed">
