@@ -245,7 +245,9 @@ export default function FlagById() {
       <Section id="eligibility">
         <Card
           footer={
-            <SubmitButton form="form-update-eligibility">Update</SubmitButton>
+            hasEligibility && (
+              <SubmitButton form="form-update-eligibility">Update</SubmitButton>
+            )
           }
         >
           <CardContent>
