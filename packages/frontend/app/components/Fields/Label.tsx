@@ -4,12 +4,14 @@ export interface LabelProps extends HTMLAttributes<HTMLLabelElement> {
   children: React.ReactNode;
   as?: "legend" | "span" | undefined;
   htmlFor?: string;
+  className?: string;
 }
 
 export const Label = ({
   children,
   as: asComponent,
   htmlFor,
+  className,
   ...props
 }: LabelProps) => {
   const Component = asComponent || "label";
@@ -17,7 +19,7 @@ export const Label = ({
   return (
     <Component
       htmlFor={htmlFor}
-      className="text-gray-500 dark:text-slate-200"
+      className={`text-gray-500 dark:text-slate-200 ${className || ""}`}
       {...props}
     >
       {children}

@@ -1,4 +1,4 @@
-import { HTMLAttributes } from "react";
+import { HTMLAttributes, useId } from "react";
 import { Stack } from "../Stack";
 import { VisuallyHidden } from "../VisuallyHidden";
 import { Label } from "./Label";
@@ -15,6 +15,7 @@ export interface TextInputProps extends HTMLAttributes<HTMLInputElement> {
   hiddenLabel?: boolean;
   id?: string;
   isDisabled?: boolean;
+  className?: string;
 }
 
 export const TextInput = ({
@@ -28,11 +29,13 @@ export const TextInput = ({
   hiddenLabel,
   id,
   isDisabled,
+  className,
   ...props
 }: TextInputProps) => {
+  const localId = useId();
   let ariaDescription: string | undefined;
 
-  const currentId = id || name;
+  const currentId = id || localId;
 
   if (isInvalid) {
     ariaDescription = `error-${currentId}`;
@@ -46,6 +49,10 @@ export const TextInput = ({
 
   if (isDisabled) {
     inputClasses += " border-gray-300 text-gray-600 bg-gray-50";
+  }
+
+  if (className) {
+    inputClasses += ` ${className}`;
   }
 
   return (
