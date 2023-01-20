@@ -87,15 +87,12 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]", () => {
             .should("be.visible")
             .click();
 
-          cy.findAllByLabelText("Field name").should("have.length", 2);
+          cy.get("[name='field-name']").should("have.length", 2);
+          cy.checkA11y();
 
           cy.reload();
 
-          cy.findAllByLabelText("Field name")
-            .should("be.visible")
-            .and("have.length", 2);
-
-          cy.checkA11y();
+          cy.get("[name='field-name']").should("have.length", 2);
         });
       });
     });

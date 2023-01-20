@@ -1,4 +1,4 @@
-import { HTMLAttributes } from "react";
+import { HTMLAttributes, useId } from "react";
 import { Stack } from "../Stack";
 import { VisuallyHidden } from "../VisuallyHidden";
 import { Label } from "./Label";
@@ -32,9 +32,10 @@ export const TextInput = ({
   className,
   ...props
 }: TextInputProps) => {
+  const localId = useId();
   let ariaDescription: string | undefined;
 
-  const currentId = id || name;
+  const currentId = id || localId;
 
   if (isInvalid) {
     ariaDescription = `error-${currentId}`;

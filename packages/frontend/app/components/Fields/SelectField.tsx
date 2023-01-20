@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useId, useState } from "react";
 import { Stack } from "../Stack";
 import { Label } from "./Label";
 
@@ -26,6 +26,7 @@ export const SelectField = ({
   hiddenLabel,
   ...props
 }: SelectFieldProps) => {
+  const id = useId();
   const [selected, setSelected] = useState(options[0]?.value || "");
   const inputClasses = isInvalid
     ? "h-10 rounded px-4 border border-red-500 dark:text-slate-100 dark:bg-slate-700"
@@ -35,7 +36,7 @@ export const SelectField = ({
 
   return (
     <Stack spacing={2}>
-      <Label htmlFor={name} className={hiddenLabel ? "sr-only" : undefined}>
+      <Label htmlFor={id} className={hiddenLabel ? "sr-only" : undefined}>
         {label}
       </Label>
 
@@ -45,7 +46,7 @@ export const SelectField = ({
 
           <select
             name={name}
-            id={name}
+            id={id}
             defaultValue={defaultValue}
             aria-describedby={isInvalid ? `error-${name}` : undefined}
             className="w-full h-full bg-transparent text-gray-600 dark:text-slate-100 px-2"
