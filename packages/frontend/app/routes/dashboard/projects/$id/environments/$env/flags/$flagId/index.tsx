@@ -2,10 +2,7 @@ import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { getStrategies } from "~/modules/strategies/services/getStrategies";
 import { getSession } from "~/sessions";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
-import {
-  AdditionalAudienceRetrieveDTO,
-  ComparatorEnum,
-} from "~/modules/strategies/types";
+import { AdditionalAudienceRetrieveDTO } from "~/modules/strategies/types";
 import { Section, SectionHeader } from "~/components/Section";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
 import {
@@ -34,12 +31,12 @@ import { CreateButton } from "~/components/Buttons/CreateButton";
 import { AdditionalAudienceList } from "~/modules/strategies/components/AdditionalAudienceList";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { getEligibilities } from "~/modules/eligibility/services/getEligibilities";
-import { Eligibility, UpsertEligibilityDTO } from "~/modules/eligibility/types";
+import { Eligibility } from "~/modules/eligibility/types";
 import { VariantTable } from "~/modules/variants/components/VariantTable";
 import { Spacer } from "~/components/Spacer";
 import { FormEligibility } from "~/modules/eligibility/components/FormEligibility";
 import { createEligibility } from "~/modules/eligibility/services/createEligibility";
-import { updateEligibility } from "~/modules/eligibility/services/updateEligibility";
+import { updateEligibilityAction } from "~/modules/eligibility/form-actions/updateEligibilityAction";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -70,30 +67,7 @@ export const action: ActionFunction = async ({
   const type = formData.get("_type");
 
   if (type === "update-eligibility") {
-    const allIds = formData.getAll("eligibility-id");
-    const allFieldName = formData.getAll("field-name");
-    const allComparators = formData.getAll("field-comparator");
-    const allFieldValue = formData.getAll("field-value");
-
-    const entries = allIds.entries();
-
-    for (const [i, uuid] of entries) {
-      const fieldName = allFieldName[i]?.toString() || "";
-      const fieldComparator = allComparators[i]?.toString() || "";
-      const fieldValue = allFieldValue[i]?.toString() || "";
-
-      const eligiblityDto: UpsertEligibilityDTO = {
-        fieldName,
-        fieldValue,
-        fieldComparator: fieldComparator
-          ? (fieldComparator as ComparatorEnum)
-          : ComparatorEnum.Equals,
-      };
-
-      await updateEligibility(uuid.toString(), eligiblityDto, authCookie);
-    }
-
-    return { successEligibilityUpdated: true };
+    return updateEligibilityAction(formData, authCookie);
   }
 
   if (type === "create-eligibility") {

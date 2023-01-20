@@ -5,7 +5,7 @@ import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { Card } from "~/components/Card";
 import { Typography } from "~/components/Typography";
 import { FlagStatus } from "~/modules/flags/components/FlagStatus";
-import { Schedule, SchedulingStatus, SchedulingType } from "../types";
+import { Schedule, SchedulingStatus } from "../types";
 
 export const formatDate = (utc: string) => {
   const options = {

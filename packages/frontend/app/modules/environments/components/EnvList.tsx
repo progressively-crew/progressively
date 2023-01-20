@@ -3,7 +3,6 @@ import { ButtonCopy } from "~/components/ButtonCopy";
 import { Card, CardContent } from "~/components/Card";
 import { InitialBox } from "~/components/InitialBox";
 import { Link } from "~/components/Link";
-import { RawTable, Td, Th, Tr } from "~/components/RawTable";
 import { Environment } from "../types";
 
 export interface EnvListProps {
