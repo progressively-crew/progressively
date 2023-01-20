@@ -106,7 +106,7 @@ describe('Eligibility (e2e)', () => {
       };
 
       return request(app.getHttpServer())
-        .put('/eligibilities/1')
+        .put('/eligibilities/3')
         .set('Authorization', `Bearer ${access_token}`)
         .send(validEligibility)
         .expect(403)
