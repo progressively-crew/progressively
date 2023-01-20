@@ -54,9 +54,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]", () => {
         );
 
         // Concerned flag has empty state for eligibility audience
-        cy.findByRole("heading", { name: "No restrictions" }).should(
-          "be.visible"
-        );
         cy.findByRole("button", { name: "Update" }).should("not.exist");
 
         cy.checkA11y();

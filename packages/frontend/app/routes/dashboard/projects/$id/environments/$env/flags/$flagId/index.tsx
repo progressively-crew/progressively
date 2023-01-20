@@ -54,6 +54,7 @@ type ActionDataType = null | {
   successEligibilityCreated?: boolean;
   successEligibilityUpdated?: boolean;
   errors?: { [key: string]: string | undefined };
+  elibilityErrors?: { [key: string]: string | undefined };
 };
 
 export const action: ActionFunction = async ({
@@ -220,7 +221,9 @@ export default function FlagById() {
         <Card
           footer={
             hasEligibility && (
-              <SubmitButton form="form-update-eligibility">Update</SubmitButton>
+              <SubmitButton form="form-update-eligibility" variant="secondary">
+                Update
+              </SubmitButton>
             )
           }
         >
@@ -230,63 +233,51 @@ export default function FlagById() {
               description={
                 "Only people matching at least one of the following rules (and the additional audience) will resolve the flag."
               }
-              status={
-                actionData?.successEligibilityUpdated ? (
-                  <SuccessBox id="eligibility-updated">
-                    Eligibility audience updated.
-                  </SuccessBox>
-                ) : isEligibilityRemoved ? (
-                  <SuccessBox id="eligibility-removed">
-                    The eligibility audience has been successfully removed.
-                  </SuccessBox>
-                ) : null
-              }
             />
+
+            {actionData?.successEligibilityUpdated ? (
+              <>
+                <Spacer size={6} />
+                <SuccessBox id="eligibility-updated">
+                  Eligibility audience updated.
+                </SuccessBox>
+              </>
+            ) : isEligibilityRemoved ? (
+              <>
+                <Spacer size={6} />
+                <SuccessBox id="eligibility-removed">
+                  The eligibility audience has been successfully removed.
+                </SuccessBox>
+              </>
+            ) : actionData?.elibilityErrors ? (
+              <>
+                <Spacer size={6} />
+                <ErrorBox list={actionData?.elibilityErrors} />
+              </>
+            ) : null}
+
+            <Spacer size={6} />
+
+            <FormEligibility
+              initialEligibilites={eligibilities}
+              projectId={project.uuid}
+              envId={environment.uuid}
+              flagId={currentFlag.uuid}
+            />
+
+            {hasEligibility && <Spacer size={6} />}
+
+            <Form method="post">
+              <input type="hidden" name="_type" value="create-eligibility" />
+
+              <button
+                type="submit"
+                className="p-2 border rounded border-dashed border-gray-300 text-center w-full text-gray-600 active:bg-gray-100 hover:bg-gray-50 dark:text-slate-200 dark:active:bg-slate-600 dark:hover:bg-slate-700"
+              >
+                Add a new rule
+              </button>
+            </Form>
           </CardContent>
-
-          {!hasEligibility && (
-            <CardContent>
-              <EmptyState
-                titleAs="h2"
-                title="No restrictions"
-                description={
-                  "There are no eligibility restrictions. Every users will resolve the flag."
-                }
-                action={
-                  <CreateButton
-                    to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/eligibilities/create`}
-                    variant="secondary"
-                  >
-                    Create an eligibility restriction
-                  </CreateButton>
-                }
-              />
-            </CardContent>
-          )}
-
-          {hasEligibility && (
-            <CardContent>
-              <FormEligibility
-                initialEligibilites={eligibilities}
-                projectId={project.uuid}
-                envId={environment.uuid}
-                flagId={currentFlag.uuid}
-              />
-
-              <Spacer size={4} />
-
-              <Form method="post">
-                <input type="hidden" name="_type" value="create-eligibility" />
-
-                <button
-                  type="submit"
-                  className="p-2 border rounded border-dashed border-gray-300 text-center w-full text-gray-600 active:bg-gray-100 hover:bg-gray-50 dark:text-slate-200 dark:active:bg-slate-600 dark:hover:bg-slate-700"
-                >
-                  Add a new rule
-                </button>
-              </Form>
-            </CardContent>
-          )}
         </Card>
       </Section>
 

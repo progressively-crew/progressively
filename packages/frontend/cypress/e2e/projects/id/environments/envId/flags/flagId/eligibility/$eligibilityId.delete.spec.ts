@@ -87,10 +87,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/eligibili
           "/dashboard/projects/1/environments/1/flags/2?eligibilityRemoved=true#eligibility-removed"
         );
 
-        cy.findByRole("heading", { name: "No restrictions" }).should(
-          "be.visible"
-        );
-
         cy.get(".success-box")
           .should("have.focus")
           .and(

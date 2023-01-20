@@ -11,15 +11,18 @@ export const updateEligibilityAction = async (
   const allComparators = formData.getAll("field-comparator");
   const allFieldValue = formData.getAll("field-value");
 
+  const toUpdate: Array<UpsertEligibilityDTO> = [];
   const entries = allIds.entries();
+  let hasError = false;
 
   for (const [i, uuid] of entries) {
     const fieldName = allFieldName[i]?.toString() || "";
     const fieldComparator = allComparators[i]?.toString() || "";
     const fieldValue = allFieldValue[i]?.toString() || "";
 
-    if (fieldName && fieldComparator && fieldValue) {
+    if (uuid && fieldName && fieldComparator && fieldValue) {
       const eligiblityDto: UpsertEligibilityDTO = {
+        uuid: uuid.toString(),
         fieldName,
         fieldValue,
         fieldComparator: fieldComparator
@@ -27,9 +30,25 @@ export const updateEligibilityAction = async (
           : ComparatorEnum.Equals,
       };
 
-      await updateEligibility(uuid.toString(), eligiblityDto, authCookie);
+      toUpdate.push(eligiblityDto);
+    } else {
+      hasError = true;
     }
   }
 
-  return { successEligibilityUpdated: true };
+  if (!hasError) {
+    for (const eligiblityDto of toUpdate) {
+      await updateEligibility(eligiblityDto.uuid!, eligiblityDto, authCookie);
+    }
+  }
+
+  return {
+    successEligibilityUpdated: !hasError,
+    elibilityErrors: hasError
+      ? {
+          eligbilityAudience:
+            "All the fields are required in every single rule.",
+        }
+      : undefined,
+  };
 };
