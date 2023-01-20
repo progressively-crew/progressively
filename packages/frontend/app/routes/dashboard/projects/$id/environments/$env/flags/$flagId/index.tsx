@@ -220,7 +220,9 @@ export default function FlagById() {
         <Card
           footer={
             hasEligibility && (
-              <SubmitButton form="form-update-eligibility">Update</SubmitButton>
+              <SubmitButton form="form-update-eligibility" variant="secondary">
+                Update
+              </SubmitButton>
             )
           }
         >
@@ -273,7 +275,7 @@ export default function FlagById() {
                 flagId={currentFlag.uuid}
               />
 
-              <Spacer size={4} />
+              <Spacer size={6} />
 
               <Form method="post">
                 <input type="hidden" name="_type" value="create-eligibility" />
