@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PopulatedFlagEnv } from '../flags/types';
 import { FieldRecord } from '../strategy/types';
 import { PrismaService } from '../database/prisma.service';
-import { EligibilityUpdateDTO } from './types';
+import { EligibilityCreateDTO, EligibilityUpdateDTO } from './types';
 import { ComparatorEnum } from '../shared/utils/comparators/types';
 import { ComparatorFactory } from '../shared/utils/comparators/comparatorFactory';
 
@@ -99,7 +99,7 @@ export class EligibilityService {
   addEligibilityToFlagEnv(
     envId: string,
     flagId: string,
-    eligibility: EligibilityUpdateDTO,
+    eligibility: EligibilityCreateDTO,
   ) {
     return this.prisma.eligibility.create({
       data: {

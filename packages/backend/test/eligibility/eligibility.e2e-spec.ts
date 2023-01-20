@@ -100,6 +100,7 @@ describe('Eligibility (e2e)', () => {
       const access_token = await authenticate(app);
 
       const validEligibility: EligibilityUpdateDTO = {
+        uuid: '3',
         fieldName: 'email',
         fieldValue: '@gmail.com',
         fieldComparator: ComparatorEnum.Equals,
@@ -168,6 +169,7 @@ describe('Eligibility (e2e)', () => {
       const access_token = await authenticate(app);
 
       const validEligibility: EligibilityUpdateDTO = {
+        uuid: '2',
         fieldName: 'email',
         fieldValue: '@gmail.com',
         fieldComparator: ComparatorEnum.Equals,
