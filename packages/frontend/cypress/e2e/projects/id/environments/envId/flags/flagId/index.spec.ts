@@ -62,7 +62,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]", () => {
         cy.checkA11y();
       });
 
-      describe.only("Audience eligibility (form)", () => {
+      describe("Audience eligibility (form)", () => {
         beforeEach(() => {
           cy.visit("/dashboard/projects/1/environments/1/flags/2");
           cy.injectAxe();
@@ -93,6 +93,21 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]", () => {
           cy.reload();
 
           cy.get("[name='field-name']").should("have.length", 2);
+        });
+
+        it("edits the existing rules", () => {
+          cy.findAllByLabelText("Field name").should("have.length", 1);
+
+          cy.findByRole("button", { name: "Add a new rule" }).click();
+
+          cy.get("[name='tag-name']").last().type("hello world{enter}");
+          cy.findByRole("button", { name: "Update" }).click();
+
+          cy.get("[name='field-value']")
+            .last()
+            .should("have.attr", "value", "@gmail.com\nhello world");
+
+          cy.reload();
         });
       });
     });
