@@ -31,17 +31,24 @@ export const updateEligibilityAction = async (
       };
 
       toUpdate.push(eligiblityDto);
-    } else hasError = true;
+    } else {
+      hasError = true;
+    }
   }
 
-  for (const eligiblityDto of toUpdate) {
-    await updateEligibility(eligiblityDto.uuid!, eligiblityDto, authCookie);
+  if (!hasError) {
+    for (const eligiblityDto of toUpdate) {
+      await updateEligibility(eligiblityDto.uuid!, eligiblityDto, authCookie);
+    }
   }
 
   return {
     successEligibilityUpdated: !hasError,
-    errors: {
-      eligibility: "All the fields are required in every single rule.",
-    },
+    errors: hasError
+      ? {
+          eligbilityAudience:
+            "All the fields are required in every single rule.",
+        }
+      : undefined,
   };
 };

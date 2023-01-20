@@ -17,6 +17,7 @@ export class Eligibility {
 }
 
 export const EligibilitySchema = Joi.object({
+  uuid: Joi.string().required(),
   fieldName: Joi.string().required(),
   fieldComparator: Joi.string()
     .valid(ComparatorEnum.Equals, ComparatorEnum.Contains)
