@@ -47,7 +47,7 @@ export const TagInput = ({ defaultValue }: TagInputProps) => {
               <li key={tag}>
                 <button
                   aria-label="Remove"
-                  className="bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-slate-300 text-xs rounded  p-1 h-full flex items-center justify-between"
+                  className="bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-slate-300 hover:bg-gray-200 active:bg-gray-300 dark:hover:bg-slate-700 dark:active:bg-slate-600 text-xs rounded p-1 h-full flex items-center justify-between"
                   type="button"
                   onClick={() => removeTag(tag)}
                 >
