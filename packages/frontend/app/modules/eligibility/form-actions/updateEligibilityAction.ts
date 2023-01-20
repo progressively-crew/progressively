@@ -18,15 +18,17 @@ export const updateEligibilityAction = async (
     const fieldComparator = allComparators[i]?.toString() || "";
     const fieldValue = allFieldValue[i]?.toString() || "";
 
-    const eligiblityDto: UpsertEligibilityDTO = {
-      fieldName,
-      fieldValue,
-      fieldComparator: fieldComparator
-        ? (fieldComparator as ComparatorEnum)
-        : ComparatorEnum.Equals,
-    };
+    if (fieldName && fieldComparator && fieldValue) {
+      const eligiblityDto: UpsertEligibilityDTO = {
+        fieldName,
+        fieldValue,
+        fieldComparator: fieldComparator
+          ? (fieldComparator as ComparatorEnum)
+          : ComparatorEnum.Equals,
+      };
 
-    await updateEligibility(uuid.toString(), eligiblityDto, authCookie);
+      await updateEligibility(uuid.toString(), eligiblityDto, authCookie);
+    }
   }
 
   return { successEligibilityUpdated: true };

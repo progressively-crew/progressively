@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { IoCloseOutline } from "react-icons/io5";
 import { KeyboardKeys } from "~/modules/a11y/utils/keyboardKeys";
 
@@ -7,7 +7,7 @@ export interface TagInputProps {
 }
 
 export const TagInput = ({ defaultValue }: TagInputProps) => {
-  const inputRef = useRef<HTMLInputElement>(null);
+  const [value, setValue] = useState("");
   const [tags, setTags] = useState<Array<string>>(defaultValue || []);
 
   const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
@@ -23,14 +23,13 @@ export const TagInput = ({ defaultValue }: TagInputProps) => {
       e.key === KeyboardKeys.ENTER &&
       (e.target as HTMLInputElement).value !== ""
     ) {
-      const input = inputRef.current;
-      if (!input) return;
+      e.preventDefault();
 
-      if (!tags.includes(input.value)) {
-        setTags((s) => [...s, input.value]);
+      if (!value) return;
 
-        input.value = "";
-        input.focus();
+      if (!tags.includes(value)) {
+        setTags((s) => [...s, value]);
+        setValue("");
       }
     }
   };
@@ -60,12 +59,13 @@ export const TagInput = ({ defaultValue }: TagInputProps) => {
         )}
 
         <input
-          ref={inputRef}
           type="text"
           name="tag-name"
           aria-label="Add a new tag to the list"
           className="bg-white dark:bg-transparent"
           onKeyDown={handleKeyDown}
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
         />
       </div>
 

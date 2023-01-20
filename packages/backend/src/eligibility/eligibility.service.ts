@@ -90,6 +90,9 @@ export class EligibilityService {
         flagEnvironmentEnvironmentId: envId,
         flagEnvironmentFlagId: flagId,
       },
+      orderBy: {
+        uuid: 'asc',
+      },
     });
   }
 

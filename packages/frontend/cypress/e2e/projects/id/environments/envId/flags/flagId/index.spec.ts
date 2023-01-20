@@ -1,6 +1,6 @@
 describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]", () => {
-  before(cy.seed);
-  after(cy.cleanupDb);
+  beforeEach(cy.seed);
+  afterEach(cy.cleanupDb);
 
   describe("not authenticated", () => {
     beforeEach(() => {
@@ -96,18 +96,16 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]", () => {
         });
 
         it("edits the existing rules", () => {
-          cy.findAllByLabelText("Field name").should("have.length", 1);
-
           cy.findByRole("button", { name: "Add a new rule" }).click();
 
+          cy.get("[name='field-name']").should("have.length", 2);
           cy.get("[name='tag-name']").last().type("hello world{enter}");
           cy.findByRole("button", { name: "Update" }).click();
 
+          cy.get("[name='field-name']").should("have.length", 2);
           cy.get("[name='field-value']")
             .last()
-            .should("have.attr", "value", "@gmail.com\nhello world");
-
-          cy.reload();
+            .should("have.attr", "value", "hello world");
         });
       });
     });
