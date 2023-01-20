@@ -44,7 +44,7 @@ export const updateEligibilityAction = async (
 
   return {
     successEligibilityUpdated: !hasError,
-    errors: hasError
+    elibilityErrors: hasError
       ? {
           eligbilityAudience:
             "All the fields are required in every single rule.",

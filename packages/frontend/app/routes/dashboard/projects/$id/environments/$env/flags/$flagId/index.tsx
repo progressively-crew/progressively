@@ -54,6 +54,7 @@ type ActionDataType = null | {
   successEligibilityCreated?: boolean;
   successEligibilityUpdated?: boolean;
   errors?: { [key: string]: string | undefined };
+  elibilityErrors?: { [key: string]: string | undefined };
 };
 
 export const action: ActionFunction = async ({
@@ -247,6 +248,11 @@ export default function FlagById() {
                 <SuccessBox id="eligibility-removed">
                   The eligibility audience has been successfully removed.
                 </SuccessBox>
+              </>
+            ) : actionData?.elibilityErrors ? (
+              <>
+                <Spacer size={6} />
+                <ErrorBox list={actionData?.elibilityErrors} />
               </>
             ) : null}
 
