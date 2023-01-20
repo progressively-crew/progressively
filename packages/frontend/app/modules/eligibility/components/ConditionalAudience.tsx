@@ -17,6 +17,7 @@ export const ConditionalAudience = ({
 }: ConditionalAudienceProps) => {
   return (
     <div className="bg-gray-50 dark:bg-slate-900 px-6 py-4 flex flex-row gap-4">
+      <input type="hidden" name="eligibility-id" value={eligiblity.uuid} />
       <Typography className="shrink-0 py-2">When field</Typography>
 
       <div className="shrink-0">
@@ -26,7 +27,6 @@ export const ConditionalAudience = ({
           placeholder="e.g: email"
           defaultValue={eligiblity.fieldName}
           name="field-name"
-          form="eligibility-form"
           className="w-40"
         />
       </div>
@@ -47,7 +47,6 @@ export const ConditionalAudience = ({
               label: "Contains",
             },
           ]}
-          form="eligibility-form"
         />
       </div>
 

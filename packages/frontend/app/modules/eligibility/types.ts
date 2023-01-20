@@ -13,6 +13,5 @@ export interface UpsertEligibilityDTO {
   fieldName: string;
   fieldComparator: ComparatorEnum;
   fieldValue: string;
-  uuid: string;
-  hasToBeCreated?: boolean;
+  uuid?: string;
 }

@@ -2,7 +2,10 @@ import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { getStrategies } from "~/modules/strategies/services/getStrategies";
 import { getSession } from "~/sessions";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
-import { AdditionalAudienceRetrieveDTO } from "~/modules/strategies/types";
+import {
+  AdditionalAudienceRetrieveDTO,
+  ComparatorEnum,
+} from "~/modules/strategies/types";
 import { Section, SectionHeader } from "~/components/Section";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
 import {
@@ -31,11 +34,12 @@ import { CreateButton } from "~/components/Buttons/CreateButton";
 import { AdditionalAudienceList } from "~/modules/strategies/components/AdditionalAudienceList";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { getEligibilities } from "~/modules/eligibility/services/getEligibilities";
-import { Eligibility } from "~/modules/eligibility/types";
+import { Eligibility, UpsertEligibilityDTO } from "~/modules/eligibility/types";
 import { VariantTable } from "~/modules/variants/components/VariantTable";
 import { Spacer } from "~/components/Spacer";
 import { FormEligibility } from "~/modules/eligibility/components/FormEligibility";
 import { createEligibility } from "~/modules/eligibility/services/createEligibility";
+import { updateEligibility } from "~/modules/eligibility/services/updateEligibility";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -51,6 +55,7 @@ type ActionDataType = null | {
   successChangePercentage?: boolean;
   successEdit?: boolean;
   successEligibilityCreated?: boolean;
+  successEligibilityUpdated?: boolean;
   errors?: { [key: string]: string | undefined };
 };
 
@@ -63,6 +68,33 @@ export const action: ActionFunction = async ({
   const flagId = params.flagId;
   const formData = await request.formData();
   const type = formData.get("_type");
+
+  if (type === "update-eligibility") {
+    const allIds = formData.getAll("eligibility-id");
+    const allFieldName = formData.getAll("field-name");
+    const allComparators = formData.getAll("field-comparator");
+    const allFieldValue = formData.getAll("field-value");
+
+    const entries = allIds.entries();
+
+    for (const [i, uuid] of entries) {
+      const fieldName = allFieldName[i]?.toString() || "";
+      const fieldComparator = allComparators[i]?.toString() || "";
+      const fieldValue = allFieldValue[i]?.toString() || "";
+
+      const eligiblityDto: UpsertEligibilityDTO = {
+        fieldName,
+        fieldValue,
+        fieldComparator: fieldComparator
+          ? (fieldComparator as ComparatorEnum)
+          : ComparatorEnum.Equals,
+      };
+
+      await updateEligibility(uuid.toString(), eligiblityDto, authCookie);
+    }
+
+    return { successEligibilityUpdated: true };
+  }
 
   if (type === "create-eligibility") {
     await createEligibility(params.env!, flagId as string, authCookie);
@@ -212,7 +244,11 @@ export default function FlagById() {
       </Section>
 
       <Section id="eligibility">
-        <Card>
+        <Card
+          footer={
+            <SubmitButton form="form-update-eligibility">Update</SubmitButton>
+          }
+        >
           <CardContent>
             <SectionHeader
               title="Audience eligibility"
