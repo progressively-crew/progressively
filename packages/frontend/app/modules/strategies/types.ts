@@ -3,7 +3,8 @@ export enum ComparatorEnum {
   Contains = "contains",
 }
 
-export interface AdditionalAudienceCreateDTO {
+export interface AdditionalAudienceUpdateDTO {
+  uuid?: string;
   fieldName: string;
   fieldComparator: ComparatorEnum;
   fieldValue: string;
@@ -12,7 +13,7 @@ export interface AdditionalAudienceCreateDTO {
 }
 
 export interface AdditionalAudienceRetrieveDTO
-  extends AdditionalAudienceCreateDTO {
+  extends AdditionalAudienceUpdateDTO {
   uuid: string;
 }
 

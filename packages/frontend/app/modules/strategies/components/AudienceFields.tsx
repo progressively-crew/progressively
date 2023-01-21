@@ -12,15 +12,15 @@ import { VariantIcon } from "~/components/Icons/VariantIcon";
 import { Variant } from "~/modules/variants/types";
 import {
   ComparatorEnum,
-  AdditionalAudienceCreateDTO,
+  AdditionalAudienceUpdateDTO,
   StrategyValueToServe,
 } from "../types";
 
 export interface AudienceFieldsProps {
   errors: Record<string, string>;
-  initialFieldName?: AdditionalAudienceCreateDTO["fieldName"];
-  initialFieldValue?: AdditionalAudienceCreateDTO["fieldValue"];
-  initialFieldComparator?: AdditionalAudienceCreateDTO["fieldComparator"];
+  initialFieldName?: AdditionalAudienceUpdateDTO["fieldName"];
+  initialFieldValue?: AdditionalAudienceUpdateDTO["fieldValue"];
+  initialFieldComparator?: AdditionalAudienceUpdateDTO["fieldComparator"];
   variants: Array<Variant>;
 }
 
