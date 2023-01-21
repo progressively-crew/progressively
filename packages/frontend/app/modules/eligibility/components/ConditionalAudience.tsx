@@ -1,5 +1,5 @@
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
-import { SelectField } from "~/components/Fields/SelectField";
+import { SelectField, SelectOption } from "~/components/Fields/SelectField";
 import { TagInput } from "~/components/Fields/TagInput";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Typography } from "~/components/Typography";
@@ -9,15 +9,24 @@ import { UpsertEligibilityDTO } from "../types";
 export interface ConditionalAudienceProps {
   eligiblity: UpsertEligibilityDTO;
   removeLink: string;
+  valuesToServe?: Array<SelectOption>;
+  uuid: string;
+  fieldName: string;
+  fieldValue: string;
+  fieldComparator: ComparatorEnum;
 }
 
 export const ConditionalAudience = ({
-  eligiblity,
   removeLink,
+  valuesToServe,
+  fieldName,
+  fieldValue,
+  fieldComparator,
+  uuid,
 }: ConditionalAudienceProps) => {
   return (
     <div className="bg-gray-50 dark:bg-slate-900 px-6 py-4 flex flex-row gap-4">
-      <input type="hidden" name="eligibility-id" value={eligiblity.uuid} />
+      <input type="hidden" name="eligibility-id" value={uuid} />
       <Typography className="shrink-0 py-2">When field</Typography>
 
       <div className="shrink-0">
@@ -25,7 +34,7 @@ export const ConditionalAudience = ({
           hiddenLabel
           label="Field name"
           placeholder="e.g: email"
-          defaultValue={eligiblity.fieldName}
+          defaultValue={fieldName}
           name="field-name"
           className="w-40"
         />
@@ -36,7 +45,7 @@ export const ConditionalAudience = ({
           hiddenLabel
           name="field-comparator"
           label="Field comparator"
-          defaultValue={eligiblity.fieldComparator}
+          defaultValue={fieldComparator}
           options={[
             {
               value: ComparatorEnum.Equals,
@@ -50,11 +59,16 @@ export const ConditionalAudience = ({
         />
       </div>
 
-      <TagInput
-        defaultValue={
-          eligiblity.fieldValue ? eligiblity.fieldValue.split("\n") : []
-        }
-      />
+      <TagInput defaultValue={fieldValue ? fieldValue.split("\n") : []} />
+
+      {valuesToServe ? (
+        <SelectField
+          hiddenLabel
+          name={"value-to-serve"}
+          label={"Values to serve"}
+          options={valuesToServe}
+        />
+      ) : null}
 
       <div className="py-1">
         <DeleteButton size="S" variant="secondary" to={removeLink}>
