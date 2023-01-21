@@ -19,7 +19,6 @@ import { FlagsService } from './flags.service';
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
 import { strToFlagStatus } from './utils';
 import { WebsocketGateway } from '../websocket/websocket.gateway';
-import { StrategySchema, StrategyCreationDTO } from '../strategy/strategy.dto';
 import { HasFlagAccessGuard } from './guards/hasFlagAccess';
 import { ValidationPipe } from '../shared/pipes/ValidationPipe';
 import { ApiBearerAuth } from '@nestjs/swagger';

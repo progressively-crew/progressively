@@ -1,3 +1,4 @@
+import * as Joi from 'joi';
 import { ComparatorEnum } from '../shared/utils/comparators/types';
 
 export interface FlagDict {
@@ -16,3 +17,29 @@ export interface RolloutStrategy {
   valueToServeType: string;
   valueToServe: string;
 }
+
+export class StrategyUpdateDTO {
+  uuid: string;
+  fieldName: string;
+  fieldComparator: ComparatorEnum;
+  fieldValue: string;
+  valueToServeType: string;
+  valueToServe: string;
+}
+
+export enum StrategyValueToServe {
+  Boolean = 'Boolean',
+  String = 'String',
+}
+
+export const StrategySchema = Joi.object({
+  fieldName: Joi.string().required(),
+  fieldComparator: Joi.string()
+    .valid(ComparatorEnum.Equals, ComparatorEnum.Contains)
+    .required(),
+  fieldValue: Joi.string().required(),
+  valueToServeType: Joi.string()
+    .valid(StrategyValueToServe.Boolean, StrategyValueToServe.String)
+    .required(),
+  valueToServe: Joi.string().required(),
+});
