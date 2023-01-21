@@ -37,6 +37,7 @@ import { Spacer } from "~/components/Spacer";
 import { FormEligibility } from "~/modules/eligibility/components/FormEligibility";
 import { createEligibility } from "~/modules/eligibility/services/createEligibility";
 import { updateEligibilityAction } from "~/modules/eligibility/form-actions/updateEligibilityAction";
+import { FormAdditionalAudience } from "~/modules/strategies/components/FormAdditionalAudience";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -290,60 +291,48 @@ export default function FlagById() {
                 !hasStrategies &&
                 "The users matching at least one of the following condition will resolve the flag even if they are not targeted because of the eligibility restrictions"
               }
-              status={
-                isStrategyUpdated ? (
-                  <SuccessBox id="strategy-updated">
-                    The additional audience has been updated.
-                  </SuccessBox>
-                ) : isStrategyAdded ? (
-                  <SuccessBox id="strategy-added">
-                    The additional audience has been successfully set.
-                  </SuccessBox>
-                ) : isStrategyRemoved ? (
-                  <SuccessBox id="strategy-removed">
-                    The additional audience has been successfully removed.
-                  </SuccessBox>
-                ) : null
-              }
-              action={
-                hasStrategies && (
-                  <CreateButton
-                    variant="secondary"
-                    to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
-                  >
-                    Create an additional audience
-                  </CreateButton>
-                )
-              }
             />
-          </CardContent>
 
-          {!hasStrategies && (
-            <CardContent>
-              <EmptyState
-                titleAs="h2"
-                title="No additional audience"
-                description={"There are no additional audience for this flag."}
-                action={
-                  <CreateButton
-                    variant="secondary"
-                    to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
-                  >
-                    Create an additional audience
-                  </CreateButton>
-                }
-              />
-            </CardContent>
-          )}
+            {isStrategyUpdated ? (
+              <SuccessBox id="strategy-updated">
+                The additional audience has been updated.
+              </SuccessBox>
+            ) : isStrategyAdded ? (
+              <SuccessBox id="strategy-added">
+                The additional audience has been successfully set.
+              </SuccessBox>
+            ) : isStrategyRemoved ? (
+              <SuccessBox id="strategy-removed">
+                The additional audience has been successfully removed.
+              </SuccessBox>
+            ) : null}
 
-          {hasStrategies && (
-            <AdditionalAudienceList
-              items={strategies}
+            <Spacer size={6} />
+
+            <FormAdditionalAudience
+              additionalAudiences={strategies}
               projectId={project.uuid}
               envId={environment.uuid}
               flagId={currentFlag.uuid}
             />
-          )}
+
+            {hasStrategies && <Spacer size={6} />}
+
+            <Form method="post">
+              <input
+                type="hidden"
+                name="_type"
+                value="create-additional-audience"
+              />
+
+              <button
+                type="submit"
+                className="p-2 border rounded border-dashed border-gray-300 text-center w-full text-gray-600 active:bg-gray-100 hover:bg-gray-50 dark:text-slate-200 dark:active:bg-slate-600 dark:hover:bg-slate-700"
+              >
+                Add a new rule
+              </button>
+            </Form>
+          </CardContent>
         </Card>
       </Section>
     </DashboardLayout>
