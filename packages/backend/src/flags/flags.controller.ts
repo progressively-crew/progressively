@@ -212,16 +212,13 @@ export class FlagsController {
   @Post('environments/:envId/flags/:flagId/strategies')
   @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
-  @UsePipes(new ValidationPipe(StrategySchema))
   async addStrategyToFlag(
     @Param('envId') envId: string,
     @Param('flagId') flagId: string,
-    @Body() strategyDto: StrategyCreationDTO,
   ): Promise<any> {
     const strategy = await this.strategyService.addStrategyToFlagEnv(
       envId,
       flagId,
-      strategyDto,
     );
 
     const { flagEnvironment: flagEnv } =

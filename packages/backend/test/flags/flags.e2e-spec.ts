@@ -443,69 +443,6 @@ describe('FlagsController (e2e)', () => {
         });
     });
 
-    it('gives 400 when the project has noname', async () => {
-      const access_token = await authenticate(app);
-
-      const invalidStrategy: any = {
-        name: undefined,
-      };
-
-      await request(app.getHttpServer())
-        .post('/environments/1/flags/1/strategies')
-        .set('Authorization', `Bearer ${access_token}`)
-        .send(invalidStrategy)
-        .expect(400)
-        .expect({
-          statusCode: 400,
-          message: 'Validation failed',
-          error: 'Bad Request',
-        });
-    });
-
-    it('gives 400 when the project receives a wrong strategy type', async () => {
-      const access_token = await authenticate(app);
-
-      const invalidStrategy: any = {};
-
-      await request(app.getHttpServer())
-        .post('/environments/1/flags/1/strategies')
-        .set('Authorization', `Bearer ${access_token}`)
-        .send(invalidStrategy)
-        .expect(400)
-        .expect({
-          statusCode: 400,
-          message: 'Validation failed',
-          error: 'Bad Request',
-        });
-    });
-
-    [
-      'fieldName',
-      'fieldComparator',
-      'fieldValue',
-      'valueToServe',
-      'valueToServeType',
-    ].forEach((field) => {
-      it(`gives 400 when the project has a strategy of type "field" but no "${field}"`, async () => {
-        const access_token = await authenticate(app);
-
-        const invalidStrategy: any = {
-          [field]: undefined,
-        };
-
-        await request(app.getHttpServer())
-          .post('/environments/1/flags/1/strategies')
-          .set('Authorization', `Bearer ${access_token}`)
-          .send(invalidStrategy)
-          .expect(400)
-          .expect({
-            statusCode: 400,
-            message: 'Validation failed',
-            error: 'Bad Request',
-          });
-      });
-    });
-
     it('creates a default strategy', async () => {
       const access_token = await authenticate(app);
 
@@ -528,73 +465,11 @@ describe('FlagsController (e2e)', () => {
       expect(uuid).toBeDefined();
       expect(obj).toEqual({
         fieldComparator: 'eq',
-        fieldName: 'email',
-        fieldValue: '@gmail.com',
+        fieldName: '',
+        fieldValue: '',
         flagEnvironmentFlagId: '1',
         flagEnvironmentEnvironmentId: '1',
-        valueToServe: 'true',
-        valueToServeType: 'Boolean',
-      });
-    });
-
-    it('creates a field strategy', async () => {
-      const access_token = await authenticate(app);
-
-      const validStrategy: any = {
-        fieldName: 'email',
-        fieldComparator: 'eq',
-        fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
-        valueToServe: 'true',
-        valueToServeType: 'Boolean',
-      };
-
-      const response = await request(app.getHttpServer())
-        .post('/environments/1/flags/1/strategies')
-        .set('Authorization', `Bearer ${access_token}`)
-        .send(validStrategy)
-        .expect(201);
-
-      const { uuid, ...obj } = response.body;
-
-      expect(uuid).toBeDefined();
-      expect(obj).toEqual({
-        fieldName: 'email',
-        fieldComparator: 'eq',
-        fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
-        flagEnvironmentFlagId: '1',
-        flagEnvironmentEnvironmentId: '1',
-        valueToServe: 'true',
-        valueToServeType: 'Boolean',
-      });
-    });
-
-    it('creates a field strategy with an activation percentage', async () => {
-      const access_token = await authenticate(app);
-
-      const validStrategy: any = {
-        fieldName: 'email',
-        fieldComparator: 'eq',
-        fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
-        valueToServe: 'true',
-        valueToServeType: 'Boolean',
-      };
-
-      const response = await request(app.getHttpServer())
-        .post('/environments/1/flags/1/strategies')
-        .set('Authorization', `Bearer ${access_token}`)
-        .send(validStrategy)
-        .expect(201);
-
-      const { uuid, ...obj } = response.body;
-
-      expect(uuid).toBeDefined();
-      expect(obj).toEqual({
-        fieldName: 'email',
-        fieldComparator: 'eq',
-        fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
-        flagEnvironmentFlagId: '1',
-        flagEnvironmentEnvironmentId: '1',
-        valueToServe: 'true',
+        valueToServe: 'false',
         valueToServeType: 'Boolean',
       });
     });

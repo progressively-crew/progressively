@@ -2,8 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ComparatorFactory } from '../shared/utils/comparators/comparatorFactory';
 import { ComparatorEnum } from '../shared/utils/comparators/types';
 import { PrismaService } from '../database/prisma.service';
-
-import { StrategyCreationDTO, StrategyValueToServe } from './strategy.dto';
+import { StrategyValueToServe } from './strategy.dto';
 import { FieldRecord, RolloutStrategy } from './types';
 
 @Injectable()
@@ -46,11 +45,7 @@ export class StrategyService {
     return false;
   }
 
-  addStrategyToFlagEnv(
-    envId: string,
-    flagId: string,
-    strategy: Partial<StrategyCreationDTO>,
-  ) {
+  addStrategyToFlagEnv(envId: string, flagId: string) {
     return this.prisma.rolloutStrategy.create({
       data: {
         flagEnvironment: {
@@ -61,11 +56,11 @@ export class StrategyService {
             },
           },
         },
-        fieldName: strategy.fieldName,
-        fieldValue: strategy.fieldValue,
-        fieldComparator: strategy.fieldComparator,
-        valueToServe: strategy.valueToServe,
-        valueToServeType: strategy.valueToServeType,
+        fieldName: '',
+        fieldValue: '',
+        fieldComparator: ComparatorEnum.Equals,
+        valueToServe: 'false',
+        valueToServeType: StrategyValueToServe.Boolean,
       },
     });
   }
