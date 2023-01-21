@@ -67,7 +67,7 @@ export const action: ActionFunction = async ({
   const formData = await request.formData();
   const type = formData.get("_type");
 
-  if (type === "") {
+  if (type === "create-additional-audience") {
     await createStrategy(
       params.env!,
       params.flagId!,
@@ -297,23 +297,31 @@ export default function FlagById() {
             <SectionHeader
               title="Additional audience"
               description={
-                !hasStrategies &&
                 "The users matching at least one of the following condition will resolve the flag even if they are not targeted because of the eligibility restrictions"
               }
             />
 
             {isStrategyUpdated ? (
-              <SuccessBox id="strategy-updated">
-                The additional audience has been updated.
-              </SuccessBox>
+              <>
+                <Spacer size={6} />
+                <SuccessBox id="strategy-updated">
+                  The additional audience has been updated.
+                </SuccessBox>
+              </>
             ) : isStrategyAdded ? (
-              <SuccessBox id="strategy-added">
-                The additional audience has been successfully set.
-              </SuccessBox>
+              <>
+                <Spacer size={6} />
+                <SuccessBox id="strategy-added">
+                  The additional audience has been successfully set.
+                </SuccessBox>
+              </>
             ) : isStrategyRemoved ? (
-              <SuccessBox id="strategy-removed">
-                The additional audience has been successfully removed.
-              </SuccessBox>
+              <>
+                <Spacer size={6} />
+                <SuccessBox id="strategy-removed">
+                  The additional audience has been successfully removed.
+                </SuccessBox>
+              </>
             ) : null}
 
             <Spacer size={6} />
