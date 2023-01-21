@@ -1,29 +1,29 @@
 import { Form } from "@remix-run/react";
-import { Eligibility } from "../types";
-import { ConditionalAudience } from "../../misc/components/ConditionalAudience";
+import { ConditionalAudience } from "~/modules/misc/components/ConditionalAudience";
+import { AdditionalAudienceRetrieveDTO } from "../types";
 
-export interface FormEligibilityProps {
-  initialEligibilites: Array<Eligibility>;
+export interface FormAdditionalAudienceProps {
+  additionalAudiences: Array<AdditionalAudienceRetrieveDTO>;
   projectId: string;
   envId: string;
   flagId: string;
 }
 
-export const FormEligibility = ({
-  initialEligibilites,
+export const FormAdditionalAudience = ({
+  additionalAudiences,
   projectId,
   envId,
   flagId,
-}: FormEligibilityProps) => {
+}: FormAdditionalAudienceProps) => {
   return (
     <Form method="post" id="form-update-eligibility">
       <input type="hidden" name="_type" value="update-eligibility" />
 
       <div className="flex flex-col gap-1">
-        {initialEligibilites.map((el) => (
+        {additionalAudiences.map((el) => (
           <ConditionalAudience
             key={el.uuid}
-            removeLink={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/eligibilities/${el.uuid}/delete`}
+            removeLink={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/strategies/${el.uuid}/delete`}
             uuid={el.uuid}
             fieldName={el.fieldName}
             fieldValue={el.fieldValue}

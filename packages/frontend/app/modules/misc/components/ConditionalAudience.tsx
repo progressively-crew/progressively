@@ -4,10 +4,8 @@ import { TagInput } from "~/components/Fields/TagInput";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Typography } from "~/components/Typography";
 import { ComparatorEnum } from "~/modules/strategies/types";
-import { UpsertEligibilityDTO } from "../types";
 
 export interface ConditionalAudienceProps {
-  eligiblity: UpsertEligibilityDTO;
   removeLink: string;
   valuesToServe?: Array<SelectOption>;
   uuid: string;
