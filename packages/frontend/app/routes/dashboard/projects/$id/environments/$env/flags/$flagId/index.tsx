@@ -26,9 +26,6 @@ import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction"
 import { editVariantAction } from "~/modules/variants/form-actions/editVariantAction";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { PageTitle } from "~/components/PageTitle";
-import { EmptyState } from "~/components/EmptyState";
-import { CreateButton } from "~/components/Buttons/CreateButton";
-import { AdditionalAudienceList } from "~/modules/strategies/components/AdditionalAudienceList";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { getEligibilities } from "~/modules/eligibility/services/getEligibilities";
 import { Eligibility } from "~/modules/eligibility/types";
@@ -38,6 +35,7 @@ import { FormEligibility } from "~/modules/eligibility/components/FormEligibilit
 import { createEligibility } from "~/modules/eligibility/services/createEligibility";
 import { updateEligibilityAction } from "~/modules/eligibility/form-actions/updateEligibilityAction";
 import { FormAdditionalAudience } from "~/modules/strategies/components/FormAdditionalAudience";
+import { createStrategy } from "~/modules/strategies/services/createStrategy";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -54,6 +52,7 @@ type ActionDataType = null | {
   successEdit?: boolean;
   successEligibilityCreated?: boolean;
   successEligibilityUpdated?: boolean;
+  successAdditionalAudienceCreated?: boolean;
   errors?: { [key: string]: string | undefined };
   elibilityErrors?: { [key: string]: string | undefined };
 };
@@ -67,6 +66,16 @@ export const action: ActionFunction = async ({
   const flagId = params.flagId;
   const formData = await request.formData();
   const type = formData.get("_type");
+
+  if (type === "") {
+    await createStrategy(
+      params.env!,
+      params.flagId!,
+      session.get("auth-cookie")
+    );
+
+    return { successAdditionalAudienceCreated: true };
+  }
 
   if (type === "update-eligibility") {
     return updateEligibilityAction(formData, authCookie);

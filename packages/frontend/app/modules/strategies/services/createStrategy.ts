@@ -1,17 +1,14 @@
 import { Constants } from "~/constants";
-import { AdditionalAudienceCreateDTO } from "../types";
 
 export const createStrategy = (
   envId: string,
   flagId: string,
-  strategy: AdditionalAudienceCreateDTO,
   accessToken: string
 ) =>
   fetch(
     `${Constants.BackendUrl}/environments/${envId}/flags/${flagId}/strategies`,
     {
       method: "POST",
-      body: JSON.stringify(strategy),
       headers: {
         Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
