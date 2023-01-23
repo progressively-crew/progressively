@@ -129,7 +129,6 @@ export default function MetricCreatePage() {
     options.push({
       value: variant.uuid,
       label: variant.value,
-      icon: <VariantDot variant={variant.value} />,
     });
   }
 

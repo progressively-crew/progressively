@@ -331,6 +331,7 @@ export default function FlagById() {
               projectId={project.uuid}
               envId={environment.uuid}
               flagId={currentFlag.uuid}
+              variants={flagEnv.variants}
             />
 
             {hasStrategies && <Spacer size={6} />}

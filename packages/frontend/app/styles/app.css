@@ -758,6 +758,10 @@ video {
   max-width: 64rem;
 }
 
+.max-w-6xl {
+  max-width: 72rem;
+}
+
 .flex-1 {
   flex: 1 1 0%;
 }
@@ -843,6 +847,14 @@ video {
 
 .grid-cols-3 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.grid-cols-\[auto_auto_auto_1fr\] {
+  grid-template-columns: auto auto auto 1fr;
+}
+
+.grid-cols-\[auto_auto_auto_1fr_auto\] {
+  grid-template-columns: auto auto auto 1fr auto;
 }
 
 .grid-cols-4 {
@@ -1670,9 +1682,19 @@ input[type="range"]::-moz-range-thumb {
   height: 1rem;
 }
 
+.checked\:before\:h-2:checked::before {
+  content: var(--tw-content);
+  height: 0.5rem;
+}
+
 .checked\:before\:w-4:checked::before {
   content: var(--tw-content);
   width: 1rem;
+}
+
+.checked\:before\:w-2:checked::before {
+  content: var(--tw-content);
+  width: 0.5rem;
 }
 
 .hover\:cursor-pointer:hover {

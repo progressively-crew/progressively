@@ -1,12 +1,14 @@
 import { Form } from "@remix-run/react";
 import { ConditionalAudience } from "~/modules/misc/components/ConditionalAudience";
-import { AdditionalAudienceRetrieveDTO } from "../types";
+import { Variant } from "~/modules/variants/types";
+import { AdditionalAudienceRetrieveDTO, StrategyValueToServe } from "../types";
 
 export interface FormAdditionalAudienceProps {
   additionalAudiences: Array<AdditionalAudienceRetrieveDTO>;
   projectId: string;
   envId: string;
   flagId: string;
+  variants: Array<Variant>;
 }
 
 export const FormAdditionalAudience = ({
@@ -14,6 +16,7 @@ export const FormAdditionalAudience = ({
   projectId,
   envId,
   flagId,
+  variants,
 }: FormAdditionalAudienceProps) => {
   return (
     <Form method="post" id="form-update-eligibility">
@@ -28,6 +31,10 @@ export const FormAdditionalAudience = ({
             fieldName={el.fieldName}
             fieldValue={el.fieldValue}
             fieldComparator={el.fieldComparator}
+            variants={variants}
+            valueToServe={el.valueToServe}
+            valueToServeType={el.valueToServeType as StrategyValueToServe}
+            showAdditionalFields
           />
         ))}
       </div>
