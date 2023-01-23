@@ -1,4 +1,7 @@
-import { ComparatorEnum } from "~/modules/strategies/types";
+import {
+  ComparatorEnum,
+  StrategyValueToServe,
+} from "~/modules/strategies/types";
 import { updateStrategy } from "../services/updateStrategy";
 import { AdditionalAudienceUpdateDTO } from "../types";
 
@@ -10,6 +13,8 @@ export const updateStrategyAction = async (
   const allFieldName = formData.getAll("field-name");
   const allComparators = formData.getAll("field-comparator");
   const allFieldValue = formData.getAll("field-value");
+  const allValuesToServeType = formData.getAll("value-to-serve");
+  const allValuesToServe = formData.getAll("value-to-serve");
 
   const toUpdate: Array<AdditionalAudienceUpdateDTO> = [];
   const entries = allIds.entries();
@@ -19,6 +24,9 @@ export const updateStrategyAction = async (
     const fieldName = allFieldName[i]?.toString() || "";
     const fieldComparator = allComparators[i]?.toString() || "";
     const fieldValue = allFieldValue[i]?.toString() || "";
+    const valueToServe = allValuesToServe[i]?.toString() || "false";
+    const valueToServeType =
+      allValuesToServeType[i]?.toString() || StrategyValueToServe.Boolean;
 
     if (uuid && fieldName && fieldComparator && fieldValue) {
       const strategyDto: AdditionalAudienceUpdateDTO = {
@@ -28,6 +36,8 @@ export const updateStrategyAction = async (
         fieldComparator: fieldComparator
           ? (fieldComparator as ComparatorEnum)
           : ComparatorEnum.Equals,
+        valueToServe: valueToServe,
+        valueToServeType: valueToServeType,
       };
 
       toUpdate.push(strategyDto);
