@@ -41,24 +41,24 @@ const AdditionalFields = ({
   const valueOptions = [
     {
       value: StrategyValueToServe.Boolean,
-      label: "A boolean",
+      label: "the boolean",
     },
     {
       value: StrategyValueToServe.String,
-      label: "A string",
+      label: "the string",
     },
   ];
 
   if (hasVariants) {
     valueOptions.push({
       value: StrategyValueToServe.Variant,
-      label: "A variant value",
+      label: "the variant",
     });
   }
 
   return (
     <>
-      <Typography className="shrink-0 py-2">Serve a</Typography>
+      <Typography className="shrink-0 py-2">Serve</Typography>
 
       <SelectField
         hiddenLabel
@@ -165,11 +165,11 @@ export const ConditionalAudience = ({
             options={[
               {
                 value: ComparatorEnum.Equals,
-                label: "Equals",
+                label: "is in array",
               },
               {
                 value: ComparatorEnum.Contains,
-                label: "Contains",
+                label: "matches in array",
               },
             ]}
           />
@@ -193,6 +193,14 @@ export const ConditionalAudience = ({
           </div>
         )}
       </div>
+
+      {showAdditionalFields && (
+        <div className="pt-4 flex justify-end">
+          <DeleteButton size="S" variant="secondary" to={removeLink}>
+            Remove
+          </DeleteButton>
+        </div>
+      )}
     </div>
   );
 };
