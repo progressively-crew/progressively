@@ -46,7 +46,11 @@ export const ErrorBox = ({ list }: ErrorBoxProps) => {
         </div>
       </figure>
 
-      <Link to={location.pathname} className="text-xl">
+      <Link
+        to={location.pathname}
+        className="text-xl"
+        preventScrollReset={true}
+      >
         <MdClose aria-label="Close the banner" />
       </Link>
     </div>

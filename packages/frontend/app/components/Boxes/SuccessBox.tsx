@@ -29,7 +29,11 @@ export const SuccessBox = ({ children, id, ...props }: SuccessBoxProps) => {
         </HStack>
       </p>
 
-      <Link to={location.pathname} className="text-xl">
+      <Link
+        to={location.pathname}
+        className="text-xl"
+        preventScrollReset={true}
+      >
         <MdClose aria-label="Close the banner" />
       </Link>
     </div>
