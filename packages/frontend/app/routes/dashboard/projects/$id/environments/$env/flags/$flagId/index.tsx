@@ -57,6 +57,7 @@ type ActionDataType = null | {
   successAdditionalAudienceCreated?: boolean;
   errors?: { [key: string]: string | undefined };
   elibilityErrors?: { [key: string]: string | undefined };
+  additionalAudienceErrors?: { [key: string]: string | undefined };
 };
 
 export const action: ActionFunction = async ({
@@ -333,6 +334,11 @@ export default function FlagById() {
                 <SuccessBox id="strategy-removed">
                   The additional audience has been successfully removed.
                 </SuccessBox>
+              </>
+            ) : actionData?.additionalAudienceErrors ? (
+              <>
+                <Spacer size={6} />
+                <ErrorBox list={actionData?.additionalAudienceErrors} />
               </>
             ) : null}
 

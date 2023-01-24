@@ -54,9 +54,9 @@ export const updateStrategyAction = async (
 
   return {
     successStrategyUpdated: !hasError,
-    elibilityErrors: hasError
+    additionalAudienceErrors: hasError
       ? {
-          eligbilityAudience:
+          additionalAudience:
             "All the fields are required in every single rule.",
         }
       : undefined,
