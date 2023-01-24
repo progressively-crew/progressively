@@ -26,9 +26,6 @@ import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction"
 import { editVariantAction } from "~/modules/variants/form-actions/editVariantAction";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { PageTitle } from "~/components/PageTitle";
-import { EmptyState } from "~/components/EmptyState";
-import { CreateButton } from "~/components/Buttons/CreateButton";
-import { AdditionalAudienceList } from "~/modules/strategies/components/AdditionalAudienceList";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { getEligibilities } from "~/modules/eligibility/services/getEligibilities";
 import { Eligibility } from "~/modules/eligibility/types";
@@ -37,6 +34,9 @@ import { Spacer } from "~/components/Spacer";
 import { FormEligibility } from "~/modules/eligibility/components/FormEligibility";
 import { createEligibility } from "~/modules/eligibility/services/createEligibility";
 import { updateEligibilityAction } from "~/modules/eligibility/form-actions/updateEligibilityAction";
+import { FormAdditionalAudience } from "~/modules/strategies/components/FormAdditionalAudience";
+import { createStrategy } from "~/modules/strategies/services/createStrategy";
+import { updateStrategyAction } from "~/modules/strategies/form-actions/updateStrategyAction";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -53,8 +53,11 @@ type ActionDataType = null | {
   successEdit?: boolean;
   successEligibilityCreated?: boolean;
   successEligibilityUpdated?: boolean;
+  successStrategyUpdated?: boolean;
+  successAdditionalAudienceCreated?: boolean;
   errors?: { [key: string]: string | undefined };
   elibilityErrors?: { [key: string]: string | undefined };
+  additionalAudienceErrors?: { [key: string]: string | undefined };
 };
 
 export const action: ActionFunction = async ({
@@ -66,6 +69,20 @@ export const action: ActionFunction = async ({
   const flagId = params.flagId;
   const formData = await request.formData();
   const type = formData.get("_type");
+
+  if (type === "create-additional-audience") {
+    await createStrategy(
+      params.env!,
+      params.flagId!,
+      session.get("auth-cookie")
+    );
+
+    return { successAdditionalAudienceCreated: true };
+  }
+
+  if (type === "update-strategy") {
+    return updateStrategyAction(formData, authCookie);
+  }
 
   if (type === "update-eligibility") {
     return updateEligibilityAction(formData, authCookie);
@@ -155,8 +172,6 @@ export default function FlagById() {
   const hasErrors = Object.keys(actionData?.errors || {}).length > 0;
   const isMultiVariants = flagEnv.variants.length > 0;
 
-  const isStrategyAdded = searchParams.get("newStrategy") || undefined;
-  const isStrategyUpdated = searchParams.get("strategyUpdated") || undefined;
   const isStrategyRemoved = searchParams.get("stratRemoved") || undefined;
 
   const isEligibilityRemoved =
@@ -282,68 +297,78 @@ export default function FlagById() {
       </Section>
 
       <Section id="additional-audience">
-        <Card>
+        <Card
+          footer={
+            hasStrategies && (
+              <SubmitButton form="form-update-strategy" variant="secondary">
+                Update
+              </SubmitButton>
+            )
+          }
+        >
           <CardContent>
             <SectionHeader
               title="Additional audience"
               description={
-                !hasStrategies &&
                 "The users matching at least one of the following condition will resolve the flag even if they are not targeted because of the eligibility restrictions"
               }
-              status={
-                isStrategyUpdated ? (
-                  <SuccessBox id="strategy-updated">
-                    The additional audience has been updated.
-                  </SuccessBox>
-                ) : isStrategyAdded ? (
-                  <SuccessBox id="strategy-added">
-                    The additional audience has been successfully set.
-                  </SuccessBox>
-                ) : isStrategyRemoved ? (
-                  <SuccessBox id="strategy-removed">
-                    The additional audience has been successfully removed.
-                  </SuccessBox>
-                ) : null
-              }
-              action={
-                hasStrategies && (
-                  <CreateButton
-                    variant="secondary"
-                    to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
-                  >
-                    Create an additional audience
-                  </CreateButton>
-                )
-              }
             />
-          </CardContent>
 
-          {!hasStrategies && (
-            <CardContent>
-              <EmptyState
-                titleAs="h2"
-                title="No additional audience"
-                description={"There are no additional audience for this flag."}
-                action={
-                  <CreateButton
-                    variant="secondary"
-                    to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/strategies/create`}
-                  >
-                    Create an additional audience
-                  </CreateButton>
-                }
-              />
-            </CardContent>
-          )}
+            {actionData?.successStrategyUpdated ? (
+              <>
+                <Spacer size={6} />
+                <SuccessBox id="strategy-updated">
+                  The additional audience has been updated.
+                </SuccessBox>
+              </>
+            ) : actionData?.successAdditionalAudienceCreated ? (
+              <>
+                <Spacer size={6} />
+                <SuccessBox id="strategy-added">
+                  The additional audience has been successfully set.
+                </SuccessBox>
+              </>
+            ) : isStrategyRemoved ? (
+              <>
+                <Spacer size={6} />
+                <SuccessBox id="strategy-removed">
+                  The additional audience has been successfully removed.
+                </SuccessBox>
+              </>
+            ) : actionData?.additionalAudienceErrors ? (
+              <>
+                <Spacer size={6} />
+                <ErrorBox list={actionData?.additionalAudienceErrors} />
+              </>
+            ) : null}
 
-          {hasStrategies && (
-            <AdditionalAudienceList
-              items={strategies}
+            <Spacer size={6} />
+
+            <FormAdditionalAudience
+              additionalAudiences={strategies}
               projectId={project.uuid}
               envId={environment.uuid}
               flagId={currentFlag.uuid}
+              variants={flagEnv.variants}
             />
-          )}
+
+            {hasStrategies && <Spacer size={6} />}
+
+            <Form method="post">
+              <input
+                type="hidden"
+                name="_type"
+                value="create-additional-audience"
+              />
+
+              <button
+                type="submit"
+                className="p-2 border rounded border-dashed border-gray-300 text-center w-full text-gray-600 active:bg-gray-100 hover:bg-gray-50 dark:text-slate-200 dark:active:bg-slate-600 dark:hover:bg-slate-700"
+              >
+                Add a new rule
+              </button>
+            </Form>
+          </CardContent>
         </Card>
       </Section>
     </DashboardLayout>

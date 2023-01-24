@@ -1,20 +1,20 @@
-import React, { useId, useState } from "react";
+import { HTMLAttributes, useId } from "react";
 import { Stack } from "../Stack";
 import { Label } from "./Label";
 
 export interface SelectOption {
   label: string;
   value: string | number;
-  icon?: React.ReactNode;
 }
 
-export interface SelectFieldProps {
+export interface SelectFieldProps extends HTMLAttributes<HTMLSelectElement> {
   isInvalid?: boolean;
   name: string;
   defaultValue?: string;
   label: string;
   options: Array<SelectOption>;
   hiddenLabel?: boolean;
+  className?: string;
 }
 
 export const SelectField = ({
@@ -24,15 +24,13 @@ export const SelectField = ({
   label,
   options,
   hiddenLabel,
+  className,
   ...props
 }: SelectFieldProps) => {
   const id = useId();
-  const [selected, setSelected] = useState(options[0]?.value || "");
   const inputClasses = isInvalid
     ? "h-10 rounded px-4 border border-red-500 dark:text-slate-100 dark:bg-slate-700"
     : "h-10 rounded px-4 border border-gray-200 bg-white dark:border-slate-700 dark:text-slate-100 dark:bg-slate-700";
-
-  const icon = options.find((opt) => opt.value === selected);
 
   return (
     <Stack spacing={2}>
@@ -40,17 +38,14 @@ export const SelectField = ({
         {label}
       </Label>
 
-      <div className={inputClasses}>
+      <div className={`${inputClasses} ${className || ""}`}>
         <div className="flex flex-row gap-2 h-full items-center">
-          {icon?.icon && <span aria-hidden>{icon?.icon}</span>}
-
           <select
             name={name}
             id={id}
             defaultValue={defaultValue}
             aria-describedby={isInvalid ? `error-${name}` : undefined}
-            className="w-full h-full bg-transparent text-gray-600 dark:text-slate-100 px-2"
-            onChange={(e) => setSelected(e.target.value)}
+            className={`w-full h-full bg-transparent text-gray-600 dark:text-slate-100 px-2`}
             {...props}
           >
             {options.map((opt) => (

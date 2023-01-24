@@ -1,5 +1,4 @@
 import { NavLink } from "@remix-run/react";
-import { HStack } from "./HStack";
 
 export interface HorizontalNavProps {
   children: React.ReactNode;

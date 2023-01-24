@@ -7,7 +7,6 @@ import { MetaFunction, LoaderFunction, redirect } from "@remix-run/node";
 import { useSearchParams, useLoaderData } from "@remix-run/react";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { ProjectList } from "~/modules/projects/components/ProjectList";
-import { Card } from "~/components/Card";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { PageTitle } from "~/components/PageTitle";
 import { SearchBar } from "~/components/SearchBar";

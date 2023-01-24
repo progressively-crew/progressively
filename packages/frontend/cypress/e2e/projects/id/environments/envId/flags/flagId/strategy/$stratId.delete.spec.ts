@@ -85,10 +85,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/strategie
           "/dashboard/projects/1/environments/1/flags/1?stratRemoved=true"
         );
 
-        cy.findByRole("heading", { name: "No additional audience" }).should(
-          "be.visible"
-        );
-
         cy.get(".success-box")
           .should("have.focus")
           .and(

@@ -14,6 +14,7 @@ export interface RadioFieldProps<T> {
   onChange: (nextValue: T) => void;
   options: Array<RadioFieldOption<T>>;
   title: string;
+  hiddenTitle?: boolean;
 }
 
 export const RadioField = <T extends string>({
@@ -22,10 +23,13 @@ export const RadioField = <T extends string>({
   onChange,
   options,
   title,
+  hiddenTitle,
 }: RadioFieldProps<T>) => {
   return (
     <fieldset>
-      <Label as="legend">{title}</Label>
+      <Label as="legend" className={hiddenTitle ? "sr-only" : undefined}>
+        {title}
+      </Label>
       <Spacer size={2} />
       <HStack spacing={2}>
         {options.map((opt) => (

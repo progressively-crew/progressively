@@ -14,7 +14,7 @@ export interface SectionProps extends React.HTMLAttributes<HTMLElement> {
 export const Section = ({ children, id, ...props }: SectionProps) => {
   return (
     <SectionContext.Provider value={id}>
-      <section aria-labelledby={id} {...props}>
+      <section aria-labelledby={id} id={`${id}-section`} {...props}>
         {children}
       </section>
     </SectionContext.Provider>

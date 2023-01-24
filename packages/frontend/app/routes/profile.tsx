@@ -124,7 +124,7 @@ export default function ProfilePage() {
     >
       <PageTitle value="My profile" />
 
-      <Section>
+      <Section id="change-password">
         <Card>
           <CardContent>
             <SectionHeader title="Change password" name="password" />
@@ -162,7 +162,7 @@ export default function ProfilePage() {
         </Card>
       </Section>
 
-      <Section>
+      <Section id="logout">
         <Card>
           <CardContent>
             <SectionHeader

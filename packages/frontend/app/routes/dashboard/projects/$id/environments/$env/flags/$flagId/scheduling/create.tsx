@@ -3,7 +3,7 @@ import { getSession } from "~/sessions";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
 import { useActionData, Form, useTransition } from "@remix-run/react";
-import { CreateSchedulingFrom } from "~/modules/strategies/components/CreateSchedulingForm";
+
 import {
   SchedulingCreateDTO,
   SchedulingType,
@@ -20,6 +20,7 @@ import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { BackLink } from "~/components/BackLink";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 import { validateScheduling } from "~/modules/scheduling/validators/validateScheduling";
+import { CreateSchedulingFrom } from "~/modules/scheduling/CreateSchedulingForm";
 
 export const handle = {
   breadcrumb: (match: { params: any }) => {
