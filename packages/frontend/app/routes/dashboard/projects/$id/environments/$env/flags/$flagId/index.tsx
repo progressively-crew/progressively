@@ -10,6 +10,7 @@ import {
   useActionData,
   useSearchParams,
   Form,
+  useTransition,
 } from "@remix-run/react";
 import { Card, CardContent } from "~/components/Card";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
@@ -153,9 +154,25 @@ export const loader: LoaderFunction = async ({
   };
 };
 
+const useFormTransition = () => {
+  const transition = useTransition();
+  const type = transition.submission?.formData.get("_type");
+
+  const isSubmitting = Boolean(transition.submission);
+
+  return {
+    isCreatingEligibility: type === "create-eligibility" && isSubmitting,
+    isCreatingAdditionalAudience:
+      type === "create-additional-audience" && isSubmitting,
+    isUpdatingEligibility: type === "update-eligibility" && isSubmitting,
+    isUpdatingAdditionalAudience: type === "update-strategy" && isSubmitting,
+  };
+};
+
 /* eslint-disable sonarjs/cognitive-complexity */
 export default function FlagById() {
   const actionData = useActionData<ActionDataType>();
+  const formTransition = useFormTransition();
   const { project } = useProject();
   const { user } = useUser();
   const { environment } = useEnvironment();
@@ -236,7 +253,12 @@ export default function FlagById() {
         <Card
           footer={
             hasEligibility && (
-              <SubmitButton form="form-update-eligibility" variant="secondary">
+              <SubmitButton
+                form="form-update-eligibility"
+                variant="secondary"
+                isLoading={formTransition.isUpdatingEligibility}
+                loadingText="Updating the eligibility rules..."
+              >
                 Update
               </SubmitButton>
             )
@@ -288,6 +310,12 @@ export default function FlagById() {
               <button
                 type="submit"
                 className="p-2 border rounded border-dashed border-gray-300 text-center w-full text-gray-600 active:bg-gray-100 hover:bg-gray-50 dark:text-slate-200 dark:active:bg-slate-600 dark:hover:bg-slate-700"
+                aria-disabled={formTransition.isCreatingAdditionalAudience}
+                aria-label={
+                  formTransition.isCreatingEligibility
+                    ? "Creating a new eligibility rule..."
+                    : undefined
+                }
               >
                 Add a new rule
               </button>
@@ -300,7 +328,12 @@ export default function FlagById() {
         <Card
           footer={
             hasStrategies && (
-              <SubmitButton form="form-update-strategy" variant="secondary">
+              <SubmitButton
+                form="form-update-strategy"
+                variant="secondary"
+                isLoading={formTransition.isUpdatingAdditionalAudience}
+                loadingText="Updating the additional audience rules..."
+              >
                 Update
               </SubmitButton>
             )
@@ -364,6 +397,12 @@ export default function FlagById() {
               <button
                 type="submit"
                 className="p-2 border rounded border-dashed border-gray-300 text-center w-full text-gray-600 active:bg-gray-100 hover:bg-gray-50 dark:text-slate-200 dark:active:bg-slate-600 dark:hover:bg-slate-700"
+                aria-disabled={formTransition.isCreatingAdditionalAudience}
+                aria-label={
+                  formTransition.isCreatingAdditionalAudience
+                    ? "Creating a new eligibility rule..."
+                    : undefined
+                }
               >
                 Add a new rule
               </button>
