@@ -82,7 +82,6 @@ export const VariantList = ({ variants, errors }: VariantListProps) => {
                     index + 1
                   } the control variant?`}
                   readOnly
-                  checkedColor={color}
                 />
 
                 <TextInput
