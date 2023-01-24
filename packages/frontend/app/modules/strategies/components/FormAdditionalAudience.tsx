@@ -19,8 +19,8 @@ export const FormAdditionalAudience = ({
   variants,
 }: FormAdditionalAudienceProps) => {
   return (
-    <Form method="post" id="form-update-eligibility">
-      <input type="hidden" name="_type" value="update-eligibility" />
+    <Form method="post" id="form-update-strategy">
+      <input type="hidden" name="_type" value="update-strategy" />
 
       <div className="flex flex-col gap-1">
         {additionalAudiences.map((el) => (

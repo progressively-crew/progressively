@@ -64,6 +64,7 @@ const AdditionalFields = ({
         hiddenLabel
         label="What value to you want to serve?"
         name={"value-to-serve-type"}
+        defaultValue={valueToServeType || valueOptions[0].value}
         options={valueOptions}
         className="w-40"
         onChange={(e) => setStatus(e.target.value as StrategyValueToServe)}
@@ -140,7 +141,7 @@ export const ConditionalAudience = ({
     <div className="bg-gray-50 dark:bg-slate-900 px-6 py-4">
       <div className={gridClassName}>
         <div>
-          <input type="hidden" name="eligibility-id" value={uuid} />
+          <input type="hidden" name="uuid" value={uuid} />
           <Typography className="shrink-0 py-2">When field</Typography>
         </div>
 

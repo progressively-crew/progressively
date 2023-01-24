@@ -9,11 +9,11 @@ export const updateStrategyAction = async (
   formData: FormData,
   authCookie: string
 ) => {
-  const allIds = formData.getAll("eligibility-id");
+  const allIds = formData.getAll("uuid");
   const allFieldName = formData.getAll("field-name");
   const allComparators = formData.getAll("field-comparator");
   const allFieldValue = formData.getAll("field-value");
-  const allValuesToServeType = formData.getAll("value-to-serve");
+  const allValuesToServeType = formData.getAll("value-to-serve-type");
   const allValuesToServe = formData.getAll("value-to-serve");
 
   const toUpdate: Array<AdditionalAudienceUpdateDTO> = [];
@@ -53,7 +53,7 @@ export const updateStrategyAction = async (
   }
 
   return {
-    successEligibilityUpdated: !hasError,
+    successStrategyUpdated: !hasError,
     elibilityErrors: hasError
       ? {
           eligbilityAudience:

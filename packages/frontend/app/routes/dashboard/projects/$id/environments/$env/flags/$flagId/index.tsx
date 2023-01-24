@@ -36,6 +36,7 @@ import { createEligibility } from "~/modules/eligibility/services/createEligibil
 import { updateEligibilityAction } from "~/modules/eligibility/form-actions/updateEligibilityAction";
 import { FormAdditionalAudience } from "~/modules/strategies/components/FormAdditionalAudience";
 import { createStrategy } from "~/modules/strategies/services/createStrategy";
+import { updateStrategyAction } from "~/modules/strategies/form-actions/updateStrategyAction";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -52,6 +53,7 @@ type ActionDataType = null | {
   successEdit?: boolean;
   successEligibilityCreated?: boolean;
   successEligibilityUpdated?: boolean;
+  successStrategyUpdated?: boolean;
   successAdditionalAudienceCreated?: boolean;
   errors?: { [key: string]: string | undefined };
   elibilityErrors?: { [key: string]: string | undefined };
@@ -75,6 +77,10 @@ export const action: ActionFunction = async ({
     );
 
     return { successAdditionalAudienceCreated: true };
+  }
+
+  if (type === "update-strategy") {
+    return updateStrategyAction(formData, authCookie);
   }
 
   if (type === "update-eligibility") {
@@ -165,8 +171,6 @@ export default function FlagById() {
   const hasErrors = Object.keys(actionData?.errors || {}).length > 0;
   const isMultiVariants = flagEnv.variants.length > 0;
 
-  const isStrategyAdded = searchParams.get("newStrategy") || undefined;
-  const isStrategyUpdated = searchParams.get("strategyUpdated") || undefined;
   const isStrategyRemoved = searchParams.get("stratRemoved") || undefined;
 
   const isEligibilityRemoved =
@@ -292,7 +296,15 @@ export default function FlagById() {
       </Section>
 
       <Section id="additional-audience">
-        <Card>
+        <Card
+          footer={
+            hasStrategies && (
+              <SubmitButton form="form-update-strategy" variant="secondary">
+                Update
+              </SubmitButton>
+            )
+          }
+        >
           <CardContent>
             <SectionHeader
               title="Additional audience"
@@ -301,14 +313,14 @@ export default function FlagById() {
               }
             />
 
-            {isStrategyUpdated ? (
+            {actionData?.successStrategyUpdated ? (
               <>
                 <Spacer size={6} />
                 <SuccessBox id="strategy-updated">
                   The additional audience has been updated.
                 </SuccessBox>
               </>
-            ) : isStrategyAdded ? (
+            ) : actionData?.successAdditionalAudienceCreated ? (
               <>
                 <Spacer size={6} />
                 <SuccessBox id="strategy-added">
