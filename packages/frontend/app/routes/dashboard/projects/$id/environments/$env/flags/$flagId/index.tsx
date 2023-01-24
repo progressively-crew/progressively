@@ -38,6 +38,7 @@ import { updateEligibilityAction } from "~/modules/eligibility/form-actions/upda
 import { FormAdditionalAudience } from "~/modules/strategies/components/FormAdditionalAudience";
 import { createStrategy } from "~/modules/strategies/services/createStrategy";
 import { updateStrategyAction } from "~/modules/strategies/form-actions/updateStrategyAction";
+import { Spinner } from "~/components/Spinner";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -317,7 +318,12 @@ export default function FlagById() {
                     : undefined
                 }
               >
-                Add a new rule
+                <span className="flex flex-row justify-center items-center  gap-4">
+                  {formTransition.isCreatingEligibility && (
+                    <Spinner className="-ml-8" />
+                  )}
+                  Add a new rule
+                </span>
               </button>
             </Form>
           </CardContent>
@@ -404,7 +410,12 @@ export default function FlagById() {
                     : undefined
                 }
               >
-                Add a new rule
+                <span className="flex flex-row justify-center items-center  gap-4">
+                  {formTransition.isCreatingAdditionalAudience && (
+                    <Spinner className="-ml-8" />
+                  )}
+                  Add a new rule
+                </span>
               </button>
             </Form>
           </CardContent>
