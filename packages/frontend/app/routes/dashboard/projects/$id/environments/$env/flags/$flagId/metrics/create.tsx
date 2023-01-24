@@ -28,7 +28,6 @@ import { Variant } from "~/modules/variants/types";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { BackLink } from "~/components/BackLink";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
-import { VariantDot } from "~/modules/flags/components/VariantDot";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);

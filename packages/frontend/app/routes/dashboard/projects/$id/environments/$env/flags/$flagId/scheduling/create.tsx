@@ -20,7 +20,7 @@ import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { BackLink } from "~/components/BackLink";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 import { validateScheduling } from "~/modules/scheduling/validators/validateScheduling";
-import { CreateSchedulingFrom } from "~/modules/scheduling/CreateSchedulingForm";
+import { CreateSchedulingFrom } from "~/modules/scheduling/components/CreateSchedulingForm";
 
 export const handle = {
   breadcrumb: (match: { params: any }) => {

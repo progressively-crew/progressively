@@ -7,7 +7,7 @@ import { Spacer } from "~/components/Spacer";
 import { Switch } from "~/components/Switch";
 import { FlagEnv, FlagStatus } from "~/modules/flags/types";
 import { SchedulingType } from "~/modules/scheduling/types";
-import { MultiVariantFields } from "./MultiVariantFields";
+import { MultiVariantFields } from "../../strategies/components/MultiVariantFields";
 
 export interface CreateSchedulingFormProps {
   flagEnv: FlagEnv;
