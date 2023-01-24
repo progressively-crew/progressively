@@ -19,7 +19,7 @@ describe("/profile", () => {
       cy.injectAxe();
     });
 
-    it("shows the create page layout", () => {
+    it("shows the my profile page", () => {
       cy.title().should("eq", "Progressively | Profile");
 
       cy.findByRole("heading", { name: "My profile" }).should("be.visible");
