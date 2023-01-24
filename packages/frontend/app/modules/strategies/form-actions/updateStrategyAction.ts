@@ -8,6 +8,7 @@ import { AdditionalAudienceUpdateDTO } from "../types";
 export const updateStrategyAction = async (
   formData: FormData,
   authCookie: string
+  // eslint-disable-next-line sonarjs/cognitive-complexity
 ) => {
   const allIds = formData.getAll("uuid");
   const allFieldName = formData.getAll("field-name");
