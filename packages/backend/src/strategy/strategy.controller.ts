@@ -58,8 +58,8 @@ export class StrategyController {
   @UseGuards(HasStrategyAccessGuard)
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(StrategySchema))
-  async updateEligibility(
-    @Param('eligibilityId') stratId: string,
+  async updateStrategy(
+    @Param('stratId') stratId: string,
     @Body() strategyDto: StrategyUpdateDTO,
   ): Promise<any> {
     const updatedEligibility = await this.strategyService.updateStrategy(
