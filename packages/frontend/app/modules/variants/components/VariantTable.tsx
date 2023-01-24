@@ -66,7 +66,7 @@ export const VariantTable = ({ variants }: VariantTableProps) => {
                   variant.isControl ? "bg-gray-50 dark:bg-slate-800" : ""
                 }`}
               >
-                <span className="flex flex-row gap-3 items-center text-gray-700">
+                <span className="flex flex-row gap-3 items-center text-gray-700 dark:text-slate-200">
                   <VariantDot variant={variant.value} />
                   {variant.value}
                 </span>
