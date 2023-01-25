@@ -138,7 +138,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
           ).should("be.visible");
         });
 
-        it.only("shows and success message in the scheduling list page", () => {
+        it("shows and success message in the scheduling list page", () => {
           cy.get("#date-dateTime").type("2023-01-27");
           cy.get("#time-dateTime").type("03:15");
 
@@ -147,13 +147,13 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
           cy.findByLabelText(
             "What should be the next rollout percentage for Control"
           )
-            .invoke("val", 30)
+            .invoke("val", 40)
             .trigger("change");
 
           cy.findByLabelText(
             "What should be the next rollout percentage for Second"
           )
-            .invoke("val", 70)
+            .invoke("val", 60)
             .trigger("change");
 
           cy.findByRole("button", { name: "Save the schedule" }).click();
@@ -167,8 +167,8 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
             .within(() => {
               cy.findByText("27/01/2023, 03:15:00").should("be.visible");
               cy.contains("Updating status to Activated").should("be.visible");
-              cy.contains("Control to 30%").should("be.visible");
-              cy.contains("Second to 70%").should("be.visible");
+              cy.contains("Control to 40%").should("be.visible");
+              cy.contains("Second to 60%").should("be.visible");
             });
         });
       });

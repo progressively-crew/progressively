@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { SliderInput } from "~/components/Fields/SliderInput";
 import { FlagEnv } from "~/modules/flags/types";
 import { SchedulingType } from "~/modules/scheduling/types";
@@ -29,10 +29,10 @@ export const MultiVariantFields = ({ variants }: MultiVariantFieldsProps) => {
   return (
     <div>
       {variants.map((variant) => (
-        <>
-          <VariantRow variant={variant} key={variant.uuid} />
+        <React.Fragment key={variant.uuid}>
+          <VariantRow variant={variant} />
           <input type="hidden" name="variantId" value={variant.uuid} />
-        </>
+        </React.Fragment>
       ))}
 
       <input
