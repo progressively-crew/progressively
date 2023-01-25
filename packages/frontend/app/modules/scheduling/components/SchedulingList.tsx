@@ -72,7 +72,7 @@ export const SchedulingList = ({
 
         return (
           <div
-            className="px-6 py-4 grid grid-cols-3 last:border-b-0 border-b border-gray-200 dark:border-slate-700"
+            className="scheduling-row px-6 py-4 grid grid-cols-3 last:border-b-0 border-b border-gray-200 dark:border-slate-700"
             key={`${schedule.utc}-${schedule.data?.rolloutPercentage}-${index}`}
           >
             <div className="flex flex-row gap-2">

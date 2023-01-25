@@ -118,7 +118,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
           ).should("be.visible");
         });
 
-        it.only("shows an error message when the sum of the percentage is less than 100%", () => {
+        it("shows an error message when the sum of the percentage is less than 100%", () => {
           cy.findByLabelText(
             "What should be the next rollout percentage for Control"
           )
@@ -136,6 +136,40 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
           cy.findByText(
             "The sum of the variant percentage is 60% which is lower than 100%."
           ).should("be.visible");
+        });
+
+        it.only("shows and success message in the scheduling list page", () => {
+          cy.get("#date-dateTime").type("2023-01-27");
+          cy.get("#time-dateTime").type("03:15");
+
+          cy.findByLabelText("What should be the next status").click();
+
+          cy.findByLabelText(
+            "What should be the next rollout percentage for Control"
+          )
+            .invoke("val", 30)
+            .trigger("change");
+
+          cy.findByLabelText(
+            "What should be the next rollout percentage for Second"
+          )
+            .invoke("val", 70)
+            .trigger("change");
+
+          cy.findByRole("button", { name: "Save the schedule" }).click();
+
+          cy.findByText("The schedule has been successfully added.").should(
+            "be.visible"
+          );
+
+          cy.get(".scheduling-row")
+            .first()
+            .within(() => {
+              cy.findByText("27/01/2023, 03:15:00").should("be.visible");
+              cy.contains("Updating status to Activated").should("be.visible");
+              cy.contains("Control to 30%").should("be.visible");
+              cy.contains("Second to 70%").should("be.visible");
+            });
         });
       });
     });
