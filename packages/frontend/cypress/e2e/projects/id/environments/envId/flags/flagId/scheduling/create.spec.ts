@@ -165,7 +165,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
           cy.get(".scheduling-row")
             .first()
             .within(() => {
-              cy.findByText("27/01/2023, 03:15:00").should("be.visible");
+              cy.findByText("1/27/2023, 03:15:00").should("be.visible");
               cy.contains("Updating status to Activated").should("be.visible");
               cy.contains("Control to 40%").should("be.visible");
               cy.contains("Second to 60%").should("be.visible");
