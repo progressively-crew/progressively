@@ -17,7 +17,5 @@ export const initSentryOnClient = () => {
         ),
       }),
     ],
-    // eslint-disable-next-line unicorn/better-regex
-    denyUrls: [/^https?:\/\/\w+(\.\w+)*(:[0-9]+)?(\/.*)?$/],
   });
 };
