@@ -23,7 +23,14 @@ export const meta: MetaFunction = () => ({
 });
 
 export function links() {
-  return [{ rel: "stylesheet", href: styles }];
+  return [
+    {
+      as: "style",
+      href: "https://rsms.me/inter/inter.css",
+      rel: "preload",
+    },
+    { rel: "stylesheet", href: styles },
+  ];
 }
 
 export const loader: LoaderFunction = async ({ request }) => {

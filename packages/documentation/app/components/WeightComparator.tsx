@@ -142,11 +142,8 @@ const PerfGrid = () => {
 export const WeightComparator = () => {
   return (
     <section>
-      <h2 className="text-center text-3xl md:text-6xl font-bold dark:text-white">
-        <span className="text-indigo-700 dark:text-indigo-400">
-          Performance
-        </span>{" "}
-        difference
+      <h2 className="text-center text-3xl md:text-6xl font-semibold dark:text-white">
+        Performance difference
       </h2>
 
       <figure>

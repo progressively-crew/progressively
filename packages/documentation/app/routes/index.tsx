@@ -16,8 +16,9 @@ import { ChooseSdk, ChooseSdkCode } from "~/modules/getstarted/ChooseSdk";
 import { CreateFlag, CreateFlagImg } from "~/modules/getstarted/CreateFlag";
 import { AiOutlineArrowDown } from "react-icons/ai";
 import { Timeline, TimelineStep } from "~/components/TImeline";
-import { GetInsights } from "~/components/GetInsights";
 import { Spacer } from "~/components/Spacer";
+import { ExampleSection } from "~/modules/example/ExampleSection";
+import { Analyze } from "~/modules/analyze/Analyze";
 
 const title = "Progressively, simple and accessible feature flagging tool";
 const description =
@@ -72,12 +73,17 @@ export default function Index() {
       <main>
         <Hero />
 
-        <div className="max-w-screen-xl mx-auto">
-          <section className="pb-4">
-            <h2 className="sr-only">Prepare your instance of Progressively</h2>
-            <div className="flex justify-center text-gray-400 text-4xl pb-4">
-              <AiOutlineArrowDown />
-            </div>
+        <section className="py-20 lg:py-28 bg-white">
+          <div className="max-w-screen-xl mx-auto px-4">
+            <ExampleSection />
+          </div>
+        </section>
+
+        <div className="max-w-screen-xl mx-auto px-4">
+          <section className="pb-4 pt-20">
+            <h2 className="text-center text-3xl md:text-6xl font-semibold dark:text-white pb-8">
+              Prepare your instance
+            </h2>
 
             <Timeline>
               <TimelineStep
@@ -102,27 +108,23 @@ export default function Index() {
             </div>
           </section>
 
-          <div className="pb-12">
+          <div className="pb-4">
             <Features />
-          </div>
-          {/* 
-          <div className="flex items-center text-gray-400 text-4xl flex-col pb-4">
-            <div className="hidden md:block h-32 bg-transparent w-[1px] top-0 border-r border-gray-500 border-dashed" />
-            <div className="pt-4">
+
+            <div className="flex justify-center text-gray-400 text-4xl pt-4">
               <AiOutlineArrowDown />
             </div>
           </div>
 
-          <div className="pb-12">
-            <GetInsights />
-          </div> */}
+          <div className="pb-32">
+            <Analyze />
+          </div>
+        </div>
 
-          <Spacer size={12} />
-
-          <div className="px-4 md:px-0">
+        <div className="bg-white py-20 lg:py-28">
+          <div className="max-w-screen-xl mx-auto px-4">
             <WeightComparator />
           </div>
-          <Spacer size={12} />
         </div>
       </main>
     </div>

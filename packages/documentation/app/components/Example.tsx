@@ -62,8 +62,10 @@ export const Example = () => {
   return (
     <div className="hidden md:block">
       <div className="py-6 flex items-center justify-center">
-        <div className="bg-gray-100 dark:bg-slate-800 pl-10 pr-3 py-3 rounded-full flex flex-row gap-3">
+        <div className="bg-gray-50 dark:bg-slate-800 pl-6 pr-3 py-3 rounded-full flex flex-row gap-3 items-center text-gray-700 dark:text-slate-200 font-semibold">
+          <label htmlFor="range-input">Rollout new Hero to</label>
           <input
+            id="range-input"
             type="range"
             aria-label="Percentage of the audience"
             onChange={(e) => setPercentage(Number(e.target.value))}
@@ -73,6 +75,8 @@ export const Example = () => {
           <div className="px-3 py-2 w-16 bg-indigo-700 text-white text-sm font-bold rounded-full text-center">
             {percentage}%
           </div>
+
+          <span>of the audience</span>
         </div>
       </div>
 
