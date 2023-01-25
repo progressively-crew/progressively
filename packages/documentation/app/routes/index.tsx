@@ -72,7 +72,7 @@ export default function Index() {
       <main>
         <Hero />
 
-        <section className="px-20 lg:px-40 bg-white">
+        <section className="py-20 lg:py-40 bg-white">
           <div className="max-w-screen-xl mx-auto px-4">
             <ExampleSection />
           </div>
