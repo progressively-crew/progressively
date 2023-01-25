@@ -8,16 +8,16 @@ export const Analyze = () => {
         Analyze
       </h2>
 
-      <div className="flex flex-col md:flex-row gap-4 text-5xl justify-center items-center">
-        <p className=" text-gray-600">Metric</p>
+      <div className="flex flex-col md:flex-row gap-4 text-5xl justify-center items-center text-gray-600 dark:text-slate-300">
+        <p>Metric</p>
 
         <FiDivide />
 
-        <p className="text-gray-600">Flag evaluation</p>
+        <p>Flag evaluation</p>
 
         <TbEqual />
 
-        <p className="text-gray-600">Conversion</p>
+        <p>Conversion</p>
       </div>
     </section>
   );

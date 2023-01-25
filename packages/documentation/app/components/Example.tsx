@@ -62,7 +62,7 @@ export const Example = () => {
   return (
     <div className="hidden md:block">
       <div className="py-6 flex items-center justify-center">
-        <div className="bg-gray-50 dark:bg-slate-800 pl-6 pr-3 py-3 rounded-full flex flex-row gap-3 items-center text-gray-700 dark:text-slate-200 font-semibold">
+        <div className="bg-gray-50 dark:bg-slate-700 pl-6 pr-3 py-3 rounded-full flex flex-row gap-3 items-center text-gray-700 dark:text-slate-200 font-semibold">
           <label htmlFor="range-input">Rollout new Hero to</label>
           <input
             id="range-input"

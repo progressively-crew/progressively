@@ -73,7 +73,7 @@ export default function Index() {
       <main>
         <Hero />
 
-        <section className="py-20 lg:py-28 bg-white">
+        <section className="py-20 lg:py-28 bg-white dark:bg-slate-800">
           <div className="max-w-screen-xl mx-auto px-4">
             <ExampleSection />
           </div>
@@ -121,7 +121,7 @@ export default function Index() {
           </div>
         </div>
 
-        <div className="bg-white py-20 lg:py-28">
+        <div className="bg-white dark:bg-slate-800 py-20 lg:py-28">
           <div className="max-w-screen-xl mx-auto px-4">
             <WeightComparator />
           </div>
