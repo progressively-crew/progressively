@@ -1,3 +1,4 @@
+import { useId } from "react";
 import { useTheme } from "~/modules/theme/useTheme";
 import { HStack } from "../HStack";
 import { Stack } from "../Stack";
@@ -25,8 +26,10 @@ export const SliderInput = ({
   bgColor,
   fgColor,
 }: SliderInputProps) => {
+  const actualId = useId();
   const { theme } = useTheme();
-  const currentId = id || name;
+
+  const currentId = id || actualId;
 
   const wrapperStyle = bgColor
     ? ({ "--primary": bgColor } as React.CSSProperties)
