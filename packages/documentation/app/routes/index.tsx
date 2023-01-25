@@ -16,8 +16,8 @@ import { ChooseSdk, ChooseSdkCode } from "~/modules/getstarted/ChooseSdk";
 import { CreateFlag, CreateFlagImg } from "~/modules/getstarted/CreateFlag";
 import { AiOutlineArrowDown } from "react-icons/ai";
 import { Timeline, TimelineStep } from "~/components/TImeline";
-import { GetInsights } from "~/components/GetInsights";
 import { Spacer } from "~/components/Spacer";
+import { ExampleSection } from "~/modules/example/ExampleSection";
 
 const title = "Progressively, simple and accessible feature flagging tool";
 const description =
@@ -72,9 +72,17 @@ export default function Index() {
       <main>
         <Hero />
 
+        <section className="pb-40 pt-40 bg-white">
+          <div className="max-w-screen-xl mx-auto">
+            <ExampleSection />
+          </div>
+        </section>
+
         <div className="max-w-screen-xl mx-auto">
-          <section className="pb-4">
-            <h2 className="sr-only">Prepare your instance of Progressively</h2>
+          <section className="pb-4 pt-20">
+            <h2 className="text-center text-3xl md:text-6xl font-bold dark:text-white pb-8">
+              Prepare your instance
+            </h2>
             <div className="flex justify-center text-gray-400 text-4xl pb-4">
               <AiOutlineArrowDown />
             </div>
