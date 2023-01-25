@@ -84,7 +84,7 @@ export const action: ActionFunction = async ({
       status,
       data: variants.map((variantId, index: number) => ({
         variantId,
-        variantNewPercentage: rolloutPercentages[index],
+        variantNewPercentage: Number(rolloutPercentages[index]),
       })),
       type,
     };
