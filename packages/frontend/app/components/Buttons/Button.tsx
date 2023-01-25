@@ -30,7 +30,7 @@ const classCombination = {
 };
 
 const sizeClasses = {
-  S: "h-8 px-2 text-sm gap-2",
+  S: "h-6 px-1 text-xs gap-1",
   M: "h-10 px-4 gap-4",
 };
 

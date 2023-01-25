@@ -1263,6 +1263,10 @@ video {
   padding-top: 1rem;
 }
 
+.pl-8 {
+  padding-left: 2rem;
+}
+
 .pr-6 {
   padding-right: 1.5rem;
 }
@@ -1273,14 +1277,6 @@ video {
 
 .pb-6 {
   padding-bottom: 1.5rem;
-}
-
-.pl-8 {
-  padding-left: 2rem;
-}
-
-.pl-6 {
-  padding-left: 1.5rem;
 }
 
 .text-left {
