@@ -7,6 +7,7 @@ import { useActionData, Form, useTransition } from "@remix-run/react";
 import {
   SchedulingCreateDTO,
   SchedulingType,
+  SchedulingUpdateVariantEntry,
 } from "~/modules/scheduling/types";
 import { createScheduling } from "~/modules/scheduling/services/createScheduling";
 import { useProject } from "~/modules/projects/contexts/useProject";
@@ -33,7 +34,7 @@ export const handle = {
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
-  const envName = getEnvMetaTitle(parentsData, params.env);
+  const envName = getEnvMetaTitle(parentsData, params.env!);
   const flagName = getFlagMetaTitle(parentsData);
 
   return {
@@ -67,26 +68,30 @@ export const action: ActionFunction = async ({
 
     const rolloutPercentage = rolloutPercentageFormData
       ? Number(rolloutPercentageFormData)
-      : undefined;
+      : 0;
 
     createSchedulingDto = {
       utc,
       status,
+      type: SchedulingType.UpdatePercentage,
       data: { rolloutPercentage },
-      type,
     };
   } else if (SchedulingType.UpdateVariantPercentage) {
     const variants = formData.getAll("variantId");
     const rolloutPercentages = formData.getAll("rolloutPercentage");
 
+    const formattedVariants: Array<SchedulingUpdateVariantEntry> = variants.map(
+      (variantId, index: number) => ({
+        variantId: variantId.toString(),
+        variantNewPercentage: Number(rolloutPercentages[index]),
+      })
+    );
+
     createSchedulingDto = {
       utc,
       status,
-      data: variants.map((variantId, index: number) => ({
-        variantId,
-        variantNewPercentage: Number(rolloutPercentages[index]),
-      })),
-      type,
+      type: SchedulingType.UpdateVariantPercentage,
+      data: formattedVariants,
     };
   }
 

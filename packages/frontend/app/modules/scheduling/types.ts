@@ -26,7 +26,6 @@ export interface SchedulingUpdatePercentageData {
 export type SchedulingCreateDTO = {
   utc: string;
   status: FlagStatus;
-  type: SchedulingType;
 } & (
   | {
       type: SchedulingType.UpdatePercentage;
