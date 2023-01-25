@@ -5,12 +5,40 @@ import { Label } from "~/components/Fields/Label";
 import { SliderInput } from "~/components/Fields/SliderInput";
 import { Spacer } from "~/components/Spacer";
 import { Switch } from "~/components/Switch";
-import { FlagStatus } from "~/modules/flags/types";
+import { FlagEnv, FlagStatus } from "~/modules/flags/types";
 import { SchedulingType } from "~/modules/scheduling/types";
+import { MultiVariantFields } from "./MultiVariantFields";
 
-export const CreateSchedulingFrom = () => {
+export interface CreateSchedulingFormProps {
+  flagEnv: FlagEnv;
+}
+
+const SingleVariantFields = () => {
   const [percentage, setPercentage] = useState(100);
+
+  return (
+    <>
+      <SliderInput
+        onChange={setPercentage}
+        percentageValue={percentage}
+        label={"What should be the next rollout percentage"}
+        name={"rolloutPercentage"}
+      />
+
+      <input
+        type="hidden"
+        name="type"
+        value={SchedulingType.UpdatePercentage}
+      />
+    </>
+  );
+};
+
+export const CreateSchedulingFrom = ({
+  flagEnv,
+}: CreateSchedulingFormProps) => {
   const [nextStatus, setNextStatus] = useState(FlagStatus.NOT_ACTIVATED);
+  const isMultiVariate = flagEnv.variants.length > 0;
 
   return (
     <FormGroup>
@@ -41,18 +69,11 @@ export const CreateSchedulingFrom = () => {
 
       <input type="hidden" name={"nextStatus"} value={nextStatus} />
 
-      <SliderInput
-        onChange={setPercentage}
-        percentageValue={percentage}
-        label={"What should be the next rollout percentage"}
-        name={"rolloutPercentage"}
-      />
-
-      <input
-        type="hidden"
-        name="type"
-        value={SchedulingType.UpdatePercentage}
-      />
+      {isMultiVariate ? (
+        <MultiVariantFields variants={flagEnv.variants} />
+      ) : (
+        <SingleVariantFields />
+      )}
     </FormGroup>
   );
 };

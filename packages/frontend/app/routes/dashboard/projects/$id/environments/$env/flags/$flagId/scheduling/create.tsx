@@ -7,6 +7,7 @@ import { useActionData, Form, useTransition } from "@remix-run/react";
 import {
   SchedulingCreateDTO,
   SchedulingType,
+  SchedulingUpdateVariantEntry,
 } from "~/modules/scheduling/types";
 import { createScheduling } from "~/modules/scheduling/services/createScheduling";
 import { useProject } from "~/modules/projects/contexts/useProject";
@@ -20,7 +21,7 @@ import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { BackLink } from "~/components/BackLink";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 import { validateScheduling } from "~/modules/scheduling/validators/validateScheduling";
-import { CreateSchedulingFrom } from "~/modules/scheduling/CreateSchedulingForm";
+import { CreateSchedulingFrom } from "~/modules/scheduling/components/CreateSchedulingForm";
 
 export const handle = {
   breadcrumb: (match: { params: any }) => {
@@ -33,7 +34,7 @@ export const handle = {
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
-  const envName = getEnvMetaTitle(parentsData, params.env);
+  const envName = getEnvMetaTitle(parentsData, params.env!);
   const flagName = getFlagMetaTitle(parentsData);
 
   return {
@@ -52,25 +53,47 @@ export const action: ActionFunction = async ({
   const formData = await request.formData();
   const session = await getSession(request.headers.get("Cookie"));
 
+  // Shared fields between single and multi variants
   const utc = formData.get("utc-dateTime")?.toString();
   const type = formData.get("type")?.toString() as SchedulingType | undefined;
-
   const status =
     (formData.get("nextStatus") as unknown as FlagStatus) || undefined;
 
-  const rolloutPercentageFormData = formData
-    .get("rolloutPercentage")
-    ?.toString();
-  const rolloutPercentage = rolloutPercentageFormData
-    ? Number(rolloutPercentageFormData)
-    : undefined;
+  let createSchedulingDto: Partial<SchedulingCreateDTO> = {};
 
-  const createSchedulingDto: Partial<SchedulingCreateDTO> = {
-    utc,
-    status,
-    data: { rolloutPercentage },
-    type,
-  };
+  if (type === SchedulingType.UpdatePercentage) {
+    const rolloutPercentageFormData = formData
+      .get("rolloutPercentage")
+      ?.toString();
+
+    const rolloutPercentage = rolloutPercentageFormData
+      ? Number(rolloutPercentageFormData)
+      : 0;
+
+    createSchedulingDto = {
+      utc,
+      status,
+      type: SchedulingType.UpdatePercentage,
+      data: { rolloutPercentage },
+    };
+  } else if (SchedulingType.UpdateVariantPercentage) {
+    const variants = formData.getAll("variantId");
+    const rolloutPercentages = formData.getAll("rolloutPercentage");
+
+    const formattedVariants: Array<SchedulingUpdateVariantEntry> = variants.map(
+      (variantId, index: number) => ({
+        variantId: variantId.toString(),
+        variantNewPercentage: Number(rolloutPercentages[index]),
+      })
+    );
+
+    createSchedulingDto = {
+      utc,
+      status,
+      type: SchedulingType.UpdateVariantPercentage,
+      data: formattedVariants,
+    };
+  }
 
   const errors = validateScheduling(createSchedulingDto);
 
@@ -78,18 +101,11 @@ export const action: ActionFunction = async ({
     return { errors };
   }
 
-  const scheduling: SchedulingCreateDTO = {
-    utc: utc!,
-    status,
-    data: { rolloutPercentage },
-    type: type!,
-  };
-
   try {
     await createScheduling(
       params.env!,
       params.flagId!,
-      scheduling,
+      createSchedulingDto,
       session.get("auth-cookie")
     );
 
@@ -136,7 +152,7 @@ export default function SchedulingCreatePage() {
           </BackLink>
         }
       >
-        <CreateSchedulingFrom />
+        <CreateSchedulingFrom flagEnv={flagEnv} />
       </CreateEntityLayout>
     </Form>
   );

@@ -32,58 +32,145 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
     });
 
     describe("user: Marvin", () => {
-      beforeEach(() => {
-        cy.signIn("Marvin");
-        cy.visit(
-          "/dashboard/projects/1/environments/1/flags/1/scheduling/create"
-        );
+      describe("no variants", () => {
+        beforeEach(() => {
+          cy.signIn("Marvin");
+          cy.visit(
+            "/dashboard/projects/1/environments/1/flags/1/scheduling/create"
+          );
 
-        cy.injectAxe();
+          cy.injectAxe();
+        });
+
+        it("shows the layout", () => {
+          cy.title().should(
+            "eq",
+            "Progressively | Project from seeding | Production | Flags | New homepage | Scheduling | Create"
+          );
+
+          cy.findByRole("heading", { name: "Create a scheduling" }).should(
+            "be.visible"
+          );
+        });
+
+        it("shows the form layout", () => {
+          cy.findByText("When should the flag change status").should(
+            "be.visible"
+          );
+
+          cy.findByText("What should be the next status").should("be.visible");
+          cy.findByLabelText(
+            "What should be the next rollout percentage"
+          ).should("be.visible");
+
+          cy.findByRole("button", { name: "Save the schedule" }).should(
+            "be.visible"
+          );
+        });
+
+        it("adds a schedule", () => {
+          cy.findByRole("button", { name: "Save the schedule" }).click();
+
+          cy.url().should(
+            "include",
+            "/dashboard/projects/1/environments/1/flags/1/scheduling?newSchedule=true"
+          );
+
+          cy.get(".success-box")
+            .should("have.focus")
+            .and("contain.text", "The schedule has been successfully added.");
+
+          cy.checkA11y();
+        });
       });
 
-      it("shows the layout", () => {
-        cy.title().should(
-          "eq",
-          "Progressively | Project from seeding | Production | Flags | New homepage | Scheduling | Create"
-        );
+      describe("multi variants", () => {
+        beforeEach(() => {
+          cy.signIn("Marvin");
+          cy.visit(
+            "/dashboard/projects/1/environments/1/flags/4/scheduling/create"
+          );
+        });
 
-        cy.findByRole("heading", { name: "Create a scheduling" }).should(
-          "be.visible"
-        );
+        it("shows the form layout", () => {
+          cy.findByText("When should the flag change status").should(
+            "be.visible"
+          );
 
-        // cy.checkA11y(); axe is yelling because of a missing label while the field is in a fieldset with legend
-      });
+          cy.findByText("What should be the next status").should("be.visible");
+          cy.findByLabelText(
+            "What should be the next rollout percentage for Control"
+          ).should("be.visible");
 
-      it("shows the form layout", () => {
-        cy.findByText("When should the flag change status").should(
-          "be.visible"
-        );
+          cy.findByLabelText(
+            "What should be the next rollout percentage for Second"
+          ).should("be.visible");
 
-        cy.findByText("What should be the next status").should("be.visible");
-        cy.findByLabelText("What should be the next rollout percentage").should(
-          "be.visible"
-        );
+          cy.findByRole("button", { name: "Save the schedule" }).should(
+            "be.visible"
+          );
+        });
 
-        cy.findByRole("button", { name: "Save the schedule" }).should(
-          "be.visible"
-        );
+        it("shows an error message when the sum of the percentage is over 100%", () => {
+          cy.findByRole("button", { name: "Save the schedule" }).click();
+          cy.findByText(
+            "The sum of the variant percentage is 200% which exceeds 100%."
+          ).should("be.visible");
+        });
 
-        // cy.checkA11y(); axe is yelling because of a missing label while the field is in a fieldset with legend
-      });
+        it("shows an error message when the sum of the percentage is less than 100%", () => {
+          cy.findByLabelText(
+            "What should be the next rollout percentage for Control"
+          )
+            .invoke("val", 20)
+            .trigger("change");
 
-      it("adds a schedule", () => {
-        cy.findByRole("button", { name: "Save the schedule" }).click();
+          cy.findByLabelText(
+            "What should be the next rollout percentage for Second"
+          )
+            .invoke("val", 40)
+            .trigger("change");
 
-        cy.url().should(
-          "include",
-          "/dashboard/projects/1/environments/1/flags/1/scheduling?newSchedule=true"
-        );
+          cy.findByRole("button", { name: "Save the schedule" }).click();
 
-        cy.get(".success-box")
-          .should("have.focus")
-          .and("contain.text", "The schedule has been successfully added.");
+          cy.findByText(
+            "The sum of the variant percentage is 60% which is lower than 100%."
+          ).should("be.visible");
+        });
 
-        cy.checkA11y();
+        it("shows and success message in the scheduling list page", () => {
+          cy.get("#date-dateTime").type("2023-01-27");
+          cy.get("#time-dateTime").type("03:15");
+
+          cy.findByLabelText("What should be the next status").click();
+
+          cy.findByLabelText(
+            "What should be the next rollout percentage for Control"
+          )
+            .invoke("val", 40)
+            .trigger("change");
+
+          cy.findByLabelText(
+            "What should be the next rollout percentage for Second"
+          )
+            .invoke("val", 60)
+            .trigger("change");
+
+          cy.findByRole("button", { name: "Save the schedule" }).click();
+
+          cy.findByText("The schedule has been successfully added.").should(
+            "be.visible"
+          );
+
+          cy.get(".scheduling-row")
+            .first()
+            .within(() => {
+              cy.findByText("1/27/2023, 03:15:00").should("be.visible");
+              cy.contains("Updating status to Activated").should("be.visible");
+              cy.contains("Control to 40%").should("be.visible");
+              cy.contains("Second to 60%").should("be.visible");
+            });
+        });
       });
     });
   });

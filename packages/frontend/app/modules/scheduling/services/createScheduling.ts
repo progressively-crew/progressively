@@ -4,7 +4,7 @@ import { SchedulingCreateDTO } from "../types";
 export const createScheduling = (
   envId: string,
   flagId: string,
-  scheduling: SchedulingCreateDTO,
+  scheduling: Partial<SchedulingCreateDTO>,
   accessToken: string
 ) =>
   fetch(

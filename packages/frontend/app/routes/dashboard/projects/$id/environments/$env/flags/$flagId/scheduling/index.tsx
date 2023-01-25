@@ -1,13 +1,11 @@
 import { ActionFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
-import { WarningBox } from "~/components/Boxes/WarningBox";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { Card, CardContent } from "~/components/Card";
 import { EmptyState } from "~/components/EmptyState";
 import { PageTitle } from "~/components/PageTitle";
 import { Section } from "~/components/Section";
-import { Spacer } from "~/components/Spacer";
 import { Typography } from "~/components/Typography";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
@@ -133,20 +131,6 @@ export default function SchedulingOfFlag() {
       />
 
       <Section aria-label="List of schedules">
-        {flagEnv.variants.length > 0 && (
-          <>
-            <WarningBox
-              title={
-                <>
-                  Only flag without variants are concerned by the scheduling.
-                  However, multi variants scheduling may come in the future.
-                </>
-              }
-            />
-            <Spacer size={4} />
-          </>
-        )}
-
         {!hasScheduling && (
           <Card>
             <CardContent>
@@ -155,13 +139,11 @@ export default function SchedulingOfFlag() {
                 title="No schedule found"
                 description={"There are no scheduling for this flag."}
                 action={
-                  flagEnv.variants.length === 0 && (
-                    <CreateButton
-                      to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/scheduling/create`}
-                    >
-                      Create a schedule
-                    </CreateButton>
-                  )
+                  <CreateButton
+                    to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/scheduling/create`}
+                  >
+                    Create a schedule
+                  </CreateButton>
                 }
               />
             </CardContent>

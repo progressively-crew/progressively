@@ -1,4 +1,4 @@
-import { SchedulingCreateDTO, SchedulingTypes } from "../types";
+import { SchedulingCreateDTO, SchedulingType, SchedulingTypes } from "../types";
 
 export const validateScheduling = (values: Partial<SchedulingCreateDTO>) => {
   const errors: { [key: string]: string } = {};
@@ -11,12 +11,25 @@ export const validateScheduling = (values: Partial<SchedulingCreateDTO>) => {
     errors["utc"] = "The provided date is invalid";
   }
 
-  // 0 falsy value is valid in this case
-  if (
-    values.data?.rolloutPercentage === undefined ||
-    values.data?.rolloutPercentage === null
-  ) {
-    errors["rolloutPercentage"] = "The rollout percentage is invalid";
+  if (values.type === SchedulingType.UpdateVariantPercentage) {
+    let count = 0;
+
+    const variantPercentages = values.data || [];
+    for (const percentage of variantPercentages) {
+      count += percentage.variantNewPercentage;
+    }
+
+    if (count > 100) {
+      errors[
+        "rolloutPercentage"
+      ] = `The sum of the variant percentage is ${count}% which exceeds 100%.`;
+    }
+
+    if (count < 100) {
+      errors[
+        "rolloutPercentage"
+      ] = `The sum of the variant percentage is ${count}% which is lower than 100%.`;
+    }
   }
 
   return errors;
