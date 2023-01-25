@@ -5,14 +5,22 @@ export enum SchedulingStatus {
   HAS_RUN = "HAS_RUN",
 }
 
-export interface Schedule {
+export type Schedule = {
   utc: string;
   data: { rolloutPercentage?: number };
   status: FlagStatus;
   uuid: string;
   schedulingStatus: SchedulingStatus;
-  type: SchedulingType;
-}
+} & (
+  | {
+      type: SchedulingType.UpdatePercentage;
+      data: SchedulingUpdatePercentageData;
+    }
+  | {
+      type: SchedulingType.UpdateVariantPercentage;
+      data: Array<SchedulingUpdateVariantEntry>;
+    }
+);
 
 export interface SchedulingUpdateVariantEntry {
   variantId: string;
