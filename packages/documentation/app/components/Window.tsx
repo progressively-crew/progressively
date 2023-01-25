@@ -56,9 +56,7 @@ export const Window = ({ children, header, inverse }: WindowProps) => {
     : "border-b-gray-100";
 
   return (
-    <div
-      className={"rounded-2xl drop-shadow-lg overflow-hidden " + wrapperStyle}
-    >
+    <div className={"rounded drop-shadow overflow-hidden " + wrapperStyle}>
       <div
         className={
           "flex flex-row items-center h-12 px-4 gap-4 border-b " + headerStyle

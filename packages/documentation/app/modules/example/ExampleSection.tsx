@@ -6,11 +6,11 @@ export const ExampleSection = () => {
   const { flags, track } = useFlags();
 
   return (
-    <div className="flex flex-col lg:flex-row gap-4 items-center">
+    <div className="flex flex-col lg:flex-row gap-8 items-center">
       <div className="flex-1">
-        <h3 className="font-bold pt-2 text-4xl lg:text-6xl dark:text-slate-100">
+        <h2 className="font-semibold pt-2 text-4xl lg:text-6xl dark:text-slate-100">
           Deploy whenever <br /> you want
-        </h3>
+        </h2>
 
         {flags.deploySection === "Control" && (
           <p className="pt-2 md:pt-4 text-gray-600 dark:text-slate-200 text-2xl">

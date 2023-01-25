@@ -14,7 +14,7 @@ export const Installation = () => {
       </div>
 
       <h3 className="font-bold pt-2 text-xl dark:text-slate-100">
-        Create your own instance
+        Get the project running locally
       </h3>
 
       <p className="pt-1 md:pt-2 text-gray-700 dark:text-slate-200">
