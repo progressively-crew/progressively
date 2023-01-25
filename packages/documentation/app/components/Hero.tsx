@@ -36,10 +36,6 @@ export const Hero = () => {
 
           <div className="mt-8 flex flex-wrap gap-4">
             <Button to="/docs/introduction/getting-started">Get Started</Button>
-
-            <Button variant="secondary" to="/demo-instance">
-              Demo instance
-            </Button>
           </div>
         </div>
       </div>

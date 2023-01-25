@@ -72,13 +72,13 @@ export default function Index() {
       <main>
         <Hero />
 
-        <section className="pb-40 pt-40 bg-white">
-          <div className="max-w-screen-xl mx-auto">
+        <section className="px-20 lg:px-40 bg-white">
+          <div className="max-w-screen-xl mx-auto px-4">
             <ExampleSection />
           </div>
         </section>
 
-        <div className="max-w-screen-xl mx-auto">
+        <div className="max-w-screen-xl mx-auto px-4 ">
           <section className="pb-4 pt-20">
             <h2 className="text-center text-3xl md:text-6xl font-bold dark:text-white pb-8">
               Prepare your instance

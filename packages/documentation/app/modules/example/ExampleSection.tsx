@@ -1,13 +1,14 @@
 import { useFlags } from "@progressively/react";
+import { Button } from "~/components/Button";
 import { Example } from "~/components/Example";
 
 export const ExampleSection = () => {
-  const { flags } = useFlags();
+  const { flags, track } = useFlags();
 
   return (
-    <div className="flex flex-row gap-4 items-center">
+    <div className="flex flex-col lg:flex-row gap-4 items-center">
       <div className="flex-1">
-        <h3 className="font-bold pt-2 text-6xl dark:text-slate-100">
+        <h3 className="font-bold pt-2 text-4xl lg:text-6xl dark:text-slate-100">
           Deploy whenever <br /> you want
         </h3>
 
@@ -34,6 +35,18 @@ export const ExampleSection = () => {
             successful launch.
           </p>
         )}
+
+        <div className="inline-block mt-4">
+          <Button
+            variant="secondary"
+            to="/demo-instance"
+            onClick={() => {
+              track(`Demo instance ${flags.deploySection}`);
+            }}
+          >
+            Demo instance
+          </Button>
+        </div>
       </div>
 
       <div className="flex-1">
