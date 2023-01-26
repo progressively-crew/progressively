@@ -21,7 +21,6 @@ export class SdkController {
 
   _prepareCookie(response: Response, userId: string) {
     response.cookie(COOKIE_KEY, userId, {
-      sameSite: 'lax',
       secure: true,
     });
 
