@@ -11,19 +11,25 @@ export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "tertiary";
   scheme?: "default" | "danger";
   icon?: React.ReactNode;
+  size?: "L" | "M";
 }
 
 const classCombination = {
   defaultprimary:
     "bg-indigo-700 text-white hover:bg-indigo-500 active:bg-indigo-600",
   defaultsecondary:
-    "bg-indigo-100 text-indigo-700 text-indigo-700 hover:bg-indigo-50 active:bg-indigo-100",
+    "border border-indigo-500 text-indigo-700 text-indigo-700 hover:border-indigo-700 transition-all dark:border-indigo-200 dark:text-indigo-200",
   defaulttertiary: "text-indigo-700 hover:bg-gray-50 active:bg-gray-100",
 
   dangerprimary: "bg-red-700 text-white hover:bg-red-500 active:bg-red-600",
   dangersecondary:
     "bg-red-100 text-red-700 text-red-700 hover:bg-red-50 active:bg-red-100",
   dangertertiary: "text-red-700",
+};
+
+const Sizes = {
+  M: "h-10 px-4",
+  L: "h-12 px-6 text-lg",
 };
 
 export const Button = ({
@@ -37,10 +43,12 @@ export const Button = ({
   scheme,
   variant,
   className,
+  size = "M",
   ...props
 }: ButtonProps) => {
+  const btnSizeStyle = Sizes[size];
   const sharedButtonClass =
-    "block rounded flex items-center h-10 px-4 whitespace-nowrap";
+    "block rounded flex items-center  whitespace-nowrap " + btnSizeStyle;
   const actuelScheme = scheme || "default";
   const actualVariant = variant || "primary";
   const combinedClassName = classCombination[actuelScheme + actualVariant];
