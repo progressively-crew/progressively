@@ -1,12 +1,10 @@
 import type { LinksFunction, MetaFunction } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
 import { Features } from "~/components/Features";
 import { Hero } from "~/components/Hero";
 import { WeightComparator } from "~/components/WeightComparator";
 import homeCss from "../styles/home.css";
 import darkTheme from "highlight.js/styles/github-dark.css";
 import lightTheme from "highlight.js/styles/github.css";
-import { useFlags } from "@progressively/react";
 import { SiteNav } from "~/components/SiteNav";
 import {
   Installation,
@@ -16,7 +14,6 @@ import { ChooseSdk, ChooseSdkCode } from "~/modules/getstarted/ChooseSdk";
 import { CreateFlag, CreateFlagImg } from "~/modules/getstarted/CreateFlag";
 import { AiOutlineArrowDown } from "react-icons/ai";
 import { Timeline, TimelineStep } from "~/components/TImeline";
-import { Spacer } from "~/components/Spacer";
 import { ExampleSection } from "~/modules/example/ExampleSection";
 import { Analyze } from "~/modules/analyze/Analyze";
 
@@ -58,12 +55,6 @@ export const links: LinksFunction = () => {
 
     { rel: "stylesheet", href: homeCss },
   ];
-};
-
-export const loader = () => {
-  return {
-    isProgressivelyActivated: Boolean(process.env.PROGRESSIVELY_ENV),
-  };
 };
 
 export default function Index() {
