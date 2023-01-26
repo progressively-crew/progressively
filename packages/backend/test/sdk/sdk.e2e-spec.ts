@@ -53,7 +53,7 @@ describe('SdkController (e2e)', () => {
       });
       expect(response.headers['set-cookie']).toMatchInlineSnapshot(`
         [
-          "progressively-id=12345-marvin; Path=/; Secure; SameSite=Lax",
+          "progressively-id=12345-marvin; Path=/; Secure",
         ]
       `);
     });
@@ -73,7 +73,7 @@ describe('SdkController (e2e)', () => {
       });
       expect(response.headers['set-cookie']).toMatchInlineSnapshot(`
         [
-          "progressively-id=1; Path=/; Secure; SameSite=Lax",
+          "progressively-id=1; Path=/; Secure",
         ]
       `);
     });
@@ -96,7 +96,7 @@ describe('SdkController (e2e)', () => {
       });
       expect(response.headers['set-cookie']).toMatchInlineSnapshot(`
         [
-          "progressively-id=2; Path=/; Secure; SameSite=Lax",
+          "progressively-id=2; Path=/; Secure",
         ]
       `);
     });
@@ -116,7 +116,7 @@ describe('SdkController (e2e)', () => {
       });
       expect(response.headers['set-cookie']).toMatchInlineSnapshot(`
         [
-          "progressively-id=1; Path=/; Secure; SameSite=Lax",
+          "progressively-id=1; Path=/; Secure",
         ]
       `);
     });
@@ -136,7 +136,7 @@ describe('SdkController (e2e)', () => {
       });
       expect(response.headers['set-cookie']).toMatchInlineSnapshot(`
         [
-          "progressively-id=2; Path=/; Secure; SameSite=Lax",
+          "progressively-id=2; Path=/; Secure",
         ]
       `);
     });

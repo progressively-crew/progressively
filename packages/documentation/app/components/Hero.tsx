@@ -1,4 +1,3 @@
-import { Logo } from "./Logo";
 import { Button } from "./Button";
 
 const Catchphrase = () => {
@@ -12,12 +11,8 @@ const Catchphrase = () => {
 
 export const Hero = () => {
   return (
-    <div className="max-w-screen-xl mx-auto px-4 md:px-0 py-12 md:py-32 w-full">
+    <div className="max-w-screen-xl mx-auto px-4 md:px-0 py-12 md:py-56 w-full">
       <div>
-        <div className="md:pb-8">
-          <Logo className="h-16 w-16" />
-        </div>
-
         <h1 className="text-black text-3xl dark:text-white font-extrabold sm:text-6xl p-1 motion-safe:animate-fade-enter-top">
           Rollout quickly, effectively,
           <span className="sm:block dark:text-indigo-400 text-indigo-700">
@@ -35,7 +30,9 @@ export const Hero = () => {
           <Catchphrase />
 
           <div className="mt-8 flex flex-wrap gap-4">
-            <Button to="/docs/introduction/getting-started">Get Started</Button>
+            <Button to="/docs/introduction/getting-started" size="L">
+              Get Started
+            </Button>
           </div>
         </div>
       </div>
