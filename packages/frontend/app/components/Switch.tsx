@@ -32,6 +32,9 @@ export const Switch = ({
 
   const thumnailTransitionClasses = checked ? "group-active:-ml-4" : "";
 
+  const focusStyles =
+    "group-focus-within:outline-none group-focus-within:ring-2 group-focus-within:ring-slate-400 group-focus-within:ring-offset-2 dark:group-focus-within:ring-offset-slate-900";
+
   return (
     <button
       aria-checked={checked}
@@ -40,7 +43,7 @@ export const Switch = ({
       aria-label={label}
       onClick={onClick}
       form={form}
-      className="h-8 px-1 flex items-center gap-2 group"
+      className="h-6 px-1 flex items-center gap-2 group outline-none"
       {...props}
     >
       <Typography as="span" className="text-sm">
@@ -48,8 +51,10 @@ export const Switch = ({
       </Typography>
       <span
         className={
-          "transition-all ease-in-out duration-200 h-7 w-12 rounded-full inline-block p-1 " +
-          wrapperCheckedClasses
+          "h-7 w-12 rounded-full inline-block p-1 " +
+          wrapperCheckedClasses +
+          " " +
+          focusStyles
         }
       >
         <span

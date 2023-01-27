@@ -578,6 +578,11 @@ video {
   margin-right: auto;
 }
 
+.-mx-1 {
+  margin-left: -0.25rem;
+  margin-right: -0.25rem;
+}
+
 .mt-2 {
   margin-top: 0.5rem;
 }
@@ -1866,6 +1871,26 @@ input[type="range"]::-moz-range-progress {
   color: rgb(67 56 202 / var(--tw-text-opacity));
 }
 
+.group:focus-within .group-focus-within\:outline-none {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.group:focus-within .group-focus-within\:ring-2 {
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
+.group:focus-within .group-focus-within\:ring-slate-400 {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(148 163 184 / var(--tw-ring-opacity));
+}
+
+.group:focus-within .group-focus-within\:ring-offset-2 {
+  --tw-ring-offset-width: 2px;
+}
+
 .group:active .group-active\:-ml-4 {
   margin-left: -1rem;
 }
@@ -2117,6 +2142,10 @@ input[type="range"]::-moz-range-progress {
 .dark .dark\:active\:bg-slate-600:active {
   --tw-bg-opacity: 1;
   background-color: rgb(71 85 105 / var(--tw-bg-opacity));
+}
+
+.dark .group:focus-within .dark\:group-focus-within\:ring-offset-slate-900 {
+  --tw-ring-offset-color: #0f172a;
 }
 
 @media (min-width: 768px) {

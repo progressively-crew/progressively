@@ -7,8 +7,10 @@ export interface HorizontalNavProps {
 
 export const HorizontalNav = ({ children, label }: HorizontalNavProps) => {
   return (
-    <nav aria-label={label} className="w-full dark:bg-slate-800 bg-white py-3">
-      <ul className="overflow-x-scroll flex flex-row gap-4">{children}</ul>
+    <nav aria-label={label} className="w-full dark:bg-slate-800 bg-white">
+      <ul className="overflow-x-scroll flex flex-row gap-4 items-center py-3">
+        {children}
+      </ul>
     </nav>
   );
 };
