@@ -44,12 +44,14 @@ export const WebhooksList = ({
                 {
                   label: "Remove",
                   href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/webhooks/${webhook.uuid}/delete`,
+                  noInitial: true,
                 },
                 {
                   label: "Copy secret",
                   onClick: () => {
                     navigator.clipboard.writeText(webhook.secret);
                   },
+                  noInitial: true,
                 },
               ]}
               label={"Actions on webhook"}

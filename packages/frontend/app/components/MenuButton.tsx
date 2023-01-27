@@ -8,6 +8,7 @@ interface MenuItem {
   label: string;
   href?: string;
   onClick?: () => void;
+  noInitial?: boolean;
 }
 
 export interface MenuButtonProps {
@@ -42,13 +43,15 @@ export const MenuButton = ({ items, label }: MenuButtonProps) => {
                 {({ active }) => (
                   <NavLink
                     as={item.onClick ? "button" : undefined}
-                    className={`flex gap-2 w-full items-center first:rounded-t-md last:rounded-b-md px-3 py-3 text-sm text-gray-700 dark:text-slate-200 font-normal focus:bg-gray-100 ${
+                    className={`whitespace-nowrap flex gap-2 w-full items-center first:rounded-t-md last:rounded-b-md px-3 py-3 text-sm text-gray-700 dark:text-slate-200 font-normal focus:bg-gray-100 ${
                       active ? "bg-gray-100 dark:bg-slate-700" : ""
                     }`}
                     to={item.href || ""}
                     onClick={item.onClick}
                   >
-                    <InitialBox content={item.label} size="S" />
+                    {!item.noInitial && (
+                      <InitialBox content={item.label} size="S" />
+                    )}
                     {item.label}
                   </NavLink>
                 )}
