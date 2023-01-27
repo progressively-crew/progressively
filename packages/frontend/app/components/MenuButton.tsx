@@ -2,11 +2,11 @@ import { Menu, Transition } from "@headlessui/react";
 import { NavLink } from "@remix-run/react";
 import React, { Fragment } from "react";
 import { RxCaretSort } from "react-icons/rx";
+import { InitialBox } from "./InitialBox";
 
 interface MenuItem {
   label: string;
   href?: string;
-  icon?: React.ReactNode;
   onClick?: () => void;
 }
 
@@ -36,7 +36,7 @@ export const MenuButton = ({ items, label }: MenuButtonProps) => {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="z-20 absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 dark:divide-slate-700 rounded-md bg-white dark:bg-slate-800 shadow-lg ring-1 ring-black ring-opacity-5">
+          <Menu.Items className="z-20 absolute right-0 mt-2 w-auto origin-top-right divide-y divide-gray-100 dark:divide-slate-700 rounded-md bg-white dark:bg-slate-800 shadow-lg ring-1 ring-black ring-opacity-5">
             {items.map((item) => (
               <Menu.Item key={item.label}>
                 {({ active }) => (
@@ -48,7 +48,7 @@ export const MenuButton = ({ items, label }: MenuButtonProps) => {
                     to={item.href || ""}
                     onClick={item.onClick}
                   >
-                    {item.icon}
+                    <InitialBox content={item.label} size="S" />
                     {item.label}
                   </NavLink>
                 )}

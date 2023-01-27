@@ -22,13 +22,15 @@ const ProjectCard = ({ userProject }: ProjectRowProps) => {
     <Card onClick={() => linkRef.current?.click()}>
       <CardContent>
         <div className="flex flex-row gap-4 items-center">
-          <InitialBox content={userProject.project.name} />
+          <div className="shrink-0">
+            <InitialBox content={userProject.project.name} />
+          </div>
 
           <div>
             <Link
               ref={linkRef}
               to={`/dashboard/projects/${userProject.projectId}`}
-              className="dark:text-slate-100"
+              className="dark:text-slate-100 break-all"
             >
               {userProject.project.name}
             </Link>
@@ -47,7 +49,7 @@ const ProjectCard = ({ userProject }: ProjectRowProps) => {
 };
 export const ProjectList = ({ projects }: ProjectListProps) => {
   return (
-    <div className="grid grid-cols-3 gap-8">
+    <div className="flex flex-col gap-4">
       {projects.map((userProject) => (
         <ProjectCard key={userProject.projectId} userProject={userProject} />
       ))}
