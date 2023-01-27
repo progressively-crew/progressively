@@ -1,3 +1,4 @@
+import { Card, CardContent } from "~/components/Card";
 import { Tag } from "~/components/Tag";
 import { VariantDot } from "~/modules/flags/components/VariantDot";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
@@ -13,20 +14,22 @@ export const VariantCard = ({ variant, hit, ratio }: VariantCardProps) => {
   const formatter = Intl.NumberFormat("en", { notation: "compact" });
 
   return (
-    <div className="border border-gray-100 rounded-md bg-white dark:border-slate-700 dark:bg-slate-800 p-4">
-      <div className="flex flex-row items-center gap-2 font-bold pb-2">
-        <VariantDot variant={variant} size="L" />
-        <p style={{ color }}>{variant}</p>
-      </div>
+    <Card>
+      <CardContent>
+        <div className="flex flex-row items-center gap-2 font-bold pb-2">
+          <VariantDot variant={variant} size="L" />
+          <p style={{ color }}>{variant}</p>
+        </div>
 
-      <div className="dark:text-white text-slate-900 pb-4">
-        <span className="text-6xl font-bold">{formatter.format(hit)}</span>
-        <span className="dark:text-slate-300 text-slate-900 pl-2">eval.</span>
-      </div>
+        <div className="dark:text-white text-slate-900 pb-4">
+          <span className="text-6xl font-bold">{formatter.format(hit)}</span>
+          <span className="dark:text-slate-300 text-slate-900 pl-2">eval.</span>
+        </div>
 
-      <Tag style={{ background: color }} className="!text-slate-900">
-        {ratio}%
-      </Tag>
-    </div>
+        <Tag style={{ background: color }} className="!text-slate-900">
+          {ratio}%
+        </Tag>
+      </CardContent>
+    </Card>
   );
 };
