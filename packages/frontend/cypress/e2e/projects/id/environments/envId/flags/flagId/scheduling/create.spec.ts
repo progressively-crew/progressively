@@ -139,7 +139,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
         });
 
         it("shows and success message in the scheduling list page", () => {
-          cy.get("#date-dateTime").type("2023-01-27");
+          cy.get("#date-dateTime").type("2025-01-27");
           cy.get("#time-dateTime").type("03:15");
 
           cy.findByLabelText("What should be the next status").click();
@@ -165,7 +165,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
           cy.get(".scheduling-row")
             .first()
             .within(() => {
-              cy.findByText("1/27/2023, 03:15:00").should("be.visible");
+              cy.findByText("1/27/2025, 03:15:00").should("be.visible");
               cy.contains("Updating status to Activated").should("be.visible");
               cy.contains("Control to 40%").should("be.visible");
               cy.contains("Second to 60%").should("be.visible");
