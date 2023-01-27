@@ -755,6 +755,10 @@ video {
   width: 10rem;
 }
 
+.min-w-\[200px\] {
+  min-width: 200px;
+}
+
 .max-w-lg {
   max-width: 32rem;
 }
