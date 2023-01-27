@@ -1,7 +1,5 @@
 import { Outlet, useParams } from "@remix-run/react";
-import { EnvIcon } from "~/components/Icons/EnvIcon";
 import { EnvProvider } from "~/modules/environments/contexts/EnvProvider";
-import { stringToColor } from "~/modules/misc/utils/stringToColor";
 import { useProject } from "~/modules/projects/contexts/useProject";
 
 export const handle = {
@@ -33,7 +31,6 @@ export const handle = {
         return {
           label: env.name,
           href,
-          icon: <EnvIcon style={{ color: stringToColor(env.name, 75) }} />,
         };
       }),
       menuLabel: `Change environment`,

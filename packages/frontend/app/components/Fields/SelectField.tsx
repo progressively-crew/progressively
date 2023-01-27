@@ -28,9 +28,12 @@ export const SelectField = ({
   ...props
 }: SelectFieldProps) => {
   const id = useId();
-  const inputClasses = isInvalid
+  let inputClasses = isInvalid
     ? "h-10 rounded px-4 border border-red-500 dark:text-slate-100 dark:bg-slate-700"
     : "h-10 rounded px-4 border border-gray-200 bg-white dark:border-slate-700 dark:text-slate-100 dark:bg-slate-700";
+
+  inputClasses +=
+    " focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:focus:ring-offset-slate-900";
 
   return (
     <Stack spacing={2}>
@@ -38,24 +41,20 @@ export const SelectField = ({
         {label}
       </Label>
 
-      <div className={`${inputClasses} ${className || ""}`}>
-        <div className="flex flex-row gap-2 h-full items-center">
-          <select
-            name={name}
-            id={id}
-            defaultValue={defaultValue}
-            aria-describedby={isInvalid ? `error-${name}` : undefined}
-            className={`w-full h-full bg-transparent text-gray-600 dark:text-slate-100 px-2`}
-            {...props}
-          >
-            {options.map((opt) => (
-              <option key={`${name}-${opt.value}`} value={opt.value}>
-                {opt.label}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
+      <select
+        name={name}
+        id={id}
+        defaultValue={defaultValue}
+        aria-describedby={isInvalid ? `error-${name}` : undefined}
+        className={inputClasses}
+        {...props}
+      >
+        {options.map((opt) => (
+          <option key={`${name}-${opt.value}`} value={opt.value}>
+            {opt.label}
+          </option>
+        ))}
+      </select>
     </Stack>
   );
 };

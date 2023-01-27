@@ -2,12 +2,13 @@ import { Menu, Transition } from "@headlessui/react";
 import { NavLink } from "@remix-run/react";
 import React, { Fragment } from "react";
 import { RxCaretSort } from "react-icons/rx";
+import { InitialBox } from "./InitialBox";
 
 interface MenuItem {
   label: string;
   href?: string;
-  icon?: React.ReactNode;
   onClick?: () => void;
+  noInitial?: boolean;
 }
 
 export interface MenuButtonProps {
@@ -21,7 +22,7 @@ export const MenuButton = ({ items, label }: MenuButtonProps) => {
       <Menu>
         <Menu.Button
           className={
-            "w-6 h-8 flex justify-center items-center hover:bg-gray-100 hover:dark:bg-slate-700 active:dark:bg-slate-600 transition-all rounded text-gray-500 dark:text-slate-200 text-xl"
+            "w-6 h-8 flex justify-center items-center hover:bg-gray-100 hover:dark:bg-slate-700 active:dark:bg-slate-600 rounded text-gray-500 dark:text-slate-200 text-xl focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
           }
         >
           <RxCaretSort aria-label={label} />
@@ -36,19 +37,21 @@ export const MenuButton = ({ items, label }: MenuButtonProps) => {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="z-20 absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 dark:divide-slate-700 rounded-md bg-white dark:bg-slate-800 shadow-lg ring-1 ring-black ring-opacity-5">
+          <Menu.Items className="z-20 absolute right-0 mt-2 w-auto origin-top-right divide-y divide-gray-100 dark:divide-slate-700 rounded-md bg-white dark:bg-slate-800 shadow-lg ring-1 ring-black ring-opacity-5">
             {items.map((item) => (
               <Menu.Item key={item.label}>
                 {({ active }) => (
                   <NavLink
                     as={item.onClick ? "button" : undefined}
-                    className={`flex gap-2 w-full items-center first:rounded-t-md last:rounded-b-md px-3 py-3 text-sm text-gray-700 dark:text-slate-200 font-normal focus:bg-gray-100 ${
+                    className={`whitespace-nowrap flex gap-2 min-w-[200px] items-center first:rounded-t-md last:rounded-b-md px-3 py-3 text-sm text-gray-700 dark:text-slate-200 font-normal focus:bg-gray-100 ${
                       active ? "bg-gray-100 dark:bg-slate-700" : ""
                     }`}
                     to={item.href || ""}
                     onClick={item.onClick}
                   >
-                    {item.icon}
+                    {!item.noInitial && (
+                      <InitialBox content={item.label} size="S" />
+                    )}
                     {item.label}
                   </NavLink>
                 )}

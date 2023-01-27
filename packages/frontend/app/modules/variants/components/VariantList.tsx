@@ -107,6 +107,7 @@ export const VariantList = ({ variants, errors }: VariantListProps) => {
                     {
                       label: "Attach metric",
                       href: `../metrics/create?variant=${variant.uuid}`,
+                      noInitial: true,
                     },
                     {
                       label: "Remove",
@@ -116,6 +117,7 @@ export const VariantList = ({ variants, errors }: VariantListProps) => {
                         ) as HTMLFormElement | undefined;
                         formEl?.submit();
                       },
+                      noInitial: true,
                     },
                   ]}
                   label={"Actions on variant"}

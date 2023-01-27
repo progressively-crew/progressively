@@ -38,7 +38,7 @@ export const DateTimeInput = ({
     ariaDescription = `hint-${name}`;
   }
 
-  let utc: string | null;
+  let utc: string | null = null;
 
   if (date && time) {
     const [hours, minutes] = time.split(":");
@@ -53,9 +53,12 @@ export const DateTimeInput = ({
     }
   }
 
-  const inputClasses = isInvalid
+  let inputClasses = isInvalid
     ? "h-10 rounded px-4 border border-red-500 text-gray-700 dark:text-slate-100 dark:bg-slate-700"
     : "h-10 rounded px-4 border border-gray-200 bg-white text-gray-700 dark:border-slate-700 dark:text-slate-100 dark:bg-slate-700";
+
+  inputClasses +=
+    " focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:focus:ring-offset-slate-900";
 
   return (
     <Stack spacing={2}>

@@ -61,7 +61,7 @@ export const SliderInput = ({
             id={currentId}
             name={name}
             onChange={(e) => onChange(Number(e.target.value))}
-            className="appearance h-10 w-52"
+            className="rounded appearance h-10 w-52 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
             style={inputStyles}
           />
 
