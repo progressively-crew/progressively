@@ -1772,6 +1772,16 @@ input[type="range"]::-moz-range-thumb {
   border-color: rgb(67 56 202 / var(--tw-border-opacity));
 }
 
+.hover\:border-gray-600:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(75 85 99 / var(--tw-border-opacity));
+}
+
+.hover\:border-gray-400:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(156 163 175 / var(--tw-border-opacity));
+}
+
 .hover\:border-l-indigo-500:hover {
   --tw-border-opacity: 1;
   border-left-color: rgb(99 102 241 / var(--tw-border-opacity));
@@ -2146,6 +2156,16 @@ input[type="range"]::-moz-range-thumb {
 
 .dark .dark\:focus-within\:ring-offset-slate-900:focus-within {
   --tw-ring-offset-color: #0f172a;
+}
+
+.dark .dark\:hover\:border-gray-400:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(156 163 175 / var(--tw-border-opacity));
+}
+
+.dark .dark\:hover\:border-slate-400:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(148 163 184 / var(--tw-border-opacity));
 }
 
 .dark .hover\:dark\:bg-slate-700:hover {
