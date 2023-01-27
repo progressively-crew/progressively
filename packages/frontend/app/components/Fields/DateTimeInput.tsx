@@ -38,7 +38,7 @@ export const DateTimeInput = ({
     ariaDescription = `hint-${name}`;
   }
 
-  let utc: string | null;
+  let utc: string | null = null;
 
   if (date && time) {
     const [hours, minutes] = time.split(":");
