@@ -13,7 +13,7 @@ export const Hero = () => {
   return (
     <div className="max-w-screen-xl mx-auto px-4 md:px-0 py-12 md:py-56 w-full">
       <div>
-        <h1 className="text-black text-3xl dark:text-white font-extrabold sm:text-6xl p-1 motion-safe:animate-fade-enter-top">
+        <h1 className="text-black text-3xl dark:text-white font-extrabold sm:text-6xl p-1">
           Rollout quickly, effectively,
           <span className="sm:block dark:text-indigo-400 text-indigo-700">
             {" "}
@@ -21,19 +21,12 @@ export const Hero = () => {
           </span>
         </h1>
 
-        <div
-          className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"
-          style={{
-            animationDelay: "500ms",
-          }}
-        >
-          <Catchphrase />
+        <Catchphrase />
 
-          <div className="mt-8 flex flex-wrap gap-4">
-            <Button to="/docs/introduction/getting-started" size="L">
-              Get Started
-            </Button>
-          </div>
+        <div className="mt-8 flex flex-wrap gap-4">
+          <Button to="/docs/introduction/getting-started" size="L">
+            Get Started
+          </Button>
         </div>
       </div>
     </div>

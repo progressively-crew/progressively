@@ -46,31 +46,24 @@ export default function Index() {
               <Logo className="h-16 w-16" />
             </div>
 
-            <h1 className="text-black text-3xl dark:text-white font-extrabold sm:text-5xl p-1 motion-safe:animate-fade-enter-top">
+            <h1 className="text-black text-3xl dark:text-white font-extrabold sm:text-5xl p-1">
               <span className="sm:block dark:text-indigo-400 text-indigo-700">
                 Progressively{" "}
               </span>
               Demo instance
             </h1>
 
-            <div
-              className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"
-              style={{
-                animationDelay: "500ms",
-              }}
-            >
-              <p className="mt-4 max-w-xl sm:text-xl sm:leading-relaxed text-gray-600 dark:text-slate-200">
-                You are about to enter the demo instance of Progressively. Make
-                sure to not use it as a production ready instance:
-                <br />
-                <strong>data will be erased regularly</strong>.
-              </p>
+            <p className="mt-4 max-w-xl sm:text-xl sm:leading-relaxed text-gray-600 dark:text-slate-200">
+              You are about to enter the demo instance of Progressively. Make
+              sure to not use it as a production ready instance:
+              <br />
+              <strong>data will be erased regularly</strong>.
+            </p>
 
-              <div className="inline-block pt-8">
-                <Button href="https://dashboard.progressively.app/signin">
-                  Enter the demo instance
-                </Button>
-              </div>
+            <div className="inline-block pt-8">
+              <Button href="https://dashboard.progressively.app/signin">
+                Enter the demo instance
+              </Button>
             </div>
           </div>
         </div>
