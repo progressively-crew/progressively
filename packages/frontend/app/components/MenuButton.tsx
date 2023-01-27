@@ -21,7 +21,7 @@ export const MenuButton = ({ items, label }: MenuButtonProps) => {
       <Menu>
         <Menu.Button
           className={
-            "w-6 h-8 flex justify-center items-center hover:bg-gray-100 hover:dark:bg-slate-700 active:dark:bg-slate-600 transition-all rounded text-gray-500 dark:text-slate-200 text-xl"
+            "w-6 h-8 flex justify-center items-center hover:bg-gray-100 hover:dark:bg-slate-700 active:dark:bg-slate-600 rounded text-gray-500 dark:text-slate-200 text-xl focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
           }
         >
           <RxCaretSort aria-label={label} />

@@ -24,7 +24,7 @@ export const ThemeSwitch = () => {
       role="switch"
       aria-label={"Toggle theme"}
       onClick={toggleTheme}
-      className="h-10 px-1 flex items-center gap-2 group"
+      className="h-10 px-1 flex items-center gap-2 group rounded w-full focus-within:outline-none focus-within:ring-2 focus-within:ring-slate-400 focus-within:ring-offset-2 dark:focus-within:ring-offset-slate-900"
     >
       <Typography as="span" className={`text-xs`}>
         {"Light"}
