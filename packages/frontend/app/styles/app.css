@@ -549,6 +549,10 @@ video {
   left: 0px;
 }
 
+.right-1 {
+  right: 0.25rem;
+}
+
 .z-20 {
   z-index: 20;
 }
@@ -936,6 +940,14 @@ video {
   border-color: rgb(243 244 246 / var(--tw-divide-opacity));
 }
 
+.place-self-end {
+  place-self: end;
+}
+
+.self-end {
+  align-self: flex-end;
+}
+
 .overflow-hidden {
   overflow: hidden;
 }
@@ -1298,6 +1310,10 @@ video {
 
 .pr-8 {
   padding-right: 2rem;
+}
+
+.pr-12 {
+  padding-right: 3rem;
 }
 
 .text-left {
