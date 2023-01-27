@@ -29,27 +29,27 @@ export const FlagMenu = ({ projectId, envId, flagEnv }: FlagMenuProps) => {
       </NavItem>
 
       <NavItem
-        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/insights`}
-      >
-        Insights
-      </NavItem>
-
-      <NavItem
         to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/variants`}
       >
         Variants
       </NavItem>
 
       <NavItem
-        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/metrics`}
-      >
-        Metrics
-      </NavItem>
-
-      <NavItem
         to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/scheduling`}
       >
         Scheduling
+      </NavItem>
+
+      <NavItem
+        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/insights`}
+      >
+        Insights
+      </NavItem>
+
+      <NavItem
+        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/metrics`}
+      >
+        Metrics
       </NavItem>
 
       <NavItem

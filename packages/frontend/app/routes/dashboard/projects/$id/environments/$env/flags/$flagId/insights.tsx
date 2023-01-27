@@ -11,10 +11,9 @@ import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
-import { Card } from "~/components/Card";
+import { Card, CardContent } from "~/components/Card";
 import { TextInput } from "~/components/Fields/TextInput";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
-import { Typography } from "~/components/Typography";
 import { PageTitle } from "~/components/PageTitle";
 import { MetricPerVariantList } from "~/modules/flags/MetricPerVariantList";
 import { Section, SectionHeader } from "~/components/Section";
@@ -185,14 +184,7 @@ export default function FlagInsights() {
         />
       }
     >
-      <PageTitle
-        value="Insights"
-        description={
-          <Typography>
-            Information about variants hits per date on the feature flag.
-          </Typography>
-        }
-      />
+      <PageTitle value="Insights" />
 
       <Form action=".">
         <div className="flex flex-col md:flex-row gap-3 md:items-end">
@@ -213,52 +205,62 @@ export default function FlagInsights() {
       </Form>
 
       <Section id="variants-hits">
-        <SectionHeader
-          title="Flag evaluations"
-          description="These are the number of hit on each metrics and the associated variant (if applicable). The chart shows the ratio between the variant evaluation and the metric hit."
-        />
-
-        <Spacer size={4} />
-
-        <div className="grid grid-cols-4 gap-8">
-          <EvalCard count={flagEvaluationsCount} />
-
-          <div
-            className="w-full col-span-3 border border-gray-100 rounded-md bg-white dark:border-slate-700 dark:bg-slate-800 pr-6"
-            style={{ height: 300 }}
-          >
-            {hitsPerVariantPerDate.length > 0 ? (
-              <LineChart data={hitsPerVariantPerDate} />
-            ) : (
-              <EmptyState
-                title="No data"
-                description={"There are no flag evaluations for this period."}
-              />
-            )}
-          </div>
-
-          {flagEvaluations.map((fe) => (
-            <VariantCard
-              key={`variant-card-${fe.valueResolved}`}
-              variant={fe.valueResolved}
-              hit={fe._count}
-              ratio={
-                Math.round((fe._count / flagEvaluationsCount) * 10_000) / 100
-              }
+        <Card>
+          <CardContent>
+            <SectionHeader
+              title="Flag evaluations"
+              description="These are the number of hit on each metrics and the associated variant (if applicable). The chart shows the ratio between the variant evaluation and the metric hit."
             />
-          ))}
-        </div>
+
+            <Spacer size={4} />
+
+            <div className="grid grid-cols-4 gap-8">
+              <EvalCard count={flagEvaluationsCount} />
+
+              <div className="w-full col-span-3">
+                <Card>
+                  <div className="pr-6" style={{ height: 300 }}>
+                    {hitsPerVariantPerDate.length > 0 ? (
+                      <LineChart data={hitsPerVariantPerDate} />
+                    ) : (
+                      <EmptyState
+                        title="No data"
+                        description={
+                          "There are no flag evaluations for this period."
+                        }
+                      />
+                    )}
+                  </div>
+                </Card>
+              </div>
+
+              {flagEvaluations.map((fe) => (
+                <VariantCard
+                  key={`variant-card-${fe.valueResolved}`}
+                  variant={fe.valueResolved}
+                  hit={fe._count}
+                  ratio={
+                    Math.round((fe._count / flagEvaluationsCount) * 10_000) /
+                    100
+                  }
+                />
+              ))}
+            </div>
+          </CardContent>
+        </Card>
       </Section>
 
       <Section id="metrics-variant">
-        <SectionHeader
-          title="Hit on metrics"
-          description="These are the number of hit on each metrics and the associated variant (if applicable). The chart shows the ratio between the variant evaluation and the metric hit."
-        />
-
-        <Spacer size={4} />
-
         <Card>
+          <CardContent>
+            <SectionHeader
+              title="Hit on metrics"
+              description="These are the number of hit on each metrics and the associated variant (if applicable). The chart shows the ratio between the variant evaluation and the metric hit."
+            />
+          </CardContent>
+
+          <Spacer size={4} />
+
           <MetricPerVariantList items={metricsByVariantCount} />
 
           <div
