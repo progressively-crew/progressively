@@ -57,6 +57,13 @@ export const FlagMenu = ({ projectId, envId, flagEnv }: FlagMenuProps) => {
       >
         Webhooks
       </NavItem>
+
+      <NavItem
+        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/activity`}
+      >
+        Activity
+      </NavItem>
+
       <NavItem
         to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/settings`}
       >

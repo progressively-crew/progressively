@@ -29,7 +29,7 @@ export class EligibilityController {
   async updateEligibility(
     @Param('eligibilityId') eligibilityId: string,
     @Body() eligibilityDto: EligibilityUpdateDTO,
-  ): Promise<any> {
+  ) {
     const updatedEligibility = await this.eligibilityService.updateEligibility(
       eligibilityId,
       eligibilityDto,
@@ -55,9 +55,7 @@ export class EligibilityController {
   @Delete(':eligibilityId')
   @UseGuards(HasEligibilityAccessGuard)
   @UseGuards(JwtAuthGuard)
-  async deleteEligibility(
-    @Param('eligibilityId') eligibilityId: string,
-  ): Promise<any> {
+  async deleteEligibility(@Param('eligibilityId') eligibilityId: string) {
     const deletedEligibility = await this.eligibilityService.deleteEligibility(
       eligibilityId,
     );

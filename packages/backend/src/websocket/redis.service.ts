@@ -29,11 +29,11 @@ export class RedisService implements OnModuleDestroy {
     await Promise.all([teardown(this.publisher), teardown(this.subscriber)]);
   }
 
-  notifyChannel(channel: string, message: any) {
+  notifyChannel(channel: string, message: unknown) {
     this.publisher.publish(channel, JSON.stringify(message));
   }
 
-  subscribe(channel: string, callback: (data: any) => void) {
+  subscribe(channel: string, callback: (data: unknown) => void) {
     // Prevent multiple subscriptions to the same channel
     if (this.alreadySubscribedChannels[channel]) return;
     this.alreadySubscribedChannels[channel] = true;

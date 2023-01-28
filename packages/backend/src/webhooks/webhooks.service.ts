@@ -28,7 +28,7 @@ export class WebhooksService {
     envId: string,
     flagId: string,
     webhook: WebhookCreationDTO,
-  ): Promise<any> {
+  ) {
     return this.prisma.webhook.create({
       data: {
         endpoint: webhook.endpoint,

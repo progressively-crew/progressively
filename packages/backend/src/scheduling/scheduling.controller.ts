@@ -10,7 +10,7 @@ export class SchedulingController {
   @Delete(':scheduleId')
   @UseGuards(HasScheduleAccessGuard)
   @UseGuards(JwtAuthGuard)
-  deleteSchedule(@Param('scheduleId') scheduleId: string): Promise<any> {
+  deleteSchedule(@Param('scheduleId') scheduleId: string) {
     return this.schedulingService.deleteSchedule(scheduleId);
   }
 }

@@ -41,6 +41,8 @@ import { WebhooksService } from '../webhooks/webhooks.service';
 import { post, WebhooksEventsToFlagStatus } from '../webhooks/utils';
 import { EligibilityService } from '../eligibility/eligibility.service';
 import { ComparatorEnum } from '../shared/utils/comparators/types';
+import { ActivityLogService } from '../activity-log/activity-log.service';
+import { UserId } from '../users/users.decorator';
 
 @ApiBearerAuth()
 @Controller()
@@ -52,6 +54,7 @@ export class FlagsController {
     private readonly webhookService: WebhooksService,
     private readonly eligibilityService: EligibilityService,
     private readonly wsGateway: WebsocketGateway,
+    private readonly activityLogService: ActivityLogService,
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
   ) {}
 
@@ -62,6 +65,7 @@ export class FlagsController {
   @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
   async changeFlagForEnvStatus(
+    @UserId() userId: string,
     @Param('envId') envId: string,
     @Param('flagId') flagId: string,
     @Body() body: ActivateFlagDTO,
@@ -98,6 +102,15 @@ export class FlagsController {
       }
     }
 
+    await this.activityLogService.register({
+      userId,
+      flagId: flagId,
+      envId: envId,
+      concernedEntity: 'flag',
+      type: 'change-flag-status',
+      data: JSON.stringify({ status }),
+    });
+
     return updatedFlagEnv;
   }
 
@@ -106,6 +119,7 @@ export class FlagsController {
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(ChangePercentageSchema))
   async adjustFlagPercentage(
+    @UserId() userId: string,
     @Param('envId') envId: string,
     @Param('flagId') flagId: string,
     @Body() body: ChangePercentageDTO,
@@ -120,6 +134,15 @@ export class FlagsController {
       updatedFlagEnv.environment.clientKey,
       updatedFlagEnv,
     );
+
+    await this.activityLogService.register({
+      userId,
+      flagId: flagId,
+      envId: envId,
+      concernedEntity: 'flag',
+      type: 'change-flag-percentage',
+      data: String(body.rolloutPercentage),
+    });
 
     return updatedFlagEnv;
   }
@@ -167,7 +190,7 @@ export class FlagsController {
     @Param('flagId') flagId: string,
     @Query('startDate') startDate: string | undefined,
     @Query('endDate') endDate: string | undefined,
-  ): Promise<any> {
+  ) {
     if (!endDate || !startDate) {
       throw new BadRequestException('startDate and endDate are required.');
     }
@@ -208,13 +231,30 @@ export class FlagsController {
     };
   }
 
+  @Get('environments/:envId/flags/:flagId/activity')
+  @UseGuards(HasFlagEnvAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  async getActivity(
+    @Param('envId') envId: string,
+    @Param('flagId') flagId: string,
+  ) {
+    const activities = await this.flagService.listActivity(envId, flagId);
+    const activitiesDto = activities.map((activity) => ({
+      ...activity,
+      data: activity.data ? JSON.parse(activity.data) : undefined,
+    }));
+
+    return activitiesDto;
+  }
+
   @Post('environments/:envId/flags/:flagId/strategies')
   @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
   async addStrategyToFlag(
+    @UserId() userId: string,
     @Param('envId') envId: string,
     @Param('flagId') flagId: string,
-  ): Promise<any> {
+  ) {
     const strategy = await this.strategyService.addStrategyToFlagEnv(
       envId,
       flagId,
@@ -227,6 +267,14 @@ export class FlagsController {
       this.wsGateway.notifyChanges(flagEnv.environment.clientKey, flagEnv);
     }
 
+    await this.activityLogService.register({
+      userId,
+      flagId: flagId,
+      envId: envId,
+      concernedEntity: 'flag',
+      type: 'create-additional-audience',
+    });
+
     return strategy;
   }
 
@@ -234,9 +282,10 @@ export class FlagsController {
   @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
   async addEligibilityToFlag(
+    @UserId() userId: string,
     @Param('envId') envId: string,
     @Param('flagId') flagId: string,
-  ): Promise<any> {
+  ) {
     const eligibility = await this.eligibilityService.addEligibilityToFlagEnv(
       envId,
       flagId,
@@ -254,6 +303,14 @@ export class FlagsController {
       this.wsGateway.notifyChanges(flagEnv.environment.clientKey, flagEnv);
     }
 
+    await this.activityLogService.register({
+      userId,
+      flagId: flagId,
+      envId: envId,
+      concernedEntity: 'flag',
+      type: 'create-eligibility-restriction',
+    });
+
     return eligibility;
   }
 
@@ -261,12 +318,28 @@ export class FlagsController {
   @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(WebhookSchema))
-  addWebhookToFlagEnv(
+  async addWebhookToFlagEnv(
+    @UserId() userId: string,
     @Param('envId') envId: string,
     @Param('flagId') flagId: string,
     @Body() webhookDto: WebhookCreationDTO,
-  ): Promise<any> {
-    return this.webhookService.addWebhookToFlagEnv(envId, flagId, webhookDto);
+  ) {
+    const webhook = await this.webhookService.addWebhookToFlagEnv(
+      envId,
+      flagId,
+      webhookDto,
+    );
+
+    await this.activityLogService.register({
+      userId,
+      flagId: flagId,
+      envId: envId,
+      concernedEntity: 'flag',
+      type: 'create-webhook',
+      data: JSON.stringify(webhook),
+    });
+
+    return webhook;
   }
 
   @Post('environments/:envId/flags/:flagId/scheduling')
@@ -274,55 +347,95 @@ export class FlagsController {
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(SchedulingSchema))
   async addSchedulingToFlag(
+    @UserId() userId: string,
     @Param('envId') envId: string,
     @Param('flagId') flagId: string,
     @Body() schedulingDto: SchedulingCreationDTO,
-  ): Promise<any> {
-    return this.schedulingService.addSchedulingToFlagEnv(
+  ) {
+    const scheduling = await this.schedulingService.addSchedulingToFlagEnv(
       envId,
       flagId,
       schedulingDto,
     );
+
+    await this.activityLogService.register({
+      userId,
+      flagId: flagId,
+      envId: envId,
+      concernedEntity: 'flag',
+      type: 'create-scheduling',
+      data: JSON.stringify(scheduling),
+    });
+
+    return scheduling;
   }
 
   @Post('environments/:envId/flags/:flagId/metrics')
   @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(MetricSchema))
-  addMetricToFlag(
+  async addMetricToFlag(
+    @UserId() userId: string,
     @Param('envId') envId: string,
     @Param('flagId') flagId: string,
     @Body() metricDto: MetricDto,
-  ): Promise<any> {
-    return this.flagService.addMetricToFlagEnv(
+  ) {
+    const metric = await this.flagService.addMetricToFlagEnv(
       envId,
       flagId,
       metricDto.name,
       metricDto.variantId,
     );
+
+    await this.activityLogService.register({
+      userId,
+      flagId: flagId,
+      envId: envId,
+      concernedEntity: 'flag',
+      type: 'create-metric',
+      data: JSON.stringify(metric),
+    });
+
+    return metric;
   }
 
   @Post('environments/:envId/flags/:flagId/variants')
   @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(VariantSchema))
-  addVariantsToFlag(
+  async addVariantsToFlag(
+    @UserId() userId: string,
     @Param('envId') envId: string,
     @Param('flagId') flagId: string,
     @Body() variantDto: VariantCreationDTO,
-  ): Promise<any> {
-    return this.flagService.createVariant(envId, flagId, variantDto);
+  ) {
+    const variant = await this.flagService.createVariant(
+      envId,
+      flagId,
+      variantDto,
+    );
+
+    await this.activityLogService.register({
+      userId,
+      flagId: flagId,
+      envId: envId,
+      concernedEntity: 'flag',
+      type: 'create-variant',
+      data: JSON.stringify(variant),
+    });
+
+    return variant;
   }
 
   @Put('environments/:envId/flags/:flagId/variants')
   @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(VariantsSchema))
-  editVariantsOfFlag(
+  async editVariantsOfFlag(
     @Param('envId') envId: string,
     @Param('flagId') flagId: string,
     @Body() variantsDto: Array<Variant>,
-  ): Promise<any> {
+  ) {
     let cumulative = 0;
     let hasControl = false;
 
@@ -355,7 +468,7 @@ export class FlagsController {
   getStrategies(
     @Param('envId') envId: string,
     @Param('flagId') flagId: string,
-  ): Promise<any> {
+  ) {
     return this.strategyService.listStrategies(envId, flagId);
   }
 
@@ -365,7 +478,7 @@ export class FlagsController {
   getEligibilities(
     @Param('envId') envId: string,
     @Param('flagId') flagId: string,
-  ): Promise<any> {
+  ) {
     return this.eligibilityService.listEligibilities(envId, flagId);
   }
 
@@ -382,27 +495,21 @@ export class FlagsController {
   getScheduling(
     @Param('envId') envId: string,
     @Param('flagId') flagId: string,
-  ): Promise<any> {
+  ) {
     return this.schedulingService.listScheduling(envId, flagId);
   }
 
   @Get('environments/:envId/flags/:flagId/webhooks')
   @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
-  getWebhooks(
-    @Param('envId') envId: string,
-    @Param('flagId') flagId: string,
-  ): Promise<any> {
+  getWebhooks(@Param('envId') envId: string, @Param('flagId') flagId: string) {
     return this.webhookService.listWebhooks(envId, flagId);
   }
 
   @Get('environments/:envId/flags/:flagId/variants')
   @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
-  getVariants(
-    @Param('envId') envId: string,
-    @Param('flagId') flagId: string,
-  ): Promise<any> {
+  getVariants(@Param('envId') envId: string, @Param('flagId') flagId: string) {
     return this.flagService.listVariants(envId, flagId);
   }
 }

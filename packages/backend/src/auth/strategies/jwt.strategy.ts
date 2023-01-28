@@ -14,7 +14,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: any) {
+  async validate(
+    payload: Partial<{ uuid: string; email: string; fullname: string }>,
+  ) {
     const user: UserRetrieveDTO = {
       uuid: payload.uuid,
       email: payload.email,

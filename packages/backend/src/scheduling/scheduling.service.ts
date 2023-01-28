@@ -20,7 +20,7 @@ export class SchedulingService {
     envId: string,
     flagId: string,
     scheduling: SchedulingCreationDTO,
-  ): Promise<any> {
+  ) {
     return this.prisma.schedule.create({
       data: {
         utc: scheduling.utc,
