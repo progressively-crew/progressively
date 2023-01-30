@@ -8,15 +8,23 @@ import { DatabaseModule } from '../database/database.module';
 import { SchedulingService } from '../scheduling/scheduling.service';
 import { WebhooksService } from '../webhooks/webhooks.service';
 import { EligibilityService } from '../eligibility/eligibility.service';
+import { ActivityLogModule } from '../activity-log/activity-log.module';
+import { ActivityLogService } from '../activity-log/activity-log.service';
 
 @Module({
-  imports: [EnvironmentsModule, WebsocketModule, DatabaseModule],
+  imports: [
+    EnvironmentsModule,
+    WebsocketModule,
+    DatabaseModule,
+    ActivityLogModule,
+  ],
   providers: [
     FlagsService,
     StrategyService,
     SchedulingService,
     WebhooksService,
     EligibilityService,
+    ActivityLogService,
   ],
   controllers: [FlagsController],
   exports: [FlagsService],

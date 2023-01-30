@@ -28,14 +28,14 @@ export class StrategyController {
   @Get(':stratId')
   @UseGuards(HasStrategyAccessGuard)
   @UseGuards(JwtAuthGuard)
-  getStrategy(@Param('stratId') stratId: string): Promise<any> {
+  getStrategy(@Param('stratId') stratId: string) {
     return this.strategyService.getStrategy(stratId);
   }
 
   @Delete(':stratId')
   @UseGuards(HasStrategyAccessGuard)
   @UseGuards(JwtAuthGuard)
-  async deleteStrategy(@Param('stratId') stratId: string): Promise<any> {
+  async deleteStrategy(@Param('stratId') stratId: string) {
     const deletedStrategy = await this.strategyService.deleteStrategy(stratId);
     const flagEnv = deletedStrategy.flagEnvironment;
 
@@ -61,7 +61,7 @@ export class StrategyController {
   async updateStrategy(
     @Param('stratId') stratId: string,
     @Body() strategyDto: StrategyUpdateDTO,
-  ): Promise<any> {
+  ) {
     const updatedEligibility = await this.strategyService.updateStrategy(
       stratId,
       strategyDto,

@@ -10,7 +10,7 @@ export class WebhooksController {
   @Delete(':webhookId')
   @UseGuards(HasWebhookAccessGuard)
   @UseGuards(JwtAuthGuard)
-  deleteSchedule(@Param('webhookId') webhookId: string): Promise<any> {
+  deleteSchedule(@Param('webhookId') webhookId: string) {
     return this.webhookService.deleteWebhook(webhookId);
   }
 }

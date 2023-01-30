@@ -29,7 +29,7 @@ export class Rooms {
     socket.__FIELDS = undefined;
   }
 
-  public emit(socket: LocalWebsocket, data: any) {
+  public emit(socket: LocalWebsocket, data: unknown) {
     socket.send(JSON.stringify({ data }));
   }
 

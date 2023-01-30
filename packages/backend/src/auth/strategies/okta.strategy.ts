@@ -19,7 +19,7 @@ export class OktaStrategy extends PassportStrategy(Strategy) {
       const tokenMeta = await this.authService.validateToken(token);
 
       return this.userService.createUserFromProvider(
-        tokenMeta.claims.uid,
+        tokenMeta.claims.uid as string,
         tokenMeta.claims.sub,
         AuthProviders.Okta,
       );

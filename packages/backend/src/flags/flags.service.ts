@@ -384,6 +384,25 @@ export class FlagsService {
     });
   }
 
+  listActivity(envId: string, flagId: string) {
+    return this.prisma.activityLog.findMany({
+      where: {
+        flagEnvironmentEnvironmentId: envId,
+        flagEnvironmentFlagId: flagId,
+      },
+      include: {
+        user: {
+          select: {
+            fullname: true,
+          },
+        },
+      },
+      orderBy: {
+        id: 'desc',
+      },
+    });
+  }
+
   async createVariant(
     envId: string,
     flagId: string,

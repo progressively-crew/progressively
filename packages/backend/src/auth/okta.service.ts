@@ -29,7 +29,7 @@ export class OktaService {
     }
   }
 
-  async validateToken(token: string): Promise<any> {
+  async validateToken(token: string) {
     const config = OktaService.getOktaConfig();
 
     if (!config.isOktaActivated) {

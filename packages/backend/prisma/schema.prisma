@@ -2,25 +2,22 @@
 // If you need enums, use a string and define the enum in a TS file
 // Make the check at the code level, not at the DB level
 
+generator client {
+  provider   = "prisma-client-js"
+  engineType = "binary"
+}
+
 datasource POSTGRES_DATASOURCE {
   provider          = "postgresql"
   url               = env("DATABASE_URL")
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-generator client {
-  provider   = "prisma-client-js"
-  engineType = "binary"
-}
-
 model UserOfProvider {
   uuid     String  @id
   provider String
-  User     User?   @relation(fields: [userUuid], references: [uuid])
   userUuid String?
+  User     User?   @relation(fields: [userUuid], references: [uuid])
 }
 
 model User {
@@ -28,13 +25,13 @@ model User {
   fullname            String
   email               String                @unique
   password            String
-  userProject         UserProject[]
   activationToken     String?
-  authProviders       UserOfProvider[]
-  // the values set in users/status.ts
   status              String
-  RefreshToken        RefreshToken[]
   PasswordResetTokens PasswordResetTokens[]
+  RefreshToken        RefreshToken[]
+  authProviders       UserOfProvider[]
+  userProject         UserProject[]
+  ActivityLog         ActivityLog[]
 }
 
 model Project {
@@ -46,14 +43,11 @@ model Project {
 }
 
 model UserProject {
-  user   User   @relation(fields: [userId], references: [uuid])
-  userId String
-
-  project   Project @relation(fields: [projectId], references: [uuid])
+  userId    String
   projectId String
-
-  // the values set in users/roles.ts
-  role String
+  role      String
+  project   Project @relation(fields: [projectId], references: [uuid])
+  user      User    @relation(fields: [userId], references: [uuid])
 
   @@id([userId, projectId])
 }
@@ -61,26 +55,26 @@ model UserProject {
 model Environment {
   uuid            String            @id @default(uuid())
   name            String
-  project         Project           @relation(fields: [projectId], references: [uuid])
   projectId       String
   clientKey       String            @default(uuid())
+  project         Project           @relation(fields: [projectId], references: [uuid])
   flagEnvironment FlagEnvironment[]
 }
 
 model RefreshToken {
   id      Int      @id @default(autoincrement())
-  user    User     @relation(fields: [userId], references: [uuid])
   userId  String
   expired DateTime
   value   String
+  user    User     @relation(fields: [userId], references: [uuid])
 }
 
 model PasswordResetTokens {
   uuid     String   @id @default(uuid())
   dateEnd  DateTime
   token    String
-  user     User     @relation(fields: [userUuid], references: [uuid])
   userUuid String
+  user     User     @relation(fields: [userUuid], references: [uuid])
 }
 
 model Flag {
@@ -93,22 +87,21 @@ model Flag {
 }
 
 model FlagEnvironment {
-  flag              Flag              @relation(fields: [flagId], references: [uuid])
   flagId            String
-  environment       Environment       @relation(fields: [environmentId], references: [uuid])
   environmentId     String
-  flagHit           FlagHit[]
-  // the values set in flags/flag.status.ts
   status            String?           @default("NOT_ACTIVATED")
-  strategies        RolloutStrategy[]
   rolloutPercentage Int               @default(100)
-
-  scheduling    Schedule[]
-  variants      Variant[]
-  metrics       PMetric[]
-  metricHits    PMetricHit[]
-  webhooks      Webhook[]
-  eligibilities Eligibility[]
+  eligibilities     Eligibility[]
+  environment       Environment       @relation(fields: [environmentId], references: [uuid])
+  flag              Flag              @relation(fields: [flagId], references: [uuid])
+  flagHit           FlagHit[]
+  metrics           PMetric[]
+  metricHits        PMetricHit[]
+  strategies        RolloutStrategy[]
+  scheduling        Schedule[]
+  variants          Variant[]
+  webhooks          Webhook[]
+  ActivityLog       ActivityLog[]
 
   @@id([flagId, environmentId])
 }
@@ -118,84 +111,75 @@ model Webhook {
   endpoint                     String
   secret                       String
   event                        String
-  flagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
   flagEnvironmentFlagId        String?
   flagEnvironmentEnvironmentId String?
+  flagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
 }
 
 model Variant {
-  uuid              String  @id @default(uuid())
-  rolloutPercentage Int     @default(100)
-  isControl         Boolean
-  value             String
-
-  flagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
+  uuid                         String           @id @default(uuid())
+  rolloutPercentage            Int              @default(100)
+  isControl                    Boolean
+  value                        String
   flagEnvironmentFlagId        String?
   flagEnvironmentEnvironmentId String?
   PMetric                      PMetric[]
+  flagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
 }
 
 model PMetric {
   uuid                         String           @id @default(uuid())
   name                         String
-  flagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
   flagEnvironmentFlagId        String?
   flagEnvironmentEnvironmentId String?
-  PMetricHit                   PMetricHit[]
-  variant                      Variant?         @relation(fields: [variantUuid], references: [uuid])
   variantUuid                  String?
+  flagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
+  variant                      Variant?         @relation(fields: [variantUuid], references: [uuid])
+  PMetricHit                   PMetricHit[]
 }
 
 model PMetricHit {
   id                           Int              @id @default(autoincrement())
   date                         DateTime         @default(now())
   data                         String?
-  flagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
   flagEnvironmentFlagId        String?
   flagEnvironmentEnvironmentId String?
-  metric                       PMetric          @relation(fields: [pMetricUuid], references: [uuid])
   pMetricUuid                  String
   visitorId                    String
+  flagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
+  metric                       PMetric          @relation(fields: [pMetricUuid], references: [uuid])
 }
 
 model FlagHit {
   id                           Int             @id @default(autoincrement())
   date                         DateTime        @default(now())
-  flagEnvironment              FlagEnvironment @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
   flagEnvironmentFlagId        String
   flagEnvironmentEnvironmentId String
   valueResolved                String
   visitorId                    String
+  flagEnvironment              FlagEnvironment @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
 }
 
 model RolloutStrategy {
-  uuid String @id @default(uuid())
-
-  fieldName       String
-  fieldComparator String
-  fieldValue      String
-
-  valueToServeType String
-  valueToServe     String
-
-  // Relations
-  flagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
+  uuid                         String           @id @default(uuid())
+  fieldName                    String
+  fieldComparator              String
+  fieldValue                   String
+  valueToServeType             String
+  valueToServe                 String
   flagEnvironmentFlagId        String?
   flagEnvironmentEnvironmentId String?
+  flagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
 }
 
 model Eligibility {
-  uuid String @id @default(uuid())
-
-  // related to strategy type "field"
-  fieldName       String
-  fieldComparator String
-  fieldValue      String
-
-  // Relations
-  flagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
+  uuid                         String           @id @default(uuid())
+  fieldName                    String
+  fieldComparator              String
+  fieldValue                   String
   flagEnvironmentFlagId        String?
   flagEnvironmentEnvironmentId String?
+  flagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
 }
 
 model Schedule {
@@ -204,8 +188,24 @@ model Schedule {
   data                         Json
   utc                          DateTime
   status                       String
-  flagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
   schedulingStatus             String           @default("NOT_RUN")
   flagEnvironmentFlagId        String?
   flagEnvironmentEnvironmentId String?
+  flagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
+}
+
+model ActivityLog {
+  id              Int      @id @default(autoincrement())
+  utc             DateTime @default(now())
+  type            String
+  concernedEntity String
+
+  user     User   @relation(fields: [userUuid], references: [uuid])
+  userUuid String
+
+  flagEnv                      FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
+  flagEnvironmentFlagId        String?
+  flagEnvironmentEnvironmentId String?
+
+  data String?
 }

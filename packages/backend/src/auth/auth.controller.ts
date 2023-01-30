@@ -141,7 +141,7 @@ export class AuthController {
   @Get('/activate/:token')
   async activateUser(
     @Param('token') rawToken: string,
-    @Response() res: any,
+    @Response() res,
   ): Promise<{ success: boolean }> {
     // Mitigate brute force
     await sleep();
@@ -162,7 +162,7 @@ export class AuthController {
     @Req() request: ExpressRequest,
     @Res({ passthrough: true }) res: ExpressResponse,
   ) {
-    const refreshToken: any = request.cookies['refresh-token'];
+    const refreshToken = request.cookies['refresh-token'];
 
     try {
       const { accessToken, nextRefreshToken } =

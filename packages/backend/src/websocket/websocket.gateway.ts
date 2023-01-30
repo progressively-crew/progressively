@@ -45,7 +45,7 @@ export class WebsocketGateway
     this.rooms.leave(socket);
   }
 
-  handleConnection(socket: LocalWebsocket, req: any) {
+  handleConnection(socket: LocalWebsocket, req: { url: string }) {
     // Heart-beating
     socket.isAlive = true;
 

@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { SchedulingType } from '../../src/scheduling/types';
 import { UserRoles } from '../../src/users/roles';
+import { seedActivity } from './seeds/activity';
 import {
   seedFlagHits,
   seedFlagHitsVariants,
@@ -88,6 +89,8 @@ export const seedDb = async () => {
         },
       },
     });
+
+    await seedActivity(flagEnv, prismaClient);
 
     const d = new Date(); // add 10 seconds so that the test don't break because of scheduling updates
     d.setSeconds(d.getSeconds() + 10);

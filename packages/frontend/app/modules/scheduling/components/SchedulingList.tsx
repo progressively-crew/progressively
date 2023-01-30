@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { TbCircle } from "react-icons/tb";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
@@ -6,40 +5,8 @@ import { Card } from "~/components/Card";
 import { Typography } from "~/components/Typography";
 import { FlagStatus } from "~/modules/flags/components/FlagStatus";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
-import {
-  Schedule,
-  SchedulingStatus,
-  SchedulingType,
-  SchedulingUpdateVariantEntry,
-} from "../types";
-
-export const formatDate = (utc: string) => {
-  const options = {
-    year: "numeric",
-    month: "numeric",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    second: "numeric",
-    hour12: false,
-  };
-
-  return new Intl.DateTimeFormat("default", options).format(new Date(utc));
-};
-
-const DateCell = ({ utc }: { utc: string }) => {
-  const [formatted, setFormatted] = useState<string>();
-
-  useEffect(() => {
-    setFormatted(formatDate(utc));
-  }, []);
-
-  if (!formatted) return null;
-
-  return (
-    <p className="font-semibold dark:text-slate-50 text-sm">{formatted}</p>
-  );
-};
+import { FormattedDate } from "~/modules/misc/components/FormattedDate";
+import { Schedule, SchedulingStatus, SchedulingType } from "../types";
 
 export interface SchedulingListProps {
   scheduling: Array<Schedule>;
@@ -83,7 +50,7 @@ export const SchedulingList = ({
                     className="text-emerald-500 mt-1"
                   />
                   <div>
-                    <DateCell utc={schedule.utc} />
+                    <FormattedDate utc={schedule.utc} />
                     <Typography className="text-sm">
                       The schedule has already run
                     </Typography>
@@ -93,7 +60,10 @@ export const SchedulingList = ({
                 <>
                   <TbCircle aria-hidden className="text-gray-300 mt-1" />
                   <div>
-                    <DateCell utc={schedule.utc} />
+                    <p className="font-semibold dark:text-slate-50 text-sm">
+                      <FormattedDate utc={schedule.utc} />
+                    </p>
+
                     <Typography className="text-sm">
                       The schedule has not run yet
                     </Typography>
