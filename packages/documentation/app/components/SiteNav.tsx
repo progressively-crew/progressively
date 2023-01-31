@@ -53,9 +53,6 @@ export const SiteNav = ({ navToggleSlot }: SiteNavProps) => {
             </div>
 
             <ul className="flex flex-row gap-8">
-              {/* <li>
-                <NavLink to="/blog">Blog</NavLink>
-              </li> */}
               <li>
                 <NavLink to="/docs/introduction/why">Documentation</NavLink>
               </li>
