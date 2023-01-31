@@ -86,15 +86,13 @@ export default function App() {
         <link rel="shortcut icon" type="image/jpg" href="/favicon.png" />
       </head>
       <body>
-        <PrismicProvider client={client}>
-          {progressivelyProps ? (
-            <ProgressivelyProvider {...progressivelyProps}>
-              <Outlet />
-            </ProgressivelyProvider>
-          ) : (
+        {progressivelyProps ? (
+          <ProgressivelyProvider {...progressivelyProps}>
             <Outlet />
-          )}
-        </PrismicProvider>
+          </ProgressivelyProvider>
+        ) : (
+          <Outlet />
+        )}
 
         <ScrollRestoration />
         <Scripts />
