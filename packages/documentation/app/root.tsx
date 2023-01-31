@@ -13,8 +13,6 @@ import styles from "./styles/app.css";
 import { ProgressivelyProvider } from "@progressively/react";
 import { getProgressivelyData } from "@progressively/server-side";
 import { progressivelyCookie } from "./cookies";
-import { PrismicProvider } from "@prismicio/react";
-import { client } from "./modules/prismic/client";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
