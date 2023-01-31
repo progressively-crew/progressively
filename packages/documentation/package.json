@@ -2,7 +2,7 @@
   "private": true,
   "sideEffects": false,
   "scripts": {
-    "build": "npm run build:css && remix build",
+    "build": "npm run build:css && remix build && cp middleware.js ./build && ls build",
     "build:css": "tailwindcss -m -i ./styles/app.css -o app/styles/app.css",
     "postinstall": "remix setup node",
     "dev": "concurrently \"npm run dev:css\" \"remix dev\"",

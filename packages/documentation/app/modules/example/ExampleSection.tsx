@@ -1,9 +1,13 @@
 import { useFlags } from "@progressively/react";
+import { useSearchParams } from "@remix-run/react";
 import { Button } from "~/components/Button";
 import { Example } from "~/components/Example";
 
 export const ExampleSection = () => {
-  const { flags, track } = useFlags();
+  const { track } = useFlags();
+  const [searchParams] = useSearchParams();
+
+  const variant = searchParams.get("variant") || "Control";
 
   return (
     <div className="flex flex-col lg:flex-row gap-8 items-center">
@@ -12,7 +16,7 @@ export const ExampleSection = () => {
           Deploy whenever <br /> you want
         </h2>
 
-        {flags.deploySection === "Control" && (
+        {variant === "Control" && (
           <p className="pt-2 md:pt-4 text-gray-600 dark:text-slate-200 text-2xl">
             Experience the evolution of deployments with progressive rollouts,
             using the precision of percentages to pave the way for a smoother
@@ -20,7 +24,7 @@ export const ExampleSection = () => {
           </p>
         )}
 
-        {flags.deploySection === "A" && (
+        {variant === "A" && (
           <p className="pt-2 md:pt-4 text-gray-600 dark:text-slate-200 text-2xl">
             Step into the future of deployments with the flexibility of
             percentage-based progressive rollouts, perfecting your launch one
@@ -28,7 +32,7 @@ export const ExampleSection = () => {
           </p>
         )}
 
-        {flags.deploySection === "B" && (
+        {variant === "B" && (
           <p className="pt-2 md:pt-4 text-gray-600 dark:text-slate-200 text-2xl">
             Revolutionize your deployments with the precision of progressive
             rollouts, using the power of percentages to pave the way for a
@@ -41,7 +45,7 @@ export const ExampleSection = () => {
             variant="secondary"
             to="/demo-instance"
             onClick={() => {
-              track(`Demo instance ${flags.deploySection}`);
+              track(`Demo instance ${variant}`);
             }}
           >
             Demo instance
