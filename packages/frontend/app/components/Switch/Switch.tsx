@@ -21,10 +21,13 @@ export const Switch = ({
 
   return (
     <div className="flex items-center space-x-2">
-      <Label htmlFor={id}>{label}</Label>
+      <Label htmlFor={id} aria-hidden>
+        {label}
+      </Label>
       <RawSwitch
         id={id}
         defaultChecked={checked}
+        aria-label="label"
         type={type}
         form={form}
         onClick={onClick}
