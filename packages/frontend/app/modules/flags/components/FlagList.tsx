@@ -22,17 +22,17 @@ export const FlagList = ({ flags, projectId, envId }: FlagListProps) => {
             avatar={<InitialBox content={flagEnv.flag.name} />}
             link={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}`}
             title={flagEnv.flag.name}
-            description={flagEnv.flag.name}
+            description={flagEnv.flag.description}
             actions={
               <>
+                <ButtonCopy toCopy={flagEnv.flag.key}>
+                  {flagEnv.flag.key}
+                </ButtonCopy>
                 <ToggleFlag
                   isFlagActivated={flagEnv.status === FlagStatus.ACTIVATED}
                   flagId={flagEnv.flagId}
                   onClick={(e) => e.stopPropagation()}
                 />
-                <ButtonCopy toCopy={flagEnv.flag.key}>
-                  {flagEnv.flag.key}
-                </ButtonCopy>
               </>
             }
           />
