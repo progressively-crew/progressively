@@ -8,7 +8,7 @@ export interface HorizontalNavProps {
 export const HorizontalNav = ({ children, label }: HorizontalNavProps) => {
   return (
     <nav aria-label={label} className="w-full dark:bg-slate-800 bg-white">
-      <ul className="overflow-x-scroll flex flex-row gap-4 items-center py-3">
+      <ul className="overflow-x-scroll flex flex-row gap-4 items-center py-3 px-1">
         {children}
       </ul>
     </nav>
@@ -31,9 +31,9 @@ export const NavItem = ({ children, to }: NavItemProps) => {
         end
         className={({ isActive }) =>
           isActive
-            ? "h-8 block flex items-center rounded px-3 bg-indigo-100 text-indigo-700 dark:bg-slate-600 dark:text-slate-50 text-sm " +
+            ? "h-8 block flex items-center rounded px-3 bg-gray-100 text-gray-700 dark:bg-slate-600 dark:text-slate-50 text-sm " +
               focusStyles
-            : "h-8 block flex items-center rounded px-3 hover:bg-gray-100 hover:dark:bg-slate-700 text-gray-500 dark:text-gray-300 text-sm " +
+            : "h-8 block flex items-center rounded px-3 hover:bg-gray-50 hover:dark:bg-slate-700 text-gray-500 dark:text-gray-300 text-sm " +
               focusStyles
         }
       >

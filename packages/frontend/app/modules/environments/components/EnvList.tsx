@@ -18,20 +18,20 @@ const EnvCard = ({ env, projectId }: EnvCardProps) => {
   const linkRef = useRef<HTMLAnchorElement>(null);
 
   return (
-    <Card
-      onClick={() => linkRef.current?.click()}
-      footer={<ButtonCopy toCopy={env.clientKey}>{env.clientKey}</ButtonCopy>}
-    >
+    <Card onClick={() => linkRef.current?.click()}>
       <CardContent>
-        <div className="flex flex-row gap-4 items-center">
-          <InitialBox content={env.name} />
-          <Link
-            ref={linkRef}
-            to={`/dashboard/projects/${projectId}/environments/${env.uuid}`}
-            className="dark:text-slate-100"
-          >
-            {env.name}
-          </Link>
+        <div className="flex flex-row justify-between items-center">
+          <div className="flex flex-row gap-4 items-center">
+            <InitialBox content={env.name} />
+            <Link
+              ref={linkRef}
+              to={`/dashboard/projects/${projectId}/environments/${env.uuid}`}
+              className="dark:text-slate-100"
+            >
+              {env.name}
+            </Link>
+          </div>
+          <ButtonCopy toCopy={env.clientKey}>{env.clientKey}</ButtonCopy>
         </div>
       </CardContent>
     </Card>
@@ -39,7 +39,7 @@ const EnvCard = ({ env, projectId }: EnvCardProps) => {
 };
 export const EnvList = ({ environments, projectId }: EnvListProps) => {
   return (
-    <div className="grid grid-cols-3 gap-8">
+    <div className="flex flex-col gap-4">
       {environments.map((env) => (
         <EnvCard key={env.uuid} env={env} projectId={projectId} />
       ))}

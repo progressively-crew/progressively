@@ -23,7 +23,10 @@ import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { TextInput } from "~/components/Fields/TextInput";
 import { getVariants } from "~/modules/variants/services/getVariants";
-import { SelectField, SelectOption } from "~/components/Fields/SelectField";
+import {
+  SelectField,
+  SelectOption,
+} from "~/components/Fields/Select/SelectField";
 import { Variant } from "~/modules/variants/types";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { BackLink } from "~/components/BackLink";

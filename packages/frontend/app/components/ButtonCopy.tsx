@@ -4,6 +4,7 @@ import { TbClipboardText, TbClipboardCheck } from "react-icons/tb";
 import { KeyboardKeys } from "~/modules/a11y/utils/keyboardKeys";
 import { useHydrated } from "~/modules/misc/hooks/useHydrated";
 import { Button, ButtonProps } from "./Buttons/Button";
+import { Tooltip } from "./Tooltip/Tooltip";
 import { VisuallyHidden } from "./VisuallyHidden";
 
 export interface ButtonCopyProps extends ButtonProps {
@@ -36,6 +37,12 @@ export const ButtonCopy = ({ toCopy, children, ...props }: ButtonCopyProps) => {
     };
   }, [isCopied]);
 
+  const sharedClassName =
+    "rounded h-10 pl-1 pr-4 whitespace-nowrap inline-flex flex-row gap-4 items-center border border-gray-300 text-gray-700 text-gray-700 hover:border-gray-700 transition-all dark:border-slate-500 dark:text-gray-200";
+
+  const sharedIconClassName =
+    "rounded-xs flex items-center justify-center bg-gray-200 dark:bg-slate-700 h-8 w-8";
+
   if (isHydrated) {
     const copyToClipBoardProps = props as HTMLAttributes<HTMLButtonElement>;
 
@@ -53,50 +60,48 @@ export const ButtonCopy = ({ toCopy, children, ...props }: ButtonCopyProps) => {
     };
 
     return (
-      <CopyToClipboard text={toCopy}>
-        <Button
-          size="S"
-          type="button"
-          onClick={handleClick}
-          aria-live="polite"
-          icon={
-            isCopied ? (
-              <TbClipboardCheck aria-hidden />
+      <Tooltip tooltip={<p>Hello world</p>}>
+        <CopyToClipboard text={toCopy}>
+          <button
+            type="button"
+            onClick={handleClick}
+            aria-live="polite"
+            onKeyDown={handleKeyDow}
+            className={sharedClassName}
+            {...copyToClipBoardProps}
+          >
+            <span className={sharedIconClassName}>
+              {isCopied ? (
+                <TbClipboardCheck aria-hidden />
+              ) : (
+                <TbClipboardText aria-hidden />
+              )}
+            </span>
+
+            {isCopied ? (
+              <span>
+                Copied <VisuallyHidden>{toCopy}</VisuallyHidden>
+              </span>
             ) : (
-              <TbClipboardText aria-hidden />
-            )
-          }
-          variant="secondary"
-          onKeyDown={handleKeyDow}
-          {...copyToClipBoardProps}
-        >
-          {isCopied ? (
-            <span>
-              Copied <VisuallyHidden>{toCopy}</VisuallyHidden>
-            </span>
-          ) : (
-            <span>
-              <VisuallyHidden>Copy </VisuallyHidden>
-              {children}
-            </span>
-          )}
-        </Button>
-      </CopyToClipboard>
+              <span>
+                <VisuallyHidden>Copy </VisuallyHidden>
+                {children}
+              </span>
+            )}
+          </button>
+        </CopyToClipboard>
+      </Tooltip>
     );
   }
 
   const spanProps = props as HTMLAttributes<HTMLSpanElement>;
 
   return (
-    <Button
-      size="S"
-      as={"span"}
-      aria-live="polite"
-      icon={<TbClipboardText aria-hidden />}
-      variant="secondary"
-      {...spanProps}
-    >
+    <span aria-live="polite" className={sharedClassName} {...spanProps}>
+      <span className={sharedIconClassName}>
+        <TbClipboardText aria-hidden />
+      </span>
       {children}
-    </Button>
+    </span>
   );
 };

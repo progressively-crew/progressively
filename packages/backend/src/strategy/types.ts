@@ -30,6 +30,7 @@ export class StrategyUpdateDTO {
 export enum StrategyValueToServe {
   Boolean = 'Boolean',
   String = 'String',
+  Variant = 'Variant',
 }
 
 export const StrategySchema = Joi.object({
@@ -40,7 +41,11 @@ export const StrategySchema = Joi.object({
     .required(),
   fieldValue: Joi.string().required(),
   valueToServeType: Joi.string()
-    .valid(StrategyValueToServe.Boolean, StrategyValueToServe.String)
+    .valid(
+      StrategyValueToServe.Boolean,
+      StrategyValueToServe.String,
+      StrategyValueToServe.Variant,
+    )
     .required(),
   valueToServe: Joi.string().required(),
 });
