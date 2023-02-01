@@ -36,7 +36,7 @@ export const EmptyState = ({
       <Spacer size={2} />
 
       <div className="max-w-lg text-center">
-        <Typography className="text-gray-500 dark:text-slate-400">
+        <Typography className="text-gray-500 dark:text-slate-200">
           {description}
         </Typography>
       </div>
