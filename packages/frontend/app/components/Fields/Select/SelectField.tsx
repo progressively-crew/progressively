@@ -35,15 +35,20 @@ export const SelectField = ({
 
   return (
     <Stack spacing={2}>
-      <Label htmlFor={id} className={hiddenLabel ? "sr-only" : undefined}>
+      <Label
+        htmlFor={id}
+        className={hiddenLabel ? "sr-only" : undefined}
+        aria-hidden
+      >
         {label}
       </Label>
+
       <Select
         defaultValue={defaultValue}
         name={name}
         onValueChange={onValueChange}
       >
-        <SelectTrigger id={id}>
+        <SelectTrigger id={id} aria-label={label}>
           <SelectValue placeholder={label} />
         </SelectTrigger>
         <SelectContent>

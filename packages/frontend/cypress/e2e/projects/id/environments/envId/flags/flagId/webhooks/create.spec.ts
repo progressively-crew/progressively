@@ -55,7 +55,8 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/webhooks/
           .should("be.visible")
           .type("https://something.com");
 
-        cy.findByLabelText("Event:").should("be.visible").select("ACTIVATION");
+        cy.findByLabelText("Event:").click();
+        cy.findByLabelText("Flag activation").click();
 
         cy.findByRole("button", { name: "Save the webhook" })
           .should("be.visible")
