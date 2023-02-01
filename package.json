@@ -19,8 +19,5 @@
     "test:e2e:ci": "lerna run test:e2e:ci --stream",
     "deploy:lib": "lerna publish",
     "deploy:images": "./scripts/docker-build-deploy.sh"
-  },
-  "dependencies": {
-    "@radix-ui/react-tooltip": "^1.0.3"
   }
 }

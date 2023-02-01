@@ -1,4 +1,9 @@
-import * as RTooltip from "@radix-ui/react-tooltip";
+import {
+  Tooltip as RawTooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./RawTooltip";
 
 export interface TooltipProps {
   children: React.ReactNode;
@@ -7,18 +12,11 @@ export interface TooltipProps {
 
 export const Tooltip = ({ children, tooltip }: TooltipProps) => {
   return (
-    <RTooltip.Provider>
-      <RTooltip.Root>
-        <RTooltip.Trigger asChild>
-          <button className="IconButton">efefe</button>
-        </RTooltip.Trigger>
-        <RTooltip.Portal>
-          <RTooltip.Content className="TooltipContent" sideOffset={5}>
-            Add to library
-            <RTooltip.Arrow className="TooltipArrow" />
-          </RTooltip.Content>
-        </RTooltip.Portal>
-      </RTooltip.Root>
-    </RTooltip.Provider>
+    <TooltipProvider>
+      <RawTooltip>
+        <TooltipTrigger asChild>{children}</TooltipTrigger>
+        <TooltipContent>{tooltip}</TooltipContent>
+      </RawTooltip>
+    </TooltipProvider>
   );
 };

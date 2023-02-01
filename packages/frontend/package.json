@@ -21,6 +21,7 @@
     "@headlessui/react": "^1.7.8",
     "@okta/okta-auth-js": "^7.2.0",
     "@radix-ui/react-select": "^1.2.0",
+    "@radix-ui/react-tooltip": "^1.0.3",
     "@remix-run/node": "^1.12.0",
     "@remix-run/react": "^1.12.0",
     "@remix-run/serve": "^1.12.0",
@@ -29,7 +30,6 @@
     "camelcase": "6.3.0",
     "nock": "^13.3.0",
     "react": "^18.2.0",
-    "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
     "recharts": "^2.3.2"
@@ -41,7 +41,6 @@
     "@testing-library/react": "^13.4.0",
     "@types/jest": "^29.4.0",
     "@types/react": "^18.0.27",
-    "@types/react-copy-to-clipboard": "^5.0.4",
     "@types/react-dom": "^18.0.10",
     "@typescript-eslint/eslint-plugin": "^5.50.0",
     "@typescript-eslint/parser": "^5.50.0",
