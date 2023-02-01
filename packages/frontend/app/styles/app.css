@@ -1255,6 +1255,11 @@ video {
   background-color: rgb(209 250 229 / var(--tw-bg-opacity));
 }
 
+.bg-red-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(239 68 68 / var(--tw-bg-opacity));
+}
+
 .bg-gradient-to-t {
   background-image: linear-gradient(to top, var(--tw-gradient-stops));
 }
@@ -1710,6 +1715,62 @@ video {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+@keyframes enter {
+  from {
+    opacity: var(--tw-enter-opacity, 1);
+    transform: translate3d(var(--tw-enter-translate-x, 0), var(--tw-enter-translate-y, 0), 0) scale3d(var(--tw-enter-scale, 1), var(--tw-enter-scale, 1), var(--tw-enter-scale, 1)) rotate(var(--tw-enter-rotate, 0));
+  }
+}
+
+@keyframes exit {
+  to {
+    opacity: var(--tw-exit-opacity, 1);
+    transform: translate3d(var(--tw-exit-translate-x, 0), var(--tw-exit-translate-y, 0), 0) scale3d(var(--tw-exit-scale, 1), var(--tw-exit-scale, 1), var(--tw-exit-scale, 1)) rotate(var(--tw-exit-rotate, 0));
+  }
+}
+
+.animate-in {
+  animation-name: enter;
+  animation-duration: 150ms;
+  --tw-enter-opacity: initial;
+  --tw-enter-scale: initial;
+  --tw-enter-rotate: initial;
+  --tw-enter-translate-x: initial;
+  --tw-enter-translate-y: initial;
+}
+
+.fade-in-50 {
+  --tw-enter-opacity: 0.5;
+}
+
+.fade-in-80 {
+  --tw-enter-opacity: 0.8;
+}
+
+.duration-100 {
+  animation-duration: 100ms;
+}
+
+.duration-75 {
+  animation-duration: 75ms;
+}
+
+.duration-200 {
+  animation-duration: 200ms;
+}
+
+.ease-out {
+  animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+}
+
+.ease-in {
+  animation-timing-function: cubic-bezier(0.4, 0, 1, 1);
+}
+
+.ease-in-out {
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 :root {
   --primary: #4f46e5;
 }
@@ -2083,6 +2144,22 @@ input[type="range"]::-moz-range-progress {
 
 .data-\[disabled\]\:opacity-50[data-disabled] {
   opacity: 0.5;
+}
+
+.data-\[side\=bottom\]\:slide-in-from-top-1[data-side=bottom] {
+  --tw-enter-translate-y: -0.25rem;
+}
+
+.data-\[side\=top\]\:slide-in-from-bottom-1[data-side=top] {
+  --tw-enter-translate-y: 0.25rem;
+}
+
+.data-\[side\=left\]\:slide-in-from-right-1[data-side=left] {
+  --tw-enter-translate-x: 0.25rem;
+}
+
+.data-\[side\=right\]\:slide-in-from-left-1[data-side=right] {
+  --tw-enter-translate-x: -0.25rem;
 }
 
 @media (prefers-reduced-motion: no-preference) {

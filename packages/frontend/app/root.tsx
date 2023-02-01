@@ -118,7 +118,7 @@ document.documentElement.classList.remove('dark')
 };
 
 function Layout({ children }: React.PropsWithChildren<unknown>) {
-  return <div>{children}</div>;
+  return <>{children}</>;
 }
 
 export function CatchBoundary() {
