@@ -59,7 +59,7 @@ export const SectionHeader = ({
               <>
                 <Spacer size={1} />
                 {description && (
-                  <div className="text-gray-500 dark:text-slate-400 max-w-2xl">
+                  <div className="text-gray-500 dark:text-slate-400 max-w-2xl font-light">
                     {description}
                   </div>
                 )}
