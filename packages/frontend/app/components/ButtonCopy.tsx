@@ -69,7 +69,13 @@ export const ButtonCopy = forwardRef(
       };
 
       return (
-        <Tooltip tooltip={<p>Hello world</p>}>
+        <Tooltip
+          tooltip={
+            <p>
+              Copy <strong>{toCopy}</strong> to clipboard
+            </p>
+          }
+        >
           <button
             ref={ref}
             type="button"
