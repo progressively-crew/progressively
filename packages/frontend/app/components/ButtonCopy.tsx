@@ -114,10 +114,11 @@ export const ButtonCopy = forwardRef(
 
     return (
       <span aria-live="polite" className={sharedClassName} {...spanProps}>
+        {children}
+
         <span className={sharedIconClassName}>
           <TbClipboardText aria-hidden />
         </span>
-        {children}
       </span>
     );
   }
