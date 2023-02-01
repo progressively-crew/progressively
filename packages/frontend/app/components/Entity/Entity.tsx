@@ -46,7 +46,7 @@ export const Entity = ({
           </div>
 
           {actions && (
-            <div className="flex flex-row gap-4 items-center">{actions}</div>
+            <div className="flex flex-row gap-8 items-center">{actions}</div>
           )}
         </div>
       </CardContent>
