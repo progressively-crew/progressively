@@ -121,13 +121,12 @@ export default function FlagsByEnvPage() {
             </SearchLayout>
 
             <Spacer size={4} />
-            <Card>
-              <FlagList
-                flags={filteredFlags}
-                envId={environment.uuid}
-                projectId={project.uuid}
-              />
-            </Card>
+
+            <FlagList
+              flags={filteredFlags}
+              envId={environment.uuid}
+              projectId={project.uuid}
+            />
           </div>
         ) : (
           <Card>
