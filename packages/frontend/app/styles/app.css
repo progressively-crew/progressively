@@ -920,6 +920,10 @@ video {
           user-select: all;
 }
 
+.scroll-m-20 {
+  scroll-margin: 5rem;
+}
+
 .list-disc {
   list-style-type: disc;
 }
@@ -1490,12 +1494,24 @@ video {
   font-weight: 500;
 }
 
+.font-extrabold {
+  font-weight: 800;
+}
+
+.font-light {
+  font-weight: 300;
+}
+
 .uppercase {
   text-transform: uppercase;
 }
 
 .tracking-wide {
   letter-spacing: 0.025em;
+}
+
+.tracking-tight {
+  letter-spacing: -0.025em;
 }
 
 .text-white {
@@ -2554,5 +2570,10 @@ input[type="range"]::-moz-range-progress {
 
   .lg\:pt-20 {
     padding-top: 5rem;
+  }
+
+  .lg\:text-5xl {
+    font-size: 3rem;
+    line-height: 1;
   }
 }
