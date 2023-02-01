@@ -31,7 +31,9 @@ export const Card = ({
       {children}
 
       {footer && (
-        <div className={`px-6 py-4 ${footerSchemeClassName}`}>{footer}</div>
+        <div className={`rounded-b px-6 py-4 ${footerSchemeClassName}`}>
+          {footer}
+        </div>
       )}
     </div>
   );

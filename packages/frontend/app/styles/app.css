@@ -816,6 +816,10 @@ video {
   min-width: 8rem;
 }
 
+.min-w-\[100px\] {
+  min-width: 100px;
+}
+
 .max-w-lg {
   max-width: 32rem;
 }
@@ -1055,6 +1059,15 @@ video {
 
 .rounded-sm {
   border-radius: 0.125rem;
+}
+
+.rounded-\[0\.185rem\] {
+  border-radius: 0.185rem;
+}
+
+.rounded-b {
+  border-bottom-right-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
 }
 
 .border {
@@ -1631,6 +1644,12 @@ video {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+.shadow-sm {
+  --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
 .outline-none {
   outline: 2px solid transparent;
   outline-offset: 2px;
@@ -2137,8 +2156,24 @@ input[type="range"]::-moz-range-progress {
   pointer-events: none;
 }
 
+.data-\[state\=active\]\:bg-white[data-state=active] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.data-\[state\=active\]\:text-slate-900[data-state=active] {
+  --tw-text-opacity: 1;
+  color: rgb(15 23 42 / var(--tw-text-opacity));
+}
+
 .data-\[disabled\]\:opacity-50[data-disabled] {
   opacity: 0.5;
+}
+
+.data-\[state\=active\]\:shadow-sm[data-state=active] {
+  --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 .data-\[side\=bottom\]\:slide-in-from-top-1[data-side=bottom] {
@@ -2429,6 +2464,16 @@ input[type="range"]::-moz-range-progress {
 
 .dark .group:focus-within .dark\:group-focus-within\:ring-offset-slate-900 {
   --tw-ring-offset-color: #0f172a;
+}
+
+.dark .dark\:data-\[state\=active\]\:bg-slate-900[data-state=active] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(15 23 42 / var(--tw-bg-opacity));
+}
+
+.dark .dark\:data-\[state\=active\]\:text-slate-100[data-state=active] {
+  --tw-text-opacity: 1;
+  color: rgb(241 245 249 / var(--tw-text-opacity));
 }
 
 @media (min-width: 768px) {
