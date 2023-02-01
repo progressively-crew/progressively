@@ -12,7 +12,7 @@ import { WebhookCreationDTO, WebhookEvents } from "~/modules/webhooks/types";
 import { createWebhook } from "~/modules/webhooks/services/createWebhook";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { FormGroup } from "~/components/Fields/FormGroup";
-import { SelectField } from "~/components/Fields/SelectField";
+import { SelectField } from "~/components/Fields/Select/SelectField";
 import { TextInput } from "~/components/Fields/TextInput";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { BackLink } from "~/components/BackLink";

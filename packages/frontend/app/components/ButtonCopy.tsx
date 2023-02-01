@@ -1,102 +1,124 @@
-import React, { HTMLAttributes, useEffect, useRef, useState } from "react";
-import { CopyToClipboard } from "react-copy-to-clipboard";
+/* eslint-disable sonarjs/cognitive-complexity */
+import React, {
+  forwardRef,
+  HTMLAttributes,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { TbClipboardText, TbClipboardCheck } from "react-icons/tb";
 import { KeyboardKeys } from "~/modules/a11y/utils/keyboardKeys";
 import { useHydrated } from "~/modules/misc/hooks/useHydrated";
-import { Button, ButtonProps } from "./Buttons/Button";
+import { Tooltip } from "./Tooltip/Tooltip";
 import { VisuallyHidden } from "./VisuallyHidden";
 
-export interface ButtonCopyProps extends ButtonProps {
+export interface ButtonCopyProps {
   toCopy: string;
   children: React.ReactNode;
 }
 
-export const ButtonCopy = ({ toCopy, children, ...props }: ButtonCopyProps) => {
-  const timerIdRef = useRef<NodeJS.Timeout>();
-  const [isCopied, setIsCopied] = useState(false);
-  const isHydrated = useHydrated();
+export const ButtonCopy = forwardRef(
+  ({ toCopy, children, ...props }: ButtonCopyProps, ref: any) => {
+    const timerIdRef = useRef<NodeJS.Timeout>();
+    const [isCopied, setIsCopied] = useState(false);
+    const isHydrated = useHydrated();
 
-  useEffect(() => {
-    if (isCopied) {
-      if (timerIdRef.current) {
-        clearTimeout(timerIdRef.current);
+    useEffect(() => {
+      if (isCopied) {
+        if (timerIdRef.current) {
+          clearTimeout(timerIdRef.current);
+        }
+
+        timerIdRef.current = setTimeout(() => {
+          setIsCopied(false);
+        }, 3000);
       }
 
-      timerIdRef.current = setTimeout(() => {
-        setIsCopied(false);
-      }, 3000);
+      const timerId = timerIdRef.current;
+
+      return () => {
+        if (timerId) {
+          clearTimeout(timerId);
+        }
+      };
+    }, [isCopied]);
+
+    const sharedClassName =
+      "rounded h-10 pl-1 pr-4 whitespace-nowrap inline-flex flex-row gap-4 items-center border border-gray-300 text-gray-700 text-gray-700 hover:border-gray-700 transition-all dark:border-slate-500 dark:text-gray-200";
+
+    const sharedIconClassName =
+      "rounded-xs flex items-center justify-center bg-gray-200 dark:bg-slate-700 h-8 w-8";
+
+    if (isHydrated) {
+      const copyToClipBoardProps = props as HTMLAttributes<HTMLButtonElement>;
+
+      const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation();
+
+        navigator.clipboard.writeText(toCopy).then(() => {
+          setIsCopied(true);
+        });
+      };
+
+      const handleKeyDow = (e: React.KeyboardEvent) => {
+        // When used inside a Card, we don't want to trigger the link click when
+        // pressing enter
+        if (e.key === KeyboardKeys.ENTER) {
+          e.stopPropagation();
+        }
+      };
+
+      return (
+        <Tooltip
+          tooltip={
+            <p>
+              Copy <strong>{toCopy}</strong> to clipboard
+            </p>
+          }
+        >
+          <button
+            ref={ref}
+            type="button"
+            onClick={handleClick}
+            aria-live="polite"
+            onKeyDown={handleKeyDow}
+            className={sharedClassName}
+            {...copyToClipBoardProps}
+          >
+            <span className={sharedIconClassName}>
+              {isCopied ? (
+                <TbClipboardCheck aria-hidden />
+              ) : (
+                <TbClipboardText aria-hidden />
+              )}
+            </span>
+
+            {isCopied ? (
+              <span>
+                Copied <VisuallyHidden>{toCopy}</VisuallyHidden>
+              </span>
+            ) : (
+              <span>
+                <VisuallyHidden>Copy </VisuallyHidden>
+                {children}
+              </span>
+            )}
+          </button>
+        </Tooltip>
+      );
     }
 
-    const timerId = timerIdRef.current;
-
-    return () => {
-      if (timerId) {
-        clearTimeout(timerId);
-      }
-    };
-  }, [isCopied]);
-
-  if (isHydrated) {
-    const copyToClipBoardProps = props as HTMLAttributes<HTMLButtonElement>;
-
-    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-      e.stopPropagation();
-      setIsCopied(true);
-    };
-
-    const handleKeyDow = (e: React.KeyboardEvent) => {
-      // When used inside a Card, we don't want to trigger the link click when
-      // pressing enter
-      if (e.key === KeyboardKeys.ENTER) {
-        e.stopPropagation();
-      }
-    };
+    const spanProps = props as HTMLAttributes<HTMLSpanElement>;
 
     return (
-      <CopyToClipboard text={toCopy}>
-        <Button
-          size="S"
-          type="button"
-          onClick={handleClick}
-          aria-live="polite"
-          icon={
-            isCopied ? (
-              <TbClipboardCheck aria-hidden />
-            ) : (
-              <TbClipboardText aria-hidden />
-            )
-          }
-          variant="secondary"
-          onKeyDown={handleKeyDow}
-          {...copyToClipBoardProps}
-        >
-          {isCopied ? (
-            <span>
-              Copied <VisuallyHidden>{toCopy}</VisuallyHidden>
-            </span>
-          ) : (
-            <span>
-              <VisuallyHidden>Copy </VisuallyHidden>
-              {children}
-            </span>
-          )}
-        </Button>
-      </CopyToClipboard>
+      <span aria-live="polite" className={sharedClassName} {...spanProps}>
+        <span className={sharedIconClassName}>
+          <TbClipboardText aria-hidden />
+        </span>
+        {children}
+      </span>
     );
   }
+);
 
-  const spanProps = props as HTMLAttributes<HTMLSpanElement>;
-
-  return (
-    <Button
-      size="S"
-      as={"span"}
-      aria-live="polite"
-      icon={<TbClipboardText aria-hidden />}
-      variant="secondary"
-      {...spanProps}
-    >
-      {children}
-    </Button>
-  );
-};
+ButtonCopy.displayName = "ButtonCopy";

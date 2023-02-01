@@ -105,9 +105,8 @@ export const SchedulingList = ({
               )}
             </div>
 
-            <div className="flex justify-end items-center">
+            <div className="flex justify-end">
               <DeleteButton
-                size="S"
                 variant="secondary"
                 to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/scheduling/${schedule.uuid}/delete`}
               >

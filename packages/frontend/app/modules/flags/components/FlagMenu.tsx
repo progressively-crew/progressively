@@ -12,12 +12,11 @@ export interface FlagMenuProps {
 export const FlagMenu = ({ projectId, envId, flagEnv }: FlagMenuProps) => {
   return (
     <HorizontalNav label={`Flag related`}>
-      <li>
+      <li className="border-r border-gray-200 dark:border-slate-700 pr-4">
         <Form method="post" id={`form-${flagEnv.flagId}`}>
           <ToggleFlag
             isFlagActivated={flagEnv.status === FlagStatus.ACTIVATED}
             flagId={flagEnv.flagId}
-            flagName={flagEnv.flag.name}
           />
         </Form>
       </li>

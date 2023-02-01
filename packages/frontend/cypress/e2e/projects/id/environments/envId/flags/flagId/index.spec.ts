@@ -72,9 +72,11 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]", () => {
             cy.findByLabelText("Field name")
               .should("be.visible")
               .and("have.value", "email");
+
             cy.findByLabelText("Field comparator")
               .should("be.visible")
-              .and("have.value", "eq");
+              .and("have.text", "is in array");
+
             cy.get("[name='field-value']").and("have.value", "@gmail.com");
           });
 
@@ -133,7 +135,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]", () => {
               .and("have.value", "id");
             cy.findByLabelText("Field comparator")
               .should("be.visible")
-              .and("have.value", "eq");
+              .and("have.text", "is in array");
             cy.get("[name='field-value']").and("have.value", "1");
           });
 

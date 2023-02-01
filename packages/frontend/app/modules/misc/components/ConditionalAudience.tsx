@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
-import { SelectField } from "~/components/Fields/SelectField";
+import { SelectField } from "~/components/Fields/Select/SelectField";
 import { TagInput } from "~/components/Fields/TagInput";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Typography } from "~/components/Typography";
@@ -66,8 +66,7 @@ const AdditionalFields = ({
         name={"value-to-serve-type"}
         defaultValue={valueToServeType || valueOptions[0].value}
         options={valueOptions}
-        className="w-40"
-        onChange={(e) => setStatus(e.target.value as StrategyValueToServe)}
+        onValueChange={(str) => setStatus(str as StrategyValueToServe)}
       />
 
       {status === StrategyValueToServe.Variant && hasVariants && (
@@ -80,7 +79,6 @@ const AdditionalFields = ({
               ? valueToServe || variants[0].value
               : variants[0].value
           }
-          className="w-40"
           options={variants.map((v) => ({
             label: v.value,
             value: v.value,
@@ -98,7 +96,6 @@ const AdditionalFields = ({
               ? valueToServe
               : ""
           }
-          className="w-40"
           options={[
             { value: "true", label: "True" },
             { value: "false", label: "False" },
@@ -162,7 +159,6 @@ export const ConditionalAudience = ({
             name="field-comparator"
             label="Field comparator"
             defaultValue={fieldComparator}
-            className="w-40"
             options={[
               {
                 value: ComparatorEnum.Equals,
@@ -187,17 +183,15 @@ export const ConditionalAudience = ({
         )}
 
         {!showAdditionalFields && (
-          <div className="py-1">
-            <DeleteButton size="S" variant="secondary" to={removeLink}>
-              Remove
-            </DeleteButton>
-          </div>
+          <DeleteButton variant="secondary" to={removeLink}>
+            Remove
+          </DeleteButton>
         )}
       </div>
 
       {showAdditionalFields && (
-        <div className="pt-4 flex justify-end">
-          <DeleteButton size="S" variant="secondary" to={removeLink}>
+        <div className="pt-4 flex">
+          <DeleteButton variant="secondary" to={removeLink}>
             Remove
           </DeleteButton>
         </div>

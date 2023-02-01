@@ -12,24 +12,24 @@ export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "tertiary";
   scheme?: "default" | "danger";
   icon?: React.ReactNode;
-  size?: "S" | "M";
+  size?: "M";
 }
 
 const classCombination = {
   defaultprimary: "bg-indigo-700 text-white hover:bg-indigo-500",
   defaultsecondary:
-    "border border-indigo-500 text-indigo-700 text-indigo-700 hover:border-indigo-700 transition-all dark:border-indigo-200 dark:text-indigo-200",
+    "bg-transparent border border-slate-200 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-100",
   defaulttertiary:
-    "text-indigo-700 dark:text-indigo-200 hover:bg-gray-50 hover:dark:bg-slate-700",
+    "bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800 dark:text-slate-100 dark:hover:text-slate-100",
 
   dangerprimary: "bg-red-600 text-white hover:bg-red-500",
-  dangersecondary: "bg-red-50 text-red-700 hover:bg-red-100",
+  dangersecondary:
+    "bg-transparent border border-red-200 hover:bg-red-100 dark:border-red-700 dark:text-red-100 text-red-700",
   dangertertiary:
     "text-red-700 dark:text-red-200 hover:dark:bg-slate-800 hover:bg-red-100",
 };
 
 const sizeClasses = {
-  S: "h-6 px-1 text-xs gap-1",
   M: "h-10 px-4 gap-4",
 };
 
@@ -48,7 +48,8 @@ export const Button = ({
   ...props
 }: ButtonProps) => {
   const sharedButtonClass =
-    "block rounded flex items-center whitespace-nowrap transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:focus:ring-offset-slate-900";
+    "whitespace-nowrap inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:hover:bg-slate-800 dark:hover:text-slate-100 disabled:opacity-50 dark:focus:ring-slate-400 disabled:pointer-events-none dark:focus:ring-offset-slate-900";
+
   const actuelScheme = scheme || "default";
   const actualVariant = variant || "primary";
   const combinedClassName = classCombination[actuelScheme + actualVariant];
