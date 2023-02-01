@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { DateTimeInput } from "~/components/Fields/DateTimeInput";
 import { FormGroup } from "~/components/Fields/FormGroup";
-import { Label } from "~/components/Fields/Label";
 import { SliderInput } from "~/components/Fields/SliderInput";
-import { Spacer } from "~/components/Spacer";
-import { Switch } from "~/components/Switch";
+import { Switch } from "~/components/Switch/Switch";
+
 import { FlagEnv, FlagStatus } from "~/modules/flags/types";
 import { SchedulingType } from "~/modules/scheduling/types";
 import { MultiVariantFields } from "./MultiVariantFields";
@@ -48,14 +47,9 @@ export const CreateSchedulingFrom = ({
       />
 
       <div>
-        <Label as="span" id="next-schedule">
-          What should be the next status
-        </Label>
-        <Spacer size={1} />
-
         <Switch
-          aria-labelledby="next-schedule"
           type="button"
+          label="What should be the next status"
           checked={FlagStatus.ACTIVATED === nextStatus}
           onClick={() =>
             setNextStatus((p) =>

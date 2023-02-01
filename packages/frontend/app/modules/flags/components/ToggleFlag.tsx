@@ -1,17 +1,15 @@
-import { Switch } from "~/components/Switch";
+import { Switch } from "~/components/Switch/Switch";
 import { FlagStatus } from "../types";
 
 export interface ToggleFlag {
   isFlagActivated: boolean;
   flagId: string;
-  flagName: string;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export const ToggleFlag = ({
   flagId,
   isFlagActivated,
-  flagName,
   onClick,
 }: ToggleFlag) => {
   const formId = `form-${flagId}`;
@@ -31,8 +29,7 @@ export const ToggleFlag = ({
 
       <Switch
         form={formId}
-        label={`Toggle ${flagName} flag status`}
-        type="submit"
+        label="Flag status"
         checked={isFlagActivated}
         onClick={onClick}
       />

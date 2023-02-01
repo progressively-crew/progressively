@@ -17,7 +17,6 @@ export const FlagMenu = ({ projectId, envId, flagEnv }: FlagMenuProps) => {
           <ToggleFlag
             isFlagActivated={flagEnv.status === FlagStatus.ACTIVATED}
             flagId={flagEnv.flagId}
-            flagName={flagEnv.flag.name}
           />
         </Form>
       </li>
