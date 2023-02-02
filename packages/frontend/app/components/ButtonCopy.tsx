@@ -3,6 +3,7 @@ import React, {
   forwardRef,
   HTMLAttributes,
   useEffect,
+  useId,
   useRef,
   useState,
 } from "react";
@@ -22,6 +23,7 @@ export const ButtonCopy = forwardRef(
     const timerIdRef = useRef<NodeJS.Timeout>();
     const [isCopied, setIsCopied] = useState(false);
     const isHydrated = useHydrated();
+    const id = useId();
 
     useEffect(() => {
       if (isCopied) {
@@ -70,7 +72,7 @@ export const ButtonCopy = forwardRef(
 
       return (
         <span className={sharedClassName}>
-          <span>
+          <span id={id}>
             {isCopied ? (
               <span>
                 Copied <VisuallyHidden>{toCopy}</VisuallyHidden>
@@ -90,6 +92,7 @@ export const ButtonCopy = forwardRef(
             }
           >
             <button
+              aria-labelledby={id}
               ref={ref}
               type="button"
               onClick={handleClick}
