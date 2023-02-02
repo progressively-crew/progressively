@@ -40,7 +40,7 @@ import { createStrategy } from "~/modules/strategies/services/createStrategy";
 import { updateStrategyAction } from "~/modules/strategies/form-actions/updateStrategyAction";
 import { Spinner } from "~/components/Spinner";
 import { MdOutlineTune } from "react-icons/md";
-import { CardEntity, Entity } from "~/components/Entity/Entity";
+import { CardEntity } from "~/components/Entity/Entity";
 import { MenuButton } from "~/components/MenuButton";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {

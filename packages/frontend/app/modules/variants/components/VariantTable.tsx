@@ -5,6 +5,7 @@ import { Variant } from "../types";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
 import { VariantDot } from "~/modules/flags/components/VariantDot";
 import { Entity } from "~/components/Entity/Entity";
+import { MenuButton } from "~/components/MenuButton";
 
 export interface FormSliderInputProps {
   name: string;
@@ -69,14 +70,32 @@ export const VariantTable = ({ variants }: VariantTableProps) => {
                 }
                 avatar={<VariantDot size="L" variant={variant.value} />}
                 actions={
-                  <FormSliderInput
-                    id={`rolloutPercentage-${index}`}
-                    name={`rolloutPercentage`}
-                    label={`Variant ${index + 1} rollout percentage`}
-                    initialPercentage={variant.rolloutPercentage}
-                    bgColor={background}
-                    fgColor={color}
-                  />
+                  <>
+                    <FormSliderInput
+                      id={`rolloutPercentage-${index}`}
+                      name={`rolloutPercentage`}
+                      label={`Variant ${index + 1} rollout percentage`}
+                      initialPercentage={variant.rolloutPercentage}
+                      bgColor={background}
+                      fgColor={color}
+                    />
+                    <MenuButton
+                      variant="action"
+                      items={[
+                        {
+                          label: "Attach metric",
+                          href: `./metrics/create?variant=${variant.uuid}`,
+                          noInitial: true,
+                        },
+                        {
+                          label: "Delete",
+                          href: `./variants/${variant.uuid}/delete`,
+                          noInitial: true,
+                        },
+                      ]}
+                      label={"Action on the variant"}
+                    />
+                  </>
                 }
               />
             </div>
