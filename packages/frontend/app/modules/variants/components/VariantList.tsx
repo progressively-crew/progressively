@@ -48,16 +48,6 @@ export interface VariantListProps {
 export const VariantList = ({ variants, errors }: VariantListProps) => {
   return (
     <div>
-      {variants.map((variant) => (
-        <Form
-          key={`delete-form-variant-${variant.uuid}`}
-          method="post"
-          id={`delete-form-${variant.uuid}`}
-        >
-          <input type="hidden" name="uuid" value={variant.uuid} />
-          <input type="hidden" name="_type" value="delete-variant" />
-        </Form>
-      ))}
       <Form method="post" id="edit-variant">
         <input type="hidden" name="_type" value="edit-variant" />
 
@@ -111,12 +101,7 @@ export const VariantList = ({ variants, errors }: VariantListProps) => {
                     },
                     {
                       label: "Remove",
-                      onClick: () => {
-                        const formEl = document.querySelector(
-                          `#delete-form-${variant.uuid}`
-                        ) as HTMLFormElement | undefined;
-                        formEl?.submit();
-                      },
+                      href: `./${variant.uuid}/delete`,
                       noInitial: true,
                     },
                   ]}

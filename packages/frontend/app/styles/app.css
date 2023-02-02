@@ -1106,10 +1106,6 @@ video {
   border-right-width: 1px;
 }
 
-.border-t {
-  border-top-width: 1px;
-}
-
 .border-dashed {
   border-style: dashed;
 }
@@ -1185,11 +1181,6 @@ video {
 .border-l-orange-600 {
   --tw-border-opacity: 1;
   border-left-color: rgb(234 88 12 / var(--tw-border-opacity));
-}
-
-.border-b-gray-300 {
-  --tw-border-opacity: 1;
-  border-bottom-color: rgb(209 213 219 / var(--tw-border-opacity));
 }
 
 .bg-white {
