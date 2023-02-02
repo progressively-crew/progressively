@@ -37,7 +37,7 @@ export const MenuButton = ({
         ) : (
           <Tooltip tooltip={<p>{label}</p>}>
             <Menu.Button className={menuButtonClass}>
-              <HiOutlineDotsVertical />
+              <HiOutlineDotsVertical aria-label={label} />
             </Menu.Button>
           </Tooltip>
         )}
