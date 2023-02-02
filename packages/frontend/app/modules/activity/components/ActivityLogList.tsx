@@ -16,9 +16,9 @@ const ActivityItem = ({ activity, flagEnv }: ActivityItemProps) => {
 
   return (
     <div
-      className={`border-t border-gray-200 py-4 text-sm text-gray-600 flex flex-row justify-between items-center`}
+      className={`border-t border-gray-200 py-4 text-sm text-gray-600 flex flex-row justify-between`}
     >
-      <div className="flex flex-row items-center">
+      <div className="flex flex-row">
         <div
           className="w-8 h-8 flex items-center justify-center rounded-full mr-4"
           style={{ background }}
@@ -26,8 +26,8 @@ const ActivityItem = ({ activity, flagEnv }: ActivityItemProps) => {
           <ActivityIcon type={activity.type} />
         </div>
 
-        <div className="flex flex-row gap-1 items-center">
-          <ActivityType type={activity.type} />
+        <div className="">
+          <ActivityType type={activity.type} />{" "}
           <ActivityDescription activity={activity} flagEnv={flagEnv} />
         </div>
       </div>

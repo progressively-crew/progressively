@@ -70,7 +70,7 @@ export const ActivityDescription = ({
         flagEnv.variants.find((variant) => variant.uuid === variantId)?.value;
 
       return (
-        <span>
+        <div>
           It will <strong>activate</strong> the flag on the{" "}
           <strong>
             <FormattedDate utc={data.utc} />
@@ -84,7 +84,7 @@ export const ActivityDescription = ({
               </li>
             ))}
           </ul>
-        </span>
+        </div>
       );
     }
 
