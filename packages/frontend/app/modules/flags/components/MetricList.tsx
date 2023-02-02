@@ -35,7 +35,7 @@ export const MetricList = ({
             <Td>
               {metric.variant?.value && (
                 <Link
-                  to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/variants`}
+                  to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}`}
                   className="no-underline"
                 >
                   <span className="flex flex-row gap-3 items-center">
