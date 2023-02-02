@@ -1,6 +1,5 @@
-import { Card } from "~/components/Card";
+import { CardEntity } from "~/components/Entity/Entity";
 import { MenuButton } from "~/components/MenuButton";
-import { Typography } from "~/components/Typography";
 import { Webhook } from "../types";
 import { WebhookEvent } from "./WebhookEvent";
 
@@ -17,31 +16,19 @@ export const WebhooksList = ({
   flagId,
 }: WebhooksListProps) => {
   return (
-    <Card>
+    <div className="flex flex-col gap-4">
       {webhooks.map((webhook) => (
-        <div
-          className="px-6 py-4 grid grid-cols-3 items-center last:border-b-0 border-b border-gray-200 dark:border-slate-700"
+        <CardEntity
           key={webhook.uuid}
-        >
-          <a
-            href={webhook.endpoint}
-            className="font-semibold dark:text-slate-50 text-sm underline"
-          >
-            {webhook.endpoint}
-          </a>
-
-          <Typography className="text-sm">
-            On event <WebhookEvent value={webhook.event} />
-          </Typography>
-
-          <div className="justify-end flex items-center">
+          title={webhook.endpoint}
+          description={
+            <p>
+              On event <WebhookEvent value={webhook.event} />
+            </p>
+          }
+          actions={
             <MenuButton
               items={[
-                {
-                  label: "Remove",
-                  href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/webhooks/${webhook.uuid}/delete`,
-                  noInitial: true,
-                },
                 {
                   label: "Copy secret",
                   onClick: () => {
@@ -49,12 +36,18 @@ export const WebhooksList = ({
                   },
                   noInitial: true,
                 },
+                {
+                  label: "Remove",
+                  href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/webhooks/${webhook.uuid}/delete`,
+                  noInitial: true,
+                },
               ]}
               label={"Actions on webhook"}
+              variant="action"
             />
-          </div>
-        </div>
+          }
+        />
       ))}
-    </Card>
+    </div>
   );
 };
