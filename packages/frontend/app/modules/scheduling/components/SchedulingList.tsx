@@ -1,7 +1,5 @@
 import { AiFillCheckCircle } from "react-icons/ai";
 import { TbCircle } from "react-icons/tb";
-import { DeleteButton } from "~/components/Buttons/DeleteButton";
-import { Card } from "~/components/Card";
 import { CardEntity } from "~/components/Entity/Entity";
 import { MenuButton } from "~/components/MenuButton";
 import { Typography } from "~/components/Typography";
