@@ -1,8 +1,10 @@
 import { Menu, Transition } from "@headlessui/react";
 import { NavLink } from "@remix-run/react";
 import React, { Fragment } from "react";
+import { HiOutlineDotsVertical } from "react-icons/hi";
 import { RxCaretSort } from "react-icons/rx";
 import { InitialBox } from "./InitialBox";
+import { Tooltip } from "./Tooltip/Tooltip";
 
 interface MenuItem {
   label: string;
@@ -14,19 +16,31 @@ interface MenuItem {
 export interface MenuButtonProps {
   items: Array<MenuItem>;
   label: string;
+  variant?: "action" | "switch";
 }
 
-export const MenuButton = ({ items, label }: MenuButtonProps) => {
+export const MenuButton = ({
+  items,
+  label,
+  variant = "switch",
+}: MenuButtonProps) => {
+  const menuButtonClass =
+    "w-6 h-8 flex justify-center items-center hover:bg-gray-100 hover:dark:bg-slate-700 active:dark:bg-slate-600 rounded text-gray-500 dark:text-slate-200 text-xl focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:focus:ring-offset-slate-900";
+
   return (
     <div className="relative">
       <Menu>
-        <Menu.Button
-          className={
-            "w-6 h-8 flex justify-center items-center hover:bg-gray-100 hover:dark:bg-slate-700 active:dark:bg-slate-600 rounded text-gray-500 dark:text-slate-200 text-xl focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
-          }
-        >
-          <RxCaretSort aria-label={label} />
-        </Menu.Button>
+        {variant === "switch" ? (
+          <Menu.Button className={menuButtonClass}>
+            <RxCaretSort aria-label={label} />
+          </Menu.Button>
+        ) : (
+          <Tooltip tooltip={<p>{label}</p>}>
+            <Menu.Button className={menuButtonClass}>
+              <HiOutlineDotsVertical />
+            </Menu.Button>
+          </Tooltip>
+        )}
 
         <Transition
           as={Fragment}

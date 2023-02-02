@@ -41,6 +41,7 @@ import { updateStrategyAction } from "~/modules/strategies/form-actions/updateSt
 import { Spinner } from "~/components/Spinner";
 import { MdOutlineTune } from "react-icons/md";
 import { CardEntity, Entity } from "~/components/Entity/Entity";
+import { MenuButton } from "~/components/MenuButton";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -231,6 +232,19 @@ export default function FlagById() {
             <SectionHeader
               title="Range of eligibility"
               description={`Only people in the percentage range will be eligible to flag evaluation.`}
+              action={
+                <MenuButton
+                  variant="action"
+                  items={[
+                    {
+                      label: "Add a variant",
+                      href: `./variants/create`,
+                      noInitial: true,
+                    },
+                  ]}
+                  label={"Additional actions"}
+                />
+              }
               status={
                 hasPercentageChanged ? (
                   <SuccessBox id="percentage-changed">
