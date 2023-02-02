@@ -114,7 +114,7 @@ export const ActivityDescription = ({
   if (type === "create-variant") {
     return (
       <span className={textStyles}>
-        New variant: <Link to={`../variants`}>{data.value}</Link>
+        New variant: <Link to={`../`}>{data.value}</Link>
       </span>
     );
   }

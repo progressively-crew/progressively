@@ -57,7 +57,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants/
           .and(
             "have.attr",
             "href",
-            "/dashboard/projects/1/environments/1/flags/1/variants"
+            "/dashboard/projects/1/environments/1/flags/1"
           );
 
         cy.checkA11y();
