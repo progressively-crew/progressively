@@ -1,7 +1,7 @@
 import { AiFillCheckCircle } from "react-icons/ai";
 import { TbCircle } from "react-icons/tb";
-import { DeleteButton } from "~/components/Buttons/DeleteButton";
-import { Card } from "~/components/Card";
+import { CardEntity } from "~/components/Entity/Entity";
+import { MenuButton } from "~/components/MenuButton";
 import { Typography } from "~/components/Typography";
 import { FlagStatus } from "~/modules/flags/components/FlagStatus";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
@@ -23,8 +23,8 @@ export const SchedulingList = ({
   const { flagEnv } = useFlagEnv();
 
   return (
-    <Card>
-      {scheduling.map((schedule, index: number) => {
+    <div className="flex flex-col gap-4">
+      {scheduling.map((schedule) => {
         const isMultiVariate =
           schedule.type === SchedulingType.UpdateVariantPercentage;
 
@@ -38,84 +38,79 @@ export const SchedulingList = ({
           : [];
 
         return (
-          <div
-            className="scheduling-row px-6 py-4 grid grid-cols-3 last:border-b-0 border-b border-gray-200 dark:border-slate-700"
-            key={`${schedule.utc}-${schedule.data?.rolloutPercentage}-${index}`}
-          >
-            <div className="flex flex-row gap-2">
-              {schedule.schedulingStatus === SchedulingStatus.HAS_RUN ? (
-                <>
+          <div className="scheduling-row" key={schedule.uuid}>
+            <CardEntity
+              key={schedule.uuid}
+              title={<FormattedDate utc={schedule.utc} />}
+              avatar={
+                schedule.schedulingStatus === SchedulingStatus.HAS_RUN ? (
                   <AiFillCheckCircle
                     aria-hidden
-                    className="text-emerald-500 mt-1"
+                    className="text-emerald-500 h-10 w-10"
                   />
-                  <div>
-                    <FormattedDate utc={schedule.utc} />
+                ) : (
+                  <TbCircle
+                    aria-hidden
+                    className="text-gray-300 text-lg h-10 w-10"
+                  />
+                )
+              }
+              description={
+                <p>
+                  Updating status to <FlagStatus value={schedule.status} />
+                </p>
+              }
+              actions={
+                <MenuButton
+                  items={[
+                    {
+                      label: "Remove",
+                      href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/scheduling/${schedule.uuid}/delete`,
+                      noInitial: true,
+                    },
+                  ]}
+                  label={"Actions on scheduling"}
+                  variant="action"
+                />
+              }
+            >
+              <div>
+                {isMultiVariate ? (
+                  <>
                     <Typography className="text-sm">
-                      The schedule has already run
+                      New variants percentage
                     </Typography>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <TbCircle aria-hidden className="text-gray-300 mt-1" />
-                  <div>
-                    <p className="font-semibold dark:text-slate-50 text-sm">
-                      <FormattedDate utc={schedule.utc} />
-                    </p>
 
-                    <Typography className="text-sm">
-                      The schedule has not run yet
-                    </Typography>
-                  </div>
-                </>
-              )}
-            </div>
-
-            <div>
-              <Typography className="text-sm">
-                Updating status to <FlagStatus value={schedule.status} />
-              </Typography>
-
-              {isMultiVariate ? (
-                <>
-                  <Typography className="text-sm">
-                    Updating variants percentage:{" "}
-                  </Typography>
-                  <ul className="list-disc pl-8">
                     {variantsWithPercentage.map((variant) => (
-                      <li key={`${schedule.uuid}-${variant.variantValue}`}>
-                        <Typography as="span" className="text-sm">
-                          {variant.variantValue} to{" "}
-                          <strong className="text-black dark:text-slate-50">
-                            {variant.nextPercentage}%
-                          </strong>
-                        </Typography>
-                      </li>
+                      <Typography
+                        as="span"
+                        className="text-sm mr-2"
+                        key={`${schedule.uuid}-${variant.variantValue}`}
+                      >
+                        {variant.variantValue} to{" "}
+                        <strong className="text-black dark:text-slate-50">
+                          {variant.nextPercentage}%
+                        </strong>
+                      </Typography>
                     ))}
-                  </ul>
-                </>
-              ) : (
-                <Typography className="text-sm">
-                  Updating rollout percentage to:{" "}
-                  <strong className="text-black dark:text-slate-50">
-                    {schedule.data.rolloutPercentage}%
-                  </strong>
-                </Typography>
-              )}
-            </div>
-
-            <div className="flex justify-end">
-              <DeleteButton
-                variant="secondary"
-                to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/scheduling/${schedule.uuid}/delete`}
-              >
-                Remove
-              </DeleteButton>
-            </div>
+                  </>
+                ) : (
+                  <>
+                    <Typography className="text-sm">
+                      New rollout percentage
+                    </Typography>
+                    <Typography className="text-sm" as="span">
+                      <strong className="text-black dark:text-slate-50">
+                        {schedule.data.rolloutPercentage}%
+                      </strong>
+                    </Typography>
+                  </>
+                )}
+              </div>
+            </CardEntity>
           </div>
         );
       })}
-    </Card>
+    </div>
   );
 };
