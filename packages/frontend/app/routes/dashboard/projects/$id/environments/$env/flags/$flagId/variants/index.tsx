@@ -24,7 +24,6 @@ import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { VariantList } from "~/modules/variants/components/VariantList";
-import { deleteVariantAction } from "~/modules/variants/form-actions/deleteVariantAction";
 import { editVariantAction } from "~/modules/variants/form-actions/editVariantAction";
 import { getVariants } from "~/modules/variants/services/getVariants";
 import { Variant } from "~/modules/variants/types";
@@ -83,10 +82,6 @@ export const action: ActionFunction = async ({
     return editVariantAction(formData, params, authCookie);
   }
 
-  if (type === "delete-variant") {
-    return deleteVariantAction(formData, params, authCookie);
-  }
-
   if (type === "toggle-flag") {
     return toggleFlagAction(formData, params, authCookie);
   }
@@ -102,6 +97,7 @@ export default function VariantsOfFlag() {
   const { variants } = useLoaderData<LoaderData>();
   const [searchParams] = useSearchParams();
   const isVariantAdded = searchParams.get("newVariant") || undefined;
+  const isVariantRemoved = searchParams.get("variantRemoved") || undefined;
 
   const actionData = useActionData<ActionDataType>();
 
@@ -131,6 +127,10 @@ export default function VariantsOfFlag() {
         ) : isVariantAdded ? (
           <SuccessBox id="variant-added">
             The variant has been successfully created.
+          </SuccessBox>
+        ) : isVariantRemoved ? (
+          <SuccessBox id="variant-removed">
+            The variant has been successfully removed.
           </SuccessBox>
         ) : null
       }
