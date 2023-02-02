@@ -1,7 +1,6 @@
 import { Form } from "@remix-run/react";
-import React from "react";
 import { ButtonCopy } from "~/components/ButtonCopy";
-import { Entity } from "~/components/Entity/Entity";
+import { CardEntity } from "~/components/Entity/Entity";
 import { InitialBox } from "~/components/InitialBox";
 import { FlagEnv, FlagStatus } from "../types";
 import { ToggleFlag } from "./ToggleFlag";
@@ -18,7 +17,7 @@ export const FlagList = ({ flags, projectId, envId }: FlagListProps) => {
       {flags.map((flagEnv) => (
         <div key={flagEnv.flagId}>
           <Form method="post" id={`form-${flagEnv.flagId}`} />
-          <Entity
+          <CardEntity
             avatar={<InitialBox content={flagEnv.flag.name} />}
             link={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}`}
             title={flagEnv.flag.name}

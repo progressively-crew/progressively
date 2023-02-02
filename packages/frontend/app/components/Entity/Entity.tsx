@@ -8,9 +8,10 @@ export interface EntityProps {
   description?: React.ReactNode;
   avatar?: React.ReactNode;
   actions?: React.ReactNode;
+  linkRef?: React.RefObject<HTMLAnchorElement>;
 }
 
-export const Entity = ({
+export const CardEntity = ({
   title,
   description,
   avatar,
@@ -20,36 +21,55 @@ export const Entity = ({
   const linkRef = useRef<HTMLAnchorElement>(null);
 
   const handleClick = link ? () => linkRef.current?.click() : undefined;
-
   return (
     <Card onClick={handleClick}>
-      <CardContent>
-        <div className="flex flex-row items-center gap-4 justify-between">
-          <div className="flex flex-row items-center gap-4">
-            {avatar}
-            <div className="space-y-1">
-              <div className="font-medium leading-none">
-                {link ? (
-                  <Link ref={linkRef} to={link}>
-                    {title}
-                  </Link>
-                ) : (
-                  title
-                )}
-              </div>
-              {description && (
-                <div className="text-sm text-slate-500 dark:text-slate-400">
-                  {description}
-                </div>
+      <Entity
+        title={title}
+        description={description}
+        avatar={avatar}
+        link={link}
+        actions={actions}
+        linkRef={linkRef}
+      />
+    </Card>
+  );
+};
+
+export const Entity = ({
+  title,
+  description,
+  avatar,
+  link,
+  actions,
+  linkRef,
+}: EntityProps) => {
+  return (
+    <CardContent>
+      <div className="flex flex-row items-center gap-4 justify-between">
+        <div className="flex flex-row items-center gap-4">
+          {avatar}
+          <div className="space-y-1">
+            <div className="font-medium leading-none">
+              {link ? (
+                <Link ref={linkRef} to={link}>
+                  {title}
+                </Link>
+              ) : (
+                title
               )}
             </div>
+            {description && (
+              <div className="text-sm text-slate-500 dark:text-slate-400">
+                {description}
+              </div>
+            )}
           </div>
-
-          {actions && (
-            <div className="flex flex-row gap-8 items-center">{actions}</div>
-          )}
         </div>
-      </CardContent>
-    </Card>
+
+        {actions && (
+          <div className="flex flex-row gap-8 items-center">{actions}</div>
+        )}
+      </div>
+    </CardContent>
   );
 };

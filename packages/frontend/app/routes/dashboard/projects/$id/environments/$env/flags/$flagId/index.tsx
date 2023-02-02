@@ -40,7 +40,7 @@ import { createStrategy } from "~/modules/strategies/services/createStrategy";
 import { updateStrategyAction } from "~/modules/strategies/form-actions/updateStrategyAction";
 import { Spinner } from "~/components/Spinner";
 import { MdOutlineTune } from "react-icons/md";
-import { Entity } from "~/components/Entity/Entity";
+import { CardEntity, Entity } from "~/components/Entity/Entity";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -249,7 +249,7 @@ export default function FlagById() {
             {!isMultiVariants && (
               <>
                 <Spacer size={4} />
-                <Entity
+                <CardEntity
                   title="Percentage range"
                   actions={
                     <SliderFlag
