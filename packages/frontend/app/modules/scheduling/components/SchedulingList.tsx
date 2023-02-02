@@ -38,75 +38,77 @@ export const SchedulingList = ({
           : [];
 
         return (
-          <CardEntity
-            key={schedule.uuid}
-            title={<FormattedDate utc={schedule.utc} />}
-            avatar={
-              schedule.schedulingStatus === SchedulingStatus.HAS_RUN ? (
-                <AiFillCheckCircle
-                  aria-hidden
-                  className="text-emerald-500 h-10 w-10"
+          <div className="scheduling-row" key={schedule.uuid}>
+            <CardEntity
+              key={schedule.uuid}
+              title={<FormattedDate utc={schedule.utc} />}
+              avatar={
+                schedule.schedulingStatus === SchedulingStatus.HAS_RUN ? (
+                  <AiFillCheckCircle
+                    aria-hidden
+                    className="text-emerald-500 h-10 w-10"
+                  />
+                ) : (
+                  <TbCircle
+                    aria-hidden
+                    className="text-gray-300 text-lg h-10 w-10"
+                  />
+                )
+              }
+              description={
+                <p>
+                  Updating status to <FlagStatus value={schedule.status} />
+                </p>
+              }
+              actions={
+                <MenuButton
+                  items={[
+                    {
+                      label: "Remove",
+                      href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/scheduling/${schedule.uuid}/delete`,
+                      noInitial: true,
+                    },
+                  ]}
+                  label={"Actions on scheduling"}
+                  variant="action"
                 />
-              ) : (
-                <TbCircle
-                  aria-hidden
-                  className="text-gray-300 text-lg h-10 w-10"
-                />
-              )
-            }
-            description={
-              <p>
-                Updating status to <FlagStatus value={schedule.status} />
-              </p>
-            }
-            actions={
-              <MenuButton
-                items={[
-                  {
-                    label: "Remove",
-                    href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/scheduling/${schedule.uuid}/delete`,
-                    noInitial: true,
-                  },
-                ]}
-                label={"Actions on scheduling"}
-                variant="action"
-              />
-            }
-          >
-            <div>
-              {isMultiVariate ? (
-                <>
-                  <Typography className="text-sm">
-                    New variants percentage
-                  </Typography>
+              }
+            >
+              <div>
+                {isMultiVariate ? (
+                  <>
+                    <Typography className="text-sm">
+                      New variants percentage
+                    </Typography>
 
-                  {variantsWithPercentage.map((variant) => (
-                    <Typography
-                      as="span"
-                      className="text-sm mr-2"
-                      key={`${schedule.uuid}-${variant.variantValue}`}
-                    >
-                      {variant.variantValue} to{" "}
+                    {variantsWithPercentage.map((variant) => (
+                      <Typography
+                        as="span"
+                        className="text-sm mr-2"
+                        key={`${schedule.uuid}-${variant.variantValue}`}
+                      >
+                        {variant.variantValue} to{" "}
+                        <strong className="text-black dark:text-slate-50">
+                          {variant.nextPercentage}%
+                        </strong>
+                      </Typography>
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    <Typography className="text-sm">
+                      New rollout percentage
+                    </Typography>
+                    <Typography className="text-sm" as="span">
                       <strong className="text-black dark:text-slate-50">
-                        {variant.nextPercentage}%
+                        {schedule.data.rolloutPercentage}%
                       </strong>
                     </Typography>
-                  ))}
-                </>
-              ) : (
-                <>
-                  <Typography className="text-sm">
-                    New rollout percentage
-                  </Typography>
-                  <Typography className="text-sm" as="span">
-                    <strong className="text-black dark:text-slate-50">
-                      {schedule.data.rolloutPercentage}%
-                    </strong>
-                  </Typography>
-                </>
-              )}
-            </div>
-          </CardEntity>
+                  </>
+                )}
+              </div>
+            </CardEntity>
+          </div>
         );
       })}
     </div>
