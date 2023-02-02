@@ -45,22 +45,20 @@ export const DashboardLayout = ({
         <Container>{subNav}</Container>
       </div>
 
-      <InertWhenNavOpened className="h-full">
-        <div className="px-4 md:px-12 h-full bg-gray-50 dark:bg-slate-900">
-          <div>
-            <div className={`max-w-5xl w-full mx-auto`}>
-              <Spacer size={12} />
+      <InertWhenNavOpened className="flex-1 px-4 md:px-12 h-full bg-gray-50 dark:bg-slate-900">
+        <div>
+          <div className={`max-w-5xl w-full mx-auto`}>
+            <Spacer size={12} />
 
-              <Main>
-                <div className="flex flex-col gap-2 md:gap-6">
-                  {status}
+            <Main>
+              <div className="flex flex-col gap-2 md:gap-6">
+                {status}
 
-                  {children}
-                </div>
-              </Main>
+                {children}
+              </div>
+            </Main>
 
-              <Spacer size={10} />
-            </div>
+            <Spacer size={10} />
           </div>
         </div>
       </InertWhenNavOpened>

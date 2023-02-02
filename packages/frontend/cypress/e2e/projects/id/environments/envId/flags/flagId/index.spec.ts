@@ -49,7 +49,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]", () => {
 
         cy.findAllByText("New homepage").should("have.length", 2);
         cy.findByRole("heading", { name: "Audience" }).should("be.visible");
-        cy.findByRole("heading", { name: "Percentage of the audience" }).should(
+        cy.findByRole("heading", { name: "Range of eligibility" }).should(
           "be.visible"
         );
 
@@ -61,7 +61,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]", () => {
         cy.checkA11y();
       });
 
-      describe("Audience eligibility (form)", () => {
+      describe("Eligibility criteria (form)", () => {
         beforeEach(() => {
           cy.visit("/dashboard/projects/1/environments/1/flags/2");
           cy.injectAxe();

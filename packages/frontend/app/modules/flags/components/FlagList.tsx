@@ -1,9 +1,7 @@
 import { Form } from "@remix-run/react";
-import { useRef } from "react";
 import { ButtonCopy } from "~/components/ButtonCopy";
-import { Link } from "~/components/Link";
-import { RawTable, Td, Th, Tr } from "~/components/RawTable";
-import { Typography } from "~/components/Typography";
+import { CardEntity } from "~/components/Entity/Entity";
+import { InitialBox } from "~/components/InitialBox";
 import { FlagEnv, FlagStatus } from "../types";
 import { ToggleFlag } from "./ToggleFlag";
 
@@ -13,72 +11,32 @@ export interface FlagListProps {
   envId: string;
 }
 
-interface FlagRowProps {
-  flagEnv: FlagEnv;
-  projectId: string;
-  envId: string;
-}
-
-const FlagRow = ({ flagEnv, projectId, envId }: FlagRowProps) => {
-  const linkRef = useRef<HTMLAnchorElement>(null);
-
-  return (
-    <Tr onClick={() => linkRef.current?.click()}>
-      <Td>
-        <Link
-          ref={linkRef}
-          to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}`}
-        >
-          {flagEnv.flag.name}
-        </Link>
-
-        <Typography className="text-sm">{flagEnv.flag.description}</Typography>
-      </Td>
-      <Td>
-        <ToggleFlag
-          isFlagActivated={flagEnv.status === FlagStatus.ACTIVATED}
-          flagId={flagEnv.flagId}
-          onClick={(e) => e.stopPropagation()}
-        />
-      </Td>
-
-      <Td>
-        <ButtonCopy toCopy={flagEnv.flag.key}>{flagEnv.flag.key}</ButtonCopy>
-      </Td>
-    </Tr>
-  );
-};
-
 export const FlagList = ({ flags, projectId, envId }: FlagListProps) => {
   return (
-    <div>
+    <div className="flex flex-col gap-4">
       {flags.map((flagEnv) => (
-        <Form
-          method="post"
-          key={`form-${flagEnv.flagId}`}
-          id={`form-${flagEnv.flagId}`}
-        />
+        <div key={flagEnv.flagId}>
+          <Form method="post" id={`form-${flagEnv.flagId}`} />
+          <CardEntity
+            avatar={<InitialBox content={flagEnv.flag.name} />}
+            link={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}`}
+            title={flagEnv.flag.name}
+            description={flagEnv.flag.description}
+            actions={
+              <>
+                <ButtonCopy toCopy={flagEnv.flag.key}>
+                  {flagEnv.flag.key}
+                </ButtonCopy>
+                <ToggleFlag
+                  isFlagActivated={flagEnv.status === FlagStatus.ACTIVATED}
+                  flagId={flagEnv.flagId}
+                  onClick={(e) => e.stopPropagation()}
+                />
+              </>
+            }
+          />
+        </div>
       ))}
-
-      <RawTable caption="Flags available in the environment">
-        <thead>
-          <Tr>
-            <Th>Name</Th>
-            <Th className="px-14">Status</Th>
-            <Th>Flag key</Th>
-          </Tr>
-        </thead>
-        <tbody>
-          {flags.map((flagEnv) => (
-            <FlagRow
-              flagEnv={flagEnv}
-              projectId={projectId}
-              envId={envId}
-              key={flagEnv.flagId}
-            />
-          ))}
-        </tbody>
-      </RawTable>
     </div>
   );
 };

@@ -4,7 +4,7 @@ import { SliderInput } from "~/components/Fields/SliderInput";
 import { Variant } from "../types";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
 import { VariantDot } from "~/modules/flags/components/VariantDot";
-import { Typography } from "~/components/Typography";
+import { Entity } from "~/components/Entity/Entity";
 
 export interface FormSliderInputProps {
   name: string;
@@ -61,31 +61,24 @@ export const VariantTable = ({ variants }: VariantTableProps) => {
                 <input type="hidden" name="isControl" value={variant.uuid} />
               )}
 
-              <div
-                className={`px-6 py-4 last:border-b-0 border-b border-gray-200 dark:border-slate-700 grid grid-cols-3 gap-6 items-center ${
-                  variant.isControl ? "bg-gray-50 dark:bg-slate-800" : ""
-                }`}
-              >
-                <span className="flex flex-row gap-3 items-center text-gray-700 dark:text-slate-200">
-                  <VariantDot variant={variant.value} />
-                  {variant.value}
-                </span>
-
-                <FormSliderInput
-                  id={`rolloutPercentage-${index}`}
-                  name={`rolloutPercentage`}
-                  label={`Variant ${index + 1} rollout percentage`}
-                  initialPercentage={variant.rolloutPercentage}
-                  bgColor={background}
-                  fgColor={color}
-                />
-
-                {variant.isControl && (
-                  <Typography className="text-xs dark:text-slate-300 text-gray-600">
-                    This is the control variant
-                  </Typography>
-                )}
-              </div>
+              <Entity
+                key={variant.uuid}
+                title={variant.value}
+                description={
+                  variant.isControl ? `This is the control variant` : undefined
+                }
+                avatar={<VariantDot size="L" variant={variant.value} />}
+                actions={
+                  <FormSliderInput
+                    id={`rolloutPercentage-${index}`}
+                    name={`rolloutPercentage`}
+                    label={`Variant ${index + 1} rollout percentage`}
+                    initialPercentage={variant.rolloutPercentage}
+                    bgColor={background}
+                    fgColor={color}
+                  />
+                }
+              />
             </div>
           );
         })}

@@ -3,6 +3,7 @@ import React, {
   forwardRef,
   HTMLAttributes,
   useEffect,
+  useId,
   useRef,
   useState,
 } from "react";
@@ -22,6 +23,7 @@ export const ButtonCopy = forwardRef(
     const timerIdRef = useRef<NodeJS.Timeout>();
     const [isCopied, setIsCopied] = useState(false);
     const isHydrated = useHydrated();
+    const id = useId();
 
     useEffect(() => {
       if (isCopied) {
@@ -44,10 +46,10 @@ export const ButtonCopy = forwardRef(
     }, [isCopied]);
 
     const sharedClassName =
-      "rounded h-10 pl-1 pr-4 whitespace-nowrap inline-flex flex-row gap-4 items-center border border-gray-300 text-gray-700 text-gray-700 hover:border-gray-700 transition-all dark:border-slate-500 dark:text-gray-200";
+      "rounded h-10 pl-4 font-mono text-xs whitespace-nowrap inline-flex flex-row items-center border border-gray-300 text-gray-500 dark:border-slate-500 dark:text-gray-200";
 
     const sharedIconClassName =
-      "rounded-xs flex items-center justify-center bg-gray-200 dark:bg-slate-700 h-8 w-8";
+      "rounded-xs flex items-center justify-center text-lg h-10 w-10";
 
     if (isHydrated) {
       const copyToClipBoardProps = props as HTMLAttributes<HTMLButtonElement>;
@@ -69,30 +71,8 @@ export const ButtonCopy = forwardRef(
       };
 
       return (
-        <Tooltip
-          tooltip={
-            <p>
-              Copy <strong>{toCopy}</strong> to clipboard
-            </p>
-          }
-        >
-          <button
-            ref={ref}
-            type="button"
-            onClick={handleClick}
-            aria-live="polite"
-            onKeyDown={handleKeyDow}
-            className={sharedClassName}
-            {...copyToClipBoardProps}
-          >
-            <span className={sharedIconClassName}>
-              {isCopied ? (
-                <TbClipboardCheck aria-hidden />
-              ) : (
-                <TbClipboardText aria-hidden />
-              )}
-            </span>
-
+        <span className={sharedClassName}>
+          <span id={id}>
             {isCopied ? (
               <span>
                 Copied <VisuallyHidden>{toCopy}</VisuallyHidden>
@@ -103,8 +83,33 @@ export const ButtonCopy = forwardRef(
                 {children}
               </span>
             )}
-          </button>
-        </Tooltip>
+          </span>
+          <Tooltip
+            tooltip={
+              <p>
+                Copy <strong>{toCopy}</strong> to clipboard
+              </p>
+            }
+          >
+            <button
+              aria-labelledby={id}
+              ref={ref}
+              type="button"
+              onClick={handleClick}
+              aria-live="polite"
+              onKeyDown={handleKeyDow}
+              {...copyToClipBoardProps}
+            >
+              <span className={sharedIconClassName}>
+                {isCopied ? (
+                  <TbClipboardCheck aria-hidden />
+                ) : (
+                  <TbClipboardText aria-hidden />
+                )}
+              </span>
+            </button>
+          </Tooltip>
+        </span>
       );
     }
 
@@ -112,10 +117,11 @@ export const ButtonCopy = forwardRef(
 
     return (
       <span aria-live="polite" className={sharedClassName} {...spanProps}>
+        {children}
+
         <span className={sharedIconClassName}>
           <TbClipboardText aria-hidden />
         </span>
-        {children}
       </span>
     );
   }

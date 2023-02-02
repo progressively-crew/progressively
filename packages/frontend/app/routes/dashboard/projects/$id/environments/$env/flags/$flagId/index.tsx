@@ -39,6 +39,8 @@ import { FormAdditionalAudience } from "~/modules/strategies/components/FormAddi
 import { createStrategy } from "~/modules/strategies/services/createStrategy";
 import { updateStrategyAction } from "~/modules/strategies/form-actions/updateStrategyAction";
 import { Spinner } from "~/components/Spinner";
+import { MdOutlineTune } from "react-icons/md";
+import { CardEntity, Entity } from "~/components/Entity/Entity";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -211,16 +213,24 @@ export default function FlagById() {
       <Section id="rollout-target">
         <Card
           footer={
-            isMultiVariants && (
-              <div className="flex items-center flex-row h-full">
-                <SubmitButton form="edit-variant">Adjust</SubmitButton>
-              </div>
-            )
+            <div className="flex items-center flex-row h-full">
+              <SubmitButton
+                form={
+                  isMultiVariants
+                    ? "edit-variant"
+                    : "update-single-variant-percentage"
+                }
+                icon={<MdOutlineTune />}
+              >
+                Adjust
+              </SubmitButton>
+            </div>
           }
         >
           <CardContent>
             <SectionHeader
-              title="Percentage of the audience"
+              title="Range of eligibility"
+              description={`Only people in the percentage range will be eligible to flag evaluation.`}
               status={
                 hasPercentageChanged ? (
                   <SuccessBox id="percentage-changed">
@@ -238,9 +248,15 @@ export default function FlagById() {
 
             {!isMultiVariants && (
               <>
-                <Spacer size={2} />
-                <SliderFlag
-                  initialRolloutPercentage={flagEnv.rolloutPercentage}
+                <Spacer size={4} />
+                <CardEntity
+                  title="Percentage range"
+                  actions={
+                    <SliderFlag
+                      formId="update-single-variant-percentage"
+                      initialRolloutPercentage={flagEnv.rolloutPercentage}
+                    />
+                  }
                 />
               </>
             )}
@@ -267,7 +283,7 @@ export default function FlagById() {
         >
           <CardContent>
             <SectionHeader
-              title="Audience eligibility"
+              title="Eligibility criteria"
               description={
                 "Only people matching at least one of the following rules (and the additional audience) will resolve the flag."
               }
