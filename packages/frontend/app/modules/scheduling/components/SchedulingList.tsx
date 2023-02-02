@@ -45,10 +45,13 @@ export const SchedulingList = ({
               schedule.schedulingStatus === SchedulingStatus.HAS_RUN ? (
                 <AiFillCheckCircle
                   aria-hidden
-                  className="text-emerald-500 mt-1"
+                  className="text-emerald-500 h-10 w-10"
                 />
               ) : (
-                <TbCircle aria-hidden className="text-gray-300 mt-1" />
+                <TbCircle
+                  aria-hidden
+                  className="text-gray-300 text-lg h-10 w-10"
+                />
               )
             }
             description={
