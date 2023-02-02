@@ -632,16 +632,12 @@ video {
   margin-left: 1rem;
 }
 
-.mt-1 {
-  margin-top: 0.25rem;
+.mr-2 {
+  margin-right: 0.5rem;
 }
 
 .-ml-8 {
   margin-left: -2rem;
-}
-
-.mr-2 {
-  margin-right: 0.5rem;
 }
 
 .block {
@@ -956,10 +952,6 @@ video {
 
 .grid-cols-\[auto_auto_auto_1fr_auto\] {
   grid-template-columns: auto auto auto 1fr auto;
-}
-
-.grid-cols-3 {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .grid-cols-4 {
@@ -1956,10 +1948,6 @@ input[type="range"]::-moz-range-progress {
 .last\:rounded-b-md:last-child {
   border-bottom-right-radius: 0.375rem;
   border-bottom-left-radius: 0.375rem;
-}
-
-.last\:border-b-0:last-child {
-  border-bottom-width: 0px;
 }
 
 .last-of-type\:font-bold:last-of-type {

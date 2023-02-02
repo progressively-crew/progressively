@@ -132,7 +132,7 @@ export default function SchedulingCreatePage() {
   const actionData = useActionData<ActionData>();
 
   return (
-    <Form method="post">
+    <Form method="post" className="flex flex-col flex-1">
       <CreateEntityLayout
         status={actionData?.errors && <ErrorBox list={actionData.errors} />}
         titleSlot={<CreateEntityTitle>Create a scheduling</CreateEntityTitle>}

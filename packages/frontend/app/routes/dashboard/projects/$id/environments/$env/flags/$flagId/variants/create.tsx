@@ -61,7 +61,7 @@ export default function CteateVariantPage() {
   const errors = actionData?.errors;
 
   return (
-    <Form method="post">
+    <Form method="post" className="flex flex-col flex-1">
       <CreateEntityLayout
         status={actionData?.errors && <ErrorBox list={actionData.errors} />}
         titleSlot={<CreateEntityTitle>Create a variant</CreateEntityTitle>}

@@ -20,40 +20,42 @@ export const CreateEntityLayout = ({
   backLinkSlot,
 }: CreateEntityLayoutProps) => {
   return (
-    <main className="mx-auto max-w-2xl lg:pt-20" aria-labelledby="page-title">
-      {error}
+    <div className="flex-1 bg-gray-50 dark:bg-slate-900">
+      <main className="mx-auto max-w-2xl lg:pt-20" aria-labelledby="page-title">
+        {error}
 
-      <Spacer size={4} />
+        <Spacer size={4} />
 
-      {status && (
-        <div>
-          {status}
-          <Spacer size={4} />
+        {status && (
+          <div>
+            {status}
+            <Spacer size={4} />
+          </div>
+        )}
+
+        <div className="inline-block motion-safe:animate-fade-enter-bottom motion-safe:opacity-0">
+          {backLinkSlot}
         </div>
-      )}
 
-      <div className="inline-block motion-safe:animate-fade-enter-bottom motion-safe:opacity-0">
-        {backLinkSlot}
-      </div>
+        <Spacer size={2} />
 
-      <Spacer size={2} />
+        <div
+          className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"
+          style={{
+            animationDelay: "300ms",
+          }}
+        >
+          <Card footer={submitSlot}>
+            <CardContent>
+              {titleSlot}
+              <Spacer size={8} />
+              {children}
+            </CardContent>
+          </Card>
+        </div>
 
-      <div
-        className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"
-        style={{
-          animationDelay: "300ms",
-        }}
-      >
-        <Card footer={submitSlot}>
-          <CardContent>
-            {titleSlot}
-            <Spacer size={8} />
-            {children}
-          </CardContent>
-        </Card>
-      </div>
-
-      <Spacer size={6} />
-    </main>
+        <Spacer size={6} />
+      </main>
+    </div>
   );
 };

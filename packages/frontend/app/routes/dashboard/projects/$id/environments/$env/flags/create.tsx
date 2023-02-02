@@ -82,7 +82,7 @@ export default function CreateFlagPage() {
   const camelValue = camelcase(value);
 
   return (
-    <Form method="post">
+    <Form method="post" className="flex flex-col flex-1">
       <CreateEntityLayout
         status={
           (errors?.name || errors?.description) && <ErrorBox list={errors} />
