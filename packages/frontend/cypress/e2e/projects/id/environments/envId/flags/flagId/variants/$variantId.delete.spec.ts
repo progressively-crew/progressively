@@ -82,7 +82,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants/
 
         cy.url().should(
           "contain",
-          "/dashboard/projects/1/environments/1/flags/1/variants/?variantRemoved=true#variant-removed"
+          "/dashboard/projects/1/environments/1/flags/1/?variantRemoved=true#variant-removed"
         );
 
         cy.get(".success-box")

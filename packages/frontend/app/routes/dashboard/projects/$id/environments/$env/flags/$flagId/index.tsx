@@ -194,6 +194,7 @@ export default function FlagById() {
   const isMultiVariants = flagEnv.variants.length > 0;
 
   const isStrategyRemoved = searchParams.get("stratRemoved") || undefined;
+  const isVariantRemoved = searchParams.get("variantRemoved") || undefined;
 
   const isEligibilityRemoved =
     searchParams.get("eligibilityRemoved") || undefined;
@@ -256,6 +257,10 @@ export default function FlagById() {
                   </SuccessBox>
                 ) : hasErrors ? (
                   <ErrorBox list={actionData?.errors || {}} />
+                ) : isVariantRemoved ? (
+                  <SuccessBox id="variant-removed">
+                    The variant has been successfully removed.
+                  </SuccessBox>
                 ) : null
               }
             />
