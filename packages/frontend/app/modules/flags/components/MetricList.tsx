@@ -1,6 +1,5 @@
-import { DeleteButton } from "~/components/Buttons/DeleteButton";
-import { Link } from "~/components/Link";
-import { RawTable, Td, Th, Tr } from "~/components/RawTable";
+import { CardEntity } from "~/components/Entity/Entity";
+import { MenuButton } from "~/components/MenuButton";
 import { Metric } from "../types";
 import { VariantDot } from "./VariantDot";
 
@@ -17,48 +16,38 @@ export const MetricList = ({
   flagId,
 }: MetricListProps) => {
   return (
-    <RawTable caption="Metrics list">
-      <thead>
-        <Tr>
-          <Th>Name</Th>
-          <Th>Attached variant (optional)</Th>
-          <Th>Actions</Th>
-        </Tr>
-      </thead>
-      <tbody>
-        {metrics.map((metric) => (
-          <Tr key={metric.uuid}>
-            <Td>
-              <div>{metric.name}</div>
-            </Td>
-
-            <Td>
-              {metric.variant?.value && (
-                <Link
-                  to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}`}
-                  className="no-underline"
-                >
-                  <span className="flex flex-row gap-3 items-center">
-                    <VariantDot variant={metric.variant.value} />
-                    {metric.variant.value}
-                  </span>
-                </Link>
-              )}
-            </Td>
-
-            <Td>
-              <div className="inline-block">
-                <DeleteButton
-                  variant="secondary"
-                  to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/metrics/${metric.uuid}/delete`}
-                >
-                  Remove
-                </DeleteButton>
+    <div className="flex flex-col gap-4">
+      {metrics.map((metric) => (
+        <CardEntity
+          key={metric.uuid}
+          title={metric.name}
+          description={
+            metric.variant ? (
+              <div className="flex flex-row gap-2 items-center">
+                <VariantDot variant={metric.variant.value} />
+                <p>
+                  Attached to variant <strong>{metric.variant.value}</strong>
+                </p>
               </div>
-            </Td>
-          </Tr>
-        ))}
-      </tbody>
-    </RawTable>
+            ) : (
+              "No variant attached"
+            )
+          }
+          actions={
+            <MenuButton
+              items={[
+                {
+                  label: "Remove",
+                  href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/metrics/${metric.uuid}/delete`,
+                  noInitial: true,
+                },
+              ]}
+              label={"Actions on webhook"}
+              variant="action"
+            />
+          }
+        />
+      ))}
+    </div>
   );
 };
