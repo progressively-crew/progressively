@@ -1,3 +1,4 @@
+import { Card } from "~/components/Card";
 import { Entity } from "~/components/Entity/Entity";
 import { InitialBox } from "~/components/InitialBox";
 import { Tag } from "~/components/Tag";
@@ -12,17 +13,18 @@ export const ProjectList = ({ projects }: ProjectListProps) => {
   return (
     <div className="flex flex-col gap-4">
       {projects.map((userProject) => (
-        <Entity
-          key={userProject.projectId}
-          avatar={<InitialBox content={userProject.project.name} />}
-          title={userProject.project.name}
-          description={
-            <Typography>
-              Role in the project: <Tag size="S">{userProject.role}</Tag>
-            </Typography>
-          }
-          link={`/dashboard/projects/${userProject.projectId}`}
-        />
+        <Card key={userProject.projectId}>
+          <Entity
+            avatar={<InitialBox content={userProject.project.name} />}
+            title={userProject.project.name}
+            description={
+              <Typography>
+                Role in the project: <Tag size="S">{userProject.role}</Tag>
+              </Typography>
+            }
+            link={`/dashboard/projects/${userProject.projectId}`}
+          />
+        </Card>
       ))}
     </div>
   );

@@ -39,6 +39,7 @@ import { FormAdditionalAudience } from "~/modules/strategies/components/FormAddi
 import { createStrategy } from "~/modules/strategies/services/createStrategy";
 import { updateStrategyAction } from "~/modules/strategies/form-actions/updateStrategyAction";
 import { Spinner } from "~/components/Spinner";
+import { MdOutlineTune } from "react-icons/md";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -213,14 +214,17 @@ export default function FlagById() {
           footer={
             isMultiVariants && (
               <div className="flex items-center flex-row h-full">
-                <SubmitButton form="edit-variant">Adjust</SubmitButton>
+                <SubmitButton form="edit-variant" icon={<MdOutlineTune />}>
+                  Adjust
+                </SubmitButton>
               </div>
             )
           }
         >
           <CardContent>
             <SectionHeader
-              title="Percentage of the audience"
+              title="Range of eligibility"
+              description={`Only people in the percentage range will be eligible to flag evaluation.`}
               status={
                 hasPercentageChanged ? (
                   <SuccessBox id="percentage-changed">
@@ -267,7 +271,7 @@ export default function FlagById() {
         >
           <CardContent>
             <SectionHeader
-              title="Audience eligibility"
+              title="Eligibility criteria"
               description={
                 "Only people matching at least one of the following rules (and the additional audience) will resolve the flag."
               }
