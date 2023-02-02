@@ -40,7 +40,8 @@ import { createStrategy } from "~/modules/strategies/services/createStrategy";
 import { updateStrategyAction } from "~/modules/strategies/form-actions/updateStrategyAction";
 import { Spinner } from "~/components/Spinner";
 import { MdOutlineTune } from "react-icons/md";
-import { CardEntity, Entity } from "~/components/Entity/Entity";
+import { CardEntity } from "~/components/Entity/Entity";
+import { MenuButton } from "~/components/MenuButton";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -193,6 +194,8 @@ export default function FlagById() {
   const isMultiVariants = flagEnv.variants.length > 0;
 
   const isStrategyRemoved = searchParams.get("stratRemoved") || undefined;
+  const isVariantCreated = searchParams.get("newVariant") || undefined;
+  const isVariantRemoved = searchParams.get("variantRemoved") || undefined;
 
   const isEligibilityRemoved =
     searchParams.get("eligibilityRemoved") || undefined;
@@ -231,6 +234,19 @@ export default function FlagById() {
             <SectionHeader
               title="Range of eligibility"
               description={`Only people in the percentage range will be eligible to flag evaluation.`}
+              action={
+                <MenuButton
+                  variant="action"
+                  items={[
+                    {
+                      label: "Add a variant",
+                      href: `./variants/create`,
+                      noInitial: true,
+                    },
+                  ]}
+                  label={"Additional actions"}
+                />
+              }
               status={
                 hasPercentageChanged ? (
                   <SuccessBox id="percentage-changed">
@@ -242,6 +258,14 @@ export default function FlagById() {
                   </SuccessBox>
                 ) : hasErrors ? (
                   <ErrorBox list={actionData?.errors || {}} />
+                ) : isVariantRemoved ? (
+                  <SuccessBox id="variant-removed">
+                    The variant has been successfully removed.
+                  </SuccessBox>
+                ) : isVariantCreated ? (
+                  <SuccessBox id="variant-added">
+                    The variant has been successfully created.
+                  </SuccessBox>
                 ) : null
               }
             />

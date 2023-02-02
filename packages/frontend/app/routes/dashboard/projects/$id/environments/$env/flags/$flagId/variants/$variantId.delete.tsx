@@ -54,7 +54,7 @@ export const action: ActionFunction = async ({
   }
 
   return redirect(
-    `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/variants/?variantRemoved=true#variant-removed`
+    `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/?variantRemoved=true#variant-removed`
   );
 };
 

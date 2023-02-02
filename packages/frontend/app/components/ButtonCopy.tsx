@@ -7,7 +7,8 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { TbClipboardText, TbClipboardCheck } from "react-icons/tb";
+import { BsCheck } from "react-icons/bs";
+import { MdContentCopy } from "react-icons/md";
 import { KeyboardKeys } from "~/modules/a11y/utils/keyboardKeys";
 import { useHydrated } from "~/modules/misc/hooks/useHydrated";
 import { Tooltip } from "./Tooltip/Tooltip";
@@ -102,9 +103,9 @@ export const ButtonCopy = forwardRef(
             >
               <span className={sharedIconClassName}>
                 {isCopied ? (
-                  <TbClipboardCheck aria-hidden />
+                  <BsCheck aria-hidden />
                 ) : (
-                  <TbClipboardText aria-hidden />
+                  <MdContentCopy aria-hidden />
                 )}
               </span>
             </button>
@@ -120,7 +121,7 @@ export const ButtonCopy = forwardRef(
         {children}
 
         <span className={sharedIconClassName}>
-          <TbClipboardText aria-hidden />
+          <MdContentCopy aria-hidden />
         </span>
       </span>
     );
