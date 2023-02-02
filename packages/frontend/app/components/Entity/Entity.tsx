@@ -3,12 +3,13 @@ import { Link } from "../Link";
 import { Card, CardContent } from "../Card";
 
 export interface EntityProps {
-  title: string;
+  title: React.ReactNode;
   link?: string;
   description?: React.ReactNode;
   avatar?: React.ReactNode;
   actions?: React.ReactNode;
   linkRef?: React.RefObject<HTMLAnchorElement>;
+  children?: React.ReactNode;
 }
 
 export const CardEntity = ({
@@ -17,6 +18,7 @@ export const CardEntity = ({
   avatar,
   link,
   actions,
+  children,
 }: EntityProps) => {
   const linkRef = useRef<HTMLAnchorElement>(null);
 
@@ -30,7 +32,9 @@ export const CardEntity = ({
         link={link}
         actions={actions}
         linkRef={linkRef}
-      />
+      >
+        {children}
+      </Entity>
     </Card>
   );
 };
@@ -42,6 +46,7 @@ export const Entity = ({
   link,
   actions,
   linkRef,
+  children,
 }: EntityProps) => {
   return (
     <CardContent>
@@ -65,6 +70,8 @@ export const Entity = ({
             )}
           </div>
         </div>
+
+        {children}
 
         {actions && (
           <div className="flex flex-row gap-8 items-center">{actions}</div>

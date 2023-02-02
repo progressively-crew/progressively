@@ -640,6 +640,10 @@ video {
   margin-left: -2rem;
 }
 
+.mr-2 {
+  margin-right: 0.5rem;
+}
+
 .block {
   display: block;
 }
