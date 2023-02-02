@@ -1,6 +1,3 @@
-import { Avatar } from "~/components/Avatar";
-import { Card, CardContent } from "~/components/Card";
-import { Spacer } from "~/components/Spacer";
 import { FlagEnv } from "~/modules/flags/types";
 import { FormattedDate } from "~/modules/misc/components/FormattedDate";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
@@ -15,48 +12,29 @@ interface ActivityItemProps {
 }
 
 const ActivityItem = ({ activity, flagEnv }: ActivityItemProps) => {
-  const iconBackground = stringToColor(activity.type, 90);
+  const background = stringToColor(activity.type, 90);
 
   return (
-    <div className={`grid grid-cols-[160px_auto_1fr] items-center group`}>
-      <div
-        className="text-xs flex items-center text-gray-600 rounded-full px-4 py-2 -mr-8 font-semibold"
-        style={{ background: iconBackground }}
-      >
-        <FormattedDate utc={activity.utc} />
-      </div>
-
-      <div
-        className="relative h-full flex items-center justify-center"
-        aria-hidden
-      >
-        <div className="w-[2px] h-1/2 bg-gray-100 group-first:bg-transparent absolute top-0 left-1/2 -translate-x-[1px]" />
-        <div className="w-[2px] h-1/2 bg-gray-100 group-last:bg-transparent absolute bottom-0 left-1/2 -translate-x-[1px]" />
+    <div
+      className={`border-t border-gray-200 py-4 text-sm text-gray-600 flex flex-row justify-between items-center`}
+    >
+      <div className="flex flex-row items-center">
         <div
-          className={`w-8 h-8 border-2 border-white dark:border-slate-800 rounded-full bg-gray-200 relative z-2 flex items-center justify-center text-gray-600`}
-          style={{ background: iconBackground }}
+          className="w-8 h-8 flex items-center justify-center rounded-full mr-4"
+          style={{ background }}
         >
           <ActivityIcon type={activity.type} />
         </div>
+
+        <div className="flex flex-row gap-1 items-center">
+          <ActivityType type={activity.type} />
+          <ActivityDescription activity={activity} flagEnv={flagEnv} />
+        </div>
       </div>
 
-      <div className="flex-1 py-2 ml-4">
-        <Card>
-          <div className={`p-6 ${activity.data ? "pb-4" : ""}`}>
-            <h2 className="font-bold dark:text-slate-100">
-              <ActivityType type={activity.type} />
-            </h2>
-            <div className="flex flex-row gap-1 text-xs text-gray-600 items-center dark:text-slate-300">
-              By <strong>{activity.user.fullname}</strong>
-            </div>
-          </div>
-          {activity.data && (
-            <div className="bg-gray-50 dark:bg-slate-700 p-6 pt-4">
-              <ActivityDescription activity={activity} flagEnv={flagEnv} />
-            </div>
-          )}
-        </Card>
-      </div>
+      <span className="text-xs text-gray-500">
+        <FormattedDate utc={activity.utc} />
+      </span>
     </div>
   );
 };

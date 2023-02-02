@@ -16,25 +16,20 @@ export const ActivityDescription = ({
   activity,
   flagEnv,
 }: ActivityDescriptionProps) => {
-  const textStyles = "text-sm text-gray-800 dark:text-slate-300";
   const { data, type, id } = activity;
 
   if (type === "change-flag-status") {
-    return (
-      <div className={textStyles}>
-        New status is <FlagStatus value={data.status} />
-      </div>
-    );
+    return <FlagStatus value={data.status} />;
   }
 
   if (type === "change-flag-percentage") {
     return (
-      <div className={textStyles}>
+      <span>
         Percentage updated to{" "}
         <Tag variant="SUCCESS" size="S">
           {data}%
         </Tag>
-      </div>
+      </span>
     );
   }
 
@@ -48,7 +43,7 @@ export const ActivityDescription = ({
 
   if (type === "create-webhook") {
     return (
-      <span className={textStyles}>
+      <span>
         Post on{" "}
         <Link href={data.endpoint} target="_blank" rel="noopener noreferrer">
           {data.endpoint}
@@ -61,7 +56,7 @@ export const ActivityDescription = ({
   if (type === "create-scheduling") {
     if (data.status === FlagStatusType.NOT_ACTIVATED) {
       return (
-        <span className={textStyles}>
+        <span>
           It will <strong>deactivate</strong> the flag on the{" "}
           <strong>
             <FormattedDate utc={data.utc} />
@@ -73,8 +68,9 @@ export const ActivityDescription = ({
     if (data.type === SchedulingType.UpdateVariantPercentage) {
       const getVariantValue = (variantId: string) =>
         flagEnv.variants.find((variant) => variant.uuid === variantId)?.value;
+
       return (
-        <span className={textStyles}>
+        <span>
           It will <strong>activate</strong> the flag on the{" "}
           <strong>
             <FormattedDate utc={data.utc} />
@@ -93,7 +89,7 @@ export const ActivityDescription = ({
     }
 
     return (
-      <span className={textStyles}>
+      <span>
         It will <strong>activate</strong> the flag and target{" "}
         <strong>{data.data.rolloutPercentage}%</strong> of the audience on the{" "}
         <strong>
@@ -105,7 +101,7 @@ export const ActivityDescription = ({
 
   if (type === "create-metric") {
     return (
-      <span className={textStyles}>
+      <span>
         New metric: <Link to={`../metrics`}>{data.name}</Link>
       </span>
     );
@@ -113,15 +109,11 @@ export const ActivityDescription = ({
 
   if (type === "create-variant") {
     return (
-      <span className={textStyles}>
+      <span>
         New variant: <Link to={`../`}>{data.value}</Link>
       </span>
     );
   }
 
-  return (
-    <span className={textStyles}>
-      Woops, the type {type} is not supported yet.
-    </span>
-  );
+  return <span>Woops, the type {type} is not supported yet.</span>;
 };
