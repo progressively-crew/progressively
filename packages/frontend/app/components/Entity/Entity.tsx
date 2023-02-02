@@ -49,7 +49,7 @@ export const Entity = ({
         <div className="flex flex-row items-center gap-4">
           {avatar}
           <div className="space-y-1">
-            <div className="font-medium leading-none">
+            <div className="font-medium leading-none dark:text-slate-200">
               {link ? (
                 <Link ref={linkRef} to={link}>
                   {title}
