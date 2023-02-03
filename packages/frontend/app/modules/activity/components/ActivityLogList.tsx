@@ -4,7 +4,6 @@ import { stringToColor } from "~/modules/misc/utils/stringToColor";
 import { Activity } from "../types";
 import { ActivityDescription } from "./ActivityDescription";
 import { ActivityIcon } from "./ActivityIcon";
-import { ActivityType } from "./ActivityType";
 
 interface ActivityItemProps {
   activity: Activity;
@@ -26,15 +25,17 @@ const ActivityItem = ({ activity, flagEnv }: ActivityItemProps) => {
           <ActivityIcon type={activity.type} />
         </div>
 
-        <div className="">
-          <ActivityType type={activity.type} />{" "}
+        <div className="py-1">
           <ActivityDescription activity={activity} flagEnv={flagEnv} />
         </div>
       </div>
 
-      <span className="text-xs text-gray-500">
-        <FormattedDate utc={activity.utc} />
-      </span>
+      <div className="flex flex-row gap-4 py-1">
+        <span>By {activity.user.fullname}</span>
+        <div className="text-xs text-gray-500 w-32">
+          <FormattedDate utc={activity.utc} />
+        </div>
+      </div>
     </div>
   );
 };
