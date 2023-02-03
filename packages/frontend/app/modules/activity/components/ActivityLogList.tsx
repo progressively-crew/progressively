@@ -30,7 +30,7 @@ const ActivityItem = ({ activity, flagEnv }: ActivityItemProps) => {
         </div>
       </div>
 
-      <div className="flex flex-row gap-4 py-1">
+      <div className="flex flex-row gap-4 py-1 shrink-0">
         <span>By {activity.user.fullname}</span>
         <div className="text-xs text-gray-500 w-32">
           <FormattedDate utc={activity.utc} />
