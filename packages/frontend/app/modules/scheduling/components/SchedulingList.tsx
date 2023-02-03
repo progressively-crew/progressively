@@ -1,6 +1,7 @@
 import { AiFillCheckCircle } from "react-icons/ai";
 import { TbCircle } from "react-icons/tb";
 import { CardEntity } from "~/components/Entity/Entity";
+import { EntityField } from "~/components/Entity/EntityField";
 import { MenuButton } from "~/components/MenuButton";
 import { Typography } from "~/components/Typography";
 import { FlagStatus } from "~/modules/flags/components/FlagStatus";
@@ -76,35 +77,33 @@ export const SchedulingList = ({
             >
               <div>
                 {isMultiVariate ? (
-                  <>
-                    <Typography className="text-sm">
-                      New variants percentage
-                    </Typography>
-
-                    {variantsWithPercentage.map((variant) => (
-                      <Typography
-                        as="span"
-                        className="text-sm mr-2"
-                        key={`${schedule.uuid}-${variant.variantValue}`}
-                      >
-                        {variant.variantValue} to{" "}
-                        <strong className="text-black dark:text-slate-50">
-                          {variant.nextPercentage}%
-                        </strong>
-                      </Typography>
-                    ))}
-                  </>
+                  <EntityField
+                    name=" New variants percentage"
+                    value={
+                      <>
+                        {variantsWithPercentage.map((variant) => (
+                          <span
+                            key={`${schedule.uuid}-${variant.variantValue}`}
+                            className="mr-1"
+                          >
+                            {variant.variantValue} to{" "}
+                            <strong className="text-black dark:text-slate-50">
+                              {variant.nextPercentage}%
+                            </strong>
+                          </span>
+                        ))}
+                      </>
+                    }
+                  />
                 ) : (
-                  <>
-                    <Typography className="text-sm">
-                      New rollout percentage
-                    </Typography>
-                    <Typography className="text-sm" as="span">
+                  <EntityField
+                    name=" New rollout percentage"
+                    value={
                       <strong className="text-black dark:text-slate-50">
                         {schedule.data.rolloutPercentage}%
                       </strong>
-                    </Typography>
-                  </>
+                    }
+                  />
                 )}
               </div>
             </CardEntity>

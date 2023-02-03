@@ -259,8 +259,6 @@ export default function FlagInsights() {
             />
           </CardContent>
 
-          <Spacer size={4} />
-
           <MetricPerVariantList items={metricsByVariantCount} />
 
           <div
