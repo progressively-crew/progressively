@@ -8,8 +8,8 @@ export interface EntityFieldProps {
 export const EntityField = ({ name, value }: EntityFieldProps) => {
   return (
     <div>
-      <Typography className="text-sm">{name}</Typography>
-      <Typography className="text-sm !text-black !dark:text-slate-50" as="span">
+      <Typography className="text-sm text-gray-600">{name}</Typography>
+      <Typography className="text-sm text-black dark:text-slate-50" as="span">
         {value}
       </Typography>
     </div>

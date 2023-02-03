@@ -51,7 +51,7 @@ export const Entity = ({
   return (
     <CardContent>
       <div className="flex flex-row items-center gap-4 justify-between">
-        <div className="flex flex-row items-center gap-4">
+        <div className="flex flex-row items-center gap-4 w-[40%]">
           {avatar}
           <div className="space-y-1">
             <div className="font-medium leading-none dark:text-slate-200">
