@@ -1,5 +1,5 @@
 import { FlagEnv } from "~/modules/flags/types";
-import { FormattedDate } from "~/modules/misc/components/FormattedDate";
+import { formatDateAgo } from "~/modules/misc/utils/formatDateAgo";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
 import { Activity } from "../types";
 import { ActivityDescription } from "./ActivityDescription";
@@ -15,7 +15,7 @@ const ActivityItem = ({ activity, flagEnv }: ActivityItemProps) => {
 
   return (
     <div
-      className={`border-t border-gray-200 py-4 text-sm text-gray-600 flex flex-row justify-between`}
+      className={`border-t border-gray-200 dark:border-slate-700 py-4 text-sm text-gray-600 flex flex-row justify-between gap-4`}
     >
       <div className="flex flex-row">
         <div
@@ -25,17 +25,15 @@ const ActivityItem = ({ activity, flagEnv }: ActivityItemProps) => {
           <ActivityIcon type={activity.type} />
         </div>
 
-        <div className="py-1">
+        <div className="py-1 dark:text-slate-200">
           <ActivityDescription activity={activity} flagEnv={flagEnv} />
         </div>
       </div>
 
-      <div className="flex flex-row gap-4 py-1 shrink-0">
+      <p className="flex flex-row gap-2 py-2 shrink-0 text-xs text-gray-500 dark:text-slate-300">
         <span>By {activity.user.fullname}</span>
-        <div className="text-xs text-gray-500 w-32">
-          <FormattedDate utc={activity.utc} />
-        </div>
-      </div>
+        <span className="w-24 text-right">{formatDateAgo(activity.utc)}</span>
+      </p>
     </div>
   );
 };

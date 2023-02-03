@@ -90,7 +90,7 @@ export const ActivityDescription = ({
           with the variant values:{" "}
           <ul className="list-disc pl-4">
             {data.data.map((variant: any) => (
-              <li key={`${id}-${variant.variantId}`}>
+              <li key={`${id}-${variant.variantId}`} className="pt-1">
                 Variant {getVariantValue(variant.variantId) || "N/A"}:{" "}
                 <strong>{variant.variantNewPercentage}%</strong>
               </li>
