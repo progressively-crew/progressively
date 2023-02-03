@@ -259,23 +259,22 @@ export default function FlagInsights() {
             />
           </CardContent>
 
-          <Spacer size={4} />
-
           <MetricPerVariantList items={metricsByVariantCount} />
 
-          <div
-            className="w-full bg-gray-50 dark:bg-slate-700 pt-8 pb-6"
-            style={{ height: 300 }}
-          >
-            {barChartData.length > 0 ? (
-              <BarChart data={barChartData} />
-            ) : (
-              <EmptyState
-                title="No data"
-                description={"There are no metric hits for this period."}
-              />
-            )}
-          </div>
+          <CardContent>
+            <Card>
+              <div className="w-full pt-8 pb-6" style={{ height: 300 }}>
+                {barChartData.length > 0 ? (
+                  <BarChart data={barChartData} />
+                ) : (
+                  <EmptyState
+                    title="No data"
+                    description={"There are no metric hits for this period."}
+                  />
+                )}
+              </div>
+            </Card>
+          </CardContent>
         </Card>
       </Section>
     </DashboardLayout>
