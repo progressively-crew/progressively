@@ -5,6 +5,7 @@ export interface CardProps {
   footer?: React.ReactNode;
   onClick?: () => void;
   scheme?: "ERROR" | "DEFAULT";
+  className?: string;
 }
 
 const footerSchemeStyles = {
@@ -17,6 +18,7 @@ export const Card = ({
   footer,
   onClick,
   scheme = "DEFAULT",
+  className,
 }: CardProps) => {
   const footerSchemeClassName = footerSchemeStyles[scheme];
   const clickableClasses = onClick
@@ -25,7 +27,9 @@ export const Card = ({
 
   return (
     <div
-      className={`border border-gray-200 dark:border-slate-700 rounded-md bg-white dark:border-slate-700 dark:bg-slate-800 ${clickableClasses}`}
+      className={`border border-gray-200 dark:border-slate-700 rounded-md bg-white dark:border-slate-700 dark:bg-slate-800 ${clickableClasses} ${
+        className || ""
+      }`}
       onClick={onClick}
     >
       {children}

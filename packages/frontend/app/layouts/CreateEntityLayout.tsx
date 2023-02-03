@@ -21,7 +21,10 @@ export const CreateEntityLayout = ({
 }: CreateEntityLayoutProps) => {
   return (
     <div className="flex-1 bg-gray-50 dark:bg-slate-900">
-      <main className="mx-auto max-w-2xl lg:pt-20" aria-labelledby="page-title">
+      <main
+        className="mx-auto max-w-2xl lg:pt-20 px-4 md:px-12"
+        aria-labelledby="page-title"
+      >
         {error}
 
         <Spacer size={4} />

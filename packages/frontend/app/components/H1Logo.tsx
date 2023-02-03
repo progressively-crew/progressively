@@ -6,14 +6,11 @@ export interface H1LogoProps {
 
 export const H1Logo = ({ children }: H1LogoProps) => {
   return (
-    <div className="flex flex-row items-center gap-2">
-      <Logo
-        className="h-10 w-10 motion-safe:animate-fade-enter-left motion-safe:opacity-0"
-        aria-hidden
-      />
+    <div className="flex flex-col items-center gap-2 justify-center">
+      <Logo className="h-10 w-10" aria-hidden />
       <h1
         id="page-title"
-        className="text-3xl font-bold text-center tracking-wide motion-safe:animate-fade-enter-left motion-safe:opacity-0 dark:text-slate-100"
+        className="text-3xl font-bold text-center tracking-wide dark:text-slate-100"
         style={{
           animationDelay: "300ms",
         }}

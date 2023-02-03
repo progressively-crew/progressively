@@ -96,7 +96,7 @@ export const Button = ({
       aria-disabled={isLoading}
       aria-label={isLoading ? loadingText : undefined}
     >
-      {icon && isLoading && <Spinner />}
+      {isLoading && <Spinner />}
       {icon && !isLoading && icon}
 
       <span className={icon ? "text" : undefined}>{children}</span>
