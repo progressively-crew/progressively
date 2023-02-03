@@ -1,3 +1,4 @@
+import { rewrite } from "@vercel/edge";
 import { getProgressivelyData } from "@progressively/server-side";
 
 const ExperimentRoutes = {
@@ -6,8 +7,7 @@ const ExperimentRoutes = {
   B: "/?variant=B",
 };
 
-export default async function middleware(request, res) {
-  console.log("lol", res);
+export default async function middleware(request) {
   // Get the user ID from cookies in order to always show them the same variant
   // If showing the same variant to the same user every time is not a concern for you, you can remove this line
   const id = request.cookies.get("progressively-id");
@@ -32,7 +32,7 @@ export default async function middleware(request, res) {
     ExperimentRoutes[data.initialFlags.deploySection] ||
     ExperimentRoutes.Control;
 
-  const nextUrl = res.rewrite(new URL(nextRawUrl, request.url));
+  const nextUrl = rewrite(new URL(nextRawUrl, request.url));
   console.log("Hitting", nextUrl);
 
   // Stick the user ID to the cookies in order to always show them the same variant
