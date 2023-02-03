@@ -36,7 +36,9 @@ export const MetricList = ({
           }
           actions={
             <>
-              <ButtonCopy toCopy={metric.name}>{metric.name}</ButtonCopy>
+              <div className="hidden md:block">
+                <ButtonCopy toCopy={metric.name}>{metric.name}</ButtonCopy>
+              </div>
               <MenuButton
                 items={[
                   {

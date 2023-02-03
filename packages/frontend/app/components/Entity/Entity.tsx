@@ -50,7 +50,7 @@ export const Entity = ({
 }: EntityProps) => {
   return (
     <CardContent>
-      <div className="flex flex-row items-center gap-4 justify-between">
+      <div className="flex items-center gap-4 justify-between">
         <div className="flex flex-row items-center gap-4 lg:w-[40%]">
           {avatar}
           <div className="space-y-1">
