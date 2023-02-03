@@ -135,7 +135,7 @@ export default function MetricCreatePage() {
   }
 
   return (
-    <Form method="post">
+    <Form method="post" className="flex flex-col flex-1">
       <CreateEntityLayout
         status={actionData?.errors && <ErrorBox list={actionData.errors} />}
         titleSlot={<CreateEntityTitle>Create a metric</CreateEntityTitle>}

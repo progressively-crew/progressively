@@ -63,7 +63,7 @@ export default function CreateEnvironmentPage() {
   const errors = data?.errors;
 
   return (
-    <Form method="post">
+    <Form method="post" className="flex flex-col flex-1">
       <CreateEntityLayout
         status={errors?.name && <ErrorBox list={errors} />}
         titleSlot={<CreateEntityTitle>Create an environment</CreateEntityTitle>}

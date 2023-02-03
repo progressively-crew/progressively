@@ -51,7 +51,7 @@ export default function CreateProjectPage() {
   const errors = data?.errors;
 
   return (
-    <Form method="post">
+    <Form method="post" className="flex flex-col flex-1">
       <CreateEntityLayout
         status={errors?.name && <ErrorBox list={errors} />}
         titleSlot={<CreateEntityTitle>Create a project</CreateEntityTitle>}

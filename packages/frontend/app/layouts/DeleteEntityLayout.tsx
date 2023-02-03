@@ -30,38 +30,43 @@ export const DeleteEntityLayout = ({
   }
 
   return (
-    <main className="mx-auto max-w-2xl lg:pt-20" aria-labelledby="page-title">
-      {error}
-      <Spacer size={4} />
-
-      <div className="inline-block motion-safe:animate-fade-enter-bottom motion-safe:opacity-0">
-        {backLinkSlot}
-      </div>
-
-      <Spacer size={2} />
-
-      <div
-        className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"
-        style={{
-          animationDelay: "300ms",
-        }}
+    <div className="bg-gray-50 dark:bg-slate-900 h-full flex-1">
+      <main
+        className="mx-auto max-w-2xl lg:pt-20 "
+        aria-labelledby="page-title"
       >
-        <Card
-          scheme="ERROR"
-          footer={
-            <div className="flex justify-between gap-8">
-              {cancelAction}
-              {confirmAction}
-            </div>
-          }
+        {error}
+        <Spacer size={4} />
+
+        <div className="inline-block motion-safe:animate-fade-enter-bottom motion-safe:opacity-0">
+          {backLinkSlot}
+        </div>
+
+        <Spacer size={2} />
+
+        <div
+          className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"
+          style={{
+            animationDelay: "300ms",
+          }}
         >
-          <CardContent>
-            {titleSlot}
-            <Spacer size={8} />
-            {children}
-          </CardContent>
-        </Card>
-      </div>
-    </main>
+          <Card
+            scheme="ERROR"
+            footer={
+              <div className="flex justify-between gap-8">
+                {cancelAction}
+                {confirmAction}
+              </div>
+            }
+          >
+            <CardContent>
+              {titleSlot}
+              <Spacer size={8} />
+              {children}
+            </CardContent>
+          </Card>
+        </div>
+      </main>
+    </div>
   );
 };

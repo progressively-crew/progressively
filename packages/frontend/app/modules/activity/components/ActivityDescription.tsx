@@ -16,112 +16,120 @@ export const ActivityDescription = ({
   activity,
   flagEnv,
 }: ActivityDescriptionProps) => {
-  const textStyles = "text-sm text-gray-800 dark:text-slate-300";
   const { data, type, id } = activity;
 
   if (type === "change-flag-status") {
     return (
-      <div className={textStyles}>
-        New status is <FlagStatus value={data.status} />
-      </div>
+      <p>
+        <strong>Flag status</strong> has been changed to{" "}
+        <FlagStatus value={data.status} />.
+      </p>
     );
   }
 
   if (type === "change-flag-percentage") {
     return (
-      <div className={textStyles}>
-        Percentage updated to{" "}
-        <Tag variant="SUCCESS" size="S">
-          {data}%
-        </Tag>
-      </div>
+      <p>
+        <strong>Percentage</strong> updated to <Tag size="S">{data}%</Tag>.
+      </p>
     );
   }
 
   if (type === "create-additional-audience") {
-    return null;
+    return (
+      <p>
+        An <strong>additional audience</strong> has been created.
+      </p>
+    );
   }
 
   if (type === "create-eligibility-restriction") {
-    return null;
+    return (
+      <p>
+        An <strong>eligibility restriction</strong> has been created.
+      </p>
+    );
   }
 
   if (type === "create-webhook") {
     return (
-      <span className={textStyles}>
-        Post on{" "}
+      <p>
+        <strong>A webhook</strong> has been created: trigger{" "}
         <Link href={data.endpoint} target="_blank" rel="noopener noreferrer">
           {data.endpoint}
         </Link>{" "}
-        when <WebhookEvent value={data.event} />
-      </span>
+        when <WebhookEvent value={data.event} />.
+      </p>
     );
   }
 
   if (type === "create-scheduling") {
     if (data.status === FlagStatusType.NOT_ACTIVATED) {
       return (
-        <span className={textStyles}>
-          It will <strong>deactivate</strong> the flag on the{" "}
+        <p>
+          <strong>A scheduling</strong> has been created. It will{" "}
+          <strong>deactivate</strong> the flag on the{" "}
           <strong>
             <FormattedDate utc={data.utc} />
           </strong>
-        </span>
+        </p>
       );
     }
 
     if (data.type === SchedulingType.UpdateVariantPercentage) {
       const getVariantValue = (variantId: string) =>
         flagEnv.variants.find((variant) => variant.uuid === variantId)?.value;
+
       return (
-        <span className={textStyles}>
-          It will <strong>activate</strong> the flag on the{" "}
+        <p>
+          <strong>A scheduling</strong> has been created. It will{" "}
+          <strong>activate</strong> the flag on the{" "}
           <strong>
             <FormattedDate utc={data.utc} />
           </strong>{" "}
-          with the following variant values:{" "}
+          with the variant values:{" "}
           <ul className="list-disc pl-4">
             {data.data.map((variant: any) => (
-              <li key={`${id}-${variant.variantId}`}>
+              <li key={`${id}-${variant.variantId}`} className="pt-1">
                 Variant {getVariantValue(variant.variantId) || "N/A"}:{" "}
                 <strong>{variant.variantNewPercentage}%</strong>
               </li>
             ))}
           </ul>
-        </span>
+        </p>
       );
     }
 
     return (
-      <span className={textStyles}>
-        It will <strong>activate</strong> the flag and target{" "}
+      <p>
+        <strong>A scheduling</strong> has been created. It will{" "}
+        <strong>activate</strong> the flag and target{" "}
         <strong>{data.data.rolloutPercentage}%</strong> of the audience on the{" "}
         <strong>
           <FormattedDate utc={data.utc} />
         </strong>
-      </span>
+        .
+      </p>
     );
   }
 
   if (type === "create-metric") {
     return (
-      <span className={textStyles}>
-        New metric: <Link to={`../metrics`}>{data.name}</Link>
-      </span>
+      <p>
+        <strong>A metric</strong> has been created:{" "}
+        <Link to={`../metrics`}>{data.name}</Link>
+      </p>
     );
   }
 
   if (type === "create-variant") {
     return (
-      <span className={textStyles}>
-        New variant: <Link to={`../`}>{data.value}</Link>
-      </span>
+      <p>
+        <strong>A variant</strong> has been created:{" "}
+        <Link to={`../`}>{data.value}</Link>
+      </p>
     );
   }
 
-  return (
-    <span className={textStyles}>
-      Woops, the type {type} is not supported yet.
-    </span>
-  );
+  return <span>Woops, the type {type} is not supported yet.</span>;
 };

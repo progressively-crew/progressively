@@ -1,3 +1,4 @@
+import { ButtonCopy } from "~/components/ButtonCopy";
 import { CardEntity } from "~/components/Entity/Entity";
 import { MenuButton } from "~/components/MenuButton";
 import { Metric } from "../types";
@@ -34,17 +35,20 @@ export const MetricList = ({
             )
           }
           actions={
-            <MenuButton
-              items={[
-                {
-                  label: "Remove",
-                  href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/metrics/${metric.uuid}/delete`,
-                  noInitial: true,
-                },
-              ]}
-              label={"Actions on webhook"}
-              variant="action"
-            />
+            <>
+              <ButtonCopy toCopy={metric.name}>{metric.name}</ButtonCopy>
+              <MenuButton
+                items={[
+                  {
+                    label: "Remove",
+                    href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/metrics/${metric.uuid}/delete`,
+                    noInitial: true,
+                  },
+                ]}
+                label={"Actions on webhook"}
+                variant="action"
+              />
+            </>
           }
         />
       ))}
