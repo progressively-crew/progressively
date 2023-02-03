@@ -33,6 +33,7 @@ export default async function middleware(request) {
     ExperimentRoutes.Control;
 
   const nextUrl = NextResponse.rewrite(new URL(nextRawUrl, request.url));
+  console.log("Hitting", nextUrl);
 
   // Stick the user ID to the cookies in order to always show them the same variant
   // If showing the same variant to the same user every time is not a concern for you, you can remove this line
