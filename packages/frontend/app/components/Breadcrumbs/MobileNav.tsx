@@ -29,7 +29,7 @@ export const MobileNav = ({ crumbs }: DesktopNavProps) => {
         tabIndex={isNavOpened ? -1 : 0}
         aria-hidden={isNavOpened}
       >
-        <AiOutlineMenu />
+        <AiOutlineMenu className="text-2xl" />
         <VisuallyHidden>Toggle menu</VisuallyHidden>
       </Button>
 
