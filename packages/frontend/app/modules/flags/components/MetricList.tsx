@@ -35,22 +35,22 @@ export const MetricList = ({
             )
           }
           actions={
-            <>
-              <div className="hidden md:block">
-                <ButtonCopy toCopy={metric.name}>{metric.name}</ButtonCopy>
-              </div>
-              <MenuButton
-                items={[
-                  {
-                    label: "Remove",
-                    href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/metrics/${metric.uuid}/delete`,
-                    noInitial: true,
-                  },
-                ]}
-                label={"Actions on webhook"}
-                variant="action"
-              />
-            </>
+            <div className="hidden md:block">
+              <ButtonCopy toCopy={metric.name}>{metric.name}</ButtonCopy>
+            </div>
+          }
+          menu={
+            <MenuButton
+              items={[
+                {
+                  label: "Remove",
+                  href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/metrics/${metric.uuid}/delete`,
+                  noInitial: true,
+                },
+              ]}
+              label={"Actions on webhook"}
+              variant="action"
+            />
           }
         />
       ))}
