@@ -61,7 +61,7 @@ export const SchedulingList = ({
                   Updating status to <FlagStatus value={schedule.status} />
                 </p>
               }
-              actions={
+              menu={
                 <MenuButton
                   items={[
                     {

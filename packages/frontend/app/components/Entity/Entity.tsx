@@ -10,6 +10,7 @@ export interface EntityProps {
   actions?: React.ReactNode;
   linkRef?: React.RefObject<HTMLAnchorElement>;
   children?: React.ReactNode;
+  menu?: React.ReactNode;
 }
 
 export const CardEntity = ({
@@ -19,6 +20,7 @@ export const CardEntity = ({
   link,
   actions,
   children,
+  menu,
 }: EntityProps) => {
   const linkRef = useRef<HTMLAnchorElement>(null);
 
@@ -26,6 +28,7 @@ export const CardEntity = ({
   return (
     <Card onClick={handleClick}>
       <Entity
+        menu={menu}
         title={title}
         description={description}
         avatar={avatar}
@@ -47,34 +50,43 @@ export const Entity = ({
   actions,
   linkRef,
   children,
+  menu,
 }: EntityProps) => {
   return (
     <CardContent>
-      <div className="flex items-center gap-4 justify-between">
-        <div className="flex flex-row items-center gap-4 lg:w-[40%]">
-          {avatar}
-          <div className="space-y-1">
-            <div className="font-medium leading-none dark:text-slate-200">
-              {link ? (
-                <Link ref={linkRef} to={link}>
-                  {title}
-                </Link>
-              ) : (
-                title
+      <div className="flex flex-col md:flex-row md:items-center justify-between">
+        <div className="flex flex-row gap-4 lg:w-[40%]">
+          <div className="flex flex-col md:flex-row md:items-center gap-4 flex-1">
+            {avatar}
+
+            <div className="flex-1">
+              <div className="font-medium leading-none dark:text-slate-200">
+                {link ? (
+                  <Link ref={linkRef} to={link}>
+                    {title}
+                  </Link>
+                ) : (
+                  title
+                )}
+              </div>
+              {description && (
+                <div className="text-sm text-slate-500 dark:text-slate-400">
+                  {description}
+                </div>
               )}
             </div>
-            {description && (
-              <div className="text-sm text-slate-500 dark:text-slate-400">
-                {description}
-              </div>
-            )}
           </div>
+
+          {menu && <div className="md:hidden">{menu}</div>}
         </div>
 
-        {children}
+        {children && <div className="mt-4 md:mt-0">{children}</div>}
 
-        {actions && (
-          <div className="flex flex-row gap-8 items-center">{actions}</div>
+        {(actions || menu) && (
+          <div className="flex flex-row gap-8 items-center">
+            {actions}
+            {menu && <div className="hidden md:block">{menu}</div>}
+          </div>
         )}
       </div>
     </CardContent>
