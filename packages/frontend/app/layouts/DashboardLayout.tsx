@@ -51,7 +51,7 @@ export const DashboardLayout = ({
             <Spacer size={12} />
 
             <Main>
-              <div className="flex flex-col gap-2 md:gap-6">
+              <div className="flex flex-col gap-4 md:gap-6">
                 {status}
 
                 {children}
