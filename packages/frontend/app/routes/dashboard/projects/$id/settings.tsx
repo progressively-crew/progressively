@@ -146,20 +146,18 @@ export default function SettingsPage() {
       {userRole === UserRoles.Admin && (
         <Card
           footer={
-            <div className="inline-block">
-              <DeleteButton to={`/dashboard/projects/${project.uuid}/delete`}>
-                <span aria-hidden>
-                  Delete{" "}
-                  <span className="hidden md:inline">
-                    {`"${project.name}"`} forever
-                  </span>
+            <DeleteButton to={`/dashboard/projects/${project.uuid}/delete`}>
+              <span aria-hidden>
+                Delete{" "}
+                <span className="hidden md:inline">
+                  {`"${project.name}"`} forever
                 </span>
+              </span>
 
-                <VisuallyHidden>
-                  Delete {`"${project.name}"`} forever
-                </VisuallyHidden>
-              </DeleteButton>
-            </div>
+              <VisuallyHidden>
+                Delete {`"${project.name}"`} forever
+              </VisuallyHidden>
+            </DeleteButton>
           }
         >
           <CardContent>

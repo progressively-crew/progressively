@@ -58,22 +58,20 @@ export default function EnvSettingsPage() {
       {userRole === UserRoles.Admin && (
         <Card
           footer={
-            <div className="inline-block">
-              <DeleteButton
-                to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/delete`}
-              >
-                <span aria-hidden>
-                  Delete{" "}
-                  <span className="hidden md:inline">
-                    {`"${environment.name}"`} forever
-                  </span>
+            <DeleteButton
+              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/delete`}
+            >
+              <span aria-hidden>
+                Delete{" "}
+                <span className="hidden md:inline">
+                  {`"${environment.name}"`} forever
                 </span>
+              </span>
 
-                <VisuallyHidden>
-                  Delete {`"${environment.name}"`} forever
-                </VisuallyHidden>
-              </DeleteButton>
-            </div>
+              <VisuallyHidden>
+                Delete {`"${environment.name}"`} forever
+              </VisuallyHidden>
+            </DeleteButton>
           }
         >
           <CardContent>

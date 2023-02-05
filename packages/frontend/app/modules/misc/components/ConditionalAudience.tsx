@@ -131,8 +131,8 @@ export const ConditionalAudience = ({
   showAdditionalFields,
 }: ConditionalAudienceProps) => {
   const gridClassName = showAdditionalFields
-    ? "grid grid-cols-[auto_auto_auto_1fr] gap-4"
-    : "grid grid-cols-[auto_auto_auto_1fr_auto] gap-4";
+    ? "grid md:grid-cols-[auto_auto_auto_1fr] gap-4"
+    : "grid md:grid-cols-[auto_auto_auto_1fr_auto] gap-4";
 
   return (
     <div className="bg-gray-50 dark:bg-slate-900 px-6 py-4">
@@ -149,7 +149,7 @@ export const ConditionalAudience = ({
             placeholder="e.g: email"
             defaultValue={fieldName}
             name="field-name"
-            className="w-40"
+            className="w-full md:w-40"
           />
         </div>
 

@@ -7,6 +7,7 @@ export const SubmitButton = ({ children, ...props }: ButtonProps) => {
       type="submit"
       variant="primary"
       icon={<FiEdit aria-hidden />}
+      className="w-full md:w-auto"
       {...props}
     >
       {children}

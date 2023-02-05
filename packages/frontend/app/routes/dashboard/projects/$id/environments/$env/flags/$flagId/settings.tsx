@@ -92,22 +92,20 @@ export default function FlagSettingPage() {
       {userRole === UserRoles.Admin && (
         <Card
           footer={
-            <div className="inline-block">
-              <DeleteButton
-                to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/delete`}
-              >
-                <span aria-hidden>
-                  <span>Delete </span>
-                  <span className="hidden md:inline">
-                    {currentFlag.name} forever
-                  </span>
+            <DeleteButton
+              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/delete`}
+            >
+              <span aria-hidden>
+                <span>Delete </span>
+                <span className="hidden md:inline">
+                  {currentFlag.name} forever
                 </span>
+              </span>
 
-                <VisuallyHidden>
-                  {`Delete ${currentFlag.name} forever`}
-                </VisuallyHidden>
-              </DeleteButton>
-            </div>
+              <VisuallyHidden>
+                {`Delete ${currentFlag.name} forever`}
+              </VisuallyHidden>
+            </DeleteButton>
           }
         >
           <CardContent>
