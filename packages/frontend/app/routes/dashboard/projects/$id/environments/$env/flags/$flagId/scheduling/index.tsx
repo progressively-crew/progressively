@@ -5,7 +5,6 @@ import { CreateButton } from "~/components/Buttons/CreateButton";
 import { Card, CardContent } from "~/components/Card";
 import { EmptyState } from "~/components/EmptyState";
 import { PageTitle } from "~/components/PageTitle";
-import { Section } from "~/components/Section";
 import { Typography } from "~/components/Typography";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
@@ -130,35 +129,33 @@ export default function SchedulingOfFlag() {
         }
       />
 
-      <Section aria-label="List of schedules">
-        {!hasScheduling && (
-          <Card>
-            <CardContent>
-              <EmptyState
-                titleAs="h2"
-                title="No schedule found"
-                description={"There are no scheduling for this flag."}
-                action={
-                  <CreateButton
-                    to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/scheduling/create`}
-                  >
-                    Create a schedule
-                  </CreateButton>
-                }
-              />
-            </CardContent>
-          </Card>
-        )}
+      {!hasScheduling && (
+        <Card>
+          <CardContent>
+            <EmptyState
+              titleAs="h2"
+              title="No schedule found"
+              description={"There are no scheduling for this flag."}
+              action={
+                <CreateButton
+                  to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/scheduling/create`}
+                >
+                  Create a schedule
+                </CreateButton>
+              }
+            />
+          </CardContent>
+        </Card>
+      )}
 
-        {hasScheduling && (
-          <SchedulingList
-            scheduling={scheduling}
-            projectId={project.uuid}
-            envId={environment.uuid}
-            flagId={currentFlag.uuid}
-          />
-        )}
-      </Section>
+      {hasScheduling && (
+        <SchedulingList
+          scheduling={scheduling}
+          projectId={project.uuid}
+          envId={environment.uuid}
+          flagId={currentFlag.uuid}
+        />
+      )}
     </DashboardLayout>
   );
 }

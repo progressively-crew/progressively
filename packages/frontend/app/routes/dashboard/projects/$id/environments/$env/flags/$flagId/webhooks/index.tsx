@@ -5,7 +5,6 @@ import { CreateButton } from "~/components/Buttons/CreateButton";
 import { Card, CardContent } from "~/components/Card";
 import { EmptyState } from "~/components/EmptyState";
 import { PageTitle } from "~/components/PageTitle";
-import { Section } from "~/components/Section";
 import { Typography } from "~/components/Typography";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
@@ -129,35 +128,33 @@ export default function WebhooksPage() {
         }
       />
 
-      <Section aria-label="List of webhooks">
-        {!hasWebhooks && (
-          <Card>
-            <CardContent>
-              <EmptyState
-                titleAs="h2"
-                title="No webhooks found"
-                description={"There are no webhooks for this flag."}
-                action={
-                  <CreateButton
-                    to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/webhooks/create`}
-                  >
-                    Create a webhook
-                  </CreateButton>
-                }
-              />
-            </CardContent>
-          </Card>
-        )}
+      {!hasWebhooks && (
+        <Card>
+          <CardContent>
+            <EmptyState
+              titleAs="h2"
+              title="No webhooks found"
+              description={"There are no webhooks for this flag."}
+              action={
+                <CreateButton
+                  to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/webhooks/create`}
+                >
+                  Create a webhook
+                </CreateButton>
+              }
+            />
+          </CardContent>
+        </Card>
+      )}
 
-        {hasWebhooks && (
-          <WebhooksList
-            webhooks={webhooks}
-            projectId={project.uuid}
-            envId={environment.uuid}
-            flagId={currentFlag.uuid}
-          />
-        )}
-      </Section>
+      {hasWebhooks && (
+        <WebhooksList
+          webhooks={webhooks}
+          projectId={project.uuid}
+          envId={environment.uuid}
+          flagId={currentFlag.uuid}
+        />
+      )}
     </DashboardLayout>
   );
 }

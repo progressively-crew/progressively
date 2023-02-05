@@ -5,7 +5,6 @@ import { CreateButton } from "~/components/Buttons/CreateButton";
 import { Card, CardContent } from "~/components/Card";
 import { EmptyState } from "~/components/EmptyState";
 import { PageTitle } from "~/components/PageTitle";
-import { Section } from "~/components/Section";
 import { Typography } from "~/components/Typography";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
@@ -129,35 +128,33 @@ export default function Metrics() {
         }
       />
 
-      <Section aria-label="List of metrics">
-        {!hasMetrics && (
-          <Card>
-            <CardContent>
-              <EmptyState
-                titleAs="h2"
-                title="No metrics found"
-                description={"There are no metrics for this flag."}
-                action={
-                  <CreateButton
-                    to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/metrics/create`}
-                  >
-                    Create a metric
-                  </CreateButton>
-                }
-              />
-            </CardContent>
-          </Card>
-        )}
+      {!hasMetrics && (
+        <Card>
+          <CardContent>
+            <EmptyState
+              titleAs="h2"
+              title="No metrics found"
+              description={"There are no metrics for this flag."}
+              action={
+                <CreateButton
+                  to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/metrics/create`}
+                >
+                  Create a metric
+                </CreateButton>
+              }
+            />
+          </CardContent>
+        </Card>
+      )}
 
-        {hasMetrics && (
-          <MetricList
-            metrics={metrics}
-            projectId={project.uuid}
-            envId={environment.uuid}
-            flagId={currentFlag.uuid}
-          />
-        )}
-      </Section>
+      {hasMetrics && (
+        <MetricList
+          metrics={metrics}
+          projectId={project.uuid}
+          envId={environment.uuid}
+          flagId={currentFlag.uuid}
+        />
+      )}
     </DashboardLayout>
   );
 }

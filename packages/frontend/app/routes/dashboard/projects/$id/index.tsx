@@ -1,6 +1,5 @@
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { Section } from "~/components/Section";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { EmptyState } from "~/components/EmptyState";
 import { CreateButton } from "~/components/Buttons/CreateButton";
@@ -14,7 +13,6 @@ import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaT
 import { PageTitle } from "~/components/PageTitle";
 import { SearchBar } from "~/components/SearchBar";
 import { SearchLayout } from "~/layouts/SearchLayout";
-import { Spacer } from "~/components/Spacer";
 
 export const meta: MetaFunction = ({ parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -67,50 +65,46 @@ export default function ProjectDetailPage() {
     >
       <PageTitle value="Environments" />
 
-      <Section aria-label="List of environments">
-        {hasEnvironments ? (
-          <div>
-            <SearchLayout
-              actions={
+      {hasEnvironments ? (
+        <>
+          <SearchLayout
+            actions={
+              <CreateButton
+                to={`/dashboard/projects/${project.uuid}/environments/create`}
+              >
+                Create an environment
+              </CreateButton>
+            }
+          >
+            <SearchBar
+              label="Search for environments"
+              placeholder="e.g: The environment"
+              count={isSearching ? filteredEnvironments.length : undefined}
+            />
+          </SearchLayout>
+
+          <EnvList
+            environments={filteredEnvironments}
+            projectId={project.uuid}
+          />
+        </>
+      ) : (
+        <Card>
+          <CardContent>
+            <EmptyState
+              title="No environments found"
+              description={"There are no environments yet on this project."}
+              action={
                 <CreateButton
                   to={`/dashboard/projects/${project.uuid}/environments/create`}
                 >
                   Create an environment
                 </CreateButton>
               }
-            >
-              <SearchBar
-                label="Search for environments"
-                placeholder="e.g: The environment"
-                count={isSearching ? filteredEnvironments.length : undefined}
-              />
-            </SearchLayout>
-
-            <Spacer size={4} />
-
-            <EnvList
-              environments={filteredEnvironments}
-              projectId={project.uuid}
             />
-          </div>
-        ) : (
-          <Card>
-            <CardContent>
-              <EmptyState
-                title="No environments found"
-                description={"There are no environments yet on this project."}
-                action={
-                  <CreateButton
-                    to={`/dashboard/projects/${project.uuid}/environments/create`}
-                  >
-                    Create an environment
-                  </CreateButton>
-                }
-              />
-            </CardContent>
-          </Card>
-        )}
-      </Section>
+          </CardContent>
+        </Card>
+      )}
     </DashboardLayout>
   );
 }

@@ -3,7 +3,12 @@ import { AiOutlinePlus } from "react-icons/ai";
 
 export const CreateButton = ({ children, ...props }: ButtonProps) => {
   return (
-    <Button variant="primary" icon={<AiOutlinePlus aria-hidden />} {...props}>
+    <Button
+      variant="primary"
+      icon={<AiOutlinePlus aria-hidden />}
+      className="w-full md:w-auto"
+      {...props}
+    >
       {children}
     </Button>
   );
