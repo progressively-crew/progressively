@@ -40,6 +40,7 @@ export const MobileNav = ({ crumbs }: DesktopNavProps) => {
           tabIndex={isNavOpened ? -1 : 0}
           aria-hidden={isNavOpened}
           to={prevCrumb.link}
+          className={"-ml-4"}
         >
           <IoArrowBackOutline className="text-2xl" />
           <VisuallyHidden>Go back to</VisuallyHidden>
@@ -52,6 +53,7 @@ export const MobileNav = ({ crumbs }: DesktopNavProps) => {
         onClick={toggleNav}
         tabIndex={isNavOpened ? -1 : 0}
         aria-hidden={isNavOpened}
+        className={"-mr-4"}
       >
         <AiOutlineMenu className="text-2xl" />
         <VisuallyHidden>Toggle menu</VisuallyHidden>
