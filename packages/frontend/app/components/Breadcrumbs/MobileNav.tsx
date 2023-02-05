@@ -9,6 +9,7 @@ import { VisuallyHidden } from "../VisuallyHidden";
 import { Spacer } from "../Spacer";
 import { FocusTrap } from "../FocusTrap";
 import { InitialBox } from "../InitialBox";
+import { ThemeSwitch } from "../ThemeSwitch";
 
 export interface DesktopNavProps {
   crumbs: Crumbs;
@@ -40,15 +41,23 @@ export const MobileNav = ({ crumbs }: DesktopNavProps) => {
       >
         <FocusTrap isActive={isNavOpened}>
           <div className="p-4">
-            <Button
-              variant="primary"
-              onClick={toggleNav}
-              icon={<IoMdClose />}
-              tabIndex={isNavOpened ? 0 : -1}
-              aria-hidden={!isNavOpened}
-            >
-              Close menu
-            </Button>
+            <div className="flex flex-row justify-between gap-4">
+              <div className="flex-1">
+                <Button
+                  variant="primary"
+                  onClick={toggleNav}
+                  icon={<IoMdClose />}
+                  tabIndex={isNavOpened ? 0 : -1}
+                  aria-hidden={!isNavOpened}
+                >
+                  Close menu
+                </Button>
+              </div>
+
+              <div>
+                <ThemeSwitch />
+              </div>
+            </div>
 
             <Spacer size={12} />
 

@@ -11,7 +11,9 @@ export interface UserDropdownProps {
 export const UseDropdown = ({ user }: UserDropdownProps) => {
   return (
     <nav aria-label="User related" className="flex flex-row gap-2">
-      <ThemeSwitch />
+      <div className="hidden md:block">
+        <ThemeSwitch />
+      </div>
       <Button
         to="/profile"
         className="text-sm"
