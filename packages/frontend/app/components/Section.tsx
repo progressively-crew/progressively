@@ -28,6 +28,7 @@ export interface SectionHeaderProps extends React.HTMLAttributes<HTMLElement> {
   action?: React.ReactNode;
   status?: React.ReactNode;
   name?: string;
+  menu?: React.ReactNode;
 }
 
 export const SectionHeader = ({
@@ -37,6 +38,7 @@ export const SectionHeader = ({
   action,
   status,
   name,
+  menu,
   ...props
 }: SectionHeaderProps) => {
   const id = useContext(SectionContext);
@@ -46,27 +48,33 @@ export const SectionHeader = ({
     <div {...props}>
       <Stack spacing={4}>
         <div className="flex flex-col md:flex-row md:justify-between gap-8">
-          <div>
-            <HeadingComponent
-              as={titleAs}
-              className="text-3xl font-semibold tracking-tight dark:text-white"
-              id={id}
-              name={name}
-            >
-              {title}
-            </HeadingComponent>
-            {description && (
-              <>
-                <Spacer size={1} />
-                {description && (
-                  <div className="text-gray-500 dark:text-slate-400 max-w-2xl font-light">
-                    {description}
-                  </div>
-                )}
-              </>
-            )}
+          <div className="flex flex-row gap-8 flex-1">
+            <div className="flex-1">
+              <HeadingComponent
+                as={titleAs}
+                className="text-3xl font-semibold tracking-tight dark:text-white"
+                id={id}
+                name={name}
+              >
+                {title}
+              </HeadingComponent>
+
+              {description && (
+                <>
+                  <Spacer size={1} />
+                  {description && (
+                    <div className="text-gray-500 dark:text-slate-400 max-w-2xl font-light">
+                      {description}
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
+
+            {menu}
           </div>
-          <div>{action}</div>
+
+          {action}
         </div>
 
         {status}
