@@ -8,7 +8,6 @@ import { UserRoles } from "~/modules/projects/types";
 import { UserTable } from "~/modules/user/components/UserTable";
 import { getSession } from "~/sessions";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
-import { Stack } from "~/components/Stack";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { Spacer } from "~/components/Spacer";
 import { MetaFunction, ActionFunction } from "@remix-run/node";
@@ -89,94 +88,92 @@ export default function SettingsPage() {
     >
       <PageTitle value="Settings" />
 
-      <Stack spacing={8}>
-        <Card>
-          <Section id="members">
-            <Form method="post">
-              <CardContent>
-                <SectionHeader
-                  title="Project members"
-                  action={
-                    userRole === UserRoles.Admin && (
-                      <div className="flex flex-col md:flex-row gap-3">
-                        <CreateButton
-                          variant="secondary"
-                          to={`/dashboard/projects/${project.uuid}/add-member`}
-                        >
-                          Add member
-                        </CreateButton>
-
-                        <DeleteButton
-                          variant="secondary"
-                          type={"submit"}
-                          isLoading={transition.state === "submitting"}
-                          loadingText="Deleting the member(s), please wait..."
-                        >
-                          Remove from project
-                        </DeleteButton>
-                      </div>
-                    )
-                  }
-                />
-
-                {data?.errors.unauthorized && (
-                  <>
-                    <Spacer size={4} />
-                    <ErrorBox list={data.errors} />
-                  </>
-                )}
-
-                {data?.success && (
-                  <>
-                    <Spacer size={4} />
-                    <SuccessBox id="member-deleted">
-                      {data?.removedCount} user have been successfully removed
-                      from the project.
-                    </SuccessBox>
-                  </>
-                )}
-              </CardContent>
-
-              <UserTable
-                userProjects={project.userProject || []}
-                canEdit={userRole === UserRoles.Admin}
-              />
-            </Form>
-          </Section>
-        </Card>
-
-        {userRole === UserRoles.Admin && (
-          <Card
-            footer={
-              <div className="inline-block">
-                <DeleteButton to={`/dashboard/projects/${project.uuid}/delete`}>
-                  <span aria-hidden>
-                    Delete{" "}
-                    <span className="hidden md:inline">
-                      {`"${project.name}"`} forever
-                    </span>
-                  </span>
-
-                  <VisuallyHidden>
-                    Delete {`"${project.name}"`} forever
-                  </VisuallyHidden>
-                </DeleteButton>
-              </div>
-            }
-          >
+      <Card>
+        <Section id="members">
+          <Form method="post">
             <CardContent>
-              <Section id="danger">
-                <SectionHeader
-                  title="Danger zone"
-                  description={
-                    "You can delete a project at any time, but you won't be able to access its environments and all the related flags will be removed and be falsy in your applications. Be sure to know what you're doing before removing a project."
-                  }
-                />
-              </Section>
+              <SectionHeader
+                title="Project members"
+                action={
+                  userRole === UserRoles.Admin && (
+                    <div className="flex flex-col md:flex-row gap-3">
+                      <CreateButton
+                        variant="secondary"
+                        to={`/dashboard/projects/${project.uuid}/add-member`}
+                      >
+                        Add member
+                      </CreateButton>
+
+                      <DeleteButton
+                        variant="secondary"
+                        type={"submit"}
+                        isLoading={transition.state === "submitting"}
+                        loadingText="Deleting the member(s), please wait..."
+                      >
+                        Remove from project
+                      </DeleteButton>
+                    </div>
+                  )
+                }
+              />
+
+              {data?.errors.unauthorized && (
+                <>
+                  <Spacer size={4} />
+                  <ErrorBox list={data.errors} />
+                </>
+              )}
+
+              {data?.success && (
+                <>
+                  <Spacer size={4} />
+                  <SuccessBox id="member-deleted">
+                    {data?.removedCount} user have been successfully removed
+                    from the project.
+                  </SuccessBox>
+                </>
+              )}
             </CardContent>
-          </Card>
-        )}
-      </Stack>
+
+            <UserTable
+              userProjects={project.userProject || []}
+              canEdit={userRole === UserRoles.Admin}
+            />
+          </Form>
+        </Section>
+      </Card>
+
+      {userRole === UserRoles.Admin && (
+        <Card
+          footer={
+            <div className="inline-block">
+              <DeleteButton to={`/dashboard/projects/${project.uuid}/delete`}>
+                <span aria-hidden>
+                  Delete{" "}
+                  <span className="hidden md:inline">
+                    {`"${project.name}"`} forever
+                  </span>
+                </span>
+
+                <VisuallyHidden>
+                  Delete {`"${project.name}"`} forever
+                </VisuallyHidden>
+              </DeleteButton>
+            </div>
+          }
+        >
+          <CardContent>
+            <Section id="danger">
+              <SectionHeader
+                title="Danger zone"
+                description={
+                  "You can delete a project at any time, but you won't be able to access its environments and all the related flags will be removed and be falsy in your applications. Be sure to know what you're doing before removing a project."
+                }
+              />
+            </Section>
+          </CardContent>
+        </Card>
+      )}
     </DashboardLayout>
   );
 }
