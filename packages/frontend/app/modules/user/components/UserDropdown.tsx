@@ -8,12 +8,11 @@ export interface UserDropdownProps {
   user: User;
 }
 
-export const UseDropdown = ({ user }: UserDropdownProps) => {
+export const UserDropdown = ({ user }: UserDropdownProps) => {
   return (
-    <nav aria-label="User related" className="flex flex-row gap-2">
-      <div className="hidden md:block">
-        <ThemeSwitch />
-      </div>
+    <nav aria-label="User related" className="hidden lg:flex flex-row gap-2 ">
+      <ThemeSwitch />
+
       <Button
         to="/profile"
         className="text-sm"

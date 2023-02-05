@@ -10,12 +10,15 @@ import { Spacer } from "../Spacer";
 import { FocusTrap } from "../FocusTrap";
 import { InitialBox } from "../InitialBox";
 import { ThemeSwitch } from "../ThemeSwitch";
+import { Avatar } from "../Avatar";
+import { useUser } from "~/modules/user/contexts/useUser";
 
 export interface DesktopNavProps {
   crumbs: Crumbs;
 }
 
 export const MobileNav = ({ crumbs }: DesktopNavProps) => {
+  const { user } = useUser();
   const { toggleNav, isNavOpened } = useNavToggle();
   const lastItemIndex = crumbs.length - 1;
 
@@ -39,8 +42,8 @@ export const MobileNav = ({ crumbs }: DesktopNavProps) => {
           translateClass
         }
       >
-        <FocusTrap isActive={isNavOpened}>
-          <div className="p-4">
+        <FocusTrap isActive={isNavOpened} className="h-full relative">
+          <div className="p-4 h-full">
             <div className="flex flex-row justify-between gap-4">
               <div className="flex-1">
                 <Button
@@ -64,6 +67,7 @@ export const MobileNav = ({ crumbs }: DesktopNavProps) => {
             <nav
               aria-label="Application breadcrumbs"
               aria-hidden={!isNavOpened}
+              className="h-full flex"
             >
               <ol>
                 {crumbs.map((crumb, index) => {
@@ -93,6 +97,17 @@ export const MobileNav = ({ crumbs }: DesktopNavProps) => {
                   );
                 })}
               </ol>
+
+              <div className="bg-gray-100 absolute bottom-0 w-full left-0 py-2">
+                <Button
+                  className="w-full"
+                  to="/profile"
+                  icon={<Avatar aria-hidden>{user.fullname}</Avatar>}
+                  variant="tertiary"
+                >
+                  {user.fullname}
+                </Button>
+              </div>
             </nav>
           </div>
         </FocusTrap>
