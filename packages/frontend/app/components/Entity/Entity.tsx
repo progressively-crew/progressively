@@ -11,6 +11,7 @@ export interface EntityProps {
   linkRef?: React.RefObject<HTMLAnchorElement>;
   children?: React.ReactNode;
   menu?: React.ReactNode;
+  breakAvatar?: boolean;
 }
 
 export const CardEntity = ({
@@ -21,6 +22,7 @@ export const CardEntity = ({
   actions,
   children,
   menu,
+  breakAvatar,
 }: EntityProps) => {
   const linkRef = useRef<HTMLAnchorElement>(null);
 
@@ -35,6 +37,7 @@ export const CardEntity = ({
         link={link}
         actions={actions}
         linkRef={linkRef}
+        breakAvatar={breakAvatar}
       >
         {children}
       </Entity>
@@ -51,12 +54,19 @@ export const Entity = ({
   linkRef,
   children,
   menu,
+  breakAvatar,
 }: EntityProps) => {
   return (
     <CardContent>
       <div className="flex flex-col md:flex-row md:items-center justify-between">
         <div className="flex flex-row gap-4 lg:w-[40%]">
-          <div className="flex flex-col md:flex-row md:items-center gap-4 flex-1">
+          <div
+            className={`flex ${
+              breakAvatar
+                ? "flex-col md:flex-row md:items-center"
+                : "flex-row items-center"
+            }  gap-4 flex-1`}
+          >
             {avatar}
 
             <div className="flex-1">

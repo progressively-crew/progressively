@@ -43,6 +43,7 @@ export const SchedulingList = ({
             <CardEntity
               key={schedule.uuid}
               title={<FormattedDate utc={schedule.utc} />}
+              breakAvatar
               avatar={
                 schedule.schedulingStatus === SchedulingStatus.HAS_RUN ? (
                   <AiFillCheckCircle
