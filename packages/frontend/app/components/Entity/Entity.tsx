@@ -90,7 +90,11 @@ export const Entity = ({
           {menu && <div className="md:hidden">{menu}</div>}
         </div>
 
-        {children && <div className="mt-4 md:mt-0">{children}</div>}
+        {children && (
+          <div className="mt-4 md:mt-0 flex flex-col gap-2 md:flex-row justify-between flex-1">
+            {children}
+          </div>
+        )}
 
         {(actions || menu) && (
           <div className="flex flex-row gap-8 items-center">
