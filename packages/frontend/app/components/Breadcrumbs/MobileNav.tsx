@@ -1,3 +1,4 @@
+import { IoArrowBackOutline } from "react-icons/io5";
 import { Crumbs } from "./types";
 import { Link } from "../Link";
 import { HStack } from "../HStack";
@@ -22,10 +23,30 @@ export const MobileNav = ({ crumbs }: DesktopNavProps) => {
   const { toggleNav, isNavOpened } = useNavToggle();
   const lastItemIndex = crumbs.length - 1;
 
+  const prevCrumbIndex = lastItemIndex - 1;
+  const prevCrumb = crumbs[prevCrumbIndex];
+
   const translateClass = isNavOpened ? "translate-x-0" : "-translate-x-full";
 
   return (
-    <div>
+    <div
+      className={`flex flex-row ${
+        prevCrumb ? "justify-between" : "justify-end"
+      }`}
+    >
+      {prevCrumb && (
+        <Button
+          variant="tertiary"
+          tabIndex={isNavOpened ? -1 : 0}
+          aria-hidden={isNavOpened}
+          to={prevCrumb.link}
+        >
+          <IoArrowBackOutline className="text-2xl" />
+          <VisuallyHidden>Go back to</VisuallyHidden>
+          {prevCrumb.label}
+        </Button>
+      )}
+
       <Button
         variant="tertiary"
         onClick={toggleNav}
@@ -38,7 +59,7 @@ export const MobileNav = ({ crumbs }: DesktopNavProps) => {
 
       <div
         className={
-          "absolute z-20 h-full w-full bg-white dark:bg-slate-800 top-0 bottom-0 left-0 transition-transform ease-in-out duration-200 " +
+          "absolute z-20 h-full w-full bg-white dark:bg-slate-800 top-0 bottom-0 right-0 transition-transform ease-in-out duration-200 " +
           translateClass
         }
       >

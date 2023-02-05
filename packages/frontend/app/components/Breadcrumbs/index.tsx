@@ -10,7 +10,7 @@ export interface BreadCrumbsProps {
 export const BreadCrumbs = ({ crumbs }: BreadCrumbsProps) => {
   return (
     <>
-      <HideDesktop>
+      <HideDesktop className="w-full">
         <MobileNav crumbs={crumbs} />
       </HideDesktop>
 
