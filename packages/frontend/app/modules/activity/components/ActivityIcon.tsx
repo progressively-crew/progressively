@@ -35,6 +35,10 @@ export const ActivityIcon = ({ type }: ActivityIconProps) => {
     return <AiOutlineLink />;
   }
 
+  if (type === "delete-webhook") {
+    return <AiOutlineLink />;
+  }
+
   if (type === "create-scheduling") {
     return <AiOutlineClockCircle />;
   }

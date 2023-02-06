@@ -8,7 +8,7 @@ export class WebhooksService {
   constructor(private prisma: PrismaService) {}
 
   deleteWebhook(uuid: string) {
-    return this.prisma.webhook.deleteMany({
+    return this.prisma.webhook.delete({
       where: {
         uuid,
       },

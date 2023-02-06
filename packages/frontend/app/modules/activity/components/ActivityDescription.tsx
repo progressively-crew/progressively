@@ -68,6 +68,18 @@ export const ActivityDescription = ({
     );
   }
 
+  if (type === "delete-webhook") {
+    return (
+      <p>
+        <strong>A webhook</strong> has been deleted:{" "}
+        <Link href={data.endpoint} target="_blank" rel="noopener noreferrer">
+          {data.endpoint}
+        </Link>{" "}
+        when <WebhookEvent value={data.event} />.
+      </p>
+    );
+  }
+
   if (type === "create-webhook") {
     return (
       <p>
