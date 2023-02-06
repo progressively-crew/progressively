@@ -30,6 +30,7 @@ export class EligibilityController {
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(EligibilitySchema))
   async updateEligibility(
+    @UserId() userId: string,
     @Param('eligibilityId') eligibilityId: string,
     @Body() eligibilityDto: EligibilityUpdateDTO,
   ) {
@@ -44,7 +45,7 @@ export class EligibilityController {
       this.wsGateway.notifyChanges(flagEnv.environment.clientKey, flagEnv);
     }
 
-    return {
+    const eligibility = {
       uuid: updatedEligibility.uuid,
       fieldName: updatedEligibility.fieldName,
       fieldComparator: updatedEligibility.fieldComparator,
@@ -53,6 +54,17 @@ export class EligibilityController {
       flagEnvironmentEnvironmentId:
         updatedEligibility.flagEnvironmentEnvironmentId,
     };
+
+    await this.activityLogService.register({
+      userId,
+      flagId: flagEnv.flagId,
+      envId: flagEnv.environmentId,
+      concernedEntity: 'flag',
+      type: 'edit-eligibility',
+      data: JSON.stringify(eligibility),
+    });
+
+    return eligibility;
   }
 
   @Delete(':eligibilityId')

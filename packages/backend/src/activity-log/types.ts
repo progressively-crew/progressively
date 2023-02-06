@@ -13,7 +13,9 @@ export type ActivityType =
   | 'delete-metric'
   | 'delete-scheduling'
   | 'delete-eligibility'
-  | 'delete-additional-audience';
+  | 'delete-additional-audience'
+  | 'edit-eligibility'
+  | 'edit-additional-audience';
 
 export type ActivityEntity = 'flag';
 

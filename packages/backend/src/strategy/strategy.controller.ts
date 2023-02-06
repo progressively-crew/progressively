@@ -76,6 +76,7 @@ export class StrategyController {
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(StrategySchema))
   async updateStrategy(
+    @UserId() userId: string,
     @Param('stratId') stratId: string,
     @Body() strategyDto: StrategyUpdateDTO,
   ) {
@@ -90,7 +91,7 @@ export class StrategyController {
       this.wsGateway.notifyChanges(flagEnv.environment.clientKey, flagEnv);
     }
 
-    return {
+    const strat = {
       uuid: updatedEligibility.uuid,
       fieldName: updatedEligibility.fieldName,
       fieldComparator: updatedEligibility.fieldComparator,
@@ -101,5 +102,16 @@ export class StrategyController {
       flagEnvironmentEnvironmentId:
         updatedEligibility.flagEnvironmentEnvironmentId,
     };
+
+    await this.activityLogService.register({
+      userId,
+      flagId: strat.flagEnvironmentEnvironmentId,
+      envId: strat.flagEnvironmentEnvironmentId,
+      concernedEntity: 'flag',
+      type: 'edit-additional-audience',
+      data: JSON.stringify(strat),
+    });
+
+    return strat;
   }
 }
