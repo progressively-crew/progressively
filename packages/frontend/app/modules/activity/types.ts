@@ -14,7 +14,8 @@ export type ActivityType =
   | "delete-scheduling"
   | "delete-eligibility"
   | "delete-additional-audience"
-  | "edit-eligibility";
+  | "edit-eligibility"
+  | "edit-additional-audience";
 
 export type ActivityEntity = "flag";
 

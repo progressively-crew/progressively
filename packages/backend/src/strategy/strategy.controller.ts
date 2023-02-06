@@ -105,7 +105,7 @@ export class StrategyController {
 
     await this.activityLogService.register({
       userId,
-      flagId: strat.flagEnvironmentEnvironmentId,
+      flagId: strat.flagEnvironmentFlagId,
       envId: strat.flagEnvironmentEnvironmentId,
       concernedEntity: 'flag',
       type: 'edit-additional-audience',
