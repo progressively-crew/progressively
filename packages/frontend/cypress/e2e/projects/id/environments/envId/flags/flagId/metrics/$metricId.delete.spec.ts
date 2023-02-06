@@ -69,7 +69,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/metrics/[
       beforeEach(() => {
         cy.signIn("Marvin");
         cy.visit(
-          "/dashboard/projects/1/environments/1/flags/1/metrics/1/delete"
+          "/dashboard/projects/1/environments/1/flags/4/metrics/1/delete"
         );
       });
 
@@ -80,11 +80,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/metrics/[
 
         cy.url().should(
           "contain",
-          "/dashboard/projects/1/environments/1/flags/1/metrics?metricRemoved=true"
-        );
-
-        cy.findByRole("heading", { name: "No metrics found" }).should(
-          "be.visible"
+          "/dashboard/projects/1/environments/1/flags/4/metrics?metricRemoved=true"
         );
 
         cy.get(".success-box")

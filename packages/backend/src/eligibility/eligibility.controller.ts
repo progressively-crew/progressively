@@ -14,12 +14,15 @@ import { FlagStatus } from '../flags/flags.status';
 import { HasEligibilityAccessGuard } from './guards/hasEligibilityAccess';
 import { EligibilityService } from './eligibility.service';
 import { EligibilitySchema, EligibilityUpdateDTO } from './types';
+import { ActivityLogService } from '../activity-log/activity-log.service';
+import { UserId } from '../users/users.decorator';
 
 @Controller('eligibilities')
 export class EligibilityController {
   constructor(
     private readonly eligibilityService: EligibilityService,
     private readonly wsGateway: WebsocketGateway,
+    private readonly activityLogService: ActivityLogService,
   ) {}
 
   @Put(':eligibilityId')
@@ -27,6 +30,7 @@ export class EligibilityController {
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(EligibilitySchema))
   async updateEligibility(
+    @UserId() userId: string,
     @Param('eligibilityId') eligibilityId: string,
     @Body() eligibilityDto: EligibilityUpdateDTO,
   ) {
@@ -41,7 +45,7 @@ export class EligibilityController {
       this.wsGateway.notifyChanges(flagEnv.environment.clientKey, flagEnv);
     }
 
-    return {
+    const eligibility = {
       uuid: updatedEligibility.uuid,
       fieldName: updatedEligibility.fieldName,
       fieldComparator: updatedEligibility.fieldComparator,
@@ -50,12 +54,26 @@ export class EligibilityController {
       flagEnvironmentEnvironmentId:
         updatedEligibility.flagEnvironmentEnvironmentId,
     };
+
+    await this.activityLogService.register({
+      userId,
+      flagId: flagEnv.flagId,
+      envId: flagEnv.environmentId,
+      concernedEntity: 'flag',
+      type: 'edit-eligibility',
+      data: JSON.stringify(eligibility),
+    });
+
+    return eligibility;
   }
 
   @Delete(':eligibilityId')
   @UseGuards(HasEligibilityAccessGuard)
   @UseGuards(JwtAuthGuard)
-  async deleteEligibility(@Param('eligibilityId') eligibilityId: string) {
+  async deleteEligibility(
+    @UserId() userId: string,
+    @Param('eligibilityId') eligibilityId: string,
+  ) {
     const deletedEligibility = await this.eligibilityService.deleteEligibility(
       eligibilityId,
     );
@@ -64,6 +82,15 @@ export class EligibilityController {
     if (flagEnv.status === FlagStatus.ACTIVATED) {
       this.wsGateway.notifyChanges(flagEnv.environment.clientKey, flagEnv);
     }
+
+    await this.activityLogService.register({
+      userId,
+      flagId: flagEnv.flagId,
+      envId: flagEnv.environmentId,
+      concernedEntity: 'flag',
+      type: 'delete-eligibility',
+      data: JSON.stringify(deletedEligibility),
+    });
 
     return {
       uuid: deletedEligibility.uuid,

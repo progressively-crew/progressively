@@ -160,23 +160,51 @@ export class FlagsController {
   @Delete('environments/:envId/flags/:flagId/variants/:variantId')
   @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
-  deleteVariantFlag(
+  async deleteVariantFlag(
+    @UserId() userId: string,
     @Param('envId') envId: string,
     @Param('flagId') flagId: string,
     @Param('variantId') variantId: string,
   ) {
-    return this.flagService.deleteVariantFlag(envId, flagId, variantId);
+    const variantDeleted = await this.flagService.deleteVariantFlag(variantId);
+
+    await this.activityLogService.register({
+      userId,
+      flagId: flagId,
+      envId: envId,
+      concernedEntity: 'flag',
+      type: 'delete-variant',
+      data: JSON.stringify(variantDeleted),
+    });
+
+    return variantDeleted;
   }
 
   @Delete('environments/:envId/flags/:flagId/metrics/:metricId')
   @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
-  deleteMetricFlag(
+  async deleteMetricFlag(
+    @UserId() userId: string,
     @Param('envId') envId: string,
     @Param('flagId') flagId: string,
     @Param('metricId') metricId: string,
   ) {
-    return this.flagService.deleteMetricFlag(envId, flagId, metricId);
+    const deletedMetric = await this.flagService.deleteMetricFlag(
+      envId,
+      flagId,
+      metricId,
+    );
+
+    await this.activityLogService.register({
+      userId,
+      flagId: flagId,
+      envId: envId,
+      concernedEntity: 'flag',
+      type: 'delete-metric',
+      data: JSON.stringify(deletedMetric),
+    });
+
+    return deletedMetric;
   }
 
   /**
@@ -432,6 +460,7 @@ export class FlagsController {
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(VariantsSchema))
   async editVariantsOfFlag(
+    @UserId() userId: string,
     @Param('envId') envId: string,
     @Param('flagId') flagId: string,
     @Body() variantsDto: Array<Variant>,
@@ -459,7 +488,22 @@ export class FlagsController {
       );
     }
 
-    return this.flagService.editVariants(envId, flagId, variantsDto);
+    const result = await this.flagService.editVariants(
+      envId,
+      flagId,
+      variantsDto,
+    );
+
+    await this.activityLogService.register({
+      userId,
+      flagId: flagId,
+      envId: envId,
+      concernedEntity: 'flag',
+      type: 'change-variants-percentage',
+      data: JSON.stringify(variantsDto),
+    });
+
+    return result;
   }
 
   @Get('environments/:envId/flags/:flagId/strategies')

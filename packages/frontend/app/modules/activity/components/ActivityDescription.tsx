@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/cognitive-complexity */
 import { Link } from "~/components/Link";
 import { Tag } from "~/components/Tag";
 import { FlagEnv, FlagStatus as FlagStatusType } from "~/modules/flags/types";
@@ -35,6 +36,23 @@ export const ActivityDescription = ({
     );
   }
 
+  if (type === "change-variants-percentage") {
+    return (
+      <div>
+        <strong>Variants percentage</strong> have been updated to the following:
+        <ul className="list-disc pl-4">
+          {data.map((variant: any) => (
+            <li key={`${id}-${variant.uuid}`} className="pt-1">
+              Variant {variant.value}:{" "}
+              <strong>{variant.rolloutPercentage}%</strong>{" "}
+              {variant.isControl ? <strong>(control)</strong> : ""}
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+
   if (type === "create-additional-audience") {
     return (
       <p>
@@ -43,10 +61,66 @@ export const ActivityDescription = ({
     );
   }
 
+  if (type === "delete-additional-audience") {
+    return (
+      <p>
+        An <strong>additional audience</strong> rule has been deleted.
+      </p>
+    );
+  }
+
+  if (type === "edit-additional-audience") {
+    return (
+      <p>
+        Additional audience updated to "<strong>{data.fieldName}</strong>{" "}
+        <strong>{data.fieldComparator}</strong>{" "}
+        <strong>{data.fieldValue}</strong>"
+      </p>
+    );
+  }
+
   if (type === "create-eligibility-restriction") {
     return (
       <p>
-        An <strong>eligibility restriction</strong> has been created.
+        An <strong>eligibility restriction</strong> rule has been created.
+      </p>
+    );
+  }
+
+  if (type === "edit-eligibility") {
+    return (
+      <p>
+        Eligibility restriction updated to "<strong>{data.fieldName}</strong>{" "}
+        <strong>{data.fieldComparator}</strong>{" "}
+        <strong>{data.fieldValue}</strong>"
+      </p>
+    );
+  }
+
+  if (type === "delete-eligibility") {
+    return (
+      <p>
+        An <strong>eligibility restriction</strong> has been deleted.
+      </p>
+    );
+  }
+
+  if (type === "delete-webhook") {
+    return (
+      <p>
+        <strong>A webhook</strong> has been deleted:{" "}
+        <Link href={data.endpoint} target="_blank" rel="noopener noreferrer">
+          {data.endpoint}
+        </Link>{" "}
+        when <WebhookEvent value={data.event} />.
+      </p>
+    );
+  }
+
+  if (type === "delete-variant") {
+    return (
+      <p>
+        <strong>The variant</strong> {data.value} has been deleted.
       </p>
     );
   }
@@ -59,6 +133,15 @@ export const ActivityDescription = ({
           {data.endpoint}
         </Link>{" "}
         when <WebhookEvent value={data.event} />.
+      </p>
+    );
+  }
+
+  if (type === "delete-scheduling") {
+    return (
+      <p>
+        <strong>The scheduling</strong> supposed to run on{" "}
+        <FormattedDate utc={data.utc} /> has been removed.
       </p>
     );
   }
@@ -81,7 +164,7 @@ export const ActivityDescription = ({
         flagEnv.variants.find((variant) => variant.uuid === variantId)?.value;
 
       return (
-        <p>
+        <div>
           <strong>A scheduling</strong> has been created. It will{" "}
           <strong>activate</strong> the flag on the{" "}
           <strong>
@@ -96,7 +179,7 @@ export const ActivityDescription = ({
               </li>
             ))}
           </ul>
-        </p>
+        </div>
       );
     }
 
@@ -118,6 +201,14 @@ export const ActivityDescription = ({
       <p>
         <strong>A metric</strong> has been created:{" "}
         <Link to={`../metrics`}>{data.name}</Link>
+      </p>
+    );
+  }
+
+  if (type === "delete-metric") {
+    return (
+      <p>
+        <strong>The metric</strong> {data.name} has been deleted.
       </p>
     );
   }
