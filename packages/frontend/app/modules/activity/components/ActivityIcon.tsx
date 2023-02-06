@@ -43,6 +43,10 @@ export const ActivityIcon = ({ type }: ActivityIconProps) => {
     return <AiOutlineLink />;
   }
 
+  if (type === "delete-scheduling") {
+    return <AiOutlineClockCircle />;
+  }
+
   if (type === "create-scheduling") {
     return <AiOutlineClockCircle />;
   }

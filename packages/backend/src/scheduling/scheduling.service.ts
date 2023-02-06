@@ -7,7 +7,7 @@ import {
   SchedulingUpdateVariantEntry,
 } from './types';
 import { PopulatedFlagEnv, SchedulingStatus } from '../flags/types';
-import { Prisma, Schedule } from '@prisma/client';
+import { Schedule } from '@prisma/client';
 
 @Injectable()
 export class SchedulingService {
@@ -46,7 +46,7 @@ export class SchedulingService {
   }
 
   deleteSchedule(uuid: string) {
-    return this.prisma.schedule.deleteMany({
+    return this.prisma.schedule.delete({
       where: {
         uuid,
       },

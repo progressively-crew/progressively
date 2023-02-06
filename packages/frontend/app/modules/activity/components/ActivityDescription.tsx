@@ -37,7 +37,7 @@ export const ActivityDescription = ({
 
   if (type === "change-variants-percentage") {
     return (
-      <p>
+      <div>
         <strong>Variants percentage</strong> have been updated to the following:
         <ul className="list-disc pl-4">
           {data.map((variant: any) => (
@@ -48,7 +48,7 @@ export const ActivityDescription = ({
             </li>
           ))}
         </ul>
-      </p>
+      </div>
     );
   }
 
@@ -100,6 +100,15 @@ export const ActivityDescription = ({
     );
   }
 
+  if (type === "delete-scheduling") {
+    return (
+      <p>
+        <strong>The scheduling</strong> supposed to run on{" "}
+        <FormattedDate utc={data.utc} /> has been removed.
+      </p>
+    );
+  }
+
   if (type === "create-scheduling") {
     if (data.status === FlagStatusType.NOT_ACTIVATED) {
       return (
@@ -118,7 +127,7 @@ export const ActivityDescription = ({
         flagEnv.variants.find((variant) => variant.uuid === variantId)?.value;
 
       return (
-        <p>
+        <div>
           <strong>A scheduling</strong> has been created. It will{" "}
           <strong>activate</strong> the flag on the{" "}
           <strong>
@@ -133,7 +142,7 @@ export const ActivityDescription = ({
               </li>
             ))}
           </ul>
-        </p>
+        </div>
       );
     }
 
