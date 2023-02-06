@@ -138,7 +138,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
           ).should("be.visible");
         });
 
-        it.only("shows and success message in the scheduling list page", () => {
+        it("shows and success message in the scheduling list page", () => {
           cy.get("#date-dateTime").type("2025-01-27");
           cy.get("#time-dateTime").type("03:15");
 

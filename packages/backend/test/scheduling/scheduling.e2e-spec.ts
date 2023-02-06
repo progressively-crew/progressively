@@ -63,13 +63,20 @@ describe('Scheduling (e2e)', () => {
     it('gives a 200 when a user of the project deletes a schedule', async () => {
       const access_token = await authenticate(app);
 
-      await request(app.getHttpServer())
+      const result = await request(app.getHttpServer())
         .delete('/scheduling/1')
         .set('Authorization', `Bearer ${access_token}`)
-        .expect(200)
-        .expect({
-          count: 1,
-        });
+        .expect(200);
+
+      expect(result.body).toMatchObject({
+        uuid: '1',
+        type: 'UpdatePercentage',
+        data: { rolloutPercentage: 100 },
+        status: 'ACTIVATED',
+        schedulingStatus: 'NOT_RUN',
+        flagEnvironmentFlagId: '1',
+        flagEnvironmentEnvironmentId: '1',
+      });
     });
   });
 });

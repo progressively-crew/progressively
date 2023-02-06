@@ -63,13 +63,19 @@ describe('Webhooks (e2e)', () => {
     it('gives a 200 when a user of the project deletes a webhooks', async () => {
       const access_token = await authenticate(app);
 
-      await request(app.getHttpServer())
+      const result = await request(app.getHttpServer())
         .delete('/webhooks/1')
         .set('Authorization', `Bearer ${access_token}`)
-        .expect(200)
-        .expect({
-          count: 1,
-        });
+        .expect(200);
+
+      expect(result.body).toMatchObject({
+        uuid: '1',
+        endpoint: 'http://localhost:4000',
+        secret: 'this is secret',
+        event: 'ACTIVATION',
+        flagEnvironmentFlagId: '1',
+        flagEnvironmentEnvironmentId: '1',
+      });
     });
   });
 });
