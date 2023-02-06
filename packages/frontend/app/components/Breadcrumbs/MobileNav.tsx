@@ -124,7 +124,7 @@ export const MobileNav = ({ crumbs }: DesktopNavProps) => {
               <div className="bg-gray-100 absolute bottom-0 w-full left-0 py-2">
                 <Button
                   className="w-full"
-                  to="/profile"
+                  to="/dashboard/profile"
                   icon={<Avatar aria-hidden>{user.fullname}</Avatar>}
                   variant="tertiary"
                 >

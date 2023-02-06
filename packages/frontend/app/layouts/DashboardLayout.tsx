@@ -10,7 +10,7 @@ import { useMatches } from "@remix-run/react";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 
 export interface DashboardLayoutProps {
-  user?: Partial<User>;
+  user: User;
   children: React.ReactNode;
   subNav?: React.ReactNode;
   status?: React.ReactNode;

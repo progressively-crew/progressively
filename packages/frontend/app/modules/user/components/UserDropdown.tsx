@@ -14,7 +14,7 @@ export const UserDropdown = ({ user }: UserDropdownProps) => {
       <ThemeSwitch />
 
       <Button
-        to="/profile"
+        to="/dashboard/profile"
         className="text-sm"
         icon={<Avatar aria-hidden>{user.fullname}</Avatar>}
         variant="tertiary"
