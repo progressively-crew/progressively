@@ -60,10 +60,18 @@ export const ActivityDescription = ({
     );
   }
 
+  if (type === "delete-additional-audience") {
+    return (
+      <p>
+        An <strong>additional audience</strong> rule has been deleted.
+      </p>
+    );
+  }
+
   if (type === "create-eligibility-restriction") {
     return (
       <p>
-        An <strong>eligibility restriction</strong> has been created.
+        An <strong>eligibility restriction</strong> rule has been created.
       </p>
     );
   }

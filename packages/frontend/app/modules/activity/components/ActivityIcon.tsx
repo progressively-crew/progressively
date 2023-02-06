@@ -31,6 +31,10 @@ export const ActivityIcon = ({ type }: ActivityIconProps) => {
     return <HiOutlineUserGroup />;
   }
 
+  if (type === "delete-additional-audience") {
+    return <HiOutlineUserGroup />;
+  }
+
   if (type === "create-eligibility-restriction") {
     return <MdGroupWork />;
   }
