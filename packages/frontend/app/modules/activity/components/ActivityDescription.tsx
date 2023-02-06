@@ -68,6 +68,14 @@ export const ActivityDescription = ({
     );
   }
 
+  if (type === "delete-eligibility") {
+    return (
+      <p>
+        An <strong>eligibility restriction</strong> has been deleted.
+      </p>
+    );
+  }
+
   if (type === "delete-webhook") {
     return (
       <p>

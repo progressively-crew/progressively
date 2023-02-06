@@ -35,6 +35,10 @@ export const ActivityIcon = ({ type }: ActivityIconProps) => {
     return <MdGroupWork />;
   }
 
+  if (type === "delete-eligibility") {
+    return <MdGroupWork />;
+  }
+
   if (type === "create-webhook") {
     return <AiOutlineLink />;
   }

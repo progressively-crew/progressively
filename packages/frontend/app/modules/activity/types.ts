@@ -11,7 +11,8 @@ export type ActivityType =
   | "delete-webhook"
   | "delete-variant"
   | "delete-metric"
-  | "delete-scheduling";
+  | "delete-scheduling"
+  | "delete-eligibility";
 
 export type ActivityEntity = "flag";
 
