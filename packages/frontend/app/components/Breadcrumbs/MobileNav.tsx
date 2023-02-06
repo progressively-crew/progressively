@@ -70,13 +70,13 @@ export const MobileNav = ({ crumbs }: DesktopNavProps) => {
             <div className="flex flex-row justify-between gap-4">
               <div className="flex-1">
                 <Button
-                  variant="primary"
+                  variant="tertiary"
                   onClick={toggleNav}
-                  icon={<IoMdClose />}
                   tabIndex={isNavOpened ? 0 : -1}
                   aria-hidden={!isNavOpened}
                 >
-                  Close menu
+                  <IoMdClose className="text-2xl" />
+                  <VisuallyHidden>Close menu</VisuallyHidden>
                 </Button>
               </div>
 
