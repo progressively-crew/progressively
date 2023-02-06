@@ -20,7 +20,7 @@ export const ActivityIcon = ({ type }: ActivityIconProps) => {
   }
 
   if (type === "change-variants-percentage") {
-    return <FlagIcon />;
+    return <VariantIcon />;
   }
 
   if (type === "create-additional-audience") {
