@@ -35,6 +35,23 @@ export const ActivityDescription = ({
     );
   }
 
+  if (type === "change-variants-percentage") {
+    return (
+      <p>
+        <strong>Variants percentage</strong> have been updated to the following:
+        <ul className="list-disc pl-4">
+          {data.map((variant: any) => (
+            <li key={`${id}-${variant.uuid}`} className="pt-1">
+              Variant {variant.value}:{" "}
+              <strong>{variant.rolloutPercentage}%</strong>{" "}
+              {variant.isControl ? <strong>(control)</strong> : ""}
+            </li>
+          ))}
+        </ul>
+      </p>
+    );
+  }
+
   if (type === "create-additional-audience") {
     return (
       <p>

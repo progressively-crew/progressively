@@ -19,6 +19,10 @@ export const ActivityIcon = ({ type }: ActivityIconProps) => {
     return <FlagIcon />;
   }
 
+  if (type === "change-variants-percentage") {
+    return <FlagIcon />;
+  }
+
   if (type === "create-additional-audience") {
     return <HiOutlineUserGroup />;
   }

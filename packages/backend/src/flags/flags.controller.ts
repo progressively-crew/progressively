@@ -432,6 +432,7 @@ export class FlagsController {
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(VariantsSchema))
   async editVariantsOfFlag(
+    @UserId() userId: string,
     @Param('envId') envId: string,
     @Param('flagId') flagId: string,
     @Body() variantsDto: Array<Variant>,
@@ -459,7 +460,22 @@ export class FlagsController {
       );
     }
 
-    return this.flagService.editVariants(envId, flagId, variantsDto);
+    const result = await this.flagService.editVariants(
+      envId,
+      flagId,
+      variantsDto,
+    );
+
+    await this.activityLogService.register({
+      userId,
+      flagId: flagId,
+      envId: envId,
+      concernedEntity: 'flag',
+      type: 'change-variants-percentage',
+      data: JSON.stringify(variantsDto),
+    });
+
+    return result;
   }
 
   @Get('environments/:envId/flags/:flagId/strategies')

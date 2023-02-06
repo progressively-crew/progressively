@@ -1,6 +1,7 @@
 export type ActivityType =
   | "change-flag-status"
   | "change-flag-percentage"
+  | "change-variants-percentage"
   | "create-additional-audience"
   | "create-eligibility-restriction"
   | "create-webhook"
