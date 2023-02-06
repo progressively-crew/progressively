@@ -159,6 +159,14 @@ export const ActivityDescription = ({
     );
   }
 
+  if (type === "delete-metric") {
+    return (
+      <p>
+        <strong>The metric</strong> {data.name} has been deleted.
+      </p>
+    );
+  }
+
   if (type === "create-variant") {
     return (
       <p>

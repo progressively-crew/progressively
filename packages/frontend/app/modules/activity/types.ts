@@ -9,7 +9,8 @@ export type ActivityType =
   | "create-metric"
   | "create-variant"
   | "delete-webhook"
-  | "delete-variant";
+  | "delete-variant"
+  | "delete-metric";
 
 export type ActivityEntity = "flag";
 

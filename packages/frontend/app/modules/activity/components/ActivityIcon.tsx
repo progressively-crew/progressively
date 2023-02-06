@@ -51,6 +51,10 @@ export const ActivityIcon = ({ type }: ActivityIconProps) => {
     return <MetricIcon />;
   }
 
+  if (type === "delete-metric") {
+    return <MetricIcon />;
+  }
+
   if (type === "create-variant") {
     return <VariantIcon />;
   }
