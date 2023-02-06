@@ -23,6 +23,10 @@ export const ActivityIcon = ({ type }: ActivityIconProps) => {
     return <VariantIcon />;
   }
 
+  if (type === "delete-variant") {
+    return <VariantIcon />;
+  }
+
   if (type === "create-additional-audience") {
     return <HiOutlineUserGroup />;
   }

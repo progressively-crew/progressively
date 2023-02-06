@@ -449,11 +449,9 @@ export class FlagsService {
     return { count: result.length };
   }
 
-  deleteVariantFlag(envId: string, flagId: string, variantId: string) {
-    return this.prisma.variant.deleteMany({
+  deleteVariantFlag(variantId: string) {
+    return this.prisma.variant.delete({
       where: {
-        flagEnvironmentFlagId: flagId,
-        flagEnvironmentEnvironmentId: envId,
         uuid: variantId,
       },
     });

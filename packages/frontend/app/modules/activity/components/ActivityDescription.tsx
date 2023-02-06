@@ -80,6 +80,14 @@ export const ActivityDescription = ({
     );
   }
 
+  if (type === "delete-variant") {
+    return (
+      <p>
+        <strong>The variant</strong> {data.value} has been deleted.
+      </p>
+    );
+  }
+
   if (type === "create-webhook") {
     return (
       <p>

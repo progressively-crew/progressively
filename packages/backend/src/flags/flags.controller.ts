@@ -160,12 +160,24 @@ export class FlagsController {
   @Delete('environments/:envId/flags/:flagId/variants/:variantId')
   @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
-  deleteVariantFlag(
+  async deleteVariantFlag(
+    @UserId() userId: string,
     @Param('envId') envId: string,
     @Param('flagId') flagId: string,
     @Param('variantId') variantId: string,
   ) {
-    return this.flagService.deleteVariantFlag(envId, flagId, variantId);
+    const variantDeleted = await this.flagService.deleteVariantFlag(variantId);
+
+    await this.activityLogService.register({
+      userId,
+      flagId: flagId,
+      envId: envId,
+      concernedEntity: 'flag',
+      type: 'delete-variant',
+      data: JSON.stringify(variantDeleted),
+    });
+
+    return variantDeleted;
   }
 
   @Delete('environments/:envId/flags/:flagId/metrics/:metricId')
