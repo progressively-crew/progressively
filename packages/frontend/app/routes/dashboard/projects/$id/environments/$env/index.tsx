@@ -19,7 +19,6 @@ import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction"
 import { PageTitle } from "~/components/PageTitle";
 import { SearchLayout } from "~/layouts/SearchLayout";
 import { SearchBar } from "~/components/SearchBar";
-import { Spacer } from "~/components/Spacer";
 
 export const meta: MetaFunction = ({ params, parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);

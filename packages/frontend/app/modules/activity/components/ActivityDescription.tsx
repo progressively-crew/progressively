@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/cognitive-complexity */
 import { Link } from "~/components/Link";
 import { Tag } from "~/components/Tag";
 import { FlagEnv, FlagStatus as FlagStatusType } from "~/modules/flags/types";

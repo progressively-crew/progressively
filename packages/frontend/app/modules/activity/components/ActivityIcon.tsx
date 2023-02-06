@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/cognitive-complexity */
 import { AiOutlineClockCircle, AiOutlineLink } from "react-icons/ai";
 import { HiOutlineUserGroup } from "react-icons/hi";
 import { MdGroupWork } from "react-icons/md";

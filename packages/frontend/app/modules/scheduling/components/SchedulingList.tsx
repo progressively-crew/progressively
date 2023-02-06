@@ -3,7 +3,6 @@ import { TbCircle } from "react-icons/tb";
 import { CardEntity } from "~/components/Entity/Entity";
 import { EntityField } from "~/components/Entity/EntityField";
 import { MenuButton } from "~/components/MenuButton";
-import { Typography } from "~/components/Typography";
 import { FlagStatus } from "~/modules/flags/components/FlagStatus";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { FormattedDate } from "~/modules/misc/components/FormattedDate";
