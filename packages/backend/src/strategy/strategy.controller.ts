@@ -61,7 +61,7 @@ export class StrategyController {
 
     await this.activityLogService.register({
       userId,
-      flagId: deletedStrategy.flagEnvironmentEnvironmentId,
+      flagId: deletedStrategy.flagEnvironmentFlagId,
       envId: deletedStrategy.flagEnvironmentEnvironmentId,
       concernedEntity: 'flag',
       type: 'delete-additional-audience',
