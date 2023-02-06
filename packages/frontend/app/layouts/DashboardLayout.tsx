@@ -5,12 +5,12 @@ import { Container } from "~/components/Container";
 import { Spacer } from "~/components/Spacer";
 import { NavProvider } from "~/components/Breadcrumbs/providers/NavProvider";
 import { InertWhenNavOpened } from "~/components/Breadcrumbs/InertWhenNavOpened";
-import { UseDropdown } from "~/modules/user/components/UserDropdown";
+import { UserDropdown } from "~/modules/user/components/UserDropdown";
 import { useMatches } from "@remix-run/react";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 
 export interface DashboardLayoutProps {
-  user?: Partial<User>;
+  user: User;
   children: React.ReactNode;
   subNav?: React.ReactNode;
   status?: React.ReactNode;
@@ -36,7 +36,7 @@ export const DashboardLayout = ({
         <Container>
           <div className="flex justify-between h-14 items-center">
             <BreadCrumbs crumbs={crumbs} />
-            <UseDropdown user={user} />
+            <UserDropdown user={user} />
           </div>
         </Container>
       </div>
@@ -51,7 +51,7 @@ export const DashboardLayout = ({
             <Spacer size={12} />
 
             <Main>
-              <div className="flex flex-col gap-2 md:gap-6">
+              <div className="flex flex-col gap-4 md:gap-6">
                 {status}
 
                 {children}

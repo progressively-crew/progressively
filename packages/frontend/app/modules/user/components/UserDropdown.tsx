@@ -8,12 +8,13 @@ export interface UserDropdownProps {
   user: User;
 }
 
-export const UseDropdown = ({ user }: UserDropdownProps) => {
+export const UserDropdown = ({ user }: UserDropdownProps) => {
   return (
-    <nav aria-label="User related" className="flex flex-row gap-2">
+    <nav aria-label="User related" className="hidden lg:flex flex-row gap-2 ">
       <ThemeSwitch />
+
       <Button
-        to="/profile"
+        to="/dashboard/profile"
         className="text-sm"
         icon={<Avatar aria-hidden>{user.fullname}</Avatar>}
         variant="tertiary"

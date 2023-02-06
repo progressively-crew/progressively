@@ -32,7 +32,7 @@ export const DeleteEntityLayout = ({
   return (
     <div className="bg-gray-50 dark:bg-slate-900 h-full flex-1">
       <main
-        className="mx-auto max-w-2xl lg:pt-20 "
+        className="mx-auto max-w-2xl lg:pt-20 px-4 md:px-12"
         aria-labelledby="page-title"
       >
         {error}
@@ -53,7 +53,7 @@ export const DeleteEntityLayout = ({
           <Card
             scheme="ERROR"
             footer={
-              <div className="flex justify-between gap-8">
+              <div className="flex flex-col md:flex-row justify-between gap-4 md:gap-8">
                 {cancelAction}
                 {confirmAction}
               </div>

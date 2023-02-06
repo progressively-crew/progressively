@@ -24,14 +24,18 @@ export const FlagList = ({ flags, projectId, envId }: FlagListProps) => {
             description={flagEnv.flag.description}
             actions={
               <>
-                <ButtonCopy toCopy={flagEnv.flag.key}>
-                  {flagEnv.flag.key}
-                </ButtonCopy>
-                <ToggleFlag
-                  isFlagActivated={flagEnv.status === FlagStatus.ACTIVATED}
-                  flagId={flagEnv.flagId}
-                  onClick={(e) => e.stopPropagation()}
-                />
+                <div className="hidden md:block">
+                  <ButtonCopy toCopy={flagEnv.flag.key}>
+                    {flagEnv.flag.key}
+                  </ButtonCopy>
+                </div>
+                <div className="hidden md:block">
+                  <ToggleFlag
+                    isFlagActivated={flagEnv.status === FlagStatus.ACTIVATED}
+                    flagId={flagEnv.flagId}
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                </div>
               </>
             }
           />

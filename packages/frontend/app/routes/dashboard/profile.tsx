@@ -27,17 +27,6 @@ import { Typography } from "~/components/Typography";
 import { Button } from "~/components/Buttons/Button";
 import { Spacer } from "~/components/Spacer";
 
-export const handle = {
-  breadcrumb: () => {
-    return {
-      link: `/dashboard`,
-      label: "Projects",
-      isRoot: true,
-      forceNotCurrent: true,
-    };
-  },
-};
-
 export const meta: MetaFunction = () => {
   return {
     title: "Progressively | Profile",
@@ -105,6 +94,7 @@ export default function ProfilePage() {
   const transition = useTransition();
   const data = useActionData<ActionData>();
   const { user } = useLoaderData<LoaderData>();
+
   const passwordUpdated = data?.passwordUpdated;
   const errors = data?.errors;
 

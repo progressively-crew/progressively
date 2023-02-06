@@ -7,7 +7,6 @@ import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { EnvNavBar } from "~/modules/environments/components/EnvNavbar";
 import { MetaFunction } from "@remix-run/node";
 import { Card, CardContent } from "~/components/Card";
-import { Stack } from "~/components/Stack";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
@@ -37,63 +36,59 @@ export default function EnvSettingsPage() {
     >
       <PageTitle value="Settings" />
 
-      <Stack spacing={8}>
+      <Card
+        footer={
+          <ButtonCopy toCopy={environment.clientKey} size="M">
+            {environment.clientKey}
+          </ButtonCopy>
+        }
+      >
+        <CardContent>
+          <Section id="general">
+            <SectionHeader
+              title="General"
+              description={
+                "The following is the client key to use inside your application to retrieve the flags"
+              }
+            />
+          </Section>
+        </CardContent>
+      </Card>
+
+      {userRole === UserRoles.Admin && (
         <Card
           footer={
-            <ButtonCopy toCopy={environment.clientKey} size="M">
-              {environment.clientKey}
-            </ButtonCopy>
+            <DeleteButton
+              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/delete`}
+            >
+              <span aria-hidden>
+                Delete{" "}
+                <span className="hidden md:inline">
+                  {`"${environment.name}"`} forever
+                </span>
+              </span>
+
+              <VisuallyHidden>
+                Delete {`"${environment.name}"`} forever
+              </VisuallyHidden>
+            </DeleteButton>
           }
         >
           <CardContent>
-            <Section id="general">
+            <Section id="danger">
               <SectionHeader
-                title="General"
+                title="Danger zone"
+                titleAs="h3"
                 description={
-                  "The following is the client key to use inside your application to retrieve the flags"
+                  "You can delete an environment at any time, but you won't be able to access its flags will be removed and be falsy in your applications. Be sure to know what you're doing before removing an environment."
                 }
               />
+
+              <Spacer size={4} />
             </Section>
           </CardContent>
         </Card>
-
-        {userRole === UserRoles.Admin && (
-          <Card
-            footer={
-              <div className="inline-block">
-                <DeleteButton
-                  to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/delete`}
-                >
-                  <span aria-hidden>
-                    Delete{" "}
-                    <span className="hidden md:inline">
-                      {`"${environment.name}"`} forever
-                    </span>
-                  </span>
-
-                  <VisuallyHidden>
-                    Delete {`"${environment.name}"`} forever
-                  </VisuallyHidden>
-                </DeleteButton>
-              </div>
-            }
-          >
-            <CardContent>
-              <Section id="danger">
-                <SectionHeader
-                  title="Danger zone"
-                  titleAs="h3"
-                  description={
-                    "You can delete an environment at any time, but you won't be able to access its flags will be removed and be falsy in your applications. Be sure to know what you're doing before removing an environment."
-                  }
-                />
-
-                <Spacer size={4} />
-              </Section>
-            </CardContent>
-          </Card>
-        )}
-      </Stack>
+      )}
     </DashboardLayout>
   );
 }

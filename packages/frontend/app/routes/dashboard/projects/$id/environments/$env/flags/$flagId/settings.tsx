@@ -5,7 +5,6 @@ import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { ActionFunction, MetaFunction } from "@remix-run/node";
 import { Card, CardContent } from "~/components/Card";
-import { Stack } from "~/components/Stack";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { useProject } from "~/modules/projects/contexts/useProject";
@@ -71,61 +70,57 @@ export default function FlagSettingPage() {
     >
       <PageTitle value="Settings" />
 
-      <Stack spacing={8}>
+      <Card
+        footer={
+          <ButtonCopy toCopy={currentFlag.key} size="M">
+            {currentFlag.key}
+          </ButtonCopy>
+        }
+      >
+        <CardContent>
+          <Section id="general">
+            <SectionHeader
+              title="General"
+              description={
+                "The following is the flag key to use inside your application to get the flag variation"
+              }
+            />
+          </Section>
+        </CardContent>
+      </Card>
+
+      {userRole === UserRoles.Admin && (
         <Card
           footer={
-            <ButtonCopy toCopy={currentFlag.key} size="M">
-              {currentFlag.key}
-            </ButtonCopy>
+            <DeleteButton
+              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/delete`}
+            >
+              <span aria-hidden>
+                <span>Delete </span>
+                <span className="hidden md:inline">
+                  {currentFlag.name} forever
+                </span>
+              </span>
+
+              <VisuallyHidden>
+                {`Delete ${currentFlag.name} forever`}
+              </VisuallyHidden>
+            </DeleteButton>
           }
         >
           <CardContent>
-            <Section id="general">
+            <Section id="danger">
               <SectionHeader
-                title="General"
+                title="Danger zone"
+                titleAs="h3"
                 description={
-                  "The following is the flag key to use inside your application to get the flag variation"
+                  "You can delete a feature flag at any time, but you  won't be able to access its insights anymore and false will be served to the application using it."
                 }
               />
             </Section>
           </CardContent>
         </Card>
-
-        {userRole === UserRoles.Admin && (
-          <Card
-            footer={
-              <div className="inline-block">
-                <DeleteButton
-                  to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/delete`}
-                >
-                  <span aria-hidden>
-                    <span>Delete </span>
-                    <span className="hidden md:inline">
-                      {currentFlag.name} forever
-                    </span>
-                  </span>
-
-                  <VisuallyHidden>
-                    {`Delete ${currentFlag.name} forever`}
-                  </VisuallyHidden>
-                </DeleteButton>
-              </div>
-            }
-          >
-            <CardContent>
-              <Section id="danger">
-                <SectionHeader
-                  title="Danger zone"
-                  titleAs="h3"
-                  description={
-                    "You can delete a feature flag at any time, but you  won't be able to access its insights anymore and false will be served to the application using it."
-                  }
-                />
-              </Section>
-            </CardContent>
-          </Card>
-        )}
-      </Stack>
+      )}
     </DashboardLayout>
   );
 }

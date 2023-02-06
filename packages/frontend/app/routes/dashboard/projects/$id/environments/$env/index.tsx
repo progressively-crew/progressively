@@ -3,7 +3,6 @@ import { FlagEnv } from "~/modules/flags/types";
 import { getSession } from "~/sessions";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { Section } from "~/components/Section";
 import { EmptyState } from "~/components/EmptyState";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { FlagList } from "~/modules/flags/components/FlagList";
@@ -101,52 +100,48 @@ export default function FlagsByEnvPage() {
     >
       <PageTitle value="Feature flags" />
 
-      <Section aria-label="List of feature flags">
-        {hasFlags ? (
-          <div>
-            <SearchLayout
-              actions={
+      {hasFlags ? (
+        <>
+          <SearchLayout
+            actions={
+              <CreateButton
+                to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/create`}
+              >
+                Create a feature flag
+              </CreateButton>
+            }
+          >
+            <SearchBar
+              label="Search for flags"
+              placeholder="e.g: The flag"
+              count={isSearching ? filteredFlags.length : undefined}
+            />
+          </SearchLayout>
+
+          <FlagList
+            flags={filteredFlags}
+            envId={environment.uuid}
+            projectId={project.uuid}
+          />
+        </>
+      ) : (
+        <Card>
+          <CardContent>
+            <EmptyState
+              titleAs="h2"
+              title="No flags found"
+              description={"There are no flags yet on this environment."}
+              action={
                 <CreateButton
                   to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/create`}
                 >
                   Create a feature flag
                 </CreateButton>
               }
-            >
-              <SearchBar
-                label="Search for flags"
-                placeholder="e.g: The flag"
-                count={isSearching ? filteredFlags.length : undefined}
-              />
-            </SearchLayout>
-
-            <Spacer size={4} />
-
-            <FlagList
-              flags={filteredFlags}
-              envId={environment.uuid}
-              projectId={project.uuid}
             />
-          </div>
-        ) : (
-          <Card>
-            <CardContent>
-              <EmptyState
-                titleAs="h2"
-                title="No flags found"
-                description={"There are no flags yet on this environment."}
-                action={
-                  <CreateButton
-                    to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/create`}
-                  >
-                    Create a feature flag
-                  </CreateButton>
-                }
-              />
-            </CardContent>
-          </Card>
-        )}
-      </Section>
+          </CardContent>
+        </Card>
+      )}
     </DashboardLayout>
   );
 }

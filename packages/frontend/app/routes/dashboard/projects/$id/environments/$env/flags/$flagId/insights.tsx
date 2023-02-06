@@ -214,12 +214,12 @@ export default function FlagInsights() {
 
             <Spacer size={4} />
 
-            <div className="grid grid-cols-4 gap-8">
+            <div className="grid md:grid-cols-4 gap-4 md:gap-8">
               <EvalCard count={flagEvaluationsCount} />
 
-              <div className="w-full col-span-3">
+              <div className="w-full md:col-span-3">
                 <Card>
-                  <div className="pr-6" style={{ height: 300 }}>
+                  <div className="md:pr-6 md:h-[300px]">
                     {hitsPerVariantPerDate.length > 0 ? (
                       <LineChart data={hitsPerVariantPerDate} />
                     ) : (

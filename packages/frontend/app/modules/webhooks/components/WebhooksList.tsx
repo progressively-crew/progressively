@@ -26,7 +26,7 @@ export const WebhooksList = ({
               On event <WebhookEvent value={webhook.event} />
             </p>
           }
-          actions={
+          menu={
             <MenuButton
               items={[
                 {

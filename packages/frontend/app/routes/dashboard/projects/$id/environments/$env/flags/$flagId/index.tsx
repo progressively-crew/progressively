@@ -234,7 +234,7 @@ export default function FlagById() {
             <SectionHeader
               title="Range of eligibility"
               description={`Only people in the percentage range will be eligible to flag evaluation.`}
-              action={
+              menu={
                 <MenuButton
                   variant="action"
                   items={[

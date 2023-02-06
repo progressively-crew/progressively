@@ -15,7 +15,7 @@ export const PageTitle = ({
   endAction,
 }: PageTitleProps) => {
   return (
-    <div className="flex flex-col md:flex-row md:justify-between gap-3 items-center">
+    <div className="flex flex-col md:flex-row md:justify-between gap-3 md:items-center">
       <div>
         <HStack spacing={3}>
           <h1
@@ -35,7 +35,7 @@ export const PageTitle = ({
         )}
       </div>
 
-      <div>{action}</div>
+      {action}
     </div>
   );
 };

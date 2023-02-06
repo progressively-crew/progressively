@@ -18,7 +18,9 @@ export const EnvList = ({ environments, projectId }: EnvListProps) => {
           title={env.name}
           link={`/dashboard/projects/${projectId}/environments/${env.uuid}`}
           actions={
-            <ButtonCopy toCopy={env.clientKey}>{env.clientKey}</ButtonCopy>
+            <div className="hidden md:block">
+              <ButtonCopy toCopy={env.clientKey}>{env.clientKey}</ButtonCopy>
+            </div>
           }
         />
       ))}

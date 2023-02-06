@@ -43,7 +43,7 @@ export const EmptyState = ({
 
       <Spacer size={2} />
 
-      {action && <div className="inline-block">{action}</div>}
+      {action && <div className="inline-block w-full md:w-auto">{action}</div>}
     </div>
   );
 };

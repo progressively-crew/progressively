@@ -38,7 +38,7 @@ export const MetricPerVariantList = ({ items }: MetricPerVariantListProps) => {
             <EntityField
               name="Variant eval."
               value={
-                <strong>{mHit.variant ? mHit.variantCount : "N/A"}</strong>
+                <strong>{mHit.variant ? mHit.variantCount || 0 : "N/A"}</strong>
               }
             />
 

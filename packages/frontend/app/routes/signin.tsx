@@ -124,19 +124,9 @@ export default function Signin() {
         ) : null
       }
     >
-      <Card>
+      <Card className="border-0 lg:border lg:py-12">
         <CardContent>
-          <div className="flex flex-row justify-between">
-            <H1Logo>Signin</H1Logo>
-
-            {showRegister && (
-              <Button
-                className="justify-center"
-                to="/register"
-                variant="tertiary"
-              >{`Sign up`}</Button>
-            )}
-          </div>
+          <H1Logo>Progressively</H1Logo>
 
           <Spacer size={16} />
 
@@ -168,14 +158,23 @@ export default function Signin() {
                 </div>
               </div>
 
-              <SubmitButton
-                className="justify-center"
+              <Button
                 isLoading={transition.state === "submitting"}
                 loadingText="Signin in progress, please wait..."
               >
                 Sign in
-              </SubmitButton>
+              </Button>
             </FormGroup>
+
+            {showRegister && (
+              <div className="flex justify-center">
+                <Button
+                  to="/register"
+                  variant="secondary"
+                  className="w-full mt-2"
+                >{`Sign up`}</Button>
+              </div>
+            )}
           </Form>
 
           {oktaConfig.isOktaActivated && (
@@ -184,7 +183,7 @@ export default function Signin() {
               <Separator />
 
               <div className="flex justify-center -mt-3">
-                <Typography className="text-sm px-3 bg-white dark:bg-slate-800">
+                <Typography className="text-sm px-3 bg-white dark:bg-slate-800 text-gray-600">
                   Or signin with
                 </Typography>
               </div>

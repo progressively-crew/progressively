@@ -1,14 +1,19 @@
-import React, { useEffect, useRef } from "react";
+import React, { HTMLAttributes, useEffect, useRef } from "react";
 import { getFocusableNodes } from "~/modules/a11y/utils/getFocusableNodes";
 import { KeyboardKeys } from "~/modules/a11y/utils/keyboardKeys";
 
-export interface FocusTrapProps {
+export interface FocusTrapProps extends HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   isActive: boolean;
   initialElementSelector?: string;
 }
 
-export const FocusTrap = ({ children, isActive, initialElementSelector }: FocusTrapProps) => {
+export const FocusTrap = ({
+  children,
+  isActive,
+  initialElementSelector,
+  ...props
+}: FocusTrapProps) => {
   const trappedRef = useRef<HTMLElement>(null);
 
   /**
@@ -34,7 +39,9 @@ export const FocusTrap = ({ children, isActive, initialElementSelector }: FocusT
 
     // Sends the focus to the element matching the selector if passed
     if (initialElementSelector) {
-      const focusableElement = trappedRef.current.querySelector(`#${initialElementSelector}`);
+      const focusableElement = trappedRef.current.querySelector(
+        `#${initialElementSelector}`
+      );
 
       if (focusableElement) {
         return (focusableElement as HTMLElement).focus();
@@ -79,7 +86,11 @@ export const FocusTrap = ({ children, isActive, initialElementSelector }: FocusT
   };
 
   return (
-    <div ref={trappedRef} onKeyDown={isActive ? handleKeyDown : undefined}>
+    <div
+      ref={trappedRef}
+      onKeyDown={isActive ? handleKeyDown : undefined}
+      {...props}
+    >
       {children}
     </div>
   );
