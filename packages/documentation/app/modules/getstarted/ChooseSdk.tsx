@@ -28,7 +28,7 @@ export const ChooseSdk = () => {
         <div className="pt-4 inline-block">
           <Button
             variant="secondary"
-            to="/docs/developers/sdk"
+            href="https://progressively.gitbook.io/docs/developpers/sdks"
             icon={
               <BsArrowRight
                 aria-hidden

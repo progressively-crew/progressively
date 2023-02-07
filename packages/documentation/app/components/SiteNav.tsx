@@ -1,7 +1,6 @@
 import { Link } from "@remix-run/react";
 import { HideTablet } from "./HideMobile";
 import { Logo } from "./Logo";
-import { InertWhenNavOpened } from "./Nav/InertWhenNavOpened";
 
 const NavLink = ({
   children,
@@ -14,6 +13,7 @@ const NavLink = ({
 }) => {
   const className =
     "no-underline font-semibold hover:underline text-gray-800 active:text-gray-600 dark:text-slate-200 active:dark:text-slate-50";
+
   if (href) {
     return (
       <a
@@ -33,41 +33,36 @@ const NavLink = ({
   );
 };
 
-export interface SiteNavProps {
-  navToggleSlot?: React.ReactNode;
-}
-export const SiteNav = ({ navToggleSlot }: SiteNavProps) => {
+export const SiteNav = () => {
   return (
-    <InertWhenNavOpened>
-      <nav className="h-14 border-b border-b-gray-100 px-4 md:px-12 bg-white dark:bg-slate-800 dark:border-b-slate-700">
-        <div className="max-w-screen-2xl mx-auto h-full">
-          <div className="flex flex-row items-center h-full justify-between">
-            <div>
-              <HideTablet>
-                <Link to="/">
-                  <Logo aria-label="Progressively" className="h-8 w-8" />
-                </Link>
-              </HideTablet>
-
-              {navToggleSlot}
-            </div>
-
-            <ul className="flex flex-row gap-8">
-              <li>
-                <NavLink to="/docs/introduction/why">Documentation</NavLink>
-              </li>
-              <li className="hidden md:block">
-                <NavLink to="/demo-instance">Demo instance</NavLink>
-              </li>
-              <li>
-                <NavLink href="https://github.com/progressively-crew/progressively">
-                  Github
-                </NavLink>
-              </li>
-            </ul>
+    <nav className="h-14 border-b border-b-gray-100 px-4 md:px-12 bg-white dark:bg-slate-800 dark:border-b-slate-700">
+      <div className="max-w-screen-2xl mx-auto h-full">
+        <div className="flex flex-row items-center h-full justify-between">
+          <div>
+            <HideTablet>
+              <Link to="/">
+                <Logo aria-label="Progressively" className="h-8 w-8" />
+              </Link>
+            </HideTablet>
           </div>
+
+          <ul className="flex flex-row gap-8">
+            <li>
+              <NavLink href="https://progressively.gitbook.io/docs/">
+                Documentation
+              </NavLink>
+            </li>
+            <li className="hidden md:block">
+              <NavLink to="/demo-instance">Demo instance</NavLink>
+            </li>
+            <li>
+              <NavLink href="https://github.com/progressively-crew/progressively">
+                Github
+              </NavLink>
+            </li>
+          </ul>
         </div>
-      </nav>
-    </InertWhenNavOpened>
+      </div>
+    </nav>
   );
 };

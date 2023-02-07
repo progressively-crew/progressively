@@ -24,7 +24,7 @@ export const Hero = () => {
         <Catchphrase />
 
         <div className="mt-8 flex flex-wrap gap-4">
-          <Button to="/docs/introduction/getting-started" size="L">
+          <Button href="https://progressively.gitbook.io/docs/" size="L">
             Get Started
           </Button>
         </div>

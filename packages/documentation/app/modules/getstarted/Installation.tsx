@@ -27,7 +27,7 @@ export const Installation = () => {
         <div className="pt-4 inline-block">
           <Button
             variant="secondary"
-            to="/docs/introduction/getting-started"
+            href="https://progressively.gitbook.io/docs/getting-started/quick-start"
             icon={
               <BsArrowRight
                 aria-hidden
