@@ -13,6 +13,7 @@ const NavLink = ({
 }) => {
   const className =
     "no-underline font-semibold hover:underline text-gray-800 active:text-gray-600 dark:text-slate-200 active:dark:text-slate-50";
+
   if (href) {
     return (
       <a
