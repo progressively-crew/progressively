@@ -10,14 +10,14 @@
     "test:e2e:ci": "PROJECT_ROOT=$(pwd) npm run test:e2e:ci --prefix node_modules/@progressively/cypress-helpers"
   },
   "dependencies": {
-    "@progressively/react": "file:../../packages/react",
-    "@progressively/server-side": "file:../../packages/server-side",
+    "@progressively/react": "0.0.1-beta.1",
+    "@progressively/server-side": "0.0.1-alpha.19",
     "next": "12.1.6",
     "react": "18.1.0",
     "react-dom": "18.1.0"
   },
   "devDependencies": {
-    "@progressively/cypress-helpers": "file:../cypress-helpers",
+    "@progressively/cypress-helpers": "1.0.0",
     "@types/node": "17.0.31",
     "@types/react": "18.0.9",
     "eslint": "8.15.0",
