@@ -44,6 +44,7 @@
     "got": "^11.8.5",
     "helmet": "^6.0.1",
     "ioredis": "^5.2.5",
+    "isbot": "^3.6.5",
     "joi": "^17.7.0",
     "jsonwebtoken": "^8.5.1",
     "murmurhash3js": "^3.0.1",
