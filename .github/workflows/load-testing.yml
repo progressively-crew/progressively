@@ -35,7 +35,7 @@ jobs:
 
       - name: Install the cypress-helpers dependencies
         working-directory: ./packages/load-testing
-        run: npm ci
+        run: npm i
 
       - name: Start the Example node project
         working-directory: ./packages/load-testing

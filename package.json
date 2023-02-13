@@ -12,7 +12,6 @@
     "db:cleanup": "lerna run db:cleanup",
     "gen:user": "npm --prefix packages/backend run gen:user",
     "setup": "npm i && lerna bootstrap",
-    "setup:ci": "npm ci --legacy-peer-deps && lerna bootstrap -- --legacy-peer-deps",
     "start": "lerna run start --stream",
     "start:dev": "lerna run dev --stream",
     "test:e2e:ci": "lerna run test:e2e:ci --stream",
