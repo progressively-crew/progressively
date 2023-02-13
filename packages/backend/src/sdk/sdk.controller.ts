@@ -10,6 +10,7 @@ import {
   Headers,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
+import * as isbot from 'isbot';
 import { SdkService } from './sdk.service';
 import { EventHit } from './types';
 
@@ -38,6 +39,12 @@ export class SdkController {
     @Req() request: Request,
     @Headers() headers,
   ) {
+    // Make sure to always resolve nothing when the user agent is a bot
+    const ua = headers['user-agent'];
+    if (isbot(ua)) {
+      return {};
+    }
+
     // User section, managing the user ID and cookies
     const cookieUserId = request?.cookies?.[COOKIE_KEY];
     const fields = this.sdkService.parseBase64Params(base64Params);
