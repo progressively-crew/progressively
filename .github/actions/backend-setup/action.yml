@@ -19,7 +19,7 @@ runs:
 
     - name: Bootstrap projects
       shell: bash
-      run: npm run setup:ci
+      run: npm run setup
 
     - name: Prepare the DB
       shell: bash

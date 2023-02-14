@@ -19,15 +19,11 @@ jobs:
           cache-dependency-path: packages/react/package-lock.json
 
       - name: Bootstrap projects
-        run: npm run setup:ci
+        run: npm run setup
 
-      - name: Build sdk JS (dependency)
+      - name: Build projects
+        shell: bash
         run: npm run build
-        working-directory: ./packages/sdk-js
-
-      - name: Build sdk react
-        run: npm run build
-        working-directory: ./packages/react
 
       - name: Tests
         working-directory: ./packages/react

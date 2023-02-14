@@ -1,4 +1,5 @@
 {
+  "name": "@progressively/documentation",
   "private": true,
   "sideEffects": false,
   "scripts": {

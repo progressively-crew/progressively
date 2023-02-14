@@ -12,13 +12,14 @@
     }
   },
   "scripts": {
-    "build": "rollup -c rollup.config.js",
+    "build": "rollup -c rollup.config.mjs",
     "build:dev": "npm run build -- --environment BUILD:development",
     "test": "jest",
     "bundlesize": "bundlesize --enable-github-checks"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.3.0",
+    "@rollup/plugin-terser": "^0.4.0",
     "@rollup/plugin-typescript": "^8.3.2",
     "@testing-library/jest-dom": "^5.16.4",
     "@types/jest": "^28.1.1",
@@ -28,7 +29,6 @@
     "jest-environment-jsdom": "^28.1.1",
     "msw": "^0.42.1",
     "rollup": "^2.75.6",
-    "rollup-plugin-terser": "^7.0.2",
     "ts-jest": "^28.0.4",
     "ts-loader": "^9.3.0",
     "typescript": "^4.7.3"

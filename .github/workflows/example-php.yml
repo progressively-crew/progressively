@@ -33,13 +33,9 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ./.github/actions/backend-setup
 
-      - name: Install the cypress-helpers dependencies
-        working-directory: ./example/cypress-helpers
-        run: npm ci
-
       - name: Install dependencies on the example project
         working-directory: ./example/php
-        run: npm ci && composer install
+        run: composer install
 
       - name: Start the Example PHP project
         working-directory: ./example/php

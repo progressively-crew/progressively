@@ -1,5 +1,5 @@
 {
-  "name": "bundle-diffs",
+  "name": "@progressively/example-bundle-diff",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -13,7 +13,7 @@
     "@flagship.io/react-sdk": "^3.0.7",
     "@growthbook/growthbook-react": "^0.9.0",
     "@next/bundle-analyzer": "^12.2.2",
-    "@progressively/react": "file:../../packages/react",
+    "@progressively/react": "0.0.1-beta.1",
     "@unleash/proxy-client-react": "^3.4.0",
     "launchdarkly-react-client-sdk": "^2.26.0",
     "next": "12.2.2",

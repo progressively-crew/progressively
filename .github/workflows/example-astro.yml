@@ -33,18 +33,6 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ./.github/actions/backend-setup
 
-      - name: Install the cypress-helpers dependencies
-        working-directory: ./example/cypress-helpers
-        run: npm ci
-
-      - name: Install dependencies on the example project
-        working-directory: ./example/astro
-        run: npm ci
-
-      - name: Build project
-        working-directory: ./example/astro
-        run: npm run build
-
       - name: Start the Example AstroBuild project
         working-directory: ./example/astro
         run: npm start &

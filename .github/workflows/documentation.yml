@@ -24,7 +24,7 @@ jobs:
       - name: Check env variable
         run: echo $PROGRESSIVELY_ENV
       - name: Install
-        run: npm ci
+        run: npm i
         working-directory: ./packages/documentation
 
       - name: Build the project and start

@@ -1,9 +1,9 @@
 {
-  "name": "cra",
+  "name": "@progressively/example-cra",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@progressively/react": "file:../../packages/react",
+    "@progressively/react": "0.0.1-beta.1",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.2.0",
     "@testing-library/user-event": "^14.1.1",
@@ -14,7 +14,7 @@
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
-    "@progressively/cypress-helpers": "file:../cypress-helpers"
+    "@progressively/cypress-helpers": "1.0.0"
   },
   "scripts": {
     "start": "rm -rf ../../packages/react/node_modules && react-scripts start",

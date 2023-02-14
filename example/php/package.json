@@ -1,5 +1,5 @@
 {
-  "name": "php-sdk",
+  "name": "@progressively/example-php",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,7 +9,7 @@
     "test:e2e:ci": "PROJECT_ROOT=$(pwd) npm run test:e2e:ci --prefix node_modules/@progressively/cypress-helpers"
   },
   "dependencies": {
-    "@progressively/cypress-helpers": "file:../cypress-helpers"
+    "@progressively/cypress-helpers": "1.0.0"
   },
   "keywords": [],
   "author": "",
