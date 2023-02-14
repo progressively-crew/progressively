@@ -20,7 +20,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./packages/sdk-js
-        run: npm ci
+        run: npm i
 
       - name: Tests
         working-directory: ./packages/sdk-js

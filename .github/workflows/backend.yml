@@ -43,7 +43,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./packages/backend
-        run: npm ci
+        run: npm i
 
       - name: Preparation
         working-directory: ./packages/backend

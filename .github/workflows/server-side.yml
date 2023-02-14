@@ -19,7 +19,7 @@ jobs:
           cache-dependency-path: packages/server-side/package-lock.json
 
       - name: Install dependencies
-        run: npm ci
+        run: npm i
         working-directory: ./packages/server-side
 
       - name: Build sdk react
