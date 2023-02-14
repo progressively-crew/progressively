@@ -1,5 +1,5 @@
 {
-  "name": "nextjs",
+  "name": "@progressively/example-next",
   "private": true,
   "scripts": {
     "dev": "next dev",

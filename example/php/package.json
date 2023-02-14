@@ -1,5 +1,5 @@
 {
-  "name": "php-sdk",
+  "name": "@progressively/example-php",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",

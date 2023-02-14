@@ -1,5 +1,5 @@
 {
-  "name": "node",
+  "name": "@progressively/example-node",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
