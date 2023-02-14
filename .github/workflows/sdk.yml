@@ -18,6 +18,10 @@ jobs:
           cache: "npm"
           cache-dependency-path: packages/sdk-js/package-lock.json
 
+      - name: Bootstrap projects
+        shell: bash
+        run: npm run setup
+
       - name: Tests
         working-directory: ./packages/sdk-js
         run: npm run test
