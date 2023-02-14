@@ -33,18 +33,6 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ./.github/actions/backend-setup
 
-      - name: Install the cypress-helpers dependencies
-        working-directory: ./example/cypress-helpers
-        run: npm i
-
-      - name: Install dependencies on the example project
-        working-directory: ./example/nextjs
-        run: npm i
-
-      - name: Build project
-        working-directory: ./example/nextjs
-        run: npm run build
-
       - name: Start project
         working-directory: ./example/nextjs
         run: npm start &

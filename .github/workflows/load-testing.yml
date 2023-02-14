@@ -33,10 +33,6 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ./.github/actions/backend-setup
 
-      - name: Install the cypress-helpers dependencies
-        working-directory: ./packages/load-testing
-        run: npm i
-
       - name: Start the Example node project
         working-directory: ./packages/load-testing
         run: npm start &
