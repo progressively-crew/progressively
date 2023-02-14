@@ -21,6 +21,10 @@ jobs:
       - name: Bootstrap projects
         run: npm run setup
 
+      - name: Build projects
+        shell: bash
+        run: npm run build
+
       - name: Tests
         working-directory: ./packages/react
         run: npm run test

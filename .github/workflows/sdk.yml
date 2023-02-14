@@ -22,6 +22,10 @@ jobs:
         shell: bash
         run: npm run setup
 
+      - name: Build projects
+        shell: bash
+        run: npm run build
+
       - name: Tests
         working-directory: ./packages/sdk-js
         run: npm run test
