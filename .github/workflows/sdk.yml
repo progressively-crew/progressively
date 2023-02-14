@@ -18,17 +18,9 @@ jobs:
           cache: "npm"
           cache-dependency-path: packages/sdk-js/package-lock.json
 
-      - name: Install dependencies
-        working-directory: ./packages/sdk-js
-        run: npm i
-
       - name: Tests
         working-directory: ./packages/sdk-js
         run: npm run test
-
-      - name: Build
-        working-directory: ./packages/sdk-js
-        run: npm run build
 
       - name: Bundlesize
         working-directory: ./packages/sdk-js

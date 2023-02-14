@@ -21,14 +21,6 @@ jobs:
       - name: Bootstrap projects
         run: npm run setup
 
-      - name: Build sdk JS (dependency)
-        run: npm run build
-        working-directory: ./packages/sdk-js
-
-      - name: Build sdk react
-        run: npm run build
-        working-directory: ./packages/react
-
       - name: Tests
         working-directory: ./packages/react
         run: npm run test
