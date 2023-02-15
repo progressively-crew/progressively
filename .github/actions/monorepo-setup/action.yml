@@ -37,6 +37,8 @@ runs:
       shell: bash
       run: pnpm run setup
 
+    - run: cat /home/runner/.cache/Cypress
+
     - name: Prepare the DB
       shell: bash
       run: pnpm run db:prepare
