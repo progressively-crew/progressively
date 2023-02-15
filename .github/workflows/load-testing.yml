@@ -34,7 +34,7 @@ jobs:
       - uses: ./.github/actions/monorepo-setup
 
       - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+        run: npx --yes playwright install --with-deps
 
       - name: Start the Example node project
         working-directory: ./packages/load-testing
