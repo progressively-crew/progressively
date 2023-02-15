@@ -13,7 +13,7 @@
   "types": "./lib/legacy",
   "scripts": {
     "build": "rollup -c rollup.config.mjs",
-    "build:dev": "npm run build -- --environment BUILD:development",
+    "build:dev": "pnpm run build -- --environment BUILD:development",
     "test": "jest",
     "bundlesize": "bundlesize --enable-github-checks"
   },

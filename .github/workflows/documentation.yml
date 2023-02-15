@@ -15,26 +15,15 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "18"
-          cache: "npm"
-          cache-dependency-path: |
-            package-lock.json
-            packages/frontend/package-lock.json
-            packages/backend/package-lock.json
 
+      - uses: ./.github/actions/monorepo-setup
       - name: Check env variable
         run: echo $PROGRESSIVELY_ENV
-      - name: Install
-        run: npm i
-        working-directory: ./packages/documentation
-
-      - name: Build the project and start
-        run: npm run build
-        working-directory: ./packages/documentation
 
       - name: Start the project
-        run: npm start &
+        run: pnpm start &
         working-directory: ./packages/documentation
 
       - name: E2E tests
-        run: npx wait-on -t 60000 tcp:3000 && npm run test:e2e:ci
+        run: npx wait-on -t 60000 tcp:3000 && pnpm run test:e2e:ci
         working-directory: ./packages/documentation

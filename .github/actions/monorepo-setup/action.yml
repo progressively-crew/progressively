@@ -4,16 +4,48 @@ runs:
   using: "composite"
   steps:
     - uses: actions/setup-node@v2
-    - uses: ./.github/actions/backend-setup
+      name: Install Node 18
       with:
         node-version: "18"
-        cache: "npm"
-        cache-dependency-path: |
-          package-lock.json
-          packages/frontend/package-lock.json
-          packages/backend/package-lock.json
 
-    - name: Start the frontend project
-      working-directory: ./packages/frontend
+    - uses: pnpm/action-setup@v2
+      name: Install pnpm
+      id: pnpm-install
+      with:
+        version: 7
+        run_install: false
+
+    - name: Get pnpm store directory
+      id: pnpm-cache
       shell: bash
-      run: npm start &
+      run: |
+        echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+    - uses: actions/cache@v3
+      name: Setup pnpm cache
+      with:
+        path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-pnpm-store-
+
+    - name: Creating .env files
+      shell: bash
+      run: mv ./packages/frontend/.env.example ./packages/frontend/.env && mv ./packages/backend/.env.example ./packages/backend/.env
+
+    - name: Bootstrap projects
+      shell: bash
+      run: pnpm run setup
+
+    - name: Prepare the DB
+      shell: bash
+      run: pnpm run db:prepare
+
+    - name: Build
+      shell: bash
+      run: pnpm run build
+
+    - name: Start the backend project
+      working-directory: ./packages/backend
+      shell: bash
+      run: pnpm start &

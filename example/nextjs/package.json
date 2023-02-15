@@ -6,8 +6,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test:e2e": "PROJECT_ROOT=$(pwd) npm run test:e2e --prefix node_modules/@progressively/cypress-helpers",
-    "test:e2e:ci": "PROJECT_ROOT=$(pwd) npm run test:e2e:ci --prefix node_modules/@progressively/cypress-helpers"
+    "test:e2e": "PROJECT_ROOT=$(pwd) pnpm --filter @progressively/cypress-helpers run test:e2e",
+    "test:e2e:ci": "PROJECT_ROOT=$(pwd) pnpm --filter @progressively/cypress-helpers run test:e2e:ci"
   },
   "dependencies": {
     "@progressively/react": "0.0.1-beta.1",

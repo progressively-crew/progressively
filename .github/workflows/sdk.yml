@@ -15,21 +15,12 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "18"
-          cache: "npm"
-          cache-dependency-path: packages/sdk-js/package-lock.json
-
-      - name: Bootstrap projects
-        shell: bash
-        run: npm run setup
-
-      - name: Build projects
-        shell: bash
-        run: npm run build
+      - uses: ./.github/actions/monorepo-setup
 
       - name: Tests
         working-directory: ./packages/sdk-js
-        run: npm run test
+        run: pnpm run test
 
       - name: Bundlesize
         working-directory: ./packages/sdk-js
-        run: npm run bundlesize
+        run: pnpm run bundlesize

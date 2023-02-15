@@ -15,17 +15,8 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "18"
-          cache: "npm"
-          cache-dependency-path: packages/server-side/package-lock.json
-
-      - name: Install dependencies
-        run: npm i
-        working-directory: ./packages/server-side
-
-      - name: Build sdk react
-        run: npm run build
-        working-directory: ./packages/server-side
+      - uses: ./.github/actions/monorepo-setup
 
       - name: Bundlesize
         working-directory: ./packages/server-side
-        run: npm run bundlesize
+        run: pnpm run bundlesize
