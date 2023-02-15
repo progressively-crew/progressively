@@ -498,6 +498,7 @@ importers:
       '@types/jest': ^29.4.0
       '@types/node-fetch': ^2.6.1
       '@types/react': ^18.0.28
+      '@types/testing-library__jest-dom': ^5.14.5
       bundlesize2: ^0.0.31
       jest: ^29.4.2
       jest-environment-jsdom: ^29.4.2
@@ -519,6 +520,7 @@ importers:
       '@types/jest': 29.4.0
       '@types/node-fetch': 2.6.2
       '@types/react': 18.0.28
+      '@types/testing-library__jest-dom': 5.14.5
       bundlesize2: 0.0.31
       jest: 29.4.2
       jest-environment-jsdom: 29.4.2
@@ -8267,7 +8269,7 @@ packages:
   /axios/0.25.0:
     resolution: {integrity: sha512-cD8FOb0tRH3uuEe6+evtAbgJtfxr7ly3fQjYcMcuPlgkwVS9xboaVIpcDV+cYQe+yGykgwZCs1pzjntcGa6l5g==}
     dependencies:
-      follow-redirects: 1.15.2_debug@4.3.4
+      follow-redirects: 1.15.2
     transitivePeerDependencies:
       - debug
     dev: true
@@ -12630,6 +12632,7 @@ packages:
         optional: true
     dependencies:
       debug: 4.3.4
+    dev: false
 
   /for-each/0.3.3:
     resolution: {integrity: sha512-jqYfLp7mo9vIyQf8ykW2v7A+2N4QjeCeI5+Dz9XraiO1ign81wjiH7Fb9vSOWvQfNtmSa4H2RoQTrrXivdUZmw==}
@@ -22740,7 +22743,7 @@ packages:
     dependencies:
       bs-logger: 0.2.6
       fast-json-stable-stringify: 2.1.0
-      jest: 29.4.2_ucpl6toqp57nqodtp3vxxi6g5a
+      jest: 29.4.2
       jest-util: 29.4.2
       json5: 2.2.3
       lodash.memoize: 4.1.2

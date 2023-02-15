@@ -20,6 +20,10 @@ jobs:
       - name: Check env variable
         run: echo $PROGRESSIVELY_ENV
 
+      - name: Bootstrap projects
+        shell: bash
+        run: pnpm run setup
+
       - name: Start the project
         run: pnpm start &
         working-directory: ./packages/documentation

@@ -15,6 +15,10 @@ jobs:
 
       - uses: ./.github/actions/monorepo-setup
 
+      - name: Bootstrap projects
+        shell: bash
+        run: pnpm run setup
+
       - name: Lint
         working-directory: ./packages/frontend
         run: pnpm run lint
