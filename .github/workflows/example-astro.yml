@@ -36,6 +36,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
+          install: false
           working-directory: example/astro
           start: pnpm start
           wait-on: "http://localhost:4000"
