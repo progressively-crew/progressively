@@ -33,11 +33,13 @@ runs:
       shell: bash
       run: mv ./packages/frontend/.env.example ./packages/frontend/.env && mv ./packages/backend/.env.example ./packages/backend/.env
 
+    - name: Dirty Cypress hack, make sure to use PW when possible
+      shell: bash
+      run: npm i -g cypress
+
     - name: Bootstrap projects
       shell: bash
       run: pnpm run setup
-
-    - run: cat /home/runner/.cache/Cypress
 
     - name: Prepare the DB
       shell: bash
