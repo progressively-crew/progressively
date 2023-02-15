@@ -15,8 +15,8 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "18"
+      - uses: ./.github/actions/pnpm
 
-      - uses: ./.github/actions/monorepo-setup
       - name: Check env variable
         run: echo $PROGRESSIVELY_ENV
 
