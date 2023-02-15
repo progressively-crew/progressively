@@ -24,6 +24,10 @@ jobs:
         shell: bash
         run: pnpm run setup
 
+      - name: Build projects
+        shell: bash
+        run: pnpm run build
+
       - name: Start the project
         run: pnpm start &
         working-directory: ./packages/documentation
