@@ -48,4 +48,4 @@ runs:
     - name: Start the backend project
       working-directory: ./packages/backend
       shell: bash
-      run: pnpm start
+      run: pnpm start &

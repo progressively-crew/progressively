@@ -39,5 +39,5 @@ jobs:
           install: false
           working-directory: example/astro
           start: pnpm start
-          wait-on: "http://localhost:4000"
+          wait-on: "http://localhost:4000/api"
           command: pnpm run test:e2e:ci
