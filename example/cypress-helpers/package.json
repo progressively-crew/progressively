@@ -10,9 +10,7 @@
   "keywords": [],
   "author": "",
   "dependencies": {
-    "@testing-library/cypress": "^9.0.0"
-  },
-  "peerDependencies": {
+    "@testing-library/cypress": "^9.0.0",
     "cypress": "^12.5.1"
   },
   "devDependencies": {
