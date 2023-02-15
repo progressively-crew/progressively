@@ -15,7 +15,10 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "18"
-      - uses: ./.github/actions/monorepo-setup
+
+      - name: Bootstrap projects
+        shell: bash
+        run: pnpm run setup
 
       - name: Bundlesize
         working-directory: ./packages/server-side
