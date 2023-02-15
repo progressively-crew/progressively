@@ -9,8 +9,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "test:e2e": "PROJECT_ROOT=$(pwd) npm run test:e2e --prefix node_modules/@progressively/cypress-helpers",
-    "test:e2e:ci": "PROJECT_ROOT=$(pwd) npm run test:e2e:ci --prefix node_modules/@progressively/cypress-helpers"
+    "test:e2e": "PROJECT_ROOT=$(pwd) pnpm --filter @progressively/cypress-helpers run test:e2e",
+    "test:e2e:ci": "PROJECT_ROOT=$(pwd) pnpm --filter @progressively/cypress-helpers run test:e2e:ci"
   },
   "dependencies": {
     "@astrojs/node": "^2.0.2",
