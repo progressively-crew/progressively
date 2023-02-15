@@ -40,4 +40,4 @@ jobs:
           working-directory: example/astro
           start: pnpm start
           wait-on: "http://localhost:4000/api"
-          command: ls && pnpm run test:e2e:ci
+          command: pnpm run test:e2e:ci
