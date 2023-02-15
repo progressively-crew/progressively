@@ -13,7 +13,7 @@ jobs:
         with:
           node-version: "18"
 
-      - uses: ./.github/actions/monorepo-setup
+      - uses: ./.github/actions/pnpm
 
       - name: Bootstrap projects
         shell: bash
