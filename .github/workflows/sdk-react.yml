@@ -21,6 +21,11 @@ jobs:
         shell: bash
         run: pnpm run setup
 
+      - name: Build
+        shell: bash
+        working-directory: ./packages/react
+        run: pnpm run build
+
       - name: Tests
         working-directory: ./packages/react
         run: pnpm run test

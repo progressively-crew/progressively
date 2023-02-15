@@ -21,6 +21,11 @@ jobs:
         shell: bash
         run: pnpm run setup
 
+      - name: Build
+        shell: bash
+        working-directory: ./packages/server-side
+        run: pnpm run build
+
       - name: Bundlesize
         working-directory: ./packages/server-side
         run: pnpm run bundlesize

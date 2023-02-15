@@ -21,6 +21,11 @@ jobs:
         shell: bash
         run: pnpm run setup
 
+      - name: Build
+        shell: bash
+        working-directory: ./packages/sdk-js
+        run: pnpm run build
+
       - name: Tests
         working-directory: ./packages/sdk-js
         run: pnpm run test
