@@ -6,13 +6,14 @@
   },
   "scripts": {
     "build": "turbo build",
+    "ci:shared:checks": "turbo db:generate:schema build lint test",
     "db:prepare": "turbo run db:migrate:dev --filter=@progressively/backend && turbo run db:generate:schema --filter=@progressively/backend",
     "db:seed": "turbo run db:seed --filter=@progressively/backend",
     "db:cleanup": "turbo run db:seed --filter=@progressively/backend",
     "setup": "pnpm install",
     "start": "turbo run start --filter=@progressively/frontend --filter=@progressively/backend",
     "dev": "turbo run dev --filter=@progressively/frontend --filter=@progressively/backend",
-    "deploy:lib": "turbo run build lint test && changeset version && changeset publish",
+    "deploy:lib": "turbo run deploy && changeset version && changeset publish",
     "deploy:images": "./scripts/docker-build-deploy.sh"
   },
   "dependencies": {
