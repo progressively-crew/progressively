@@ -2,7 +2,6 @@
   "name": "root",
   "private": true,
   "devDependencies": {
-    "lerna": "^5.4.0",
     "wait-on": "^6.0.1"
   },
   "scripts": {
@@ -13,10 +12,11 @@
     "setup": "pnpm install",
     "start": "turbo run start --filter=@progressively/frontend --filter=@progressively/backend",
     "dev": "turbo run dev --filter=@progressively/frontend --filter=@progressively/backend",
-    "deploy:lib": "lerna publish",
+    "deploy:lib": "turbo run build lint test && changeset version && changeset publish",
     "deploy:images": "./scripts/docker-build-deploy.sh"
   },
   "dependencies": {
+    "@changesets/cli": "^2.26.0",
     "turbo": "^1.7.4"
   }
 }
