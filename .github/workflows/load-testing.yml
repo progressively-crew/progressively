@@ -31,10 +31,11 @@ jobs:
           - 5432:5432
     steps:
       - uses: actions/checkout@v2
-      - uses: ./.github/actions/monorepo-setup
+      - uses: ./.github/actions/monorepo-setupa
 
-      - name: Install Playwright Browsers
-        run: npx --yes playwright install --with-deps
+      - name: Setup CI for tests
+        working-directory: ./packages/load-testing
+        run: pnpm run ci:test:setup
 
       - name: Start the Example node project
         working-directory: ./packages/load-testing
