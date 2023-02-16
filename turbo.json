@@ -10,6 +10,18 @@
     "dev": {
       "dependsOn": []
     },
+    "db:migrate:dev": {
+      "dependsOn": ["^build"]
+    },
+    "db:generate:schema": {
+      "dependsOn": ["^db:migrate:dev"]
+    },
+    "db:seed": {
+      "dependsOn": []
+    },
+    "db:cleanup": {
+      "dependsOn": []
+    },
     "test": {
       // A package's `test` script depends on that package's
       // own `build` script being completed first.
