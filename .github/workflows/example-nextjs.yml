@@ -37,6 +37,14 @@ jobs:
         shell: bash
         run: npm i -g cypress
 
+      - name: Install dependencies
+        shell: bash
+        run: pnpm install --filter nextjs
+
+      - name: Build
+        shell: bash
+        run: pnpm run build --filter nextjs
+
       - name: Start project
         working-directory: ./example/nextjs
         run: pnpm start &

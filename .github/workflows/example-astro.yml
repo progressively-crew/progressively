@@ -37,6 +37,14 @@ jobs:
         shell: bash
         run: npm i -g cypress
 
+      - name: Install dependencies
+        shell: bash
+        run: pnpm install --filter astro
+
+      - name: Build
+        shell: bash
+        run: pnpm run build --filter astro
+
       - name: Start the Example AstroBuild project
         working-directory: ./example/astro
         run: pnpm start &

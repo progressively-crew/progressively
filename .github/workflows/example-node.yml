@@ -37,6 +37,10 @@ jobs:
         shell: bash
         run: npm i -g cypress
 
+      - name: Install dependencies
+        shell: bash
+        run: pnpm install --filter node
+
       - name: Start the Example node project
         working-directory: ./example/node
         run: pnpm start &

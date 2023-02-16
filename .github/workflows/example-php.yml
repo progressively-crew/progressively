@@ -37,6 +37,10 @@ jobs:
         shell: bash
         run: npm i -g cypress
 
+      - name: Install dependencies
+        shell: bash
+        run: pnpm install --filter php
+
       - name: Install dependencies on the example project
         working-directory: ./example/php
         run: composer install
