@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        testPath: ["flags.e2e", "--testPathIgnorePatterns=".*flags\.e2e.*"]
+        testPath: ["flags.e2e", '--testPathIgnorePatterns=".*flags\.e2e.*"']
     services:
       redis:
         image: redis
