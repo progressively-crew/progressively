@@ -1,11 +1,11 @@
-name: Example (SDK Node)
+name: SDK Node
 on:
   pull_request:
     branches: ["master"]
   workflow_dispatch:
 
 jobs:
-  static:
+  e2e:
     runs-on: ubuntu-latest
     services:
       redis:

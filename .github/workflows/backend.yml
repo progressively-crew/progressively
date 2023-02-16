@@ -1,5 +1,4 @@
-name: Backend (Integration Tests)
-
+name: Backend
 env:
   SLEEP_DELAY: 0
 
@@ -9,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  static:
+  integration-test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -41,7 +40,24 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "18"
-      - uses: ./.github/actions/monorepo-setup
+      - uses: ./.github/actions/pnpm
+
+      - name: Install
+        shell: bash
+        run: pnpm install
+
+      - name: Prepare the DB
+        shell: bash
+        run: pnpm run db:prepare
+
+      - name: Build
+        shell: bash
+        run: pnpm run build
+
+      - name: Start the backend project
+        working-directory: ./packages/backend
+        shell: bash
+        run: pnpm start &
 
       - name: API tests (${{ matrix.testPath }})
         working-directory: ./packages/backend
