@@ -10,6 +10,7 @@
   "keywords": [],
   "author": "",
   "dependencies": {
+    "@progressively/database": "^1.0.0",
     "@testing-library/cypress": "^9.0.0",
     "cypress": "^12.5.1"
   },

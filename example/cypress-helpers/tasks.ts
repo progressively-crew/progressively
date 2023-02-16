@@ -1,4 +1,4 @@
-import { cleanupDb, seedDb } from "../../packages/backend/test/helpers/seed";
+import { cleanupDb, seedDb } from "@progressively/database/seed";
 import { authenticate } from "../../packages/backend/test/helpers/authenticate";
 
 export const tasks = () => ({
