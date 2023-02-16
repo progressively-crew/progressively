@@ -39,11 +39,11 @@ jobs:
 
       - name: Install dependencies
         shell: bash
-        run: pnpm install --filter astro
+        run: pnpm install --filter @progressively/example-astro
 
       - name: Build
         shell: bash
-        run: pnpm run build --filter astro
+        run: pnpm run build --filter @progressively/example-astro
 
       - name: Start the Example AstroBuild project
         working-directory: ./example/astro

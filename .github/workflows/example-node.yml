@@ -39,7 +39,7 @@ jobs:
 
       - name: Install dependencies
         shell: bash
-        run: pnpm install --filter node
+        run: pnpm install --filter @progressively/example-node
 
       - name: Start the Example node project
         working-directory: ./example/node

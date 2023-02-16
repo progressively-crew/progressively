@@ -39,7 +39,7 @@ jobs:
 
       - name: Install dependencies
         shell: bash
-        run: pnpm install --filter php
+        run: pnpm install --filter @progressively/example-php
 
       - name: Install dependencies on the example project
         working-directory: ./example/php

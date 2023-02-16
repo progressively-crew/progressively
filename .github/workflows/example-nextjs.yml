@@ -39,11 +39,11 @@ jobs:
 
       - name: Install dependencies
         shell: bash
-        run: pnpm install --filter nextjs
+        run: pnpm install --filter @progressively/example-next
 
       - name: Build
         shell: bash
-        run: pnpm run build --filter nextjs
+        run: pnpm run build --filter @progressively/example-next
 
       - name: Start project
         working-directory: ./example/nextjs

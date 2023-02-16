@@ -39,11 +39,11 @@ jobs:
 
       - name: Install dependencies
         shell: bash
-        run: pnpm install --filter cra
+        run: pnpm install --filter @progressively/example-cra
 
       - name: Build
         shell: bash
-        run: pnpm run build --filter cra
+        run: pnpm run build --filter @progressively/example-cra
 
       - name: Start the Example CRA project
         working-directory: ./example/cra
