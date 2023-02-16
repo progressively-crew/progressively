@@ -1,0 +1,41 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build", "db:generate:schema"]
+    },
+    "lint": {
+      "dependsOn": []
+    },
+    "test": {
+      "dependsOn": ["build"]
+    },
+    "start": {
+      "dependsOn": ["^build"]
+    },
+    "dev": {
+      "dependsOn": []
+    },
+    "db:migrate:dev": {
+      "dependsOn": ["^build"]
+    },
+    "db:generate:schema": {
+      "dependsOn": []
+    },
+    "db:seed": {
+      "dependsOn": []
+    },
+    "db:cleanup": {
+      "dependsOn": []
+    },
+    "bundlesize": {
+      "dependsOn": ["build"]
+    },
+    "deploy": {
+      // A package's `deploy` script depends on the `build`,
+      // `test`, and `lint` scripts of the same package
+      // being completed. It also has no filesystem outputs.
+      "dependsOn": ["build", "test", "lint"]
+    }
+  }
+}

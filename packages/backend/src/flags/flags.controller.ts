@@ -267,12 +267,10 @@ export class FlagsController {
     @Param('flagId') flagId: string,
   ) {
     const activities = await this.flagService.listActivity(envId, flagId);
-    const activitiesDto = activities.map((activity) => ({
+    return activities.map((activity) => ({
       ...activity,
       data: activity.data ? JSON.parse(activity.data) : undefined,
     }));
-
-    return activitiesDto;
   }
 
   @Post('environments/:envId/flags/:flagId/strategies')

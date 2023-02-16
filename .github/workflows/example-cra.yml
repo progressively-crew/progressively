@@ -1,4 +1,4 @@
-name: Example CRA
+name: Example (create-react-app)
 on:
   pull_request:
     branches: ["master"]

@@ -1,4 +1,4 @@
-name: Example SDK Php
+name: Example (SDK PHP)
 on:
   pull_request:
     branches: ["master"]

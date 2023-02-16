@@ -1,4 +1,4 @@
-name: Backend
+name: Backend (Integration Tests)
 
 env:
   SLEEP_DELAY: 0
@@ -39,14 +39,6 @@ jobs:
         with:
           node-version: "18"
       - uses: ./.github/actions/monorepo-setup
-
-      - name: Lint
-        working-directory: ./packages/backend
-        run: pnpm run lint
-
-      - name: Tests
-        working-directory: ./packages/backend
-        run: pnpm run test
 
       - name: API tests
         working-directory: ./packages/backend

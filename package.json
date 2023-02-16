@@ -2,19 +2,22 @@
   "name": "root",
   "private": true,
   "devDependencies": {
-    "lerna": "^5.4.0",
     "wait-on": "^6.0.1"
   },
   "scripts": {
-    "build": "lerna run build",
-    "db:prepare": "lerna run db:migrate:dev && lerna run db:generate:schema",
-    "db:seed": "lerna run db:seed",
-    "db:cleanup": "lerna run db:cleanup",
+    "build": "turbo build",
+    "ci:shared:checks": "turbo db:generate:schema build lint test bundlesize",
+    "db:prepare": "turbo run db:migrate:dev --filter=@progressively/backend && turbo run db:generate:schema --filter=@progressively/backend",
+    "db:seed": "turbo run db:seed --filter=@progressively/backend",
+    "db:cleanup": "turbo run db:seed --filter=@progressively/backend",
     "setup": "pnpm install",
-    "start": "lerna run start --stream",
-    "start:dev": "lerna run dev --stream",
-    "test:e2e:ci": "lerna run test:e2e:ci --stream",
-    "deploy:lib": "lerna publish",
+    "start": "turbo run start --filter=@progressively/frontend --filter=@progressively/backend",
+    "dev": "turbo run dev --filter=@progressively/frontend --filter=@progressively/backend",
+    "deploy:lib": "turbo run deploy && changeset version && changeset publish",
     "deploy:images": "./scripts/docker-build-deploy.sh"
+  },
+  "dependencies": {
+    "@changesets/cli": "^2.26.0",
+    "turbo": "^1.7.4"
   }
 }
