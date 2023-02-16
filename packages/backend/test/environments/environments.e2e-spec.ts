@@ -2,7 +2,7 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { authenticate } from '../helpers/authenticate';
 import { prepareApp } from '../helpers/prepareApp';
-import { cleanupDb, seedDb } from '../helpers/seed';
+import { seedDb, cleanupDb } from '@progressively/database/seed';
 import { verifyAuthGuard } from '../helpers/verify-auth-guard';
 
 describe('Environments (e2e)', () => {

@@ -1,6 +1,6 @@
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { seedDb, cleanupDb } from '../helpers/seed';
+import { seedDb, cleanupDb } from '@progressively/database/seed';
 import { prepareApp } from '../helpers/prepareApp';
 
 jest.mock('nanoid', () => ({
