@@ -31,7 +31,7 @@ jobs:
           - 5432:5432
     steps:
       - uses: actions/checkout@v2
-      - uses: ./.github/actions/backend-setup
+      - uses: ./.github/actions/monorepo-setup
 
       - name: Install dependencies on the example project
         working-directory: ./example/php
@@ -43,4 +43,4 @@ jobs:
 
       - name: E2E tests
         working-directory: ./example/php
-        run: npx wait-on -t 60000 tcp:4000 && npm run test:e2e:ci
+        run: npx wait-on -t 60000 tcp:4000 && pnpm run test:e2e:ci

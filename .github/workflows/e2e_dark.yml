@@ -44,9 +44,14 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ./.github/actions/monorepo-setup
 
+      - name: Start the frontend project
+        working-directory: ./packages/frontend
+        shell: bash
+        run: pnpm start &
+
       # Uncomment for parallel
       - name: E2E tests
-        run: npx wait-on -t 60000 tcp:4000 && npm run test:e2e:ci:dark
+        run: npx wait-on -t 60000 tcp:4000 && pnpm run test:e2e:ci:dark
         working-directory: ./packages/frontend
         # env:
         #   CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}

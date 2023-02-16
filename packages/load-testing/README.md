@@ -11,11 +11,11 @@ They mostly aim to verify that the flag provided to the N users are the good one
 ## How to start the load tests?
 
 - You first need to follow the [Raw installation guide](https://progressively-crew.github.io/docs/get-started/raw-installation)
-- Then, start the backend using `npm run dev` in the `./packages/backend`
-- Then start the dedicated client application running `npm start` in `./packages/load-testing`
+- Then, start the backend using `pnpm run dev` in the `./packages/backend`
+- Then start the dedicated client application running `pnpm start` in `./packages/load-testing`
 - Finally, run one of the following command:
-  - `npm run test:chromium`
-  - `npm run test:firefox`
-  - `npm run test:webkit`
+  - `pnpm run test:chromium`
+  - `pnpm run test:firefox`
+  - `pnpm run test:webkit`
 
-You can adjust the number of clients by running something like `USER_COUNT=100 npm run test:chromium`
+You can adjust the number of clients by running something like `USER_COUNT=100 pnpm run test:chromium`

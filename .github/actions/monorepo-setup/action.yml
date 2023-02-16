@@ -4,16 +4,33 @@ runs:
   using: "composite"
   steps:
     - uses: actions/setup-node@v2
-    - uses: ./.github/actions/backend-setup
+      name: Install Node 18
       with:
         node-version: "18"
-        cache: "npm"
-        cache-dependency-path: |
-          package-lock.json
-          packages/frontend/package-lock.json
-          packages/backend/package-lock.json
 
-    - name: Start the frontend project
-      working-directory: ./packages/frontend
+    - uses: ./.github/actions/pnpm
+
+    - name: Creating .env files
       shell: bash
-      run: npm start &
+      run: mv ./packages/frontend/.env.example ./packages/frontend/.env && mv ./packages/backend/.env.example ./packages/backend/.env
+
+    - name: Dirty Cypress hack, make sure to use PW when possible
+      shell: bash
+      run: npm i -g cypress
+
+    - name: Bootstrap projects
+      shell: bash
+      run: pnpm run setup
+
+    - name: Prepare the DB
+      shell: bash
+      run: pnpm run db:prepare
+
+    - name: Build
+      shell: bash
+      run: pnpm run build
+
+    - name: Start the backend project
+      working-directory: ./packages/backend
+      shell: bash
+      run: pnpm start &

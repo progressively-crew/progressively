@@ -31,12 +31,12 @@ jobs:
           - 5432:5432
     steps:
       - uses: actions/checkout@v2
-      - uses: ./.github/actions/backend-setup
+      - uses: ./.github/actions/monorepo-setup
 
       - name: Start the Example node project
         working-directory: ./example/node
-        run: npm start &
+        run: pnpm start &
 
       - name: E2E tests
         working-directory: ./example/node
-        run: npx wait-on -t 60000 tcp:4000 && npm run test:e2e:ci
+        run: npx wait-on -t 60000 tcp:4000 && pnpm run test:e2e:ci

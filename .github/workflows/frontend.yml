@@ -12,25 +12,17 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "18"
-          cache: "npm"
-          cache-dependency-path: packages/frontend/package-lock.json
 
-      - name: Install dependencies
-        working-directory: ./packages/frontend
-        run: npm i --legacy-peer-deps
+      - uses: ./.github/actions/pnpm
 
-      - name: Preparation
-        working-directory: ./packages/frontend
-        run: mv .env.example .env
+      - name: Bootstrap projects
+        shell: bash
+        run: pnpm run setup
 
       - name: Lint
         working-directory: ./packages/frontend
-        run: npm run lint
+        run: pnpm run lint
 
       - name: Tests
         working-directory: ./packages/frontend
-        run: npm run test
-
-      - name: Build
-        working-directory: ./packages/frontend
-        run: npm run build
+        run: pnpm run test
