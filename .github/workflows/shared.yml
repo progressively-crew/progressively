@@ -1,0 +1,26 @@
+name: Shared checks (turbo)
+on:
+  pull_request:
+    branches: ["master"]
+  workflow_dispatch:
+
+jobs:
+  static:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "18"
+      - uses: ./.github/actions/pnpm
+
+      - name: Bootstrap projects
+        shell: bash
+        run: pnpm run setup
+
+      - name: Shared checks
+        shell: bash
+        run: pnpm run ci:shared:checks

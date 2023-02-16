@@ -28,6 +28,9 @@
     "db:cleanup": {
       "dependsOn": []
     },
+    "bundlesize": {
+      "dependsOn": ["build"]
+    },
     "deploy": {
       // A package's `deploy` script depends on the `build`,
       // `test`, and `lint` scripts of the same package
