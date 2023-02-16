@@ -13,7 +13,7 @@
     "setup": "pnpm install",
     "start": "turbo run start --filter=@progressively/frontend --filter=@progressively/backend",
     "dev": "turbo run dev --filter=@progressively/frontend --filter=@progressively/backend",
-    "deploy:lib": "turbo run deploy && changeset version && changeset publish",
+    "deploy:lib": "pnpm run ci:shared:checks && changeset version && changeset publish",
     "deploy:images": "./scripts/docker-build-deploy.sh"
   },
   "dependencies": {
