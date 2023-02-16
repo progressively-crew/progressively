@@ -31,7 +31,11 @@ jobs:
           - 5432:5432
     steps:
       - uses: actions/checkout@v2
-      - uses: ./.github/actions/monorepo-setup
+      - uses: ./.github/actions/backend-setup
+
+      - name: Dirty Cypress hack, make sure to use PW when possible
+        shell: bash
+        run: npm i -g cypress
 
       - name: Start the Example CRA project
         working-directory: ./example/cra

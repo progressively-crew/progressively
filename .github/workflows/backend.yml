@@ -41,28 +41,7 @@ jobs:
         with:
           node-version: "18"
 
-      - uses: ./.github/actions/pnpm
-
-      - name: Creating .env files
-        shell: bash
-        run: mv ./packages/frontend/.env.example ./packages/frontend/.env && mv ./packages/backend/.env.example ./packages/backend/.env
-
-      - name: Install dependencies
-        shell: bash
-        run: pnpm install --filter backend
-
-      - name: Prepare the DB
-        shell: bash
-        run: pnpm run db:prepare
-
-      - name: Build
-        shell: bash
-        run: pnpm run build --filter backend
-
-      - name: Start the backend project
-        working-directory: ./packages/backend
-        shell: bash
-        run: pnpm start &
+      - uses: ./.github/actions/backend-setup
 
       - name: API tests (${{ matrix.testPath }})
         working-directory: ./packages/backend
