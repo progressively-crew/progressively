@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@progressively/database';
 import { CryptoService } from '../../src/crypto/crypto.service';
 import { v4 as uuidv4 } from 'uuid';
 

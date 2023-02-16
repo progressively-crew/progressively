@@ -1,0 +1,25 @@
+{
+  "name": "@progressively/database",
+  "version": "1.0.01",
+  "description": "",
+  "author": "",
+  "main": "index.ts",
+  "module": "index.ts",
+  "private": true,
+  "scripts": {
+    "gen:user": "node ./cli/generate-user.js",
+    "db:migrate:dev": "prisma format && prisma migrate dev --name init",
+    "db:generate:schema": "prisma generate",
+    "db:seed": "ts-node ./seeds/seed-run.ts",
+    "db:cleanup": "ts-node ./seeds/cleanup-run.ts"
+  },
+  "dependencies": {
+    "prompts": "^2.4.2",
+    "@prisma/client": "^4.8.1"
+  },
+  "devDependencies": {
+    "bcrypt": "^5.1.0",
+    "prisma": "^4.8.1",
+    "typescript": "^4.9.4"
+  }
+}

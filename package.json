@@ -7,7 +7,7 @@
   "scripts": {
     "build": "turbo build",
     "ci:shared:checks": "turbo db:generate:schema build lint test bundlesize",
-    "db:prepare": "turbo run db:migrate:dev --filter=@progressively/backend && turbo run db:generate:schema --filter=@progressively/backend",
+    "db:prepare": "turbo run db:migrate:dev --filter=@progressively/database && turbo run db:generate:schema --filter=@progressively/database",
     "db:seed": "turbo run db:seed --filter=@progressively/backend",
     "db:cleanup": "turbo run db:seed --filter=@progressively/backend",
     "setup": "pnpm install",

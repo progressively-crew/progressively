@@ -7,7 +7,7 @@ import {
   SchedulingUpdateVariantEntry,
 } from './types';
 import { PopulatedFlagEnv, SchedulingStatus } from '../flags/types';
-import { Schedule } from '@prisma/client';
+import { Schedule } from '@progressively/database';
 
 @Injectable()
 export class SchedulingService {
