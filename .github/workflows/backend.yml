@@ -51,13 +51,13 @@ jobs:
         shell: bash
         run: pnpm install --filter backend
 
-      - name: Prepare the DB
-        shell: bash
-        run: pnpm run db:prepare
-
       - name: Build
         shell: bash
         run: pnpm run build --filter backend
+
+      - name: Prepare the DB
+        shell: bash
+        run: pnpm run db:prepare
 
       - name: Start the backend project
         working-directory: ./packages/backend
