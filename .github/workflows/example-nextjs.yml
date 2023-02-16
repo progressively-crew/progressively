@@ -1,4 +1,4 @@
-name: Example Nextjs
+name: Example (Nextjs)
 on:
   pull_request:
     branches: ["master"]

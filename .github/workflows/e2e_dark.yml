@@ -1,4 +1,4 @@
-name: E2E Dark
+name: Frontend (E2E Dark)
 on:
   pull_request:
     branches: ["master"]

@@ -1,4 +1,4 @@
-name: Shared checks (turbo)
+name: Shared checks (build, lint, tests, bundlesize)
 on:
   pull_request:
     branches: ["master"]
