@@ -1,5 +1,4 @@
-name: Backend (Integration Tests)
-
+name: Backend
 env:
   SLEEP_DELAY: 0
 
@@ -9,8 +8,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  static:
+  integration-test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        testPath: ["flags.e2e", '--testPathIgnorePatterns=".*flags\.e2e.*"']
     services:
       redis:
         image: redis
@@ -38,8 +40,30 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "18"
-      - uses: ./.github/actions/monorepo-setup
 
-      - name: API tests
+      - uses: ./.github/actions/pnpm
+
+      - name: Creating .env files
+        shell: bash
+        run: mv ./packages/frontend/.env.example ./packages/frontend/.env && mv ./packages/backend/.env.example ./packages/backend/.env
+
+      - name: Install dependencies
+        shell: bash
+        run: pnpm install --filter backend
+
+      - name: Prepare the DB
+        shell: bash
+        run: pnpm run db:prepare
+
+      - name: Build
+        shell: bash
+        run: pnpm run build --filter backend
+
+      - name: Start the backend project
         working-directory: ./packages/backend
-        run: pnpm run test:e2e
+        shell: bash
+        run: pnpm start &
+
+      - name: API tests (${{ matrix.testPath }})
+        working-directory: ./packages/backend
+        run: pnpm run test:e2e ${{ matrix.testPath }}

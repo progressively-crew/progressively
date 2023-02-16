@@ -1,4 +1,4 @@
-name: Frontend (E2E Dark)
+name: Dashboard
 on:
   pull_request:
     branches: ["master"]
@@ -8,7 +8,7 @@ env:
   SLEEP_DELAY: 0
 
 jobs:
-  static:
+  e2e-dark:
     env:
       ALLOW_REGISTRATION: true
       START_MOCK_SERVER: true
