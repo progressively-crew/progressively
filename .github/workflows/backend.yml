@@ -11,6 +11,9 @@ on:
 jobs:
   static:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        testPath: ["flags.e2e", "--testPathIgnorePatterns=".*flags\.e2e.*"]
     services:
       redis:
         image: redis
@@ -40,6 +43,6 @@ jobs:
           node-version: "18"
       - uses: ./.github/actions/monorepo-setup
 
-      - name: API tests
+      - name: API tests (${{ matrix.testPath }})
         working-directory: ./packages/backend
-        run: pnpm run test:e2e
+        run: pnpm run test:e2e ${{ matrix.testPath }}"
