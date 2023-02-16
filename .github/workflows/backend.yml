@@ -40,7 +40,29 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "18"
-      - uses: ./.github/actions/monorepo-setup
+
+      - uses: ./.github/actions/pnpm
+
+      - name: Creating .env files
+        shell: bash
+        run: mv ./packages/frontend/.env.example ./packages/frontend/.env && mv ./packages/backend/.env.example ./packages/backend/.env
+
+      - name: Bootstrap projects
+        shell: bash
+        run: pnpm run setup
+
+      - name: Prepare the DB
+        shell: bash
+        run: pnpm run db:prepare
+
+      - name: Build
+        shell: bash
+        run: pnpm run build --filter backend
+
+      - name: Start the backend project
+        working-directory: ./packages/backend
+        shell: bash
+        run: pnpm start &
 
       - name: API tests (${{ matrix.testPath }})
         working-directory: ./packages/backend
