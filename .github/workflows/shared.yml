@@ -17,6 +17,9 @@ jobs:
           node-version: "18"
       - uses: ./.github/actions/pnpm
 
+      - name: Creating .env files
+        shell: bash
+        run: mv ./packages/frontend/.env.example ./packages/frontend/.env && mv ./packages/backend/.env.example ./packages/backend/.env
       - name: Bootstrap projects
         shell: bash
         run: pnpm run setup
