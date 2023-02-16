@@ -45,4 +45,4 @@ jobs:
 
       - name: API tests (${{ matrix.testPath }})
         working-directory: ./packages/backend
-        run: pnpm run test:e2e ${{ matrix.testPath }}"
+        run: pnpm run test:e2e ${{ matrix.testPath }}
