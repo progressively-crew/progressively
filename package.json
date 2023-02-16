@@ -6,15 +6,18 @@
     "wait-on": "^6.0.1"
   },
   "scripts": {
-    "build": "lerna run build",
+    "build": "turbo build",
     "db:prepare": "lerna run db:migrate:dev && lerna run db:generate:schema",
     "db:seed": "lerna run db:seed",
     "db:cleanup": "lerna run db:cleanup",
     "setup": "pnpm install",
-    "start": "lerna run start --stream",
-    "start:dev": "lerna run dev --stream",
+    "start": "turbo run start --filter=@progressively/frontend --filter=@progressively/backend",
+    "dev": "turbo run dev --filter=@progressively/frontend --filter=@progressively/backend",
     "test:e2e:ci": "lerna run test:e2e:ci --stream",
     "deploy:lib": "lerna publish",
     "deploy:images": "./scripts/docker-build-deploy.sh"
+  },
+  "dependencies": {
+    "turbo": "^1.7.4"
   }
 }
