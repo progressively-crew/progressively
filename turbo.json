@@ -14,19 +14,19 @@
       "dependsOn": ["^build"]
     },
     "start:frontend": {
-      "dependsOn": ["^build"]
+      "dependsOn": []
     },
     "start:backend": {
-      "dependsOn": ["^build"]
+      "dependsOn": []
     },
     "dev": {
       "dependsOn": []
     },
     "db:migrate:dev": {
-      "dependsOn": ["^build"]
+      "dependsOn": []
     },
     "db:migrate:deploy": {
-      "dependsOn": ["^build"]
+      "dependsOn": []
     },
     "db:seed": {
       "dependsOn": []
