@@ -1,7 +1,7 @@
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import got from 'got';
-import { seedDb, cleanupDb } from '../helpers/seed';
+import { seedDb, cleanupDb } from '@progressively/database/seed';
 import { prepareApp } from '../helpers/prepareApp';
 import { verifyAuthGuard } from '../helpers/verify-auth-guard';
 import { authenticate } from '../helpers/authenticate';

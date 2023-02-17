@@ -1,7 +1,0 @@
-./packages/react
-./packages/sdk-js
-./example
-node_modules
-.cache
-**/build
-.env

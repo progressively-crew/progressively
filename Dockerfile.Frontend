@@ -1,0 +1,22 @@
+FROM node:18 AS builder
+WORKDIR /app
+
+RUN apt-get update || : && apt-get install python -y
+RUN apt-get install python3-pip -y
+RUN npm i -g pnpm
+
+COPY . .
+
+RUN rm -rf packages/documentation packages/backend packages/load-testing packages/react packages/sdk-js packages/sdk-node packages/server-side
+RUN pnpm install
+RUN pnpm run build
+
+FROM node:18 AS runner
+
+RUN npm i -g pnpm
+
+COPY --from=builder /app ./
+
+EXPOSE 3000
+
+CMD [ "pnpm", "run", "start:frontend" ]

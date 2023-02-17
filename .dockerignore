@@ -3,3 +3,4 @@
 **/migrations
 **/*.db
 .env
+./example

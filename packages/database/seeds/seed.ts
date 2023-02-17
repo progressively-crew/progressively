@@ -1,15 +1,13 @@
-import { PrismaClient } from '@prisma/client';
-import { SchedulingType } from '../../src/scheduling/types';
-import { UserRoles } from '../../src/users/roles';
-import { seedActivity } from './seeds/activity';
+import { PrismaClient } from "@prisma/client";
+import { seedActivity } from "./activity";
 import {
   seedFlagHits,
   seedFlagHitsVariants,
   seedFlagMetricHits,
   seedFlags,
-} from './seeds/flags';
-import { seedProjects } from './seeds/projects';
-import { seedPasswordReset, seedUsers } from './seeds/users';
+} from "./flags";
+import { seedProjects } from "./projects";
+import { seedPasswordReset, seedUsers } from "./users";
 
 const prismaClient = new PrismaClient();
 
@@ -20,7 +18,7 @@ export const seedDb = async () => {
     // Initial seeding
     const [marvin, john] = await seedUsers(prismaClient);
     const [projectFromSeeding, otherFromSeeding] = await seedProjects(
-      prismaClient,
+      prismaClient
     );
 
     await seedPasswordReset(prismaClient, john); // Necessary to e2e test password reset
@@ -28,28 +26,28 @@ export const seedDb = async () => {
     //  Contextual seeding
     const production = await prismaClient.environment.create({
       data: {
-        uuid: '1',
-        name: 'Production',
+        uuid: "1",
+        name: "Production",
         projectId: projectFromSeeding.uuid,
-        clientKey: 'valid-sdk-key',
+        clientKey: "valid-sdk-key",
       },
     });
 
     await prismaClient.environment.create({
       data: {
-        uuid: '2',
-        name: 'Developer',
+        uuid: "2",
+        name: "Developer",
         projectId: projectFromSeeding.uuid,
-        clientKey: 'valid-sdk-key-2',
+        clientKey: "valid-sdk-key-2",
       },
     });
 
     const otherEnv = await prismaClient.environment.create({
       data: {
-        uuid: '3',
-        name: 'Staging',
+        uuid: "3",
+        name: "Staging",
         projectId: otherFromSeeding.uuid,
-        clientKey: 'valid-sdk-key-3',
+        clientKey: "valid-sdk-key-3",
       },
     });
 
@@ -57,7 +55,7 @@ export const seedDb = async () => {
       data: {
         projectId: projectFromSeeding.uuid,
         userId: marvin.uuid,
-        role: UserRoles.Admin,
+        role: "admin",
       },
     });
 
@@ -65,13 +63,13 @@ export const seedDb = async () => {
       data: {
         projectId: projectFromSeeding.uuid,
         userId: john.uuid,
-        role: UserRoles.User,
+        role: "user",
       },
     });
 
     // Flag setup
     const [homePageFlag, footerFlag, asideFlag, multiVariate] = await seedFlags(
-      prismaClient,
+      prismaClient
     );
 
     const flagEnv = await prismaClient.flagEnvironment.create({
@@ -81,10 +79,10 @@ export const seedDb = async () => {
         rolloutPercentage: 100,
         webhooks: {
           create: {
-            uuid: '1',
-            endpoint: 'http://localhost:4000',
-            secret: 'this is secret',
-            event: 'ACTIVATION',
+            uuid: "1",
+            endpoint: "http://localhost:4000",
+            secret: "this is secret",
+            event: "ACTIVATION",
           },
         },
       },
@@ -96,12 +94,12 @@ export const seedDb = async () => {
     d.setSeconds(d.getSeconds() + 10);
     await prismaClient.schedule.create({
       data: {
-        uuid: '1',
+        uuid: "1",
         utc: d,
         flagEnvironmentFlagId: flagEnv.flagId,
         flagEnvironmentEnvironmentId: flagEnv.environmentId,
-        status: 'ACTIVATED',
-        type: SchedulingType.UpdatePercentage,
+        status: "ACTIVATED",
+        type: "UpdatePercentage",
         data: {
           rolloutPercentage: 100,
         },
@@ -112,7 +110,7 @@ export const seedDb = async () => {
       data: {
         environmentId: production.uuid,
         flagId: footerFlag.uuid,
-        status: 'ACTIVATED',
+        status: "ACTIVATED",
         rolloutPercentage: 0,
       },
     });
@@ -137,19 +135,19 @@ export const seedDb = async () => {
 
     await prismaClient.schedule.create({
       data: {
-        uuid: '2',
+        uuid: "2",
         utc: d,
         flagEnvironmentFlagId: multiVariateFlagEnv.flagId,
         flagEnvironmentEnvironmentId: multiVariateFlagEnv.environmentId,
-        status: 'ACTIVATED',
-        type: SchedulingType.UpdateVariantPercentage,
+        status: "ACTIVATED",
+        type: "UpdateVariantPercentage",
         data: [
           {
-            variantId: '1',
+            variantId: "1",
             variantNewPercentage: 30,
           },
           {
-            variantId: '2',
+            variantId: "2",
             variantNewPercentage: 70,
           },
         ],
@@ -158,10 +156,10 @@ export const seedDb = async () => {
 
     const firstVariant = await prismaClient.variant.create({
       data: {
-        uuid: '1',
+        uuid: "1",
         rolloutPercentage: 12,
         isControl: true,
-        value: 'Control',
+        value: "Control",
         flagEnvironmentEnvironmentId: multiVariateFlagEnv.environmentId,
         flagEnvironmentFlagId: multiVariateFlagEnv.flagId,
       },
@@ -169,10 +167,10 @@ export const seedDb = async () => {
 
     await prismaClient.variant.create({
       data: {
-        uuid: '2',
+        uuid: "2",
         rolloutPercentage: 88,
         isControl: false,
-        value: 'Second',
+        value: "Second",
         flagEnvironmentEnvironmentId: multiVariateFlagEnv.environmentId,
         flagEnvironmentFlagId: multiVariateFlagEnv.flagId,
       },
@@ -180,8 +178,8 @@ export const seedDb = async () => {
 
     const aMetric = await prismaClient.pMetric.create({
       data: {
-        uuid: '1',
-        name: 'A metric',
+        uuid: "1",
+        name: "A metric",
         flagEnvironmentEnvironmentId: multiVariateFlagEnv.environmentId,
         flagEnvironmentFlagId: multiVariateFlagEnv.flagId,
       },
@@ -189,8 +187,8 @@ export const seedDb = async () => {
 
     const bMetric = await prismaClient.pMetric.create({
       data: {
-        uuid: '100',
-        name: 'B metric',
+        uuid: "100",
+        name: "B metric",
         flagEnvironmentEnvironmentId: multiVariateFlagEnv.environmentId,
         flagEnvironmentFlagId: multiVariateFlagEnv.flagId,
         variantUuid: firstVariant.uuid,
@@ -200,51 +198,51 @@ export const seedDb = async () => {
 
     await prismaClient.rolloutStrategy.create({
       data: {
-        uuid: '1',
+        uuid: "1",
         flagEnvironmentFlagId: flagEnv.flagId,
         flagEnvironmentEnvironmentId: flagEnv.environmentId,
-        fieldName: 'id',
-        fieldComparator: 'eq',
-        fieldValue: '1',
-        valueToServe: 'true',
-        valueToServeType: 'Boolean',
+        fieldName: "id",
+        fieldComparator: "eq",
+        fieldValue: "1",
+        valueToServe: "true",
+        valueToServeType: "Boolean",
       },
     });
 
     await prismaClient.rolloutStrategy.create({
       data: {
-        uuid: '2',
+        uuid: "2",
         flagEnvironmentFlagId: footerFlagEnv.flagId,
         flagEnvironmentEnvironmentId: footerFlagEnv.environmentId,
-        fieldName: 'id',
-        fieldComparator: 'eq',
-        fieldValue: '1',
-        valueToServe: 'true',
-        valueToServeType: 'Boolean',
+        fieldName: "id",
+        fieldComparator: "eq",
+        fieldValue: "1",
+        valueToServe: "true",
+        valueToServeType: "Boolean",
       },
     });
 
     await prismaClient.rolloutStrategy.create({
       data: {
-        uuid: '3',
+        uuid: "3",
         flagEnvironmentFlagId: otherFlagEnv.flagId,
         flagEnvironmentEnvironmentId: otherFlagEnv.environmentId,
-        fieldComparator: 'eq',
-        fieldName: 'email',
-        fieldValue: '@gmail.com',
-        valueToServe: 'true',
-        valueToServeType: 'Boolean',
+        fieldComparator: "eq",
+        fieldName: "email",
+        fieldValue: "@gmail.com",
+        valueToServe: "true",
+        valueToServeType: "Boolean",
       },
     });
 
     await prismaClient.eligibility.create({
       data: {
-        uuid: '1',
+        uuid: "1",
         flagEnvironmentFlagId: footerFlagEnv.flagId,
         flagEnvironmentEnvironmentId: footerFlagEnv.environmentId,
-        fieldName: 'email',
-        fieldValue: '@gmail.com',
-        fieldComparator: 'eq',
+        fieldName: "email",
+        fieldValue: "@gmail.com",
+        fieldComparator: "eq",
       },
     });
 
@@ -257,26 +255,26 @@ export const seedDb = async () => {
       prismaClient,
       multiVariateFlagEnv,
       new Date(1992, 0, 1, 1),
-      10,
+      10
     );
 
     await seedFlagHits(
       prismaClient,
       multiVariateFlagEnv,
       new Date(1992, 0, 3, 1),
-      20,
+      20
     );
     await seedFlagHits(
       prismaClient,
       multiVariateFlagEnv,
       new Date(1992, 0, 2, 1),
-      40,
+      40
     );
     await seedFlagHits(
       prismaClient,
       multiVariateFlagEnv,
       new Date(1992, 0, 6, 1),
-      10,
+      10
     );
 
     await seedFlagMetricHits(
@@ -284,7 +282,7 @@ export const seedDb = async () => {
       multiVariateFlagEnv,
       aMetric,
       new Date(1992, 0, 1, 1),
-      10,
+      10
     );
 
     await seedFlagMetricHits(
@@ -292,59 +290,59 @@ export const seedDb = async () => {
       multiVariateFlagEnv,
       aMetric,
       new Date(1992, 0, 3, 1),
-      20,
+      20
     );
     await seedFlagMetricHits(
       prismaClient,
       multiVariateFlagEnv,
       bMetric,
       new Date(1992, 0, 2, 1),
-      40,
+      40
     );
     await seedFlagMetricHits(
       prismaClient,
       multiVariateFlagEnv,
       aMetric,
       new Date(1992, 0, 2, 1),
-      17,
+      17
     );
     await seedFlagMetricHits(
       prismaClient,
       multiVariateFlagEnv,
       bMetric,
       new Date(1992, 0, 6, 1),
-      10,
+      10
     );
 
     await seedFlagHitsVariants(
       prismaClient,
       multiVariateFlagEnv,
       new Date(1992, 0, 1, 1),
-      10,
+      10
     );
     await seedFlagHitsVariants(
       prismaClient,
       multiVariateFlagEnv,
       new Date(1992, 0, 4, 1),
-      50,
+      50
     );
     await seedFlagHitsVariants(
       prismaClient,
       multiVariateFlagEnv,
       new Date(1992, 0, 7, 1),
-      20,
+      20
     );
     await seedFlagHitsVariants(
       prismaClient,
       multiVariateFlagEnv,
       new Date(1992, 0, 2, 1),
-      100,
+      100
     );
     await seedFlagHitsVariants(
       prismaClient,
       multiVariateFlagEnv,
       new Date(1992, 0, 22, 1),
-      13,
+      13
     );
 
     // End of Flag setup
@@ -363,9 +361,9 @@ export const cleanupDb = async () => {
 
   const tables = tablenames
     .map(({ tablename }) => tablename)
-    .filter((name) => name !== '_prisma_migrations')
+    .filter((name) => name !== "_prisma_migrations")
     .map((name) => `"public"."${name}"`)
-    .join(', ');
+    .join(", ");
 
   try {
     await prismaClient.$executeRawUnsafe(`TRUNCATE TABLE ${tables} CASCADE;`);

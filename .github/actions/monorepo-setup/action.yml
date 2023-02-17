@@ -12,7 +12,7 @@ runs:
 
     - name: Creating .env files
       shell: bash
-      run: mv ./packages/frontend/.env.example ./packages/frontend/.env && mv ./packages/backend/.env.example ./packages/backend/.env
+      run: mv ./packages/frontend/.env.example ./packages/frontend/.env && mv ./packages/backend/.env.example ./packages/backend/.env && mv ./packages/database/.env.example ./packages/database/.env
 
     - name: Dirty Cypress hack, make sure to use PW when possible
       shell: bash
@@ -24,7 +24,7 @@ runs:
 
     - name: Prepare the DB
       shell: bash
-      run: pnpm run db:prepare
+      run: rm -rf ./packages/database/prisma/migrations && pnpm run db:prepare
 
     - name: Build
       shell: bash
