@@ -24,7 +24,7 @@ runs:
 
     - name: Prepare the DB
       shell: bash
-      run: pnpm run db:prepare
+      run: pnpm run db:migrate
 
     - name: Build
       shell: bash
