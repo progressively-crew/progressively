@@ -382,6 +382,7 @@ importers:
       '@babel/core': ^7.20.12
       '@headlessui/react': ^1.7.8
       '@okta/okta-auth-js': ^7.2.0
+      '@progressively/database': ^1.0.0
       '@radix-ui/react-label': ^2.0.0
       '@radix-ui/react-select': ^1.2.0
       '@radix-ui/react-switch': ^1.0.1
@@ -444,6 +445,7 @@ importers:
       timeago.js: 4.0.2
     devDependencies:
       '@babel/core': 7.20.12
+      '@progressively/database': link:../database
       '@remix-run/dev': 1.13.0_@remix-run+serve@1.13.0
       '@testing-library/cypress': 9.0.0_cypress@12.5.1
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
@@ -473,6 +475,7 @@ importers:
   packages/load-testing:
     specifiers:
       '@playwright/test': ^1.27.1
+      '@progressively/database': ^1.0.0
       '@progressively/react': 0.0.1-beta.1
       '@testing-library/jest-dom': ^5.16.5
       '@testing-library/react': ^13.4.0
@@ -499,6 +502,7 @@ importers:
       web-vitals: 3.1.1
     devDependencies:
       '@playwright/test': 1.30.0
+      '@progressively/database': link:../database
       '@types/node': 18.13.0
       '@types/node-fetch': 2.6.2
       chalk: 5.2.0

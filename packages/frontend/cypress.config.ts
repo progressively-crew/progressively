@@ -1,7 +1,7 @@
 import { defineConfig } from "cypress";
 import * as cookieSignature from "cookie-signature";
 import { getSession, commitSession } from "./app/sessions";
-import { cleanupDb, seedDb } from "../backend/test/helpers/seed";
+import { cleanupDb, seedDb } from "@progressively/database/seed";
 
 /**
  * /!\ this is not conventional and related to how Remix run when creating cookies
@@ -52,9 +52,9 @@ module.exports = defineConfig({
                 session.set("auth-cookie", accessToken);
                 return commitSession(session);
               })
-              .catch((e) => {
-                console.error(e);
-                return e;
+              .catch((error) => {
+                console.error(error);
+                return error;
               });
           },
         });
