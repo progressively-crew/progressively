@@ -13,6 +13,12 @@
     "start": {
       "dependsOn": ["^build"]
     },
+    "start:frontend": {
+      "dependsOn": ["^build"]
+    },
+    "start:backend": {
+      "dependsOn": ["^build"]
+    },
     "dev": {
       "dependsOn": []
     },

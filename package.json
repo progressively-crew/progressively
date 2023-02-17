@@ -7,14 +7,15 @@
   "scripts": {
     "build": "turbo build",
     "ci:shared:checks": "turbo db:generate:schema build lint test bundlesize",
+    "dev": "turbo run dev --filter=@progressively/frontend --filter=@progressively/backend",
+    "deploy:lib": "pnpm run ci:shared:checks && changeset version && changeset publish",
     "db:prepare": "turbo run db:migrate:deploy --filter=@progressively/database && turbo run db:generate:schema --filter=@progressively/database",
     "db:seed": "turbo run db:seed --filter=@progressively/database",
     "db:cleanup": "turbo run db:seed --filter=@progressively/database",
     "setup": "pnpm install",
     "start": "turbo run start --filter=@progressively/frontend --filter=@progressively/backend",
-    "dev": "turbo run dev --filter=@progressively/frontend --filter=@progressively/backend",
-    "deploy:lib": "pnpm run ci:shared:checks && changeset version && changeset publish",
-    "deploy:images": "./scripts/docker-build-deploy.sh"
+    "start:backend": "turbo run start --filter=@progressively/backend",
+    "start:frontend": "turbo run start --filter=@progressively/frontend"
   },
   "dependencies": {
     "@changesets/cli": "^2.26.0",
