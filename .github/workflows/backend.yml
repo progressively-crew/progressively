@@ -57,7 +57,7 @@ jobs:
 
       - name: Prepare the DB
         shell: bash
-        run: pnpm run db:prepare
+        run: rm -rf ./packages/database/migrations && pnpm run db:prepare
 
       - name: Start the backend project
         working-directory: ./packages/backend
