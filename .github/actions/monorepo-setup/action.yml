@@ -24,7 +24,7 @@ runs:
 
     - name: Prepare the DB
       shell: bash
-      run: pnpm run db:prepare
+      run: rm -rf ./packages/database/prisma/migrations && pnpm run db:prepare
 
     - name: Build
       shell: bash
