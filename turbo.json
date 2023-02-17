@@ -19,6 +19,9 @@
     "db:migrate:dev": {
       "dependsOn": ["^build"]
     },
+    "db:migrate:deploy": {
+      "dependsOn": ["^build"]
+    },
     "db:generate:schema": {
       "dependsOn": []
     },
