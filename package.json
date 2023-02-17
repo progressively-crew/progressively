@@ -6,10 +6,11 @@
   },
   "scripts": {
     "build": "turbo build",
-    "ci:shared:checks": "turbo db:generate:schema build lint test bundlesize",
+    "ci:shared:checks": "turbo build lint test bundlesize",
     "dev": "turbo run dev --filter=@progressively/frontend --filter=@progressively/backend",
     "deploy:lib": "pnpm run ci:shared:checks && changeset version && changeset publish",
-    "db:prepare": "turbo run db:migrate:deploy --filter=@progressively/database && turbo run db:generate:schema --filter=@progressively/database",
+    "db:prepare": "turbo run db:migrate:dev --filter=@progressively/database",
+    "db:migrate": "turbo run db:migrate:deploy --filter=@progressively/database",
     "db:seed": "turbo run db:seed --filter=@progressively/database",
     "db:cleanup": "turbo run db:seed --filter=@progressively/database",
     "setup": "pnpm install",

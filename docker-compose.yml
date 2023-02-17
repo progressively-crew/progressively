@@ -39,11 +39,19 @@ services:
       OKTA_ISSUER:
       OKTA_CLIENT_ID:
     depends_on:
-      - db
-    command: scripts/docker-compose-init.sh
+      db:
+        condition: service_healthy
+    command: [scripts/docker-compose-init.sh]
   db:
     image: postgres
     restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_PASSWORD: admin
       POSTGRES_USER: admin

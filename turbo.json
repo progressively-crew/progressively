@@ -2,7 +2,7 @@
   "$schema": "https://turbo.build/schema.json",
   "pipeline": {
     "build": {
-      "dependsOn": ["^build", "db:generate:schema"]
+      "dependsOn": ["^build"]
     },
     "lint": {
       "dependsOn": []
@@ -27,9 +27,6 @@
     },
     "db:migrate:deploy": {
       "dependsOn": ["^build"]
-    },
-    "db:generate:schema": {
-      "dependsOn": []
     },
     "db:seed": {
       "dependsOn": []

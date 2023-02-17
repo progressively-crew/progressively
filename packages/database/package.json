@@ -11,7 +11,7 @@
     "./seeds/flags": "./dist/seeds/flags.js"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "pnpm run db:generate:schema && tsc",
     "gen:user": "node ./cli/generate-user.js",
     "db:migrate:dev": "prisma format && prisma migrate dev --name init",
     "db:migrate:deploy": "prisma format && prisma migrate deploy",
