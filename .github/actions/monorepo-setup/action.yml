@@ -22,9 +22,9 @@ runs:
       shell: bash
       run: pnpm run setup
 
-    - name: Prepare the DB
-      shell: bash
-      run: pnpm run db:prepare
+    # - name: Prepare the DB
+    #   shell: bash
+    #   run: pnpm run db:prepare
 
     - name: Build
       shell: bash
