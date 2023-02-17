@@ -6,7 +6,9 @@
   "private": true,
   "exports": {
     ".": "./dist/index.js",
-    "./seed": "./dist/seed.js"
+    "./seed": "./dist/seed.js",
+    "./seeds/projects": "./dist/seeds/projects.js",
+    "./seeds/flags": "./dist/seeds/flags.js"
   },
   "scripts": {
     "build": "tsc",

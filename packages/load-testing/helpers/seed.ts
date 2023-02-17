@@ -3,7 +3,7 @@ import { PrismaClient } from "@progressively/database";
 import { seedProjects } from "@progressively/database/seeds/projects";
 import { seedFlags } from "@progressively/database/seeds/flags";
 import { UserStatus } from "../../backend/src/users/status";
-import { CryptoService } from "../..//backend/src/crypto/crypto.service";
+import { CryptoService } from "../../backend/src/crypto/crypto.service";
 import { UserRoles } from "../../backend/src/users/roles";
 export { cleanupDb } from "@progressively/database/seed";
 
