@@ -7,7 +7,7 @@ RUN npm i -g pnpm
 
 COPY . .
 
-RUN rm -rf packages/**/!(backend|database)
+RUN rm -rf packages/!(backend|database)
 RUN pnpm install
 RUN pnpm run build
 
