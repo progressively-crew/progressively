@@ -1,0 +1,21 @@
+{
+  "name": "@progressively/playwright-helpers",
+  "version": "1.0.0",
+  "description": "",
+  "exports": {
+    ".": "./index.ts",
+    "./cmd": "./cmd.ts"
+  },
+  "scripts": {
+    "test": "playwright test",
+    "test:ci": "playwright test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@progressively/database": "^1.0.0",
+    "@playwright/test": "^1.27.1",
+    "typescript": "^4.9.5"
+  }
+}
