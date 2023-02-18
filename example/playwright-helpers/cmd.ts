@@ -7,6 +7,7 @@ export const changeFlagStatus = (
 ) => {
   return fetch("http://localhost:4000/auth/login", {
     method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       username: "marvin.frachet@something.com",
       password: "password",
@@ -21,6 +22,7 @@ export const changeFlagStatus = (
         }),
         headers: {
           Authorization: `Bearer ${access_token}`,
+          "Content-Type": "application/json",
         },
       })
     );

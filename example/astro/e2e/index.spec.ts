@@ -29,7 +29,7 @@ test.describe("/", () => {
     await expect(page.getByText("Old footer")).not.toBeVisible();
   });
 
-  test.only("shows the new variant when the flag is activated for homepage", async ({
+  test("shows the new variant when the flag is activated for homepage", async ({
     page,
   }) => {
     await changeFlagStatus("1", "1", "ACTIVATED");
@@ -52,14 +52,14 @@ test.describe("/", () => {
     // Verify the activation using sockets
     await expect(page.getByText("Old variant")).toBeVisible();
     await expect(page.getByText("New variant")).not.toBeVisible();
-    await expect(page.getByText("New footer")).toBeVisible();
-    await expect(page.getByText("Old footer")).not.toBeVisible();
+    await expect(page.getByText("New footer")).not.toBeVisible();
+    await expect(page.getByText("Old footer")).toBeVisible();
 
     // Verify the activation using SSR
     await page.reload();
     await expect(page.getByText("Old variant")).toBeVisible();
     await expect(page.getByText("New variant")).not.toBeVisible();
-    await expect(page.getByText("Old footer")).toBeVisible();
     await expect(page.getByText("New footer")).not.toBeVisible();
+    await expect(page.getByText("Old footer")).toBeVisible();
   });
 });
