@@ -8,8 +8,6 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 const specPattern = `${process.env.PROJECT_ROOT}/e2e`;
-
-console.log("loool", specPattern);
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
