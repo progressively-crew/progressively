@@ -44,7 +44,7 @@ jobs:
       - name: Install Playwright deps
         shell: bash
         working-directory: ./example/astro
-        run: pnpm run test:prepare
+        run: npx playwright install && npx playwright install-deps
 
       - name: Build
         shell: bash
