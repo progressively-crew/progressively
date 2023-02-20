@@ -11,17 +11,13 @@ export interface BarProps {
 }
 
 export const CliBar = ({ children }: BarProps) => {
-  return (
-    <div className="flex-1 text-center text-sm dark:text-slate-900">
-      {children}
-    </div>
-  );
+  return <div className="flex-1 text-center text-sm">{children}</div>;
 };
 
 export const EditorBar = ({ children }: BarProps) => {
   return (
     <div className="flex-1 text-sm h-full ml-16" aria-hidden>
-      <div className="border-l border-r border-t border-gray-900 dark:border-gray-100 border-t-pink-500 h-full inline-flex items-center px-4 text-white dark:text-slate-900">
+      <div className="border-l border-r border-t border-gray-900 border-t-pink-500 h-full inline-flex items-center px-4 text-white">
         {children}
       </div>
     </div>
@@ -32,9 +28,7 @@ export const SearchBar = ({
   children,
   dark,
 }: BarProps & { dark?: boolean }) => {
-  const darkClasses = dark
-    ? "text-white bg-slate-700 dark:text-slate-900 dark:bg-slate-100"
-    : "";
+  const darkClasses = dark ? "text-white bg-slate-700" : "bg-white";
   return (
     <div className="flex items-center justify-center flex-1">
       <div
@@ -48,15 +42,15 @@ export const SearchBar = ({
 
 export const Window = ({ children, header, inverse }: WindowProps) => {
   const wrapperStyle = inverse
-    ? "bg-slate-900 text-white dark:bg-white"
-    : "bg-white";
+    ? "bg-slate-900 text-white border border-gray-900"
+    : "bg-white border border-gray-100";
 
   const headerStyle = inverse
-    ? "border-b-gray-900 dark:border-b-gray-100"
-    : "border-b-gray-100";
+    ? "border-b-gray-900 bg-slate-800"
+    : "border-b-gray-100 bg-slate-100";
 
   return (
-    <div className={"rounded-lg drop-shadow overflow-hidden " + wrapperStyle}>
+    <div className={"rounded overflow-hidden " + wrapperStyle}>
       <div
         className={
           "flex flex-row items-center h-12 px-4 gap-4 border-b " + headerStyle
@@ -75,7 +69,7 @@ export const Window = ({ children, header, inverse }: WindowProps) => {
         )}
       </div>
 
-      <div className="overflow-x-auto" tabIndex={inverse ? 0 : -1}>
+      <div className="overflow-x-auto relative" tabIndex={inverse ? 0 : -1}>
         {children}
       </div>
     </div>

@@ -16,7 +16,7 @@ const VerticalLine = () => (
 
 export const Features = () => (
   <section>
-    <h2 className="text-center text-3xl md:text-6xl font-semibold dark:text-white mb-8">
+    <h2 className="text-center text-3xl md:text-6xl font-semibold mb-8">
       Operate
     </h2>
 

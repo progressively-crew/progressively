@@ -1,4 +1,3 @@
-import { useId } from "react";
 import { Label } from "./Label";
 import { RawSwitch } from "./RawSwitch";
 
@@ -8,6 +7,7 @@ export interface SwitchProps {
   form?: string;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   type?: "button" | "submit";
+  id: string;
 }
 
 export const Switch = ({
@@ -16,9 +16,8 @@ export const Switch = ({
   form,
   onClick,
   type = "submit",
+  id,
 }: SwitchProps) => {
-  const id = useId();
-
   return (
     <div className="flex items-center space-x-2">
       <Label htmlFor={id} aria-hidden>
@@ -26,7 +25,7 @@ export const Switch = ({
       </Label>
       <RawSwitch
         id={id}
-        defaultChecked={checked}
+        checked={checked}
         aria-label={label}
         type={type}
         form={form}

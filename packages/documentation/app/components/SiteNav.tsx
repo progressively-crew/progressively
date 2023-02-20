@@ -12,7 +12,7 @@ const NavLink = ({
   href?: string;
 }) => {
   const className =
-    "no-underline font-semibold hover:underline text-gray-800 active:text-gray-600 dark:text-slate-200 active:dark:text-slate-50";
+    "no-underline font-semibold hover:underline text-slate-200 active:text-slate-400";
 
   if (href) {
     return (
@@ -35,7 +35,7 @@ const NavLink = ({
 
 export const SiteNav = () => {
   return (
-    <nav className="h-14 border-b border-b-gray-100 px-4 md:px-12 bg-white dark:bg-slate-800 dark:border-b-slate-700">
+    <nav className="h-14 px-4 md:px-12 bg-slate-900 py-12">
       <div className="max-w-screen-2xl mx-auto h-full">
         <div className="flex flex-row items-center h-full justify-between">
           <div>
@@ -53,7 +53,9 @@ export const SiteNav = () => {
               </NavLink>
             </li>
             <li className="hidden md:block">
-              <NavLink to="/demo-instance">Demo instance</NavLink>
+              <NavLink href="https://dashboard.progressively.app">
+                Demo instance
+              </NavLink>
             </li>
             <li>
               <NavLink href="https://github.com/progressively-crew/progressively">

@@ -16,7 +16,7 @@ const WhyCard = ({ title, children }: WhyCardProps) => {
 
   return (
     <div
-      className="relative z-10 bg-white hover:bg-gray-50 active:bg-gray-100 dark:bg-slate-800 dark:hover:bg-slate-700 dark:active:bg-slate-600 rounded p-4 drop-shadow cursor-pointer"
+      className="relative z-10 bg-white hover:bg-gray-50 active:bg-gray-100 rounded p-4 drop-shadow cursor-pointer"
       tabIndex={-1}
       onClick={() => buttonRef?.current?.click()}
     >
@@ -33,9 +33,7 @@ const WhyCard = ({ title, children }: WhyCardProps) => {
             aria-controls={sectionId}
             aria-expanded={expanded}
           >
-            <span className="!text-indigo-700 dark:!text-slate-100">
-              {title}
-            </span>
+            <span className="!text-indigo-700">{title}</span>
           </button>
         </h2>
 
@@ -52,7 +50,7 @@ const WhyCard = ({ title, children }: WhyCardProps) => {
         id={sectionId}
         role="region"
         aria-labelledby={triggerId}
-        className="text-gray-600 dark:text-slate-300 text-sm dark:text-slate-100"
+        className="text-gray-600 text-sm"
         hidden={!expanded}
       >
         {children}
