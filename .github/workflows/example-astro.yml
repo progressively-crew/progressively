@@ -31,33 +31,7 @@ jobs:
           - 5432:5432
     steps:
       - uses: actions/checkout@v2
-      - uses: ./.github/actions/pnpm
-
-      - name: Creating .env files
-        shell: bash
-        run: mv ./packages/frontend/.env.example ./packages/frontend/.env && mv ./packages/backend/.env.example ./packages/backend/.env && mv ./packages/database/.env.example ./packages/database/.env
-
-      - name: Install dependencies
-        shell: bash
-        run: pnpm install --filter backend --filter database --filter playwright-helpers --filter example-astro
-
-      - name: Install Playwright deps
-        shell: bash
-        working-directory: ./example/astro
-        run: npx playwright install && npx playwright install-deps
-
-      - name: Build
-        shell: bash
-        run: pnpm run build --filter backend
-
-      - name: Prepare the DB
-        shell: bash
-        run: rm -rf ./packages/database/prisma/migrations && pnpm run db:prepare
-
-      - name: Start the backend project
-        working-directory: ./packages/backend
-        shell: bash
-        run: pnpm start &
+      - uses: ./.github/actions/monorepo-setup
 
       - name: Start the Example AstroBuild project
         working-directory: ./example/astro
