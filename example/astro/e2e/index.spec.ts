@@ -11,7 +11,6 @@ test.describe("/", () => {
   });
 
   test.afterEach(async ({ page }) => {
-    await page.waitForTimeout(500);
     await cleanup();
   });
 

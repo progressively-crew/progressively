@@ -11,7 +11,6 @@ test.describe("/anonymous", () => {
   });
 
   test.afterEach(async ({ page }) => {
-    await page.waitForTimeout(500);
     await cleanup();
   });
 
@@ -67,19 +66,16 @@ test.describe("/anonymous", () => {
     const previousCookie = await getCookie("progressively-id", context);
 
     await page.reload();
-    await page.waitForTimeout(500);
 
     const nextCookie1 = await getCookie("progressively-id", context);
     expect(previousCookie).toEqual(nextCookie1);
 
     await page.reload();
-    await page.waitForTimeout(500);
 
     const nextCookie2 = await getCookie("progressively-id", context);
     expect(previousCookie).toEqual(nextCookie2);
 
     await page.reload();
-    await page.waitForTimeout(500);
 
     const nextCookie3 = await getCookie("progressively-id", context);
     expect(previousCookie).toEqual(nextCookie3);
