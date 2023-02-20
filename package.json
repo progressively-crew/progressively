@@ -12,7 +12,7 @@
     "db:prepare": "turbo run db:migrate:dev --filter=@progressively/database",
     "db:migrate": "turbo run db:migrate:deploy --filter=@progressively/database",
     "db:seed": "turbo run db:seed --filter=@progressively/database",
-    "db:cleanup": "turbo run db:seed --filter=@progressively/database",
+    "db:cleanup": "turbo run db:cleanup --filter=@progressively/database",
     "setup": "pnpm install",
     "start": "turbo run start --filter=@progressively/frontend --filter=@progressively/backend",
     "start:backend": "turbo run start --filter=@progressively/backend",

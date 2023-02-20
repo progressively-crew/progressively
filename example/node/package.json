@@ -6,11 +6,12 @@
   "private": true,
   "scripts": {
     "start": "node index.js",
-    "test:e2e": "PROJECT_ROOT=$(pwd) pnpm --filter @progressively/cypress-helpers run test:e2e",
-    "test:e2e:ci": "PROJECT_ROOT=$(pwd) pnpm --filter @progressively/cypress-helpers run test:e2e:ci"
+    "test:e2e": "PROJECT_ROOT=$(pwd) pnpm --filter @progressively/playwright-helpers run test:e2e",
+    "test:e2e:debug": "PROJECT_ROOT=$(pwd) pnpm --filter @progressively/playwright-helpers run test:e2e:debug",
+    "test:e2e:ci": "PROJECT_ROOT=$(pwd) pnpm --filter @progressively/playwright-helpers run test:e2e:ci"
   },
   "dependencies": {
-    "@progressively/cypress-helpers": "1.0.0",
+    "@progressively/playwright-helpers": "1.0.0",
     "@progressively/sdk-node": "0.0.1-alpha.14"
   },
   "keywords": [],

@@ -9,8 +9,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "test:e2e": "PROJECT_ROOT=$(pwd) pnpm --filter @progressively/cypress-helpers run test:e2e",
-    "test:e2e:ci": "PROJECT_ROOT=$(pwd) pnpm --filter @progressively/cypress-helpers run test:e2e:ci"
+    "test:e2e": "PROJECT_ROOT=$(pwd) pnpm --filter @progressively/playwright-helpers run test:e2e",
+    "test:e2e:debug": "PROJECT_ROOT=$(pwd) pnpm --filter @progressively/playwright-helpers run test:e2e:debug",
+    "test:e2e:ci": "PROJECT_ROOT=$(pwd) pnpm --filter @progressively/playwright-helpers run test:e2e:ci"
   },
   "dependencies": {
     "@astrojs/node": "^2.0.2",
@@ -22,7 +23,7 @@
   },
   "devDependencies": {
     "@astrojs/react": "^1.2.1",
-    "@progressively/cypress-helpers": "1.0.0",
+    "@progressively/playwright-helpers": "1.0.0",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.10"
   }
