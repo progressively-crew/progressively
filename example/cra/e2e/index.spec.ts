@@ -22,6 +22,7 @@ test.describe("/", () => {
     page,
     context,
   }) => {
+    await page.waitForTimeout(500);
     const cookie = await getCookie("progressively-id", context);
 
     // 1 is the user id set in nextjs getServerSideProps
