@@ -39,7 +39,7 @@ jobs:
 
       - name: Install dependencies
         shell: bash
-        run: pnpm install --filter backend --filter database --filter playwright --filter astro
+        run: pnpm install --filter backend --filter database --filter playwright-helpers --filter example-astro
 
       - name: Build
         shell: bash
