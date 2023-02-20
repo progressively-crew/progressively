@@ -128,11 +128,11 @@ importers:
 
   example/node:
     specifiers:
-      '@progressively/cypress-helpers': 1.0.0
+      '@progressively/playwright-helpers': 1.0.0
       '@progressively/sdk-node': 0.0.1-alpha.14
       typescript: ^4.7.4
     dependencies:
-      '@progressively/cypress-helpers': link:../cypress-helpers
+      '@progressively/playwright-helpers': link:../playwright-helpers
       '@progressively/sdk-node': link:../../packages/sdk-node
     devDependencies:
       typescript: 4.9.5
