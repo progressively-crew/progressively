@@ -41,6 +41,11 @@ jobs:
         shell: bash
         run: pnpm install --filter backend --filter database --filter playwright-helpers --filter example-astro
 
+      - name: Install Playwright deps
+        shell: bash
+        working-directory: ./example/astro
+        run: pnpm run test:prepare
+
       - name: Build
         shell: bash
         run: pnpm run build --filter backend
