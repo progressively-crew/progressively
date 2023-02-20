@@ -41,6 +41,10 @@ jobs:
         shell: bash
         run: pnpm install --filter backend --filter database --filter playwright --filter astro
 
+      - name: Install dependencies
+        shell: bash
+        run: pnpm run test:prepare --filter astro
+
       - name: Build
         shell: bash
         run: pnpm run build --filter backend
