@@ -139,10 +139,10 @@ importers:
 
   example/php:
     specifiers:
-      '@progressively/cypress-helpers': 1.0.0
+      '@progressively/playwright-helpers': 1.0.0
       typescript: ^4.7.4
     dependencies:
-      '@progressively/cypress-helpers': link:../cypress-helpers
+      '@progressively/playwright-helpers': link:../playwright-helpers
     devDependencies:
       typescript: 4.9.5
 
