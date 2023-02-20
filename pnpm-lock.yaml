@@ -101,7 +101,7 @@ importers:
 
   example/nextjs:
     specifiers:
-      '@progressively/cypress-helpers': 1.0.0
+      '@progressively/playwright-helpers': 1.0.0
       '@progressively/react': 0.0.1-beta.1
       '@progressively/server-side': 0.0.1-alpha.19
       '@types/node': 17.0.31
@@ -119,7 +119,7 @@ importers:
       react: 18.1.0
       react-dom: 18.1.0_react@18.1.0
     devDependencies:
-      '@progressively/cypress-helpers': link:../cypress-helpers
+      '@progressively/playwright-helpers': link:../playwright-helpers
       '@types/node': 17.0.31
       '@types/react': 18.0.9
       eslint: 8.15.0
