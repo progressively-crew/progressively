@@ -14,6 +14,8 @@
     "test:e2e:ci": "cypress run --browser chrome"
   },
   "dependencies": {
+    "@radix-ui/react-label": "^2.0.0",
+    "@radix-ui/react-switch": "^1.0.1",
     "@progressively/react": "^0.0.1-beta.1",
     "@progressively/server-side": "^0.0.1-alpha.19",
     "@remix-run/node": "^1.13.0",

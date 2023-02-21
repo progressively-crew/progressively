@@ -301,6 +301,8 @@ importers:
     specifiers:
       '@progressively/react': ^0.0.1-beta.1
       '@progressively/server-side': ^0.0.1-alpha.19
+      '@radix-ui/react-label': ^2.0.0
+      '@radix-ui/react-switch': ^1.0.1
       '@remix-run/dev': ^1.13.0
       '@remix-run/eslint-config': ^1.13.0
       '@remix-run/node': ^1.13.0
@@ -333,6 +335,8 @@ importers:
     dependencies:
       '@progressively/react': link:../react
       '@progressively/server-side': link:../server-side
+      '@radix-ui/react-label': 2.0.0_biqbaboplfbrettd7655fr4n2y
+      '@radix-ui/react-switch': 1.0.1_biqbaboplfbrettd7655fr4n2y
       '@remix-run/node': 1.13.0
       '@remix-run/react': 1.13.0_biqbaboplfbrettd7655fr4n2y
       '@remix-run/serve': 1.13.0

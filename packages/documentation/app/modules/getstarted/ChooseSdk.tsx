@@ -8,16 +8,14 @@ export const ChooseSdk = () => {
   return (
     <div className="flex flex-col justify-center">
       <div>
-        <div className="bg-gray-100 border border-gray-200 text-3xl text-gray-500 rounded-lg inline-block p-2 dark:text-slate-300 dark:bg-slate-800 dark:border-slate-700">
+        <div className="bg-gray-100 border border-gray-200 text-3xl text-gray-500 rounded-lg inline-block p-2">
           <VscTools />
         </div>
       </div>
 
-      <h3 className="font-bold pt-2 text-xl dark:text-slate-100">
-        Choose a SDK
-      </h3>
+      <h3 className="font-bold pt-2 text-3xl">Choose a SDK</h3>
 
-      <p className="pt-1 md:pt-2 text-gray-700 dark:text-slate-200">
+      <p className="pt-1 md:pt-4 text-gray-600 text-xl">
         Progressively is built to be usable on any types of application. From
         frontend, to backend, to CLIs. Anything that can send an HTTP request
         can use Progressively. And it supports{" "}
@@ -25,7 +23,7 @@ export const ChooseSdk = () => {
       </p>
 
       <div>
-        <div className="pt-4 inline-block">
+        <div className="pt-5 inline-block">
           <Button
             variant="secondary"
             href="https://progressively.gitbook.io/docs/developpers/sdks"
@@ -48,8 +46,9 @@ export const ChooseSdkCode = () => {
   return (
     <div className="drop-shadow-xl">
       <Window inverse header={<EditorBar>index.js</EditorBar>}>
-        <Highlighter
-          content={`
+        <div className="h-[312px] w-[528px] overflow-x-auto">
+          <Highlighter
+            content={`
 	import { useFlags } from "@progressively/react";
 	
 	const Hero = () => {
@@ -62,8 +61,9 @@ export const ChooseSdkCode = () => {
 	  return <OldHero />;
 	};
 		`}
-          language="typescript"
-        />
+            language="typescript"
+          />
+        </div>
       </Window>
     </div>
   );

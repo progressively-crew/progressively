@@ -37,26 +37,16 @@ export const Card = ({ title, children, size = "M" }: CardProps) => {
       <article
         aria-labelledby={id}
         className={
-          "border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-xl px-4 py-16 h-full relative flex flex-col justify-center " +
+          "border border-gray-200 rounded-xl px-4 py-16 h-full relative flex flex-col justify-center bg-white " +
           " " +
           wrapperStyles
         }
       >
-        <h3
-          className={
-            "font-semibold text-center dark:text-slate-100 " + titleStyles
-          }
-          id={id}
-        >
+        <h3 className={"font-semibold text-center " + titleStyles} id={id}>
           {title}
         </h3>
 
-        <div
-          className={
-            "text-center pt-2 text-gray-600 dark:text-slate-200 " +
-            contentStyles
-          }
-        >
+        <div className={"text-center pt-2 text-gray-600 " + contentStyles}>
           {children}
         </div>
       </article>

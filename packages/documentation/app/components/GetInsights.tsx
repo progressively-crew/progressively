@@ -7,16 +7,14 @@ import { VisuallyHidden } from "./VisuallyHidden";
 
 export const GetInsights = () => (
   <section>
-    <h2 className="text-center text-3xl md:text-6xl font-bold dark:text-white">
-      Get Insights
-    </h2>
+    <h2 className="text-center text-3xl md:text-6xl font-bold">Get Insights</h2>
     <div className="grid px-4 lg:px-0 lg:grid-cols-4 gap-6 pt-12">
       <Card
         title="Scheduling"
         bottom={
           <div className="flex justify-center">
             <div className="inline-block">
-              <p className="bg-gray-900 dark:bg-slate-900 text-white p-2 rounded-3xl flex flex-row gap-4 text-sm">
+              <p className="bg-gray-900 text-white p-2 rounded-3xl flex flex-row gap-4 text-sm">
                 <BsClockHistory className="text-lg" aria-hidden />
                 <span>
                   <VisuallyHidden>Example:</VisuallyHidden> Flag activated at

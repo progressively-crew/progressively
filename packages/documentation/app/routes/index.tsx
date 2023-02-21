@@ -59,60 +59,64 @@ export const links: LinksFunction = () => {
 
 export default function Index() {
   return (
-    <div className="bg-gray-50 dark:bg-slate-900">
+    <div>
       <SiteNav />
       <main>
         <Hero />
 
-        <section className="py-20 lg:py-28 bg-white dark:bg-slate-800">
+        <section className="py-20 lg:py-28 mt-12">
           <div className="max-w-screen-xl mx-auto px-4">
             <ExampleSection />
           </div>
         </section>
 
-        <div className="max-w-screen-xl mx-auto px-4">
-          <section className="pb-4 pt-20">
-            <h2 className="text-center text-3xl md:text-6xl font-semibold dark:text-white pb-8">
-              Prepare your instance
-            </h2>
+        <div className="bg-gray-50">
+          <div className="max-w-screen-xl mx-auto px-4">
+            <section className="pb-4 pt-20">
+              <h2 className="text-center text-3xl md:text-6xl font-semibold pb-8">
+                Prepare your instance
+              </h2>
 
-            <Timeline>
-              <TimelineStep
-                left={<InstallationCli />}
-                right={<Installation />}
-                position={"1"}
-              />
-              <TimelineStep
-                left={<CreateFlagImg />}
-                right={<CreateFlag />}
-                position={"2"}
-              />
-              <TimelineStep
-                left={<ChooseSdkCode />}
-                right={<ChooseSdk />}
-                position={"3"}
-              />
-            </Timeline>
+              <Timeline>
+                <TimelineStep
+                  left={<InstallationCli />}
+                  right={<Installation />}
+                  position={"1"}
+                />
+                <TimelineStep
+                  left={<CreateFlagImg />}
+                  right={<CreateFlag />}
+                  position={"2"}
+                />
+                <TimelineStep
+                  left={<ChooseSdkCode />}
+                  right={<ChooseSdk />}
+                  position={"3"}
+                />
+              </Timeline>
 
-            <div className="flex justify-center text-gray-400 text-4xl pt-4">
-              <AiOutlineArrowDown />
-            </div>
-          </section>
+              <div className="flex justify-center text-gray-400 text-4xl pt-4">
+                <AiOutlineArrowDown />
+              </div>
+            </section>
 
-          <div className="pb-4">
-            <Features />
+            <div className="pb-4">
+              <Features />
 
-            <div className="flex justify-center text-gray-400 text-4xl pt-4">
-              <AiOutlineArrowDown />
+              <div className="flex justify-center text-gray-400 text-4xl pt-4">
+                <AiOutlineArrowDown />
+              </div>
             </div>
           </div>
 
           <div className="pb-32">
-            <Analyze />
+            <div className="max-w-screen-xl mx-auto px-4">
+              <Analyze />
+            </div>
           </div>
         </div>
 
-        <div className="bg-white dark:bg-slate-800 py-20 lg:py-28">
+        <div className="py-20 lg:py-28">
           <div className="max-w-screen-xl mx-auto px-4">
             <WeightComparator />
           </div>

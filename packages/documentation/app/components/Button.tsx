@@ -8,7 +8,7 @@ export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean;
   loadingText?: string;
   type?: "button" | "submit" | "reset";
-  variant?: "primary" | "secondary" | "tertiary";
+  variant?: "primary" | "secondary" | "tertiary" | "secondary-inverse";
   scheme?: "default" | "danger";
   icon?: React.ReactNode;
   size?: "L" | "M";
@@ -18,13 +18,16 @@ const classCombination = {
   defaultprimary:
     "bg-indigo-700 text-white hover:bg-indigo-500 active:bg-indigo-600",
   defaultsecondary:
-    "border border-indigo-500 text-indigo-700 text-indigo-700 hover:border-indigo-700 transition-all dark:border-indigo-200 dark:text-indigo-200",
+    "border border-indigo-500 text-indigo-700 text-indigo-700 hover:border-indigo-700 transition-all",
   defaulttertiary: "text-indigo-700 hover:bg-gray-50 active:bg-gray-100",
+  "defaultsecondary-inverse":
+    "border border-indigo-200 text-indigo-200 hover:text-indigo-400 hover:border-indigo-400 transition-all",
 
   dangerprimary: "bg-red-700 text-white hover:bg-red-500 active:bg-red-600",
   dangersecondary:
     "bg-red-100 text-red-700 text-red-700 hover:bg-red-50 active:bg-red-100",
   dangertertiary: "text-red-700",
+  "dangersecondary-inverse": "",
 };
 
 const Sizes = {

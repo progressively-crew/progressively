@@ -65,9 +65,7 @@ const PerfGrid = () => {
         const percentageSize = (toolSize.weight / Maxima) * 100;
 
         const color =
-          toolSize.name === "Progressively"
-            ? "bg-indigo-500"
-            : "bg-gray-300 dark:bg-slate-600";
+          toolSize.name === "Progressively" ? "bg-indigo-500" : "bg-gray-300";
 
         const size = getTimeFromSize(toolSize.weight);
         const threeG = formatTime(size.threeG);
@@ -76,26 +74,24 @@ const PerfGrid = () => {
 
         return (
           <React.Fragment key={toolSize.name}>
-            <h3 className="font-semibold flex flex-row items-center md:justify-end pt-4 md:pt-0 dark:text-slate-200">
+            <h3 className="font-semibold flex flex-row items-center md:justify-end pt-4 md:pt-0">
               <span>{toolSize.name}</span>
             </h3>
 
-            <div className="border border-gray-300 dark:border-slate-600 rounded p-1 pr-4 drop-shadow-md">
+            <div className="border border-gray-300 rounded p-1 pr-4 drop-shadow-md">
               <div className="flex flex-row gap-4 items-center">
                 <div
                   className={"h-8 rounded-sm " + color}
                   style={{ width: `${percentageSize}%` }}
                 />
-                <div className="flex shrink-0 flex-row gap-4 dark:text-slate-200">
+                <div className="flex shrink-0 flex-row gap-4">
                   <VisuallyHidden>
                     {`Size of ${toolSize.name}: ${toolSize.weight / 1000}kB`}
                   </VisuallyHidden>
 
                   <span aria-hidden>
                     {toolSize.weight / 1000}{" "}
-                    <span className="text-gray-700 dark:text-slate-400 text-xs">
-                      kB
-                    </span>
+                    <span className="text-gray-700 text-xs">kB</span>
                   </span>
                 </div>
               </div>
@@ -109,11 +105,9 @@ const PerfGrid = () => {
                   ${threeG.unit}`}
                 </VisuallyHidden>
 
-                <span className="text-sm dark:text-slate-200" aria-hidden>
+                <span className="text-sm" aria-hidden>
                   {threeG.size}{" "}
-                  <span className="text-gray-700 text-xs dark:text-slate-400">
-                    {threeG.unit}
-                  </span>
+                  <span className="text-gray-700 text-xs">{threeG.unit}</span>
                 </span>
               </span>
 
@@ -124,11 +118,9 @@ const PerfGrid = () => {
                   ${fourG.unit}`}
                 </VisuallyHidden>
 
-                <span className="text-sm dark:text-slate-200" aria-hidden>
+                <span className="text-sm" aria-hidden>
                   {fourG.size}{" "}
-                  <span className="text-gray-700 dark:text-slate-400 text-xs">
-                    {fourG.unit}
-                  </span>
+                  <span className="text-gray-700 text-xs">{fourG.unit}</span>
                 </span>
               </span>
             </div>
@@ -142,19 +134,19 @@ const PerfGrid = () => {
 export const WeightComparator = () => {
   return (
     <section>
-      <h2 className="text-center text-3xl md:text-6xl font-semibold dark:text-white">
+      <h2 className="text-center text-3xl md:text-6xl font-semibold">
         Performance difference
       </h2>
 
       <figure>
         <blockquote cite="https://www.thinkwithgoogle.com/intl/en-ca/marketing-strategies/app-and-mobile/mobile-page-speed-new-industry-benchmarks/">
-          <p className="text-center text-gray-700 dark:text-slate-200 p-4 md:px-16 md:text-xl lg:text-2xl before:content-['\201C'] after:content-['\201D']">
+          <p className="text-center text-gray-700 p-4 md:px-16 md:text-xl lg:text-2xl before:content-['\201C'] after:content-['\201D']">
             As page load time goes from <strong>one second</strong> to{" "}
             <strong>seven seconds</strong>, the probability of a mobile site
             visitor <strong>bouncing increases 113%</strong>.
           </p>
         </blockquote>
-        <figcaption className="text-center dark:text-slate-200">
+        <figcaption className="text-center">
           —{" "}
           <a
             href="https://www.thinkwithgoogle.com/intl/en-ca/marketing-strategies/app-and-mobile/mobile-page-speed-new-industry-benchmarks/"
@@ -171,7 +163,7 @@ export const WeightComparator = () => {
         <PerfGrid />
 
         <div className="pt-6">
-          <p className="text-center text-gray-700 text-xs dark:text-slate-200">
+          <p className="text-center text-gray-700 text-xs">
             Approximative numbers from the{" "}
             <a
               href="https://github.com/progressively-crew/progressively/tree/master/example/bundle-diffs"
