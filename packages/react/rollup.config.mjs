@@ -16,7 +16,11 @@ export default () => {
     },
     plugins: [
       nodeResolve(),
-      typescript({ outDir: "lib/legacy", target: "es5" }),
+      typescript({
+        outDir: "lib/legacy",
+        target: "es5",
+        exclude: ["src/__tests__/index.tsx"],
+      }),
       terser(),
     ],
     external,
@@ -32,7 +36,11 @@ export default () => {
     },
     plugins: [
       nodeResolve(),
-      typescript({ outDir: "lib/esm", target: "ESNext" }),
+      typescript({
+        outDir: "lib/esm",
+        target: "ESNext",
+        exclude: ["src/__tests__/index.tsx"],
+      }),
       terser(),
     ],
     external,
