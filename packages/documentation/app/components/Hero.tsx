@@ -116,13 +116,17 @@ export const Hero = () => {
               Get Started
             </Button>
 
-            <Button
-              href="https://dashboard.progressively.app"
-              variant="secondary-inverse"
-              size="L"
+            <a
+              href="https://railway.app/new/template/o-qwn1?referralCode=AwmVVM"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              Demo instance
-            </Button>
+              <img
+                src="https://railway.app/button.svg"
+                alt="Deploy on Railway"
+                className="h-12 px-4"
+              />
+            </a>
           </div>
         </div>
 
