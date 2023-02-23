@@ -1,7 +1,10 @@
 import { loader$ } from "@builder.io/qwik-city";
-import { component$ } from "@builder.io/qwik";
+import { component$, useSignal, useTask$ } from "@builder.io/qwik";
+import { isBrowser } from "@builder.io/qwik/build";
 import type { DocumentHead } from "@builder.io/qwik-city";
+import type { FlagDict } from "@progressively/server-side";
 import { getProgressivelyData } from "@progressively/server-side";
+import { Progressively } from "@progressively/sdk-js";
 
 export const useFlags = loader$(async ({ cookie }) => {
   const userId = cookie.get("progressively-id");
@@ -25,15 +28,26 @@ export const useFlags = loader$(async ({ cookie }) => {
 
 export default component$(() => {
   const signal = useFlags();
+  const flags = useSignal<FlagDict>({});
+
+  useTask$(async () => {
+    if (isBrowser) {
+      const sdk = Progressively.init(signal.value.clientKey, signal.value);
+
+      sdk.onFlagUpdate((nextFlags) => {
+        flags.value = nextFlags;
+      });
+    }
+  });
 
   return (
     <main>
       <div>
-        <h1>New homepage {signal.value.time}</h1>
-        {/* {flags.newHomepage ? "New variant" : "Old variant"} */}
+        <h1>New homepage</h1>
+        {flags.value.newHomepage ? "New variant" : "Old variant"}
       </div>
 
-      {/* <footer>{flags.newFooter ? "New footer" : "Old footer"}</footer> */}
+      <footer>{flags.value.newFooter ? "New footer" : "Old footer"}</footer>
     </main>
   );
 });
