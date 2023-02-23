@@ -31,6 +31,7 @@ export interface ProgressivelySdkType {
     newFields: Fields,
     ctrl?: AbortController
   ) => Promise<LoadFlagsReturnType>;
+  flags: FlagDict;
 }
 
 export interface LoadFlagsArgs {

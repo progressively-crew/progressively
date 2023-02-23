@@ -1,0 +1,42 @@
+name: Svelte
+on:
+  pull_request:
+    branches: ["master"]
+  workflow_dispatch:
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    services:
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_DB: progressively
+          POSTGRES_USER: admin
+          POSTGRES_PASSWORD: admin
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/monorepo-setup
+
+      - name: Start the Example Svelte project
+        working-directory: ./example/svelte
+        run: pnpm run preview &
+
+      - name: E2E tests
+        working-directory: ./example/svelte
+        run: npx wait-on -t 60000 tcp:4000 && pnpm run test:e2e:ci

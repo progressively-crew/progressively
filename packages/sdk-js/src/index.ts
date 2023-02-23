@@ -105,7 +105,7 @@ function init(clientKey: string, options: SDKOptions): ProgressivelySdkType {
     socket?.close();
   }
 
-  return { loadFlags, disconnect, onFlagUpdate, track, setFields };
+  return { loadFlags, disconnect, onFlagUpdate, track, setFields, flags };
 }
 
 export const Progressively = { init };
