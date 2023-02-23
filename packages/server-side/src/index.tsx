@@ -3,7 +3,7 @@ export type Fields = Record<string, string | number | boolean>;
 
 export interface SDKOptions {
   fields?: Fields;
-  apiUrl?: string;
+  apiUrl: string;
   websocketUrl?: string;
   initialFlags?: FlagDict;
   shouldHit?: boolean;
@@ -43,7 +43,7 @@ export function getProgressivelyData(clientKey: string, options: SDKOptions) {
     .catch(() => {
       return {
         data: {
-          initialFlags: options?.safeValueWhenFailing ? {} : null,
+          initialFlags: options?.safeValueWhenFailing ? {} : undefined,
           clientKey,
           ...options,
         },
