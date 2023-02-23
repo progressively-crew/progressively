@@ -1,6 +1,9 @@
 import { loader$ } from "@builder.io/qwik-city";
-import { component$, useSignal, useTask$ } from "@builder.io/qwik";
-import { isBrowser } from "@builder.io/qwik/build";
+import {
+  component$,
+  useBrowserVisibleTask$,
+  useSignal,
+} from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import type { FlagDict } from "@progressively/server-side";
 import { getProgressivelyData } from "@progressively/server-side";
@@ -28,17 +31,22 @@ export const useFlags = loader$(async ({ cookie }) => {
 
 export default component$(() => {
   const signal = useFlags();
-  const flags = useSignal<FlagDict>({});
+  const flags = useSignal<FlagDict>(signal.value.initialFlags || {});
 
-  useTask$(async () => {
-    if (isBrowser) {
+  useBrowserVisibleTask$(
+    async () => {
       const sdk = Progressively.init(signal.value.clientKey, signal.value);
 
       sdk.onFlagUpdate((nextFlags) => {
         flags.value = nextFlags;
       });
-    }
-  });
+
+      return () => {
+        sdk.disconnect();
+      };
+    },
+    { strategy: "document-ready" }
+  );
 
   return (
     <main>
