@@ -1,13 +1,26 @@
-<!-- <script>
+<script>
+	import { onDestroy, onMount } from 'svelte';
 	import { Progressively } from '@progressively/sdk-js';
 	/** @type {import('./$types').PageData} */ export let data;
 
-	const sdk = Progressively.init(data.clientKey, {
-		apiUrl: data.apiUrl,
-		websocketUrl: data.websocketUrl,
-		initialFlags: data.initialFlags
+	let flags = data.initialFlags || {};
+
+	/**
+	 * @type {import('@progressively/sdk-js').ProgressivelySdkType}
+	 */
+	let sdk;
+
+	onMount(() => {
+		sdk = Progressively.init(data.clientKey, data);
+
+		sdk.onFlagUpdate((nextFlags) => {
+			flags = nextFlags;
+		});
 	});
-	const flags = {};
+
+	onDestroy(() => {
+		sdk?.disconnect();
+	});
 </script>
 
 <main>
@@ -17,4 +30,4 @@
 	</div>
 
 	<footer>{flags.newFooter ? 'New footer' : 'Old footer'}</footer>
-</main> -->
+</main>

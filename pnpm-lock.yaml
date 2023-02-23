@@ -147,6 +147,7 @@ importers:
 
   example/svelte:
     specifiers:
+      '@progressively/playwright-helpers': 1.0.0
       '@progressively/sdk-js': 0.0.1-alpha.19
       '@progressively/server-side': 0.0.1-alpha.19
       '@sveltejs/adapter-auto': ^2.0.0
@@ -164,6 +165,7 @@ importers:
       typescript: ^4.9.3
       vite: ^4.0.0
     devDependencies:
+      '@progressively/playwright-helpers': link:../playwright-helpers
       '@progressively/sdk-js': link:../../packages/sdk-js
       '@progressively/server-side': link:../../packages/server-side
       '@sveltejs/adapter-auto': 2.0.0_@sveltejs+kit@1.8.3
