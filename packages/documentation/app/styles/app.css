@@ -780,6 +780,14 @@ video {
   height: 100%;
 }
 
+.h-\[54px\] {
+  height: 54px;
+}
+
+.h-\[40px\] {
+  height: 40px;
+}
+
 .min-h-full {
   min-height: 100%;
 }
@@ -854,6 +862,10 @@ video {
 
 .w-full {
   width: 100%;
+}
+
+.w-\[250px\] {
+  width: 250px;
 }
 
 .max-w-screen-2xl {

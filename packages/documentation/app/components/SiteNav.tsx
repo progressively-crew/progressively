@@ -46,7 +46,7 @@ export const SiteNav = () => {
             </HideTablet>
           </div>
 
-          <ul className="flex flex-row gap-8">
+          <ul className="flex flex-row gap-8 items-center">
             <li>
               <NavLink href="https://progressively.gitbook.io/docs/">
                 Documentation
@@ -61,6 +61,21 @@ export const SiteNav = () => {
               <NavLink href="https://github.com/progressively-crew/progressively">
                 Github
               </NavLink>
+            </li>
+            <li className="hidden md:block">
+              <a
+                href="https://www.producthunt.com/posts/progressively?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-progressively"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <img
+                  src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=379584&theme=neutral"
+                  alt="Progressively - Rollout&#0032;quickly&#0044;&#0032;effectively&#0044;&#0032;progressively | Product Hunt"
+                  className="h-[40px] w-[250px]"
+                  width="250"
+                  height="54"
+                />
+              </a>
             </li>
           </ul>
         </div>
