@@ -10,20 +10,18 @@ import { getProgressivelyData } from "@progressively/server-side";
 import { Progressively } from "@progressively/sdk-js";
 
 export const useFlags = loader$(async ({ cookie }) => {
-  const userId = cookie.get("progressively-id");
+  const id = cookie.get("progressively-id");
 
-  const { data, response } = await getProgressivelyData("valid-sdk-key", {
+  const { data, userId } = await getProgressivelyData("valid-sdk-key", {
     websocketUrl: "ws://localhost:4000",
     apiUrl: "http://localhost:4000",
     fields: {
-      id: userId?.value,
+      id: id?.value,
     },
   });
 
-  const headerId = response?.headers?.get("X-progressively-id");
-
-  if (headerId) {
-    cookie.set("progressively-id", headerId);
+  if (userId) {
+    cookie.set("progressively-id", userId);
   }
 
   return data;

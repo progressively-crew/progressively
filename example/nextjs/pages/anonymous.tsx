@@ -42,19 +42,17 @@ export async function getServerSideProps({
   req: Request;
   res: any;
 }) {
-  const userIdFromNextjsCookie =
-    (req as any).cookies?.["progressively-id"] || null;
+  const id = (req as any).cookies?.["progressively-id"];
 
-  const { data, response } = await getProgressivelyData("valid-sdk-key", {
+  const { data, userId } = await getProgressivelyData("valid-sdk-key", {
     websocketUrl: "ws://localhost:4000",
     apiUrl: "http://localhost:4000",
     fields: {
-      id: userIdFromNextjsCookie,
+      id,
     },
   });
 
-  const progressivelyCookie = response?.headers?.get("set-cookie");
-  res.setHeader("set-cookie", progressivelyCookie);
+  res.setHeader("set-cookie", userId);
 
   return {
     props: {
