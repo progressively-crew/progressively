@@ -1,0 +1,48 @@
+{
+  "name": "my-qwik-basic-starter",
+  "description": "App with Routing built-in (recommended)",
+  "engines": {
+    "node": ">=15.0.0"
+  },
+  "private": true,
+  "scripts": {
+    "build": "qwik build",
+    "build.client": "vite build",
+    "build.preview": "vite build --ssr src/entry.preview.tsx",
+    "build.types": "tsc --incremental --noEmit",
+    "deploy": "echo 'Run \"npm run qwik add\" to install a server adapter'",
+    "dev": "vite --mode ssr",
+    "dev.debug": "node --inspect-brk ./node_modules/vite/bin/vite.js --mode ssr --force",
+    "fmt": "prettier --write .",
+    "fmt.check": "prettier --check .",
+    "lint": "eslint \"src/**/*.ts*\"",
+    "preview": "qwik build preview && vite preview --open --port 3000",
+    "start": "vite --open --mode ssr",
+    "qwik": "qwik",
+    "test:e2e": "PROJECT_ROOT=$(pwd) pnpm --filter @progressively/playwright-helpers run test:e2e",
+    "test:e2e:debug": "PROJECT_ROOT=$(pwd) pnpm --filter @progressively/playwright-helpers run test:e2e:debug",
+    "test:e2e:ci": "PROJECT_ROOT=$(pwd) pnpm --filter @progressively/playwright-helpers run test:e2e:ci"
+  },
+  "dependencies": {
+    "@progressively/playwright-helpers": "1.0.0",
+    "@progressively/sdk-js": "0.0.1-alpha.19",
+    "@progressively/server-side": "0.0.1-alpha.19"
+  },
+  "devDependencies": {
+    "@builder.io/qwik": "0.19.2",
+    "@builder.io/qwik-city": "0.4.0",
+    "@types/eslint": "8.21.1",
+    "@types/node": "^18.14.0",
+    "@types/node-fetch": "latest",
+    "@typescript-eslint/eslint-plugin": "5.53.0",
+    "@typescript-eslint/parser": "5.53.0",
+    "eslint": "8.34.0",
+    "eslint-plugin-qwik": "0.19.2",
+    "node-fetch": "3.3.0",
+    "prettier": "2.8.4",
+    "typescript": "4.9.5",
+    "undici": "5.20.0",
+    "vite": "4.1.4",
+    "vite-tsconfig-paths": "3.5.0"
+  }
+}
