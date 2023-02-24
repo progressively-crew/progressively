@@ -23,3 +23,8 @@ lerna-debug.log*
 */schema.prisma
 
 .turbo
+
+
+# tailwind generated styles on build
+./packages/frontend/app/styles/app.css
+./packages/documentation/app/styles/app.css
