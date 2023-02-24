@@ -597,6 +597,7 @@ importers:
       jest: ^29.4.2
       jest-environment-jsdom: ^29.4.2
       msw: ^1.0.1
+      node-fetch: 2.6.7
       react: '>=18'
       react-dom: '>=18'
       rollup: ^3.15.0
@@ -619,6 +620,7 @@ importers:
       jest: 29.4.2
       jest-environment-jsdom: 29.4.2
       msw: 1.0.1_typescript@4.9.5
+      node-fetch: 2.6.7
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       rollup: 3.15.0
