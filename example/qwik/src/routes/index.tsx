@@ -20,9 +20,7 @@ export const useFlags = loader$(async ({ cookie }) => {
     },
   });
 
-  if (userId) {
-    cookie.set("progressively-id", userId);
-  }
+  cookie.set("progressively-id", userId);
 
   return data;
 });

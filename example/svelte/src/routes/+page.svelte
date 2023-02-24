@@ -1,7 +1,7 @@
 <script>
 	import { onDestroy, onMount } from 'svelte';
 	import { Progressively } from '@progressively/sdk-js';
-	/** @type {import('./$types').PageData} */ export let data;
+	/** @type {import('./$types').PageServerData} */ export let data;
 
 	let flags = data.initialFlags || {};
 

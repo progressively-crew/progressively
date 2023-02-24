@@ -21,7 +21,7 @@ export function getProgressivelyData(clientKey: string, options: SDKOptions) {
   fields.clientKey = clientKey;
 
   let response: Response | undefined;
-  let userId: string | undefined;
+  let userId = "";
   return fetch(`${apiRoot}/sdk/${btoA(JSON.stringify(fields))}`, {
     credentials: "include",
     headers: options?.shouldHit
@@ -32,7 +32,7 @@ export function getProgressivelyData(clientKey: string, options: SDKOptions) {
   })
     .then((res: Response) => {
       response = res;
-      userId = response.headers?.get("X-progressively-id") ?? undefined;
+      userId = response.headers?.get("X-progressively-id") ?? "";
       return response.json();
     })
     .then((flags: FlagDict) => {

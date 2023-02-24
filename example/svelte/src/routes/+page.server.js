@@ -1,5 +1,6 @@
 import { getProgressivelyData } from '@progressively/server-side';
 
+/** @type {import('./$types').PageServerLoad} */
 export async function load({ cookies }) {
 	const id = cookies.get('progressively-id');
 
