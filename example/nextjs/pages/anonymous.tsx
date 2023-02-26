@@ -42,7 +42,7 @@ export async function getServerSideProps({
   req: Request;
   res: any;
 }) {
-  const id = (req as any).cookies?.["progressively-id"];
+  const id = (req as any).cookies?.["progressively-id"] ?? null;
 
   const { data, userId } = await getProgressivelyData("valid-sdk-key", {
     websocketUrl: "ws://localhost:4000",
