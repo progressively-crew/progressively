@@ -378,8 +378,8 @@ importers:
 
   packages/documentation:
     specifiers:
-      '@progressively/react': ^0.0.1-beta.1
-      '@progressively/server-side': ^0.0.1-alpha.19
+      '@progressively/react': workspace:0.0.1-beta.1
+      '@progressively/server-side': workspace:0.0.1-alpha.19
       '@radix-ui/react-label': ^2.0.0
       '@radix-ui/react-switch': ^1.0.1
       '@remix-run/dev': ^1.13.0
@@ -452,7 +452,7 @@ importers:
       '@babel/core': ^7.20.12
       '@headlessui/react': ^1.7.11
       '@okta/okta-auth-js': ^7.2.0
-      '@progressively/database': ^1.0.0
+      '@progressively/database': workspace:^1.0.0
       '@radix-ui/react-label': ^2.0.0
       '@radix-ui/react-select': ^1.2.0
       '@radix-ui/react-switch': ^1.0.1
@@ -545,8 +545,8 @@ importers:
   packages/load-testing:
     specifiers:
       '@playwright/test': ^1.27.1
-      '@progressively/database': ^1.0.0
-      '@progressively/react': 0.0.1-beta.1
+      '@progressively/database': workspace:^1.0.0
+      '@progressively/react': workspace:0.0.1-beta.1
       '@testing-library/jest-dom': ^5.16.5
       '@testing-library/react': ^13.4.0
       '@testing-library/user-event': ^14.4.3
@@ -2413,6 +2413,7 @@ packages:
   /@colors/colors/1.5.0:
     resolution: {integrity: sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==}
     engines: {node: '>=0.1.90'}
+    requiresBuild: true
 
   /@cspotcode/source-map-support/0.8.1:
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}

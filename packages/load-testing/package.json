@@ -3,7 +3,7 @@
   "version": "0.0.1-beta.1",
   "private": true,
   "dependencies": {
-    "@progressively/react": "0.0.1-beta.1",
+    "@progressively/react": "workspace:0.0.1-beta.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
@@ -13,8 +13,8 @@
     "web-vitals": "^3.0.4"
   },
   "devDependencies": {
-    "@progressively/database": "^1.0.0",
     "@playwright/test": "^1.27.1",
+    "@progressively/database": "workspace:^1.0.0",
     "@types/node": "^18.11.9",
     "@types/node-fetch": "^2.6.2",
     "chalk": "^5",
