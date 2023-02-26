@@ -136,7 +136,7 @@ importers:
   example/playwright-helpers:
     specifiers:
       '@playwright/test': ^1.27.1
-      '@progressively/database': ^1.0.0
+      '@progressively/database': workspace:^1.0.0
       dotenv: ^16.0.3
       typescript: ^4.9.5
     dependencies:
