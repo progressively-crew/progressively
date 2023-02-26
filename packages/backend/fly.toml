@@ -5,6 +5,10 @@ kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
 
+[build]
+  dockerfile = "../../Dockerfile.Backend"
+
+
 [env]
   SMTP_PORT = 587
   REFRESH_TOKEN_EXPIRES = 84600

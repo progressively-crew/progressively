@@ -6,6 +6,7 @@ RUN apt-get install python3-pip -y
 RUN npm i -g pnpm
 
 COPY . .
+COPY pnpm-*.yaml .
 
 RUN rm -rf packages/documentation packages/frontend packages/load-testing packages/react packages/sdk-js packages/sdk-node packages/server-side
 RUN pnpm install
