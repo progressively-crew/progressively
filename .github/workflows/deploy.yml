@@ -12,5 +12,4 @@ jobs:
       - uses: superfly/flyctl-actions/setup-flyctl@master
 
       - name: Deploy backend
-        working-directory: ./packages/backend
         run: flyctl deploy --remote-only
