@@ -1,12 +1,23 @@
-# fly.toml file generated for home-progressively on 2022-10-05T18:30:17+02:00
+# fly.toml file generated for backend-progressively on 2022-10-31T08:51:24+01:00
 
-app = "home-progressively"
+app = "backend-progressively"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
 
+[build]
+  dockerfile = "./Dockerfile.Backend"
+
+
 [env]
-  PROGRESSIVELY_ENV = "64a70aec-f69c-4635-bb16-2d0a14bdb7ce"
+  SMTP_PORT = 587
+  REFRESH_TOKEN_EXPIRES = 84600
+  FRONTEND_URL = "https://dashboard.progressively.app"
+  BACKEND_URL = "https://backend-progressively.fly.dev"
+  SOCKET_TIMEOUT = 10000
+  ALLOW_REGISTRATION = "true"
+  THROTTLING_TTL = 60
+  THROTTLING_LIMIT = 10000
 
 [experimental]
   allowed_public_ports = []
@@ -14,7 +25,7 @@ processes = []
 
 [[services]]
   http_checks = []
-  internal_port = 3000
+  internal_port = 4000
   processes = ["app"]
   protocol = "tcp"
   script_checks = []
