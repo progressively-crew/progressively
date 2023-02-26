@@ -1,7 +1,6 @@
 <div align="center">
- <img src="https://user-images.githubusercontent.com/3874873/219444867-11fa1ba3-d4b9-40df-be35-4c4f5f268af9.jpg" alt="Progressively" />
-
  <p><strong>Rollout quickly, effectively, progressively</strong></p>
+ <img src="https://user-images.githubusercontent.com/3874873/219444867-11fa1ba3-d4b9-40df-be35-4c4f5f268af9.jpg" alt="Progressively" />
 </div>
 
 <br />
