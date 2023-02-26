@@ -11,7 +11,7 @@
       "dependsOn": ["build"]
     },
     "start": {
-      "dependsOn": ["^build"]
+      "dependsOn": []
     },
     "start:frontend": {
       "dependsOn": []
