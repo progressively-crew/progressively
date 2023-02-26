@@ -38,8 +38,8 @@
     "timeago.js": "^4.0.2"
   },
   "devDependencies": {
-    "@progressively/database": "^1.0.0",
     "@babel/core": "^7.20.12",
+    "@progressively/database": "workspace:^1.0.0",
     "@remix-run/dev": "^1.13.0",
     "@testing-library/cypress": "^9.0.0",
     "@testing-library/react": "^14.0.0",

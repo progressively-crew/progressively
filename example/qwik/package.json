@@ -24,9 +24,9 @@
     "test:e2e:ci": "PROJECT_ROOT=$(pwd) pnpm --filter @progressively/playwright-helpers run test:e2e:ci"
   },
   "dependencies": {
-    "@progressively/playwright-helpers": "1.0.0",
-    "@progressively/sdk-js": "0.0.1-alpha.19",
-    "@progressively/server-side": "0.0.1-alpha.19"
+    "@progressively/playwright-helpers": "workspace:1.0.0",
+    "@progressively/sdk-js": "workspace:0.0.1-alpha.19",
+    "@progressively/server-side": "workspace:0.0.1-alpha.19"
   },
   "devDependencies": {
     "@builder.io/qwik": "0.19.2",
