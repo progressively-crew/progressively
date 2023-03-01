@@ -1,0 +1,16 @@
+{
+  "name": "@progressively/react-native",
+  "author": "mfrachet",
+  "version": "0.0.1",
+  "types": "./src/index.ts",
+  "main": "./src/index.ts",
+  "peerDependencies": {
+    "react": "18.2.0",
+    "react-native": "0.71.3"
+  },
+  "devDependencies": {
+    "react": "18.2.0",
+    "react-native": "0.71.3",
+    "typescript": "^4.9.5"
+  }
+}

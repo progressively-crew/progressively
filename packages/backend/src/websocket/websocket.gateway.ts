@@ -46,6 +46,7 @@ export class WebsocketGateway
   }
 
   handleConnection(socket: LocalWebsocket, req: { url: string }) {
+    console.log('wooop');
     // Heart-beating
     socket.isAlive = true;
 
