@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
+import base64 from "base-64";
 import { loadFlags } from "./loadFlags";
 import { ProgressivelyContext } from "./ProgressivelyContext";
 
@@ -29,14 +30,14 @@ export const ProgressivelyProvider = ({
   initialFlags,
   apiUrl,
   websocketUrl,
-  fields,
+  fields = {},
 }: ProgressivelyProviderProps) => {
   const [state, setState] = useState<Status>({ status: "idle" });
   const [flags, setFlags] = useState<FlagDict>(initialFlags || {});
 
   useEffect(() => {
-    const sdkParams =
-      "eyJlbWFpbCI6Im1hcnZpbi5mcmFjaGV0QHNvbWV0aGluZy5jb20iLCJpZCI6IjEiLCJjbGllbnRLZXkiOiJ2YWxpZC1zZGsta2V5In0=";
+    fields.clientKey = clientKey;
+    const sdkParams = base64.encode(JSON.stringify(fields));
 
     let ws: WebSocket;
     const ctrl = new AbortController();
@@ -49,7 +50,13 @@ export const ProgressivelyProvider = ({
     const handleWsConnect = (userId: string | null | undefined) => {
       const nextFields = { ...fields, id: userId };
 
-      ws = new WebSocket(`${websocketUrl}?opts=${sdkParams}`);
+      ws = new WebSocket(
+        `${websocketUrl}?opts=${base64.encode(JSON.stringify(nextFields))}`
+      );
+
+      ws.onmessage = (event) => {
+        setFlags((s) => ({ ...s, ...JSON.parse(event.data).data }));
+      };
     };
 
     loadFlags(apiUrl, sdkParams, ctrl).then((res) => {

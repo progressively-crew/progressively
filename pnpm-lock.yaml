@@ -647,10 +647,15 @@ importers:
 
   packages/react-native:
     specifiers:
+      '@types/base-64': ^1.0.0
+      base-64: ^1.0.0
       react: 18.2.0
       react-native: 0.71.3
       typescript: ^4.9.5
+    dependencies:
+      base-64: 1.0.0
     devDependencies:
+      '@types/base-64': 1.0.0
       react: 18.2.0
       react-native: 0.71.3_react@18.2.0
       typescript: 4.9.5
@@ -6993,6 +6998,10 @@ packages:
     dependencies:
       '@babel/types': 7.20.7
 
+  /@types/base-64/1.0.0:
+    resolution: {integrity: sha512-AvCJx/HrfYHmOQRFdVvgKMplXfzTUizmh0tz9GFTpDePWgCY4uoKll84zKlaRoeiYiCr7c9ZnqSTzkl0BUVD6g==}
+    dev: true
+
   /@types/bcrypt/5.0.0:
     resolution: {integrity: sha512-agtcFKaruL8TmcvqbndlqHPSJgsolhf/qPWchFlgnW1gECTN/nKbFcoFnvKAQRFfKbh+BO6A3SWdJu9t+xF3Lw==}
     dependencies:
@@ -9177,6 +9186,10 @@ packages:
 
   /balanced-match/1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
+
+  /base-64/1.0.0:
+    resolution: {integrity: sha512-kwDPIFCGx0NZHog36dj+tHiwP4QMzsZ3AgMViUBKI0+V5n4U0ufTCUMhnQ04diaRI8EX/QcPfql7zlhZ7j4zgg==}
+    dev: false
 
   /base/0.11.2:
     resolution: {integrity: sha512-5T6P4xPgpp0YDFvSWwEZ4NoE3aM4QBQXDzmVbraCkFj8zHM+mba8SyqB5DbZWyR7mYHo6Y7BdQo3MoA4m0TeQg==}

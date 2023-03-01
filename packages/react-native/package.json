@@ -9,8 +9,12 @@
     "react-native": "0.71.3"
   },
   "devDependencies": {
+    "@types/base-64": "^1.0.0",
     "react": "18.2.0",
     "react-native": "0.71.3",
     "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "base-64": "^1.0.0"
   }
 }

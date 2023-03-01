@@ -1,18 +1,26 @@
-import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { ProgressivelyProvider } from "../../packages/react-native/src";
+import {
+  ProgressivelyProvider,
+  useFlags,
+} from "../../packages/react-native/src";
+
+const Flagged = () => {
+  const { flags } = useFlags();
+
+  return <Text>{JSON.stringify(flags)}</Text>;
+};
 
 export default function App() {
   return (
     <ProgressivelyProvider
-      clientKey={"abd"}
+      clientKey={"valid-sdk-key"}
       apiUrl={"http://localhost:4000"}
       websocketUrl="ws://localhost:4000"
     >
       <View style={styles.container}>
         <Text>Open up App.js to start working on your app fefe!</Text>
-        <StatusBar style="auto" />
+        <Flagged />
       </View>
     </ProgressivelyProvider>
   );

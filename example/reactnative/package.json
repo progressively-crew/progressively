@@ -9,6 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "base-64": "^1.0.0",
     "expo": "~48.0.4",
     "expo-status-bar": "~1.4.4",
     "react": "18.2.0",
