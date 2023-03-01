@@ -15,8 +15,8 @@ export default function App() {
   return (
     <ProgressivelyProvider
       clientKey={"valid-sdk-key"}
-      apiUrl={"http://localhost:4000"}
-      websocketUrl="ws://localhost:4000"
+      apiUrl={"http://192.168.1.20:4000"}
+      websocketUrl="ws://192.168.1.20:4000"
     >
       <View style={styles.container}>
         <Text>Open up App.js to start working on your app fefe!</Text>

@@ -17,7 +17,6 @@ interface Status {
 
 export interface ProgressivelyProviderProps {
   clientKey: string;
-  initialFlags?: FlagDict;
   fields?: Fields;
   apiUrl: string;
   websocketUrl?: string;
@@ -27,16 +26,15 @@ export interface ProgressivelyProviderProps {
 export const ProgressivelyProvider = ({
   children,
   clientKey,
-  initialFlags,
   apiUrl,
   websocketUrl,
-  fields = {},
+  fields: initialFields = {},
 }: ProgressivelyProviderProps) => {
+  const [fields] = useState({ ...initialFields, clientKey });
   const [state, setState] = useState<Status>({ status: "idle" });
-  const [flags, setFlags] = useState<FlagDict>(initialFlags || {});
+  const [flags, setFlags] = useState<FlagDict>({});
 
   useEffect(() => {
-    fields.clientKey = clientKey;
     const sdkParams = base64.encode(JSON.stringify(fields));
 
     let ws: WebSocket;
@@ -48,10 +46,10 @@ export const ProgressivelyProvider = ({
     };
 
     const handleWsConnect = (userId: string | null | undefined) => {
-      const nextFields = { ...fields, id: userId };
+      const wsFields = { ...fields, id: userId };
 
       ws = new WebSocket(
-        `${websocketUrl}?opts=${base64.encode(JSON.stringify(nextFields))}`
+        `${websocketUrl}?opts=${base64.encode(JSON.stringify(wsFields))}`
       );
 
       ws.onmessage = (event) => {
@@ -68,7 +66,7 @@ export const ProgressivelyProvider = ({
       ws?.close();
       ctrl.abort();
     };
-  }, [apiUrl, websocketUrl]);
+  }, [apiUrl, websocketUrl, fields]);
 
   const isLoading = state.status === "loading";
 
