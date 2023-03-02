@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "types": "./src/index.ts",
   "main": "./src/index.ts",
+  "private": false,
   "peerDependencies": {
     "react": "18.2.0",
     "react-native": "0.71.3"
