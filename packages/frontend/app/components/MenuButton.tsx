@@ -31,13 +31,13 @@ export const MenuButton = ({
     <div className="relative">
       <Menu>
         {variant === "switch" ? (
-          <Menu.Button className={menuButtonClass}>
-            <RxCaretSort aria-label={label} />
+          <Menu.Button className={menuButtonClass} aria-label={label}>
+            <RxCaretSort />
           </Menu.Button>
         ) : (
           <Tooltip tooltip={<p>{label}</p>}>
-            <Menu.Button className={menuButtonClass}>
-              <HiOutlineDotsVertical aria-label={label} />
+            <Menu.Button className={menuButtonClass} aria-label={label}>
+              <HiOutlineDotsVertical />
             </Menu.Button>
           </Tooltip>
         )}
