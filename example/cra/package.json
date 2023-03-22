@@ -16,7 +16,6 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --watchAll=false --passWithNoTests",
     "eject": "react-scripts eject",
     "test:e2e": "PROJECT_ROOT=$(pwd) pnpm --filter @progressively/playwright-helpers run test:e2e",
     "test:e2e:debug": "PROJECT_ROOT=$(pwd) pnpm --filter @progressively/playwright-helpers run test:e2e:debug",
@@ -24,8 +23,7 @@
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
-      "react-app/jest"
+      "react-app"
     ]
   },
   "browserslist": {
