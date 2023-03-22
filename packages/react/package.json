@@ -10,7 +10,7 @@
       "import": "./lib/esm/index.js"
     }
   },
-  "types": "./lib/legacy",
+  "types": "./lib/legacy/index.d.ts",
   "scripts": {
     "build": "rollup -c rollup.config.mjs",
     "build:dev": "pnpm run build -- --environment BUILD:development",
