@@ -15,7 +15,6 @@
     },
     "noEmit": true,
     "forceConsistentCasingInFileNames": true,
-    "allowJs": true,
-    "types": ["jest"]
+    "allowJs": true
   }
 }
