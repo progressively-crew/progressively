@@ -6,7 +6,7 @@
   "exports": "./dist/modern/index.js",
   "types": "./dist/modern/index.d.ts",
   "scripts": {
-    "build": "tsc && tsc --target ES2017 --outDir ./dist/modern --module 'ESNext'",
+    "build": "tsc && tsc --target ES2017 --outDir ./dist/modern --module 'esnext'",
     "test": "jest",
     "bundlesize": "bundlesize --enable-github-checks"
   },
