@@ -6,37 +6,27 @@ const external = ["react"];
 const globals = { react: "react" };
 
 export default () => {
-  const legacy = {
+  return {
     input: "src/index.tsx",
-    output: {
-      name: "progressively-react",
-      dir: "lib/legacy",
-      format: "umd",
-      globals,
-    },
+    output: [
+      {
+        file: "lib/cjs/index.cjs.js",
+        format: "cjs",
+        name: "progressively-react",
+        globals,
+      },
+      {
+        file: "lib/esm/index.mjs",
+        format: "es",
+      },
+    ],
     plugins: [
       nodeResolve(),
-      typescript({ outDir: "lib/legacy", target: "es5" }),
+      typescript({
+        tsconfig: "./tsconfig.json",
+      }),
       terser(),
     ],
     external,
   };
-
-  const esm = {
-    input: "src/index.tsx",
-    output: {
-      name: "progressively-react",
-      dir: "lib/esm",
-      format: "esm",
-      globals,
-    },
-    plugins: [
-      nodeResolve(),
-      typescript({ outDir: "lib/esm", target: "ESNext" }),
-      terser(),
-    ],
-    external,
-  };
-
-  return [legacy, esm];
 };

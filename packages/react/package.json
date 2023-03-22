@@ -2,15 +2,15 @@
   "name": "@progressively/react",
   "author": "mfrachet",
   "version": "0.0.1-beta.1",
-  "main": "./lib/legacy/index.js",
+  "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
   "exports": {
     ".": {
-      "require": "./lib/legacy/index.js",
-      "import": "./lib/esm/index.js"
+      "require": "./lib/cjs/index.js",
+      "import": "./lib/esm/index.mjs"
     }
   },
-  "types": "./lib/legacy/src/index.d.ts",
+  "types": "./lib/cjs/types/src/index.d.ts",
   "scripts": {
     "build": "rollup -c rollup.config.mjs",
     "build:dev": "pnpm run build -- --environment BUILD:development",
@@ -44,11 +44,11 @@
   },
   "bundlesize": [
     {
-      "path": "./lib/esm/index.js",
+      "path": "./lib/esm/index.mjs",
       "maxSize": "1.3 kB"
     },
     {
-      "path": "./lib/legacy/index.js",
+      "path": "./lib/cjs/index.cjs.js",
       "maxSize": "1.3 kB"
     }
   ]
