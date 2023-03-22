@@ -2,15 +2,15 @@
   "name": "@progressively/server-side",
   "author": "mfrachet",
   "version": "0.0.1-alpha.19",
-  "types": "./lib/legacy",
-  "main": "./lib/legacy/index.js",
-  "module": "./lib/esm/index.js",
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.mjs",
   "exports": {
     ".": {
-      "require": "./lib/legacy/index.js",
-      "import": "./lib/esm/index.js"
+      "require": "./lib/cjs/index.js",
+      "import": "./lib/esm/index.mjs"
     }
   },
+  "types": "./lib/cjs/index.d.ts",
   "scripts": {
     "build": "rollup -c rollup.config.mjs",
     "build:dev": "pnpm run build -- --environment BUILD:development",
@@ -35,11 +35,11 @@
   },
   "bundlesize": [
     {
-      "path": "./lib/esm/index.js",
+      "path": "./lib/esm/index.mjs",
       "maxSize": "1.1 kB"
     },
     {
-      "path": "./lib/legacy/index.js",
+      "path": "./lib/cjs/index.cjs.js",
       "maxSize": "1.1 kB"
     }
   ]

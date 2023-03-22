@@ -20,7 +20,7 @@ export class SdkController {
   constructor(private readonly sdkService: SdkService) {}
 
   _prepareCookie(response: Response, userId: string) {
-    response.cookie(COOKIE_KEY, userId, {
+    response.cookie('progressively-id', userId, {
       secure: true,
     });
 

@@ -33,7 +33,7 @@ export default component$(() => {
     async () => {
       const sdk = Progressively.init(signal.value.clientKey, signal.value);
 
-      sdk.onFlagUpdate((nextFlags) => {
+      sdk.onFlagUpdate((nextFlags: FlagDict) => {
         flags.value = nextFlags;
       });
 

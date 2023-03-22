@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "declaration": true,
+    "declarationDir": "types",
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,

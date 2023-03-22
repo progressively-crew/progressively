@@ -1,12 +1,14 @@
 {
   "compilerOptions": {
     "declaration": true,
+    "declarationDir": "types",
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "jsx": "react"
+    "jsx": "react",
+    "types": ["vitest/globals"]
   }
 }

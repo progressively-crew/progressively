@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import { serialize } from "cookie";
 import styles from "../styles/Home.module.css";
 import { ProgressivelyProvider, useFlags } from "@progressively/react";
 import { getProgressivelyData } from "@progressively/server-side";
@@ -52,7 +53,13 @@ export async function getServerSideProps({
     },
   });
 
-  res.setHeader("set-cookie", userId);
+  const cookie = serialize("progressively-id", userId, {
+    httpOnly: true,
+    path: "/",
+    secure: true,
+  });
+
+  res.setHeader("set-cookie", cookie);
 
   return {
     props: {

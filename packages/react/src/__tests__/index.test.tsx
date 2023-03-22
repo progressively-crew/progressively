@@ -44,13 +44,13 @@ describe("React-sdk root", () => {
   let socket: any;
 
   beforeEach(() => {
-    socket = { close: jest.fn() };
-    (global as any).fetch = jest.fn(fetch);
-    (global as any).WebSocket = jest.fn(() => socket);
+    socket = { close: vi.fn() };
+    (global as any).fetch = vi.fn(fetch);
+    (global as any).WebSocket = vi.fn(() => socket);
   });
 
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   beforeAll(() => worker.listen());
