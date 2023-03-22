@@ -58,7 +58,7 @@ test.describe("/anonymous", () => {
     await expect(page.getByText("New variant")).not.toBeVisible();
   });
 
-  test.only("uses the same cookie for anonymous users after page reload", async ({
+  test("uses the same cookie for anonymous users after page reload", async ({
     page,
     context,
   }) => {
