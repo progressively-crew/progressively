@@ -14,7 +14,8 @@
   "scripts": {
     "build": "rollup -c rollup.config.mjs",
     "build:dev": "pnpm run build -- --environment BUILD:development",
-    "test": "vitest",
+    "test": "CI=true vitest",
+    "test:watch": "vitest",
     "bundlesize": "bundlesize --enable-github-checks"
   },
   "peerDependencies": {
