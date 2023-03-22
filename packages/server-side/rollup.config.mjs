@@ -3,33 +3,25 @@ import terser from "@rollup/plugin-terser";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 
 export default () => {
-  const legacy = {
+  return {
     input: "src/index.tsx",
-    output: {
-      name: "progressively-server-side",
-      dir: "lib/legacy",
-      format: "umd",
-    },
+    output: [
+      {
+        file: "lib/cjs/index.cjs.js",
+        format: "cjs",
+        name: "progressively-react",
+      },
+      {
+        file: "lib/esm/index.mjs",
+        format: "es",
+      },
+    ],
     plugins: [
       nodeResolve(),
-      typescript({ outDir: "lib/legacy", target: "es5" }),
+      typescript({
+        tsconfig: "./tsconfig.json",
+      }),
       terser(),
     ],
   };
-
-  const esm = {
-    input: "src/index.tsx",
-    output: {
-      name: "progressively-server-side",
-      dir: "lib/esm",
-      format: "esm",
-    },
-    plugins: [
-      nodeResolve(),
-      typescript({ outDir: "lib/esm", target: "ESNext" }),
-      terser(),
-    ],
-  };
-
-  return [legacy, esm];
 };
