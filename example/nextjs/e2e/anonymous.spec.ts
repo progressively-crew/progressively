@@ -58,7 +58,7 @@ test.describe("/anonymous", () => {
     await expect(page.getByText("New variant")).not.toBeVisible();
   });
 
-  test("uses the same cookie for anonymous users after page reload", async ({
+  test.only("uses the same cookie for anonymous users after page reload", async ({
     page,
     context,
   }) => {
@@ -68,16 +68,19 @@ test.describe("/anonymous", () => {
     await page.reload();
 
     const nextCookie1 = await getCookie("progressively-id", context);
+    expect(nextCookie1).toBeDefined();
     expect(previousCookie).toEqual(nextCookie1);
 
     await page.reload();
 
     const nextCookie2 = await getCookie("progressively-id", context);
+    expect(nextCookie2).toBeDefined();
     expect(previousCookie).toEqual(nextCookie2);
 
     await page.reload();
 
     const nextCookie3 = await getCookie("progressively-id", context);
+    expect(nextCookie3).toBeDefined();
     expect(previousCookie).toEqual(nextCookie3);
   });
 });

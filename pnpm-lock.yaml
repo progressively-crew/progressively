@@ -91,8 +91,10 @@ importers:
       '@progressively/playwright-helpers': workspace:1.0.0
       '@progressively/react': workspace:0.0.1-beta.1
       '@progressively/server-side': workspace:0.0.1-alpha.19
+      '@types/cookie': ^0.5.1
       '@types/node': 17.0.31
       '@types/react': 18.0.9
+      cookie: ^0.5.0
       eslint: 8.15.0
       eslint-config-next: 12.1.6
       next: 12.1.6
@@ -102,11 +104,13 @@ importers:
     dependencies:
       '@progressively/react': link:../../packages/react
       '@progressively/server-side': link:../../packages/server-side
+      cookie: 0.5.0
       next: 12.1.6_ef5jwxihqo6n7gxfmzogljlgcm
       react: 18.1.0
       react-dom: 18.1.0_react@18.1.0
     devDependencies:
       '@progressively/playwright-helpers': link:../playwright-helpers
+      '@types/cookie': 0.5.1
       '@types/node': 17.0.31
       '@types/react': 18.0.9
       eslint: 8.15.0
