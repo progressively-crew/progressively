@@ -3,7 +3,7 @@
   "author": "mfrachet",
   "version": "0.0.1-beta.1",
   "main": "./lib/cjs/index.js",
-  "module": "./lib/esm/index.js",
+  "module": "./lib/esm/index.mjs",
   "exports": {
     ".": {
       "require": "./lib/cjs/index.js",
