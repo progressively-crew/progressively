@@ -4,7 +4,7 @@
   "version": "0.0.1-alpha.19",
   "main": "./dist/legacy/index.js",
   "exports": "./dist/modern/index.js",
-  "types": "./dist/modern",
+  "types": "./dist/modern/index.d.ts",
   "scripts": {
     "build": "tsc && tsc --target ES2017 --outDir ./dist/modern --module 'ESNext'",
     "test": "jest",
