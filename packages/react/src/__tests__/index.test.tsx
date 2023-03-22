@@ -3,7 +3,6 @@ import { render as renderTL, screen, waitFor } from "@testing-library/react";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
 import fetch from "node-fetch";
-import "@testing-library/jest-dom";
 import { ProgressivelyProvider } from "../ProgressivelyProvider";
 import { ProgressivelyProviderProps } from "../types";
 import { useFlags } from "../useFlags";
@@ -44,9 +43,11 @@ describe("React-sdk root", () => {
   let socket: any;
 
   beforeEach(() => {
-    socket = { close: vi.fn() };
+    socket = { close: vi.fn(), addEventListener: vi.fn() };
     (global as any).fetch = vi.fn(fetch);
-    (global as any).WebSocket = vi.fn(() => socket);
+    (global as any).WebSocket = function WebSocket() {
+      return socket;
+    };
   });
 
   afterEach(() => {
@@ -68,7 +69,7 @@ describe("React-sdk root", () => {
       render();
 
       await waitFor(() => {
-        expect(screen.getByText("Old variant")).toBeInTheDocument();
+        expect(screen.getByText("Old variant")).toBeTruthy();
       });
     });
 
@@ -81,9 +82,7 @@ describe("React-sdk root", () => {
 
       render();
 
-      await waitFor(() =>
-        expect(screen.getByText("New variant")).toBeInTheDocument()
-      );
+      await waitFor(() => expect(screen.getByText("New variant")).toBeTruthy());
     });
 
     it("should render an error", async () => {
@@ -96,7 +95,7 @@ describe("React-sdk root", () => {
       render();
 
       await waitFor(() => {
-        expect(screen.getByText("Error")).toBeInTheDocument();
+        expect(screen.getByText("Error")).toBeTruthy();
       });
     });
   });
@@ -117,7 +116,7 @@ describe("React-sdk root", () => {
       });
 
       await waitFor(() => {
-        expect(screen.getByText("Old variant")).toBeInTheDocument();
+        expect(screen.getByText("Old variant")).toBeTruthy();
       });
     });
 
@@ -127,13 +126,17 @@ describe("React-sdk root", () => {
         clientKey: "valid-sdk-key",
       });
 
-      await waitFor(() =>
-        expect(screen.getByText("New variant")).toBeInTheDocument()
-      );
+      await waitFor(() => expect(screen.getByText("New variant")).toBeTruthy());
     });
   });
 
   describe("WebSocket init", () => {
+    beforeEach(() => {
+      socket = { close: vi.fn(), addEventListener: vi.fn() };
+
+      (global as any).WebSocket = vi.fn(() => socket);
+    });
+
     it("[From CSR loads and React Native] Socket init through HTTP header", async () => {
       worker.use(
         rest.get(FLAG_ENDPOINT, (_, res, ctx) => {
@@ -146,9 +149,7 @@ describe("React-sdk root", () => {
 
       render();
 
-      await waitFor(() =>
-        expect(screen.getByText("New variant")).toBeInTheDocument()
-      );
+      await waitFor(() => expect(screen.getByText("New variant")).toBeTruthy());
 
       expect(global.WebSocket).toHaveBeenCalledWith(
         "ws://localhost:4000?opts=eyJjbGllbnRLZXkiOiJ2YWxpZC1zZGsta2V5IiwiaWQiOiJhYmNkIn0="

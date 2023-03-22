@@ -1,22 +1,32 @@
 import { rest } from "msw";
+import { DoneCallback } from "vitest";
 import { setupServer } from "msw/node";
 import fetch from "node-fetch";
-import { WebSocketServer, WebSocket } from "ws";
-import { Progressively as Sdk } from "../";
+import { Progressively as Sdk } from "..";
+
+let _close: () => void | undefined;
+let _callback: (data: any) => void | undefined;
+let _wsUrl: string | undefined;
+
+function MockWebSocket(url: string) {
+  _wsUrl = url;
+  _close = vi.fn();
+
+  return {
+    close: _close,
+    addEventListener: (_: string, callback: typeof _callback) => {
+      _callback = callback;
+    },
+  };
+}
 
 describe("SDK", () => {
   const sendMessage = (data: any) => {
-    // Poll to check the websocket registration. Not perfect, but it works
-    intervalId = setInterval(() => {
-      if (ws) {
-        ws.send(JSON.stringify({ data }));
-        clearInterval(intervalId);
-      }
-    }, 100);
+    _callback({ data: JSON.stringify({ data }) });
   };
 
   // HTTP
-  (globalThis as any).fetch = jest.fn(fetch);
+  (globalThis as any).fetch = vi.fn(fetch);
   const FLAG_ENDPOINT = `http://localhost:4000*`;
   const worker = setupServer();
 
@@ -24,26 +34,9 @@ describe("SDK", () => {
   afterEach(() => worker.resetHandlers());
   afterAll(() => worker.close());
 
-  // WS
-  (globalThis as any).WebSocket = WebSocket;
-  let wss: WebSocketServer;
-  let ws: WebSocket;
-  let intervalId: NodeJS.Timer;
-
-  beforeEach(() => {
-    wss = new WebSocketServer({
-      port: 1234,
-    });
-
-    wss.on("connection", (websocket) => {
-      ws = websocket;
-    });
-  });
+  (globalThis as any).WebSocket = MockWebSocket;
 
   afterEach(() => {
-    clearInterval(intervalId);
-    wss.clients.forEach((client) => client.terminate());
-    wss.close();
     window.localStorage.clear();
   });
 
@@ -243,46 +236,45 @@ describe("SDK", () => {
   });
 
   describe("sending flag updates", () => {
-    it("sets the flag when receiving a valid message when no flags are set", (done) => {
-      const sdk = Sdk.init("client-key", {
-        websocketUrl: "ws://localhost:1234",
-        apiUrl: "http://localhost:4000",
-      });
+    it("sets the flag when receiving a valid message when no flags are set", () =>
+      new Promise((done: DoneCallback) => {
+        const sdk = Sdk.init("client-key", {
+          websocketUrl: "ws://localhost:1234",
+          apiUrl: "http://localhost:4000",
+        });
 
-      sendMessage({ hello: true });
+        sdk.onFlagUpdate((flags) => {
+          expect(flags).toEqual({ hello: true });
+          done();
+        });
 
-      sdk.onFlagUpdate((flags) => {
-        expect(flags).toEqual({ hello: true });
-        done();
-      });
-    });
-
-    it("sets the flag when receiving a valid message when some flags already exists", (done) => {
-      worker.use(
-        rest.get(FLAG_ENDPOINT, (_, res, ctx) => {
-          return res(ctx.json({ flag: true, flag2: false }));
-        })
-      );
-
-      const sdk = Sdk.init("client-key", {
-        websocketUrl: "ws://localhost:1234",
-        apiUrl: "http://localhost:4000",
-      });
-
-      sdk.onFlagUpdate((flags) => {
-        ws.terminate();
-        expect(flags).toEqual({ hello: true, flag: true, flag2: false });
-        done();
-      });
-
-      sdk.loadFlags().then(() => {
         sendMessage({ hello: true });
-      });
-    });
+      }));
+
+    it("sets the flag when receiving a valid message when some flags already exists", () =>
+      new Promise((done: DoneCallback) => {
+        worker.use(
+          rest.get(FLAG_ENDPOINT, (_, res, ctx) => {
+            return res(ctx.json({ flag: true, flag2: false }));
+          })
+        );
+
+        const sdk = Sdk.init("client-key", {
+          websocketUrl: "ws://localhost:1234",
+          apiUrl: "http://localhost:4000",
+        });
+
+        sdk.onFlagUpdate((flags) => {
+          expect(flags).toEqual({ hello: true, flag: true, flag2: false });
+          done();
+        });
+
+        sdk.loadFlags().then(() => {
+          sendMessage({ hello: true });
+        });
+      }));
 
     it("calls the websocket constructor with the fields paramaters but without ID (id is set manually in onFlagUpdate)", () => {
-      (global as any).WebSocket = jest.fn() as any;
-
       const sdk = Sdk.init("client-key", {
         websocketUrl: "ws://localhost:1234",
         apiUrl: "http://localhost:4000",
@@ -290,14 +282,12 @@ describe("SDK", () => {
       });
 
       sdk.onFlagUpdate(() => {});
-      expect((global as any).WebSocket).toHaveBeenCalledWith(
+      expect(_wsUrl).toBe(
         "ws://localhost:1234?opts=eyJlbWFpbCI6ImpvaG4uZG9lQGdtYWlsLmNvbSIsImNsaWVudEtleSI6ImNsaWVudC1rZXkifQ=="
       );
     });
 
     it("calls the websocket constructor with the fields paramaters AND the user id (passed as second args of onFlagUpdate)", () => {
-      (global as any).WebSocket = jest.fn() as any;
-
       const sdk = Sdk.init("client-key", {
         websocketUrl: "ws://localhost:1234",
         apiUrl: "http://localhost:4000",
@@ -305,7 +295,7 @@ describe("SDK", () => {
       });
 
       sdk.onFlagUpdate(() => {}, "real-id");
-      expect((global as any).WebSocket).toHaveBeenCalledWith(
+      expect(_wsUrl).toBe(
         "ws://localhost:1234?opts=eyJlbWFpbCI6ImpvaG4uZG9lQGdtYWlsLmNvbSIsImlkIjoicmVhbC1pZCIsImNsaWVudEtleSI6ImNsaWVudC1rZXkifQ=="
       );
     });
@@ -322,9 +312,6 @@ describe("SDK", () => {
     });
 
     it("disconnects the socket when it s set", () => {
-      const socket = { close: jest.fn() };
-      (global as any).WebSocket = jest.fn(() => socket) as any;
-
       const sdk = Sdk.init("client-key", {
         websocketUrl: "ws://localhost:1234",
         apiUrl: "http://localhost:4000",
@@ -333,7 +320,7 @@ describe("SDK", () => {
       sdk.onFlagUpdate(() => {});
       sdk.disconnect();
 
-      expect(socket.close).toBeCalled();
+      expect(_close).toBeCalled();
     });
   });
 });

@@ -70,13 +70,13 @@ function init(clientKey: string, options: SDKOptions): ProgressivelySdkType {
 
     socket = new WebSocket(`${wsRoot}?opts=${btoa(JSON.stringify(fields))}`);
 
-    socket.onmessage = (event) => {
+    socket.addEventListener("message", (event) => {
       flags = { ...flags, ...JSON.parse(event.data).data };
 
       persistLocalFlags(flags);
 
       _callback(flags);
-    };
+    });
   }
 
   function track(eventName: string) {
