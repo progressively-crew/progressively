@@ -2,7 +2,7 @@
   "name": "@progressively/server-side",
   "author": "mfrachet",
   "version": "0.0.1-alpha.19",
-  "types": "./lib/legacy",
+  "types": "./lib/legacy/index.d.ts",
   "main": "./lib/legacy/index.js",
   "module": "./lib/esm/index.js",
   "exports": {
