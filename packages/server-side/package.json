@@ -14,17 +14,14 @@
   "scripts": {
     "build": "rollup -c rollup.config.mjs",
     "build:dev": "pnpm run build -- --environment BUILD:development",
-    "test": "jest --passWithNoTests",
     "bundlesize": "bundlesize --enable-github-checks"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.3.0",
     "@rollup/plugin-terser": "^0.4.0",
     "@rollup/plugin-typescript": "^8.3.2",
-    "@testing-library/jest-dom": "^5.16.4",
     "@types/node-fetch": "^2.6.1",
     "bundlesize2": "^0.0.31",
-    "jest-environment-jsdom": "^28.1.1",
     "msw": "^0.42.1",
     "rollup": "^2.75.6",
     "ts-loader": "^9.3.0",
