@@ -6,8 +6,9 @@ import { Spacer } from "~/components/Spacer";
 import { NavProvider } from "~/components/Breadcrumbs/providers/NavProvider";
 import { InertWhenNavOpened } from "~/components/Breadcrumbs/InertWhenNavOpened";
 import { UserDropdown } from "~/modules/user/components/UserDropdown";
-import { useMatches } from "@remix-run/react";
+import { useMatches, useNavigation } from "@remix-run/react";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
+import { Spinner } from "~/components/Spinner";
 
 export interface DashboardLayoutProps {
   user: User;
@@ -22,11 +23,15 @@ export const DashboardLayout = ({
   subNav,
   status,
 }: DashboardLayoutProps) => {
+  const navigation = useNavigation();
   const matches = useMatches();
 
   const crumbs = matches
     .filter((match) => match.handle && match.handle.breadcrumb)
     .map((match) => match.handle.breadcrumb(match, matches));
+
+  const isNormalLoad =
+    navigation.state === "loading" && navigation.formData == null;
 
   return (
     <NavProvider>
@@ -61,6 +66,18 @@ export const DashboardLayout = ({
             <Spacer size={10} />
           </div>
         </div>
+
+        {isNormalLoad && (
+          <div
+            className="fixed left-4 bottom-4 animate-opacity-appearing"
+            style={{
+              animationDelay: "300ms",
+              opacity: 0,
+            }}
+          >
+            <Spinner className="text-3xl text-gray-400" />
+          </div>
+        )}
       </InertWhenNavOpened>
     </NavProvider>
   );
