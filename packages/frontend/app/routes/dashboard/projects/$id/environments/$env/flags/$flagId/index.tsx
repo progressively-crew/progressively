@@ -42,7 +42,10 @@ import { Spinner } from "~/components/Spinner";
 import { MdOutlineTune } from "react-icons/md";
 import { CardEntity } from "~/components/Entity/Entity";
 import { MenuButton } from "~/components/MenuButton";
-import { AddRuleButton } from "~/modules/eligibility/components/AddRuleButton";
+import { AddCiteriaButton } from "~/modules/eligibility/components/AddCiteriaButton";
+import { Separator } from "~/components/Separator";
+import { Tag } from "~/components/Tag";
+import { Typography } from "~/components/Typography";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -218,7 +221,7 @@ export default function FlagById() {
         <Card>
           <CardContent>
             <SectionHeader
-              title="Eligibility"
+              title="Using percentage range"
               description={`Only people in the percentage range matching the eventual rules will be eligible to flag evaluation.`}
               status={
                 hasPercentageChanged ? (
@@ -269,9 +272,13 @@ export default function FlagById() {
             )}
           </CardContent>
 
-          <div className="border-dashed border-gray-300 border-y py-6">
+          <Separator className="border-dashed" />
+
+          <div className="py-6">
             <div className="flex flex-row justify-between px-6 items-center">
-              <h3 className="font-semibold text-xl">Variants</h3>
+              <Typography as="h3" className="font-semibold text-xl">
+                Variants
+              </Typography>
               <MenuButton
                 variant="action"
                 items={[
@@ -286,6 +293,7 @@ export default function FlagById() {
             </div>
 
             {isMultiVariants && <VariantTable variants={flagEnv.variants} />}
+
             <div className="px-6">
               <SubmitButton
                 form={
@@ -300,8 +308,12 @@ export default function FlagById() {
             </div>
           </div>
 
+          <Separator className="border-dashed" />
+
           <CardContent>
-            <h3 className="font-semibold text-xl pb-6">Rules</h3>
+            <Typography as="h3" className="font-semibold text-xl pb-6">
+              Eligibility criteria
+            </Typography>
             <FormEligibility
               initialEligibilites={eligibilities}
               projectId={project.uuid}
@@ -311,7 +323,7 @@ export default function FlagById() {
 
             {hasEligibility && (
               <div className="flex flex-row pt-6 gap-6">
-                <AddRuleButton variant="simple" />
+                <AddCiteriaButton variant="simple" />
 
                 <SubmitButton
                   form="form-update-eligibility"
@@ -324,10 +336,14 @@ export default function FlagById() {
               </div>
             )}
 
-            {!hasEligibility && <AddRuleButton variant="full" />}
+            {!hasEligibility && <AddCiteriaButton variant="full" />}
           </CardContent>
         </Card>
       </Section>
+
+      <div className="flex justify-center">
+        <Tag variant="PRIMARY">OR</Tag>
+      </div>
 
       <Section id="additional-audience">
         <Card
@@ -346,9 +362,9 @@ export default function FlagById() {
         >
           <CardContent>
             <SectionHeader
-              title="Additional audience"
+              title="Using attributes"
               description={
-                "The users matching at least one of the following condition will resolve the flag even if they are not targeted because of the eligibility restrictions"
+                "The users matching at least one of the following condition will will be eligible to flag evaluation."
               }
             />
 

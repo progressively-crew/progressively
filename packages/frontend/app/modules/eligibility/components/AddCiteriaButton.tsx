@@ -2,11 +2,11 @@ import { Form, useNavigation } from "@remix-run/react";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { Spinner } from "~/components/Spinner";
 
-export interface AddRuleButtonProps {
+export interface AddCiteriaButtonProps {
   variant: "full" | "simple";
 }
 
-export const AddRuleButton = ({ variant }: AddRuleButtonProps) => {
+export const AddCiteriaButton = ({ variant }: AddCiteriaButtonProps) => {
   const navigation = useNavigation();
   const type = navigation?.formData?.get("_type");
   const isCreatingEligibility = type === "create-eligibility";
@@ -28,7 +28,7 @@ export const AddRuleButton = ({ variant }: AddRuleButtonProps) => {
         >
           <span className="flex flex-row justify-center items-center  gap-4">
             {isCreatingEligibility && <Spinner className="-ml-8" />}
-            Add a new rule
+            Add a new eligibility criteria
           </span>
         </button>
       )}
