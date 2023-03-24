@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "@progressively/sdk-js": "workspace:*",
+    "@progressively/server-side": "workspace:*",
+    "nuxt": "^3.3.1"
+  }
+}
