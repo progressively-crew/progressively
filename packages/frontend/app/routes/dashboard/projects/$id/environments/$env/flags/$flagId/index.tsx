@@ -259,45 +259,72 @@ export default function FlagById() {
           <Separator className="border-dashed" />
 
           <div className="py-6">
-            <div className="flex flex-row justify-between px-6 items-center">
-              <Typography as="h3" className="font-semibold text-xl">
-                {isMultiVariants ? "Variants" : "Audience range"}
-              </Typography>
-              <MenuButton
-                variant="action"
-                items={[
-                  {
-                    label: "Add a variant",
-                    href: `./variants/create`,
-                    noInitial: true,
-                  },
-                ]}
-                label={"Additional actions"}
-              />
-            </div>
+            <div>
+              {isMultiVariants ? (
+                <div>
+                  <div className="flex flex-row justify-between px-6 items-center">
+                    <Typography as="h3" className="font-semibold text-xl">
+                      Variants
+                    </Typography>
 
-            {isMultiVariants ? (
-              <VariantTable variants={flagEnv.variants} />
-            ) : (
-              <div className="px-6">
-                <SliderFlag
-                  formId="update-single-variant-percentage"
-                  initialRolloutPercentage={flagEnv.rolloutPercentage}
-                />
-              </div>
-            )}
+                    <MenuButton
+                      variant="action"
+                      items={[
+                        {
+                          label: "Add a variant",
+                          href: `./variants/create`,
+                          noInitial: true,
+                        },
+                      ]}
+                      label={"Additional actions"}
+                    />
+                  </div>
 
-            <div className="px-6">
-              <SubmitButton
-                form={
-                  isMultiVariants
-                    ? "edit-variant"
-                    : "update-single-variant-percentage"
-                }
-                icon={<MdOutlineTune />}
-              >
-                Adjust
-              </SubmitButton>
+                  <VariantTable variants={flagEnv.variants} />
+
+                  <div className="px-6">
+                    <SubmitButton
+                      form={"edit-variant"}
+                      icon={<MdOutlineTune />}
+                    >
+                      Adjust
+                    </SubmitButton>
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <div className="flex flex-row justify-between items-center px-6">
+                    <div className="flex flex-row  gap-6 items-center">
+                      <Typography as="h3" className="font-semibold text-xl">
+                        Audience range
+                      </Typography>
+
+                      <SliderFlag
+                        formId="update-single-variant-percentage"
+                        initialRolloutPercentage={flagEnv.rolloutPercentage}
+                      />
+
+                      <SubmitButton
+                        form={"update-single-variant-percentage"}
+                        icon={<MdOutlineTune />}
+                      >
+                        Adjust
+                      </SubmitButton>
+                    </div>
+                    <MenuButton
+                      variant="action"
+                      items={[
+                        {
+                          label: "Add a variant",
+                          href: `./variants/create`,
+                          noInitial: true,
+                        },
+                      ]}
+                      label={"Additional actions"}
+                    />
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
