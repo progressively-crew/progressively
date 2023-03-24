@@ -5,11 +5,15 @@ import { SliderInput } from "~/components/Fields/SliderInput";
 export interface SliderFlagProps {
   initialRolloutPercentage: number;
   formId: string;
+  bgColor?: string;
+  fgColor?: string;
 }
 
 export const SliderFlag = ({
   initialRolloutPercentage,
   formId,
+  bgColor,
+  fgColor,
 }: SliderFlagProps) => {
   const [rolloutPercentage, setRolloutPercentage] = useState(
     initialRolloutPercentage
@@ -27,6 +31,8 @@ export const SliderFlag = ({
         label={"Percentage of the audience"}
         hiddenLabel
         onChange={setRolloutPercentage}
+        bgColor={bgColor}
+        fgColor={fgColor}
       />
 
       <input type="hidden" name="_type" value="percentage" />

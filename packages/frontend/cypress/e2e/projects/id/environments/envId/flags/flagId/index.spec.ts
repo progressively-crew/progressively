@@ -49,12 +49,15 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]", () => {
 
         cy.findAllByText("New homepage").should("have.length", 2);
         cy.findByRole("heading", { name: "Audience" }).should("be.visible");
-        cy.findByRole("heading", { name: "Range of eligibility" }).should(
+        cy.findByRole("heading", { name: "Using percentage range" }).should(
+          "be.visible"
+        );
+        cy.findByRole("heading", { name: "Using attributes" }).should(
           "be.visible"
         );
 
         // Concerned flag has empty state for eligibility audience
-        cy.get("#eligibility-section").within(() => {
+        cy.get("#rollout-target-section").within(() => {
           cy.findByRole("button", { name: "Update" }).should("not.exist");
         });
 
@@ -68,7 +71,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]", () => {
         });
 
         it("shows an initial form", () => {
-          cy.get("#eligibility-section").within(() => {
+          cy.get("#rollout-target-section").within(() => {
             cy.findByLabelText("Field name")
               .should("be.visible")
               .and("have.value", "email");
@@ -84,7 +87,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]", () => {
         });
 
         it("adds a new rule when pressing the button", () => {
-          cy.get("#eligibility-section").within(() => {
+          cy.get("#rollout-target-section").within(() => {
             cy.findAllByLabelText("Field name").should("have.length", 1);
 
             cy.findByRole("button", { name: "Add a new rule" })
@@ -101,7 +104,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]", () => {
         });
 
         it("edits the existing rules", () => {
-          cy.get("#eligibility-section").within(() => {
+          cy.get("#rollout-target-section").within(() => {
             cy.findByRole("button", { name: "Add a new rule" }).click();
 
             cy.get("[name='field-name']").should("have.length", 2);
