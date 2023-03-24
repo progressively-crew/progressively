@@ -42,6 +42,7 @@ import { Spinner } from "~/components/Spinner";
 import { MdOutlineTune } from "react-icons/md";
 import { CardEntity } from "~/components/Entity/Entity";
 import { MenuButton } from "~/components/MenuButton";
+import { AddRuleButton } from "~/modules/eligibility/components/AddRuleButton";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -214,39 +215,11 @@ export default function FlagById() {
       <PageTitle value="Audience" />
 
       <Section id="rollout-target">
-        <Card
-          footer={
-            <div className="flex items-center flex-row h-full">
-              <SubmitButton
-                form={
-                  isMultiVariants
-                    ? "edit-variant"
-                    : "update-single-variant-percentage"
-                }
-                icon={<MdOutlineTune />}
-              >
-                Adjust
-              </SubmitButton>
-            </div>
-          }
-        >
+        <Card>
           <CardContent>
             <SectionHeader
-              title="Range of eligibility"
-              description={`Only people in the percentage range will be eligible to flag evaluation.`}
-              menu={
-                <MenuButton
-                  variant="action"
-                  items={[
-                    {
-                      label: "Add a variant",
-                      href: `./variants/create`,
-                      noInitial: true,
-                    },
-                  ]}
-                  label={"Additional actions"}
-                />
-              }
+              title="Eligibility"
+              description={`Only people in the percentage range matching the eventual rules will be eligible to flag evaluation.`}
               status={
                 hasPercentageChanged ? (
                   <SuccessBox id="percentage-changed">
@@ -266,6 +239,16 @@ export default function FlagById() {
                   <SuccessBox id="variant-added">
                     The variant has been successfully created.
                   </SuccessBox>
+                ) : actionData?.successEligibilityUpdated ? (
+                  <SuccessBox id="eligibility-updated">
+                    Eligibility audience updated.
+                  </SuccessBox>
+                ) : isEligibilityRemoved ? (
+                  <SuccessBox id="eligibility-removed">
+                    The eligibility audience has been successfully removed.
+                  </SuccessBox>
+                ) : actionData?.elibilityErrors ? (
+                  <ErrorBox list={actionData?.elibilityErrors} />
                 ) : null
               }
             />
@@ -286,56 +269,39 @@ export default function FlagById() {
             )}
           </CardContent>
 
-          {isMultiVariants && <VariantTable variants={flagEnv.variants} />}
-        </Card>
-      </Section>
+          <div className="border-dashed border-gray-300 border-y py-6">
+            <div className="flex flex-row justify-between px-6 items-center">
+              <h3 className="font-semibold text-xl">Variants</h3>
+              <MenuButton
+                variant="action"
+                items={[
+                  {
+                    label: "Add a variant",
+                    href: `./variants/create`,
+                    noInitial: true,
+                  },
+                ]}
+                label={"Additional actions"}
+              />
+            </div>
 
-      <Section id="eligibility">
-        <Card
-          footer={
-            hasEligibility && (
+            {isMultiVariants && <VariantTable variants={flagEnv.variants} />}
+            <div className="px-6">
               <SubmitButton
-                form="form-update-eligibility"
-                variant="secondary"
-                isLoading={formTransition.isUpdatingEligibility}
-                loadingText="Updating the eligibility rules..."
+                form={
+                  isMultiVariants
+                    ? "edit-variant"
+                    : "update-single-variant-percentage"
+                }
+                icon={<MdOutlineTune />}
               >
-                Update
+                Adjust
               </SubmitButton>
-            )
-          }
-        >
+            </div>
+          </div>
+
           <CardContent>
-            <SectionHeader
-              title="Eligibility criteria"
-              description={
-                "Only people matching at least one of the following rules (and the additional audience) will resolve the flag."
-              }
-            />
-
-            {actionData?.successEligibilityUpdated ? (
-              <>
-                <Spacer size={6} />
-                <SuccessBox id="eligibility-updated">
-                  Eligibility audience updated.
-                </SuccessBox>
-              </>
-            ) : isEligibilityRemoved ? (
-              <>
-                <Spacer size={6} />
-                <SuccessBox id="eligibility-removed">
-                  The eligibility audience has been successfully removed.
-                </SuccessBox>
-              </>
-            ) : actionData?.elibilityErrors ? (
-              <>
-                <Spacer size={6} />
-                <ErrorBox list={actionData?.elibilityErrors} />
-              </>
-            ) : null}
-
-            <Spacer size={6} />
-
+            <h3 className="font-semibold text-xl pb-6">Rules</h3>
             <FormEligibility
               initialEligibilites={eligibilities}
               projectId={project.uuid}
@@ -343,29 +309,22 @@ export default function FlagById() {
               flagId={currentFlag.uuid}
             />
 
-            {hasEligibility && <Spacer size={6} />}
+            {hasEligibility && (
+              <div className="flex flex-row pt-6 gap-6">
+                <AddRuleButton variant="simple" />
 
-            <Form method="post">
-              <input type="hidden" name="_type" value="create-eligibility" />
+                <SubmitButton
+                  form="form-update-eligibility"
+                  variant="secondary"
+                  isLoading={formTransition.isUpdatingEligibility}
+                  loadingText="Updating the eligibility rules..."
+                >
+                  Update
+                </SubmitButton>
+              </div>
+            )}
 
-              <button
-                type="submit"
-                className="p-2 border rounded border-dashed border-gray-300 text-center w-full text-gray-600 active:bg-gray-100 hover:bg-gray-50 dark:text-slate-200 dark:active:bg-slate-600 dark:hover:bg-slate-700"
-                aria-disabled={formTransition.isCreatingAdditionalAudience}
-                aria-label={
-                  formTransition.isCreatingEligibility
-                    ? "Creating a new eligibility rule..."
-                    : undefined
-                }
-              >
-                <span className="flex flex-row justify-center items-center  gap-4">
-                  {formTransition.isCreatingEligibility && (
-                    <Spinner className="-ml-8" />
-                  )}
-                  Add a new rule
-                </span>
-              </button>
-            </Form>
+            {!hasEligibility && <AddRuleButton variant="full" />}
           </CardContent>
         </Card>
       </Section>
