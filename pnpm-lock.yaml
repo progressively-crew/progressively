@@ -130,13 +130,21 @@ importers:
 
   example/nuxt:
     specifiers:
+      '@progressively/playwright-helpers': workspace:*
       '@progressively/sdk-js': workspace:*
       '@progressively/server-side': workspace:*
       nuxt: ^3.3.1
+      test:e2e: PROJECT_ROOT=$(pwd) pnpm --filter @progressively/playwright-helpers run test:e2e
+      test:e2e:ci: PROJECT_ROOT=$(pwd) pnpm --filter @progressively/playwright-helpers run test:e2e:ci
+      test:e2e:debug: PROJECT_ROOT=$(pwd) pnpm --filter @progressively/playwright-helpers run test:e2e:debug
     devDependencies:
+      '@progressively/playwright-helpers': link:../playwright-helpers
       '@progressively/sdk-js': link:../../packages/sdk-js
       '@progressively/server-side': link:../../packages/server-side
       nuxt: 3.3.1
+      test:e2e: link:PROJECT_ROOT=$(pwd) pnpm --filter @progressively/playwright-helpers run test:e2e
+      test:e2e:ci: link:PROJECT_ROOT=$(pwd) pnpm --filter @progressively/playwright-helpers run test:e2e:ci
+      test:e2e:debug: link:PROJECT_ROOT=$(pwd) pnpm --filter @progressively/playwright-helpers run test:e2e:debug
 
   example/php:
     specifiers:
