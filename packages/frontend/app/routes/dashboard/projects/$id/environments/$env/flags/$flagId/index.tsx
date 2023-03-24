@@ -40,7 +40,6 @@ import { createStrategy } from "~/modules/strategies/services/createStrategy";
 import { updateStrategyAction } from "~/modules/strategies/form-actions/updateStrategyAction";
 import { Spinner } from "~/components/Spinner";
 import { MdOutlineTune } from "react-icons/md";
-import { CardEntity } from "~/components/Entity/Entity";
 import { MenuButton } from "~/components/MenuButton";
 import { AddCiteriaButton } from "~/modules/eligibility/components/AddCiteriaButton";
 import { Separator } from "~/components/Separator";
@@ -255,21 +254,6 @@ export default function FlagById() {
                 ) : null
               }
             />
-
-            {!isMultiVariants && (
-              <>
-                <Spacer size={4} />
-                <CardEntity
-                  title="Percentage range"
-                  actions={
-                    <SliderFlag
-                      formId="update-single-variant-percentage"
-                      initialRolloutPercentage={flagEnv.rolloutPercentage}
-                    />
-                  }
-                />
-              </>
-            )}
           </CardContent>
 
           <Separator className="border-dashed" />
@@ -277,7 +261,7 @@ export default function FlagById() {
           <div className="py-6">
             <div className="flex flex-row justify-between px-6 items-center">
               <Typography as="h3" className="font-semibold text-xl">
-                Variants
+                {isMultiVariants ? "Variants" : "Audience range"}
               </Typography>
               <MenuButton
                 variant="action"
@@ -292,7 +276,16 @@ export default function FlagById() {
               />
             </div>
 
-            {isMultiVariants && <VariantTable variants={flagEnv.variants} />}
+            {isMultiVariants ? (
+              <VariantTable variants={flagEnv.variants} />
+            ) : (
+              <div className="px-6">
+                <SliderFlag
+                  formId="update-single-variant-percentage"
+                  initialRolloutPercentage={flagEnv.rolloutPercentage}
+                />
+              </div>
+            )}
 
             <div className="px-6">
               <SubmitButton
