@@ -3,8 +3,7 @@ import { PopulatedFlagEnv } from '../flags/types';
 import { FieldRecord } from '../strategy/types';
 import { PrismaService } from '../database/prisma.service';
 import { EligibilityCreateDTO, EligibilityUpdateDTO } from './types';
-import { ComparatorFactory } from '../rule/comparators/comparatorFactory';
-import { ComparatorEnum } from '../rule/comparators/types';
+import { Rule } from '../rule/Rule';
 
 @Injectable()
 export class EligibilityService {
@@ -137,14 +136,13 @@ export class EligibilityService {
     if (flagEnv.eligibilities.length === 0) return true;
 
     for (const eligibility of flagEnv.eligibilities) {
-      const fieldComparator = eligibility.fieldComparator as ComparatorEnum;
-      const isValid = ComparatorFactory.create(fieldComparator);
       const fieldValues = eligibility.fieldValue.split('\n');
+      const clientFieldValue = fields[eligibility.fieldName] || '';
 
       for (const fieldValue of fieldValues) {
-        const clientFieldValue = fields[eligibility.fieldName] || '';
+        const rule = Rule.createFrom(fieldValue, eligibility.fieldComparator);
 
-        if (isValid(fieldValue, clientFieldValue)) {
+        if (rule.isSatisfiedBy(clientFieldValue)) {
           return true;
         }
       }

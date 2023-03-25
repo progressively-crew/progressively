@@ -1,7 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { ComparatorFactory } from '../rule/comparators/comparatorFactory';
-import { ComparatorEnum } from '../rule/comparators/types';
-
 import { PrismaService } from '../database/prisma.service';
 
 import {
@@ -10,21 +7,21 @@ import {
   StrategyUpdateDTO,
   StrategyValueToServe,
 } from './types';
+import { Rule } from '../rule/Rule';
+import { ComparatorEnum } from '../rule/comparators/types';
 
 @Injectable()
 export class StrategyService {
   constructor(private prisma: PrismaService) {}
 
   private isValidStrategy(strategy: RolloutStrategy, fields: FieldRecord) {
-    const fieldComparator = strategy.fieldComparator as ComparatorEnum;
-    const isValid = ComparatorFactory.create(fieldComparator);
-
+    const clientFieldValue = fields[strategy.fieldName] || '';
     const strategyFieldValues = strategy.fieldValue.split('\n');
 
     for (const fieldValue of strategyFieldValues) {
-      const clientFieldValue = fields[strategy.fieldName] || '';
+      const rule = Rule.createFrom(fieldValue, strategy.fieldComparator);
 
-      if (isValid(fieldValue, clientFieldValue)) {
+      if (rule.isSatisfiedBy(clientFieldValue)) {
         return true;
       }
     }
