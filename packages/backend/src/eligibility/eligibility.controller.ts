@@ -47,9 +47,11 @@ export class EligibilityController {
 
     const eligibility = {
       uuid: updatedEligibility.uuid,
-      fieldName: updatedEligibility.fieldName,
-      fieldComparator: updatedEligibility.fieldComparator,
-      fieldValue: updatedEligibility.fieldValue,
+      rule: {
+        fieldName: updatedEligibility.rule.fieldName,
+        fieldComparator: updatedEligibility.rule.fieldComparator,
+        fieldValue: updatedEligibility.rule.fieldValue,
+      },
       flagEnvironmentFlagId: updatedEligibility.flagEnvironmentFlagId,
       flagEnvironmentEnvironmentId:
         updatedEligibility.flagEnvironmentEnvironmentId,
@@ -94,9 +96,11 @@ export class EligibilityController {
 
     return {
       uuid: deletedEligibility.uuid,
-      fieldName: deletedEligibility.fieldName,
-      fieldComparator: deletedEligibility.fieldComparator,
-      fieldValue: deletedEligibility.fieldValue,
+      rule: {
+        fieldName: deletedEligibility.rule.fieldName,
+        fieldComparator: deletedEligibility.rule.fieldComparator,
+        fieldValue: deletedEligibility.rule.fieldValue,
+      },
       flagEnvironmentFlagId: deletedEligibility.flagEnvironmentFlagId,
       flagEnvironmentEnvironmentId:
         deletedEligibility.flagEnvironmentEnvironmentId,

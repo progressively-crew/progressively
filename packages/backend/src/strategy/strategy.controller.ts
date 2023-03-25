@@ -18,6 +18,7 @@ import { ValidationPipe } from '../shared/pipes/ValidationPipe';
 import { StrategyUpdateDTO, StrategySchema } from './types';
 import { ActivityLogService } from '../activity-log/activity-log.service';
 import { UserId } from '../users/users.decorator';
+import { ComparatorEnum } from '../rule/comparators/types';
 
 @ApiBearerAuth()
 @Controller('strategies')
@@ -51,9 +52,11 @@ export class StrategyController {
 
     const strat = {
       uuid: deletedStrategy.uuid,
-      fieldName: deletedStrategy.fieldName,
-      fieldComparator: deletedStrategy.fieldComparator,
-      fieldValue: deletedStrategy.fieldValue,
+      rule: {
+        fieldComparator: deletedStrategy.rule.fieldComparator as ComparatorEnum,
+        fieldName: deletedStrategy.rule.fieldName,
+        fieldValue: deletedStrategy.rule.fieldValue,
+      },
       flagEnvironmentFlagId: deletedStrategy.flagEnvironmentFlagId,
       flagEnvironmentEnvironmentId:
         deletedStrategy.flagEnvironmentEnvironmentId,
@@ -93,9 +96,12 @@ export class StrategyController {
 
     const strat = {
       uuid: updatedEligibility.uuid,
-      fieldName: updatedEligibility.fieldName,
-      fieldComparator: updatedEligibility.fieldComparator,
-      fieldValue: updatedEligibility.fieldValue,
+      rule: {
+        fieldComparator: updatedEligibility.rule
+          .fieldComparator as ComparatorEnum,
+        fieldName: updatedEligibility.rule.fieldName,
+        fieldValue: updatedEligibility.rule.fieldValue,
+      },
       valueToServe: updatedEligibility.valueToServe,
       valueToServeType: updatedEligibility.valueToServeType,
       flagEnvironmentFlagId: updatedEligibility.flagEnvironmentFlagId,

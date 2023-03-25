@@ -1,4 +1,5 @@
 import * as Joi from 'joi';
+import { RuleType } from '../rule/types';
 import { ComparatorEnum } from '../rule/comparators/types';
 
 export interface FlagDict {
@@ -20,9 +21,7 @@ export interface RolloutStrategy {
 
 export class StrategyUpdateDTO {
   uuid: string;
-  fieldName: string;
-  fieldComparator: ComparatorEnum;
-  fieldValue: string;
+  rule: RuleType;
   valueToServeType: string;
   valueToServe: string;
 }

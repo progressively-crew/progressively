@@ -46,6 +46,7 @@ export class EligibilityService {
         uuid: eligibilityId,
       },
       include: {
+        rule: true,
         flagEnvironment: {
           include: {
             environment: true,
@@ -65,11 +66,16 @@ export class EligibilityService {
         uuid,
       },
       data: {
-        fieldComparator: eligibility.fieldComparator,
-        fieldValue: eligibility.fieldValue,
-        fieldName: eligibility.fieldName,
+        rule: {
+          update: {
+            fieldComparator: eligibility.fieldComparator,
+            fieldValue: eligibility.fieldValue,
+            fieldName: eligibility.fieldName,
+          },
+        },
       },
       include: {
+        rule: true,
         flagEnvironment: {
           include: {
             environment: true,
@@ -102,11 +108,21 @@ export class EligibilityService {
   ) {
     return this.prisma.eligibility.create({
       data: {
-        fieldName: eligibility.fieldName,
-        fieldValue: eligibility.fieldValue,
-        fieldComparator: eligibility.fieldComparator,
-        flagEnvironmentEnvironmentId: envId,
-        flagEnvironmentFlagId: flagId,
+        rule: {
+          create: {
+            fieldName: eligibility.fieldName,
+            fieldValue: eligibility.fieldValue,
+            fieldComparator: String(eligibility.fieldComparator),
+          },
+        },
+        flagEnvironment: {
+          connect: {
+            flagId_environmentId: {
+              environmentId: envId,
+              flagId: flagId,
+            },
+          },
+        },
       },
     });
   }

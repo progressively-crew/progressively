@@ -59,9 +59,13 @@ export class StrategyService {
             },
           },
         },
-        fieldName: '',
-        fieldValue: '',
-        fieldComparator: ComparatorEnum.Equals,
+        rule: {
+          create: {
+            fieldName: '',
+            fieldValue: '',
+            fieldComparator: ComparatorEnum.Equals,
+          },
+        },
         valueToServe: 'false',
         valueToServeType: StrategyValueToServe.Boolean,
       },
@@ -74,13 +78,18 @@ export class StrategyService {
         uuid,
       },
       data: {
-        fieldComparator: strategy.fieldComparator,
-        fieldValue: strategy.fieldValue,
-        fieldName: strategy.fieldName,
+        rule: {
+          update: {
+            fieldComparator: strategy.rule.fieldComparator,
+            fieldValue: strategy.rule.fieldValue,
+            fieldName: strategy.rule.fieldName,
+          },
+        },
         valueToServeType: strategy.valueToServeType,
         valueToServe: strategy.valueToServe,
       },
       include: {
+        rule: true,
         flagEnvironment: {
           include: {
             environment: true,
@@ -136,6 +145,7 @@ export class StrategyService {
         uuid: stratId,
       },
       include: {
+        rule: true,
         flagEnvironment: {
           include: {
             environment: true,
