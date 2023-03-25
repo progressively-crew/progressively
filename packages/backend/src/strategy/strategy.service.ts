@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { ComparatorFactory } from '../shared/utils/comparators/comparatorFactory';
-import { ComparatorEnum } from '../shared/utils/comparators/types';
+import { ComparatorFactory } from '../rule/comparators/comparatorFactory';
+import { ComparatorEnum } from '../rule/comparators/types';
+
 import { PrismaService } from '../database/prisma.service';
 
 import {

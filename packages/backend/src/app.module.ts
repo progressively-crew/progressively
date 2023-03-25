@@ -20,6 +20,7 @@ import { SchedulingModule } from './scheduling/scheduling.module';
 import { WebhooksModule } from './webhooks/webhooks.module';
 import { EligibilityModule } from './eligibility/eligibility.module';
 import { ActivityLogModule } from './activity-log/activity-log.module';
+import { RuleModule } from './rule/rule.module';
 import 'winston-daily-rotate-file';
 
 @Module({
@@ -63,6 +64,7 @@ import 'winston-daily-rotate-file';
     WebhooksModule,
     EligibilityModule,
     ActivityLogModule,
+    RuleModule,
   ],
   providers: [AppService],
 })

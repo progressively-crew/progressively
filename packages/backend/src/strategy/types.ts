@@ -1,5 +1,5 @@
 import * as Joi from 'joi';
-import { ComparatorEnum } from '../shared/utils/comparators/types';
+import { ComparatorEnum } from '../rule/comparators/types';
 
 export interface FlagDict {
   [key: string]: boolean;

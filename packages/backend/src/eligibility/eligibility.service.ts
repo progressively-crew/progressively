@@ -3,8 +3,8 @@ import { PopulatedFlagEnv } from '../flags/types';
 import { FieldRecord } from '../strategy/types';
 import { PrismaService } from '../database/prisma.service';
 import { EligibilityCreateDTO, EligibilityUpdateDTO } from './types';
-import { ComparatorEnum } from '../shared/utils/comparators/types';
-import { ComparatorFactory } from '../shared/utils/comparators/comparatorFactory';
+import { ComparatorFactory } from '../rule/comparators/comparatorFactory';
+import { ComparatorEnum } from '../rule/comparators/types';
 
 @Injectable()
 export class EligibilityService {
