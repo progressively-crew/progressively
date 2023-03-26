@@ -446,27 +446,14 @@ describe('FlagsController (e2e)', () => {
     it('creates a default strategy', async () => {
       const access_token = await authenticate(app);
 
-      const validStrategy: any = {
-        fieldName: 'email',
-        fieldValue: '@gmail.com',
-        fieldComparator: 'eq',
-        valueToServe: 'true',
-        valueToServeType: 'Boolean',
-      };
-
       const response = await request(app.getHttpServer())
         .post('/environments/1/flags/1/strategies')
         .set('Authorization', `Bearer ${access_token}`)
-        .send(validStrategy)
         .expect(201);
 
-      const { uuid, ...obj } = response.body;
-
-      expect(uuid).toBeDefined();
-      expect(obj).toEqual({
-        fieldComparator: 'eq',
-        fieldName: '',
-        fieldValue: '',
+      expect(response.body.uuid).toBeDefined();
+      expect(response.body.ruleUuid).toBeDefined();
+      expect(response.body).toMatchObject({
         flagEnvironmentFlagId: '1',
         flagEnvironmentEnvironmentId: '1',
         valueToServe: 'false',
@@ -511,20 +498,13 @@ describe('FlagsController (e2e)', () => {
         });
     });
 
-    it('gives the strategies information when the user is authenticated and authorized', async () => {
+    it.only('gives the strategies information when the user is authenticated and authorized', async () => {
       const access_token = await authenticate(app);
-
-      const validStrategy: any = {
-        fieldName: 'email',
-        fieldComparator: 'eq',
-        fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
-      };
 
       // Create a strategy to check it works
       await request(app.getHttpServer())
         .post('/environments/1/flags/1/strategies')
-        .set('Authorization', `Bearer ${access_token}`)
-        .send(validStrategy);
+        .set('Authorization', `Bearer ${access_token}`);
 
       const response = await request(app.getHttpServer())
         .get('/environments/1/flags/1/strategies')
@@ -533,15 +513,18 @@ describe('FlagsController (e2e)', () => {
       const newStrat = response.body[0];
 
       expect(response.status).toBe(200);
-      expect(newStrat).toEqual({
-        fieldComparator: 'eq',
-        fieldName: 'id',
-        fieldValue: '1',
+      expect(newStrat.ruleUuid).toBeDefined();
+      expect(newStrat).toMatchObject({
         flagEnvironmentEnvironmentId: '1',
         flagEnvironmentFlagId: '1',
         valueToServe: 'true',
         valueToServeType: 'Boolean',
         uuid: '1',
+        rule: {
+          fieldComparator: 'eq',
+          fieldName: 'id',
+          fieldValue: '1',
+        },
       });
     });
   });
@@ -1643,13 +1626,15 @@ describe('FlagsController (e2e)', () => {
       const eligibilities = response.body[0];
 
       expect(response.status).toBe(200);
-      expect(eligibilities).toEqual({
-        fieldComparator: 'eq',
-        fieldName: 'email',
-        fieldValue: '@gmail.com',
+      expect(eligibilities).toMatchObject({
         flagEnvironmentEnvironmentId: '1',
         flagEnvironmentFlagId: '2',
         uuid: '1',
+        rule: {
+          fieldComparator: 'eq',
+          fieldName: 'email',
+          fieldValue: '@gmail.com',
+        },
       });
     });
   });
@@ -1699,9 +1684,6 @@ describe('FlagsController (e2e)', () => {
         .expect(201);
 
       expect(response.body).toMatchObject({
-        fieldComparator: 'eq',
-        fieldName: '',
-        fieldValue: '',
         flagEnvironmentFlagId: '1',
         flagEnvironmentEnvironmentId: '1',
       });

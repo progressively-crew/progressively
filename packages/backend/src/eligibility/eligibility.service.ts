@@ -98,6 +98,9 @@ export class EligibilityService {
       orderBy: {
         uuid: 'asc',
       },
+      include: {
+        rule: true,
+      },
     });
   }
 

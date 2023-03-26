@@ -109,6 +109,9 @@ export class StrategyService {
         flagEnvironmentEnvironmentId: envId,
         flagEnvironmentFlagId: flagId,
       },
+      include: {
+        rule: true,
+      },
     });
   }
 
