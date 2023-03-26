@@ -10,9 +10,11 @@ export type FieldRecord = Record<string, string | number | boolean>;
 
 export interface RolloutStrategy {
   uuid: string;
-  fieldName: string;
-  fieldComparator: ComparatorEnum;
-  fieldValue: string;
+  rule: {
+    fieldName: string;
+    fieldComparator: ComparatorEnum;
+    fieldValue: string;
+  };
   flagEnvironmentFlagId?: string;
   flagEnvironmentEnvironmentId?: string;
   valueToServeType: string;

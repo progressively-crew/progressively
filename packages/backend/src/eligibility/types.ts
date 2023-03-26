@@ -16,9 +16,11 @@ export class EligibilityCreateDTO {
 
 export class Eligibility {
   uuid: string;
-  fieldName: string;
-  fieldComparator: ComparatorEnum;
-  fieldValue: string;
+  rule: {
+    fieldName: string;
+    fieldComparator: ComparatorEnum;
+    fieldValue: string;
+  };
   flagEnvironmentFlagId: string;
   flagEnvironmentEnvironmentId: string;
 }

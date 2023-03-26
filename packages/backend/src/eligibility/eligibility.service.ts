@@ -155,11 +155,14 @@ export class EligibilityService {
     if (flagEnv.eligibilities.length === 0) return true;
 
     for (const eligibility of flagEnv.eligibilities) {
-      const fieldValues = eligibility.fieldValue.split('\n');
-      const clientFieldValue = fields[eligibility.fieldName] || '';
+      const fieldValues = eligibility.rule.fieldValue.split('\n');
+      const clientFieldValue = fields[eligibility.rule.fieldName] || '';
 
       for (const fieldValue of fieldValues) {
-        const rule = Rule.createFrom(fieldValue, eligibility.fieldComparator);
+        const rule = Rule.createFrom(
+          fieldValue,
+          eligibility.rule.fieldComparator,
+        );
 
         if (rule.isSatisfiedBy(clientFieldValue)) {
           return true;

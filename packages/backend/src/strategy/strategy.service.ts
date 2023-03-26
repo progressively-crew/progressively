@@ -15,11 +15,11 @@ export class StrategyService {
   constructor(private prisma: PrismaService) {}
 
   private isValidStrategy(strategy: RolloutStrategy, fields: FieldRecord) {
-    const clientFieldValue = fields[strategy.fieldName] || '';
-    const strategyFieldValues = strategy.fieldValue.split('\n');
+    const clientFieldValue = fields[strategy.rule.fieldName] || '';
+    const strategyFieldValues = strategy.rule.fieldValue.split('\n');
 
     for (const fieldValue of strategyFieldValues) {
-      const rule = Rule.createFrom(fieldValue, strategy.fieldComparator);
+      const rule = Rule.createFrom(fieldValue, strategy.rule.fieldComparator);
 
       if (rule.isSatisfiedBy(clientFieldValue)) {
         return true;
