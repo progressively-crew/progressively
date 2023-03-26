@@ -498,7 +498,7 @@ describe('FlagsController (e2e)', () => {
         });
     });
 
-    it.only('gives the strategies information when the user is authenticated and authorized', async () => {
+    it('gives the strategies information when the user is authenticated and authorized', async () => {
       const access_token = await authenticate(app);
 
       // Create a strategy to check it works
