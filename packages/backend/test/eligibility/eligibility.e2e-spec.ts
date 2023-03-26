@@ -5,7 +5,7 @@ import { authenticate } from '../helpers/authenticate';
 import { verifyAuthGuard } from '../helpers/verify-auth-guard';
 import { prepareApp } from '../helpers/prepareApp';
 import { EligibilityUpdateDTO } from '../../src/eligibility/types';
-import { ComparatorEnum } from '../../src/shared/utils/comparators/types';
+import { ComparatorEnum } from '../../src//rule/comparators/types';
 
 describe('Eligibility (e2e)', () => {
   let app: INestApplication;

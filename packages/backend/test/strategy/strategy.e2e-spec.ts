@@ -8,7 +8,7 @@ import {
   StrategyUpdateDTO,
   StrategyValueToServe,
 } from '../../src/strategy/types';
-import { ComparatorEnum } from '../../src/shared/utils/comparators/types';
+import { ComparatorEnum } from '../../src//rule/comparators/types';
 
 describe('Strategy (e2e)', () => {
   let app: INestApplication;
@@ -178,9 +178,11 @@ describe('Strategy (e2e)', () => {
 
       const validStrategy: Partial<StrategyUpdateDTO> = {
         uuid: '3',
-        fieldName: 'email',
-        fieldValue: '@gmail.com',
-        fieldComparator: ComparatorEnum.Equals,
+        rule: {
+          fieldName: 'email',
+          fieldValue: '@gmail.com',
+          fieldComparator: ComparatorEnum.Equals,
+        },
       };
 
       return request(app.getHttpServer())
@@ -229,9 +231,11 @@ describe('Strategy (e2e)', () => {
         const access_token = await authenticate(app);
 
         const invalidStrategy: Partial<StrategyUpdateDTO> = {
-          fieldName: 'email',
-          fieldValue: '@gmail.com',
-          fieldComparator: ComparatorEnum.Equals,
+          rule: {
+            fieldName: 'email',
+            fieldValue: '@gmail.com',
+            fieldComparator: ComparatorEnum.Equals,
+          },
           valueToServe: 'false',
           valueToServeType: StrategyValueToServe.Boolean,
           [field]: undefined,
@@ -255,9 +259,11 @@ describe('Strategy (e2e)', () => {
 
       const validStrategy: Partial<StrategyUpdateDTO> = {
         uuid: '1',
-        fieldName: 'email',
-        fieldValue: '@gmail.com\nhello-world',
-        fieldComparator: ComparatorEnum.Equals,
+        rule: {
+          fieldName: 'email',
+          fieldValue: '@gmail.com\nhello-world',
+          fieldComparator: ComparatorEnum.Equals,
+        },
         valueToServeType: StrategyValueToServe.String,
         valueToServe: 'hello y all',
       };
