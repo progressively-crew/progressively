@@ -25,9 +25,9 @@ export const FormEligibility = ({
             key={el.uuid}
             removeLink={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/eligibilities/${el.uuid}/delete`}
             uuid={el.uuid}
-            fieldName={el.fieldName}
-            fieldValue={el.fieldValue}
-            fieldComparator={el.fieldComparator}
+            fieldName={el.rule.fieldName}
+            fieldValue={el.rule.fieldValue}
+            fieldComparator={el.rule.fieldComparator}
           />
         ))}
       </div>

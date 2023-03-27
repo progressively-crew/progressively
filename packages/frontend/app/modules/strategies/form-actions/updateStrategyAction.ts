@@ -1,7 +1,5 @@
-import {
-  ComparatorEnum,
-  StrategyValueToServe,
-} from "~/modules/strategies/types";
+import { ComparatorEnum } from "~/modules/rules/types";
+import { StrategyValueToServe } from "~/modules/strategies/types";
 import { updateStrategy } from "../services/updateStrategy";
 import { AdditionalAudienceUpdateDTO } from "../types";
 
@@ -32,11 +30,13 @@ export const updateStrategyAction = async (
     if (uuid && fieldName && fieldComparator && fieldValue) {
       const strategyDto: AdditionalAudienceUpdateDTO = {
         uuid: uuid.toString(),
-        fieldName,
-        fieldValue,
-        fieldComparator: fieldComparator
-          ? (fieldComparator as ComparatorEnum)
-          : ComparatorEnum.Equals,
+        rule: {
+          fieldName,
+          fieldValue,
+          fieldComparator: fieldComparator
+            ? (fieldComparator as ComparatorEnum)
+            : ComparatorEnum.Equals,
+        },
         valueToServe: valueToServe,
         valueToServeType: valueToServeType,
       };
