@@ -303,17 +303,17 @@ export class FlagsService {
           flagEnvironmentFlagId: flagId,
         },
       }),
+      this.prisma.segment.deleteMany({
+        where: {
+          uuid: flagId,
+        },
+      }),
       this.prisma.flagEnvironment.deleteMany({
         where: {
           flagId: flagId,
         },
       }),
       this.prisma.flag.deleteMany({
-        where: {
-          uuid: flagId,
-        },
-      }),
-      this.prisma.segment.deleteMany({
         where: {
           uuid: flagId,
         },
