@@ -8,7 +8,7 @@ import {
   StrategyUpdateDTO,
   StrategyValueToServe,
 } from '../../src/strategy/types';
-import { ComparatorEnum } from '../../src/shared/utils/comparators/types';
+import { ComparatorEnum } from '../../src//rule/comparators/types';
 
 describe('Strategy (e2e)', () => {
   let app: INestApplication;
@@ -73,11 +73,8 @@ describe('Strategy (e2e)', () => {
         .set('Authorization', `Bearer ${access_token}`);
 
       expect(response.status).toBe(200);
-      expect(response.body).toEqual({
-        uuid: '1',
-        fieldName: 'id',
-        fieldComparator: 'eq',
-        fieldValue: '1',
+      expect(response.body.ruleUuid).toBeDefined();
+      expect(response.body).toMatchObject({
         flagEnvironmentFlagId: '1',
         flagEnvironmentEnvironmentId: '1',
         valueToServe: 'true',
@@ -129,18 +126,14 @@ describe('Strategy (e2e)', () => {
         .get('/strategies/1')
         .set('Authorization', `Bearer ${access_token}`);
 
-      expect(prev.body).toMatchInlineSnapshot(`
-        {
-          "fieldComparator": "eq",
-          "fieldName": "id",
-          "fieldValue": "1",
-          "flagEnvironmentEnvironmentId": "1",
-          "flagEnvironmentFlagId": "1",
-          "uuid": "1",
-          "valueToServe": "true",
-          "valueToServeType": "Boolean",
-        }
-      `);
+      expect(prev.body.ruleUuid).toBeDefined();
+      expect(prev.body).toMatchObject({
+        flagEnvironmentEnvironmentId: '1',
+        flagEnvironmentFlagId: '1',
+        uuid: '1',
+        valueToServe: 'true',
+        valueToServeType: 'Boolean',
+      });
 
       await request(app.getHttpServer())
         .delete('/strategies/1')
@@ -148,9 +141,7 @@ describe('Strategy (e2e)', () => {
         .expect(200)
         .expect({
           uuid: '1',
-          fieldName: 'id',
-          fieldComparator: 'eq',
-          fieldValue: '1',
+          rule: { fieldName: 'id', fieldComparator: 'eq', fieldValue: '1' },
           flagEnvironmentFlagId: '1',
           flagEnvironmentEnvironmentId: '1',
         });
@@ -178,9 +169,11 @@ describe('Strategy (e2e)', () => {
 
       const validStrategy: Partial<StrategyUpdateDTO> = {
         uuid: '3',
-        fieldName: 'email',
-        fieldValue: '@gmail.com',
-        fieldComparator: ComparatorEnum.Equals,
+        rule: {
+          fieldName: 'email',
+          fieldValue: '@gmail.com',
+          fieldComparator: ComparatorEnum.Equals,
+        },
       };
 
       return request(app.getHttpServer())
@@ -229,9 +222,11 @@ describe('Strategy (e2e)', () => {
         const access_token = await authenticate(app);
 
         const invalidStrategy: Partial<StrategyUpdateDTO> = {
-          fieldName: 'email',
-          fieldValue: '@gmail.com',
-          fieldComparator: ComparatorEnum.Equals,
+          rule: {
+            fieldName: 'email',
+            fieldValue: '@gmail.com',
+            fieldComparator: ComparatorEnum.Equals,
+          },
           valueToServe: 'false',
           valueToServeType: StrategyValueToServe.Boolean,
           [field]: undefined,
@@ -255,9 +250,11 @@ describe('Strategy (e2e)', () => {
 
       const validStrategy: Partial<StrategyUpdateDTO> = {
         uuid: '1',
-        fieldName: 'email',
-        fieldValue: '@gmail.com\nhello-world',
-        fieldComparator: ComparatorEnum.Equals,
+        rule: {
+          fieldName: 'email',
+          fieldValue: '@gmail.com\nhello-world',
+          fieldComparator: ComparatorEnum.Equals,
+        },
         valueToServeType: StrategyValueToServe.String,
         valueToServe: 'hello y all',
       };
@@ -268,10 +265,8 @@ describe('Strategy (e2e)', () => {
         .send(validStrategy)
         .expect(200);
 
+      expect(response.body.uuid).toBeDefined();
       expect(response.body).toMatchObject({
-        fieldComparator: 'eq',
-        fieldName: 'email',
-        fieldValue: '@gmail.com\nhello-world',
         flagEnvironmentFlagId: '1',
         flagEnvironmentEnvironmentId: '1',
       });

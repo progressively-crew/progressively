@@ -3,8 +3,7 @@ import { PopulatedFlagEnv } from '../flags/types';
 import { FieldRecord } from '../strategy/types';
 import { PrismaService } from '../database/prisma.service';
 import { EligibilityCreateDTO, EligibilityUpdateDTO } from './types';
-import { ComparatorEnum } from '../shared/utils/comparators/types';
-import { ComparatorFactory } from '../shared/utils/comparators/comparatorFactory';
+import { Rule } from '../rule/Rule';
 
 @Injectable()
 export class EligibilityService {
@@ -47,13 +46,22 @@ export class EligibilityService {
         uuid: eligibilityId,
       },
       include: {
+        rule: true,
         flagEnvironment: {
           include: {
             environment: true,
             flag: true,
-            strategies: true,
+            strategies: {
+              include: {
+                rule: true,
+              },
+            },
             variants: true,
-            eligibilities: true,
+            eligibilities: {
+              include: {
+                rule: true,
+              },
+            },
           },
         },
       },
@@ -66,18 +74,31 @@ export class EligibilityService {
         uuid,
       },
       data: {
-        fieldComparator: eligibility.fieldComparator,
-        fieldValue: eligibility.fieldValue,
-        fieldName: eligibility.fieldName,
+        rule: {
+          update: {
+            fieldComparator: eligibility.rule.fieldComparator,
+            fieldValue: eligibility.rule.fieldValue,
+            fieldName: eligibility.rule.fieldName,
+          },
+        },
       },
       include: {
+        rule: true,
         flagEnvironment: {
           include: {
             environment: true,
             flag: true,
-            strategies: true,
+            strategies: {
+              include: {
+                rule: true,
+              },
+            },
             variants: true,
-            eligibilities: true,
+            eligibilities: {
+              include: {
+                rule: true,
+              },
+            },
           },
         },
       },
@@ -93,6 +114,9 @@ export class EligibilityService {
       orderBy: {
         uuid: 'asc',
       },
+      include: {
+        rule: true,
+      },
     });
   }
 
@@ -103,11 +127,21 @@ export class EligibilityService {
   ) {
     return this.prisma.eligibility.create({
       data: {
-        fieldName: eligibility.fieldName,
-        fieldValue: eligibility.fieldValue,
-        fieldComparator: eligibility.fieldComparator,
-        flagEnvironmentEnvironmentId: envId,
-        flagEnvironmentFlagId: flagId,
+        rule: {
+          create: {
+            fieldName: eligibility.fieldName,
+            fieldValue: eligibility.fieldValue,
+            fieldComparator: String(eligibility.fieldComparator),
+          },
+        },
+        flagEnvironment: {
+          connect: {
+            flagId_environmentId: {
+              environmentId: envId,
+              flagId: flagId,
+            },
+          },
+        },
       },
     });
   }
@@ -122,9 +156,17 @@ export class EligibilityService {
           include: {
             environment: true,
             flag: true,
-            strategies: true,
+            strategies: {
+              include: {
+                rule: true,
+              },
+            },
             variants: true,
-            eligibilities: true,
+            eligibilities: {
+              include: {
+                rule: true,
+              },
+            },
           },
         },
       },
@@ -137,14 +179,16 @@ export class EligibilityService {
     if (flagEnv.eligibilities.length === 0) return true;
 
     for (const eligibility of flagEnv.eligibilities) {
-      const fieldComparator = eligibility.fieldComparator as ComparatorEnum;
-      const isValid = ComparatorFactory.create(fieldComparator);
-      const fieldValues = eligibility.fieldValue.split('\n');
+      const fieldValues = eligibility.rule.fieldValue.split('\n');
+      const clientFieldValue = fields[eligibility.rule.fieldName] || '';
 
       for (const fieldValue of fieldValues) {
-        const clientFieldValue = fields[eligibility.fieldName] || '';
+        const rule = Rule.createFrom(
+          fieldValue,
+          eligibility.rule.fieldComparator,
+        );
 
-        if (isValid(fieldValue, clientFieldValue)) {
+        if (rule.isSatisfiedBy(clientFieldValue)) {
           return true;
         }
       }

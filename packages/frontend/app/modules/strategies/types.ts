@@ -1,13 +1,8 @@
-export enum ComparatorEnum {
-  Equals = "eq",
-  Contains = "contains",
-}
+import { RuleType } from "../rules/types";
 
 export interface AdditionalAudienceUpdateDTO {
   uuid?: string;
-  fieldName: string;
-  fieldComparator: ComparatorEnum;
-  fieldValue: string;
+  rule: RuleType;
   valueToServeType: string;
   valueToServe: string;
 }

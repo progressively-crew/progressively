@@ -199,50 +199,91 @@ export const seedDb = async () => {
     await prismaClient.rolloutStrategy.create({
       data: {
         uuid: "1",
-        flagEnvironmentFlagId: flagEnv.flagId,
-        flagEnvironmentEnvironmentId: flagEnv.environmentId,
-        fieldName: "id",
-        fieldComparator: "eq",
-        fieldValue: "1",
+        rule: {
+          create: {
+            fieldName: "id",
+            fieldComparator: "eq",
+            fieldValue: "1",
+          },
+        },
         valueToServe: "true",
         valueToServeType: "Boolean",
+        flagEnvironment: {
+          connect: {
+            flagId_environmentId: {
+              flagId: flagEnv.flagId,
+              environmentId: flagEnv.environmentId,
+            },
+          },
+        },
       },
     });
 
     await prismaClient.rolloutStrategy.create({
       data: {
         uuid: "2",
-        flagEnvironmentFlagId: footerFlagEnv.flagId,
-        flagEnvironmentEnvironmentId: footerFlagEnv.environmentId,
-        fieldName: "id",
-        fieldComparator: "eq",
-        fieldValue: "1",
         valueToServe: "true",
         valueToServeType: "Boolean",
+        rule: {
+          create: {
+            fieldName: "id",
+            fieldComparator: "eq",
+            fieldValue: "1",
+          },
+        },
+        flagEnvironment: {
+          connect: {
+            flagId_environmentId: {
+              flagId: footerFlagEnv.flagId,
+              environmentId: footerFlagEnv.environmentId,
+            },
+          },
+        },
       },
     });
 
     await prismaClient.rolloutStrategy.create({
       data: {
         uuid: "3",
-        flagEnvironmentFlagId: otherFlagEnv.flagId,
-        flagEnvironmentEnvironmentId: otherFlagEnv.environmentId,
-        fieldComparator: "eq",
-        fieldName: "email",
-        fieldValue: "@gmail.com",
+
+        rule: {
+          create: {
+            fieldComparator: "eq",
+            fieldName: "email",
+            fieldValue: "@gmail.com",
+          },
+        },
         valueToServe: "true",
         valueToServeType: "Boolean",
+        flagEnvironment: {
+          connect: {
+            flagId_environmentId: {
+              flagId: otherFlagEnv.flagId,
+              environmentId: otherFlagEnv.environmentId,
+            },
+          },
+        },
       },
     });
 
     await prismaClient.eligibility.create({
       data: {
         uuid: "1",
-        flagEnvironmentFlagId: footerFlagEnv.flagId,
-        flagEnvironmentEnvironmentId: footerFlagEnv.environmentId,
-        fieldName: "email",
-        fieldValue: "@gmail.com",
-        fieldComparator: "eq",
+        rule: {
+          create: {
+            fieldName: "email",
+            fieldValue: "@gmail.com",
+            fieldComparator: "eq",
+          },
+        },
+        flagEnvironment: {
+          connect: {
+            flagId_environmentId: {
+              flagId: footerFlagEnv.flagId,
+              environmentId: footerFlagEnv.environmentId,
+            },
+          },
+        },
       },
     });
 

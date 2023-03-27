@@ -1,17 +1,13 @@
-import { ComparatorEnum } from "../strategies/types";
+import { RuleType } from "../rules/types";
 
 export interface Eligibility {
   uuid: string;
-  fieldName: string;
-  fieldComparator: ComparatorEnum;
-  fieldValue: string;
+  rule: RuleType;
   flagEnvironmentFlagId: string;
   flagEnvironmentEnvironmentId: string;
 }
 
 export interface UpsertEligibilityDTO {
-  fieldName: string;
-  fieldComparator: ComparatorEnum;
-  fieldValue: string;
+  rule: RuleType;
   uuid?: string;
 }

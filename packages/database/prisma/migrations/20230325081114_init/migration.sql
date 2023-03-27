@@ -149,15 +149,23 @@ CREATE TABLE "FlagHit" (
 );
 
 -- CreateTable
-CREATE TABLE "RolloutStrategy" (
+CREATE TABLE "Rule" (
     "uuid" TEXT NOT NULL,
     "fieldName" TEXT NOT NULL,
     "fieldComparator" TEXT NOT NULL,
     "fieldValue" TEXT NOT NULL,
+
+    CONSTRAINT "Rule_pkey" PRIMARY KEY ("uuid")
+);
+
+-- CreateTable
+CREATE TABLE "RolloutStrategy" (
+    "uuid" TEXT NOT NULL,
     "valueToServeType" TEXT NOT NULL,
     "valueToServe" TEXT NOT NULL,
     "flagEnvironmentFlagId" TEXT,
     "flagEnvironmentEnvironmentId" TEXT,
+    "ruleUuid" TEXT NOT NULL,
 
     CONSTRAINT "RolloutStrategy_pkey" PRIMARY KEY ("uuid")
 );
@@ -165,11 +173,9 @@ CREATE TABLE "RolloutStrategy" (
 -- CreateTable
 CREATE TABLE "Eligibility" (
     "uuid" TEXT NOT NULL,
-    "fieldName" TEXT NOT NULL,
-    "fieldComparator" TEXT NOT NULL,
-    "fieldValue" TEXT NOT NULL,
     "flagEnvironmentFlagId" TEXT,
     "flagEnvironmentEnvironmentId" TEXT,
+    "ruleUuid" TEXT NOT NULL,
 
     CONSTRAINT "Eligibility_pkey" PRIMARY KEY ("uuid")
 );
@@ -251,7 +257,13 @@ ALTER TABLE "PMetricHit" ADD CONSTRAINT "PMetricHit_pMetricUuid_fkey" FOREIGN KE
 ALTER TABLE "FlagHit" ADD CONSTRAINT "FlagHit_flagEnvironmentFlagId_flagEnvironmentEnvironmentId_fkey" FOREIGN KEY ("flagEnvironmentFlagId", "flagEnvironmentEnvironmentId") REFERENCES "FlagEnvironment"("flagId", "environmentId") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "RolloutStrategy" ADD CONSTRAINT "RolloutStrategy_ruleUuid_fkey" FOREIGN KEY ("ruleUuid") REFERENCES "Rule"("uuid") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "RolloutStrategy" ADD CONSTRAINT "RolloutStrategy_flagEnvironmentFlagId_flagEnvironmentEnvir_fkey" FOREIGN KEY ("flagEnvironmentFlagId", "flagEnvironmentEnvironmentId") REFERENCES "FlagEnvironment"("flagId", "environmentId") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Eligibility" ADD CONSTRAINT "Eligibility_ruleUuid_fkey" FOREIGN KEY ("ruleUuid") REFERENCES "Rule"("uuid") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Eligibility" ADD CONSTRAINT "Eligibility_flagEnvironmentFlagId_flagEnvironmentEnvironme_fkey" FOREIGN KEY ("flagEnvironmentFlagId", "flagEnvironmentEnvironmentId") REFERENCES "FlagEnvironment"("flagId", "environmentId") ON DELETE SET NULL ON UPDATE CASCADE;

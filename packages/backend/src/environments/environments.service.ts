@@ -24,9 +24,15 @@ export class EnvironmentsService {
       },
       include: {
         flag: true,
-        strategies: true,
+        strategies: {
+          include: { rule: true },
+        },
         scheduling: true,
-        eligibilities: true,
+        eligibilities: {
+          include: {
+            rule: true,
+          },
+        },
         variants: {
           orderBy: {
             rolloutPercentage: 'asc',

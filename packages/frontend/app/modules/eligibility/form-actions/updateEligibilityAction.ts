@@ -1,4 +1,4 @@
-import { ComparatorEnum } from "~/modules/strategies/types";
+import { ComparatorEnum } from "~/modules/rules/types";
 import { updateEligibility } from "../services/updateEligibility";
 import { UpsertEligibilityDTO } from "../types";
 
@@ -23,11 +23,13 @@ export const updateEligibilityAction = async (
     if (uuid && fieldName && fieldComparator && fieldValue) {
       const eligiblityDto: UpsertEligibilityDTO = {
         uuid: uuid.toString(),
-        fieldName,
-        fieldValue,
-        fieldComparator: fieldComparator
-          ? (fieldComparator as ComparatorEnum)
-          : ComparatorEnum.Equals,
+        rule: {
+          fieldName,
+          fieldValue,
+          fieldComparator: fieldComparator
+            ? (fieldComparator as ComparatorEnum)
+            : ComparatorEnum.Equals,
+        },
       };
 
       toUpdate.push(eligiblityDto);

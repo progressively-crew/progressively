@@ -4,15 +4,12 @@ import { SelectField } from "~/components/Fields/Select/SelectField";
 import { TagInput } from "~/components/Fields/TagInput";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Typography } from "~/components/Typography";
-import {
-  ComparatorEnum,
-  StrategyValueToServe,
-} from "~/modules/strategies/types";
+import { ComparatorEnum } from "~/modules/rules/types";
+import { StrategyValueToServe } from "~/modules/strategies/types";
 import { Variant } from "~/modules/variants/types";
 
 export interface ConditionalAudienceProps {
   removeLink: string;
-
   uuid: string;
   fieldName: string;
   fieldValue: string;

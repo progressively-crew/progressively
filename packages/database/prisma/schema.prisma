@@ -160,26 +160,33 @@ model FlagHit {
   flagEnvironment              FlagEnvironment @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
 }
 
+model Rule {
+  uuid            String            @id @default(uuid())
+  fieldName       String
+  fieldComparator String
+  fieldValue      String
+  RolloutStrategy RolloutStrategy[]
+  Eligibility     Eligibility[]
+}
+
 model RolloutStrategy {
   uuid                         String           @id @default(uuid())
-  fieldName                    String
-  fieldComparator              String
-  fieldValue                   String
+  rule                         Rule             @relation(fields: [ruleUuid], references: [uuid])
   valueToServeType             String
   valueToServe                 String
   flagEnvironmentFlagId        String?
   flagEnvironmentEnvironmentId String?
   flagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
+  ruleUuid                     String
 }
 
 model Eligibility {
   uuid                         String           @id @default(uuid())
-  fieldName                    String
-  fieldComparator              String
-  fieldValue                   String
+  rule                         Rule             @relation(fields: [ruleUuid], references: [uuid])
   flagEnvironmentFlagId        String?
   flagEnvironmentEnvironmentId String?
   flagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
+  ruleUuid                     String
 }
 
 model Schedule {

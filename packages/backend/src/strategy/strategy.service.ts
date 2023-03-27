@@ -1,6 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { ComparatorFactory } from '../shared/utils/comparators/comparatorFactory';
-import { ComparatorEnum } from '../shared/utils/comparators/types';
 import { PrismaService } from '../database/prisma.service';
 
 import {
@@ -9,21 +7,21 @@ import {
   StrategyUpdateDTO,
   StrategyValueToServe,
 } from './types';
+import { Rule } from '../rule/Rule';
+import { ComparatorEnum } from '../rule/comparators/types';
 
 @Injectable()
 export class StrategyService {
   constructor(private prisma: PrismaService) {}
 
   private isValidStrategy(strategy: RolloutStrategy, fields: FieldRecord) {
-    const fieldComparator = strategy.fieldComparator as ComparatorEnum;
-    const isValid = ComparatorFactory.create(fieldComparator);
-
-    const strategyFieldValues = strategy.fieldValue.split('\n');
+    const clientFieldValue = fields[strategy.rule.fieldName] || '';
+    const strategyFieldValues = strategy.rule.fieldValue.split('\n');
 
     for (const fieldValue of strategyFieldValues) {
-      const clientFieldValue = fields[strategy.fieldName] || '';
+      const rule = Rule.createFrom(fieldValue, strategy.rule.fieldComparator);
 
-      if (isValid(fieldValue, clientFieldValue)) {
+      if (rule.isSatisfiedBy(clientFieldValue)) {
         return true;
       }
     }
@@ -61,9 +59,13 @@ export class StrategyService {
             },
           },
         },
-        fieldName: '',
-        fieldValue: '',
-        fieldComparator: ComparatorEnum.Equals,
+        rule: {
+          create: {
+            fieldName: '',
+            fieldValue: '',
+            fieldComparator: ComparatorEnum.Equals,
+          },
+        },
         valueToServe: 'false',
         valueToServeType: StrategyValueToServe.Boolean,
       },
@@ -76,20 +78,33 @@ export class StrategyService {
         uuid,
       },
       data: {
-        fieldComparator: strategy.fieldComparator,
-        fieldValue: strategy.fieldValue,
-        fieldName: strategy.fieldName,
+        rule: {
+          update: {
+            fieldComparator: strategy.rule.fieldComparator,
+            fieldValue: strategy.rule.fieldValue,
+            fieldName: strategy.rule.fieldName,
+          },
+        },
         valueToServeType: strategy.valueToServeType,
         valueToServe: strategy.valueToServe,
       },
       include: {
+        rule: true,
         flagEnvironment: {
           include: {
             environment: true,
             flag: true,
-            strategies: true,
+            strategies: {
+              include: {
+                rule: true,
+              },
+            },
             variants: true,
-            eligibilities: true,
+            eligibilities: {
+              include: {
+                rule: true,
+              },
+            },
           },
         },
       },
@@ -101,6 +116,9 @@ export class StrategyService {
       where: {
         flagEnvironmentEnvironmentId: envId,
         flagEnvironmentFlagId: flagId,
+      },
+      include: {
+        rule: true,
       },
     });
   }
@@ -123,9 +141,17 @@ export class StrategyService {
           include: {
             environment: true,
             flag: true,
-            strategies: true,
+            strategies: {
+              include: {
+                rule: true,
+              },
+            },
             variants: true,
-            eligibilities: true,
+            eligibilities: {
+              include: {
+                rule: true,
+              },
+            },
           },
         },
       },
@@ -138,13 +164,22 @@ export class StrategyService {
         uuid: stratId,
       },
       include: {
+        rule: true,
         flagEnvironment: {
           include: {
             environment: true,
             flag: true,
-            strategies: true,
+            strategies: {
+              include: {
+                rule: true,
+              },
+            },
             variants: true,
-            eligibilities: true,
+            eligibilities: {
+              include: {
+                rule: true,
+              },
+            },
           },
         },
       },

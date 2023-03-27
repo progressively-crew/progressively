@@ -40,9 +40,10 @@ import { Webhook, WebhookCreationDTO, WebhookSchema } from '../webhooks/types';
 import { WebhooksService } from '../webhooks/webhooks.service';
 import { post, WebhooksEventsToFlagStatus } from '../webhooks/utils';
 import { EligibilityService } from '../eligibility/eligibility.service';
-import { ComparatorEnum } from '../shared/utils/comparators/types';
+
 import { ActivityLogService } from '../activity-log/activity-log.service';
 import { UserId } from '../users/users.decorator';
+import { ComparatorEnum } from '../rule/comparators/types';
 
 @ApiBearerAuth()
 @Controller()
