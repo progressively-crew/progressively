@@ -68,9 +68,9 @@ export class EligibilityService {
       data: {
         rule: {
           update: {
-            fieldComparator: eligibility.fieldComparator,
-            fieldValue: eligibility.fieldValue,
-            fieldName: eligibility.fieldName,
+            fieldComparator: eligibility.rule.fieldComparator,
+            fieldValue: eligibility.rule.fieldValue,
+            fieldName: eligibility.rule.fieldName,
           },
         },
       },

@@ -1,11 +1,10 @@
 import * as Joi from 'joi';
+import { RuleSchema, RuleType } from '../rule/types';
 import { ComparatorEnum } from '../rule/comparators/types';
 
 export class EligibilityUpdateDTO {
   uuid: string;
-  fieldName: string;
-  fieldComparator: ComparatorEnum;
-  fieldValue: string;
+  rule: RuleType;
 }
 
 export class EligibilityCreateDTO {
@@ -16,20 +15,12 @@ export class EligibilityCreateDTO {
 
 export class Eligibility {
   uuid: string;
-  rule: {
-    fieldName: string;
-    fieldComparator: ComparatorEnum;
-    fieldValue: string;
-  };
+  rule: RuleType;
   flagEnvironmentFlagId: string;
   flagEnvironmentEnvironmentId: string;
 }
 
 export const EligibilitySchema = Joi.object({
   uuid: Joi.string().required(),
-  fieldName: Joi.string().required(),
-  fieldComparator: Joi.string()
-    .valid(ComparatorEnum.Equals, ComparatorEnum.Contains)
-    .required(),
-  fieldValue: Joi.string().required(),
+  rule: RuleSchema,
 });

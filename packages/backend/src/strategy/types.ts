@@ -1,5 +1,5 @@
 import * as Joi from 'joi';
-import { RuleType } from '../rule/types';
+import { RuleSchema, RuleType } from '../rule/types';
 import { ComparatorEnum } from '../rule/comparators/types';
 
 export interface FlagDict {
@@ -10,11 +10,7 @@ export type FieldRecord = Record<string, string | number | boolean>;
 
 export interface RolloutStrategy {
   uuid: string;
-  rule: {
-    fieldName: string;
-    fieldComparator: ComparatorEnum;
-    fieldValue: string;
-  };
+  rule: RuleType;
   flagEnvironmentFlagId?: string;
   flagEnvironmentEnvironmentId?: string;
   valueToServeType: string;
@@ -36,11 +32,7 @@ export enum StrategyValueToServe {
 
 export const StrategySchema = Joi.object({
   uuid: Joi.string().required(),
-  fieldName: Joi.string().required(),
-  fieldComparator: Joi.string()
-    .valid(ComparatorEnum.Equals, ComparatorEnum.Contains)
-    .required(),
-  fieldValue: Joi.string().required(),
+  rule: RuleSchema,
   valueToServeType: Joi.string()
     .valid(
       StrategyValueToServe.Boolean,

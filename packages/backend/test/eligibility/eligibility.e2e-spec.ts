@@ -71,9 +71,11 @@ describe('Eligibility (e2e)', () => {
         .expect(200)
         .expect({
           uuid: '1',
-          fieldName: 'email',
-          fieldComparator: 'eq',
-          fieldValue: '@gmail.com',
+          rule: {
+            fieldName: 'email',
+            fieldComparator: 'eq',
+            fieldValue: '@gmail.com',
+          },
           flagEnvironmentFlagId: '2',
           flagEnvironmentEnvironmentId: '1',
         });
@@ -101,9 +103,11 @@ describe('Eligibility (e2e)', () => {
 
       const validEligibility: EligibilityUpdateDTO = {
         uuid: '3',
-        fieldName: 'email',
-        fieldValue: '@gmail.com',
-        fieldComparator: ComparatorEnum.Equals,
+        rule: {
+          fieldName: 'email',
+          fieldValue: '@gmail.com',
+          fieldComparator: ComparatorEnum.Equals,
+        },
       };
 
       return request(app.getHttpServer())
@@ -170,9 +174,11 @@ describe('Eligibility (e2e)', () => {
 
       const validEligibility: EligibilityUpdateDTO = {
         uuid: '2',
-        fieldName: 'email',
-        fieldValue: '@gmail.com',
-        fieldComparator: ComparatorEnum.Equals,
+        rule: {
+          fieldName: 'email',
+          fieldValue: '@gmail.com',
+          fieldComparator: ComparatorEnum.Equals,
+        },
       };
 
       const response = await request(app.getHttpServer())
@@ -182,9 +188,11 @@ describe('Eligibility (e2e)', () => {
         .expect(200);
 
       expect(response.body).toMatchObject({
-        fieldComparator: 'eq',
-        fieldName: 'email',
-        fieldValue: '@gmail.com',
+        rule: {
+          fieldComparator: 'eq',
+          fieldName: 'email',
+          fieldValue: '@gmail.com',
+        },
         flagEnvironmentFlagId: '2',
         flagEnvironmentEnvironmentId: '1',
       });
