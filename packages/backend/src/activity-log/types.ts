@@ -15,6 +15,7 @@ export type ActivityType =
   | 'delete-scheduling'
   | 'delete-eligibility'
   | 'delete-additional-audience'
+  | 'delete-segment'
   | 'edit-eligibility'
   | 'edit-additional-audience';
 

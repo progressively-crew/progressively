@@ -183,6 +183,29 @@ export class FlagsController {
     return variantDeleted;
   }
 
+  @Delete('environments/:envId/flags/:flagId/segments/:segmentId')
+  @UseGuards(HasFlagEnvAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  async deleteSegment(
+    @UserId() userId: string,
+    @Param('envId') envId: string,
+    @Param('flagId') flagId: string,
+    @Param('segmentId') segmentId: string,
+  ) {
+    const segmentDeleted = await this.segmentService.deleteSegment(segmentId);
+
+    await this.activityLogService.register({
+      userId,
+      flagId: flagId,
+      envId: envId,
+      concernedEntity: 'flag',
+      type: 'delete-segment',
+      data: JSON.stringify(segmentDeleted),
+    });
+
+    return segmentDeleted;
+  }
+
   @Delete('environments/:envId/flags/:flagId/metrics/:metricId')
   @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)

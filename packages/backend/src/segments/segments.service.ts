@@ -59,4 +59,12 @@ export class SegmentsService {
       },
     });
   }
+
+  deleteSegment(segmentId: string) {
+    return this.prisma.segment.delete({
+      where: {
+        uuid: segmentId,
+      },
+    });
+  }
 }
