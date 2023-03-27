@@ -44,6 +44,7 @@ import { EligibilityService } from '../eligibility/eligibility.service';
 import { ActivityLogService } from '../activity-log/activity-log.service';
 import { UserId } from '../users/users.decorator';
 import { ComparatorEnum } from '../rule/comparators/types';
+import { SegmentsService } from '../segments/segments.service';
 
 @ApiBearerAuth()
 @Controller()
@@ -56,6 +57,7 @@ export class FlagsController {
     private readonly eligibilityService: EligibilityService,
     private readonly wsGateway: WebsocketGateway,
     private readonly activityLogService: ActivityLogService,
+    private readonly segmentService: SegmentsService,
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
   ) {}
 
@@ -513,6 +515,13 @@ export class FlagsController {
     @Param('flagId') flagId: string,
   ) {
     return this.strategyService.listStrategies(envId, flagId);
+  }
+
+  @Get('environments/:envId/flags/:flagId/segments')
+  @UseGuards(HasFlagEnvAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  getSegments(@Param('envId') envId: string, @Param('flagId') flagId: string) {
+    return this.segmentService.listSegments(envId, flagId);
   }
 
   @Get('environments/:envId/flags/:flagId/eligibilities')

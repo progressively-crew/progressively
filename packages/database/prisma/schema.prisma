@@ -102,6 +102,7 @@ model FlagEnvironment {
   variants          Variant[]
   webhooks          Webhook[]
   ActivityLog       ActivityLog[]
+  Segment           Segment[]
 
   @@id([flagId, environmentId])
 }
@@ -167,6 +168,17 @@ model Rule {
   fieldValue      String
   RolloutStrategy RolloutStrategy[]
   Eligibility     Eligibility[]
+  Segment         Segment?          @relation(fields: [segmentUuid], references: [uuid])
+  segmentUuid     String?
+}
+
+model Segment {
+  uuid                         String          @id @default(uuid())
+  name                         String
+  rule                         Rule[]
+  flagEnvironment              FlagEnvironment @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
+  flagEnvironmentFlagId        String
+  flagEnvironmentEnvironmentId String
 }
 
 model RolloutStrategy {
