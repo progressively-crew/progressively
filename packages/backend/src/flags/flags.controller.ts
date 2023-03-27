@@ -40,11 +40,11 @@ import { Webhook, WebhookCreationDTO, WebhookSchema } from '../webhooks/types';
 import { WebhooksService } from '../webhooks/webhooks.service';
 import { post, WebhooksEventsToFlagStatus } from '../webhooks/utils';
 import { EligibilityService } from '../eligibility/eligibility.service';
-
 import { ActivityLogService } from '../activity-log/activity-log.service';
 import { UserId } from '../users/users.decorator';
 import { ComparatorEnum } from '../rule/comparators/types';
 import { SegmentsService } from '../segments/segments.service';
+import { SegmentCreationDTO, SegmentSchema } from '../segments/types';
 
 @ApiBearerAuth()
 @Controller()
@@ -305,6 +305,41 @@ export class FlagsController {
     });
 
     return strategy;
+  }
+
+  @Post('environments/:envId/flags/:flagId/segments')
+  @UseGuards(HasFlagEnvAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(new ValidationPipe(SegmentSchema))
+  async addSegmentToFlag(
+    @UserId() userId: string,
+    @Param('envId') envId: string,
+    @Param('flagId') flagId: string,
+    @Body() segmentDto: SegmentCreationDTO,
+  ) {
+    const segment = await this.segmentService.addSegmentToFlagEnv(
+      envId,
+      flagId,
+      segmentDto.name,
+    );
+
+    const { flagEnvironment: flagEnv } =
+      await this.segmentService.getSegmentFlagEnv(segment.uuid);
+
+    if (flagEnv.status === FlagStatus.ACTIVATED) {
+      this.wsGateway.notifyChanges(flagEnv.environment.clientKey, flagEnv);
+    }
+
+    await this.activityLogService.register({
+      userId,
+      flagId: flagId,
+      envId: envId,
+      data: JSON.stringify(segment),
+      concernedEntity: 'flag',
+      type: 'create-segment',
+    });
+
+    return segment;
   }
 
   @Post('environments/:envId/flags/:flagId/eligibilities')

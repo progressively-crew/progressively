@@ -8,6 +8,7 @@ export type ActivityType =
   | 'create-scheduling'
   | 'create-metric'
   | 'create-variant'
+  | 'create-segment'
   | 'delete-webhook'
   | 'delete-variant'
   | 'delete-metric'

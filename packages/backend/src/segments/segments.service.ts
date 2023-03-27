@@ -5,8 +5,8 @@ import { PrismaService } from '../database/prisma.service';
 export class SegmentsService {
   constructor(private prisma: PrismaService) {}
 
-  async listSegments(envId: string, flagId: string) {
-    const x = await this.prisma.segment.findMany({
+  listSegments(envId: string, flagId: string) {
+    return this.prisma.segment.findMany({
       where: {
         flagEnvironmentEnvironmentId: envId,
         flagEnvironmentFlagId: flagId,
@@ -15,7 +15,48 @@ export class SegmentsService {
         rule: true,
       },
     });
+  }
 
-    return x;
+  addSegmentToFlagEnv(envId: string, flagId: string, name: string) {
+    return this.prisma.segment.create({
+      data: {
+        name,
+        flagEnvironment: {
+          connect: {
+            flagId_environmentId: {
+              environmentId: envId,
+              flagId: flagId,
+            },
+          },
+        },
+      },
+    });
+  }
+
+  getSegmentFlagEnv(segmendId: string) {
+    return this.prisma.segment.findFirst({
+      where: {
+        uuid: segmendId,
+      },
+      include: {
+        flagEnvironment: {
+          include: {
+            environment: true,
+            flag: true,
+            strategies: {
+              include: {
+                rule: true,
+              },
+            },
+            variants: true,
+            eligibilities: {
+              include: {
+                rule: true,
+              },
+            },
+          },
+        },
+      },
+    });
   }
 }
