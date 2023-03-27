@@ -1726,7 +1726,7 @@ describe('FlagsController (e2e)', () => {
         });
     });
 
-    it.only('gives the segments information when the user is authenticated and authorized', async () => {
+    it('gives the segments information when the user is authenticated and authorized', async () => {
       const access_token = await authenticate(app);
 
       const response = await request(app.getHttpServer())

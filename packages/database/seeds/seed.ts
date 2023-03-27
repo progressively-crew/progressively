@@ -213,7 +213,6 @@ export const seedDb = async () => {
         },
       },
     });
-    console.log("kfzaofjza");
 
     await prismaClient.rolloutStrategy.create({
       data: {

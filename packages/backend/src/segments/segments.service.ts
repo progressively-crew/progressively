@@ -5,8 +5,8 @@ import { PrismaService } from '../database/prisma.service';
 export class SegmentsService {
   constructor(private prisma: PrismaService) {}
 
-  listSegments(envId: string, flagId: string) {
-    return this.prisma.segment.findMany({
+  async listSegments(envId: string, flagId: string) {
+    const x = await this.prisma.segment.findMany({
       where: {
         flagEnvironmentEnvironmentId: envId,
         flagEnvironmentFlagId: flagId,
@@ -15,5 +15,7 @@ export class SegmentsService {
         rule: true,
       },
     });
+
+    return x;
   }
 }
