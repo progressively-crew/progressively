@@ -94,9 +94,17 @@ export class StrategyService {
           include: {
             environment: true,
             flag: true,
-            strategies: true,
+            strategies: {
+              include: {
+                rule: true,
+              },
+            },
             variants: true,
-            eligibilities: true,
+            eligibilities: {
+              include: {
+                rule: true,
+              },
+            },
           },
         },
       },
@@ -133,9 +141,17 @@ export class StrategyService {
           include: {
             environment: true,
             flag: true,
-            strategies: true,
+            strategies: {
+              include: {
+                rule: true,
+              },
+            },
             variants: true,
-            eligibilities: true,
+            eligibilities: {
+              include: {
+                rule: true,
+              },
+            },
           },
         },
       },
@@ -153,9 +169,17 @@ export class StrategyService {
           include: {
             environment: true,
             flag: true,
-            strategies: true,
+            strategies: {
+              include: {
+                rule: true,
+              },
+            },
             variants: true,
-            eligibilities: true,
+            eligibilities: {
+              include: {
+                rule: true,
+              },
+            },
           },
         },
       },

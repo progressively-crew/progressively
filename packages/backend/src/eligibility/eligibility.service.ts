@@ -51,9 +51,17 @@ export class EligibilityService {
           include: {
             environment: true,
             flag: true,
-            strategies: true,
+            strategies: {
+              include: {
+                rule: true,
+              },
+            },
             variants: true,
-            eligibilities: true,
+            eligibilities: {
+              include: {
+                rule: true,
+              },
+            },
           },
         },
       },
@@ -80,9 +88,17 @@ export class EligibilityService {
           include: {
             environment: true,
             flag: true,
-            strategies: true,
+            strategies: {
+              include: {
+                rule: true,
+              },
+            },
             variants: true,
-            eligibilities: true,
+            eligibilities: {
+              include: {
+                rule: true,
+              },
+            },
           },
         },
       },
@@ -140,9 +156,17 @@ export class EligibilityService {
           include: {
             environment: true,
             flag: true,
-            strategies: true,
+            strategies: {
+              include: {
+                rule: true,
+              },
+            },
             variants: true,
-            eligibilities: true,
+            eligibilities: {
+              include: {
+                rule: true,
+              },
+            },
           },
         },
       },
