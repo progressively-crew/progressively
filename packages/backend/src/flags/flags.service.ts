@@ -313,6 +313,11 @@ export class FlagsService {
           uuid: flagId,
         },
       }),
+      this.prisma.segment.deleteMany({
+        where: {
+          uuid: flagId,
+        },
+      }),
     ];
 
     const [, , , , , flagRemoved] = await this.prisma.$transaction(
