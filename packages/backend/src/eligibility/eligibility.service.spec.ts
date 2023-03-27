@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
-import { ComparatorEnum } from '../shared/utils/comparators/types';
+import { ComparatorEnum } from '../rule/comparators/types';
 import { PrismaService } from '../database/prisma.service';
 import { FlagStatus } from '../flags/flags.status';
 import { PopulatedFlagEnv } from '../flags/types';
@@ -31,9 +31,11 @@ describe('EligibilityService', () => {
 
   beforeEach(() => {
     eligibility = {
-      fieldComparator: ComparatorEnum.Contains,
-      fieldName: 'email',
-      fieldValue: '@gmail.com',
+      rule: {
+        fieldComparator: ComparatorEnum.Contains,
+        fieldName: 'email',
+        fieldValue: '@gmail.com',
+      },
       flagEnvironmentEnvironmentId: '1',
       flagEnvironmentFlagId: '1',
       uuid: '123',
