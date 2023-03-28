@@ -222,5 +222,22 @@ export const ActivityDescription = ({
     );
   }
 
+  if (type === "create-segment") {
+    return (
+      <p>
+        <strong>The segment {data.name}</strong> has been created:{" "}
+        <Link to={`../segments`}>{data.name}</Link>
+      </p>
+    );
+  }
+
+  if (type === "delete-segment") {
+    return (
+      <p>
+        <strong>The segment {data.name}</strong> has been deleted.
+      </p>
+    );
+  }
+
   return <span>Woops, the type {type} is not supported yet.</span>;
 };
