@@ -202,6 +202,15 @@ export class ProjectsService {
           },
         },
       }),
+      this.prisma.segment.deleteMany({
+        where: {
+          flagEnvironment: {
+            environment: {
+              projectId,
+            },
+          },
+        },
+      }),
       this.prisma.flagEnvironment.deleteMany({
         where: {
           environment: {
