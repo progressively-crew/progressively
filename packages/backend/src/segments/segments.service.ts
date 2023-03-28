@@ -61,6 +61,17 @@ export class SegmentsService {
     });
   }
 
+  getSegment(segmentId: string) {
+    return this.prisma.segment.findFirst({
+      where: {
+        uuid: segmentId,
+      },
+      include: {
+        rule: true,
+      },
+    });
+  }
+
   deleteSegment(segmentId: string) {
     return this.prisma.segment.delete({
       where: {

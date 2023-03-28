@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Param,
+  Get,
   Put,
   UseGuards,
   UsePipes,
@@ -21,6 +22,13 @@ export class SegmentsController {
     private readonly activityLogService: ActivityLogService,
   ) {}
 
+  @Get(':segmentId')
+  @UseGuards(HasSegmentAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  getStrategy(@Param('segmentId') segmentId: string) {
+    return this.segmentService.getSegment(segmentId);
+  }
+
   @Put(':segmentId')
   @UseGuards(HasSegmentAccessGuard)
   @UseGuards(JwtAuthGuard)
@@ -31,7 +39,6 @@ export class SegmentsController {
     @Body() strategyDto: SegmentCreationDTO,
   ) {
     try {
-      console.log('broooooooo', segmentId);
       const updatedEligibility = await this.segmentService.updateSegment(
         segmentId,
         strategyDto,
