@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
+import { SegmentCreationDTO } from './types';
 
 @Injectable()
 export class SegmentsService {
@@ -64,6 +65,48 @@ export class SegmentsService {
     return this.prisma.segment.delete({
       where: {
         uuid: segmentId,
+      },
+    });
+  }
+
+  async hasPermissionOnSegment(
+    segmentId: string,
+    userId: string,
+    roles?: Array<string>,
+  ) {
+    const flagOfProject = await this.prisma.userProject.findFirst({
+      where: {
+        userId,
+        project: {
+          environments: {
+            some: {
+              flagEnvironment: {
+                some: { Segment: { some: { uuid: segmentId } } },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!flagOfProject) {
+      return false;
+    }
+
+    if (!roles || roles.length === 0) {
+      return true;
+    }
+
+    return roles.includes(flagOfProject.role);
+  }
+
+  updateSegment(uuid: string, segment: SegmentCreationDTO) {
+    return this.prisma.segment.update({
+      where: {
+        uuid,
+      },
+      data: {
+        name: segment.name,
       },
     });
   }
