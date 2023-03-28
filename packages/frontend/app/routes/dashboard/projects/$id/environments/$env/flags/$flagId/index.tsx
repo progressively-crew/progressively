@@ -217,7 +217,24 @@ export default function FlagById() {
       <PageTitle value="Audience" />
 
       <Section id="rollout-target">
-        <Card>
+        <Card
+          footer={
+            hasEligibility && (
+              <div className="flex flex-row gap-6">
+                <AddCiteriaButton variant="simple" />
+
+                <SubmitButton
+                  form="form-update-eligibility"
+                  variant="secondary"
+                  isLoading={formTransition.isUpdatingEligibility}
+                  loadingText="Updating the eligibility rules..."
+                >
+                  Update
+                </SubmitButton>
+              </div>
+            )
+          }
+        >
           <CardContent>
             <SectionHeader
               title="Using percentage range"
@@ -340,21 +357,6 @@ export default function FlagById() {
               envId={environment.uuid}
               flagId={currentFlag.uuid}
             />
-
-            {hasEligibility && (
-              <div className="flex flex-row pt-6 gap-6">
-                <AddCiteriaButton variant="simple" />
-
-                <SubmitButton
-                  form="form-update-eligibility"
-                  variant="secondary"
-                  isLoading={formTransition.isUpdatingEligibility}
-                  loadingText="Updating the eligibility rules..."
-                >
-                  Update
-                </SubmitButton>
-              </div>
-            )}
 
             {!hasEligibility && <AddCiteriaButton variant="full" />}
           </CardContent>

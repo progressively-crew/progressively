@@ -10,6 +10,7 @@ import { PageTitle } from "~/components/PageTitle";
 import { Section, SectionHeader } from "~/components/Section";
 import { Typography } from "~/components/Typography";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
+import { AddCiteriaButton } from "~/modules/eligibility/components/AddCiteriaButton";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
@@ -17,6 +18,7 @@ import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
+import { RuleFormField } from "~/modules/rules/components/RuleFormField";
 import { editSegment } from "~/modules/segments/services/editSegment";
 import { getSegment } from "~/modules/segments/services/getSegment";
 import { Segment } from "~/modules/segments/types";
@@ -124,23 +126,61 @@ export default function Segments() {
       />
 
       <Section id="general-informations">
-        <Card>
+        <Form method="post">
+          <Card
+            footer={
+              <SubmitButton variant="secondary">Save the segment</SubmitButton>
+            }
+          >
+            <CardContent>
+              <SectionHeader
+                title={"General information"}
+                description={
+                  <Typography>General information about the segment</Typography>
+                }
+              />
+
+              <div className="pt-4">
+                <TextInput
+                  name={"name"}
+                  label={"Name of the segment"}
+                  defaultValue={segment.name}
+                />
+              </div>
+            </CardContent>
+          </Card>
+        </Form>
+      </Section>
+
+      <Section id="rules">
+        <Card
+          footer={
+            <div className="flex flex-row gap-6">
+              <AddCiteriaButton variant="simple" />
+
+              <SubmitButton loadingText="Updating the eligibility rules...">
+                Save the rules
+              </SubmitButton>
+            </div>
+          }
+        >
           <CardContent>
             <SectionHeader
-              title={"General information"}
+              title={"Rules"}
               description={
-                <Typography>General information about the segment</Typography>
+                <Typography>
+                  Rules to validate to be part of the segment.
+                </Typography>
               }
             />
 
-            <Form method="post">
-              <FormGroup>
-                <TextInput name={"name"} label={"Name of the segment"} />
-                <div>
-                  <SubmitButton>Save the segment</SubmitButton>
-                </div>
-              </FormGroup>
-            </Form>
+            <div className="pt-4">
+              <RuleFormField
+                initialFieldName={""}
+                initialFieldComparator={""}
+                initialFieldValue={""}
+              />
+            </div>
           </CardContent>
         </Card>
       </Section>
