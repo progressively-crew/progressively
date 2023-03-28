@@ -17,7 +17,8 @@ export type ActivityType =
   | "delete-additional-audience"
   | "delete-segment"
   | "edit-eligibility"
-  | "edit-additional-audience";
+  | "edit-additional-audience"
+  | "edit-segment-name";
 
 export type ActivityEntity = "flag";
 
