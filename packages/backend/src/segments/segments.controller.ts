@@ -38,25 +38,20 @@ export class SegmentsController {
     @Param('segmentId') segmentId: string,
     @Body() strategyDto: SegmentCreationDTO,
   ) {
-    try {
-      const updatedEligibility = await this.segmentService.updateSegment(
-        segmentId,
-        strategyDto,
-      );
+    const updatedEligibility = await this.segmentService.updateSegment(
+      segmentId,
+      strategyDto,
+    );
 
-      await this.activityLogService.register({
-        userId,
-        flagId: updatedEligibility.flagEnvironmentFlagId,
-        envId: updatedEligibility.flagEnvironmentEnvironmentId,
-        concernedEntity: 'flag',
-        type: 'edit-segment-name',
-        data: JSON.stringify(updatedEligibility),
-      });
+    await this.activityLogService.register({
+      userId,
+      flagId: updatedEligibility.flagEnvironmentFlagId,
+      envId: updatedEligibility.flagEnvironmentEnvironmentId,
+      concernedEntity: 'flag',
+      type: 'edit-segment-name',
+      data: JSON.stringify(updatedEligibility),
+    });
 
-      return updatedEligibility;
-    } catch (err: any) {
-      console.log('loool', err);
-      return {};
-    }
+    return updatedEligibility;
   }
 }

@@ -1735,8 +1735,6 @@ describe('FlagsController (e2e)', () => {
 
       const newSegment = response.body[0];
 
-      console.log('lol', response.body);
-
       expect(response.status).toBe(200);
       expect(newSegment).toMatchObject({
         flagEnvironmentEnvironmentId: '1',
