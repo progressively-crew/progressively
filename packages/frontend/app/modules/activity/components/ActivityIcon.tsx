@@ -2,6 +2,7 @@
 import { AiOutlineClockCircle, AiOutlineLink } from "react-icons/ai";
 import { HiOutlineUserGroup } from "react-icons/hi";
 import { MdGroupWork } from "react-icons/md";
+import { GrGroup } from "react-icons/gr";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { MetricIcon } from "~/components/Icons/MetricIcon";
 import { VariantIcon } from "~/components/Icons/VariantIcon";
@@ -78,6 +79,14 @@ export const ActivityIcon = ({ type }: ActivityIconProps) => {
 
   if (type === "create-variant") {
     return <VariantIcon />;
+  }
+
+  if (type === "create-segment") {
+    return <GrGroup />;
+  }
+
+  if (type === "delete-segment") {
+    return <GrGroup />;
   }
 
   return <span>Woops, the type {type} is not supported yet.</span>;
