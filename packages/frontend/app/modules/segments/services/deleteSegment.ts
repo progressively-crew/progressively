@@ -1,13 +1,13 @@
 import { Constants } from "~/constants";
 
-export const deleteVariant = (
+export const deleteSegment = (
   envId: string,
   flagId: string,
-  variantId: string,
+  segmentId: string,
   accessToken: string
 ) =>
   fetch(
-    `${Constants.BackendUrl}/environments/${envId}/flags/${flagId}/variants/${variantId}`,
+    `${Constants.BackendUrl}/environments/${envId}/flags/${flagId}/segments/${segmentId}`,
     {
       method: "DELETE",
       headers: {
@@ -17,7 +17,7 @@ export const deleteVariant = (
     }
   ).then((res) => {
     if (!res.ok) {
-      throw new Error("You are not authorized to remove this variant.");
+      throw new Error("You are not authorized to remove this segment.");
     }
     return res.json();
   });
