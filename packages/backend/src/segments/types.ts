@@ -5,6 +5,5 @@ export interface SegmentCreationDTO {
 }
 
 export const SegmentSchema = Joi.object({
-  name: Joi.string()
-  .required(),
+  name: Joi.string().required(),
 });
