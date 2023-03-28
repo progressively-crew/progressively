@@ -10,6 +10,8 @@ import { WebhooksService } from '../webhooks/webhooks.service';
 import { EligibilityService } from '../eligibility/eligibility.service';
 import { ActivityLogModule } from '../activity-log/activity-log.module';
 import { ActivityLogService } from '../activity-log/activity-log.service';
+import { SegmentsModule } from '../segments/segments.module';
+import { SegmentsService } from '../segments/segments.service';
 
 @Module({
   imports: [
@@ -17,6 +19,7 @@ import { ActivityLogService } from '../activity-log/activity-log.service';
     WebsocketModule,
     DatabaseModule,
     ActivityLogModule,
+    SegmentsModule,
   ],
   providers: [
     FlagsService,
@@ -25,6 +28,7 @@ import { ActivityLogService } from '../activity-log/activity-log.service';
     WebhooksService,
     EligibilityService,
     ActivityLogService,
+    SegmentsService,
   ],
   controllers: [FlagsController],
   exports: [FlagsService],

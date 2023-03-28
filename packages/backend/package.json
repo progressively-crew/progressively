@@ -31,7 +31,7 @@
     "@nestjs/throttler": "^3.1.0",
     "@nestjs/websockets": "^9.2.1",
     "@okta/jwt-verifier": "^2.6.0",
-    "@progressively/database": "workspace:^1.0.0",
+    "@progressively/database": "workspace:*",
     "@types/ws": "^8.5.4",
     "bcrypt": "^5.1.0",
     "camelcase": "6.3.0",

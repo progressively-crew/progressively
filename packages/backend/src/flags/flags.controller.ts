@@ -40,10 +40,11 @@ import { Webhook, WebhookCreationDTO, WebhookSchema } from '../webhooks/types';
 import { WebhooksService } from '../webhooks/webhooks.service';
 import { post, WebhooksEventsToFlagStatus } from '../webhooks/utils';
 import { EligibilityService } from '../eligibility/eligibility.service';
-
 import { ActivityLogService } from '../activity-log/activity-log.service';
 import { UserId } from '../users/users.decorator';
 import { ComparatorEnum } from '../rule/comparators/types';
+import { SegmentsService } from '../segments/segments.service';
+import { SegmentCreationDTO, SegmentSchema } from '../segments/types';
 
 @ApiBearerAuth()
 @Controller()
@@ -56,6 +57,7 @@ export class FlagsController {
     private readonly eligibilityService: EligibilityService,
     private readonly wsGateway: WebsocketGateway,
     private readonly activityLogService: ActivityLogService,
+    private readonly segmentService: SegmentsService,
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
   ) {}
 
@@ -181,6 +183,29 @@ export class FlagsController {
     return variantDeleted;
   }
 
+  @Delete('environments/:envId/flags/:flagId/segments/:segmentId')
+  @UseGuards(HasFlagEnvAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  async deleteSegment(
+    @UserId() userId: string,
+    @Param('envId') envId: string,
+    @Param('flagId') flagId: string,
+    @Param('segmentId') segmentId: string,
+  ) {
+    const segmentDeleted = await this.segmentService.deleteSegment(segmentId);
+
+    await this.activityLogService.register({
+      userId,
+      flagId: flagId,
+      envId: envId,
+      concernedEntity: 'flag',
+      type: 'delete-segment',
+      data: JSON.stringify(segmentDeleted),
+    });
+
+    return segmentDeleted;
+  }
+
   @Delete('environments/:envId/flags/:flagId/metrics/:metricId')
   @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
@@ -303,6 +328,41 @@ export class FlagsController {
     });
 
     return strategy;
+  }
+
+  @Post('environments/:envId/flags/:flagId/segments')
+  @UseGuards(HasFlagEnvAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(new ValidationPipe(SegmentSchema))
+  async addSegmentToFlag(
+    @UserId() userId: string,
+    @Param('envId') envId: string,
+    @Param('flagId') flagId: string,
+    @Body() segmentDto: SegmentCreationDTO,
+  ) {
+    const segment = await this.segmentService.addSegmentToFlagEnv(
+      envId,
+      flagId,
+      segmentDto.name,
+    );
+
+    const { flagEnvironment: flagEnv } =
+      await this.segmentService.getSegmentFlagEnv(segment.uuid);
+
+    if (flagEnv.status === FlagStatus.ACTIVATED) {
+      this.wsGateway.notifyChanges(flagEnv.environment.clientKey, flagEnv);
+    }
+
+    await this.activityLogService.register({
+      userId,
+      flagId: flagId,
+      envId: envId,
+      data: JSON.stringify(segment),
+      concernedEntity: 'flag',
+      type: 'create-segment',
+    });
+
+    return segment;
   }
 
   @Post('environments/:envId/flags/:flagId/eligibilities')
@@ -513,6 +573,13 @@ export class FlagsController {
     @Param('flagId') flagId: string,
   ) {
     return this.strategyService.listStrategies(envId, flagId);
+  }
+
+  @Get('environments/:envId/flags/:flagId/segments')
+  @UseGuards(HasFlagEnvAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  getSegments(@Param('envId') envId: string, @Param('flagId') flagId: string) {
+    return this.segmentService.listSegments(envId, flagId);
   }
 
   @Get('environments/:envId/flags/:flagId/eligibilities')

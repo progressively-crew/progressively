@@ -1,0 +1,143 @@
+import { ActionFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
+import { CreateButton } from "~/components/Buttons/CreateButton";
+import { Card, CardContent } from "~/components/Card";
+import { EmptyState } from "~/components/EmptyState";
+import { PageTitle } from "~/components/PageTitle";
+import { Typography } from "~/components/Typography";
+import { DashboardLayout } from "~/layouts/DashboardLayout";
+import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
+import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
+import { FlagMenu } from "~/modules/flags/components/FlagMenu";
+import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
+import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
+import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
+import { useProject } from "~/modules/projects/contexts/useProject";
+import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
+import { SegmentList } from "~/modules/segments/components/SegmentList";
+import { getSegments } from "~/modules/segments/services/getSegments";
+import { Segment } from "~/modules/segments/types";
+import { useUser } from "~/modules/user/contexts/useUser";
+import { getSession } from "~/sessions";
+
+export const meta: MetaFunction = ({ parentsData, params }) => {
+  const projectName = getProjectMetaTitle(parentsData);
+  const envName = getEnvMetaTitle(parentsData, params.env);
+  const flagName = getFlagMetaTitle(parentsData);
+
+  return {
+    title: `Progressively | ${projectName} | ${envName} | Flags | ${flagName} | Segments`,
+  };
+};
+
+interface LoaderData {
+  segments: Array<Segment>;
+}
+
+export const loader: LoaderFunction = async ({
+  request,
+  params,
+}): Promise<LoaderData> => {
+  const session = await getSession(request.headers.get("Cookie"));
+  const authCookie = session.get("auth-cookie");
+
+  const segments: Array<Segment> = await getSegments(
+    params.env!,
+    params.flagId!,
+    authCookie
+  );
+
+  return {
+    segments,
+  };
+};
+
+type ActionDataType = null | {
+  errors?: { [key: string]: string | undefined };
+};
+
+export const action: ActionFunction = async ({
+  request,
+  params,
+}): Promise<ActionDataType> => {
+  const session = await getSession(request.headers.get("Cookie"));
+  const authCookie = session.get("auth-cookie");
+  const formData = await request.formData();
+  const type = formData.get("_type");
+
+  if (type === "toggle-flag") {
+    return toggleFlagAction(formData, params, authCookie);
+  }
+
+  return null;
+};
+
+export default function Segments() {
+  const { user } = useUser();
+  const { project } = useProject();
+  const { environment } = useEnvironment();
+  const { flagEnv } = useFlagEnv();
+  const { segments } = useLoaderData<LoaderData>();
+  const currentFlag = flagEnv.flag;
+
+  const hasSegments = segments.length > 0;
+
+  return (
+    <DashboardLayout
+      user={user}
+      subNav={
+        <FlagMenu
+          projectId={project.uuid}
+          envId={environment.uuid}
+          flagEnv={flagEnv}
+        />
+      }
+    >
+      <PageTitle
+        value="Segments"
+        description={
+          <Typography>
+            The segments available for an easier targeting.
+          </Typography>
+        }
+        action={
+          hasSegments && (
+            <CreateButton
+              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/segments/create`}
+            >
+              Create a segment
+            </CreateButton>
+          )
+        }
+      />
+
+      {!hasSegments && (
+        <Card>
+          <CardContent>
+            <EmptyState
+              titleAs="h2"
+              title="No segments found"
+              description={"There are no segments for this flag."}
+              action={
+                <CreateButton
+                  to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/segments/create`}
+                >
+                  Create a segment
+                </CreateButton>
+              }
+            />
+          </CardContent>
+        </Card>
+      )}
+
+      {hasSegments && (
+        <SegmentList
+          segments={segments}
+          projectId={project.uuid}
+          envId={environment.uuid}
+          flagId={currentFlag.uuid}
+        />
+      )}
+    </DashboardLayout>
+  );
+}

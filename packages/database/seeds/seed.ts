@@ -196,6 +196,24 @@ export const seedDb = async () => {
     });
     // End of multi variate setup
 
+    await prismaClient.segment.create({
+      data: {
+        name: "By email address",
+        uuid: "1",
+        flagEnvironmentEnvironmentId: production.uuid,
+        flagEnvironmentFlagId: homePageFlag.uuid,
+        rule: {
+          create: [
+            {
+              fieldName: "email",
+              fieldComparator: "eq",
+              fieldValue: "gmail.com",
+            },
+          ],
+        },
+      },
+    });
+
     await prismaClient.rolloutStrategy.create({
       data: {
         uuid: "1",
