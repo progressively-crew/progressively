@@ -1,5 +1,6 @@
 import { ActionFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData, useSearchParams } from "@remix-run/react";
+import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { Card, CardContent } from "~/components/Card";
 import { EmptyState } from "~/components/EmptyState";
@@ -78,7 +79,11 @@ export default function Segments() {
   const { environment } = useEnvironment();
   const { flagEnv } = useFlagEnv();
   const { segments } = useLoaderData<LoaderData>();
+  const [searchParams] = useSearchParams();
   const currentFlag = flagEnv.flag;
+
+  const isSegmentRemoved = searchParams.get("segmentRemoved") || undefined;
+  const isSegmentAdded = searchParams.get("newSegment") || undefined;
 
   const hasSegments = segments.length > 0;
 
@@ -91,6 +96,17 @@ export default function Segments() {
           envId={environment.uuid}
           flagEnv={flagEnv}
         />
+      }
+      status={
+        isSegmentRemoved ? (
+          <SuccessBox id="segment-removed">
+            The segment has been successfully removed.
+          </SuccessBox>
+        ) : isSegmentAdded ? (
+          <SuccessBox id="segment-added">
+            The segment has been successfully added.
+          </SuccessBox>
+        ) : null
       }
     >
       <PageTitle
