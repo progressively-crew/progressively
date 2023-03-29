@@ -4,6 +4,7 @@ import {
   Param,
   Get,
   Put,
+  Post,
   UseGuards,
   UsePipes,
 } from '@nestjs/common';
@@ -14,12 +15,16 @@ import { UserId } from '../users/users.decorator';
 import { SegmentCreationDTO, SegmentSchema } from './types';
 import { SegmentsService } from './segments.service';
 import { ActivityLogService } from '../activity-log/activity-log.service';
+import { RuleSchema, RuleType } from '../rule/types';
+import { WebsocketGateway } from '../websocket/websocket.gateway';
+import { FlagStatus } from '../flags/flags.status';
 
 @Controller('segments')
 export class SegmentsController {
   constructor(
     private readonly segmentService: SegmentsService,
     private readonly activityLogService: ActivityLogService,
+    private readonly wsGateway: WebsocketGateway,
   ) {}
 
   @Get(':segmentId')
@@ -53,5 +58,33 @@ export class SegmentsController {
     });
 
     return updatedEligibility;
+  }
+
+  @Post(':segmentId/rules')
+  @UseGuards(HasSegmentAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  async addRuleToSegment(
+    @UserId() userId: string,
+    @Param('segmentId') segmentId: string,
+  ) {
+    const rule = await this.segmentService.createRuleForSegment(segmentId);
+
+    const { flagEnvironment: flagEnv } =
+      await this.segmentService.getSegmentFlagEnv(rule.segmentUuid);
+
+    if (flagEnv.status === FlagStatus.ACTIVATED) {
+      this.wsGateway.notifyChanges(flagEnv.environment.clientKey, flagEnv);
+    }
+
+    await this.activityLogService.register({
+      userId,
+      flagId: flagEnv.flagId,
+      envId: flagEnv.environmentId,
+      concernedEntity: 'flag',
+      type: 'create-segment-rule',
+      data: JSON.stringify(rule),
+    });
+
+    return rule;
   }
 }

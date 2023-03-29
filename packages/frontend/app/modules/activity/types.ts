@@ -9,6 +9,7 @@ export type ActivityType =
   | "create-metric"
   | "create-variant"
   | "create-segment"
+  | "create-segment-rule"
   | "delete-webhook"
   | "delete-variant"
   | "delete-metric"

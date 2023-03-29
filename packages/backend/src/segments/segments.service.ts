@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
 import { SegmentCreationDTO } from './types';
+import { ComparatorEnum } from '../rule/comparators/types';
 
 @Injectable()
 export class SegmentsService {
@@ -27,33 +28,6 @@ export class SegmentsService {
             flagId_environmentId: {
               environmentId: envId,
               flagId: flagId,
-            },
-          },
-        },
-      },
-    });
-  }
-
-  getSegmentFlagEnv(segmendId: string) {
-    return this.prisma.segment.findFirst({
-      where: {
-        uuid: segmendId,
-      },
-      include: {
-        flagEnvironment: {
-          include: {
-            environment: true,
-            flag: true,
-            strategies: {
-              include: {
-                rule: true,
-              },
-            },
-            variants: true,
-            eligibilities: {
-              include: {
-                rule: true,
-              },
             },
           },
         },
@@ -118,6 +92,49 @@ export class SegmentsService {
       },
       data: {
         name: segment.name,
+      },
+    });
+  }
+
+  createRuleForSegment(segmentId: string) {
+    return this.prisma.rule.create({
+      data: {
+        segmentUuid: segmentId,
+        fieldComparator: ComparatorEnum.Equals,
+        fieldName: '',
+        fieldValue: '',
+      },
+    });
+  }
+
+  getSegmentFlagEnv(segmentId: string) {
+    return this.prisma.segment.findFirst({
+      where: {
+        uuid: segmentId,
+      },
+      include: {
+        flagEnvironment: {
+          include: {
+            environment: true,
+            flag: true,
+            strategies: {
+              include: {
+                rule: true,
+              },
+            },
+            Segment: {
+              include: {
+                rule: true,
+              },
+            },
+            variants: true,
+            eligibilities: {
+              include: {
+                rule: true,
+              },
+            },
+          },
+        },
       },
     });
   }

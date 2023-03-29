@@ -1,25 +1,32 @@
 import { ActionFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
-import { Form, useActionData, useLoaderData } from "@remix-run/react";
+import {
+  Form,
+  useActionData,
+  useLoaderData,
+  useNavigation,
+} from "@remix-run/react";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { Card, CardContent } from "~/components/Card";
-import { FormGroup } from "~/components/Fields/FormGroup";
 import { TextInput } from "~/components/Fields/TextInput";
 import { PageTitle } from "~/components/PageTitle";
 import { Section, SectionHeader } from "~/components/Section";
 import { Typography } from "~/components/Typography";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { AddCiteriaButton } from "~/modules/eligibility/components/AddCiteriaButton";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
+import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { RuleFormField } from "~/modules/rules/components/RuleFormField";
-import { editSegment } from "~/modules/segments/services/editSegment";
+import { RuleType } from "~/modules/rules/types";
+import { createSegmentRuleAction } from "~/modules/segments/form-actions/createSegmentRuleAction";
+import { editSegmentAction } from "~/modules/segments/form-actions/editSegmentAction";
+import { createSegmentRule } from "~/modules/segments/services/createSegmentRule";
 import { getSegment } from "~/modules/segments/services/getSegment";
 import { Segment } from "~/modules/segments/types";
 import { useUser } from "~/modules/user/contexts/useUser";
@@ -38,6 +45,7 @@ export const meta: MetaFunction = ({ parentsData, params, data }) => {
 
 export interface ActionData {
   segment?: Segment;
+  rule?: RuleType;
   errors?: {
     invalidField?: string;
   };
@@ -51,25 +59,22 @@ export const action: ActionFunction = async ({
   const authCookie = session.get("auth-cookie");
   const segmentId = params.segmentId!;
   const formData = await request.formData();
-  const name = formData.get("name");
 
-  if (!name) {
-    return {
-      errors: {
-        invalidField: "Name is a mandatory field",
-      },
-    };
+  const type = formData.get("_type");
+
+  if (type === "toggle-flag") {
+    return toggleFlagAction(formData, params, authCookie);
   }
 
-  const updatedSegment = await editSegment(
-    name.toString(),
-    segmentId,
-    authCookie
-  );
+  if (type === "edit-segment") {
+    return editSegmentAction(formData, segmentId, authCookie);
+  }
 
-  return {
-    segment: updatedSegment,
-  };
+  if (type === "create-segment-rule") {
+    return createSegmentRuleAction(segmentId, authCookie);
+  }
+
+  return {};
 };
 
 interface LoaderData {
@@ -97,6 +102,9 @@ export default function Segments() {
   const { flagEnv } = useFlagEnv();
   const { segment } = useLoaderData<LoaderData>();
   const actionData = useActionData<ActionData>();
+  const navigation = useNavigation();
+  const type = navigation?.formData?.get("_type");
+  const isCreatingRule = type === "create-segment-rule";
 
   return (
     <DashboardLayout
@@ -127,6 +135,7 @@ export default function Segments() {
 
       <Section id="general-informations">
         <Form method="post">
+          <input type="hidden" name="_type" value="edit-segment" />
           <Card
             footer={
               <SubmitButton variant="secondary">Save the segment</SubmitButton>
@@ -156,9 +165,18 @@ export default function Segments() {
         <Card
           footer={
             <div className="flex flex-row gap-6">
-              <AddCiteriaButton variant="simple" />
+              <Form method="post">
+                <input type="hidden" name="_type" value="create-segment-rule" />
+                <SubmitButton
+                  variant="secondary"
+                  isLoading={isCreatingRule}
+                  loadingText="Creating a new segment rule..."
+                >
+                  Add a new rule
+                </SubmitButton>
+              </Form>
 
-              <SubmitButton loadingText="Updating the eligibility rules...">
+              <SubmitButton loadingText="Updating the segment rules...">
                 Save the rules
               </SubmitButton>
             </div>
