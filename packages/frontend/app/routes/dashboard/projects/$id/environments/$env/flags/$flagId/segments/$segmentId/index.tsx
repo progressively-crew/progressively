@@ -22,11 +22,10 @@ import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction"
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
-import { RuleFormField } from "~/modules/rules/components/RuleFormField";
 import { RuleType } from "~/modules/rules/types";
+import { SegmentRulesForm } from "~/modules/segments/components/SegmentRulesForm";
 import { createSegmentRuleAction } from "~/modules/segments/form-actions/createSegmentRuleAction";
 import { editSegmentAction } from "~/modules/segments/form-actions/editSegmentAction";
-import { createSegmentRule } from "~/modules/segments/services/createSegmentRule";
 import { getSegment } from "~/modules/segments/services/getSegment";
 import { Segment } from "~/modules/segments/types";
 import { useUser } from "~/modules/user/contexts/useUser";
@@ -193,11 +192,7 @@ export default function Segments() {
             />
 
             <div className="pt-4">
-              <RuleFormField
-                initialFieldName={""}
-                initialFieldComparator={""}
-                initialFieldValue={""}
-              />
+              <SegmentRulesForm rules={segment.rule} />
             </div>
           </CardContent>
         </Card>
