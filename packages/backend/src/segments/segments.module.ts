@@ -4,9 +4,10 @@ import { DatabaseModule } from '../database/database.module';
 import { ActivityLogModule } from '../activity-log/activity-log.module';
 import { SegmentsController } from './segments.controller';
 import { ActivityLogService } from '../activity-log/activity-log.service';
+import { WebsocketModule } from '../websocket/websocket.module';
 
 @Module({
-  imports: [DatabaseModule, ActivityLogModule],
+  imports: [WebsocketModule, DatabaseModule, ActivityLogModule],
   providers: [SegmentsService, ActivityLogService],
   controllers: [SegmentsController],
 })

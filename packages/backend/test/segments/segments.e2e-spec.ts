@@ -166,4 +166,66 @@ describe('Segment (e2e)', () => {
       });
     });
   });
+
+  describe('/segments/:segmentsId/rules (POST)', () => {
+    it('gives a 401 when the user is not authenticated', () =>
+      verifyAuthGuard(app, '/segments/1/rules', 'post'));
+
+    it('gives a 403 when trying to access a valid project but an invalid env', async () => {
+      const access_token = await authenticate(app);
+
+      const validStrategy: any = {};
+
+      return request(app.getHttpServer())
+        .post('/segments/4/rules')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send(validStrategy)
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('gives a 403 when the user requests a forbidden project', async () => {
+      const access_token = await authenticate(
+        app,
+        'jane.doe@gmail.com',
+        'password',
+      );
+
+      return request(app.getHttpServer())
+        .post('/segments/1/rules')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send({
+          fieldName: 'email',
+          fieldComparator: 'eq',
+          fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
+        })
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('creates a default strategy', async () => {
+      const access_token = await authenticate(app);
+
+      const response = await request(app.getHttpServer())
+        .post('/segments/1/rules')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(201);
+
+      expect(response.body.uuid).toBeDefined();
+      expect(response.body).toMatchObject({
+        fieldComparator: 'eq',
+        fieldName: '',
+        fieldValue: '',
+        segmentUuid: '1',
+      });
+    });
+  });
 });

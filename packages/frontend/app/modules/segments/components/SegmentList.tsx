@@ -18,12 +18,16 @@ export const SegmentList = ({
     <div className="flex flex-col gap-4">
       {segments.map((segment) => (
         <CardEntity
-          link={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/segments/${segment.uuid}`}
           key={segment.uuid}
           title={segment.name}
           menu={
             <MenuButton
               items={[
+                {
+                  label: "Edit",
+                  href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/segments/${segment.uuid}`,
+                  noInitial: true,
+                },
                 {
                   label: "Remove",
                   href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/segments/${segment.uuid}/delete`,
