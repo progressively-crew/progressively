@@ -54,7 +54,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/segments/
 
         cy.findByLabelText("Name of the segment")
           .should("be.visible")
-          .and("have.value", "");
+          .and("have.value", "By email address");
 
         cy.checkA11y();
       });
@@ -73,11 +73,11 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/segments/
             .click();
 
           cy.findByRole("heading", {
-            name: `Segments "By email address"`,
+            name: `Segments "By email addressHello world"`,
           }).should("not.exist");
 
           cy.findByRole("heading", {
-            name: `Segments "Hello world"`,
+            name: `Segments "By email addressHello world"`,
           }).should("be.visible");
 
           cy.findByText("The segment has been successfully edited.").should(
@@ -89,7 +89,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/segments/
           cy.reload();
 
           cy.findByRole("heading", {
-            name: `Segments "Hello world"`,
+            name: `Segments "By email addressHello world"`,
           }).should("be.visible");
         });
       });
