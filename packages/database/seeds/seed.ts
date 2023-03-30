@@ -205,6 +205,7 @@ export const seedDb = async () => {
         rule: {
           create: [
             {
+              uuid: "1",
               fieldName: "email",
               fieldComparator: "eq",
               fieldValue: "gmail.com",
