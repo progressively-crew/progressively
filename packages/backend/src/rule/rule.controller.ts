@@ -5,6 +5,7 @@ import {
   Put,
   UseGuards,
   UsePipes,
+  Delete,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
 import { ValidationPipe } from '../shared/pipes/ValidationPipe';
@@ -42,5 +43,23 @@ export class RuleController {
     });
 
     return updatedRule;
+  }
+
+  @Delete(':ruleId')
+  @UseGuards(HasRuleAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  async deleteRule(@UserId() userId: string, @Param('ruleId') ruleId: string) {
+    const deletedRule = await this.ruleService.deleteRule(ruleId);
+
+    await this.activityLogService.register({
+      userId,
+      flagId: deletedRule.Segment.flagEnvironmentFlagId,
+      envId: deletedRule.Segment.flagEnvironmentEnvironmentId,
+      concernedEntity: 'flag',
+      type: 'delete-rule',
+      data: JSON.stringify(deletedRule),
+    });
+
+    return deletedRule;
   }
 }
