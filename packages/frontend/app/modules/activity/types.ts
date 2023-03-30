@@ -19,7 +19,8 @@ export type ActivityType =
   | "delete-segment"
   | "edit-eligibility"
   | "edit-additional-audience"
-  | "edit-segment-name";
+  | "edit-segment-name"
+  | "edit-segment-rule";
 
 export type ActivityEntity = "flag";
 
