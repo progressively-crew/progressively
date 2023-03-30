@@ -52,4 +52,15 @@ export class RuleService {
       },
     });
   }
+
+  deleteRule(ruleId: string) {
+    return this.prisma.rule.delete({
+      where: {
+        uuid: ruleId,
+      },
+      include: {
+        Segment: true,
+      },
+    });
+  }
 }

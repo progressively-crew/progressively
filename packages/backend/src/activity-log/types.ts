@@ -17,6 +17,7 @@ export type ActivityType =
   | 'delete-eligibility'
   | 'delete-additional-audience'
   | 'delete-segment'
+  | 'delete-rule'
   | 'edit-eligibility'
   | 'edit-additional-audience'
   | 'edit-segment-name'

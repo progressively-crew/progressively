@@ -26,6 +26,65 @@ describe('Rule (e2e)', () => {
     await cleanupDb();
   });
 
+  describe.only('/rules/1 (DELETE)', () => {
+    it('gives a 401 when the user is not authenticated', () =>
+      verifyAuthGuard(app, '/rules/1', 'delete'));
+
+    it('gives a 403 when trying to access a valid project but an invalid env', async () => {
+      const access_token = await authenticate(app);
+
+      return request(app.getHttpServer())
+        .delete('/rules/3')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('gives a 403 when the user requests a forbidden project', async () => {
+      const access_token = await authenticate(
+        app,
+        'jane.doe@gmail.com',
+        'password',
+      );
+
+      return request(app.getHttpServer())
+        .delete('/rules/1')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('gives a 200 when a user of the project deletes a rule', async () => {
+      const access_token = await authenticate(app);
+
+      return request(app.getHttpServer())
+        .delete('/rules/1')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(200)
+        .expect({
+          uuid: '1',
+          fieldName: 'email',
+          fieldComparator: 'eq',
+          fieldValue: 'gmail.com',
+          segmentUuid: '1',
+          Segment: {
+            uuid: '1',
+            name: 'By email address',
+            flagEnvironmentFlagId: '1',
+            flagEnvironmentEnvironmentId: '1',
+          },
+        });
+    });
+  });
+
   describe('/rules/1 (Put)', () => {
     it('gives a 401 when the user is not authenticated', () =>
       verifyAuthGuard(app, '/rules/1', 'put'));
