@@ -22,6 +22,7 @@ import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction"
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
+import { updateRuleAction } from "~/modules/rules/form-actions/updateRuleAction";
 import { RuleType } from "~/modules/rules/types";
 import { SegmentRulesForm } from "~/modules/segments/components/SegmentRulesForm";
 import { createSegmentRuleAction } from "~/modules/segments/form-actions/createSegmentRuleAction";
@@ -48,6 +49,10 @@ export interface ActionData {
   errors?: {
     invalidField?: string;
   };
+  successRuleUpdated?: boolean;
+  ruleErrors?: {
+    ruleAudience: string;
+  };
 }
 
 export const action: ActionFunction = async ({
@@ -71,6 +76,10 @@ export const action: ActionFunction = async ({
 
   if (type === "create-segment-rule") {
     return createSegmentRuleAction(segmentId, authCookie);
+  }
+
+  if (type === "edit-segment-rules") {
+    return updateRuleAction(formData, authCookie);
   }
 
   return {};
@@ -120,8 +129,14 @@ export default function Segments() {
           <SuccessBox id="segment-edited">
             The segment has been successfully edited.
           </SuccessBox>
+        ) : actionData?.successRuleUpdated ? (
+          <SuccessBox id="segment-rule-edited">
+            The segment rules have been successfully edited.
+          </SuccessBox>
         ) : actionData?.errors ? (
           <ErrorBox list={actionData?.errors} />
+        ) : actionData?.ruleErrors ? (
+          <ErrorBox list={actionData?.ruleErrors} />
         ) : null
       }
     >
@@ -175,7 +190,10 @@ export default function Segments() {
                 </SubmitButton>
               </Form>
 
-              <SubmitButton loadingText="Updating the segment rules...">
+              <SubmitButton
+                loadingText="Updating the segment rules..."
+                form="edit-rules"
+              >
                 Save the rules
               </SubmitButton>
             </div>
@@ -192,7 +210,10 @@ export default function Segments() {
             />
 
             <div className="pt-4">
-              <SegmentRulesForm rules={segment.rule} />
+              <Form method="post" id="edit-rules">
+                <input type="hidden" name="_type" value="edit-segment-rules" />
+                <SegmentRulesForm rules={segment.rule} />
+              </Form>
             </div>
           </CardContent>
         </Card>
