@@ -4,6 +4,8 @@ import { seedDb, cleanupDb } from '@progressively/database/seed';
 import { authenticate } from '../helpers/authenticate';
 import { verifyAuthGuard } from '../helpers/verify-auth-guard';
 import { prepareApp } from '../helpers/prepareApp';
+import { ComparatorEnum } from '../../src/rule/comparators/types';
+import { StrategyUpdateDto, ValueToServe } from '../../src/strategy/types';
 
 describe('Strategy (e2e)', () => {
   let app: INestApplication;
@@ -136,6 +138,118 @@ describe('Strategy (e2e)', () => {
         flagEnvironmentEnvironmentId: '1',
         flagEnvironmentFlagId: '1',
         rolloutPercentage: 100,
+      });
+    });
+  });
+
+  describe.only('/strategies/1 (Put)', () => {
+    it('gives a 401 when the user is not authenticated', () =>
+      verifyAuthGuard(app, '/strategies/1', 'put'));
+
+    it('gives a 403 when trying to access a valid project but an invalid env', async () => {
+      const access_token = await authenticate(app);
+
+      const validRule: StrategyUpdateDto = {
+        valueToServeType: ValueToServe.Boolean,
+        rules: [
+          {
+            fieldName: 'id',
+            fieldValue: '1234',
+            fieldComparator: ComparatorEnum.Contains,
+          },
+        ],
+      };
+
+      return request(app.getHttpServer())
+        .put('/strategies/1')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send(validRule)
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('gives a 403 when the user requests a forbidden project', async () => {
+      const access_token = await authenticate(
+        app,
+        'jane.doe@gmail.com',
+        'password',
+      );
+
+      const validRule: StrategyUpdateDto = {
+        valueToServeType: ValueToServe.Boolean,
+        rules: [
+          {
+            fieldName: 'id',
+            fieldValue: '1234',
+            fieldComparator: ComparatorEnum.Contains,
+          },
+        ],
+      };
+
+      return request(app.getHttpServer())
+        .put('/strategies/1')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send(validRule)
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    ['valueToServeType'].forEach((field) => {
+      it(`gives 400 when "${field}" is invalid`, async () => {
+        const access_token = await authenticate(app);
+
+        const invalidStrategy: any = {
+          [field]: undefined,
+        };
+
+        await request(app.getHttpServer())
+          .put('/strategies/1')
+          .set('Authorization', `Bearer ${access_token}`)
+          .send(invalidStrategy)
+          .expect(400)
+          .expect({
+            statusCode: 400,
+            message: 'Validation failed',
+            error: 'Bad Request',
+          });
+      });
+    });
+
+    it('updates a strategy', async () => {
+      const access_token = await authenticate(app);
+
+      const validRule: StrategyUpdateDto = {
+        valueToServeType: ValueToServe.Boolean,
+        rules: [
+          {
+            fieldName: 'id',
+            fieldValue: '1234',
+            fieldComparator: ComparatorEnum.Contains,
+          },
+        ],
+      };
+
+      const response = await request(app.getHttpServer())
+        .put('/strategies/1')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send(validRule)
+        .expect(200);
+
+      expect(response.body).toEqual({
+        rolloutPercentage: 100,
+        uuid: '1',
+        valueToServe: null,
+        valueToServeType: 'Boolean',
+        flagEnvironmentEnvironmentId: '1',
+        flagEnvironmentFlagId: '1',
       });
     });
   });

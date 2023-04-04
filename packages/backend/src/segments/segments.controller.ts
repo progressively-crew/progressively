@@ -15,7 +15,6 @@ import { UserId } from '../users/users.decorator';
 import { SegmentCreationDTO, SegmentSchema } from './types';
 import { SegmentsService } from './segments.service';
 import { ActivityLogService } from '../activity-log/activity-log.service';
-import { RuleSchema, RuleType } from '../rule/types';
 import { WebsocketGateway } from '../websocket/websocket.gateway';
 import { FlagStatus } from '../flags/flags.status';
 

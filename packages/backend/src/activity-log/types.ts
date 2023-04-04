@@ -17,7 +17,8 @@ export type ActivityType =
   | 'delete-rule'
   | 'delete-strategy'
   | 'edit-segment-name'
-  | 'edit-segment-rule';
+  | 'edit-segment-rule'
+  | 'edit-strategy';
 
 export type ActivityEntity = 'flag';
 
