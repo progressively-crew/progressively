@@ -12,6 +12,8 @@ import { ActivityLogModule } from '../activity-log/activity-log.module';
 import { ActivityLogService } from '../activity-log/activity-log.service';
 import { SegmentsModule } from '../segments/segments.module';
 import { SegmentsService } from '../segments/segments.service';
+import { StrategyModule } from '../strategy/strategy.module';
+import { RuleModule } from '../rule/rule.module';
 
 @Module({
   imports: [
@@ -20,6 +22,8 @@ import { SegmentsService } from '../segments/segments.service';
     DatabaseModule,
     ActivityLogModule,
     SegmentsModule,
+    StrategyModule,
+    RuleModule,
   ],
   providers: [
     FlagsService,

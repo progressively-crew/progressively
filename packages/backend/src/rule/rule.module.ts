@@ -8,6 +8,7 @@ import { ActivityLogService } from '../activity-log/activity-log.service';
 @Module({
   imports: [DatabaseModule, ActivityLogModule],
   providers: [RuleService, ActivityLogService],
+  exports: [RuleService],
   controllers: [RuleController],
 })
 export class RuleModule {}

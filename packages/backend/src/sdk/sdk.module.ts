@@ -11,6 +11,7 @@ import { StrategyService } from '../strategy/strategy.service';
 import { EligibilityModule } from '../eligibility/eligibility.module';
 import { SchedulingModule } from '../scheduling/scheduling.module';
 import { SchedulingService } from '../scheduling/scheduling.service';
+import { RuleModule } from '../rule/rule.module';
 
 @Module({
   controllers: [SdkController],
@@ -21,6 +22,7 @@ import { SchedulingService } from '../scheduling/scheduling.service';
     SchedulingModule,
     DatabaseModule,
     EligibilityModule,
+    RuleModule,
   ],
   providers: [SdkService, StrategyService, SchedulingService],
 })
