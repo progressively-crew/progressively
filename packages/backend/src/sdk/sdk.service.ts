@@ -3,10 +3,9 @@ import { nanoid } from 'nanoid';
 import { EnvironmentsService } from '../environments/environments.service';
 import { FlagsService } from '../flags/flags.service';
 import { PopulatedFlagEnv, Variant } from '../flags/types';
-import { FieldRecord } from '../strategy/types';
+import { FieldRecord } from '../rule/types';
 import { EventHit } from './types';
 import { PrismaService } from '../database/prisma.service';
-import { StrategyService } from '../strategy/strategy.service';
 import { FlagStatus } from '../flags/flags.status';
 import { genBucket, getVariation, isInBucket } from './utils';
 import { EligibilityService } from '../eligibility/eligibility.service';
@@ -18,7 +17,6 @@ export class SdkService {
   constructor(
     private prisma: PrismaService,
     private readonly envService: EnvironmentsService,
-    private readonly strategyService: StrategyService,
     private readonly scheduleService: SchedulingService,
     private readonly eligibilityService: EligibilityService,
     private readonly segmentService: SegmentsService,
@@ -73,15 +71,6 @@ export class SdkService {
 
   resolveFlagStatus(flagEnv: PopulatedFlagEnv, fields: FieldRecord) {
     if (flagEnv.status !== FlagStatus.ACTIVATED) return false;
-
-    // By attributes
-    const additionalAudienceValue =
-      this.strategyService.resolveAdditionalAudienceValue(
-        flagEnv.strategies,
-        fields,
-      );
-
-    if (additionalAudienceValue) return additionalAudienceValue;
 
     // By segment
     if (flagEnv.Segment.length > 0) {

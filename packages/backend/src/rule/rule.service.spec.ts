@@ -4,7 +4,7 @@ import { PrismaService } from '../database/prisma.service';
 import { RuleService } from './rule.service';
 import { RuleType } from './types';
 import { ComparatorEnum } from './comparators/types';
-import { FieldRecord } from '../strategy/types';
+import { FieldRecord } from '../rule/types';
 
 describe('RuleService', () => {
   let service: RuleService;

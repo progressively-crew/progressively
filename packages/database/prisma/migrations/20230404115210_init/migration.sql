@@ -170,18 +170,6 @@ CREATE TABLE "Segment" (
 );
 
 -- CreateTable
-CREATE TABLE "RolloutStrategy" (
-    "uuid" TEXT NOT NULL,
-    "valueToServeType" TEXT NOT NULL,
-    "valueToServe" TEXT NOT NULL,
-    "flagEnvironmentFlagId" TEXT,
-    "flagEnvironmentEnvironmentId" TEXT,
-    "ruleUuid" TEXT NOT NULL,
-
-    CONSTRAINT "RolloutStrategy_pkey" PRIMARY KEY ("uuid")
-);
-
--- CreateTable
 CREATE TABLE "Eligibility" (
     "uuid" TEXT NOT NULL,
     "flagEnvironmentFlagId" TEXT,
@@ -272,12 +260,6 @@ ALTER TABLE "Rule" ADD CONSTRAINT "Rule_segmentUuid_fkey" FOREIGN KEY ("segmentU
 
 -- AddForeignKey
 ALTER TABLE "Segment" ADD CONSTRAINT "Segment_flagEnvironmentFlagId_flagEnvironmentEnvironmentId_fkey" FOREIGN KEY ("flagEnvironmentFlagId", "flagEnvironmentEnvironmentId") REFERENCES "FlagEnvironment"("flagId", "environmentId") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "RolloutStrategy" ADD CONSTRAINT "RolloutStrategy_ruleUuid_fkey" FOREIGN KEY ("ruleUuid") REFERENCES "Rule"("uuid") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "RolloutStrategy" ADD CONSTRAINT "RolloutStrategy_flagEnvironmentFlagId_flagEnvironmentEnvir_fkey" FOREIGN KEY ("flagEnvironmentFlagId", "flagEnvironmentEnvironmentId") REFERENCES "FlagEnvironment"("flagId", "environmentId") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Eligibility" ADD CONSTRAINT "Eligibility_ruleUuid_fkey" FOREIGN KEY ("ruleUuid") REFERENCES "Rule"("uuid") ON DELETE RESTRICT ON UPDATE CASCADE;

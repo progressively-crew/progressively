@@ -1,15 +1,12 @@
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { getStrategies } from "~/modules/strategies/services/getStrategies";
 import { getSession } from "~/sessions";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
-import { AdditionalAudienceRetrieveDTO } from "~/modules/strategies/types";
 import { Section, SectionHeader } from "~/components/Section";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
 import {
   useLoaderData,
   useActionData,
   useSearchParams,
-  Form,
   useTransition,
 } from "@remix-run/react";
 import { Card, CardContent } from "~/components/Card";
@@ -31,14 +28,9 @@ import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { getEligibilities } from "~/modules/eligibility/services/getEligibilities";
 import { Eligibility } from "~/modules/eligibility/types";
 import { VariantTable } from "~/modules/variants/components/VariantTable";
-import { Spacer } from "~/components/Spacer";
 import { FormEligibility } from "~/modules/eligibility/components/FormEligibility";
 import { createEligibility } from "~/modules/eligibility/services/createEligibility";
 import { updateEligibilityAction } from "~/modules/eligibility/form-actions/updateEligibilityAction";
-import { FormAdditionalAudience } from "~/modules/strategies/components/FormAdditionalAudience";
-import { createStrategy } from "~/modules/strategies/services/createStrategy";
-import { updateStrategyAction } from "~/modules/strategies/form-actions/updateStrategyAction";
-import { Spinner } from "~/components/Spinner";
 import { MdOutlineTune } from "react-icons/md";
 import { MenuButton } from "~/components/MenuButton";
 import { AddCiteriaButton } from "~/modules/eligibility/components/AddCiteriaButton";
@@ -61,7 +53,6 @@ type ActionDataType = null | {
   successEdit?: boolean;
   successEligibilityCreated?: boolean;
   successEligibilityUpdated?: boolean;
-  successStrategyUpdated?: boolean;
   successAdditionalAudienceCreated?: boolean;
   errors?: { [key: string]: string | undefined };
   elibilityErrors?: { [key: string]: string | undefined };
@@ -77,20 +68,6 @@ export const action: ActionFunction = async ({
   const flagId = params.flagId;
   const formData = await request.formData();
   const type = formData.get("_type");
-
-  if (type === "create-additional-audience") {
-    await createStrategy(
-      params.env!,
-      params.flagId!,
-      session.get("auth-cookie")
-    );
-
-    return { successAdditionalAudienceCreated: true };
-  }
-
-  if (type === "update-strategy") {
-    return updateStrategyAction(formData, authCookie);
-  }
 
   if (type === "update-eligibility") {
     return updateEligibilityAction(formData, authCookie);
@@ -132,7 +109,6 @@ export const action: ActionFunction = async ({
 };
 
 interface LoaderData {
-  strategies: Array<AdditionalAudienceRetrieveDTO>;
   eligibilities: Array<Eligibility>;
 }
 
@@ -143,12 +119,6 @@ export const loader: LoaderFunction = async ({
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
 
-  const strategies = await getStrategies(
-    params.env!,
-    params.flagId!,
-    authCookie
-  );
-
   const eligibilities = await getEligibilities(
     params.env!,
     params.flagId!,
@@ -156,7 +126,6 @@ export const loader: LoaderFunction = async ({
   );
 
   return {
-    strategies,
     eligibilities,
   };
 };
@@ -172,7 +141,6 @@ const useFormTransition = () => {
     isCreatingAdditionalAudience:
       type === "create-additional-audience" && isSubmitting,
     isUpdatingEligibility: type === "update-eligibility" && isSubmitting,
-    isUpdatingAdditionalAudience: type === "update-strategy" && isSubmitting,
   };
 };
 
@@ -186,17 +154,15 @@ export default function FlagById() {
   const { flagEnv } = useFlagEnv();
   const [searchParams] = useSearchParams();
 
-  const { strategies, eligibilities } = useLoaderData<LoaderData>();
+  const { eligibilities } = useLoaderData<LoaderData>();
   const hasPercentageChanged = Boolean(actionData?.successChangePercentage);
 
   const currentFlag = flagEnv.flag;
 
-  const hasStrategies = strategies.length > 0;
   const hasEligibility = eligibilities.length > 0;
   const hasErrors = Object.keys(actionData?.errors || {}).length > 0;
   const isMultiVariants = flagEnv.variants.length > 0;
 
-  const isStrategyRemoved = searchParams.get("stratRemoved") || undefined;
   const isVariantCreated = searchParams.get("newVariant") || undefined;
   const isVariantRemoved = searchParams.get("variantRemoved") || undefined;
 
@@ -366,98 +332,6 @@ export default function FlagById() {
       <div className="flex justify-center">
         <Tag variant="PRIMARY">OR</Tag>
       </div>
-
-      <Section id="additional-audience">
-        <Card
-          footer={
-            hasStrategies && (
-              <SubmitButton
-                form="form-update-strategy"
-                variant="secondary"
-                isLoading={formTransition.isUpdatingAdditionalAudience}
-                loadingText="Updating the additional audience rules..."
-              >
-                Update
-              </SubmitButton>
-            )
-          }
-        >
-          <CardContent>
-            <SectionHeader
-              title="Using attributes"
-              description={
-                "The users matching at least one of the following condition will will be eligible to flag evaluation."
-              }
-            />
-
-            {actionData?.successStrategyUpdated ? (
-              <>
-                <Spacer size={6} />
-                <SuccessBox id="strategy-updated">
-                  The additional audience has been updated.
-                </SuccessBox>
-              </>
-            ) : actionData?.successAdditionalAudienceCreated ? (
-              <>
-                <Spacer size={6} />
-                <SuccessBox id="strategy-added">
-                  The additional audience has been successfully set.
-                </SuccessBox>
-              </>
-            ) : isStrategyRemoved ? (
-              <>
-                <Spacer size={6} />
-                <SuccessBox id="strategy-removed">
-                  The additional audience has been successfully removed.
-                </SuccessBox>
-              </>
-            ) : actionData?.additionalAudienceErrors ? (
-              <>
-                <Spacer size={6} />
-                <ErrorBox list={actionData?.additionalAudienceErrors} />
-              </>
-            ) : null}
-
-            <Spacer size={6} />
-
-            <FormAdditionalAudience
-              additionalAudiences={strategies}
-              projectId={project.uuid}
-              envId={environment.uuid}
-              flagId={currentFlag.uuid}
-              variants={flagEnv.variants}
-            />
-
-            {hasStrategies && <Spacer size={6} />}
-
-            <Form method="post">
-              <input
-                type="hidden"
-                name="_type"
-                value="create-additional-audience"
-              />
-
-              <button
-                type="submit"
-                className="p-2 border rounded border-dashed border-gray-300 text-center w-full text-gray-600 active:bg-gray-100 hover:bg-gray-50 dark:text-slate-200 dark:active:bg-slate-600 dark:hover:bg-slate-700"
-                aria-disabled={formTransition.isCreatingAdditionalAudience}
-                aria-label={
-                  formTransition.isCreatingAdditionalAudience
-                    ? "Creating a new eligibility rule..."
-                    : undefined
-                }
-              >
-                <span className="flex flex-row justify-center items-center  gap-4">
-                  {formTransition.isCreatingAdditionalAudience && (
-                    <Spinner className="-ml-8" />
-                  )}
-                  Add a new rule
-                </span>
-              </button>
-            </Form>
-          </CardContent>
-        </Card>
-      </Section>
     </DashboardLayout>
   );
 }

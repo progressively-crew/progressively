@@ -1,9 +1,6 @@
 import { MenuButton } from "~/components/MenuButton";
 import { RuleFormField } from "~/modules/rules/components/RuleFormField";
 import { ComparatorEnum } from "~/modules/rules/types";
-import { ValuesToServeFields } from "~/modules/strategies/components/ValuesToServeFields";
-import { StrategyValueToServe } from "~/modules/strategies/types";
-import { Variant } from "~/modules/variants/types";
 
 export interface ConditionalAudienceProps {
   removeLink: string;
@@ -11,21 +8,15 @@ export interface ConditionalAudienceProps {
   fieldName: string;
   fieldValue: string;
   fieldComparator: ComparatorEnum;
-  variants?: Array<Variant>;
-  valueToServe?: string;
-  valueToServeType?: StrategyValueToServe;
   showAdditionalFields?: boolean;
 }
 
 export const ConditionalAudience = ({
   removeLink,
-  valueToServe,
-  valueToServeType,
   fieldName,
   fieldValue,
   fieldComparator,
   uuid,
-  variants,
   showAdditionalFields,
 }: ConditionalAudienceProps) => {
   return (
@@ -42,11 +33,6 @@ export const ConditionalAudience = ({
           {showAdditionalFields && (
             <>
               <div className="h-2" />
-              <ValuesToServeFields
-                valueToServe={valueToServe}
-                valueToServeType={valueToServeType}
-                variants={variants}
-              />
             </>
           )}
         </div>

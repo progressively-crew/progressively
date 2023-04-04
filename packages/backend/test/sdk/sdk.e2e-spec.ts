@@ -58,7 +58,7 @@ describe('SdkController (e2e)', () => {
       `);
     });
 
-    it('gives a list of flags when the key is valid for an authenticated user (field is passed as query param and match a strategy)', async () => {
+    it('gives a list of flags when the key is valid for an authenticated user (field is passed as query param)', async () => {
       const fields = btoa(
         JSON.stringify({ clientKey: 'valid-sdk-key', id: '1' }),
       );

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
 import { Segment, SegmentCreationDTO } from './types';
 import { ComparatorEnum } from '../rule/comparators/types';
-import { FieldRecord } from '../strategy/types';
+import { FieldRecord } from '../rule/types';
 import { RuleService } from '../rule/rule.service';
 
 @Injectable()
@@ -122,11 +122,6 @@ export class SegmentsService {
           include: {
             environment: true,
             flag: true,
-            strategies: {
-              include: {
-                rule: true,
-              },
-            },
             Segment: {
               include: {
                 rule: true,

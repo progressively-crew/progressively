@@ -30,7 +30,7 @@ export class SegmentsController {
   @Get(':segmentId')
   @UseGuards(HasSegmentAccessGuard)
   @UseGuards(JwtAuthGuard)
-  getStrategy(@Param('segmentId') segmentId: string) {
+  getSegmentById(@Param('segmentId') segmentId: string) {
     return this.segmentService.getSegment(segmentId);
   }
 
@@ -38,14 +38,14 @@ export class SegmentsController {
   @UseGuards(HasSegmentAccessGuard)
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(SegmentSchema))
-  async updateStrategy(
+  async updateSegment(
     @UserId() userId: string,
     @Param('segmentId') segmentId: string,
-    @Body() strategyDto: SegmentCreationDTO,
+    @Body() segmentDto: SegmentCreationDTO,
   ) {
     const updatedEligibility = await this.segmentService.updateSegment(
       segmentId,
-      strategyDto,
+      segmentDto,
     );
 
     await this.activityLogService.register({

@@ -1,4 +1,4 @@
-import { FieldRecord } from '../strategy/types';
+import { FieldRecord } from '../rule/types';
 import { WebSocket as WS } from 'ws';
 
 export interface LocalWebsocket extends WS {

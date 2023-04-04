@@ -92,7 +92,7 @@ export default function DeleteEligibilityPage() {
           <DeleteButton
             type="submit"
             isLoading={transition.state === "submitting"}
-            loadingText="Deleting the strategy, please wait..."
+            loadingText="Deleting the eligibility audience, please wait..."
           >
             Yes, delete the eligibility restriction
           </DeleteButton>

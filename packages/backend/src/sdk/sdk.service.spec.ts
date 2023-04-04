@@ -1,5 +1,4 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { RolloutStrategy } from '../strategy/types';
 import { FlagStatus } from '../flags/flags.status';
 import { PopulatedFlagEnv, Variant } from '../flags/types';
 import { SdkService } from './sdk.service';
@@ -10,7 +9,6 @@ import { ComparatorEnum } from '../rule/comparators/types';
 
 describe('SdkService', () => {
   let service: SdkService;
-  let strategy: RolloutStrategy;
   let flagEnv: PopulatedFlagEnv;
   let redisService: RedisService;
 
@@ -28,19 +26,6 @@ describe('SdkService', () => {
   });
 
   beforeEach(() => {
-    strategy = {
-      rule: {
-        fieldComparator: ComparatorEnum.Equals,
-        fieldName: 'email',
-        fieldValue: '`gmail.com',
-      },
-      flagEnvironmentEnvironmentId: '1',
-      flagEnvironmentFlagId: '1',
-      uuid: '123',
-      valueToServe: 'true',
-      valueToServeType: 'Boolean',
-    };
-
     flagEnv = {
       environmentId: '1',
       flagId: '2',
@@ -56,7 +41,6 @@ describe('SdkService', () => {
       variants: [],
       eligibilities: [],
       scheduling: [],
-      strategies: [strategy],
       environment: {
         name: 'First',
         uuid: '1',
@@ -306,68 +290,6 @@ describe('SdkService', () => {
         });
 
         expect(shouldActivate).toBe(false);
-      });
-    });
-
-    describe('Additional audience', () => {
-      it('always returns true when no strategies are found', () => {
-        flagEnv.strategies = [];
-
-        const shouldActivate = service.resolveFlagStatus(flagEnv, {
-          id: 'user-id-123',
-        });
-
-        expect(shouldActivate).toBe(true);
-      });
-
-      it('returns true when the field value matches', () => {
-        strategy.rule.fieldName = 'email';
-        strategy.rule.fieldValue = 'marvin.frachet@something.com';
-        strategy.rule.fieldComparator = ComparatorEnum.Equals;
-        flagEnv.rolloutPercentage = 0;
-
-        const fields = { email: 'marvin.frachet@something.com', id: '1234' };
-
-        const shouldActivate = service.resolveFlagStatus(flagEnv, fields);
-
-        expect(shouldActivate).toBe(true);
-      });
-
-      it('returns false when field value DOES NOT match', () => {
-        strategy.rule.fieldName = 'email';
-        strategy.rule.fieldValue = 'marvin.frachet@something.com';
-        flagEnv.rolloutPercentage = 0;
-
-        const fields = { email: 'not.working@gmail.com' };
-
-        const shouldActivate = service.resolveFlagStatus(flagEnv, fields);
-
-        expect(shouldActivate).toBe(false);
-      });
-
-      it('returns false when the field name DOES NOT match', () => {
-        strategy.rule.fieldName = 'email';
-        strategy.rule.fieldValue = 'marvin.frachet@something.com';
-        flagEnv.rolloutPercentage = 0;
-
-        const fields = { uuid: 'not.working@gmail.com' };
-
-        const shouldActivate = service.resolveFlagStatus(flagEnv, fields);
-
-        expect(shouldActivate).toBe(false);
-      });
-
-      describe('Comparators', () => {
-        it('returns true when the field email contains @gmail', () => {
-          strategy.rule.fieldName = 'email';
-          strategy.rule.fieldValue = '@gmail';
-          strategy.rule.fieldComparator = ComparatorEnum.Contains;
-
-          const fields = { email: 'should.workg@gmail.com' };
-          const shouldActivate = service.resolveFlagStatus(flagEnv, fields);
-
-          expect(shouldActivate).toBe(true);
-        });
       });
     });
   });

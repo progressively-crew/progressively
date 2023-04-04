@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
 import { RuleType } from './types';
-import { FieldRecord } from '../strategy/types';
+import { FieldRecord } from './types';
 import { Rule } from './Rule';
 
 @Injectable()

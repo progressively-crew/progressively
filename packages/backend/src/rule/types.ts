@@ -14,3 +14,5 @@ export const RuleSchema = Joi.object({
     .required(),
   fieldValue: Joi.string().required(),
 });
+
+export type FieldRecord = Record<string, string | number | boolean>;

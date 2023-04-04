@@ -24,9 +24,6 @@ export class EnvironmentsService {
       },
       include: {
         flag: true,
-        strategies: {
-          include: { rule: true },
-        },
         scheduling: true,
         eligibilities: {
           include: {
@@ -180,11 +177,6 @@ export class EnvironmentsService {
         },
       }),
       this.prisma.schedule.deleteMany({
-        where: {
-          flagEnvironmentEnvironmentId: envId,
-        },
-      }),
-      this.prisma.rolloutStrategy.deleteMany({
         where: {
           flagEnvironmentEnvironmentId: envId,
         },

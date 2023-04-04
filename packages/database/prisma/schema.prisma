@@ -89,15 +89,14 @@ model Flag {
 model FlagEnvironment {
   flagId            String
   environmentId     String
-  status            String?           @default("NOT_ACTIVATED")
-  rolloutPercentage Int               @default(100)
+  status            String?       @default("NOT_ACTIVATED")
+  rolloutPercentage Int           @default(100)
   eligibilities     Eligibility[]
-  environment       Environment       @relation(fields: [environmentId], references: [uuid])
-  flag              Flag              @relation(fields: [flagId], references: [uuid])
+  environment       Environment   @relation(fields: [environmentId], references: [uuid])
+  flag              Flag          @relation(fields: [flagId], references: [uuid])
   flagHit           FlagHit[]
   metrics           PMetric[]
   metricHits        PMetricHit[]
-  strategies        RolloutStrategy[]
   scheduling        Schedule[]
   variants          Variant[]
   webhooks          Webhook[]
@@ -162,13 +161,12 @@ model FlagHit {
 }
 
 model Rule {
-  uuid            String            @id @default(uuid())
+  uuid            String        @id @default(uuid())
   fieldName       String
   fieldComparator String
   fieldValue      String
-  RolloutStrategy RolloutStrategy[]
   Eligibility     Eligibility[]
-  Segment         Segment?          @relation(fields: [segmentUuid], references: [uuid])
+  Segment         Segment?      @relation(fields: [segmentUuid], references: [uuid])
   segmentUuid     String?
 }
 
@@ -179,17 +177,6 @@ model Segment {
   flagEnvironment              FlagEnvironment @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
   flagEnvironmentFlagId        String
   flagEnvironmentEnvironmentId String
-}
-
-model RolloutStrategy {
-  uuid                         String           @id @default(uuid())
-  rule                         Rule             @relation(fields: [ruleUuid], references: [uuid])
-  valueToServeType             String
-  valueToServe                 String
-  flagEnvironmentFlagId        String?
-  flagEnvironmentEnvironmentId String?
-  flagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
-  ruleUuid                     String
 }
 
 model Eligibility {

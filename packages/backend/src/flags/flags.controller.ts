@@ -14,7 +14,6 @@ import {
   UsePipes,
 } from '@nestjs/common';
 import { FlagStatus } from './flags.status';
-import { StrategyService } from '../strategy/strategy.service';
 import { FlagsService } from './flags.service';
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
 import { strToFlagStatus } from './utils';
@@ -50,7 +49,6 @@ import { SegmentCreationDTO, SegmentSchema } from '../segments/types';
 @Controller()
 export class FlagsController {
   constructor(
-    private readonly strategyService: StrategyService,
     private readonly schedulingService: SchedulingService,
     private readonly flagService: FlagsService,
     private readonly webhookService: WebhooksService,
@@ -299,37 +297,6 @@ export class FlagsController {
     }));
   }
 
-  @Post('environments/:envId/flags/:flagId/strategies')
-  @UseGuards(HasFlagEnvAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  async addStrategyToFlag(
-    @UserId() userId: string,
-    @Param('envId') envId: string,
-    @Param('flagId') flagId: string,
-  ) {
-    const strategy = await this.strategyService.addStrategyToFlagEnv(
-      envId,
-      flagId,
-    );
-
-    const { flagEnvironment: flagEnv } =
-      await this.strategyService.getStrategyFlagEnv(strategy.uuid);
-
-    if (flagEnv.status === FlagStatus.ACTIVATED) {
-      this.wsGateway.notifyChanges(flagEnv.environment.clientKey, flagEnv);
-    }
-
-    await this.activityLogService.register({
-      userId,
-      flagId: flagId,
-      envId: envId,
-      concernedEntity: 'flag',
-      type: 'create-additional-audience',
-    });
-
-    return strategy;
-  }
-
   @Post('environments/:envId/flags/:flagId/segments')
   @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
@@ -563,16 +530,6 @@ export class FlagsController {
     });
 
     return result;
-  }
-
-  @Get('environments/:envId/flags/:flagId/strategies')
-  @UseGuards(HasFlagEnvAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  getStrategies(
-    @Param('envId') envId: string,
-    @Param('flagId') flagId: string,
-  ) {
-    return this.strategyService.listStrategies(envId, flagId);
   }
 
   @Get('environments/:envId/flags/:flagId/segments')

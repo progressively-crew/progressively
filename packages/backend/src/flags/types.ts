@@ -1,7 +1,6 @@
 import { Segment } from '../segments/types';
 import { Eligibility } from '../eligibility/types';
 import { Environment } from '../environments/types';
-import { RolloutStrategy } from '../strategy/types';
 import { FlagStatus } from './flags.status';
 
 export interface Flag {
@@ -31,7 +30,6 @@ interface Schedule {
 export interface PopulatedFlagEnv extends FlagEnvironment {
   environment: Environment;
   flag: Flag;
-  strategies: Array<RolloutStrategy>;
   scheduling: Array<Schedule>;
   eligibilities: Array<Eligibility>;
   Segment: Array<Segment>;
