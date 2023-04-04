@@ -11,6 +11,7 @@ import { FlagStatus } from '../flags/flags.status';
 import { genBucket, getVariation, isInBucket } from './utils';
 import { EligibilityService } from '../eligibility/eligibility.service';
 import { SchedulingService } from '../scheduling/scheduling.service';
+import { SegmentsService } from '../segments/segments.service';
 
 @Injectable()
 export class SdkService {
@@ -20,6 +21,7 @@ export class SdkService {
     private readonly strategyService: StrategyService,
     private readonly scheduleService: SchedulingService,
     private readonly eligibilityService: EligibilityService,
+    private readonly segmentService: SegmentsService,
     private readonly flagService: FlagsService,
   ) {}
 
@@ -72,6 +74,7 @@ export class SdkService {
   resolveFlagStatus(flagEnv: PopulatedFlagEnv, fields: FieldRecord) {
     if (flagEnv.status !== FlagStatus.ACTIVATED) return false;
 
+    // By attributes
     const additionalAudienceValue =
       this.strategyService.resolveAdditionalAudienceValue(
         flagEnv.strategies,
@@ -80,6 +83,23 @@ export class SdkService {
 
     if (additionalAudienceValue) return additionalAudienceValue;
 
+    // By segment
+    if (flagEnv.Segment.length > 0) {
+      const isInSegment = this.segmentService.isInSegment(
+        flagEnv.Segment,
+        fields,
+      );
+
+      if (isInSegment) {
+        const userVariant = this.getUserVariant(flagEnv, fields);
+
+        if (Boolean(userVariant)) {
+          return userVariant;
+        }
+      }
+    }
+
+    // By attributes and percentage
     const isEligible = this.eligibilityService.isEligible(flagEnv, fields);
     if (!isEligible) return false;
 

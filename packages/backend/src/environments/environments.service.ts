@@ -33,6 +33,11 @@ export class EnvironmentsService {
             rule: true,
           },
         },
+        Segment: {
+          include: {
+            rule: true,
+          },
+        },
         variants: {
           orderBy: {
             rolloutPercentage: 'asc',

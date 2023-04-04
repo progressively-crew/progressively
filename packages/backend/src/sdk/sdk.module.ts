@@ -9,9 +9,9 @@ import { FieldRecord } from '../strategy/types';
 import { DatabaseModule } from '../database/database.module';
 import { EligibilityModule } from '../eligibility/eligibility.module';
 import { SchedulingModule } from '../scheduling/scheduling.module';
-import { SchedulingService } from '../scheduling/scheduling.service';
 import { RuleModule } from '../rule/rule.module';
 import { StrategyModule } from '../strategy/strategy.module';
+import { SegmentsModule } from '../segments/segments.module';
 
 @Module({
   controllers: [SdkController],
@@ -24,6 +24,7 @@ import { StrategyModule } from '../strategy/strategy.module';
     EligibilityModule,
     RuleModule,
     StrategyModule,
+    SegmentsModule,
   ],
   providers: [SdkService],
 })

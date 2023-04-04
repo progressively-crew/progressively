@@ -1,3 +1,4 @@
+import { Segment } from '../segments/types';
 import { Eligibility } from '../eligibility/types';
 import { Environment } from '../environments/types';
 import { RolloutStrategy } from '../strategy/types';
@@ -33,6 +34,7 @@ export interface PopulatedFlagEnv extends FlagEnvironment {
   strategies: Array<RolloutStrategy>;
   scheduling: Array<Schedule>;
   eligibilities: Array<Eligibility>;
+  Segment: Array<Segment>;
 }
 
 export enum SchedulingStatus {
