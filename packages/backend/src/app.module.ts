@@ -20,6 +20,7 @@ import { WebhooksModule } from './webhooks/webhooks.module';
 import { ActivityLogModule } from './activity-log/activity-log.module';
 import { RuleModule } from './rule/rule.module';
 import { SegmentsModule } from './segments/segments.module';
+import { StrategyModule } from './strategy/strategy.module';
 import 'winston-daily-rotate-file';
 
 @Module({
@@ -63,6 +64,7 @@ import 'winston-daily-rotate-file';
     ActivityLogModule,
     RuleModule,
     SegmentsModule,
+    StrategyModule,
   ],
   providers: [AppService],
 })

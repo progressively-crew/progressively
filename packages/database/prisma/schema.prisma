@@ -101,6 +101,7 @@ model FlagEnvironment {
   webhooks          Webhook[]
   ActivityLog       ActivityLog[]
   Segment           Segment[]
+  strategies        Strategy[]
 
   @@id([flagId, environmentId])
 }
@@ -160,12 +161,13 @@ model FlagHit {
 }
 
 model Rule {
-  uuid            String   @id @default(uuid())
+  uuid            String         @id @default(uuid())
   fieldName       String
   fieldComparator String
   fieldValue      String
-  Segment         Segment? @relation(fields: [segmentUuid], references: [uuid])
+  Segment         Segment?       @relation(fields: [segmentUuid], references: [uuid])
   segmentUuid     String?
+  StrategyRule    StrategyRule[]
 }
 
 model Segment {
@@ -203,4 +205,23 @@ model ActivityLog {
   flagEnvironmentEnvironmentId String?
 
   data String?
+}
+
+model Strategy {
+  uuid                         String           @id @default(uuid())
+  rolloutPercentage            Int              @default(100)
+  strategyRules                StrategyRule[]
+  FlagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
+  flagEnvironmentFlagId        String?
+  flagEnvironmentEnvironmentId String?
+}
+
+model StrategyRule {
+  uuid             String    @id @default(uuid())
+  rule             Rule      @relation(fields: [ruleUuid], references: [uuid])
+  ruleUuid         String
+  valueToServeType String
+  valueToServe     String?
+  Strategy         Strategy? @relation(fields: [strategyUuid], references: [uuid])
+  strategyUuid     String?
 }

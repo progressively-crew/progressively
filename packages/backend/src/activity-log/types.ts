@@ -4,6 +4,7 @@ export type ActivityType =
   | 'change-variants-percentage'
   | 'create-webhook'
   | 'create-scheduling'
+  | 'create-strategy'
   | 'create-metric'
   | 'create-variant'
   | 'create-segment'

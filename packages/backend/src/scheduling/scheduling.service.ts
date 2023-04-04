@@ -105,18 +105,8 @@ export class SchedulingService {
   makeUpdateQuery(flagEnv: PopulatedFlagEnv, schedule: Schedule) {
     const include = {
       flag: true,
-      strategies: {
-        include: {
-          rule: true,
-        },
-      },
       scheduling: true,
       variants: true,
-      eligibilities: {
-        include: {
-          rule: true,
-        },
-      },
     };
 
     if (schedule.type === SchedulingType.UpdatePercentage) {

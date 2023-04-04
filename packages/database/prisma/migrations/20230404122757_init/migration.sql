@@ -197,6 +197,27 @@ CREATE TABLE "ActivityLog" (
     CONSTRAINT "ActivityLog_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "Strategy" (
+    "uuid" TEXT NOT NULL,
+    "rolloutPercentage" INTEGER NOT NULL DEFAULT 100,
+    "flagEnvironmentFlagId" TEXT,
+    "flagEnvironmentEnvironmentId" TEXT,
+
+    CONSTRAINT "Strategy_pkey" PRIMARY KEY ("uuid")
+);
+
+-- CreateTable
+CREATE TABLE "StrategyRule" (
+    "uuid" TEXT NOT NULL,
+    "ruleUuid" TEXT NOT NULL,
+    "valueToServeType" TEXT NOT NULL,
+    "valueToServe" TEXT,
+    "strategyUuid" TEXT,
+
+    CONSTRAINT "StrategyRule_pkey" PRIMARY KEY ("uuid")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
@@ -259,3 +280,12 @@ ALTER TABLE "ActivityLog" ADD CONSTRAINT "ActivityLog_userUuid_fkey" FOREIGN KEY
 
 -- AddForeignKey
 ALTER TABLE "ActivityLog" ADD CONSTRAINT "ActivityLog_flagEnvironmentFlagId_flagEnvironmentEnvironme_fkey" FOREIGN KEY ("flagEnvironmentFlagId", "flagEnvironmentEnvironmentId") REFERENCES "FlagEnvironment"("flagId", "environmentId") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Strategy" ADD CONSTRAINT "Strategy_flagEnvironmentFlagId_flagEnvironmentEnvironmentI_fkey" FOREIGN KEY ("flagEnvironmentFlagId", "flagEnvironmentEnvironmentId") REFERENCES "FlagEnvironment"("flagId", "environmentId") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "StrategyRule" ADD CONSTRAINT "StrategyRule_ruleUuid_fkey" FOREIGN KEY ("ruleUuid") REFERENCES "Rule"("uuid") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "StrategyRule" ADD CONSTRAINT "StrategyRule_strategyUuid_fkey" FOREIGN KEY ("strategyUuid") REFERENCES "Strategy"("uuid") ON DELETE SET NULL ON UPDATE CASCADE;
