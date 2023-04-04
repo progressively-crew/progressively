@@ -7,7 +7,6 @@ import { WebsocketModule } from '../websocket/websocket.module';
 import { WebsocketGateway } from '../websocket/websocket.gateway';
 import { FieldRecord } from '../rule/types';
 import { DatabaseModule } from '../database/database.module';
-import { EligibilityModule } from '../eligibility/eligibility.module';
 import { SchedulingModule } from '../scheduling/scheduling.module';
 import { RuleModule } from '../rule/rule.module';
 import { SegmentsModule } from '../segments/segments.module';
@@ -20,7 +19,6 @@ import { SegmentsModule } from '../segments/segments.module';
     WebsocketModule,
     SchedulingModule,
     DatabaseModule,
-    EligibilityModule,
     RuleModule,
     SegmentsModule,
   ],

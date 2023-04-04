@@ -128,11 +128,6 @@ export class SegmentsService {
               },
             },
             variants: true,
-            eligibilities: {
-              include: {
-                rule: true,
-              },
-            },
           },
         },
       },

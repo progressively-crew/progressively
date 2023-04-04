@@ -8,7 +8,6 @@ import { EventHit } from './types';
 import { PrismaService } from '../database/prisma.service';
 import { FlagStatus } from '../flags/flags.status';
 import { genBucket, getVariation, isInBucket } from './utils';
-import { EligibilityService } from '../eligibility/eligibility.service';
 import { SchedulingService } from '../scheduling/scheduling.service';
 import { SegmentsService } from '../segments/segments.service';
 
@@ -18,7 +17,6 @@ export class SdkService {
     private prisma: PrismaService,
     private readonly envService: EnvironmentsService,
     private readonly scheduleService: SchedulingService,
-    private readonly eligibilityService: EligibilityService,
     private readonly segmentService: SegmentsService,
     private readonly flagService: FlagsService,
   ) {}
@@ -89,8 +87,6 @@ export class SdkService {
     }
 
     // By attributes and percentage
-    const isEligible = this.eligibilityService.isEligible(flagEnv, fields);
-    if (!isEligible) return false;
 
     const userVariant = this.getUserVariant(flagEnv, fields);
 

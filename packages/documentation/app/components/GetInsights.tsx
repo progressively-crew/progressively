@@ -43,18 +43,6 @@ export const GetInsights = () => (
       </Card>
 
       <Card
-        title="Audience Eligibility"
-        top={
-          <div className="flex justify-center">
-            <TbChartPie aria-hidden className="text-4xl" />
-          </div>
-        }
-      >
-        Rollout to only specific subsets of your audience based on qualitative
-        criteria
-      </Card>
-
-      <Card
         title="Gradual rollout"
         bottom={
           <div className="flex justify-center">

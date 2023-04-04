@@ -112,12 +112,6 @@ export default function SchedulingOfFlag() {
     >
       <PageTitle
         value="Scheduling"
-        description={
-          <Typography>
-            The additional audience rules that you have defined will apply at
-            the given dates.
-          </Typography>
-        }
         action={
           hasScheduling && (
             <CreateButton

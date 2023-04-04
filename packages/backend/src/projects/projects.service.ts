@@ -184,15 +184,6 @@ export class ProjectsService {
           },
         },
       }),
-      this.prisma.eligibility.deleteMany({
-        where: {
-          flagEnvironment: {
-            environment: {
-              projectId,
-            },
-          },
-        },
-      }),
       this.prisma.segment.deleteMany({
         where: {
           flagEnvironment: {

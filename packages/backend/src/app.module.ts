@@ -17,7 +17,6 @@ import { MailModule } from './mail/mail.module';
 import { DatabaseModule } from './database/database.module';
 import { SchedulingModule } from './scheduling/scheduling.module';
 import { WebhooksModule } from './webhooks/webhooks.module';
-import { EligibilityModule } from './eligibility/eligibility.module';
 import { ActivityLogModule } from './activity-log/activity-log.module';
 import { RuleModule } from './rule/rule.module';
 import { SegmentsModule } from './segments/segments.module';
@@ -61,7 +60,6 @@ import 'winston-daily-rotate-file';
     DatabaseModule,
     SchedulingModule,
     WebhooksModule,
-    EligibilityModule,
     ActivityLogModule,
     RuleModule,
     SegmentsModule,

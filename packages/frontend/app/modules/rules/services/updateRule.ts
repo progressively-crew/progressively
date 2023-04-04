@@ -16,7 +16,7 @@ export const updateRule = (
   }).then((res) => {
     if (!res.ok) {
       throw new Error(
-        "Woops! Something went wrong when trying to create the eligibility."
+        "Woops! Something went wrong when trying to create the rule."
       );
     }
 

@@ -2,13 +2,8 @@ import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { getSession } from "~/sessions";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { Section, SectionHeader } from "~/components/Section";
-import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
-import {
-  useLoaderData,
-  useActionData,
-  useSearchParams,
-  useTransition,
-} from "@remix-run/react";
+import { MetaFunction, ActionFunction } from "@remix-run/node";
+import { useActionData, useSearchParams } from "@remix-run/react";
 import { Card, CardContent } from "~/components/Card";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
 import { SliderFlag } from "~/modules/flags/components/SliderFlag";
@@ -25,17 +20,10 @@ import { editVariantAction } from "~/modules/variants/form-actions/editVariantAc
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { PageTitle } from "~/components/PageTitle";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
-import { getEligibilities } from "~/modules/eligibility/services/getEligibilities";
-import { Eligibility } from "~/modules/eligibility/types";
 import { VariantTable } from "~/modules/variants/components/VariantTable";
-import { FormEligibility } from "~/modules/eligibility/components/FormEligibility";
-import { createEligibility } from "~/modules/eligibility/services/createEligibility";
-import { updateEligibilityAction } from "~/modules/eligibility/form-actions/updateEligibilityAction";
 import { MdOutlineTune } from "react-icons/md";
 import { MenuButton } from "~/components/MenuButton";
-import { AddCiteriaButton } from "~/modules/eligibility/components/AddCiteriaButton";
 import { Separator } from "~/components/Separator";
-import { Tag } from "~/components/Tag";
 import { Typography } from "~/components/Typography";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
@@ -51,12 +39,7 @@ export const meta: MetaFunction = ({ parentsData, params }) => {
 type ActionDataType = null | {
   successChangePercentage?: boolean;
   successEdit?: boolean;
-  successEligibilityCreated?: boolean;
-  successEligibilityUpdated?: boolean;
-  successAdditionalAudienceCreated?: boolean;
   errors?: { [key: string]: string | undefined };
-  elibilityErrors?: { [key: string]: string | undefined };
-  additionalAudienceErrors?: { [key: string]: string | undefined };
 };
 
 export const action: ActionFunction = async ({
@@ -68,15 +51,6 @@ export const action: ActionFunction = async ({
   const flagId = params.flagId;
   const formData = await request.formData();
   const type = formData.get("_type");
-
-  if (type === "update-eligibility") {
-    return updateEligibilityAction(formData, authCookie);
-  }
-
-  if (type === "create-eligibility") {
-    await createEligibility(params.env!, flagId as string, authCookie);
-    return { successEligibilityCreated: true };
-  }
 
   if (type === "percentage") {
     const rolloutPercentage = formData.get("rolloutPercentage");
@@ -108,66 +82,22 @@ export const action: ActionFunction = async ({
   return null;
 };
 
-interface LoaderData {
-  eligibilities: Array<Eligibility>;
-}
-
-export const loader: LoaderFunction = async ({
-  request,
-  params,
-}): Promise<LoaderData> => {
-  const session = await getSession(request.headers.get("Cookie"));
-  const authCookie = session.get("auth-cookie");
-
-  const eligibilities = await getEligibilities(
-    params.env!,
-    params.flagId!,
-    authCookie
-  );
-
-  return {
-    eligibilities,
-  };
-};
-
-const useFormTransition = () => {
-  const transition = useTransition();
-  const type = transition.submission?.formData.get("_type");
-
-  const isSubmitting = Boolean(transition.submission);
-
-  return {
-    isCreatingEligibility: type === "create-eligibility" && isSubmitting,
-    isCreatingAdditionalAudience:
-      type === "create-additional-audience" && isSubmitting,
-    isUpdatingEligibility: type === "update-eligibility" && isSubmitting,
-  };
-};
-
 /* eslint-disable sonarjs/cognitive-complexity */
 export default function FlagById() {
   const actionData = useActionData<ActionDataType>();
-  const formTransition = useFormTransition();
   const { project } = useProject();
   const { user } = useUser();
   const { environment } = useEnvironment();
   const { flagEnv } = useFlagEnv();
   const [searchParams] = useSearchParams();
 
-  const { eligibilities } = useLoaderData<LoaderData>();
   const hasPercentageChanged = Boolean(actionData?.successChangePercentage);
 
-  const currentFlag = flagEnv.flag;
-
-  const hasEligibility = eligibilities.length > 0;
   const hasErrors = Object.keys(actionData?.errors || {}).length > 0;
   const isMultiVariants = flagEnv.variants.length > 0;
 
   const isVariantCreated = searchParams.get("newVariant") || undefined;
   const isVariantRemoved = searchParams.get("variantRemoved") || undefined;
-
-  const isEligibilityRemoved =
-    searchParams.get("eligibilityRemoved") || undefined;
 
   return (
     <DashboardLayout
@@ -183,24 +113,7 @@ export default function FlagById() {
       <PageTitle value="Audience" />
 
       <Section id="rollout-target">
-        <Card
-          footer={
-            hasEligibility && (
-              <div className="flex flex-row gap-6">
-                <AddCiteriaButton variant="simple" />
-
-                <SubmitButton
-                  form="form-update-eligibility"
-                  variant="secondary"
-                  isLoading={formTransition.isUpdatingEligibility}
-                  loadingText="Updating the eligibility rules..."
-                >
-                  Update
-                </SubmitButton>
-              </div>
-            )
-          }
-        >
+        <Card>
           <CardContent>
             <SectionHeader
               title="Using percentage range"
@@ -224,16 +137,6 @@ export default function FlagById() {
                   <SuccessBox id="variant-added">
                     The variant has been successfully created.
                   </SuccessBox>
-                ) : actionData?.successEligibilityUpdated ? (
-                  <SuccessBox id="eligibility-updated">
-                    Eligibility audience updated.
-                  </SuccessBox>
-                ) : isEligibilityRemoved ? (
-                  <SuccessBox id="eligibility-removed">
-                    The eligibility audience has been successfully removed.
-                  </SuccessBox>
-                ) : actionData?.elibilityErrors ? (
-                  <ErrorBox list={actionData?.elibilityErrors} />
                 ) : null
               }
             />
@@ -310,28 +213,8 @@ export default function FlagById() {
               )}
             </div>
           </div>
-
-          <Separator className="border-dashed" />
-
-          <CardContent>
-            <Typography as="h3" className="font-semibold text-xl pb-6">
-              Eligibility criteria
-            </Typography>
-            <FormEligibility
-              initialEligibilites={eligibilities}
-              projectId={project.uuid}
-              envId={environment.uuid}
-              flagId={currentFlag.uuid}
-            />
-
-            {!hasEligibility && <AddCiteriaButton variant="full" />}
-          </CardContent>
         </Card>
       </Section>
-
-      <div className="flex justify-center">
-        <Tag variant="PRIMARY">OR</Tag>
-      </div>
     </DashboardLayout>
   );
 }

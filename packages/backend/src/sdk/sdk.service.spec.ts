@@ -3,7 +3,6 @@ import { FlagStatus } from '../flags/flags.status';
 import { PopulatedFlagEnv, Variant } from '../flags/types';
 import { SdkService } from './sdk.service';
 import { AppModule } from '../app.module';
-import { Eligibility } from '../eligibility/types';
 import { RedisService } from '../websocket/redis.service';
 import { ComparatorEnum } from '../rule/comparators/types';
 
@@ -39,7 +38,6 @@ describe('SdkService', () => {
       status: FlagStatus.ACTIVATED,
       rolloutPercentage: 100,
       variants: [],
-      eligibilities: [],
       scheduling: [],
       environment: {
         name: 'First',
@@ -236,60 +234,6 @@ describe('SdkService', () => {
 
           expect(shouldActivate).toEqual(expectedVariant);
         });
-      });
-    });
-
-    describe('Eligibilities', () => {
-      it('returns true when no eligibilities', () => {
-        const shouldActivate = service.resolveFlagStatus(flagEnv, {
-          id: 'user-id-123',
-        });
-
-        expect(shouldActivate).toBe(true);
-      });
-
-      it('returns true when the user matches eligibilities', () => {
-        const eligility: Eligibility = {
-          uuid: '1',
-          rule: {
-            fieldName: 'name',
-            fieldComparator: ComparatorEnum.Equals,
-            fieldValue: 'john\njane\nmarvin',
-          },
-          flagEnvironmentFlagId: '1',
-          flagEnvironmentEnvironmentId: '1',
-        };
-
-        flagEnv.eligibilities = [eligility];
-
-        const shouldActivate = service.resolveFlagStatus(flagEnv, {
-          id: 'user-id-123',
-          name: 'jane',
-        });
-
-        expect(shouldActivate).toBe(true);
-      });
-
-      it('returns false when the user does not match eligibilities', () => {
-        const eligility: Eligibility = {
-          uuid: '1',
-          rule: {
-            fieldName: 'name',
-            fieldComparator: ComparatorEnum.Equals,
-            fieldValue: 'john\njane\nmarvin',
-          },
-          flagEnvironmentFlagId: '1',
-          flagEnvironmentEnvironmentId: '1',
-        };
-
-        flagEnv.eligibilities = [eligility];
-
-        const shouldActivate = service.resolveFlagStatus(flagEnv, {
-          id: 'user-id-123',
-          name: 'laeti',
-        });
-
-        expect(shouldActivate).toBe(false);
       });
     });
   });

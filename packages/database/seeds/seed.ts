@@ -215,27 +215,6 @@ export const seedDb = async () => {
       },
     });
 
-    await prismaClient.eligibility.create({
-      data: {
-        uuid: "1",
-        rule: {
-          create: {
-            fieldName: "email",
-            fieldValue: "@gmail.com",
-            fieldComparator: "eq",
-          },
-        },
-        flagEnvironment: {
-          connect: {
-            flagId_environmentId: {
-              flagId: footerFlagEnv.flagId,
-              environmentId: footerFlagEnv.environmentId,
-            },
-          },
-        },
-      },
-    });
-
     await seedFlagHits(prismaClient, flagEnv, new Date(1992, 0, 1, 1), 10);
     await seedFlagHits(prismaClient, flagEnv, new Date(1992, 0, 3, 1), 20);
     await seedFlagHits(prismaClient, flagEnv, new Date(1992, 0, 2, 1), 40);

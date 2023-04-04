@@ -1,5 +1,4 @@
 import { Segment } from '../segments/types';
-import { Eligibility } from '../eligibility/types';
 import { Environment } from '../environments/types';
 import { FlagStatus } from './flags.status';
 
@@ -31,7 +30,6 @@ export interface PopulatedFlagEnv extends FlagEnvironment {
   environment: Environment;
   flag: Flag;
   scheduling: Array<Schedule>;
-  eligibilities: Array<Eligibility>;
   Segment: Array<Segment>;
 }
 

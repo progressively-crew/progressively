@@ -43,21 +43,21 @@ export class SegmentsController {
     @Param('segmentId') segmentId: string,
     @Body() segmentDto: SegmentCreationDTO,
   ) {
-    const updatedEligibility = await this.segmentService.updateSegment(
+    const updatedSegment = await this.segmentService.updateSegment(
       segmentId,
       segmentDto,
     );
 
     await this.activityLogService.register({
       userId,
-      flagId: updatedEligibility.flagEnvironmentFlagId,
-      envId: updatedEligibility.flagEnvironmentEnvironmentId,
+      flagId: updatedSegment.flagEnvironmentFlagId,
+      envId: updatedSegment.flagEnvironmentEnvironmentId,
       concernedEntity: 'flag',
       type: 'edit-segment-name',
-      data: JSON.stringify(updatedEligibility),
+      data: JSON.stringify(updatedSegment),
     });
 
-    return updatedEligibility;
+    return updatedSegment;
   }
 
   @Post(':segmentId/rules')

@@ -38,7 +38,6 @@ import { MetricDto, Variant } from './types';
 import { Webhook, WebhookCreationDTO, WebhookSchema } from '../webhooks/types';
 import { WebhooksService } from '../webhooks/webhooks.service';
 import { post, WebhooksEventsToFlagStatus } from '../webhooks/utils';
-import { EligibilityService } from '../eligibility/eligibility.service';
 import { ActivityLogService } from '../activity-log/activity-log.service';
 import { UserId } from '../users/users.decorator';
 import { ComparatorEnum } from '../rule/comparators/types';
@@ -52,7 +51,6 @@ export class FlagsController {
     private readonly schedulingService: SchedulingService,
     private readonly flagService: FlagsService,
     private readonly webhookService: WebhooksService,
-    private readonly eligibilityService: EligibilityService,
     private readonly wsGateway: WebsocketGateway,
     private readonly activityLogService: ActivityLogService,
     private readonly segmentService: SegmentsService,
@@ -332,42 +330,6 @@ export class FlagsController {
     return segment;
   }
 
-  @Post('environments/:envId/flags/:flagId/eligibilities')
-  @UseGuards(HasFlagEnvAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  async addEligibilityToFlag(
-    @UserId() userId: string,
-    @Param('envId') envId: string,
-    @Param('flagId') flagId: string,
-  ) {
-    const eligibility = await this.eligibilityService.addEligibilityToFlagEnv(
-      envId,
-      flagId,
-      {
-        fieldComparator: ComparatorEnum.Equals,
-        fieldName: '',
-        fieldValue: '',
-      },
-    );
-
-    const { flagEnvironment: flagEnv } =
-      await this.eligibilityService.getEligibilityFlagEnv(eligibility.uuid);
-
-    if (flagEnv.status === FlagStatus.ACTIVATED) {
-      this.wsGateway.notifyChanges(flagEnv.environment.clientKey, flagEnv);
-    }
-
-    await this.activityLogService.register({
-      userId,
-      flagId: flagId,
-      envId: envId,
-      concernedEntity: 'flag',
-      type: 'create-eligibility-restriction',
-    });
-
-    return eligibility;
-  }
-
   @Post('environments/:envId/flags/:flagId/webhooks')
   @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
@@ -537,16 +499,6 @@ export class FlagsController {
   @UseGuards(JwtAuthGuard)
   getSegments(@Param('envId') envId: string, @Param('flagId') flagId: string) {
     return this.segmentService.listSegments(envId, flagId);
-  }
-
-  @Get('environments/:envId/flags/:flagId/eligibilities')
-  @UseGuards(HasFlagEnvAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  getEligibilities(
-    @Param('envId') envId: string,
-    @Param('flagId') flagId: string,
-  ) {
-    return this.eligibilityService.listEligibilities(envId, flagId);
   }
 
   @Get('environments/:envId/flags/:flagId/metrics')

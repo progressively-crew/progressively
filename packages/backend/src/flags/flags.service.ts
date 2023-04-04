@@ -28,11 +28,6 @@ export class FlagsService {
         flag: true,
         variants: true,
         webhooks: true,
-        eligibilities: {
-          include: {
-            rule: true,
-          },
-        },
       },
     });
   }
@@ -56,11 +51,6 @@ export class FlagsService {
         environment: true,
         flag: true,
         variants: true,
-        eligibilities: {
-          include: {
-            rule: true,
-          },
-        },
       },
     });
   }
@@ -279,11 +269,6 @@ export class FlagsService {
         },
       }),
       this.prisma.schedule.deleteMany({
-        where: {
-          flagEnvironmentFlagId: flagId,
-        },
-      }),
-      this.prisma.eligibility.deleteMany({
         where: {
           flagEnvironmentFlagId: flagId,
         },

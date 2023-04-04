@@ -9,7 +9,6 @@ import { SegmentsModule } from '../segments/segments.module';
 import { RuleModule } from '../rule/rule.module';
 import { SchedulingModule } from '../scheduling/scheduling.module';
 import { WebhooksModule } from '../webhooks/webhooks.module';
-import { EligibilityModule } from '../eligibility/eligibility.module';
 
 @Module({
   imports: [
@@ -21,7 +20,6 @@ import { EligibilityModule } from '../eligibility/eligibility.module';
     RuleModule,
     SchedulingModule,
     WebhooksModule,
-    EligibilityModule,
     SegmentsModule,
     ActivityLogModule,
   ],

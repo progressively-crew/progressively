@@ -91,7 +91,6 @@ model FlagEnvironment {
   environmentId     String
   status            String?       @default("NOT_ACTIVATED")
   rolloutPercentage Int           @default(100)
-  eligibilities     Eligibility[]
   environment       Environment   @relation(fields: [environmentId], references: [uuid])
   flag              Flag          @relation(fields: [flagId], references: [uuid])
   flagHit           FlagHit[]
@@ -161,12 +160,11 @@ model FlagHit {
 }
 
 model Rule {
-  uuid            String        @id @default(uuid())
+  uuid            String   @id @default(uuid())
   fieldName       String
   fieldComparator String
   fieldValue      String
-  Eligibility     Eligibility[]
-  Segment         Segment?      @relation(fields: [segmentUuid], references: [uuid])
+  Segment         Segment? @relation(fields: [segmentUuid], references: [uuid])
   segmentUuid     String?
 }
 
@@ -177,15 +175,6 @@ model Segment {
   flagEnvironment              FlagEnvironment @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
   flagEnvironmentFlagId        String
   flagEnvironmentEnvironmentId String
-}
-
-model Eligibility {
-  uuid                         String           @id @default(uuid())
-  rule                         Rule             @relation(fields: [ruleUuid], references: [uuid])
-  flagEnvironmentFlagId        String?
-  flagEnvironmentEnvironmentId String?
-  flagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
-  ruleUuid                     String
 }
 
 model Schedule {

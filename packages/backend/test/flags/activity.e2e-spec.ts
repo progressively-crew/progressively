@@ -72,28 +72,6 @@ describe('FlagsController (e2e)', () => {
       expect(res.body).toMatchObject([
         {
           concernedEntity: 'flag',
-          flagEnvironmentEnvironmentId: '1',
-          flagEnvironmentFlagId: '1',
-          type: 'create-additional-audience',
-          userUuid: '1',
-          utc: '2023-01-21T00:00:00.000Z',
-          user: {
-            fullname: 'Marvin Frachet',
-          },
-        },
-        {
-          concernedEntity: 'flag',
-          flagEnvironmentEnvironmentId: '1',
-          flagEnvironmentFlagId: '1',
-          type: 'create-eligibility-restriction',
-          userUuid: '1',
-          utc: '2023-01-21T00:00:00.000Z',
-          user: {
-            fullname: 'Marvin Frachet',
-          },
-        },
-        {
-          concernedEntity: 'flag',
           data: 39,
           flagEnvironmentEnvironmentId: '1',
           flagEnvironmentFlagId: '1',

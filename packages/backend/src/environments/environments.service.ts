@@ -25,11 +25,6 @@ export class EnvironmentsService {
       include: {
         flag: true,
         scheduling: true,
-        eligibilities: {
-          include: {
-            rule: true,
-          },
-        },
         Segment: {
           include: {
             rule: true,
@@ -177,11 +172,6 @@ export class EnvironmentsService {
         },
       }),
       this.prisma.schedule.deleteMany({
-        where: {
-          flagEnvironmentEnvironmentId: envId,
-        },
-      }),
-      this.prisma.eligibility.deleteMany({
         where: {
           flagEnvironmentEnvironmentId: envId,
         },
