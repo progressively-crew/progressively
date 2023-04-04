@@ -7,10 +7,11 @@ import { WebsocketModule } from '../websocket/websocket.module';
 import { WebsocketGateway } from '../websocket/websocket.gateway';
 import { FieldRecord } from '../strategy/types';
 import { DatabaseModule } from '../database/database.module';
-import { StrategyService } from '../strategy/strategy.service';
 import { EligibilityModule } from '../eligibility/eligibility.module';
 import { SchedulingModule } from '../scheduling/scheduling.module';
 import { SchedulingService } from '../scheduling/scheduling.service';
+import { RuleModule } from '../rule/rule.module';
+import { StrategyModule } from '../strategy/strategy.module';
 
 @Module({
   controllers: [SdkController],
@@ -21,8 +22,10 @@ import { SchedulingService } from '../scheduling/scheduling.service';
     SchedulingModule,
     DatabaseModule,
     EligibilityModule,
+    RuleModule,
+    StrategyModule,
   ],
-  providers: [SdkService, StrategyService, SchedulingService],
+  providers: [SdkService],
 })
 export class SdkModule implements OnModuleInit {
   constructor(

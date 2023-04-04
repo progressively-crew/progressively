@@ -7,34 +7,25 @@ import {
   StrategyUpdateDTO,
   StrategyValueToServe,
 } from './types';
-import { Rule } from '../rule/Rule';
 import { ComparatorEnum } from '../rule/comparators/types';
+import { RuleService } from '../rule/rule.service';
 
 @Injectable()
 export class StrategyService {
-  constructor(private prisma: PrismaService) {}
-
-  private isValidStrategy(strategy: RolloutStrategy, fields: FieldRecord) {
-    const clientFieldValue = fields[strategy.rule.fieldName] || '';
-    const strategyFieldValues = strategy.rule.fieldValue.split('\n');
-
-    for (const fieldValue of strategyFieldValues) {
-      const rule = Rule.createFrom(fieldValue, strategy.rule.fieldComparator);
-
-      if (rule.isSatisfiedBy(clientFieldValue)) {
-        return true;
-      }
-    }
-
-    return false;
-  }
+  constructor(
+    private prisma: PrismaService,
+    private ruleService: RuleService,
+  ) {}
 
   resolveAdditionalAudienceValue(
     strategies: Array<RolloutStrategy>,
     fields: FieldRecord,
   ) {
     for (const strategy of strategies) {
-      const isValidStrategyRule = this.isValidStrategy(strategy, fields);
+      const isValidStrategyRule = this.ruleService.isMatchingRule(
+        strategy.rule,
+        fields,
+      );
 
       if (isValidStrategyRule) {
         if (strategy.valueToServeType === StrategyValueToServe.Boolean) {

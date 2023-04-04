@@ -4,6 +4,7 @@ import { ComparatorEnum } from '../rule/comparators/types';
 import { PrismaService } from '../database/prisma.service';
 import { StrategyService } from './strategy.service';
 import { RolloutStrategy } from './types';
+import { RuleService } from '../rule/rule.service';
 
 describe('StrategyService', () => {
   let service: StrategyService;
@@ -14,6 +15,7 @@ describe('StrategyService', () => {
       providers: [
         StrategyService,
         PrismaService,
+        RuleService,
         {
           provide: WINSTON_MODULE_PROVIDER,
           useValue: {

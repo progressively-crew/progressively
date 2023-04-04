@@ -4,10 +4,14 @@ import { FieldRecord } from '../strategy/types';
 import { PrismaService } from '../database/prisma.service';
 import { EligibilityCreateDTO, EligibilityUpdateDTO } from './types';
 import { Rule } from '../rule/Rule';
+import { RuleService } from '../rule/rule.service';
 
 @Injectable()
 export class EligibilityService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private ruleService: RuleService,
+  ) {}
 
   async hasPermissionOnEligibility(
     eligibilityId: string,
@@ -179,18 +183,13 @@ export class EligibilityService {
     if (flagEnv.eligibilities.length === 0) return true;
 
     for (const eligibility of flagEnv.eligibilities) {
-      const fieldValues = eligibility.rule.fieldValue.split('\n');
-      const clientFieldValue = fields[eligibility.rule.fieldName] || '';
+      const isEligible = this.ruleService.isMatchingRule(
+        eligibility.rule,
+        fields,
+      );
 
-      for (const fieldValue of fieldValues) {
-        const rule = Rule.createFrom(
-          fieldValue,
-          eligibility.rule.fieldComparator,
-        );
-
-        if (rule.isSatisfiedBy(clientFieldValue)) {
-          return true;
-        }
+      if (isEligible) {
+        return true;
       }
     }
 

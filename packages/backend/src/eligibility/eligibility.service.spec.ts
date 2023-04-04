@@ -6,6 +6,7 @@ import { FlagStatus } from '../flags/flags.status';
 import { PopulatedFlagEnv } from '../flags/types';
 import { EligibilityService } from './eligibility.service';
 import { Eligibility } from './types';
+import { RuleService } from '../rule/rule.service';
 
 describe('EligibilityService', () => {
   let service: EligibilityService;
@@ -17,6 +18,7 @@ describe('EligibilityService', () => {
       providers: [
         EligibilityService,
         PrismaService,
+        RuleService,
         {
           provide: WINSTON_MODULE_PROVIDER,
           useValue: {
