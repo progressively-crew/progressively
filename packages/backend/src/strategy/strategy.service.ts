@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
+import { ValueToServe } from './types';
 
 @Injectable()
 export class StrategyService {
@@ -10,6 +11,15 @@ export class StrategyService {
       data: {
         flagEnvironmentEnvironmentId: envId,
         flagEnvironmentFlagId: flagId,
+        valueToServeType: ValueToServe.Boolean,
+      },
+    });
+  }
+
+  deleteStrategy(strategyId: string) {
+    return this.prisma.strategy.delete({
+      where: {
+        uuid: strategyId,
       },
     });
   }

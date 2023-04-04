@@ -155,6 +155,7 @@ CREATE TABLE "Rule" (
     "fieldComparator" TEXT NOT NULL,
     "fieldValue" TEXT NOT NULL,
     "segmentUuid" TEXT,
+    "strategyUuid" TEXT,
 
     CONSTRAINT "Rule_pkey" PRIMARY KEY ("uuid")
 );
@@ -203,19 +204,10 @@ CREATE TABLE "Strategy" (
     "rolloutPercentage" INTEGER NOT NULL DEFAULT 100,
     "flagEnvironmentFlagId" TEXT,
     "flagEnvironmentEnvironmentId" TEXT,
-
-    CONSTRAINT "Strategy_pkey" PRIMARY KEY ("uuid")
-);
-
--- CreateTable
-CREATE TABLE "StrategyRule" (
-    "uuid" TEXT NOT NULL,
-    "ruleUuid" TEXT NOT NULL,
     "valueToServeType" TEXT NOT NULL,
     "valueToServe" TEXT,
-    "strategyUuid" TEXT,
 
-    CONSTRAINT "StrategyRule_pkey" PRIMARY KEY ("uuid")
+    CONSTRAINT "Strategy_pkey" PRIMARY KEY ("uuid")
 );
 
 -- CreateIndex
@@ -270,6 +262,9 @@ ALTER TABLE "FlagHit" ADD CONSTRAINT "FlagHit_flagEnvironmentFlagId_flagEnvironm
 ALTER TABLE "Rule" ADD CONSTRAINT "Rule_segmentUuid_fkey" FOREIGN KEY ("segmentUuid") REFERENCES "Segment"("uuid") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "Rule" ADD CONSTRAINT "Rule_strategyUuid_fkey" FOREIGN KEY ("strategyUuid") REFERENCES "Strategy"("uuid") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "Segment" ADD CONSTRAINT "Segment_flagEnvironmentFlagId_flagEnvironmentEnvironmentId_fkey" FOREIGN KEY ("flagEnvironmentFlagId", "flagEnvironmentEnvironmentId") REFERENCES "FlagEnvironment"("flagId", "environmentId") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -283,9 +278,3 @@ ALTER TABLE "ActivityLog" ADD CONSTRAINT "ActivityLog_flagEnvironmentFlagId_flag
 
 -- AddForeignKey
 ALTER TABLE "Strategy" ADD CONSTRAINT "Strategy_flagEnvironmentFlagId_flagEnvironmentEnvironmentI_fkey" FOREIGN KEY ("flagEnvironmentFlagId", "flagEnvironmentEnvironmentId") REFERENCES "FlagEnvironment"("flagId", "environmentId") ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "StrategyRule" ADD CONSTRAINT "StrategyRule_ruleUuid_fkey" FOREIGN KEY ("ruleUuid") REFERENCES "Rule"("uuid") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "StrategyRule" ADD CONSTRAINT "StrategyRule_strategyUuid_fkey" FOREIGN KEY ("strategyUuid") REFERENCES "Strategy"("uuid") ON DELETE SET NULL ON UPDATE CASCADE;

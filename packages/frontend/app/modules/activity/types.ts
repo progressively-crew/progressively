@@ -14,6 +14,7 @@ export type ActivityType =
   | "delete-scheduling"
   | "delete-segment"
   | "delete-rule"
+  | "delete-strategy"
   | "edit-segment-name"
   | "edit-segment-rule";
 

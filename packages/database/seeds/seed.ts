@@ -196,6 +196,15 @@ export const seedDb = async () => {
     });
     // End of multi variate setup
 
+    await prismaClient.strategy.create({
+      data: {
+        uuid: "1",
+        flagEnvironmentEnvironmentId: production.uuid,
+        flagEnvironmentFlagId: homePageFlag.uuid,
+        valueToServeType: "string",
+      },
+    });
+
     await prismaClient.segment.create({
       data: {
         name: "By email address",
