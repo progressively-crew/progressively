@@ -174,12 +174,12 @@ describe('Segment (e2e)', () => {
     it('gives a 403 when trying to access a valid project but an invalid env', async () => {
       const access_token = await authenticate(app);
 
-      const validStrategy: any = {};
+      const validRule: any = {};
 
       return request(app.getHttpServer())
         .post('/segments/4/rules')
         .set('Authorization', `Bearer ${access_token}`)
-        .send(validStrategy)
+        .send(validRule)
         .expect(403)
         .expect({
           statusCode: 403,
@@ -211,7 +211,7 @@ describe('Segment (e2e)', () => {
         });
     });
 
-    it('creates a default strategy', async () => {
+    it('creates a default rule', async () => {
       const access_token = await authenticate(app);
 
       const response = await request(app.getHttpServer())

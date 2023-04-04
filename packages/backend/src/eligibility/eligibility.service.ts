@@ -1,9 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { PopulatedFlagEnv } from '../flags/types';
-import { FieldRecord } from '../strategy/types';
+import { FieldRecord } from '../rule/types';
 import { PrismaService } from '../database/prisma.service';
 import { EligibilityCreateDTO, EligibilityUpdateDTO } from './types';
-import { Rule } from '../rule/Rule';
 import { RuleService } from '../rule/rule.service';
 
 @Injectable()
@@ -55,11 +54,6 @@ export class EligibilityService {
           include: {
             environment: true,
             flag: true,
-            strategies: {
-              include: {
-                rule: true,
-              },
-            },
             variants: true,
             eligibilities: {
               include: {
@@ -92,11 +86,6 @@ export class EligibilityService {
           include: {
             environment: true,
             flag: true,
-            strategies: {
-              include: {
-                rule: true,
-              },
-            },
             variants: true,
             eligibilities: {
               include: {
@@ -160,11 +149,6 @@ export class EligibilityService {
           include: {
             environment: true,
             flag: true,
-            strategies: {
-              include: {
-                rule: true,
-              },
-            },
             variants: true,
             eligibilities: {
               include: {

@@ -11,7 +11,6 @@ import { AuthModule } from './auth/auth.module';
 import { WebsocketModule } from './websocket/websocket.module';
 import { TokensModule } from './tokens/tokens.module';
 import { EnvironmentsModule } from './environments/environments.module';
-import { StrategyModule } from './strategy/strategy.module';
 import { AppLoggerMiddleware } from './logging.middleware';
 import { SdkModule } from './sdk/sdk.module';
 import { MailModule } from './mail/mail.module';
@@ -57,7 +56,6 @@ import 'winston-daily-rotate-file';
     }),
     WebsocketModule,
     EnvironmentsModule,
-    StrategyModule,
     SdkModule,
     MailModule,
     DatabaseModule,

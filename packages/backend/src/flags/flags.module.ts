@@ -5,9 +5,7 @@ import { EnvironmentsModule } from '../environments/environments.module';
 import { WebsocketModule } from '../websocket/websocket.module';
 import { DatabaseModule } from '../database/database.module';
 import { ActivityLogModule } from '../activity-log/activity-log.module';
-import { ActivityLogService } from '../activity-log/activity-log.service';
 import { SegmentsModule } from '../segments/segments.module';
-import { StrategyModule } from '../strategy/strategy.module';
 import { RuleModule } from '../rule/rule.module';
 import { SchedulingModule } from '../scheduling/scheduling.module';
 import { WebhooksModule } from '../webhooks/webhooks.module';
@@ -20,7 +18,6 @@ import { EligibilityModule } from '../eligibility/eligibility.module';
     DatabaseModule,
     ActivityLogModule,
     SegmentsModule,
-    StrategyModule,
     RuleModule,
     SchedulingModule,
     WebhooksModule,

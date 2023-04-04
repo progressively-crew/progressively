@@ -399,136 +399,6 @@ describe('FlagsController (e2e)', () => {
     });
   });
 
-  describe('/environments/:envId/flags/:flagId/strategies (POST)', () => {
-    it('gives a 401 when the user is not authenticated', () =>
-      verifyAuthGuard(app, '/environments/1/flags/1/strategies', 'post'));
-
-    it('gives a 403 when trying to access a valid project but an invalid env', async () => {
-      const access_token = await authenticate(app);
-
-      const validStrategy: any = {};
-
-      return request(app.getHttpServer())
-        .post('/environments/1/flags/3/strategies')
-        .set('Authorization', `Bearer ${access_token}`)
-        .send(validStrategy)
-        .expect(403)
-        .expect({
-          statusCode: 403,
-          message: 'Forbidden resource',
-          error: 'Forbidden',
-        });
-    });
-
-    it('gives a 403 when the user requests a forbidden project', async () => {
-      const access_token = await authenticate(
-        app,
-        'jane.doe@gmail.com',
-        'password',
-      );
-
-      return request(app.getHttpServer())
-        .post('/environments/1/flags/1/strategies')
-        .set('Authorization', `Bearer ${access_token}`)
-        .send({
-          fieldName: 'email',
-          fieldComparator: 'eq',
-          fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
-        })
-        .expect(403)
-        .expect({
-          statusCode: 403,
-          message: 'Forbidden resource',
-          error: 'Forbidden',
-        });
-    });
-
-    it('creates a default strategy', async () => {
-      const access_token = await authenticate(app);
-
-      const response = await request(app.getHttpServer())
-        .post('/environments/1/flags/1/strategies')
-        .set('Authorization', `Bearer ${access_token}`)
-        .expect(201);
-
-      expect(response.body.uuid).toBeDefined();
-      expect(response.body.ruleUuid).toBeDefined();
-      expect(response.body).toMatchObject({
-        flagEnvironmentFlagId: '1',
-        flagEnvironmentEnvironmentId: '1',
-        valueToServe: 'false',
-        valueToServeType: 'Boolean',
-      });
-    });
-  });
-
-  describe('/environments/1/flags/1/strategies (GET)', () => {
-    it('gives a 401 when the user is not authenticated', () =>
-      verifyAuthGuard(app, '/environments/1/flags/1/strategies', 'get'));
-
-    it('gives a 403 when trying to access a valid project but an invalid env', async () => {
-      const access_token = await authenticate(app);
-
-      return request(app.getHttpServer())
-        .get('/environments/1/flags/3/strategies')
-        .set('Authorization', `Bearer ${access_token}`)
-        .expect(403)
-        .expect({
-          statusCode: 403,
-          message: 'Forbidden resource',
-          error: 'Forbidden',
-        });
-    });
-
-    it('gives a 403 when the user requests a forbidden project', async () => {
-      const access_token = await authenticate(
-        app,
-        'jane.doe@gmail.com',
-        'password',
-      );
-
-      return request(app.getHttpServer())
-        .get('/environments/1/flags/1/strategies')
-        .set('Authorization', `Bearer ${access_token}`)
-        .expect(403)
-        .expect({
-          statusCode: 403,
-          message: 'Forbidden resource',
-          error: 'Forbidden',
-        });
-    });
-
-    it('gives the strategies information when the user is authenticated and authorized', async () => {
-      const access_token = await authenticate(app);
-
-      // Create a strategy to check it works
-      await request(app.getHttpServer())
-        .post('/environments/1/flags/1/strategies')
-        .set('Authorization', `Bearer ${access_token}`);
-
-      const response = await request(app.getHttpServer())
-        .get('/environments/1/flags/1/strategies')
-        .set('Authorization', `Bearer ${access_token}`);
-
-      const newStrat = response.body[0];
-
-      expect(response.status).toBe(200);
-      expect(newStrat.ruleUuid).toBeDefined();
-      expect(newStrat).toMatchObject({
-        flagEnvironmentEnvironmentId: '1',
-        flagEnvironmentFlagId: '1',
-        valueToServe: 'true',
-        valueToServeType: 'Boolean',
-        uuid: '1',
-        rule: {
-          fieldComparator: 'eq',
-          fieldName: 'id',
-          fieldValue: '1',
-        },
-      });
-    });
-  });
-
   describe('/environments/1/flags/1/scheduling (GET)', () => {
     it('gives a 401 when the user is not authenticated', () =>
       verifyAuthGuard(app, '/environments/1/flags/1/scheduling', 'get'));
@@ -568,18 +438,6 @@ describe('FlagsController (e2e)', () => {
     it('gives the scheduling information when the user is authenticated and authorized', async () => {
       const access_token = await authenticate(app);
 
-      const validStrategy: any = {
-        fieldName: 'email',
-        fieldComparator: 'eq',
-        fieldValue: 'marvin.frachet@something.com\njohn.doe@gmail.com',
-      };
-
-      // Create a strategy to check it works
-      await request(app.getHttpServer())
-        .post('/environments/1/flags/1/scheduling')
-        .set('Authorization', `Bearer ${access_token}`)
-        .send(validStrategy);
-
       const response = await request(app.getHttpServer())
         .get('/environments/1/flags/1/scheduling')
         .set('Authorization', `Bearer ${access_token}`);
@@ -601,12 +459,10 @@ describe('FlagsController (e2e)', () => {
     it('gives a 403 when trying to access a valid project but an invalid env', async () => {
       const access_token = await authenticate(app);
 
-      const validStrategy: any = {};
-
       return request(app.getHttpServer())
         .post('/environments/1/flags/3/scheduling')
         .set('Authorization', `Bearer ${access_token}`)
-        .send(validStrategy)
+        .send({})
         .expect(403)
         .expect({
           statusCode: 403,
@@ -1426,12 +1282,10 @@ describe('FlagsController (e2e)', () => {
     it('gives a 403 when trying to access a valid project but an invalid env', async () => {
       const access_token = await authenticate(app);
 
-      const validStrategy: any = {};
-
       return request(app.getHttpServer())
         .post('/environments/1/flags/3/webhooks')
         .set('Authorization', `Bearer ${access_token}`)
-        .send(validStrategy)
+        .send({})
         .expect(403)
         .expect({
           statusCode: 403,
@@ -1467,14 +1321,14 @@ describe('FlagsController (e2e)', () => {
       it(`gives 400 when the project has a webhook without "${field}"`, async () => {
         const access_token = await authenticate(app);
 
-        const invalidStrategy: any = {
+        const invalidWebhook: any = {
           [field]: undefined,
         };
 
         await request(app.getHttpServer())
           .post('/environments/1/flags/1/webhooks')
           .set('Authorization', `Bearer ${access_token}`)
-          .send(invalidStrategy)
+          .send(invalidWebhook)
           .expect(400)
           .expect({
             statusCode: 400,
@@ -1759,12 +1613,12 @@ describe('FlagsController (e2e)', () => {
 
     it('gives a 403 when trying to access a valid project but an invalid env', async () => {
       const access_token = await authenticate(app);
-      const validStrategy: any = {};
+      const validSegment: any = {};
 
       return request(app.getHttpServer())
         .post('/environments/1/flags/3/segments')
         .set('Authorization', `Bearer ${access_token}`)
-        .send(validStrategy)
+        .send(validSegment)
         .expect(403)
         .expect({
           statusCode: 403,
