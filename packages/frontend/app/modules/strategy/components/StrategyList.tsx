@@ -70,13 +70,14 @@ const StrategyItem = ({ strategy }: StrategyItemProps) => {
         <Separator className="border-dashed" />
 
         <CardContent>
-          <RuleFormField
-            initialFieldName={""}
-            initialFieldComparator={""}
-            initialFieldValue={""}
-          />
-
-          <div className="h-2" />
+          <div className="bg-gray-50 dark:bg-slate-900 px-6 py-4">
+            <RuleFormField
+              initialFieldName={""}
+              initialFieldComparator={""}
+              initialFieldValue={""}
+            />
+          </div>
+          <div className="h-4" />
 
           <DashedButton type="button" size="S">
             Add a rule
