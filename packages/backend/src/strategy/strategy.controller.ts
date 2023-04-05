@@ -25,7 +25,7 @@ export class StrategyController {
     private activityLogService: ActivityLogService,
   ) {}
 
-  @Get('environments/:envId/flags/:flagId/strategies')
+  @Get('/environments/:envId/flags/:flagId/strategies')
   @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
   getStrategies(

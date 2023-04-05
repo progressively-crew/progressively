@@ -8,3 +8,5 @@ export enum ComparatorEnum {
   Equals = "eq",
   Contains = "contains",
 }
+
+export type Rule = RuleType & { uuid: string };
