@@ -5,11 +5,12 @@ import { useId, useRef } from "react";
 import { RuleFormField } from "~/modules/rules/components/RuleFormField";
 import { FormSliderInput } from "~/modules/flags/components/FormSliderInput";
 import { ValueToServeFormField } from "./ValueToServeFormField";
-import { Separator } from "~/components/Separator";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { Typography } from "~/components/Typography";
 import { DashedButton } from "~/components/Buttons/DashedButton";
+import { Tag } from "~/components/Tag";
+import { CreateButton } from "~/components/Buttons/CreateButton";
 
 export interface StrategyListProps {
   items: Array<Strategy>;
@@ -36,15 +37,24 @@ const StrategyItem = ({ strategy }: StrategyItemProps) => {
   return (
     <Card
       footer={
-        <div className="flex flex-row gap-4">
-          <SubmitButton form={updateStrategyFormId}>
-            Update strategy
-          </SubmitButton>
+        <div className="flex flex-row gap-4 justify-between">
+          <div className="flex flex-row gap-4">
+            <SubmitButton form={updateStrategyFormId}>Save</SubmitButton>
+
+            <Form method="post">
+              <input type="hidden" value="add-strategy-rule" name="_type" />
+              <input type="hidden" value={strategy.uuid} name="uuid" />
+
+              <CreateButton type="submit" variant="secondary">
+                Add a rule
+              </CreateButton>
+            </Form>
+          </div>
 
           <Form method="post" ref={formRef}>
             <input type="hidden" value="delete-strategy" name="_type" />
             <input type="hidden" value={strategy.uuid} name="uuid" />
-            <DeleteButton variant="secondary">Delete strategy</DeleteButton>
+            <DeleteButton variant="secondary">Delete</DeleteButton>
           </Form>
         </div>
       }
@@ -59,7 +69,7 @@ const StrategyItem = ({ strategy }: StrategyItemProps) => {
               valueToServeType={strategy.valueToServeType}
             />
 
-            <Typography>to</Typography>
+            <Typography className="text-sm font-semibold">to</Typography>
 
             <FormSliderInput
               name={`rolloutPercentage`}
@@ -67,39 +77,37 @@ const StrategyItem = ({ strategy }: StrategyItemProps) => {
               initialPercentage={strategy.rolloutPercentage || 0}
             />
 
-            <Typography>of the audience</Typography>
+            <Typography className="text-sm font-semibold">
+              of the audience
+            </Typography>
           </div>
         </CardContent>
 
-        <Separator className="border-dashed" />
+        <div
+          className={`flex flex-col gap-1 ${
+            strategy.rules?.length ? "mb-1" : ""
+          }`}
+        >
+          {strategy.rules?.map((rule, index) => (
+            <div key={rule.uuid}>
+              <div className="bg-gray-50 dark:bg-slate-900 px-6 py-4 pl-20">
+                <input type="hidden" value={rule.uuid} name="ruleUuid" />
+                <RuleFormField
+                  initialFieldName={rule.fieldName}
+                  initialFieldComparator={rule.fieldComparator}
+                  initialFieldValue={rule.fieldValue}
+                />
+              </div>
 
-        <div className="flex flex-col gap-1">
-          {strategy.rules?.map((rule) => (
-            <div
-              className="bg-gray-50 dark:bg-slate-900 px-6 py-4 px-6"
-              key={rule.uuid}
-            >
-              <input type="hidden" value={rule.uuid} name="ruleUuid" />
-              <RuleFormField
-                initialFieldName={rule.fieldName}
-                initialFieldComparator={rule.fieldComparator}
-                initialFieldValue={rule.fieldValue}
-              />
+              {index !== strategy.rules!.length - 1 && (
+                <span className="-mt-2 absolute -ml-6">
+                  <Tag variant="PRIMARY">OR</Tag>
+                </span>
+              )}
             </div>
           ))}
         </div>
       </Form>
-
-      <div className="px-6 py-4">
-        <Form method="post">
-          <input type="hidden" value="add-strategy-rule" name="_type" />
-          <input type="hidden" value={strategy.uuid} name="uuid" />
-
-          <DashedButton type="submit" size="S">
-            Add a rule
-          </DashedButton>
-        </Form>
-      </div>
     </Card>
   );
 };

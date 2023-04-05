@@ -16,8 +16,10 @@ export const RuleFormField = ({
   initialFieldValue,
 }: RuleFormFieldsProps) => {
   return (
-    <div className="flex flex-row gap-2">
-      <Typography className="shrink-0 py-2 w-28">When field</Typography>
+    <div className="flex flex-row gap-4 items-center">
+      <Typography className="shrink-0 py-2 text-sm font-semibold">
+        When field
+      </Typography>
 
       <TextInput
         hiddenLabel

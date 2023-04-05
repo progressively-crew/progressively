@@ -18,9 +18,9 @@ import { getStrategies } from "~/modules/strategy/services/getStrategies";
 import { StrategyList } from "~/modules/strategy/components/StrategyList";
 import { createStrategy } from "~/modules/strategy/services/createStrategy";
 import { deleteStrategy } from "~/modules/strategy/services/deleteStrategy";
-import { DashedButton } from "~/components/Buttons/DashedButton";
 import { createStrategyRule } from "~/modules/strategy/services/createStrategyRule";
 import { editStrategyAction } from "~/modules/strategy/form-actions/editStrategyAction";
+import { CreateButton } from "~/components/Buttons/CreateButton";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -123,16 +123,19 @@ export default function FlagById() {
         />
       }
     >
-      <PageTitle value="Audience" />
+      <PageTitle
+        value="Audience"
+        action={
+          <Form method="post">
+            <input type="hidden" name="_type" value="add-strategy" />
+            <CreateButton type="submit">Add a strategy</CreateButton>
+          </Form>
+        }
+      />
 
       <Section id="rollout-target">
         <StrategyList items={strategies} />
         <div className="h-4" />
-
-        <Form method="post">
-          <input type="hidden" name="_type" value="add-strategy" />
-          <DashedButton type="submit">Add a strategy</DashedButton>
-        </Form>
       </Section>
     </DashboardLayout>
   );
