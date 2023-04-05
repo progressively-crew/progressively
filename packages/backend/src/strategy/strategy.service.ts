@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
 import { StrategyUpdateDto, ValueToServe } from './types';
 import { ComparatorEnum } from '../rule/comparators/types';
+import { Strategy } from '@progressively/database';
 
 @Injectable()
 export class StrategyService {
@@ -17,12 +18,23 @@ export class StrategyService {
     });
   }
 
-  deleteStrategy(strategyId: string) {
-    return this.prisma.strategy.delete({
-      where: {
-        uuid: strategyId,
-      },
-    });
+  async deleteStrategy(strategyId: string) {
+    const queries = [
+      this.prisma.rule.deleteMany({
+        where: {
+          strategyUuid: strategyId,
+        },
+      }),
+      this.prisma.strategy.delete({
+        where: {
+          uuid: strategyId,
+        },
+      }),
+    ];
+
+    const result = await this.prisma.$transaction(queries);
+
+    return result[result.length - 1] as Strategy;
   }
 
   updateStrategy(strategyId: string, strategyDto: StrategyUpdateDto) {

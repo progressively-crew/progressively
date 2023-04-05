@@ -83,9 +83,7 @@ const StrategyItem = ({ strategy }: StrategyItemProps) => {
         ))}
       </Form>
 
-      <div className="h-4" />
-
-      <div className="px-6">
+      <div className="px-6 py-4">
         <Form method="post">
           <input type="hidden" value="add-strategy-rule" name="_type" />
           <input type="hidden" value={strategy.uuid} name="uuid" />
