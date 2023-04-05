@@ -51,12 +51,23 @@ export class SegmentsService {
     });
   }
 
-  deleteSegment(segmentId: string) {
-    return this.prisma.segment.delete({
-      where: {
-        uuid: segmentId,
-      },
-    });
+  async deleteSegment(segmentId: string) {
+    const queries = [
+      this.prisma.rule.deleteMany({
+        where: {
+          segmentUuid: segmentId,
+        },
+      }),
+      this.prisma.segment.delete({
+        where: {
+          uuid: segmentId,
+        },
+      }),
+    ];
+
+    const result = await this.prisma.$transaction(queries);
+
+    return result[result.length - 1];
   }
 
   async hasPermissionOnSegment(
