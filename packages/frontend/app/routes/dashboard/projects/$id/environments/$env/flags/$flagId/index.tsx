@@ -3,7 +3,6 @@ import { getSession } from "~/sessions";
 import { Section } from "~/components/Section";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
 import { Form, useActionData, useLoaderData } from "@remix-run/react";
-import { Card, CardContent } from "~/components/Card";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { useUser } from "~/modules/user/contexts/useUser";
@@ -17,9 +16,9 @@ import { PageTitle } from "~/components/PageTitle";
 import { Strategy } from "~/modules/strategy/types";
 import { getStrategies } from "~/modules/strategy/services/getStrategies";
 import { StrategyList } from "~/modules/strategy/components/StrategyList";
-import { AddStrategyButton } from "~/modules/strategy/components/AddStrategyButton";
 import { createStrategy } from "~/modules/strategy/services/createStrategy";
 import { deleteStrategy } from "~/modules/strategy/services/deleteStrategy";
+import { DashedButton } from "~/components/Buttons/DashedButton";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -109,10 +108,11 @@ export default function FlagById() {
 
       <Section id="rollout-target">
         <StrategyList items={strategies} />
+        <div className="h-4" />
 
         <Form method="post">
           <input type="hidden" name="_type" value="add-strategy" />
-          <AddStrategyButton />
+          <DashedButton type="submit">Add a strategy</DashedButton>
         </Form>
       </Section>
     </DashboardLayout>
