@@ -76,6 +76,7 @@ const StrategyItem = ({ strategy }: StrategyItemProps) => {
               className="bg-gray-50 dark:bg-slate-900 px-6 py-4 px-6"
               key={rule.uuid}
             >
+              <input type="hidden" value={rule.uuid} name="ruleUuid" />
               <RuleFormField
                 initialFieldName={rule.fieldName}
                 initialFieldComparator={rule.fieldComparator}

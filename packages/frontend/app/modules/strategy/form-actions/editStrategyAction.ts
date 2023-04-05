@@ -7,11 +7,13 @@ export const editStrategyAction = (
   const valueToServeType = formData.get("value-to-serve-type");
   const valueToServe = formData.get("value-to-serve");
 
+  const ruleUuids = formData.getAll("ruleUuid");
   const fieldNames = formData.getAll("field-name");
   const fieldComparators = formData.getAll("field-comparator");
   const fieldValues = formData.getAll("field-value");
 
   console.log("LOL", {
+    ruleUuids,
     rolloutPercentage,
     valueToServe,
     valueToServeType,
