@@ -20,6 +20,7 @@ import { createStrategy } from "~/modules/strategy/services/createStrategy";
 import { deleteStrategy } from "~/modules/strategy/services/deleteStrategy";
 import { DashedButton } from "~/components/Buttons/DashedButton";
 import { createStrategyRule } from "~/modules/strategy/services/createStrategyRule";
+import { editStrategyAction } from "~/modules/strategy/form-actions/editStrategyAction";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -47,6 +48,8 @@ export const action: ActionFunction = async ({
   const formData = await request.formData();
   const type = formData.get("_type");
 
+  console.log("FOWJHFOWJHFOWJFOWJFO", type);
+
   if (type === "add-strategy") {
     return await createStrategy(params.env!, params.flagId!, authCookie);
   }
@@ -68,6 +71,13 @@ export const action: ActionFunction = async ({
 
   if (type === "toggle-flag") {
     return toggleFlagAction(formData, params, authCookie);
+  }
+
+  if (type === "edit-strategy") {
+    const strategyId = formData.get("uuid")?.toString();
+    if (strategyId) {
+      return editStrategyAction(formData, strategyId, authCookie);
+    }
   }
 
   return null;

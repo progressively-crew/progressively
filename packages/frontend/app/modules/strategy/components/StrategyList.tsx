@@ -1,8 +1,7 @@
 import { Card, CardContent } from "~/components/Card";
 import { Strategy } from "../types";
-import { MenuButton } from "~/components/MenuButton";
 import { Form } from "@remix-run/react";
-import { useRef } from "react";
+import { useId, useRef } from "react";
 import { RuleFormField } from "~/modules/rules/components/RuleFormField";
 import { FormSliderInput } from "~/modules/flags/components/FormSliderInput";
 import { ValueToServeFormField } from "./ValueToServeFormField";
@@ -32,7 +31,7 @@ export interface StrategyItemProps {
 const StrategyItem = ({ strategy }: StrategyItemProps) => {
   const formRef = useRef<HTMLFormElement>(null);
 
-  const updateStrategyFormId = "update-strategy";
+  const updateStrategyFormId = useId();
 
   return (
     <Card
@@ -51,6 +50,8 @@ const StrategyItem = ({ strategy }: StrategyItemProps) => {
       }
     >
       <Form method="post" className="block" id={updateStrategyFormId}>
+        <input type="hidden" value="edit-strategy" name="_type" />
+        <input type="hidden" value={strategy.uuid} name="uuid" />
         <CardContent>
           <div className="flex flex-row gap-4 items-center">
             <ValueToServeFormField />
@@ -69,18 +70,20 @@ const StrategyItem = ({ strategy }: StrategyItemProps) => {
 
         <Separator className="border-dashed" />
 
-        {strategy.rules?.map((rule) => (
-          <div
-            className="bg-gray-50 dark:bg-slate-900 px-6 py-4 px-6"
-            key={rule.uuid}
-          >
-            <RuleFormField
-              initialFieldName={rule.fieldName}
-              initialFieldComparator={rule.fieldComparator}
-              initialFieldValue={rule.fieldValue}
-            />
-          </div>
-        ))}
+        <div className="flex flex-col gap-1">
+          {strategy.rules?.map((rule) => (
+            <div
+              className="bg-gray-50 dark:bg-slate-900 px-6 py-4 px-6"
+              key={rule.uuid}
+            >
+              <RuleFormField
+                initialFieldName={rule.fieldName}
+                initialFieldComparator={rule.fieldComparator}
+                initialFieldValue={rule.fieldValue}
+              />
+            </div>
+          ))}
+        </div>
       </Form>
 
       <div className="px-6 py-4">

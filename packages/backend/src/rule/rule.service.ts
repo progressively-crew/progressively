@@ -22,6 +22,7 @@ export class RuleService {
               flagEnvironment: {
                 some: {
                   Segment: { some: { rule: { some: { uuid: ruleId } } } },
+                  strategies: { some: { rules: { some: { uuid: ruleId } } } },
                 },
               },
             },
