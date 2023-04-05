@@ -4,7 +4,6 @@ import { PopulatedFlagEnv, Variant } from '../flags/types';
 import { SdkService } from './sdk.service';
 import { AppModule } from '../app.module';
 import { RedisService } from '../websocket/redis.service';
-import { ComparatorEnum } from '../rule/comparators/types';
 
 describe('SdkService', () => {
   let service: SdkService;

@@ -16,7 +16,6 @@ import { SegmentCreationDTO, SegmentSchema } from './types';
 import { SegmentsService } from './segments.service';
 import { ActivityLogService } from '../activity-log/activity-log.service';
 import { WebsocketGateway } from '../websocket/websocket.gateway';
-import { FlagStatus } from '../flags/flags.status';
 
 @Controller('segments')
 export class SegmentsController {
@@ -70,10 +69,6 @@ export class SegmentsController {
 
     const { flagEnvironment: flagEnv } =
       await this.segmentService.getSegmentFlagEnv(rule.segmentUuid);
-
-    if (flagEnv.status === FlagStatus.ACTIVATED) {
-      this.wsGateway.notifyChanges(flagEnv.environment.clientKey, flagEnv);
-    }
 
     await this.activityLogService.register({
       userId,

@@ -107,6 +107,11 @@ export class SchedulingService {
       flag: true,
       scheduling: true,
       variants: true,
+      strategies: {
+        include: {
+          rules: true,
+        },
+      },
     };
 
     if (schedule.type === SchedulingType.UpdatePercentage) {

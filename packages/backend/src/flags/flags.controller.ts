@@ -40,7 +40,6 @@ import { WebhooksService } from '../webhooks/webhooks.service';
 import { post, WebhooksEventsToFlagStatus } from '../webhooks/utils';
 import { ActivityLogService } from '../activity-log/activity-log.service';
 import { UserId } from '../users/users.decorator';
-import { ComparatorEnum } from '../rule/comparators/types';
 import { SegmentsService } from '../segments/segments.service';
 import { SegmentCreationDTO, SegmentSchema } from '../segments/types';
 
@@ -310,13 +309,6 @@ export class FlagsController {
       flagId,
       segmentDto.name,
     );
-
-    const { flagEnvironment: flagEnv } =
-      await this.segmentService.getSegmentFlagEnv(segment.uuid);
-
-    if (flagEnv.status === FlagStatus.ACTIVATED) {
-      this.wsGateway.notifyChanges(flagEnv.environment.clientKey, flagEnv);
-    }
 
     await this.activityLogService.register({
       userId,

@@ -28,6 +28,11 @@ export class FlagsService {
         flag: true,
         variants: true,
         webhooks: true,
+        strategies: {
+          include: {
+            rules: true,
+          },
+        },
       },
     });
   }
@@ -51,6 +56,11 @@ export class FlagsService {
         environment: true,
         flag: true,
         variants: true,
+        strategies: {
+          include: {
+            rules: true,
+          },
+        },
       },
     });
   }
