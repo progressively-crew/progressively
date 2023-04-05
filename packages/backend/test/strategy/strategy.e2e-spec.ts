@@ -200,6 +200,61 @@ describe('Strategy (e2e)', () => {
     });
   });
 
+  describe('/strategies/1/rules (POST)', () => {
+    it('gives a 401 when the user is not authenticated', () =>
+      verifyAuthGuard(app, '/strategies/1/rules', 'post'));
+
+    it('gives a 403 when trying to access a valid project but an invalid env', async () => {
+      const access_token = await authenticate(app);
+
+      return request(app.getHttpServer())
+        .post('/strategies/3/rules')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('gives a 403 when the user requests a forbidden project', async () => {
+      const access_token = await authenticate(
+        app,
+        'jane.doe@gmail.com',
+        'password',
+      );
+
+      return request(app.getHttpServer())
+        .post('/strategies/1/rules')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('creates a default rule', async () => {
+      const access_token = await authenticate(app);
+
+      const response = await request(app.getHttpServer())
+        .post('/strategies/1/rules')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(201);
+
+      expect(response.body.uuid).toBeDefined();
+      expect(response.body).toMatchObject({
+        fieldComparator: 'eq',
+        fieldName: '',
+        fieldValue: '',
+        segmentUuid: null,
+        strategyUuid: '1',
+      });
+    });
+  });
+
   describe('/strategies/1 (Put)', () => {
     it('gives a 401 when the user is not authenticated', () =>
       verifyAuthGuard(app, '/strategies/1', 'put'));
@@ -209,13 +264,6 @@ describe('Strategy (e2e)', () => {
 
       const validRule: StrategyUpdateDto = {
         valueToServeType: ValueToServe.Boolean,
-        rules: [
-          {
-            fieldName: 'id',
-            fieldValue: '1234',
-            fieldComparator: ComparatorEnum.Contains,
-          },
-        ],
       };
 
       return request(app.getHttpServer())
@@ -239,13 +287,6 @@ describe('Strategy (e2e)', () => {
 
       const validRule: StrategyUpdateDto = {
         valueToServeType: ValueToServe.Boolean,
-        rules: [
-          {
-            fieldName: 'id',
-            fieldValue: '1234',
-            fieldComparator: ComparatorEnum.Contains,
-          },
-        ],
       };
 
       return request(app.getHttpServer())
@@ -286,13 +327,6 @@ describe('Strategy (e2e)', () => {
 
       const validRule: StrategyUpdateDto = {
         valueToServeType: ValueToServe.Boolean,
-        rules: [
-          {
-            fieldName: 'id',
-            fieldValue: '1234',
-            fieldComparator: ComparatorEnum.Contains,
-          },
-        ],
       };
 
       const response = await request(app.getHttpServer())

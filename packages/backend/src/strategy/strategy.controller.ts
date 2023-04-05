@@ -57,6 +57,16 @@ export class StrategyController {
     return strategy;
   }
 
+  @Post('/strategies/:strategyId/rules')
+  @UseGuards(HasStrategyAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  createStrategyRule(
+    @UserId() userId: string,
+    @Param('strategyId') strategyId: string,
+  ) {
+    return this.strategyService.createStrategyRule(strategyId);
+  }
+
   @Delete('/strategies/:strategyId')
   @UseGuards(HasStrategyAccessGuard)
   @UseGuards(JwtAuthGuard)

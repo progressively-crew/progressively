@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
 import { StrategyUpdateDto, ValueToServe } from './types';
+import { ComparatorEnum } from '../rule/comparators/types';
 
 @Injectable()
 export class StrategyService {
@@ -24,13 +25,7 @@ export class StrategyService {
     });
   }
 
-  async updateStrategy(strategyId: string, strategyDto: StrategyUpdateDto) {
-    await this.prisma.rule.deleteMany({
-      where: {
-        strategyUuid: strategyId,
-      },
-    });
-
+  updateStrategy(strategyId: string, strategyDto: StrategyUpdateDto) {
     return this.prisma.strategy.update({
       where: {
         uuid: strategyId,
@@ -39,7 +34,17 @@ export class StrategyService {
         rolloutPercentage: strategyDto.rolloutPercentage,
         valueToServe: strategyDto.valueToServe,
         valueToServeType: strategyDto.valueToServeType,
-        rules: { createMany: { data: strategyDto.rules } },
+      },
+    });
+  }
+
+  createStrategyRule(strategyId: string) {
+    return this.prisma.rule.create({
+      data: {
+        strategyUuid: strategyId,
+        fieldComparator: ComparatorEnum.Equals,
+        fieldName: '',
+        fieldValue: '',
       },
     });
   }
