@@ -13,7 +13,7 @@ export class RuleService {
     userId: string,
     roles?: Array<string>,
   ) {
-    const flagOfProject = await this.prisma.userProject.findFirst({
+    const flagOfProjectOfSegment = await this.prisma.userProject.findFirst({
       where: {
         userId,
         project: {
@@ -22,6 +22,22 @@ export class RuleService {
               flagEnvironment: {
                 some: {
                   Segment: { some: { rule: { some: { uuid: ruleId } } } },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    const flagOfProjectOfStrategies = await this.prisma.userProject.findFirst({
+      where: {
+        userId,
+        project: {
+          environments: {
+            some: {
+              flagEnvironment: {
+                some: {
                   strategies: { some: { rules: { some: { uuid: ruleId } } } },
                 },
               },
@@ -31,7 +47,7 @@ export class RuleService {
       },
     });
 
-    if (!flagOfProject) {
+    if (!flagOfProjectOfSegment && !flagOfProjectOfStrategies) {
       return false;
     }
 
@@ -39,7 +55,10 @@ export class RuleService {
       return true;
     }
 
-    return roles.includes(flagOfProject.role);
+    return (
+      roles.includes(flagOfProjectOfSegment.role) ||
+      roles.includes(flagOfProjectOfStrategies.role)
+    );
   }
 
   editRule(ruleId: string, rule: RuleType) {
@@ -52,6 +71,7 @@ export class RuleService {
       },
       include: {
         Segment: true,
+        Strategy: true,
       },
     });
   }

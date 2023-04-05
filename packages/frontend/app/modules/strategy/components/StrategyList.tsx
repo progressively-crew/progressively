@@ -54,7 +54,10 @@ const StrategyItem = ({ strategy }: StrategyItemProps) => {
         <input type="hidden" value={strategy.uuid} name="uuid" />
         <CardContent>
           <div className="flex flex-row gap-4 items-center">
-            <ValueToServeFormField />
+            <ValueToServeFormField
+              valueToServe={strategy.valueToServe}
+              valueToServeType={strategy.valueToServeType}
+            />
 
             <Typography>to</Typography>
 
