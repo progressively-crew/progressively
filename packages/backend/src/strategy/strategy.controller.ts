@@ -7,6 +7,7 @@ import {
   Put,
   UseGuards,
   UsePipes,
+  Get,
 } from '@nestjs/common';
 import { StrategyService } from './strategy.service';
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
@@ -23,6 +24,16 @@ export class StrategyController {
     private strategyService: StrategyService,
     private activityLogService: ActivityLogService,
   ) {}
+
+  @Get('environments/:envId/flags/:flagId/strategies')
+  @UseGuards(HasFlagEnvAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  getStrategies(
+    @Param('envId') envId: string,
+    @Param('flagId') flagId: string,
+  ) {
+    return this.strategyService.getStrategies(envId, flagId);
+  }
 
   @Post('/environments/:envId/flags/:flagId/strategies')
   @UseGuards(HasFlagEnvAccessGuard)

@@ -74,4 +74,16 @@ export class StrategyService {
 
     return roles.includes(flagOfProject.role);
   }
+
+  getStrategies(envId: string, flagId: string) {
+    return this.prisma.strategy.findMany({
+      where: {
+        flagEnvironmentEnvironmentId: envId,
+        flagEnvironmentFlagId: flagId,
+      },
+      include: {
+        rules: true,
+      },
+    });
+  }
 }
