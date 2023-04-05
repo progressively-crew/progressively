@@ -1,44 +1,10 @@
 import { Form } from "@remix-run/react";
-import { useState } from "react";
-import { SliderInput } from "~/components/Fields/SliderInput";
 import { Variant } from "../types";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
 import { VariantDot } from "~/modules/flags/components/VariantDot";
 import { Entity } from "~/components/Entity/Entity";
 import { MenuButton } from "~/components/MenuButton";
-
-export interface FormSliderInputProps {
-  name: string;
-  label: string;
-  id: string;
-  initialPercentage: number;
-  bgColor?: string;
-  fgColor?: string;
-}
-
-const FormSliderInput = ({
-  name,
-  label,
-  id,
-  initialPercentage,
-  bgColor,
-  fgColor,
-}: FormSliderInputProps) => {
-  const [percentage, setPercentage] = useState(initialPercentage);
-
-  return (
-    <SliderInput
-      id={id}
-      name={name}
-      hiddenLabel
-      percentageValue={percentage}
-      onChange={setPercentage}
-      label={label}
-      bgColor={bgColor}
-      fgColor={fgColor}
-    />
-  );
-};
+import { FormSliderInput } from "~/modules/flags/components/FormSliderInput";
 
 export interface VariantTableProps {
   variants: Array<Variant>;

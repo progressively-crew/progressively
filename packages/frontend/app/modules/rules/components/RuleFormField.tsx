@@ -18,6 +18,7 @@ export const RuleFormField = ({
   return (
     <div className="flex flex-row gap-2">
       <Typography className="shrink-0 py-2 w-28">When field</Typography>
+
       <TextInput
         hiddenLabel
         label="Field name"
@@ -26,6 +27,7 @@ export const RuleFormField = ({
         name="field-name"
         className="w-full md:w-40"
       />
+
       <SelectField
         hiddenLabel
         name="field-comparator"
@@ -42,6 +44,7 @@ export const RuleFormField = ({
           },
         ]}
       />
+
       <TagInput
         defaultValue={initialFieldValue ? initialFieldValue.split("\n") : []}
       />

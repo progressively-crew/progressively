@@ -3,6 +3,10 @@ import { Strategy } from "../types";
 import { MenuButton } from "~/components/MenuButton";
 import { Form } from "@remix-run/react";
 import { useRef } from "react";
+import { RuleFormField } from "~/modules/rules/components/RuleFormField";
+import { FormSliderInput } from "~/modules/flags/components/FormSliderInput";
+import { ValueToServeFormField } from "./ValueToServeFormField";
+import { Separator } from "~/components/Separator";
 
 export interface StrategyListProps {
   items: Array<Strategy>;
@@ -26,29 +30,47 @@ const StrategyItem = ({ strategy }: StrategyItemProps) => {
 
   return (
     <Card>
-      <CardContent>
-        <div className="flex flex-row gap-4">
-          <div>Left</div>
-
-          <Form method="post" ref={formRef}>
-            <input type="hidden" value="delete-strategy" name="_type" />
-            <input type="hidden" value={strategy.uuid} name="uuid" />
-            <MenuButton
-              items={[
-                {
-                  label: "Delete strategy",
-                  onClick: () => {
-                    formRef?.current?.submit();
-                  },
-                  noInitial: true,
-                },
-              ]}
-              label={"Actions on strategy"}
-              variant="action"
+      <div className="flex-1">
+        <Form method="post" className="block">
+          <CardContent>
+            <FormSliderInput
+              name={`rolloutPercentage`}
+              label={`Rollout percentage`}
+              initialPercentage={strategy.rolloutPercentage || 0}
             />
-          </Form>
-        </div>
-      </CardContent>
+          </CardContent>
+
+          <Separator className="border-dashed" />
+
+          <CardContent>
+            <RuleFormField
+              initialFieldName={""}
+              initialFieldComparator={""}
+              initialFieldValue={""}
+            />
+
+            <ValueToServeFormField />
+          </CardContent>
+        </Form>
+      </div>
+
+      <Form method="post" ref={formRef}>
+        <input type="hidden" value="delete-strategy" name="_type" />
+        <input type="hidden" value={strategy.uuid} name="uuid" />
+        <MenuButton
+          items={[
+            {
+              label: "Delete strategy",
+              onClick: () => {
+                formRef?.current?.submit();
+              },
+              noInitial: true,
+            },
+          ]}
+          label={"Actions on strategy"}
+          variant="action"
+        />
+      </Form>
     </Card>
   );
 };
