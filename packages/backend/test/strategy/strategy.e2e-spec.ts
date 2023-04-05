@@ -142,7 +142,7 @@ describe('Strategy (e2e)', () => {
     });
   });
 
-  describe.only('/strategies/1 (Put)', () => {
+  describe('/strategies/1 (Put)', () => {
     it('gives a 401 when the user is not authenticated', () =>
       verifyAuthGuard(app, '/strategies/1', 'put'));
 
@@ -161,7 +161,7 @@ describe('Strategy (e2e)', () => {
       };
 
       return request(app.getHttpServer())
-        .put('/strategies/1')
+        .put('/strategies/4')
         .set('Authorization', `Bearer ${access_token}`)
         .send(validRule)
         .expect(403)
