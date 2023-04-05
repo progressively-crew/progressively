@@ -19,6 +19,7 @@ import { StrategyList } from "~/modules/strategy/components/StrategyList";
 import { createStrategy } from "~/modules/strategy/services/createStrategy";
 import { deleteStrategy } from "~/modules/strategy/services/deleteStrategy";
 import { DashedButton } from "~/components/Buttons/DashedButton";
+import { createStrategyRule } from "~/modules/strategy/services/createStrategyRule";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -48,6 +49,14 @@ export const action: ActionFunction = async ({
 
   if (type === "add-strategy") {
     return await createStrategy(params.env!, params.flagId!, authCookie);
+  }
+
+  if (type === "add-strategy-rule") {
+    const strategyId = formData.get("uuid")?.toString();
+
+    if (strategyId) {
+      return await createStrategyRule(strategyId, authCookie);
+    }
   }
 
   if (type === "delete-strategy") {

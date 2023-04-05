@@ -10,7 +10,6 @@ export enum ValueToServe {
 export interface StrategyUpdateDto {
   rolloutPercentage?: number;
   valueToServeType: ValueToServe;
-  rules?: Array<RuleType>;
   valueToServe?: string;
 }
 

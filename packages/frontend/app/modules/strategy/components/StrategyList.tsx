@@ -69,21 +69,32 @@ const StrategyItem = ({ strategy }: StrategyItemProps) => {
 
         <Separator className="border-dashed" />
 
-        <CardContent>
-          <div className="bg-gray-50 dark:bg-slate-900 px-6 py-4">
+        {strategy.rules?.map((rule) => (
+          <div
+            className="bg-gray-50 dark:bg-slate-900 px-6 py-4 px-6"
+            key={rule.uuid}
+          >
             <RuleFormField
-              initialFieldName={""}
-              initialFieldComparator={""}
-              initialFieldValue={""}
+              initialFieldName={rule.fieldName}
+              initialFieldComparator={rule.fieldComparator}
+              initialFieldValue={rule.fieldValue}
             />
           </div>
-          <div className="h-4" />
+        ))}
+      </Form>
 
-          <DashedButton type="button" size="S">
+      <div className="h-4" />
+
+      <div className="px-6">
+        <Form method="post">
+          <input type="hidden" value="add-strategy-rule" name="_type" />
+          <input type="hidden" value={strategy.uuid} name="uuid" />
+
+          <DashedButton type="submit" size="S">
             Add a rule
           </DashedButton>
-        </CardContent>
-      </Form>
+        </Form>
+      </div>
     </Card>
   );
 };
