@@ -423,7 +423,6 @@ export class FlagsService {
         flagEnvironmentEnvironmentId: envId,
         flagEnvironmentFlagId: flagId,
         isControl: isFirstVariantCreatedThusControl,
-        rolloutPercentage: variant.rolloutPercentage,
         value: variant.value,
       },
     });
@@ -439,7 +438,6 @@ export class FlagsService {
         },
         data: {
           isControl: Boolean(variant.isControl),
-          rolloutPercentage: variant.rolloutPercentage,
           value: variant.value,
         },
       }),

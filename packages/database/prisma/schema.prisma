@@ -118,7 +118,6 @@ model Webhook {
 
 model Variant {
   uuid                         String           @id @default(uuid())
-  rolloutPercentage            Int              @default(100)
   isControl                    Boolean
   value                        String
   flagEnvironmentFlagId        String?

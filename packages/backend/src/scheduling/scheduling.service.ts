@@ -132,42 +132,6 @@ export class SchedulingService {
       ];
     }
 
-    if (schedule.type === SchedulingType.UpdateVariantPercentage) {
-      const updateVariantEntries =
-        schedule.data as unknown as Array<SchedulingUpdateVariantEntry>;
-
-      const queries: any = updateVariantEntries.map((updateVariantEntry) =>
-        this.prisma.variant.updateMany({
-          where: {
-            uuid: updateVariantEntry.variantId,
-            flagEnvironmentEnvironmentId: flagEnv.environmentId,
-            flagEnvironmentFlagId: flagEnv.flagId,
-          },
-          data: {
-            rolloutPercentage: updateVariantEntry.variantNewPercentage,
-          },
-        }),
-      );
-
-      //Important to be the last query
-      queries.push(
-        this.prisma.flagEnvironment.update({
-          where: {
-            flagId_environmentId: {
-              environmentId: flagEnv.environmentId,
-              flagId: flagEnv.flagId,
-            },
-          },
-          data: {
-            status: schedule.status,
-          },
-          include,
-        }),
-      );
-
-      return queries;
-    }
-
     return undefined;
   }
 

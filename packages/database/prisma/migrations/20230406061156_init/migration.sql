@@ -103,7 +103,6 @@ CREATE TABLE "Webhook" (
 -- CreateTable
 CREATE TABLE "Variant" (
     "uuid" TEXT NOT NULL,
-    "rolloutPercentage" INTEGER NOT NULL DEFAULT 100,
     "isControl" BOOLEAN NOT NULL,
     "value" TEXT NOT NULL,
     "flagEnvironmentFlagId" TEXT,

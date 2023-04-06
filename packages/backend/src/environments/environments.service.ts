@@ -32,7 +32,7 @@ export class EnvironmentsService {
         },
         variants: {
           orderBy: {
-            rolloutPercentage: 'asc',
+            value: 'asc',
           },
         },
       },
