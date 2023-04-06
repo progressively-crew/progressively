@@ -59,10 +59,18 @@ export class RuleController {
   async deleteRule(@UserId() userId: string, @Param('ruleId') ruleId: string) {
     const deletedRule = await this.ruleService.deleteRule(ruleId);
 
+    const flagId =
+      deletedRule.Segment?.flagEnvironmentFlagId ||
+      deletedRule.Strategy?.flagEnvironmentFlagId;
+
+    const envId =
+      deletedRule.Segment?.flagEnvironmentEnvironmentId ||
+      deletedRule.Strategy?.flagEnvironmentEnvironmentId;
+
     await this.activityLogService.register({
       userId,
-      flagId: deletedRule.Segment.flagEnvironmentFlagId,
-      envId: deletedRule.Segment.flagEnvironmentEnvironmentId,
+      flagId,
+      envId,
       concernedEntity: 'flag',
       type: 'delete-rule',
       data: JSON.stringify(deletedRule),

@@ -2678,6 +2678,10 @@ input[type="range"]::-moz-range-progress {
     width: auto;
   }
 
+  .md\:w-\[220px\] {
+    width: 220px;
+  }
+
   .md\:max-w-\[480px\] {
     max-width: 480px;
   }

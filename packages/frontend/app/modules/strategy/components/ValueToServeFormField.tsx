@@ -26,18 +26,18 @@ export const ValueToServeFormField = ({
   const valueOptions = [
     {
       value: ValueToServe.Boolean,
-      label: "the boolean",
+      label: "the calculated boolean",
     },
     {
       value: ValueToServe.String,
-      label: "the string",
+      label: "the custom string",
     },
   ];
 
   if (hasVariants) {
     valueOptions.push({
       value: ValueToServe.Variant,
-      label: "the variant",
+      label: "the calculated variant",
     });
   }
 

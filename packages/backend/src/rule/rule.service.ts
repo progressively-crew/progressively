@@ -83,6 +83,7 @@ export class RuleService {
       },
       include: {
         Segment: true,
+        Strategy: true,
       },
     });
   }

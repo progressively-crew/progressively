@@ -21,6 +21,7 @@ import { deleteStrategy } from "~/modules/strategy/services/deleteStrategy";
 import { createStrategyRule } from "~/modules/strategy/services/createStrategyRule";
 import { editStrategyAction } from "~/modules/strategy/form-actions/editStrategyAction";
 import { CreateButton } from "~/components/Buttons/CreateButton";
+import { deleteRule } from "~/modules/rules/services/deleteRule";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -75,6 +76,13 @@ export const action: ActionFunction = async ({
     const strategyId = formData.get("uuid")?.toString();
     if (strategyId) {
       return editStrategyAction(formData, strategyId, authCookie);
+    }
+  }
+  if (type === "delete-strategy-rule") {
+    const ruleId = formData.get("ruleId")?.toString();
+
+    if (ruleId) {
+      return deleteRule(ruleId, authCookie);
     }
   }
 

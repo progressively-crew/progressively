@@ -10,6 +10,8 @@ import { Tag } from "~/components/Tag";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { PercentageField } from "~/components/Fields/PercentageField";
 import { MenuButton } from "~/components/MenuButton";
+import { Button } from "~/components/Buttons/Button";
+import { DeleteButton } from "~/components/Buttons/DeleteButton";
 
 export interface StrategyListProps {
   items: Array<Strategy>;
@@ -29,9 +31,11 @@ export interface StrategyItemProps {
   strategy: Strategy;
 }
 const StrategyItem = ({ strategy }: StrategyItemProps) => {
-  const formRef = useRef<HTMLFormElement>(null);
+  const deleteStrategyForm = useRef<HTMLFormElement>(null);
 
-  const updateStrategyFormId = useId();
+  const id = useId();
+  const updateStrategyFormId = `update-strategy-${id}`;
+  const deleteStrategyRule = `delete-strategy-rule-${id}`;
 
   return (
     <Card
@@ -50,13 +54,17 @@ const StrategyItem = ({ strategy }: StrategyItemProps) => {
             </Form>
           </div>
 
-          <Form method="post" ref={formRef}>
+          <Form method="post" ref={deleteStrategyForm}>
             <input type="hidden" value="delete-strategy" name="_type" />
             <input type="hidden" value={strategy.uuid} name="uuid" />
           </Form>
         </div>
       }
     >
+      <Form method="post" id={deleteStrategyRule}>
+        <input type="hidden" value="delete-strategy-rule" name="_type" />
+      </Form>
+
       <Form method="post" className="block" id={updateStrategyFormId}>
         <input type="hidden" value="edit-strategy" name="_type" />
         <input type="hidden" value={strategy.uuid} name="uuid" />
@@ -87,7 +95,7 @@ const StrategyItem = ({ strategy }: StrategyItemProps) => {
                 {
                   label: "Delete strategy",
                   onClick: () => {
-                    formRef.current?.submit();
+                    deleteStrategyForm.current?.submit();
                   },
                 },
               ]}
@@ -105,11 +113,26 @@ const StrategyItem = ({ strategy }: StrategyItemProps) => {
             <div key={rule.uuid}>
               <div className="bg-gray-50 dark:bg-slate-900 px-6 py-4 pl-20">
                 <input type="hidden" value={rule.uuid} name="ruleUuid" />
-                <RuleFormField
-                  initialFieldName={rule.fieldName}
-                  initialFieldComparator={rule.fieldComparator}
-                  initialFieldValue={rule.fieldValue}
-                />
+                <div className="flex flex-row gap-4 justify-between">
+                  <div className="flex-1">
+                    <RuleFormField
+                      initialFieldName={rule.fieldName}
+                      initialFieldComparator={rule.fieldComparator}
+                      initialFieldValue={rule.fieldValue}
+                    />
+                  </div>
+
+                  <DeleteButton
+                    type="submit"
+                    value={rule.uuid}
+                    form={deleteStrategyRule}
+                    name="ruleId"
+                    className="rounded"
+                    variant="tertiary"
+                  >
+                    Remove
+                  </DeleteButton>
+                </div>
               </div>
 
               {index !== strategy.rules!.length - 1 && (
