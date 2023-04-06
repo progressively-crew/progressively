@@ -37,17 +37,51 @@ export class StrategyService {
     return result[result.length - 1] as Strategy;
   }
 
-  updateStrategy(strategyId: string, strategyDto: StrategyUpdateDto) {
-    return this.prisma.strategy.update({
-      where: {
-        uuid: strategyId,
-      },
-      data: {
-        rolloutPercentage: strategyDto.rolloutPercentage,
-        valueToServe: strategyDto.valueToServe,
-        valueToServeType: strategyDto.valueToServeType,
-      },
-    });
+  async updateStrategy(strategyId: string, strategyDto: StrategyUpdateDto) {
+    const queries = [];
+    const variants = strategyDto?.variants || [];
+
+    for (const variant of variants) {
+      queries.push(
+        this.prisma.strategyVariant.upsert({
+          where: {
+            strategyUuid_variantUuid: {
+              strategyUuid: strategyId,
+              variantUuid: variant.variantUuid,
+            },
+          },
+          update: {
+            rolloutPercentage: variant.rolloutPercentage,
+            variantUuid: variant.variantUuid,
+            strategyUuid: strategyId,
+          },
+          create: {
+            rolloutPercentage: variant.rolloutPercentage,
+            variantUuid: variant.variantUuid,
+            strategyUuid: strategyId,
+          },
+        }),
+      );
+    }
+
+    queries.push(
+      this.prisma.strategy.update({
+        where: {
+          uuid: strategyId,
+        },
+        data: {
+          rolloutPercentage: strategyDto.rolloutPercentage,
+          valueToServe: strategyDto.valueToServe,
+          valueToServeType: strategyDto.valueToServeType,
+        },
+        include: {
+          variants: true,
+        },
+      }),
+    );
+
+    const result = await this.prisma.$transaction(queries);
+    return result[result.length - 1] as Strategy;
   }
 
   createStrategyRule(strategyId: string) {

@@ -211,12 +211,11 @@ CREATE TABLE "Strategy" (
 
 -- CreateTable
 CREATE TABLE "StrategyVariant" (
-    "uuid" TEXT NOT NULL,
     "rolloutPercentage" INTEGER NOT NULL DEFAULT 0,
     "variantUuid" TEXT NOT NULL,
     "strategyUuid" TEXT NOT NULL,
 
-    CONSTRAINT "StrategyVariant_pkey" PRIMARY KEY ("uuid")
+    CONSTRAINT "StrategyVariant_pkey" PRIMARY KEY ("strategyUuid","variantUuid")
 );
 
 -- CreateIndex

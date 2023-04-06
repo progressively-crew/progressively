@@ -322,6 +322,36 @@ describe('Strategy (e2e)', () => {
       });
     });
 
+    ['variantUuid', 'rolloutPercentage'].forEach((field) => {
+      it(`gives 400 when valueToServeType is Variant but mandatory "${field}" is invalid`, async () => {
+        const access_token = await authenticate(app);
+
+        const invalidStrategy: any = {
+          valueToServe: undefined,
+          rolloutPercentage: 0,
+          valueToServeType: 'Variant',
+          variants: [
+            {
+              variantUuid: '1',
+              rolloutPercentage: 100,
+              [field]: undefined,
+            },
+          ],
+        };
+
+        await request(app.getHttpServer())
+          .put('/strategies/1')
+          .set('Authorization', `Bearer ${access_token}`)
+          .send(invalidStrategy)
+          .expect(400)
+          .expect({
+            statusCode: 400,
+            message: 'Validation failed',
+            error: 'Bad Request',
+          });
+      });
+    });
+
     it('updates a strategy', async () => {
       const access_token = await authenticate(app);
 
@@ -342,6 +372,43 @@ describe('Strategy (e2e)', () => {
         valueToServeType: 'Boolean',
         flagEnvironmentEnvironmentId: '1',
         flagEnvironmentFlagId: '1',
+        variants: [],
+      });
+    });
+
+    it('updates a strategy with variants', async () => {
+      const access_token = await authenticate(app);
+
+      const validRule: StrategyUpdateDto = {
+        valueToServeType: ValueToServe.Variant,
+        variants: [
+          {
+            variantUuid: '1',
+            rolloutPercentage: 78,
+          },
+        ],
+      };
+
+      const response = await request(app.getHttpServer())
+        .put('/strategies/1')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send(validRule)
+        .expect(200);
+
+      expect(response.body).toEqual({
+        rolloutPercentage: 100,
+        uuid: '1',
+        valueToServe: null,
+        valueToServeType: 'Variant',
+        flagEnvironmentEnvironmentId: '1',
+        flagEnvironmentFlagId: '1',
+        variants: [
+          {
+            rolloutPercentage: 78,
+            strategyUuid: '1',
+            variantUuid: '1',
+          },
+        ],
       });
     });
   });

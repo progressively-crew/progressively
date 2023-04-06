@@ -60,7 +60,7 @@ export const StrategyFormFields = ({
   if (hasVariants) {
     valueOptions.push({
       value: ValueToServe.Variant,
-      label: "the calculated variant",
+      label: "the variants",
     });
   }
 

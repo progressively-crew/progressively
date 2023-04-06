@@ -7,6 +7,11 @@ export enum ValueToServe {
   Number = 'Number',
 }
 
+const StrategyVariantDtoSchema = Joi.object({
+  rolloutPercentage: Joi.number().integer().min(0).max(100).required(),
+  variantUuid: Joi.string().required(),
+});
+
 export const StrategyUpdateDtoSchema = Joi.object({
   rolloutPercentage: Joi.number().integer().min(0).max(100),
   valueToServe: Joi.string().optional(),
@@ -18,10 +23,20 @@ export const StrategyUpdateDtoSchema = Joi.object({
       ValueToServe.Variant,
     )
     .required(),
+  variants: Joi.any().when('valueToServeType', {
+    is: ValueToServe.Variant,
+    then: Joi.array().items(StrategyVariantDtoSchema),
+    otherwise: Joi.optional(),
+  }),
 });
 
+export interface StrategyVariant {
+  rolloutPercentage: number;
+  variantUuid: string;
+}
 export interface StrategyUpdateDto {
   rolloutPercentage?: number;
   valueToServeType: ValueToServe;
   valueToServe?: string;
+  variants?: Array<StrategyVariant>;
 }

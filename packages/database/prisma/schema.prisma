@@ -217,14 +217,15 @@ model Strategy {
   valueToServeType             String
   valueToServe                 String?
   rules                        Rule[]
-  StrategyVariant              StrategyVariant[]
+  variants                     StrategyVariant[]
 }
 
 model StrategyVariant {
-  uuid              String   @id @default(uuid())
   rolloutPercentage Int      @default(0)
   variant           Variant  @relation(fields: [variantUuid], references: [uuid])
   variantUuid       String
   strategy          Strategy @relation(fields: [strategyUuid], references: [uuid])
   strategyUuid      String
+
+  @@id([strategyUuid, variantUuid])
 }
