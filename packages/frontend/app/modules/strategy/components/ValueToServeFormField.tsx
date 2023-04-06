@@ -73,21 +73,6 @@ export const ValueToServeFormField = ({
         />
       )}
 
-      {status === ValueToServe.Boolean && (
-        <SelectField
-          hiddenLabel
-          name="value-to-serve"
-          label="Boolean value to serve"
-          defaultValue={
-            valueToServeType === ValueToServe.Boolean ? valueToServe : ""
-          }
-          options={[
-            { value: "true", label: "True" },
-            { value: "false", label: "False" },
-          ]}
-        />
-      )}
-
       {status === ValueToServe.String && (
         <TextInput
           label="String value to serve"

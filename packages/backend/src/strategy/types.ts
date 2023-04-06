@@ -7,9 +7,9 @@ export enum ValueToServe {
   Number = 'Number',
 }
 
-export const StrategyUpdateDto = Joi.object({
+export const StrategyUpdateDtoSchema = Joi.object({
   rolloutPercentage: Joi.number().integer().min(0).max(100),
-  valueToServe: Joi.string(),
+  valueToServe: Joi.string().optional(),
   valueToServeType: Joi.string()
     .valid(
       ValueToServe.Boolean,

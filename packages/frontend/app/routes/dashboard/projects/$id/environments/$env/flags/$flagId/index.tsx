@@ -48,8 +48,6 @@ export const action: ActionFunction = async ({
   const formData = await request.formData();
   const type = formData.get("_type");
 
-  console.log("FOWJHFOWJHFOWJFOWJFO", type);
-
   if (type === "add-strategy") {
     return await createStrategy(params.env!, params.flagId!, authCookie);
   }

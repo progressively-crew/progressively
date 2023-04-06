@@ -15,7 +15,7 @@ import { HasStrategyAccessGuard } from './guards/hasStrategyAccess';
 import { UserId } from '../users/users.decorator';
 import { HasFlagEnvAccessGuard } from '../flags/guards/hasFlagEnvAccess';
 import { ActivityLogService } from '../activity-log/activity-log.service';
-import { StrategyUpdateDto } from './types';
+import { StrategyUpdateDto, StrategyUpdateDtoSchema } from './types';
 import { ValidationPipe } from '../shared/pipes/ValidationPipe';
 
 @Controller()
@@ -91,7 +91,7 @@ export class StrategyController {
   @Put('/strategies/:strategyId')
   @UseGuards(HasStrategyAccessGuard)
   @UseGuards(JwtAuthGuard)
-  @UsePipes(new ValidationPipe(StrategyUpdateDto))
+  @UsePipes(new ValidationPipe(StrategyUpdateDtoSchema))
   async updateStrategy(
     @UserId() userId: string,
     @Param('strategyId') strategyId: string,

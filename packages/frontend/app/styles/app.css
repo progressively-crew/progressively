@@ -812,10 +812,6 @@ video {
   width: 3.5rem;
 }
 
-.w-28 {
-  width: 7rem;
-}
-
 .w-3 {
   width: 0.75rem;
 }
@@ -866,6 +862,14 @@ video {
 
 .w-full {
   width: 100%;
+}
+
+.w-64 {
+  width: 16rem;
+}
+
+.w-28 {
+  width: 7rem;
 }
 
 .w-24 {
@@ -1003,6 +1007,14 @@ video {
           appearance: none;
 }
 
+.grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.grid-cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
 .flex-row {
   flex-direction: row;
 }
@@ -1013,6 +1025,10 @@ video {
 
 .flex-wrap {
   flex-wrap: wrap;
+}
+
+.items-end {
+  align-items: flex-end;
 }
 
 .items-center {
@@ -1080,6 +1096,10 @@ video {
   border-color: rgb(243 244 246 / var(--tw-divide-opacity));
 }
 
+.self-end {
+  align-self: flex-end;
+}
+
 .overflow-hidden {
   overflow: hidden;
 }
@@ -1131,6 +1151,11 @@ video {
 
 .border-2 {
   border-width: 2px;
+}
+
+.border-y {
+  border-top-width: 1px;
+  border-bottom-width: 1px;
 }
 
 .border-b {
@@ -1427,6 +1452,11 @@ video {
   padding-bottom: 1rem;
 }
 
+.py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
 .py-6 {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
@@ -1488,12 +1518,12 @@ video {
   padding-top: 2rem;
 }
 
-.pr-6 {
-  padding-right: 1.5rem;
-}
-
 .pt-6 {
   padding-top: 1.5rem;
+}
+
+.pr-6 {
+  padding-right: 1.5rem;
 }
 
 .pl-16 {
@@ -2629,6 +2659,14 @@ input[type="range"]::-moz-range-progress {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
+  .md\:grid-cols-\[auto_auto_auto_1fr\] {
+    grid-template-columns: auto auto auto 1fr;
+  }
+
+  .md\:grid-cols-\[auto_auto_auto_1fr_auto\] {
+    grid-template-columns: auto auto auto 1fr auto;
+  }
+
   .md\:flex-row {
     flex-direction: row;
   }
@@ -2704,43 +2742,6 @@ input[type="range"]::-moz-range-progress {
 
   .lg\:border {
     border-width: 1px;
-  }
-
-  .lg\:bg-gray-50 {
-    --tw-bg-opacity: 1;
-    background-color: rgb(249 250 251 / var(--tw-bg-opacity));
-  }
-
-  .lg\:px-8 {
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
-
-  .lg\:py-10 {
-    padding-top: 2.5rem;
-    padding-bottom: 2.5rem;
-  }
-
-  .lg\:py-12 {
-    padding-top: 3rem;
-    padding-bottom: 3rem;
-  }
-
-  .lg\:pt-20 {
-    padding-top: 5rem;
-  }
-
-  .lg\:text-5xl {
-    font-size: 3rem;
-    line-height: 1;
-  }
-
-  .dark .lg\:dark\:bg-slate-900 {
-    --tw-bg-opacity: 1;
-    background-color: rgb(15 23 42 / var(--tw-bg-opacity));
-  }
-}
-idth: 1px;
   }
 
   .lg\:bg-gray-50 {

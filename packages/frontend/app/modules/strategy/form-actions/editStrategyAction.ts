@@ -12,7 +12,7 @@ export const editStrategyAction = async (
   const rolloutPercentage = formData.get("rolloutPercentage")?.toString() || "";
   const valueToServeType =
     formData.get("value-to-serve-type")?.toString() || "";
-  const valueToServe = formData.get("value-to-serve")?.toString() || "";
+  const valueToServe = formData.get("value-to-serve")?.toString();
 
   const allIds = formData.getAll("ruleUuid");
   const allFieldName = formData.getAll("field-name");
