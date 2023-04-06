@@ -3,14 +3,13 @@ import { Strategy } from "../types";
 import { Form } from "@remix-run/react";
 import { useId, useRef } from "react";
 import { RuleFormField } from "~/modules/rules/components/RuleFormField";
-import { FormSliderInput } from "~/modules/flags/components/FormSliderInput";
 import { ValueToServeFormField } from "./ValueToServeFormField";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
-import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { Typography } from "~/components/Typography";
-import { DashedButton } from "~/components/Buttons/DashedButton";
 import { Tag } from "~/components/Tag";
 import { CreateButton } from "~/components/Buttons/CreateButton";
+import { PercentageField } from "~/components/Fields/PercentageField";
+import { MenuButton } from "~/components/MenuButton";
 
 export interface StrategyListProps {
   items: Array<Strategy>;
@@ -54,7 +53,6 @@ const StrategyItem = ({ strategy }: StrategyItemProps) => {
           <Form method="post" ref={formRef}>
             <input type="hidden" value="delete-strategy" name="_type" />
             <input type="hidden" value={strategy.uuid} name="uuid" />
-            <DeleteButton variant="secondary">Delete</DeleteButton>
           </Form>
         </div>
       }
@@ -63,23 +61,38 @@ const StrategyItem = ({ strategy }: StrategyItemProps) => {
         <input type="hidden" value="edit-strategy" name="_type" />
         <input type="hidden" value={strategy.uuid} name="uuid" />
         <CardContent>
-          <div className="flex flex-row gap-4 items-center">
-            <ValueToServeFormField
-              valueToServe={strategy.valueToServe}
-              valueToServeType={strategy.valueToServeType}
+          <div className="flex flex-row gap-4 items-center justify-between">
+            <div className="flex flex-row gap-4 items-center">
+              <ValueToServeFormField
+                valueToServe={strategy.valueToServe}
+                valueToServeType={strategy.valueToServeType}
+              />
+
+              <Typography className="text-sm font-semibold">to</Typography>
+
+              <PercentageField
+                name={"rolloutPercentage"}
+                initialValue={strategy.rolloutPercentage || 0}
+                label={"Rollout percentage"}
+                hiddenLabel
+              />
+
+              <Typography className="text-sm font-semibold">
+                of the audience
+              </Typography>
+            </div>
+
+            <MenuButton
+              items={[
+                {
+                  label: "Delete strategy",
+                  onClick: () => {
+                    formRef.current?.submit();
+                  },
+                },
+              ]}
+              label={"Actions on strategy"}
             />
-
-            <Typography className="text-sm font-semibold">to</Typography>
-
-            <FormSliderInput
-              name={`rolloutPercentage`}
-              label={`Rollout percentage`}
-              initialPercentage={strategy.rolloutPercentage || 0}
-            />
-
-            <Typography className="text-sm font-semibold">
-              of the audience
-            </Typography>
           </div>
         </CardContent>
 
