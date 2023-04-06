@@ -100,19 +100,12 @@ export class SdkService {
       }
 
       if (strategy.valueToServeType === ValueToServe.Variant) {
-        if (!isMatching) {
-          // Give back the control variant when it does not match any variant
-          const controlVariant = strategy.variants.find(
-            (variant) => variant.variant.isControl,
-          )!;
+        if (isMatching) {
+          const bucketId = genBucket(flagKey, fields.id as string);
+          const variantResolved = getVariation(bucketId, strategy.variants);
 
-          return controlVariant.variant.value;
+          return variantResolved;
         }
-
-        const bucketId = genBucket(flagKey, fields.id as string);
-        const variantResolved = getVariation(bucketId, strategy.variants);
-
-        return variantResolved;
       }
     }
 
