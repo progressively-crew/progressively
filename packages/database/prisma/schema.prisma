@@ -117,13 +117,14 @@ model Webhook {
 }
 
 model Variant {
-  uuid                         String           @id @default(uuid())
+  uuid                         String            @id @default(uuid())
   isControl                    Boolean
   value                        String
   flagEnvironmentFlagId        String?
   flagEnvironmentEnvironmentId String?
   PMetric                      PMetric[]
-  flagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
+  flagEnvironment              FlagEnvironment?  @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
+  StrategyVariant              StrategyVariant[]
 }
 
 model PMetric {
@@ -208,12 +209,22 @@ model ActivityLog {
 }
 
 model Strategy {
-  uuid                         String           @id @default(uuid())
-  rolloutPercentage            Int              @default(100)
-  FlagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
+  uuid                         String            @id @default(uuid())
+  rolloutPercentage            Int               @default(100)
+  FlagEnvironment              FlagEnvironment?  @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
   flagEnvironmentFlagId        String?
   flagEnvironmentEnvironmentId String?
   valueToServeType             String
   valueToServe                 String?
   rules                        Rule[]
+  StrategyVariant              StrategyVariant[]
+}
+
+model StrategyVariant {
+  uuid              String   @id @default(uuid())
+  rolloutPercentage Int      @default(0)
+  variant           Variant  @relation(fields: [variantUuid], references: [uuid])
+  variantUuid       String
+  strategy          Strategy @relation(fields: [strategyUuid], references: [uuid])
+  strategyUuid      String
 }

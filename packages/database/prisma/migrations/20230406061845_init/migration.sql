@@ -209,6 +209,16 @@ CREATE TABLE "Strategy" (
     CONSTRAINT "Strategy_pkey" PRIMARY KEY ("uuid")
 );
 
+-- CreateTable
+CREATE TABLE "StrategyVariant" (
+    "uuid" TEXT NOT NULL,
+    "rolloutPercentage" INTEGER NOT NULL DEFAULT 0,
+    "variantUuid" TEXT NOT NULL,
+    "strategyUuid" TEXT NOT NULL,
+
+    CONSTRAINT "StrategyVariant_pkey" PRIMARY KEY ("uuid")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
@@ -277,3 +287,9 @@ ALTER TABLE "ActivityLog" ADD CONSTRAINT "ActivityLog_flagEnvironmentFlagId_flag
 
 -- AddForeignKey
 ALTER TABLE "Strategy" ADD CONSTRAINT "Strategy_flagEnvironmentFlagId_flagEnvironmentEnvironmentI_fkey" FOREIGN KEY ("flagEnvironmentFlagId", "flagEnvironmentEnvironmentId") REFERENCES "FlagEnvironment"("flagId", "environmentId") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "StrategyVariant" ADD CONSTRAINT "StrategyVariant_variantUuid_fkey" FOREIGN KEY ("variantUuid") REFERENCES "Variant"("uuid") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "StrategyVariant" ADD CONSTRAINT "StrategyVariant_strategyUuid_fkey" FOREIGN KEY ("strategyUuid") REFERENCES "Strategy"("uuid") ON DELETE RESTRICT ON UPDATE CASCADE;
