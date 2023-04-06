@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/cognitive-complexity */
 import { updateRule } from "~/modules/rules/services/updateRule";
 import { ComparatorEnum, Rule } from "~/modules/rules/types";
 import { editStrategy } from "../services/editStrategy";
@@ -54,9 +55,12 @@ export const editStrategyAction = async (
 
     const variants: Array<StrategyVariant> = allVariantUuids.map(
       (variantUuid, index) => {
-        const rolloutPercentage = allVariantPercentage[index];
+        const rolloutPercentage = Number(
+          allVariantPercentage[index].toString()
+        );
+
         return {
-          variantUuid,
+          variantUuid: variantUuid.toString(),
           rolloutPercentage,
         };
       }
