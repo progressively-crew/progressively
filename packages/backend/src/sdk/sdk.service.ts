@@ -9,7 +9,6 @@ import { PrismaService } from '../database/prisma.service';
 import { FlagStatus } from '../flags/flags.status';
 import { genBucket, getVariation, isInBucket } from './utils';
 import { SchedulingService } from '../scheduling/scheduling.service';
-import { SegmentsService } from '../segments/segments.service';
 import { RuleService } from '../rule/rule.service';
 import { ValueToServe } from '../strategy/types';
 
@@ -19,7 +18,6 @@ export class SdkService {
     private prisma: PrismaService,
     private readonly envService: EnvironmentsService,
     private readonly scheduleService: SchedulingService,
-    private readonly segmentService: SegmentsService,
     private readonly flagService: FlagsService,
     private readonly ruleService: RuleService,
   ) {}
