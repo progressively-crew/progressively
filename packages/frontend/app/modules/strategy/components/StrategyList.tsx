@@ -10,6 +10,7 @@ import { CreateButton } from "~/components/Buttons/CreateButton";
 import { MenuButton } from "~/components/MenuButton";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { Variant } from "~/modules/variants/types";
+import { IoCloseOutline } from "react-icons/io5";
 
 export interface StrategyListProps {
   items: Array<Strategy>;
@@ -115,9 +116,9 @@ const StrategyItem = ({ strategy, variants }: StrategyItemProps) => {
         >
           {strategy.rules?.map((rule, index) => (
             <div key={rule.uuid}>
-              <div className="bg-gray-50 dark:bg-slate-900 px-6 py-4 pl-20">
+              <div className="bg-gray-50 dark:bg-slate-900 px-6 py-4">
                 <input type="hidden" value={rule.uuid} name="ruleUuid" />
-                <div className="flex flex-row gap-4 justify-between">
+                <div className="flex flex-row gap-4 justify-between items-start">
                   <div className="flex-1">
                     <RuleFormField
                       initialFieldName={rule.fieldName}
@@ -126,22 +127,21 @@ const StrategyItem = ({ strategy, variants }: StrategyItemProps) => {
                     />
                   </div>
 
-                  <DeleteButton
+                  <button
                     type="submit"
                     value={rule.uuid}
                     form={deleteStrategyRule}
                     name="ruleId"
-                    className="rounded"
-                    variant="tertiary"
+                    className="rounded bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800 dark:text-slate-100 dark:hover:text-slate-100 p-2 -m-2"
                   >
-                    Remove
-                  </DeleteButton>
+                    <IoCloseOutline title="Remove rule" />
+                  </button>
                 </div>
               </div>
 
               {index !== strategy.rules!.length - 1 && (
-                <span className="-mt-2 absolute -ml-6">
-                  <Tag variant="PRIMARY">OR</Tag>
+                <span className="-mt-3 absolute text-center bg-white rounded-full h-6 w-12 text-xs text-gray-500 flex items-center justify-center left-1/2 -ml-6">
+                  OR
                 </span>
               )}
             </div>

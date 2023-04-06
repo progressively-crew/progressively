@@ -20,36 +20,38 @@ export const RuleFormField = ({
       <Typography className="shrink-0 py-2 text-sm font-semibold">
         When field
       </Typography>
+      <div className="flex-1">
+        <div className="flex flex-row gap-2 pb-2">
+          <TextInput
+            hiddenLabel
+            label="Field name"
+            placeholder="e.g: email"
+            defaultValue={initialFieldName}
+            name="field-name"
+            className="w-full md:w-40"
+          />
 
-      <TextInput
-        hiddenLabel
-        label="Field name"
-        placeholder="e.g: email"
-        defaultValue={initialFieldName}
-        name="field-name"
-        className="w-full md:w-40"
-      />
-
-      <SelectField
-        hiddenLabel
-        name="field-comparator"
-        label="Field comparator"
-        defaultValue={initialFieldComparator}
-        options={[
-          {
-            value: ComparatorEnum.Equals,
-            label: "is in array",
-          },
-          {
-            value: ComparatorEnum.Contains,
-            label: "matches in array",
-          },
-        ]}
-      />
-
-      <TagInput
-        defaultValue={initialFieldValue ? initialFieldValue.split("\n") : []}
-      />
+          <SelectField
+            hiddenLabel
+            name="field-comparator"
+            label="Field comparator"
+            defaultValue={initialFieldComparator}
+            options={[
+              {
+                value: ComparatorEnum.Equals,
+                label: "is in array",
+              },
+              {
+                value: ComparatorEnum.Contains,
+                label: "matches in array",
+              },
+            ]}
+          />
+        </div>
+        <TagInput
+          defaultValue={initialFieldValue ? initialFieldValue.split("\n") : []}
+        />
+      </div>
     </div>
   );
 };

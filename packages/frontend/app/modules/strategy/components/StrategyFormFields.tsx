@@ -70,10 +70,8 @@ export const StrategyFormFields = ({
 
   return (
     <div>
-      <div className="flex flex-row gap-4 items-center">
-        <Typography className="shrink-0 py-2 text-sm font-semibold">
-          Serve
-        </Typography>
+      <div className="flex flex-row gap-2 items-center">
+        <Typography className="shrink-0 py-2 font-bold pr-2">Serve</Typography>
 
         <SelectField
           hiddenLabel
@@ -99,7 +97,7 @@ export const StrategyFormFields = ({
 
         {status !== ValueToServe.Variant && (
           <>
-            <Typography className="text-sm font-semibold">to</Typography>
+            <Typography className="font-bold">to</Typography>
 
             <PercentageField
               name={"rolloutPercentage"}
@@ -108,9 +106,7 @@ export const StrategyFormFields = ({
               hiddenLabel
             />
 
-            <Typography className="text-sm font-semibold">
-              of the audience
-            </Typography>
+            <Typography className="font-bold">of the audience</Typography>
           </>
         )}
       </div>
