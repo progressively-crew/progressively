@@ -58,14 +58,6 @@ export class SdkService {
     );
 
     return valueFromStrategy;
-
-    // const userVariant = this.getUserVariant(flagEnv, fields);
-
-    // if (Boolean(userVariant)) {
-    //   return userVariant;
-    // }
-
-    // return false;
   }
 
   resolveStrategies(
@@ -126,22 +118,15 @@ export class SdkService {
   ) {
     const flagStatusRecord = this.resolveFlagStatus(flagEnv, fields);
 
-    let valueResolved;
-    if (typeof flagStatusRecord === 'object') {
-      valueResolved = 'flagStatusRecord.value';
-    } else {
-      valueResolved = flagStatusRecord;
-    }
-
     await this.flagService.hitFlag(
       flagEnv.environmentId,
       flagEnv.flagId,
       String(fields?.id || ''),
-      String(valueResolved),
+      String(flagStatusRecord),
     );
 
     return {
-      [flagEnv.flag.key]: valueResolved,
+      [flagEnv.flag.key]: flagStatusRecord,
     };
   }
 
@@ -165,24 +150,14 @@ export class SdkService {
 
       const flagStatusOrVariant = this.resolveFlagStatus(nextFlag, fields);
 
-      if (typeof flagStatusOrVariant === 'object') {
-        flags[nextFlag.flag.key] = 'flagStatusOrVariant.value';
-      } else {
-        flags[nextFlag.flag.key] = flagStatusOrVariant;
-      }
+      flags[nextFlag.flag.key] = flagStatusOrVariant;
 
       if (!skipHit) {
-        let valueResolved = '';
-        if (typeof flagStatusOrVariant === 'object') {
-          valueResolved = 'flagStatusOrVariant.value';
-        } else {
-          valueResolved = String(flagStatusOrVariant);
-        }
         await this.flagService.hitFlag(
           nextFlag.environmentId,
           nextFlag.flagId,
           String(fields?.id || ''),
-          valueResolved,
+          String(flagStatusOrVariant),
         );
       }
     }
