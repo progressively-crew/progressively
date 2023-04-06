@@ -74,6 +74,11 @@ export class SdkService {
     fields: FieldRecord,
   ) {
     for (const strategy of strategies) {
+      const isMatching = this.ruleService.isMatchingAllRules(
+        strategy.rules,
+        fields,
+      );
+
       if (strategy.valueToServeType === ValueToServe.Boolean) {
         if (strategy.rules.length === 0) {
           const inBucket = this.isInBucket(flagKey, strategy, fields);
@@ -101,15 +106,6 @@ export class SdkService {
 
           return variantResolved;
         }
-      }
-
-      const isMatchingRules = this.ruleService.isMatchingAllRules(
-        strategy.rules,
-        fields,
-      );
-
-      if (isMatchingRules) {
-        return true;
       }
     }
 

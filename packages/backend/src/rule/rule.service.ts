@@ -103,6 +103,12 @@ export class RuleService {
     return false;
   }
 
+  isMatchingAtLeastOneRule(rules: Array<RuleType>, fields: FieldRecord) {
+    if (rules.length === 0) return true;
+
+    return Boolean(rules.find((rule) => this.isMatchingRule(rule, fields)));
+  }
+
   // Make sure the list of rules are matching with the "and" operator
   isMatchingAllRules(rules: Array<RuleType>, fields: FieldRecord) {
     if (rules.length === 0) return false;
