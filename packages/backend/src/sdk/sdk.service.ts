@@ -49,13 +49,7 @@ export class SdkService {
     if (flagEnv.status !== FlagStatus.ACTIVATED) return false;
     if (flagEnv.strategies.length === 0) return true;
 
-    const valueFromStrategy = this.resolveStrategies(
-      flagEnv.flag.key,
-      flagEnv.strategies,
-      fields,
-    );
-
-    return valueFromStrategy;
+    return this.resolveStrategies(flagEnv.flag.key, flagEnv.strategies, fields);
   }
 
   resolveStrategies(
@@ -89,9 +83,7 @@ export class SdkService {
 
       if (strategy.valueToServeType === ValueToServe.Variant) {
         const bucketId = genBucket(flagKey, fields.id as string);
-        const variantResolved = getVariation(bucketId, strategy.variants);
-
-        return variantResolved;
+        return getVariation(bucketId, strategy.variants);
       }
     }
 

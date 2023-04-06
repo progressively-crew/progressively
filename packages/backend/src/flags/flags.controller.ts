@@ -24,8 +24,6 @@ import { ApiBearerAuth } from '@nestjs/swagger';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import {
   ActivateFlagDTO,
-  ChangePercentageDTO,
-  ChangePercentageSchema,
   MetricSchema,
   VariantCreationDTO,
   VariantSchema,

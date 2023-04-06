@@ -1,5 +1,5 @@
 import { x86 as murmur } from 'murmurhash3js';
-import { PopulatedVariant, Variant } from '../flags/types';
+import { PopulatedVariant } from '../flags/types';
 
 const BUCKET_COUNT = 10000; // number of buckets
 const MAX_INT_32 = Math.pow(2, 32);

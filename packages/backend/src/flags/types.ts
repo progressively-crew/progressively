@@ -1,7 +1,6 @@
-import { Segment } from '../segments/types';
 import { Environment } from '../environments/types';
 import { FlagStatus } from './flags.status';
-import { Strategy, StrategyVariant } from '@progressively/database';
+import { Strategy } from '@progressively/database';
 import { RuleType } from '../rule/types';
 
 export interface Flag {

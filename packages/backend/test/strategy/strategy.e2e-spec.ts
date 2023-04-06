@@ -4,7 +4,6 @@ import { seedDb, cleanupDb } from '@progressively/database/seed';
 import { authenticate } from '../helpers/authenticate';
 import { verifyAuthGuard } from '../helpers/verify-auth-guard';
 import { prepareApp } from '../helpers/prepareApp';
-import { ComparatorEnum } from '../../src/rule/comparators/types';
 import { StrategyUpdateDto, ValueToServe } from '../../src/strategy/types';
 
 describe('Strategy (e2e)', () => {

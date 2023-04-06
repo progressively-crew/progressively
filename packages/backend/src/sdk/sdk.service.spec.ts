@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { FlagStatus } from '../flags/flags.status';
-import { PopulatedFlagEnv, Variant } from '../flags/types';
+import { PopulatedFlagEnv } from '../flags/types';
 import { SdkService } from './sdk.service';
 import { AppModule } from '../app.module';
 import { RedisService } from '../websocket/redis.service';
