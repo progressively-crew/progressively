@@ -143,7 +143,12 @@ export default function FlagById() {
         action={
           <Form method="post">
             <input type="hidden" name="_type" value="add-strategy" />
-            <CreateButton type="submit">Add a strategy</CreateButton>
+            <CreateButton
+              type="submit"
+              variant={strategies.length > 0 ? "secondary" : "primary"}
+            >
+              Add a strategy
+            </CreateButton>
           </Form>
         }
       />

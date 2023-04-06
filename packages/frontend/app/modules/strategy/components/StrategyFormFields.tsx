@@ -2,11 +2,9 @@ import { useState } from "react";
 import { SelectField } from "~/components/Fields/Select/SelectField";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Typography } from "~/components/Typography";
-
 import { Variant } from "~/modules/variants/types";
 import { ValueToServe } from "../types";
 import { PercentageField } from "~/components/Fields/PercentageField";
-import React from "react";
 
 export interface ValuesToServeFieldsProps {
   variants?: Array<Variant & { rolloutPercentage: number }>;
@@ -21,17 +19,17 @@ export interface VariantFieldsProps {
 
 const VariantFields = ({ variants }: VariantFieldsProps) => {
   return (
-    <div className="grid grid-cols-2 gap-2">
+    <div className="flex flex-row gap-8">
       {variants.map((variant) => {
         return (
-          <React.Fragment key={variant.uuid}>
+          <div key={variant.uuid}>
             <input type="hidden" name="variantUuid" value={variant.uuid} />
             <PercentageField
               name={"variantRolloutPercentage"}
               initialValue={variant.rolloutPercentage}
               label={variant.value}
             />
-          </React.Fragment>
+          </div>
         );
       })}
     </div>

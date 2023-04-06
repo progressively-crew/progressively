@@ -20,6 +20,11 @@ export class StrategyService {
 
   async deleteStrategy(strategyId: string) {
     const queries = [
+      this.prisma.strategyVariant.deleteMany({
+        where: {
+          strategyUuid: strategyId,
+        },
+      }),
       this.prisma.rule.deleteMany({
         where: {
           strategyUuid: strategyId,

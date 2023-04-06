@@ -17,7 +17,7 @@ export const PercentageField = ({
   const id = useId();
 
   return (
-    <>
+    <div className="flex flex-row gap-2">
       <label
         htmlFor={id}
         className={
@@ -47,6 +47,6 @@ export const PercentageField = ({
           %
         </div>
       </div>
-    </>
+    </div>
   );
 };
