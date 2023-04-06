@@ -241,5 +241,28 @@ describe('SdkService', () => {
         expect(shouldActivate).toBe('hello world');
       });
     });
+
+    describe('valueToServe: string', () => {
+      it('resolves "Control" when the strategy has 2 variants with Controll 100% and Second 0%', () => {
+        flagEnv.strategies = [
+          {
+            flagEnvironmentEnvironmentId: '1',
+            flagEnvironmentFlagId: '1',
+            valueToServe: 'hello world',
+            valueToServeType: 'String',
+            uuid: '1',
+            variants: [],
+            rolloutPercentage: 90,
+            rules: [],
+          },
+        ];
+
+        const shouldActivate = service.resolveFlagStatus(flagEnv, {
+          id: 'user-id-123',
+        });
+
+        expect(shouldActivate).toBe('hello world');
+      });
+    });
   });
 });

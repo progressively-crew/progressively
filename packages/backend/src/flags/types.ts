@@ -28,7 +28,18 @@ interface Schedule {
 }
 
 export interface PopulatedStrategy extends Strategy {
-  variants: StrategyVariant[];
+  variants: Array<{
+    rolloutPercentage: number;
+    variantUuid: string;
+    strategyUuid: string;
+    variant: {
+      uuid: string;
+      isControl: boolean;
+      value: string;
+      flagEnvironmentFlagId: string;
+      flagEnvironmentEnvironmentId: string;
+    };
+  }>;
   rules: Array<RuleType>;
 }
 

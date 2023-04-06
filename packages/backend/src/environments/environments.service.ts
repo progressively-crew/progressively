@@ -29,7 +29,11 @@ export class EnvironmentsService {
         strategies: {
           include: {
             rules: true,
-            variants: true,
+            variants: {
+              include: {
+                variant: true,
+              },
+            },
           },
         },
       },
