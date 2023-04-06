@@ -2,7 +2,7 @@ import { ButtonCopy } from "~/components/ButtonCopy";
 import { CardEntity } from "~/components/Entity/Entity";
 import { MenuButton } from "~/components/MenuButton";
 import { Metric } from "../types";
-import { VariantDot } from "./VariantDot";
+import { VariantDot } from "../../variants/components/VariantDot";
 
 export interface MetricListProps {
   metrics: Array<Metric>;

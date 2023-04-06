@@ -1,6 +1,6 @@
 import { Card, CardContent } from "~/components/Card";
 import { Tag } from "~/components/Tag";
-import { VariantDot } from "~/modules/flags/components/VariantDot";
+import { VariantDot } from "~/modules/variants/components/VariantDot";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
 
 export interface VariantCardProps {

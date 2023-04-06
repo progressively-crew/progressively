@@ -22,6 +22,8 @@ import { createStrategyRule } from "~/modules/strategy/services/createStrategyRu
 import { editStrategyAction } from "~/modules/strategy/form-actions/editStrategyAction";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { deleteRule } from "~/modules/rules/services/deleteRule";
+import { Variant } from "~/modules/variants/types";
+import { getVariants } from "~/modules/variants/services/getVariants";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -91,6 +93,7 @@ export const action: ActionFunction = async ({
 
 interface LoaderData {
   strategies: Array<Strategy>;
+  variants: Array<Variant>;
 }
 
 export const loader: LoaderFunction = async ({
@@ -106,7 +109,13 @@ export const loader: LoaderFunction = async ({
     authCookie
   );
 
-  return { strategies };
+  const variants: Array<Variant> = await getVariants(
+    params.env!,
+    params.flagId!,
+    authCookie
+  );
+
+  return { strategies, variants };
 };
 
 /* eslint-disable sonarjs/cognitive-complexity */
@@ -116,7 +125,7 @@ export default function FlagById() {
   const { user } = useUser();
   const { environment } = useEnvironment();
   const { flagEnv } = useFlagEnv();
-  const { strategies } = useLoaderData<LoaderData>();
+  const { strategies, variants } = useLoaderData<LoaderData>();
 
   return (
     <DashboardLayout
@@ -140,7 +149,7 @@ export default function FlagById() {
       />
 
       <Section id="rollout-target">
-        <StrategyList items={strategies} />
+        <StrategyList items={strategies} variants={variants} />
         <div className="h-4" />
       </Section>
     </DashboardLayout>

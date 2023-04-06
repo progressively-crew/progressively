@@ -3,25 +3,32 @@ import { Strategy } from "../types";
 import { Form } from "@remix-run/react";
 import { useId, useRef } from "react";
 import { RuleFormField } from "~/modules/rules/components/RuleFormField";
-import { ValueToServeFormField } from "./ValueToServeFormField";
+import { StrategyFormFields } from "./StrategyFormFields";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { Typography } from "~/components/Typography";
 import { Tag } from "~/components/Tag";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { PercentageField } from "~/components/Fields/PercentageField";
 import { MenuButton } from "~/components/MenuButton";
-import { Button } from "~/components/Buttons/Button";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
+import { Variant } from "~/modules/variants/types";
 
 export interface StrategyListProps {
   items: Array<Strategy>;
+  variants: Array<Variant>;
 }
 
-export const StrategyList = ({ items }: StrategyListProps) => {
+export const StrategyList = ({ items, variants }: StrategyListProps) => {
   return (
     <div className="flex flex-col gap-4">
       {items.map((strategy) => {
-        return <StrategyItem key={strategy.uuid} strategy={strategy} />;
+        return (
+          <StrategyItem
+            key={strategy.uuid}
+            strategy={strategy}
+            variants={variants}
+          />
+        );
       })}
     </div>
   );
@@ -29,8 +36,10 @@ export const StrategyList = ({ items }: StrategyListProps) => {
 
 export interface StrategyItemProps {
   strategy: Strategy;
+  variants: Array<Variant>;
 }
-const StrategyItem = ({ strategy }: StrategyItemProps) => {
+
+const StrategyItem = ({ strategy, variants }: StrategyItemProps) => {
   const deleteStrategyForm = useRef<HTMLFormElement>(null);
 
   const id = useId();
@@ -69,26 +78,13 @@ const StrategyItem = ({ strategy }: StrategyItemProps) => {
         <input type="hidden" value="edit-strategy" name="_type" />
         <input type="hidden" value={strategy.uuid} name="uuid" />
         <CardContent>
-          <div className="flex flex-row gap-4 items-center justify-between">
-            <div className="flex flex-row gap-4 items-center">
-              <ValueToServeFormField
-                valueToServe={strategy.valueToServe}
-                valueToServeType={strategy.valueToServeType}
-              />
-
-              <Typography className="text-sm font-semibold">to</Typography>
-
-              <PercentageField
-                name={"rolloutPercentage"}
-                initialValue={strategy.rolloutPercentage || 0}
-                label={"Rollout percentage"}
-                hiddenLabel
-              />
-
-              <Typography className="text-sm font-semibold">
-                of the audience
-              </Typography>
-            </div>
+          <div className="flex flex-row gap-4 justify-between">
+            <StrategyFormFields
+              valueToServe={strategy.valueToServe}
+              valueToServeType={strategy.valueToServeType}
+              variants={variants}
+              rolloutPercentage={strategy.rolloutPercentage || 0}
+            />
 
             <MenuButton
               items={[

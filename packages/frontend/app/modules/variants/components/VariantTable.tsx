@@ -1,7 +1,7 @@
 import { Form } from "@remix-run/react";
 import { Variant } from "../types";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
-import { VariantDot } from "~/modules/flags/components/VariantDot";
+import { VariantDot } from "~/modules/variants/components/VariantDot";
 import { Entity } from "~/components/Entity/Entity";
 import { MenuButton } from "~/components/MenuButton";
 import { FormSliderInput } from "~/modules/flags/components/FormSliderInput";

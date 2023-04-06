@@ -157,7 +157,6 @@ export const seedDb = async () => {
     const firstVariant = await prismaClient.variant.create({
       data: {
         uuid: "1",
-        rolloutPercentage: 12,
         isControl: true,
         value: "Control",
         flagEnvironmentEnvironmentId: multiVariateFlagEnv.environmentId,
@@ -168,7 +167,6 @@ export const seedDb = async () => {
     await prismaClient.variant.create({
       data: {
         uuid: "2",
-        rolloutPercentage: 88,
         isControl: false,
         value: "Second",
         flagEnvironmentEnvironmentId: multiVariateFlagEnv.environmentId,
