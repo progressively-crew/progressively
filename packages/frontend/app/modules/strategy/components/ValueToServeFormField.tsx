@@ -26,7 +26,7 @@ export const ValueToServeFormField = ({
   const valueOptions = [
     {
       value: ValueToServe.Boolean,
-      label: "the calculated boolean",
+      label: `the "true" boolean`,
     },
     {
       value: ValueToServe.String,
