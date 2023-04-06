@@ -346,26 +346,46 @@ describe('SdkService', () => {
     });
 
     describe('With strategies and rules', () => {
-      describe('valueToServe: boolean', () => {
-        it('resolves true when the rollout percentage is 100% and the user matches the rules', () => {
-          flagEnv.strategies = [
+      let stratOne;
+      let stratTwo;
+
+      beforeEach(() => {
+        stratOne = {
+          flagEnvironmentEnvironmentId: '1',
+          flagEnvironmentFlagId: '1',
+          valueToServe: undefined,
+          valueToServeType: 'Boolean',
+          uuid: '1',
+          variants: [],
+          rolloutPercentage: 100,
+          rules: [
             {
-              flagEnvironmentEnvironmentId: '1',
-              flagEnvironmentFlagId: '1',
-              valueToServe: undefined,
-              valueToServeType: 'Boolean',
-              uuid: '1',
-              variants: [],
-              rolloutPercentage: 100,
-              rules: [
-                {
-                  fieldComparator: ComparatorEnum.Equals,
-                  fieldName: 'email',
-                  fieldValue: 'marvin',
-                },
-              ],
+              fieldComparator: ComparatorEnum.Equals,
+              fieldName: 'id',
+              fieldValue: 'marvin',
+            },
+            {
+              fieldComparator: ComparatorEnum.Equals,
+              fieldName: 'email',
+              fieldValue: 'notgood',
+            },
+          ],
+        };
+
+        stratTwo = JSON.parse(JSON.stringify(stratOne));
+      });
+
+      describe('valueToServe: boolean', () => {
+        it('resolves true when the rollout percentage is 100% and the user matches the rules of one of the strategies', () => {
+          stratTwo.rules = [
+            {
+              fieldComparator: ComparatorEnum.Equals,
+              fieldName: 'email',
+              fieldValue: 'marvin',
             },
           ];
+
+          flagEnv.strategies = [stratOne, stratTwo];
 
           const shouldActivate = service.resolveFlagStatus(flagEnv, {
             id: 'user-id-123',
@@ -376,24 +396,7 @@ describe('SdkService', () => {
         });
 
         it('resolves false when the rollout percentage is 100% and the user does not matches the rules', () => {
-          flagEnv.strategies = [
-            {
-              flagEnvironmentEnvironmentId: '1',
-              flagEnvironmentFlagId: '1',
-              valueToServe: undefined,
-              valueToServeType: 'Boolean',
-              uuid: '1',
-              variants: [],
-              rolloutPercentage: 100,
-              rules: [
-                {
-                  fieldComparator: ComparatorEnum.Equals,
-                  fieldName: 'email',
-                  fieldValue: 'marvin',
-                },
-              ],
-            },
-          ];
+          flagEnv.strategies = [stratOne, stratTwo];
 
           const shouldActivate = service.resolveFlagStatus(flagEnv, {
             id: 'user-id-123',
@@ -405,30 +408,21 @@ describe('SdkService', () => {
       });
 
       describe('valueToServe: string', () => {
-        it('resolves true when the rollout percentage is 100% and the user matches the rules', () => {
-          flagEnv.strategies = [
+        it('resolves "hello world" when the rollout percentage is 100% and the user matches the rules', () => {
+          stratOne.valueToServeType = 'String';
+          stratTwo.valueToServeType = 'String';
+          stratOne.valueToServe = 'noop';
+          stratTwo.valueToServe = 'hello world';
+
+          stratTwo.rules = [
             {
-              flagEnvironmentEnvironmentId: '1',
-              flagEnvironmentFlagId: '1',
-              valueToServe: 'hello world',
-              valueToServeType: 'String',
-              uuid: '1',
-              variants: [],
-              rolloutPercentage: 100,
-              rules: [
-                {
-                  fieldComparator: ComparatorEnum.Equals,
-                  fieldName: 'id',
-                  fieldValue: 'marvin',
-                },
-                {
-                  fieldComparator: ComparatorEnum.Equals,
-                  fieldName: 'email',
-                  fieldValue: 'marvin',
-                },
-              ],
+              fieldComparator: ComparatorEnum.Equals,
+              fieldName: 'email',
+              fieldValue: 'marvin',
             },
           ];
+
+          flagEnv.strategies = [stratOne, stratTwo];
 
           const shouldActivate = service.resolveFlagStatus(flagEnv, {
             id: 'user-id-123',
@@ -439,29 +433,20 @@ describe('SdkService', () => {
         });
 
         it('resolves false when the rollout percentage is 100% and the user does not matches the rules', () => {
-          flagEnv.strategies = [
+          stratOne.valueToServeType = 'String';
+          stratTwo.valueToServeType = 'String';
+          stratOne.valueToServe = 'noop';
+          stratTwo.valueToServe = 'hello world';
+
+          stratTwo.rules = [
             {
-              flagEnvironmentEnvironmentId: '1',
-              flagEnvironmentFlagId: '1',
-              valueToServe: 'hello world',
-              valueToServeType: 'String',
-              uuid: '1',
-              variants: [],
-              rolloutPercentage: 100,
-              rules: [
-                {
-                  fieldComparator: ComparatorEnum.Equals,
-                  fieldName: 'id',
-                  fieldValue: 'marvin',
-                },
-                {
-                  fieldComparator: ComparatorEnum.Equals,
-                  fieldName: 'email',
-                  fieldValue: 'marvin',
-                },
-              ],
+              fieldComparator: ComparatorEnum.Equals,
+              fieldName: 'email',
+              fieldValue: 'marvin',
             },
           ];
+
+          flagEnv.strategies = [stratOne, stratTwo];
 
           const shouldActivate = service.resolveFlagStatus(flagEnv, {
             id: 'user-id-123',

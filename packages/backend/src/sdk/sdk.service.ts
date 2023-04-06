@@ -80,22 +80,22 @@ export class SdkService {
       );
 
       if (strategy.valueToServeType === ValueToServe.Boolean) {
-        if (!isMatching) return false;
+        if (isMatching) {
+          const inBucket = this.isInBucket(flagKey, strategy, fields);
 
-        const inBucket = this.isInBucket(flagKey, strategy, fields);
-
-        if (inBucket) {
-          return true;
+          if (inBucket) {
+            return true;
+          }
         }
       }
 
       if (strategy.valueToServeType === ValueToServe.String) {
-        if (!isMatching) return false;
+        if (isMatching) {
+          const inBucket = this.isInBucket(flagKey, strategy, fields);
 
-        const inBucket = this.isInBucket(flagKey, strategy, fields);
-
-        if (inBucket) {
-          return strategy.valueToServe;
+          if (inBucket) {
+            return strategy.valueToServe;
+          }
         }
       }
 
