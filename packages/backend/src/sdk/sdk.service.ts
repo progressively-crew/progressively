@@ -79,33 +79,29 @@ export class SdkService {
         fields,
       );
 
-      if (strategy.valueToServeType === ValueToServe.Boolean) {
-        if (isMatching) {
-          const inBucket = this.isInBucket(flagKey, strategy, fields);
+      if (!isMatching) continue;
 
-          if (inBucket) {
-            return true;
-          }
+      if (strategy.valueToServeType === ValueToServe.Boolean) {
+        const inBucket = this.isInBucket(flagKey, strategy, fields);
+
+        if (inBucket) {
+          return true;
         }
       }
 
       if (strategy.valueToServeType === ValueToServe.String) {
-        if (isMatching) {
-          const inBucket = this.isInBucket(flagKey, strategy, fields);
+        const inBucket = this.isInBucket(flagKey, strategy, fields);
 
-          if (inBucket) {
-            return strategy.valueToServe;
-          }
+        if (inBucket) {
+          return strategy.valueToServe;
         }
       }
 
       if (strategy.valueToServeType === ValueToServe.Variant) {
-        if (isMatching) {
-          const bucketId = genBucket(flagKey, fields.id as string);
-          const variantResolved = getVariation(bucketId, strategy.variants);
+        const bucketId = genBucket(flagKey, fields.id as string);
+        const variantResolved = getVariation(bucketId, strategy.variants);
 
-          return variantResolved;
-        }
+        return variantResolved;
       }
     }
 
