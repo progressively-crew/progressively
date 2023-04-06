@@ -1,7 +1,8 @@
 import { Segment } from '../segments/types';
 import { Environment } from '../environments/types';
 import { FlagStatus } from './flags.status';
-import { Rule, Strategy, StrategyVariant } from '@progressively/database';
+import { Strategy, StrategyVariant } from '@progressively/database';
+import { RuleType } from '../rule/types';
 
 export interface Flag {
   uuid: string;
@@ -15,7 +16,6 @@ export interface FlagEnvironment {
   flagId: string;
   environmentId: string;
   status: string;
-  rolloutPercentage: number;
   variants: Array<Variant>;
 }
 
@@ -27,9 +27,9 @@ interface Schedule {
   schedulingStatus: SchedulingStatus;
 }
 
-interface PopulatedStrategy extends Strategy {
+export interface PopulatedStrategy extends Strategy {
   variants: StrategyVariant[];
-  rules: Rule[];
+  rules: Array<RuleType>;
 }
 
 export interface PopulatedFlagEnv extends FlagEnvironment {

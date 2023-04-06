@@ -35,7 +35,6 @@ describe('SdkService', () => {
         name: 'Super flag',
       },
       status: FlagStatus.ACTIVATED,
-      rolloutPercentage: 100,
       variants: [],
       scheduling: [],
       environment: {
@@ -60,22 +59,100 @@ describe('SdkService', () => {
         expect(shouldActivate).toBe(false);
       });
 
-      it('resolves "true" when the rollout percentage is 100% without strategies', () => {
+      it('resolves "true" when the flag is activated', () => {
         const shouldActivate = service.resolveFlagStatus(flagEnv, {
           id: 'user-id-123',
         });
 
         expect(shouldActivate).toBe(true);
       });
+    });
 
-      it('resolves "false" when the id is not passed percentage is not 100%', () => {
-        flagEnv.status = FlagStatus.NOT_ACTIVATED;
+    describe('With strategies', () => {
+      describe('boolean', () => {
+        it('resolves "true" when the strategy has a rollout of 100% and no rules', () => {
+          flagEnv.strategies = [
+            {
+              flagEnvironmentEnvironmentId: '1',
+              flagEnvironmentFlagId: '1',
+              valueToServe: 'true',
+              valueToServeType: 'Boolean',
+              uuid: '1',
+              variants: [],
+              rolloutPercentage: 100,
+              rules: [],
+            },
+          ];
 
-        const shouldActivate = service.resolveFlagStatus(flagEnv, {
-          id: undefined,
+          const shouldActivate = service.resolveFlagStatus(flagEnv, {
+            id: 'user-id-123',
+          });
+
+          expect(shouldActivate).toBe(true);
         });
 
-        expect(shouldActivate).toBe(false);
+        it('resolves "false" when the strategy has a rollout of 0% and no rules', () => {
+          flagEnv.strategies = [
+            {
+              flagEnvironmentEnvironmentId: '1',
+              flagEnvironmentFlagId: '1',
+              valueToServe: 'true',
+              valueToServeType: 'Boolean',
+              uuid: '1',
+              variants: [],
+              rolloutPercentage: 0,
+              rules: [],
+            },
+          ];
+
+          const shouldActivate = service.resolveFlagStatus(flagEnv, {
+            id: 'user-id-123',
+          });
+
+          expect(shouldActivate).toBe(false);
+        });
+
+        it('resolves "false" when the strategy has a rollout of 10% and no rules', () => {
+          flagEnv.strategies = [
+            {
+              flagEnvironmentEnvironmentId: '1',
+              flagEnvironmentFlagId: '1',
+              valueToServe: 'true',
+              valueToServeType: 'Boolean',
+              uuid: '1',
+              variants: [],
+              rolloutPercentage: 10,
+              rules: [],
+            },
+          ];
+
+          const shouldActivate = service.resolveFlagStatus(flagEnv, {
+            id: 'user-id-123',
+          });
+
+          expect(shouldActivate).toBe(false);
+        });
+
+        it('resolves "true" when the strategy has a rollout of 90% and no rules', () => {
+          flagEnv.strategies = [
+            {
+              flagEnvironmentEnvironmentId: '1',
+              flagEnvironmentFlagId: '1',
+              valueToServe: 'true',
+              valueToServeType: 'Boolean',
+              uuid: '1',
+              variants: [],
+              rolloutPercentage: 90,
+              rules: [],
+            },
+          ];
+
+          const shouldActivate = service.resolveFlagStatus(flagEnv, {
+            id: 'user-id-123',
+          });
+
+          expect(shouldActivate).toBe(true);
+        });
       });
     });
   });

@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { nanoid } from 'nanoid';
 import { EnvironmentsService } from '../environments/environments.service';
 import { FlagsService } from '../flags/flags.service';
-import { PopulatedFlagEnv, Variant } from '../flags/types';
+import { PopulatedFlagEnv, PopulatedStrategy, Variant } from '../flags/types';
 import { FieldRecord } from '../rule/types';
 import { EventHit } from './types';
 import { PrismaService } from '../database/prisma.service';
@@ -10,6 +10,7 @@ import { FlagStatus } from '../flags/flags.status';
 import { genBucket, getVariation, isInBucket } from './utils';
 import { SchedulingService } from '../scheduling/scheduling.service';
 import { SegmentsService } from '../segments/segments.service';
+import { RuleService } from '../rule/rule.service';
 
 @Injectable()
 export class SdkService {
@@ -19,6 +20,7 @@ export class SdkService {
     private readonly scheduleService: SchedulingService,
     private readonly segmentService: SegmentsService,
     private readonly flagService: FlagsService,
+    private readonly ruleService: RuleService,
   ) {}
 
   resolveUserId(params: FieldRecord, cookieUserId?: string) {
@@ -44,39 +46,67 @@ export class SdkService {
     }
   }
 
-  private getUserVariant(
-    flagEnv: PopulatedFlagEnv,
-    fields: FieldRecord,
-  ): boolean | Variant {
-    // When at least one variant is created, we cant rely on rolloutPercentage at the flag level
-    // we need to rely on the percentage at the variant level
-    if (flagEnv.rolloutPercentage === 100) {
-      return true;
-    }
-
-    // No users, we can't make assumptions, should be very rare
-    if (!fields?.id) return false;
-
-    const bucketId = genBucket(flagEnv.flag.key, fields.id as string);
-    const isMultiVariate = flagEnv.variants.length > 0;
-
-    if (isMultiVariate) {
-      return getVariation(bucketId, flagEnv.variants);
-    }
-
-    return isInBucket(bucketId, flagEnv.rolloutPercentage);
-  }
-
   resolveFlagStatus(flagEnv: PopulatedFlagEnv, fields: FieldRecord) {
     if (flagEnv.status !== FlagStatus.ACTIVATED) return false;
+    if (flagEnv.strategies.length === 0) return true;
 
-    const userVariant = this.getUserVariant(flagEnv, fields);
+    const valueFromStrategy = this.resolveStrategies(
+      flagEnv.flag.key,
+      flagEnv.strategies,
+      fields,
+    );
 
-    if (Boolean(userVariant)) {
-      return userVariant;
+    return valueFromStrategy;
+
+    // const userVariant = this.getUserVariant(flagEnv, fields);
+
+    // if (Boolean(userVariant)) {
+    //   return userVariant;
+    // }
+
+    // return false;
+  }
+
+  resolveStrategies(
+    flagKey: string,
+    strategies: Array<PopulatedStrategy>,
+    fields: FieldRecord,
+  ) {
+    for (const strategy of strategies) {
+      const inBucket = this.isInBucket(flagKey, strategy, fields);
+
+      // No rules, early break when possible
+      if (strategy.rules.length === 0) {
+        const inBucket = this.isInBucket(flagKey, strategy, fields);
+
+        if (inBucket) {
+          return true;
+        }
+      }
+
+      const isMatchingRules = this.ruleService.isMatchingAllRules(
+        strategy.rules,
+        fields,
+      );
+
+      if (isMatchingRules) {
+        return true;
+      }
     }
 
     return false;
+  }
+
+  private isInBucket(
+    flagKey: string,
+    strategy: PopulatedStrategy,
+    fields: FieldRecord,
+  ): boolean | Variant {
+    if (strategy.rolloutPercentage === 0) return false;
+    if (strategy.rolloutPercentage === 100) return true;
+
+    const bucketId = genBucket(flagKey, fields.id as string);
+    return isInBucket(bucketId, strategy.rolloutPercentage);
   }
 
   async resolveFlagStatusRecord(
@@ -87,7 +117,7 @@ export class SdkService {
 
     let valueResolved;
     if (typeof flagStatusRecord === 'object') {
-      valueResolved = flagStatusRecord.value;
+      valueResolved = 'flagStatusRecord.value';
     } else {
       valueResolved = flagStatusRecord;
     }
@@ -125,7 +155,7 @@ export class SdkService {
       const flagStatusOrVariant = this.resolveFlagStatus(nextFlag, fields);
 
       if (typeof flagStatusOrVariant === 'object') {
-        flags[nextFlag.flag.key] = flagStatusOrVariant.value;
+        flags[nextFlag.flag.key] = 'flagStatusOrVariant.value';
       } else {
         flags[nextFlag.flag.key] = flagStatusOrVariant;
       }
@@ -133,7 +163,7 @@ export class SdkService {
       if (!skipHit) {
         let valueResolved = '';
         if (typeof flagStatusOrVariant === 'object') {
-          valueResolved = flagStatusOrVariant.value;
+          valueResolved = 'flagStatusOrVariant.value';
         } else {
           valueResolved = String(flagStatusOrVariant);
         }

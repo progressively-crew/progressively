@@ -21,6 +21,7 @@ import { SegmentsModule } from '../segments/segments.module';
     DatabaseModule,
     RuleModule,
     SegmentsModule,
+    RuleModule,
   ],
   providers: [SdkService],
 })
