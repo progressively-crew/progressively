@@ -1,14 +1,15 @@
 import { x86 as murmur } from 'murmurhash3js';
-import { Variant } from '../flags/types';
+import { PopulatedVariant, Variant } from '../flags/types';
 
 const BUCKET_COUNT = 10000; // number of buckets
 const MAX_INT_32 = Math.pow(2, 32);
 
 export const getVariation = (
   bucketId: number,
-  orderedVariants: Array<Variant>,
-): Variant => {
+  orderedVariants: Array<PopulatedVariant>,
+): string | undefined => {
   let cumulative = 0;
+
   for (const variant of orderedVariants) {
     const countOfConcernedBuckets =
       BUCKET_COUNT * (variant.rolloutPercentage / 100);
@@ -16,12 +17,13 @@ export const getVariation = (
     cumulative += countOfConcernedBuckets;
 
     if (bucketId < cumulative) {
-      return variant;
+      return variant.variant.value;
     }
   }
 
   // We guarantee that the control variant always exists and can't be removed
-  return orderedVariants.find((variant) => variant.isControl)!;
+  return orderedVariants.find((variant) => variant.variant.isControl)!.variant
+    .value;
 };
 
 export const isInBucket = (bucketId: number, rolloutPercentage: number) => {

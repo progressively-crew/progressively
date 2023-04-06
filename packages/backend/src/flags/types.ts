@@ -27,19 +27,20 @@ interface Schedule {
   schedulingStatus: SchedulingStatus;
 }
 
+export interface PopulatedVariant {
+  rolloutPercentage: number;
+  variantUuid: string;
+  strategyUuid: string;
+  variant: {
+    uuid: string;
+    isControl: boolean;
+    value: string;
+    flagEnvironmentFlagId: string;
+    flagEnvironmentEnvironmentId: string;
+  };
+}
 export interface PopulatedStrategy extends Strategy {
-  variants: Array<{
-    rolloutPercentage: number;
-    variantUuid: string;
-    strategyUuid: string;
-    variant: {
-      uuid: string;
-      isControl: boolean;
-      value: string;
-      flagEnvironmentFlagId: string;
-      flagEnvironmentEnvironmentId: string;
-    };
-  }>;
+  variants: Array<PopulatedVariant>;
   rules: Array<RuleType>;
 }
 

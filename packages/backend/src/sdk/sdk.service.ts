@@ -94,6 +94,15 @@ export class SdkService {
         }
       }
 
+      if (strategy.valueToServeType === ValueToServe.Variant) {
+        if (strategy.rules.length === 0) {
+          const bucketId = genBucket(flagKey, fields.id as string);
+          const variantResolved = getVariation(bucketId, strategy.variants);
+
+          return variantResolved;
+        }
+      }
+
       const isMatchingRules = this.ruleService.isMatchingAllRules(
         strategy.rules,
         fields,

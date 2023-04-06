@@ -33,6 +33,9 @@ export class EnvironmentsService {
               include: {
                 variant: true,
               },
+              orderBy: {
+                rolloutPercentage: 'asc',
+              },
             },
           },
         },
