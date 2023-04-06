@@ -50,7 +50,7 @@ export class SdkService {
   ): boolean | Variant {
     // When at least one variant is created, we cant rely on rolloutPercentage at the flag level
     // we need to rely on the percentage at the variant level
-    if (flagEnv.variants?.length === 0 && flagEnv.rolloutPercentage === 100) {
+    if (flagEnv.rolloutPercentage === 100) {
       return true;
     }
 
@@ -69,24 +69,6 @@ export class SdkService {
 
   resolveFlagStatus(flagEnv: PopulatedFlagEnv, fields: FieldRecord) {
     if (flagEnv.status !== FlagStatus.ACTIVATED) return false;
-
-    // By segment
-    if (flagEnv.Segment.length > 0) {
-      const isInSegment = this.segmentService.isInSegment(
-        flagEnv.Segment,
-        fields,
-      );
-
-      if (isInSegment) {
-        const userVariant = this.getUserVariant(flagEnv, fields);
-
-        if (Boolean(userVariant)) {
-          return userVariant;
-        }
-      }
-    }
-
-    // By attributes and percentage
 
     const userVariant = this.getUserVariant(flagEnv, fields);
 
@@ -124,9 +106,9 @@ export class SdkService {
 
   async resolveSdkFlags(fields: FieldRecord, skipHit: boolean) {
     const clientKey = String(fields.clientKey);
-    const flagEnvs = (await this.envService.getFlagEnvironmentByClientKey(
+    const flagEnvs = await this.envService.getFlagEnvironmentByClientKey(
       clientKey,
-    )) as unknown as Array<PopulatedFlagEnv>;
+    );
 
     const flags = {};
 

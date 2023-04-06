@@ -83,7 +83,6 @@ CREATE TABLE "FlagEnvironment" (
     "flagId" TEXT NOT NULL,
     "environmentId" TEXT NOT NULL,
     "status" TEXT DEFAULT 'NOT_ACTIVATED',
-    "rolloutPercentage" INTEGER NOT NULL DEFAULT 100,
 
     CONSTRAINT "FlagEnvironment_pkey" PRIMARY KEY ("flagId","environmentId")
 );

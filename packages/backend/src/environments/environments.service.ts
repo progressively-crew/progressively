@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import camelcase from 'camelcase';
 import { PrismaService } from '../database/prisma.service';
 import { FlagAlreadyExists } from './errors';
+import { PopulatedFlagEnv } from '../flags/types';
 
 @Injectable()
 export class EnvironmentsService {
@@ -25,18 +26,14 @@ export class EnvironmentsService {
       include: {
         flag: true,
         scheduling: true,
-        Segment: {
+        strategies: {
           include: {
-            rule: true,
-          },
-        },
-        variants: {
-          orderBy: {
-            value: 'asc',
+            rules: true,
+            variants: true,
           },
         },
       },
-    });
+    }) as unknown as Promise<Array<PopulatedFlagEnv>>;
   }
 
   async createEnvironment(projectId: string, environmentName: string) {

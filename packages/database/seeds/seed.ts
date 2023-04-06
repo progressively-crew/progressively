@@ -76,7 +76,6 @@ export const seedDb = async () => {
       data: {
         environmentId: production.uuid,
         flagId: homePageFlag.uuid,
-        rolloutPercentage: 100,
         webhooks: {
           create: {
             uuid: "1",
@@ -111,7 +110,6 @@ export const seedDb = async () => {
         environmentId: production.uuid,
         flagId: footerFlag.uuid,
         status: "ACTIVATED",
-        rolloutPercentage: 0,
       },
     });
 
@@ -119,7 +117,6 @@ export const seedDb = async () => {
       data: {
         environmentId: otherEnv.uuid,
         flagId: asideFlag.uuid,
-        rolloutPercentage: 100,
       },
     });
 
@@ -129,7 +126,6 @@ export const seedDb = async () => {
       data: {
         environmentId: production.uuid,
         flagId: multiVariate.uuid,
-        rolloutPercentage: 100,
       },
     });
 

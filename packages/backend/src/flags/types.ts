@@ -1,6 +1,7 @@
 import { Segment } from '../segments/types';
 import { Environment } from '../environments/types';
 import { FlagStatus } from './flags.status';
+import { Rule, Strategy, StrategyVariant } from '@progressively/database';
 
 export interface Flag {
   uuid: string;
@@ -26,11 +27,16 @@ interface Schedule {
   schedulingStatus: SchedulingStatus;
 }
 
+interface PopulatedStrategy extends Strategy {
+  variants: StrategyVariant[];
+  rules: Rule[];
+}
+
 export interface PopulatedFlagEnv extends FlagEnvironment {
   environment: Environment;
   flag: Flag;
   scheduling: Array<Schedule>;
-  Segment: Array<Segment>;
+  strategies: Array<PopulatedStrategy>;
 }
 
 export enum SchedulingStatus {

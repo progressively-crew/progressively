@@ -87,21 +87,20 @@ model Flag {
 }
 
 model FlagEnvironment {
-  flagId            String
-  environmentId     String
-  status            String?       @default("NOT_ACTIVATED")
-  rolloutPercentage Int           @default(100)
-  environment       Environment   @relation(fields: [environmentId], references: [uuid])
-  flag              Flag          @relation(fields: [flagId], references: [uuid])
-  flagHit           FlagHit[]
-  metrics           PMetric[]
-  metricHits        PMetricHit[]
-  scheduling        Schedule[]
-  variants          Variant[]
-  webhooks          Webhook[]
-  ActivityLog       ActivityLog[]
-  Segment           Segment[]
-  strategies        Strategy[]
+  flagId        String
+  environmentId String
+  status        String?       @default("NOT_ACTIVATED")
+  environment   Environment   @relation(fields: [environmentId], references: [uuid])
+  flag          Flag          @relation(fields: [flagId], references: [uuid])
+  flagHit       FlagHit[]
+  metrics       PMetric[]
+  metricHits    PMetricHit[]
+  scheduling    Schedule[]
+  variants      Variant[]
+  webhooks      Webhook[]
+  ActivityLog   ActivityLog[]
+  Segment       Segment[]
+  strategies    Strategy[]
 
   @@id([flagId, environmentId])
 }
