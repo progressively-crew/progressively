@@ -112,39 +112,6 @@ export class FlagsController {
     return updatedFlagEnv;
   }
 
-  @Put('environments/:envId/flags/:flagId/percentage')
-  @UseGuards(HasFlagEnvAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  @UsePipes(new ValidationPipe(ChangePercentageSchema))
-  async adjustFlagPercentage(
-    @UserId() userId: string,
-    @Param('envId') envId: string,
-    @Param('flagId') flagId: string,
-    @Body() body: ChangePercentageDTO,
-  ) {
-    const updatedFlagEnv = await this.flagService.adjustFlagPercentage(
-      envId,
-      flagId,
-      body.rolloutPercentage,
-    );
-
-    this.wsGateway.notifyChanges(
-      updatedFlagEnv.environment.clientKey,
-      updatedFlagEnv,
-    );
-
-    await this.activityLogService.register({
-      userId,
-      flagId: flagId,
-      envId: envId,
-      concernedEntity: 'flag',
-      type: 'change-flag-percentage',
-      data: String(body.rolloutPercentage),
-    });
-
-    return updatedFlagEnv;
-  }
-
   /**
    * Delete a project by project/env/flag
    */
