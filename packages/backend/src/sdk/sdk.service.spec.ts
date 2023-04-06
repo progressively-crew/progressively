@@ -69,7 +69,7 @@ describe('SdkService', () => {
     });
 
     describe('With strategies', () => {
-      describe('boolean', () => {
+      describe('valueToServe: boolean', () => {
         it('resolves "true" when the strategy has a rollout of 100% and no rules', () => {
           flagEnv.strategies = [
             {
@@ -153,6 +153,92 @@ describe('SdkService', () => {
 
           expect(shouldActivate).toBe(true);
         });
+      });
+    });
+
+    describe('valueToServe: string', () => {
+      it('resolves "hello world" when the strategy has a rollout of 100% and no rules', () => {
+        flagEnv.strategies = [
+          {
+            flagEnvironmentEnvironmentId: '1',
+            flagEnvironmentFlagId: '1',
+            valueToServe: 'hello world',
+            valueToServeType: 'String',
+            uuid: '1',
+            variants: [],
+            rolloutPercentage: 100,
+            rules: [],
+          },
+        ];
+
+        const shouldActivate = service.resolveFlagStatus(flagEnv, {
+          id: 'user-id-123',
+        });
+
+        expect(shouldActivate).toBe('hello world');
+      });
+
+      it('resolves "false" when the strategy has a rollout of 0% and no rules', () => {
+        flagEnv.strategies = [
+          {
+            flagEnvironmentEnvironmentId: '1',
+            flagEnvironmentFlagId: '1',
+            valueToServe: 'hello world',
+            valueToServeType: 'String',
+            uuid: '1',
+            variants: [],
+            rolloutPercentage: 0,
+            rules: [],
+          },
+        ];
+
+        const shouldActivate = service.resolveFlagStatus(flagEnv, {
+          id: 'user-id-123',
+        });
+
+        expect(shouldActivate).toBe(false);
+      });
+
+      it('resolves "false" when the strategy has a rollout of 10% and no rules', () => {
+        flagEnv.strategies = [
+          {
+            flagEnvironmentEnvironmentId: '1',
+            flagEnvironmentFlagId: '1',
+            valueToServe: 'hello world',
+            valueToServeType: 'String',
+            uuid: '1',
+            variants: [],
+            rolloutPercentage: 10,
+            rules: [],
+          },
+        ];
+
+        const shouldActivate = service.resolveFlagStatus(flagEnv, {
+          id: 'user-id-123',
+        });
+
+        expect(shouldActivate).toBe(false);
+      });
+
+      it('resolves "hello-world" when the strategy has a rollout of 90% and no rules', () => {
+        flagEnv.strategies = [
+          {
+            flagEnvironmentEnvironmentId: '1',
+            flagEnvironmentFlagId: '1',
+            valueToServe: 'hello world',
+            valueToServeType: 'String',
+            uuid: '1',
+            variants: [],
+            rolloutPercentage: 90,
+            rules: [],
+          },
+        ];
+
+        const shouldActivate = service.resolveFlagStatus(flagEnv, {
+          id: 'user-id-123',
+        });
+
+        expect(shouldActivate).toBe('hello world');
       });
     });
   });

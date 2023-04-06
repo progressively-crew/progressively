@@ -11,6 +11,7 @@ import { genBucket, getVariation, isInBucket } from './utils';
 import { SchedulingService } from '../scheduling/scheduling.service';
 import { SegmentsService } from '../segments/segments.service';
 import { RuleService } from '../rule/rule.service';
+import { ValueToServe } from '../strategy/types';
 
 @Injectable()
 export class SdkService {
@@ -73,14 +74,23 @@ export class SdkService {
     fields: FieldRecord,
   ) {
     for (const strategy of strategies) {
-      const inBucket = this.isInBucket(flagKey, strategy, fields);
+      if (strategy.valueToServeType === ValueToServe.Boolean) {
+        if (strategy.rules.length === 0) {
+          const inBucket = this.isInBucket(flagKey, strategy, fields);
 
-      // No rules, early break when possible
-      if (strategy.rules.length === 0) {
-        const inBucket = this.isInBucket(flagKey, strategy, fields);
+          if (inBucket) {
+            return true;
+          }
+        }
+      }
 
-        if (inBucket) {
-          return true;
+      if (strategy.valueToServeType === ValueToServe.String) {
+        if (strategy.rules.length === 0) {
+          const inBucket = this.isInBucket(flagKey, strategy, fields);
+
+          if (inBucket) {
+            return strategy.valueToServe;
+          }
         }
       }
 
