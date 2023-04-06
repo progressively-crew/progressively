@@ -74,38 +74,45 @@ export class SdkService {
     fields: FieldRecord,
   ) {
     for (const strategy of strategies) {
-      const isMatching = this.ruleService.isMatchingAllRules(
+      const isMatching = this.ruleService.isMatchingAtLeastOneRule(
         strategy.rules,
         fields,
       );
 
       if (strategy.valueToServeType === ValueToServe.Boolean) {
-        if (strategy.rules.length === 0) {
-          const inBucket = this.isInBucket(flagKey, strategy, fields);
+        if (!isMatching) return false;
 
-          if (inBucket) {
-            return true;
-          }
+        const inBucket = this.isInBucket(flagKey, strategy, fields);
+
+        if (inBucket) {
+          return true;
         }
       }
 
       if (strategy.valueToServeType === ValueToServe.String) {
-        if (strategy.rules.length === 0) {
-          const inBucket = this.isInBucket(flagKey, strategy, fields);
+        if (!isMatching) return false;
 
-          if (inBucket) {
-            return strategy.valueToServe;
-          }
+        const inBucket = this.isInBucket(flagKey, strategy, fields);
+
+        if (inBucket) {
+          return strategy.valueToServe;
         }
       }
 
       if (strategy.valueToServeType === ValueToServe.Variant) {
-        if (strategy.rules.length === 0) {
-          const bucketId = genBucket(flagKey, fields.id as string);
-          const variantResolved = getVariation(bucketId, strategy.variants);
+        if (!isMatching) {
+          // Give back the control variant when it does not match any variant
+          const controlVariant = strategy.variants.find(
+            (variant) => variant.variant.isControl,
+          )!;
 
-          return variantResolved;
+          return controlVariant.variant.value;
         }
+
+        const bucketId = genBucket(flagKey, fields.id as string);
+        const variantResolved = getVariation(bucketId, strategy.variants);
+
+        return variantResolved;
       }
     }
 

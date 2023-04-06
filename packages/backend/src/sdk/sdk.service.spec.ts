@@ -4,6 +4,7 @@ import { PopulatedFlagEnv, Variant } from '../flags/types';
 import { SdkService } from './sdk.service';
 import { AppModule } from '../app.module';
 import { RedisService } from '../websocket/redis.service';
+import { ComparatorEnum } from '../../src/rule/comparators/types';
 
 describe('SdkService', () => {
   let service: SdkService;
@@ -340,6 +341,134 @@ describe('SdkService', () => {
           });
 
           expect(shouldActivate).toBe('Control');
+        });
+      });
+    });
+
+    describe('With strategies and rules', () => {
+      describe('valueToServe: boolean', () => {
+        it('resolves true when the rollout percentage is 100% and the user matches the rules', () => {
+          flagEnv.strategies = [
+            {
+              flagEnvironmentEnvironmentId: '1',
+              flagEnvironmentFlagId: '1',
+              valueToServe: undefined,
+              valueToServeType: 'Boolean',
+              uuid: '1',
+              variants: [],
+              rolloutPercentage: 100,
+              rules: [
+                {
+                  fieldComparator: ComparatorEnum.Equals,
+                  fieldName: 'email',
+                  fieldValue: 'marvin',
+                },
+              ],
+            },
+          ];
+
+          const shouldActivate = service.resolveFlagStatus(flagEnv, {
+            id: 'user-id-123',
+            email: 'marvin',
+          });
+
+          expect(shouldActivate).toBe(true);
+        });
+
+        it('resolves false when the rollout percentage is 100% and the user does not matches the rules', () => {
+          flagEnv.strategies = [
+            {
+              flagEnvironmentEnvironmentId: '1',
+              flagEnvironmentFlagId: '1',
+              valueToServe: undefined,
+              valueToServeType: 'Boolean',
+              uuid: '1',
+              variants: [],
+              rolloutPercentage: 100,
+              rules: [
+                {
+                  fieldComparator: ComparatorEnum.Equals,
+                  fieldName: 'email',
+                  fieldValue: 'marvin',
+                },
+              ],
+            },
+          ];
+
+          const shouldActivate = service.resolveFlagStatus(flagEnv, {
+            id: 'user-id-123',
+            email: 'marvinx',
+          });
+
+          expect(shouldActivate).toBe(false);
+        });
+      });
+
+      describe('valueToServe: string', () => {
+        it('resolves true when the rollout percentage is 100% and the user matches the rules', () => {
+          flagEnv.strategies = [
+            {
+              flagEnvironmentEnvironmentId: '1',
+              flagEnvironmentFlagId: '1',
+              valueToServe: 'hello world',
+              valueToServeType: 'String',
+              uuid: '1',
+              variants: [],
+              rolloutPercentage: 100,
+              rules: [
+                {
+                  fieldComparator: ComparatorEnum.Equals,
+                  fieldName: 'id',
+                  fieldValue: 'marvin',
+                },
+                {
+                  fieldComparator: ComparatorEnum.Equals,
+                  fieldName: 'email',
+                  fieldValue: 'marvin',
+                },
+              ],
+            },
+          ];
+
+          const shouldActivate = service.resolveFlagStatus(flagEnv, {
+            id: 'user-id-123',
+            email: 'marvin',
+          });
+
+          expect(shouldActivate).toBe('hello world');
+        });
+
+        it('resolves false when the rollout percentage is 100% and the user does not matches the rules', () => {
+          flagEnv.strategies = [
+            {
+              flagEnvironmentEnvironmentId: '1',
+              flagEnvironmentFlagId: '1',
+              valueToServe: 'hello world',
+              valueToServeType: 'String',
+              uuid: '1',
+              variants: [],
+              rolloutPercentage: 100,
+              rules: [
+                {
+                  fieldComparator: ComparatorEnum.Equals,
+                  fieldName: 'id',
+                  fieldValue: 'marvin',
+                },
+                {
+                  fieldComparator: ComparatorEnum.Equals,
+                  fieldName: 'email',
+                  fieldValue: 'marvin',
+                },
+              ],
+            },
+          ];
+
+          const shouldActivate = service.resolveFlagStatus(flagEnv, {
+            id: 'user-id-123',
+            email: 'marvinx',
+          });
+
+          expect(shouldActivate).toBe(false);
         });
       });
     });
