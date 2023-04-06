@@ -8,15 +8,16 @@ import { ValueToServe } from "../types";
 import { PercentageField } from "~/components/Fields/PercentageField";
 
 export interface ValuesToServeFieldsProps {
-  variants?: Array<Variant>;
+  variants?: Array<Variant & { rolloutPercentage: number }>;
   valueToServe?: string;
   valueToServeType?: ValueToServe;
   rolloutPercentage: number;
 }
 
 export interface VariantFieldsProps {
-  variants: Array<Variant>;
+  variants: Array<Variant & { rolloutPercentage: number }>;
 }
+
 const VariantFields = ({ variants }: VariantFieldsProps) => {
   return (
     <div className="grid grid-cols-2 gap-2">

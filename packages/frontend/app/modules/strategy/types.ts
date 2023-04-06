@@ -13,10 +13,16 @@ export interface StrategyUpdateDto {
   valueToServe?: string;
 }
 
+export interface StrategyVariant {
+  rolloutPercentage: number;
+  variantUuid: string;
+}
+
 export interface Strategy {
   uuid: string;
   rolloutPercentage?: number;
   valueToServeType: ValueToServe;
   rules?: Array<Rule>;
   valueToServe?: string;
+  variants?: Array<StrategyVariant>;
 }

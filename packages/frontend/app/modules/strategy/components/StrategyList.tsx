@@ -1,14 +1,12 @@
 import { Card, CardContent } from "~/components/Card";
-import { Strategy } from "../types";
+import { Strategy, StrategyVariant } from "../types";
 import { Form } from "@remix-run/react";
 import { useId, useRef } from "react";
 import { RuleFormField } from "~/modules/rules/components/RuleFormField";
 import { StrategyFormFields } from "./StrategyFormFields";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
-import { Typography } from "~/components/Typography";
 import { Tag } from "~/components/Tag";
 import { CreateButton } from "~/components/Buttons/CreateButton";
-import { PercentageField } from "~/components/Fields/PercentageField";
 import { MenuButton } from "~/components/MenuButton";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { Variant } from "~/modules/variants/types";
@@ -38,6 +36,16 @@ export interface StrategyItemProps {
   strategy: Strategy;
   variants: Array<Variant>;
 }
+
+const getVariantPercentage = (
+  variant: Variant,
+  variants: Array<StrategyVariant> | undefined
+) => ({
+  ...variant,
+  rolloutPercentage:
+    variants?.find((sv) => sv.variantUuid === variant.uuid)
+      ?.rolloutPercentage || 0,
+});
 
 const StrategyItem = ({ strategy, variants }: StrategyItemProps) => {
   const deleteStrategyForm = useRef<HTMLFormElement>(null);
@@ -82,7 +90,9 @@ const StrategyItem = ({ strategy, variants }: StrategyItemProps) => {
             <StrategyFormFields
               valueToServe={strategy.valueToServe}
               valueToServeType={strategy.valueToServeType}
-              variants={variants}
+              variants={variants.map((variant) =>
+                getVariantPercentage(variant, strategy.variants)
+              )}
               rolloutPercentage={strategy.rolloutPercentage || 0}
             />
 
