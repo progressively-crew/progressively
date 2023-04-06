@@ -6,6 +6,7 @@ import { Typography } from "~/components/Typography";
 import { Variant } from "~/modules/variants/types";
 import { ValueToServe } from "../types";
 import { PercentageField } from "~/components/Fields/PercentageField";
+import React from "react";
 
 export interface ValuesToServeFieldsProps {
   variants?: Array<Variant & { rolloutPercentage: number }>;
@@ -23,12 +24,14 @@ const VariantFields = ({ variants }: VariantFieldsProps) => {
     <div className="grid grid-cols-2 gap-2">
       {variants.map((variant) => {
         return (
-          <PercentageField
-            key={variant.uuid}
-            name={"variantUuid"}
-            initialValue={0}
-            label={variant.value}
-          />
+          <React.Fragment key={variant.uuid}>
+            <input type="hidden" name="variantUuid" value={variant.uuid} />
+            <PercentageField
+              name={"variantRolloutPercentage"}
+              initialValue={variant.rolloutPercentage}
+              label={variant.value}
+            />
+          </React.Fragment>
         );
       })}
     </div>

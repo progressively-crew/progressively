@@ -1,7 +1,7 @@
 import { updateRule } from "~/modules/rules/services/updateRule";
 import { ComparatorEnum, Rule } from "~/modules/rules/types";
 import { editStrategy } from "../services/editStrategy";
-import { ValueToServe } from "../types";
+import { StrategyVariant, ValueToServe } from "../types";
 
 /* eslint-disable unicorn/no-array-for-each */
 export const editStrategyAction = async (
@@ -13,6 +13,8 @@ export const editStrategyAction = async (
   const valueToServeType =
     formData.get("value-to-serve-type")?.toString() || "";
   const valueToServe = formData.get("value-to-serve")?.toString();
+  const allVariantUuids = formData.getAll("variantUuid");
+  const allVariantPercentage = formData.getAll("variantRolloutPercentage");
 
   const allIds = formData.getAll("ruleUuid");
   const allFieldName = formData.getAll("field-name");
@@ -50,12 +52,23 @@ export const editStrategyAction = async (
       await updateRule(uuid!, dto, authCookie);
     }
 
+    const variants: Array<StrategyVariant> = allVariantUuids.map(
+      (variantUuid, index) => {
+        const rolloutPercentage = allVariantPercentage[index];
+        return {
+          variantUuid,
+          rolloutPercentage,
+        };
+      }
+    );
+
     await editStrategy(
       strategyId,
       {
         valueToServeType: valueToServeType as ValueToServe,
         valueToServe,
         rolloutPercentage: Number(rolloutPercentage),
+        variants,
       },
       authCookie
     );

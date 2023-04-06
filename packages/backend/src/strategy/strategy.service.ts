@@ -51,12 +51,16 @@ export class StrategyService {
             },
           },
           update: {
-            rolloutPercentage: variant.rolloutPercentage,
+            rolloutPercentage: variant.rolloutPercentage
+              ? Number(variant.rolloutPercentage)
+              : 0,
             variantUuid: variant.variantUuid,
             strategyUuid: strategyId,
           },
           create: {
-            rolloutPercentage: variant.rolloutPercentage,
+            rolloutPercentage: variant.rolloutPercentage
+              ? Number(variant.rolloutPercentage)
+              : 0,
             variantUuid: variant.variantUuid,
             strategyUuid: strategyId,
           },

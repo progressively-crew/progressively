@@ -37,16 +37,6 @@ export interface StrategyItemProps {
   variants: Array<Variant>;
 }
 
-const getVariantPercentage = (
-  variant: Variant,
-  variants: Array<StrategyVariant> | undefined
-) => ({
-  ...variant,
-  rolloutPercentage:
-    variants?.find((sv) => sv.variantUuid === variant.uuid)
-      ?.rolloutPercentage || 0,
-});
-
 const StrategyItem = ({ strategy, variants }: StrategyItemProps) => {
   const deleteStrategyForm = useRef<HTMLFormElement>(null);
 
@@ -90,9 +80,17 @@ const StrategyItem = ({ strategy, variants }: StrategyItemProps) => {
             <StrategyFormFields
               valueToServe={strategy.valueToServe}
               valueToServeType={strategy.valueToServeType}
-              variants={variants.map((variant) =>
-                getVariantPercentage(variant, strategy.variants)
-              )}
+              variants={variants.map((variant) => {
+                const rolloutPercentage =
+                  strategy.variants?.find(
+                    (sv) => sv.variantUuid === variant.uuid
+                  )?.rolloutPercentage || 0;
+
+                return {
+                  ...variant,
+                  rolloutPercentage,
+                };
+              })}
               rolloutPercentage={strategy.rolloutPercentage || 0}
             />
 
