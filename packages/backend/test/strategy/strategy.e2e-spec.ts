@@ -79,6 +79,7 @@ describe('Strategy (e2e)', () => {
           uuid: '1',
           valueToServe: null,
           valueToServeType: 'string',
+          variants: [],
         },
       ]);
     });

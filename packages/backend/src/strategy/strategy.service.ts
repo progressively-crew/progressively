@@ -134,6 +134,7 @@ export class StrategyService {
       },
       include: {
         rules: true,
+        variants: true,
       },
     });
   }
