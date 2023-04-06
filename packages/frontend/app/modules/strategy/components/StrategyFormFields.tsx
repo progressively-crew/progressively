@@ -19,7 +19,7 @@ export interface VariantFieldsProps {
 
 const VariantFields = ({ variants }: VariantFieldsProps) => {
   return (
-    <div className="flex flex-row gap-8">
+    <div className="flex flex-col gap-2">
       {variants.map((variant) => {
         return (
           <div key={variant.uuid}>
