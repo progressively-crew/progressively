@@ -15,7 +15,7 @@ import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { useUser } from "~/modules/user/contexts/useUser";
-import { VariantTable } from "~/modules/variants/components/VariantTable";
+import { VariantList } from "~/modules/variants/components/VariantList";
 import { getVariants } from "~/modules/variants/services/getVariants";
 import { Variant } from "~/modules/variants/types";
 import { getSession } from "~/sessions";
@@ -140,7 +140,14 @@ export default function Variants() {
         </Card>
       )}
 
-      {hasVariants && <VariantTable variants={variants} />}
+      {hasVariants && (
+        <VariantList
+          variants={variants}
+          projectId={project.uuid}
+          envId={environment.uuid}
+          flagId={currentFlag.uuid}
+        />
+      )}
     </DashboardLayout>
   );
 }
