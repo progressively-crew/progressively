@@ -55,45 +55,17 @@ export const action: ActionFunction = async ({
 
   // Shared fields between single and multi variants
   const utc = formData.get("utc-dateTime")?.toString();
-  const type = formData.get("type")?.toString() as SchedulingType | undefined;
   const status =
     (formData.get("nextStatus") as unknown as FlagStatus) || undefined;
 
   let createSchedulingDto: Partial<SchedulingCreateDTO> = {};
 
-  if (type === SchedulingType.UpdatePercentage) {
-    const rolloutPercentageFormData = formData
-      .get("rolloutPercentage")
-      ?.toString();
-
-    const rolloutPercentage = rolloutPercentageFormData
-      ? Number(rolloutPercentageFormData)
-      : 0;
-
-    createSchedulingDto = {
-      utc,
-      status,
-      type: SchedulingType.UpdatePercentage,
-      data: { rolloutPercentage },
-    };
-  } else if (SchedulingType.UpdateVariantPercentage) {
-    const variants = formData.getAll("variantId");
-    const rolloutPercentages = formData.getAll("rolloutPercentage");
-
-    const formattedVariants: Array<SchedulingUpdateVariantEntry> = variants.map(
-      (variantId, index: number) => ({
-        variantId: variantId.toString(),
-        variantNewPercentage: Number(rolloutPercentages[index]),
-      })
-    );
-
-    createSchedulingDto = {
-      utc,
-      status,
-      type: SchedulingType.UpdateVariantPercentage,
-      data: formattedVariants,
-    };
-  }
+  createSchedulingDto = {
+    utc,
+    status,
+    type: SchedulingType.UpdatePercentage,
+    data: {},
+  };
 
   const errors = validateScheduling(createSchedulingDto);
 

@@ -1,12 +1,10 @@
 import { AiFillCheckCircle } from "react-icons/ai";
 import { TbCircle } from "react-icons/tb";
 import { CardEntity } from "~/components/Entity/Entity";
-import { EntityField } from "~/components/Entity/EntityField";
 import { MenuButton } from "~/components/MenuButton";
 import { FlagStatus } from "~/modules/flags/components/FlagStatus";
-import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { FormattedDate } from "~/modules/misc/components/FormattedDate";
-import { Schedule, SchedulingStatus, SchedulingType } from "../types";
+import { Schedule, SchedulingStatus } from "../types";
 
 export interface SchedulingListProps {
   scheduling: Array<Schedule>;
@@ -20,23 +18,9 @@ export const SchedulingList = ({
   envId,
   flagId,
 }: SchedulingListProps) => {
-  const { flagEnv } = useFlagEnv();
-
   return (
     <div className="flex flex-col gap-4">
       {scheduling.map((schedule) => {
-        const isMultiVariate =
-          schedule.type === SchedulingType.UpdateVariantPercentage;
-
-        const variantsWithPercentage = isMultiVariate
-          ? flagEnv.variants.map((variant) => ({
-              variantValue: variant.value,
-              nextPercentage: schedule.data.find(
-                (d) => d.variantId === variant.uuid
-              )?.variantNewPercentage,
-            }))
-          : [];
-
         return (
           <div className="scheduling-row" key={schedule.uuid}>
             <CardEntity
@@ -74,39 +58,7 @@ export const SchedulingList = ({
                   variant="action"
                 />
               }
-            >
-              <div>
-                {isMultiVariate ? (
-                  <EntityField
-                    name=" New variants percentage"
-                    value={
-                      <>
-                        {variantsWithPercentage.map((variant) => (
-                          <span
-                            key={`${schedule.uuid}-${variant.variantValue}`}
-                            className="mr-1"
-                          >
-                            {variant.variantValue} to{" "}
-                            <strong className="text-black dark:text-slate-50">
-                              {variant.nextPercentage}%
-                            </strong>
-                          </span>
-                        ))}
-                      </>
-                    }
-                  />
-                ) : (
-                  <EntityField
-                    name=" New rollout percentage"
-                    value={
-                      <strong className="text-black dark:text-slate-50">
-                        {schedule.data.rolloutPercentage}%
-                      </strong>
-                    }
-                  />
-                )}
-              </div>
-            </CardEntity>
+            />
           </div>
         );
       })}

@@ -58,7 +58,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants/
 
         cy.url().should(
           "include",
-          "/dashboard/projects/1/environments/1/flags/1?newVariant=true"
+          "/dashboard/projects/1/environments/1/flags/1/variants?newVariant=true"
         );
 
         cy.get(".success-box")
