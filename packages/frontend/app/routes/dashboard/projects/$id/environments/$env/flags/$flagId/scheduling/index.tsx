@@ -5,7 +5,6 @@ import { CreateButton } from "~/components/Buttons/CreateButton";
 import { Card, CardContent } from "~/components/Card";
 import { EmptyState } from "~/components/EmptyState";
 import { PageTitle } from "~/components/PageTitle";
-import { Typography } from "~/components/Typography";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
@@ -112,12 +111,6 @@ export default function SchedulingOfFlag() {
     >
       <PageTitle
         value="Scheduling"
-        description={
-          <Typography>
-            The additional audience rules that you have defined will apply at
-            the given dates.
-          </Typography>
-        }
         action={
           hasScheduling && (
             <CreateButton

@@ -33,11 +33,6 @@ export const Features = () => (
         custom metrics to analyze conversion
       </Card>
 
-      <Card title="Audience Eligibility">
-        Rollout to only specific subsets of your audience based on qualitative
-        criteria
-      </Card>
-
       <Card title="Gradual rollout">
         Target a percentage of your audience when deploying
       </Card>

@@ -1,6 +1,6 @@
 import { Entity } from "~/components/Entity/Entity";
 import { EntityField } from "~/components/Entity/EntityField";
-import { VariantDot } from "./components/VariantDot";
+import { VariantDot } from "../variants/components/VariantDot";
 
 interface MetricHit {
   metric: string;

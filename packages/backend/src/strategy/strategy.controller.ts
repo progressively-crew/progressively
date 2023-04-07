@@ -2,122 +2,115 @@ import {
   Body,
   Controller,
   Delete,
-  Get,
   Param,
+  Post,
   Put,
   UseGuards,
   UsePipes,
+  Get,
 } from '@nestjs/common';
-import { ApiBearerAuth } from '@nestjs/swagger';
-import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
 import { StrategyService } from './strategy.service';
+import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
 import { HasStrategyAccessGuard } from './guards/hasStrategyAccess';
-import { WebsocketGateway } from '../websocket/websocket.gateway';
-import { FlagStatus } from '../flags/flags.status';
-import { ValidationPipe } from '../shared/pipes/ValidationPipe';
-import { StrategyUpdateDTO, StrategySchema } from './types';
-import { ActivityLogService } from '../activity-log/activity-log.service';
 import { UserId } from '../users/users.decorator';
-import { ComparatorEnum } from '../rule/comparators/types';
+import { HasFlagEnvAccessGuard } from '../flags/guards/hasFlagEnvAccess';
+import { ActivityLogService } from '../activity-log/activity-log.service';
+import { StrategyUpdateDto, StrategyUpdateDtoSchema } from './types';
+import { ValidationPipe } from '../shared/pipes/ValidationPipe';
 
-@ApiBearerAuth()
-@Controller('strategies')
+@Controller()
 export class StrategyController {
   constructor(
-    private readonly strategyService: StrategyService,
-    private readonly wsGateway: WebsocketGateway,
-    private readonly activityLogService: ActivityLogService,
+    private strategyService: StrategyService,
+    private activityLogService: ActivityLogService,
   ) {}
 
-  @Get(':stratId')
-  @UseGuards(HasStrategyAccessGuard)
+  @Get('/environments/:envId/flags/:flagId/strategies')
+  @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
-  getStrategy(@Param('stratId') stratId: string) {
-    return this.strategyService.getStrategy(stratId);
+  getStrategies(
+    @Param('envId') envId: string,
+    @Param('flagId') flagId: string,
+  ) {
+    return this.strategyService.getStrategies(envId, flagId);
   }
 
-  @Delete(':stratId')
+  @Post('/environments/:envId/flags/:flagId/strategies')
+  @UseGuards(HasFlagEnvAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  async createStrategy(
+    @UserId() userId: string,
+    @Param('envId') envId: string,
+    @Param('flagId') flagId: string,
+  ) {
+    const strategy = await this.strategyService.createStrategy(envId, flagId);
+
+    await this.activityLogService.register({
+      userId,
+      flagId: strategy.flagEnvironmentFlagId,
+      envId: strategy.flagEnvironmentEnvironmentId,
+      concernedEntity: 'flag',
+      type: 'create-strategy',
+      data: JSON.stringify(strategy),
+    });
+
+    return strategy;
+  }
+
+  @Post('/strategies/:strategyId/rules')
+  @UseGuards(HasStrategyAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  createStrategyRule(
+    @UserId() userId: string,
+    @Param('strategyId') strategyId: string,
+  ) {
+    return this.strategyService.createStrategyRule(strategyId);
+  }
+
+  @Delete('/strategies/:strategyId')
   @UseGuards(HasStrategyAccessGuard)
   @UseGuards(JwtAuthGuard)
   async deleteStrategy(
     @UserId() userId: string,
-    @Param('stratId') stratId: string,
+    @Param('strategyId') strategyId: string,
   ) {
-    const deletedStrategy = await this.strategyService.deleteStrategy(stratId);
-    const flagEnv = deletedStrategy.flagEnvironment;
-
-    if (flagEnv.status === FlagStatus.ACTIVATED) {
-      this.wsGateway.notifyChanges(flagEnv.environment.clientKey, flagEnv);
-    }
-
-    const strat = {
-      uuid: deletedStrategy.uuid,
-      rule: {
-        fieldComparator: deletedStrategy.rule.fieldComparator as ComparatorEnum,
-        fieldName: deletedStrategy.rule.fieldName,
-        fieldValue: deletedStrategy.rule.fieldValue,
-      },
-      flagEnvironmentFlagId: deletedStrategy.flagEnvironmentFlagId,
-      flagEnvironmentEnvironmentId:
-        deletedStrategy.flagEnvironmentEnvironmentId,
-    };
+    const strategy = await this.strategyService.deleteStrategy(strategyId);
 
     await this.activityLogService.register({
       userId,
-      flagId: deletedStrategy.flagEnvironmentFlagId,
-      envId: deletedStrategy.flagEnvironmentEnvironmentId,
+      flagId: strategy.flagEnvironmentFlagId,
+      envId: strategy.flagEnvironmentEnvironmentId,
       concernedEntity: 'flag',
-      type: 'delete-additional-audience',
-      data: JSON.stringify(deletedStrategy),
+      type: 'delete-strategy',
+      data: JSON.stringify(strategy),
     });
 
-    return strat;
+    return strategy;
   }
 
-  @Put(':stratId')
+  @Put('/strategies/:strategyId')
   @UseGuards(HasStrategyAccessGuard)
   @UseGuards(JwtAuthGuard)
-  @UsePipes(new ValidationPipe(StrategySchema))
+  @UsePipes(new ValidationPipe(StrategyUpdateDtoSchema))
   async updateStrategy(
     @UserId() userId: string,
-    @Param('stratId') stratId: string,
-    @Body() strategyDto: StrategyUpdateDTO,
+    @Param('strategyId') strategyId: string,
+    @Body() strategyDto: StrategyUpdateDto,
   ) {
-    const updatedEligibility = await this.strategyService.updateStrategy(
-      stratId,
+    const strategy = await this.strategyService.updateStrategy(
+      strategyId,
       strategyDto,
     );
 
-    const flagEnv = updatedEligibility.flagEnvironment;
-
-    if (flagEnv.status === FlagStatus.ACTIVATED) {
-      this.wsGateway.notifyChanges(flagEnv.environment.clientKey, flagEnv);
-    }
-
-    const strat = {
-      uuid: updatedEligibility.uuid,
-      rule: {
-        fieldComparator: updatedEligibility.rule
-          .fieldComparator as ComparatorEnum,
-        fieldName: updatedEligibility.rule.fieldName,
-        fieldValue: updatedEligibility.rule.fieldValue,
-      },
-      valueToServe: updatedEligibility.valueToServe,
-      valueToServeType: updatedEligibility.valueToServeType,
-      flagEnvironmentFlagId: updatedEligibility.flagEnvironmentFlagId,
-      flagEnvironmentEnvironmentId:
-        updatedEligibility.flagEnvironmentEnvironmentId,
-    };
-
     await this.activityLogService.register({
       userId,
-      flagId: strat.flagEnvironmentFlagId,
-      envId: strat.flagEnvironmentEnvironmentId,
+      flagId: strategy.flagEnvironmentFlagId,
+      envId: strategy.flagEnvironmentEnvironmentId,
       concernedEntity: 'flag',
-      type: 'edit-additional-audience',
-      data: JSON.stringify(strat),
+      type: 'edit-strategy',
+      data: JSON.stringify(strategy),
     });
 
-    return strat;
+    return strategy;
   }
 }

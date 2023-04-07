@@ -2,8 +2,6 @@ export type ActivityType =
   | "change-flag-status"
   | "change-flag-percentage"
   | "change-variants-percentage"
-  | "create-additional-audience"
-  | "create-eligibility-restriction"
   | "create-webhook"
   | "create-scheduling"
   | "create-metric"
@@ -14,12 +12,9 @@ export type ActivityType =
   | "delete-variant"
   | "delete-metric"
   | "delete-scheduling"
-  | "delete-eligibility"
-  | "delete-additional-audience"
   | "delete-segment"
   | "delete-rule"
-  | "edit-eligibility"
-  | "edit-additional-audience"
+  | "delete-strategy"
   | "edit-segment-name"
   | "edit-segment-rule";
 

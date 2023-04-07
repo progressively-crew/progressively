@@ -1,95 +1,82 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { nanoid } from 'nanoid';
+import { Injectable } from '@nestjs/common';
 import { EnvironmentsService } from '../environments/environments.service';
 import { FlagsService } from '../flags/flags.service';
-import { PopulatedFlagEnv, Variant } from '../flags/types';
-import { FieldRecord } from '../strategy/types';
+import { PopulatedFlagEnv, PopulatedStrategy, Variant } from '../flags/types';
+import { FieldRecord } from '../rule/types';
 import { EventHit } from './types';
 import { PrismaService } from '../database/prisma.service';
-import { StrategyService } from '../strategy/strategy.service';
 import { FlagStatus } from '../flags/flags.status';
 import { genBucket, getVariation, isInBucket } from './utils';
-import { EligibilityService } from '../eligibility/eligibility.service';
 import { SchedulingService } from '../scheduling/scheduling.service';
+import { RuleService } from '../rule/rule.service';
+import { ValueToServe } from '../strategy/types';
 
 @Injectable()
 export class SdkService {
   constructor(
     private prisma: PrismaService,
     private readonly envService: EnvironmentsService,
-    private readonly strategyService: StrategyService,
     private readonly scheduleService: SchedulingService,
-    private readonly eligibilityService: EligibilityService,
     private readonly flagService: FlagsService,
+    private readonly ruleService: RuleService,
   ) {}
-
-  resolveUserId(params: FieldRecord, cookieUserId?: string) {
-    if (params?.id) {
-      // User exists, but initial request
-      return String(params.id);
-    }
-
-    if (cookieUserId) {
-      // User exists, subsequent requests
-      return cookieUserId;
-    }
-
-    // first visit but anonymous
-    return nanoid();
-  }
-
-  parseBase64Params(b64: string): FieldRecord {
-    try {
-      return JSON.parse(Buffer.from(b64, 'base64').toString('ascii'));
-    } catch (e) {
-      throw new BadRequestException();
-    }
-  }
-
-  private getUserVariant(
-    flagEnv: PopulatedFlagEnv,
-    fields: FieldRecord,
-  ): boolean | Variant {
-    // When at least one variant is created, we cant rely on rolloutPercentage at the flag level
-    // we need to rely on the percentage at the variant level
-    if (flagEnv.variants?.length === 0 && flagEnv.rolloutPercentage === 100) {
-      return true;
-    }
-
-    // No users, we can't make assumptions, should be very rare
-    if (!fields?.id) return false;
-
-    const bucketId = genBucket(flagEnv.flag.key, fields.id as string);
-    const isMultiVariate = flagEnv.variants.length > 0;
-
-    if (isMultiVariate) {
-      return getVariation(bucketId, flagEnv.variants);
-    }
-
-    return isInBucket(bucketId, flagEnv.rolloutPercentage);
-  }
 
   resolveFlagStatus(flagEnv: PopulatedFlagEnv, fields: FieldRecord) {
     if (flagEnv.status !== FlagStatus.ACTIVATED) return false;
+    if (flagEnv.strategies.length === 0) return true;
 
-    const additionalAudienceValue =
-      this.strategyService.resolveAdditionalAudienceValue(
-        flagEnv.strategies,
+    return this.resolveStrategies(flagEnv.flag.key, flagEnv.strategies, fields);
+  }
+
+  resolveStrategies(
+    flagKey: string,
+    strategies: Array<PopulatedStrategy>,
+    fields: FieldRecord,
+  ) {
+    for (const strategy of strategies) {
+      const isMatching = this.ruleService.isMatchingAtLeastOneRule(
+        strategy.rules,
         fields,
       );
 
-    if (additionalAudienceValue) return additionalAudienceValue;
+      if (!isMatching) continue;
 
-    const isEligible = this.eligibilityService.isEligible(flagEnv, fields);
-    if (!isEligible) return false;
+      if (strategy.valueToServeType === ValueToServe.Boolean) {
+        const inBucket = this.isInBucket(flagKey, strategy, fields);
 
-    const userVariant = this.getUserVariant(flagEnv, fields);
+        if (inBucket) {
+          return true;
+        }
+      }
 
-    if (Boolean(userVariant)) {
-      return userVariant;
+      if (strategy.valueToServeType === ValueToServe.String) {
+        const inBucket = this.isInBucket(flagKey, strategy, fields);
+
+        if (inBucket) {
+          return strategy.valueToServe;
+        }
+      }
+
+      if (strategy.valueToServeType === ValueToServe.Variant) {
+        const bucketId = genBucket(flagKey, fields.id as string);
+
+        return getVariation(bucketId, strategy.variants);
+      }
     }
 
     return false;
+  }
+
+  private isInBucket(
+    flagKey: string,
+    strategy: PopulatedStrategy,
+    fields: FieldRecord,
+  ): boolean | Variant {
+    if (strategy.rolloutPercentage === 0) return false;
+    if (strategy.rolloutPercentage === 100) return true;
+
+    const bucketId = genBucket(flagKey, fields.id as string);
+    return isInBucket(bucketId, strategy.rolloutPercentage);
   }
 
   async resolveFlagStatusRecord(
@@ -98,30 +85,23 @@ export class SdkService {
   ) {
     const flagStatusRecord = this.resolveFlagStatus(flagEnv, fields);
 
-    let valueResolved;
-    if (typeof flagStatusRecord === 'object') {
-      valueResolved = flagStatusRecord.value;
-    } else {
-      valueResolved = flagStatusRecord;
-    }
-
     await this.flagService.hitFlag(
       flagEnv.environmentId,
       flagEnv.flagId,
       String(fields?.id || ''),
-      String(valueResolved),
+      String(flagStatusRecord),
     );
 
     return {
-      [flagEnv.flag.key]: valueResolved,
+      [flagEnv.flag.key]: flagStatusRecord,
     };
   }
 
-  async resolveSdkFlags(fields: FieldRecord, skipHit: boolean) {
+  async computeFlags(fields: FieldRecord, skipHit: boolean) {
     const clientKey = String(fields.clientKey);
-    const flagEnvs = (await this.envService.getFlagEnvironmentByClientKey(
+    const flagEnvs = await this.envService.getFlagEnvironmentByClientKey(
       clientKey,
-    )) as unknown as Array<PopulatedFlagEnv>;
+    );
 
     const flags = {};
 
@@ -137,24 +117,14 @@ export class SdkService {
 
       const flagStatusOrVariant = this.resolveFlagStatus(nextFlag, fields);
 
-      if (typeof flagStatusOrVariant === 'object') {
-        flags[nextFlag.flag.key] = flagStatusOrVariant.value;
-      } else {
-        flags[nextFlag.flag.key] = flagStatusOrVariant;
-      }
+      flags[nextFlag.flag.key] = flagStatusOrVariant;
 
       if (!skipHit) {
-        let valueResolved = '';
-        if (typeof flagStatusOrVariant === 'object') {
-          valueResolved = flagStatusOrVariant.value;
-        } else {
-          valueResolved = String(flagStatusOrVariant);
-        }
         await this.flagService.hitFlag(
           nextFlag.environmentId,
           nextFlag.flagId,
           String(fields?.id || ''),
-          valueResolved,
+          String(flagStatusOrVariant),
         );
       }
     }

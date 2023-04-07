@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
 import { RuleType } from './types';
-import { FieldRecord } from '../strategy/types';
+import { FieldRecord } from './types';
 import { Rule } from './Rule';
 
 @Injectable()
@@ -13,7 +13,7 @@ export class RuleService {
     userId: string,
     roles?: Array<string>,
   ) {
-    const flagOfProject = await this.prisma.userProject.findFirst({
+    const flagOfProjectOfSegment = await this.prisma.userProject.findFirst({
       where: {
         userId,
         project: {
@@ -30,7 +30,24 @@ export class RuleService {
       },
     });
 
-    if (!flagOfProject) {
+    const flagOfProjectOfStrategies = await this.prisma.userProject.findFirst({
+      where: {
+        userId,
+        project: {
+          environments: {
+            some: {
+              flagEnvironment: {
+                some: {
+                  strategies: { some: { rules: { some: { uuid: ruleId } } } },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!flagOfProjectOfSegment && !flagOfProjectOfStrategies) {
       return false;
     }
 
@@ -38,7 +55,10 @@ export class RuleService {
       return true;
     }
 
-    return roles.includes(flagOfProject.role);
+    return (
+      roles.includes(flagOfProjectOfSegment.role) ||
+      roles.includes(flagOfProjectOfStrategies.role)
+    );
   }
 
   editRule(ruleId: string, rule: RuleType) {
@@ -51,6 +71,7 @@ export class RuleService {
       },
       include: {
         Segment: true,
+        Strategy: true,
       },
     });
   }
@@ -62,6 +83,7 @@ export class RuleService {
       },
       include: {
         Segment: true,
+        Strategy: true,
       },
     });
   }
@@ -79,6 +101,12 @@ export class RuleService {
     }
 
     return false;
+  }
+
+  isMatchingAtLeastOneRule(rules: Array<RuleType>, fields: FieldRecord) {
+    if (rules.length === 0) return true;
+
+    return Boolean(rules.find((rule) => this.isMatchingRule(rule, fields)));
   }
 
   // Make sure the list of rules are matching with the "and" operator

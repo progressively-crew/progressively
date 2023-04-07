@@ -150,6 +150,26 @@ export class ProjectsService {
           },
         },
       }),
+      this.prisma.strategyVariant.deleteMany({
+        where: {
+          strategy: {
+            FlagEnvironment: {
+              environment: {
+                projectId,
+              },
+            },
+          },
+        },
+      }),
+      this.prisma.strategy.deleteMany({
+        where: {
+          FlagEnvironment: {
+            environment: {
+              projectId,
+            },
+          },
+        },
+      }),
       this.prisma.pMetricHit.deleteMany({
         where: {
           flagEnvironment: {
@@ -181,24 +201,6 @@ export class ProjectsService {
         where: {
           flagEnvironment: {
             environment: { projectId },
-          },
-        },
-      }),
-      this.prisma.rolloutStrategy.deleteMany({
-        where: {
-          flagEnvironment: {
-            environment: {
-              projectId,
-            },
-          },
-        },
-      }),
-      this.prisma.eligibility.deleteMany({
-        where: {
-          flagEnvironment: {
-            environment: {
-              projectId,
-            },
           },
         },
       }),

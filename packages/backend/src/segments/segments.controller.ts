@@ -4,6 +4,7 @@ import {
   Param,
   Get,
   Put,
+  Delete,
   Post,
   UseGuards,
   UsePipes,
@@ -15,11 +16,10 @@ import { UserId } from '../users/users.decorator';
 import { SegmentCreationDTO, SegmentSchema } from './types';
 import { SegmentsService } from './segments.service';
 import { ActivityLogService } from '../activity-log/activity-log.service';
-import { RuleSchema, RuleType } from '../rule/types';
 import { WebsocketGateway } from '../websocket/websocket.gateway';
-import { FlagStatus } from '../flags/flags.status';
+import { HasFlagEnvAccessGuard } from '../flags/guards/hasFlagEnvAccess';
 
-@Controller('segments')
+@Controller()
 export class SegmentsController {
   constructor(
     private readonly segmentService: SegmentsService,
@@ -27,40 +27,40 @@ export class SegmentsController {
     private readonly wsGateway: WebsocketGateway,
   ) {}
 
-  @Get(':segmentId')
+  @Get('/segments/:segmentId')
   @UseGuards(HasSegmentAccessGuard)
   @UseGuards(JwtAuthGuard)
-  getStrategy(@Param('segmentId') segmentId: string) {
+  getSegmentById(@Param('segmentId') segmentId: string) {
     return this.segmentService.getSegment(segmentId);
   }
 
-  @Put(':segmentId')
+  @Put('/segments/:segmentId')
   @UseGuards(HasSegmentAccessGuard)
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(SegmentSchema))
-  async updateStrategy(
+  async updateSegment(
     @UserId() userId: string,
     @Param('segmentId') segmentId: string,
-    @Body() strategyDto: SegmentCreationDTO,
+    @Body() segmentDto: SegmentCreationDTO,
   ) {
-    const updatedEligibility = await this.segmentService.updateSegment(
+    const updatedSegment = await this.segmentService.updateSegment(
       segmentId,
-      strategyDto,
+      segmentDto,
     );
 
     await this.activityLogService.register({
       userId,
-      flagId: updatedEligibility.flagEnvironmentFlagId,
-      envId: updatedEligibility.flagEnvironmentEnvironmentId,
+      flagId: updatedSegment.flagEnvironmentFlagId,
+      envId: updatedSegment.flagEnvironmentEnvironmentId,
       concernedEntity: 'flag',
       type: 'edit-segment-name',
-      data: JSON.stringify(updatedEligibility),
+      data: JSON.stringify(updatedSegment),
     });
 
-    return updatedEligibility;
+    return updatedSegment;
   }
 
-  @Post(':segmentId/rules')
+  @Post('/segments/:segmentId/rules')
   @UseGuards(HasSegmentAccessGuard)
   @UseGuards(JwtAuthGuard)
   async addRuleToSegment(
@@ -72,10 +72,6 @@ export class SegmentsController {
     const { flagEnvironment: flagEnv } =
       await this.segmentService.getSegmentFlagEnv(rule.segmentUuid);
 
-    if (flagEnv.status === FlagStatus.ACTIVATED) {
-      this.wsGateway.notifyChanges(flagEnv.environment.clientKey, flagEnv);
-    }
-
     await this.activityLogService.register({
       userId,
       flagId: flagEnv.flagId,
@@ -86,5 +82,63 @@ export class SegmentsController {
     });
 
     return rule;
+  }
+
+  @Delete('/environments/:envId/flags/:flagId/segments/:segmentId')
+  @UseGuards(HasFlagEnvAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  async deleteSegment(
+    @UserId() userId: string,
+    @Param('envId') envId: string,
+    @Param('flagId') flagId: string,
+    @Param('segmentId') segmentId: string,
+  ) {
+    const segmentDeleted = await this.segmentService.deleteSegment(segmentId);
+
+    await this.activityLogService.register({
+      userId,
+      flagId: flagId,
+      envId: envId,
+      concernedEntity: 'flag',
+      type: 'delete-segment',
+      data: JSON.stringify(segmentDeleted),
+    });
+
+    return segmentDeleted;
+  }
+
+  @Post('/environments/:envId/flags/:flagId/segments')
+  @UseGuards(HasFlagEnvAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(new ValidationPipe(SegmentSchema))
+  async addSegmentToFlag(
+    @UserId() userId: string,
+    @Param('envId') envId: string,
+    @Param('flagId') flagId: string,
+    @Body() segmentDto: SegmentCreationDTO,
+  ) {
+    const segment = await this.segmentService.addSegmentToFlagEnv(
+      envId,
+      flagId,
+      segmentDto.name,
+    );
+
+    await this.activityLogService.register({
+      userId,
+      flagId: flagId,
+      envId: envId,
+      data: JSON.stringify(segment),
+      concernedEntity: 'flag',
+      type: 'create-segment',
+    });
+
+    return segment;
+  }
+
+  @Get('environments/:envId/flags/:flagId/segments')
+  @UseGuards(HasFlagEnvAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  getSegments(@Param('envId') envId: string, @Param('flagId') flagId: string) {
+    return this.segmentService.listSegments(envId, flagId);
   }
 }

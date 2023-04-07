@@ -26,7 +26,7 @@ describe('Rule (e2e)', () => {
     await cleanupDb();
   });
 
-  describe.only('/rules/1 (DELETE)', () => {
+  describe('/rules/1 (DELETE)', () => {
     it('gives a 401 when the user is not authenticated', () =>
       verifyAuthGuard(app, '/rules/1', 'delete'));
 
@@ -75,12 +75,14 @@ describe('Rule (e2e)', () => {
           fieldComparator: 'eq',
           fieldValue: 'gmail.com',
           segmentUuid: '1',
+          strategyUuid: null,
           Segment: {
             uuid: '1',
             name: 'By email address',
             flagEnvironmentFlagId: '1',
             flagEnvironmentEnvironmentId: '1',
           },
+          Strategy: null,
         });
     });
   });
@@ -184,6 +186,8 @@ describe('Rule (e2e)', () => {
         fieldValue: '1234',
         segmentUuid: '1',
         uuid: '1',
+        strategyUuid: null,
+        Strategy: null,
       });
     });
   });

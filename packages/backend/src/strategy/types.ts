@@ -1,43 +1,42 @@
 import * as Joi from 'joi';
-import { RuleSchema, RuleType } from '../rule/types';
 
-export interface FlagDict {
-  [key: string]: boolean;
-}
-
-export type FieldRecord = Record<string, string | number | boolean>;
-
-export interface RolloutStrategy {
-  uuid: string;
-  rule: RuleType;
-  flagEnvironmentFlagId?: string;
-  flagEnvironmentEnvironmentId?: string;
-  valueToServeType: string;
-  valueToServe: string;
-}
-
-export class StrategyUpdateDTO {
-  uuid: string;
-  rule: RuleType;
-  valueToServeType: string;
-  valueToServe: string;
-}
-
-export enum StrategyValueToServe {
+export enum ValueToServe {
   Boolean = 'Boolean',
-  String = 'String',
   Variant = 'Variant',
+  String = 'String',
+  Number = 'Number',
 }
 
-export const StrategySchema = Joi.object({
-  uuid: Joi.string().required(),
-  rule: RuleSchema,
+const StrategyVariantDtoSchema = Joi.object({
+  rolloutPercentage: Joi.number().integer().min(0).max(100).required(),
+  variantUuid: Joi.string().required(),
+});
+
+export const StrategyUpdateDtoSchema = Joi.object({
+  rolloutPercentage: Joi.number().integer().min(0).max(100),
+  valueToServe: Joi.string().optional(),
   valueToServeType: Joi.string()
     .valid(
-      StrategyValueToServe.Boolean,
-      StrategyValueToServe.String,
-      StrategyValueToServe.Variant,
+      ValueToServe.Boolean,
+      ValueToServe.Number,
+      ValueToServe.String,
+      ValueToServe.Variant,
     )
     .required(),
-  valueToServe: Joi.string().required(),
+  variants: Joi.any().when('valueToServeType', {
+    is: ValueToServe.Variant,
+    then: Joi.array().items(StrategyVariantDtoSchema),
+    otherwise: Joi.optional(),
+  }),
 });
+
+export interface StrategyVariant {
+  rolloutPercentage: number;
+  variantUuid: string;
+}
+export interface StrategyUpdateDto {
+  rolloutPercentage?: number;
+  valueToServeType: ValueToServe;
+  valueToServe?: string;
+  variants?: Array<StrategyVariant>;
+}

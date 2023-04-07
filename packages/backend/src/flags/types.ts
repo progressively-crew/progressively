@@ -1,7 +1,7 @@
-import { Eligibility } from '../eligibility/types';
 import { Environment } from '../environments/types';
-import { RolloutStrategy } from '../strategy/types';
 import { FlagStatus } from './flags.status';
+import { Strategy } from '@progressively/database';
+import { RuleType } from '../rule/types';
 
 export interface Flag {
   uuid: string;
@@ -15,7 +15,6 @@ export interface FlagEnvironment {
   flagId: string;
   environmentId: string;
   status: string;
-  rolloutPercentage: number;
   variants: Array<Variant>;
 }
 
@@ -27,12 +26,28 @@ interface Schedule {
   schedulingStatus: SchedulingStatus;
 }
 
+export interface PopulatedVariant {
+  rolloutPercentage: number;
+  variantUuid: string;
+  strategyUuid: string;
+  variant: {
+    uuid: string;
+    isControl: boolean;
+    value: string;
+    flagEnvironmentFlagId: string;
+    flagEnvironmentEnvironmentId: string;
+  };
+}
+export interface PopulatedStrategy extends Strategy {
+  variants: Array<PopulatedVariant>;
+  rules: Array<RuleType>;
+}
+
 export interface PopulatedFlagEnv extends FlagEnvironment {
   environment: Environment;
   flag: Flag;
-  strategies: Array<RolloutStrategy>;
   scheduling: Array<Schedule>;
-  eligibilities: Array<Eligibility>;
+  strategies: Array<PopulatedStrategy>;
 }
 
 export enum SchedulingStatus {

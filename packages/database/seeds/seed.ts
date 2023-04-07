@@ -76,7 +76,6 @@ export const seedDb = async () => {
       data: {
         environmentId: production.uuid,
         flagId: homePageFlag.uuid,
-        rolloutPercentage: 100,
         webhooks: {
           create: {
             uuid: "1",
@@ -100,9 +99,7 @@ export const seedDb = async () => {
         flagEnvironmentEnvironmentId: flagEnv.environmentId,
         status: "ACTIVATED",
         type: "UpdatePercentage",
-        data: {
-          rolloutPercentage: 100,
-        },
+        data: {},
       },
     });
 
@@ -111,7 +108,6 @@ export const seedDb = async () => {
         environmentId: production.uuid,
         flagId: footerFlag.uuid,
         status: "ACTIVATED",
-        rolloutPercentage: 0,
       },
     });
 
@@ -119,7 +115,6 @@ export const seedDb = async () => {
       data: {
         environmentId: otherEnv.uuid,
         flagId: asideFlag.uuid,
-        rolloutPercentage: 100,
       },
     });
 
@@ -129,35 +124,13 @@ export const seedDb = async () => {
       data: {
         environmentId: production.uuid,
         flagId: multiVariate.uuid,
-        rolloutPercentage: 100,
-      },
-    });
-
-    await prismaClient.schedule.create({
-      data: {
-        uuid: "2",
-        utc: d,
-        flagEnvironmentFlagId: multiVariateFlagEnv.flagId,
-        flagEnvironmentEnvironmentId: multiVariateFlagEnv.environmentId,
-        status: "ACTIVATED",
-        type: "UpdateVariantPercentage",
-        data: [
-          {
-            variantId: "1",
-            variantNewPercentage: 30,
-          },
-          {
-            variantId: "2",
-            variantNewPercentage: 70,
-          },
-        ],
+        status: "NOT_ACTIVATED",
       },
     });
 
     const firstVariant = await prismaClient.variant.create({
       data: {
         uuid: "1",
-        rolloutPercentage: 12,
         isControl: true,
         value: "Control",
         flagEnvironmentEnvironmentId: multiVariateFlagEnv.environmentId,
@@ -165,10 +138,9 @@ export const seedDb = async () => {
       },
     });
 
-    await prismaClient.variant.create({
+    const secondVariant = await prismaClient.variant.create({
       data: {
         uuid: "2",
-        rolloutPercentage: 88,
         isControl: false,
         value: "Second",
         flagEnvironmentEnvironmentId: multiVariateFlagEnv.environmentId,
@@ -196,6 +168,56 @@ export const seedDb = async () => {
     });
     // End of multi variate setup
 
+    await prismaClient.strategy.create({
+      data: {
+        uuid: "1",
+        flagEnvironmentEnvironmentId: production.uuid,
+        flagEnvironmentFlagId: homePageFlag.uuid,
+        valueToServeType: "Boolean",
+      },
+    });
+
+    await prismaClient.strategy.create({
+      data: {
+        uuid: "2",
+        flagEnvironmentEnvironmentId: production.uuid,
+        flagEnvironmentFlagId: footerFlag.uuid,
+        valueToServe: undefined,
+        valueToServeType: "Boolean",
+        rolloutPercentage: 100,
+        rules: {
+          create: [
+            {
+              fieldName: "id",
+              fieldComparator: "eq",
+              fieldValue: "1",
+            },
+          ],
+        },
+      },
+    });
+
+    await prismaClient.strategy.create({
+      data: {
+        uuid: "3",
+        flagEnvironmentEnvironmentId: multiVariateFlagEnv.environmentId,
+        flagEnvironmentFlagId: multiVariateFlagEnv.flagId,
+        valueToServeType: "Variant",
+        variants: {
+          create: [
+            {
+              variantUuid: firstVariant.uuid,
+              rolloutPercentage: 50,
+            },
+            {
+              variantUuid: secondVariant.uuid,
+              rolloutPercentage: 50,
+            },
+          ],
+        },
+      },
+    });
+
     await prismaClient.segment.create({
       data: {
         name: "By email address",
@@ -211,97 +233,6 @@ export const seedDb = async () => {
               fieldValue: "gmail.com",
             },
           ],
-        },
-      },
-    });
-
-    await prismaClient.rolloutStrategy.create({
-      data: {
-        uuid: "1",
-        rule: {
-          create: {
-            fieldName: "id",
-            fieldComparator: "eq",
-            fieldValue: "1",
-          },
-        },
-        valueToServe: "true",
-        valueToServeType: "Boolean",
-        flagEnvironment: {
-          connect: {
-            flagId_environmentId: {
-              flagId: flagEnv.flagId,
-              environmentId: flagEnv.environmentId,
-            },
-          },
-        },
-      },
-    });
-
-    await prismaClient.rolloutStrategy.create({
-      data: {
-        uuid: "2",
-        valueToServe: "true",
-        valueToServeType: "Boolean",
-        rule: {
-          create: {
-            fieldName: "id",
-            fieldComparator: "eq",
-            fieldValue: "1",
-          },
-        },
-        flagEnvironment: {
-          connect: {
-            flagId_environmentId: {
-              flagId: footerFlagEnv.flagId,
-              environmentId: footerFlagEnv.environmentId,
-            },
-          },
-        },
-      },
-    });
-
-    await prismaClient.rolloutStrategy.create({
-      data: {
-        uuid: "3",
-
-        rule: {
-          create: {
-            fieldComparator: "eq",
-            fieldName: "email",
-            fieldValue: "@gmail.com",
-          },
-        },
-        valueToServe: "true",
-        valueToServeType: "Boolean",
-        flagEnvironment: {
-          connect: {
-            flagId_environmentId: {
-              flagId: otherFlagEnv.flagId,
-              environmentId: otherFlagEnv.environmentId,
-            },
-          },
-        },
-      },
-    });
-
-    await prismaClient.eligibility.create({
-      data: {
-        uuid: "1",
-        rule: {
-          create: {
-            fieldName: "email",
-            fieldValue: "@gmail.com",
-            fieldComparator: "eq",
-          },
-        },
-        flagEnvironment: {
-          connect: {
-            flagId_environmentId: {
-              flagId: footerFlagEnv.flagId,
-              environmentId: footerFlagEnv.environmentId,
-            },
-          },
         },
       },
     });

@@ -53,58 +53,6 @@ export const ActivityDescription = ({
     );
   }
 
-  if (type === "create-additional-audience") {
-    return (
-      <p>
-        An <strong>additional audience</strong> has been created.
-      </p>
-    );
-  }
-
-  if (type === "delete-additional-audience") {
-    return (
-      <p>
-        An <strong>additional audience</strong> rule has been deleted.
-      </p>
-    );
-  }
-
-  if (type === "edit-additional-audience") {
-    return (
-      <p>
-        Additional audience updated to "<strong>{data.fieldName}</strong>{" "}
-        <strong>{data.fieldComparator}</strong>{" "}
-        <strong>{data.fieldValue}</strong>"
-      </p>
-    );
-  }
-
-  if (type === "create-eligibility-restriction") {
-    return (
-      <p>
-        An <strong>eligibility restriction</strong> rule has been created.
-      </p>
-    );
-  }
-
-  if (type === "edit-eligibility") {
-    return (
-      <p>
-        Eligibility restriction updated to "<strong>{data.fieldName}</strong>{" "}
-        <strong>{data.fieldComparator}</strong>{" "}
-        <strong>{data.fieldValue}</strong>"
-      </p>
-    );
-  }
-
-  if (type === "delete-eligibility") {
-    return (
-      <p>
-        An <strong>eligibility restriction</strong> has been deleted.
-      </p>
-    );
-  }
-
   if (type === "delete-webhook") {
     return (
       <p>

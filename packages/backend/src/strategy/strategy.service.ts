@@ -1,184 +1,111 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
-
-import {
-  FieldRecord,
-  RolloutStrategy,
-  StrategyUpdateDTO,
-  StrategyValueToServe,
-} from './types';
+import { StrategyUpdateDto, ValueToServe } from './types';
 import { ComparatorEnum } from '../rule/comparators/types';
-import { RuleService } from '../rule/rule.service';
+import { Strategy } from '@progressively/database';
 
 @Injectable()
 export class StrategyService {
-  constructor(
-    private prisma: PrismaService,
-    private ruleService: RuleService,
-  ) {}
+  constructor(private prisma: PrismaService) {}
 
-  resolveAdditionalAudienceValue(
-    strategies: Array<RolloutStrategy>,
-    fields: FieldRecord,
-  ) {
-    for (const strategy of strategies) {
-      const isValidStrategyRule = this.ruleService.isMatchingRule(
-        strategy.rule,
-        fields,
-      );
-
-      if (isValidStrategyRule) {
-        if (strategy.valueToServeType === StrategyValueToServe.Boolean) {
-          return strategy.valueToServe === 'true';
-        }
-
-        return strategy.valueToServe;
-      }
-    }
-
-    return false;
-  }
-
-  addStrategyToFlagEnv(envId: string, flagId: string) {
-    return this.prisma.rolloutStrategy.create({
+  createStrategy(envId: string, flagId: string) {
+    return this.prisma.strategy.create({
       data: {
-        flagEnvironment: {
-          connect: {
-            flagId_environmentId: {
-              environmentId: envId,
-              flagId: flagId,
-            },
-          },
-        },
-        rule: {
-          create: {
-            fieldName: '',
-            fieldValue: '',
-            fieldComparator: ComparatorEnum.Equals,
-          },
-        },
-        valueToServe: 'false',
-        valueToServeType: StrategyValueToServe.Boolean,
-      },
-    });
-  }
-
-  updateStrategy(uuid: string, strategy: StrategyUpdateDTO) {
-    return this.prisma.rolloutStrategy.update({
-      where: {
-        uuid,
-      },
-      data: {
-        rule: {
-          update: {
-            fieldComparator: strategy.rule.fieldComparator,
-            fieldValue: strategy.rule.fieldValue,
-            fieldName: strategy.rule.fieldName,
-          },
-        },
-        valueToServeType: strategy.valueToServeType,
-        valueToServe: strategy.valueToServe,
-      },
-      include: {
-        rule: true,
-        flagEnvironment: {
-          include: {
-            environment: true,
-            flag: true,
-            strategies: {
-              include: {
-                rule: true,
-              },
-            },
-            variants: true,
-            eligibilities: {
-              include: {
-                rule: true,
-              },
-            },
-          },
-        },
-      },
-    });
-  }
-
-  listStrategies(envId: string, flagId: string) {
-    return this.prisma.rolloutStrategy.findMany({
-      where: {
         flagEnvironmentEnvironmentId: envId,
         flagEnvironmentFlagId: flagId,
-      },
-      include: {
-        rule: true,
+        valueToServeType: ValueToServe.Boolean,
       },
     });
   }
 
-  getStrategy(stratId: string) {
-    return this.prisma.rolloutStrategy.findUnique({
-      where: {
-        uuid: stratId,
-      },
-    });
+  async deleteStrategy(strategyId: string) {
+    const queries = [
+      this.prisma.strategyVariant.deleteMany({
+        where: {
+          strategyUuid: strategyId,
+        },
+      }),
+      this.prisma.rule.deleteMany({
+        where: {
+          strategyUuid: strategyId,
+        },
+      }),
+      this.prisma.strategy.delete({
+        where: {
+          uuid: strategyId,
+        },
+      }),
+    ];
+
+    const result = await this.prisma.$transaction(queries);
+
+    return result[result.length - 1] as Strategy;
   }
 
-  getStrategyFlagEnv(stratId: string) {
-    return this.prisma.rolloutStrategy.findFirst({
-      where: {
-        uuid: stratId,
-      },
-      include: {
-        flagEnvironment: {
-          include: {
-            environment: true,
-            flag: true,
-            strategies: {
-              include: {
-                rule: true,
-              },
-            },
-            variants: true,
-            eligibilities: {
-              include: {
-                rule: true,
-              },
+  async updateStrategy(strategyId: string, strategyDto: StrategyUpdateDto) {
+    const queries = [];
+    const variants = strategyDto?.variants || [];
+
+    for (const variant of variants) {
+      queries.push(
+        this.prisma.strategyVariant.upsert({
+          where: {
+            strategyUuid_variantUuid: {
+              strategyUuid: strategyId,
+              variantUuid: variant.variantUuid,
             },
           },
+          update: {
+            rolloutPercentage: variant.rolloutPercentage
+              ? Number(variant.rolloutPercentage)
+              : 0,
+            variantUuid: variant.variantUuid,
+            strategyUuid: strategyId,
+          },
+          create: {
+            rolloutPercentage: variant.rolloutPercentage
+              ? Number(variant.rolloutPercentage)
+              : 0,
+            variantUuid: variant.variantUuid,
+            strategyUuid: strategyId,
+          },
+        }),
+      );
+    }
+
+    queries.push(
+      this.prisma.strategy.update({
+        where: {
+          uuid: strategyId,
         },
-      },
-    });
+        data: {
+          rolloutPercentage: strategyDto.rolloutPercentage,
+          valueToServe: strategyDto.valueToServe,
+          valueToServeType: strategyDto.valueToServeType,
+        },
+        include: {
+          variants: true,
+        },
+      }),
+    );
+
+    const result = await this.prisma.$transaction(queries);
+    return result[result.length - 1] as Strategy;
   }
 
-  deleteStrategy(stratId: string) {
-    return this.prisma.rolloutStrategy.delete({
-      where: {
-        uuid: stratId,
-      },
-      include: {
-        rule: true,
-        flagEnvironment: {
-          include: {
-            environment: true,
-            flag: true,
-            strategies: {
-              include: {
-                rule: true,
-              },
-            },
-            variants: true,
-            eligibilities: {
-              include: {
-                rule: true,
-              },
-            },
-          },
-        },
+  createStrategyRule(strategyId: string) {
+    return this.prisma.rule.create({
+      data: {
+        strategyUuid: strategyId,
+        fieldComparator: ComparatorEnum.Equals,
+        fieldName: '',
+        fieldValue: '',
       },
     });
   }
 
   async hasPermissionOnStrategy(
-    stratId: string,
+    strategyId: string,
     userId: string,
     roles?: Array<string>,
   ) {
@@ -189,7 +116,7 @@ export class StrategyService {
           environments: {
             some: {
               flagEnvironment: {
-                some: { strategies: { some: { uuid: stratId } } },
+                some: { strategies: { some: { uuid: strategyId } } },
               },
             },
           },
@@ -206,5 +133,18 @@ export class StrategyService {
     }
 
     return roles.includes(flagOfProject.role);
+  }
+
+  getStrategies(envId: string, flagId: string) {
+    return this.prisma.strategy.findMany({
+      where: {
+        flagEnvironmentEnvironmentId: envId,
+        flagEnvironmentFlagId: flagId,
+      },
+      include: {
+        rules: true,
+        variants: true,
+      },
+    });
   }
 }

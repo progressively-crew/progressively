@@ -1,7 +1,5 @@
 /* eslint-disable sonarjs/cognitive-complexity */
 import { AiOutlineClockCircle, AiOutlineLink } from "react-icons/ai";
-import { HiOutlineUserGroup } from "react-icons/hi";
-import { MdGroupWork } from "react-icons/md";
 import { GrGroup } from "react-icons/gr";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { MetricIcon } from "~/components/Icons/MetricIcon";
@@ -27,30 +25,6 @@ export const ActivityIcon = ({ type }: ActivityIconProps) => {
 
   if (type === "delete-variant") {
     return <VariantIcon />;
-  }
-
-  if (type === "create-additional-audience") {
-    return <HiOutlineUserGroup />;
-  }
-
-  if (type === "edit-additional-audience") {
-    return <HiOutlineUserGroup />;
-  }
-
-  if (type === "delete-additional-audience") {
-    return <HiOutlineUserGroup />;
-  }
-
-  if (type === "create-eligibility-restriction") {
-    return <MdGroupWork />;
-  }
-
-  if (type === "delete-eligibility") {
-    return <MdGroupWork />;
-  }
-
-  if (type === "edit-eligibility") {
-    return <MdGroupWork />;
   }
 
   if (type === "create-webhook") {

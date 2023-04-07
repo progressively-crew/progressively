@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import camelcase from 'camelcase';
 import { PrismaService } from '../database/prisma.service';
 import { FlagAlreadyExists } from './errors';
+import { PopulatedFlagEnv } from '../flags/types';
 
 @Injectable()
 export class EnvironmentsService {
@@ -24,22 +25,22 @@ export class EnvironmentsService {
       },
       include: {
         flag: true,
-        strategies: {
-          include: { rule: true },
-        },
         scheduling: true,
-        eligibilities: {
+        strategies: {
           include: {
-            rule: true,
-          },
-        },
-        variants: {
-          orderBy: {
-            rolloutPercentage: 'asc',
+            rules: true,
+            variants: {
+              include: {
+                variant: true,
+              },
+              orderBy: {
+                rolloutPercentage: 'asc',
+              },
+            },
           },
         },
       },
-    });
+    }) as unknown as Promise<Array<PopulatedFlagEnv>>;
   }
 
   async createEnvironment(projectId: string, environmentName: string) {
@@ -52,17 +53,16 @@ export class EnvironmentsService {
       distinct: ['flagId'],
     });
 
-    const flagsToCreate = allMatchingFlagEnv.map((flagEnv) => ({
-      rolloutPercentage: 100,
-      flagId: flagEnv.flagId,
-    }));
-
     return await this.prisma.environment.create({
       data: {
         name: environmentName,
         projectId: projectId,
         flagEnvironment: {
-          createMany: { data: flagsToCreate },
+          createMany: {
+            data: allMatchingFlagEnv.map((flagEnv) => ({
+              flagId: flagEnv.flagId,
+            })),
+          },
         },
       },
     });
@@ -100,18 +100,17 @@ export class EnvironmentsService {
       },
     });
 
-    const flagsEnvs = envsOfProject.map((env) => ({
-      environmentId: env.uuid,
-      rolloutPercentage: 100,
-    }));
-
     return await this.prisma.flag.create({
       data: {
         name,
         description,
         key: flagKey,
         flagEnvironment: {
-          createMany: { data: flagsEnvs },
+          createMany: {
+            data: envsOfProject.map((env) => ({
+              environmentId: env.uuid,
+            })),
+          },
         },
       },
     });
@@ -159,6 +158,18 @@ export class EnvironmentsService {
           flagEnvironmentEnvironmentId: envId,
         },
       }),
+      this.prisma.strategyVariant.deleteMany({
+        where: {
+          strategy: {
+            flagEnvironmentEnvironmentId: envId,
+          },
+        },
+      }),
+      this.prisma.strategy.deleteMany({
+        where: {
+          flagEnvironmentEnvironmentId: envId,
+        },
+      }),
       this.prisma.pMetricHit.deleteMany({
         where: {
           flagEnvironmentEnvironmentId: envId,
@@ -175,16 +186,6 @@ export class EnvironmentsService {
         },
       }),
       this.prisma.schedule.deleteMany({
-        where: {
-          flagEnvironmentEnvironmentId: envId,
-        },
-      }),
-      this.prisma.rolloutStrategy.deleteMany({
-        where: {
-          flagEnvironmentEnvironmentId: envId,
-        },
-      }),
-      this.prisma.eligibility.deleteMany({
         where: {
           flagEnvironmentEnvironmentId: envId,
         },

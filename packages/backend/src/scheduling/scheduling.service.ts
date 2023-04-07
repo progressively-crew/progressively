@@ -1,11 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { WebsocketGateway } from '../websocket/websocket.gateway';
 import { PrismaService } from '../database/prisma.service';
-import {
-  SchedulingCreationDTO,
-  SchedulingType,
-  SchedulingUpdateVariantEntry,
-} from './types';
+import { SchedulingCreationDTO, SchedulingType } from './types';
 import { PopulatedFlagEnv, SchedulingStatus } from '../flags/types';
 import { Schedule } from '@progressively/database';
 
@@ -103,77 +99,38 @@ export class SchedulingService {
   }
 
   makeUpdateQuery(flagEnv: PopulatedFlagEnv, schedule: Schedule) {
-    const include = {
-      flag: true,
-      strategies: {
-        include: {
-          rule: true,
-        },
-      },
-      scheduling: true,
-      variants: true,
-      eligibilities: {
-        include: {
-          rule: true,
-        },
-      },
-    };
-
-    if (schedule.type === SchedulingType.UpdatePercentage) {
-      return [
-        //Important to be the last query
-        this.prisma.flagEnvironment.update({
-          where: {
-            flagId_environmentId: {
-              environmentId: flagEnv.environmentId,
-              flagId: flagEnv.flagId,
-            },
-          },
-          data: {
-            status: schedule.status,
-          },
-          include,
-        }),
-      ];
-    }
-
-    if (schedule.type === SchedulingType.UpdateVariantPercentage) {
-      const updateVariantEntries =
-        schedule.data as unknown as Array<SchedulingUpdateVariantEntry>;
-
-      const queries: any = updateVariantEntries.map((updateVariantEntry) =>
-        this.prisma.variant.updateMany({
-          where: {
-            uuid: updateVariantEntry.variantId,
-            flagEnvironmentEnvironmentId: flagEnv.environmentId,
-            flagEnvironmentFlagId: flagEnv.flagId,
-          },
-          data: {
-            rolloutPercentage: updateVariantEntry.variantNewPercentage,
-          },
-        }),
-      );
-
+    return [
       //Important to be the last query
-      queries.push(
-        this.prisma.flagEnvironment.update({
-          where: {
-            flagId_environmentId: {
-              environmentId: flagEnv.environmentId,
-              flagId: flagEnv.flagId,
+      this.prisma.flagEnvironment.update({
+        where: {
+          flagId_environmentId: {
+            environmentId: flagEnv.environmentId,
+            flagId: flagEnv.flagId,
+          },
+        },
+        data: {
+          status: schedule.status,
+        },
+        include: {
+          flag: true,
+          scheduling: true,
+          variants: true,
+          strategies: {
+            include: {
+              rules: true,
+              variants: {
+                include: {
+                  variant: true,
+                },
+                orderBy: {
+                  rolloutPercentage: 'asc',
+                },
+              },
             },
           },
-          data: {
-            status: schedule.status,
-          },
-          include,
-        }),
-      );
-
-      return queries;
-    }
-
-    return undefined;
+        },
+      }),
+    ];
   }
 
   async manageFlagScheduling(

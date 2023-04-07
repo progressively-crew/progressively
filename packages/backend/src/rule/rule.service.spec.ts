@@ -4,7 +4,7 @@ import { PrismaService } from '../database/prisma.service';
 import { RuleService } from './rule.service';
 import { RuleType } from './types';
 import { ComparatorEnum } from './comparators/types';
-import { FieldRecord } from '../strategy/types';
+import { FieldRecord } from '../rule/types';
 
 describe('RuleService', () => {
   let service: RuleService;
@@ -24,6 +24,63 @@ describe('RuleService', () => {
     }).compile();
 
     service = module.get<RuleService>(RuleService);
+  });
+
+  describe('isMatchingAtLeastOneRule', () => {
+    it('returns true when no rules are passed', () => {
+      const rules: Array<RuleType> = [];
+
+      const fields: FieldRecord = {
+        id: '1234',
+        email: 'marv',
+      };
+
+      expect(service.isMatchingAtLeastOneRule(rules, fields)).toBe(true);
+    });
+
+    it('returns true when at least one rule is valid', () => {
+      const rules: Array<RuleType> = [
+        {
+          fieldComparator: ComparatorEnum.Equals,
+          fieldName: 'email',
+          fieldValue: 'marvin',
+        },
+        {
+          fieldComparator: ComparatorEnum.Equals,
+          fieldName: 'id',
+          fieldValue: '1234',
+        },
+      ];
+
+      const fields: FieldRecord = {
+        id: 'abcd',
+        email: 'marvin',
+      };
+
+      expect(service.isMatchingAtLeastOneRule(rules, fields)).toBe(true);
+    });
+
+    it('returns fals when absolutely no rule is matching', () => {
+      const rules: Array<RuleType> = [
+        {
+          fieldComparator: ComparatorEnum.Equals,
+          fieldName: 'email',
+          fieldValue: 'marvin',
+        },
+        {
+          fieldComparator: ComparatorEnum.Equals,
+          fieldName: 'id',
+          fieldValue: '1234',
+        },
+      ];
+
+      const fields: FieldRecord = {
+        id: 'not-matching',
+        email: 'not-matching',
+      };
+
+      expect(service.isMatchingAtLeastOneRule(rules, fields)).toBe(false);
+    });
   });
 
   describe('isMatchingAllRules', () => {

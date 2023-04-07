@@ -33,10 +33,18 @@ export class RuleController {
   ) {
     const updatedRule = await this.ruleService.editRule(ruleId, ruleDto);
 
+    const flagId =
+      updatedRule.Segment?.flagEnvironmentFlagId ||
+      updatedRule.Strategy?.flagEnvironmentFlagId;
+
+    const envId =
+      updatedRule.Segment?.flagEnvironmentEnvironmentId ||
+      updatedRule.Strategy?.flagEnvironmentEnvironmentId;
+
     await this.activityLogService.register({
       userId,
-      flagId: updatedRule.Segment.flagEnvironmentFlagId,
-      envId: updatedRule.Segment.flagEnvironmentEnvironmentId,
+      flagId,
+      envId,
       concernedEntity: 'flag',
       type: 'edit-segment-rule',
       data: JSON.stringify(updatedRule),
@@ -51,10 +59,18 @@ export class RuleController {
   async deleteRule(@UserId() userId: string, @Param('ruleId') ruleId: string) {
     const deletedRule = await this.ruleService.deleteRule(ruleId);
 
+    const flagId =
+      deletedRule.Segment?.flagEnvironmentFlagId ||
+      deletedRule.Strategy?.flagEnvironmentFlagId;
+
+    const envId =
+      deletedRule.Segment?.flagEnvironmentEnvironmentId ||
+      deletedRule.Strategy?.flagEnvironmentEnvironmentId;
+
     await this.activityLogService.register({
       userId,
-      flagId: deletedRule.Segment.flagEnvironmentFlagId,
-      envId: deletedRule.Segment.flagEnvironmentEnvironmentId,
+      flagId,
+      envId,
       concernedEntity: 'flag',
       type: 'delete-rule',
       data: JSON.stringify(deletedRule),

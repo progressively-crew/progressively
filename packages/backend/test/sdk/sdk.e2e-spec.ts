@@ -58,7 +58,7 @@ describe('SdkController (e2e)', () => {
       `);
     });
 
-    it('gives a list of flags when the key is valid for an authenticated user (field is passed as query param and match a strategy)', async () => {
+    it('gives a list of flags when the key is valid for an authenticated user (field is passed as query param)', async () => {
       const fields = btoa(
         JSON.stringify({ clientKey: 'valid-sdk-key', id: '1' }),
       );
@@ -141,7 +141,7 @@ describe('SdkController (e2e)', () => {
       `);
     });
 
-    test('gives a list of flags when the key is valid for an authenticated user with scheduling', async () => {
+    it('gives a list of flags when the key is valid for an authenticated user with scheduling', async () => {
       const fields = btoa(JSON.stringify({ clientKey: 'valid-sdk-key' }));
 
       const response = await request(app.getHttpServer())
@@ -167,7 +167,7 @@ describe('SdkController (e2e)', () => {
       expect(response2.body).toEqual({
         newHomepage: true,
         newFooter: false,
-        multivariate: 'Second',
+        multivariate: false,
       });
     }, 20000);
   });

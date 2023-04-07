@@ -11,17 +11,16 @@ import { AuthModule } from './auth/auth.module';
 import { WebsocketModule } from './websocket/websocket.module';
 import { TokensModule } from './tokens/tokens.module';
 import { EnvironmentsModule } from './environments/environments.module';
-import { StrategyModule } from './strategy/strategy.module';
 import { AppLoggerMiddleware } from './logging.middleware';
 import { SdkModule } from './sdk/sdk.module';
 import { MailModule } from './mail/mail.module';
 import { DatabaseModule } from './database/database.module';
 import { SchedulingModule } from './scheduling/scheduling.module';
 import { WebhooksModule } from './webhooks/webhooks.module';
-import { EligibilityModule } from './eligibility/eligibility.module';
 import { ActivityLogModule } from './activity-log/activity-log.module';
 import { RuleModule } from './rule/rule.module';
 import { SegmentsModule } from './segments/segments.module';
+import { StrategyModule } from './strategy/strategy.module';
 import 'winston-daily-rotate-file';
 
 @Module({
@@ -57,16 +56,15 @@ import 'winston-daily-rotate-file';
     }),
     WebsocketModule,
     EnvironmentsModule,
-    StrategyModule,
     SdkModule,
     MailModule,
     DatabaseModule,
     SchedulingModule,
     WebhooksModule,
-    EligibilityModule,
     ActivityLogModule,
     RuleModule,
     SegmentsModule,
+    StrategyModule,
   ],
   providers: [AppService],
 })

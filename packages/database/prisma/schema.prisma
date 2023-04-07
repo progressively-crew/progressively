@@ -87,22 +87,20 @@ model Flag {
 }
 
 model FlagEnvironment {
-  flagId            String
-  environmentId     String
-  status            String?           @default("NOT_ACTIVATED")
-  rolloutPercentage Int               @default(100)
-  eligibilities     Eligibility[]
-  environment       Environment       @relation(fields: [environmentId], references: [uuid])
-  flag              Flag              @relation(fields: [flagId], references: [uuid])
-  flagHit           FlagHit[]
-  metrics           PMetric[]
-  metricHits        PMetricHit[]
-  strategies        RolloutStrategy[]
-  scheduling        Schedule[]
-  variants          Variant[]
-  webhooks          Webhook[]
-  ActivityLog       ActivityLog[]
-  Segment           Segment[]
+  flagId        String
+  environmentId String
+  status        String?       @default("NOT_ACTIVATED")
+  environment   Environment   @relation(fields: [environmentId], references: [uuid])
+  flag          Flag          @relation(fields: [flagId], references: [uuid])
+  flagHit       FlagHit[]
+  metrics       PMetric[]
+  metricHits    PMetricHit[]
+  scheduling    Schedule[]
+  variants      Variant[]
+  webhooks      Webhook[]
+  ActivityLog   ActivityLog[]
+  Segment       Segment[]
+  strategies    Strategy[]
 
   @@id([flagId, environmentId])
 }
@@ -118,14 +116,14 @@ model Webhook {
 }
 
 model Variant {
-  uuid                         String           @id @default(uuid())
-  rolloutPercentage            Int              @default(100)
+  uuid                         String            @id @default(uuid())
   isControl                    Boolean
   value                        String
   flagEnvironmentFlagId        String?
   flagEnvironmentEnvironmentId String?
   PMetric                      PMetric[]
-  flagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
+  flagEnvironment              FlagEnvironment?  @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
+  StrategyVariant              StrategyVariant[]
 }
 
 model PMetric {
@@ -162,14 +160,14 @@ model FlagHit {
 }
 
 model Rule {
-  uuid            String            @id @default(uuid())
+  uuid            String    @id @default(uuid())
   fieldName       String
   fieldComparator String
   fieldValue      String
-  RolloutStrategy RolloutStrategy[]
-  Eligibility     Eligibility[]
-  Segment         Segment?          @relation(fields: [segmentUuid], references: [uuid])
+  Segment         Segment?  @relation(fields: [segmentUuid], references: [uuid])
   segmentUuid     String?
+  Strategy        Strategy? @relation(fields: [strategyUuid], references: [uuid])
+  strategyUuid    String?
 }
 
 model Segment {
@@ -179,26 +177,6 @@ model Segment {
   flagEnvironment              FlagEnvironment @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
   flagEnvironmentFlagId        String
   flagEnvironmentEnvironmentId String
-}
-
-model RolloutStrategy {
-  uuid                         String           @id @default(uuid())
-  rule                         Rule             @relation(fields: [ruleUuid], references: [uuid])
-  valueToServeType             String
-  valueToServe                 String
-  flagEnvironmentFlagId        String?
-  flagEnvironmentEnvironmentId String?
-  flagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
-  ruleUuid                     String
-}
-
-model Eligibility {
-  uuid                         String           @id @default(uuid())
-  rule                         Rule             @relation(fields: [ruleUuid], references: [uuid])
-  flagEnvironmentFlagId        String?
-  flagEnvironmentEnvironmentId String?
-  flagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
-  ruleUuid                     String
 }
 
 model Schedule {
@@ -227,4 +205,26 @@ model ActivityLog {
   flagEnvironmentEnvironmentId String?
 
   data String?
+}
+
+model Strategy {
+  uuid                         String            @id @default(uuid())
+  rolloutPercentage            Int               @default(100)
+  FlagEnvironment              FlagEnvironment?  @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
+  flagEnvironmentFlagId        String?
+  flagEnvironmentEnvironmentId String?
+  valueToServeType             String
+  valueToServe                 String?
+  rules                        Rule[]
+  variants                     StrategyVariant[]
+}
+
+model StrategyVariant {
+  rolloutPercentage Int      @default(0)
+  variant           Variant  @relation(fields: [variantUuid], references: [uuid])
+  variantUuid       String
+  strategy          Strategy @relation(fields: [strategyUuid], references: [uuid])
+  strategyUuid      String
+
+  @@id([strategyUuid, variantUuid])
 }

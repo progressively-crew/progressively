@@ -7,20 +7,12 @@ export enum SchedulingStatus {
 
 export type Schedule = {
   utc: string;
-  data: { rolloutPercentage?: number };
+  data: any;
   status: FlagStatus;
   uuid: string;
   schedulingStatus: SchedulingStatus;
-} & (
-  | {
-      type: SchedulingType.UpdatePercentage;
-      data: SchedulingUpdatePercentageData;
-    }
-  | {
-      type: SchedulingType.UpdateVariantPercentage;
-      data: Array<SchedulingUpdateVariantEntry>;
-    }
-);
+  type: SchedulingType.UpdatePercentage;
+};
 
 export interface SchedulingUpdateVariantEntry {
   variantId: string;
@@ -34,23 +26,11 @@ export interface SchedulingUpdatePercentageData {
 export type SchedulingCreateDTO = {
   utc: string;
   status: FlagStatus;
-} & (
-  | {
-      type: SchedulingType.UpdatePercentage;
-      data: SchedulingUpdatePercentageData;
-    }
-  | {
-      type: SchedulingType.UpdateVariantPercentage;
-      data: Array<SchedulingUpdateVariantEntry>;
-    }
-);
-
+  data: any;
+  type: string;
+};
 export enum SchedulingType {
   UpdatePercentage = "UpdatePercentage",
-  UpdateVariantPercentage = "UpdateVariantPercentage",
 }
 
-export const SchedulingTypes = [
-  SchedulingType.UpdatePercentage,
-  SchedulingType.UpdateVariantPercentage,
-];
+export const SchedulingTypes = [SchedulingType.UpdatePercentage];

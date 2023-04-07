@@ -26,49 +26,11 @@ export class FlagsService {
       include: {
         environment: true,
         flag: true,
-        strategies: {
-          include: {
-            rule: true,
-          },
-        },
         variants: true,
         webhooks: true,
-        eligibilities: {
-          include: {
-            rule: true,
-          },
-        },
-      },
-    });
-  }
-
-  adjustFlagPercentage(
-    environmentId: string,
-    flagId: string,
-    rolloutPercentage: number,
-  ) {
-    return this.prisma.flagEnvironment.update({
-      where: {
-        flagId_environmentId: {
-          flagId,
-          environmentId,
-        },
-      },
-      data: {
-        rolloutPercentage,
-      },
-      include: {
-        environment: true,
-        flag: true,
         strategies: {
           include: {
-            rule: true,
-          },
-        },
-        variants: true,
-        eligibilities: {
-          include: {
-            rule: true,
+            rules: true,
           },
         },
       },
@@ -293,16 +255,6 @@ export class FlagsService {
           flagEnvironmentFlagId: flagId,
         },
       }),
-      this.prisma.rolloutStrategy.deleteMany({
-        where: {
-          flagEnvironmentFlagId: flagId,
-        },
-      }),
-      this.prisma.eligibility.deleteMany({
-        where: {
-          flagEnvironmentFlagId: flagId,
-        },
-      }),
       this.prisma.segment.deleteMany({
         where: {
           uuid: flagId,
@@ -443,7 +395,6 @@ export class FlagsService {
         flagEnvironmentEnvironmentId: envId,
         flagEnvironmentFlagId: flagId,
         isControl: isFirstVariantCreatedThusControl,
-        rolloutPercentage: variant.rolloutPercentage,
         value: variant.value,
       },
     });
@@ -459,7 +410,6 @@ export class FlagsService {
         },
         data: {
           isControl: Boolean(variant.isControl),
-          rolloutPercentage: variant.rolloutPercentage,
           value: variant.value,
         },
       }),
@@ -470,12 +420,23 @@ export class FlagsService {
     return { count: result.length };
   }
 
-  deleteVariantFlag(variantId: string) {
-    return this.prisma.variant.delete({
-      where: {
-        uuid: variantId,
-      },
-    });
+  async deleteVariantFlag(variantId: string) {
+    const deleteQueries = [
+      this.prisma.strategyVariant.deleteMany({
+        where: {
+          variantUuid: variantId,
+        },
+      }),
+      this.prisma.variant.delete({
+        where: {
+          uuid: variantId,
+        },
+      }),
+    ];
+
+    const result = await this.prisma.$transaction(deleteQueries);
+
+    return result[result.length - 1];
   }
 
   async deleteMetricFlag(envId: string, flagId: string, metricId: string) {

@@ -14,7 +14,6 @@ import {
   UsePipes,
 } from '@nestjs/common';
 import { FlagStatus } from './flags.status';
-import { StrategyService } from '../strategy/strategy.service';
 import { FlagsService } from './flags.service';
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
 import { strToFlagStatus } from './utils';
@@ -25,39 +24,27 @@ import { ApiBearerAuth } from '@nestjs/swagger';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import {
   ActivateFlagDTO,
-  ChangePercentageDTO,
-  ChangePercentageSchema,
   MetricSchema,
   VariantCreationDTO,
   VariantSchema,
   VariantsSchema,
 } from './flags.dto';
 import { HasFlagEnvAccessGuard } from './guards/hasFlagEnvAccess';
-import { SchedulingCreationDTO, SchedulingSchema } from '../scheduling/types';
-import { SchedulingService } from '../scheduling/scheduling.service';
 import { MetricDto, Variant } from './types';
 import { Webhook, WebhookCreationDTO, WebhookSchema } from '../webhooks/types';
 import { WebhooksService } from '../webhooks/webhooks.service';
 import { post, WebhooksEventsToFlagStatus } from '../webhooks/utils';
-import { EligibilityService } from '../eligibility/eligibility.service';
 import { ActivityLogService } from '../activity-log/activity-log.service';
 import { UserId } from '../users/users.decorator';
-import { ComparatorEnum } from '../rule/comparators/types';
-import { SegmentsService } from '../segments/segments.service';
-import { SegmentCreationDTO, SegmentSchema } from '../segments/types';
 
 @ApiBearerAuth()
 @Controller()
 export class FlagsController {
   constructor(
-    private readonly strategyService: StrategyService,
-    private readonly schedulingService: SchedulingService,
     private readonly flagService: FlagsService,
     private readonly webhookService: WebhooksService,
-    private readonly eligibilityService: EligibilityService,
     private readonly wsGateway: WebsocketGateway,
     private readonly activityLogService: ActivityLogService,
-    private readonly segmentService: SegmentsService,
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
   ) {}
 
@@ -117,39 +104,6 @@ export class FlagsController {
     return updatedFlagEnv;
   }
 
-  @Put('environments/:envId/flags/:flagId/percentage')
-  @UseGuards(HasFlagEnvAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  @UsePipes(new ValidationPipe(ChangePercentageSchema))
-  async adjustFlagPercentage(
-    @UserId() userId: string,
-    @Param('envId') envId: string,
-    @Param('flagId') flagId: string,
-    @Body() body: ChangePercentageDTO,
-  ) {
-    const updatedFlagEnv = await this.flagService.adjustFlagPercentage(
-      envId,
-      flagId,
-      body.rolloutPercentage,
-    );
-
-    this.wsGateway.notifyChanges(
-      updatedFlagEnv.environment.clientKey,
-      updatedFlagEnv,
-    );
-
-    await this.activityLogService.register({
-      userId,
-      flagId: flagId,
-      envId: envId,
-      concernedEntity: 'flag',
-      type: 'change-flag-percentage',
-      data: String(body.rolloutPercentage),
-    });
-
-    return updatedFlagEnv;
-  }
-
   /**
    * Delete a project by project/env/flag
    */
@@ -181,29 +135,6 @@ export class FlagsController {
     });
 
     return variantDeleted;
-  }
-
-  @Delete('environments/:envId/flags/:flagId/segments/:segmentId')
-  @UseGuards(HasFlagEnvAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  async deleteSegment(
-    @UserId() userId: string,
-    @Param('envId') envId: string,
-    @Param('flagId') flagId: string,
-    @Param('segmentId') segmentId: string,
-  ) {
-    const segmentDeleted = await this.segmentService.deleteSegment(segmentId);
-
-    await this.activityLogService.register({
-      userId,
-      flagId: flagId,
-      envId: envId,
-      concernedEntity: 'flag',
-      type: 'delete-segment',
-      data: JSON.stringify(segmentDeleted),
-    });
-
-    return segmentDeleted;
   }
 
   @Delete('environments/:envId/flags/:flagId/metrics/:metricId')
@@ -299,108 +230,6 @@ export class FlagsController {
     }));
   }
 
-  @Post('environments/:envId/flags/:flagId/strategies')
-  @UseGuards(HasFlagEnvAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  async addStrategyToFlag(
-    @UserId() userId: string,
-    @Param('envId') envId: string,
-    @Param('flagId') flagId: string,
-  ) {
-    const strategy = await this.strategyService.addStrategyToFlagEnv(
-      envId,
-      flagId,
-    );
-
-    const { flagEnvironment: flagEnv } =
-      await this.strategyService.getStrategyFlagEnv(strategy.uuid);
-
-    if (flagEnv.status === FlagStatus.ACTIVATED) {
-      this.wsGateway.notifyChanges(flagEnv.environment.clientKey, flagEnv);
-    }
-
-    await this.activityLogService.register({
-      userId,
-      flagId: flagId,
-      envId: envId,
-      concernedEntity: 'flag',
-      type: 'create-additional-audience',
-    });
-
-    return strategy;
-  }
-
-  @Post('environments/:envId/flags/:flagId/segments')
-  @UseGuards(HasFlagEnvAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  @UsePipes(new ValidationPipe(SegmentSchema))
-  async addSegmentToFlag(
-    @UserId() userId: string,
-    @Param('envId') envId: string,
-    @Param('flagId') flagId: string,
-    @Body() segmentDto: SegmentCreationDTO,
-  ) {
-    const segment = await this.segmentService.addSegmentToFlagEnv(
-      envId,
-      flagId,
-      segmentDto.name,
-    );
-
-    const { flagEnvironment: flagEnv } =
-      await this.segmentService.getSegmentFlagEnv(segment.uuid);
-
-    if (flagEnv.status === FlagStatus.ACTIVATED) {
-      this.wsGateway.notifyChanges(flagEnv.environment.clientKey, flagEnv);
-    }
-
-    await this.activityLogService.register({
-      userId,
-      flagId: flagId,
-      envId: envId,
-      data: JSON.stringify(segment),
-      concernedEntity: 'flag',
-      type: 'create-segment',
-    });
-
-    return segment;
-  }
-
-  @Post('environments/:envId/flags/:flagId/eligibilities')
-  @UseGuards(HasFlagEnvAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  async addEligibilityToFlag(
-    @UserId() userId: string,
-    @Param('envId') envId: string,
-    @Param('flagId') flagId: string,
-  ) {
-    const eligibility = await this.eligibilityService.addEligibilityToFlagEnv(
-      envId,
-      flagId,
-      {
-        fieldComparator: ComparatorEnum.Equals,
-        fieldName: '',
-        fieldValue: '',
-      },
-    );
-
-    const { flagEnvironment: flagEnv } =
-      await this.eligibilityService.getEligibilityFlagEnv(eligibility.uuid);
-
-    if (flagEnv.status === FlagStatus.ACTIVATED) {
-      this.wsGateway.notifyChanges(flagEnv.environment.clientKey, flagEnv);
-    }
-
-    await this.activityLogService.register({
-      userId,
-      flagId: flagId,
-      envId: envId,
-      concernedEntity: 'flag',
-      type: 'create-eligibility-restriction',
-    });
-
-    return eligibility;
-  }
-
   @Post('environments/:envId/flags/:flagId/webhooks')
   @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
@@ -427,34 +256,6 @@ export class FlagsController {
     });
 
     return webhook;
-  }
-
-  @Post('environments/:envId/flags/:flagId/scheduling')
-  @UseGuards(HasFlagEnvAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  @UsePipes(new ValidationPipe(SchedulingSchema))
-  async addSchedulingToFlag(
-    @UserId() userId: string,
-    @Param('envId') envId: string,
-    @Param('flagId') flagId: string,
-    @Body() schedulingDto: SchedulingCreationDTO,
-  ) {
-    const scheduling = await this.schedulingService.addSchedulingToFlagEnv(
-      envId,
-      flagId,
-      schedulingDto,
-    );
-
-    await this.activityLogService.register({
-      userId,
-      flagId: flagId,
-      envId: envId,
-      concernedEntity: 'flag',
-      type: 'create-scheduling',
-      data: JSON.stringify(scheduling),
-    });
-
-    return scheduling;
   }
 
   @Post('environments/:envId/flags/:flagId/metrics')
@@ -565,48 +366,11 @@ export class FlagsController {
     return result;
   }
 
-  @Get('environments/:envId/flags/:flagId/strategies')
-  @UseGuards(HasFlagEnvAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  getStrategies(
-    @Param('envId') envId: string,
-    @Param('flagId') flagId: string,
-  ) {
-    return this.strategyService.listStrategies(envId, flagId);
-  }
-
-  @Get('environments/:envId/flags/:flagId/segments')
-  @UseGuards(HasFlagEnvAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  getSegments(@Param('envId') envId: string, @Param('flagId') flagId: string) {
-    return this.segmentService.listSegments(envId, flagId);
-  }
-
-  @Get('environments/:envId/flags/:flagId/eligibilities')
-  @UseGuards(HasFlagEnvAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  getEligibilities(
-    @Param('envId') envId: string,
-    @Param('flagId') flagId: string,
-  ) {
-    return this.eligibilityService.listEligibilities(envId, flagId);
-  }
-
   @Get('environments/:envId/flags/:flagId/metrics')
   @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
   getMetrics(@Param('envId') envId: string, @Param('flagId') flagId: string) {
     return this.flagService.listMetrics(envId, flagId);
-  }
-
-  @Get('environments/:envId/flags/:flagId/scheduling')
-  @UseGuards(HasFlagEnvAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  getScheduling(
-    @Param('envId') envId: string,
-    @Param('flagId') flagId: string,
-  ) {
-    return this.schedulingService.listScheduling(envId, flagId);
   }
 
   @Get('environments/:envId/flags/:flagId/webhooks')

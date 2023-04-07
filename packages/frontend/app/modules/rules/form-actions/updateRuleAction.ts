@@ -1,5 +1,4 @@
-import { ComparatorEnum } from "~/modules/rules/types";
-import { RuleType } from "../types";
+import { ComparatorEnum, Rule } from "~/modules/rules/types";
 import { updateRule } from "../services/updateRule";
 
 export const updateRuleAction = async (
@@ -11,7 +10,7 @@ export const updateRuleAction = async (
   const allComparators = formData.getAll("field-comparator");
   const allFieldValue = formData.getAll("field-value");
 
-  const toUpdate: Array<RuleType & { uuid: string }> = [];
+  const toUpdate: Array<Rule> = [];
   const entries = allIds.entries();
   let hasError = false;
 
@@ -21,7 +20,7 @@ export const updateRuleAction = async (
     const fieldValue = allFieldValue[i]?.toString() || "";
 
     if (uuid && fieldName && fieldComparator && fieldValue) {
-      const ruleDto: RuleType & { uuid: string } = {
+      const ruleDto: Rule = {
         uuid: uuid.toString(),
         fieldName,
         fieldValue,

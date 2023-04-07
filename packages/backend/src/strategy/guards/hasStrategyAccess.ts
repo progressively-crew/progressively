@@ -1,7 +1,7 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { StrategyService } from '../strategy.service';
 import { UserRetrieveDTO } from '../../users/users.dto';
+import { StrategyService } from '../strategy.service';
 
 @Injectable()
 export class HasStrategyAccessGuard implements CanActivate {
@@ -14,11 +14,11 @@ export class HasStrategyAccessGuard implements CanActivate {
     const roles = this.reflector.get<string[]>('roles', context.getHandler());
     const req = context.switchToHttp().getRequest();
 
-    const stratId = req.params.stratId;
+    const strategyId = req.params.strategyId;
     const user: UserRetrieveDTO = req.user;
 
     return this.strategyService.hasPermissionOnStrategy(
-      stratId,
+      strategyId,
       user.uuid,
       roles,
     );

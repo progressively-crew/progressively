@@ -12,21 +12,13 @@ import {
 import { Response, Request } from 'express';
 import { SdkService } from './sdk.service';
 import { EventHit } from './types';
+import { parseBase64Params, prepareCookie, resolveUserId } from './utils';
 
 export const COOKIE_KEY = 'progressively-id';
 
 @Controller('sdk')
 export class SdkController {
   constructor(private readonly sdkService: SdkService) {}
-
-  _prepareCookie(response: Response, userId: string) {
-    response.cookie('progressively-id', userId, {
-      secure: true,
-    });
-
-    response.header('X-progressively-id', userId);
-    response.header('Access-Control-Expose-Headers', 'X-progressively-id');
-  }
 
   /**
    * Get the flag values by client sdk key
@@ -38,17 +30,14 @@ export class SdkController {
     @Req() request: Request,
     @Headers() headers,
   ) {
-    // User section, managing the user ID and cookies
+    const fields = parseBase64Params(base64Params);
     const cookieUserId = request?.cookies?.[COOKIE_KEY];
-    const fields = this.sdkService.parseBase64Params(base64Params);
+    const shouldSkipHits = headers['x-progressively-hit'] === 'skip';
 
-    fields.id = this.sdkService.resolveUserId(fields, cookieUserId);
-    this._prepareCookie(response, fields.id);
+    fields.id = resolveUserId(fields, cookieUserId);
+    prepareCookie(response, fields.id);
 
-    return this.sdkService.resolveSdkFlags(
-      fields,
-      headers['x-progressively-hit'] === 'skip',
-    );
+    return this.sdkService.computeFlags(fields, shouldSkipHits);
   }
 
   @Post('/:params')
@@ -60,7 +49,7 @@ export class SdkController {
       throw new BadRequestException();
     }
 
-    const fields = this.sdkService.parseBase64Params(base64Params);
+    const fields = parseBase64Params(base64Params);
 
     if (!fields.clientKey) {
       throw new BadRequestException();
