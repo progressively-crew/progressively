@@ -77,7 +77,7 @@ describe('Strategy (e2e)', () => {
           rules: [],
           uuid: '1',
           valueToServe: null,
-          valueToServeType: 'string',
+          valueToServeType: 'Boolean',
           variants: [],
         },
       ]);
@@ -92,7 +92,7 @@ describe('Strategy (e2e)', () => {
       const access_token = await authenticate(app);
 
       return request(app.getHttpServer())
-        .delete('/strategies/3')
+        .delete('/strategies/10')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(403)
         .expect({
@@ -134,7 +134,7 @@ describe('Strategy (e2e)', () => {
         flagEnvironmentEnvironmentId: '1',
         rolloutPercentage: 100,
         valueToServe: null,
-        valueToServeType: 'string',
+        valueToServeType: 'Boolean',
       });
     });
   });
@@ -208,7 +208,7 @@ describe('Strategy (e2e)', () => {
       const access_token = await authenticate(app);
 
       return request(app.getHttpServer())
-        .post('/strategies/3/rules')
+        .post('/strategies/10/rules')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(403)
         .expect({
