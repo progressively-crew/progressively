@@ -420,12 +420,23 @@ export class FlagsService {
     return { count: result.length };
   }
 
-  deleteVariantFlag(variantId: string) {
-    return this.prisma.variant.delete({
-      where: {
-        uuid: variantId,
-      },
-    });
+  async deleteVariantFlag(variantId: string) {
+    const deleteQueries = [
+      this.prisma.strategyVariant.deleteMany({
+        where: {
+          variantUuid: variantId,
+        },
+      }),
+      this.prisma.variant.delete({
+        where: {
+          uuid: variantId,
+        },
+      }),
+    ];
+
+    const result = await this.prisma.$transaction(deleteQueries);
+
+    return result[result.length - 1];
   }
 
   async deleteMetricFlag(envId: string, flagId: string, metricId: string) {
