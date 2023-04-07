@@ -71,7 +71,7 @@ describe('Scheduling (e2e)', () => {
       expect(result.body).toMatchObject({
         uuid: '1',
         type: 'UpdatePercentage',
-        data: { rolloutPercentage: 100 },
+        data: {},
         status: 'ACTIVATED',
         schedulingStatus: 'NOT_RUN',
         flagEnvironmentFlagId: '1',
@@ -188,30 +188,6 @@ describe('Scheduling (e2e)', () => {
         });
     });
 
-    it('gives 400 when the scheduling has a wrong data object', async () => {
-      const access_token = await authenticate(app);
-
-      const invalidScheduling: any = {
-        utc: new Date('1992-06-21'),
-        status: 'ACTIVATED',
-        type: 'UpdatePercentage',
-        data: {
-          invalidData: 100,
-        },
-      };
-
-      await request(app.getHttpServer())
-        .post('/environments/1/flags/1/scheduling')
-        .set('Authorization', `Bearer ${access_token}`)
-        .send(invalidScheduling)
-        .expect(400)
-        .expect({
-          statusCode: 400,
-          message: 'Validation failed',
-          error: 'Bad Request',
-        });
-    });
-
     it('creates a scheduling for a single variant flag', async () => {
       const access_token = await authenticate(app);
 
@@ -219,9 +195,7 @@ describe('Scheduling (e2e)', () => {
         utc: new Date('1992-06-21'),
         status: 'ACTIVATED',
         type: 'UpdatePercentage',
-        data: {
-          rolloutPercentage: 100,
-        },
+        data: {},
       };
 
       const response = await request(app.getHttpServer())
@@ -234,30 +208,6 @@ describe('Scheduling (e2e)', () => {
         status: 'ACTIVATED',
         utc: '1992-06-21T00:00:00.000Z',
       });
-    });
-
-    it('gives 400 when the scheduling has a wrong data object for ', async () => {
-      const access_token = await authenticate(app);
-
-      const invalidScheduling: any = {
-        utc: new Date('1992-06-21'),
-        status: 'ACTIVATED',
-        type: 'UpdateVariantPercentage',
-        data: {
-          invalidData: 100,
-        },
-      };
-
-      await request(app.getHttpServer())
-        .post('/environments/1/flags/1/scheduling')
-        .set('Authorization', `Bearer ${access_token}`)
-        .send(invalidScheduling)
-        .expect(400)
-        .expect({
-          statusCode: 400,
-          message: 'Validation failed',
-          error: 'Bad Request',
-        });
     });
   });
 

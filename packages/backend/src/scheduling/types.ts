@@ -31,10 +31,5 @@ export const SchedulingSchema = Joi.object({
 
   type: Joi.string().valid(SchedulingType.UpdatePercentage),
 
-  data: Joi.any().when('type', {
-    is: SchedulingType.UpdatePercentage,
-    then: Joi.object({
-      rolloutPercentage: Joi.number().integer().min(0).max(100).required(),
-    }).required(),
-  }),
+  data: Joi.any(),
 });

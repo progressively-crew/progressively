@@ -513,7 +513,7 @@ describe('FlagsController (e2e)', () => {
         });
     });
 
-    it('gives a 200 when the flag has been deleted', async () => {
+    it('gives a 200 when the variant has been deleted', async () => {
       const access_token = await authenticate(app);
 
       const prevResponse = await request(app.getHttpServer())
