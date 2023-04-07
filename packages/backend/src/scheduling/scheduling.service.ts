@@ -106,14 +106,6 @@ export class SchedulingService {
       strategies: {
         include: {
           rules: true,
-          variants: {
-            include: {
-              variant: true,
-            },
-            orderBy: {
-              rolloutPercentage: 'asc',
-            },
-          },
         },
       },
     };

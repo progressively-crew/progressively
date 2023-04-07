@@ -199,6 +199,26 @@ export const seedDb = async () => {
       },
     });
 
+    await prismaClient.strategy.create({
+      data: {
+        uuid: "2",
+        flagEnvironmentEnvironmentId: production.uuid,
+        flagEnvironmentFlagId: footerFlag.uuid,
+        valueToServe: undefined,
+        valueToServeType: "Boolean",
+        rolloutPercentage: 100,
+        rules: {
+          create: [
+            {
+              fieldName: "id",
+              fieldComparator: "eq",
+              fieldValue: "1",
+            },
+          ],
+        },
+      },
+    });
+
     await prismaClient.segment.create({
       data: {
         name: "By email address",
