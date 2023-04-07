@@ -99,9 +99,7 @@ export const seedDb = async () => {
         flagEnvironmentEnvironmentId: flagEnv.environmentId,
         status: "ACTIVATED",
         type: "UpdatePercentage",
-        data: {
-          rolloutPercentage: 100,
-        },
+        data: {},
       },
     });
 
@@ -126,27 +124,7 @@ export const seedDb = async () => {
       data: {
         environmentId: production.uuid,
         flagId: multiVariate.uuid,
-      },
-    });
-
-    await prismaClient.schedule.create({
-      data: {
-        uuid: "2",
-        utc: d,
-        flagEnvironmentFlagId: multiVariateFlagEnv.flagId,
-        flagEnvironmentEnvironmentId: multiVariateFlagEnv.environmentId,
-        status: "ACTIVATED",
-        type: "UpdateVariantPercentage",
-        data: [
-          {
-            variantId: "1",
-            variantNewPercentage: 30,
-          },
-          {
-            variantId: "2",
-            variantNewPercentage: 70,
-          },
-        ],
+        status: "NOT_ACTIVATED",
       },
     });
 
@@ -160,7 +138,7 @@ export const seedDb = async () => {
       },
     });
 
-    await prismaClient.variant.create({
+    const secondVariant = await prismaClient.variant.create({
       data: {
         uuid: "2",
         isControl: false,
@@ -195,7 +173,7 @@ export const seedDb = async () => {
         uuid: "1",
         flagEnvironmentEnvironmentId: production.uuid,
         flagEnvironmentFlagId: homePageFlag.uuid,
-        valueToServeType: "string",
+        valueToServeType: "Boolean",
       },
     });
 
@@ -213,6 +191,27 @@ export const seedDb = async () => {
               fieldName: "id",
               fieldComparator: "eq",
               fieldValue: "1",
+            },
+          ],
+        },
+      },
+    });
+
+    await prismaClient.strategy.create({
+      data: {
+        uuid: "3",
+        flagEnvironmentEnvironmentId: multiVariateFlagEnv.environmentId,
+        flagEnvironmentFlagId: multiVariateFlagEnv.flagId,
+        valueToServeType: "Variant",
+        variants: {
+          create: [
+            {
+              variantUuid: firstVariant.uuid,
+              rolloutPercentage: 50,
+            },
+            {
+              variantUuid: secondVariant.uuid,
+              rolloutPercentage: 50,
             },
           ],
         },

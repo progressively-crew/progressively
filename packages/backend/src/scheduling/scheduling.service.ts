@@ -99,36 +99,38 @@ export class SchedulingService {
   }
 
   makeUpdateQuery(flagEnv: PopulatedFlagEnv, schedule: Schedule) {
-    const include = {
-      flag: true,
-      scheduling: true,
-      variants: true,
-      strategies: {
-        include: {
-          rules: true,
+    return [
+      //Important to be the last query
+      this.prisma.flagEnvironment.update({
+        where: {
+          flagId_environmentId: {
+            environmentId: flagEnv.environmentId,
+            flagId: flagEnv.flagId,
+          },
         },
-      },
-    };
-
-    if (schedule.type === SchedulingType.UpdatePercentage) {
-      return [
-        //Important to be the last query
-        this.prisma.flagEnvironment.update({
-          where: {
-            flagId_environmentId: {
-              environmentId: flagEnv.environmentId,
-              flagId: flagEnv.flagId,
+        data: {
+          status: schedule.status,
+        },
+        include: {
+          flag: true,
+          scheduling: true,
+          variants: true,
+          strategies: {
+            include: {
+              rules: true,
+              variants: {
+                include: {
+                  variant: true,
+                },
+                orderBy: {
+                  rolloutPercentage: 'asc',
+                },
+              },
             },
           },
-          data: {
-            status: schedule.status,
-          },
-          include,
-        }),
-      ];
-    }
-
-    return undefined;
+        },
+      }),
+    ];
   }
 
   async manageFlagScheduling(

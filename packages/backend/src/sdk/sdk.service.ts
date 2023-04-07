@@ -59,6 +59,7 @@ export class SdkService {
 
       if (strategy.valueToServeType === ValueToServe.Variant) {
         const bucketId = genBucket(flagKey, fields.id as string);
+
         return getVariation(bucketId, strategy.variants);
       }
     }
@@ -107,12 +108,12 @@ export class SdkService {
     for (const flagEnv of flagEnvs) {
       let nextFlag = flagEnv;
 
-      // if (flagEnv.scheduling.length > 0) {
-      //   nextFlag = await this.scheduleService.manageFlagScheduling(
-      //     clientKey,
-      //     flagEnv,
-      //   );
-      // }
+      if (flagEnv.scheduling.length > 0) {
+        nextFlag = await this.scheduleService.manageFlagScheduling(
+          clientKey,
+          flagEnv,
+        );
+      }
 
       const flagStatusOrVariant = this.resolveFlagStatus(nextFlag, fields);
 
