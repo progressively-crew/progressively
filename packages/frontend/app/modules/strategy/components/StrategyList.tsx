@@ -1,23 +1,27 @@
 import { Card, CardContent } from "~/components/Card";
-import { Strategy, StrategyVariant } from "../types";
+import { Strategy } from "../types";
 import { Form } from "@remix-run/react";
 import { useId, useRef } from "react";
-import { RuleFormField } from "~/modules/rules/components/RuleFormField";
 import { StrategyFormFields } from "./StrategyFormFields";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
-import { Tag } from "~/components/Tag";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { MenuButton } from "~/components/MenuButton";
-import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { Variant } from "~/modules/variants/types";
 import { IoCloseOutline } from "react-icons/io5";
+import { StrategyRuleFormField } from "./StrategyRuleFormField";
+import { Segment } from "~/modules/segments/types";
 
 export interface StrategyListProps {
   items: Array<Strategy>;
   variants: Array<Variant>;
+  segments: Array<Segment>;
 }
 
-export const StrategyList = ({ items, variants }: StrategyListProps) => {
+export const StrategyList = ({
+  items,
+  variants,
+  segments,
+}: StrategyListProps) => {
   return (
     <div className="flex flex-col gap-4">
       {items.map((strategy) => {
@@ -26,6 +30,7 @@ export const StrategyList = ({ items, variants }: StrategyListProps) => {
             key={strategy.uuid}
             strategy={strategy}
             variants={variants}
+            segments={segments}
           />
         );
       })}
@@ -36,9 +41,10 @@ export const StrategyList = ({ items, variants }: StrategyListProps) => {
 export interface StrategyItemProps {
   strategy: Strategy;
   variants: Array<Variant>;
+  segments: Array<Segment>;
 }
 
-const StrategyItem = ({ strategy, variants }: StrategyItemProps) => {
+const StrategyItem = ({ strategy, variants, segments }: StrategyItemProps) => {
   const deleteStrategyForm = useRef<HTMLFormElement>(null);
 
   const id = useId();
@@ -120,10 +126,11 @@ const StrategyItem = ({ strategy, variants }: StrategyItemProps) => {
                 <input type="hidden" value={rule.uuid} name="ruleUuid" />
                 <div className="flex flex-row gap-4 justify-between items-start">
                   <div className="flex-1">
-                    <RuleFormField
+                    <StrategyRuleFormField
                       initialFieldName={rule.fieldName}
                       initialFieldComparator={rule.fieldComparator}
                       initialFieldValue={rule.fieldValue}
+                      segments={segments}
                     />
                   </div>
 
