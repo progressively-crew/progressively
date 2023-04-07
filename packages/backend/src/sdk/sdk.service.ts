@@ -1,5 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { nanoid } from 'nanoid';
+import { Injectable } from '@nestjs/common';
 import { EnvironmentsService } from '../environments/environments.service';
 import { FlagsService } from '../flags/flags.service';
 import { PopulatedFlagEnv, PopulatedStrategy, Variant } from '../flags/types';
@@ -21,29 +20,6 @@ export class SdkService {
     private readonly flagService: FlagsService,
     private readonly ruleService: RuleService,
   ) {}
-
-  resolveUserId(params: FieldRecord, cookieUserId?: string) {
-    if (params?.id) {
-      // User exists, but initial request
-      return String(params.id);
-    }
-
-    if (cookieUserId) {
-      // User exists, subsequent requests
-      return cookieUserId;
-    }
-
-    // first visit but anonymous
-    return nanoid();
-  }
-
-  parseBase64Params(b64: string): FieldRecord {
-    try {
-      return JSON.parse(Buffer.from(b64, 'base64').toString('ascii'));
-    } catch (e) {
-      throw new BadRequestException();
-    }
-  }
 
   resolveFlagStatus(flagEnv: PopulatedFlagEnv, fields: FieldRecord) {
     if (flagEnv.status !== FlagStatus.ACTIVATED) return false;
@@ -120,7 +96,7 @@ export class SdkService {
     };
   }
 
-  async resolveSdkFlags(fields: FieldRecord, skipHit: boolean) {
+  async computeFlags(fields: FieldRecord, skipHit: boolean) {
     const clientKey = String(fields.clientKey);
     const flagEnvs = await this.envService.getFlagEnvironmentByClientKey(
       clientKey,
