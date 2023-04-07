@@ -38,8 +38,6 @@ import { WebhooksService } from '../webhooks/webhooks.service';
 import { post, WebhooksEventsToFlagStatus } from '../webhooks/utils';
 import { ActivityLogService } from '../activity-log/activity-log.service';
 import { UserId } from '../users/users.decorator';
-import { SegmentsService } from '../segments/segments.service';
-import { SegmentCreationDTO, SegmentSchema } from '../segments/types';
 
 @ApiBearerAuth()
 @Controller()
@@ -50,7 +48,6 @@ export class FlagsController {
     private readonly webhookService: WebhooksService,
     private readonly wsGateway: WebsocketGateway,
     private readonly activityLogService: ActivityLogService,
-    private readonly segmentService: SegmentsService,
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
   ) {}
 
@@ -141,29 +138,6 @@ export class FlagsController {
     });
 
     return variantDeleted;
-  }
-
-  @Delete('environments/:envId/flags/:flagId/segments/:segmentId')
-  @UseGuards(HasFlagEnvAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  async deleteSegment(
-    @UserId() userId: string,
-    @Param('envId') envId: string,
-    @Param('flagId') flagId: string,
-    @Param('segmentId') segmentId: string,
-  ) {
-    const segmentDeleted = await this.segmentService.deleteSegment(segmentId);
-
-    await this.activityLogService.register({
-      userId,
-      flagId: flagId,
-      envId: envId,
-      concernedEntity: 'flag',
-      type: 'delete-segment',
-      data: JSON.stringify(segmentDeleted),
-    });
-
-    return segmentDeleted;
   }
 
   @Delete('environments/:envId/flags/:flagId/metrics/:metricId')
@@ -257,34 +231,6 @@ export class FlagsController {
       ...activity,
       data: activity.data ? JSON.parse(activity.data) : undefined,
     }));
-  }
-
-  @Post('environments/:envId/flags/:flagId/segments')
-  @UseGuards(HasFlagEnvAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  @UsePipes(new ValidationPipe(SegmentSchema))
-  async addSegmentToFlag(
-    @UserId() userId: string,
-    @Param('envId') envId: string,
-    @Param('flagId') flagId: string,
-    @Body() segmentDto: SegmentCreationDTO,
-  ) {
-    const segment = await this.segmentService.addSegmentToFlagEnv(
-      envId,
-      flagId,
-      segmentDto.name,
-    );
-
-    await this.activityLogService.register({
-      userId,
-      flagId: flagId,
-      envId: envId,
-      data: JSON.stringify(segment),
-      concernedEntity: 'flag',
-      type: 'create-segment',
-    });
-
-    return segment;
   }
 
   @Post('environments/:envId/flags/:flagId/webhooks')
@@ -449,13 +395,6 @@ export class FlagsController {
     });
 
     return result;
-  }
-
-  @Get('environments/:envId/flags/:flagId/segments')
-  @UseGuards(HasFlagEnvAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  getSegments(@Param('envId') envId: string, @Param('flagId') flagId: string) {
-    return this.segmentService.listSegments(envId, flagId);
   }
 
   @Get('environments/:envId/flags/:flagId/metrics')
