@@ -17,7 +17,7 @@ import { SegmentCreationDTO, SegmentSchema } from './types';
 import { SegmentsService } from './segments.service';
 import { ActivityLogService } from '../activity-log/activity-log.service';
 import { WebsocketGateway } from '../websocket/websocket.gateway';
-import { HasFlagEnvAccessGuard } from '../../src/flags/guards/hasFlagEnvAccess';
+import { HasFlagEnvAccessGuard } from '../flags/guards/hasFlagEnvAccess';
 
 @Controller()
 export class SegmentsController {
