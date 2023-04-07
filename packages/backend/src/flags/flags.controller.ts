@@ -30,8 +30,6 @@ import {
   VariantsSchema,
 } from './flags.dto';
 import { HasFlagEnvAccessGuard } from './guards/hasFlagEnvAccess';
-import { SchedulingCreationDTO, SchedulingSchema } from '../scheduling/types';
-import { SchedulingService } from '../scheduling/scheduling.service';
 import { MetricDto, Variant } from './types';
 import { Webhook, WebhookCreationDTO, WebhookSchema } from '../webhooks/types';
 import { WebhooksService } from '../webhooks/webhooks.service';
@@ -43,7 +41,6 @@ import { UserId } from '../users/users.decorator';
 @Controller()
 export class FlagsController {
   constructor(
-    private readonly schedulingService: SchedulingService,
     private readonly flagService: FlagsService,
     private readonly webhookService: WebhooksService,
     private readonly wsGateway: WebsocketGateway,
@@ -261,34 +258,6 @@ export class FlagsController {
     return webhook;
   }
 
-  @Post('environments/:envId/flags/:flagId/scheduling')
-  @UseGuards(HasFlagEnvAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  @UsePipes(new ValidationPipe(SchedulingSchema))
-  async addSchedulingToFlag(
-    @UserId() userId: string,
-    @Param('envId') envId: string,
-    @Param('flagId') flagId: string,
-    @Body() schedulingDto: SchedulingCreationDTO,
-  ) {
-    const scheduling = await this.schedulingService.addSchedulingToFlagEnv(
-      envId,
-      flagId,
-      schedulingDto,
-    );
-
-    await this.activityLogService.register({
-      userId,
-      flagId: flagId,
-      envId: envId,
-      concernedEntity: 'flag',
-      type: 'create-scheduling',
-      data: JSON.stringify(scheduling),
-    });
-
-    return scheduling;
-  }
-
   @Post('environments/:envId/flags/:flagId/metrics')
   @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
@@ -402,16 +371,6 @@ export class FlagsController {
   @UseGuards(JwtAuthGuard)
   getMetrics(@Param('envId') envId: string, @Param('flagId') flagId: string) {
     return this.flagService.listMetrics(envId, flagId);
-  }
-
-  @Get('environments/:envId/flags/:flagId/scheduling')
-  @UseGuards(HasFlagEnvAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  getScheduling(
-    @Param('envId') envId: string,
-    @Param('flagId') flagId: string,
-  ) {
-    return this.schedulingService.listScheduling(envId, flagId);
   }
 
   @Get('environments/:envId/flags/:flagId/webhooks')
