@@ -16,6 +16,8 @@ import { getActivity } from "~/modules/activity/services/getActivity";
 import { Activity } from "~/modules/activity/types";
 import { ActivityLogList } from "~/modules/activity/components/ActivityLogList";
 import { Typography } from "~/components/Typography";
+import { Card, CardContent } from "~/components/Card";
+import { EmptyState } from "~/components/EmptyState";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -93,7 +95,18 @@ export default function FlagInsights() {
         }
       />
 
-      <ActivityLogList list={activities} flagEnv={flagEnv} />
+      {activities.length > 0 ? (
+        <ActivityLogList list={activities} flagEnv={flagEnv} />
+      ) : (
+        <Card>
+          <CardContent>
+            <EmptyState
+              title="No activity found"
+              description={`Wait for people to make actions on this instance to start seeing things appearing`}
+            />
+          </CardContent>
+        </Card>
+      )}
     </DashboardLayout>
   );
 }

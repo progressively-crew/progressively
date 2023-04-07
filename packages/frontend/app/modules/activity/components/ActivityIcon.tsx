@@ -1,6 +1,7 @@
 /* eslint-disable sonarjs/cognitive-complexity */
 import { AiOutlineClockCircle, AiOutlineLink } from "react-icons/ai";
 import { GrGroup } from "react-icons/gr";
+import { RiSettingsLine } from "react-icons/ri";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { MetricIcon } from "~/components/Icons/MetricIcon";
 import { VariantIcon } from "~/components/Icons/VariantIcon";
@@ -61,6 +62,26 @@ export const ActivityIcon = ({ type }: ActivityIconProps) => {
 
   if (type === "delete-segment") {
     return <GrGroup />;
+  }
+
+  if (type === "delete-strategy") {
+    return <RiSettingsLine />;
+  }
+
+  if (type === "create-strategy") {
+    return <RiSettingsLine />;
+  }
+
+  if (type === "edit-strategy") {
+    return <RiSettingsLine />;
+  }
+
+  if (type === "edit-segment-rule") {
+    return <RiSettingsLine />;
+  }
+
+  if (type === "delete-rule") {
+    return <RiSettingsLine />;
   }
 
   return <span>Woops, the type {type} is not supported yet.</span>;
