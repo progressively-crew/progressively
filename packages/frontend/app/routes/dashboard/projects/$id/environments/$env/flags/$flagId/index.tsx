@@ -24,6 +24,8 @@ import { CreateButton } from "~/components/Buttons/CreateButton";
 import { deleteRule } from "~/modules/rules/services/deleteRule";
 import { Variant } from "~/modules/variants/types";
 import { getVariants } from "~/modules/variants/services/getVariants";
+import { EmptyState } from "~/components/EmptyState";
+import { Card, CardContent } from "~/components/Card";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -141,21 +143,41 @@ export default function FlagById() {
       <PageTitle
         value="Audience"
         action={
-          <Form method="post">
-            <input type="hidden" name="_type" value="add-strategy" />
-            <CreateButton
-              type="submit"
-              variant={strategies.length > 0 ? "secondary" : "primary"}
-            >
-              Add a strategy
-            </CreateButton>
-          </Form>
+          strategies.length > 0 && (
+            <Form method="post">
+              <input type="hidden" name="_type" value="add-strategy" />
+              <CreateButton type="submit" variant={"secondary"}>
+                Add a strategy
+              </CreateButton>
+            </Form>
+          )
         }
       />
 
       <Section id="rollout-target">
-        <StrategyList items={strategies} variants={variants} />
-        <div className="h-4" />
+        {strategies.length > 0 ? (
+          <StrategyList items={strategies} variants={variants} />
+        ) : (
+          <Card>
+            <CardContent>
+              <EmptyState
+                title="No strategies found"
+                description={`The persons requesting your flag will simply resolve "true" or "false" depending on the flag status toggle.`}
+                action={
+                  <Form method="post">
+                    <input type="hidden" name="_type" value="add-strategy" />
+                    <CreateButton
+                      type="submit"
+                      variant={strategies.length > 0 ? "secondary" : "primary"}
+                    >
+                      Add a strategy
+                    </CreateButton>
+                  </Form>
+                }
+              />
+            </CardContent>
+          </Card>
+        )}
       </Section>
     </DashboardLayout>
   );

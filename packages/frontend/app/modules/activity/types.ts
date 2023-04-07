@@ -7,6 +7,7 @@ export type ActivityType =
   | "create-metric"
   | "create-variant"
   | "create-segment"
+  | "create-strategy"
   | "create-segment-rule"
   | "delete-webhook"
   | "delete-variant"
@@ -16,6 +17,8 @@ export type ActivityType =
   | "delete-rule"
   | "delete-strategy"
   | "edit-segment-name"
+  | "edit-segment-rule"
+  | "edit-strategy"
   | "edit-segment-rule";
 
 export type ActivityEntity = "flag";

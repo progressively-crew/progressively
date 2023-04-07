@@ -187,5 +187,45 @@ export const ActivityDescription = ({
     );
   }
 
+  if (type === "delete-strategy") {
+    return (
+      <p>
+        <strong>A strategy</strong> has been removed{" "}
+      </p>
+    );
+  }
+
+  if (type === "create-strategy") {
+    return (
+      <p>
+        <strong>A strategy</strong> has been created.
+      </p>
+    );
+  }
+
+  if (type === "edit-strategy") {
+    return (
+      <p>
+        <strong>A strategy</strong> has been edited.
+      </p>
+    );
+  }
+
+  if (type === "edit-segment-rule") {
+    return (
+      <p>
+        <strong>A strategy rule</strong> has been edited.
+      </p>
+    );
+  }
+
+  if (type === "delete-rule") {
+    return (
+      <p>
+        <strong>A rule</strong> has been deleted.
+      </p>
+    );
+  }
+
   return <span>Woops, the type {type} is not supported yet.</span>;
 };
