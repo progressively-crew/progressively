@@ -10,3 +10,10 @@ export enum ComparatorEnum {
 }
 
 export type Rule = RuleType & { uuid: string };
+
+export type RuleUpdateDto = {
+  fieldName?: string;
+  fieldComparator?: ComparatorEnum;
+  fieldValue?: string;
+  segmentUuid?: string;
+};

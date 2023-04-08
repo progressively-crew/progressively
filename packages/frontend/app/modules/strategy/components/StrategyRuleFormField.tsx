@@ -59,7 +59,7 @@ export const StrategyRuleFormField = ({
             onValueChange={(str) => setTargetEntity(str as TargetEntity)}
           />
 
-          {targetEntity === TargetEntity.Field && (
+          {targetEntity === TargetEntity.Field ? (
             <>
               <TextInput
                 hiddenLabel
@@ -87,9 +87,14 @@ export const StrategyRuleFormField = ({
                 ]}
               />
             </>
+          ) : (
+            <>
+              <input type="hidden" name="field-comparator" value={undefined} />
+              <input type="hidden" name="field-name" value={undefined} />
+            </>
           )}
 
-          {targetEntity === TargetEntity.Segment && (
+          {targetEntity === TargetEntity.Segment ? (
             <SelectField
               hiddenLabel
               name="segmentUuid"
@@ -100,14 +105,18 @@ export const StrategyRuleFormField = ({
                 label: segment.name,
               }))}
             />
+          ) : (
+            <input type="hidden" name="segmentUuid" value={undefined} />
           )}
         </div>
-        {targetEntity === TargetEntity.Field && (
+        {targetEntity === TargetEntity.Field ? (
           <TagInput
             defaultValue={
               initialFieldValue ? initialFieldValue.split("\n") : []
             }
           />
+        ) : (
+          <input type="hidden" name="field-value" value={undefined} />
         )}
       </div>
     </div>

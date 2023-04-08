@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
-import { RuleType } from './types';
+import { RuleType, RuleUpdateDto } from './types';
 import { FieldRecord } from './types';
 import { Rule } from './Rule';
 
@@ -61,13 +61,14 @@ export class RuleService {
     );
   }
 
-  editRule(ruleId: string, rule: RuleType) {
+  editRule(ruleId: string, rule: RuleUpdateDto) {
     return this.prisma.rule.update({
       where: { uuid: ruleId },
       data: {
-        fieldComparator: rule.fieldComparator,
-        fieldName: rule.fieldName,
-        fieldValue: rule.fieldValue,
+        fieldComparator: rule.fieldComparator || null,
+        fieldName: rule.fieldName || null,
+        fieldValue: rule.fieldValue || null,
+        segmentUuid: rule.segmentUuid, // dont fallback to null, important
       },
       include: {
         Segment: true,

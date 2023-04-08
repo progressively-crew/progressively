@@ -237,6 +237,25 @@ export const seedDb = async () => {
       },
     });
 
+    await prismaClient.segment.create({
+      data: {
+        name: "By id",
+        uuid: "2",
+        flagEnvironmentEnvironmentId: production.uuid,
+        flagEnvironmentFlagId: homePageFlag.uuid,
+        rule: {
+          create: [
+            {
+              uuid: "10",
+              fieldName: "id",
+              fieldComparator: "eq",
+              fieldValue: "1234",
+            },
+          ],
+        },
+      },
+    });
+
     await seedFlagHits(prismaClient, flagEnv, new Date(1992, 0, 1, 1), 10);
     await seedFlagHits(prismaClient, flagEnv, new Date(1992, 0, 3, 1), 20);
     await seedFlagHits(prismaClient, flagEnv, new Date(1992, 0, 2, 1), 40);

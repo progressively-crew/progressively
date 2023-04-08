@@ -7,6 +7,19 @@ export interface RuleType {
   fieldValue: string;
 }
 
+export interface RuleType {
+  fieldName: string;
+  fieldComparator: ComparatorEnum;
+  fieldValue: string;
+}
+
+export type RuleUpdateDto = {
+  fieldName?: string;
+  fieldComparator?: ComparatorEnum;
+  fieldValue?: string;
+  segmentUuid?: string;
+};
+
 export const RuleSchema = Joi.object({
   fieldName: Joi.string().when('segmentUuid', {
     is: Joi.exist(),
