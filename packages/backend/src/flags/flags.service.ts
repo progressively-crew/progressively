@@ -240,6 +240,37 @@ export class FlagsService {
           flagEnvironmentFlagId: flagId,
         },
       }),
+      this.prisma.rule.deleteMany({
+        where: {
+          Segment: {
+            flagEnvironmentFlagId: flagId,
+          },
+        },
+      }),
+      this.prisma.rule.deleteMany({
+        where: {
+          Strategy: {
+            flagEnvironmentFlagId: flagId,
+          },
+        },
+      }),
+      this.prisma.strategyVariant.deleteMany({
+        where: {
+          strategy: {
+            flagEnvironmentFlagId: flagId,
+          },
+        },
+      }),
+      this.prisma.strategy.deleteMany({
+        where: {
+          flagEnvironmentFlagId: flagId,
+        },
+      }),
+      this.prisma.segment.deleteMany({
+        where: {
+          flagEnvironmentFlagId: flagId,
+        },
+      }),
       this.prisma.pMetric.deleteMany({
         where: {
           flagEnvironmentFlagId: flagId,
@@ -253,11 +284,6 @@ export class FlagsService {
       this.prisma.schedule.deleteMany({
         where: {
           flagEnvironmentFlagId: flagId,
-        },
-      }),
-      this.prisma.segment.deleteMany({
-        where: {
-          uuid: flagId,
         },
       }),
       this.prisma.flagEnvironment.deleteMany({
