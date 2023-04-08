@@ -8,11 +8,24 @@ export interface RuleType {
 }
 
 export const RuleSchema = Joi.object({
-  fieldName: Joi.string().required(),
-  fieldComparator: Joi.string()
-    .valid(ComparatorEnum.Equals, ComparatorEnum.Contains)
-    .required(),
-  fieldValue: Joi.string().required(),
+  fieldName: Joi.string().when('segmentUuid', {
+    is: Joi.exist(),
+    then: Joi.valid(null),
+    otherwise: Joi.string().required(),
+  }),
+  fieldComparator: Joi.string().when('segmentUuid', {
+    is: Joi.exist(),
+    then: Joi.valid(null),
+    otherwise: Joi.string()
+      .valid(ComparatorEnum.Equals, ComparatorEnum.Contains)
+      .required(),
+  }),
+  fieldValue: Joi.string().when('segmentUuid', {
+    is: Joi.exist(),
+    then: Joi.valid(null),
+    otherwise: Joi.string().required(),
+  }),
+  segmentUuid: Joi.string().allow('').optional(),
 });
 
 export type FieldRecord = Record<string, string | number | boolean>;
