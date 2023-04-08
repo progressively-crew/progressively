@@ -23,8 +23,6 @@ export const editStrategyAction = async (
   const allFieldValue = formData.getAll("field-value");
   const allFieldSegmentsUuid = formData.getAll("segmentUuid");
 
-  console.log("loool", allFieldSegmentsUuid);
-
   const toUpdate: Array<RuleUpdateDto & { uuid: string }> = [];
   const entries = allIds.entries();
   let hasError = false;
@@ -38,11 +36,11 @@ export const editStrategyAction = async (
     if (uuid && ((fieldName && fieldComparator && fieldValue) || segmentUuid)) {
       const ruleDto: RuleUpdateDto & { uuid: string } = {
         uuid: uuid.toString(),
-        fieldName,
-        fieldValue,
+        fieldName: fieldName || undefined,
+        fieldValue: fieldValue || undefined,
         fieldComparator: fieldComparator
           ? (fieldComparator as ComparatorEnum)
-          : ComparatorEnum.Equals,
+          : undefined,
         segmentUuid,
       };
 

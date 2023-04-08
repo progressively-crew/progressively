@@ -130,6 +130,7 @@ const StrategyItem = ({ strategy, variants, segments }: StrategyItemProps) => {
                       initialFieldName={rule.fieldName}
                       initialFieldComparator={rule.fieldComparator}
                       initialFieldValue={rule.fieldValue}
+                      initialSegmentUuid={rule.segmentUuid}
                       segments={segments}
                     />
                   </div>

@@ -11,7 +11,6 @@ export interface StrategyRuleFormFieldProps {
   initialFieldName: string;
   initialFieldComparator: string;
   initialFieldValue: string;
-  initialTargetEntity?: TargetEntity;
   initialSegmentUuid?: string;
   segments: Array<Segment>;
 }
@@ -20,12 +19,11 @@ export const StrategyRuleFormField = ({
   initialFieldName,
   initialFieldComparator,
   initialFieldValue,
-  initialTargetEntity,
   initialSegmentUuid,
   segments,
 }: StrategyRuleFormFieldProps) => {
   const [targetEntity, setTargetEntity] = useState(
-    initialTargetEntity || TargetEntity.Field
+    initialSegmentUuid ? TargetEntity.Segment : TargetEntity.Field
   );
 
   const targetOptions = [
