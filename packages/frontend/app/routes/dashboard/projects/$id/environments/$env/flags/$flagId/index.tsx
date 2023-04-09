@@ -26,6 +26,8 @@ import { Variant } from "~/modules/variants/types";
 import { getVariants } from "~/modules/variants/services/getVariants";
 import { EmptyState } from "~/components/EmptyState";
 import { Card, CardContent } from "~/components/Card";
+import { Segment } from "~/modules/segments/types";
+import { getSegments } from "~/modules/segments/services/getSegments";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -96,6 +98,7 @@ export const action: ActionFunction = async ({
 interface LoaderData {
   strategies: Array<Strategy>;
   variants: Array<Variant>;
+  segments: Array<Segment>;
 }
 
 export const loader: LoaderFunction = async ({
@@ -117,7 +120,13 @@ export const loader: LoaderFunction = async ({
     authCookie
   );
 
-  return { strategies, variants };
+  const segments: Array<Segment> = await getSegments(
+    params.env!,
+    params.flagId!,
+    authCookie
+  );
+
+  return { strategies, variants, segments };
 };
 
 /* eslint-disable sonarjs/cognitive-complexity */
@@ -127,7 +136,7 @@ export default function FlagById() {
   const { user } = useUser();
   const { environment } = useEnvironment();
   const { flagEnv } = useFlagEnv();
-  const { strategies, variants } = useLoaderData<LoaderData>();
+  const { strategies, variants, segments } = useLoaderData<LoaderData>();
 
   return (
     <DashboardLayout
@@ -156,7 +165,11 @@ export default function FlagById() {
 
       <Section id="rollout-target">
         {strategies.length > 0 ? (
-          <StrategyList items={strategies} variants={variants} />
+          <StrategyList
+            items={strategies}
+            variants={variants}
+            segments={segments}
+          />
         ) : (
           <Card>
             <CardContent>

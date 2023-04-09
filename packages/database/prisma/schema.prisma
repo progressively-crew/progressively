@@ -161,9 +161,9 @@ model FlagHit {
 
 model Rule {
   uuid            String    @id @default(uuid())
-  fieldName       String
-  fieldComparator String
-  fieldValue      String
+  fieldName       String?
+  fieldComparator String?
+  fieldValue      String?
   Segment         Segment?  @relation(fields: [segmentUuid], references: [uuid])
   segmentUuid     String?
   Strategy        Strategy? @relation(fields: [strategyUuid], references: [uuid])

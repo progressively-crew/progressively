@@ -7,12 +7,38 @@ export interface RuleType {
   fieldValue: string;
 }
 
+export interface RuleType {
+  fieldName: string;
+  fieldComparator: ComparatorEnum;
+  fieldValue: string;
+}
+
+export type RuleUpdateDto = {
+  fieldName?: string;
+  fieldComparator?: ComparatorEnum;
+  fieldValue?: string;
+  segmentUuid?: string;
+};
+
 export const RuleSchema = Joi.object({
-  fieldName: Joi.string().required(),
-  fieldComparator: Joi.string()
-    .valid(ComparatorEnum.Equals, ComparatorEnum.Contains)
-    .required(),
-  fieldValue: Joi.string().required(),
+  fieldName: Joi.string().when('segmentUuid', {
+    is: Joi.exist(),
+    then: Joi.valid(null),
+    otherwise: Joi.string().required(),
+  }),
+  fieldComparator: Joi.string().when('segmentUuid', {
+    is: Joi.exist(),
+    then: Joi.valid(null),
+    otherwise: Joi.string()
+      .valid(ComparatorEnum.Equals, ComparatorEnum.Contains)
+      .required(),
+  }),
+  fieldValue: Joi.string().when('segmentUuid', {
+    is: Joi.exist(),
+    then: Joi.valid(null),
+    otherwise: Joi.string().required(),
+  }),
+  segmentUuid: Joi.string().allow('').optional(),
 });
 
 export type FieldRecord = Record<string, string | number | boolean>;

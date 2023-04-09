@@ -1,9 +1,9 @@
 import { Constants } from "~/constants";
-import { RuleType } from "../types";
+import { RuleUpdateDto } from "../types";
 
 export const updateRule = (
   id: string,
-  ruleDto: RuleType,
+  ruleDto: RuleUpdateDto,
   accessToken: string
 ) =>
   fetch(`${Constants.BackendUrl}/rules/${id}`, {

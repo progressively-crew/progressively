@@ -149,9 +149,9 @@ CREATE TABLE "FlagHit" (
 -- CreateTable
 CREATE TABLE "Rule" (
     "uuid" TEXT NOT NULL,
-    "fieldName" TEXT NOT NULL,
-    "fieldComparator" TEXT NOT NULL,
-    "fieldValue" TEXT NOT NULL,
+    "fieldName" TEXT,
+    "fieldComparator" TEXT,
+    "fieldValue" TEXT,
     "segmentUuid" TEXT,
     "strategyUuid" TEXT,
 

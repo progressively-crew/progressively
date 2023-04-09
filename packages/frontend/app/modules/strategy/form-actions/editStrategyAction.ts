@@ -1,6 +1,6 @@
 /* eslint-disable sonarjs/cognitive-complexity */
 import { updateRule } from "~/modules/rules/services/updateRule";
-import { ComparatorEnum, Rule } from "~/modules/rules/types";
+import { ComparatorEnum, Rule, RuleUpdateDto } from "~/modules/rules/types";
 import { editStrategy } from "../services/editStrategy";
 import { StrategyVariant, ValueToServe } from "../types";
 
@@ -21,8 +21,9 @@ export const editStrategyAction = async (
   const allFieldName = formData.getAll("field-name");
   const allComparators = formData.getAll("field-comparator");
   const allFieldValue = formData.getAll("field-value");
+  const allFieldSegmentsUuid = formData.getAll("segmentUuid");
 
-  const toUpdate: Array<Rule> = [];
+  const toUpdate: Array<RuleUpdateDto & { uuid: string }> = [];
   const entries = allIds.entries();
   let hasError = false;
 
@@ -30,15 +31,17 @@ export const editStrategyAction = async (
     const fieldName = allFieldName[i]?.toString() || "";
     const fieldComparator = allComparators[i]?.toString() || "";
     const fieldValue = allFieldValue[i]?.toString() || "";
+    const segmentUuid = allFieldSegmentsUuid[i]?.toString() || "";
 
-    if (uuid && fieldName && fieldComparator && fieldValue) {
-      const ruleDto: Rule = {
+    if (uuid && ((fieldName && fieldComparator && fieldValue) || segmentUuid)) {
+      const ruleDto: RuleUpdateDto & { uuid: string } = {
         uuid: uuid.toString(),
-        fieldName,
-        fieldValue,
+        fieldName: fieldName || undefined,
+        fieldValue: fieldValue || undefined,
         fieldComparator: fieldComparator
           ? (fieldComparator as ComparatorEnum)
-          : ComparatorEnum.Equals,
+          : undefined,
+        segmentUuid,
       };
 
       toUpdate.push(ruleDto);

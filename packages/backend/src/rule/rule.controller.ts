@@ -13,7 +13,7 @@ import { ActivityLogService } from '../activity-log/activity-log.service';
 import { UserId } from '../users/users.decorator';
 import { RuleService } from './rule.service';
 import { HasRuleAccessGuard } from './guards/hasRuleAccess';
-import { RuleSchema, RuleType } from './types';
+import { RuleSchema, RuleUpdateDto } from './types';
 
 @Controller('rules')
 export class RuleController {
@@ -29,7 +29,7 @@ export class RuleController {
   async updateRule(
     @UserId() userId: string,
     @Param('ruleId') ruleId: string,
-    @Body() ruleDto: RuleType,
+    @Body() ruleDto: RuleUpdateDto,
   ) {
     const updatedRule = await this.ruleService.editRule(ruleId, ruleDto);
 

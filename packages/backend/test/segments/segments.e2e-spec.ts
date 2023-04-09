@@ -268,16 +268,24 @@ describe('Segment (e2e)', () => {
     it('gives a 200 when the flag has been deleted', async () => {
       const access_token = await authenticate(app);
 
+      const beforeResponse = await request(app.getHttpServer())
+        .get('/environments/1/flags/1/segments')
+        .set('Authorization', `Bearer ${access_token}`);
+
+      expect(beforeResponse.body.length).toBe(2);
+
       const response = await request(app.getHttpServer())
         .delete('/environments/1/flags/1/segments/1')
         .set('Authorization', `Bearer ${access_token}`);
+
       expect(response.status).toBe(200);
+      expect(response.body.uuid).toBe('1');
 
       const afterResponse = await request(app.getHttpServer())
         .get('/environments/1/flags/1/segments')
         .set('Authorization', `Bearer ${access_token}`);
 
-      expect(afterResponse.body.length).toBe(0);
+      expect(afterResponse.body.length).toBe(1);
     });
   });
 

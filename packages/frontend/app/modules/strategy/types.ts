@@ -7,6 +7,11 @@ export enum ValueToServe {
   Number = "Number",
 }
 
+export enum TargetEntity {
+  Field = "Field",
+  Segment = "Segment",
+}
+
 export interface StrategyUpdateDto {
   rolloutPercentage?: number;
   valueToServeType: ValueToServe;

@@ -123,9 +123,7 @@ export default function MetricCreatePage() {
   const actionData = useActionData<ActionData>();
   const errors = actionData?.errors;
 
-  const options: Array<SelectOption> = [
-    { value: "", label: "No variant", icon: undefined },
-  ];
+  const options: Array<SelectOption> = [{ value: "", label: "No variant" }];
 
   for (const variant of variants) {
     options.push({
@@ -164,12 +162,14 @@ export default function MetricCreatePage() {
             placeholder="e.g: My super metric"
           />
 
-          <SelectField
-            name="variant"
-            label="Variant (optional):"
-            options={options}
-            defaultValue={initialVariantUuid}
-          />
+          {options.length > 1 && (
+            <SelectField
+              name="variant"
+              label="Variant (optional):"
+              options={options}
+              defaultValue={initialVariantUuid}
+            />
+          )}
         </FormGroup>
       </CreateEntityLayout>
     </Form>
