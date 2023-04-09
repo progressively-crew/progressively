@@ -36,13 +36,6 @@ export class UsersController {
     private readonly mailService: MailService,
   ) {}
 
-  @Get('/')
-  async hasUsers() {
-    const hasUsers = await this.userService.hasUsers();
-
-    return { hasUsers };
-  }
-
   @ApiBearerAuth()
   @Get('/me')
   @UseGuards(JwtAuthGuard)
