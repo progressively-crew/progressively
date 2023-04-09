@@ -158,6 +158,20 @@ export class EnvironmentsService {
           flagEnvironmentEnvironmentId: envId,
         },
       }),
+      this.prisma.rule.deleteMany({
+        where: {
+          Segment: {
+            flagEnvironmentEnvironmentId: envId,
+          },
+        },
+      }),
+      this.prisma.rule.deleteMany({
+        where: {
+          Strategy: {
+            flagEnvironmentEnvironmentId: envId,
+          },
+        },
+      }),
       this.prisma.strategyVariant.deleteMany({
         where: {
           strategy: {
