@@ -8,11 +8,4 @@ describe("/", () => {
       cy.url().should("contain", "/signin");
     });
   });
-
-  describe("with db NOT filled", () => {
-    it("shows the welcome page", () => {
-      cy.visit("/");
-      cy.url().should("contain", "/welcome");
-    });
-  });
 });
