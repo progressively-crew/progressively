@@ -56,8 +56,6 @@ const StrategyItem = ({ strategy, variants, segments }: StrategyItemProps) => {
       footer={
         <div className="flex flex-row gap-4 justify-between">
           <div className="flex flex-row gap-4">
-            <SubmitButton form={updateStrategyFormId}>Save</SubmitButton>
-
             <Form method="post">
               <input type="hidden" value="add-strategy-rule" name="_type" />
               <input type="hidden" value={strategy.uuid} name="uuid" />
@@ -66,6 +64,8 @@ const StrategyItem = ({ strategy, variants, segments }: StrategyItemProps) => {
                 Add a rule
               </CreateButton>
             </Form>
+
+            <SubmitButton form={updateStrategyFormId}>Save</SubmitButton>
           </div>
 
           <Form method="post" ref={deleteStrategyForm}>

@@ -38,6 +38,7 @@ export const updateRuleAction = async (
   if (!hasError) {
     for (const rule of toUpdate) {
       const { uuid, ...dto } = rule;
+
       await updateRule(uuid!, dto, authCookie);
     }
   }
