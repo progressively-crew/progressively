@@ -1,5 +1,6 @@
 import { useId } from "react";
 import { VariantDot } from "../../modules/variants/components/VariantDot";
+import { Typography } from "../Typography";
 
 export interface PercentageFieldProps {
   name: string;
@@ -18,7 +19,8 @@ export const PercentageField = ({
 
   return (
     <div className="flex flex-row gap-2">
-      <label
+      <Typography
+        as="label"
         htmlFor={id}
         className={
           hiddenLabel
@@ -28,7 +30,7 @@ export const PercentageField = ({
       >
         <VariantDot variant={label} />
         {label}
-      </label>
+      </Typography>
 
       <div className="overflow-hidden inline-block w-28 border border-gray-200 dark:border-slate-800 dark:text-slate-100 dark:bg-slate-700 h-10 rounded flex flex-row focus-within:outline-none focus-within:ring-2 focus-within:ring-slate-400 focus-within:ring-offset-2 dark:focus-within:ring-offset-slate-900">
         <input
@@ -40,12 +42,13 @@ export const PercentageField = ({
           defaultValue={initialValue}
           className="h-full px-4 w-20 pr-2 bg-transparent rounded-l outline-none"
         />
-        <div
-          className="bg-gray-100 rounded-r h-full flex items-center px-2 w-8"
+        <Typography
+          as="span"
+          className="bg-slate-100 dark:bg-slate-600 rounded-r h-full flex items-center px-2 w-8"
           aria-hidden
         >
           %
-        </div>
+        </Typography>
       </div>
     </div>
   );
