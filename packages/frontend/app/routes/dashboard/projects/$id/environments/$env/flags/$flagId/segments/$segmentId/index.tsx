@@ -7,6 +7,7 @@ import {
 } from "@remix-run/react";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
+import { DashedButton } from "~/components/Buttons/DashedButton";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { Card, CardContent } from "~/components/Card";
 import { TextInput } from "~/components/Fields/TextInput";
@@ -23,6 +24,7 @@ import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { updateRuleAction } from "~/modules/rules/form-actions/updateRuleAction";
+import { deleteRule } from "~/modules/rules/services/deleteRule";
 import { RuleType } from "~/modules/rules/types";
 import { SegmentRulesForm } from "~/modules/segments/components/SegmentRulesForm";
 import { createSegmentRuleAction } from "~/modules/segments/form-actions/createSegmentRuleAction";
@@ -80,6 +82,14 @@ export const action: ActionFunction = async ({
 
   if (type === "edit-segment-rules") {
     return updateRuleAction(formData, authCookie);
+  }
+
+  if (type === "delete-rule") {
+    const ruleId = formData.get("ruleId")?.toString();
+
+    if (ruleId) {
+      return deleteRule(ruleId, authCookie);
+    }
   }
 
   return {};
@@ -178,25 +188,12 @@ export default function Segments() {
       <Section id="rules">
         <Card
           footer={
-            <div className="flex flex-row gap-6">
-              <Form method="post">
-                <input type="hidden" name="_type" value="create-segment-rule" />
-                <SubmitButton
-                  variant="secondary"
-                  isLoading={isCreatingRule}
-                  loadingText="Creating a new segment rule..."
-                >
-                  Add a new rule
-                </SubmitButton>
-              </Form>
-
-              <SubmitButton
-                loadingText="Updating the segment rules..."
-                form="edit-rules"
-              >
-                Save the rules
-              </SubmitButton>
-            </div>
+            <SubmitButton
+              loadingText="Updating the segment rules..."
+              form="edit-rules"
+            >
+              Save the rules
+            </SubmitButton>
           }
         >
           <CardContent>
@@ -208,14 +205,25 @@ export default function Segments() {
                 </Typography>
               }
             />
-
-            <div className="pt-4">
-              <Form method="post" id="edit-rules">
-                <input type="hidden" name="_type" value="edit-segment-rules" />
-                <SegmentRulesForm rules={segment.rule} />
-              </Form>
-            </div>
           </CardContent>
+
+          <div className="pt-4">
+            <Form method="post" id="delete-rule">
+              <input type="hidden" value="delete-rule" name="_type" />
+            </Form>
+
+            <Form method="post" id="edit-rules">
+              <input type="hidden" name="_type" value="edit-segment-rules" />
+              <SegmentRulesForm rules={segment.rule} />
+            </Form>
+          </div>
+
+          <Form method="post" className="p-1">
+            <input type="hidden" name="_type" value="create-segment-rule" />
+            <DashedButton type="submit">
+              <Typography as="span">Add a rule</Typography>
+            </DashedButton>
+          </Form>
         </Card>
       </Section>
     </DashboardLayout>
