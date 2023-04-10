@@ -28,6 +28,7 @@ export const StrategyUpdateDtoSchema = Joi.object({
     then: Joi.array().items(StrategyVariantDtoSchema),
     otherwise: Joi.optional(),
   }),
+  segmentUuid: Joi.string().optional(),
 });
 
 export interface StrategyVariant {

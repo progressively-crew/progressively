@@ -19,7 +19,7 @@ export interface VariantFieldsProps {
 
 const VariantFields = ({ variants }: VariantFieldsProps) => {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-row gap-x-8 flex-wrap">
       {variants.map((variant) => {
         return (
           <div key={variant.uuid}>
@@ -68,7 +68,7 @@ export const StrategyFormFields = ({
 
   return (
     <div>
-      <div className="flex flex-row gap-2 items-center">
+      <div className="flex flex-row gap-2 items-center flex-wrap">
         <Typography className="shrink-0 py-2 font-bold pr-2">Serve</Typography>
 
         <SelectField
@@ -107,13 +107,11 @@ export const StrategyFormFields = ({
             <Typography className="font-bold">of the audience</Typography>
           </>
         )}
-      </div>
 
-      {status === ValueToServe.Variant && hasVariants && (
-        <div className="pt-4">
+        {status === ValueToServe.Variant && hasVariants && (
           <VariantFields variants={variants || []} />
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

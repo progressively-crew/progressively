@@ -704,6 +704,10 @@ video {
   margin-bottom: -0.5rem;
 }
 
+.-ml-12 {
+  margin-left: -3rem;
+}
+
 .block {
   display: block;
 }
@@ -920,6 +924,10 @@ video {
   max-width: 32rem;
 }
 
+.max-w-full {
+  max-width: 100%;
+}
+
 .flex-1 {
   flex: 1 1 0%;
 }
@@ -1111,6 +1119,20 @@ video {
   gap: 2rem;
 }
 
+.gap-x-2 {
+  -moz-column-gap: 0.5rem;
+       column-gap: 0.5rem;
+}
+
+.gap-y-8 {
+  row-gap: 2rem;
+}
+
+.gap-x-8 {
+  -moz-column-gap: 2rem;
+       column-gap: 2rem;
+}
+
 .space-x-2 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
   margin-right: calc(0.5rem * var(--tw-space-x-reverse));
@@ -1267,6 +1289,11 @@ video {
 .border-gray-500 {
   --tw-border-opacity: 1;
   border-color: rgb(107 114 128 / var(--tw-border-opacity));
+}
+
+.border-slate-300 {
+  --tw-border-opacity: 1;
+  border-color: rgb(203 213 225 / var(--tw-border-opacity));
 }
 
 .border-b-gray-100 {
@@ -1592,6 +1619,14 @@ video {
 
 .pr-8 {
   padding-right: 2rem;
+}
+
+.pl-6 {
+  padding-left: 1.5rem;
+}
+
+.pb-1 {
+  padding-bottom: 0.25rem;
 }
 
 .text-left {
@@ -2179,6 +2214,11 @@ input[type="range"]::-moz-range-progress {
   border-color: rgb(107 114 128 / var(--tw-border-opacity));
 }
 
+.hover\:border-slate-200:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(226 232 240 / var(--tw-border-opacity));
+}
+
 .hover\:border-l-indigo-500:hover {
   --tw-border-opacity: 1;
   border-left-color: rgb(99 102 241 / var(--tw-border-opacity));
@@ -2237,6 +2277,11 @@ input[type="range"]::-moz-range-progress {
 .hover\:text-gray-400:hover {
   --tw-text-opacity: 1;
   color: rgb(156 163 175 / var(--tw-text-opacity));
+}
+
+.hover\:text-slate-400:hover {
+  --tw-text-opacity: 1;
+  color: rgb(148 163 184 / var(--tw-text-opacity));
 }
 
 .focus\:not-sr-only:focus {
@@ -2302,6 +2347,11 @@ input[type="range"]::-moz-range-progress {
   border-color: rgb(209 213 219 / var(--tw-border-opacity));
 }
 
+.active\:border-slate-100:active {
+  --tw-border-opacity: 1;
+  border-color: rgb(241 245 249 / var(--tw-border-opacity));
+}
+
 .active\:bg-gray-100:active {
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
@@ -2325,6 +2375,11 @@ input[type="range"]::-moz-range-progress {
 .active\:text-gray-300:active {
   --tw-text-opacity: 1;
   color: rgb(209 213 219 / var(--tw-text-opacity));
+}
+
+.active\:text-slate-300:active {
+  --tw-text-opacity: 1;
+  color: rgb(203 213 225 / var(--tw-text-opacity));
 }
 
 .disabled\:pointer-events-none:disabled {

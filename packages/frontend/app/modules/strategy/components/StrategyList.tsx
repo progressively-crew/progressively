@@ -4,12 +4,13 @@ import { Form } from "@remix-run/react";
 import { useId, useRef } from "react";
 import { StrategyFormFields } from "./StrategyFormFields";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
-import { CreateButton } from "~/components/Buttons/CreateButton";
 import { MenuButton } from "~/components/MenuButton";
 import { Variant } from "~/modules/variants/types";
 import { IoCloseOutline } from "react-icons/io5";
 import { StrategyRuleFormField } from "./StrategyRuleFormField";
 import { Segment } from "~/modules/segments/types";
+import { DashedButton } from "~/components/Buttons/DashedButton";
+import { Typography } from "~/components/Typography";
 
 export interface StrategyListProps {
   items: Array<Strategy>;
@@ -54,19 +55,8 @@ const StrategyItem = ({ strategy, variants, segments }: StrategyItemProps) => {
   return (
     <Card
       footer={
-        <div className="flex flex-row gap-4 justify-between">
-          <div className="flex flex-row gap-4">
-            <SubmitButton form={updateStrategyFormId}>Save</SubmitButton>
-
-            <Form method="post">
-              <input type="hidden" value="add-strategy-rule" name="_type" />
-              <input type="hidden" value={strategy.uuid} name="uuid" />
-
-              <CreateButton type="submit" variant="secondary">
-                Add a rule
-              </CreateButton>
-            </Form>
-          </div>
+        <div>
+          <SubmitButton form={updateStrategyFormId}>Save</SubmitButton>
 
           <Form method="post" ref={deleteStrategyForm}>
             <input type="hidden" value="delete-strategy" name="_type" />
@@ -105,6 +95,7 @@ const StrategyItem = ({ strategy, variants, segments }: StrategyItemProps) => {
               items={[
                 {
                   label: "Delete strategy",
+                  noInitial: true,
                   onClick: () => {
                     deleteStrategyForm.current?.submit();
                   },
@@ -115,11 +106,7 @@ const StrategyItem = ({ strategy, variants, segments }: StrategyItemProps) => {
           </div>
         </CardContent>
 
-        <div
-          className={`flex flex-col gap-1 ${
-            strategy.rules?.length ? "mb-1" : ""
-          }`}
-        >
+        <div className={`flex flex-col gap-1 pb-1`}>
           {strategy.rules?.map((rule, index) => (
             <div key={rule.uuid}>
               <div className="bg-gray-50 dark:bg-slate-900 px-6 py-4">
@@ -140,7 +127,7 @@ const StrategyItem = ({ strategy, variants, segments }: StrategyItemProps) => {
                     value={rule.uuid}
                     form={deleteStrategyRule}
                     name="ruleId"
-                    className="rounded bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800 dark:text-slate-100 dark:hover:text-slate-100 p-2 -m-2"
+                    className="rounded bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800 dark:text-slate-100 dark:hover:text-slate-100 w-6 h-8 flex items-center justify-center"
                   >
                     <IoCloseOutline title="Remove rule" />
                   </button>
@@ -154,6 +141,17 @@ const StrategyItem = ({ strategy, variants, segments }: StrategyItemProps) => {
               )}
             </div>
           ))}
+
+          <div className="px-1">
+            <Form method="post">
+              <input type="hidden" value="add-strategy-rule" name="_type" />
+              <input type="hidden" value={strategy.uuid} name="uuid" />
+
+              <DashedButton type="submit">
+                <Typography as="span">Add a rule</Typography>
+              </DashedButton>
+            </Form>
+          </div>
         </div>
       </Form>
     </Card>

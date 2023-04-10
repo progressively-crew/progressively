@@ -41,7 +41,7 @@ export const editStrategyAction = async (
         fieldComparator: fieldComparator
           ? (fieldComparator as ComparatorEnum)
           : undefined,
-        segmentUuid,
+        segmentUuid: segmentUuid || undefined,
       };
 
       toUpdate.push(ruleDto);
