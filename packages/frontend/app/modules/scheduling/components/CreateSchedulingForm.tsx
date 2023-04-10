@@ -63,11 +63,7 @@ export const CreateSchedulingFrom = ({
 
       <input type="hidden" name={"nextStatus"} value={nextStatus} />
 
-      {isMultiVariate ? (
-        <MultiVariantFields variants={flagEnv.variants} />
-      ) : (
-        <SingleVariantFields />
-      )}
+      <SingleVariantFields />
     </FormGroup>
   );
 };

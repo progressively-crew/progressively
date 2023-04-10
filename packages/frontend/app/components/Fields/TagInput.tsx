@@ -65,7 +65,7 @@ export const TagInput = ({ defaultValue }: TagInputProps) => {
           type="text"
           name="tag-name"
           aria-label="Add a new tag to the list"
-          className="bg-white dark:bg-transparent outline-none"
+          className="dark:bg-transparent outline-none flex-1"
           onKeyDown={handleKeyDown}
           value={value}
           onChange={(e) => setValue(e.target.value)}
