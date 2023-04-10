@@ -4,7 +4,6 @@ import { Form } from "@remix-run/react";
 import { useId, useRef } from "react";
 import { StrategyFormFields } from "./StrategyFormFields";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
-import { CreateButton } from "~/components/Buttons/CreateButton";
 import { MenuButton } from "~/components/MenuButton";
 import { Variant } from "~/modules/variants/types";
 import { IoCloseOutline } from "react-icons/io5";
