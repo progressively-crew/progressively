@@ -84,5 +84,9 @@ export const ActivityIcon = ({ type }: ActivityIconProps) => {
     return <RiSettingsLine />;
   }
 
+  if (type === "create-segment-rule") {
+    return <RiSettingsLine />;
+  }
+
   return <span>Woops, the type {type} is not supported yet.</span>;
 };

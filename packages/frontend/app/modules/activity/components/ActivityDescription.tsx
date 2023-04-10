@@ -227,5 +227,13 @@ export const ActivityDescription = ({
     );
   }
 
+  if (type === "create-segment-rule") {
+    return (
+      <p>
+        <strong>A rule</strong> has been created for a segment.
+      </p>
+    );
+  }
+
   return <span>Woops, the type {type} is not supported yet.</span>;
 };
