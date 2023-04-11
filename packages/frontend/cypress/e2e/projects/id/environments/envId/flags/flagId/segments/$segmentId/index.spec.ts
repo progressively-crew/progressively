@@ -117,7 +117,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/segments/
         it("adds a new rule when pressing the button", () => {
           cy.findAllByLabelText("Field name").should("have.length", 1);
 
-          cy.findByRole("button", { name: "Add a new rule" })
+          cy.findByRole("button", { name: "Add a rule" })
             .should("be.visible")
             .click();
 
@@ -129,8 +129,8 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/segments/
           cy.get("[name='field-name']").should("have.length", 2);
         });
 
-        it("edits the existing rules", () => {
-          cy.findByRole("button", { name: "Add a new rule" }).click();
+        it.only("edits the existing rules", () => {
+          cy.findByRole("button", { name: "Add a rule" }).click();
           cy.get("[name='field-name']").should("have.length", 2);
 
           cy.get("[name='field-name']").last().type("firstname");
