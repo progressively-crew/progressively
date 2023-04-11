@@ -129,7 +129,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/segments/
           cy.get("[name='field-name']").should("have.length", 2);
         });
 
-        it.only("edits the existing rules", () => {
+        it("edits the existing rules", () => {
           cy.findByRole("button", { name: "Add a rule" }).click();
           cy.get("[name='field-name']").should("have.length", 2);
 
