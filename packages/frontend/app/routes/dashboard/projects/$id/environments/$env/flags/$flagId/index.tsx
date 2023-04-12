@@ -28,6 +28,8 @@ import { EmptyState } from "~/components/EmptyState";
 import { Card, CardContent } from "~/components/Card";
 import { Segment } from "~/modules/segments/types";
 import { getSegments } from "~/modules/segments/services/getSegments";
+import { SuccessBox } from "~/components/Boxes/SuccessBox";
+import { ErrorBox } from "~/components/Boxes/ErrorBox";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -43,6 +45,11 @@ type ActionDataType = null | {
   successChangePercentage?: boolean;
   successEdit?: boolean;
   errors?: { [key: string]: string | undefined };
+  successStrategyEdited?: boolean;
+  successStrategyDeleted?: boolean;
+  ruleErrors?: {
+    ruleAudience: string;
+  };
 };
 
 export const action: ActionFunction = async ({
@@ -70,7 +77,11 @@ export const action: ActionFunction = async ({
   if (type === "delete-strategy") {
     const strategyId = formData.get("uuid")?.toString();
     if (strategyId) {
-      return await deleteStrategy(strategyId, authCookie);
+      await deleteStrategy(strategyId, authCookie);
+
+      return {
+        successStrategyDeleted: true,
+      };
     }
   }
 
@@ -147,6 +158,21 @@ export default function FlagById() {
           envId={environment.uuid}
           flagEnv={flagEnv}
         />
+      }
+      status={
+        actionData?.successStrategyEdited ? (
+          <SuccessBox id={"strategy-edited"}>
+            The strategy has been successfully edited.
+          </SuccessBox>
+        ) : actionData?.successStrategyDeleted ? (
+          <SuccessBox id="strategy-deleted">
+            The strategy has been removed.
+          </SuccessBox>
+        ) : actionData?.errors ? (
+          <ErrorBox list={actionData.errors} />
+        ) : actionData?.ruleErrors ? (
+          <ErrorBox list={actionData.ruleErrors} />
+        ) : null
       }
     >
       <PageTitle

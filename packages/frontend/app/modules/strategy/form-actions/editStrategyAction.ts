@@ -82,7 +82,7 @@ export const editStrategyAction = async (
   }
 
   return {
-    successRuleUpdated: !hasError,
+    successStrategyEdited: !hasError,
     ruleErrors: hasError
       ? {
           ruleAudience: "All the fields are required in every single rule.",
