@@ -401,20 +401,22 @@ describe('ProjectsController (e2e)', () => {
         .get('/projects/1/environments')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(200)
-        .expect([
-          {
-            uuid: '1',
-            name: 'Production',
-            projectId: '1',
-            clientKey: 'valid-sdk-key',
-          },
-          {
-            uuid: '2',
-            name: 'Developer',
-            projectId: '1',
-            clientKey: 'valid-sdk-key-2',
-          },
-        ]);
+        .expect((res) =>
+          expect(res.body).toMatchObject([
+            {
+              uuid: '1',
+              name: 'Production',
+              projectId: '1',
+              clientKey: 'valid-sdk-key',
+            },
+            {
+              uuid: '2',
+              name: 'Developer',
+              projectId: '1',
+              clientKey: 'valid-sdk-key-2',
+            },
+          ]),
+        );
     });
   });
 

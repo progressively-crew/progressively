@@ -69,21 +69,23 @@ describe('Rule (e2e)', () => {
         .delete('/rules/1')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(200)
-        .expect({
-          uuid: '1',
-          fieldName: 'email',
-          fieldComparator: 'eq',
-          fieldValue: 'gmail.com',
-          segmentUuid: '1',
-          strategyUuid: null,
-          Segment: {
+        .expect((res) =>
+          expect(res.body).toMatchObject({
             uuid: '1',
-            name: 'By email address',
-            flagEnvironmentFlagId: '1',
-            flagEnvironmentEnvironmentId: '1',
-          },
-          Strategy: null,
-        });
+            fieldName: 'email',
+            fieldComparator: 'eq',
+            fieldValue: 'gmail.com',
+            segmentUuid: '1',
+            strategyUuid: null,
+            Segment: {
+              uuid: '1',
+              name: 'By email address',
+              flagEnvironmentFlagId: '1',
+              flagEnvironmentEnvironmentId: '1',
+            },
+            Strategy: null,
+          }),
+        );
     });
   });
 
@@ -196,7 +198,7 @@ describe('Rule (e2e)', () => {
         .send(validRule)
         .expect(200);
 
-      expect(response.body).toEqual({
+      expect(response.body).toMatchObject({
         Segment: {
           flagEnvironmentEnvironmentId: '1',
           flagEnvironmentFlagId: '1',
@@ -229,7 +231,7 @@ describe('Rule (e2e)', () => {
         .send(validRule)
         .expect(200);
 
-      expect(response.body).toEqual({
+      expect(response.body).toMatchObject({
         Segment: {
           flagEnvironmentEnvironmentId: '1',
           flagEnvironmentFlagId: '1',

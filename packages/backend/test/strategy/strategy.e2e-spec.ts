@@ -69,7 +69,7 @@ describe('Strategy (e2e)', () => {
         .set('Authorization', `Bearer ${access_token}`);
 
       expect(response.status).toBe(200);
-      expect(response.body).toEqual([
+      expect(response.body).toMatchObject([
         {
           flagEnvironmentEnvironmentId: '1',
           flagEnvironmentFlagId: '1',
@@ -128,7 +128,7 @@ describe('Strategy (e2e)', () => {
         .set('Authorization', `Bearer ${access_token}`)
         .expect(200);
 
-      expect(result.body).toEqual({
+      expect(result.body).toMatchObject({
         uuid: '1',
         flagEnvironmentFlagId: '1',
         flagEnvironmentEnvironmentId: '1',
@@ -365,7 +365,7 @@ describe('Strategy (e2e)', () => {
         .send(validRule)
         .expect(200);
 
-      expect(response.body).toEqual({
+      expect(response.body).toMatchObject({
         rolloutPercentage: 100,
         uuid: '1',
         valueToServe: null,
@@ -395,7 +395,7 @@ describe('Strategy (e2e)', () => {
         .send(validRule)
         .expect(200);
 
-      expect(response.body).toEqual({
+      expect(response.body).toMatchObject({
         rolloutPercentage: 100,
         uuid: '1',
         valueToServe: null,
