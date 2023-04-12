@@ -43,6 +43,7 @@ CREATE TABLE "Environment" (
     "name" TEXT NOT NULL,
     "projectId" TEXT NOT NULL,
     "clientKey" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Environment_pkey" PRIMARY KEY ("uuid")
 );
@@ -95,6 +96,7 @@ CREATE TABLE "Webhook" (
     "event" TEXT NOT NULL,
     "flagEnvironmentFlagId" TEXT,
     "flagEnvironmentEnvironmentId" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Webhook_pkey" PRIMARY KEY ("uuid")
 );
@@ -106,6 +108,7 @@ CREATE TABLE "Variant" (
     "value" TEXT NOT NULL,
     "flagEnvironmentFlagId" TEXT,
     "flagEnvironmentEnvironmentId" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Variant_pkey" PRIMARY KEY ("uuid")
 );
@@ -117,6 +120,7 @@ CREATE TABLE "PMetric" (
     "flagEnvironmentFlagId" TEXT,
     "flagEnvironmentEnvironmentId" TEXT,
     "variantUuid" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "PMetric_pkey" PRIMARY KEY ("uuid")
 );
@@ -154,6 +158,7 @@ CREATE TABLE "Rule" (
     "fieldValue" TEXT,
     "segmentUuid" TEXT,
     "strategyUuid" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Rule_pkey" PRIMARY KEY ("uuid")
 );
@@ -164,6 +169,7 @@ CREATE TABLE "Segment" (
     "name" TEXT NOT NULL,
     "flagEnvironmentFlagId" TEXT NOT NULL,
     "flagEnvironmentEnvironmentId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Segment_pkey" PRIMARY KEY ("uuid")
 );
@@ -178,6 +184,7 @@ CREATE TABLE "Schedule" (
     "schedulingStatus" TEXT NOT NULL DEFAULT 'NOT_RUN',
     "flagEnvironmentFlagId" TEXT,
     "flagEnvironmentEnvironmentId" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Schedule_pkey" PRIMARY KEY ("uuid")
 );
@@ -204,6 +211,7 @@ CREATE TABLE "Strategy" (
     "flagEnvironmentEnvironmentId" TEXT,
     "valueToServeType" TEXT NOT NULL,
     "valueToServe" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Strategy_pkey" PRIMARY KEY ("uuid")
 );

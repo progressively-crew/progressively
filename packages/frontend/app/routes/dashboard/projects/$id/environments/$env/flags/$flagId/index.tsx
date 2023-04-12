@@ -2,7 +2,12 @@ import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { getSession } from "~/sessions";
 import { Section } from "~/components/Section";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
-import { Form, useActionData, useLoaderData } from "@remix-run/react";
+import {
+  Form,
+  useActionData,
+  useLoaderData,
+  useNavigation,
+} from "@remix-run/react";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { useUser } from "~/modules/user/contexts/useUser";
@@ -148,6 +153,10 @@ export default function FlagById() {
   const { environment } = useEnvironment();
   const { flagEnv } = useFlagEnv();
   const { strategies, variants, segments } = useLoaderData<LoaderData>();
+  const navigation = useNavigation();
+
+  const type = navigation?.formData?.get("_type");
+  const isCreatingStrategy = type === "add-strategy";
 
   return (
     <DashboardLayout
@@ -181,7 +190,12 @@ export default function FlagById() {
           strategies.length > 0 && (
             <Form method="post">
               <input type="hidden" name="_type" value="add-strategy" />
-              <CreateButton type="submit" variant={"secondary"}>
+              <CreateButton
+                type="submit"
+                variant={"secondary"}
+                isLoading={isCreatingStrategy}
+                loadingText="Adding a new strategy..."
+              >
                 Add a strategy
               </CreateButton>
             </Form>

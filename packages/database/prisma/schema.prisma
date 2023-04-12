@@ -59,6 +59,7 @@ model Environment {
   clientKey       String            @default(uuid())
   project         Project           @relation(fields: [projectId], references: [uuid])
   flagEnvironment FlagEnvironment[]
+  createdAt       DateTime          @default(now())
 }
 
 model RefreshToken {
@@ -113,6 +114,7 @@ model Webhook {
   flagEnvironmentFlagId        String?
   flagEnvironmentEnvironmentId String?
   flagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
+  createdAt                    DateTime         @default(now())
 }
 
 model Variant {
@@ -124,6 +126,7 @@ model Variant {
   PMetric                      PMetric[]
   flagEnvironment              FlagEnvironment?  @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
   StrategyVariant              StrategyVariant[]
+  createdAt                    DateTime          @default(now())
 }
 
 model PMetric {
@@ -135,6 +138,7 @@ model PMetric {
   flagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
   variant                      Variant?         @relation(fields: [variantUuid], references: [uuid])
   PMetricHit                   PMetricHit[]
+  createdAt                    DateTime         @default(now())
 }
 
 model PMetricHit {
@@ -168,6 +172,7 @@ model Rule {
   segmentUuid     String?
   Strategy        Strategy? @relation(fields: [strategyUuid], references: [uuid])
   strategyUuid    String?
+  createdAt       DateTime  @default(now())
 }
 
 model Segment {
@@ -177,6 +182,7 @@ model Segment {
   flagEnvironment              FlagEnvironment @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
   flagEnvironmentFlagId        String
   flagEnvironmentEnvironmentId String
+  createdAt                    DateTime        @default(now())
 }
 
 model Schedule {
@@ -189,6 +195,7 @@ model Schedule {
   flagEnvironmentFlagId        String?
   flagEnvironmentEnvironmentId String?
   flagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
+  createdAt                    DateTime         @default(now())
 }
 
 model ActivityLog {
@@ -217,6 +224,7 @@ model Strategy {
   valueToServe                 String?
   rules                        Rule[]
   variants                     StrategyVariant[]
+  createdAt                    DateTime          @default(now())
 }
 
 model StrategyVariant {
