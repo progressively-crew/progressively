@@ -142,8 +142,15 @@ export class StrategyService {
         flagEnvironmentFlagId: flagId,
       },
       include: {
-        rules: true,
+        rules: {
+          orderBy: {
+            createdAt: 'asc',
+          },
+        },
         variants: true,
+      },
+      orderBy: {
+        createdAt: 'asc',
       },
     });
   }

@@ -101,14 +101,16 @@ describe('Environments (e2e)', () => {
         .get('/projects/1/environments')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(200)
-        .expect([
-          {
-            clientKey: 'valid-sdk-key-2',
-            name: 'Developer',
-            projectId: '1',
-            uuid: '2',
-          },
-        ]);
+        .expect((res) =>
+          expect(res.body).toMatchObject([
+            {
+              clientKey: 'valid-sdk-key-2',
+              name: 'Developer',
+              projectId: '1',
+              uuid: '2',
+            },
+          ]),
+        );
 
       // Make sure the pre-created flag still exists in the sibling env
       // in the project

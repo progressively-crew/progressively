@@ -2,7 +2,12 @@ import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { getSession } from "~/sessions";
 import { Section } from "~/components/Section";
 import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
-import { Form, useActionData, useLoaderData } from "@remix-run/react";
+import {
+  Form,
+  useActionData,
+  useLoaderData,
+  useNavigation,
+} from "@remix-run/react";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { useUser } from "~/modules/user/contexts/useUser";
@@ -28,6 +33,8 @@ import { EmptyState } from "~/components/EmptyState";
 import { Card, CardContent } from "~/components/Card";
 import { Segment } from "~/modules/segments/types";
 import { getSegments } from "~/modules/segments/services/getSegments";
+import { SuccessBox } from "~/components/Boxes/SuccessBox";
+import { ErrorBox } from "~/components/Boxes/ErrorBox";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -43,6 +50,11 @@ type ActionDataType = null | {
   successChangePercentage?: boolean;
   successEdit?: boolean;
   errors?: { [key: string]: string | undefined };
+  successStrategyEdited?: boolean;
+  successStrategyDeleted?: boolean;
+  ruleErrors?: {
+    ruleAudience: string;
+  };
 };
 
 export const action: ActionFunction = async ({
@@ -70,7 +82,11 @@ export const action: ActionFunction = async ({
   if (type === "delete-strategy") {
     const strategyId = formData.get("uuid")?.toString();
     if (strategyId) {
-      return await deleteStrategy(strategyId, authCookie);
+      await deleteStrategy(strategyId, authCookie);
+
+      return {
+        successStrategyDeleted: true,
+      };
     }
   }
 
@@ -137,6 +153,10 @@ export default function FlagById() {
   const { environment } = useEnvironment();
   const { flagEnv } = useFlagEnv();
   const { strategies, variants, segments } = useLoaderData<LoaderData>();
+  const navigation = useNavigation();
+
+  const type = navigation?.formData?.get("_type");
+  const isCreatingStrategy = type === "add-strategy";
 
   return (
     <DashboardLayout
@@ -148,6 +168,21 @@ export default function FlagById() {
           flagEnv={flagEnv}
         />
       }
+      status={
+        actionData?.successStrategyEdited ? (
+          <SuccessBox id={"strategy-edited"}>
+            The strategy has been successfully edited.
+          </SuccessBox>
+        ) : actionData?.successStrategyDeleted ? (
+          <SuccessBox id="strategy-deleted">
+            The strategy has been removed.
+          </SuccessBox>
+        ) : actionData?.errors ? (
+          <ErrorBox list={actionData.errors} />
+        ) : actionData?.ruleErrors ? (
+          <ErrorBox list={actionData.ruleErrors} />
+        ) : null
+      }
     >
       <PageTitle
         value="Audience"
@@ -155,7 +190,12 @@ export default function FlagById() {
           strategies.length > 0 && (
             <Form method="post">
               <input type="hidden" name="_type" value="add-strategy" />
-              <CreateButton type="submit" variant={"secondary"}>
+              <CreateButton
+                type="submit"
+                variant={"secondary"}
+                isLoading={isCreatingStrategy}
+                loadingText="Adding a new strategy..."
+              >
                 Add a strategy
               </CreateButton>
             </Form>

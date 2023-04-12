@@ -82,6 +82,7 @@ describe('SdkService', () => {
               variants: [],
               rolloutPercentage: 100,
               rules: [],
+              createdAt: null,
             },
           ];
 
@@ -103,6 +104,7 @@ describe('SdkService', () => {
               variants: [],
               rolloutPercentage: 0,
               rules: [],
+              createdAt: null,
             },
           ];
 
@@ -124,6 +126,7 @@ describe('SdkService', () => {
               variants: [],
               rolloutPercentage: 10,
               rules: [],
+              createdAt: null,
             },
           ];
 
@@ -145,6 +148,7 @@ describe('SdkService', () => {
               variants: [],
               rolloutPercentage: 90,
               rules: [],
+              createdAt: null,
             },
           ];
 
@@ -168,6 +172,7 @@ describe('SdkService', () => {
               variants: [],
               rolloutPercentage: 100,
               rules: [],
+              createdAt: null,
             },
           ];
 
@@ -189,6 +194,7 @@ describe('SdkService', () => {
               variants: [],
               rolloutPercentage: 0,
               rules: [],
+              createdAt: null,
             },
           ];
 
@@ -210,6 +216,7 @@ describe('SdkService', () => {
               variants: [],
               rolloutPercentage: 10,
               rules: [],
+              createdAt: null,
             },
           ];
 
@@ -231,6 +238,7 @@ describe('SdkService', () => {
               variants: [],
               rolloutPercentage: 90,
               rules: [],
+              createdAt: null,
             },
           ];
 
@@ -285,6 +293,7 @@ describe('SdkService', () => {
               variants: [control, second],
               rolloutPercentage: undefined,
               rules: [],
+              createdAt: null,
             },
           ];
 
@@ -309,6 +318,7 @@ describe('SdkService', () => {
               variants: [control, second],
               rolloutPercentage: undefined,
               rules: [],
+              createdAt: null,
             },
           ];
 
@@ -333,6 +343,7 @@ describe('SdkService', () => {
               variants: [control, second],
               rolloutPercentage: undefined,
               rules: [],
+              createdAt: null,
             },
           ];
 

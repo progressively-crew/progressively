@@ -1063,7 +1063,8 @@ describe('FlagsController (e2e)', () => {
       const webhook = response.body[0];
 
       expect(response.status).toBe(200);
-      expect(webhook).toEqual({
+      expect(webhook.createdAt).toBeDefined();
+      expect(webhook).toMatchObject({
         endpoint: 'http://localhost:4000',
         event: 'ACTIVATION',
         flagEnvironmentEnvironmentId: '1',

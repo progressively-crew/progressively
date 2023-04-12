@@ -13,6 +13,7 @@ export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   scheme?: "default" | "danger";
   icon?: React.ReactNode;
   size?: "M";
+  form?: string;
 }
 
 const classCombination = {

@@ -5,12 +5,14 @@ import { WsAdapter } from '@nestjs/platform-ws';
 import { MailService } from '../../src/mail/mail.service';
 import { AppModule } from '../../src/app.module';
 import { TestLogger } from './TestLogger';
+import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 
 export const prepareApp = async () => {
   const moduleFixture: TestingModule = await Test.createTestingModule({
     imports: [AppModule],
   })
-    .setLogger(new TestLogger())
+    .overrideProvider(WINSTON_MODULE_PROVIDER)
+    .useClass(TestLogger)
     .overrideProvider(MailService)
     .useValue({
       sendRegistrationMail: async (

@@ -158,7 +158,7 @@ describe('Segment (e2e)', () => {
         .send(updateDto)
         .expect(200);
 
-      expect(response.body).toEqual({
+      expect(response.body).toMatchObject({
         flagEnvironmentEnvironmentId: '1',
         flagEnvironmentFlagId: '1',
         name: 'new name',
