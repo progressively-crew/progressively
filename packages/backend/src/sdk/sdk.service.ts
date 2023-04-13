@@ -97,6 +97,36 @@ export class SdkService {
     };
   }
 
+  async computeFlag(
+    flagEnv: PopulatedFlagEnv,
+    clientKey: string,
+    fields: FieldRecord,
+    flagsByRef: Record<string, boolean | string>,
+    skipHit: boolean,
+  ) {
+    let nextFlag = flagEnv;
+
+    if (flagEnv.scheduling.length > 0) {
+      nextFlag = await this.scheduleService.manageFlagScheduling(
+        clientKey,
+        flagEnv,
+      );
+    }
+
+    const flagStatusOrVariant = this.resolveFlagStatus(nextFlag, fields);
+
+    flagsByRef[nextFlag.flag.key] = flagStatusOrVariant;
+
+    if (!skipHit) {
+      await this.flagService.hitFlag(
+        nextFlag.environmentId,
+        nextFlag.flagId,
+        String(fields?.id || ''),
+        String(flagStatusOrVariant),
+      );
+    }
+  }
+
   async computeFlags(fields: FieldRecord, skipHit: boolean) {
     const clientKey = String(fields.clientKey);
     const flagEnvs = await this.envService.getFlagEnvironmentByClientKey(
@@ -105,29 +135,11 @@ export class SdkService {
 
     const flags = {};
 
-    for (const flagEnv of flagEnvs) {
-      let nextFlag = flagEnv;
+    const promises = flagEnvs.map((flagEnv) =>
+      this.computeFlag(flagEnv, clientKey, fields, flags, skipHit),
+    );
 
-      if (flagEnv.scheduling.length > 0) {
-        nextFlag = await this.scheduleService.manageFlagScheduling(
-          clientKey,
-          flagEnv,
-        );
-      }
-
-      const flagStatusOrVariant = this.resolveFlagStatus(nextFlag, fields);
-
-      flags[nextFlag.flag.key] = flagStatusOrVariant;
-
-      if (!skipHit) {
-        await this.flagService.hitFlag(
-          nextFlag.environmentId,
-          nextFlag.flagId,
-          String(fields?.id || ''),
-          String(flagStatusOrVariant),
-        );
-      }
-    }
+    await Promise.all(promises);
 
     return flags;
   }
