@@ -1,16 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
-import { Segment, SegmentCreationDTO } from './types';
+import { SegmentCreationDTO } from './types';
 import { ComparatorEnum } from '../rule/comparators/types';
-import { FieldRecord } from '../rule/types';
 import { RuleService } from '../rule/rule.service';
 
 @Injectable()
 export class SegmentsService {
-  constructor(
-    private prisma: PrismaService,
-    private ruleService: RuleService,
-  ) {}
+  constructor(private prisma: PrismaService) {}
 
   listSegments(envId: string, flagId: string) {
     return this.prisma.segment.findMany({
@@ -143,15 +139,5 @@ export class SegmentsService {
         },
       },
     });
-  }
-
-  isInSegment(segments: Array<Segment>, fields: FieldRecord) {
-    for (const segment of segments) {
-      if (this.ruleService.isMatchingAllRules(segment.rule, fields)) {
-        return true;
-      }
-    }
-
-    return false;
   }
 }

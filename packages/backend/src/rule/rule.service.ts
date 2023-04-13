@@ -89,9 +89,15 @@ export class RuleService {
     });
   }
 
-  isMatchingRule(rule: RuleType, fields: FieldRecord) {
+  isMatchingRule(rule: Partial<RuleType>, fields: FieldRecord) {
+    // Dealing with Segment first
+    if (rule.Segment) {
+      return this.isMatchingAllRules(rule.Segment.rule, fields);
+    }
+
+    // Dealing with regular rules
     const clientFieldValue = fields[rule.fieldName] || '';
-    const fieldValues = rule.fieldValue.split('\n');
+    const fieldValues = rule.fieldValue?.split('\n') || '';
 
     for (const fieldValue of fieldValues) {
       const ruleCheck = Rule.createFrom(fieldValue, rule.fieldComparator);
@@ -104,7 +110,10 @@ export class RuleService {
     return false;
   }
 
-  isMatchingAtLeastOneRule(rules: Array<RuleType>, fields: FieldRecord) {
+  isMatchingAtLeastOneRule(
+    rules: Array<Partial<RuleType>>,
+    fields: FieldRecord,
+  ) {
     if (rules.length === 0) return true;
 
     return Boolean(rules.find((rule) => this.isMatchingRule(rule, fields)));

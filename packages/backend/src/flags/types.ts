@@ -40,7 +40,7 @@ export interface PopulatedVariant {
 }
 export interface PopulatedStrategy extends Strategy {
   variants: Array<PopulatedVariant>;
-  rules: Array<RuleType>;
+  rules: Array<Partial<RuleType>>;
 }
 
 export interface PopulatedFlagEnv extends FlagEnvironment {

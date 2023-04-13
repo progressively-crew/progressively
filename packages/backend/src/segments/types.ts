@@ -6,7 +6,9 @@ export interface SegmentCreationDTO {
 }
 
 export interface Segment {
+  uuid: string;
   name: string;
+  createdAt: Date;
   rule: Array<RuleType>;
 }
 
