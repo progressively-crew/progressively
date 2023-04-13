@@ -32,7 +32,11 @@ export class FlagsService {
           include: {
             rules: {
               include: {
-                Segment: true,
+                Segment: {
+                  include: {
+                    rule: true,
+                  },
+                },
               },
             },
             variants: {

@@ -1,16 +1,12 @@
 import * as Joi from 'joi';
 import { ComparatorEnum } from './comparators/types';
+import { Segment } from '../segments/types';
 
 export interface RuleType {
   fieldName: string;
   fieldComparator: ComparatorEnum;
   fieldValue: string;
-}
-
-export interface RuleType {
-  fieldName: string;
-  fieldComparator: ComparatorEnum;
-  fieldValue: string;
+  Segment?: Segment;
 }
 
 export type RuleUpdateDto = {

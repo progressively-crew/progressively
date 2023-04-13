@@ -30,7 +30,11 @@ export class EnvironmentsService {
           include: {
             rules: {
               include: {
-                Segment: true,
+                Segment: {
+                  include: {
+                    rule: true,
+                  },
+                },
               },
             },
             variants: {

@@ -119,7 +119,11 @@ export class SchedulingService {
             include: {
               rules: {
                 include: {
-                  Segment: true,
+                  Segment: {
+                    include: {
+                      rule: true,
+                    },
+                  },
                 },
               },
               variants: {
