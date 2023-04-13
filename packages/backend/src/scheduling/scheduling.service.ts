@@ -117,7 +117,11 @@ export class SchedulingService {
           variants: true,
           strategies: {
             include: {
-              rules: true,
+              rules: {
+                include: {
+                  Segment: true,
+                },
+              },
               variants: {
                 include: {
                   variant: true,

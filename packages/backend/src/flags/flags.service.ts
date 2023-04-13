@@ -30,7 +30,19 @@ export class FlagsService {
         webhooks: true,
         strategies: {
           include: {
-            rules: true,
+            rules: {
+              include: {
+                Segment: true,
+              },
+            },
+            variants: {
+              include: {
+                variant: true,
+              },
+              orderBy: {
+                rolloutPercentage: 'asc',
+              },
+            },
           },
         },
       },

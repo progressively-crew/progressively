@@ -28,7 +28,11 @@ export class EnvironmentsService {
         scheduling: true,
         strategies: {
           include: {
-            rules: true,
+            rules: {
+              include: {
+                Segment: true,
+              },
+            },
             variants: {
               include: {
                 variant: true,
