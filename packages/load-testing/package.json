@@ -23,7 +23,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build:test": "react-scripts build",
-    "db:seed": "ts-node ./tests/helpers/seed-run.ts",
+    "db:seed": "ts-node ./helpers/seed-run.ts",
     "test:chromium": "playwright test --project=chromium",
     "test:firefox": "playwright test --project=chromium",
     "test:webkit": "playwright test --project=chromium",

@@ -37,7 +37,15 @@ export const seedDb = async (userCount: number) => {
       environmentId: production.uuid,
       flagId: footerFlag.uuid,
       status: "NOT_ACTIVATED",
+    },
+  });
+
+  await prismaClient.strategy.create({
+    data: {
       rolloutPercentage: 25,
+      valueToServeType: "Boolean",
+      flagEnvironmentEnvironmentId: production.uuid,
+      flagEnvironmentFlagId: footerFlag.uuid,
     },
   });
 

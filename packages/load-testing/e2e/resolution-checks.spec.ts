@@ -46,6 +46,7 @@ test("footer resolution should approximate 25% (load time)", async ({
     await page.goto("http://localhost:3000?id=" + i);
 
     await page.waitForSelector("text=Loading...", { state: "detached" });
+    await new Promise((resolve) => setTimeout(resolve, 100));
 
     if (await page.isVisible("text=New footer variant")) {
       activated++;
@@ -76,7 +77,7 @@ test("footer resolution should approximate 25% (websockets time)", async ({
     await page.waitForSelector("text=Loading...", { state: "detached" });
     await changeFlagStatus("1", "2", "ACTIVATED");
 
-    await new Promise((resolve) => setTimeout(resolve, 200));
+    await new Promise((resolve) => setTimeout(resolve, 100));
 
     if (await page.isVisible("text=New footer variant")) {
       activated++;
