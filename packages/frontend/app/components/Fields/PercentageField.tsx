@@ -7,6 +7,7 @@ export interface PercentageFieldProps {
   initialValue: number;
   label: string;
   hiddenLabel?: boolean;
+  hiddenDot?: boolean;
 }
 
 export const PercentageField = ({
@@ -14,6 +15,7 @@ export const PercentageField = ({
   initialValue,
   label,
   hiddenLabel,
+  hiddenDot,
 }: PercentageFieldProps) => {
   const id = useId();
 
@@ -28,7 +30,7 @@ export const PercentageField = ({
             : "text-sm font-semibold flex flex-row gap-2 items-center"
         }
       >
-        <VariantDot variant={label} />
+        {!hiddenDot && <VariantDot variant={label} />}
         {label}
       </Typography>
 
