@@ -468,28 +468,32 @@ describe('SdkService', () => {
           expect(shouldActivate).toBe(false);
         });
 
-        describe.only('segments', () => {
-          it('resolves false when the user does not match the segment', () => {
-            stratOne.rules = [
-              {
-                fieldName: null,
-                fieldComparator: null,
-                fieldValue: null,
-                Segment: {
-                  uuid: '1',
-                  name: 'By email',
-                  createdAt: new Date(1992, 5, 21),
-                  rule: [
-                    {
-                      fieldName: 'email',
-                      fieldComparator: ComparatorEnum.Contains,
-                      fieldValue: '@gmail',
-                    },
-                  ],
+        describe('segments', () => {
+          const segmentRule = {
+            fieldName: null,
+            fieldComparator: null,
+            fieldValue: null,
+            Segment: {
+              uuid: '1',
+              name: 'By email',
+              createdAt: new Date(1992, 5, 21),
+              rule: [
+                {
+                  fieldName: 'email',
+                  fieldComparator: ComparatorEnum.Contains,
+                  fieldValue: '@gmail',
                 },
-              },
-            ];
+                {
+                  fieldName: 'id',
+                  fieldComparator: ComparatorEnum.Equals,
+                  fieldValue: '123',
+                },
+              ],
+            },
+          };
 
+          it('resolves false when the user does not match any rule of the segment', () => {
+            stratOne.rules = [segmentRule];
             flagEnv.strategies = [stratOne];
 
             const shouldActivate = service.resolveFlagStatus(flagEnv, {
@@ -500,31 +504,24 @@ describe('SdkService', () => {
             expect(shouldActivate).toBe(false);
           });
 
-          it('resolves true when the user matches the segment', () => {
-            stratOne.rules = [
-              {
-                fieldName: null,
-                fieldComparator: null,
-                fieldValue: null,
-                Segment: {
-                  uuid: '1',
-                  name: 'By email',
-                  createdAt: new Date(1992, 5, 21),
-                  rule: [
-                    {
-                      fieldName: 'email',
-                      fieldComparator: ComparatorEnum.Contains,
-                      fieldValue: '@gmail',
-                    },
-                  ],
-                },
-              },
-            ];
-
+          it('resolves false when the user only matches one rule of the segment', () => {
+            stratOne.rules = [segmentRule];
             flagEnv.strategies = [stratOne];
 
             const shouldActivate = service.resolveFlagStatus(flagEnv, {
               id: 'user-id-123',
+              email: '@gmail.com',
+            });
+
+            expect(shouldActivate).toBe(false);
+          });
+
+          it('resolves true when the user matches all the rules rule of the segment', () => {
+            stratOne.rules = [segmentRule];
+            flagEnv.strategies = [stratOne];
+
+            const shouldActivate = service.resolveFlagStatus(flagEnv, {
+              id: '123',
               email: '@gmail.com',
             });
 

@@ -90,6 +90,12 @@ export class RuleService {
   }
 
   isMatchingRule(rule: Partial<RuleType>, fields: FieldRecord) {
+    // Dealing with Segment first
+    if (rule.Segment) {
+      return this.isMatchingAllRules(rule.Segment.rule, fields);
+    }
+
+    // Dealing with regular rules
     const clientFieldValue = fields[rule.fieldName] || '';
     const fieldValues = rule.fieldValue?.split('\n') || '';
 
