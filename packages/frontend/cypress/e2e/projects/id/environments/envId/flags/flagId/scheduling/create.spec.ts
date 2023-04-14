@@ -59,9 +59,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
           );
 
           cy.findByText("What should be the next status").should("be.visible");
-          cy.findByLabelText(
-            "What should be the next rollout percentage"
-          ).should("be.visible");
 
           cy.findByRole("button", { name: "Save the schedule" }).should(
             "be.visible"

@@ -3,11 +3,9 @@ import { getSession } from "~/sessions";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
 import { useActionData, Form, useTransition } from "@remix-run/react";
-
 import {
   SchedulingCreateDTO,
   SchedulingType,
-  SchedulingUpdateVariantEntry,
 } from "~/modules/scheduling/types";
 import { createScheduling } from "~/modules/scheduling/services/createScheduling";
 import { useProject } from "~/modules/projects/contexts/useProject";
@@ -124,7 +122,7 @@ export default function SchedulingCreatePage() {
           </BackLink>
         }
       >
-        <CreateSchedulingFrom flagEnv={flagEnv} />
+        <CreateSchedulingFrom />
       </CreateEntityLayout>
     </Form>
   );
