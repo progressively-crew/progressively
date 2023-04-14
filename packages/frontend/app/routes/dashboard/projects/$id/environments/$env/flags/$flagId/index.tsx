@@ -35,6 +35,7 @@ import { Segment } from "~/modules/segments/types";
 import { getSegments } from "~/modules/segments/services/getSegments";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
+import { Typography } from "~/components/Typography";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -186,6 +187,13 @@ export default function FlagById() {
     >
       <PageTitle
         value="Audience"
+        description={
+          <Typography>
+            Configure strategies and customize rules to better target your
+            <br />
+            audience.
+          </Typography>
+        }
         action={
           strategies.length > 0 && (
             <Form method="post">

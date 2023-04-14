@@ -113,7 +113,7 @@ export default function Segments() {
         value="Segments"
         description={
           <Typography>
-            The segments available for an easier targeting.
+            Group your users using rules for an easier targeting.
           </Typography>
         }
         action={
