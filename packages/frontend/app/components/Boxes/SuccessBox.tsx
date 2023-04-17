@@ -19,23 +19,31 @@ export const SuccessBox = ({ children, id, ...props }: SuccessBoxProps) => {
 
   return (
     <div
-      className="p-4 bg-green-100 text-green-700 rounded border-l-8 border-l-green-600 flex flex-row justify-between motion-safe:animate-fade-enter-top"
+      className="p-4 bg-green-100 text-green-700 rounded motion-safe:animate-fade-enter-top"
       key={id}
     >
-      <p ref={boxRef} tabIndex={-1} id={id} {...props} className="success-box">
-        <HStack as="span" spacing={2}>
-          <AiOutlineCheckCircle aria-hidden />
-          <span>{children}</span>
-        </HStack>
-      </p>
+      <div className="max-w-5xl w-full mx-auto flex flex-row justify-between">
+        <p
+          ref={boxRef}
+          tabIndex={-1}
+          id={id}
+          {...props}
+          className="success-box"
+        >
+          <HStack as="span" spacing={2}>
+            <AiOutlineCheckCircle aria-hidden />
+            <span>{children}</span>
+          </HStack>
+        </p>
 
-      <Link
-        to={location.pathname}
-        className="text-xl"
-        preventScrollReset={true}
-      >
-        <MdClose aria-label="Close the banner" />
-      </Link>
+        <Link
+          to={location.pathname}
+          className="text-xl rounded bg-transparent hover:bg-green-200 active:bg-green-300 flex items-center justify-center w-6 h-6"
+          preventScrollReset={true}
+        >
+          <MdClose aria-label="Close the banner" />
+        </Link>
+      </div>
     </div>
   );
 };
