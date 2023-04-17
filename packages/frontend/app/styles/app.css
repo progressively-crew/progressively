@@ -836,6 +836,18 @@ video {
   width: 100%;
 }
 
+.w-1 {
+  width: 0.25rem;
+}
+
+.w-2 {
+  width: 0.5rem;
+}
+
+.w-\[1px\] {
+  width: 1px;
+}
+
 .min-w-\[200px\] {
   min-width: 200px;
 }
