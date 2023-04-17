@@ -50,34 +50,33 @@ export const DashboardLayout = ({
         <Container>{subNav}</Container>
       </div>
 
-      <InertWhenNavOpened className="flex-1 px-4 md:px-12 h-full bg-gray-50 dark:bg-slate-900">
-        <div>
-          <div className={`max-w-5xl w-full mx-auto`}>
-            <Spacer size={12} />
+      <InertWhenNavOpened className="h-full bg-gray-50 dark:bg-slate-900 flex-1">
+        <Main>
+          {status}
+          <div className="flex-1 px-4 md:px-12">
+            <div>
+              <div className={`max-w-5xl w-full mx-auto`}>
+                <Spacer size={12} />
 
-            <Main>
-              <div className="flex flex-col gap-4 md:gap-6">
-                {status}
+                <div className="flex flex-col gap-4 md:gap-6">{children}</div>
 
-                {children}
+                <Spacer size={10} />
               </div>
-            </Main>
+            </div>
 
-            <Spacer size={10} />
+            {isNormalLoad && (
+              <div
+                className="fixed left-4 bottom-4 animate-opacity-appearing"
+                style={{
+                  animationDelay: "300ms",
+                  opacity: 0,
+                }}
+              >
+                <Spinner className="text-3xl text-gray-400" />
+              </div>
+            )}
           </div>
-        </div>
-
-        {isNormalLoad && (
-          <div
-            className="fixed left-4 bottom-4 animate-opacity-appearing"
-            style={{
-              animationDelay: "300ms",
-              opacity: 0,
-            }}
-          >
-            <Spinner className="text-3xl text-gray-400" />
-          </div>
-        )}
+        </Main>
       </InertWhenNavOpened>
     </NavProvider>
   );

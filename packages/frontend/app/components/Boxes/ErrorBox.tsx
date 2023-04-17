@@ -26,7 +26,7 @@ export const ErrorBox = ({ list }: ErrorBoxProps) => {
       : `The following ${errors.length} errors have been found:`;
 
   return (
-    <div className="p-4 bg-red-100 text-red-700 rounded border-l-8 border-l-red-600 flex flex-row justify-between  motion-safe:animate-fade-enter-top">
+    <div className="p-4 bg-red-100 text-red-700 rounded flex flex-row justify-between motion-safe:animate-fade-enter-top">
       <figure ref={boxRef} tabIndex={-1} className="error-box">
         <div>
           <HStack spacing={2}>
@@ -48,7 +48,7 @@ export const ErrorBox = ({ list }: ErrorBoxProps) => {
 
       <Link
         to={location.pathname}
-        className="text-xl"
+        className="text-xl rounded bg-transparent hover:bg-red-200 active:bg-red-300 flex items-center justify-center w-6 h-6"
         preventScrollReset={true}
       >
         <MdClose aria-label="Close the banner" />
