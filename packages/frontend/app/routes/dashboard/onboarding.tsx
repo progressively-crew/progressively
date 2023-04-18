@@ -1,5 +1,5 @@
 import { ActionFunction, redirect } from "@remix-run/node";
-import { useActionData, Form } from "@remix-run/react";
+import { useActionData, Form, useNavigation } from "@remix-run/react";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { TextInput } from "~/components/Fields/TextInput";
@@ -11,12 +11,9 @@ import { getSession } from "~/sessions";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import { Spacer } from "~/components/Spacer";
 import { Stack } from "~/components/Stack";
-import { ProjectIcon } from "~/components/Icons/ProjectIcon";
 import { TipBox } from "~/components/Boxes/TipBox";
 import { Li, Ul } from "~/components/Ul";
 import { HStack } from "~/components/HStack";
-import { EnvIcon } from "~/components/Icons/EnvIcon";
-import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { useUser } from "~/modules/user/contexts/useUser";
 
 export const meta = () => {
@@ -54,6 +51,7 @@ export const action: ActionFunction = async ({
 export default function OnboardingPage() {
   const data = useActionData<ActionData>();
   const { user } = useUser();
+  const navigation = useNavigation();
 
   const errors = data?.errors;
 
@@ -87,8 +85,6 @@ export default function OnboardingPage() {
           >
             <Form method="post">
               <div className="flex flex-col md:flex-row gap-4 items-center">
-                <ProjectIcon className="text-indigo-600" />
-
                 <div className="flex-1">
                   <TextInput
                     isInvalid={Boolean(errors?.name)}
@@ -99,7 +95,12 @@ export default function OnboardingPage() {
                   />
                 </div>
 
-                <SubmitButton>Create the project</SubmitButton>
+                <SubmitButton
+                  loadingText="Creating the project..."
+                  isLoading={navigation.state === "loading"}
+                >
+                  Create the project
+                </SubmitButton>
               </div>
             </Form>
           </div>
@@ -128,39 +129,20 @@ export default function OnboardingPage() {
           <Ul>
             <Li>
               <HStack spacing={2}>
-                <ProjectIcon />
                 <span>Projects</span>
               </HStack>
             </Li>
             <Li>
               <HStack spacing={2}>
-                <EnvIcon />
                 <span>Environments</span>
               </HStack>
             </Li>
             <Li>
               <HStack spacing={2}>
-                <FlagIcon />
                 <span>Feature flags</span>
               </HStack>
             </Li>
           </Ul>
-
-          <Spacer size={2} />
-
-          <Typography className="text-inherit dark:text-inherit">
-            You can recognize them in the application with their icons. You can
-            learn more on{" "}
-            <a
-              href="https://progressively.app/docs/features/hierarchical-structure"
-              target={"_blank"}
-              rel="noopener noreferrer"
-              className="underline"
-            >
-              the associated documentation page
-            </a>
-            .
-          </Typography>
         </TipBox>
       </div>
     </NotAuthenticatedLayout>

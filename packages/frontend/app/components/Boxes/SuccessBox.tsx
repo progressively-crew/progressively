@@ -19,7 +19,7 @@ export const SuccessBox = ({ children, id, ...props }: SuccessBoxProps) => {
 
   return (
     <div
-      className="p-4 bg-green-100 text-green-700 rounded motion-safe:animate-fade-enter-top"
+      className="p-4 bg-green-100 border-b border-b-green-200 text-green-700 rounded motion-safe:animate-fade-enter-top"
       key={id}
     >
       <div className="max-w-5xl w-full mx-auto flex flex-row justify-between">
