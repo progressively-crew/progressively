@@ -267,6 +267,41 @@ export default function FlagInsights() {
         </Section>
       </div>
 
+      <div className="grid grid-cols-2 gap-8">
+        <Section id="metric-hits">
+          <Card>
+            <CardContent>
+              <SectionHeader
+                title="Hit on metrics"
+                description="These are the number of hit on each metrics and the associated variant (if applicable). The chart shows the ratio between the variant evaluation and the metric hit."
+              />
+            </CardContent>
+          </Card>
+        </Section>
+
+        <Section id="metric-hits">
+          <Card>
+            <CardContent>
+              <SectionHeader
+                title="Metrics per variant"
+                description="Checking the amount of metrics tracked by variant evaluation"
+              />
+
+              <div className="w-full" style={{ height: 300 }}>
+                {barChartData.length > 0 ? (
+                  <BarChart data={barChartData} />
+                ) : (
+                  <EmptyState
+                    title="No data"
+                    description={"There are no metric hits for this period."}
+                  />
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        </Section>
+      </div>
+
       <Section id="metrics-variant">
         <Card>
           <CardContent>
