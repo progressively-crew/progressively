@@ -17,7 +17,6 @@ import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { PageTitle } from "~/components/PageTitle";
 import { MetricPerVariantList } from "~/modules/flags/MetricPerVariantList";
 import { Section, SectionHeader } from "~/components/Section";
-import { BarChart } from "~/components/BarChart";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
 import { EmptyState } from "~/components/EmptyState";
 import { LineChart } from "~/components/LineChart";
@@ -163,7 +162,6 @@ export default function FlagInsights() {
     endDate,
     metricsByVariantCount,
     flagEvaluationsCount,
-    barChartData,
     hitsPerVariantPerDate,
     flagEvaluations,
   } = useLoaderData<LoaderData>();
@@ -174,7 +172,6 @@ export default function FlagInsights() {
 
   return (
     <DashboardLayout
-      variant="large"
       user={user}
       subNav={
         <FlagMenu
@@ -213,78 +210,53 @@ export default function FlagInsights() {
         </Form>
       </div>
 
-      <div className="grid grid-cols-[3fr_2fr] gap-8">
-        <Section id="variant-evaluations">
-          <Card>
-            <CardContent>
-              <SectionHeader
-                title="Variants evaluations"
-                description="Number of times the different variants have been calculated for the users"
+      <Section id="variant-evaluations">
+        <Card>
+          <CardContent>
+            <SectionHeader
+              title="Variants evaluations"
+              description="Number of times the different variants have been calculated for the users"
+            />
+
+            {hitsPerVariantPerDate.length > 0 ? (
+              <LineChart data={hitsPerVariantPerDate} />
+            ) : (
+              <EmptyState
+                title="No data"
+                description={"There are no flag evaluations for this period."}
               />
+            )}
 
-              {hitsPerVariantPerDate.length > 0 ? (
-                <LineChart data={hitsPerVariantPerDate} />
-              ) : (
-                <EmptyState
-                  title="No data"
-                  description={"There are no flag evaluations for this period."}
-                />
-              )}
-
-              <div>
-                <Typography as="h3" className="text-lg font-semibold pb-2">
-                  Total for period{" "}
-                  <span className="bg-slate-100 rounded-full px-2 py-1 font-normal text-gray-600 text-xs ml-2">
-                    {flagEvaluationsCount} eval.
-                  </span>
-                </Typography>
-                <div className="flex flex-row gap-4 flex-wrap">
-                  {flagEvaluations.map((fe) => (
-                    <VariantCard
-                      key={`variant-card-${fe.valueResolved}`}
-                      variant={fe.valueResolved}
-                      hit={fe._count}
-                      ratio={
-                        Math.round(
-                          (fe._count / flagEvaluationsCount) * 10_000
-                        ) / 100
-                      }
-                    />
-                  ))}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </Section>
-
-        <Section id="metric-hits">
-          <Card>
-            <CardContent>
-              <SectionHeader
-                title="Metrics per variant"
-                description="Hits on metrics per their associated variant evaluation count"
-              />
-
-              <div className="w-full pt-4" style={{ height: 300 }}>
-                {barChartData.length > 0 ? (
-                  <BarChart data={barChartData} />
-                ) : (
-                  <EmptyState
-                    title="No data"
-                    description={"There are no metric hits for this period."}
+            <div>
+              <Typography as="h3" className="text-xl font-semibold pb-4">
+                Total for period
+                <span className="bg-slate-100 rounded-full px-2 py-1 font-normal text-gray-600 text-xs ml-2">
+                  {flagEvaluationsCount} eval.
+                </span>
+              </Typography>
+              <div className="flex flex-row gap-4 flex-wrap">
+                {flagEvaluations.map((fe) => (
+                  <VariantCard
+                    key={`variant-card-${fe.valueResolved}`}
+                    variant={fe.valueResolved}
+                    hit={fe._count}
+                    ratio={
+                      Math.round((fe._count / flagEvaluationsCount) * 10_000) /
+                      100
+                    }
                   />
-                )}
+                ))}
               </div>
-            </CardContent>
-          </Card>
-        </Section>
-      </div>
+            </div>
+          </CardContent>
+        </Card>
+      </Section>
 
       <Section id="metric-hits">
         <Card>
           <div className="px-6 pt-6">
             <SectionHeader
-              title="Hit on metrics"
+              title="Hits on metrics"
               description="Multiple information regarding metrics that have been tracked."
             />
           </div>
