@@ -15,6 +15,7 @@ export interface DashboardLayoutProps {
   children: React.ReactNode;
   subNav?: React.ReactNode;
   status?: React.ReactNode;
+  variant?: "default" | "large";
 }
 
 export const DashboardLayout = ({
@@ -22,6 +23,7 @@ export const DashboardLayout = ({
   children,
   subNav,
   status,
+  variant,
 }: DashboardLayoutProps) => {
   const navigation = useNavigation();
   const matches = useMatches();
@@ -32,6 +34,8 @@ export const DashboardLayout = ({
 
   const isNormalLoad =
     navigation.state === "loading" && navigation.formData == null;
+
+  const containerClass = variant === "large" ? "" : "max-w-5xl w-full mx-auto";
 
   return (
     <NavProvider>
@@ -55,7 +59,7 @@ export const DashboardLayout = ({
           {status}
           <div className="flex-1 px-4 md:px-12">
             <div>
-              <div className={`max-w-5xl w-full mx-auto`}>
+              <div className={containerClass}>
                 <Spacer size={12} />
 
                 <div className="flex flex-col gap-4 md:gap-6">{children}</div>
