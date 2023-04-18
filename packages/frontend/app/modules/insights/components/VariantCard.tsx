@@ -27,7 +27,7 @@ export const VariantCard = ({ variant, hit, ratio }: VariantCardProps) => {
             <p style={{ color }}>{variant}</p>
           </div>
 
-          <div className="dark:text-white text-slate-900 pb-4">
+          <div className="dark:text-white text-slate-900">
             <span className="text-5xl font-bold">{formatter.format(hit)}</span>
             <span className="dark:text-slate-300 text-slate-900 pl-2">
               eval.
