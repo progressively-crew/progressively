@@ -254,14 +254,14 @@ export default function FlagInsights() {
 
       <Section id="metric-hits">
         <Card>
-          <div className="px-6 pt-6">
+          <CardContent>
             <SectionHeader
               title="Hits on metrics"
               description="Multiple information regarding metrics that have been tracked."
             />
-          </div>
 
-          <MetricPerVariantList items={metricsByVariantCount} />
+            <MetricPerVariantList items={metricsByVariantCount} />
+          </CardContent>
         </Card>
       </Section>
     </DashboardLayout>

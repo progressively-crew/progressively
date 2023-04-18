@@ -3,6 +3,7 @@ import { EntityField } from "~/components/Entity/EntityField";
 import { VariantDot } from "../variants/components/VariantDot";
 import { SelectField } from "~/components/Fields/Select/SelectField";
 import { useState } from "react";
+import { MetricCard } from "../insights/components/MetricCard";
 
 interface MetricHit {
   metric: string;
@@ -46,6 +47,23 @@ const VariantEntity = ({ mHit, allMetrics }: VariantEntityProps) => {
     const otherMetric = allMetrics.find((m) => m.metric === selected)!;
     ratio = `${((mHit.count / otherMetric.count) * 100).toFixed(2)}%`;
   }
+
+  return (
+    <MetricCard
+      metric={mHit.metric}
+      hit={mHit.count}
+      variant={mHit.variant}
+      ratio={ratio}
+    >
+      <SelectField
+        name="compare-with"
+        label="Compare with"
+        defaultValue={"variant"}
+        options={compareWithOptions}
+        onValueChange={(x) => setSelected(x)}
+      />
+    </MetricCard>
+  );
 
   return (
     <Entity
@@ -95,7 +113,7 @@ export interface MetricPerVariantListProps {
 
 export const MetricPerVariantList = ({ items }: MetricPerVariantListProps) => {
   return (
-    <div>
+    <div className="flex flex-row gap-4 pt-4">
       {items.map((mHit) => {
         return (
           <VariantEntity key={mHit.metric} mHit={mHit} allMetrics={items} />
