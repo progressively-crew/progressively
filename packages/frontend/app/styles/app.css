@@ -656,6 +656,10 @@ video {
   margin-top: 2rem;
 }
 
+.ml-4 {
+  margin-left: 1rem;
+}
+
 .block {
   display: block;
 }
@@ -989,6 +993,18 @@ video {
 
 .grid-cols-\[1fr_3fr\] {
   grid-template-columns: 1fr 3fr;
+}
+
+.grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.grid-cols-\[3fr_1fr\] {
+  grid-template-columns: 3fr 1fr;
+}
+
+.grid-cols-\[3fr_2fr\] {
+  grid-template-columns: 3fr 2fr;
 }
 
 .flex-row {
@@ -1504,6 +1520,10 @@ video {
 
 .pt-8 {
   padding-top: 2rem;
+}
+
+.pt-6 {
+  padding-top: 1.5rem;
 }
 
 .text-left {

@@ -23,8 +23,6 @@ import { EmptyState } from "~/components/EmptyState";
 import { LineChart } from "~/components/LineChart";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
 import { VariantCard } from "~/modules/insights/components/VariantCard";
-import { EvalCard } from "~/modules/insights/components/EvalCard";
-import { Spacer } from "~/components/Spacer";
 import { Typography } from "~/components/Typography";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
@@ -215,23 +213,7 @@ export default function FlagInsights() {
         </Form>
       </div>
 
-      <div className="grid grid-cols-[1fr_3fr] gap-8">
-        <Section id="variants-hits">
-          <Card>
-            <CardContent>
-              <div className="h-full">
-                <SectionHeader
-                  title="Flag evaluations"
-                  description="Number of times the flag has been calculated for the users"
-                />
-
-                <Spacer size={4} />
-                <EvalCard count={flagEvaluationsCount} />
-              </div>
-            </CardContent>
-          </Card>
-        </Section>
-
+      <div className="grid grid-cols-[3fr_2fr] gap-8">
         <Section id="variant-evaluations">
           <Card>
             <CardContent>
@@ -249,32 +231,28 @@ export default function FlagInsights() {
                 />
               )}
 
-              <div className="flex flex-row gap-4 flex-wrap">
-                {flagEvaluations.map((fe) => (
-                  <VariantCard
-                    key={`variant-card-${fe.valueResolved}`}
-                    variant={fe.valueResolved}
-                    hit={fe._count}
-                    ratio={
-                      Math.round((fe._count / flagEvaluationsCount) * 10_000) /
-                      100
-                    }
-                  />
-                ))}
+              <div>
+                <Typography as="h3" className="text-lg font-semibold pb-2">
+                  Total for period{" "}
+                  <span className="bg-slate-100 rounded-full px-2 py-1 font-normal text-gray-600 text-xs ml-2">
+                    {flagEvaluationsCount} eval.
+                  </span>
+                </Typography>
+                <div className="flex flex-row gap-4 flex-wrap">
+                  {flagEvaluations.map((fe) => (
+                    <VariantCard
+                      key={`variant-card-${fe.valueResolved}`}
+                      variant={fe.valueResolved}
+                      hit={fe._count}
+                      ratio={
+                        Math.round(
+                          (fe._count / flagEvaluationsCount) * 10_000
+                        ) / 100
+                      }
+                    />
+                  ))}
+                </div>
               </div>
-            </CardContent>
-          </Card>
-        </Section>
-      </div>
-
-      <div className="grid grid-cols-2 gap-8">
-        <Section id="metric-hits">
-          <Card>
-            <CardContent>
-              <SectionHeader
-                title="Hit on metrics"
-                description="These are the number of hit on each metrics and the associated variant (if applicable). The chart shows the ratio between the variant evaluation and the metric hit."
-              />
             </CardContent>
           </Card>
         </Section>
@@ -284,10 +262,10 @@ export default function FlagInsights() {
             <CardContent>
               <SectionHeader
                 title="Metrics per variant"
-                description="Checking the amount of metrics tracked by variant evaluation"
+                description="Hits on metrics per their associated variant evaluation count"
               />
 
-              <div className="w-full" style={{ height: 300 }}>
+              <div className="w-full pt-4" style={{ height: 300 }}>
                 {barChartData.length > 0 ? (
                   <BarChart data={barChartData} />
                 ) : (
@@ -302,31 +280,16 @@ export default function FlagInsights() {
         </Section>
       </div>
 
-      <Section id="metrics-variant">
+      <Section id="metric-hits">
         <Card>
-          <CardContent>
+          <div className="px-6 pt-6">
             <SectionHeader
               title="Hit on metrics"
-              description="These are the number of hit on each metrics and the associated variant (if applicable). The chart shows the ratio between the variant evaluation and the metric hit."
+              description="Multiple information regarding metrics that have been tracked."
             />
-          </CardContent>
+          </div>
 
           <MetricPerVariantList items={metricsByVariantCount} />
-
-          <CardContent>
-            <Card>
-              <div className="w-full pt-8 pb-6" style={{ height: 300 }}>
-                {barChartData.length > 0 ? (
-                  <BarChart data={barChartData} />
-                ) : (
-                  <EmptyState
-                    title="No data"
-                    description={"There are no metric hits for this period."}
-                  />
-                )}
-              </div>
-            </Card>
-          </CardContent>
         </Card>
       </Section>
     </DashboardLayout>
