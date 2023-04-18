@@ -17,14 +17,12 @@ import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { PageTitle } from "~/components/PageTitle";
 import { MetricPerVariantList } from "~/modules/flags/MetricPerVariantList";
 import { Section, SectionHeader } from "~/components/Section";
-import { BarChart } from "~/components/BarChart";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
 import { EmptyState } from "~/components/EmptyState";
 import { LineChart } from "~/components/LineChart";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
 import { VariantCard } from "~/modules/insights/components/VariantCard";
-import { EvalCard } from "~/modules/insights/components/EvalCard";
-import { Spacer } from "~/components/Spacer";
+import { Typography } from "~/components/Typography";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -164,7 +162,6 @@ export default function FlagInsights() {
     endDate,
     metricsByVariantCount,
     flagEvaluationsCount,
-    barChartData,
     hitsPerVariantPerDate,
     flagEvaluations,
   } = useLoaderData<LoaderData>();
@@ -184,96 +181,86 @@ export default function FlagInsights() {
         />
       }
     >
-      <PageTitle value="Insights" />
+      <div className="flex flex-row gap-8 justify-between">
+        <PageTitle
+          value="Insights"
+          description={
+            <Typography>
+              Information related to flag evaluations, variants and metrics.
+            </Typography>
+          }
+        />
 
-      <Form action=".">
-        <div className="flex flex-col md:flex-row gap-3 md:items-end">
-          <TextInput
-            type="date"
-            name={"startDate"}
-            label={"Start date"}
-            defaultValue={formatDefaultDate(startDate)}
-          />
-          <TextInput
-            type="date"
-            name={"endDate"}
-            label={"End date"}
-            defaultValue={formatDefaultDate(endDate)}
-          />
-          <SubmitButton>Filter</SubmitButton>
-        </div>
-      </Form>
+        <Form action=".">
+          <div className="flex flex-col md:flex-row gap-3 md:items-end">
+            <TextInput
+              type="date"
+              name={"startDate"}
+              label={"Start date"}
+              defaultValue={formatDefaultDate(startDate)}
+            />
+            <TextInput
+              type="date"
+              name={"endDate"}
+              label={"End date"}
+              defaultValue={formatDefaultDate(endDate)}
+            />
+            <SubmitButton>Filter</SubmitButton>
+          </div>
+        </Form>
+      </div>
 
-      <Section id="variants-hits">
+      <Section id="variant-evaluations">
         <Card>
           <CardContent>
             <SectionHeader
-              title="Flag evaluations"
-              description="These are the number of hit on each metrics and the associated variant (if applicable). The chart shows the ratio between the variant evaluation and the metric hit."
+              title="Variants evaluations"
+              description="Number of times the different variants have been calculated for the users"
             />
 
-            <Spacer size={4} />
+            {hitsPerVariantPerDate.length > 0 ? (
+              <LineChart data={hitsPerVariantPerDate} />
+            ) : (
+              <EmptyState
+                title="No data"
+                description={"There are no flag evaluations for this period."}
+              />
+            )}
 
-            <div className="grid md:grid-cols-4 gap-4 md:gap-8">
-              <EvalCard count={flagEvaluationsCount} />
-
-              <div className="w-full md:col-span-3">
-                <Card>
-                  <div className="md:pr-6 md:h-[300px]">
-                    {hitsPerVariantPerDate.length > 0 ? (
-                      <LineChart data={hitsPerVariantPerDate} />
-                    ) : (
-                      <EmptyState
-                        title="No data"
-                        description={
-                          "There are no flag evaluations for this period."
-                        }
-                      />
-                    )}
-                  </div>
-                </Card>
+            <div>
+              <Typography as="h3" className="text-xl font-semibold pb-4">
+                Total for period
+                <span className="bg-slate-100 rounded-full px-2 py-1 font-normal text-gray-600 text-xs ml-2">
+                  {flagEvaluationsCount} eval.
+                </span>
+              </Typography>
+              <div className="flex flex-row gap-4 flex-wrap">
+                {flagEvaluations.map((fe) => (
+                  <VariantCard
+                    key={`variant-card-${fe.valueResolved}`}
+                    variant={fe.valueResolved}
+                    hit={fe._count}
+                    ratio={
+                      Math.round((fe._count / flagEvaluationsCount) * 10_000) /
+                      100
+                    }
+                  />
+                ))}
               </div>
-
-              {flagEvaluations.map((fe) => (
-                <VariantCard
-                  key={`variant-card-${fe.valueResolved}`}
-                  variant={fe.valueResolved}
-                  hit={fe._count}
-                  ratio={
-                    Math.round((fe._count / flagEvaluationsCount) * 10_000) /
-                    100
-                  }
-                />
-              ))}
             </div>
           </CardContent>
         </Card>
       </Section>
 
-      <Section id="metrics-variant">
+      <Section id="metric-hits">
         <Card>
           <CardContent>
             <SectionHeader
-              title="Hit on metrics"
-              description="These are the number of hit on each metrics and the associated variant (if applicable). The chart shows the ratio between the variant evaluation and the metric hit."
+              title="Hits on metrics"
+              description="Multiple information regarding metrics that have been tracked."
             />
-          </CardContent>
 
-          <MetricPerVariantList items={metricsByVariantCount} />
-
-          <CardContent>
-            <Card>
-              <div className="w-full pt-8 pb-6" style={{ height: 300 }}>
-                {barChartData.length > 0 ? (
-                  <BarChart data={barChartData} />
-                ) : (
-                  <EmptyState
-                    title="No data"
-                    description={"There are no metric hits for this period."}
-                  />
-                )}
-              </div>
-            </Card>
+            <MetricPerVariantList items={metricsByVariantCount} />
           </CardContent>
         </Card>
       </Section>
