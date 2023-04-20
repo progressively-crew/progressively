@@ -95,7 +95,6 @@ export const RegisterForm = ({ errors, actionLabel }: RegisterFormProps) => {
         />
 
         <SubmitButton
-          className="w-full justify-center"
           isLoading={transition.state === "submitting"}
           loadingText="Creation in progress, please wait..."
         >

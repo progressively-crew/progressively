@@ -5,7 +5,6 @@ import {
   Form,
   useTransition,
 } from "@remix-run/react";
-import { BackLink } from "~/components/BackLink";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { FormGroup } from "~/components/Fields/FormGroup";
@@ -17,9 +16,9 @@ import {
   validatePassword,
 } from "~/modules/forms/utils/validatePassword";
 import { resetPassword } from "~/modules/user/services/resetPassword";
-import { Card, CardContent } from "~/components/Card";
 import { H1Logo } from "~/components/H1Logo";
 import { Spacer } from "~/components/Spacer";
+import { Button } from "~/components/Buttons/Button";
 
 export const meta: MetaFunction = () => {
   return {
@@ -105,63 +104,55 @@ export default function ResetPasswordPage() {
   return (
     <NotAuthenticatedLayout
       size="S"
-      nav={<BackLink to="/signin">Back to signin</BackLink>}
-      status={
-        <>
-          {errors && Object.keys(errors).length > 0 && (
-            <ErrorBox list={errors} />
-          )}
-
-          {success && (
-            <SuccessBox id="password-reset">
-              The password has been successfully reset. You can now connect.
-            </SuccessBox>
-          )}
-        </>
+      action={
+        <Button
+          to="/signin"
+          variant="secondary"
+          className="w-full"
+        >{`Sign in`}</Button>
       }
     >
-      <Card>
-        <CardContent>
-          <H1Logo>{pageTitle}</H1Logo>
-          <Spacer size={16} />
-          <Form method="post">
-            <input
-              type="hidden"
-              name="token"
-              id="token"
-              value={urlToken || ""}
-            />
+      <H1Logo>{pageTitle}</H1Logo>
 
-            <FormGroup>
-              <TextInput
-                isInvalid={Boolean(errors?.password)}
-                label="New password"
-                name="password"
-                placeholder="**********"
-                type="password"
-              />
+      <Spacer size={1} />
+      {errors && Object.keys(errors).length > 0 && <ErrorBox list={errors} />}
 
-              <TextInput
-                isInvalid={Boolean(errors?.confirmationPassword)}
-                label="Confirmation password"
-                name="confirmationPassword"
-                placeholder="**********"
-                type="password"
-              />
+      {success && (
+        <SuccessBox id="password-reset">
+          The password has been successfully reset. You can now connect.
+        </SuccessBox>
+      )}
 
-              <div>
-                <SubmitButton
-                  className="justify-center w-full"
-                  isLoading={transition.state === "submitting"}
-                  loadingText="Password changing in progress, please wait..."
-                >
-                  Change password
-                </SubmitButton>
-              </div>
-            </FormGroup>
-          </Form>
-        </CardContent>
-      </Card>
+      <Spacer size={1} />
+
+      <Form method="post">
+        <input type="hidden" name="token" id="token" value={urlToken || ""} />
+
+        <FormGroup>
+          <TextInput
+            isInvalid={Boolean(errors?.password)}
+            label="New password"
+            name="password"
+            placeholder="**********"
+            type="password"
+          />
+
+          <TextInput
+            isInvalid={Boolean(errors?.confirmationPassword)}
+            label="Confirmation password"
+            name="confirmationPassword"
+            placeholder="**********"
+            type="password"
+          />
+
+          <SubmitButton
+            isLoading={transition.state === "submitting"}
+            loadingText="Password changing in progress, please wait..."
+          >
+            Change password
+          </SubmitButton>
+        </FormGroup>
+      </Form>
     </NotAuthenticatedLayout>
   );
 }

@@ -4,7 +4,6 @@ import {
   registerAction,
   RegisterActionData,
 } from "~/modules/user/components/RegisterForm";
-import { BackLink } from "~/components/BackLink";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import {
@@ -14,9 +13,9 @@ import {
   redirect,
 } from "@remix-run/node";
 import { useActionData } from "@remix-run/react";
-import { Card, CardContent } from "~/components/Card";
 import { H1Logo } from "~/components/H1Logo";
 import { Spacer } from "~/components/Spacer";
+import { Button } from "~/components/Buttons/Button";
 
 export const meta: MetaFunction = () => {
   return {
@@ -46,26 +45,28 @@ export default function CreateAccountPage() {
   return (
     <NotAuthenticatedLayout
       size="S"
-      nav={<BackLink to="/signin">Back to signin</BackLink>}
-      status={
-        errors && Object.keys(errors).length > 0 ? (
-          <ErrorBox list={errors} />
-        ) : newUser?.uuid ? (
-          <SuccessBox id="user-created">
-            The user has been created! Take a look at your inbox, there should
-            be a link to activate it :).
-          </SuccessBox>
-        ) : null
+      action={
+        <Button
+          to="/signin"
+          variant="secondary"
+          className="w-full"
+        >{`Sign in`}</Button>
       }
     >
-      <Card>
-        <CardContent>
-          <H1Logo>Sign up</H1Logo>
+      <H1Logo>Sign up</H1Logo>
+      <Spacer size={1} />
 
-          <Spacer size={16} />
-          <RegisterForm errors={errors} />
-        </CardContent>
-      </Card>
+      {errors && Object.keys(errors).length > 0 ? (
+        <ErrorBox list={errors} />
+      ) : newUser?.uuid ? (
+        <SuccessBox id="user-created">
+          The user has been created! Take a look at your inbox, there should be
+          a link to activate it :).
+        </SuccessBox>
+      ) : null}
+
+      <Spacer size={1} />
+      <RegisterForm errors={errors} />
     </NotAuthenticatedLayout>
   );
 }
