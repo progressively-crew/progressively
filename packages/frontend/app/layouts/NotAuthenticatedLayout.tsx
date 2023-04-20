@@ -42,7 +42,6 @@ export const NotAuthenticatedLayout = ({
         <Spacer size={8} />
 
         <Main>
-          {nav && <div className="inline-block">{nav}</div>}
           <Stack spacing={4}>
             <Stack spacing={2}>
               {header}
