@@ -6,7 +6,6 @@ import { Stack } from "~/components/Stack";
 
 export interface NotAuthenticatedLayoutProps {
   children: React.ReactNode;
-  nav?: React.ReactNode;
   header?: React.ReactNode;
   status?: React.ReactNode;
   size?: "S" | "M";
@@ -15,7 +14,6 @@ export interface NotAuthenticatedLayoutProps {
 
 export const NotAuthenticatedLayout = ({
   children,
-  nav,
   header,
   status,
   size,
