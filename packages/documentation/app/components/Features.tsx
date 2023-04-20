@@ -36,6 +36,11 @@ export const Features = () => (
       <Card title="Gradual rollout">
         Target a percentage of your audience when deploying
       </Card>
+
+      <Card title="Audience Eligibility">
+        Rollout to only specific subsets of your audience based on qualitative
+        criteria
+      </Card>
     </div>
 
     <HorizontalLine />

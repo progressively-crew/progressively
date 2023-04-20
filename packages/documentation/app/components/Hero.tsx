@@ -98,15 +98,15 @@ export const Hero = () => {
   };
 
   return (
-    <div className="bg-slate-900">
+    <div className="bg-slate-100">
       <div className="max-w-screen-xl mx-auto px-4 md:px-0 pt-12 md:pt-32 w-full text-center pb-12">
         <div>
-          <h1 className="text-slate-50 text-3xl font-extrabold sm:text-6xl p-1">
+          <h1 className="text-3xl font-extrabold sm:text-6xl p-1">
             Rollout quickly, effectively,
-            <span className="sm:block text-indigo-300"> Progressively. </span>
+            <span className="sm:block text-indigo-700"> Progressively. </span>
           </h1>
 
-          <p className="mt-4 sm:text-3xl sm:leading-relaxed text-slate-300 font-thin">
+          <p className="mt-4 sm:text-3xl sm:leading-relaxed font-thin">
             A simple, accessible, lightweight, self-hosted and OpenSource{" "}
             <strong>feature flag software</strong>.
           </p>
@@ -221,9 +221,7 @@ export const Hero = () => {
             <div className="flex-1 drop-shadow-xl">
               <Window
                 inverse={isFirstActivated}
-                header={
-                  <SearchBar dark={isFirstActivated}>your-app.com</SearchBar>
-                }
+                header={<SearchBar>your-app.com</SearchBar>}
               >
                 {isFirstActivated ? (
                   <div

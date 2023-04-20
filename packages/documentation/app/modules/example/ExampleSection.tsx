@@ -7,7 +7,7 @@ export const ExampleSection = () => {
   const variant = searchParams.get("variant") || "Control";
 
   return (
-    <div className="flex flex-col lg:flex-row gap-8 items-center">
+    <div className="flex flex-col lg:flex-row gap-16 items-center">
       <div className="flex-1">
         <h2 className="font-semibold pt-2 text-4xl lg:text-6xl">
           Deploy whenever <br /> you want

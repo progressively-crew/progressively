@@ -24,11 +24,8 @@ export const EditorBar = ({ children }: BarProps) => {
   );
 };
 
-export const SearchBar = ({
-  children,
-  dark,
-}: BarProps & { dark?: boolean }) => {
-  const darkClasses = dark ? "text-white bg-slate-700" : "bg-white";
+export const SearchBar = ({ children }: BarProps & { dark?: boolean }) => {
+  const darkClasses = "text-white bg-slate-700";
   return (
     <div className="flex items-center justify-center flex-1">
       <div
@@ -45,9 +42,7 @@ export const Window = ({ children, header, inverse }: WindowProps) => {
     ? "bg-slate-900 text-white border border-gray-900"
     : "bg-white border border-gray-100";
 
-  const headerStyle = inverse
-    ? "border-b-gray-900 bg-slate-800"
-    : "border-b-gray-100 bg-slate-100";
+  const headerStyle = "border-b-gray-900 bg-slate-800";
 
   return (
     <div className={"rounded overflow-hidden " + wrapperStyle}>

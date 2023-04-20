@@ -4,7 +4,6 @@ import { Hero } from "~/components/Hero";
 import { WeightComparator } from "~/components/WeightComparator";
 import homeCss from "../styles/home.css";
 import darkTheme from "highlight.js/styles/github-dark.css";
-import lightTheme from "highlight.js/styles/github.css";
 import { SiteNav } from "~/components/SiteNav";
 import {
   Installation,
@@ -47,12 +46,6 @@ export const links: LinksFunction = () => {
       rel: "stylesheet",
       href: darkTheme,
     },
-    {
-      rel: "stylesheet",
-      href: lightTheme,
-      media: "(prefers-color-scheme: dark)",
-    },
-
     { rel: "stylesheet", href: homeCss },
   ];
 };
@@ -64,7 +57,7 @@ export default function Index() {
       <main>
         <Hero />
 
-        <section className="py-20 lg:py-28 mt-12">
+        <section className="py-20 lg:py-40 mt-12">
           <div className="max-w-screen-xl mx-auto px-4">
             <ExampleSection />
           </div>

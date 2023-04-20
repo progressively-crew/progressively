@@ -63,7 +63,7 @@ export const Example = () => {
     <div className="hidden md:block">
       <div className="py-6 flex items-center justify-center">
         <div className="bg-gray-50 pl-6 pr-3 py-3 rounded-full flex flex-row gap-3 items-center text-gray-700 font-semibold">
-          <label htmlFor="range-input">Rollout new Hero to</label>
+          <label htmlFor="range-input">New Hero</label>
           <input
             id="range-input"
             type="range"
