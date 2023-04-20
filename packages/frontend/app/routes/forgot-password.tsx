@@ -1,6 +1,5 @@
 import { MetaFunction, ActionFunction } from "@remix-run/node";
 import { useActionData, Form, useTransition } from "@remix-run/react";
-import { BackLink } from "~/components/BackLink";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { FormGroup } from "~/components/Fields/FormGroup";
@@ -10,9 +9,9 @@ import { Typography } from "~/components/Typography";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import { validateEmail } from "~/modules/forms/utils/validateEmail";
 import { forgotPassword } from "~/modules/user/services/forgotPassword";
-import { Card, CardContent } from "~/components/Card";
 import { H1Logo } from "~/components/H1Logo";
 import { Spacer } from "~/components/Spacer";
+import { Button } from "~/components/Buttons/Button";
 
 export const meta: MetaFunction = () => {
   return {
@@ -67,7 +66,13 @@ export default function ForgotPasswordPage() {
   return (
     <NotAuthenticatedLayout
       size="S"
-      nav={<BackLink to="/signin">Back to signin</BackLink>}
+      action={
+        <Button
+          to="/signin"
+          variant="secondary"
+          className="w-full"
+        >{`Sign in`}</Button>
+      }
       status={
         errors && Object.keys(errors).length > 0 ? (
           <ErrorBox list={errors} />
@@ -79,38 +84,31 @@ export default function ForgotPasswordPage() {
         ) : null
       }
     >
-      <Card>
-        <CardContent>
-          <H1Logo>Password forgotten</H1Logo>
-          <Spacer size={4} />
+      <H1Logo>Password forgotten</H1Logo>
 
-          <Typography>
-            Enter your email to get a recovery link and reset your password.
-          </Typography>
+      <Typography className="text-center">
+        Enter your email to get a recovery link and reset your password.
+      </Typography>
 
-          <Spacer size={4} />
+      <Form method="post">
+        <FormGroup>
+          <TextInput
+            hiddenLabel
+            isInvalid={Boolean(errors?.email)}
+            label="Email"
+            name="email"
+            type="email"
+            placeholder="e.g: james.bond@mi6.com"
+          />
 
-          <Form method="post">
-            <FormGroup>
-              <TextInput
-                isInvalid={Boolean(errors?.email)}
-                label="Email"
-                name="email"
-                type="email"
-                placeholder="e.g: james.bond@mi6.com"
-              />
-
-              <SubmitButton
-                className="justify-center w-full"
-                isLoading={transition.state === "submitting"}
-                loadingText="Password resetting in progress, please wait..."
-              >
-                Reset password
-              </SubmitButton>
-            </FormGroup>
-          </Form>
-        </CardContent>
-      </Card>
+          <SubmitButton
+            isLoading={transition.state === "submitting"}
+            loadingText="Password resetting in progress, please wait..."
+          >
+            Reset password
+          </SubmitButton>
+        </FormGroup>
+      </Form>
     </NotAuthenticatedLayout>
   );
 }

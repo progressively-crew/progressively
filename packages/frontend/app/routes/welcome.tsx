@@ -39,7 +39,7 @@ export default function WelcomePage() {
   const errors = data?.errors;
 
   return (
-    <NotAuthenticatedLayout>
+    <NotAuthenticatedLayout size="S">
       <Stack spacing={4}>
         <div className="text-center motion-safe:animate-fade-enter-top">
           <h1
@@ -55,7 +55,9 @@ export default function WelcomePage() {
           </Typography>
         </div>
 
+        <Spacer size={1} />
         {errors && Object.keys(errors).length > 0 && <ErrorBox list={errors} />}
+        <Spacer size={1} />
 
         <div
           className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"
@@ -63,14 +65,7 @@ export default function WelcomePage() {
             animationDelay: "500ms",
           }}
         >
-          <Card>
-            <CardContent>
-              <RegisterForm
-                errors={errors}
-                actionLabel="Create my admin user"
-              />
-            </CardContent>
-          </Card>
+          <RegisterForm errors={errors} actionLabel="Create my admin user" />
         </div>
       </Stack>
     </NotAuthenticatedLayout>

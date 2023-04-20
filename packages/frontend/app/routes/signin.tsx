@@ -21,13 +21,10 @@ import { AuthCredentials, OktaConfig } from "~/modules/auth/types";
 import { commitSession, getSession } from "~/sessions";
 import { authenticate } from "../modules/auth/services/authenticate";
 import { validateSigninForm } from "../modules/auth/validators/validate-signin-form";
-import { Typography } from "~/components/Typography";
 import { Button } from "~/components/Buttons/Button";
 import { SiOkta } from "react-icons/si";
-import { Card, CardContent } from "~/components/Card";
 import { getOktaConfig } from "~/modules/auth/services/get-okta-config";
 import { useOkta } from "~/modules/auth/hooks/useOkta";
-import { Separator } from "~/components/Separator";
 import { Spacer } from "~/components/Spacer";
 import { H1Logo } from "~/components/H1Logo";
 
@@ -102,105 +99,88 @@ export default function Signin() {
   return (
     <NotAuthenticatedLayout
       size="S"
-      status={
-        oauthFailed ? (
-          <ErrorBox
-            list={{
-              oauth:
-                "An error appeared during the authentication. Please try again or contact your system administrator.",
-            }}
-          />
-        ) : errors?.password || errors?.email || errors?.badUser ? (
-          <ErrorBox list={errors} />
-        ) : userActivated ? (
-          <SuccessBox id="user-activated">
-            The account has been activated, you can now log in
-          </SuccessBox>
-        ) : userCreated ? (
-          <SuccessBox id="user-created">
-            The account has been created, you can now log in
-          </SuccessBox>
-        ) : null
+      action={
+        showRegister && (
+          <Button
+            to="/register"
+            variant="secondary"
+            className="w-full"
+          >{`Sign up`}</Button>
+        )
       }
     >
-      <Card className="border-0 lg:border lg:py-12">
-        <CardContent>
-          <H1Logo>Progressively</H1Logo>
+      <H1Logo>Progressively</H1Logo>
 
-          <Spacer size={16} />
+      <Spacer size={1} />
 
-          <Form method="post">
-            <FormGroup>
-              <TextInput
-                isInvalid={Boolean(errors?.email)}
-                name="email"
-                label="Email"
-                placeholder="e.g: james.bond@mi6.com"
-                autoComplete="username"
-              />
+      {oauthFailed ? (
+        <ErrorBox
+          list={{
+            oauth:
+              "An error appeared during the authentication. Please try again or contact your system administrator.",
+          }}
+        />
+      ) : errors?.password || errors?.email || errors?.badUser ? (
+        <ErrorBox list={errors} />
+      ) : userActivated ? (
+        <SuccessBox id="user-activated">
+          The account has been activated, you can now log in
+        </SuccessBox>
+      ) : userCreated ? (
+        <SuccessBox id="user-created">
+          The account has been created, you can now log in
+        </SuccessBox>
+      ) : null}
 
-              <div>
-                <TextInput
-                  isInvalid={Boolean(errors?.password)}
-                  name="password"
-                  label="Password"
-                  type="password"
-                  placeholder="************"
-                  autoComplete="current-password"
-                />
+      <Spacer size={1} />
 
-                <div className="pt-1 flex justify-end">
-                  <Link
-                    to="/forgot-password"
-                    className="text-xs text-gray-500 dark:text-slate-300"
-                  >{`I forgot my password`}</Link>
-                </div>
-              </div>
+      <Form method="post">
+        <FormGroup>
+          <TextInput
+            isInvalid={Boolean(errors?.email)}
+            name="email"
+            label="Email"
+            placeholder="e.g: james.bond@mi6.com"
+            autoComplete="username"
+          />
 
-              <Button
-                isLoading={transition.state === "submitting"}
-                loadingText="Signin in progress, please wait..."
-              >
-                Sign in
-              </Button>
-            </FormGroup>
+          <div>
+            <TextInput
+              isInvalid={Boolean(errors?.password)}
+              name="password"
+              label="Password"
+              type="password"
+              placeholder="************"
+              autoComplete="current-password"
+            />
 
-            {showRegister && (
-              <div className="flex justify-center">
-                <Button
-                  to="/register"
-                  variant="secondary"
-                  className="w-full mt-2"
-                >{`Sign up`}</Button>
-              </div>
-            )}
-          </Form>
-
-          {oktaConfig.isOktaActivated && (
-            <div>
-              <Spacer size={12} />
-              <Separator />
-
-              <div className="flex justify-center -mt-3">
-                <Typography className="text-sm px-3 bg-white dark:bg-slate-800 text-gray-600">
-                  Or signin with
-                </Typography>
-              </div>
-
-              <Spacer size={4} />
-              <Button
-                type="button"
-                className="justify-center w-full"
-                variant="secondary"
-                icon={<SiOkta aria-hidden />}
-                onClick={okta?.openLoginPage}
-              >
-                Sign in with Okta
-              </Button>
+            <div className="pt-1 flex justify-end">
+              <Link
+                to="/forgot-password"
+                className="text-xs text-gray-500 dark:text-slate-300"
+              >{`I forgot my password`}</Link>
             </div>
-          )}
-        </CardContent>
-      </Card>
+          </div>
+
+          <Button
+            isLoading={transition.state === "submitting"}
+            loadingText="Signin in progress, please wait..."
+          >
+            Sign in
+          </Button>
+        </FormGroup>
+      </Form>
+
+      {oktaConfig.isOktaActivated && (
+        <Button
+          type="button"
+          variant="secondary"
+          icon={<SiOkta aria-hidden />}
+          onClick={okta?.openLoginPage}
+        >
+          Sign in with Okta
+        </Button>
+      )}
     </NotAuthenticatedLayout>
   );
 }
