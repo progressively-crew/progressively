@@ -52,7 +52,7 @@ export const InstallationCli = () => {
             content={`
 	$ git clone https://github.com/progressively-crew/progressively
 	$ cd progressively
-	$ docker-compose up -d
+	$ docker-compose up -d # or docker compose up -d
 		`}
             language="shell"
           />

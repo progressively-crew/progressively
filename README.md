@@ -23,7 +23,7 @@
 ```sh
 $ git clone https://github.com/progressively-crew/progressively
 $ cd progressively
-$ docker-compose up -d
+$ docker-compose up -d # or docker compose up -d
 ```
 
 You can now open http://localhost:3000/welcome to create your admin user.
