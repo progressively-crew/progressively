@@ -21,7 +21,7 @@ export const ProjectList = ({ projects }: ProjectListProps) => {
               Role in the project: <Tag size="S">{userProject.role}</Tag>
             </Typography>
           }
-          link={`/dashboard/projects/${userProject.projectId}`}
+          link={`/dashboard/projects/${userProject.projectId}/flags`}
         />
       ))}
     </div>
