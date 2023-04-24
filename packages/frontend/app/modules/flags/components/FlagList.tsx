@@ -6,16 +6,17 @@ import { ButtonCopy } from "~/components/ButtonCopy";
 export interface FlagEnvListProps {
   flags: Array<Flag>;
   projectId: string;
+  envId: string;
 }
 
-export const FlagList = ({ flags, projectId }: FlagEnvListProps) => {
+export const FlagList = ({ flags, projectId, envId }: FlagEnvListProps) => {
   return (
     <div className="flex flex-col gap-4">
       {flags.map((flag) => (
         <div key={flag.uuid}>
           <CardEntity
             avatar={<InitialBox content={flag.name} />}
-            link={`/dashboard/projects/${projectId}/flags/${flag.uuid}`}
+            link={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flag.uuid}`}
             title={flag.name}
             description={flag.description}
             actions={

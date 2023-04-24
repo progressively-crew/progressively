@@ -53,7 +53,10 @@ export default function ProjectDetailPage() {
         ) : null
       }
     >
-      <PageTitle value="Environments" />
+      <PageTitle
+        value="Environments"
+        description="All the environments available in the project."
+      />
 
       {hasEnvironments ? (
         <>
