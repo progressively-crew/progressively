@@ -1,4 +1,4 @@
-describe.only("/dashboard/projects/[id]/environments/[envId]", () => {
+describe("/dashboard/projects/[id]/environments/[envId]", () => {
   before(cy.seed);
   after(cy.cleanupDb);
 
