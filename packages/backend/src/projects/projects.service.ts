@@ -8,6 +8,23 @@ import { FlagAlreadyExists } from './errors';
 export class ProjectsService {
   constructor(private prisma: PrismaService) {}
 
+  flagsByProject(projectId: string) {
+    return this.prisma.flag.findMany({
+      where: {
+        flagEnvironment: {
+          every: {
+            environment: {
+              projectId,
+            },
+          },
+        },
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+  }
+
   createProject(name: string, userId: string) {
     return this.prisma.project.create({
       data: {

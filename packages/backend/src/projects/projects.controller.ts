@@ -68,6 +68,16 @@ export class ProjectsController {
     return this.projectService.getAll(user.uuid);
   }
 
+  /**
+   * Get all the flag of a given project/env (by projectId and envId)
+   */
+  @Get(':id/flags')
+  @UseGuards(HasProjectAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  getFlagsByProjectAndEnv(@Param('id') id: string) {
+    return this.projectService.flagsByProject(id);
+  }
+
   @Post()
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(ProjectCreationSchema))
