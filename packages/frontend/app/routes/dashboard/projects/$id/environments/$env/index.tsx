@@ -101,15 +101,7 @@ export default function FlagsByEnvPage() {
 
       {hasFlags ? (
         <>
-          <SearchLayout
-            actions={
-              <CreateButton
-                to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/create`}
-              >
-                Create a feature flag
-              </CreateButton>
-            }
-          >
+          <SearchLayout>
             <SearchBar
               label="Search for flags"
               placeholder="e.g: The flag"
