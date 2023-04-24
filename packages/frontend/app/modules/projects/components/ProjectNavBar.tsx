@@ -7,10 +7,11 @@ export interface ProjectNavBarProps {
 export const ProjectNavBar = ({ projectId }: ProjectNavBarProps) => {
   return (
     <HorizontalNav label={`Project related`}>
-      <NavItem to={`/dashboard/projects/${projectId}`}>Environments</NavItem>
       <NavItem to={`/dashboard/projects/${projectId}/flags`}>
         Feature flags
       </NavItem>
+
+      <NavItem to={`/dashboard/projects/${projectId}`}>Environments</NavItem>
 
       <NavItem to={`/dashboard/projects/${projectId}/settings`}>
         Settings
