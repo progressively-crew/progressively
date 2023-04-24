@@ -1,6 +1,5 @@
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { EmptyState } from "~/components/EmptyState";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { MetaFunction } from "@remix-run/node";
@@ -13,6 +12,7 @@ import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaT
 import { PageTitle } from "~/components/PageTitle";
 import { SearchBar } from "~/components/SearchBar";
 import { SearchLayout } from "~/layouts/SearchLayout";
+import { ProjectNavBar } from "~/modules/projects/components/ProjectNavBar";
 
 export const meta: MetaFunction = ({ parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -40,17 +40,7 @@ export default function ProjectDetailPage() {
   return (
     <DashboardLayout
       user={user}
-      subNav={
-        <HorizontalNav label={`Project related`}>
-          <NavItem to={`/dashboard/projects/${project.uuid}`}>
-            Environments
-          </NavItem>
-
-          <NavItem to={`/dashboard/projects/${project.uuid}/settings`}>
-            Settings
-          </NavItem>
-        </HorizontalNav>
-      }
+      subNav={<ProjectNavBar projectId={project.uuid} />}
       status={
         newEnvId ? (
           <SuccessBox id="env-added">

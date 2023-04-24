@@ -18,6 +18,7 @@ import { useProject } from "~/modules/projects/contexts/useProject";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
+import { ProjectNavBar } from "~/modules/projects/components/ProjectNavBar";
 
 export const meta: MetaFunction = ({ parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -74,17 +75,7 @@ export default function SettingsPage() {
   return (
     <DashboardLayout
       user={user}
-      subNav={
-        <HorizontalNav label={`Project related`}>
-          <NavItem to={`/dashboard/projects/${project.uuid}`}>
-            Environments
-          </NavItem>
-
-          <NavItem to={`/dashboard/projects/${project.uuid}/settings`}>
-            Settings
-          </NavItem>
-        </HorizontalNav>
-      }
+      subNav={<ProjectNavBar projectId={project.uuid} />}
     >
       <PageTitle value="Settings" />
 
