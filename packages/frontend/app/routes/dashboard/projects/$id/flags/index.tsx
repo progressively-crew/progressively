@@ -82,7 +82,7 @@ export default function FlagsByEnvPage() {
             />
           </SearchLayout>
 
-          <FlagList flags={flags} projectId={project.uuid} />
+          <FlagList flags={filteredFlags} projectId={project.uuid} />
         </>
       ) : (
         <Card>
