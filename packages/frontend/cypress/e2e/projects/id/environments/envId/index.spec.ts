@@ -1,4 +1,4 @@
-describe("/dashboard/projects/[id]/environments/[envId]", () => {
+describe.only("/dashboard/projects/[id]/environments/[envId]", () => {
   before(cy.seed);
   after(cy.cleanupDb);
 
@@ -54,13 +54,9 @@ describe("/dashboard/projects/[id]/environments/[envId]", () => {
           "be.visible"
         );
 
-        cy.findByRole("link", { name: "Create a feature flag" })
+        cy.findAllByRole("link", { name: "Create a feature flag" })
           .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/2/flags/create"
-          );
+          .and("have.attr", "href", "/dashboard/projects/1/flags/create");
       });
     });
 
@@ -89,14 +85,10 @@ describe("/dashboard/projects/[id]/environments/[envId]", () => {
         cy.findByRole("link", { name: "Feature flags" }).should("be.visible");
         cy.findByRole("link", { name: "Create a feature flag" })
           .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/1/flags/create"
-          );
+          .and("have.attr", "href", "/dashboard/projects/1/flags/create");
 
         /* verify the flag list */
-        cy.findByRole("link", { name: "New homepage" }).should("be.visible");
+        cy.findAllByRole("link", { name: "New homepage" }).should("be.visible");
 
         // it overflows in the table, reason why we test the existence and no the visibility
         cy.findByText("newHomepage").should("exist");

@@ -1,10 +1,10 @@
-describe("/dashboard/projects/[id]/environments/[envId]/flags/create", () => {
+describe("/dashboard/projects/[id]flags/create", () => {
   before(cy.seed);
   after(cy.cleanupDb);
 
   describe("not authenticated", () => {
     beforeEach(() => {
-      cy.visit("/dashboard/projects/1/environments/1/flags/create");
+      cy.visit("/dashboard/projects/1/flags/create");
     });
 
     it("checks that the route is protected", () => {
@@ -16,7 +16,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/create", () => {
     describe("user: Jane", () => {
       beforeEach(() => {
         cy.signIn("Jane");
-        cy.visit("/dashboard/projects/1/environments/1/flags/create", {
+        cy.visit("/dashboard/projects/1/flags/create", {
           failOnStatusCode: false,
         });
       });
@@ -29,14 +29,14 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/create", () => {
     describe("user: Marvin", () => {
       beforeEach(() => {
         cy.signIn("Marvin");
-        cy.visit("/dashboard/projects/1/environments/1/flags/create");
+        cy.visit("/dashboard/projects/1/flags/create");
         cy.injectAxe();
       });
 
       it("shows the layout", () => {
         cy.title().should(
           "eq",
-          "Progressively | Project from seeding | Production | Flags | Create"
+          "Progressively | Project from seeding | Flags | Create"
         );
 
         cy.findByRole("heading", { name: "Create a feature flag" }).should(
@@ -82,10 +82,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/create", () => {
         cy.findByRole("link", { name: "My new flag" }).should("be.visible");
         cy.findByText("My new flag description").should("be.visible");
 
-        cy.url().should(
-          "include",
-          "/dashboard/projects/1/environments/1?newFlagId"
-        );
+        cy.url().should("include", "/dashboard/projects/1/flags?newFlagId");
 
         cy.checkA11y();
       });
@@ -97,7 +94,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/create", () => {
         cy.findByRole("button", { name: "Create the feature flag" }).click();
 
         // New flag creation
-        cy.visit("/dashboard/projects/1/environments/1/flags/create");
+        cy.visit("/dashboard/projects/1/flags/create");
         cy.findByLabelText("Flag name").type("My new flag");
         cy.findByLabelText("Flag description").type("My new flag description");
         cy.findByRole("button", { name: "Create the feature flag" }).click();
