@@ -1,12 +1,12 @@
 import { Constants } from "~/constants";
 
 export const createFlag = (
-  envId: string,
+  projectId: string,
   name: string,
   description: string,
   accessToken: string
 ) =>
-  fetch(`${Constants.BackendUrl}/environments/${envId}/flags`, {
+  fetch(`${Constants.BackendUrl}/projects/${projectId}/flags`, {
     method: "POST",
     body: JSON.stringify({ name, description }),
     headers: {

@@ -10,8 +10,6 @@ import { validateFlagShape } from "~/modules/flags/validators/validateFlagShape"
 import { getSession } from "~/sessions";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
-import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
-import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { BackLink } from "~/components/BackLink";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
@@ -19,12 +17,11 @@ import { useState } from "react";
 import camelcase from "camelcase";
 import { ButtonCopy } from "~/components/ButtonCopy";
 
-export const meta: MetaFunction = ({ params, parentsData }) => {
+export const meta: MetaFunction = ({ parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
-  const envName = getEnvMetaTitle(parentsData, params.env);
 
   return {
-    title: `Progressively | ${projectName} | ${envName} | Flags | Create`,
+    title: `Progressively | ${projectName} | Flags | Create`,
   };
 };
 
@@ -37,7 +34,6 @@ export const action: ActionFunction = async ({
   params,
 }): Promise<ActionData | Response> => {
   const projectId = params.id!;
-  const envId = params.env!;
   const formData = await request.formData();
   const name = formData.get("flag-name")?.toString();
   const description = formData.get("flag-desc")?.toString();
@@ -52,14 +48,14 @@ export const action: ActionFunction = async ({
 
   try {
     const newFlag: Flag = await createFlag(
-      envId,
+      projectId,
       name!,
       description!,
       session.get("auth-cookie")
     );
 
     return redirect(
-      `/dashboard/projects/${projectId}/environments/${envId}?newFlagId=${newFlag.uuid}#flag-added`
+      `/dashboard/projects/${projectId}/flags?newFlagId=${newFlag.uuid}#flag-added`
     );
   } catch (error: unknown) {
     if (error instanceof Error) {
@@ -75,7 +71,6 @@ export default function CreateFlagPage() {
   const { project } = useProject();
   const data = useActionData<ActionData>();
   const transition = useTransition();
-  const { environment } = useEnvironment();
 
   const errors = data?.errors;
 
@@ -98,10 +93,8 @@ export default function CreateFlagPage() {
           </SubmitButton>
         }
         backLinkSlot={
-          <BackLink
-            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}`}
-          >
-            Back to environment
+          <BackLink to={`/dashboard/projects/${project.uuid}/flags`}>
+            Back to project
           </BackLink>
         }
       >

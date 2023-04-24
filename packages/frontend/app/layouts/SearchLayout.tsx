@@ -1,6 +1,6 @@
 export interface SearchLayoutProps {
   children: React.ReactNode;
-  actions: React.ReactNode;
+  actions?: React.ReactNode;
 }
 
 export const SearchLayout = ({ children, actions }: SearchLayoutProps) => {

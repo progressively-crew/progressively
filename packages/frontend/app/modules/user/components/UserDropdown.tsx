@@ -2,16 +2,25 @@ import { User } from "~/modules/user/types";
 import { Avatar } from "~/components/Avatar";
 import { Button } from "~/components/Buttons/Button";
 import { HideMobile } from "~/components/HideMobile";
-import { ThemeSwitch } from "~/components/ThemeSwitch";
+import { CreateButton } from "~/components/Buttons/CreateButton";
+import { useProject } from "~/modules/projects/contexts/useProject";
 
 export interface UserDropdownProps {
   user: User;
 }
 
 export const UserDropdown = ({ user }: UserDropdownProps) => {
+  const { project } = useProject();
   return (
     <nav aria-label="User related" className="hidden lg:flex flex-row gap-2 ">
-      <ThemeSwitch />
+      {project && (
+        <CreateButton
+          to={`/dashboard/projects/${project.uuid}/flags/create`}
+          variant="secondary"
+        >
+          Create a feature flag
+        </CreateButton>
+      )}
 
       <Button
         to="/dashboard/profile"

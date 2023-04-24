@@ -1,52 +1,32 @@
-import { getFlagsByProjectEnv } from "~/modules/flags/services/getFlagsByProjectEnv";
-import { FlagEnv } from "~/modules/flags/types";
+import { Flag } from "~/modules/flags/types";
 import { getSession } from "~/sessions";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { EmptyState } from "~/components/EmptyState";
 import { CreateButton } from "~/components/Buttons/CreateButton";
-import { FlagEnvList } from "~/modules/flags/components/FlagEnvList";
-import { EnvNavBar } from "~/modules/environments/components/EnvNavbar";
-import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
+import { MetaFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { Card, CardContent } from "~/components/Card";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
-import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
-import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
-import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
 import { PageTitle } from "~/components/PageTitle";
 import { SearchLayout } from "~/layouts/SearchLayout";
 import { SearchBar } from "~/components/SearchBar";
+import { ProjectNavBar } from "~/modules/projects/components/ProjectNavBar";
+import { getProjectFlags } from "~/modules/projects/services/getProjectFlags";
+import { FlagList } from "~/modules/flags/components/FlagList";
 
-export const meta: MetaFunction = ({ params, parentsData }) => {
+export const meta: MetaFunction = ({ parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
-  const envName = getEnvMetaTitle(parentsData, params.env);
 
   return {
-    title: `Progressively | ${projectName} | ${envName} | Flags`,
+    title: `Progressively | ${projectName} | Flags`,
   };
 };
 
-export const action: ActionFunction = async ({
-  request,
-  params,
-}): Promise<null> => {
-  const session = await getSession(request.headers.get("Cookie"));
-  const authCookie = session.get("auth-cookie");
-  const formData = await request.formData();
-  const type = formData.get("_type");
-
-  if (type === "toggle-flag") {
-    return toggleFlagAction(formData, params, authCookie);
-  }
-
-  return null;
-};
-
 interface LoaderData {
-  flagsByEnv: Array<FlagEnv>;
+  flags: Array<Flag>;
 }
 
 export const loader: LoaderFunction = async ({
@@ -56,41 +36,34 @@ export const loader: LoaderFunction = async ({
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
 
-  const flagsByEnv: Array<FlagEnv> = await getFlagsByProjectEnv(
-    params.env!,
-    authCookie
-  );
+  const flags: Array<Flag> = await getProjectFlags(params.id!, authCookie);
 
-  return { flagsByEnv };
+  return { flags };
 };
 
 export default function FlagsByEnvPage() {
-  const { flagsByEnv } = useLoaderData<LoaderData>();
+  const { flags } = useLoaderData<LoaderData>();
   const { user } = useUser();
   const { project } = useProject();
-  const { environment } = useEnvironment();
+
   const [searchParams] = useSearchParams();
   const search = searchParams.get("search");
   const newFlagId = searchParams.get("newFlagId") || undefined;
-  const isFlagRemoved = searchParams.get("flagRemoved") || undefined;
+
   const isSearching = Boolean(searchParams.get("search") || undefined);
 
-  const filteredFlags = flagsByEnv.filter((flag) =>
-    flag.flag.name.toLocaleLowerCase().includes(search || "")
+  const filteredFlags = flags.filter((flag) =>
+    flag.name.toLocaleLowerCase().includes(search || "")
   );
 
-  const hasFlags = flagsByEnv.length > 0;
+  const hasFlags = flags.length > 0;
 
   return (
     <DashboardLayout
       user={user}
-      subNav={<EnvNavBar projectId={project.uuid} envId={environment.uuid} />}
+      subNav={<ProjectNavBar projectId={project.uuid} />}
       status={
-        isFlagRemoved ? (
-          <SuccessBox id="flag-removed">
-            The flag has been successfully deleted.
-          </SuccessBox>
-        ) : newFlagId ? (
+        newFlagId ? (
           <SuccessBox id="flag-added">
             The flag has been successfully created.
           </SuccessBox>
@@ -109,11 +82,7 @@ export default function FlagsByEnvPage() {
             />
           </SearchLayout>
 
-          <FlagEnvList
-            flags={filteredFlags}
-            envId={environment.uuid}
-            projectId={project.uuid}
-          />
+          <FlagList flags={filteredFlags} projectId={project.uuid} />
         </>
       ) : (
         <Card>
@@ -124,7 +93,7 @@ export default function FlagsByEnvPage() {
               description={"There are no flags yet on this environment."}
               action={
                 <CreateButton
-                  to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/create`}
+                  to={`/dashboard/projects/${project.uuid}/flags/create`}
                 >
                   Create a feature flag
                 </CreateButton>
