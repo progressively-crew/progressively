@@ -1,22 +1,9 @@
-import {
-  BadRequestException,
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  UseGuards,
-  UsePipes,
-} from '@nestjs/common';
+import { Controller, Delete, Get, Param, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
-import { FlagCreationDTO, FlagCreationSchema } from '../flags/flags.dto';
 import { Roles } from '../shared/decorators/Roles';
-import { ValidationPipe } from '../shared/pipes/ValidationPipe';
 import { UserRoles } from '../users/roles';
 import { EnvironmentsService } from './environments.service';
-import { FlagAlreadyExists } from './errors';
 import { HasEnvironmentAccessGuard } from './guards/hasEnvAccess';
 
 @ApiBearerAuth()
@@ -32,29 +19,6 @@ export class EnvironmentsController {
   @UseGuards(JwtAuthGuard)
   getFlagsByProjectAndEnv(@Param('envId') envId: string) {
     return this.envService.flagsByEnv(envId);
-  }
-
-  /**
-   * Create a flag on a given project/env (by projectId and envId)
-   */
-  @Post(':envId/flags')
-  @UseGuards(HasEnvironmentAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  @UsePipes(new ValidationPipe(FlagCreationSchema))
-  async createFlag(@Param('envId') envId, @Body() body: FlagCreationDTO) {
-    try {
-      return await this.envService.createFlagEnvironment(
-        envId,
-        body.name,
-        body.description,
-      );
-    } catch (e) {
-      if (e instanceof FlagAlreadyExists) {
-        throw new BadRequestException('Flag already exists');
-      }
-
-      throw e;
-    }
   }
 
   /**

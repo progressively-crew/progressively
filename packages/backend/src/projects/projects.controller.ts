@@ -12,6 +12,7 @@ import {
   UnauthorizedException,
   NotFoundException,
   ConflictException,
+  BadRequestException,
 } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
@@ -37,6 +38,8 @@ import {
 import { UserStatus } from '../users/status';
 import { MailService } from '../mail/mail.service';
 import { Environment } from '../environments/types';
+import { FlagCreationDTO, FlagCreationSchema } from '../flags/flags.dto';
+import { FlagAlreadyExists } from './errors';
 @ApiBearerAuth()
 @Controller('projects')
 export class ProjectsController {
@@ -172,5 +175,28 @@ export class ProjectsController {
     @Body() envDto: EnvironmentCreationDTO,
   ): Promise<Environment> {
     return this.envService.createEnvironment(id, envDto.name);
+  }
+
+  /**
+   * Create a flag on a given project/env (by projectId and envId)
+   */
+  @Post(':id/flags')
+  @UseGuards(HasProjectAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(new ValidationPipe(FlagCreationSchema))
+  async createFlag(@Param('id') id, @Body() body: FlagCreationDTO) {
+    try {
+      return await this.projectService.createProjectFlag(
+        id,
+        body.name,
+        body.description,
+      );
+    } catch (e) {
+      if (e instanceof FlagAlreadyExists) {
+        throw new BadRequestException('Flag already exists');
+      }
+
+      throw e;
+    }
   }
 }

@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import camelcase from 'camelcase';
 import { PrismaService } from '../database/prisma.service';
-import { FlagAlreadyExists } from './errors';
 import { PopulatedFlagEnv } from '../flags/types';
 
 @Injectable()
@@ -69,54 +67,6 @@ export class EnvironmentsService {
           createMany: {
             data: allMatchingFlagEnv.map((flagEnv) => ({
               flagId: flagEnv.flagId,
-            })),
-          },
-        },
-      },
-    });
-  }
-
-  async createFlagEnvironment(
-    envId: string,
-    name: string,
-    description: string,
-  ) {
-    const flagKey = camelcase(name);
-
-    const existingFlagEnv = await this.prisma.flagEnvironment.findFirst({
-      where: {
-        environmentId: envId,
-        flag: {
-          key: flagKey,
-        },
-      },
-    });
-
-    if (existingFlagEnv) {
-      throw new FlagAlreadyExists();
-    }
-
-    const concernedEnv = await this.prisma.environment.findFirst({
-      where: {
-        uuid: envId,
-      },
-    });
-
-    const envsOfProject = await this.prisma.environment.findMany({
-      where: {
-        projectId: concernedEnv.projectId,
-      },
-    });
-
-    return await this.prisma.flag.create({
-      data: {
-        name,
-        description,
-        key: flagKey,
-        flagEnvironment: {
-          createMany: {
-            data: envsOfProject.map((env) => ({
-              environmentId: env.uuid,
             })),
           },
         },
