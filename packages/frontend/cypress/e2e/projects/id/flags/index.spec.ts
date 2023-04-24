@@ -38,7 +38,7 @@ describe("/dashboard/projects/[id]/flags", () => {
 
         cy.verifyBreadcrumbs([
           ["Projects", "/dashboard"],
-          ["Project from seeding", "/dashboard/projects/1"],
+          ["Project from seeding", "/dashboard/projects/1/flags"],
         ]);
 
         cy.findByRole("heading", { name: "Feature flags" }).should("exist");

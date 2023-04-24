@@ -36,7 +36,7 @@ describe("/dashboard/projects/[id]", () => {
 
         cy.verifyBreadcrumbs([
           ["Projects", "/dashboard"],
-          ["Project from seeding", "/dashboard/projects/1"],
+          ["Project from seeding", "/dashboard/projects/1/flags"],
         ]);
 
         cy.findAllByText("Project from seeding").should("have.length", 2);
