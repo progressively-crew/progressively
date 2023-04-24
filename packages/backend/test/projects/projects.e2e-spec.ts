@@ -457,7 +457,7 @@ describe('ProjectsController (e2e)', () => {
     });
   });
 
-  describe.only('/projects/1/flags (POST)', () => {
+  describe('/projects/1/flags (POST)', () => {
     it('gives a 401 when the user is not authenticated', () =>
       verifyAuthGuard(app, '/projects/1/flags', 'post'));
 
@@ -487,7 +487,7 @@ describe('ProjectsController (e2e)', () => {
       );
 
       return request(app.getHttpServer())
-        .post('/environments/1/flags')
+        .post('/projects/1/flags')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(403)
         .expect({
@@ -551,11 +551,11 @@ describe('ProjectsController (e2e)', () => {
 
       // Verifies that the flag has been added to both the env of the project
       const currentEnvFlags = await request(app.getHttpServer())
-        .get('/projects/1/flags')
+        .get('/environments/1/flags')
         .set('Authorization', `Bearer ${access_token}`);
 
       const otherEnvFlags = await request(app.getHttpServer())
-        .get('/projects/2/flags')
+        .get('/environments/2/flags')
         .set('Authorization', `Bearer ${access_token}`);
 
       const flagIdMatchesUuid = ({ flagId }) => flagId === response.body.uuid;
