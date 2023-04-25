@@ -51,7 +51,6 @@ export const SchedulingList = ({
                     {
                       label: "Remove",
                       href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/scheduling/${schedule.uuid}/delete`,
-                      noInitial: true,
                     },
                   ]}
                   label={"Actions on scheduling"}

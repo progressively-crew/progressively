@@ -1,3 +1,1 @@
-import { TbFlag3 } from "react-icons/tb";
-
-export const FlagIcon = () => <TbFlag3 />;
+export { TbFlag3 as FlagIcon } from "react-icons/tb";

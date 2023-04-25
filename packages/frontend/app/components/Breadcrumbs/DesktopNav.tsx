@@ -1,5 +1,8 @@
 import { HStack } from "../HStack";
-import { InitialBox } from "../InitialBox";
+import { IconBox } from "../IconBox";
+import { EnvIcon } from "../Icons/EnvIcon";
+import { FlagIcon } from "../Icons/FlagIcon";
+import { ProjectIcon } from "../Icons/ProjectIcon";
 import { Link } from "../Link";
 import { Logo } from "../Logo/Logo";
 import { MenuButton } from "../MenuButton";
@@ -42,7 +45,11 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
                       <Logo aria-label={crumb.label} />
                     ) : (
                       <HStack spacing={2}>
-                        <InitialBox content={crumb.label} size="S" />
+                        <IconBox content={crumb.label} size="S">
+                          {crumb.isProject && <ProjectIcon />}
+                          {crumb.isEnv && <EnvIcon />}
+                          {crumb.isFlag && <FlagIcon />}
+                        </IconBox>
                         {crumb.label}
                       </HStack>
                     )}

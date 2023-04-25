@@ -1,4 +1,5 @@
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
+import { ThemeSwitch } from "~/components/ThemeSwitch";
 
 export interface FlagMenuProps {
   projectId: string;
@@ -12,6 +13,10 @@ export const UserMenu = () => {
       <NavItem to={`#password`}>Password</NavItem>
 
       <NavItem to={`#logout`}>Logout</NavItem>
+
+      <li>
+        <ThemeSwitch />
+      </li>
     </HorizontalNav>
   );
 };

@@ -1,7 +1,8 @@
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { CardEntity } from "~/components/Entity/Entity";
-import { InitialBox } from "~/components/InitialBox";
 import { Environment } from "../types";
+import { IconBox } from "~/components/IconBox";
+import { EnvIcon } from "~/components/Icons/EnvIcon";
 
 export interface EnvListProps {
   environments: Array<Environment>;
@@ -14,7 +15,11 @@ export const EnvList = ({ environments, projectId }: EnvListProps) => {
       {environments.map((env) => (
         <CardEntity
           key={env.uuid}
-          avatar={<InitialBox content={env.name} />}
+          avatar={
+            <IconBox content={env.name}>
+              <EnvIcon />
+            </IconBox>
+          }
           title={env.name}
           link={`/dashboard/projects/${projectId}/environments/${env.uuid}`}
           actions={

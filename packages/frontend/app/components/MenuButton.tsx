@@ -3,14 +3,14 @@ import { NavLink } from "@remix-run/react";
 import React, { Fragment } from "react";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { RxCaretSort } from "react-icons/rx";
-import { InitialBox } from "./InitialBox";
 import { Tooltip } from "./Tooltip/Tooltip";
+import { IconBox } from "./IconBox";
 
 interface MenuItem {
   label: string;
   href?: string;
   onClick?: () => void;
-  noInitial?: boolean;
+  icon?: React.ReactNode;
 }
 
 export interface MenuButtonProps {
@@ -63,8 +63,10 @@ export const MenuButton = ({
                     to={item.href || ""}
                     onClick={item.onClick}
                   >
-                    {!item.noInitial && (
-                      <InitialBox content={item.label} size="S" />
+                    {item.icon && (
+                      <IconBox content={item.label} size="S">
+                        {item.icon}
+                      </IconBox>
                     )}
                     {item.label}
                   </NavLink>

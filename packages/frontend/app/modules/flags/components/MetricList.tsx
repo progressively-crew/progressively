@@ -45,7 +45,6 @@ export const MetricList = ({
                 {
                   label: "Remove",
                   href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/metrics/${metric.uuid}/delete`,
-                  noInitial: true,
                 },
               ]}
               label={"Actions on webhook"}

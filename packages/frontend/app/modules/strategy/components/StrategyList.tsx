@@ -118,7 +118,6 @@ const StrategyItem = ({ strategy, variants, segments }: StrategyItemProps) => {
               items={[
                 {
                   label: "Delete strategy",
-                  noInitial: true,
                   onClick: () => {
                     deleteStrategyForm.current?.submit();
                   },
