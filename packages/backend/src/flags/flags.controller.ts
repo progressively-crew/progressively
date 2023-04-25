@@ -216,6 +216,16 @@ export class FlagsController {
     };
   }
 
+  /**
+   * Get the flag hits grouped by date
+   */
+  @Get('flags/:flagId')
+  @UseGuards(HasFlagAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  getFlag(@Param('flagId') flagId: string) {
+    return this.flagService.getFlagById(flagId);
+  }
+
   @Get('environments/:envId/flags/:flagId/activity')
   @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)

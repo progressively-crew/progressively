@@ -53,6 +53,19 @@ export class FlagsService {
     });
   }
 
+  getFlagById(flagId: string) {
+    return this.prisma.flag.findUnique({
+      where: { uuid: flagId },
+      include: {
+        flagEnvironment: {
+          include: {
+            environment: true,
+          },
+        },
+      },
+    });
+  }
+
   async addMetricToFlagEnv(
     envId: string,
     flagId: string,
