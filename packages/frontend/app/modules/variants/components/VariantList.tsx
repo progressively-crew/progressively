@@ -28,12 +28,10 @@ export const VariantList = ({
                 {
                   label: "Attach a metric",
                   href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/metrics/create?variant=${variant.uuid}`,
-                  noInitial: true,
                 },
                 {
                   label: "Remove",
                   href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/variants/${variant.uuid}/delete`,
-                  noInitial: true,
                 },
               ]}
               label={"Actions on webhook"}

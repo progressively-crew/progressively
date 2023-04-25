@@ -1,4 +1,5 @@
 import { Outlet, useParams } from "@remix-run/react";
+import { EnvIcon } from "~/components/Icons/EnvIcon";
 import { EnvProvider } from "~/modules/environments/contexts/EnvProvider";
 import { useProject } from "~/modules/projects/contexts/useProject";
 
@@ -31,6 +32,7 @@ export const handle = {
         return {
           label: env.name,
           href,
+          icon: <EnvIcon />,
         };
       }),
       menuLabel: `Change environment`,

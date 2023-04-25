@@ -1,5 +1,6 @@
 import { LoaderFunction } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
+import { ProjectIcon } from "~/components/Icons/ProjectIcon";
 import { ProjectProvider } from "~/modules/projects/contexts/ProjectProvider";
 import { getProject } from "~/modules/projects/services/getProject";
 import { Project, UserProject } from "~/modules/projects/types";
@@ -23,6 +24,7 @@ export const handle = {
       menuItems: routeWithProjects.data.projects.map((p: any) => ({
         href: `/dashboard/projects/${p.project.uuid}`,
         label: p.project.name,
+        icon: <ProjectIcon />,
       })),
       menuLabel: `Change project`,
     };

@@ -1,8 +1,9 @@
 import { CardEntity } from "~/components/Entity/Entity";
-import { InitialBox } from "~/components/InitialBox";
 import { Tag } from "~/components/Tag";
 import { Typography } from "~/components/Typography";
 import { UserProject } from "../types";
+import { IconBox } from "~/components/IconBox";
+import { ProjectIcon } from "~/components/Icons/ProjectIcon";
 
 export interface ProjectListProps {
   projects: Array<UserProject>;
@@ -14,7 +15,11 @@ export const ProjectList = ({ projects }: ProjectListProps) => {
       {projects.map((userProject) => (
         <CardEntity
           key={userProject.projectId}
-          avatar={<InitialBox content={userProject.project.name} />}
+          avatar={
+            <IconBox content={userProject.project.name}>
+              <ProjectIcon />
+            </IconBox>
+          }
           title={userProject.project.name}
           description={
             <Typography>

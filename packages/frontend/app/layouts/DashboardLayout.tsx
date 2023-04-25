@@ -9,7 +9,6 @@ import { UserDropdown } from "~/modules/user/components/UserDropdown";
 import { useMatches, useNavigation } from "@remix-run/react";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { Spinner } from "~/components/Spinner";
-import { ThemeSwitch } from "~/components/ThemeSwitch";
 
 export interface DashboardLayoutProps {
   user: User;
@@ -78,12 +77,6 @@ export const DashboardLayout = ({
             )}
           </div>
         </Main>
-
-        <footer className="px-8 py-2 border-t border-gray-300 flex justify-end">
-          <div className="inline-block">
-            <ThemeSwitch />
-          </div>
-        </footer>
       </InertWhenNavOpened>
     </NavProvider>
   );

@@ -26,12 +26,10 @@ export const SegmentList = ({
                 {
                   label: "Edit",
                   href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/segments/${segment.uuid}`,
-                  noInitial: true,
                 },
                 {
                   label: "Remove",
                   href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/segments/${segment.uuid}/delete`,
-                  noInitial: true,
                 },
               ]}
               label={"Actions on segment"}
