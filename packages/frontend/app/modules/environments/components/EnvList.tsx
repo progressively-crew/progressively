@@ -6,10 +6,10 @@ import { EnvIcon } from "~/components/Icons/EnvIcon";
 
 export interface EnvListProps {
   environments: Array<Environment>;
-  projectId: string;
+  makeLink: (env: Environment) => string;
 }
 
-export const EnvList = ({ environments, projectId }: EnvListProps) => {
+export const EnvList = ({ environments, makeLink }: EnvListProps) => {
   return (
     <div className="flex flex-col gap-4">
       {environments.map((env) => (
@@ -21,7 +21,7 @@ export const EnvList = ({ environments, projectId }: EnvListProps) => {
             </IconBox>
           }
           title={env.name}
-          link={`/dashboard/projects/${projectId}/environments/${env.uuid}`}
+          link={makeLink(env)}
           actions={
             <div className="hidden md:block">
               <ButtonCopy toCopy={env.clientKey}>{env.clientKey}</ButtonCopy>

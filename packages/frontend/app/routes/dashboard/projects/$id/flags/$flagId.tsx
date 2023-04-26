@@ -2,11 +2,11 @@ import { LoaderFunction } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
 import { FlagProvider } from "~/modules/flags/contexts/FlagProvider";
 import { getFlagById } from "~/modules/flags/services/getFlagById";
-import { Flag } from "~/modules/flags/types";
+import { FlagWithEnvs } from "~/modules/flags/types";
 import { getSession } from "~/sessions";
 
 interface LoaderData {
-  flag: Flag;
+  flag: FlagWithEnvs;
 }
 
 export const handle = {
@@ -26,7 +26,7 @@ export const loader: LoaderFunction = async ({
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
 
-  const flag: Flag = await getFlagById(params.flagId!, authCookie);
+  const flag: FlagWithEnvs = await getFlagById(params.flagId!, authCookie);
 
   return {
     flag,
