@@ -61,11 +61,7 @@ export class SdkController {
       headers,
     );
 
-    const str = `window.progressivelyFlags=${JSON.stringify(flags, null)};`;
-
-    console.log('lol', str);
-
-    return str;
+    return `window.progressivelyFlags=${JSON.stringify(flags, null)};`;
   }
 
   @Post('/:params')
