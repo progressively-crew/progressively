@@ -111,7 +111,7 @@ export default function FlagsByEnvPage() {
               description={"There are no flags yet on this environment."}
               action={
                 <CreateButton
-                  to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/create`}
+                  to={`/dashboard/projects/${project.uuid}/flags/create`}
                 >
                   Create a feature flag
                 </CreateButton>
