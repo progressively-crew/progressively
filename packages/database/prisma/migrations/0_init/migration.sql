@@ -299,3 +299,4 @@ ALTER TABLE "StrategyVariant" ADD CONSTRAINT "StrategyVariant_variantUuid_fkey" 
 
 -- AddForeignKey
 ALTER TABLE "StrategyVariant" ADD CONSTRAINT "StrategyVariant_strategyUuid_fkey" FOREIGN KEY ("strategyUuid") REFERENCES "Strategy"("uuid") ON DELETE RESTRICT ON UPDATE CASCADE;
+
