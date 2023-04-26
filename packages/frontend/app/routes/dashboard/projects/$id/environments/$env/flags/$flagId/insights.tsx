@@ -3,14 +3,14 @@ import { getSession } from "~/sessions";
 import { getFlagHits } from "~/modules/flags/services/getFlagHits";
 import { MetaFunction, LoaderFunction, ActionFunction } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
-import { FlagMenu } from "~/modules/flags/components/FlagMenu";
+import { FlagEnvMenu } from "~/modules/flags/components/FlagEnvMenu";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
-import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
+import { getFlagEnvMetaTitle } from "~/modules/flags/services/getFlagEnvMetaTitle";
 import { Card, CardContent } from "~/components/Card";
 import { TextInput } from "~/components/Fields/TextInput";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
@@ -27,7 +27,7 @@ import { Typography } from "~/components/Typography";
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
   const envName = getEnvMetaTitle(parentsData, params.env);
-  const flagName = getFlagMetaTitle(parentsData);
+  const flagName = getFlagEnvMetaTitle(parentsData);
 
   return {
     title: `Progressively | ${projectName} | ${envName} | ${flagName} | Insights`,
@@ -174,7 +174,7 @@ export default function FlagInsights() {
     <DashboardLayout
       user={user}
       subNav={
-        <FlagMenu
+        <FlagEnvMenu
           projectId={project.uuid}
           envId={environment.uuid}
           flagEnv={flagEnv}

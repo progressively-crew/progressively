@@ -1,7 +1,6 @@
 import { getFlagsByProjectEnv } from "~/modules/flags/services/getFlagsByProjectEnv";
 import { FlagEnv } from "~/modules/flags/types";
 import { getSession } from "~/sessions";
-import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { EmptyState } from "~/components/EmptyState";
 import { CreateButton } from "~/components/Buttons/CreateButton";
@@ -71,8 +70,7 @@ export default function FlagsByEnvPage() {
   const { environment } = useEnvironment();
   const [searchParams] = useSearchParams();
   const search = searchParams.get("search");
-  const newFlagId = searchParams.get("newFlagId") || undefined;
-  const isFlagRemoved = searchParams.get("flagRemoved") || undefined;
+
   const isSearching = Boolean(searchParams.get("search") || undefined);
 
   const filteredFlags = flagsByEnv.filter((flag) =>
@@ -85,17 +83,6 @@ export default function FlagsByEnvPage() {
     <DashboardLayout
       user={user}
       subNav={<EnvNavBar projectId={project.uuid} envId={environment.uuid} />}
-      status={
-        isFlagRemoved ? (
-          <SuccessBox id="flag-removed">
-            The flag has been successfully deleted.
-          </SuccessBox>
-        ) : newFlagId ? (
-          <SuccessBox id="flag-added">
-            The flag has been successfully created.
-          </SuccessBox>
-        ) : null
-      }
     >
       <PageTitle value="Feature flags" />
 

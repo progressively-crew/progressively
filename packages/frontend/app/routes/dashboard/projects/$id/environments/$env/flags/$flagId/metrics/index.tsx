@@ -9,11 +9,11 @@ import { Typography } from "~/components/Typography";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
-import { FlagMenu } from "~/modules/flags/components/FlagMenu";
+import { FlagEnvMenu } from "~/modules/flags/components/FlagEnvMenu";
 import { MetricList } from "~/modules/flags/components/MetricList";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
-import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
+import { getFlagEnvMetaTitle } from "~/modules/flags/services/getFlagEnvMetaTitle";
 import { getMetrics } from "~/modules/flags/services/getMetrics";
 import { Metric } from "~/modules/flags/types";
 import { useProject } from "~/modules/projects/contexts/useProject";
@@ -24,7 +24,7 @@ import { getSession } from "~/sessions";
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
   const envName = getEnvMetaTitle(parentsData, params.env);
-  const flagName = getFlagMetaTitle(parentsData);
+  const flagName = getFlagEnvMetaTitle(parentsData);
 
   return {
     title: `Progressively | ${projectName} | ${envName} | Flags | ${flagName} | Metrics`,
@@ -92,7 +92,7 @@ export default function Metrics() {
     <DashboardLayout
       user={user}
       subNav={
-        <FlagMenu
+        <FlagEnvMenu
           projectId={project.uuid}
           envId={environment.uuid}
           flagEnv={flagEnv}

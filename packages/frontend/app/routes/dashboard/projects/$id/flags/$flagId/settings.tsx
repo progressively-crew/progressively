@@ -3,80 +3,39 @@ import { UserRoles } from "~/modules/projects/types";
 import { Section, SectionHeader } from "~/components/Section";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
-import { ActionFunction, MetaFunction } from "@remix-run/node";
+import { MetaFunction } from "@remix-run/node";
 import { Card, CardContent } from "~/components/Card";
-import { FlagMenu } from "~/modules/flags/components/FlagMenu";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
-import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
-import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
-import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
-import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
-import { getSession } from "~/sessions";
-import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
+import { FlagMenu } from "~/modules/flags/components/FlagMenu";
+import { useFlag } from "~/modules/flags/contexts/useFlag";
+import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 
-export const meta: MetaFunction = ({ parentsData, params }) => {
+export const meta: MetaFunction = ({ parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
-  const envName = getEnvMetaTitle(parentsData, params.env);
   const flagName = getFlagMetaTitle(parentsData);
 
   return {
-    title: `Progressively | ${projectName} | ${envName} | ${flagName} | Settings`,
+    title: `Progressively | ${projectName} | ${flagName} | Settings`,
   };
-};
-
-type ActionDataType = null | {
-  errors?: { [key: string]: string | undefined };
-};
-
-export const action: ActionFunction = async ({
-  request,
-  params,
-}): Promise<ActionDataType> => {
-  const session = await getSession(request.headers.get("Cookie"));
-  const authCookie = session.get("auth-cookie");
-  const formData = await request.formData();
-  const type = formData.get("_type");
-
-  if (type === "toggle-flag") {
-    return toggleFlagAction(formData, params, authCookie);
-  }
-
-  return null;
 };
 
 export default function FlagSettingPage() {
   const { project, userRole } = useProject();
   const { user } = useUser();
-  const { flagEnv } = useFlagEnv();
-
-  const { environment } = useEnvironment();
-
-  const currentFlag = flagEnv.flag;
+  const { flag } = useFlag();
 
   return (
     <DashboardLayout
       user={user}
-      subNav={
-        <FlagMenu
-          projectId={project.uuid}
-          envId={environment.uuid}
-          flagEnv={flagEnv}
-        />
-      }
+      subNav={<FlagMenu projectId={project.uuid} flag={flag} />}
     >
       <PageTitle value="Settings" />
 
-      <Card
-        footer={
-          <ButtonCopy toCopy={currentFlag.key} size="M">
-            {currentFlag.key}
-          </ButtonCopy>
-        }
-      >
+      <Card footer={<ButtonCopy toCopy={flag.key}>{flag.key}</ButtonCopy>}>
         <CardContent>
           <Section id="general">
             <SectionHeader
@@ -93,18 +52,14 @@ export default function FlagSettingPage() {
         <Card
           footer={
             <DeleteButton
-              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/delete`}
+              to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}/delete`}
             >
               <span aria-hidden>
                 <span>Delete </span>
-                <span className="hidden md:inline">
-                  {currentFlag.name} forever
-                </span>
+                <span className="hidden md:inline">{flag.name} forever</span>
               </span>
 
-              <VisuallyHidden>
-                {`Delete ${currentFlag.name} forever`}
-              </VisuallyHidden>
+              <VisuallyHidden>{`Delete ${flag.name} forever`}</VisuallyHidden>
             </DeleteButton>
           }
         >

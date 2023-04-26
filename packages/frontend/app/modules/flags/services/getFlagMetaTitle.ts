@@ -1,10 +1,8 @@
-import { FlagEnv } from "../types";
+import { Flag } from "../types";
 
 export const getFlagMetaTitle = (parentsData: any): string => {
-  const flagEnv: FlagEnv | undefined =
-    parentsData?.[
-      "routes/dashboard/projects/$id/environments/$env/flags/$flagId"
-    ]?.flagEnv;
+  const flag: Flag | undefined =
+    parentsData?.["routes/dashboard/projects/$id/flags/$flagId"]?.flag;
 
-  return flagEnv?.flag?.name || "";
+  return flag?.name || "";
 };

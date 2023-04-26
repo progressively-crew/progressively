@@ -1,10 +1,10 @@
-describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/settings", () => {
+describe("/dashboard/projects/[id]/flags/[flagId]/settings", () => {
   before(cy.seed);
   after(cy.cleanupDb);
 
   describe("not authenticated", () => {
     beforeEach(() => {
-      cy.visit("/dashboard/projects/1/environments/1/flags/1/settings");
+      cy.visit("/dashboard/projects/1/flags/1/settings");
     });
 
     it("checks that the route is protected", () => {
@@ -16,7 +16,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/settings"
     describe("user: Jane", () => {
       beforeEach(() => {
         cy.signIn("Jane");
-        cy.visit("/dashboard/projects/1/environments/1/flags/1/settings", {
+        cy.visit("/dashboard/projects/1/flags/1/settings", {
           failOnStatusCode: false,
         });
       });
@@ -29,14 +29,14 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/settings"
     describe("user: Marvin", () => {
       beforeEach(() => {
         cy.signIn("Marvin");
-        cy.visit("/dashboard/projects/1/environments/1/flags/1/settings");
+        cy.visit("/dashboard/projects/1/flags/1/settings");
         cy.injectAxe();
       });
 
       it("shows a page layout", () => {
         cy.title().should(
           "eq",
-          "Progressively | Project from seeding | Production | New homepage | Settings"
+          "Progressively | Project from seeding | New homepage | Settings"
         );
 
         cy.findByRole("heading", { name: "Danger zone" }).should("be.visible");
@@ -47,11 +47,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/settings"
 
         cy.findByRole("link", { name: "Delete New homepage forever" })
           .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/1/flags/1/delete"
-          );
+          .and("have.attr", "href", "/dashboard/projects/1/flags/1/delete");
 
         cy.checkA11y();
       });
