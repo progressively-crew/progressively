@@ -78,7 +78,9 @@ export default function ProjectDetailPage() {
 
           <EnvList
             environments={filteredEnvironments}
-            projectId={project.uuid}
+            makeLink={(env) =>
+              `/dashboard/projects/${project.uuid}/environments/${env.uuid}`
+            }
           />
         </>
       ) : (

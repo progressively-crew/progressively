@@ -11,7 +11,7 @@ export const FlagMenu = ({ projectId, flag }: FlagMenuprops) => {
 
   return (
     <HorizontalNav label={`Flag related`}>
-      <NavItem to={`${rootPath}`}>Overview</NavItem>
+      <NavItem to={`${rootPath}`}>Environments</NavItem>
       <NavItem to={`${rootPath}/settings`}>Settings</NavItem>
     </HorizontalNav>
   );

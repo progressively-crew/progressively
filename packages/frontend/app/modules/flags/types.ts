@@ -15,13 +15,16 @@ export interface Flag {
   uuid: string;
 }
 
+export interface FlagWithEnvs extends Flag {
+  flagEnvironment: Array<FlagEnv>;
+}
+
 export interface FlagEnv {
   flagId: string;
   environmentId: string;
   status: FlagStatus;
   flag: Flag;
   environment: Environment;
-  rolloutPercentage: number;
   variants: Array<Variant>;
 }
 
