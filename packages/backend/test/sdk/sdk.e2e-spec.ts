@@ -171,7 +171,7 @@ describe('SdkController (e2e)', () => {
       });
     }, 20000);
 
-    it('gives good stuff', async () => {
+    it('sends flags resolution through the blocking script', async () => {
       const fields = btoa(JSON.stringify({ clientKey: 'valid-sdk-key' }));
 
       const response = await request(app.getHttpServer()).get(
@@ -185,17 +185,14 @@ describe('SdkController (e2e)', () => {
         'no-cache, no-store, must-revalidate',
       );
 
-      expect(response.headers['Cross-Origin-Resource-Policy']).toBe(
+      expect(response.headers['cross-origin-resource-policy']).toBe(
         'cross-origin',
       );
 
       expect(response.status).toBe(200);
-      expect(response.body).toBe(``);
-      expect(response.headers['set-cookie']).toMatchInlineSnapshot(`
-        [
-          "progressively-id=2; Path=/; Secure",
-        ]
-      `);
+      expect(response.text).toBe(
+        'window.progressivelyFlags={"multivariate":false,"newFooter":false,"newHomepage":false};',
+      );
     });
   });
 
