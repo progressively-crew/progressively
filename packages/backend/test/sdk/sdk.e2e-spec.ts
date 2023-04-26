@@ -170,6 +170,30 @@ describe('SdkController (e2e)', () => {
         multivariate: false,
       });
     }, 20000);
+
+    it('sends flags resolution through the blocking script', async () => {
+      const fields = btoa(JSON.stringify({ clientKey: 'valid-sdk-key' }));
+
+      const response = await request(app.getHttpServer()).get(
+        `/sdk/${fields}/progressively.js`,
+      );
+
+      expect(response.headers['content-type']).toBe(
+        'application/javascript; charset=utf-8',
+      );
+      expect(response.headers['cache-control']).toBe(
+        'no-cache, no-store, must-revalidate',
+      );
+
+      expect(response.headers['cross-origin-resource-policy']).toBe(
+        'cross-origin',
+      );
+
+      expect(response.status).toBe(200);
+      expect(response.text).toBe(
+        'window.progressivelyFlags={"multivariate":false,"newFooter":false,"newHomepage":false};',
+      );
+    });
   });
 
   describe('/sdk/:params (Post)', () => {
