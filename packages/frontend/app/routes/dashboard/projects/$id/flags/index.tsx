@@ -50,6 +50,7 @@ export default function FlagsByEnvPage() {
   const search = searchParams.get("search");
   const newFlagId = searchParams.get("newFlagId") || undefined;
 
+  const isFlagRemoved = searchParams.get("flagRemoved") || undefined;
   const isSearching = Boolean(searchParams.get("search") || undefined);
 
   const filteredFlags = flags.filter((flag) =>
@@ -63,7 +64,11 @@ export default function FlagsByEnvPage() {
       user={user}
       subNav={<ProjectNavBar projectId={project.uuid} />}
       status={
-        newFlagId ? (
+        isFlagRemoved ? (
+          <SuccessBox id="flag-removed">
+            The flag has been successfully deleted.
+          </SuccessBox>
+        ) : newFlagId ? (
           <SuccessBox id="flag-added">
             The flag has been successfully created.
           </SuccessBox>

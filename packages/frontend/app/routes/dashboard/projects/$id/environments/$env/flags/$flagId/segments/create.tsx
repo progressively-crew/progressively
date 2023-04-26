@@ -6,7 +6,7 @@ import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
-import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
+import { getFlagEnvMetaTitle } from "~/modules/flags/services/getFlagEnvMetaTitle";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { FormGroup } from "~/components/Fields/FormGroup";
@@ -19,7 +19,7 @@ import { createSegment } from "~/modules/segments/services/createSegment";
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
   const envName = getEnvMetaTitle(parentsData, params.env);
-  const flagName = getFlagMetaTitle(parentsData);
+  const flagName = getFlagEnvMetaTitle(parentsData);
 
   return {
     title: `Progressively | ${projectName} | ${envName} | Flags | ${flagName} | Segments | Create`,

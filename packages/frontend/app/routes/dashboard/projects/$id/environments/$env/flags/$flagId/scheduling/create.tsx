@@ -12,7 +12,7 @@ import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
-import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
+import { getFlagEnvMetaTitle } from "~/modules/flags/services/getFlagEnvMetaTitle";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
@@ -33,7 +33,7 @@ export const handle = {
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
   const envName = getEnvMetaTitle(parentsData, params.env!);
-  const flagName = getFlagMetaTitle(parentsData);
+  const flagName = getFlagEnvMetaTitle(parentsData);
 
   return {
     title: `Progressively | ${projectName} | ${envName} | Flags | ${flagName} | Scheduling | Create`,

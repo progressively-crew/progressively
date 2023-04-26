@@ -16,7 +16,7 @@ export const FlagEnvMenu = ({
 }: FlagEnvMenuProps) => {
   return (
     <HorizontalNav label={`Flag related`}>
-      <li className="border-r border-gray-200 dark:border-slate-700 pr-4 shrink-0">
+      <li>
         <Form method="post" id={`form-${flagEnv.flagId}`}>
           <ToggleFlag
             isFlagActivated={flagEnv.status === FlagStatus.ACTIVATED}
@@ -71,12 +71,6 @@ export const FlagEnvMenu = ({
         to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/activity`}
       >
         Activity
-      </NavItem>
-
-      <NavItem
-        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/settings`}
-      >
-        Settings
       </NavItem>
     </HorizontalNav>
   );

@@ -10,7 +10,7 @@ import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaT
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
-import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
+import { getFlagEnvMetaTitle } from "~/modules/flags/services/getFlagEnvMetaTitle";
 import { Stack } from "~/components/Stack";
 import { Typography } from "~/components/Typography";
 import { BackLink } from "~/components/BackLink";
@@ -20,7 +20,7 @@ import { deleteVariant } from "~/modules/variants/services/deleteVariant";
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
   const envName = getEnvMetaTitle(parentsData, params.env);
-  const flagName = getFlagMetaTitle(parentsData);
+  const flagName = getFlagEnvMetaTitle(parentsData);
 
   return {
     title: `Progressively | ${projectName} | ${envName} | ${flagName} | Variants | Delete`,

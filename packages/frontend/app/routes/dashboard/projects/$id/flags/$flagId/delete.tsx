@@ -8,21 +8,19 @@ import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
 import { useActionData, Form, useTransition } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
-import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
-import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { Stack } from "~/components/Stack";
 import { Typography } from "~/components/Typography";
 import { BackLink } from "~/components/BackLink";
 import { DeleteEntityTitle } from "~/layouts/DeleteEntityTitle";
 import { useFlag } from "~/modules/flags/contexts/useFlag";
+import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
-  const envName = getEnvMetaTitle(parentsData, params.env);
   const flagName = getFlagMetaTitle(parentsData);
 
   return {
-    title: `Progressively | ${projectName} | ${envName} | ${flagName} | Delete`,
+    title: `Progressively | ${projectName} | ${flagName} | Delete`,
   };
 };
 
