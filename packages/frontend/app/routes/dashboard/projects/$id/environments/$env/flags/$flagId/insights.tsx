@@ -3,7 +3,7 @@ import { getSession } from "~/sessions";
 import { getFlagHits } from "~/modules/flags/services/getFlagHits";
 import { MetaFunction, LoaderFunction, ActionFunction } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
-import { FlagMenu } from "~/modules/flags/components/FlagMenu";
+import { FlagEnvMenu } from "~/modules/flags/components/FlagEnvMenu";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
@@ -174,7 +174,7 @@ export default function FlagInsights() {
     <DashboardLayout
       user={user}
       subNav={
-        <FlagMenu
+        <FlagEnvMenu
           projectId={project.uuid}
           envId={environment.uuid}
           flagEnv={flagEnv}

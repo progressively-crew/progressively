@@ -8,14 +8,13 @@ import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
 import { useActionData, Form, useTransition } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
-import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
-import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { Stack } from "~/components/Stack";
 import { Typography } from "~/components/Typography";
 import { BackLink } from "~/components/BackLink";
 import { DeleteEntityTitle } from "~/layouts/DeleteEntityTitle";
+import { useFlag } from "~/modules/flags/contexts/useFlag";
 
 export const meta: MetaFunction = ({ parentsData, params }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -39,7 +38,6 @@ export const action: ActionFunction = async ({
 }): Promise<ActionData | Response> => {
   const session = await getSession(request.headers.get("Cookie"));
   const projectId = params.id!;
-  const envId = params.env!;
   const flagId = params.flagId!;
 
   try {
@@ -53,18 +51,15 @@ export const action: ActionFunction = async ({
   }
 
   return redirect(
-    `/dashboard/projects/${projectId}/environments/${envId}?flagRemoved=true#flag-removed`
+    `/dashboard/projects/${projectId}/flags?flagRemoved=true#flag-removed`
   );
 };
 
 export default function DeleteFlagPage() {
   const transition = useTransition();
   const { project } = useProject();
-  const { flagEnv } = useFlagEnv();
+  const { flag } = useFlag();
   const data = useActionData<ActionData>();
-  const { environment } = useEnvironment();
-
-  const currentFlag = flagEnv.flag;
 
   return (
     <DeleteEntityLayout
@@ -76,7 +71,7 @@ export default function DeleteFlagPage() {
         <DeleteEntityTitle>
           Are you sure you want to delete{" "}
           <span className="text-red-700 font-semibold dark:text-red-400">
-            {currentFlag.name}
+            {flag.name}
           </span>
           ?
         </DeleteEntityTitle>
@@ -85,7 +80,7 @@ export default function DeleteFlagPage() {
         <Button
           variant="tertiary"
           scheme="danger"
-          to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/settings`}
+          to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}/settings`}
         >
           Cancel
         </Button>
@@ -103,7 +98,7 @@ export default function DeleteFlagPage() {
       }
       backLinkSlot={
         <BackLink
-          to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}`}
+          to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}/settings`}
         >
           Back to environment
         </BackLink>

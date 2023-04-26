@@ -1,5 +1,4 @@
 import { CardEntity } from "~/components/Entity/Entity";
-import { InitialBox } from "~/components/InitialBox";
 import { Flag } from "../types";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { IconBox } from "~/components/IconBox";
@@ -8,10 +7,9 @@ import { FlagIcon } from "~/components/Icons/FlagIcon";
 export interface FlagEnvListProps {
   flags: Array<Flag>;
   projectId: string;
-  envId: string;
 }
 
-export const FlagList = ({ flags, projectId, envId }: FlagEnvListProps) => {
+export const FlagList = ({ flags, projectId }: FlagEnvListProps) => {
   return (
     <div className="flex flex-col gap-4">
       {flags.map((flag) => (
@@ -22,7 +20,7 @@ export const FlagList = ({ flags, projectId, envId }: FlagEnvListProps) => {
                 <FlagIcon />
               </IconBox>
             }
-            link={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flag.uuid}`}
+            link={`/dashboard/projects/${projectId}/flags/${flag.uuid}`}
             title={flag.name}
             description={flag.description}
             actions={

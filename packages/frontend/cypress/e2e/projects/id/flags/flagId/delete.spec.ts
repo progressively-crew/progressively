@@ -1,10 +1,10 @@
-describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/delete", () => {
+describe("/dashboard/projects/[id]/flags/[flagId]/delete", () => {
   before(cy.seed);
   after(cy.cleanupDb);
 
   describe("not authenticated", () => {
     beforeEach(() => {
-      cy.visit("/dashboard/projects/1/environments/1/flags/1/delete");
+      cy.visit("/dashboard/projects/1/flags/1/delete");
     });
 
     it("checks that the route is protected", () => {
@@ -16,7 +16,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/delete", 
     describe("user: Jane", () => {
       beforeEach(() => {
         cy.signIn("Jane");
-        cy.visit("/dashboard/projects/1/environments/1/flags/1/delete", {
+        cy.visit("/dashboard/projects/1/flags/1/delete", {
           failOnStatusCode: false,
         });
       });
@@ -29,14 +29,14 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/delete", 
     describe("user: Marvin", () => {
       beforeEach(() => {
         cy.signIn("Marvin");
-        cy.visit("/dashboard/projects/1/environments/1/flags/1/delete");
+        cy.visit("/dashboard/projects/1/flags/1/delete");
         cy.injectAxe();
       });
 
       it("shows the layout of the page", () => {
         cy.title().should(
           "eq",
-          "Progressively | Project from seeding | Production | New homepage | Delete"
+          "Progressively | Project from seeding | New homepage | Delete"
         );
 
         cy.findByRole("heading", {
@@ -49,11 +49,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/delete", 
 
         cy.contains("Cancel")
           .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/1/flags/1/settings"
-          );
+          .and("have.attr", "href", "/dashboard/projects/1/flags/1/settings");
 
         cy.checkA11y();
       });
@@ -69,25 +65,25 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/delete", 
 
       it("removes the flag and get me back to the envs page (empty state)", () => {
         // Delete the first flag
-        cy.visit("/dashboard/projects/1/environments/1/flags/1/delete");
+        cy.visit("/dashboard/projects/1/flags/1/delete");
         cy.findByRole("button", {
           name: "Delete",
         }).click();
 
         cy.url().should(
           "contain",
-          "/dashboard/projects/1/environments/1?flagRemoved=true"
+          "/dashboard/projects/1/flags?flagRemoved=true"
         );
 
         // Delete the second flag
-        cy.visit("/dashboard/projects/1/environments/1/flags/2/delete");
+        cy.visit("/dashboard/projects/1/flags/2/delete");
         cy.findByRole("button", {
           name: "Delete",
         }).click();
 
         cy.url().should(
           "contain",
-          "/dashboard/projects/1/environments/1?flagRemoved=true"
+          "/dashboard/projects/1/flags?flagRemoved=true"
         );
 
         cy.get(".success-box")

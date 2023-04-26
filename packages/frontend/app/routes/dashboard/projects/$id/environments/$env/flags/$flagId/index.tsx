@@ -8,7 +8,7 @@ import {
   useLoaderData,
   useNavigation,
 } from "@remix-run/react";
-import { FlagMenu } from "~/modules/flags/components/FlagMenu";
+import { FlagEnvMenu } from "~/modules/flags/components/FlagEnvMenu";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
@@ -163,7 +163,7 @@ export default function FlagById() {
     <DashboardLayout
       user={user}
       subNav={
-        <FlagMenu
+        <FlagEnvMenu
           projectId={project.uuid}
           envId={environment.uuid}
           flagEnv={flagEnv}

@@ -9,7 +9,7 @@ import { Typography } from "~/components/Typography";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
-import { FlagMenu } from "~/modules/flags/components/FlagMenu";
+import { FlagEnvMenu } from "~/modules/flags/components/FlagEnvMenu";
 import { MetricList } from "~/modules/flags/components/MetricList";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
@@ -92,7 +92,7 @@ export default function Metrics() {
     <DashboardLayout
       user={user}
       subNav={
-        <FlagMenu
+        <FlagEnvMenu
           projectId={project.uuid}
           envId={environment.uuid}
           flagEnv={flagEnv}
