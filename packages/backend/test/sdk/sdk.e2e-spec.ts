@@ -170,6 +170,33 @@ describe('SdkController (e2e)', () => {
         multivariate: false,
       });
     }, 20000);
+
+    it('gives good stuff', async () => {
+      const fields = btoa(JSON.stringify({ clientKey: 'valid-sdk-key' }));
+
+      const response = await request(app.getHttpServer()).get(
+        `/sdk/${fields}/progressively.js`,
+      );
+
+      expect(response.headers['content-type']).toBe(
+        'application/javascript; charset=utf-8',
+      );
+      expect(response.headers['cache-control']).toBe(
+        'no-cache, no-store, must-revalidate',
+      );
+
+      expect(response.headers['Cross-Origin-Resource-Policy']).toBe(
+        'cross-origin',
+      );
+
+      expect(response.status).toBe(200);
+      expect(response.body).toBe(``);
+      expect(response.headers['set-cookie']).toMatchInlineSnapshot(`
+        [
+          "progressively-id=2; Path=/; Secure",
+        ]
+      `);
+    });
   });
 
   describe('/sdk/:params (Post)', () => {

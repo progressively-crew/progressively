@@ -8,6 +8,7 @@ import {
   Req,
   Res,
   Headers,
+  Header,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { SdkService } from './sdk.service';
@@ -38,6 +39,33 @@ export class SdkController {
     prepareCookie(response, fields.id);
 
     return this.sdkService.computeFlags(fields, shouldSkipHits);
+  }
+
+  /**
+   * Get the flag values by client sdk key
+   */
+  @Get('/:params/progressively.js')
+  @Header('Cache-Control', 'no-cache, no-store, must-revalidate')
+  @Header('content-type', 'application/javascript')
+  @Header('Cross-Origin-Resource-Policy', 'cross-origin')
+  async getJavascriptScript(
+    @Param('params') base64Params: string,
+    @Res({ passthrough: true }) response: Response,
+    @Req() request: Request,
+    @Headers() headers,
+  ): Promise<string> {
+    const flags = await this.getByClientKey(
+      base64Params,
+      response,
+      request,
+      headers,
+    );
+
+    const str = `window.progressivelyFlags=${JSON.stringify(flags, null)};`;
+
+    console.log('lol', str);
+
+    return str;
   }
 
   @Post('/:params')
