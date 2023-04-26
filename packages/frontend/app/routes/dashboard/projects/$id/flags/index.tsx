@@ -16,6 +16,7 @@ import { SearchBar } from "~/components/SearchBar";
 import { ProjectNavBar } from "~/modules/projects/components/ProjectNavBar";
 import { getProjectFlags } from "~/modules/projects/services/getProjectFlags";
 import { FlagList } from "~/modules/flags/components/FlagList";
+import { Typography } from "~/components/Typography";
 
 export const meta: MetaFunction = ({ parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -77,7 +78,12 @@ export default function FlagsByEnvPage() {
     >
       <PageTitle
         value="Feature flags"
-        description="All the feature flags of the current project, no matter the environments"
+        description={
+          <Typography as="span">
+            All the feature flags available for{" "}
+            <strong className="font-bold">{project.name}</strong>.
+          </Typography>
+        }
       />
 
       {hasFlags ? (

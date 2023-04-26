@@ -18,6 +18,7 @@ import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction"
 import { PageTitle } from "~/components/PageTitle";
 import { SearchLayout } from "~/layouts/SearchLayout";
 import { SearchBar } from "~/components/SearchBar";
+import { Typography } from "~/components/Typography";
 
 export const meta: MetaFunction = ({ params, parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -84,7 +85,16 @@ export default function FlagsByEnvPage() {
       user={user}
       subNav={<EnvNavBar projectId={project.uuid} envId={environment.uuid} />}
     >
-      <PageTitle value="Feature flags" />
+      <PageTitle
+        value="Feature flags"
+        description={
+          <Typography as="span">
+            The feature flags available in the{" "}
+            <strong className="font-bold">{environment.name}</strong>{" "}
+            environment.
+          </Typography>
+        }
+      />
 
       {hasFlags ? (
         <>

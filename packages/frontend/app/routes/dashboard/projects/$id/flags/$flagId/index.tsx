@@ -11,6 +11,7 @@ import { EnvList } from "~/modules/environments/components/EnvList";
 import { SearchBar } from "~/components/SearchBar";
 import { SearchLayout } from "~/layouts/SearchLayout";
 import { useSearchParams } from "@remix-run/react";
+import { Typography } from "~/components/Typography";
 
 export const meta: MetaFunction = ({ parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -42,7 +43,15 @@ export default function FlagSettingPage() {
       user={user}
       subNav={<FlagMenu projectId={project.uuid} flag={flag} />}
     >
-      <PageTitle value="Environments" />
+      <PageTitle
+        value="Environments"
+        description={
+          <Typography as="span">
+            The feature flag <strong className="font-bold">{flag.name}</strong>{" "}
+            is available in the following environments.
+          </Typography>
+        }
+      />
 
       <SearchLayout>
         <SearchBar

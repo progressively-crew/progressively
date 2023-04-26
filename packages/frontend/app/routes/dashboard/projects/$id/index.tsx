@@ -13,6 +13,7 @@ import { PageTitle } from "~/components/PageTitle";
 import { SearchBar } from "~/components/SearchBar";
 import { SearchLayout } from "~/layouts/SearchLayout";
 import { ProjectNavBar } from "~/modules/projects/components/ProjectNavBar";
+import { Typography } from "~/components/Typography";
 
 export const meta: MetaFunction = ({ parentsData }) => {
   const projectName = getProjectMetaTitle(parentsData);
@@ -55,7 +56,12 @@ export default function ProjectDetailPage() {
     >
       <PageTitle
         value="Environments"
-        description="All the environments available in the project."
+        description={
+          <Typography as="span">
+            All the environments available for{" "}
+            <strong className="font-bold">{project.name}</strong>.
+          </Typography>
+        }
       />
 
       {hasEnvironments ? (
