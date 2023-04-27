@@ -1,5 +1,5 @@
 /*
-! tailwindcss v3.2.7 | MIT License | https://tailwindcss.com
+! tailwindcss v3.3.2 | MIT License | https://tailwindcss.com
 */
 
 /*
@@ -31,6 +31,7 @@
 3. Use a more readable tab size.
 4. Use the user's configured `sans` font-family by default.
 5. Use the user's configured `sans` font-feature-settings by default.
+6. Use the user's configured `sans` font-variation-settings by default.
 */
 
 html {
@@ -47,6 +48,8 @@ html {
   /* 4 */
   font-feature-settings: normal;
   /* 5 */
+  font-variation-settings: normal;
+  /* 6 */
 }
 
 /*
@@ -433,6 +436,9 @@ video {
   --tw-pan-y:  ;
   --tw-pinch-zoom:  ;
   --tw-scroll-snap-strictness: proximity;
+  --tw-gradient-from-position:  ;
+  --tw-gradient-via-position:  ;
+  --tw-gradient-to-position:  ;
   --tw-ordinal:  ;
   --tw-slashed-zero:  ;
   --tw-numeric-figure:  ;
@@ -480,6 +486,9 @@ video {
   --tw-pan-y:  ;
   --tw-pinch-zoom:  ;
   --tw-scroll-snap-strictness: proximity;
+  --tw-gradient-from-position:  ;
+  --tw-gradient-via-position:  ;
+  --tw-gradient-to-position:  ;
   --tw-ordinal:  ;
   --tw-slashed-zero:  ;
   --tw-numeric-figure:  ;
@@ -2250,223 +2259,223 @@ input[type="range"]::-moz-range-progress {
   }
 }
 
-.dark .dark\:divide-slate-700 > :not([hidden]) ~ :not([hidden]) {
+:is(.dark .dark\:divide-slate-700) > :not([hidden]) ~ :not([hidden]) {
   --tw-divide-opacity: 1;
   border-color: rgb(51 65 85 / var(--tw-divide-opacity));
 }
 
-.dark .dark\:border-red-700 {
+:is(.dark .dark\:border-red-700) {
   --tw-border-opacity: 1;
   border-color: rgb(185 28 28 / var(--tw-border-opacity));
 }
 
-.dark .dark\:border-slate-500 {
+:is(.dark .dark\:border-slate-500) {
   --tw-border-opacity: 1;
   border-color: rgb(100 116 139 / var(--tw-border-opacity));
 }
 
-.dark .dark\:border-slate-700 {
+:is(.dark .dark\:border-slate-700) {
   --tw-border-opacity: 1;
   border-color: rgb(51 65 85 / var(--tw-border-opacity));
 }
 
-.dark .dark\:border-slate-800 {
+:is(.dark .dark\:border-slate-800) {
   --tw-border-opacity: 1;
   border-color: rgb(30 41 59 / var(--tw-border-opacity));
 }
 
-.dark .dark\:bg-emerald-100 {
+:is(.dark .dark\:bg-emerald-100) {
   --tw-bg-opacity: 1;
   background-color: rgb(209 250 229 / var(--tw-bg-opacity));
 }
 
-.dark .dark\:bg-slate-600 {
+:is(.dark .dark\:bg-slate-600) {
   --tw-bg-opacity: 1;
   background-color: rgb(71 85 105 / var(--tw-bg-opacity));
 }
 
-.dark .dark\:bg-slate-700 {
+:is(.dark .dark\:bg-slate-700) {
   --tw-bg-opacity: 1;
   background-color: rgb(51 65 85 / var(--tw-bg-opacity));
 }
 
-.dark .dark\:bg-slate-800 {
+:is(.dark .dark\:bg-slate-800) {
   --tw-bg-opacity: 1;
   background-color: rgb(30 41 59 / var(--tw-bg-opacity));
 }
 
-.dark .dark\:bg-slate-900 {
+:is(.dark .dark\:bg-slate-900) {
   --tw-bg-opacity: 1;
   background-color: rgb(15 23 42 / var(--tw-bg-opacity));
 }
 
-.dark .dark\:bg-transparent {
+:is(.dark .dark\:bg-transparent) {
   background-color: transparent;
 }
 
-.dark .dark\:bg-white {
+:is(.dark .dark\:bg-white) {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
-.dark .dark\:text-emerald-700 {
+:is(.dark .dark\:text-emerald-700) {
   --tw-text-opacity: 1;
   color: rgb(4 120 87 / var(--tw-text-opacity));
 }
 
-.dark .dark\:text-gray-200 {
+:is(.dark .dark\:text-gray-200) {
   --tw-text-opacity: 1;
   color: rgb(229 231 235 / var(--tw-text-opacity));
 }
 
-.dark .dark\:text-gray-300 {
+:is(.dark .dark\:text-gray-300) {
   --tw-text-opacity: 1;
   color: rgb(209 213 219 / var(--tw-text-opacity));
 }
 
-.dark .dark\:text-indigo-400 {
+:is(.dark .dark\:text-indigo-400) {
   --tw-text-opacity: 1;
   color: rgb(129 140 248 / var(--tw-text-opacity));
 }
 
-.dark .dark\:text-inherit {
+:is(.dark .dark\:text-inherit) {
   color: inherit;
 }
 
-.dark .dark\:text-red-100 {
+:is(.dark .dark\:text-red-100) {
   --tw-text-opacity: 1;
   color: rgb(254 226 226 / var(--tw-text-opacity));
 }
 
-.dark .dark\:text-red-200 {
+:is(.dark .dark\:text-red-200) {
   --tw-text-opacity: 1;
   color: rgb(254 202 202 / var(--tw-text-opacity));
 }
 
-.dark .dark\:text-red-400 {
+:is(.dark .dark\:text-red-400) {
   --tw-text-opacity: 1;
   color: rgb(248 113 113 / var(--tw-text-opacity));
 }
 
-.dark .dark\:text-slate-100 {
+:is(.dark .dark\:text-slate-100) {
   --tw-text-opacity: 1;
   color: rgb(241 245 249 / var(--tw-text-opacity));
 }
 
-.dark .dark\:text-slate-200 {
+:is(.dark .dark\:text-slate-200) {
   --tw-text-opacity: 1;
   color: rgb(226 232 240 / var(--tw-text-opacity));
 }
 
-.dark .dark\:text-slate-300 {
+:is(.dark .dark\:text-slate-300) {
   --tw-text-opacity: 1;
   color: rgb(203 213 225 / var(--tw-text-opacity));
 }
 
-.dark .dark\:text-slate-400 {
+:is(.dark .dark\:text-slate-400) {
   --tw-text-opacity: 1;
   color: rgb(148 163 184 / var(--tw-text-opacity));
 }
 
-.dark .dark\:text-slate-50 {
+:is(.dark .dark\:text-slate-50) {
   --tw-text-opacity: 1;
   color: rgb(248 250 252 / var(--tw-text-opacity));
 }
 
-.dark .dark\:text-slate-500 {
+:is(.dark .dark\:text-slate-500) {
   --tw-text-opacity: 1;
   color: rgb(100 116 139 / var(--tw-text-opacity));
 }
 
-.dark .dark\:text-slate-900 {
+:is(.dark .dark\:text-slate-900) {
   --tw-text-opacity: 1;
   color: rgb(15 23 42 / var(--tw-text-opacity));
 }
 
-.dark .dark\:text-white {
+:is(.dark .dark\:text-white) {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
-.dark .dark\:focus-within\:ring-offset-slate-900:focus-within {
+:is(.dark .dark\:focus-within\:ring-offset-slate-900:focus-within) {
   --tw-ring-offset-color: #0f172a;
 }
 
-.dark .dark\:hover\:border-slate-400:hover {
+:is(.dark .dark\:hover\:border-slate-400:hover) {
   --tw-border-opacity: 1;
   border-color: rgb(148 163 184 / var(--tw-border-opacity));
 }
 
-.dark .dark\:hover\:bg-slate-600:hover {
+:is(.dark .dark\:hover\:bg-slate-600:hover) {
   --tw-bg-opacity: 1;
   background-color: rgb(71 85 105 / var(--tw-bg-opacity));
 }
 
-.dark .dark\:hover\:bg-slate-700:hover {
+:is(.dark .dark\:hover\:bg-slate-700:hover) {
   --tw-bg-opacity: 1;
   background-color: rgb(51 65 85 / var(--tw-bg-opacity));
 }
 
-.dark .dark\:hover\:bg-slate-800:hover {
+:is(.dark .dark\:hover\:bg-slate-800:hover) {
   --tw-bg-opacity: 1;
   background-color: rgb(30 41 59 / var(--tw-bg-opacity));
 }
 
-.dark .hover\:dark\:bg-slate-700:hover {
+:is(.dark .hover\:dark\:bg-slate-700):hover {
   --tw-bg-opacity: 1;
   background-color: rgb(51 65 85 / var(--tw-bg-opacity));
 }
 
-.dark .hover\:dark\:bg-slate-800:hover {
+:is(.dark .hover\:dark\:bg-slate-800):hover {
   --tw-bg-opacity: 1;
   background-color: rgb(30 41 59 / var(--tw-bg-opacity));
 }
 
-.dark .dark\:hover\:text-slate-100:hover {
+:is(.dark .dark\:hover\:text-slate-100:hover) {
   --tw-text-opacity: 1;
   color: rgb(241 245 249 / var(--tw-text-opacity));
 }
 
-.dark .hover\:dark\:text-slate-100:hover {
+:is(.dark .hover\:dark\:text-slate-100):hover {
   --tw-text-opacity: 1;
   color: rgb(241 245 249 / var(--tw-text-opacity));
 }
 
-.dark .hover\:dark\:text-slate-200:hover {
+:is(.dark .hover\:dark\:text-slate-200):hover {
   --tw-text-opacity: 1;
   color: rgb(226 232 240 / var(--tw-text-opacity));
 }
 
-.dark .dark\:focus\:bg-slate-700:focus {
+:is(.dark .dark\:focus\:bg-slate-700:focus) {
   --tw-bg-opacity: 1;
   background-color: rgb(51 65 85 / var(--tw-bg-opacity));
 }
 
-.dark .dark\:focus\:ring-slate-400:focus {
+:is(.dark .dark\:focus\:ring-slate-400:focus) {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(148 163 184 / var(--tw-ring-opacity));
 }
 
-.dark .dark\:focus\:ring-offset-slate-900:focus {
+:is(.dark .dark\:focus\:ring-offset-slate-900:focus) {
   --tw-ring-offset-color: #0f172a;
 }
 
-.dark .active\:dark\:bg-slate-600:active {
+:is(.dark .active\:dark\:bg-slate-600):active {
   --tw-bg-opacity: 1;
   background-color: rgb(71 85 105 / var(--tw-bg-opacity));
 }
 
-.dark .dark\:active\:bg-slate-500:active {
+:is(.dark .dark\:active\:bg-slate-500:active) {
   --tw-bg-opacity: 1;
   background-color: rgb(100 116 139 / var(--tw-bg-opacity));
 }
 
-.dark .dark\:active\:bg-slate-600:active {
+:is(.dark .dark\:active\:bg-slate-600:active) {
   --tw-bg-opacity: 1;
   background-color: rgb(71 85 105 / var(--tw-bg-opacity));
 }
 
-.dark .dark\:data-\[state\=unchecked\]\:bg-slate-700[data-state=unchecked] {
+:is(.dark .dark\:data-\[state\=unchecked\]\:bg-slate-700[data-state=unchecked]) {
   --tw-bg-opacity: 1;
   background-color: rgb(51 65 85 / var(--tw-bg-opacity));
 }
