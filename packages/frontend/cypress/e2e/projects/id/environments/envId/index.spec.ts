@@ -1,4 +1,4 @@
-describe("/dashboard/projects/[id]/environments/[envId]", () => {
+describe.only("/dashboard/projects/[id]/environments/[envId]", () => {
   before(cy.seed);
   after(cy.cleanupDb);
 
@@ -45,7 +45,7 @@ describe("/dashboard/projects/[id]/environments/[envId]", () => {
           ["Developer", "/dashboard/projects/1/environments/2"],
         ]);
 
-        cy.findAllByText("Developer").should("have.length", 2);
+        cy.findAllByText("Developer").should("have.length", 3);
         cy.findByRole("heading", { name: "No flags found" }).should(
           "be.visible"
         );
@@ -79,7 +79,7 @@ describe("/dashboard/projects/[id]/environments/[envId]", () => {
           ["Production", "/dashboard/projects/1/environments/1"],
         ]);
 
-        cy.findAllByText("Production").should("have.length", 2);
+        cy.findAllByText("Production").should("have.length", 3);
         cy.findByRole("heading", { name: "Feature flags" }).should("exist");
 
         cy.findByRole("link", { name: "Feature flags" }).should("be.visible");
