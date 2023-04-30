@@ -1,0 +1,90 @@
+---
+import LinkButton from "../components/LinkButton.astro";
+import Layout from "../layouts/Layout.astro";
+import shiki from "shiki";
+
+const highlighter = await shiki.getHighlighter({
+  theme: "github-light",
+});
+
+const block = highlighter.codeToHtml(
+  `$ git clone https://github.com/progressively-crew/progressively
+$ cd progressively
+$ docker compose up -d
+
+# Now, open http://localhost:3000/welcome
+`,
+  { lang: "sh" }
+);
+---
+
+<Layout title="Welcome to Progressively.">
+  <main>
+    <header>
+      <div
+        class="container px-4 lg:px-20 mx-auto flex justify-center lg:items-center flex-col py-40 gap-4"
+      >
+        <h1 class="text-6xl font-extrabold">
+          Introducing <span>Progressively</span>
+        </h1>
+
+        <p class="text-2xl sm:text-center text-slate-700">
+          A simple, accessible, lightweight, self-hosted and OpenSource feature
+          flag software.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <LinkButton href="home-sweet">Get started locally</LinkButton>
+          <LinkButton href="" variant="secondary">Deploy on Railway</LinkButton>
+          <LinkButton variant="tertiary" href="hello">Demo instance</LinkButton>
+        </div>
+      </div>
+
+      <div class="container mx-auto rounded-lg overflow-hidden">
+        <img src="/capture.png" alt="" height="512px" />
+      </div>
+    </header>
+
+    <section class="container px-4 lg:px-20 mx-auto pt-40">
+      <h2 class="font-extrabold text-5xl pb-4">
+        Why do you need feature flags?
+      </h2>
+      <p class="text-2xl leading-relaxed max-w-4xl">
+        Deploying new features in production is risky and oftentimes a pain.
+        Rollbacking a bunch of commits when a bug breaks production is not very
+        fun – and it happens. Instead of relying on Git
+      </p>
+    </section>
+
+    <section class="container px-4 lg:px-20 mx-auto pt-40">
+      <h2 class="font-extrabold text-5xl pb-4">What is a feature flag?</h2>
+      <p class="text-2xl leading-relaxed max-w-4xl">
+        An easy way to make your features available instantly, without deploying
+        new versions of the code, at any time, by switching a toggle.
+      </p>
+    </section>
+
+    <section class="container px-4 lg:px-20 mx-auto pt-40">
+      <h2 class="font-extrabold text-5xl pb-4">How to use them?</h2>
+
+      <div class="flex flex-col gap-4">
+        <p class="text-2xl leading-relaxed">
+          Get up and running with Progressively in Docker in easy <strong>
+            3 steps
+          </strong>, or deploy the application your own way following the <a
+            href=""
+            class="underline"
+            target="_blank">Get Started Guide</a
+          >.
+        </p>
+
+        <div class="overflow-x-scroll">
+          <div
+            set:html={block}
+            class="px-4 py-2 rounded-md bg-white border-2 border-slate-100 inline-block"
+          />
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
