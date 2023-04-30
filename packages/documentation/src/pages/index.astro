@@ -1,21 +1,6 @@
 ---
 import LinkButton from "../components/LinkButton.astro";
 import Layout from "../layouts/Layout.astro";
-import shiki from "shiki";
-
-const highlighter = await shiki.getHighlighter({
-  theme: "github-light",
-});
-
-const block = highlighter.codeToHtml(
-  `$ git clone https://github.com/progressively-crew/progressively
-$ cd progressively
-$ docker compose up -d
-
-# Now, open http://localhost:3000/welcome
-`,
-  { lang: "sh" }
-);
 ---
 
 <Layout title="Welcome to Progressively.">
@@ -26,6 +11,7 @@ $ docker compose up -d
           variant="tertiary"
           href="https://progressively.gitbook.io/docs/"
           target={"_blank"}
+          id="documentation"
         >
           Documentation
         </LinkButton>
@@ -33,6 +19,7 @@ $ docker compose up -d
           variant="tertiary"
           href="https://github.com/progressively-crew/progressively"
           target={"_blank"}
+          id="github"
         >
           Github
         </LinkButton>
@@ -53,6 +40,7 @@ $ docker compose up -d
           <LinkButton
             href="https://progressively.gitbook.io/docs/getting-started/quick-start"
             target={"_blank"}
+            id="get-started"
           >
             Get started locally
           </LinkButton>
@@ -60,6 +48,7 @@ $ docker compose up -d
             href="https://railway.app/new/template/o-qwn1?referralCode=AwmVVM"
             variant="secondary"
             target={"_blank"}
+            id="deploy-railway"
           >
             Deploy on Railway
           </LinkButton>
@@ -67,6 +56,7 @@ $ docker compose up -d
             variant="tertiary"
             href="https://dashboard.progressively.app/signin"
             target={"_blank"}
+            id="demo-instance"
           >
             Demo instance
           </LinkButton>
@@ -117,3 +107,33 @@ $ docker compose up -d
     </section>
   </main>
 </Layout>
+
+<script>
+  import { Progressively } from "@progressively/sdk-js";
+
+  const options = {
+    apiUrl: "https://backend-progressively.fly.dev",
+    websocketUrl: "wss://backend-progressively.fly.dev",
+  };
+
+  const sdk = Progressively.init(
+    "2c25b011-6f17-4caa-a16e-7dfc7c4290d8",
+    options
+  );
+
+  const getStartedCta = document.querySelector<HTMLElement>("#get-started");
+  const deployRailway = document.querySelector("#deploy-railway");
+  const demoInstance = document.querySelector("#demo-instance");
+  const documentationCta = document.querySelector("#documentation");
+  const githubCta = document.querySelector("#github");
+
+  getStartedCta?.addEventListener("click", () => sdk.track("Get Started CTA"));
+  deployRailway?.addEventListener("click", () =>
+    sdk.track("Deploy on Railway CTA")
+  );
+  demoInstance?.addEventListener("click", () => sdk.track("Demo Instance CTA"));
+  documentationCta?.addEventListener("click", () =>
+    sdk.track("Documentation CTA")
+  );
+  githubCta?.addEventListener("click", () => sdk.track("Github CTA"));
+</script>

@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@astrojs/tailwind": "^3.1.1",
+    "@progressively/sdk-js": "workspace:0.0.1-alpha.19",
     "astro": "^2.3.2",
     "shiki": "^0.14.1",
     "tailwindcss": "^3.0.24"
