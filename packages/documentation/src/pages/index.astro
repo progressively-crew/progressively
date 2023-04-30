@@ -21,6 +21,22 @@ $ docker compose up -d
 <Layout title="Welcome to Progressively.">
   <main>
     <header>
+      <nav class="flex justify-end container px-4 lg:px-20 mx-auto py-2 gap-2">
+        <LinkButton
+          variant="tertiary"
+          href="https://progressively.gitbook.io/docs/"
+          target={"_blank"}
+        >
+          Documentation
+        </LinkButton>
+        <LinkButton
+          variant="tertiary"
+          href="https://github.com/progressively-crew/progressively"
+          target={"_blank"}
+        >
+          Github
+        </LinkButton>
+      </nav>
       <div
         class="container px-4 lg:px-20 mx-auto flex justify-center lg:items-center flex-col py-40 gap-4"
       >
@@ -34,9 +50,26 @@ $ docker compose up -d
         </p>
 
         <div class="flex flex-col sm:flex-row gap-4">
-          <LinkButton href="home-sweet">Get started locally</LinkButton>
-          <LinkButton href="" variant="secondary">Deploy on Railway</LinkButton>
-          <LinkButton variant="tertiary" href="hello">Demo instance</LinkButton>
+          <LinkButton
+            href="https://progressively.gitbook.io/docs/getting-started/quick-start"
+            target={"_blank"}
+          >
+            Get started locally
+          </LinkButton>
+          <LinkButton
+            href="https://railway.app/new/template/o-qwn1?referralCode=AwmVVM"
+            variant="secondary"
+            target={"_blank"}
+          >
+            Deploy on Railway
+          </LinkButton>
+          <LinkButton
+            variant="tertiary"
+            href="https://dashboard.progressively.app/signin"
+            target={"_blank"}
+          >
+            Demo instance
+          </LinkButton>
         </div>
       </div>
 
@@ -51,40 +84,36 @@ $ docker compose up -d
       </h2>
       <p class="text-2xl leading-relaxed max-w-4xl">
         Deploying new features in production is risky and oftentimes a pain.
-        Rollbacking a bunch of commits when a bug breaks production is not very
-        fun – and it happens. Instead of relying on Git
+        Taking care of bugs, rollbacks, infrastructure and managing release
+        trains are not very fun – and are stressful. Who's never put some code
+        on production and after 2 hours in the wild, had to rollback?
       </p>
     </section>
 
     <section class="container px-4 lg:px-20 mx-auto pt-40">
-      <h2 class="font-extrabold text-5xl pb-4">What is a feature flag?</h2>
-      <p class="text-2xl leading-relaxed max-w-4xl">
-        An easy way to make your features available instantly, without deploying
-        new versions of the code, at any time, by switching a toggle.
+      <h2 class="font-extrabold text-5xl pb-4">
+        How feature flags solve this?
+      </h2>
+
+      <p class="text-2xl leading-relaxed max-w-4xl pt-4">
+        They make releases more dynamic, more precise, more granular and easier
+        to rollback when it comes to fixing bugs. All you have to do is <strong
+          >pulling a trigger</strong
+        > in a dashboard.
       </p>
     </section>
 
-    <section class="container px-4 lg:px-20 mx-auto pt-40">
-      <h2 class="font-extrabold text-5xl pb-4">How to use them?</h2>
+    <section class="container px-4 lg:px-20 mx-auto py-40">
+      <h2 class="font-extrabold text-5xl pb-4">Introducing Progressively</h2>
 
-      <div class="flex flex-col gap-4">
-        <p class="text-2xl leading-relaxed">
-          Get up and running with Progressively in Docker in easy <strong>
-            3 steps
-          </strong>, or deploy the application your own way following the <a
-            href=""
-            class="underline"
-            target="_blank">Get Started Guide</a
-          >.
-        </p>
-
-        <div class="overflow-x-scroll">
-          <div
-            set:html={block}
-            class="px-4 py-2 rounded-md bg-white border-2 border-slate-100 inline-block"
-          />
-        </div>
-      </div>
+      <p class="text-2xl leading-relaxed max-w-4xl pt-4">
+        Switching a toggle is great for a one-off deploy. And Progressively does
+        more by providing tooling to only <strong
+          >rollout to a given set of your audience</strong
+        >, or <strong>schedule feature activation</strong>, <strong
+          >measure feature flags impacts</strong
+        >, <strong>triggering webhook</strong> when a release happens etc...
+      </p>
     </section>
   </main>
 </Layout>
