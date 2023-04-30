@@ -1,0 +1,146 @@
+---
+import { getProgressivelyData } from "@progressively/server-side";
+import LinkButton from "../components/LinkButton.astro";
+import Layout from "../layouts/Layout.astro";
+
+await getProgressivelyData("2c25b011-6f17-4caa-a16e-7dfc7c4290d8", {
+  apiUrl: "https://backend-progressively.fly.dev",
+  websocketUrl: "wss://backend-progressively.fly.dev",
+  shouldHit: true,
+});
+---
+
+<Layout title="Welcome to Progressively.">
+  <main>
+    <header>
+      <nav class="flex justify-end container px-4 lg:px-20 mx-auto py-2 gap-2">
+        <LinkButton
+          variant="tertiary"
+          href="https://progressively.gitbook.io/docs/"
+          target={"_blank"}
+          id="documentation"
+        >
+          Documentation
+        </LinkButton>
+        <LinkButton
+          variant="tertiary"
+          href="https://github.com/progressively-crew/progressively"
+          target={"_blank"}
+          id="github"
+        >
+          Github
+        </LinkButton>
+      </nav>
+      <div
+        class="container px-4 lg:px-20 mx-auto flex justify-center lg:items-center flex-col py-40 gap-4"
+      >
+        <h1 class="text-6xl font-extrabold">
+          Introducing <span>Progressively</span>
+        </h1>
+
+        <p class="text-2xl sm:text-center text-slate-700">
+          A simple, accessible, lightweight, self-hosted and OpenSource feature
+          flag software.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <LinkButton
+            href="https://progressively.gitbook.io/docs/getting-started/quick-start"
+            target={"_blank"}
+            id="get-started"
+          >
+            Get started locally
+          </LinkButton>
+          <LinkButton
+            href="https://railway.app/new/template/o-qwn1?referralCode=AwmVVM"
+            variant="secondary"
+            target={"_blank"}
+            id="deploy-railway"
+          >
+            Deploy on Railway
+          </LinkButton>
+          <LinkButton
+            variant="tertiary"
+            href="https://dashboard.progressively.app/signin"
+            target={"_blank"}
+            id="demo-instance"
+          >
+            Demo instance
+          </LinkButton>
+        </div>
+      </div>
+
+      <div class="container mx-auto rounded-lg overflow-hidden">
+        <img src="/capture.png" alt="" height="512px" />
+      </div>
+    </header>
+
+    <section class="container px-4 lg:px-20 mx-auto pt-40">
+      <h2 class="font-extrabold text-5xl pb-4">
+        Why do you need feature flags?
+      </h2>
+      <p class="text-2xl leading-relaxed max-w-4xl">
+        Deploying new features in production is risky and oftentimes a pain.
+        Taking care of bugs, rollbacks, infrastructure and managing release
+        trains are not very fun – and are stressful. Who's never put some code
+        on production and after 2 hours in the wild, had to rollback?
+      </p>
+    </section>
+
+    <section class="container px-4 lg:px-20 mx-auto pt-40">
+      <h2 class="font-extrabold text-5xl pb-4">
+        How feature flags solve this?
+      </h2>
+
+      <p class="text-2xl leading-relaxed max-w-4xl pt-4">
+        They make releases more dynamic, more precise, more granular and easier
+        to rollback when it comes to fixing bugs. All you have to do is <strong
+          >pulling a trigger</strong
+        > in a dashboard.
+      </p>
+    </section>
+
+    <section class="container px-4 lg:px-20 mx-auto py-40">
+      <h2 class="font-extrabold text-5xl pb-4">Introducing Progressively</h2>
+
+      <p class="text-2xl leading-relaxed max-w-4xl pt-4">
+        Switching a toggle is great for a one-off deploy. And Progressively does
+        more by providing tooling to only <strong
+          >rollout to a given set of your audience</strong
+        >, or <strong>schedule feature activation</strong>, <strong
+          >measure feature flags impacts</strong
+        >, <strong>triggering webhook</strong> when a release happens etc...
+      </p>
+    </section>
+  </main>
+</Layout>
+
+<script>
+  import { Progressively } from "@progressively/sdk-js";
+
+  const options = {
+    apiUrl: "https://backend-progressively.fly.dev",
+    websocketUrl: "wss://backend-progressively.fly.dev",
+  };
+
+  const sdk = Progressively.init(
+    "2c25b011-6f17-4caa-a16e-7dfc7c4290d8",
+    options
+  );
+
+  const getStartedCta = document.querySelector<HTMLElement>("#get-started");
+  const deployRailway = document.querySelector("#deploy-railway");
+  const demoInstance = document.querySelector("#demo-instance");
+  const documentationCta = document.querySelector("#documentation");
+  const githubCta = document.querySelector("#github");
+
+  getStartedCta?.addEventListener("click", () => sdk.track("Get Started CTA"));
+  deployRailway?.addEventListener("click", () =>
+    sdk.track("Deploy on Railway CTA")
+  );
+  demoInstance?.addEventListener("click", () => sdk.track("Demo Instance CTA"));
+  documentationCta?.addEventListener("click", () =>
+    sdk.track("Documentation CTA")
+  );
+  githubCta?.addEventListener("click", () => sdk.track("Github CTA"));
+</script>

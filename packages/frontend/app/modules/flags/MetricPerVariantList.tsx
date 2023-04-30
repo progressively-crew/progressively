@@ -113,7 +113,7 @@ export interface MetricPerVariantListProps {
 
 export const MetricPerVariantList = ({ items }: MetricPerVariantListProps) => {
   return (
-    <div className="flex flex-row gap-4 pt-4">
+    <div className="flex flex-row gap-4 pt-4 flex-wrap">
       {items.map((mHit) => {
         return (
           <VariantEntity key={mHit.metric} mHit={mHit} allMetrics={items} />
