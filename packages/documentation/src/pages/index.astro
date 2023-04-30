@@ -1,6 +1,13 @@
 ---
+import { getProgressivelyData } from "@progressively/server-side";
 import LinkButton from "../components/LinkButton.astro";
 import Layout from "../layouts/Layout.astro";
+
+await getProgressivelyData("2c25b011-6f17-4caa-a16e-7dfc7c4290d8", {
+  apiUrl: "https://backend-progressively.fly.dev",
+  websocketUrl: "wss://backend-progressively.fly.dev",
+  shouldHit: true,
+});
 ---
 
 <Layout title="Welcome to Progressively.">
