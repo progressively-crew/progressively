@@ -5,7 +5,7 @@ export const getFlagEnvMetaTitle = (matches: any): string => {
     (match: any) =>
       match.id ===
       "routes/dashboard/projects/$id/environments/$env/flags/$flagId"
-  )?.data.flagEnv;
+  )?.data?.flagEnv;
 
   return flagEnv?.flag?.name || "";
 };
