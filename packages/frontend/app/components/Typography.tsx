@@ -1,12 +1,16 @@
-import React from "react";
+import React, { ElementType } from "react";
+
+export interface TypographyProps
+  extends React.HTMLAttributes<HTMLParagraphElement> {
+  as?: ElementType;
+}
 
 export const Typography = ({
-  className,
+  className = "",
   as: asHTML,
   ...props
-}: React.HTMLAttributes<HTMLParagraphElement>) => {
+}: TypographyProps) => {
   const Root = asHTML || "p";
-  return (
-    <Root {...props} className={"dark:text-gray-200 " + (className || "")} />
-  );
+
+  return <Root {...props} className={`dark:text-gray-200 ${className}`} />;
 };

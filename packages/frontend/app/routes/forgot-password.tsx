@@ -1,4 +1,4 @@
-import { MetaFunction, ActionFunction } from "@remix-run/node";
+import { V2_MetaFunction, ActionFunction } from "@remix-run/node";
 import { useActionData, Form, useTransition } from "@remix-run/react";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
@@ -10,13 +10,14 @@ import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import { validateEmail } from "~/modules/forms/utils/validateEmail";
 import { forgotPassword } from "~/modules/user/services/forgotPassword";
 import { H1Logo } from "~/components/H1Logo";
-import { Spacer } from "~/components/Spacer";
 import { Button } from "~/components/Buttons/Button";
 
-export const meta: MetaFunction = () => {
-  return {
-    title: "Progressively | Password forgotten",
-  };
+export const meta: V2_MetaFunction = () => {
+  return [
+    {
+      title: "Progressively | Password forgotten",
+    },
+  ];
 };
 
 interface ActionData {

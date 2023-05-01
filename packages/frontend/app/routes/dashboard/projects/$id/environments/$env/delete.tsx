@@ -5,7 +5,7 @@ import { Button } from "~/components/Buttons/Button";
 import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
 import { Typography } from "~/components/Typography";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
-import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
+import { ActionFunction, redirect, V2_MetaFunction } from "@remix-run/node";
 import { useActionData, Form, useTransition } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
@@ -15,13 +15,15 @@ import { Stack } from "~/components/Stack";
 import { BackLink } from "~/components/BackLink";
 import { DeleteEntityTitle } from "~/layouts/DeleteEntityTitle";
 
-export const meta: MetaFunction = ({ parentsData, params }) => {
-  const projectName = getProjectMetaTitle(parentsData);
-  const envName = getEnvMetaTitle(parentsData, params.env);
+export const meta: V2_MetaFunction = ({ matches, params }) => {
+  const projectName = getProjectMetaTitle(matches);
+  const envName = getEnvMetaTitle(matches, params.env!);
 
-  return {
-    title: `Progressively | ${projectName} | ${envName} | Settings | Delete`,
-  };
+  return [
+    {
+      title: `Progressively | ${projectName} | ${envName} | Settings | Delete`,
+    },
+  ];
 };
 
 interface ActionData {

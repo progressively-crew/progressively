@@ -1,10 +1,10 @@
 import { getSession } from "~/sessions";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import {
-  MetaFunction,
   ActionFunction,
   redirect,
   LoaderFunction,
+  V2_MetaFunction,
 } from "@remix-run/node";
 import {
   useActionData,
@@ -32,14 +32,16 @@ import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { BackLink } from "~/components/BackLink";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 
-export const meta: MetaFunction = ({ parentsData, params }) => {
-  const projectName = getProjectMetaTitle(parentsData);
-  const envName = getEnvMetaTitle(parentsData, params.env);
-  const flagName = getFlagEnvMetaTitle(parentsData);
+export const meta: V2_MetaFunction = ({ matches, params }) => {
+  const projectName = getProjectMetaTitle(matches);
+  const envName = getEnvMetaTitle(matches, params.env!);
+  const flagName = getFlagEnvMetaTitle(matches);
 
-  return {
-    title: `Progressively | ${projectName} | ${envName} | Flags | ${flagName} | Metrics | Create`,
-  };
+  return [
+    {
+      title: `Progressively | ${projectName} | ${envName} | Flags | ${flagName} | Metrics | Create`,
+    },
+  ];
 };
 
 interface ActionData {

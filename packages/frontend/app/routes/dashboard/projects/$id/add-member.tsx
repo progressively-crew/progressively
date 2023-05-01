@@ -13,7 +13,7 @@ import { Typography } from "~/components/Typography";
 import { Li, Ul } from "~/components/Ul";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
-import { MetaFunction, ActionFunction } from "@remix-run/node";
+import { ActionFunction, V2_MetaFunction } from "@remix-run/node";
 import { useActionData, Form, useTransition } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { useUser } from "~/modules/user/contexts/useUser";
@@ -29,12 +29,14 @@ export const handle = {
   },
 };
 
-export const meta: MetaFunction = ({ parentsData }) => {
-  const projectName = getProjectMetaTitle(parentsData);
+export const meta: V2_MetaFunction = ({ matches }) => {
+  const projectName = getProjectMetaTitle(matches);
 
-  return {
-    title: `Progressively | ${projectName} | Add member`,
-  };
+  return [
+    {
+      title: `Progressively | ${projectName} | Add member`,
+    },
+  ];
 };
 
 interface ActionData {

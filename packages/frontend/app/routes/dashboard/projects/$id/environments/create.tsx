@@ -8,7 +8,7 @@ import { validateEnvName } from "~/modules/environments/validators/validateEnvNa
 import { getSession } from "~/sessions";
 import { TextInput } from "~/components/Fields/TextInput";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
-import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
+import { ActionFunction, redirect, V2_MetaFunction } from "@remix-run/node";
 import { useActionData, Form, useTransition } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
@@ -16,12 +16,14 @@ import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { BackLink } from "~/components/BackLink";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 
-export const meta: MetaFunction = ({ parentsData }) => {
-  const projectName = getProjectMetaTitle(parentsData);
+export const meta: V2_MetaFunction = ({ matches }) => {
+  const projectName = getProjectMetaTitle(matches);
 
-  return {
-    title: `Progressively | ${projectName} | Create an environment`,
-  };
+  return [
+    {
+      title: `Progressively | ${projectName} | Create an environment`,
+    },
+  ];
 };
 
 interface ActionData {

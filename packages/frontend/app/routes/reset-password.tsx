@@ -1,4 +1,4 @@
-import { MetaFunction, ActionFunction } from "@remix-run/node";
+import { ActionFunction, V2_MetaFunction } from "@remix-run/node";
 import {
   useActionData,
   useSearchParams,
@@ -20,10 +20,12 @@ import { H1Logo } from "~/components/H1Logo";
 import { Spacer } from "~/components/Spacer";
 import { Button } from "~/components/Buttons/Button";
 
-export const meta: MetaFunction = () => {
-  return {
-    title: "Progressively | Reset password",
-  };
+export const meta: V2_MetaFunction = () => {
+  return [
+    {
+      title: "Progressively | Reset password",
+    },
+  ];
 };
 
 interface ActionData {

@@ -1,7 +1,11 @@
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { getSession } from "~/sessions";
 import { Section } from "~/components/Section";
-import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
+import {
+  ActionFunction,
+  LoaderFunction,
+  V2_MetaFunction,
+} from "@remix-run/node";
 import {
   Form,
   useActionData,
@@ -37,14 +41,16 @@ import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { Typography } from "~/components/Typography";
 
-export const meta: MetaFunction = ({ parentsData, params }) => {
-  const projectName = getProjectMetaTitle(parentsData);
-  const envName = getEnvMetaTitle(parentsData, params.env);
-  const flagName = getFlagEnvMetaTitle(parentsData);
+export const meta: V2_MetaFunction = ({ matches, params }) => {
+  const projectName = getProjectMetaTitle(matches);
+  const envName = getEnvMetaTitle(matches, params.env!);
+  const flagName = getFlagEnvMetaTitle(matches);
 
-  return {
-    title: `Progressively | ${projectName} | ${envName} | Flags | ${flagName}`,
-  };
+  return [
+    {
+      title: `Progressively | ${projectName} | ${envName} | Flags | ${flagName}`,
+    },
+  ];
 };
 
 type ActionDataType = null | {

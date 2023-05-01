@@ -1,4 +1,4 @@
-import { ActionFunction, redirect } from "@remix-run/node";
+import { ActionFunction, V2_MetaFunction, redirect } from "@remix-run/node";
 import { useActionData, Form, useNavigation } from "@remix-run/react";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
@@ -16,10 +16,12 @@ import { Li, Ul } from "~/components/Ul";
 import { HStack } from "~/components/HStack";
 import { useUser } from "~/modules/user/contexts/useUser";
 
-export const meta = () => {
-  return {
-    title: "Progressively | Onboarding",
-  };
+export const meta: V2_MetaFunction = () => {
+  return [
+    {
+      title: "Progressively | Onboarding",
+    },
+  ];
 };
 
 interface ActionData {

@@ -1,4 +1,4 @@
-import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
+import { ActionFunction, redirect, V2_MetaFunction } from "@remix-run/node";
 import { useActionData, Form, useTransition } from "@remix-run/react";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
@@ -17,12 +17,14 @@ import { useState } from "react";
 import camelcase from "camelcase";
 import { ButtonCopy } from "~/components/ButtonCopy";
 
-export const meta: MetaFunction = ({ parentsData }) => {
-  const projectName = getProjectMetaTitle(parentsData);
+export const meta: V2_MetaFunction = ({ matches }) => {
+  const projectName = getProjectMetaTitle(matches);
 
-  return {
-    title: `Progressively | ${projectName} | Flags | Create`,
-  };
+  return [
+    {
+      title: `Progressively | ${projectName} | Flags | Create`,
+    },
+  ];
 };
 
 interface ActionData {

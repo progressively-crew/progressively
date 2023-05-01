@@ -3,7 +3,7 @@ import { UserRoles } from "~/modules/projects/types";
 import { Section, SectionHeader } from "~/components/Section";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
-import { MetaFunction } from "@remix-run/node";
+import { V2_MetaFunction } from "@remix-run/node";
 import { Card, CardContent } from "~/components/Card";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { useProject } from "~/modules/projects/contexts/useProject";
@@ -14,13 +14,15 @@ import { FlagMenu } from "~/modules/flags/components/FlagMenu";
 import { useFlag } from "~/modules/flags/contexts/useFlag";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 
-export const meta: MetaFunction = ({ parentsData }) => {
-  const projectName = getProjectMetaTitle(parentsData);
-  const flagName = getFlagMetaTitle(parentsData);
+export const meta: V2_MetaFunction = ({ matches }) => {
+  const projectName = getProjectMetaTitle(matches);
+  const flagName = getFlagMetaTitle(matches);
 
-  return {
-    title: `Progressively | ${projectName} | ${flagName} | Settings`,
-  };
+  return [
+    {
+      title: `Progressively | ${projectName} | ${flagName} | Settings`,
+    },
+  ];
 };
 
 export default function FlagSettingPage() {

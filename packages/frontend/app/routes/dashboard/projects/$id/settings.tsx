@@ -1,5 +1,4 @@
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
-import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { Section, SectionHeader } from "~/components/Section";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
@@ -10,7 +9,7 @@ import { getSession } from "~/sessions";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { Spacer } from "~/components/Spacer";
-import { MetaFunction, ActionFunction } from "@remix-run/node";
+import { V2_MetaFunction, ActionFunction } from "@remix-run/node";
 import { useActionData, useTransition, Form } from "@remix-run/react";
 import { Card, CardContent } from "~/components/Card";
 import { CreateButton } from "~/components/Buttons/CreateButton";
@@ -20,12 +19,14 @@ import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaT
 import { PageTitle } from "~/components/PageTitle";
 import { ProjectNavBar } from "~/modules/projects/components/ProjectNavBar";
 
-export const meta: MetaFunction = ({ parentsData }) => {
-  const projectName = getProjectMetaTitle(parentsData);
+export const meta: V2_MetaFunction = ({ matches }) => {
+  const projectName = getProjectMetaTitle(matches);
 
-  return {
-    title: `Progressively | ${projectName} | Settings`,
-  };
+  return [
+    {
+      title: `Progressively | ${projectName} | Settings`,
+    },
+  ];
 };
 
 interface ActionData {

@@ -1,7 +1,11 @@
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { getSession } from "~/sessions";
 import { getFlagHits } from "~/modules/flags/services/getFlagHits";
-import { MetaFunction, LoaderFunction, ActionFunction } from "@remix-run/node";
+import {
+  LoaderFunction,
+  ActionFunction,
+  V2_MetaFunction,
+} from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
 import { FlagEnvMenu } from "~/modules/flags/components/FlagEnvMenu";
 import { useUser } from "~/modules/user/contexts/useUser";
@@ -24,14 +28,16 @@ import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction"
 import { VariantCard } from "~/modules/insights/components/VariantCard";
 import { Typography } from "~/components/Typography";
 
-export const meta: MetaFunction = ({ parentsData, params }) => {
-  const projectName = getProjectMetaTitle(parentsData);
-  const envName = getEnvMetaTitle(parentsData, params.env);
-  const flagName = getFlagEnvMetaTitle(parentsData);
+export const meta: V2_MetaFunction = ({ matches, params }) => {
+  const projectName = getProjectMetaTitle(matches);
+  const envName = getEnvMetaTitle(matches, params.env!);
+  const flagName = getFlagEnvMetaTitle(matches);
 
-  return {
-    title: `Progressively | ${projectName} | ${envName} | ${flagName} | Insights`,
-  };
+  return [
+    {
+      title: `Progressively | ${projectName} | ${envName} | ${flagName} | Insights`,
+    },
+  ];
 };
 
 type FlagHit = {

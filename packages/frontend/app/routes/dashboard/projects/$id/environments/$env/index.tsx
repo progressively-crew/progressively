@@ -6,7 +6,11 @@ import { EmptyState } from "~/components/EmptyState";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { FlagEnvList } from "~/modules/flags/components/FlagEnvList";
 import { EnvNavBar } from "~/modules/environments/components/EnvNavbar";
-import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
+import {
+  ActionFunction,
+  LoaderFunction,
+  V2_MetaFunction,
+} from "@remix-run/node";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { Card, CardContent } from "~/components/Card";
 import { useProject } from "~/modules/projects/contexts/useProject";
@@ -20,13 +24,15 @@ import { SearchLayout } from "~/layouts/SearchLayout";
 import { SearchBar } from "~/components/SearchBar";
 import { Typography } from "~/components/Typography";
 
-export const meta: MetaFunction = ({ params, parentsData }) => {
-  const projectName = getProjectMetaTitle(parentsData);
-  const envName = getEnvMetaTitle(parentsData, params.env);
+export const meta: V2_MetaFunction = ({ matches, params }) => {
+  const projectName = getProjectMetaTitle(matches);
+  const envName = getEnvMetaTitle(matches, params.env!);
 
-  return {
-    title: `Progressively | ${projectName} | ${envName} | Flags`,
-  };
+  return [
+    {
+      title: `Progressively | ${projectName} | ${envName} | Flags`,
+    },
+  ];
 };
 
 export const action: ActionFunction = async ({

@@ -1,8 +1,8 @@
 import {
-  MetaFunction,
   ActionFunction,
   redirect,
   LoaderFunction,
+  V2_MetaFunction,
 } from "@remix-run/node";
 import {
   useLoaderData,
@@ -28,10 +28,12 @@ import { useOkta } from "~/modules/auth/hooks/useOkta";
 import { Spacer } from "~/components/Spacer";
 import { H1Logo } from "~/components/H1Logo";
 
-export const meta: MetaFunction = () => {
-  return {
-    title: "Progressively | Sign in",
-  };
+export const meta: V2_MetaFunction = () => {
+  return [
+    {
+      title: "Progressively | Sign in",
+    },
+  ];
 };
 
 interface ActionData {

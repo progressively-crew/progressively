@@ -5,16 +5,18 @@ import { validateProjectName } from "~/modules/projects/validators/validateProje
 import { getSession } from "~/sessions";
 import { TextInput } from "~/components/Fields/TextInput";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
-import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
+import { ActionFunction, redirect, V2_MetaFunction } from "@remix-run/node";
 import { useActionData, Form, useTransition } from "@remix-run/react";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { BackLink } from "~/components/BackLink";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 
-export const meta: MetaFunction = () => {
-  return {
-    title: "Progressively | Create a project",
-  };
+export const meta: V2_MetaFunction = () => {
+  return [
+    {
+      title: "Progressively | Create a project",
+    },
+  ];
 };
 
 interface ActionData {
