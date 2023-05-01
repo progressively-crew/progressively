@@ -6,8 +6,9 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useCatch,
+  isRouteErrorResponse,
   useLoaderData,
+  useRouteError,
 } from "@remix-run/react";
 import UnauthorizedPage from "./routes/401";
 import ForbiddenPage from "./routes/403";
@@ -51,23 +52,6 @@ export const loader: LoaderFunction = () => {
     sentryDSN: process.env.SENTRY_DSN,
   };
 };
-
-/**
- * The root module's default export is a component that renders the current
- * route via the `<Outlet />` component. Think of this as the global layout
- * component for your app.
- */
-function App() {
-  return (
-    <Document>
-      <ThemeProvider>
-        <Outlet />
-      </ThemeProvider>
-    </Document>
-  );
-}
-
-export default withSentry(App);
 
 interface DocumentProps {
   children: React.ReactNode;
@@ -117,64 +101,68 @@ document.documentElement.classList.remove('dark')
   );
 };
 
-function Layout({ children }: React.PropsWithChildren<unknown>) {
-  return <>{children}</>;
-}
-
-export function CatchBoundary() {
-  const caught = useCatch();
-
-  let page;
-  switch (caught.status) {
-    case 403: {
-      page = <ForbiddenPage />;
-      break;
-    }
-    case 401: {
-      page = <UnauthorizedPage />;
-      break;
-    }
-    case 404: {
-      page = <NotFoundPage />;
-      break;
-    }
-
-    default: {
-      throw new Error(caught.data || caught.statusText);
-    }
-  }
-
-  return (
-    <Document title={`${caught.status} ${caught.statusText}`}>
-      <Layout>{page}</Layout>
-    </Document>
-  );
-}
-
-export function ErrorBoundary({ error }: { error: Error }) {
+function DefaultError({ errorMessage }: { errorMessage: string }) {
   return (
     <Document title="Error!">
-      <Layout>
-        <main className="p-8">
-          <Typography as="h1" className="font-bold text-lg">
-            Outch, a wild error appeared!
-          </Typography>
+      <main className="p-8">
+        <Typography as="h1" className="font-bold text-lg">
+          Outch, a wild error appeared!
+        </Typography>
 
-          <Typography>{error.message}</Typography>
+        <Typography>{errorMessage}</Typography>
 
-          <Spacer size={2} />
+        <Spacer size={2} />
 
-          <div className="inline-block">
-            <Button
-              to="/signin"
-              variant="secondary"
-              icon={<AiOutlineLogin aria-hidden />}
-            >
-              Signin page
-            </Button>
-          </div>
-        </main>
-      </Layout>
+        <div className="inline-block">
+          <Button
+            to="/signin"
+            variant="secondary"
+            icon={<AiOutlineLogin aria-hidden />}
+          >
+            Signin page
+          </Button>
+        </div>
+      </main>
     </Document>
   );
 }
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+
+  if (isRouteErrorResponse(error)) {
+    return (
+      <Document title={`${error.status} ${error.statusText}`}>
+        {error.status === 403 ? (
+          <ForbiddenPage />
+        ) : error.status === 401 ? (
+          <UnauthorizedPage />
+        ) : error.status === 404 ? (
+          <NotFoundPage />
+        ) : (
+          <DefaultError errorMessage={error.data.message || error.statusText} />
+        )}
+      </Document>
+    );
+  }
+
+  const errorMessage = (error as any).data.message as string;
+  return <DefaultError errorMessage={errorMessage} />;
+}
+
+/**
+ * The root module's default export is a component that renders the current
+ * route via the `<Outlet />` component. Think of this as the global layout
+ * component for your app.
+ */
+function App() {
+  return (
+    <Document>
+      <ThemeProvider>
+        <Outlet />
+      </ThemeProvider>
+    </Document>
+  );
+}
+
+export default withSentry(App);

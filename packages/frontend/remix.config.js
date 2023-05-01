@@ -17,5 +17,8 @@ module.exports = {
   // serverBuildPath: "build/index.js",
   // publicPath: "/build/",
   devServerPort: 8002,
+  future: {
+    v2_errorBoundary: true,
+  },
   ...vercelSpecificConfig,
 };
