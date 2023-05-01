@@ -19,6 +19,7 @@ module.exports = {
   devServerPort: 8002,
   future: {
     v2_errorBoundary: true,
+    v2_meta: true,
   },
   ...vercelSpecificConfig,
 };

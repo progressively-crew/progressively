@@ -4,7 +4,11 @@ import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { EmptyState } from "~/components/EmptyState";
 import { CreateButton } from "~/components/Buttons/CreateButton";
-import { MetaFunction, LoaderFunction } from "@remix-run/node";
+import {
+  V2_MetaFunction,
+  LoaderFunction,
+  V2_MetaFunction,
+} from "@remix-run/node";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { Card, CardContent } from "~/components/Card";
 import { useProject } from "~/modules/projects/contexts/useProject";
@@ -18,12 +22,14 @@ import { getProjectFlags } from "~/modules/projects/services/getProjectFlags";
 import { FlagList } from "~/modules/flags/components/FlagList";
 import { Typography } from "~/components/Typography";
 
-export const meta: MetaFunction = ({ parentsData }) => {
-  const projectName = getProjectMetaTitle(parentsData);
+export const meta: V2_MetaFunction = ({ matches }) => {
+  const projectName = getProjectMetaTitle(matches);
 
-  return {
-    title: `Progressively | ${projectName} | Flags`,
-  };
+  return [
+    {
+      title: `Progressively | ${projectName} | Flags`,
+    },
+  ];
 };
 
 interface LoaderData {

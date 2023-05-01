@@ -1,4 +1,8 @@
-import { MetaFunction, ActionFunction, LoaderFunction } from "@remix-run/node";
+import {
+  ActionFunction,
+  LoaderFunction,
+  V2_MetaFunction,
+} from "@remix-run/node";
 import {
   useActionData,
   useLoaderData,
@@ -27,10 +31,12 @@ import { Typography } from "~/components/Typography";
 import { Button } from "~/components/Buttons/Button";
 import { Spacer } from "~/components/Spacer";
 
-export const meta: MetaFunction = () => {
-  return {
-    title: "Progressively | Profile",
-  };
+export const meta: V2_MetaFunction = () => {
+  return [
+    {
+      title: "Progressively | Profile",
+    },
+  ];
 };
 
 interface ActionData {

@@ -5,7 +5,7 @@ import { UserRoles } from "~/modules/projects/types";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { EnvNavBar } from "~/modules/environments/components/EnvNavbar";
-import { MetaFunction } from "@remix-run/node";
+import { V2_MetaFunction } from "@remix-run/node";
 import { Card, CardContent } from "~/components/Card";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { useProject } from "~/modules/projects/contexts/useProject";
@@ -15,13 +15,15 @@ import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle
 import { PageTitle } from "~/components/PageTitle";
 import { Spacer } from "~/components/Spacer";
 
-export const meta: MetaFunction = ({ parentsData, params }) => {
-  const projectName = getProjectMetaTitle(parentsData);
-  const envName = getEnvMetaTitle(parentsData, params.env);
+export const meta: V2_MetaFunction = ({ matches, params }) => {
+  const projectName = getProjectMetaTitle(matches);
+  const envName = getEnvMetaTitle(matches, params.env!);
 
-  return {
-    title: `Progressively | ${projectName} | ${envName} | Settings`,
-  };
+  return [
+    {
+      title: `Progressively | ${projectName} | ${envName} | Settings`,
+    },
+  ];
 };
 
 export default function EnvSettingsPage() {
@@ -38,7 +40,7 @@ export default function EnvSettingsPage() {
 
       <Card
         footer={
-          <ButtonCopy toCopy={environment.clientKey} size="M">
+          <ButtonCopy toCopy={environment.clientKey}>
             {environment.clientKey}
           </ButtonCopy>
         }

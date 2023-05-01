@@ -1,4 +1,8 @@
-import { ActionFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
+import {
+  ActionFunction,
+  LoaderFunction,
+  V2_MetaFunction,
+} from "@remix-run/node";
 import {
   Form,
   useActionData,
@@ -34,15 +38,17 @@ import { Segment } from "~/modules/segments/types";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { getSession } from "~/sessions";
 
-export const meta: MetaFunction = ({ parentsData, params, data }) => {
-  const projectName = getProjectMetaTitle(parentsData);
-  const envName = getEnvMetaTitle(parentsData, params.env);
-  const flagName = getFlagEnvMetaTitle(parentsData);
+export const meta: V2_MetaFunction = ({ matches, params, data }) => {
+  const projectName = getProjectMetaTitle(matches);
+  const envName = getEnvMetaTitle(matches, params.env!);
+  const flagName = getFlagEnvMetaTitle(matches);
   const segmentName = data?.segment?.name || "";
 
-  return {
-    title: `Progressively | ${projectName} | ${envName} | Flags | ${flagName} | Segments | ${segmentName}`,
-  };
+  return [
+    {
+      title: `Progressively | ${projectName} | ${envName} | Flags | ${flagName} | Segments | ${segmentName}`,
+    },
+  ];
 };
 
 export interface ActionData {

@@ -1,7 +1,6 @@
-import { MetaFunction, ActionFunction, redirect } from "@remix-run/node";
+import { ActionFunction, redirect, V2_MetaFunction } from "@remix-run/node";
 import { useActionData } from "@remix-run/react";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
-import { Card, CardContent } from "~/components/Card";
 import { Spacer } from "~/components/Spacer";
 import { Stack } from "~/components/Stack";
 import { Typography } from "~/components/Typography";
@@ -12,10 +11,12 @@ import {
   RegisterForm,
 } from "~/modules/user/components/RegisterForm";
 
-export const meta: MetaFunction = () => {
-  return {
-    title: "Progressively | Welcome",
-  };
+export const meta: V2_MetaFunction = () => {
+  return [
+    {
+      title: "Progressively | Welcome",
+    },
+  ];
 };
 
 interface ActionData {

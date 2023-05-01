@@ -146,8 +146,11 @@ export function ErrorBoundary() {
     );
   }
 
-  const errorMessage = (error as any).data.message as string;
-  return <DefaultError errorMessage={errorMessage} />;
+  const message = (error as any).message
+    ? ((error as any).message as string)
+    : (error as any).data.message;
+
+  return <DefaultError errorMessage={message} />;
 }
 
 /**

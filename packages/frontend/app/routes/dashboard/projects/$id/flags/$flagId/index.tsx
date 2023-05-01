@@ -1,5 +1,5 @@
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { MetaFunction } from "@remix-run/node";
+import { V2_MetaFunction } from "@remix-run/node";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
@@ -12,14 +12,17 @@ import { SearchBar } from "~/components/SearchBar";
 import { SearchLayout } from "~/layouts/SearchLayout";
 import { useSearchParams } from "@remix-run/react";
 import { Typography } from "~/components/Typography";
+import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 
-export const meta: MetaFunction = ({ parentsData }) => {
-  const projectName = getProjectMetaTitle(parentsData);
-  const flagName = getFlagEnvMetaTitle(parentsData);
+export const meta: V2_MetaFunction = ({ matches }) => {
+  const projectName = getProjectMetaTitle(matches);
+  const flagName = getFlagMetaTitle(matches);
 
-  return {
-    title: `Progressively | ${projectName} | ${flagName}`,
-  };
+  return [
+    {
+      title: `Progressively | ${projectName} | ${flagName}`,
+    },
+  ];
 };
 
 export default function FlagSettingPage() {

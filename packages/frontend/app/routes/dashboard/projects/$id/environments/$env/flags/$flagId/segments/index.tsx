@@ -1,4 +1,8 @@
-import { ActionFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
+import {
+  ActionFunction,
+  LoaderFunction,
+  V2_MetaFunction,
+} from "@remix-run/node";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { CreateButton } from "~/components/Buttons/CreateButton";
@@ -21,14 +25,16 @@ import { Segment } from "~/modules/segments/types";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { getSession } from "~/sessions";
 
-export const meta: MetaFunction = ({ parentsData, params }) => {
-  const projectName = getProjectMetaTitle(parentsData);
-  const envName = getEnvMetaTitle(parentsData, params.env);
-  const flagName = getFlagEnvMetaTitle(parentsData);
+export const meta: V2_MetaFunction = ({ matches, params }) => {
+  const projectName = getProjectMetaTitle(matches);
+  const envName = getEnvMetaTitle(matches, params.env!);
+  const flagName = getFlagEnvMetaTitle(matches);
 
-  return {
-    title: `Progressively | ${projectName} | ${envName} | Flags | ${flagName} | Segments`,
-  };
+  return [
+    {
+      title: `Progressively | ${projectName} | ${envName} | Flags | ${flagName} | Segments`,
+    },
+  ];
 };
 
 interface LoaderData {

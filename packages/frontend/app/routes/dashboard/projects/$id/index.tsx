@@ -2,7 +2,7 @@ import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { EmptyState } from "~/components/EmptyState";
 import { CreateButton } from "~/components/Buttons/CreateButton";
-import { MetaFunction } from "@remix-run/node";
+import { V2_MetaFunction } from "@remix-run/node";
 import { useSearchParams } from "@remix-run/react";
 import { EnvList } from "~/modules/environments/components/EnvList";
 import { Card, CardContent } from "~/components/Card";
@@ -15,12 +15,14 @@ import { SearchLayout } from "~/layouts/SearchLayout";
 import { ProjectNavBar } from "~/modules/projects/components/ProjectNavBar";
 import { Typography } from "~/components/Typography";
 
-export const meta: MetaFunction = ({ parentsData }) => {
-  const projectName = getProjectMetaTitle(parentsData);
+export const meta: V2_MetaFunction = ({ matches }) => {
+  const projectName = getProjectMetaTitle(matches);
 
-  return {
-    title: `Progressively | ${projectName}`,
-  };
+  return [
+    {
+      title: `Progressively | ${projectName}`,
+    },
+  ];
 };
 
 export default function ProjectDetailPage() {
