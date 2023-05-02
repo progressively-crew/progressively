@@ -1,0 +1,63 @@
+import { Callout } from "nextra-theme-docs";
+import { Steps } from "nextra-theme-docs";
+
+# Medium start
+
+The medium start aims for contributions. It helps getting the project running locally while having the control to modify the codebase.
+
+<Callout type="info" emoji="ℹ️">
+  This guide assumes you have [Docker](https://www.docker.com/). We'll use it to
+  start a [Postgres](https://www.postgresql.org/) and [Redis](https://redis.io/)
+  instances.
+</Callout>
+
+## Step by step
+
+<Steps>
+
+### Get the project from Github
+
+```shell
+$ git clone https://github.com/progressively-crew/progressively && cd progressively
+```
+
+### Prepare env variables
+
+Copy the example env variable into real env variable (feel free to modify them).
+
+```shell
+$ cp ./packages/backend/.env.example ./packages/backend/.env
+$ cp ./packages/frontend/.env.example ./packages/frontend/.env
+```
+
+### Run Postgres locally in Docker
+
+You can choose to install it directly if you prefer in [their website](https://www.postgresql.org/).
+
+```shell
+$ docker run --name progressively-db -e POSTGRES_PASSWORD=admin -e POSTGRES_USER=admin -e POSTGRES_DB=progressively -p 5432:5432 -d postgres
+```
+
+### Run Redis locally in Docker
+
+You can choose to install it directly if you prefer in [their website](https://redis.io/).
+
+```shell
+$ docker run -it --rm --name progressively-redis -p 6379:6379 -d redis
+```
+
+### Setup the monorepo
+
+Install dependencies, link workspaces, prepare the Database table structure and build the SDKs. <strong>It's a one-off command</strong>.
+
+```shell
+$ pnpm run setup && pnpm run build && pnpm run db:prepare
+```
+
+### Start the project in dev mode
+
+```shell
+$ pnpm run dev
+```
+
+</Steps>

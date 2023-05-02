@@ -1,7 +1,42 @@
 export default {
-	logo: <span>Progressively</span>,
-	project: {
-	  link: 'https://github.com/progressively-crew/progressively',
-	},
-	// ...
-  }
+  logo: (
+    <span
+      style={{
+        display: "flex",
+        gap: "8px",
+        flexDirection: "row",
+        alignItems: "center",
+      }}
+    >
+      <svg
+        viewBox="0 0 32 32"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-label="Progressively"
+        class="h-8 w-8"
+        width="32"
+        height="32"
+      >
+        <rect width="32" height="32" rx="4" fill="#0f172a" />
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M14.0438 17.0394C13.9431 17.1056 13.8105 17.032 13.8105 16.91V8.26519C13.8105 8.14282 13.9439 8.06932 14.0445 8.13625L20.5795 12.4842C20.6711 12.5452 20.6708 12.6821 20.5788 12.7426L14.0438 17.0394ZM13.8105 27.0431V19.5533C13.8105 19.5009 13.8366 19.4521 13.8798 19.4238L22.832 13.5521C23.5214 13.0999 23.5214 12.0734 22.832 11.6213L14.6705 6.26815C14.5541 6.19184 14.5916 6.0119 14.7289 5.99437C15.1453 5.94125 15.5695 5.91387 16 5.91387C21.5894 5.91387 26.1206 10.5281 26.1206 16.2201C26.1206 19.6312 24.4943 22.6553 21.9841 24.5327C21.5658 24.8455 21.4757 25.4444 21.7829 25.8704C22.0902 26.2963 22.6783 26.388 23.0966 26.0752C26.0681 23.8527 28 20.2661 28 16.2201C28 9.47112 22.6274 4 16 4C9.37258 4 4 9.47112 4 16.2201C4 21.7021 7.54406 26.3388 12.4244 27.8882C12.433 27.891 12.4414 27.8945 12.4495 27.8986C12.5762 27.9635 12.7193 28 12.8708 28C12.9474 28 13.0219 27.9907 13.0932 27.973C13.2108 27.9468 13.3198 27.8957 13.4152 27.8232C13.6544 27.6497 13.8105 27.365 13.8105 27.0431ZM11.72 6.87815C11.8189 6.83108 11.9311 6.90543 11.9311 7.01662V18.5965V25.4239C11.9311 25.5351 11.8189 25.6094 11.72 25.5623C8.26928 23.9201 5.8794 20.3533 5.8794 16.2201C5.8794 12.0859 8.26983 8.52017 11.72 6.87815Z"
+          fill="white"
+        />
+      </svg>
+      <strong style={{ fontSize: "1.2rem" }}>Progressively</strong>
+    </span>
+  ),
+  project: {
+    link: "https://github.com/progressively-crew/progressively",
+  },
+  docsRepositoryBase:
+    "https://github.com/progressively-crew/progressively/tree/master/packages/documentation",
+  primaryHue: 227,
+  useNextSeoProps() {
+    return {
+      titleTemplate: "%s – Progressively",
+    };
+  },
+};

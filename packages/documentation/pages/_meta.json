@@ -1,0 +1,19 @@
+{
+  "index": "Introduction",
+  "get-started": "Get started",
+  "--- developpers": {
+    "title": "Developpers",
+    "type": "separator"
+  },
+  "sdks": "SDKs",
+  "customization": "Customization",
+  "--- community": {
+    "title": "Developpers",
+    "type": "separator"
+  },
+  "Github": {
+    "title": "Github",
+    "href": "https://github.com/progressively-crew/progressively",
+    "newWindow": true
+  }
+}
