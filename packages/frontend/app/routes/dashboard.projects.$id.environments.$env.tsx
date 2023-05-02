@@ -6,8 +6,9 @@ import { useProject } from "~/modules/projects/contexts/useProject";
 export const handle = {
   breadcrumb: (match, matches: any) => {
     const parentProjectMatch = matches.find(
-      (d: any) => d.id === "routes/dashboard/projects/$id"
+      (d: any) => d.id === "routes/dashboard.projects.$id"
     );
+
     const environment = parentProjectMatch.data.project.environments.find(
       (env) => env.uuid === match.params.env
     )!;
