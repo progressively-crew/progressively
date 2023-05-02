@@ -1,29 +1,13 @@
 ---
 import LinkButton from "../components/LinkButton.astro";
 import Layout from "../layouts/Layout.astro";
+import Nav from "../components/Nav.astro";
 ---
 
 <Layout title="Welcome to Progressively.">
   <main>
     <header>
-      <nav class="flex justify-end container px-4 lg:px-20 mx-auto py-2 gap-2">
-        <LinkButton
-          variant="tertiary"
-          href="https://docs.progressively.app/"
-          target={"_blank"}
-          id="documentation"
-        >
-          Documentation
-        </LinkButton>
-        <LinkButton
-          variant="tertiary"
-          href="https://github.com/progressively-crew/progressively"
-          target={"_blank"}
-          id="github"
-        >
-          Github
-        </LinkButton>
-      </nav>
+      <Nav />
       <div
         class="container px-4 lg:px-20 mx-auto flex justify-center lg:items-center flex-col py-40 gap-4"
       >
