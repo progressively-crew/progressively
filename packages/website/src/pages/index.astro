@@ -1,29 +1,13 @@
 ---
 import LinkButton from "../components/LinkButton.astro";
 import Layout from "../layouts/Layout.astro";
+import Nav from "../components/Nav.astro";
 ---
 
 <Layout title="Welcome to Progressively.">
   <main>
     <header>
-      <nav class="flex justify-end container px-4 lg:px-20 mx-auto py-2 gap-2">
-        <LinkButton
-          variant="tertiary"
-          href="https://docs.progressively.app/"
-          target={"_blank"}
-          id="documentation"
-        >
-          Documentation
-        </LinkButton>
-        <LinkButton
-          variant="tertiary"
-          href="https://github.com/progressively-crew/progressively"
-          target={"_blank"}
-          id="github"
-        >
-          Github
-        </LinkButton>
-      </nav>
+      <Nav />
       <div
         class="container px-4 lg:px-20 mx-auto flex justify-center lg:items-center flex-col py-40 gap-4"
       >
@@ -96,7 +80,7 @@ import Layout from "../layouts/Layout.astro";
     <section class="container px-4 lg:px-20 mx-auto py-40">
       <h2 class="font-extrabold text-5xl pb-4">Introducing Progressively</h2>
 
-      <p class="text-2xl leading-relaxed max-w-4xl pt-4">
+      <p class="text-2xl leading-relaxed max-w-4xl pt-4 pb-4">
         Switching a toggle is great for a one-off deploy. And Progressively does
         more by providing tooling to only <strong
           >rollout to a given set of your audience</strong
@@ -104,6 +88,10 @@ import Layout from "../layouts/Layout.astro";
           >measure feature flags impacts</strong
         >, <strong>triggering webhook</strong> when a release happens etc...
       </p>
+
+      <LinkButton href="/features" variant={"secondary"}>
+        Discover the features
+      </LinkButton>
     </section>
   </main>
 </Layout>

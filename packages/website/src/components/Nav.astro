@@ -1,0 +1,25 @@
+---
+import LinkButton from "./LinkButton.astro";
+---
+
+<nav class="flex justify-end container px-4 lg:px-20 mx-auto py-2 gap-2">
+  <LinkButton variant="tertiary" href="/" id="documentation">Home</LinkButton>
+  <LinkButton variant="tertiary" href="/features" id="documentation">
+    Features
+  </LinkButton>
+  <LinkButton
+    variant="tertiary"
+    href="https://docs.progressively.app/"
+    id="documentation"
+  >
+    Documentation
+  </LinkButton>
+  <LinkButton
+    variant="tertiary"
+    href="https://github.com/progressively-crew/progressively"
+    target={"_blank"}
+    id="github"
+  >
+    Github
+  </LinkButton>
+</nav>

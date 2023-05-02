@@ -1,0 +1,54 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Nav from "../components/Nav.astro";
+import Feature from "../components/Feature.astro";
+---
+
+<Layout title="Features of Progressively">
+  <main>
+    <header>
+      <Nav />
+
+      <div class="container px-4 lg:px-64 mx-auto pt-20 pb-8">
+        <h1 class="text-2xl font-extrabold">The baked-in features</h1>
+      </div>
+    </header>
+
+    <Feature title="Audience Targeting" href="/audience.png">
+      With Progressively, you can define <strong>very granular rules</strong> based
+      on users attributes to define who is supposed to get access to the new feature.
+      It also includes <strong>gradual rollouts</strong> using percentage ranges.
+    </Feature>
+
+    <Feature title="Single & Multi Variants" href="/variants.png">
+      By default, <strong>a feature can be visible or not visible</strong>. With
+      Progressively, you can define <strong>other variants</strong> to provide different
+      variations of your features to different users. It's useful for <strong
+        >A/B testing</strong
+      >.
+    </Feature>
+
+    <Feature title="Segments of users" href="/segments.png">
+      Creating granular rules might be a long and repetitive task. Segments of
+      users allows <strong
+        >to group a set of rules targeting a set of users</strong
+      > under the same entitiy. And it can also be used as a targeting rule. For
+      instance, you can give your <strong>QA team an early access</strong> to the
+      feature in production without repeating the rule.
+    </Feature>
+
+    <Feature title="Activation scheduling" href="/schedule.png">
+      You want to activate (or deactivate) your feature flag on Tuesday 2pm PST
+      but you live in Europe and you don't want to wake up? <strong
+        >We have flag activation scheduling for you</strong
+      >.
+    </Feature>
+
+    <Feature title="Flag insights" href="/insights.png">
+      Each time a user is making a request to Progressively for evaluating the
+      status of a flag, <strong>this evaluation is registered</strong>. In
+      addition to that, you can define <strong>your own metrics</strong> and we cross
+      the information between the flag evaluation and the metrics hits in dashboards.
+    </Feature>
+  </main>
+</Layout>
