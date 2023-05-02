@@ -5,7 +5,5 @@ export const getFlagMetaTitle = (matches: any): string => {
     (match: any) => match.id === "routes/dashboard.projects.$id.flags.$flagId"
   )?.data?.flag;
 
-  console.log("lol", matches);
-
   return flag?.name || "";
 };
