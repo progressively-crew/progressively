@@ -5,55 +5,55 @@ import Nav from "../components/Nav.astro";
 ---
 
 <Layout title="Welcome to Progressively.">
+  <header>
+    <Nav />
+    <div
+      class="container px-4 lg:px-20 mx-auto flex justify-center lg:items-center flex-col py-20 md:py-40 gap-4"
+    >
+      <h1 class="text-5xl md:text-6xl font-extrabold">
+        Introducing <span>Progressively</span>
+      </h1>
+
+      <p class="text-2xl sm:text-center">
+        A simple, accessible, lightweight, self-hosted and OpenSource feature
+        flag software.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4">
+        <LinkButton
+          href="https://docs.progressively.app/get-started/quick-start"
+          target={"_blank"}
+          id="get-started"
+        >
+          Get started locally
+        </LinkButton>
+        <LinkButton
+          href="https://railway.app/new/template/o-qwn1?referralCode=AwmVVM"
+          variant="secondary"
+          target={"_blank"}
+          id="deploy-railway"
+        >
+          Deploy on Railway
+        </LinkButton>
+        <LinkButton
+          variant="tertiary"
+          href="https://dashboard.progressively.app/signin"
+          target={"_blank"}
+          id="demo-instance"
+        >
+          Demo instance
+        </LinkButton>
+      </div>
+    </div>
+
+    <div class="container mx-auto md:rounded-lg overflow-hidden">
+      <img src="/capture.png" alt="" height="512px" />
+    </div>
+  </header>
+
   <main>
-    <header>
-      <Nav />
-      <div
-        class="container px-4 lg:px-20 mx-auto flex justify-center lg:items-center flex-col py-40 gap-4"
-      >
-        <h1 class="text-6xl font-extrabold">
-          Introducing <span>Progressively</span>
-        </h1>
-
-        <p class="text-2xl sm:text-center text-slate-700">
-          A simple, accessible, lightweight, self-hosted and OpenSource feature
-          flag software.
-        </p>
-
-        <div class="flex flex-col sm:flex-row gap-4">
-          <LinkButton
-            href="https://docs.progressively.app/get-started/quick-start"
-            target={"_blank"}
-            id="get-started"
-          >
-            Get started locally
-          </LinkButton>
-          <LinkButton
-            href="https://railway.app/new/template/o-qwn1?referralCode=AwmVVM"
-            variant="secondary"
-            target={"_blank"}
-            id="deploy-railway"
-          >
-            Deploy on Railway
-          </LinkButton>
-          <LinkButton
-            variant="tertiary"
-            href="https://dashboard.progressively.app/signin"
-            target={"_blank"}
-            id="demo-instance"
-          >
-            Demo instance
-          </LinkButton>
-        </div>
-      </div>
-
-      <div class="container mx-auto rounded-lg overflow-hidden">
-        <img src="/capture.png" alt="" height="512px" />
-      </div>
-    </header>
-
-    <section class="container px-4 lg:px-20 mx-auto pt-40">
-      <h2 class="font-extrabold text-5xl pb-4">
+    <section class="container px-4 lg:px-20 mx-auto pt-20 md:pt-40">
+      <h2 class="font-extrabold text-4xl md:text-5xl pb-4">
         Why do you need feature flags?
       </h2>
       <p class="text-2xl leading-relaxed max-w-4xl">
@@ -64,8 +64,8 @@ import Nav from "../components/Nav.astro";
       </p>
     </section>
 
-    <section class="container px-4 lg:px-20 mx-auto pt-40">
-      <h2 class="font-extrabold text-5xl pb-4">
+    <section class="container px-4 lg:px-20 mx-auto pt-20 md:pt-40">
+      <h2 class="font-extrabold text-4xl md:text-5xl pb-4">
         How feature flags solve this?
       </h2>
 
@@ -77,8 +77,10 @@ import Nav from "../components/Nav.astro";
       </p>
     </section>
 
-    <section class="container px-4 lg:px-20 mx-auto py-40">
-      <h2 class="font-extrabold text-5xl pb-4">Introducing Progressively</h2>
+    <section class="container px-4 lg:px-20 mx-auto py-20 md:py-40">
+      <h2 class="font-extrabold text-4xl md:text-5xl pb-4">
+        Introducing Progressively
+      </h2>
 
       <p class="text-2xl leading-relaxed max-w-4xl pt-4 pb-4">
         Switching a toggle is great for a one-off deploy. And Progressively does

@@ -7,15 +7,15 @@ export interface Props {
 const { title, href } = Astro.props;
 ---
 
-<section class="container mx-auto pb-40">
+<section class="container mx-auto md:pd-20 pb-40">
   <div class="px-4 lg:px-64">
-    <h2 class="font-extrabold text-5xl pb-4">{title}</h2>
+    <h2 class="font-extrabold text-4xl md:text-5xl pb-4">{title}</h2>
     <p class="text-2xl leading-relaxed max-w-4xl">
       <slot />
     </p>
   </div>
 
-  <div class="px-4 lg:px-32 py-16">
-    <img src={href} alt="" class="rounded-lg" />
+  <div class="lg:px-32 pt-16">
+    <img src={href} alt="" class="md:rounded-lg" />
   </div>
 </section>

@@ -1,0 +1,83 @@
+---
+import LinkButton from "../components/LinkButton.astro";
+import Layout from "../layouts/Layout.astro";
+import Nav from "../components/Nav.astro";
+import ExternalLink from "../components/ExternalLink.astro";
+---
+
+<Layout title="Welcome to Progressively.">
+  <header>
+    <Nav />
+    <div class="container px-4 lg:px-20 mx-auto pt-20 pb-8">
+      <h1 class="text-2xl font-extrabold">Why it's different?</h1>
+    </div>
+  </header>
+
+  <main>
+    <section class="container px-4 lg:px-20 mx-auto pb-20 md:pb-40">
+      <h2 class="font-extrabold text-4xl md:text-5xl pb-4">It's small</h2>
+      <p class="text-2xl leading-relaxed max-w-4xl">
+        Webpage size is a trend. And we don't want to increase it with
+        additional tooling. With this in mind, the React SDK for Progressively
+        is only <ExternalLink
+          href="https://bundlephobia.com/package/@progressively/react@0.0.1-beta.1"
+        >
+          1.2Kb
+        </ExternalLink>, which is order of magnitude smaller than other tools.
+      </p>
+    </section>
+
+    <section class="container px-4 lg:px-20 mx-auto pb-20 md:pb-40">
+      <h2 class="font-extrabold text-4xl md:text-5xl pb-4">
+        It works on Edge runtime
+      </h2>
+      <p class="text-2xl leading-relaxed max-w-4xl">
+        You can use Progressively Server Side SDK on Edge runtime. Even more
+        interesting: if you combine <ExternalLink
+          href="https://vercel.com/docs/concepts/functions/edge-middleware"
+        >
+          Vercel Edge Middleware
+        </ExternalLink> and <ExternalLink
+          href="https://docs.progressively.app/sdks/react#usage-with-ssr"
+        >
+          Progressively server side SDK
+        </ExternalLink>, you can perform A/B testing at any scale.
+      </p>
+    </section>
+
+    <section class="container px-4 lg:px-20 mx-auto pb-20 md:pb-40">
+      <h2 class="font-extrabold text-4xl md:text-5xl pb-4">It's Open Source</h2>
+      <p class="text-2xl leading-relaxed max-w-4xl">
+        All the codebase is Open Source and available in the <ExternalLink
+          href="https://github.com/progressively-crew/progressively"
+        >
+          Github Repository
+        </ExternalLink>. A feature is missing? A bug has happened? Participate
+        to the evolution of the tool and help us by <ExternalLink
+          href="https://github.com/progressively-crew/progressively/issues/new/choose"
+        >
+          filling an issue
+        </ExternalLink>, or contributing.
+      </p>
+    </section>
+
+    <section class="container px-4 lg:px-20 mx-auto pb-20 md:pb-40">
+      <h2 class="font-extrabold text-4xl md:text-5xl pb-4">It's Self Hosted</h2>
+      <p class="text-2xl leading-relaxed max-w-4xl">
+        You install the tool on your servers, you own the data. In the future, a
+        SaaS might be available for users who prefer to use a ready to go
+        service. If that's your case, please manifest your support on social
+        channels.
+      </p>
+    </section>
+
+    <section class="container px-4 lg:px-20 mx-auto pb-20 md:pb-40">
+      <h2 class="font-extrabold text-5xl pb-4">It's Accessible</h2>
+      <p class="text-2xl leading-relaxed max-w-4xl">
+        We do our best to keep the tool accessible for as many person as
+        possible. And we know there's a lot to do. If you have any problem while
+        navigating or using the app, please let us know.
+      </p>
+    </section>
+  </main>
+</Layout>

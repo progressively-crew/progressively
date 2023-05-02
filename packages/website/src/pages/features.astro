@@ -5,15 +5,15 @@ import Feature from "../components/Feature.astro";
 ---
 
 <Layout title="Features of Progressively">
+  <header>
+    <Nav />
+
+    <div class="container px-4 lg:px-64 mx-auto pt-20 pb-8">
+      <h1 class="text-2xl font-extrabold">The baked-in features</h1>
+    </div>
+  </header>
+
   <main>
-    <header>
-      <Nav />
-
-      <div class="container px-4 lg:px-64 mx-auto pt-20 pb-8">
-        <h1 class="text-2xl font-extrabold">The baked-in features</h1>
-      </div>
-    </header>
-
     <Feature title="Audience Targeting" href="/audience.png">
       With Progressively, you can define <strong>very granular rules</strong> based
       on users attributes to define who is supposed to get access to the new feature.

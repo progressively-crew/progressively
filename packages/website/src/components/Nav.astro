@@ -2,10 +2,13 @@
 import LinkButton from "./LinkButton.astro";
 ---
 
-<nav class="flex justify-end container px-4 lg:px-20 mx-auto py-2 gap-2">
-  <LinkButton variant="tertiary" href="/" id="documentation">Home</LinkButton>
-  <LinkButton variant="tertiary" href="/features" id="documentation">
-    Features
+<nav
+  class="flex flex-wrap md:justify-end container px-4 lg:px-20 mx-auto py-2 gap-2"
+>
+  <LinkButton variant="tertiary" href="/">Home</LinkButton>
+  <LinkButton variant="tertiary" href="/features">Features</LinkButton>
+  <LinkButton variant="tertiary" href="/why-it-s-different">
+    Why it's different
   </LinkButton>
   <LinkButton
     variant="tertiary"
@@ -14,6 +17,7 @@ import LinkButton from "./LinkButton.astro";
   >
     Documentation
   </LinkButton>
+
   <LinkButton
     variant="tertiary"
     href="https://github.com/progressively-crew/progressively"
