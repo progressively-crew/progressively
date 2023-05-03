@@ -26,7 +26,7 @@ export const Switch = ({
       </Label>
       <RawSwitch
         id={id}
-        defaultChecked={checked}
+        checked={checked}
         aria-label={label}
         type={type}
         form={form}
