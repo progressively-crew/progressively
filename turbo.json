@@ -23,7 +23,7 @@
     "dev": {
       "dependsOn": []
     },
-    "db:migrate:dev": {
+    "db:migrate:init": {
       "dependsOn": []
     },
     "db:migrate:deploy": {
