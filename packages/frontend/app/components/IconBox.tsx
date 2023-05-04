@@ -7,7 +7,7 @@ export interface IconBoxProps {
 }
 
 const sizes = {
-  L: "w-12 h-12 text-xl",
+  L: "w-8 h-8 text-xl",
   S: "w-5 h-5 text-xs",
 };
 

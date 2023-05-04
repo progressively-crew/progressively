@@ -32,12 +32,6 @@ export const FlagEnvMenu = ({
       </NavItem>
 
       <NavItem
-        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/variants`}
-      >
-        Variants
-      </NavItem>
-
-      <NavItem
         to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/segments`}
       >
         Segments
@@ -47,6 +41,12 @@ export const FlagEnvMenu = ({
         to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/scheduling`}
       >
         Scheduling
+      </NavItem>
+
+      <NavItem
+        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/variants`}
+      >
+        Variants
       </NavItem>
 
       <NavItem

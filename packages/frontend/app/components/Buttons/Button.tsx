@@ -17,7 +17,7 @@ export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
 }
 
 const classCombination = {
-  defaultprimary: "bg-indigo-700 text-white hover:bg-indigo-500",
+  defaultprimary: "bg-gray-800 text-white hover:bg-gray-500",
   defaultsecondary:
     "bg-transparent border border-slate-200 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-100",
   defaulttertiary:

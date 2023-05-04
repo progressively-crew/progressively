@@ -35,9 +35,7 @@ export const Card = ({
       {children}
 
       {footer && (
-        <div className={`rounded-b px-6 py-4 ${footerSchemeClassName}`}>
-          {footer}
-        </div>
+        <div className={`rounded-b p-4 ${footerSchemeClassName}`}>{footer}</div>
       )}
     </div>
   );
@@ -47,5 +45,5 @@ export interface CardContentProps {
   children: React.ReactNode;
 }
 export const CardContent = ({ children }: CardContentProps) => {
-  return <div className="p-6">{children}</div>;
+  return <div className="p-4">{children}</div>;
 };

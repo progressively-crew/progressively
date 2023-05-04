@@ -11,7 +11,7 @@ import {
 } from "@remix-run/react";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
-import { DashedButton } from "~/components/Buttons/DashedButton";
+import { CreateButton } from "~/components/Buttons/CreateButton";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { Card, CardContent } from "~/components/Card";
 import { TextInput } from "~/components/Fields/TextInput";
@@ -194,12 +194,25 @@ export default function Segments() {
       <Section id="rules">
         <Card
           footer={
-            <SubmitButton
-              loadingText="Updating the segment rules..."
-              form="edit-rules"
-            >
-              Save the rules
-            </SubmitButton>
+            <div className="flex flex-row gap-4">
+              <Form method="post">
+                <input type="hidden" name="_type" value="create-segment-rule" />
+                <CreateButton
+                  type="submit"
+                  isLoading={isCreatingRule}
+                  loadingText="Creating a rule..."
+                  variant="secondary"
+                >
+                  <Typography as="span">Add a rule</Typography>
+                </CreateButton>
+              </Form>
+              <SubmitButton
+                loadingText="Updating the segment rules..."
+                form="edit-rules"
+              >
+                Save the rules
+              </SubmitButton>
+            </div>
           }
         >
           <CardContent>
@@ -213,7 +226,7 @@ export default function Segments() {
             />
           </CardContent>
 
-          <div className="pt-4">
+          <div>
             <Form method="post" id="delete-rule">
               <input type="hidden" value="delete-rule" name="_type" />
             </Form>
@@ -223,17 +236,6 @@ export default function Segments() {
               <SegmentRulesForm rules={segment.rule} />
             </Form>
           </div>
-
-          <Form method="post" className="p-1">
-            <input type="hidden" name="_type" value="create-segment-rule" />
-            <DashedButton
-              type="submit"
-              isLoading={isCreatingRule}
-              loadingText="Creating a rule..."
-            >
-              <Typography as="span">Add a rule</Typography>
-            </DashedButton>
-          </Form>
         </Card>
       </Section>
     </DashboardLayout>
