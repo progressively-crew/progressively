@@ -1,5 +1,13 @@
 ---
 import LinkButton from "./LinkButton.astro";
+import { getFlags } from "../helpers/featureFlags.js";
+
+export interface Props {
+  showPricing?: boolean;
+}
+
+const flags = await getFlags();
+const showPricing = flags.pricingPage;
 ---
 
 <nav
@@ -19,6 +27,14 @@ import LinkButton from "./LinkButton.astro";
   >
     Documentation
   </LinkButton>
+
+  {
+    showPricing && (
+      <LinkButton variant="tertiary" href="pricing" id="pricing">
+        Pricing
+      </LinkButton>
+    )
+  }
 
   <LinkButton
     variant="tertiary"

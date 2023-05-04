@@ -7,6 +7,7 @@ import Nav from "../components/Nav.astro";
 <Layout title="Welcome to Progressively, the new feature flag solution.">
   <header>
     <Nav />
+
     <div
       class="container px-4 lg:px-20 mx-auto flex justify-center lg:items-center flex-col py-20 md:py-40 gap-4"
     >
@@ -99,33 +100,6 @@ import Nav from "../components/Nav.astro";
 </Layout>
 
 <script>
-  import { Progressively } from "@progressively/sdk-js";
-
-  const options = {
-    apiUrl: "https://backend-progressively.fly.dev",
-    websocketUrl: "wss://backend-progressively.fly.dev",
-  };
-
-  const sdk = Progressively.init(
-    "2c25b011-6f17-4caa-a16e-7dfc7c4290d8",
-    options
-  );
-
-  sdk.loadFlags();
-
-  const getStartedCta = document.querySelector<HTMLElement>("#get-started");
-  const deployRailway = document.querySelector("#deploy-railway");
-  const demoInstance = document.querySelector("#demo-instance");
-  const documentationCta = document.querySelector("#documentation");
-  const githubCta = document.querySelector("#github");
-
-  getStartedCta?.addEventListener("click", () => sdk.track("Get Started CTA"));
-  deployRailway?.addEventListener("click", () =>
-    sdk.track("Deploy on Railway CTA")
-  );
-  demoInstance?.addEventListener("click", () => sdk.track("Demo Instance CTA"));
-  documentationCta?.addEventListener("click", () =>
-    sdk.track("Documentation CTA")
-  );
-  githubCta?.addEventListener("click", () => sdk.track("Github CTA"));
+  const pricingCta = document.querySelector<HTMLElement>("#pricing");
+  pricingCta?.addEventListener("click", () => sdk.track("Click pricing page"));
 </script>
