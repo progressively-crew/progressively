@@ -6,6 +6,7 @@ export const getFlags = async () => {
   const { data } = await getProgressivelyData(progressivelyEnv, {
     apiUrl: "https://backend-progressively.fly.dev",
     websocketUrl: "wss://backend-progressively.fly.dev",
+    shouldHit: true,
   });
 
   return data.initialFlags || {};
