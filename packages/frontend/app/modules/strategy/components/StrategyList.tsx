@@ -9,9 +9,9 @@ import { Variant } from "~/modules/variants/types";
 import { IoCloseOutline } from "react-icons/io5";
 import { StrategyRuleFormField } from "./StrategyRuleFormField";
 import { Segment } from "~/modules/segments/types";
-import { DashedButton } from "~/components/Buttons/DashedButton";
 import { Typography } from "~/components/Typography";
 import { Spinner } from "~/components/Spinner";
+import { CreateButton } from "~/components/Buttons/CreateButton";
 
 export interface StrategyListProps {
   items: Array<Strategy>;
@@ -67,7 +67,19 @@ const StrategyItem = ({ strategy, variants, segments }: StrategyItemProps) => {
   return (
     <Card
       footer={
-        <div>
+        <div className="flex flex-row gap-4">
+          <div className="px-1">
+            <CreateButton
+              type="submit"
+              isLoading={isCreatingRule}
+              loadingText="Adding a rule..."
+              form={addStrategyRuleFormId}
+              variant="secondary"
+            >
+              <Typography as="span">Add a rule</Typography>
+            </CreateButton>
+          </div>
+
           <SubmitButton
             form={updateStrategyFormId}
             loadingText="Saving the strategy..."
@@ -177,17 +189,6 @@ const StrategyItem = ({ strategy, variants, segments }: StrategyItemProps) => {
               </div>
             );
           })}
-
-          <div className="px-1">
-            <DashedButton
-              type="submit"
-              isLoading={isCreatingRule}
-              loadingText="Adding a rule..."
-              form={addStrategyRuleFormId}
-            >
-              <Typography as="span">Add a rule</Typography>
-            </DashedButton>
-          </div>
         </div>
       </Form>
     </Card>

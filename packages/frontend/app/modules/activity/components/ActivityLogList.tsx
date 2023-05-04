@@ -4,6 +4,7 @@ import { stringToColor } from "~/modules/misc/utils/stringToColor";
 import { Activity } from "../types";
 import { ActivityDescription } from "./ActivityDescription";
 import { ActivityIcon } from "./ActivityIcon";
+import { Card } from "~/components/Card";
 
 interface ActivityItemProps {
   activity: Activity;
@@ -15,7 +16,7 @@ const ActivityItem = ({ activity, flagEnv }: ActivityItemProps) => {
 
   return (
     <div
-      className={`border-t border-gray-200 dark:border-slate-700 py-4 text-sm text-gray-600 flex flex-col md:flex-row md:justify-between md:gap-4`}
+      className={`py-4 text-sm text-gray-600 flex flex-col md:flex-row md:justify-between md:gap-4`}
     >
       <div className="flex flex-row">
         <div
@@ -47,10 +48,12 @@ export interface ActivityLogListProps {
 
 export const ActivityLogList = ({ list, flagEnv }: ActivityLogListProps) => {
   return (
-    <div className="flex flex-col">
-      {list.map((item) => (
-        <ActivityItem key={item.id} activity={item} flagEnv={flagEnv} />
-      ))}
-    </div>
+    <Card>
+      <div className="flex flex-col px-4">
+        {list.map((item) => (
+          <ActivityItem key={item.id} activity={item} flagEnv={flagEnv} />
+        ))}
+      </div>
+    </Card>
   );
 };
