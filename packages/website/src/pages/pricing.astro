@@ -15,12 +15,57 @@ import PricingCard from "../components/PricingCard.astro";
   </header>
 
   <main>
-    <div class="grid grid-cols-5 justify-center px-4 md:px-8 gap-2">
-      <PricingCard name="Open Source" price="Free" />
-      <PricingCard name="Free trial" price="Free for 14 days" />
-      <PricingCard name="Standard" price="$12/month per user" />
-      <PricingCard name="Pro" price="$25/month per user" />
-      <PricingCard name="Enterprise" price="Contact us" />
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-center px-2 max-w-7xl mx-auto gap-2 pb-16"
+    >
+      <PricingCard
+        name="Open Source"
+        description="Self-hosted"
+        price="Free"
+        priceUnit="You manage everything"
+        features={[
+          "Self Hosted",
+          "Unlimited seats",
+          "Unlimited flag evaluations",
+          "Unlimited projects",
+          "Unlimited environments",
+        ]}
+      />
+      <PricingCard
+        name="Free trial"
+        description="Try the tool, get an idea"
+        price="$0"
+        priceUnit="Ends after 14 days"
+        features={[
+          "No credit card required",
+          "For 14 days",
+          "1 project",
+          "2 environments",
+          "300 flag evaluations",
+        ]}
+      />
+      <PricingCard
+        name="Standard"
+        description="For small sized teams"
+        price="$12"
+        priceUnit="per seat per month"
+        features={[
+          "1 project",
+          "1000 flag evaluations",
+          "Unlimited environments",
+        ]}
+      />
+      <PricingCard
+        name="Pro"
+        description="For medium sized teams"
+        price="$25"
+        priceUnit="per seat per month"
+        features={[
+          "10000 flag evaluations",
+          "Unlimited project",
+          "Unlimited environments",
+        ]}
+      />
     </div>
   </main>
 </Layout>
