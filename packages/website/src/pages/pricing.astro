@@ -1,0 +1,26 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Nav from "../components/Nav.astro";
+import Feature from "../components/Feature.astro";
+import PricingCard from "../components/PricingCard.astro";
+---
+
+<Layout title="Features of Progressively">
+  <header>
+    <Nav />
+
+    <div class="container px-4 lg:px-64 mx-auto pt-20 pb-8">
+      <h1 class="text-5xl font-extrabold">Pricing</h1>
+    </div>
+  </header>
+
+  <main>
+    <div class="grid grid-cols-5 justify-center px-4 md:px-8 gap-2">
+      <PricingCard name="Open Source" price="Free" />
+      <PricingCard name="Free trial" price="Free for 14 days" />
+      <PricingCard name="Standard" price="$12/month per user" />
+      <PricingCard name="Pro" price="$25/month per user" />
+      <PricingCard name="Enterprise" price="Contact us" />
+    </div>
+  </main>
+</Layout>

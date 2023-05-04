@@ -1,0 +1,13 @@
+---
+export interface Props {
+  name: string;
+  price: string;
+}
+
+const { name, price } = Astro.props;
+---
+
+<article class="border border-gray-200 rounded-lg bg-white px-4 py-8">
+  <h3 class="font-extrabold text-lg">{name}</h3>
+  <p>{price}</p>
+</article>
