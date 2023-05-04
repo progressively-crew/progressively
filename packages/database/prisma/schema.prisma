@@ -82,7 +82,6 @@ model Flag {
   uuid            String            @id @default(uuid())
   name            String
   key             String
-  issueLink       String?
   description     String?
   createdAt       DateTime?         @default(now())
   flagEnvironment FlagEnvironment[]

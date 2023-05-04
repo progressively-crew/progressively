@@ -1,5 +1,6 @@
+import { exec } from "node:child_process";
+
 require("dotenv").config();
-const { exec } = require("node:child_process");
 
 const dbUrl = process.env.DATABASE_URL;
 const shadowUrl = process.env.SHADOW_DATABASE_URL;
