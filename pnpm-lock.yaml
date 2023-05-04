@@ -365,6 +365,7 @@ importers:
       '@types/bcrypt': ^5.0.0
       '@types/node': ^18.16.1
       bcrypt: ^5.1.0
+      dotenv: ^16.0.3
       prisma: ^4.13.0
       prompts: ^2.4.2
       ts-node: ^10.9.1
@@ -376,6 +377,7 @@ importers:
       '@types/bcrypt': 5.0.0
       '@types/node': 18.16.1
       bcrypt: 5.1.0
+      dotenv: 16.0.3
       prisma: 4.13.0
       ts-node: 10.9.1_z7iwqpnx42ndugzbwegid3n66u
       typescript: 5.0.4
