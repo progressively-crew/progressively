@@ -8,7 +8,7 @@ describe("/dashboard/projects/create", () => {
 
   describe("not authenticated", () => {
     it("checks that the route is protected", () => {
-      cy.checkProtectedRoute();
+      cy.checkUnauthenticatedRoute();
     });
   });
 

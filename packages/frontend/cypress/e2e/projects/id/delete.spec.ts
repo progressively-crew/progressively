@@ -9,7 +9,7 @@ describe("/dashboard/projects/[id]/delete", () => {
       });
 
       it("checks that the route is protected", () => {
-        cy.checkProtectedRoute();
+        cy.checkUnauthenticatedRoute();
       });
     });
 

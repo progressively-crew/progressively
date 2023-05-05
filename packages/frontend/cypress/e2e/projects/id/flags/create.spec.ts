@@ -8,7 +8,7 @@ describe("/dashboard/projects/[id]flags/create", () => {
     });
 
     it("checks that the route is protected", () => {
-      cy.checkProtectedRoute();
+      cy.checkUnauthenticatedRoute();
     });
   });
 

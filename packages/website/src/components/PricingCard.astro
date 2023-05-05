@@ -1,0 +1,40 @@
+---
+export interface Props {
+  name: string;
+  price: string;
+  priceUnit?: string;
+  features: Array<string>;
+  description: string;
+}
+
+const { name, price, priceUnit, description, features } = Astro.props;
+---
+
+<article
+  class="border border-gray-200 rounded-lg bg-white px-6 py-10 flex flex-col"
+>
+  <div class="flex-1">
+    <h3 class="font-bold text-2xl text-center">{name}</h3>
+
+    <p class="text-center">{description}</p>
+
+    <p class="font-extrabold text-7xl text-center py-12">
+      {price}<span class="font-normal text-base block">{priceUnit}</span>
+    </p>
+
+    <ul class="flex flex-col gap-4">
+      {
+        features.map((feature) => (
+          <li class="text-lg flex flex-row gap-2 items-center">
+            <div aria-hidden class="h-2 w-2 rounded-xs bg-gray-500" />
+            {feature}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <div class="text-center pt-12">
+    <slot />
+  </div>
+</article>

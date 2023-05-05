@@ -8,7 +8,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]", () => {
     });
 
     it("checks that the route is protected", () => {
-      cy.checkProtectedRoute();
+      cy.checkUnauthenticatedRoute();
     });
   });
 

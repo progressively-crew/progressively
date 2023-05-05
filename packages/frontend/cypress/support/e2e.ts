@@ -57,6 +57,10 @@ Cypress.Commands.add("checkProtectedRoute", () => {
   );
 });
 
+Cypress.Commands.add("checkUnauthenticatedRoute", () => {
+  cy.url().should("contain", "/signin");
+});
+
 Cypress.Commands.add("verifyBreadcrumbs", (crumbs: Array<any>) => {
   const lastIndex = crumbs.length - 1;
 

@@ -9,14 +9,14 @@ export interface SuccessBoxProps {
 export const TipBox = ({ children, title, ...props }: SuccessBoxProps) => {
   return (
     <div
-      className="success-box p-4 bg-blue-50 text-blue-600 rounded border-l-8 border-l-blue-500"
+      className="success-box p-4 bg-gray-100 text-gray-700 rounded border-l-8 border-l-gray-500"
       {...props}
     >
       <div className="flex flex-row gap-2">
         <MdOutlineTipsAndUpdates aria-hidden className="-mt-1 h-8 w-8" />
 
         <div>
-          {title}
+          <span className="font-bold">{title}</span>
 
           <Spacer size={2} />
 

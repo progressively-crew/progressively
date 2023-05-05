@@ -8,7 +8,7 @@ describe("/dashboard/onboarding", () => {
     });
 
     it("checks that the route is protected", () => {
-      cy.checkProtectedRoute();
+      cy.checkUnauthenticatedRoute();
     });
   });
 

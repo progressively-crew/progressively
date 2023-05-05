@@ -8,7 +8,7 @@ describe("/dashboard/what-s-your-name", () => {
     });
 
     it("checks that the route is protected", () => {
-      cy.checkProtectedRoute();
+      cy.checkUnauthenticatedRoute();
     });
   });
 

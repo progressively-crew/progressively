@@ -1,0 +1,115 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Nav from "../components/Nav.astro";
+import PricingCard from "../components/PricingCard.astro";
+import LinkButton from "../components/LinkButton.astro";
+import { Plans } from "@progressively/shared";
+
+const frontendUrl = import.meta.env.FRONTEND_URL;
+
+const trialUrl = `${frontendUrl}/register?plan=${Plans.Trialing}`;
+const standardUrl = `${frontendUrl}/dashboard/profile?plan=${Plans.Standard}`;
+const proUrl = `${frontendUrl}/dashboard/profile?plan=${Plans.Pro}`;
+---
+
+<Layout title="Pricing plans of Progressively">
+  <header>
+    <Nav />
+
+    <div
+      class="container px-4 lg:px-20 mx-auto flex justify-center lg:items-center flex-col py-20 gap-4"
+    >
+      <h1 class="text-5xl md:text-6xl font-extrabold">Pricing</h1>
+    </div>
+  </header>
+
+  <main>
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-center px-2 container mx-auto gap-2"
+    >
+      <PricingCard
+        name="Open Source"
+        description="Self-hosted"
+        price="Free"
+        priceUnit="You manage everything"
+        features={[
+          "Self Hosted",
+          "Unlimited seats",
+          "Unlimited projects",
+          "Unlimited environments",
+          "Unlimited flag evaluations",
+        ]}
+      >
+        <LinkButton
+          target={"_blank"}
+          href="https://docs.progressively.app/get-started/quick-start"
+        >
+          Start with Open Source
+        </LinkButton>
+      </PricingCard>
+
+      <PricingCard
+        name="Free trial"
+        description="Try the tool, get an idea"
+        price="$0"
+        priceUnit="Ends after 14 days"
+        features={[
+          "For 14 days",
+          "No credit card required",
+          "1 project",
+          "2 environments",
+          "300 flag evaluations",
+        ]}
+      >
+        <LinkButton target={"_blank"} href={trialUrl}>Try for free</LinkButton>
+      </PricingCard>
+
+      <PricingCard
+        name="Standard"
+        description="For small sized teams"
+        price="$12"
+        priceUnit="per seat per month"
+        features={[
+          "1 project",
+          "Unlimited environments",
+          "1000 flag evaluations*",
+        ]}
+      >
+        <LinkButton target={"_blank"} href={standardUrl}>
+          Start with Standard
+        </LinkButton>
+      </PricingCard>
+
+      <PricingCard
+        name="Pro"
+        description="For medium sized teams"
+        price="$25"
+        priceUnit="per seat per month"
+        features={[
+          "Unlimited project",
+          "Unlimited environments",
+          "5000 flag evaluations*",
+        ]}
+      >
+        <LinkButton target={"_blank"} href={proUrl}>Start with Pro</LinkButton>
+      </PricingCard>
+    </div>
+
+    <p class="container mx-auto pt-4 px-4">
+      * When the flag evaluation is reached, the users will receive the "false"
+      variation of the flag every time.
+    </p>
+
+    <section class="container mx-auto md:pd-20 pb-40 md:text-center pt-20 px-4">
+      <h2 class="font-extrabold text-4xl md:text-5xl pb-4">
+        Concerning an Enterprise plan
+      </h2>
+
+      <p class="text-2xl leading-relaxed max-w-4xl mx-auto">
+        The product is at an early discovery stage. We need to get insights from
+        people using more standard plans before beeing able to provide something
+        that have more than 10k/months evaluations.
+      </p>
+    </section>
+  </main>
+</Layout>
