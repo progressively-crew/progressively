@@ -8,7 +8,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/delete", () => {
     });
 
     it("checks that the route is protected", () => {
-      cy.checkProtectedRoute();
+      cy.checkUnauthenticatedRoute();
     });
   });
 

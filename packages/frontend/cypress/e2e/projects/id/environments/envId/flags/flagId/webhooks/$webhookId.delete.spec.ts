@@ -10,7 +10,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/webhooks/
     });
 
     it("checks that the route is protected", () => {
-      cy.checkProtectedRoute();
+      cy.checkUnauthenticatedRoute();
     });
   });
 

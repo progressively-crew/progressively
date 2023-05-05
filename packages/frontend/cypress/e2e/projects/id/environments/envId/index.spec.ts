@@ -8,7 +8,7 @@ describe.only("/dashboard/projects/[id]/environments/[envId]", () => {
     });
 
     it("checks that the route is protected", () => {
-      cy.checkProtectedRoute();
+      cy.checkUnauthenticatedRoute();
     });
   });
 

@@ -9,7 +9,7 @@ describe("/dashboard/projects/[id]/add-member", () => {
       });
 
       it("checks that the route is protected", () => {
-        cy.checkProtectedRoute();
+        cy.checkUnauthenticatedRoute();
       });
     });
 
