@@ -16,6 +16,15 @@ const showPricing = flags.pricingPage;
   <LinkButton variant="tertiary" href="/">Home</LinkButton>
   <LinkButton variant="tertiary" href="/blog">Blog</LinkButton>
   <LinkButton variant="tertiary" href="/features">Features</LinkButton>
+
+  {
+    showPricing && (
+      <LinkButton variant="tertiary" href="pricing" id="pricing">
+        Pricing
+      </LinkButton>
+    )
+  }
+
   <LinkButton variant="tertiary" href="/why-it-s-different">
     Why it's different
   </LinkButton>
@@ -27,14 +36,6 @@ const showPricing = flags.pricingPage;
   >
     Documentation
   </LinkButton>
-
-  {
-    showPricing && (
-      <LinkButton variant="tertiary" href="pricing" id="pricing">
-        Pricing
-      </LinkButton>
-    )
-  }
 
   <LinkButton
     variant="tertiary"

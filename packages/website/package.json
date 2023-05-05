@@ -14,6 +14,7 @@
     "@astrojs/vercel": "^3.2.5",
     "@progressively/sdk-js": "workspace:0.0.1-alpha.19",
     "@progressively/server-side": "workspace:0.0.1-alpha.19",
+    "@progressively/shared": "workspace:^1.0.0",
     "astro": "^2.3.2",
     "shiki": "^0.14.1",
     "tailwindcss": "^3.0.24"
