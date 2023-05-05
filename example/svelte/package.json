@@ -15,9 +15,9 @@
 		"test:e2e:ci": "PROJECT_ROOT=$(pwd) pnpm --filter @progressively/playwright-helpers run test:e2e:ci"
 	},
 	"devDependencies": {
-		"@progressively/playwright-helpers": "workspace:1.0.0",
-		"@progressively/sdk-js": "workspace:0.0.1-alpha.19",
-		"@progressively/server-side": "workspace:0.0.1-alpha.19",
+		"@progressively/playwright-helpers": "workspace:*",
+		"@progressively/sdk-js": "workspace:*",
+		"@progressively/server-side": "workspace:*",
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.5.0",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",

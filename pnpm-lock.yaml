@@ -18,8 +18,8 @@ importers:
       '@astrojs/node': ^2.0.2
       '@astrojs/react': ^1.2.1
       '@progressively/playwright-helpers': workspace:1.0.0
-      '@progressively/react': workspace:0.0.1-beta.1
-      '@progressively/server-side': workspace:0.0.1-alpha.19
+      '@progressively/react': workspace:*
+      '@progressively/server-side': workspace:*
       '@types/react': ^18.0.28
       '@types/react-dom': ^18.0.10
       astro: ^1.6.0
@@ -56,7 +56,7 @@ importers:
       '@flagship.io/react-sdk': 3.1.1_react@18.2.0
       '@growthbook/growthbook-react': 0.9.1_react@18.2.0
       '@next/bundle-analyzer': 12.3.4
-      '@progressively/react': link:../../packages/react
+      '@progressively/react': 0.0.1-beta.1_react@18.2.0
       '@unleash/proxy-client-react': 3.5.1_unleash-proxy-client@2.4.2
       launchdarkly-react-client-sdk: 2.29.4_biqbaboplfbrettd7655fr4n2y
       next: 12.2.2_biqbaboplfbrettd7655fr4n2y
@@ -70,7 +70,7 @@ importers:
   example/cra:
     specifiers:
       '@progressively/playwright-helpers': workspace:1.0.0
-      '@progressively/react': workspace:0.0.1-beta.1
+      '@progressively/react': workspace:*
       react: ^18.1.0
       react-dom: ^18.1.0
       react-router-dom: ^6.3.0
@@ -88,9 +88,9 @@ importers:
 
   example/nextjs:
     specifiers:
-      '@progressively/playwright-helpers': workspace:1.0.0
-      '@progressively/react': workspace:0.0.1-beta.1
-      '@progressively/server-side': workspace:0.0.1-alpha.19
+      '@progressively/playwright-helpers': workspace:*
+      '@progressively/react': workspace:*
+      '@progressively/server-side': workspace:*
       '@types/cookie': ^0.5.1
       '@types/node': 17.0.31
       '@types/react': 18.0.9
@@ -119,8 +119,8 @@ importers:
 
   example/node:
     specifiers:
-      '@progressively/playwright-helpers': workspace:1.0.0
-      '@progressively/sdk-node': workspace:0.0.1-alpha.14
+      '@progressively/playwright-helpers': workspace:*
+      '@progressively/sdk-node': workspace:*
       typescript: ^4.7.4
     dependencies:
       '@progressively/playwright-helpers': link:../playwright-helpers
@@ -153,9 +153,9 @@ importers:
     specifiers:
       '@builder.io/qwik': 0.19.2
       '@builder.io/qwik-city': 0.4.0
-      '@progressively/playwright-helpers': workspace:1.0.0
-      '@progressively/sdk-js': workspace:0.0.1-alpha.19
-      '@progressively/server-side': workspace:0.0.1-alpha.19
+      '@progressively/playwright-helpers': workspace:*
+      '@progressively/sdk-js': workspace:*
+      '@progressively/server-side': workspace:*
       '@types/eslint': 8.21.1
       '@types/node': ^18.14.0
       '@types/node-fetch': latest
@@ -192,9 +192,9 @@ importers:
 
   example/svelte:
     specifiers:
-      '@progressively/playwright-helpers': workspace:1.0.0
-      '@progressively/sdk-js': workspace:0.0.1-alpha.19
-      '@progressively/server-side': workspace:0.0.1-alpha.19
+      '@progressively/playwright-helpers': workspace:*
+      '@progressively/sdk-js': workspace:*
+      '@progressively/server-side': workspace:*
       '@sveltejs/adapter-auto': ^2.0.0
       '@sveltejs/kit': ^1.5.0
       '@typescript-eslint/eslint-plugin': ^5.45.0
@@ -402,9 +402,9 @@ importers:
       '@headlessui/react': ^1.7.14
       '@okta/okta-auth-js': ^7.2.0
       '@progressively/database': workspace:^1.0.0
-      '@progressively/react': workspace:0.0.1-beta.1
-      '@progressively/server-side': workspace:0.0.1-alpha.19
-      '@progressively/shared': workspace:^1.0.0
+      '@progressively/react': workspace:*
+      '@progressively/server-side': workspace:*
+      '@progressively/shared': workspace:*
       '@radix-ui/react-label': ^2.0.1
       '@radix-ui/react-select': ^1.2.1
       '@radix-ui/react-switch': ^1.0.2
@@ -492,8 +492,8 @@ importers:
   packages/load-testing:
     specifiers:
       '@playwright/test': ^1.27.1
-      '@progressively/database': workspace:^1.0.0
-      '@progressively/react': workspace:0.0.1-beta.1
+      '@progressively/database': workspace:*
+      '@progressively/react': workspace:*
       '@types/node': ^18.11.9
       '@types/node-fetch': ^2.6.2
       chalk: ^5
@@ -638,9 +638,9 @@ importers:
     specifiers:
       '@astrojs/tailwind': ^3.1.1
       '@astrojs/vercel': ^3.2.5
-      '@progressively/sdk-js': workspace:0.0.1-alpha.19
-      '@progressively/server-side': workspace:0.0.1-alpha.19
-      '@progressively/shared': workspace:^1.0.0
+      '@progressively/sdk-js': workspace:*
+      '@progressively/server-side': workspace:*
+      '@progressively/shared': workspace:*
       '@tailwindcss/typography': ^0.5.9
       astro: ^2.3.2
       shiki: ^0.14.1
@@ -5429,6 +5429,19 @@ packages:
   /@prisma/engines/4.13.0:
     resolution: {integrity: sha512-HrniowHRZXHuGT9XRgoXEaP2gJLXM5RMoItaY2PkjvuZ+iHc0Zjbm/302MB8YsPdWozAPHHn+jpFEcEn71OgPw==}
     requiresBuild: true
+
+  /@progressively/react/0.0.1-beta.1_react@18.2.0:
+    resolution: {integrity: sha512-R0hn1ra7oAgtmxnRjpip2ZAXbT8BycQe38ILShOXFlstXbYbh+2IFqNya9hiDR6Hwc2s0gFBWRNgGDFY0VDl3w==}
+    peerDependencies:
+      react: '>= 17'
+    dependencies:
+      '@progressively/sdk-js': 0.0.1-alpha.19
+      react: 18.2.0
+    dev: false
+
+  /@progressively/sdk-js/0.0.1-alpha.19:
+    resolution: {integrity: sha512-sLYCYjZejbDoBNAo/y9HN57vTPx9+i94pTOQTsi+J5M4USfSPvpLWqEo5Q/JBMf9QHb9IbRF4ITKlkYoNXmiaA==}
+    dev: false
 
   /@proload/core/0.3.3:
     resolution: {integrity: sha512-7dAFWsIK84C90AMl24+N/ProHKm4iw0akcnoKjRvbfHifJZBLhaDsDus1QJmhG12lXj4e/uB/8mB/0aduCW+NQ==}
