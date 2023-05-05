@@ -15,8 +15,8 @@
   },
   "dependencies": {
     "@astrojs/node": "^2.0.2",
-    "@progressively/react": "workspace:0.0.1-beta.1",
-    "@progressively/server-side": "workspace:0.0.1-alpha.19",
+    "@progressively/react": "workspace:*",
+    "@progressively/server-side": "workspace:*",
     "astro": "^1.6.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

@@ -11,15 +11,15 @@
     "test:e2e:ci": "PROJECT_ROOT=$(pwd) pnpm --filter @progressively/playwright-helpers run test:e2e:ci"
   },
   "dependencies": {
-    "@progressively/react": "workspace:0.0.1-beta.1",
-    "@progressively/server-side": "workspace:0.0.1-alpha.19",
+    "@progressively/react": "workspace:*",
+    "@progressively/server-side": "workspace:*",
     "cookie": "^0.5.0",
     "next": "12.1.6",
     "react": "18.1.0",
     "react-dom": "18.1.0"
   },
   "devDependencies": {
-    "@progressively/playwright-helpers": "workspace:1.0.0",
+    "@progressively/playwright-helpers": "workspace:*",
     "@types/cookie": "^0.5.1",
     "@types/node": "17.0.31",
     "@types/react": "18.0.9",

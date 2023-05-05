@@ -3,7 +3,7 @@
   "version": "0.0.1-beta.1",
   "private": true,
   "dependencies": {
-    "@progressively/react": "workspace:0.0.1-beta.1",
+    "@progressively/react": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
@@ -11,7 +11,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.27.1",
-    "@progressively/database": "workspace:^1.0.0",
+    "@progressively/database": "workspace:*",
     "@types/node": "^18.11.9",
     "@types/node-fetch": "^2.6.2",
     "chalk": "^5",
