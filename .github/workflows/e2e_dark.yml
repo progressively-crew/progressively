@@ -12,6 +12,8 @@ jobs:
     env:
       ALLOW_REGISTRATION: true
       START_MOCK_SERVER: true
+      BACKEND_URL: http://localhost:4000
+      PROGRESSIVELY_ENV: valid-sdk-key
 
     runs-on: ubuntu-latest
     # Uncomment for parallel
