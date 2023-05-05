@@ -1,5 +1,5 @@
+import { useFlags } from "@progressively/react";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
-import { ThemeSwitch } from "~/components/ThemeSwitch";
 
 export interface FlagMenuProps {
   projectId: string;
@@ -8,15 +8,14 @@ export interface FlagMenuProps {
 }
 
 export const UserMenu = () => {
+  const { flags } = useFlags();
+
   return (
     <HorizontalNav label={`Flag related`}>
-      <NavItem to={`#password`}>Password</NavItem>
-
-      <NavItem to={`#logout`}>Logout</NavItem>
-
-      <li>
-        <ThemeSwitch />
-      </li>
+      <NavItem to="/dashboard/profile">General</NavItem>
+      {flags.pricingPage && (
+        <NavItem to="/dashboard/profile/billing">Billing</NavItem>
+      )}
     </HorizontalNav>
   );
 };
