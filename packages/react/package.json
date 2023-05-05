@@ -2,11 +2,11 @@
   "name": "@progressively/react",
   "author": "mfrachet",
   "version": "0.0.1-beta.1",
-  "main": "./lib/cjs/index.js",
+  "main": "./lib/cjs/index.cjs.js",
   "module": "./lib/esm/index.mjs",
   "exports": {
     ".": {
-      "require": "./lib/cjs/index.js",
+      "require": "./lib/cjs/index.cjs.js",
       "import": "./lib/esm/index.mjs"
     }
   },
