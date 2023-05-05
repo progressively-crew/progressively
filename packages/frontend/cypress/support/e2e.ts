@@ -48,13 +48,7 @@ Cypress.Commands.add("signIn", (userName?: keyof typeof AvailableUsers) => {
 });
 
 Cypress.Commands.add("checkProtectedRoute", () => {
-  cy.findByText(
-    "It looks you're trying to access this page while not being authenticated."
-  );
-
-  cy.findByText(
-    "To access this content, make sure to fill the authentication page form."
-  );
+  cy.url().should("contain", "/signin");
 });
 
 Cypress.Commands.add("verifyBreadcrumbs", (crumbs: Array<any>) => {
