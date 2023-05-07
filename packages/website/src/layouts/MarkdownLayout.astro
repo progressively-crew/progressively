@@ -1,0 +1,21 @@
+---
+import Nav from "../components/Nav.astro";
+import Layout from "./Layout.astro";
+
+export interface Props {
+  content: { title: string };
+}
+
+const { content } = Astro.props;
+const { title } = content;
+---
+
+<Layout title={title}>
+  <header>
+    <Nav />
+  </header>
+
+  <main class="container mx-auto prose py-12">
+    <slot />
+  </main>
+</Layout>
