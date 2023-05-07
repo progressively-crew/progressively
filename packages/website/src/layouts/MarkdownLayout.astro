@@ -1,5 +1,5 @@
 ---
-import Nav from "../components/Nav.astro";
+import Container from "../components/Container.astro";
 import Layout from "./Layout.astro";
 
 export interface Props {
@@ -11,11 +11,9 @@ const { title } = content;
 ---
 
 <Layout title={title}>
-  <header>
-    <Nav />
-  </header>
-
-  <main class="container mx-auto prose py-12">
-    <slot />
-  </main>
+  <Container>
+    <main class="prose prose-slate py-12">
+      <slot />
+    </main>
+  </Container>
 </Layout>

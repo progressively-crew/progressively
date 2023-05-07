@@ -1,4 +1,10 @@
 ---
+import Footer from "../components/Footer.astro";
+import Nav from "../components/Nav.astro";
+import { getFlags } from "../helpers/featureFlags";
+
+const flags = await getFlags();
+
 export interface Props {
   title: string;
 }
@@ -32,6 +38,9 @@ const description =
     <title>{title}</title>
   </head>
   <body class="min-h-full h-full bg-gray-50">
+    <Nav showPricing={Boolean(flags.pricingPage)} />
     <slot />
+
+    {flags.pricingPage && <Footer />}
   </body>
 </html>

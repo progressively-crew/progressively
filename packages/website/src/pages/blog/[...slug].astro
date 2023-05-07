@@ -1,7 +1,7 @@
 ---
 import { getEntryBySlug } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
-import Nav from "../../components/Nav.astro";
+
 // 1. Get the slug from the incoming server request
 const { slug } = Astro.params;
 if (slug === undefined) {
@@ -19,8 +19,6 @@ const { Content } = await entry.render();
 
 <Layout title={`${entry.data.title} - Progressively Blog`}>
   <div class="bg-slate-50 pb-12">
-    <Nav />
-
     <div class="h-32"></div>
 
     <main

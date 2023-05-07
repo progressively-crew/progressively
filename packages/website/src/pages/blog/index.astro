@@ -1,40 +1,40 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
-import Nav from "../../components/Nav.astro";
+import Container from "../../components/Container.astro";
+
 const blogEntries = await getCollection("blog");
 ---
 
 <Layout title="Progressively blog posts">
-  <header>
-    <Nav />
-    <div class="container px-4 lg:px-20 mx-auto pt-20 pb-8">
+  <Container>
+    <header class="pt-20 pb-8">
       <h1 class="text-5xl md:text-6xl font-extrabold">The blog</h1>
-    </div>
-  </header>
+    </header>
 
-  <main>
-    <div class="container px-4 lg:px-20 mx-auto pb-20 md:pb-40">
-      <ul>
-        {
-          blogEntries.map((blogPostEntry) => (
-            <li>
-              <a
-                href={`/blog/${blogPostEntry.slug}`}
-                class="text-xl font-semibold underline"
-              >
-                {blogPostEntry.data.title}
-              </a>
-              <time
-                datetime={blogPostEntry.data.publishedDate.toISOString()}
-                class="text-sm text-slate-700 pl-4"
-              >
-                {blogPostEntry.data.publishedDate.toDateString()}
-              </time>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-  </main>
+    <main>
+      <div class="pb-20 md:pb-40">
+        <ul>
+          {
+            blogEntries.map((blogPostEntry) => (
+              <li>
+                <a
+                  href={`/blog/${blogPostEntry.slug}`}
+                  class="text-xl font-semibold underline"
+                >
+                  {blogPostEntry.data.title}
+                </a>
+                <time
+                  datetime={blogPostEntry.data.publishedDate.toISOString()}
+                  class="text-sm text-slate-700 pl-4"
+                >
+                  {blogPostEntry.data.publishedDate.toDateString()}
+                </time>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </main>
+  </Container>
 </Layout>

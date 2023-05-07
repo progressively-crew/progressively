@@ -1,50 +1,49 @@
 ---
 import LinkButton from "./LinkButton.astro";
-import { getFlags } from "../helpers/featureFlags.js";
+import Container from "./Container.astro";
 
 export interface Props {
   showPricing?: boolean;
 }
 
-const flags = await getFlags();
-const showPricing = flags.pricingPage;
+const { showPricing } = Astro.props;
 ---
 
-<nav
-  class="flex flex-wrap md:justify-end container px-4 lg:px-20 mx-auto py-2 gap-2"
->
-  <LinkButton variant="tertiary" href="/">Home</LinkButton>
+<Container>
+  <nav class="flex flex-wrap md:justify-end container py-2 gap-2">
+    <LinkButton variant="tertiary" href="/">Home</LinkButton>
 
-  <LinkButton variant="tertiary" href="/features">Features</LinkButton>
+    <LinkButton variant="tertiary" href="/features">Features</LinkButton>
 
-  {
-    showPricing && (
-      <LinkButton variant="tertiary" href="pricing" id="pricing">
-        Pricing
-      </LinkButton>
-    )
-  }
+    {
+      showPricing && (
+        <LinkButton variant="tertiary" href="pricing" id="pricing">
+          Pricing
+        </LinkButton>
+      )
+    }
 
-  <LinkButton variant="tertiary" href="/why-it-s-different">
-    Why it's different
-  </LinkButton>
+    <LinkButton variant="tertiary" href="/why-it-s-different">
+      Why it's different
+    </LinkButton>
 
-  <LinkButton variant="tertiary" href="/blog">Blog</LinkButton>
+    <LinkButton variant="tertiary" href="/blog">Blog</LinkButton>
 
-  <LinkButton
-    variant="tertiary"
-    href="https://docs.progressively.app/"
-    id="documentation"
-  >
-    Documentation
-  </LinkButton>
+    <LinkButton
+      variant="tertiary"
+      href="https://docs.progressively.app/"
+      id="documentation"
+    >
+      Documentation
+    </LinkButton>
 
-  <LinkButton
-    variant="tertiary"
-    href="https://github.com/progressively-crew/progressively"
-    target={"_blank"}
-    id="github"
-  >
-    Github
-  </LinkButton>
-</nav>
+    <LinkButton
+      variant="tertiary"
+      href="https://github.com/progressively-crew/progressively"
+      target={"_blank"}
+      id="github"
+    >
+      Github
+    </LinkButton>
+  </nav>
+</Container>
