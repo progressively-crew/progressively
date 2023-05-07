@@ -10,9 +10,6 @@
 </div>
 <div align="center">
 <br/>
-   <a href="https://railway.app/new/template/o-qwn1?referralCode=AwmVVM" target="_blank" rel="noopener noreferrer" height="40px">
-      <img src="https://railway.app/button.svg" alt="Deploy on Railway">
-   </a>
    <a href="https://volta.net/progressively-crew/progressively">
       <img src="https://user-images.githubusercontent.com/3874873/220923114-c6ddad19-0c19-4b20-a2e4-d3b12e640f85.svg" alt="Volta board" height="40px">
    </a>
