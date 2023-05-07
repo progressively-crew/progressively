@@ -1,105 +1,102 @@
 ---
+import Container from "../components/Container.astro";
 import LinkButton from "../components/LinkButton.astro";
 import Layout from "../layouts/Layout.astro";
-import Nav from "../components/Nav.astro";
 ---
 
 <Layout title="Welcome to Progressively, the new feature flag solution.">
-  <header>
-    <Nav />
+  <Container>
+    <header>
+      <div
+        class="flex justify-center lg:items-center flex-col py-20 md:py-40 gap-4"
+      >
+        <h1 class="text-5xl md:text-6xl font-extrabold">
+          Introducing <span>Progressively</span>
+        </h1>
 
-    <div
-      class="container px-4 lg:px-20 mx-auto flex justify-center lg:items-center flex-col py-20 md:py-40 gap-4"
-    >
-      <h1 class="text-5xl md:text-6xl font-extrabold">
-        Introducing <span>Progressively</span>
-      </h1>
+        <p class="text-2xl sm:text-center">
+          A simple, accessible, lightweight, self-hosted and OpenSource feature
+          flag software.
+        </p>
 
-      <p class="text-2xl sm:text-center">
-        A simple, accessible, lightweight, self-hosted and OpenSource feature
-        flag software.
-      </p>
-
-      <div class="flex flex-col sm:flex-row gap-4">
-        <LinkButton
-          href="https://docs.progressively.app/get-started/quick-start"
-          target={"_blank"}
-          id="get-started"
-        >
-          Get started locally
-        </LinkButton>
-        <LinkButton
-          href="https://railway.app/new/template/o-qwn1?referralCode=AwmVVM"
-          variant="secondary"
-          target={"_blank"}
-          id="deploy-railway"
-        >
-          Deploy on Railway
-        </LinkButton>
-        <LinkButton
-          variant="tertiary"
-          href="https://dashboard.progressively.app/signin"
-          target={"_blank"}
-          id="demo-instance"
-        >
-          Demo instance
-        </LinkButton>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <LinkButton
+            href="https://docs.progressively.app/get-started/quick-start"
+            target={"_blank"}
+            id="get-started"
+          >
+            Get started locally
+          </LinkButton>
+          <LinkButton
+            href="https://railway.app/new/template/o-qwn1?referralCode=AwmVVM"
+            variant="secondary"
+            target={"_blank"}
+            id="deploy-railway"
+          >
+            Deploy on Railway
+          </LinkButton>
+          <LinkButton
+            variant="tertiary"
+            href="https://dashboard.progressively.app/signin"
+            target={"_blank"}
+            id="demo-instance"
+          >
+            Demo instance
+          </LinkButton>
+        </div>
       </div>
-    </div>
 
-    <div class="container mx-auto md:rounded-lg overflow-hidden">
-      <img src="/capture.png" alt="" height="512px" />
-    </div>
-  </header>
+      <div class="md:rounded-lg overflow-hidden">
+        <img src="/capture.png" alt="" height="512px" />
+      </div>
+    </header>
 
-  <main>
-    <section class="container px-4 lg:px-20 mx-auto pt-20 md:pt-40">
-      <h2 class="font-extrabold text-4xl md:text-5xl pb-4">
-        Why do you need feature flags?
-      </h2>
-      <p class="text-2xl leading-relaxed max-w-4xl">
-        Deploying new features in production is risky and oftentimes a pain.
-        Taking care of bugs, rollbacks, infrastructure and managing release
-        trains are not very fun – and are stressful. Who's never put some code
-        on production and after 2 hours in the wild, had to rollback?
-      </p>
-    </section>
+    <main>
+      <section class="pt-20 md:pt-40">
+        <h2 class="font-extrabold text-4xl md:text-5xl pb-4">
+          Why do you need feature flags?
+        </h2>
+        <p class="text-2xl leading-relaxed max-w-4xl">
+          Deploying new features in production is risky and oftentimes a pain.
+          Taking care of bugs, rollbacks, infrastructure and managing release
+          trains are not very fun – and are stressful. Who's never put some code
+          on production and after 2 hours in the wild, had to rollback?
+        </p>
+      </section>
 
-    <section class="container px-4 lg:px-20 mx-auto pt-20 md:pt-40">
-      <h2 class="font-extrabold text-4xl md:text-5xl pb-4">
-        How feature flags solve this?
-      </h2>
+      <section class="pt-20 md:pt-40">
+        <h2 class="font-extrabold text-4xl md:text-5xl pb-4">
+          How feature flags solve this?
+        </h2>
 
-      <p class="text-2xl leading-relaxed max-w-4xl pt-4">
-        They make releases more dynamic, more precise, more granular and easier
-        to rollback when it comes to fixing bugs. All you have to do is <strong
-          >pulling a trigger</strong
-        > in a dashboard.
-      </p>
-    </section>
+        <p class="text-2xl leading-relaxed max-w-4xl pt-4">
+          They make releases more dynamic, more precise, more granular and
+          easier to rollback when it comes to fixing bugs. All you have to do is <strong
+            >pulling a trigger</strong
+          > in a dashboard.
+        </p>
+      </section>
 
-    <section class="container px-4 lg:px-20 mx-auto py-20 md:py-40">
-      <h2 class="font-extrabold text-4xl md:text-5xl pb-4">
-        Introducing Progressively
-      </h2>
+      <section class="py-20 md:py-40">
+        <h2 class="font-extrabold text-4xl md:text-5xl pb-4">
+          Introducing Progressively
+        </h2>
 
-      <p class="text-2xl leading-relaxed max-w-4xl pt-4 pb-4">
-        Switching a toggle is great for a one-off deploy. And Progressively does
-        more by providing tooling to only <strong
-          >rollout to a given set of your audience</strong
-        >, or <strong>schedule feature activation</strong>, <strong
-          >measure feature flags impacts</strong
-        >, <strong>triggering webhook</strong> when a release happens etc...
-      </p>
+        <p class="text-2xl leading-relaxed max-w-4xl pt-4 pb-4">
+          Switching a toggle is great for a one-off deploy. And Progressively
+          does more by providing tooling to only <strong
+            >rollout to a given set of your audience</strong
+          >, or <strong>schedule feature activation</strong>, <strong
+            >measure feature flags impacts</strong
+          >, <strong>triggering webhook</strong> when a release happens etc...
+        </p>
 
-      <LinkButton href="/features" variant={"secondary"}>
-        Discover the features
-      </LinkButton>
-    </section>
-  </main>
+        <LinkButton href="/features" variant={"secondary"}>
+          Discover the features
+        </LinkButton>
+      </section>
+    </main>
+  </Container>
 </Layout>
 
-<script>
-  const pricingCta = document.querySelector<HTMLElement>("#pricing");
-  pricingCta?.addEventListener("click", () => sdk.track("Click pricing page"));
-</script>
+<script></script>

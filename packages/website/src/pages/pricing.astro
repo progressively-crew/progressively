@@ -1,9 +1,9 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Nav from "../components/Nav.astro";
 import PricingCard from "../components/PricingCard.astro";
 import LinkButton from "../components/LinkButton.astro";
 import { Plans } from "@progressively/shared";
+import Container from "../components/Container.astro";
 
 const frontendUrl = import.meta.env.FRONTEND_URL;
 
@@ -13,98 +13,98 @@ const proUrl = `${frontendUrl}/dashboard/profile?plan=${Plans.Pro}`;
 ---
 
 <Layout title="Pricing plans of Progressively">
-  <header>
-    <Nav />
-
-    <div
-      class="container px-4 lg:px-20 mx-auto flex flex-col py-20 md:py-40 gap-4 max-w-4xl"
-    >
+  <Container>
+    <header class="flex flex-col py-20 md:py-40 gap-4">
       <h1 class="text-5xl md:text-6xl font-extrabold">Pricing</h1>
-      <p class="text-2xl leading-relaxed">
+      <p class="text-2xl leading-relaxed max-w-4xl">
         The product is at an early pricing discovery stage. The pricing will
         vary in the future, <strong>for more or for less</strong> depending on the
         cost of servers and databases used under the hood. But don't worry, pricing
         changes will not be so significant and it should reach stability at some
         point.
       </p>
-    </div>
-  </header>
+    </header>
 
-  <main>
-    <div
-      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-center px-2 container mx-auto gap-2"
-    >
-      <PricingCard
-        name="Open Source"
-        description="Self-hosted"
-        price="Free"
-        priceUnit="You manage everything"
-        features={[
-          "Self Hosted",
-          "Unlimited seats",
-          "Unlimited projects",
-          "Unlimited environments",
-          "Unlimited flag evaluations",
-        ]}
+    <main>
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-center px-2 gap-2"
       >
-        <LinkButton
-          target={"_blank"}
-          href="https://docs.progressively.app/get-started/quick-start"
+        <PricingCard
+          name="Open Source"
+          description="Self-hosted"
+          price="Free"
+          priceUnit="You manage everything"
+          features={[
+            "Self Hosted",
+            "Unlimited seats",
+            "Unlimited projects",
+            "Unlimited environments",
+            "Unlimited flag evaluations",
+          ]}
         >
-          Start with Open Source
-        </LinkButton>
-      </PricingCard>
+          <LinkButton
+            target={"_blank"}
+            href="https://docs.progressively.app/get-started/quick-start"
+          >
+            Start with Open Source
+          </LinkButton>
+        </PricingCard>
 
-      <PricingCard
-        name="Free trial"
-        description="Try the tool, get an idea"
-        price="$0"
-        priceUnit="Ends after 14 days"
-        features={[
-          "For 14 days",
-          "No credit card required",
-          "1 project",
-          "2 environments",
-          "1000 flag evaluations",
-        ]}
-      >
-        <LinkButton target={"_blank"} href={trialUrl}>Try for free</LinkButton>
-      </PricingCard>
+        <PricingCard
+          name="Free trial"
+          description="Try the tool, get an idea"
+          price="$0"
+          priceUnit="Ends after 14 days"
+          features={[
+            "For 14 days",
+            "No credit card required",
+            "1 project",
+            "2 environments",
+            "1000 flag evaluations",
+          ]}
+        >
+          <LinkButton target={"_blank"} href={trialUrl}>
+            Try for free
+          </LinkButton>
+        </PricingCard>
 
-      <PricingCard
-        name="Standard"
-        description="For small sized teams"
-        price="$12"
-        priceUnit="per seat per month"
-        features={[
-          "1 project",
-          "Unlimited environments",
-          "20 000 flag evaluations*",
-        ]}
-      >
-        <LinkButton target={"_blank"} href={standardUrl}>
-          Start with Standard
-        </LinkButton>
-      </PricingCard>
+        <PricingCard
+          name="Standard"
+          description="For small sized teams"
+          price="$12"
+          priceUnit="per seat per month"
+          features={[
+            "1 project",
+            "Unlimited environments",
+            "20 000 flag evaluations*",
+          ]}
+        >
+          <LinkButton target={"_blank"} href={standardUrl}>
+            Start with Standard
+          </LinkButton>
+        </PricingCard>
 
-      <PricingCard
-        name="Pro"
-        description="For medium sized teams"
-        price="$25"
-        priceUnit="per seat per month"
-        features={[
-          "Unlimited project",
-          "Unlimited environments",
-          "100 000 flag evaluations*",
-        ]}
-      >
-        <LinkButton target={"_blank"} href={proUrl}>Start with Pro</LinkButton>
-      </PricingCard>
-    </div>
+        <PricingCard
+          name="Pro"
+          description="For medium sized teams"
+          price="$25"
+          priceUnit="per seat per month"
+          features={[
+            "Unlimited project",
+            "Unlimited environments",
+            "100 000 flag evaluations*",
+          ]}
+        >
+          <LinkButton target={"_blank"} href={proUrl}>
+            Start with Pro
+          </LinkButton>
+        </PricingCard>
+      </div>
 
-    <p class="container mx-auto pt-4 px-4 pb-4">
-      * When the flag evaluation is reached, the users will receive the "false"
-      variation of the flag every time.
-    </p>
-  </main>
+      <p class="pt-4 px-4 pb-4">
+        * When the flag evaluation is reached, the users will receive the
+        "false" variation of the flag every time.
+      </p>
+    </main>
+  </Container>
 </Layout>
