@@ -404,7 +404,6 @@ importers:
       '@progressively/database': workspace:^1.0.0
       '@progressively/react': workspace:*
       '@progressively/server-side': workspace:*
-      '@progressively/shared': workspace:*
       '@radix-ui/react-label': ^2.0.1
       '@radix-ui/react-select': ^1.2.1
       '@radix-ui/react-switch': ^1.0.2
@@ -447,7 +446,6 @@ importers:
       '@okta/okta-auth-js': 7.2.0
       '@progressively/react': link:../react
       '@progressively/server-side': link:../server-side
-      '@progressively/shared': link:../shared
       '@radix-ui/react-label': 2.0.1_biqbaboplfbrettd7655fr4n2y
       '@radix-ui/react-select': 1.2.1_cis5wmpl6sllca25ejrqakjpau
       '@radix-ui/react-switch': 1.0.2_biqbaboplfbrettd7655fr4n2y
@@ -631,27 +629,32 @@ importers:
       ts-loader: 9.4.2_typescript@4.9.5
       typescript: 4.9.5
 
-  packages/shared:
-    specifiers: {}
-
   packages/website:
     specifiers:
+      '@astrojs/react': ^1.2.1
       '@astrojs/tailwind': ^3.1.1
       '@astrojs/vercel': ^3.2.5
       '@progressively/sdk-js': workspace:*
       '@progressively/server-side': workspace:*
-      '@progressively/shared': workspace:*
       '@tailwindcss/typography': ^0.5.9
+      '@types/react': ^18.0.21
+      '@types/react-dom': ^18.0.6
       astro: ^2.3.2
+      react: ^18.0.0
+      react-dom: ^18.0.0
       shiki: ^0.14.1
       tailwindcss: ^3.0.24
     dependencies:
+      '@astrojs/react': 1.2.2_eifcttp3urtuoaozkvkishqkgm
       '@astrojs/tailwind': 3.1.1_7yagnyihytht5lrkztaywulbna
-      '@astrojs/vercel': 3.2.5_astro@2.3.2
+      '@astrojs/vercel': 3.2.5_astro@2.3.2+react@18.2.0
       '@progressively/sdk-js': link:../sdk-js
       '@progressively/server-side': link:../server-side
-      '@progressively/shared': link:../shared
+      '@types/react': 18.2.0
+      '@types/react-dom': 18.2.1
       astro: 2.3.2
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
       shiki: 0.14.1
       tailwindcss: 3.3.2
     devDependencies:
@@ -926,6 +929,25 @@ packages:
       - supports-color
     dev: true
 
+  /@astrojs/react/1.2.2_eifcttp3urtuoaozkvkishqkgm:
+    resolution: {integrity: sha512-ab9fYvzkC74J7N+M3DWQuZgwu7sYjW0aLO3sEAdCX/jZZz+0BhrqS8m9QjtGJyQK/niF4tgJjpPfadopxKc56g==}
+    engines: {node: ^14.18.0 || >=16.12.0}
+    peerDependencies:
+      '@types/react': ^17.0.50 || ^18.0.21
+      '@types/react-dom': ^17.0.17 || ^18.0.6
+      react: ^17.0.2 || ^18.0.0
+      react-dom: ^17.0.2 || ^18.0.0
+    dependencies:
+      '@babel/core': 7.21.4
+      '@babel/plugin-transform-react-jsx': 7.20.13_@babel+core@7.21.4
+      '@types/react': 18.2.0
+      '@types/react-dom': 18.2.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
   /@astrojs/tailwind/3.1.1_7yagnyihytht5lrkztaywulbna:
     resolution: {integrity: sha512-Wx/ZtVnmtfqHWGVzvUEYZm8rufVKVgDIef0q6fzwUxoT1EpTTwBkTbpnzooogewMLOh2eTscasGe3Ih2HC1wVA==}
     peerDependencies:
@@ -974,13 +996,13 @@ packages:
       - supports-color
     dev: false
 
-  /@astrojs/vercel/3.2.5_astro@2.3.2:
+  /@astrojs/vercel/3.2.5_astro@2.3.2+react@18.2.0:
     resolution: {integrity: sha512-Az2Qcd0GSJHqZV7eWLe8q3h3tzbMApvSQbO6kCoJ9G4cUlQN1UeMZYQcJEG0WBB9YmHQNvttt8qyowVPACnwuQ==}
     peerDependencies:
       astro: ^2.3.1
     dependencies:
       '@astrojs/webapi': 2.1.0
-      '@vercel/analytics': 0.1.11
+      '@vercel/analytics': 0.1.11_react@18.2.0
       '@vercel/nft': 0.22.6
       astro: 2.3.2
       fast-glob: 3.2.12
@@ -7318,7 +7340,6 @@ packages:
     resolution: {integrity: sha512-8QZEV9+Kwy7tXFmjJrp3XUKQSs9LTnE0KnoUb0YCguWBiNW0Yfb2iBMYZ08WPg35IR6P3Z0s00B15SwZnO26+w==}
     dependencies:
       '@types/react': 18.2.0
-    dev: true
 
   /@types/react/18.0.28:
     resolution: {integrity: sha512-RD0ivG1kEztNBdoAK7lekI9M+azSnitIn85h4iOiaLjaTrMjzslhaqCGaI4IyCJ1RljWiLCEu4jyrLLgqxBTew==}
@@ -8343,10 +8364,12 @@ packages:
     resolution: {integrity: sha512-17kVyLq3ePTKOkveHxXuIJZtGYs+cSoev7BlP+Lf4916qfDhk/HBjvlYDe8egrea7LNPHKwSZJK/bzZC+Q6AwQ==}
     dev: true
 
-  /@vercel/analytics/0.1.11:
+  /@vercel/analytics/0.1.11_react@18.2.0:
     resolution: {integrity: sha512-mj5CPR02y0BRs1tN3oZcBNAX9a8NxsIUl9vElDPcqxnMfP0RbRc9fI9Ud7+QDg/1Izvt5uMumsr+6YsmVHcyuw==}
     peerDependencies:
       react: ^16.8||^17||^18
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /@vercel/nft/0.22.6:

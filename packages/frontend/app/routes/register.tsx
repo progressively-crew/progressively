@@ -12,12 +12,10 @@ import {
   redirect,
   V2_MetaFunction,
 } from "@remix-run/node";
-import { useActionData, useSearchParams } from "@remix-run/react";
+import { useActionData } from "@remix-run/react";
 import { H1Logo } from "~/components/H1Logo";
 import { Spacer } from "~/components/Spacer";
 import { Button } from "~/components/Buttons/Button";
-import { PlanBox } from "~/modules/plans/components/PlanBox";
-import { PlanType } from "@progressively/shared";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -45,8 +43,6 @@ export default function CreateAccountPage() {
   const data = useActionData<RegisterActionData>();
   const newUser = data?.newUser;
   const errors = data?.errors;
-  const [searchParams] = useSearchParams();
-  const plan = searchParams.get("plan");
 
   return (
     <NotAuthenticatedLayout
@@ -59,13 +55,6 @@ export default function CreateAccountPage() {
         >{`Sign in`}</Button>
       }
     >
-      {plan && (
-        <>
-          <PlanBox plan={plan as PlanType} />
-          <Spacer size={4} />
-        </>
-      )}
-
       <H1Logo>Sign up</H1Logo>
       <Spacer size={1} />
 
