@@ -16,7 +16,7 @@ kill_timeout = 5
 
 [env]
   ALLOW_REGISTRATION = "true"
-  BACKEND_URL = "https://backend-progressively.fly.dev"
+  BACKEND_URL = "https://api.progressively.app"
   FRONTEND_URL = "https://dashboard.progressively.app"
   REFRESH_TOKEN_EXPIRES = "84600"
   SMTP_PORT = "587"
