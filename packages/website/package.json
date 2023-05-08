@@ -10,16 +10,12 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/react": "^1.2.1",
     "@astrojs/tailwind": "^3.1.1",
     "@astrojs/vercel": "^3.2.5",
     "@progressively/sdk-js": "workspace:*",
     "@progressively/server-side": "workspace:*",
-    "@types/react": "^18.0.21",
-    "@types/react-dom": "^18.0.6",
+    "@progressively/shared": "workspace:*",
     "astro": "^2.3.2",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
     "shiki": "^0.14.1",
     "tailwindcss": "^3.0.24"
   },
