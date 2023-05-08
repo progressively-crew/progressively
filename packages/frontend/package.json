@@ -21,6 +21,7 @@
     "@okta/okta-auth-js": "^7.2.0",
     "@progressively/react": "workspace:*",
     "@progressively/server-side": "workspace:*",
+    "@progressively/shared": "workspace:*",
     "@radix-ui/react-label": "^2.0.1",
     "@radix-ui/react-select": "^1.2.1",
     "@radix-ui/react-switch": "^1.0.2",
