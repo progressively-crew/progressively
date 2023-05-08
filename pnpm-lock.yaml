@@ -413,7 +413,6 @@ importers:
       '@remix-run/node': ^1.15.0
       '@remix-run/react': ^1.15.0
       '@remix-run/serve': ^1.15.0
-      '@remix-run/vercel': ^1.15.0
       '@testing-library/cypress': ^9.0.0
       '@testing-library/react': ^14.0.0
       '@types/react': ^18.2.0
@@ -454,7 +453,6 @@ importers:
       '@remix-run/node': 1.15.0
       '@remix-run/react': 1.15.0_biqbaboplfbrettd7655fr4n2y
       '@remix-run/serve': 1.15.0
-      '@remix-run/vercel': 1.15.0
       camelcase: 6.3.0
       nock: 13.3.0
       react: 18.2.0
@@ -6183,15 +6181,6 @@ packages:
       cookie: 0.4.2
       set-cookie-parser: 2.5.1
       source-map: 0.7.4
-
-  /@remix-run/vercel/1.15.0:
-    resolution: {integrity: sha512-jrJADuNALU76ZV9ioZGSULlpc13D8qMAx7JjiIVQZagSQQdv1rGHxNLX08WyTDfORIcL9bzHDkXkZFJIxj8eVw==}
-    engines: {node: '>=14'}
-    peerDependencies:
-      '@vercel/node': ^1.8.3 || ^2.4.0
-    dependencies:
-      '@remix-run/node': 1.15.0
-    dev: false
 
   /@remix-run/web-blob/3.0.4:
     resolution: {integrity: sha512-AfegzZvSSDc+LwnXV+SwROTrDtoLiPxeFW+jxgvtDAnkuCX1rrzmVJ6CzqZ1Ai0bVfmJadkG5GxtAfYclpPmgw==}

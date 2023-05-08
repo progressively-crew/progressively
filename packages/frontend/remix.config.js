@@ -2,14 +2,6 @@
  * @type {import('@remix-run/dev/config').AppConfig}
  */
 
-const vercelSpecificConfig =
-  process.env.IS_VERCEL === "true"
-    ? {
-        serverBuildTarget: "vercel",
-        server: "./server.js",
-      }
-    : {};
-
 module.exports = {
   ignoredRouteFiles: ["**/.*"],
   // appDirectory: "app",
@@ -23,5 +15,4 @@ module.exports = {
     v2_normalizeFormMethod: true,
     v2_routeConvention: true,
   },
-  ...vercelSpecificConfig,
 };
