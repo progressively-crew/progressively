@@ -1,4 +1,4 @@
-# fly.toml app configuration file generated for frontend-progressively on 2023-05-01T07:13:51+02:00
+# fly.toml app configuration file generated for frontend-progressively on 2023-05-08T12:04:01+02:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
@@ -6,7 +6,7 @@
 app = "frontend-progressively"
 primary_region = "cdg"
 kill_signal = "SIGINT"
-kill_timeout = 5
+kill_timeout = "5s"
 
 [experimental]
   auto_rollback = true
@@ -15,9 +15,10 @@ kill_timeout = 5
   dockerfile = "Dockerfile.Frontend"
 
 [env]
+  ALLOW_REGISTRATION = "true"
   BACKEND_URL = "https://api.progressively.app"
-  PROGRESSIVELY_ENV="c0b62699-949f-40e4-9cff-aab2563c38ca" # this is not a secret :)
-  ALLOW_REGISTRATION=true
+  PRIMARY_REGION = "cdg"
+  PROGRESSIVELY_ENV = "c0b62699-949f-40e4-9cff-aab2563c38ca"
 
 [[services]]
   protocol = "tcp"
