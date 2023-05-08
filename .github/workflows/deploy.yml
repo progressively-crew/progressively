@@ -13,3 +13,11 @@ jobs:
 
       - name: Deploy backend
         run: flyctl deploy -c fly.backend.toml --remote-only
+  deploy-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+
+      - name: Deploy frontend
+        run: flyctl deploy -c fly.frontend.toml --remote-only
