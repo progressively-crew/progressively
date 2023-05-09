@@ -27,7 +27,7 @@ export const ProgressivelyProvider = ({
   children,
   clientKey,
   apiUrl = "https://api.progressively.app",
-  websocketUrl,
+  websocketUrl = "wss://api.progressively.app",
   fields: initialFields = {},
 }: ProgressivelyProviderProps) => {
   const [fields] = useState({ ...initialFields, clientKey });
