@@ -6,7 +6,7 @@ export type Fields = Record<
 >;
 export interface SDKOptions {
   fields?: Fields;
-  apiUrl: string;
+  apiUrl?: string;
   websocketUrl?: string;
   initialFlags?: FlagDict;
   headers?: RequestInit["headers"];

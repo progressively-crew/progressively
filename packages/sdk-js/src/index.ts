@@ -14,19 +14,19 @@ function persistLocalFlags(flags: FlagDict) {
   window.localStorage.setItem(LocalStorageKey, JSON.stringify(flags));
 }
 
-function init(clientKey: string, options: SDKOptions): ProgressivelySdkType {
-  let fields: Fields = options.fields || {};
+function init(clientKey: string, options?: SDKOptions): ProgressivelySdkType {
+  let fields: Fields = options?.fields || {};
   fields.clientKey = clientKey;
 
   let flags: FlagDict =
-    options.initialFlags ||
+    options?.initialFlags ||
     JSON.parse(window.localStorage.getItem(LocalStorageKey) || "{}");
 
   let socket: WebSocket;
   let _callback: (data: FlagDict) => void;
 
-  const apiRoot = options.apiUrl;
-  const wsRoot = options.websocketUrl;
+  const apiRoot = options?.apiUrl || "https://api.progressively.app";
+  const wsRoot = options?.websocketUrl || "wss://api.progressively.app";
 
   function loadFlags(args?: LoadFlagsArgs) {
     let response: Response;
@@ -34,7 +34,7 @@ function init(clientKey: string, options: SDKOptions): ProgressivelySdkType {
     return fetch(`${apiRoot}/sdk/${btoa(JSON.stringify(fields))}`, {
       credentials: "include",
       signal: args?.ctrl?.signal,
-      headers: options.headers,
+      headers: options?.headers,
     })
       .then((res) => {
         response = res;

@@ -18,7 +18,7 @@ interface Status {
 export interface ProgressivelyProviderProps {
   clientKey: string;
   fields?: Fields;
-  apiUrl: string;
+  apiUrl?: string;
   websocketUrl?: string;
   children?: React.ReactNode;
 }
@@ -26,8 +26,8 @@ export interface ProgressivelyProviderProps {
 export const ProgressivelyProvider = ({
   children,
   clientKey,
-  apiUrl,
-  websocketUrl,
+  apiUrl = "https://api.progressively.app",
+  websocketUrl = "wss://api.progressively.app",
   fields: initialFields = {},
 }: ProgressivelyProviderProps) => {
   const [fields] = useState({ ...initialFields, clientKey });

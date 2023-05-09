@@ -4,7 +4,7 @@ export type FlagDict = { [key: string]: boolean | string };
 export type Fields = Record<string, string | number | boolean>;
 export interface SDKOptions {
   fields?: Fields;
-  apiUrl: string;
+  apiUrl?: string;
 }
 export interface ProgressivelySdkType {
   loadFlags: () => Promise<{ flags: FlagDict; response: Response }>;
@@ -13,11 +13,11 @@ export interface ProgressivelySdkType {
 const btoA = (toTransform: string) =>
   Buffer.from(toTransform).toString("base64");
 
-function init(clientKey: string, options: SDKOptions): ProgressivelySdkType {
+function init(clientKey: string, options?: SDKOptions): ProgressivelySdkType {
   const fields: Fields = options?.fields || {};
   fields.clientKey = clientKey;
 
-  return Sdk(options.apiUrl, fields);
+  return Sdk(options?.apiUrl || "https://api.progressively.app", fields);
 }
 
 const Sdk = (apiRoot: string, fields: Fields): ProgressivelySdkType => {
