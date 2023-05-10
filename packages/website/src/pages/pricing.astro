@@ -1,20 +1,18 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import PricingCard from "../components/PricingCard.astro";
 import LinkButton from "../components/LinkButton.astro";
-import { Plans } from "@progressively/shared";
 import Container from "../components/Container.astro";
+import { PricingCalculator } from "../components/PricingCalculator";
+import Faq from "../components/Faq.astro";
 
 const frontendUrl = import.meta.env.FRONTEND_URL;
 
-const trialUrl = `${frontendUrl}/register?plan=${Plans.Trialing}`;
-const standardUrl = `${frontendUrl}/dashboard/profile?plan=${Plans.Standard}`;
-const proUrl = `${frontendUrl}/dashboard/profile?plan=${Plans.Pro}`;
+const trialUrl = `${frontendUrl}/register`;
 ---
 
 <Layout title="Pricing plans of Progressively">
   <Container>
-    <header class="flex flex-col py-20 md:py-40 gap-4">
+    <header class="flex flex-col pt-20 md:pt-40 pb-12 gap-4">
       <h1 class="text-5xl md:text-6xl font-extrabold">Pricing</h1>
       <p class="text-2xl leading-relaxed max-w-4xl">
         The product is at an early pricing discovery stage. The pricing will
@@ -26,85 +24,30 @@ const proUrl = `${frontendUrl}/dashboard/profile?plan=${Plans.Pro}`;
     </header>
 
     <main>
-      <div
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-center px-2 gap-2"
-      >
-        <PricingCard
-          name="Open Source"
-          description="Self-hosted"
-          price="Free"
-          priceUnit="You manage everything"
-          features={[
-            "Self Hosted",
-            "Unlimited seats",
-            "Unlimited projects",
-            "Unlimited environments",
-            "Unlimited flag evaluations",
-          ]}
-        >
-          <LinkButton
-            target={"_blank"}
-            href="https://docs.progressively.app/get-started/quick-start"
-          >
-            Start with Open Source
-          </LinkButton>
-        </PricingCard>
+      <PricingCalculator client:load />
 
-        <PricingCard
-          name="Free trial"
-          description="Try the tool, get an idea"
-          price="$0"
-          priceUnit="Ends after 14 days"
-          features={[
-            "For 14 days",
-            "No credit card required",
-            "1 project",
-            "2 environments",
-            "1000 flag evaluations",
-          ]}
-        >
-          <LinkButton target={"_blank"} href={trialUrl}>
-            Try for free
-          </LinkButton>
-        </PricingCard>
-
-        <PricingCard
-          name="Standard"
-          description="For small sized teams"
-          price="$12"
-          priceUnit="per seat per month"
-          features={[
-            "1 project",
-            "Unlimited environments",
-            "20 000 flag evaluations*",
-          ]}
-        >
-          <LinkButton target={"_blank"} href={standardUrl}>
-            Start with Standard
-          </LinkButton>
-        </PricingCard>
-
-        <PricingCard
-          name="Pro"
-          description="For medium sized teams"
-          price="$25"
-          priceUnit="per seat per month"
-          features={[
-            "Unlimited project",
-            "Unlimited environments",
-            "100 000 flag evaluations*",
-          ]}
-        >
-          <LinkButton target={"_blank"} href={proUrl}>
-            Start with Pro
-          </LinkButton>
-        </PricingCard>
+      <div class="text-center pt-8 pb-12">
+        <LinkButton href={trialUrl}>Start your free trial</LinkButton>
       </div>
 
-      <p class="pt-4 px-4 pb-4">
-        * When the flag evaluation is reached, the users will receive the
-        "false" variation of the flag every time.
-      </p>
+      <div class="pb-12">
+        <h2 class="font-extrabold text-4xl md:text-5xl pb-4">FAQ</h2>
+        <div class="flex flex-col gap-4">
+          <Faq title="What happens when the flag evaluation is reached?">
+            When the flag evaluation limit is reached, the users will receive
+            the flag has deactivated until the next month or an upgrade of your
+            plan.
+          </Faq>
+
+          <Faq title="What count as a flag evaluation?">
+            A flag evaluation corresponds to the computation of <strong
+              >one feature flag value</strong
+            >. If your project contains <strong
+              >3 feature flags, there will be 3 flag evaluations</strong
+            > when requesting the server.
+          </Faq>
+        </div>
+      </div>
     </main>
   </Container>
 </Layout>

@@ -16,8 +16,6 @@ import { useActionData, useSearchParams } from "@remix-run/react";
 import { H1Logo } from "~/components/H1Logo";
 import { Spacer } from "~/components/Spacer";
 import { Button } from "~/components/Buttons/Button";
-import { PlanBox } from "~/modules/plans/components/PlanBox";
-import { PlanType } from "@progressively/shared";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -59,13 +57,6 @@ export default function CreateAccountPage() {
         >{`Sign in`}</Button>
       }
     >
-      {plan && (
-        <>
-          <PlanBox plan={plan as PlanType} />
-          <Spacer size={4} />
-        </>
-      )}
-
       <H1Logo>Sign up</H1Logo>
       <Spacer size={1} />
 

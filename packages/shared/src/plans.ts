@@ -1,9 +1,3 @@
-export const Plans = {
-  OpenSource: "OpenSource",
-  Trialing: "Trialing",
-  Standard: "Standard",
-  Pro: "Pro",
-};
-
-export type PlansType = typeof Plans;
-export type PlanType = keyof typeof Plans;
+export const ProjectCost = 3;
+export const EnvCost = 3;
+export const FlagEvaluationTenKCost = 5;
