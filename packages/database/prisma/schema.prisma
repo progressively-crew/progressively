@@ -41,7 +41,7 @@ model Plan {
   projectCount     Int
   environmentCount Int
   evaluationCount  Int
-  createdAt        DateTime
+  createdAt        DateTime @default(now())
   User             User?    @relation(fields: [userUuid], references: [uuid])
   userUuid         String?
 }

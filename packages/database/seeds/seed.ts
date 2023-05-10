@@ -8,6 +8,7 @@ import {
 } from "./flags";
 import { seedProjects } from "./projects";
 import { seedPasswordReset, seedUsers } from "./users";
+import { seedForSaas } from "./saas";
 
 const prismaClient = new PrismaClient();
 
@@ -16,7 +17,7 @@ export const seedDb = async () => {
 
   try {
     // Initial seeding
-    const [marvin, john] = await seedUsers(prismaClient);
+    const [marvin, john, jane] = await seedUsers(prismaClient);
     const [projectFromSeeding, otherFromSeeding] = await seedProjects(
       prismaClient
     );
@@ -354,6 +355,8 @@ export const seedDb = async () => {
       new Date(1992, 0, 22, 1),
       13
     );
+
+    await seedForSaas(prismaClient, jane);
 
     // End of Flag setup
   } catch (e) {
