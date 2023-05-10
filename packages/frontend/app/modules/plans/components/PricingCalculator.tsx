@@ -27,8 +27,7 @@ export const PricingCalculator = ({
   const envSliderId = `env-${id}`;
   const flagCountSliderId = `flagcount-${id}`;
 
-  const labelClassName = "block pb-2 text-sm";
-  const innerLabelClassName = "text-slate-500 font semibold";
+  const labelClassName = "block pb-2 text-sm text-slate-500 font semibold";
 
   const total =
     ProjectCost * projectValue +
@@ -46,9 +45,9 @@ export const PricingCalculator = ({
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
           <div>
             <label htmlFor={projectSliderId} className={labelClassName}>
-              <span className={innerLabelClassName}>Number of projects</span>
-              <span className="block font-bold text-4xl">{projectValue}</span>
+              Number of projects
             </label>
+            <span className="block font-bold text-4xl">{projectValue}</span>
             <input
               name="projectCount"
               type="range"
@@ -62,11 +61,10 @@ export const PricingCalculator = ({
 
           <div>
             <label htmlFor={envSliderId} className={labelClassName}>
-              <span className={innerLabelClassName}>
-                Number of environments/project
-              </span>
-              <span className="block font-bold text-4xl">{envValue}</span>
+              Number of environments/project
             </label>
+
+            <span className="block font-bold text-4xl">{envValue}</span>
             <input
               name="envCount"
               type="range"
@@ -80,13 +78,10 @@ export const PricingCalculator = ({
 
           <div>
             <label htmlFor={flagCountSliderId} className={labelClassName}>
-              <span className={innerLabelClassName}>
-                Flag evaluations/month
-              </span>
-              <span className="block font-bold text-4xl">
-                {evaluationCount}
-              </span>
+              Flag evaluations/month
             </label>
+
+            <span className="block font-bold text-4xl">{evaluationCount}</span>
             <input
               name="evaluationCount"
               type="range"

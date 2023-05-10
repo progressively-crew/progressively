@@ -50,7 +50,7 @@ export default function ProfilePage() {
 
       <Card footer={<Button href="/">Adjust plan</Button>}>
         <CardContent>
-          <Section>
+          <Section id="active-plan">
             <SectionHeader
               title={"Active plan"}
               description="This is what you are actually paying per month. You can quickly adjust using the sliders below to fit your audience needs."
@@ -81,7 +81,7 @@ export default function ProfilePage() {
       {plans.length > 0 && (
         <Card>
           <CardContent>
-            <Section>
+            <Section id="passed-plan">
               <SectionHeader
                 title={"Passed plans"}
                 description="These are the plans you used to subscribe to in the past."
