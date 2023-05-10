@@ -50,6 +50,7 @@ export class UsersController {
       email: user.email,
       fullname: user.fullname,
       uuid: user.uuid,
+      trialEnd: user.trialEnd,
     };
   }
 

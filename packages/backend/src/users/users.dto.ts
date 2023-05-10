@@ -2,6 +2,7 @@ export interface UserRetrieveDTO {
   uuid: string;
   fullname: string;
   email: string;
+  trialEnd?: Date;
 }
 
 export class UserChangeFullnameDTO {

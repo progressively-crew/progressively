@@ -70,7 +70,7 @@ describe('UsersController (e2e)', () => {
             uuid: '1',
           },
         ],
-        remainingTrialingDays: 0,
+        remainingTrialingDays: 14,
       });
     });
 
