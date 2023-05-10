@@ -19,4 +19,8 @@ export const AvailableUsers = {
     email: "without.fullname@gmail.com",
     password: "password",
   },
+  Joe: {
+    email: "joe.doe@gmail.com",
+    password: "password",
+  },
 };
