@@ -32,6 +32,18 @@ model User {
   authProviders       UserOfProvider[]
   userProject         UserProject[]
   ActivityLog         ActivityLog[]
+  trialEnd            DateTime?
+  allPlanSubscribed   Plan[]
+}
+
+model Plan {
+  uuid             String   @id @default(uuid())
+  projectCount     Int
+  environmentCount Int
+  evaluationCount  Int
+  createdAt        DateTime
+  User             User?    @relation(fields: [userUuid], references: [uuid])
+  userUuid         String?
 }
 
 model Project {
