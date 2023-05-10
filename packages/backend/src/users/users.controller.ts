@@ -54,6 +54,13 @@ export class UsersController {
   }
 
   @ApiBearerAuth()
+  @Get('/billing')
+  @UseGuards(JwtAuthGuard)
+  getBilling(@Request() req) {
+    return this.userService.getBillingInfo(req.user.uuid);
+  }
+
+  @ApiBearerAuth()
   @Put('/me')
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(ChangeFullnameSchema))

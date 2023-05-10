@@ -128,6 +128,17 @@ export class UsersService {
     });
   }
 
+  getBillingInfo(uuid: string) {
+    return this.prisma.plan.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+      where: {
+        userUuid: uuid,
+      },
+    });
+  }
+
   async hasUsers() {
     const users = await this.prisma.user.findMany({});
 

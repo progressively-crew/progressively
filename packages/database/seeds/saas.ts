@@ -3,6 +3,7 @@ import { PrismaClient, User } from "@prisma/client";
 export const seedForSaas = async (prismaClient: PrismaClient, user: User) => {
   await prismaClient.plan.create({
     data: {
+      uuid: "1",
       userUuid: user.uuid,
       projectCount: 1,
       environmentCount: 1,
@@ -14,6 +15,7 @@ export const seedForSaas = async (prismaClient: PrismaClient, user: User) => {
 
   await prismaClient.plan.create({
     data: {
+      uuid: "2",
       userUuid: user.uuid,
       projectCount: 2,
       environmentCount: 2,
