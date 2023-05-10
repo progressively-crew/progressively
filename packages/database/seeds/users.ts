@@ -61,6 +61,7 @@ export const seedUsers = async (prismaClient: PrismaClient) => {
       password: await CryptoService.hash("password"),
       activationToken: "11",
       status: "Active",
+      trialEnd,
     },
   });
 
