@@ -9,7 +9,7 @@ export const PricingCalculator = () => {
   const id = useId();
   const [projectValue, setProjectValue] = useState(1);
   const [envValue, setEnvValue] = useState(1);
-  const [evaluationCount, setEvaluationCount] = useState(10000);
+  const [evaluationCount, setEvaluationCount] = useState(10_000);
 
   const projectSliderId = `project-${id}`;
   const envSliderId = `env-${id}`;
@@ -78,9 +78,9 @@ export const PricingCalculator = () => {
             <input
               name="evaluationCount"
               type="range"
-              min={10000}
-              step={10000}
-              max={80000}
+              min={10_000}
+              step={10_000}
+              max={80_000}
               id={flagCountSliderId}
               value={evaluationCount}
               onChange={(e) => setEvaluationCount(Number(e.target.value))}

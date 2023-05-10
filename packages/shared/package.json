@@ -3,6 +3,18 @@
   "author": "mfrachet",
   "version": "1.0.0",
   "private": true,
-  "main": "./src/index.ts",
-  "module": "./src/index.ts"
+  "main": "./dist/legacy/index.js",
+  "exports": {
+    ".": {
+      "require": "./dist/legacy/index.js",
+      "import": "./dist/modern/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc && tsc --target ES2017 --outDir ./dist/modern --module 'esnext'"
+  },
+  "devDependencies": {
+    "typescript": "^4.9.5",
+    "tslib": "^2.5.0"
+  }
 }

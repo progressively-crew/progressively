@@ -9,6 +9,7 @@ import { getBillingInfo } from "~/modules/plans/services/getBillingInfo";
 import { useLoaderData } from "@remix-run/react";
 import { Section, SectionHeader } from "~/components/Section";
 import { Card, CardContent } from "~/components/Card";
+import { PricingCalculator } from "~/modules/plans/components/PricingCalculator";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -47,6 +48,8 @@ export default function ProfilePage() {
         <CardContent>
           <Section>
             <SectionHeader title={"Active plan"} />
+
+            <PricingCalculator />
           </Section>
         </CardContent>
       </Card>
