@@ -55,20 +55,23 @@ describe('UsersController (e2e)', () => {
         .get('/users/billing')
         .set('Authorization', `Bearer ${access_token}`);
 
-      expect(body).toMatchObject([
-        {
+      expect(body).toMatchObject({
+        activePlan: {
           environmentCount: 2,
           evaluationCount: 20000,
           projectCount: 2,
           uuid: '2',
         },
-        {
-          environmentCount: 1,
-          evaluationCount: 10000,
-          projectCount: 1,
-          uuid: '1',
-        },
-      ]);
+        plans: [
+          {
+            environmentCount: 1,
+            evaluationCount: 10000,
+            projectCount: 1,
+            uuid: '1',
+          },
+        ],
+        remainingTrialingDays: 0,
+      });
     });
 
     it('gives a 401 when the token is invalid', () =>
