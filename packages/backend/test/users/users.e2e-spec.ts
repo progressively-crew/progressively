@@ -60,14 +60,12 @@ describe('UsersController (e2e)', () => {
           environmentCount: 2,
           evaluationCount: 20000,
           projectCount: 2,
-
           uuid: '2',
         },
         {
           environmentCount: 1,
           evaluationCount: 10000,
           projectCount: 1,
-
           uuid: '1',
         },
       ]);

@@ -50,6 +50,16 @@ export const seedUsers = async (prismaClient: PrismaClient) => {
     },
   });
 
+  const joe = await prismaClient.user.create({
+    data: {
+      fullname: "Joe Doe",
+      email: "joe.doe@gmail.com",
+      password: await CryptoService.hash("password"),
+      activationToken: "11",
+      status: "Active",
+    },
+  });
+
   const gina = await prismaClient.user.create({
     data: {
       uuid: "4",
