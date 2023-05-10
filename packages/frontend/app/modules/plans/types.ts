@@ -1,6 +1,6 @@
 export interface Plan {
   uuid: string;
-  createdAt: Date;
+  createdAt: string;
   environmentCount: number;
   evaluationCount: number;
   projectCount: number;

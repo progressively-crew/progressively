@@ -4,6 +4,8 @@
 
 :root {
   --primary: #4f46e5;
+  --bg-slide: #e2e8f0;
+  --color-slide-thumb: black;
 }
 
 /* Radio */
@@ -24,13 +26,19 @@ input[type="range"] {
   appearance: none;
   background: transparent;
   cursor: pointer;
+  width: 100%;
+}
+
+/* Removes default focus */
+input[type="range"]:focus {
+  outline: none;
 }
 
 /***** Chrome, Safari, Opera and Edge Chromium styles *****/
 /* slider track */
 input[type="range"]::-webkit-slider-runnable-track {
-  background-color: var(--input-range-bg);
-  border-radius: 9999px;
+  background-color: var(--bg-slide);
+  border-radius: 0.5rem;
   height: 0.5rem;
 }
 
@@ -39,57 +47,40 @@ input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none; /* Override default look */
   appearance: none;
   margin-top: -12px; /* Centers thumb on the track */
-  border-radius: 50%;
 
   /*custom styles*/
-  border: 4px solid var(--primary);
-  background: white;
+  background-color: var(--color-slide-thumb);
   height: 2rem;
-  width: 2rem;
+  width: 1rem;
 }
 
-input[type="range"]::-moz-range-progress {
-  background: var(--primary);
-  height: 0.5rem;
-  border-radius: 9999px;
+input[type="range"]:focus::-webkit-slider-thumb {
+  border: 1px solid var(--bg-slide);
+  outline: 3px solid var(--bg-slide);
+  outline-offset: 0.125rem;
 }
 
 /******** Firefox styles ********/
 /* slider track */
 input[type="range"]::-moz-range-track {
-  background-color: var(--input-range-bg);
-  border-radius: 9999px;
+  background-color: var(--bg-slide);
+  border-radius: 0.5rem;
   height: 0.5rem;
 }
 
 /* slider thumb */
 input[type="range"]::-moz-range-thumb {
   border: none; /*Removes extra border that FF applies*/
-  border-radius: 50%; /*Removes default border-radius that FF applies*/
+  border-radius: 0; /*Removes default border-radius that FF applies*/
 
   /*custom styles*/
-  border: 4px solid var(--primary);
-  background: white;
-  height: 1.5rem;
-  width: 1.5rem;
+  background-color: var(--color-slide-thumb);
+  height: 2rem;
+  width: 1rem;
 }
 
-input[type="range"]::-moz-range-progress {
-  background: var(--primary);
-  height: 0.5rem;
-  border-radius: 9999px;
-}
-
-/* input[type="range"]:focus::-moz-range-thumb {
-  border: 1px solid var(--input-range-bg);
-  outline: 3px solid var(--input-range-bg);
+input[type="range"]:focus::-moz-range-thumb {
+  border: 1px solid var(--bg-slide);
+  outline: 3px solid var(--bg-slide);
   outline-offset: 0.125rem;
-} */
-
-.triangle {
-  width: 0;
-  height: 0;
-  border-top: 8px solid transparent;
-  border-bottom: 8px solid transparent;
-  border-right: 8px solid var(--primary);
 }

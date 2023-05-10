@@ -5,17 +5,29 @@ import {
   ProjectCost,
 } from "@progressively/shared";
 
-export const PricingCalculator = () => {
+export interface PricingCalculatorProps {
+  initialProjectCount: number;
+  initialEnvCount: number;
+  initialEvaluationCount: number;
+}
+
+export const PricingCalculator = ({
+  initialProjectCount,
+  initialEnvCount,
+  initialEvaluationCount,
+}: PricingCalculatorProps) => {
   const id = useId();
-  const [projectValue, setProjectValue] = useState(1);
-  const [envValue, setEnvValue] = useState(1);
-  const [evaluationCount, setEvaluationCount] = useState(10_000);
+  const [projectValue, setProjectValue] = useState(initialProjectCount);
+  const [envValue, setEnvValue] = useState(initialEnvCount);
+  const [evaluationCount, setEvaluationCount] = useState(
+    initialEvaluationCount
+  );
 
   const projectSliderId = `project-${id}`;
   const envSliderId = `env-${id}`;
   const flagCountSliderId = `flagcount-${id}`;
 
-  const labelClassName = "block pb-2";
+  const labelClassName = "block pb-2 text-sm";
   const innerLabelClassName = "text-slate-500 font semibold";
 
   const total =
@@ -24,8 +36,8 @@ export const PricingCalculator = () => {
     FlagEvaluationTenKCost * (evaluationCount / 10_000);
 
   return (
-    <div className="bg-white rounded-lg drop-shadow-lg overflow-hidden">
-      <div className="px-16 pt-16 pb-8 ">
+    <div className="px-16">
+      <div className="pb-8">
         <div aria-live="polite" className="text-center pb-16">
           <strong className="text-7xl">€{total}</strong>
           <span className="text-4xl text-slate-500">/month</span>
@@ -69,7 +81,7 @@ export const PricingCalculator = () => {
           <div>
             <label htmlFor={flagCountSliderId} className={labelClassName}>
               <span className={innerLabelClassName}>
-                Flag evaluations/month*
+                Flag evaluations/month
               </span>
               <span className="block font-bold text-4xl">
                 {evaluationCount}
@@ -86,19 +98,6 @@ export const PricingCalculator = () => {
               onChange={(e) => setEvaluationCount(Number(e.target.value))}
             />
           </div>
-        </div>
-      </div>
-
-      <div className="flex flex-row py-8 bg-slate-100 px-16 justify-between">
-        <div>
-          Price of 1 project: <strong>€{ProjectCost}/mo</strong>
-        </div>
-        <div>
-          Price of 1 environment: <strong>€{EnvCost}/mo</strong>
-        </div>
-        <div>
-          Price of 10000 flag evaluation:
-          <strong>€{FlagEvaluationTenKCost}/mo</strong>
         </div>
       </div>
     </div>

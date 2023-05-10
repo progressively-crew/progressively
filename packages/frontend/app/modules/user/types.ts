@@ -2,6 +2,7 @@ export interface User {
   fullname: string;
   email: string;
   uuid: string;
+  trialEnd?: string;
 }
 
 export interface RegisterCredentials {
