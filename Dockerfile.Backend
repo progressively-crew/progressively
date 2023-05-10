@@ -8,7 +8,7 @@ RUN npm i -g pnpm
 COPY . .
 COPY pnpm-*.yaml .
 
-RUN rm -rf packages/documentation packages/frontend packages/load-testing packages/logs packages/react packages/react-native packages/sdk-js packages/sdk-node packages/server-side packages/shared packages/website
+RUN rm -rf packages/documentation packages/frontend packages/load-testing packages/logs packages/react packages/react-native packages/sdk-js packages/sdk-node packages/server-side packages/website
 RUN pnpm install
 RUN pnpm run build
 

@@ -5,4 +5,5 @@ export interface User {
   password: string;
   activationToken?: string;
   status: string;
+  trialEnd?: Date;
 }
