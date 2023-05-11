@@ -52,6 +52,9 @@ describe("/dashboard/profile/billing", () => {
       it("shows the billing page", () => {
         cy.title().should("eq", "Progressively | Profile | Billing");
 
+        cy.contains(
+          "This is what you are actually paying per month. You can quickly adjust using the sliders below to fit your audience needs."
+        ).should("be.visible");
         cy.findByText("Passed plans").should("be.visible");
         cy.findByText("€22").should("be.visible");
         cy.findByLabelText("Number of projects").should("have.value", 2);
@@ -79,6 +82,9 @@ describe("/dashboard/profile/billing", () => {
         cy.checkA11y();
 
         cy.findByText("You are in a trialing period").should("be.visible");
+        cy.contains(
+          "After the remaining 14 days of this trialing period, you will have to subscribe and use this calculator."
+        ).should("be.visible");
       });
     });
   });
