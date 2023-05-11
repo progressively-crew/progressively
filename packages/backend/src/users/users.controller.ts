@@ -79,6 +79,8 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(PlanSchema))
   addBillingPlan(@Request() req, @Body() planDto: PlanCreateDTO) {
+    if (process.env.IS_SAAS !== 'true') return {};
+
     return this.userService.addPlan(
       req.user.uuid,
       planDto.projectCount,

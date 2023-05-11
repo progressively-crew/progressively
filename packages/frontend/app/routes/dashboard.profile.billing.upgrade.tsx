@@ -2,6 +2,7 @@ import {
   ActionFunction,
   LoaderFunction,
   V2_MetaFunction,
+  redirect,
 } from "@remix-run/node";
 import { Plan } from "~/modules/plans/types";
 import { getSession } from "~/sessions";
@@ -11,10 +12,9 @@ import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { Typography } from "~/components/Typography";
-import { useActionData, useSearchParams } from "@remix-run/react";
+import { Form, useActionData, useSearchParams } from "@remix-run/react";
 import { calculatePrice } from "@progressively/shared";
 import { addPlan } from "~/modules/plans/services/addPlan";
-import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 
 export const meta: V2_MetaFunction = () => {
@@ -43,15 +43,12 @@ export const loader: LoaderFunction = async ({
 };
 
 export interface ActionData {
-  success: boolean;
   errors?: {
     backend?: string;
   };
 }
 
-export const action: ActionFunction = async ({
-  request,
-}): Promise<ActionData> => {
+export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
   const session = await getSession(request.headers.get("Cookie"));
   const accessToken = session.get("auth-cookie");
@@ -68,13 +65,12 @@ export const action: ActionFunction = async ({
       accessToken
     );
 
-    return { success: true };
+    return redirect("/dashboard/profile/billing?planCreated=true");
   } catch (error: any) {
     return {
       errors: {
         backend: error.message,
       },
-      success: false,
     };
   }
 };
@@ -121,23 +117,20 @@ export default function UpgradeBillingPage() {
   return (
     <CreateEntityLayout
       titleSlot={<CreateEntityTitle>Plan update</CreateEntityTitle>}
-      status={
-        data?.success ? (
-          <SuccessBox id={"plan-add-success"}>
-            The plan has been successfully added
-          </SuccessBox>
-        ) : data?.errors ? (
-          <ErrorBox list={data?.errors} />
-        ) : null
-      }
+      status={data?.errors ? <ErrorBox list={data?.errors} /> : null}
       submitSlot={
-        <SubmitButton
-          type="submit"
-          isLoading={false}
-          loadingText="Creating the metric, please wait..."
-        >
-          Update
-        </SubmitButton>
+        <Form method="post">
+          <input type="hidden" name="projectCount" value={projectCount} />
+          <input type="hidden" name="envCount" value={envCount} />
+          <input type="hidden" name="evalCount" value={evalCount} />
+          <SubmitButton
+            type="submit"
+            isLoading={false}
+            loadingText="Creating the metric, please wait..."
+          >
+            Update
+          </SubmitButton>
+        </Form>
       }
       backLinkSlot={
         <BackLink to={`/dashboard/profile/billing`}>Back to billing</BackLink>

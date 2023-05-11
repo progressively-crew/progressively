@@ -17,5 +17,6 @@ export const addPlan = (
     if (!res.ok) {
       throw new Error("Something went wrong when trying to add the plan.");
     }
+
     return res.json();
   });

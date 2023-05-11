@@ -6,7 +6,7 @@ import { useUser } from "~/modules/user/contexts/useUser";
 import { Plan } from "~/modules/plans/types";
 import { getSession } from "~/sessions";
 import { getBillingInfo } from "~/modules/plans/services/getBillingInfo";
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { Section, SectionHeader } from "~/components/Section";
 import { Card, CardContent } from "~/components/Card";
 import { PricingCalculator } from "~/modules/plans/components/PricingCalculator";
@@ -14,6 +14,7 @@ import { PlanHistory } from "~/modules/plans/components/PlanHistory";
 import { TipBox } from "~/components/Boxes/TipBox";
 import { Button } from "~/components/Buttons/Button";
 import { useState } from "react";
+import { SuccessBox } from "~/components/Boxes/SuccessBox";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -40,8 +41,9 @@ export const loader: LoaderFunction = async ({
   return billingInfo;
 };
 
-export default function ProfilePage() {
+export default function BillingPage() {
   const { user } = useUser();
+  const [searchParams] = useSearchParams();
   const { plans, activePlan, remainingTrialingDays } =
     useLoaderData<LoaderData>();
 
@@ -53,8 +55,20 @@ export default function ProfilePage() {
     activePlan?.evaluationCount || 10_000
   );
 
+  const isSuccessPlanCreate = searchParams.get("planCreated");
+
   return (
-    <DashboardLayout user={user} subNav={<UserMenu />}>
+    <DashboardLayout
+      user={user}
+      subNav={<UserMenu />}
+      status={
+        isSuccessPlanCreate ? (
+          <SuccessBox id={"plan-add-success"}>
+            The plan has been successfully added
+          </SuccessBox>
+        ) : null
+      }
+    >
       <PageTitle value="Billing" />
 
       <Card
@@ -102,7 +116,7 @@ export default function ProfilePage() {
         </CardContent>
       </Card>
 
-      {plans.length > 0 && (
+      {activePlan && (
         <Card>
           <CardContent>
             <Section id="passed-plan">
@@ -111,7 +125,7 @@ export default function ProfilePage() {
                 description="These are the plans you used to subscribe to in the past."
               />
 
-              <PlanHistory plans={plans} />
+              <PlanHistory plans={plans} activePlan={activePlan} />
             </Section>
           </CardContent>
         </Card>
