@@ -4,6 +4,7 @@ import { authGuard } from "~/modules/auth/services/auth-guard";
 import { ProjectsProvider } from "~/modules/projects/contexts/ProjectsProvider";
 import { getProjects } from "~/modules/projects/services/getProjects";
 import { Project } from "~/modules/projects/types";
+import { IsSaasProvider } from "~/modules/saas/contexts/IsSaasProvider";
 import { UserProvider } from "~/modules/user/contexts/UserProvider";
 import { User } from "~/modules/user/types";
 import { getSession } from "~/sessions";
@@ -11,6 +12,7 @@ import { getSession } from "~/sessions";
 interface LoaderData {
   user: User;
   projects: Array<Project>;
+  isSaas: boolean;
 }
 
 export const handle = {
@@ -32,17 +34,19 @@ export const loader: LoaderFunction = async ({
   const authCookie = session.get("auth-cookie");
   const projects = await getProjects(authCookie);
 
-  return { user, projects };
+  return { user, projects, isSaas: process.env.IS_SAAS === "true" };
 };
 
 export default function DashboardLayout() {
-  const { user, projects } = useLoaderData<LoaderData>();
+  const { user, projects, isSaas } = useLoaderData<LoaderData>();
 
   return (
-    <ProjectsProvider projects={projects}>
-      <UserProvider user={user}>
-        <Outlet />
-      </UserProvider>
-    </ProjectsProvider>
+    <IsSaasProvider isSaas={isSaas}>
+      <ProjectsProvider projects={projects}>
+        <UserProvider user={user}>
+          <Outlet />
+        </UserProvider>
+      </ProjectsProvider>
+    </IsSaasProvider>
   );
 }
