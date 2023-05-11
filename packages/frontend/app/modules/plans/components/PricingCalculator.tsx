@@ -4,6 +4,8 @@ import {
   FlagEvaluationTenKCost,
   ProjectCost,
 } from "@progressively/shared";
+import { Typography } from "~/components/Typography";
+import { Label } from "~/components/Fields/Label";
 
 export interface PricingCalculatorProps {
   initialProjectCount: number;
@@ -27,7 +29,7 @@ export const PricingCalculator = ({
   const envSliderId = `env-${id}`;
   const flagCountSliderId = `flagcount-${id}`;
 
-  const labelClassName = "block pb-2 text-sm text-slate-500 font semibold";
+  const labelClassName = "block pb-2 text-sm";
 
   const total =
     ProjectCost * projectValue +
@@ -38,16 +40,22 @@ export const PricingCalculator = ({
     <div className="px-16">
       <div className="pb-8">
         <div aria-live="polite" className="text-center pb-16">
-          <strong className="text-7xl">€{total}</strong>
-          <span className="text-4xl text-slate-500">/month</span>
+          <Typography as="strong" className="text-7xl">
+            €{total}
+          </Typography>
+          <Typography as="span" className="text-4xl text-slate-500">
+            /month
+          </Typography>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
           <div>
-            <label htmlFor={projectSliderId} className={labelClassName}>
+            <Label htmlFor={projectSliderId} className={labelClassName}>
               Number of projects
-            </label>
-            <span className="block font-bold text-4xl">{projectValue}</span>
+            </Label>
+            <Typography as="span" className="block font-bold text-4xl pb-4">
+              {projectValue}
+            </Typography>
             <input
               name="projectCount"
               type="range"
@@ -60,11 +68,14 @@ export const PricingCalculator = ({
           </div>
 
           <div>
-            <label htmlFor={envSliderId} className={labelClassName}>
+            <Label htmlFor={envSliderId} className={labelClassName}>
               Number of environments/project
-            </label>
+            </Label>
 
-            <span className="block font-bold text-4xl">{envValue}</span>
+            <Typography as="span" className="block font-bold text-4xl pb-4">
+              {envValue}
+            </Typography>
+
             <input
               name="envCount"
               type="range"
@@ -77,11 +88,13 @@ export const PricingCalculator = ({
           </div>
 
           <div>
-            <label htmlFor={flagCountSliderId} className={labelClassName}>
+            <Label htmlFor={flagCountSliderId} className={labelClassName}>
               Flag evaluations/month
-            </label>
+            </Label>
 
-            <span className="block font-bold text-4xl">{evaluationCount}</span>
+            <Typography as="span" className="block font-bold text-4xl pb-4">
+              {evaluationCount}
+            </Typography>
             <input
               name="evaluationCount"
               type="range"

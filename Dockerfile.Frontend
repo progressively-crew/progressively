@@ -7,7 +7,7 @@ RUN npm i -g pnpm
 
 COPY . .
 
-RUN rm -rf packages/documentation packages/backend packages/load-testing packages/sdk-node
+RUN rm -rf examples packages/documentation packages/backend packages/load-testing packages/sdk-node
 RUN pnpm install
 RUN pnpm run build
 
