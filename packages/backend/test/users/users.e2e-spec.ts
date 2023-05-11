@@ -43,6 +43,41 @@ describe('UsersController (e2e)', () => {
       verifyAuthGuard(app, '/users/me', 'get'));
   });
 
+  describe('/users/billing (Get)', () => {
+    it('gives the current user billing details', async () => {
+      const access_token = await authenticate(
+        app,
+        'jane.doe@gmail.com',
+        'password',
+      );
+
+      const { body } = await request(app.getHttpServer())
+        .get('/users/billing')
+        .set('Authorization', `Bearer ${access_token}`);
+
+      expect(body).toMatchObject({
+        activePlan: {
+          environmentCount: 2,
+          evaluationCount: 20000,
+          projectCount: 2,
+          uuid: '2',
+        },
+        plans: [
+          {
+            environmentCount: 1,
+            evaluationCount: 10000,
+            projectCount: 1,
+            uuid: '1',
+          },
+        ],
+        remainingTrialingDays: 14,
+      });
+    });
+
+    it('gives a 401 when the token is invalid', () =>
+      verifyAuthGuard(app, '/users/billing', 'get'));
+  });
+
   describe('/users/forgot-password (Post)', () => {
     it('gives 400 when the email is not set', () =>
       request(app.getHttpServer())

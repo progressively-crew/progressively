@@ -1,6 +1,3 @@
-import { Entity } from "~/components/Entity/Entity";
-import { EntityField } from "~/components/Entity/EntityField";
-import { VariantDot } from "../variants/components/VariantDot";
 import { SelectField } from "~/components/Fields/Select/SelectField";
 import { useState } from "react";
 import { MetricCard } from "../insights/components/MetricCard";
@@ -63,47 +60,6 @@ const VariantEntity = ({ mHit, allMetrics }: VariantEntityProps) => {
         onValueChange={(x) => setSelected(x)}
       />
     </MetricCard>
-  );
-
-  return (
-    <Entity
-      key={mHit.metric}
-      title={mHit.metric}
-      description={
-        mHit.variant ? (
-          <div className="flex flex-row gap-2 items-center">
-            <VariantDot variant={mHit.variant} />
-            <p>
-              Attached to variant <strong>{mHit.variant}</strong>
-            </p>
-          </div>
-        ) : (
-          "No variant attached"
-        )
-      }
-    >
-      <EntityField name="Hits" value={<strong>{mHit.count}</strong>} />
-      <EntityField
-        name={"Compare with"}
-        value={
-          <SelectField
-            hiddenLabel
-            name="compare-with"
-            label="Compare with other metric or variant entity"
-            defaultValue={"variant"}
-            options={compareWithOptions}
-            onValueChange={(x) => setSelected(x)}
-          />
-        }
-      />
-
-      <EntityField
-        name={`Ratio (hits/${
-          selected === "variant" ? "variant evals" : `${selected} hits`
-        })`}
-        value={<strong>{ratio}</strong>}
-      />
-    </Entity>
   );
 };
 

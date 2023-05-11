@@ -40,6 +40,9 @@ export const seedUsers = async (prismaClient: PrismaClient) => {
     },
   });
 
+  const trialEnd = new Date();
+  trialEnd.setDate(trialEnd.getDate() + 14);
+
   const jane = await prismaClient.user.create({
     data: {
       fullname: "Jane Doe",
@@ -47,6 +50,18 @@ export const seedUsers = async (prismaClient: PrismaClient) => {
       password: await CryptoService.hash("password"),
       activationToken: "2",
       status: "Active",
+      trialEnd,
+    },
+  });
+
+  const joe = await prismaClient.user.create({
+    data: {
+      fullname: "Joe Doe",
+      email: "joe.doe@gmail.com",
+      password: await CryptoService.hash("password"),
+      activationToken: "11",
+      status: "Active",
+      trialEnd,
     },
   });
 

@@ -44,9 +44,9 @@ describe("/dashboard", () => {
       });
     });
 
-    describe("user: Jane", () => {
+    describe("user: Joe", () => {
       beforeEach(() => {
-        cy.signIn("Jane");
+        cy.signIn("Joe");
         cy.visit("/dashboard");
       });
 

@@ -3,7 +3,7 @@ import {
   EnvCost,
   FlagEvaluationTenKCost,
   ProjectCost,
-} from "../../../shared/src/plans";
+} from "@progressively/shared";
 
 export const PricingCalculator = () => {
   const id = useId();

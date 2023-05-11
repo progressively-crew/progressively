@@ -189,10 +189,17 @@ describe('SdkController (e2e)', () => {
         'cross-origin',
       );
 
+      const txtResp = response.text;
+      const rawJson = txtResp.split('=')[1].split(';')[0];
+      const json = JSON.parse(rawJson);
+
+      expect(json).toEqual({
+        multivariate: false,
+        newFooter: false,
+        newHomepage: false,
+      });
       expect(response.status).toBe(200);
-      expect(response.text).toBe(
-        'window.progressivelyFlags={"multivariate":false,"newFooter":false,"newHomepage":false};',
-      );
+      expect(txtResp).toContain('window.progressivelyFlags=');
     });
   });
 

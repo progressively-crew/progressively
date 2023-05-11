@@ -1,23 +1,7 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 :root {
-  --primary: #4f46e5;
   --bg-slide: #e2e8f0;
   --color-slide-thumb: black;
 }
-
-/* Radio */
-
-.custom-radio:checked {
-  border: 1px solid var(--primary);
-}
-
-.custom-radio:checked::before {
-  background: var(--primary);
-}
-/* End ofRadio */
 
 /********** Range Input Styles **********/
 /*Range Reset*/

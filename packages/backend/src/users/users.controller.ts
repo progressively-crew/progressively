@@ -50,7 +50,26 @@ export class UsersController {
       email: user.email,
       fullname: user.fullname,
       uuid: user.uuid,
+      trialEnd: user.trialEnd,
     };
+  }
+
+  @ApiBearerAuth()
+  @Get('/billing')
+  @UseGuards(JwtAuthGuard)
+  async getBilling(@Request() req) {
+    const plans = await this.userService.getBillingInfo(req.user.uuid);
+    const user = await this.userService.findByUuid(req.user.uuid);
+    const activePlan = plans.shift();
+
+    let remainingTrialingDays = 0;
+
+    // trialEnd is only falsy when self-hosted. Should not happen on SaaS
+    if (user.trialEnd) {
+      remainingTrialingDays = user.trialEnd.getDate() - new Date().getDate();
+    }
+
+    return { plans, activePlan, remainingTrialingDays };
   }
 
   @ApiBearerAuth()
