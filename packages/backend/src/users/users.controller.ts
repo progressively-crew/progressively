@@ -18,13 +18,14 @@ import {
   ForgotPasswordDTO,
   ResetPasswordDTO,
   ChangePasswordDTO,
+  PlanSchema,
+  PlanCreateDTO,
 } from './users.dto';
 import { UsersService } from './users.service';
 import { MailService } from '../mail/mail.service';
 import {
   ChangeFullnameSchema,
   ChangePasswordSchema,
-  PlanSchema,
   ResetPasswordSchema,
 } from '../auth/types';
 import { ValidationPipe } from '../shared/pipes/ValidationPipe';
@@ -77,7 +78,14 @@ export class UsersController {
   @Post('/billing')
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(PlanSchema))
-  async addBillingPlan(@Request() req) {}
+  addBillingPlan(@Request() req, @Body() planDto: PlanCreateDTO) {
+    return this.userService.addPlan(
+      req.user.uuid,
+      planDto.projectCount,
+      planDto.envCount,
+      planDto.evalCount,
+    );
+  }
 
   @ApiBearerAuth()
   @Put('/me')

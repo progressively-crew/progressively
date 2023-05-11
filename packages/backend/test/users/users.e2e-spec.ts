@@ -139,18 +139,28 @@ describe('UsersController (e2e)', () => {
       });
     });
 
-    it('gives the current user billing details', async () => {
+    it(`creates a new valid plan`, async () => {
       const access_token = await authenticate(
         app,
         'jane.doe@gmail.com',
         'password',
       );
 
-      const { body } = await request(app.getHttpServer())
+      const { body, status } = await request(app.getHttpServer())
         .post('/users/billing')
+        .send({
+          projectCount: 2,
+          envCount: 3,
+          evalCount: 20000,
+        })
         .set('Authorization', `Bearer ${access_token}`);
 
-      expect(body).toMatchObject({});
+      expect(status).toBe(201);
+      expect(body).toMatchObject({
+        environmentCount: 3,
+        evaluationCount: 20000,
+        projectCount: 2,
+      });
     });
   });
 
