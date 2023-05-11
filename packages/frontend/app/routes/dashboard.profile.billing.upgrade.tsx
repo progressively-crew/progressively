@@ -1,4 +1,8 @@
-import { LoaderFunction, V2_MetaFunction } from "@remix-run/node";
+import {
+  ActionFunction,
+  LoaderFunction,
+  V2_MetaFunction,
+} from "@remix-run/node";
 import { Plan } from "~/modules/plans/types";
 import { getSession } from "~/sessions";
 import { getBillingInfo } from "~/modules/plans/services/getBillingInfo";
@@ -7,8 +11,11 @@ import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { Typography } from "~/components/Typography";
-import { useSearchParams } from "@remix-run/react";
+import { useActionData, useSearchParams } from "@remix-run/react";
 import { calculatePrice } from "@progressively/shared";
+import { addPlan } from "~/modules/plans/services/addPlan";
+import { SuccessBox } from "~/components/Boxes/SuccessBox";
+import { ErrorBox } from "~/components/Boxes/ErrorBox";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -35,8 +42,46 @@ export const loader: LoaderFunction = async ({
   return billingInfo;
 };
 
+export interface ActionData {
+  success: boolean;
+  errors?: {
+    backend?: string;
+  };
+}
+
+export const action: ActionFunction = async ({
+  request,
+}): Promise<ActionData> => {
+  const formData = await request.formData();
+  const session = await getSession(request.headers.get("Cookie"));
+  const accessToken = session.get("auth-cookie");
+
+  const projectCount = formData.get("projectCount");
+  const envCount = formData.get("envCount");
+  const evalCount = formData.get("evalCount");
+
+  try {
+    await addPlan(
+      Number(projectCount),
+      Number(envCount),
+      Number(evalCount),
+      accessToken
+    );
+
+    return { success: true };
+  } catch (error: any) {
+    return {
+      errors: {
+        backend: error.message,
+      },
+      success: false,
+    };
+  }
+};
+
 export default function UpgradeBillingPage() {
   const [searchParams] = useSearchParams();
+  const data = useActionData<ActionData>();
 
   const projectCount = searchParams.get("projectCount");
   const envCount = searchParams.get("envCount");
@@ -76,6 +121,15 @@ export default function UpgradeBillingPage() {
   return (
     <CreateEntityLayout
       titleSlot={<CreateEntityTitle>Plan update</CreateEntityTitle>}
+      status={
+        data?.success ? (
+          <SuccessBox id={"plan-add-success"}>
+            The plan has been successfully added
+          </SuccessBox>
+        ) : data?.errors ? (
+          <ErrorBox list={data?.errors} />
+        ) : null
+      }
       submitSlot={
         <SubmitButton
           type="submit"
