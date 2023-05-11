@@ -13,6 +13,7 @@ import { PricingCalculator } from "~/modules/plans/components/PricingCalculator"
 import { PlanHistory } from "~/modules/plans/components/PlanHistory";
 import { TipBox } from "~/components/Boxes/TipBox";
 import { Button } from "~/components/Buttons/Button";
+import { useIsSaas } from "~/modules/saas/contexts/useIsSaas";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -53,7 +54,10 @@ export default function ProfilePage() {
           <Section id="active-plan">
             <SectionHeader
               title={"Active plan"}
-              description="This is what you are actually paying per month. You can quickly adjust using the sliders below to fit your audience needs."
+              description={
+                activePlan &&
+                "This is what you are actually paying per month. You can quickly adjust using the sliders below to fit your audience needs."
+              }
             />
 
             {!activePlan && user.trialEnd && (
