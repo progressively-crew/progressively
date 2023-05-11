@@ -106,7 +106,8 @@ export default function UpgradeBillingPage() {
       </ul>
 
       <Typography>
-        For a total of <strong>€{total}</strong> per month.
+        For a total of <strong>€{total}</strong> per month. This amount is
+        billed immediately when you validate the update.
       </Typography>
     </CreateEntityLayout>
   );
