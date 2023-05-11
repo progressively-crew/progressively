@@ -24,6 +24,7 @@ import { MailService } from '../mail/mail.service';
 import {
   ChangeFullnameSchema,
   ChangePasswordSchema,
+  PlanSchema,
   ResetPasswordSchema,
 } from '../auth/types';
 import { ValidationPipe } from '../shared/pipes/ValidationPipe';
@@ -71,6 +72,12 @@ export class UsersController {
 
     return { plans, activePlan, remainingTrialingDays };
   }
+
+  @ApiBearerAuth()
+  @Post('/billing')
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(new ValidationPipe(PlanSchema))
+  async addBillingPlan(@Request() req) {}
 
   @ApiBearerAuth()
   @Put('/me')
