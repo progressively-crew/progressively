@@ -43,7 +43,7 @@ const PlanHistoryEntry = ({ plan }: PlanHistoryEntryProps) => {
 export const PlanHistory = ({ plans, activePlan }: PlanHistoryProps) => {
   return (
     <div>
-      <div className="bg-gray-100 my-2 border-l-4 border-gray-500">
+      <div className="bg-gray-100 my-2 border-l-4 border-gray-500 dark:bg-slate-700">
         <PlanHistoryEntry plan={activePlan} />
       </div>
 

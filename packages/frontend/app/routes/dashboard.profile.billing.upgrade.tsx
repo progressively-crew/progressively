@@ -140,7 +140,7 @@ export default function UpgradeBillingPage() {
         You are about to modify your plan to the following:
       </Typography>
 
-      <ul className="list-disc px-4 py-4">
+      <ul className="list-disc px-4 py-4 dark:text-white">
         <li>
           <strong>{projectCount}</strong> projects
         </li>
