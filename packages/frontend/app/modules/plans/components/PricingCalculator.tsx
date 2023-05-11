@@ -1,29 +1,26 @@
-import { useId, useState } from "react";
-import {
-  EnvCost,
-  FlagEvaluationTenKCost,
-  ProjectCost,
-} from "@progressively/shared";
+import { useId } from "react";
 import { Typography } from "~/components/Typography";
 import { Label } from "~/components/Fields/Label";
+import { calculatePrice } from "@progressively/shared";
 
 export interface PricingCalculatorProps {
-  initialProjectCount: number;
-  initialEnvCount: number;
-  initialEvaluationCount: number;
+  projectCount: number;
+  envCount: number;
+  evaluationCount: number;
+  onProjectCountChange: (n: number) => void;
+  onEnvCountChange: (n: number) => void;
+  onEvalCountChange: (n: number) => void;
 }
 
 export const PricingCalculator = ({
-  initialProjectCount,
-  initialEnvCount,
-  initialEvaluationCount,
+  projectCount,
+  envCount,
+  evaluationCount,
+  onProjectCountChange,
+  onEnvCountChange,
+  onEvalCountChange,
 }: PricingCalculatorProps) => {
   const id = useId();
-  const [projectValue, setProjectValue] = useState(initialProjectCount);
-  const [envValue, setEnvValue] = useState(initialEnvCount);
-  const [evaluationCount, setEvaluationCount] = useState(
-    initialEvaluationCount
-  );
 
   const projectSliderId = `project-${id}`;
   const envSliderId = `env-${id}`;
@@ -31,10 +28,7 @@ export const PricingCalculator = ({
 
   const labelClassName = "block pb-2 text-sm";
 
-  const total =
-    ProjectCost * projectValue +
-    EnvCost * envValue +
-    FlagEvaluationTenKCost * (evaluationCount / 10_000);
+  const total = calculatePrice(projectCount, envCount, evaluationCount);
 
   return (
     <div className="px-16">
@@ -54,7 +48,7 @@ export const PricingCalculator = ({
               Number of projects
             </Label>
             <Typography as="span" className="block font-bold text-4xl pb-4">
-              {projectValue}
+              {projectCount}
             </Typography>
             <input
               name="projectCount"
@@ -62,8 +56,8 @@ export const PricingCalculator = ({
               min={1}
               max={10}
               id={projectSliderId}
-              value={projectValue}
-              onChange={(e) => setProjectValue(Number(e.target.value))}
+              value={projectCount}
+              onChange={(e) => onProjectCountChange(Number(e.target.value))}
             />
           </div>
 
@@ -73,7 +67,7 @@ export const PricingCalculator = ({
             </Label>
 
             <Typography as="span" className="block font-bold text-4xl pb-4">
-              {envValue}
+              {envCount}
             </Typography>
 
             <input
@@ -82,8 +76,8 @@ export const PricingCalculator = ({
               min={1}
               max={10}
               id={envSliderId}
-              value={envValue}
-              onChange={(e) => setEnvValue(Number(e.target.value))}
+              value={envCount}
+              onChange={(e) => onEnvCountChange(Number(e.target.value))}
             />
           </div>
 
@@ -103,7 +97,7 @@ export const PricingCalculator = ({
               max={80_000}
               id={flagCountSliderId}
               value={evaluationCount}
-              onChange={(e) => setEvaluationCount(Number(e.target.value))}
+              onChange={(e) => onEvalCountChange(Number(e.target.value))}
             />
           </div>
         </div>

@@ -13,7 +13,7 @@ import { PricingCalculator } from "~/modules/plans/components/PricingCalculator"
 import { PlanHistory } from "~/modules/plans/components/PlanHistory";
 import { TipBox } from "~/components/Boxes/TipBox";
 import { Button } from "~/components/Buttons/Button";
-import { useIsSaas } from "~/modules/saas/contexts/useIsSaas";
+import { useState } from "react";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -45,18 +45,35 @@ export default function ProfilePage() {
   const { plans, activePlan, remainingTrialingDays } =
     useLoaderData<LoaderData>();
 
+  const [projectValue, setProjectValue] = useState(
+    activePlan?.projectCount || 1
+  );
+  const [envValue, setEnvValue] = useState(activePlan?.environmentCount || 1);
+  const [evaluationCount, setEvaluationCount] = useState(
+    activePlan?.evaluationCount || 10_000
+  );
+
   return (
     <DashboardLayout user={user} subNav={<UserMenu />}>
       <PageTitle value="Billing" />
 
-      <Card footer={<Button href="/">Adjust plan</Button>}>
+      <Card
+        footer={
+          <Button
+            href={`/dashboard/profile/billing/upgrade?projectCount=${projectValue}&envCount=${envValue}&evalCount=${evaluationCount}`}
+          >
+            {activePlan ? "Adjust plan" : "Use this plan"}
+          </Button>
+        }
+      >
         <CardContent>
           <Section id="active-plan">
             <SectionHeader
               title={"Active plan"}
               description={
-                activePlan &&
-                "This is what you are actually paying per month. You can quickly adjust using the sliders below to fit your audience needs."
+                activePlan
+                  ? "This is what you are actually paying per month. You can quickly adjust using the sliders below to fit your audience needs."
+                  : "You don't seem to have a subscription yet. Use the calculator below to subscribe with a plan that fits your needs."
               }
             />
 
@@ -73,9 +90,12 @@ export default function ProfilePage() {
 
             <div className="pt-8">
               <PricingCalculator
-                initialProjectCount={activePlan?.projectCount || 1}
-                initialEnvCount={activePlan?.environmentCount || 1}
-                initialEvaluationCount={activePlan?.evaluationCount || 10_000}
+                projectCount={projectValue}
+                envCount={envValue}
+                evaluationCount={evaluationCount}
+                onProjectCountChange={setProjectValue}
+                onEnvCountChange={setEnvValue}
+                onEvalCountChange={setEvaluationCount}
               />
             </div>
           </Section>
