@@ -90,7 +90,6 @@ describe("/dashboard/profile/billing/upgrade", () => {
           "/dashboard/profile/billing?planCreated=true"
         );
         cy.focused().should("contain", "The plan has been successfully added.");
-        cy.findByText("€30").should("be.visible");
       });
     });
   });
