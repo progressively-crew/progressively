@@ -1,12 +1,9 @@
-import { LoaderFunction, V2_MetaFunction } from "@remix-run/node";
+import { V2_MetaFunction } from "@remix-run/node";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { PageTitle } from "~/components/PageTitle";
 import { UserMenu } from "~/modules/user/components/UserMenu";
 import { useUser } from "~/modules/user/contexts/useUser";
-import { Plan } from "~/modules/plans/types";
-import { getSession } from "~/sessions";
-import { getBillingInfo } from "~/modules/plans/services/getBillingInfo";
-import { useLoaderData, useSearchParams } from "@remix-run/react";
+import { useSearchParams } from "@remix-run/react";
 import { Section, SectionHeader } from "~/components/Section";
 import { Card, CardContent } from "~/components/Card";
 import { PricingCalculator } from "~/modules/plans/components/PricingCalculator";
@@ -15,6 +12,7 @@ import { TipBox } from "~/components/Boxes/TipBox";
 import { Button } from "~/components/Buttons/Button";
 import { useState } from "react";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
+import { useBillingInfo } from "~/modules/plans/hooks/useBillingInfo";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -24,28 +22,10 @@ export const meta: V2_MetaFunction = () => {
   ];
 };
 
-interface LoaderData {
-  plans: Array<Plan>;
-  activePlan?: Plan;
-  remainingTrialingDays: number;
-}
-
-export const loader: LoaderFunction = async ({
-  request,
-}): Promise<LoaderData> => {
-  const session = await getSession(request.headers.get("Cookie"));
-  const authCookie = session.get("auth-cookie");
-
-  const billingInfo: LoaderData = await getBillingInfo(authCookie);
-
-  return billingInfo;
-};
-
 export default function BillingPage() {
   const { user } = useUser();
   const [searchParams] = useSearchParams();
-  const { plans, activePlan, remainingTrialingDays } =
-    useLoaderData<LoaderData>();
+  const { plans, activePlan, remainingTrialingDays } = useBillingInfo();
 
   const [projectValue, setProjectValue] = useState(
     activePlan?.projectCount || 1
