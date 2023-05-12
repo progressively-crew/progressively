@@ -12,7 +12,7 @@ export class ProjectsService {
     return this.prisma.flag.findMany({
       where: {
         flagEnvironment: {
-          every: {
+          some: {
             environment: {
               projectId,
             },
@@ -150,6 +150,18 @@ export class ProjectsService {
   }
 
   async deleteProject(projectId: string) {
+    const flagEnvs = await this.prisma.flagEnvironment.findMany({
+      where: {
+        environment: {
+          projectId,
+        },
+      },
+    });
+
+    const flagRemoveQueries = flagEnvs.map((flagEnv) =>
+      this.prisma.flag.delete({ where: { uuid: flagEnv.flagId } }),
+    );
+
     const deleteQueries = [
       this.prisma.webhook.deleteMany({
         where: {
@@ -254,6 +266,7 @@ export class ProjectsService {
           },
         },
       }),
+
       this.prisma.flagEnvironment.deleteMany({
         where: {
           environment: {
@@ -261,6 +274,7 @@ export class ProjectsService {
           },
         },
       }),
+      ...flagRemoveQueries,
       this.prisma.environment.deleteMany({
         where: {
           projectId,
@@ -280,7 +294,6 @@ export class ProjectsService {
     ];
 
     const result = await this.prisma.$transaction(deleteQueries);
-
     return result[result.length - 1];
   }
 
