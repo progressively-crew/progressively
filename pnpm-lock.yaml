@@ -441,7 +441,6 @@ importers:
       tailwindcss-animate: ^1.0.5
       timeago.js: ^4.0.2
       typescript: ^5.0.4
-      vitest: ^0.29.7
     dependencies:
       '@headlessui/react': 1.7.14_biqbaboplfbrettd7655fr4n2y
       '@okta/okta-auth-js': 7.2.0
@@ -487,7 +486,6 @@ importers:
       tailwindcss: 3.3.2
       tailwindcss-animate: 1.0.5_tailwindcss@3.3.2
       typescript: 5.0.4
-      vitest: 0.29.7
 
   packages/load-testing:
     specifiers:
