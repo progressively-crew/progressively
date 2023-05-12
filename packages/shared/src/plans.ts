@@ -1,1 +1,1 @@
-export const FlagEvaluationTenKCost = 5;
+export const FlagEvaluationTenKCost = 12;

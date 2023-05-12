@@ -452,7 +452,7 @@ const _page3 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   url: $$url$3
 }, Symbol.toStringTag, { value: 'Module' }));
 
-const FlagEvaluationTenKCost = 5;
+const FlagEvaluationTenKCost = 12;
 
 const PricingCalculator = () => {
   const id = useId();
