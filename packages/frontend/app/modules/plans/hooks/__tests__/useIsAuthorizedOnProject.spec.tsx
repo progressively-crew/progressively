@@ -90,5 +90,44 @@ describe("useIsAuthorizedOnProject", () => {
 
       expect(result.current).equal(false);
     });
+
+    describe("trial", () => {
+      it("returns true when the project is SaaS, remaining days of the trial is 4 there is no project yet", () => {
+        // No project, and has 1 slot available
+        projects = [];
+        billingInfo!.activePlan = undefined;
+        billingInfo.remainingTrialingDays = 4;
+
+        const wrapper = getWrapper();
+
+        const { result } = renderHook(() => useIsAuthorizedOnProject(), {
+          wrapper,
+        });
+
+        expect(result.current).equal(true);
+      });
+
+      it("returns false when the project is SaaS, remaining days of the trial is 4 but there is already a project", () => {
+        // No project, and has 1 slot available
+        projects = [
+          {
+            name: "Project",
+            createdAt: "",
+            uuid: "1",
+            environments: [],
+          },
+        ];
+        billingInfo!.activePlan = undefined;
+        billingInfo.remainingTrialingDays = 4;
+
+        const wrapper = getWrapper();
+
+        const { result } = renderHook(() => useIsAuthorizedOnProject(), {
+          wrapper,
+        });
+
+        expect(result.current).equal(false);
+      });
+    });
   });
 });
