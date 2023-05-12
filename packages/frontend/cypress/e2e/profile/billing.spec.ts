@@ -28,12 +28,7 @@ describe("/dashboard/profile/billing", () => {
         cy.title().should("eq", "Progressively | Profile | Billing");
 
         cy.findByText("Passed plans").should("not.exist");
-        cy.findByText("€11").should("be.visible");
-        cy.findByLabelText("Number of projects").should("have.value", 1);
-        cy.findByLabelText("Number of environments/project").should(
-          "have.value",
-          1
-        );
+
         cy.findByLabelText("Flag evaluations/month").should(
           "have.value",
           10_000
@@ -56,12 +51,7 @@ describe("/dashboard/profile/billing", () => {
           "This is what you are actually paying per month. You can quickly adjust using the sliders below to fit your audience needs."
         ).should("be.visible");
         cy.findByText("Passed plans").should("be.visible");
-        cy.findByText("€22").should("be.visible");
-        cy.findByLabelText("Number of projects").should("have.value", 2);
-        cy.findByLabelText("Number of environments/project").should(
-          "have.value",
-          2
-        );
+
         cy.findByLabelText("Flag evaluations/month").should(
           "have.value",
           20_000

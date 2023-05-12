@@ -1,13 +1,5 @@
-import { EnvCost, FlagEvaluationTenKCost, ProjectCost } from "./plans";
+import { FlagEvaluationTenKCost } from "./plans";
 
-export const calculatePrice = (
-  projectCount: number,
-  envCount: number,
-  evaluationCount: number
-) => {
-  return (
-    ProjectCost * projectCount +
-    EnvCost * envCount +
-    FlagEvaluationTenKCost * (evaluationCount / 10_000)
-  );
+export const calculatePrice = (evaluationCount: number) => {
+  return FlagEvaluationTenKCost * (evaluationCount / 10_000);
 };

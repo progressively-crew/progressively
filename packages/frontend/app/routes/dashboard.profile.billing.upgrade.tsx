@@ -53,17 +53,10 @@ export const action: ActionFunction = async ({ request }) => {
   const session = await getSession(request.headers.get("Cookie"));
   const accessToken = session.get("auth-cookie");
 
-  const projectCount = formData.get("projectCount");
-  const envCount = formData.get("envCount");
   const evalCount = formData.get("evalCount");
 
   try {
-    await addPlan(
-      Number(projectCount),
-      Number(envCount),
-      Number(evalCount),
-      accessToken
-    );
+    await addPlan(Number(evalCount), accessToken);
 
     return redirect("/dashboard/profile/billing?planCreated=true");
   } catch (error: any) {
@@ -79,11 +72,9 @@ export default function UpgradeBillingPage() {
   const [searchParams] = useSearchParams();
   const data = useActionData<ActionData>();
 
-  const projectCount = searchParams.get("projectCount");
-  const envCount = searchParams.get("envCount");
   const evalCount = searchParams.get("evalCount");
 
-  if (!projectCount || !envCount || !evalCount) {
+  if (!evalCount) {
     return (
       <main>
         <Typography as="h1">
@@ -93,15 +84,9 @@ export default function UpgradeBillingPage() {
     );
   }
 
-  const castedProjectCount = Number(projectCount);
-  const castedEnvCount = Number(envCount);
   const castedEvalCount = Number(evalCount);
 
-  if (
-    Number.isNaN(castedProjectCount) ||
-    Number.isNaN(castedEnvCount) ||
-    Number.isNaN(castedEvalCount)
-  ) {
+  if (Number.isNaN(castedEvalCount)) {
     return (
       <main>
         <Typography as="h1">
@@ -112,11 +97,7 @@ export default function UpgradeBillingPage() {
     );
   }
 
-  const total = calculatePrice(
-    Number(projectCount),
-    Number(envCount),
-    Number(evalCount)
-  );
+  const total = calculatePrice(Number(evalCount));
 
   return (
     <CreateEntityLayout
@@ -124,8 +105,6 @@ export default function UpgradeBillingPage() {
       status={data?.errors ? <ErrorBox list={data?.errors} /> : null}
       submitSlot={
         <Form method="post">
-          <input type="hidden" name="projectCount" value={projectCount} />
-          <input type="hidden" name="envCount" value={envCount} />
           <input type="hidden" name="evalCount" value={evalCount} />
           <SubmitButton
             type="submit"
@@ -145,12 +124,6 @@ export default function UpgradeBillingPage() {
       </Typography>
 
       <ul className="list-disc px-4 py-4 dark:text-white">
-        <li>
-          <strong>{projectCount}</strong> projects
-        </li>
-        <li>
-          <strong>{envCount}</strong> environments per project
-        </li>
         <li>
           <strong>{evalCount}</strong> flag evaluations
         </li>

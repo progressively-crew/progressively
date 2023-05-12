@@ -1,14 +1,9 @@
 import { Constants } from "~/constants";
 
-export const addPlan = (
-  projectCount: number,
-  envCount: number,
-  evalCount: number,
-  accessToken: string
-) =>
+export const addPlan = (evalCount: number, accessToken: string) =>
   fetch(`${Constants.BackendUrl}/users/billing`, {
     method: "POST",
-    body: JSON.stringify({ projectCount, envCount, evalCount }),
+    body: JSON.stringify({ evalCount }),
     headers: {
       Authorization: `Bearer ${accessToken}`,
       "Content-Type": "application/json",
