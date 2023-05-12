@@ -1,6 +1,5 @@
 import { useId } from "react";
 import { Typography } from "~/components/Typography";
-import { Label } from "~/components/Fields/Label";
 import { calculatePrice } from "@progressively/shared";
 
 export interface PricingCalculatorProps {
