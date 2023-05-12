@@ -452,21 +452,15 @@ const _page3 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   url: $$url$3
 }, Symbol.toStringTag, { value: 'Module' }));
 
-const ProjectCost = 3;
-const EnvCost = 3;
 const FlagEvaluationTenKCost = 5;
 
 const PricingCalculator = () => {
   const id = useId();
-  const [projectValue, setProjectValue] = useState(1);
-  const [envValue, setEnvValue] = useState(1);
   const [evaluationCount, setEvaluationCount] = useState(1e4);
-  const projectSliderId = `project-${id}`;
-  const envSliderId = `env-${id}`;
   const flagCountSliderId = `flagcount-${id}`;
   const labelClassName = "block pb-2";
   const innerLabelClassName = "text-slate-500 font semibold";
-  const total = ProjectCost * projectValue + EnvCost * envValue + FlagEvaluationTenKCost * (evaluationCount / 1e4);
+  const total = FlagEvaluationTenKCost * (evaluationCount / 1e4);
   return /* @__PURE__ */ jsxs("div", {
     className: "bg-white rounded-lg drop-shadow-lg overflow-hidden",
     children: [/* @__PURE__ */ jsxs("div", {
@@ -481,49 +475,9 @@ const PricingCalculator = () => {
           className: "text-4xl text-slate-500",
           children: "/month"
         })]
-      }), /* @__PURE__ */ jsxs("div", {
+      }), /* @__PURE__ */ jsx("div", {
         className: "grid grid-cols-1 lg:grid-cols-3 gap-16",
-        children: [/* @__PURE__ */ jsxs("div", {
-          children: [/* @__PURE__ */ jsxs("label", {
-            htmlFor: projectSliderId,
-            className: labelClassName,
-            children: [/* @__PURE__ */ jsx("span", {
-              className: innerLabelClassName,
-              children: "Number of projects"
-            }), /* @__PURE__ */ jsx("span", {
-              className: "block font-bold text-4xl",
-              children: projectValue
-            })]
-          }), /* @__PURE__ */ jsx("input", {
-            name: "projectCount",
-            type: "range",
-            min: 1,
-            max: 10,
-            id: projectSliderId,
-            value: projectValue,
-            onChange: (e) => setProjectValue(Number(e.target.value))
-          })]
-        }), /* @__PURE__ */ jsxs("div", {
-          children: [/* @__PURE__ */ jsxs("label", {
-            htmlFor: envSliderId,
-            className: labelClassName,
-            children: [/* @__PURE__ */ jsx("span", {
-              className: innerLabelClassName,
-              children: "Number of environments/project"
-            }), /* @__PURE__ */ jsx("span", {
-              className: "block font-bold text-4xl",
-              children: envValue
-            })]
-          }), /* @__PURE__ */ jsx("input", {
-            name: "envCount",
-            type: "range",
-            min: 1,
-            max: 10,
-            id: envSliderId,
-            value: envValue,
-            onChange: (e) => setEnvValue(Number(e.target.value))
-          })]
-        }), /* @__PURE__ */ jsxs("div", {
+        children: /* @__PURE__ */ jsxs("div", {
           children: [/* @__PURE__ */ jsxs("label", {
             htmlFor: flagCountSliderId,
             className: labelClassName,
@@ -544,23 +498,15 @@ const PricingCalculator = () => {
             value: evaluationCount,
             onChange: (e) => setEvaluationCount(Number(e.target.value))
           })]
-        })]
+        })
       })]
-    }), /* @__PURE__ */ jsxs("div", {
+    }), /* @__PURE__ */ jsx("div", {
       className: "flex flex-row py-8 bg-slate-100 px-16 justify-between",
-      children: [/* @__PURE__ */ jsxs("div", {
-        children: ["Price of 1 project: ", /* @__PURE__ */ jsxs("strong", {
-          children: ["€", ProjectCost, "/mo"]
-        })]
-      }), /* @__PURE__ */ jsxs("div", {
-        children: ["Price of 1 environment: ", /* @__PURE__ */ jsxs("strong", {
-          children: ["€", EnvCost, "/mo"]
-        })]
-      }), /* @__PURE__ */ jsxs("div", {
+      children: /* @__PURE__ */ jsxs("div", {
         children: ["Price of 10000 flag evaluation:", /* @__PURE__ */ jsxs("strong", {
           children: ["€", FlagEvaluationTenKCost, "/mo"]
         })]
-      })]
+      })
     })]
   });
 };

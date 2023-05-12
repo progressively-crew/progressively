@@ -27,10 +27,6 @@ export default function BillingPage() {
   const [searchParams] = useSearchParams();
   const { plans, activePlan, remainingTrialingDays } = useBillingInfo();
 
-  const [projectValue, setProjectValue] = useState(
-    activePlan?.projectCount || 1
-  );
-  const [envValue, setEnvValue] = useState(activePlan?.environmentCount || 1);
   const [evaluationCount, setEvaluationCount] = useState(
     activePlan?.evaluationCount || 10_000
   );
@@ -54,7 +50,7 @@ export default function BillingPage() {
       <Card
         footer={
           <Button
-            href={`/dashboard/profile/billing/upgrade?projectCount=${projectValue}&envCount=${envValue}&evalCount=${evaluationCount}`}
+            href={`/dashboard/profile/billing/upgrade?evalCount=${evaluationCount}`}
           >
             {activePlan ? "Adjust plan" : "Use this plan"}
           </Button>
@@ -84,11 +80,7 @@ export default function BillingPage() {
 
             <div className="pt-8">
               <PricingCalculator
-                projectCount={projectValue}
-                envCount={envValue}
                 evaluationCount={evaluationCount}
-                onProjectCountChange={setProjectValue}
-                onEnvCountChange={setEnvValue}
                 onEvalCountChange={setEvaluationCount}
               />
             </div>

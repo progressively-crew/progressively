@@ -57,16 +57,12 @@ describe('UsersController (e2e)', () => {
 
       expect(body).toMatchObject({
         activePlan: {
-          environmentCount: 2,
           evaluationCount: 20000,
-          projectCount: 2,
           uuid: '2',
         },
         plans: [
           {
-            environmentCount: 1,
             evaluationCount: 10000,
-            projectCount: 1,
             uuid: '1',
           },
         ],
@@ -82,44 +78,6 @@ describe('UsersController (e2e)', () => {
     it('gives a 401 when the token is invalid', () =>
       verifyAuthGuard(app, '/users/billing', 'post'));
 
-    [-1, 11, 1000].forEach((projectCount) => {
-      it(`gives a 400 when the project count is ${projectCount} (invalid)`, async () => {
-        const access_token = await authenticate(
-          app,
-          'jane.doe@gmail.com',
-          'password',
-        );
-
-        return request(app.getHttpServer())
-          .post('/users/billing')
-          .send({
-            projectCount,
-            envCount: 2,
-            evalCount: 10000,
-          })
-          .set('Authorization', `Bearer ${access_token}`);
-      });
-    });
-
-    [-1, 11, 1000].forEach((envCount) => {
-      it(`gives a 400 when the env count is ${envCount} (invalid)`, async () => {
-        const access_token = await authenticate(
-          app,
-          'jane.doe@gmail.com',
-          'password',
-        );
-
-        return request(app.getHttpServer())
-          .post('/users/billing')
-          .send({
-            projectCount: 2,
-            envCount,
-            evalCount: 10000,
-          })
-          .set('Authorization', `Bearer ${access_token}`);
-      });
-    });
-
     [-1, 90000, 43000].forEach((evalCount) => {
       it(`gives a 400 when the eval count is ${evalCount} (invalid)`, async () => {
         const access_token = await authenticate(
@@ -131,8 +89,6 @@ describe('UsersController (e2e)', () => {
         return request(app.getHttpServer())
           .post('/users/billing')
           .send({
-            projectCount: 2,
-            envCount: 2,
             evalCount,
           })
           .set('Authorization', `Bearer ${access_token}`);
@@ -149,17 +105,13 @@ describe('UsersController (e2e)', () => {
       const { body, status } = await request(app.getHttpServer())
         .post('/users/billing')
         .send({
-          projectCount: 2,
-          envCount: 3,
           evalCount: 20000,
         })
         .set('Authorization', `Bearer ${access_token}`);
 
       expect(status).toBe(201);
       expect(body).toMatchObject({
-        environmentCount: 3,
         evaluationCount: 20000,
-        projectCount: 2,
       });
     });
   });

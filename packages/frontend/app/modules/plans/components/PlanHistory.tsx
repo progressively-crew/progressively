@@ -25,14 +25,6 @@ const PlanHistoryEntry = ({ plan }: PlanHistoryEntryProps) => {
   return (
     <Entity title={`Plan started the ${formatted}`}>
       <EntityField
-        name="Number of projects"
-        value={<strong>{plan.projectCount}</strong>}
-      />
-      <EntityField
-        name="Number of environments/project"
-        value={<strong>{plan.environmentCount}</strong>}
-      />
-      <EntityField
         name="Flag evaluations/month"
         value={<strong>{plan.evaluationCount}</strong>}
       />

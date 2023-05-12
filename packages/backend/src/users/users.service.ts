@@ -197,14 +197,11 @@ export class UsersService {
 
   addPlan(
     userId: string,
-    projectCount: number,
-    environmentCount: number,
+
     evaluationCount: number,
   ) {
     return this.prisma.plan.create({
       data: {
-        projectCount,
-        environmentCount,
         evaluationCount,
         userUuid: userId,
       },

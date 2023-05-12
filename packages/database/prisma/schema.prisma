@@ -37,13 +37,11 @@ model User {
 }
 
 model Plan {
-  uuid             String   @id @default(uuid())
-  projectCount     Int
-  environmentCount Int
-  evaluationCount  Int
-  createdAt        DateTime @default(now())
-  User             User?    @relation(fields: [userUuid], references: [uuid])
-  userUuid         String?
+  uuid            String   @id @default(uuid())
+  evaluationCount Int
+  createdAt       DateTime @default(now())
+  User            User?    @relation(fields: [userUuid], references: [uuid])
+  userUuid        String?
 }
 
 model Project {
