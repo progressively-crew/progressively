@@ -1,6 +1,9 @@
 import { LoaderFunction } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
 import { authGuard } from "~/modules/auth/services/auth-guard";
+import { BillingProvider } from "~/modules/plans/context/BillingProvider";
+import { getBillingInfo } from "~/modules/plans/services/getBillingInfo";
+import { BillingInfo } from "~/modules/plans/types";
 import { ProjectsProvider } from "~/modules/projects/contexts/ProjectsProvider";
 import { getProjects } from "~/modules/projects/services/getProjects";
 import { Project } from "~/modules/projects/types";
@@ -13,6 +16,7 @@ interface LoaderData {
   user: User;
   projects: Array<Project>;
   isSaas: boolean;
+  billingInfo: BillingInfo;
 }
 
 export const handle = {
@@ -33,20 +37,28 @@ export const loader: LoaderFunction = async ({
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
   const projects = await getProjects(authCookie);
+  const billingInfo: BillingInfo = await getBillingInfo(authCookie);
 
-  return { user, projects, isSaas: process.env.IS_SAAS === "true" };
+  return {
+    user,
+    projects,
+    isSaas: process.env.IS_SAAS === "true",
+    billingInfo,
+  };
 };
 
 export default function DashboardLayout() {
-  const { user, projects, isSaas } = useLoaderData<LoaderData>();
+  const { user, projects, isSaas, billingInfo } = useLoaderData<LoaderData>();
 
   return (
-    <IsSaasProvider isSaas={isSaas}>
-      <ProjectsProvider projects={projects}>
-        <UserProvider user={user}>
-          <Outlet />
-        </UserProvider>
-      </ProjectsProvider>
-    </IsSaasProvider>
+    <BillingProvider billingInfo={billingInfo}>
+      <IsSaasProvider isSaas={isSaas}>
+        <ProjectsProvider projects={projects}>
+          <UserProvider user={user}>
+            <Outlet />
+          </UserProvider>
+        </ProjectsProvider>
+      </IsSaasProvider>
+    </BillingProvider>
   );
 }
