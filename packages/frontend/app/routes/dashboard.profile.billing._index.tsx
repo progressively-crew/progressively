@@ -64,7 +64,7 @@ export default function BillingPage() {
       status={
         isSuccessPlanCreate ? (
           <SuccessBox id={"plan-add-success"}>
-            The plan has been successfully added
+            The plan has been successfully added.
           </SuccessBox>
         ) : null
       }
