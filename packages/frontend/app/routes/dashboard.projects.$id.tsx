@@ -3,7 +3,7 @@ import { Outlet, useLoaderData } from "@remix-run/react";
 import { ProjectIcon } from "~/components/Icons/ProjectIcon";
 import { ProjectProvider } from "~/modules/projects/contexts/ProjectProvider";
 import { getProject } from "~/modules/projects/services/getProject";
-import { Project, UserProject } from "~/modules/projects/types";
+import { Project, UserProject, UserRoles } from "~/modules/projects/types";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { getSession } from "~/sessions";
 
@@ -54,7 +54,10 @@ export default function ProjectIdLayout() {
   );
 
   return (
-    <ProjectProvider project={project} userRole={userProject?.role}>
+    <ProjectProvider
+      project={project}
+      userRole={userProject?.role || UserRoles.User}
+    >
       <Outlet />
     </ProjectProvider>
   );
