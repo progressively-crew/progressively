@@ -24,5 +24,10 @@ export const useIsAuthorizedOnEnv = () => {
     );
   }
 
+  // Saas trialing
+  if (billingInfo.remainingTrialingDays > 0) {
+    return project.environments.length < 2;
+  }
+
   return false;
 };

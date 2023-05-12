@@ -85,5 +85,73 @@ describe("useIsAuthorizedOnEnv", () => {
 
       expect(result.current).equal(true);
     });
+
+    describe("trial", () => {
+      it("returns true when the project is SaaS, remaining days of the trial is 4 there is no env yet on the project", () => {
+        project.environments = [];
+        billingInfo!.activePlan = undefined;
+        billingInfo.remainingTrialingDays = 4;
+
+        const wrapper = getWrapper(UserRoles.Admin);
+
+        const { result } = renderHook(() => useIsAuthorizedOnEnv(), {
+          wrapper,
+        });
+
+        expect(result.current).equal(true);
+      });
+
+      it("returns true when the project is SaaS, remaining days of the trial is 4 and there is 1 env out of 2", () => {
+        // No project, and has 1 slot available
+        project.environments = [
+          {
+            name: "Production",
+            clientKey: "abcd",
+            uuid: "1",
+            projectId: "1",
+          },
+        ];
+
+        billingInfo!.activePlan = undefined;
+        billingInfo.remainingTrialingDays = 4;
+
+        const wrapper = getWrapper(UserRoles.Admin);
+
+        const { result } = renderHook(() => useIsAuthorizedOnEnv(), {
+          wrapper,
+        });
+
+        expect(result.current).equal(true);
+      });
+
+      it("returns false when the project is SaaS, remaining days of the trial is 4 but there is already 2 envs", () => {
+        // No project, and has 1 slot available
+        project.environments = [
+          {
+            name: "Production",
+            clientKey: "abcd",
+            uuid: "1",
+            projectId: "1",
+          },
+          {
+            name: "Development",
+            clientKey: "abcde",
+            uuid: "2",
+            projectId: "1",
+          },
+        ];
+
+        billingInfo!.activePlan = undefined;
+        billingInfo.remainingTrialingDays = 4;
+
+        const wrapper = getWrapper(UserRoles.Admin);
+
+        const { result } = renderHook(() => useIsAuthorizedOnEnv(), {
+          wrapper,
+        });
+
+        expect(result.current).equal(false);
+      });
+    });
   });
 });
