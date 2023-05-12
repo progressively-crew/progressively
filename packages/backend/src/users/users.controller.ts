@@ -18,6 +18,8 @@ import {
   ForgotPasswordDTO,
   ResetPasswordDTO,
   ChangePasswordDTO,
+  PlanSchema,
+  PlanCreateDTO,
 } from './users.dto';
 import { UsersService } from './users.service';
 import { MailService } from '../mail/mail.service';
@@ -70,6 +72,21 @@ export class UsersController {
     }
 
     return { plans, activePlan, remainingTrialingDays };
+  }
+
+  @ApiBearerAuth()
+  @Post('/billing')
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(new ValidationPipe(PlanSchema))
+  addBillingPlan(@Request() req, @Body() planDto: PlanCreateDTO) {
+    if (process.env.IS_SAAS !== 'true') return {};
+
+    return this.userService.addPlan(
+      req.user.uuid,
+      planDto.projectCount,
+      planDto.envCount,
+      planDto.evalCount,
+    );
   }
 
   @ApiBearerAuth()

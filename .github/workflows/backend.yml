@@ -9,6 +9,8 @@ on:
 
 jobs:
   integration-test:
+    env:
+      IS_SAAS: true
     runs-on: ubuntu-latest
     strategy:
       matrix:

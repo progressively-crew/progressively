@@ -6,14 +6,15 @@ import { useUser } from "~/modules/user/contexts/useUser";
 import { Plan } from "~/modules/plans/types";
 import { getSession } from "~/sessions";
 import { getBillingInfo } from "~/modules/plans/services/getBillingInfo";
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { Section, SectionHeader } from "~/components/Section";
 import { Card, CardContent } from "~/components/Card";
 import { PricingCalculator } from "~/modules/plans/components/PricingCalculator";
 import { PlanHistory } from "~/modules/plans/components/PlanHistory";
 import { TipBox } from "~/components/Boxes/TipBox";
 import { Button } from "~/components/Buttons/Button";
-import { useIsSaas } from "~/modules/saas/contexts/useIsSaas";
+import { useState } from "react";
+import { SuccessBox } from "~/components/Boxes/SuccessBox";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -40,23 +41,53 @@ export const loader: LoaderFunction = async ({
   return billingInfo;
 };
 
-export default function ProfilePage() {
+export default function BillingPage() {
   const { user } = useUser();
+  const [searchParams] = useSearchParams();
   const { plans, activePlan, remainingTrialingDays } =
     useLoaderData<LoaderData>();
 
+  const [projectValue, setProjectValue] = useState(
+    activePlan?.projectCount || 1
+  );
+  const [envValue, setEnvValue] = useState(activePlan?.environmentCount || 1);
+  const [evaluationCount, setEvaluationCount] = useState(
+    activePlan?.evaluationCount || 10_000
+  );
+
+  const isSuccessPlanCreate = searchParams.get("planCreated");
+
   return (
-    <DashboardLayout user={user} subNav={<UserMenu />}>
+    <DashboardLayout
+      user={user}
+      subNav={<UserMenu />}
+      status={
+        isSuccessPlanCreate ? (
+          <SuccessBox id={"plan-add-success"}>
+            The plan has been successfully added
+          </SuccessBox>
+        ) : null
+      }
+    >
       <PageTitle value="Billing" />
 
-      <Card footer={<Button href="/">Adjust plan</Button>}>
+      <Card
+        footer={
+          <Button
+            href={`/dashboard/profile/billing/upgrade?projectCount=${projectValue}&envCount=${envValue}&evalCount=${evaluationCount}`}
+          >
+            {activePlan ? "Adjust plan" : "Use this plan"}
+          </Button>
+        }
+      >
         <CardContent>
           <Section id="active-plan">
             <SectionHeader
               title={"Active plan"}
               description={
-                activePlan &&
-                "This is what you are actually paying per month. You can quickly adjust using the sliders below to fit your audience needs."
+                activePlan
+                  ? "This is what you are actually paying per month. You can quickly adjust using the sliders below to fit your audience needs."
+                  : "You don't seem to have a subscription yet. Use the calculator below to subscribe with a plan that fits your needs."
               }
             />
 
@@ -73,16 +104,19 @@ export default function ProfilePage() {
 
             <div className="pt-8">
               <PricingCalculator
-                initialProjectCount={activePlan?.projectCount || 1}
-                initialEnvCount={activePlan?.environmentCount || 1}
-                initialEvaluationCount={activePlan?.evaluationCount || 10_000}
+                projectCount={projectValue}
+                envCount={envValue}
+                evaluationCount={evaluationCount}
+                onProjectCountChange={setProjectValue}
+                onEnvCountChange={setEnvValue}
+                onEvalCountChange={setEvaluationCount}
               />
             </div>
           </Section>
         </CardContent>
       </Card>
 
-      {plans.length > 0 && (
+      {activePlan && (
         <Card>
           <CardContent>
             <Section id="passed-plan">
@@ -91,7 +125,7 @@ export default function ProfilePage() {
                 description="These are the plans you used to subscribe to in the past."
               />
 
-              <PlanHistory plans={plans} />
+              <PlanHistory plans={plans} activePlan={activePlan} />
             </Section>
           </CardContent>
         </Card>
