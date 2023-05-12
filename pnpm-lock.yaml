@@ -415,6 +415,7 @@ importers:
       '@remix-run/serve': ^1.15.0
       '@testing-library/cypress': ^9.0.0
       '@testing-library/react': ^14.0.0
+      '@testing-library/react-hooks': ^8.0.1
       '@types/react': ^18.2.0
       '@types/react-dom': ^18.2.1
       '@typescript-eslint/eslint-plugin': ^5.59.1
@@ -440,6 +441,7 @@ importers:
       tailwindcss-animate: ^1.0.5
       timeago.js: ^4.0.2
       typescript: ^5.0.4
+      vitest: ^0.29.7
     dependencies:
       '@headlessui/react': 1.7.14_biqbaboplfbrettd7655fr4n2y
       '@okta/okta-auth-js': 7.2.0
@@ -466,6 +468,7 @@ importers:
       '@remix-run/dev': 1.15.0_@remix-run+serve@1.15.0
       '@testing-library/cypress': 9.0.0_cypress@12.11.0
       '@testing-library/react': 14.0.0_biqbaboplfbrettd7655fr4n2y
+      '@testing-library/react-hooks': 8.0.1_cis5wmpl6sllca25ejrqakjpau
       '@types/react': 18.2.0
       '@types/react-dom': 18.2.1
       '@typescript-eslint/eslint-plugin': 5.59.1_2utyh6gct5glvuz6qwradubqqa
@@ -484,6 +487,7 @@ importers:
       tailwindcss: 3.3.2
       tailwindcss-animate: 1.0.5_tailwindcss@3.3.2
       typescript: 5.0.4
+      vitest: 0.29.7
 
   packages/load-testing:
     specifiers:
@@ -6731,6 +6735,29 @@ packages:
       redent: 3.0.0
     dev: true
 
+  /@testing-library/react-hooks/8.0.1_cis5wmpl6sllca25ejrqakjpau:
+    resolution: {integrity: sha512-Aqhl2IVmLt8IovEVarNDFuJDVWVvhnr9/GCU6UUnrYXwgDFF9h2L2o2P9KBni1AST5sT6riAyoukFLyjQUgD/g==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      '@types/react': ^16.9.0 || ^17.0.0
+      react: ^16.9.0 || ^17.0.0
+      react-dom: ^16.9.0 || ^17.0.0
+      react-test-renderer: ^16.9.0 || ^17.0.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      react-dom:
+        optional: true
+      react-test-renderer:
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.20.13
+      '@types/react': 18.2.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-error-boundary: 3.1.4_react@18.2.0
+    dev: true
+
   /@testing-library/react/13.4.0_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-sXOGON+WNTh3MLE9rve97ftaZukN3oNf2KjDy7YTx6hcTO2uuLHuCGynMDhFwGw/jYf4OJ2Qk0i4i79qMNNkyw==}
     engines: {node: '>=12'}
@@ -8222,7 +8249,7 @@ packages:
       lodash: 4.17.21
       mlly: 1.1.0
       outdent: 0.8.0
-      vite: 4.1.4
+      vite: 4.3.3
       vite-node: 0.28.5
     transitivePeerDependencies:
       - '@types/node'
@@ -21316,6 +21343,16 @@ packages:
       react: 18.2.0
       scheduler: 0.23.0
 
+  /react-error-boundary/3.1.4_react@18.2.0:
+    resolution: {integrity: sha512-uM9uPzZJTF6wRQORmSrvOIgt4lJ9MC1sNgEOj2XGsDTRE4kmpWxg7ENK9EWNKJRMAOY9z0MuF4yIfl6gp4sotA==}
+    engines: {node: '>=10', npm: '>=6'}
+    peerDependencies:
+      react: '>=16.13.1'
+    dependencies:
+      '@babel/runtime': 7.20.13
+      react: 18.2.0
+    dev: true
+
   /react-error-overlay/6.0.11:
     resolution: {integrity: sha512-/6UZ2qgEyH2aqzYZgQPxEnz33NJ2gNsnHA2o5+o4wW9bLM/JYQitNP9xPhsXwC08hMMovfGe/8retsdDsczPRg==}
     dev: false
@@ -22475,7 +22512,6 @@ packages:
     hasBin: true
     optionalDependencies:
       fsevents: 2.3.2
-    dev: false
 
   /run-async/2.4.1:
     resolution: {integrity: sha512-tvVnVv01b8c1RrA6Ep7JkStj85Guv/YrMcwqYQnwjsAS2cTmmPGBBjAjpCW7RrSodNSoE2/qg9O4bceNvUuDgQ==}
@@ -25199,7 +25235,7 @@ packages:
       picocolors: 1.0.0
       source-map: 0.6.1
       source-map-support: 0.5.21
-      vite: 4.1.4
+      vite: 4.3.3
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -25220,7 +25256,7 @@ packages:
       mlly: 1.1.0
       pathe: 1.1.0
       picocolors: 1.0.0
-      vite: 4.1.4_@types+node@18.16.1
+      vite: 4.3.3_@types+node@18.16.1
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -25345,40 +25381,6 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vite/4.1.4_@types+node@18.16.1:
-    resolution: {integrity: sha512-3knk/HsbSTKEin43zHu7jTwYWv81f8kgAL99G5NWBcA1LKvtvcVAC4JjBH1arBunO9kQka+1oGbrMKOjk4ZrBg==}
-    engines: {node: ^14.18.0 || >=16.0.0}
-    hasBin: true
-    peerDependencies:
-      '@types/node': '>= 14'
-      less: '*'
-      sass: '*'
-      stylus: '*'
-      sugarss: '*'
-      terser: ^5.4.0
-    peerDependenciesMeta:
-      '@types/node':
-        optional: true
-      less:
-        optional: true
-      sass:
-        optional: true
-      stylus:
-        optional: true
-      sugarss:
-        optional: true
-      terser:
-        optional: true
-    dependencies:
-      '@types/node': 18.16.1
-      esbuild: 0.16.17
-      postcss: 8.4.21
-      resolve: 1.22.1
-      rollup: 3.15.0
-    optionalDependencies:
-      fsevents: 2.3.2
-    dev: true
-
   /vite/4.3.3:
     resolution: {integrity: sha512-MwFlLBO4udZXd+VBcezo3u8mC77YQk+ik+fbc0GZWGgzfbPP+8Kf0fldhARqvSYmtIWoAJ5BXPClUbMTlqFxrA==}
     engines: {node: ^14.18.0 || >=16.0.0}
@@ -25409,7 +25411,39 @@ packages:
       rollup: 3.21.0
     optionalDependencies:
       fsevents: 2.3.2
-    dev: false
+
+  /vite/4.3.3_@types+node@18.16.1:
+    resolution: {integrity: sha512-MwFlLBO4udZXd+VBcezo3u8mC77YQk+ik+fbc0GZWGgzfbPP+8Kf0fldhARqvSYmtIWoAJ5BXPClUbMTlqFxrA==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+    hasBin: true
+    peerDependencies:
+      '@types/node': '>= 14'
+      less: '*'
+      sass: '*'
+      stylus: '*'
+      sugarss: '*'
+      terser: ^5.4.0
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      less:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
+    dependencies:
+      '@types/node': 18.16.1
+      esbuild: 0.17.6
+      postcss: 8.4.23
+      rollup: 3.21.0
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: true
 
   /vitefu/0.2.4_vite@3.2.5:
     resolution: {integrity: sha512-fanAXjSaf9xXtOOeno8wZXIhgia+CZury481LsDaV++lSvcU2R9Ch2bPh3PYFyoHW+w9LqAeYRISVQjUIew14g==}
@@ -25493,7 +25527,7 @@ packages:
       tinybench: 2.4.0
       tinypool: 0.4.0
       tinyspy: 1.1.1
-      vite: 4.1.4_@types+node@18.16.1
+      vite: 4.3.3_@types+node@18.16.1
       vite-node: 0.29.7_@types+node@18.16.1
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
