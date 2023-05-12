@@ -34,10 +34,7 @@ export const PricingCalculator = ({
       <div>
         <label htmlFor={flagCountSliderId} className={labelClassName}>
           <Typography as="span" className={innerLabelClassName}>
-            Flag evaluations/month*
-          </Typography>
-          <Typography as="span" className="block font-bold text-4xl">
-            {evaluationCount}
+            Flag evaluations/month
           </Typography>
         </label>
         <input
