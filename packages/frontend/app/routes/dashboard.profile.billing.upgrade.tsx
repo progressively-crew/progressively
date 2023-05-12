@@ -85,9 +85,11 @@ export default function UpgradeBillingPage() {
 
   if (!projectCount || !envCount || !evalCount) {
     return (
-      <Typography>
-        One of the mandatory information is missing. Please, retry the action.
-      </Typography>
+      <main>
+        <Typography as="h1">
+          One of the mandatory information is missing. Please, retry the action.
+        </Typography>
+      </main>
     );
   }
 
@@ -101,10 +103,12 @@ export default function UpgradeBillingPage() {
     Number.isNaN(castedEvalCount)
   ) {
     return (
-      <Typography>
-        One of the information is not of a valid formatting. Please, try the
-        action.
-      </Typography>
+      <main>
+        <Typography as="h1">
+          One of the information is not of a valid formatting. Please, try the
+          action.
+        </Typography>
+      </main>
     );
   }
 
