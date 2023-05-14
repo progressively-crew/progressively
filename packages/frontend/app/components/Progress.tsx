@@ -21,9 +21,9 @@ export const Progress = ({ max, value, label }: ProgressProps) => {
 
       <div className="flex flex-row gap-2 items-center">
         <div role="progressbar" aria-labelledby={id} aria-valuenow={value}>
-          <div className="relative h-6 overflow-hidden rounded bg-gradient-to-r from-green-500 to-red-500 w-[300px]">
+          <div className="relative h-6 overflow-hidden rounded bg-gradient-to-r from-green-400 to-red-400 w-[300px]">
             <div
-              className="h-full bg-gray-200 absolute right-0"
+              className="h-full bg-gray-200 dark:bg-slate-800 absolute right-0"
               style={{
                 width: `${percentageWidth}%`,
               }}

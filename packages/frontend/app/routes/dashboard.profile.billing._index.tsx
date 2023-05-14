@@ -70,8 +70,8 @@ export default function BillingPage() {
               title={isTrialing ? "Upgrading from trial" : "Active plan"}
               description={
                 isTrialing
-                  ? "This is what you are actually paying per month. You can quickly adjust using the sliders below to fit your audience needs."
-                  : "You don't seem to have a subscription yet. Use the calculator below to subscribe with a plan that fits your needs."
+                  ? "You don't seem to have a subscription yet. Use the calculator below to subscribe with a plan that fits your needs."
+                  : "This is what you are actually paying per month. You can quickly adjust using the sliders below to fit your audience needs."
               }
             />
 
