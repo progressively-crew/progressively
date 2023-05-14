@@ -44,7 +44,7 @@ describe('UsersController (e2e)', () => {
   });
 
   describe('/users/billing (Get)', () => {
-    it('gives the current user billing details', async () => {
+    it('gives the current user billing details (jane)', async () => {
       const access_token = await authenticate(
         app,
         'jane.doe@gmail.com',
@@ -67,6 +67,21 @@ describe('UsersController (e2e)', () => {
           },
         ],
         remainingTrialingDays: 14,
+        hitsForMonth: 19,
+      });
+    });
+
+    it('gives the current user billing details (marvin)', async () => {
+      const access_token = await authenticate(app);
+
+      const { body } = await request(app.getHttpServer())
+        .get('/users/billing')
+        .set('Authorization', `Bearer ${access_token}`);
+
+      expect(body).toMatchObject({
+        plans: [],
+        remainingTrialingDays: 0,
+        hitsForMonth: 0,
       });
     });
 
