@@ -13,6 +13,7 @@ import { Button } from "~/components/Buttons/Button";
 import { useState } from "react";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { useBillingInfo } from "~/modules/plans/hooks/useBillingInfo";
+import { Progress } from "~/components/Progress";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -25,7 +26,8 @@ export const meta: V2_MetaFunction = () => {
 export default function BillingPage() {
   const { user } = useUser();
   const [searchParams] = useSearchParams();
-  const { plans, activePlan, remainingTrialingDays } = useBillingInfo();
+  const { plans, activePlan, remainingTrialingDays, hitsForMonth } =
+    useBillingInfo();
 
   const [evaluationCount, setEvaluationCount] = useState(
     activePlan?.evaluationCount || 10_000
@@ -46,6 +48,11 @@ export default function BillingPage() {
       }
     >
       <PageTitle value="Billing" />
+      <Progress
+        max={activePlan?.evaluationCount || 1000}
+        value={hitsForMonth}
+        label={"Evaluation count this month"}
+      />
 
       <Card
         footer={
@@ -87,7 +94,6 @@ export default function BillingPage() {
           </Section>
         </CardContent>
       </Card>
-
       {activePlan && (
         <Card>
           <CardContent>
