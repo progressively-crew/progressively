@@ -34,6 +34,7 @@ export default function BillingPage() {
   );
 
   const isSuccessPlanCreate = searchParams.get("planCreated");
+  const isTrialing = Boolean(!activePlan && user.trialEnd);
 
   return (
     <DashboardLayout
@@ -66,15 +67,15 @@ export default function BillingPage() {
         <CardContent>
           <Section id="active-plan">
             <SectionHeader
-              title={"Active plan"}
+              title={isTrialing ? "Upgrading from trial" : "Active plan"}
               description={
-                activePlan
+                isTrialing
                   ? "This is what you are actually paying per month. You can quickly adjust using the sliders below to fit your audience needs."
                   : "You don't seem to have a subscription yet. Use the calculator below to subscribe with a plan that fits your needs."
               }
             />
 
-            {!activePlan && user.trialEnd && (
+            {isTrialing && (
               <div className="pt-4">
                 <TipBox title={"You are in a trialing period"}>
                   After{" "}
@@ -85,7 +86,7 @@ export default function BillingPage() {
               </div>
             )}
 
-            <div className="pt-8">
+            <div className="pt-8 pb-6">
               <PricingCalculator
                 evaluationCount={evaluationCount}
                 onEvalCountChange={setEvaluationCount}
@@ -94,6 +95,7 @@ export default function BillingPage() {
           </Section>
         </CardContent>
       </Card>
+
       {activePlan && (
         <Card>
           <CardContent>
