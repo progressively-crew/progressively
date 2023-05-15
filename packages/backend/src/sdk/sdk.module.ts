@@ -10,6 +10,7 @@ import { DatabaseModule } from '../database/database.module';
 import { SchedulingModule } from '../scheduling/scheduling.module';
 import { RuleModule } from '../rule/rule.module';
 import { SegmentsModule } from '../segments/segments.module';
+import { UsersModule } from '../users/users.module';
 
 @Module({
   controllers: [SdkController],
@@ -22,6 +23,7 @@ import { SegmentsModule } from '../segments/segments.module';
     RuleModule,
     SegmentsModule,
     RuleModule,
+    UsersModule,
   ],
   providers: [SdkService],
 })

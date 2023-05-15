@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { FlagEvaluationLimitTrial } from '@progressively/shared';
 import { PrismaService } from '../database/prisma.service';
 import { CryptoService } from '../crypto/crypto.service';
 import { v4 as uuidv4 } from 'uuid';
@@ -229,6 +230,65 @@ export class UsersService {
             },
           },
         },
+      },
+    });
+  }
+
+  async isPlanValid(clientKey: string) {
+    const projectOwner = await this.getProjectOwnerFromEnvClientKey(clientKey);
+    if (!projectOwner) return false;
+
+    const flagHits = await this.getHitsForEnv(clientKey);
+    const lastPlan = projectOwner?.allPlanSubscribed?.[0];
+
+    // Subscriber
+    if (lastPlan) {
+      return flagHits < lastPlan.evaluationCount;
+    }
+
+    // trialing
+    return flagHits < FlagEvaluationLimitTrial;
+  }
+
+  getHitsForEnv(environmentKey: string) {
+    const start = new Date();
+    start.setDate(1);
+
+    const end = new Date(start.getFullYear(), start.getMonth() + 1, 0);
+
+    return this.prisma.flagHit.count({
+      where: {
+        date: {
+          lte: end,
+          gte: start,
+        },
+        flagEnvironment: {
+          environment: {
+            clientKey: environmentKey,
+          },
+        },
+      },
+    });
+  }
+
+  getProjectOwnerFromEnvClientKey(clientKey: string) {
+    return this.prisma.user.findFirst({
+      where: {
+        userProject: {
+          some: {
+            role: UserRoles.Admin,
+            project: {
+              environments: {
+                some: {
+                  clientKey,
+                },
+              },
+            },
+          },
+        },
+      },
+      include: {
+        allPlanSubscribed: { orderBy: { createdAt: 'desc' }, take: 1 },
       },
     });
   }
