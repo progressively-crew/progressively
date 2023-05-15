@@ -47,6 +47,11 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ./.github/actions/monorepo-setup
 
+      - name: Install cypress
+        working-directory: ./packages/frontend
+        shell: bash
+        run: npx cypress install
+
       - name: Start the frontend project
         working-directory: ./packages/frontend
         shell: bash
