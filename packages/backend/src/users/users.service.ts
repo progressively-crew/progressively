@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { User } from './types';
 import { UserStatus } from './status';
 import { AuthProviders } from '../auth/types';
+import { UserRoles } from './roles';
 
 @Injectable()
 export class UsersService {
@@ -195,15 +196,39 @@ export class UsersService {
     });
   }
 
-  addPlan(
-    userId: string,
-
-    evaluationCount: number,
-  ) {
+  addPlan(userId: string, evaluationCount: number) {
     return this.prisma.plan.create({
       data: {
         evaluationCount,
         userUuid: userId,
+      },
+    });
+  }
+
+  getHitsForMonth(userId: string, d: Date) {
+    const start = new Date();
+    start.setDate(1);
+
+    const end = new Date(start.getFullYear(), start.getMonth() + 1, 0);
+
+    return this.prisma.flagHit.count({
+      where: {
+        date: {
+          lte: end,
+          gte: start,
+        },
+        flagEnvironment: {
+          environment: {
+            project: {
+              userProject: {
+                some: {
+                  userId,
+                  role: UserRoles.Admin,
+                },
+              },
+            },
+          },
+        },
       },
     });
   }

@@ -60,8 +60,14 @@ export class UsersController {
   @Get('/billing')
   @UseGuards(JwtAuthGuard)
   async getBilling(@Request() req) {
-    const plans = await this.userService.getBillingInfo(req.user.uuid);
-    const user = await this.userService.findByUuid(req.user.uuid);
+    const userId = req.user.uuid;
+    const plans = await this.userService.getBillingInfo(userId);
+    const user = await this.userService.findByUuid(userId);
+    const hitsForMonth = await this.userService.getHitsForMonth(
+      userId,
+      new Date(),
+    );
+
     const activePlan = plans.shift();
 
     let remainingTrialingDays = 0;
@@ -71,7 +77,7 @@ export class UsersController {
       remainingTrialingDays = user.trialEnd.getDate() - new Date().getDate();
     }
 
-    return { plans, activePlan, remainingTrialingDays };
+    return { plans, activePlan, remainingTrialingDays, hitsForMonth };
   }
 
   @ApiBearerAuth()

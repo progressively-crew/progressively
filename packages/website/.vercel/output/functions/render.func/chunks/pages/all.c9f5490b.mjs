@@ -462,51 +462,37 @@ const PricingCalculator = () => {
   const innerLabelClassName = "text-slate-500 font semibold";
   const total = FlagEvaluationTenKCost * (evaluationCount / 1e4);
   return /* @__PURE__ */ jsxs("div", {
-    className: "bg-white rounded-lg drop-shadow-lg overflow-hidden",
     children: [/* @__PURE__ */ jsxs("div", {
-      className: "px-16 pt-16 pb-8 ",
-      children: [/* @__PURE__ */ jsxs("div", {
-        "aria-live": "polite",
-        className: "text-center pb-16",
-        children: [/* @__PURE__ */ jsxs("strong", {
-          className: "text-7xl",
-          children: ["€", total]
-        }), /* @__PURE__ */ jsx("span", {
-          className: "text-4xl text-slate-500",
-          children: "/month"
-        })]
-      }), /* @__PURE__ */ jsx("div", {
-        className: "grid grid-cols-1 lg:grid-cols-3 gap-16",
-        children: /* @__PURE__ */ jsxs("div", {
-          children: [/* @__PURE__ */ jsxs("label", {
-            htmlFor: flagCountSliderId,
-            className: labelClassName,
-            children: [/* @__PURE__ */ jsx("span", {
-              className: innerLabelClassName,
-              children: "Flag evaluations/month*"
-            }), /* @__PURE__ */ jsx("span", {
-              className: "block font-bold text-4xl",
-              children: evaluationCount
-            })]
-          }), /* @__PURE__ */ jsx("input", {
-            name: "evaluationCount",
-            type: "range",
-            min: 1e4,
-            step: 1e4,
-            max: 8e4,
-            id: flagCountSliderId,
-            value: evaluationCount,
-            onChange: (e) => setEvaluationCount(Number(e.target.value))
-          })]
-        })
+      "aria-live": "polite",
+      className: "text-center pb-16",
+      children: [/* @__PURE__ */ jsxs("strong", {
+        className: "text-7xl",
+        children: ["€", total]
+      }), /* @__PURE__ */ jsx("span", {
+        className: "text-4xl text-slate-500",
+        children: "/month"
       })]
-    }), /* @__PURE__ */ jsx("div", {
-      className: "flex flex-row py-8 bg-slate-100 px-16 justify-between",
-      children: /* @__PURE__ */ jsxs("div", {
-        children: ["Price of 10000 flag evaluation:", /* @__PURE__ */ jsxs("strong", {
-          children: ["€", FlagEvaluationTenKCost, "/mo"]
+    }), /* @__PURE__ */ jsxs("div", {
+      children: [/* @__PURE__ */ jsxs("label", {
+        htmlFor: flagCountSliderId,
+        className: labelClassName,
+        children: [/* @__PURE__ */ jsx("span", {
+          className: innerLabelClassName,
+          children: "Flag evaluations/month*"
+        }), /* @__PURE__ */ jsx("span", {
+          className: "block font-bold text-4xl",
+          children: evaluationCount
         })]
-      })
+      }), /* @__PURE__ */ jsx("input", {
+        name: "evaluationCount",
+        type: "range",
+        min: 1e4,
+        step: 1e4,
+        max: 8e4,
+        id: flagCountSliderId,
+        value: evaluationCount,
+        onChange: (e) => setEvaluationCount(Number(e.target.value))
+      })]
     })]
   });
 };
@@ -533,7 +519,7 @@ const $$Pricing = createComponent(async ($$result, $$props, $$slots) => {
   const trialUrl = `${frontendUrl}/register`;
   return renderTemplate`${renderComponent($$result, "Layout", $$Layout, { "title": "Pricing plans of Progressively" }, { "default": ($$result2) => renderTemplate`
   ${renderComponent($$result2, "Container", $$Container, {}, { "default": ($$result3) => renderTemplate`
-    ${maybeRenderHead($$result3)}<header class="flex flex-col pt-20 md:pt-40 pb-12 gap-4">
+    ${maybeRenderHead($$result3)}<header class="flex flex-col pt-20 md:pt-40 pb-12 gap-4 text-center items-center justify-center">
       <h1 class="text-5xl md:text-6xl font-extrabold">Pricing</h1>
       <p class="text-2xl leading-relaxed max-w-4xl">
         The product is at an early pricing discovery stage. The pricing will
@@ -545,15 +531,19 @@ const $$Pricing = createComponent(async ($$result, $$props, $$slots) => {
     </header>
 
     <main>
-      ${renderComponent($$result3, "PricingCalculator", PricingCalculator, { "client:load": true, "client:component-hydration": "load", "client:component-path": "/Users/marvin/soft/progressively/packages/website/src/components/PricingCalculator", "client:component-export": "PricingCalculator" })}
+      <div class="bg-white rounded-lg drop-shadow-lg overflow-hidden px-32 py-20 max-w-4xl mx-auto">
+        ${renderComponent($$result3, "PricingCalculator", PricingCalculator, { "client:load": true, "client:component-hydration": "load", "client:component-path": "/Users/marvin/soft/progressively/packages/website/src/components/PricingCalculator", "client:component-export": "PricingCalculator" })}
+      </div>
 
-      <div class="text-center pt-8 pb-12">
+      <div class="text-center pt-4 pb-20">
         ${renderComponent($$result3, "LinkButton", $$LinkButton, { "href": trialUrl }, { "default": ($$result4) => renderTemplate`Start your free trial` })}
       </div>
 
       <div class="pb-12">
-        <h2 class="font-extrabold text-4xl md:text-5xl pb-4">FAQ</h2>
-        <div class="flex flex-col gap-4">
+        <h2 class="font-extrabold text-4xl md:text-5xl pb-4 text-center">
+          FAQ
+        </h2>
+        <div class="flex flex-col gap-4 mx-auto max-w-4xl">
           ${renderComponent($$result3, "Faq", $$Faq, { "title": "What happens when the flag evaluation is reached?" }, { "default": ($$result4) => renderTemplate`
             When the flag evaluation limit is reached, the users will receive
             the flag has deactivated until the next month or an upgrade of your

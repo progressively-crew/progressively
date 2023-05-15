@@ -17,11 +17,8 @@ export const PricingCalculator = ({
 
   const total = calculatePrice(evaluationCount);
 
-  const labelClassName = "block pb-2";
-  const innerLabelClassName = "text-slate-500 font semibold";
-
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-2xl mx-auto">
       <div aria-live="polite" className="text-center pb-16">
         <Typography as="strong" className="text-7xl">
           €{total}
@@ -32,11 +29,15 @@ export const PricingCalculator = ({
       </div>
 
       <div>
-        <label htmlFor={flagCountSliderId} className={labelClassName}>
-          <Typography as="span" className={innerLabelClassName}>
+        <label htmlFor={flagCountSliderId} className={"block pb-2"}>
+          <Typography as="span" className={"text-slate-500 font semibold"}>
             Flag evaluations/month
           </Typography>
         </label>
+
+        <Typography className="text-4xl font-bold pb-4">
+          {evaluationCount}
+        </Typography>
         <input
           name="evaluationCount"
           type="range"

@@ -8,4 +8,5 @@ export interface BillingInfo {
   plans: Array<Plan>;
   activePlan?: Plan;
   remainingTrialingDays: number;
+  hitsForMonth: number;
 }
