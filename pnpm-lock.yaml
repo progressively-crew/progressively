@@ -17,7 +17,7 @@ importers:
     specifiers:
       '@astrojs/node': ^2.0.2
       '@astrojs/react': ^1.2.1
-      '@progressively/playwright-helpers': workspace:1.0.0
+      '@progressively/playwright-helpers': workspace:*
       '@progressively/react': workspace:*
       '@progressively/server-side': workspace:*
       '@types/react': ^18.0.28
@@ -69,7 +69,7 @@ importers:
 
   example/cra:
     specifiers:
-      '@progressively/playwright-helpers': workspace:1.0.0
+      '@progressively/playwright-helpers': workspace:*
       '@progressively/react': workspace:*
       react: ^18.1.0
       react-dom: ^18.1.0
@@ -130,7 +130,7 @@ importers:
 
   example/php:
     specifiers:
-      '@progressively/playwright-helpers': workspace:1.0.0
+      '@progressively/playwright-helpers': workspace:*
       typescript: ^4.7.4
     dependencies:
       '@progressively/playwright-helpers': link:../playwright-helpers

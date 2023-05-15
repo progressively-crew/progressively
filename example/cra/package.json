@@ -11,7 +11,7 @@
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
-    "@progressively/playwright-helpers": "workspace:1.0.0"
+    "@progressively/playwright-helpers": "workspace:*"
   },
   "scripts": {
     "start": "react-scripts start",
