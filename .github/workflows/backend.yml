@@ -55,7 +55,7 @@ jobs:
 
       - name: Build
         shell: bash
-        run: pnpm run build --filter backend
+        run: pnpm run build
 
       - name: Prepare the DB
         shell: bash
