@@ -14,29 +14,46 @@ import { Response, Request } from 'express';
 import { SdkService } from './sdk.service';
 import { EventHit } from './types';
 import { parseBase64Params, prepareCookie, resolveUserId } from './utils';
+import { UsersService } from '../users/users.service';
 
 export const COOKIE_KEY = 'progressively-id';
 
 @Controller('sdk')
 export class SdkController {
-  constructor(private readonly sdkService: SdkService) {}
+  constructor(
+    private readonly sdkService: SdkService,
+    private readonly userService: UsersService,
+  ) {}
 
   /**
    * Get the flag values by client sdk key
    */
   @Get('/:params')
-  getByClientKey(
+  async getByClientKey(
     @Param('params') base64Params: string,
     @Res({ passthrough: true }) response: Response,
     @Req() request: Request,
     @Headers() headers,
   ) {
+    const isSaas = process.env.IS_SAAS === 'true';
     const fields = parseBase64Params(base64Params);
+
+    const clientKey = String(fields.clientKey);
     const cookieUserId = request?.cookies?.[COOKIE_KEY];
     const shouldSkipHits = headers['x-progressively-hit'] === 'skip';
 
     fields.id = resolveUserId(fields, cookieUserId);
     prepareCookie(response, fields.id);
+
+    if (isSaas) {
+      const isPlanValid = await this.userService.isPlanValid(clientKey);
+
+      if (isPlanValid) {
+        return this.sdkService.computeFlags(fields, shouldSkipHits);
+      }
+
+      return {};
+    }
 
     return this.sdkService.computeFlags(fields, shouldSkipHits);
   }
