@@ -8,12 +8,6 @@
 <div align="center">
  <a href="https://progressively.app/" target="_blank" rel="noopener noreferrer">https://progressively.app/</a>
 </div>
-<div align="center">
-<br/>
-   <a href="https://volta.net/progressively-crew/progressively">
-      <img src="https://user-images.githubusercontent.com/3874873/220923114-c6ddad19-0c19-4b20-a2e4-d3b12e640f85.svg" alt="Volta board" height="40px">
-   </a>
-</div>
 
 ## Get started
 
