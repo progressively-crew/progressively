@@ -236,8 +236,10 @@ export class UsersService {
 
   async isPlanValid(clientKey: string) {
     const projectOwner = await this.getProjectOwnerFromEnvClientKey(clientKey);
+    if (!projectOwner) return false;
+
     const flagHits = await this.getHitsForEnv(clientKey);
-    const lastPlan = projectOwner.allPlanSubscribed[0];
+    const lastPlan = projectOwner?.allPlanSubscribed?.[0];
 
     // Subscriber
     if (lastPlan) {
