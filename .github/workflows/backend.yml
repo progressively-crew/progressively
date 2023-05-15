@@ -51,7 +51,7 @@ jobs:
 
       - name: Install dependencies
         shell: bash
-        run: pnpm install
+        run: pnpm run setup
 
       - name: Build
         shell: bash
