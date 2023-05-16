@@ -47,7 +47,7 @@ export const ErrorBox = ({ list }: ErrorBoxProps) => {
       </figure>
 
       <Link
-        to={location.pathname}
+        to={location}
         className="text-xl rounded bg-transparent hover:bg-red-200 active:bg-red-300 flex items-center justify-center w-6 h-6"
         preventScrollReset={true}
       >

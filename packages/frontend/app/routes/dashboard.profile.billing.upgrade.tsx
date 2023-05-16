@@ -14,7 +14,6 @@ import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { Typography } from "~/components/Typography";
 import { Form, useActionData, useSearchParams } from "@remix-run/react";
 import { calculatePrice } from "@progressively/shared";
-import { addPlan } from "~/modules/plans/services/addPlan";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { checkout } from "~/modules/billing/services/checkout";
 
@@ -58,9 +57,14 @@ export const action: ActionFunction = async ({ request }) => {
 
   try {
     const mapOfEvalCount: Record<number, string> = {
-      10_000: "price_1N8H6aIIMJ2kplmTANQm2vZn",
-      20_000: "price_1N8H8yIIMJ2kplmTbsURY1GH",
-      30_000: "price_1N8H8RIIMJ2kplmT4BRJYYUN",
+      10_000: "price_1N8LrcIIMJ2kplmT99wSIcVE",
+      20_000: "price_1N8LrcIIMJ2kplmT99wSIcVE",
+      30_000: "price_1N8LrcIIMJ2kplmT99wSIcVE",
+      40_000: "",
+      50_000: "",
+      60_000: "",
+      70_000: "",
+      80_000: "",
     };
 
     const priceId = evalCount
@@ -68,12 +72,12 @@ export const action: ActionFunction = async ({ request }) => {
       : undefined;
 
     if (priceId) {
-      await checkout(priceId, accessToken);
+      const { sessionUrl } = await checkout(priceId, accessToken);
+
+      return redirect(sessionUrl);
     }
 
     // await addPlan(Number(evalCount), accessToken);
-
-    return redirect("/dashboard/profile/billing?planCreated=true");
   } catch (error: any) {
     return {
       errors: {
@@ -119,7 +123,7 @@ export default function UpgradeBillingPage() {
       titleSlot={<CreateEntityTitle>Plan update</CreateEntityTitle>}
       status={data?.errors ? <ErrorBox list={data?.errors} /> : null}
       submitSlot={
-        <Form method="post">
+        <Form method="post" replace>
           <input type="hidden" name="evalCount" value={evalCount} />
           <SubmitButton
             type="submit"

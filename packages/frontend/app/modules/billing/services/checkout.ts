@@ -8,4 +8,10 @@ export const checkout = (priceId: string, accessToken: string) =>
       Authorization: `Bearer ${accessToken}`,
       "Content-Type": "application/json",
     },
-  }).then((res) => res.json());
+  }).then((res) => {
+    if (!res.ok) {
+      throw new Error("Woops! Something went wrong in the server.");
+    }
+
+    return res.json();
+  });
