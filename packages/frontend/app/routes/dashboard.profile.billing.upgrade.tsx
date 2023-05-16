@@ -16,6 +16,7 @@ import { Form, useActionData, useSearchParams } from "@remix-run/react";
 import { calculatePrice } from "@progressively/shared";
 import { addPlan } from "~/modules/plans/services/addPlan";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
+import { checkout } from "~/modules/billing/services/checkout";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -56,7 +57,21 @@ export const action: ActionFunction = async ({ request }) => {
   const evalCount = formData.get("evalCount");
 
   try {
-    await addPlan(Number(evalCount), accessToken);
+    const mapOfEvalCount: Record<number, string> = {
+      10_000: "price_1N8H6aIIMJ2kplmTANQm2vZn",
+      20_000: "price_1N8H8yIIMJ2kplmTbsURY1GH",
+      30_000: "price_1N8H8RIIMJ2kplmT4BRJYYUN",
+    };
+
+    const priceId = evalCount
+      ? mapOfEvalCount[Number(evalCount.toString())]
+      : undefined;
+
+    if (priceId) {
+      await checkout(priceId, accessToken);
+    }
+
+    // await addPlan(Number(evalCount), accessToken);
 
     return redirect("/dashboard/profile/billing?planCreated=true");
   } catch (error: any) {
