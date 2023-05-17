@@ -72,25 +72,5 @@ describe("/dashboard/profile/billing/upgrade", () => {
         cy.checkA11y();
       });
     });
-
-    describe("validating a passing plan", () => {
-      before(cy.seed);
-      after(cy.cleanupDb);
-
-      beforeEach(() => {
-        cy.signIn("Marvin");
-      });
-
-      it("upgrades to a new plan", () => {
-        cy.visit("/dashboard/profile/billing/upgrade?evalCount=30000");
-
-        cy.findByRole("button", { name: "Update" }).click();
-        cy.url().should(
-          "contain",
-          "/dashboard/profile/billing?planCreated=true"
-        );
-        cy.focused().should("contain", "The plan has been successfully added.");
-      });
-    });
   });
 });

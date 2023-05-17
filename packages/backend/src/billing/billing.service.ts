@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { UsersService } from '../users/users.service';
 import Stripe from 'stripe';
-
 import { PrismaService } from '../database/prisma.service';
 import { PriceIdToEvaluation } from '@progressively/shared';
 
@@ -97,7 +95,6 @@ export class BillingService {
           stripeInvoiceId,
         },
       }),
-
       this.prisma.plan.create({
         data: {
           evaluationCount,

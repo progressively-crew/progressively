@@ -8,16 +8,22 @@ import {
   Req,
   RawBodyRequest,
   Request,
+  Inject,
+  Logger,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
 import { ValidationPipe } from '../shared/pipes/ValidationPipe';
 import { CheckoutCreationDTO, CheckoutCreationSchema } from './types';
 import { BillingService } from './billing.service';
 import { UserRetrieveDTO } from '../users/users.dto';
+import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 
 @Controller('')
 export class BillingController {
-  constructor(private readonly billingService: BillingService) {}
+  constructor(
+    private readonly billingService: BillingService,
+    @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
+  ) {}
 
   @Post('/checkout')
   @UseGuards(JwtAuthGuard)
@@ -79,6 +85,12 @@ export class BillingController {
         // Unhandled event type
       }
     } catch (err) {
+      this.logger.error({
+        error: err.message,
+        level: 'error',
+        context: 'Stripe',
+      });
+
       return new BadRequestException();
     }
   }

@@ -33,7 +33,7 @@ export default function BillingPage() {
     activePlan?.evaluationCount || 10_000
   );
 
-  const isSuccessPlanCreate = searchParams.get("planCreated");
+  const isSuccessPlanCreate = searchParams.get("success") === "true";
   const isTrialing = Boolean(!activePlan && user.trialEnd);
 
   return (
@@ -43,7 +43,8 @@ export default function BillingPage() {
       status={
         isSuccessPlanCreate ? (
           <SuccessBox id={"plan-add-success"}>
-            The plan has been successfully added.
+            The plan has been successfully added. It may take a few minutes to
+            be processed.
           </SuccessBox>
         ) : null
       }
