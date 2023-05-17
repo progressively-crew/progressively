@@ -34,6 +34,22 @@ model User {
   ActivityLog         ActivityLog[]
   trialEnd            DateTime?
   allPlanSubscribed   Plan[]
+  StripeUser          StripeUser[]
+}
+
+model StripeUser {
+  customerId String @id
+  user       User   @relation(fields: [userUuid], references: [uuid])
+  userUuid   String
+}
+
+model StripeTransaction {
+  uuid             String @id @default(uuid())
+  customerId       String
+  sessionId        String
+  stripedCreatedAt Int
+  stripeInvoiceId  String
+  subscriptionId   String
 }
 
 model Plan {
@@ -42,6 +58,7 @@ model Plan {
   createdAt       DateTime @default(now())
   User            User?    @relation(fields: [userUuid], references: [uuid])
   userUuid        String?
+  status          String   @default("INACTIVE") // see status types in billing
 }
 
 model Project {

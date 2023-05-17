@@ -30,6 +30,7 @@ import {
 } from '../auth/types';
 import { ValidationPipe } from '../shared/pipes/ValidationPipe';
 import { sleep } from '../shared/utils/sleep';
+import { PlanStatus } from '../billing/types';
 
 @Controller('users')
 export class UsersController {
@@ -61,14 +62,16 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   async getBilling(@Request() req) {
     const userId = req.user.uuid;
-    const plans = await this.userService.getBillingInfo(userId);
+    const plans = await this.userService.getPlans(userId, PlanStatus.INACTIVE);
+    const activePlans = await this.userService.getPlans(
+      userId,
+      PlanStatus.ACTIVE,
+    );
     const user = await this.userService.findByUuid(userId);
     const hitsForMonth = await this.userService.getHitsForMonth(
       userId,
       new Date(),
     );
-
-    const activePlan = plans.shift();
 
     let remainingTrialingDays = 0;
 
@@ -77,17 +80,12 @@ export class UsersController {
       remainingTrialingDays = user.trialEnd.getDate() - new Date().getDate();
     }
 
-    return { plans, activePlan, remainingTrialingDays, hitsForMonth };
-  }
-
-  @ApiBearerAuth()
-  @Post('/billing')
-  @UseGuards(JwtAuthGuard)
-  @UsePipes(new ValidationPipe(PlanSchema))
-  addBillingPlan(@Request() req, @Body() planDto: PlanCreateDTO) {
-    if (process.env.IS_SAAS !== 'true') return {};
-
-    return this.userService.addPlan(req.user.uuid, planDto.evalCount);
+    return {
+      plans,
+      activePlan: activePlans[0],
+      remainingTrialingDays,
+      hitsForMonth,
+    };
   }
 
   @ApiBearerAuth()

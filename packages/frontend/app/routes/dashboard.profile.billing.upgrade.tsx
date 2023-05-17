@@ -13,9 +13,9 @@ import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { Typography } from "~/components/Typography";
 import { Form, useActionData, useSearchParams } from "@remix-run/react";
-import { calculatePrice } from "@progressively/shared";
-import { addPlan } from "~/modules/plans/services/addPlan";
+import { EvaluationToPriceId, calculatePrice } from "@progressively/shared";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
+import { checkout } from "~/modules/billing/services/checkout";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -56,9 +56,22 @@ export const action: ActionFunction = async ({ request }) => {
   const evalCount = formData.get("evalCount");
 
   try {
-    await addPlan(Number(evalCount), accessToken);
+    const priceId = evalCount
+      ? EvaluationToPriceId[Number(evalCount.toString())]
+      : undefined;
 
-    return redirect("/dashboard/profile/billing?planCreated=true");
+    if (priceId) {
+      const { sessionUrl } = await checkout(priceId, accessToken);
+
+      return redirect(sessionUrl);
+    }
+
+    return {
+      errors: {
+        backend: "Something went wrong when trying to add the plan.",
+      },
+    };
+    // await addPlan(Number(evalCount), accessToken);
   } catch (error: any) {
     return {
       errors: {
@@ -104,7 +117,7 @@ export default function UpgradeBillingPage() {
       titleSlot={<CreateEntityTitle>Plan update</CreateEntityTitle>}
       status={data?.errors ? <ErrorBox list={data?.errors} /> : null}
       submitSlot={
-        <Form method="post">
+        <Form method="post" replace>
           <input type="hidden" name="evalCount" value={evalCount} />
           <SubmitButton
             type="submit"

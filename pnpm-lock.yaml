@@ -283,6 +283,7 @@ importers:
       prettier: ^2.8.8
       reflect-metadata: ^0.1.13
       rimraf: ^5.0.0
+      stripe: ^12.5.0
       supertest: ^6.3.3
       swagger-ui-express: ^4.6.2
       ts-jest: ^29.1.0
@@ -326,6 +327,7 @@ importers:
       passport-local: 1.0.0
       reflect-metadata: 0.1.13
       rimraf: 5.0.0
+      stripe: 12.5.0
       uuid: 9.0.0
       winston: 3.8.2
       winston-daily-rotate-file: 4.7.1_winston@3.8.2
@@ -23500,6 +23502,14 @@ packages:
     dependencies:
       acorn: 8.8.2
     dev: true
+
+  /stripe/12.5.0:
+    resolution: {integrity: sha512-eDBh4bv+Uo+GdhjnQ246lM5KaOReoBzxFltgW0HJqco/QEAgSYxZPOpFbd5+gJnZlRqHSB5B+Zqw273SlbdPag==}
+    engines: {node: '>=12.*'}
+    dependencies:
+      '@types/node': 18.16.1
+      qs: 6.11.0
+    dev: false
 
   /strnum/1.0.5:
     resolution: {integrity: sha512-J8bbNyKKXl5qYcR36TIO8W3mVGVHrmmxsd5PAItGkmyzwJvybiw2IVq5nqd0i4LSNSkB/sx9VHllbfFdr9k1JA==}

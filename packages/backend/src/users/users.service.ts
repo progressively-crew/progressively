@@ -7,6 +7,7 @@ import { User } from './types';
 import { UserStatus } from './status';
 import { AuthProviders } from '../auth/types';
 import { UserRoles } from './roles';
+import { PlanStatus } from '../billing/types';
 
 @Injectable()
 export class UsersService {
@@ -130,13 +131,14 @@ export class UsersService {
     });
   }
 
-  getBillingInfo(uuid: string) {
+  getPlans(uuid: string, planStatus: PlanStatus) {
     return this.prisma.plan.findMany({
       orderBy: {
         createdAt: 'desc',
       },
       where: {
         userUuid: uuid,
+        status: planStatus,
       },
     });
   }
@@ -193,15 +195,6 @@ export class UsersService {
       },
       where: {
         uuid: userId,
-      },
-    });
-  }
-
-  addPlan(userId: string, evaluationCount: number) {
-    return this.prisma.plan.create({
-      data: {
-        evaluationCount,
-        userUuid: userId,
       },
     });
   }

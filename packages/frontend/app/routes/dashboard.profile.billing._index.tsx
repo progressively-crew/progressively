@@ -1,9 +1,9 @@
-import { V2_MetaFunction } from "@remix-run/node";
+import { LoaderFunction, V2_MetaFunction } from "@remix-run/node";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { PageTitle } from "~/components/PageTitle";
 import { UserMenu } from "~/modules/user/components/UserMenu";
 import { useUser } from "~/modules/user/contexts/useUser";
-import { useSearchParams } from "@remix-run/react";
+import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { Section, SectionHeader } from "~/components/Section";
 import { Card, CardContent } from "~/components/Card";
 import { PricingCalculator } from "~/modules/plans/components/PricingCalculator";
@@ -23,8 +23,21 @@ export const meta: V2_MetaFunction = () => {
   ];
 };
 
+interface LoaderData {
+  stripeCustomerPortal: string;
+}
+
+export const loader: LoaderFunction = () => {
+  const stripeCustomerPortal = process.env.STRIPE_CUSTOMER_PORTAL;
+
+  return {
+    stripeCustomerPortal,
+  };
+};
+
 export default function BillingPage() {
   const { user } = useUser();
+  const { stripeCustomerPortal } = useLoaderData<LoaderData>();
   const [searchParams] = useSearchParams();
   const { plans, activePlan, remainingTrialingDays, hitsForMonth } =
     useBillingInfo();
@@ -33,7 +46,7 @@ export default function BillingPage() {
     activePlan?.evaluationCount || 10_000
   );
 
-  const isSuccessPlanCreate = searchParams.get("planCreated");
+  const isSuccessPlanCreate = searchParams.get("success") === "true";
   const isTrialing = Boolean(!activePlan && user.trialEnd);
 
   return (
@@ -43,12 +56,21 @@ export default function BillingPage() {
       status={
         isSuccessPlanCreate ? (
           <SuccessBox id={"plan-add-success"}>
-            The plan has been successfully added.
+            We are processing your payment, it may take a few minutes.
           </SuccessBox>
         ) : null
       }
     >
-      <PageTitle value="Billing" />
+      <PageTitle
+        value="Billing"
+        action={
+          activePlan ? (
+            <Button href={stripeCustomerPortal} variant="secondary">
+              Manage stripe billing
+            </Button>
+          ) : null
+        }
+      />
       <Progress
         max={activePlan?.evaluationCount || 1000}
         value={hitsForMonth}
@@ -71,7 +93,9 @@ export default function BillingPage() {
               description={
                 isTrialing
                   ? "You don't seem to have a subscription yet. Use the calculator below to subscribe with a plan that fits your needs."
-                  : "This is what you are actually paying per month. You can quickly adjust using the sliders below to fit your audience needs."
+                  : activePlan
+                  ? "This is what you are actually paying per month. You can quickly adjust using the sliders below to fit your audience needs."
+                  : "You don't have a plan yet. If you want to create your own project, environment and flag evaluations, you can subscribe here."
               }
             />
 
@@ -96,7 +120,7 @@ export default function BillingPage() {
         </CardContent>
       </Card>
 
-      {activePlan && (
+      {plans.length > 0 && (
         <Card>
           <CardContent>
             <Section id="passed-plan">
