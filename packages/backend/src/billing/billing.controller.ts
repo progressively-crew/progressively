@@ -74,7 +74,7 @@ export class BillingController {
           // This approach helps you avoid hitting rate limits.
           break;
         case 'invoice.payment_failed':
-          // await this.billingService.handleSubscriptionCancellation(event);
+          await this.billingService.handleSubscriptionCancellation(event);
 
           break;
 

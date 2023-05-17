@@ -120,7 +120,7 @@ export default function BillingPage() {
         </CardContent>
       </Card>
 
-      {activePlan && (
+      {plans.length > 0 && (
         <Card>
           <CardContent>
             <Section id="passed-plan">
