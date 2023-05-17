@@ -1,9 +1,9 @@
-import { V2_MetaFunction } from "@remix-run/node";
+import { LoaderFunction, V2_MetaFunction } from "@remix-run/node";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { PageTitle } from "~/components/PageTitle";
 import { UserMenu } from "~/modules/user/components/UserMenu";
 import { useUser } from "~/modules/user/contexts/useUser";
-import { useSearchParams } from "@remix-run/react";
+import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { Section, SectionHeader } from "~/components/Section";
 import { Card, CardContent } from "~/components/Card";
 import { PricingCalculator } from "~/modules/plans/components/PricingCalculator";
@@ -23,8 +23,21 @@ export const meta: V2_MetaFunction = () => {
   ];
 };
 
+interface LoaderData {
+  stripeCustomerPortal: string;
+}
+
+export const loader: LoaderFunction = () => {
+  const stripeCustomerPortal = process.env.STRIPE_CUSTOMER_PORTAL;
+
+  return {
+    stripeCustomerPortal,
+  };
+};
+
 export default function BillingPage() {
   const { user } = useUser();
+  const { stripeCustomerPortal } = useLoaderData<LoaderData>();
   const [searchParams] = useSearchParams();
   const { plans, activePlan, remainingTrialingDays, hitsForMonth } =
     useBillingInfo();
@@ -43,13 +56,21 @@ export default function BillingPage() {
       status={
         isSuccessPlanCreate ? (
           <SuccessBox id={"plan-add-success"}>
-            The plan has been successfully added. It may take a few minutes to
-            be processed.
+            We are processing your payment, it may take a few minutes.
           </SuccessBox>
         ) : null
       }
     >
-      <PageTitle value="Billing" />
+      <PageTitle
+        value="Billing"
+        action={
+          activePlan ? (
+            <Button href={stripeCustomerPortal} variant="secondary">
+              Manage stripe billing
+            </Button>
+          ) : null
+        }
+      />
       <Progress
         max={activePlan?.evaluationCount || 1000}
         value={hitsForMonth}

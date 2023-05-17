@@ -81,6 +81,16 @@ export class BillingController {
           // The subscription becomes past_due. Notify your customer and send them to the
           // customer portal to update their payment information.
           break;
+
+        case 'customer.subscription.updated':
+          const canceledAt = (event.data.object as any).canceled_at;
+
+          if (canceledAt) {
+            // cancel subscription
+          }
+
+          break;
+
         default:
         // Unhandled event type
       }
