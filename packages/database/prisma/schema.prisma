@@ -34,6 +34,23 @@ model User {
   ActivityLog         ActivityLog[]
   trialEnd            DateTime?
   allPlanSubscribed   Plan[]
+  StripeUser          StripeUser[]
+}
+
+model StripeUser {
+  uuid       String @id @default(uuid())
+  customerId String
+  user       User   @relation(fields: [userUuid], references: [uuid])
+  userUuid   String
+}
+
+model StripeTransaction {
+  uuid             String @id @default(uuid())
+  customerId       String
+  sessionId        String
+  stripedCreatedAt Int
+  stripeInvoiceId  String
+  subscriptionId   String
 }
 
 model Plan {

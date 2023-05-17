@@ -197,7 +197,7 @@ export class UsersService {
     });
   }
 
-  addPlan(userId: string, evaluationCount: number) {
+  addPlan(userId: string, customerId: string, evaluationCount: number) {
     return this.prisma.plan.create({
       data: {
         evaluationCount,
