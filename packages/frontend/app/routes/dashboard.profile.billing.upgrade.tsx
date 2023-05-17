@@ -66,6 +66,11 @@ export const action: ActionFunction = async ({ request }) => {
       return redirect(sessionUrl);
     }
 
+    return {
+      errors: {
+        backend: "Something went wrong when trying to add the plan.",
+      },
+    };
     // await addPlan(Number(evalCount), accessToken);
   } catch (error: any) {
     return {
