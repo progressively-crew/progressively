@@ -33,6 +33,8 @@
     "@okta/jwt-verifier": "^3.0.1",
     "@progressively/database": "workspace:*",
     "@progressively/shared": "workspace:*",
+    "@react-email/components": "^0.0.6",
+    "@react-email/render": "^0.0.7",
     "@types/ws": "^8.5.4",
     "bcrypt": "^5.1.0",
     "camelcase": "6.3.0",
@@ -50,6 +52,7 @@
     "passport-http-bearer": "^1.0.1",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
+    "react": "^18.2.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^5.0.0",
     "stripe": "^12.5.0",
@@ -93,15 +96,16 @@
     "moduleFileExtensions": [
       "js",
       "json",
-      "ts"
+      "ts",
+      "tsx"
     ],
     "rootDir": "src",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
+      "^.+\\.(tsx|ts|js)$": "ts-jest"
     },
     "collectCoverageFrom": [
-      "**/*.(t|j)s"
+      "**/*.(tsx|ts|js)"
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
