@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { BillingController } from './billing.controller';
 import { BillingService } from './billing.service';
-import { UsersModule } from 'src/users/users.module';
+import { DatabaseModule } from '../database/database.module';
 
 @Module({
-  imports: [UsersModule],
+  imports: [DatabaseModule],
   controllers: [BillingController],
   providers: [BillingService],
 })

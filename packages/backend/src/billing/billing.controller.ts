@@ -61,6 +61,7 @@ export class BillingController {
       switch (event.type) {
         case 'checkout.session.completed':
           await this.billingService.handleCheckoutCompleted(event);
+
           // Payment is successful and the subscription is created.
           // You should provision the subscription and save the customer ID to your database.
           break;

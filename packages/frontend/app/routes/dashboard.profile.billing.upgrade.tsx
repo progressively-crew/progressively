@@ -13,7 +13,7 @@ import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { Typography } from "~/components/Typography";
 import { Form, useActionData, useSearchParams } from "@remix-run/react";
-import { calculatePrice } from "@progressively/shared";
+import { EvaluationToPriceId, calculatePrice } from "@progressively/shared";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { checkout } from "~/modules/billing/services/checkout";
 
@@ -56,19 +56,8 @@ export const action: ActionFunction = async ({ request }) => {
   const evalCount = formData.get("evalCount");
 
   try {
-    const mapOfEvalCount: Record<number, string> = {
-      10_000: "price_1N8LrcIIMJ2kplmT99wSIcVE",
-      20_000: "price_1N8LrcIIMJ2kplmT99wSIcVE",
-      30_000: "price_1N8LrcIIMJ2kplmT99wSIcVE",
-      40_000: "",
-      50_000: "",
-      60_000: "",
-      70_000: "",
-      80_000: "",
-    };
-
     const priceId = evalCount
-      ? mapOfEvalCount[Number(evalCount.toString())]
+      ? EvaluationToPriceId[Number(evalCount.toString())]
       : undefined;
 
     if (priceId) {

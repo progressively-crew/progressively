@@ -197,15 +197,6 @@ export class UsersService {
     });
   }
 
-  addPlan(userId: string, customerId: string, evaluationCount: number) {
-    return this.prisma.plan.create({
-      data: {
-        evaluationCount,
-        userUuid: userId,
-      },
-    });
-  }
-
   getHitsForMonth(userId: string, d: Date) {
     const start = new Date();
     start.setDate(1);

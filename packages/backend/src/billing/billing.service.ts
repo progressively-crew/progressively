@@ -2,11 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import Stripe from 'stripe';
 
+import { PrismaService } from '../database/prisma.service';
+import { PriceIdToEvaluation } from '@progressively/shared';
+
 @Injectable()
 export class BillingService {
   private stripe: Stripe;
 
-  constructor(private readonly userService: UsersService) {
+  constructor(private readonly prisma: PrismaService) {
     this.stripe = new Stripe(process.env.STRIPE_KEY, {
       apiVersion: '2022-11-15',
     });
@@ -14,8 +17,14 @@ export class BillingService {
 
   async getCheckoutUrl(priceId: string, userId: string) {
     const frontendUrl = process.env.FRONTEND_URL;
+    const stripeUser = await this.prisma.stripeUser.findFirst({
+      where: {
+        userUuid: userId,
+      },
+    });
 
     const session = await this.stripe.checkout.sessions.create({
+      customer: stripeUser?.customerId,
       billing_address_collection: 'auto',
       mode: 'subscription',
       line_items: [
@@ -55,13 +64,46 @@ export class BillingService {
     );
 
     const userId = session.metadata.userId;
-    const customerId = session.customer;
+    const customerId = String(session.customer);
 
     const sessionId = session.id;
     const stripedCreatedAt = session.created;
-    const stripeInvoiceId = session.invoice;
-    const subscriptionId = session.subscription;
+    const stripeInvoiceId = String(session.invoice);
+    const subscriptionId = String(session.subscription);
 
-    // await this.userService.addPlan(userId, customerId,)
+    const priceId = session.line_items.data[0].price.id;
+    const evaluationCount = PriceIdToEvaluation[priceId];
+
+    return this.prisma.$transaction([
+      this.prisma.stripeUser.upsert({
+        where: {
+          customerId,
+        },
+        create: {
+          customerId,
+          userUuid: userId,
+        },
+        update: {
+          customerId,
+          userUuid: userId,
+        },
+      }),
+      this.prisma.stripeTransaction.create({
+        data: {
+          customerId,
+          sessionId,
+          subscriptionId,
+          stripedCreatedAt,
+          stripeInvoiceId,
+        },
+      }),
+
+      this.prisma.plan.create({
+        data: {
+          evaluationCount,
+          userUuid: userId,
+        },
+      }),
+    ]);
   }
 }

@@ -38,8 +38,7 @@ model User {
 }
 
 model StripeUser {
-  uuid       String @id @default(uuid())
-  customerId String
+  customerId String @id
   user       User   @relation(fields: [userUuid], references: [uuid])
   userUuid   String
 }
