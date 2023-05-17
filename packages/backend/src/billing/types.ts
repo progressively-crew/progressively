@@ -7,3 +7,8 @@ export interface CheckoutCreationDTO {
 export const CheckoutCreationSchema = Joi.object({
   priceId: Joi.string().required(),
 });
+
+export enum PlanStatus {
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
+}

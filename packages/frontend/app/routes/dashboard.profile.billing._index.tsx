@@ -93,7 +93,9 @@ export default function BillingPage() {
               description={
                 isTrialing
                   ? "You don't seem to have a subscription yet. Use the calculator below to subscribe with a plan that fits your needs."
-                  : "This is what you are actually paying per month. You can quickly adjust using the sliders below to fit your audience needs."
+                  : activePlan
+                  ? "This is what you are actually paying per month. You can quickly adjust using the sliders below to fit your audience needs."
+                  : "You don't have a plan yet. If you want to create your own project, environment and flag evaluations, you can subscribe here."
               }
             />
 

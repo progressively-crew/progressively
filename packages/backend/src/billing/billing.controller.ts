@@ -67,9 +67,6 @@ export class BillingController {
       switch (event.type) {
         case 'checkout.session.completed':
           await this.billingService.handleCheckoutCompleted(event);
-
-          // Payment is successful and the subscription is created.
-          // You should provision the subscription and save the customer ID to your database.
           break;
         case 'invoice.paid':
           // Continue to provision the subscription as payments continue to be made.
@@ -77,17 +74,12 @@ export class BillingController {
           // This approach helps you avoid hitting rate limits.
           break;
         case 'invoice.payment_failed':
-          // The payment failed or the customer does not have a valid payment method.
-          // The subscription becomes past_due. Notify your customer and send them to the
-          // customer portal to update their payment information.
+          // await this.billingService.handleSubscriptionCancellation(event);
+
           break;
 
-        case 'customer.subscription.updated':
-          const canceledAt = (event.data.object as any).canceled_at;
-
-          if (canceledAt) {
-            // cancel subscription
-          }
+        case 'customer.subscription.deleted':
+          await this.billingService.handleSubscriptionCancellation(event);
 
           break;
 

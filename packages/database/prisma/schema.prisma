@@ -58,6 +58,7 @@ model Plan {
   createdAt       DateTime @default(now())
   User            User?    @relation(fields: [userUuid], references: [uuid])
   userUuid        String?
+  status          String   @default("INACTIVE") // see status types in billing
 }
 
 model Project {

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import Stripe from 'stripe';
 import { PrismaService } from '../database/prisma.service';
 import { PriceIdToEvaluation } from '@progressively/shared';
+import { PlanStatus } from './types';
 
 @Injectable()
 export class BillingService {
@@ -53,6 +54,24 @@ export class BillingService {
     return event;
   }
 
+  async handleSubscriptionCancellation(event: Stripe.Event) {
+    const customerId = (event.data.object as any).customer;
+    const associatedUser = await this.prisma.stripeUser.findFirst({
+      where: {
+        customerId,
+      },
+    });
+
+    return this.prisma.plan.updateMany({
+      where: {
+        userUuid: associatedUser.userUuid,
+      },
+      data: {
+        status: PlanStatus.INACTIVE,
+      },
+    });
+  }
+
   async handleCheckoutCompleted(event: Stripe.Event) {
     const session = await this.stripe.checkout.sessions.retrieve(
       (event.data.object as any).id,
@@ -95,10 +114,19 @@ export class BillingService {
           stripeInvoiceId,
         },
       }),
+      this.prisma.plan.updateMany({
+        data: {
+          status: PlanStatus.INACTIVE,
+        },
+        where: {
+          userUuid: userId,
+        },
+      }),
       this.prisma.plan.create({
         data: {
           evaluationCount,
           userUuid: userId,
+          status: PlanStatus.ACTIVE,
         },
       }),
     ]);
