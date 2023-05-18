@@ -77,7 +77,9 @@ export class UsersController {
 
     // trialEnd is only falsy when self-hosted. Should not happen on SaaS
     if (user.trialEnd) {
-      remainingTrialingDays = user.trialEnd.getDate() - new Date().getDate();
+      const millisecondsPerDay = 1000 * 60 * 60 * 24;
+      const milliDiff = user.trialEnd.getTime() - new Date().getTime();
+      remainingTrialingDays = Math.round(milliDiff / millisecondsPerDay);
     }
 
     return {
