@@ -32,7 +32,7 @@ export class MailService {
     return this.transporter.sendMail({
       from: '"The Progressively Team" <no-reply@progressively.io>', // sender address
       to,
-      subject: '[Progressively] Activate your new user', // Subject line
+      subject: 'Activate your new user', // Subject line
       html,
     });
   }
@@ -50,7 +50,7 @@ export class MailService {
     return this.transporter.sendMail({
       from: '"The Progressively Team" <no-reply@Progressively.io>', // sender address
       to,
-      subject: '[Progressively] Reset your password', // Subject line
+      subject: 'Reset your password', // Subject line
       html,
     });
   }
