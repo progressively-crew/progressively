@@ -20,7 +20,7 @@ importers:
       '@progressively/playwright-helpers': workspace:*
       '@progressively/react': workspace:*
       '@progressively/server-side': workspace:*
-      '@types/react': ^18.0.28
+      '@types/react': ^18.2.6
       '@types/react-dom': ^18.0.10
       astro: ^1.6.0
       react: ^18.2.0
@@ -33,9 +33,9 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
     devDependencies:
-      '@astrojs/react': 1.2.2_3xleytyzprlgycb2ded54tx72i
+      '@astrojs/react': 1.2.2_d5m6yu2ok7xf3bmwiusdzoa7cm
       '@progressively/playwright-helpers': link:../playwright-helpers
-      '@types/react': 18.0.28
+      '@types/react': 18.2.6
       '@types/react-dom': 18.0.11
 
   example/bundle-diffs:
@@ -255,6 +255,7 @@ importers:
       '@types/node': ^18.16.1
       '@types/passport-jwt': ^3.0.8
       '@types/passport-local': ^1.0.35
+      '@types/react': ^18.2.6
       '@types/supertest': ^2.0.12
       '@types/ws': ^8.5.4
       '@typescript-eslint/eslint-plugin': ^5.59.1
@@ -350,6 +351,7 @@ importers:
       '@types/node': 18.16.1
       '@types/passport-jwt': 3.0.8
       '@types/passport-local': 1.0.35
+      '@types/react': 18.2.6
       '@types/supertest': 2.0.12
       '@typescript-eslint/eslint-plugin': 5.59.1_jsr5owskg7irefkzbmq6cipclm
       '@typescript-eslint/parser': 5.59.1_tbtvr3a5zwdiktqy4vlmx63mqq
@@ -930,7 +932,7 @@ packages:
       prismjs: 1.29.0
     dev: false
 
-  /@astrojs/react/1.2.2_3xleytyzprlgycb2ded54tx72i:
+  /@astrojs/react/1.2.2_d5m6yu2ok7xf3bmwiusdzoa7cm:
     resolution: {integrity: sha512-ab9fYvzkC74J7N+M3DWQuZgwu7sYjW0aLO3sEAdCX/jZZz+0BhrqS8m9QjtGJyQK/niF4tgJjpPfadopxKc56g==}
     engines: {node: ^14.18.0 || >=16.12.0}
     peerDependencies:
@@ -941,7 +943,7 @@ packages:
     dependencies:
       '@babel/core': 7.20.12
       '@babel/plugin-transform-react-jsx': 7.20.13_@babel+core@7.20.12
-      '@types/react': 18.0.28
+      '@types/react': 18.2.6
       '@types/react-dom': 18.0.11
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
@@ -7407,7 +7409,7 @@ packages:
   /@types/react-dom/18.0.11:
     resolution: {integrity: sha512-O38bPbI2CWtgw/OoQoY+BRelw7uysmXbWvw3nLWO21H1HSh+GOlqPuXshJfjmpNlKiiSDG9cc1JZAaMmVdcTlw==}
     dependencies:
-      '@types/react': 18.0.28
+      '@types/react': 18.2.6
     dev: true
 
   /@types/react-dom/18.2.1:
