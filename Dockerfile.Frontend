@@ -1,26 +1,28 @@
-FROM node:18-bullseye-slim AS base
-
-
-FROM base as deps
+FROM node:18-bullseye-slim as build
 WORKDIR /app
 RUN npm i -g pnpm
-COPY . .
-RUN rm -rf .github example packages/backend packages/documentation packages/load-testing packages/logs packages/react-native packages/sdk-node packages/website
-RUN pnpm install --filter @progressively/frontend...
+COPY ./package.json ./package.json
+COPY ./pnpm-lock.yaml ./pnpm-lock.yaml
+COPY ./pnpm-workspace.yaml ./pnpm-workspace.yaml
+COPY ./turbo.json ./turbo.json
+COPY ./packages/frontend ./packages/frontend
+COPY ./packages/react ./packages/react
+COPY ./packages/sdk-js ./packages/sdk-js
+COPY ./packages/server-side ./packages/server-side
+COPY ./packages/shared ./packages/shared
+COPY ./packages/database ./packages/database
 
-
-FROM base as prodBuild
-WORKDIR /app
-COPY --from=deps . .
-RUN npm i -g pnpm
-RUN pnpm prune
+# Hack to prevent cypress from installing
+RUN pnpm install --ignore-scripts --filter @progressively/frontend...
 RUN pnpm run build --filter @progressively/frontend
+# Manual recursive pruning since Pnpm does not support it for now https://pnpm.io/cli/prune
+RUN rm -rf ./**/node_modules
+RUN pnpm install --prod
 
-
-FROM base as runner
+FROM node:18-bullseye-slim as runner
 WORKDIR /app
 RUN npm i -g pnpm
-COPY --from=prodBuild . .
+COPY --from=build /app .
 EXPOSE 3000
 
 CMD [ "pnpm", "run", "start:frontend" ]

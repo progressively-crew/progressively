@@ -6,7 +6,7 @@
 ./example
 /.cache
 *.log
-.DS_Store
+**.DS_Store
 **.cache
 **/public/build
 **/build
