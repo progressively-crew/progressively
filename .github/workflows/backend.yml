@@ -51,20 +51,19 @@ jobs:
 
       - name: Install dependencies
         shell: bash
-        run: pnpm run setup
+        run: pnpm install --filter @progressively/backend
 
       - name: Build
         shell: bash
-        run: pnpm run build
+        run: pnpm run build --filter @progressively/backend
 
       - name: Prepare the DB
         shell: bash
         run: rm -rf ./packages/database/prisma/migrations && pnpm run db:prepare
 
       - name: Start the backend project
-        working-directory: ./packages/backend
         shell: bash
-        run: pnpm start &
+        run: pnpm run start:backend &
 
       - name: API tests (${{ matrix.testPath }})
         working-directory: ./packages/backend
