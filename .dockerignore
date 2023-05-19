@@ -4,3 +4,9 @@
 **/*.db
 .env
 ./example
+/.cache
+*.log
+**.DS_Store
+**.cache
+**/public/build
+**/build
