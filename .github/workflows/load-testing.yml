@@ -33,9 +33,17 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ./.github/actions/monorepo-setup
 
-      - name: Setup CI for tests
-        working-directory: ./packages/load-testing
-        run: pnpm run ci:test:setup
+      - name: Dependencies install
+        run: pnpm install --filter=@progressively/backend... --filter=@progressively/load-testing...
+
+      - name: Db prepare
+        run: rm -rf ./packages/database/prisma/migrations && pnpm run db:prepare
+
+      - name: Build the project
+        run: pnpm run build --filter=@progressively/backend
+
+      - name: Start backend
+        run: pnpm run start:backend &
 
       - name: Start the Example node project
         working-directory: ./packages/load-testing

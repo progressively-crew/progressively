@@ -1,5 +1,5 @@
 {
-  "name": "my-qwik-basic-starter",
+  "name": "@progressively/example-qwik",
   "description": "App with Routing built-in (recommended)",
   "engines": {
     "node": ">=15.0.0"
