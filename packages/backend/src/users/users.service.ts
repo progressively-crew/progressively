@@ -192,6 +192,8 @@ export class UsersService {
     return this.prisma.user.update({
       data: {
         password: encryptedPassword,
+        status: UserStatus.Active,
+        activationToken: null,
       },
       where: {
         uuid: userId,
