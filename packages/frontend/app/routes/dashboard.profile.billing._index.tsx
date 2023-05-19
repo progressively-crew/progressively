@@ -71,6 +71,7 @@ export default function BillingPage() {
           ) : null
         }
       />
+
       <Progress
         max={activePlan?.evaluationCount || 1000}
         value={hitsForMonth}
