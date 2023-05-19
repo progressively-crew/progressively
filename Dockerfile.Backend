@@ -8,6 +8,7 @@ RUN npm i -g pnpm
 COPY . .
 COPY pnpm-*.yaml .
 
+RUN rm -rf examples packages/documentation packages/frontend packages/load-testing packages/logs packages/react packages/react-native packages/sdk-js packages/sdk-node packages/server-side packages/website
 RUN pnpm install --filter @progressively/backend...
 RUN pnpm run build --filter @progressively/backend
 
