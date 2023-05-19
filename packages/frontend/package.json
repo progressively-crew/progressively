@@ -8,7 +8,6 @@
     "dev": "concurrently \"pnpm run dev:css\" \"remix dev\"",
     "dev:css": "tailwindcss -w -i ./styles/app.css -o app/styles/app.css",
     "lint": "eslint app --fix",
-    "postinstall": "remix setup node",
     "start": "remix-serve build",
     "test:e2e": "cypress open",
     "test:e2e:dark": "CYPRESS_DARK_THEME=true cypress open",
