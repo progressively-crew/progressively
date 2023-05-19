@@ -8,7 +8,7 @@ RUN npm i -g pnpm
 COPY . .
 COPY pnpm-*.yaml .
 
-RUN pnpm install --filter @progressively/backend
+RUN pnpm install --filter @progressively/backend...
 RUN pnpm run build --filter @progressively/backend
 
 FROM node:18 AS runner

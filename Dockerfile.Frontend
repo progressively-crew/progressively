@@ -7,7 +7,7 @@ RUN npm i -g pnpm
 
 COPY . .
 
-RUN pnpm install --filter @progressively/frontend
+RUN pnpm install --filter @progressively/frontend...
 RUN pnpm run build --filter @progressively/frontend
 
 FROM node:18 AS runner

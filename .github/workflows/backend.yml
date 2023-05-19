@@ -51,7 +51,7 @@ jobs:
 
       - name: Install dependencies
         shell: bash
-        run: pnpm install --filter @progressively/backend
+        run: pnpm install --filter @progressively/backend...
 
       - name: Build
         shell: bash
