@@ -1,23 +1,26 @@
-FROM node:18-bullseye-slim AS builder
+FROM node:18-bullseye-slim AS base
+
+
+FROM base as deps
 WORKDIR /app
-
-# RUN apt-get update || : && apt-get install python -y
-# RUN apt-get install python3-pip -y
 RUN npm i -g pnpm
-
 COPY . .
-
 RUN rm -rf .github example packages/backend packages/documentation packages/load-testing packages/logs packages/react-native packages/sdk-node packages/website
 RUN pnpm install --filter @progressively/frontend...
+
+
+FROM base as prodBuild
+WORKDIR /app
+COPY --from=deps . .
+RUN npm i -g pnpm
+RUN pnpm prune
 RUN pnpm run build --filter @progressively/frontend
 
-FROM node:18-bullseye-slim  AS runner
 
+FROM base as runner
+WORKDIR /app
 RUN npm i -g pnpm
-
-COPY --from=builder /app ./
-RUN pnpm prune
-
+COPY --from=prodBuild . .
 EXPOSE 3000
 
 CMD [ "pnpm", "run", "start:frontend" ]
