@@ -7,9 +7,8 @@ RUN npm i -g pnpm
 
 COPY . .
 
-RUN rm -rf examples packages/documentation packages/backend packages/load-testing packages/sdk-node
-RUN pnpm install
-RUN pnpm run build
+RUN pnpm install --filter @progressively/frontend...
+RUN pnpm run build --filter @progressively/frontend
 
 FROM node:18 AS runner
 
