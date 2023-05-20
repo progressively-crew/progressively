@@ -48,9 +48,10 @@ jobs:
       - uses: ./.github/actions/monorepo-setup
 
       - name: Dependencies install
-        run: pnpm install
+        run: pnpm install --filter=@progressively/backend... --filter=@progressively/frontend...
 
       - name: Just check cypress path
+        working-directory: ./packages/frontend
         run: pnpm exec cypress cache path
 
       - name: Db prepare
