@@ -48,10 +48,10 @@ jobs:
       - uses: ./.github/actions/monorepo-setup
 
       - name: Dependencies install
-        run: pnpm install --filter=@progressively/backend... --filter=@progressively/frontend...
+        run: pnpm install
 
       - name: Just check cypress path
-        run: npx cypress cache path
+        run: pnpm exec cypress cache path
 
       - name: Db prepare
         run: rm -rf ./packages/database/prisma/migrations && pnpm run db:prepare
