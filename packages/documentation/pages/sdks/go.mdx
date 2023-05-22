@@ -1,20 +1,20 @@
 # Go
 
-### Installation <a href="#installation" id="installation"></a>
+## Installation <a href="#installation" id="installation"></a>
 
 ```
 $ go get github.com/progressively-crew/sdk-go@latest
 ```
 
-### Usage <a href="#usage" id="usage"></a>
+## Usage <a href="#usage" id="usage"></a>
 
-#### Create an SDK (Build method)
+### Create an SDK (Build method)
 
 ```go
 sdk := progressively.SdkBuilder("valid-sdk-key", "BACKEND_URL").Build()
 ```
 
-**AddField**
+#### AddField
 
 Fields is an option that allows passing data about your users to create targeting strategies. For instance, you can set an email field, and in Progressively's dashboard, you can create a rule that only targets people that use an expected domain:
 
@@ -22,13 +22,17 @@ Fields is an option that allows passing data about your users to create targetin
 sdk := progressively.SdkBuilder("valid-sdk-key", "BACKEND_URL").AddField("email", "marvin.frachet@something.com").Build()
 ```
 
-**Evaluate**
+#### Evaluate
+
+Retrieve the status of a given flag by its key.
 
 ```go
-varValue := sdk.Evaluate("theFlagKey")
+flagValue := sdk.Evaluate("theFlagKey")
 ```
 
-**LoadFlags**
+### Load the flags
+
+Makes an HTTP request to the Progressively server to retrieve the status of the flags.
 
 ```go
 sdk.LoadFlags()
