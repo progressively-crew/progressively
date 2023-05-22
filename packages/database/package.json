@@ -22,14 +22,14 @@
   },
   "dependencies": {
     "@prisma/client": "^4.13.0",
-    "prompts": "^2.4.2"
+    "prompts": "^2.4.2",
+    "prisma": "^4.13.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
     "@types/node": "^18.16.1",
     "bcrypt": "^5.1.0",
     "dotenv": "^16.0.3",
-    "prisma": "^4.13.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
   }

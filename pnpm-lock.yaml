@@ -384,13 +384,13 @@ importers:
       typescript: ^5.0.4
     dependencies:
       '@prisma/client': 4.13.0_prisma@4.13.0
+      prisma: 4.13.0
       prompts: 2.4.2
     devDependencies:
       '@types/bcrypt': 5.0.0
       '@types/node': 18.16.1
       bcrypt: 5.1.0
       dotenv: 16.0.3
-      prisma: 4.13.0
       ts-node: 10.9.1_z7iwqpnx42ndugzbwegid3n66u
       typescript: 5.0.4
 
@@ -5473,6 +5473,7 @@ packages:
   /@prisma/engines/4.13.0:
     resolution: {integrity: sha512-HrniowHRZXHuGT9XRgoXEaP2gJLXM5RMoItaY2PkjvuZ+iHc0Zjbm/302MB8YsPdWozAPHHn+jpFEcEn71OgPw==}
     requiresBuild: true
+    dev: false
 
   /@progressively/react/0.0.1-beta.1_react@18.2.0:
     resolution: {integrity: sha512-R0hn1ra7oAgtmxnRjpip2ZAXbT8BycQe38ILShOXFlstXbYbh+2IFqNya9hiDR6Hwc2s0gFBWRNgGDFY0VDl3w==}
@@ -21389,6 +21390,7 @@ packages:
     requiresBuild: true
     dependencies:
       '@prisma/engines': 4.13.0
+    dev: false
 
   /prismjs/1.29.0:
     resolution: {integrity: sha512-Kx/1w86q/epKcmte75LNrEoT+lX8pBpavuAbvJWRXar7Hz8jrtF+e3vY751p0R8H9HdArwaCTNDDzHg/ScJK1Q==}

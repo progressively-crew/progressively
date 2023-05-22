@@ -33,6 +33,7 @@ COPY --from=build ./app/packages/database/dist ./packages/database/dist
 COPY --from=build ./app/packages/database/package.json ./packages/database/package.json
 COPY --from=build ./app/packages/database/prisma ./packages/database/prisma
 RUN pnpm install --prod
+RUN cd packages/database && pnpm run db:generate:schema
 
 
 FROM node:18-bullseye-slim as runner
