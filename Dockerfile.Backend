@@ -1,6 +1,7 @@
 FROM node:18-bullseye-slim as build
 WORKDIR /app
 RUN npm i -g pnpm
+COPY ./scripts ./scripts
 COPY ./package.json ./package.json
 COPY ./pnpm-lock.yaml ./pnpm-lock.yaml
 COPY ./pnpm-workspace.yaml ./pnpm-workspace.yaml
@@ -16,6 +17,7 @@ RUN pnpm run build --filter @progressively/backend
 FROM node:18-bullseye-slim as prodDeps
 WORKDIR /app
 RUN npm i -g pnpm
+COPY --from=build ./app/scripts ./scripts
 COPY --from=build ./app/package.json ./package.json
 COPY --from=build ./app/pnpm-lock.yaml ./pnpm-lock.yaml
 COPY --from=build ./app/pnpm-workspace.yaml ./pnpm-workspace.yaml
