@@ -15,11 +15,10 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "18"
-      - uses: ./.github/actions/pnpm
 
-      - name: Creating .env files
-        shell: bash
-        run: mv ./packages/frontend/.env.example ./packages/frontend/.env && mv ./packages/backend/.env.example ./packages/backend/.env && mv ./packages/database/.env.example ./packages/database/.env
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/monorepo-setup
+
       - name: Bootstrap projects
         shell: bash
         run: pnpm run setup
