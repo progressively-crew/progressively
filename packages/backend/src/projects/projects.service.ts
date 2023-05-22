@@ -158,9 +158,10 @@ export class ProjectsService {
       },
     });
 
-    const flagRemoveQueries = flagEnvs.map((flagEnv) =>
-      this.prisma.flag.delete({ where: { uuid: flagEnv.flagId } }),
-    );
+    const getDeleteFlagsQueries = () =>
+      flagEnvs.map((flagEnv) =>
+        this.prisma.flag.deleteMany({ where: { uuid: flagEnv.flagId } }),
+      );
 
     const deleteQueries = [
       this.prisma.webhook.deleteMany({
@@ -274,7 +275,7 @@ export class ProjectsService {
           },
         },
       }),
-      ...flagRemoveQueries,
+      ...getDeleteFlagsQueries(),
       this.prisma.environment.deleteMany({
         where: {
           projectId,
