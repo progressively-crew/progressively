@@ -1,23 +1,42 @@
-FROM node:18 AS builder
+FROM node:18-bullseye-slim as build
 WORKDIR /app
-
-RUN apt-get update || : && apt-get install python -y
-RUN apt-get install python3-pip -y
 RUN npm i -g pnpm
-
-COPY . .
-COPY pnpm-*.yaml .
-
-RUN rm -rf examples packages/documentation packages/frontend packages/load-testing packages/logs packages/react packages/react-native packages/sdk-js packages/sdk-node packages/server-side packages/website
-RUN pnpm install --filter @progressively/backend...
+COPY ./package.json ./package.json
+COPY ./pnpm-lock.yaml ./pnpm-lock.yaml
+COPY ./pnpm-workspace.yaml ./pnpm-workspace.yaml
+COPY ./turbo.json ./turbo.json
+COPY ./packages/backend ./packages/backend
+COPY ./packages/shared ./packages/shared
+COPY ./packages/database ./packages/database
+# Hack to prevent cypress from installing
+RUN pnpm install --ignore-scripts --filter @progressively/backend...
 RUN pnpm run build --filter @progressively/backend
 
-FROM node:18 AS runner
 
+FROM node:18-bullseye-slim as prodDeps
+WORKDIR /app
 RUN npm i -g pnpm
+COPY --from=build ./app/package.json ./package.json
+COPY --from=build ./app/pnpm-lock.yaml ./pnpm-lock.yaml
+COPY --from=build ./app/pnpm-workspace.yaml ./pnpm-workspace.yaml
+COPY --from=build ./app/turbo.json ./turbo.json
 
-COPY --from=builder /app ./
+COPY --from=build ./app/packages/backend/dist ./packages/frontend/dist
+COPY --from=build ./app/packages/backend/package.json ./packages/frontend/package.json
 
+COPY --from=build ./app/packages/shared/dist ./packages/shared/dist
+COPY --from=build ./app/packages/shared/package.json ./packages/shared/package.json
+
+COPY --from=build ./app/packages/database/dist ./packages/database/dist
+COPY --from=build ./app/packages/database/package.json ./packages/database/package.json
+COPY --from=build ./app/packages/database/prisma ./packages/database/prisma
+RUN pnpm install --prod
+
+
+FROM node:18-bullseye-slim as runner
+WORKDIR /app
+RUN npm i -g pnpm
+COPY --from=prodDeps /app .
 EXPOSE 4000
-
 CMD [ "pnpm", "run", "start:backend" ]
+

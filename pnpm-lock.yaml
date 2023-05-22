@@ -307,6 +307,7 @@ importers:
       '@nestjs/passport': 9.0.3_xygznos57mh4mi6h22se6rwjhq
       '@nestjs/platform-express': 9.4.0_gqkob5jndcfeb3wjw72wbdwyne
       '@nestjs/platform-ws': 9.4.0_hbbl4vffilu3u75r5lcu5nsbly
+      '@nestjs/swagger': 6.3.0_oapxqihqbztbu6zsycplsfizdq
       '@nestjs/throttler': 4.0.0_oapxqihqbztbu6zsycplsfizdq
       '@nestjs/websockets': 9.4.0_oapxqihqbztbu6zsycplsfizdq
       '@okta/jwt-verifier': 3.0.1
@@ -342,7 +343,6 @@ importers:
     devDependencies:
       '@nestjs/cli': 9.4.2
       '@nestjs/schematics': 9.1.0_typescript@4.9.5
-      '@nestjs/swagger': 6.3.0_oapxqihqbztbu6zsycplsfizdq
       '@nestjs/testing': 9.4.0_adbpomi7iuzlxxwntv6inkfmju
       '@types/bcrypt': 5.0.0
       '@types/express': 4.17.17
@@ -4780,7 +4780,7 @@ packages:
     dependencies:
       '@nestjs/common': 9.4.0_reflect-metadata@0.1.13
       reflect-metadata: 0.1.13
-    dev: true
+    dev: false
 
   /@nestjs/passport/9.0.3_xygznos57mh4mi6h22se6rwjhq:
     resolution: {integrity: sha512-HplSJaimEAz1IOZEu+pdJHHJhQyBOPAYWXYHfAPQvRqWtw4FJF1VXl1Qtk9dcXQX1eKytDtH+qBzNQc19GWNEg==}
@@ -4877,7 +4877,7 @@ packages:
       path-to-regexp: 3.2.0
       reflect-metadata: 0.1.13
       swagger-ui-dist: 4.18.2
-    dev: true
+    dev: false
 
   /@nestjs/testing/9.4.0_adbpomi7iuzlxxwntv6inkfmju:
     resolution: {integrity: sha512-xZWp363P4otcebg++gSjUcdCfTK0RorORzyFq3aLaSAQOlq8kxfFDRIKzEATR4aOUfqTMMsAA8lhnMJWf35N6A==}
@@ -24210,7 +24210,6 @@ packages:
 
   /swagger-ui-dist/4.18.2:
     resolution: {integrity: sha512-oVBoBl9Dg+VJw8uRWDxlyUyHoNEDC0c1ysT6+Boy6CTgr2rUcLcfPon4RvxgS2/taNW6O0+US+Z/dlAsWFjOAQ==}
-    dev: true
 
   /swagger-ui-express/4.6.2:
     resolution: {integrity: sha512-MHIOaq9JrTTB3ygUJD+08PbjM5Tt/q7x80yz9VTFIatw8j5uIWKcr90S0h5NLMzFEDC6+eVprtoeA5MDZXCUKQ==}
