@@ -1,16 +1,12 @@
 {
   "index": "Introduction",
-  "get-started": "Get started",
+  "start-with-saas": "Start with SaaS",
+  "start-with-self-hosted": "Start with self-hosted",
   "--- developpers": {
     "title": "Developpers",
     "type": "separator"
   },
   "sdks": "SDKs",
-  "customization": "Customization",
-  "--- community": {
-    "title": "Developpers",
-    "type": "separator"
-  },
   "Github": {
     "title": "Github",
     "href": "https://github.com/progressively-crew/progressively",

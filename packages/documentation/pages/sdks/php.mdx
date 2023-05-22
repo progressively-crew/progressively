@@ -1,6 +1,6 @@
 # PHP
 
-### Installation
+## Installation
 
 In your `composer.json` file, add the following package:
 
@@ -18,9 +18,9 @@ And finally, run the following inside your terminal:
 $ composer install
 ```
 
-### Usage
+## Usage
 
-#### Create an SDK instance
+### Create an SDK instance
 
 ```php
 $option = array(
@@ -31,7 +31,9 @@ $sdk = Progressively::create("YOUR_ENVIRONMENT_KEY", $option);
 
 ```
 
-#### Check the variant of a flag
+### Check the variant of a flag
+
+Retrieve the status of a given flag by its key.
 
 ```php
 $sdk->isActivated('theFlagKey');
