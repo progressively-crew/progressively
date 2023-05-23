@@ -33,7 +33,6 @@ export default {
   },
   docsRepositoryBase:
     "https://github.com/progressively-crew/progressively/tree/master/packages/documentation",
-  primaryHue: 227,
   useNextSeoProps() {
     return {
       titleTemplate: "%s – Progressively",
