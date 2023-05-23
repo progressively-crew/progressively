@@ -121,7 +121,7 @@ export default function BillingPage() {
         </CardContent>
       </Card>
 
-      {plans.length > 0 && (
+      {plans.length > 0 || activePlan ? (
         <Card>
           <CardContent>
             <Section id="passed-plan">
@@ -134,7 +134,7 @@ export default function BillingPage() {
             </Section>
           </CardContent>
         </Card>
-      )}
+      ) : null}
     </DashboardLayout>
   );
 }
