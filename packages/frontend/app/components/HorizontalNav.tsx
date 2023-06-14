@@ -1,4 +1,8 @@
 import { NavLink } from "@remix-run/react";
+import { useBillingInfo } from "~/modules/plans/hooks/useBillingInfo";
+import { useIsSaas } from "~/modules/saas/contexts/useIsSaas";
+import { Progress } from "./Progress";
+import { HideDesktop } from "./HideMobile";
 
 export interface HorizontalNavProps {
   children: React.ReactNode;
@@ -6,11 +10,26 @@ export interface HorizontalNavProps {
 }
 
 export const HorizontalNav = ({ children, label }: HorizontalNavProps) => {
+  const { activePlan, hitsForMonth } = useBillingInfo();
+  const isSaas = useIsSaas();
+
   return (
     <nav aria-label={label} className="w-full dark:bg-slate-800 bg-white">
-      <ul className="overflow-x-scroll flex flex-row gap-4 items-center py-3 px-1">
-        {children}
-      </ul>
+      <div className="flex flex-row justify-between items-center">
+        <ul className="overflow-x-scroll flex flex-row gap-4 items-center py-3 px-1">
+          {children}
+        </ul>
+
+        {isSaas && (
+          <div className="hidden xl:block">
+            <Progress
+              max={activePlan?.evaluationCount || 1000}
+              value={hitsForMonth}
+              label={"Evaluation count this month"}
+            />
+          </div>
+        )}
+      </div>
     </nav>
   );
 };

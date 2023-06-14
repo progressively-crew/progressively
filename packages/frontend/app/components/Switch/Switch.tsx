@@ -20,7 +20,7 @@ export const Switch = ({
   const id = useId();
 
   return (
-    <div className="flex items-center space-x-2">
+    <div className="flex items-center gap-2">
       <Label htmlFor={id} aria-hidden>
         {label}
       </Label>

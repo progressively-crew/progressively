@@ -22,7 +22,7 @@ export const Card = ({
 }: CardProps) => {
   const footerSchemeClassName = footerSchemeStyles[scheme];
   const clickableClasses = onClick
-    ? "hover:bg-gray-50 hover:dark:bg-slate-700 active:bg-gray-100 active:dark:bg-slate-600 cursor-pointer"
+    ? "hover:border-gray-300 hover:shadow-sm hover:dark:bg-slate-700 active:bg-gray-50 active:dark:bg-slate-600 cursor-pointer transition-all"
     : "";
 
   return (
