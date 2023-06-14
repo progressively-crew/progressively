@@ -3,6 +3,7 @@ import Stripe from 'stripe';
 import { PrismaService } from '../database/prisma.service';
 import { PriceIdToEvaluation } from '@progressively/shared';
 import { PlanStatus } from './types';
+import { StripeUser } from '@progressively/database';
 
 @Injectable()
 export class BillingService {
@@ -14,16 +15,63 @@ export class BillingService {
     });
   }
 
-  async getCheckoutUrl(priceId: string, userId: string) {
-    const frontendUrl = process.env.FRONTEND_URL;
-    const stripeUser = await this.prisma.stripeUser.findFirst({
+  getStripeUser(userId: string) {
+    return this.prisma.stripeUser.findFirst({
       where: {
         userUuid: userId,
       },
     });
+  }
+
+  async getUserCurrentSubscription(stripeUser: StripeUser) {
+    const existingSubscription = await this.prisma.stripeTransaction.findFirst({
+      where: {
+        customerId: stripeUser?.customerId,
+      },
+    });
+
+    return existingSubscription;
+  }
+
+  async updateSubscription(priceId: string, stripeUser: StripeUser) {
+    const existingSubscription = await this.prisma.stripeTransaction.findFirst({
+      where: {
+        customerId: stripeUser?.customerId,
+      },
+    });
+
+    // Update instead of create
+    if (existingSubscription) {
+      const subscription = await this.stripe.subscriptions.retrieve(
+        existingSubscription.subscriptionId,
+      );
+
+      const previousItemId = subscription.items.data[0].id;
+
+      const update = await this.stripe.subscriptions.update(subscription.id, {
+        cancel_at_period_end: false,
+        proration_behavior: 'create_prorations',
+        items: [
+          {
+            id: previousItemId,
+            deleted: true,
+          },
+          {
+            price: priceId,
+            quantity: 1,
+          },
+        ],
+      });
+
+      return update;
+    }
+  }
+
+  async getCheckoutUrl(priceId: string, userId: string, customerId?: string) {
+    const frontendUrl = process.env.FRONTEND_URL;
 
     const session = await this.stripe.checkout.sessions.create({
-      customer: stripeUser?.customerId,
+      customer: customerId,
       billing_address_collection: 'auto',
       mode: 'subscription',
       line_items: [
