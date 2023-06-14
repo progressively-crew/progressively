@@ -43,6 +43,7 @@ export const loader: LoaderFunction = async ({
 };
 
 export interface ActionData {
+  updated?: boolean;
   errors?: {
     backend?: string;
   };
@@ -61,9 +62,13 @@ export const action: ActionFunction = async ({ request }) => {
       : undefined;
 
     if (priceId) {
-      const { sessionUrl } = await checkout(priceId, accessToken);
+      const { sessionUrl, updated } = await checkout(priceId, accessToken);
 
-      return redirect(sessionUrl);
+      if (sessionUrl) {
+        return redirect(sessionUrl);
+      }
+
+      return { updated };
     }
 
     return {

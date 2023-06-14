@@ -65,7 +65,11 @@ export default function BillingPage() {
         value="Billing"
         action={
           activePlan ? (
-            <Button href={stripeCustomerPortal} variant="secondary">
+            <Button
+              href={stripeCustomerPortal}
+              variant="secondary"
+              target="_blank"
+            >
               Manage stripe billing
             </Button>
           ) : null
