@@ -48,22 +48,43 @@ export class BillingService {
 
       const previousItemId = subscription.items.data[0].id;
 
-      const update = await this.stripe.subscriptions.update(subscription.id, {
-        cancel_at_period_end: false,
-        proration_behavior: 'create_prorations',
-        items: [
-          {
-            id: previousItemId,
-            deleted: true,
-          },
-          {
-            price: priceId,
-            quantity: 1,
-          },
-        ],
-      });
+      const updatedSubscription = await this.stripe.subscriptions.update(
+        subscription.id,
+        {
+          cancel_at_period_end: false,
+          proration_behavior: 'create_prorations',
+          items: [
+            {
+              id: previousItemId,
+              deleted: true,
+            },
+            {
+              price: priceId,
+              quantity: 1,
+            },
+          ],
+        },
+      );
 
-      return update;
+      const evaluationCount = PriceIdToEvaluation[priceId];
+
+      return this.prisma.$transaction([
+        this.prisma.plan.updateMany({
+          data: {
+            status: PlanStatus.INACTIVE,
+          },
+          where: {
+            userUuid: stripeUser.userUuid,
+          },
+        }),
+        this.prisma.plan.create({
+          data: {
+            evaluationCount,
+            userUuid: stripeUser.userUuid,
+            status: PlanStatus.ACTIVE,
+          },
+        }),
+      ]);
     }
   }
 

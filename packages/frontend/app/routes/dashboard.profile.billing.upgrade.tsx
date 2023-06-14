@@ -68,7 +68,11 @@ export const action: ActionFunction = async ({ request }) => {
         return redirect(sessionUrl);
       }
 
-      return { updated };
+      if (updated) {
+        return redirect(
+          "/dashboard/profile/billing?subscriptionUpdated=true#subscription-updated"
+        );
+      }
     }
 
     return {

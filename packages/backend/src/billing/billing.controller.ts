@@ -41,11 +41,10 @@ export class BillingController {
         await this.billingService.getUserCurrentSubscription(stripUser);
 
       if (existingSubscription) {
-        const updatedSubscription =
-          await this.billingService.updateSubscription(
-            checkoutDto.priceId,
-            stripUser,
-          );
+        await this.billingService.updateSubscription(
+          checkoutDto.priceId,
+          stripUser,
+        );
 
         return { updated: true };
       }
