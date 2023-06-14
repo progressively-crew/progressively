@@ -79,7 +79,10 @@ export class UsersController {
     if (user.trialEnd) {
       const millisecondsPerDay = 1000 * 60 * 60 * 24;
       const milliDiff = user.trialEnd.getTime() - new Date().getTime();
-      remainingTrialingDays = Math.round(milliDiff / millisecondsPerDay);
+      remainingTrialingDays = Math.max(
+        Math.round(milliDiff / millisecondsPerDay),
+        0,
+      );
     }
 
     return {

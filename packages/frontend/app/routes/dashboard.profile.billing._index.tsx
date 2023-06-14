@@ -47,6 +47,9 @@ export default function BillingPage() {
   );
 
   const isSuccessPlanCreate = searchParams.get("success") === "true";
+  const isSubscriptionUpdated =
+    searchParams.get("subscriptionUpdated") === "true";
+
   const isTrialing = Boolean(!activePlan && user.trialEnd);
 
   return (
@@ -58,6 +61,10 @@ export default function BillingPage() {
           <SuccessBox id={"plan-add-success"}>
             We are processing your payment, it may take a few minutes.
           </SuccessBox>
+        ) : isSubscriptionUpdated ? (
+          <SuccessBox id={"subscription-updated"}>
+            The subscription has been successfully updated.
+          </SuccessBox>
         ) : null
       }
     >
@@ -65,7 +72,11 @@ export default function BillingPage() {
         value="Billing"
         action={
           activePlan ? (
-            <Button href={stripeCustomerPortal} variant="secondary">
+            <Button
+              href={stripeCustomerPortal}
+              variant="secondary"
+              target="_blank"
+            >
               Manage stripe billing
             </Button>
           ) : null
@@ -121,7 +132,7 @@ export default function BillingPage() {
         </CardContent>
       </Card>
 
-      {plans.length > 0 && (
+      {plans.length > 0 || activePlan ? (
         <Card>
           <CardContent>
             <Section id="passed-plan">
@@ -134,7 +145,7 @@ export default function BillingPage() {
             </Section>
           </CardContent>
         </Card>
-      )}
+      ) : null}
     </DashboardLayout>
   );
 }

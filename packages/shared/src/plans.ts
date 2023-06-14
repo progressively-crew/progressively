@@ -1,9 +1,8 @@
 export const FlagEvaluationTenKCost = 12;
 export const FlagEvaluationLimitTrial = 1000;
 
-// Dev products
 // const TenKPlan = "price_1N8LrcIIMJ2kplmT99wSIcVE";
-// const TwentyKPlan = "price_1N8LrcIIMJ2kplmT99wSIcVE";
+// const TwentyKPlan = "price_1NIsh8IIMJ2kplmTWlsnq5lo";
 // const ThirtyKPlan = "price_1N8LrcIIMJ2kplmT99wSIcVE";
 // const FourtyKPlan = "price_1N8LrcIIMJ2kplmT99wSIcVE";
 // const FiftyKPlan = "price_1N8LrcIIMJ2kplmT99wSIcVE";
