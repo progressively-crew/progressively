@@ -54,7 +54,7 @@ describe("/dashboard/projects/[id]/environments/[envId]", () => {
           "be.visible"
         );
 
-        cy.findAllByRole("link", { name: "Create a feature flag" })
+        cy.findAllByRole("link", { name: "Add a feature flag" })
           .should("be.visible")
           .and("have.attr", "href", "/dashboard/projects/1/flags/create");
       });
@@ -83,7 +83,7 @@ describe("/dashboard/projects/[id]/environments/[envId]", () => {
         cy.findByRole("heading", { name: "Feature flags" }).should("exist");
 
         cy.findByRole("link", { name: "Feature flags" }).should("be.visible");
-        cy.findByRole("link", { name: "Create a feature flag" })
+        cy.findByRole("link", { name: "Add a feature flag" })
           .should("be.visible")
           .and("have.attr", "href", "/dashboard/projects/1/flags/create");
 
