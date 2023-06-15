@@ -428,6 +428,7 @@ export class FlagsService {
       orderBy: {
         id: 'desc',
       },
+      take: 50,
     });
   }
 
