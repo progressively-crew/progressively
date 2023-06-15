@@ -573,12 +573,14 @@ importers:
 
   packages/react-native:
     specifiers:
+      '@progressively/types': workspace:*
       '@types/base-64': ^1.0.0
       base-64: ^1.0.0
       react: 18.2.0
       react-native: 0.71.3
       typescript: ^4.9.5
     dependencies:
+      '@progressively/types': link:../types
       base-64: 1.0.0
     devDependencies:
       '@types/base-64': 1.0.0
@@ -588,6 +590,7 @@ importers:
 
   packages/sdk-js:
     specifiers:
+      '@progressively/types': workspace:*
       '@types/node-fetch': 2.6.2
       '@types/ws': ^8.5.3
       bundlesize2: ^0.0.31
@@ -597,6 +600,8 @@ importers:
       typescript: ^4.9.5
       vitest: ^0.29.7
       ws: 8.7.0
+    dependencies:
+      '@progressively/types': link:../types
     devDependencies:
       '@types/node-fetch': 2.6.2
       '@types/ws': 8.5.4
@@ -610,10 +615,12 @@ importers:
 
   packages/sdk-node:
     specifiers:
+      '@progressively/types': workspace:*
       '@types/node': ^18.6.3
       node-fetch: ^2.6.7
       typescript: ^4.7.4
     dependencies:
+      '@progressively/types': link:../types
       node-fetch: 2.6.7
     devDependencies:
       '@types/node': 18.13.0
@@ -621,6 +628,7 @@ importers:
 
   packages/server-side:
     specifiers:
+      '@progressively/types': workspace:*
       '@rollup/plugin-node-resolve': ^13.3.0
       '@rollup/plugin-terser': ^0.4.0
       '@rollup/plugin-typescript': ^8.3.2
@@ -630,6 +638,8 @@ importers:
       rollup: ^2.75.6
       ts-loader: ^9.3.0
       typescript: ^4.7.3
+    dependencies:
+      '@progressively/types': link:../types
     devDependencies:
       '@rollup/plugin-node-resolve': 13.3.0_rollup@2.79.1
       '@rollup/plugin-terser': 0.4.0_rollup@2.79.1
@@ -648,6 +658,9 @@ importers:
     devDependencies:
       tslib: 2.5.0
       typescript: 4.9.5
+
+  packages/types:
+    specifiers: {}
 
   packages/website:
     specifiers:
