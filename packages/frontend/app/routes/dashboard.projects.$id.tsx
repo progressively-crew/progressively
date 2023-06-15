@@ -22,7 +22,7 @@ export const handle = {
       label: match.data.project.name,
       isProject: true,
       menuItems: routeWithProjects.data.projects.map((p: any) => ({
-        href: `/dashboard/projects/${p.project.uuid}`,
+        href: `/dashboard/projects/${p.project.uuid}/flags`,
         label: p.project.name,
         icon: <ProjectIcon />,
       })),

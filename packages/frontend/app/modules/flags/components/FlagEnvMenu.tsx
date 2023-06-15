@@ -16,7 +16,7 @@ export const FlagEnvMenu = ({
 }: FlagEnvMenuProps) => {
   return (
     <HorizontalNav label={`Flag related`}>
-      <li>
+      <li className="mr-8 lg:mr-0">
         <Form method="post" id={`form-${flagEnv.flagId}`}>
           <ToggleFlag
             isFlagActivated={flagEnv.status === FlagStatus.ACTIVATED}
