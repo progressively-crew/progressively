@@ -58,6 +58,11 @@ export class SdkController {
     return this.sdkService.computeFlags(fields, shouldSkipHits);
   }
 
+  @Get('/:clientKey/types')
+  getTypesDefinitions(@Param('clientKey') clientKey: string) {
+    return this.sdkService.generateTypescriptTypes(clientKey);
+  }
+
   /**
    * Get the flag values by client sdk key
    */
