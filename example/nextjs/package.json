@@ -9,8 +9,8 @@
     "test:e2e": "PROJECT_ROOT=$(pwd) pnpm --filter @progressively/playwright-helpers run test:e2e",
     "test:e2e:debug": "PROJECT_ROOT=$(pwd) pnpm --filter @progressively/playwright-helpers run test:e2e:debug",
     "test:e2e:ci": "PROJECT_ROOT=$(pwd) pnpm --filter @progressively/playwright-helpers run test:e2e:ci",
-    "gen:types": "pnpm progressively:gen-types",
-    "restore:types": "pnpm progressively:restore-types"
+    "gen:types": "pnpm progressively-gen-types",
+    "restore:types": "pnpm progressively-restore-types"
   },
   "dependencies": {
     "@progressively/react": "workspace:*",

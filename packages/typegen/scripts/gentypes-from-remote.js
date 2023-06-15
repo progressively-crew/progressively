@@ -1,15 +1,25 @@
 #!/usr/bin/env node
 
+require("dotenv").config();
+
 const path = require("node:path");
 const fs = require("node:fs");
 
 const getRemoteTypes = (clientKey) => {
-  return fetch(`http://localhost:4000/sdk/${clientKey}/types`).then((res) =>
-    res.text()
+  return fetch(`https//api.progressively.app/sdk/${clientKey}/types`).then(
+    (res) => res.text()
   );
 };
 
 const genFromRemote = async () => {
+  const envKey = process.env.PROGRESSIVELY_ENV;
+
+  if (!envKey) {
+    throw new Error(
+      `"process.env.PROGRESSIVELY_ENV" is not set. Make sure to set PROGRESSIVELY_ENV environment variable in order to fetch the type definitions.`
+    );
+  }
+
   const directory = path.join(
     process.cwd(),
     "node_modules",
@@ -22,10 +32,10 @@ const genFromRemote = async () => {
   }
 
   const filePath = path.join(directory, "index.d.ts");
-  const content = await getRemoteTypes("valid-sdk-key");
+  const content = await getRemoteTypes(envKey);
 
   fs.writeFileSync(filePath, content, { encoding: "utf8", flag: "w" });
-  console.log("Should be good");
+  console.log("\nTypes generated!\n");
 };
 
 genFromRemote();

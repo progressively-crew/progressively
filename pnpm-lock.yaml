@@ -662,7 +662,10 @@ importers:
       typescript: 4.9.5
 
   packages/typegen:
-    specifiers: {}
+    specifiers:
+      dotenv: ^16.0.3
+    dependencies:
+      dotenv: 16.0.3
 
   packages/types:
     specifiers: {}
