@@ -2,5 +2,6 @@
   "name": "@progressively/types",
   "author": "mfrachet",
   "version": "1.0.0",
-  "types": "./index.d.ts"
+  "types": "./index.d.ts",
+  "main": "index.d.ts"
 }

@@ -3,7 +3,8 @@ import { x86 as murmur } from 'murmurhash3js';
 import { BadRequestException } from '@nestjs/common';
 import { Response } from 'express';
 import { FieldRecord } from '../rule/types';
-import { PopulatedVariant } from '../flags/types';
+import { PopulatedFlagEnv, PopulatedVariant, Variant } from '../flags/types';
+import { env } from 'process';
 
 const BUCKET_COUNT = 10000; // number of buckets
 const MAX_INT_32 = Math.pow(2, 32);
@@ -74,4 +75,41 @@ export const prepareCookie = (response: Response, userId: string) => {
 
   response.header('X-progressively-id', userId);
   response.header('Access-Control-Expose-Headers', 'X-progressively-id');
+};
+
+export const getStringOfTypes = (flagEnvs: Array<PopulatedFlagEnv>) => {
+  let definition = `export interface FlagDict {`;
+
+  flagEnvs.forEach((flagEnv) => {
+    const flagKey = flagEnv.flag.key;
+    const variants: Array<string | boolean> = flagEnv.variants.map(
+      (v) => `"${v.value}"`,
+    );
+
+    if (variants.length > 0) {
+      definition += `    ${flagKey}:  boolean | ${variants.join(' | ')};\n`;
+    } else {
+      definition += `    ${flagKey}:  boolean;\n`;
+    }
+  });
+
+  definition += `    };`;
+
+  return definition;
+};
+
+export const getStringOfTypesWithCustomStrings = (
+  flagEnvs: Array<PopulatedFlagEnv>,
+) => {
+  let definition = `export interface FlagDictWithCustomString {`;
+
+  flagEnvs.forEach((flagEnv) => {
+    const flagKey = flagEnv.flag.key;
+
+    definition += `    ${flagKey}:  string | boolean;\n`;
+  });
+
+  definition += `    };`;
+
+  return definition;
 };

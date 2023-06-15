@@ -6,7 +6,13 @@ import { FieldRecord } from '../rule/types';
 import { EventHit } from './types';
 import { PrismaService } from '../database/prisma.service';
 import { FlagStatus } from '../flags/flags.status';
-import { genBucket, getVariation, isInBucket } from './utils';
+import {
+  genBucket,
+  getStringOfTypes,
+  getStringOfTypesWithCustomStrings,
+  getVariation,
+  isInBucket,
+} from './utils';
 import { SchedulingService } from '../scheduling/scheduling.service';
 import { RuleService } from '../rule/rule.service';
 import { ValueToServe } from '../strategy/types';
@@ -179,5 +185,26 @@ export class SdkService {
             : String(hit.data),
       },
     });
+  }
+
+  async generateTypescriptTypes(clientKey: string) {
+    const env = await this.prisma.environment.findFirst({
+      where: { clientKey },
+      include: {
+        flagEnvironment: {
+          include: {
+            variants: true,
+            flag: true,
+          },
+        },
+      },
+    });
+
+    const defaultDefinition = getStringOfTypes(env.flagEnvironment as any);
+    const definitionWithCustomString = getStringOfTypesWithCustomStrings(
+      env.flagEnvironment as any,
+    );
+
+    return `declare module "@progressively/types" { \n${defaultDefinition}\n\n${definitionWithCustomString}\n}`;
   }
 }

@@ -91,6 +91,7 @@ importers:
       '@progressively/playwright-helpers': workspace:*
       '@progressively/react': workspace:*
       '@progressively/server-side': workspace:*
+      '@progressively/typegen': workspace:*
       '@types/cookie': ^0.5.1
       '@types/node': 17.0.31
       '@types/react': 18.0.9
@@ -104,6 +105,7 @@ importers:
     dependencies:
       '@progressively/react': link:../../packages/react
       '@progressively/server-side': link:../../packages/server-side
+      '@progressively/typegen': link:../../packages/typegen
       cookie: 0.5.0
       next: 12.1.6_ef5jwxihqo6n7gxfmzogljlgcm
       react: 18.1.0
@@ -658,6 +660,12 @@ importers:
     devDependencies:
       tslib: 2.5.0
       typescript: 4.9.5
+
+  packages/typegen:
+    specifiers:
+      dotenv: ^16.0.3
+    dependencies:
+      dotenv: 16.0.3
 
   packages/types:
     specifiers: {}
