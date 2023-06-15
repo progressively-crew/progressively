@@ -11,6 +11,7 @@ COPY ./packages/sdk-js ./packages/sdk-js
 COPY ./packages/server-side ./packages/server-side
 COPY ./packages/shared ./packages/shared
 COPY ./packages/database ./packages/database
+COPY ./packages/types ./packages/types
 # Hack to prevent cypress from installing
 RUN pnpm install --ignore-scripts --filter @progressively/frontend...
 RUN pnpm run build --filter @progressively/frontend
@@ -30,6 +31,7 @@ COPY --from=build ./app/packages/frontend/package.json ./packages/frontend/packa
 
 COPY --from=build ./app/packages/react/lib ./packages/react/lib
 COPY --from=build ./app/packages/react/package.json ./packages/react/package.json
+COPY --from=build ./app/packages/types ./packages/types
 
 COPY --from=build ./app/packages/sdk-js/dist ./packages/sdk-js/dist
 COPY --from=build ./app/packages/sdk-js/package.json ./packages/sdk-js/package.json
