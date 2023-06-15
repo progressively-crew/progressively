@@ -8,11 +8,14 @@
     "lint": "next lint",
     "test:e2e": "PROJECT_ROOT=$(pwd) pnpm --filter @progressively/playwright-helpers run test:e2e",
     "test:e2e:debug": "PROJECT_ROOT=$(pwd) pnpm --filter @progressively/playwright-helpers run test:e2e:debug",
-    "test:e2e:ci": "PROJECT_ROOT=$(pwd) pnpm --filter @progressively/playwright-helpers run test:e2e:ci"
+    "test:e2e:ci": "PROJECT_ROOT=$(pwd) pnpm --filter @progressively/playwright-helpers run test:e2e:ci",
+    "gen:types": "pnpm progressively:gen-types",
+    "restore:types": "pnpm progressively:restore-types"
   },
   "dependencies": {
     "@progressively/react": "workspace:*",
     "@progressively/server-side": "workspace:*",
+    "@progressively/typegen": "workspace:*",
     "cookie": "^0.5.0",
     "next": "12.1.6",
     "react": "18.1.0",

@@ -78,7 +78,7 @@ export const prepareCookie = (response: Response, userId: string) => {
 };
 
 export const getStringOfTypes = (flagEnvs: Array<PopulatedFlagEnv>) => {
-  let definition = `export type FlagDict = {`;
+  let definition = `export interface FlagDict {`;
 
   flagEnvs.forEach((flagEnv) => {
     const flagKey = flagEnv.flag.key;
@@ -101,7 +101,7 @@ export const getStringOfTypes = (flagEnvs: Array<PopulatedFlagEnv>) => {
 export const getStringOfTypesWithCustomStrings = (
   flagEnvs: Array<PopulatedFlagEnv>,
 ) => {
-  let definition = `export type FlagDictWithCustomString = {`;
+  let definition = `export interface FlagDictWithCustomString {`;
 
   flagEnvs.forEach((flagEnv) => {
     const flagKey = flagEnv.flag.key;

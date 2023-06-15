@@ -205,6 +205,6 @@ export class SdkService {
       env.flagEnvironment as any,
     );
 
-    return `${defaultDefinition}\n\n${definitionWithCustomString}`;
+    return `declare module "@progressively/types" { \n${defaultDefinition}\n\n${definitionWithCustomString}\n}`;
   }
 }
