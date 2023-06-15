@@ -1,5 +1,6 @@
 import { Fields, FlagDict } from "@progressively/types";
 
+export { Fields, FlagDict };
 export interface SDKOptions {
   fields?: Fields;
   apiUrl?: string;
