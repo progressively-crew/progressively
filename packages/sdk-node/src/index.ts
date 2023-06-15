@@ -1,7 +1,9 @@
+import { Fields, FlagDict } from "@progressively/types";
+
 const actualFetch = require("node-fetch");
 
-export type FlagDict = { [key: string]: boolean | string };
-export type Fields = Record<string, string | number | boolean>;
+export { Fields, FlagDict };
+
 export interface SDKOptions {
   fields?: Fields;
   apiUrl?: string;

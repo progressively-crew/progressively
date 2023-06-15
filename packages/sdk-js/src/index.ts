@@ -1,10 +1,5 @@
-import {
-  Fields,
-  FlagDict,
-  LoadFlagsArgs,
-  ProgressivelySdkType,
-  SDKOptions,
-} from "./types";
+import { Fields, FlagDict } from "@progressively/types";
+import { LoadFlagsArgs, ProgressivelySdkType, SDKOptions } from "./types";
 
 export * from "./types";
 

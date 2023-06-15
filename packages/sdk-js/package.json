@@ -11,6 +11,9 @@
     "test:watch": "vitest",
     "bundlesize": "bundlesize --enable-github-checks"
   },
+  "dependencies": {
+    "@progressively/types": "workspace:*"
+  },
   "devDependencies": {
     "@types/node-fetch": "2.6.2",
     "@types/ws": "^8.5.3",
