@@ -12,6 +12,7 @@ export interface EntityProps {
   children?: React.ReactNode;
   menu?: React.ReactNode;
   breakAvatar?: boolean;
+  footer?: React.ReactNode;
 }
 
 export const CardEntity = ({
@@ -23,6 +24,7 @@ export const CardEntity = ({
   children,
   menu,
   breakAvatar,
+  footer,
 }: EntityProps) => {
   const linkRef = useRef<HTMLAnchorElement>(null);
 
@@ -41,6 +43,12 @@ export const CardEntity = ({
       >
         {children}
       </Entity>
+
+      {footer && (
+        <div className="bg-slate-50 dark:bg-slate-700 py-4 rounded-b">
+          {footer}
+        </div>
+      )}
     </Card>
   );
 };
