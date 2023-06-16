@@ -1,5 +1,5 @@
 rollup.config.js
 README.md
-src
+./src
 tsconfig.json
 .gitignore
