@@ -47,7 +47,7 @@ export const ButtonCopy = forwardRef(
     }, [isCopied]);
 
     const sharedClassName =
-      "rounded h-10 pl-4 font-mono text-xs whitespace-nowrap inline-flex flex-row items-center border border-gray-300 text-gray-500 dark:border-slate-500 dark:text-gray-200";
+      "rounded h-10 pl-4 font-mono text-xs whitespace-nowrap inline-flex flex-row items-center border border-gray-300 text-gray-500 dark:border-slate-500 dark:text-gray-200 hover:bg-slate-50 active:bg-slate-100 dark:hover:bg-slate-800";
 
     const sharedIconClassName =
       "rounded-xs flex items-center justify-center text-lg h-10 w-10";
@@ -72,35 +72,35 @@ export const ButtonCopy = forwardRef(
       };
 
       return (
-        <span className={sharedClassName}>
-          <span id={id}>
-            {isCopied ? (
-              <span>
-                Copied <VisuallyHidden>{toCopy}</VisuallyHidden>
-              </span>
-            ) : (
-              <span>
-                <VisuallyHidden>Copy </VisuallyHidden>
-                {children}
-              </span>
-            )}
-          </span>
-          <Tooltip
-            tooltip={
-              <p>
-                Copy <strong>{toCopy}</strong> to clipboard
-              </p>
-            }
+        <Tooltip
+          tooltip={
+            <p>
+              Copy <strong>{toCopy}</strong> to clipboard
+            </p>
+          }
+        >
+          <button
+            aria-labelledby={id}
+            ref={ref}
+            type="button"
+            onClick={handleClick}
+            aria-live="polite"
+            onKeyDown={handleKeyDow}
+            {...copyToClipBoardProps}
           >
-            <button
-              aria-labelledby={id}
-              ref={ref}
-              type="button"
-              onClick={handleClick}
-              aria-live="polite"
-              onKeyDown={handleKeyDow}
-              {...copyToClipBoardProps}
-            >
+            <span className={sharedClassName}>
+              <span id={id}>
+                {isCopied ? (
+                  <span>
+                    Copied <VisuallyHidden>{toCopy}</VisuallyHidden>
+                  </span>
+                ) : (
+                  <span>
+                    <VisuallyHidden>Copy </VisuallyHidden>
+                    {children}
+                  </span>
+                )}
+              </span>
               <span className={sharedIconClassName}>
                 {isCopied ? (
                   <BsCheck aria-hidden />
@@ -108,9 +108,9 @@ export const ButtonCopy = forwardRef(
                   <MdContentCopy aria-hidden />
                 )}
               </span>
-            </button>
-          </Tooltip>
-        </span>
+            </span>
+          </button>
+        </Tooltip>
       );
     }
 
