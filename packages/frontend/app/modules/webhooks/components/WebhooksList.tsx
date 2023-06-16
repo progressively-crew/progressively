@@ -16,36 +16,37 @@ export const WebhooksList = ({
   flagId,
 }: WebhooksListProps) => {
   return (
-    <div className="flex flex-col gap-4">
+    <ul className="flex flex-col gap-4">
       {webhooks.map((webhook) => (
-        <CardEntity
-          key={webhook.uuid}
-          title={webhook.endpoint}
-          description={
-            <p>
-              On event <WebhookEvent value={webhook.event} />
-            </p>
-          }
-          menu={
-            <MenuButton
-              items={[
-                {
-                  label: "Copy secret",
-                  onClick: () => {
-                    navigator.clipboard.writeText(webhook.secret);
+        <li key={webhook.uuid}>
+          <CardEntity
+            title={webhook.endpoint}
+            description={
+              <p>
+                On event <WebhookEvent value={webhook.event} />
+              </p>
+            }
+            menu={
+              <MenuButton
+                items={[
+                  {
+                    label: "Copy secret",
+                    onClick: () => {
+                      navigator.clipboard.writeText(webhook.secret);
+                    },
                   },
-                },
-                {
-                  label: "Remove",
-                  href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/webhooks/${webhook.uuid}/delete`,
-                },
-              ]}
-              label={"Actions on webhook"}
-              variant="action"
-            />
-          }
-        />
+                  {
+                    label: "Remove",
+                    href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/webhooks/${webhook.uuid}/delete`,
+                  },
+                ]}
+                label={"Actions on webhook"}
+                variant="action"
+              />
+            }
+          />
+        </li>
       ))}
-    </div>
+    </ul>
   );
 };

@@ -49,11 +49,13 @@ export interface ActivityLogListProps {
 export const ActivityLogList = ({ list, flagEnv }: ActivityLogListProps) => {
   return (
     <Card>
-      <div className="flex flex-col px-4">
+      <ul className="flex flex-col px-4">
         {list.map((item) => (
-          <ActivityItem key={item.id} activity={item} flagEnv={flagEnv} />
+          <li key={item.id}>
+            <ActivityItem activity={item} flagEnv={flagEnv} />
+          </li>
         ))}
-      </div>
+      </ul>
     </Card>
   );
 };

@@ -79,7 +79,7 @@ describe("/dashboard/projects/[id]flags/create", () => {
           .should("have.focus")
           .and("contain.text", "The flag has been successfully created.");
 
-        cy.findByRole("link", { name: "My new flag" }).should("be.visible");
+        cy.findByText("My new flag").should("be.visible");
         cy.findByText("My new flag description").should("be.visible");
 
         cy.url().should("include", "/dashboard/projects/1/flags?newFlagId");

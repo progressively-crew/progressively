@@ -19,7 +19,7 @@ export const UserDropdown = ({ user }: UserDropdownProps) => {
       {project && (
         <CreateButton
           to={`/dashboard/projects/${project.uuid}/flags/create`}
-          variant="secondary"
+          variant="tertiary"
         >
           Add a feature flag
         </CreateButton>

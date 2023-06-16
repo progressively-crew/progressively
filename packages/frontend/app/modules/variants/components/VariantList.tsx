@@ -16,30 +16,31 @@ export const VariantList = ({
   flagId,
 }: VariantListProps) => {
   return (
-    <div className="flex flex-col gap-4">
+    <ul className="flex flex-col gap-4">
       {variants.map((variant) => (
-        <CardEntity
-          key={variant.uuid}
-          title={variant.value}
-          avatar={<VariantDot variant={variant.value} />}
-          menu={
-            <MenuButton
-              items={[
-                {
-                  label: "Attach a metric",
-                  href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/metrics/create?variant=${variant.uuid}`,
-                },
-                {
-                  label: "Remove",
-                  href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/variants/${variant.uuid}/delete`,
-                },
-              ]}
-              label={"Actions on webhook"}
-              variant="action"
-            />
-          }
-        />
+        <li key={variant.uuid}>
+          <CardEntity
+            title={variant.value}
+            avatar={<VariantDot variant={variant.value} />}
+            menu={
+              <MenuButton
+                items={[
+                  {
+                    label: "Attach a metric",
+                    href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/metrics/create?variant=${variant.uuid}`,
+                  },
+                  {
+                    label: "Remove",
+                    href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/variants/${variant.uuid}/delete`,
+                  },
+                ]}
+                label={"Actions on webhook"}
+                variant="action"
+              />
+            }
+          />
+        </li>
       ))}
-    </div>
+    </ul>
   );
 };

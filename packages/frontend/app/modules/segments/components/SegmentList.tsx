@@ -15,29 +15,30 @@ export const SegmentList = ({
   flagId,
 }: SegmentListProps) => {
   return (
-    <div className="flex flex-col gap-4">
+    <ul className="flex flex-col gap-4">
       {segments.map((segment) => (
-        <CardEntity
-          key={segment.uuid}
-          title={segment.name}
-          menu={
-            <MenuButton
-              items={[
-                {
-                  label: "Edit",
-                  href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/segments/${segment.uuid}`,
-                },
-                {
-                  label: "Remove",
-                  href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/segments/${segment.uuid}/delete`,
-                },
-              ]}
-              label={"Actions on segment"}
-              variant="action"
-            />
-          }
-        />
+        <li key={segment.uuid}>
+          <CardEntity
+            title={segment.name}
+            menu={
+              <MenuButton
+                items={[
+                  {
+                    label: "Edit",
+                    href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/segments/${segment.uuid}`,
+                  },
+                  {
+                    label: "Remove",
+                    href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/segments/${segment.uuid}/delete`,
+                  },
+                ]}
+                label={"Actions on segment"}
+                variant="action"
+              />
+            }
+          />
+        </li>
       ))}
-    </div>
+    </ul>
   );
 };
