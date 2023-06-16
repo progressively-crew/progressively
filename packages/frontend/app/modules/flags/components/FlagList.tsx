@@ -47,6 +47,7 @@ export const FlagList = ({
                     variant="secondary"
                     icon={<EnvIcon />}
                   >
+                    <span className="sr-only">See {flag.name} in</span>
                     {env.name}
                   </Button>
                 ))}
