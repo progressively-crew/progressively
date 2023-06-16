@@ -11,24 +11,25 @@ export interface ProjectListProps {
 
 export const ProjectList = ({ projects }: ProjectListProps) => {
   return (
-    <div className="flex flex-col gap-4">
+    <ul className="flex flex-col gap-4">
       {projects.map((userProject) => (
-        <CardEntity
-          key={userProject.projectId}
-          avatar={
-            <IconBox content={userProject.project.name}>
-              <ProjectIcon />
-            </IconBox>
-          }
-          title={userProject.project.name}
-          description={
-            <Typography>
-              Role in the project: <Tag size="S">{userProject.role}</Tag>
-            </Typography>
-          }
-          link={`/dashboard/projects/${userProject.projectId}/flags`}
-        />
+        <li key={userProject.projectId}>
+          <CardEntity
+            avatar={
+              <IconBox content={userProject.project.name}>
+                <ProjectIcon />
+              </IconBox>
+            }
+            title={userProject.project.name}
+            description={
+              <Typography>
+                Role in the project: <Tag size="S">{userProject.role}</Tag>
+              </Typography>
+            }
+            link={`/dashboard/projects/${userProject.projectId}/flags`}
+          />
+        </li>
       ))}
-    </div>
+    </ul>
   );
 };

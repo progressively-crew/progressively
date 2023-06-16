@@ -15,9 +15,9 @@ export interface FlagEnvListProps {
 
 export const FlagEnvList = ({ flags, projectId, envId }: FlagEnvListProps) => {
   return (
-    <div className="flex flex-col gap-4">
+    <ul className="flex flex-col gap-4">
       {flags.map((flagEnv) => (
-        <div key={flagEnv.flagId}>
+        <li key={flagEnv.flagId}>
           <Form method="post" id={`form-${flagEnv.flagId}`} />
           <CardEntity
             avatar={
@@ -45,8 +45,8 @@ export const FlagEnvList = ({ flags, projectId, envId }: FlagEnvListProps) => {
               </>
             }
           />
-        </div>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 };

@@ -19,10 +19,10 @@ export const SchedulingList = ({
   flagId,
 }: SchedulingListProps) => {
   return (
-    <div className="flex flex-col gap-4">
+    <ul className="flex flex-col gap-4">
       {scheduling.map((schedule) => {
         return (
-          <div className="scheduling-row" key={schedule.uuid}>
+          <li className="scheduling-row" key={schedule.uuid}>
             <CardEntity
               key={schedule.uuid}
               title={<FormattedDate utc={schedule.utc} />}
@@ -58,9 +58,9 @@ export const SchedulingList = ({
                 />
               }
             />
-          </div>
+          </li>
         );
       })}
-    </div>
+    </ul>
   );
 };
