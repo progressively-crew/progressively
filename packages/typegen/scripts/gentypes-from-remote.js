@@ -6,9 +6,10 @@ const path = require("node:path");
 const fs = require("node:fs");
 
 const getRemoteTypes = (clientKey) => {
-  return fetch(`https//api.progressively.app/sdk/${clientKey}/types`).then(
-    (res) => res.text()
-  );
+  const endpoint =
+    process.env.PROGRESSIVELY_API || "https://api.progressively.app";
+
+  return fetch(`${endpoint}/sdk/${clientKey}/types`).then((res) => res.text());
 };
 
 const genFromRemote = async () => {

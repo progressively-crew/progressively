@@ -1,7 +1,7 @@
 {
   "name": "@progressively/typegen",
   "author": "mfrachet",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "bin": {
     "progressively-gen-types": "./scripts/gentypes-from-remote.js",
     "progressively-restore-types": "./scripts/restore-types.js"
