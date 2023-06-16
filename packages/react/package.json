@@ -1,7 +1,7 @@
 {
   "name": "@progressively/react",
   "author": "mfrachet",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "./lib/cjs/index.cjs.js",
   "module": "./lib/esm/index.mjs",
   "exports": {
@@ -40,7 +40,7 @@
     "vitest": "^0.29.7"
   },
   "dependencies": {
-    "@progressively/sdk-js": "workspace:*"
+    "@progressively/sdk-js": "^1.0.0"
   },
   "bundlesize": [
     {

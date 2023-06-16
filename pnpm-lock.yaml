@@ -536,7 +536,7 @@ importers:
 
   packages/react:
     specifiers:
-      '@progressively/sdk-js': workspace:*
+      '@progressively/sdk-js': ^1.0.0
       '@rollup/plugin-node-resolve': ^15.0.1
       '@rollup/plugin-terser': ^0.4.0
       '@rollup/plugin-typescript': ^11.0.0
@@ -575,7 +575,7 @@ importers:
 
   packages/react-native:
     specifiers:
-      '@progressively/types': workspace:*
+      '@progressively/types': ^1.0.0
       '@types/base-64': ^1.0.0
       base-64: ^1.0.0
       react: 18.2.0
@@ -592,7 +592,7 @@ importers:
 
   packages/sdk-js:
     specifiers:
-      '@progressively/types': workspace:*
+      '@progressively/types': ^1.0.0
       '@types/node-fetch': 2.6.2
       '@types/ws': ^8.5.3
       bundlesize2: ^0.0.31
@@ -617,7 +617,7 @@ importers:
 
   packages/sdk-node:
     specifiers:
-      '@progressively/types': workspace:*
+      '@progressively/types': ^1.0.0
       '@types/node': ^18.6.3
       node-fetch: ^2.6.7
       typescript: ^4.7.4
@@ -630,7 +630,7 @@ importers:
 
   packages/server-side:
     specifiers:
-      '@progressively/types': workspace:*
+      '@progressively/types': ^1.0.0
       '@rollup/plugin-node-resolve': ^13.3.0
       '@rollup/plugin-terser': ^0.4.0
       '@rollup/plugin-typescript': ^8.3.2
