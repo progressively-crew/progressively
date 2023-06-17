@@ -59,7 +59,15 @@ export class SdkController {
   }
 
   @Get('/:clientKey/types')
-  getTypesDefinitions(@Param('clientKey') clientKey: string) {
+  async getTypesDefinitions(@Param('clientKey') clientKey: string) {
+    const isSaas = process.env.IS_SAAS === 'true';
+
+    if (isSaas) {
+      const isPlanValid = await this.userService.isPlanValid(clientKey);
+
+      if (!isPlanValid) return ``;
+    }
+
     return this.sdkService.generateTypescriptTypes(clientKey);
   }
 
@@ -99,6 +107,16 @@ export class SdkController {
 
     if (!fields.clientKey) {
       throw new BadRequestException();
+    }
+
+    const isSaas = process.env.IS_SAAS === 'true';
+
+    if (isSaas) {
+      const isPlanValid = await this.userService.isPlanValid(
+        String(fields.clientKey),
+      );
+
+      if (!isPlanValid) return {};
     }
 
     const eventCreated = await this.sdkService.hitEvent(
