@@ -12,7 +12,19 @@ import { seedForSaas } from "./saas";
 
 const prismaClient = new PrismaClient();
 
+const guardSeeding = () => {
+  const dbUrl = process.env.DATABASE_URL;
+  const isProduction = dbUrl && !dbUrl.includes("localhost");
+
+  if (isProduction) {
+    return console.log(
+      "\nYou are trying to run an operation on a production database. It's aborted :).\n"
+    );
+  }
+};
+
 export const seedDb = async () => {
+  guardSeeding();
   await prismaClient.$connect();
 
   try {
@@ -367,6 +379,7 @@ export const seedDb = async () => {
 };
 
 export const cleanupDb = async () => {
+  guardSeeding();
   await prismaClient.$connect();
   const tablenames = await prismaClient.$queryRaw<
     Array<{ tablename: string }>
