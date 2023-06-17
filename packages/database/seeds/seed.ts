@@ -17,7 +17,7 @@ const guardSeeding = () => {
   const isProduction = dbUrl && !dbUrl.includes("localhost");
 
   if (isProduction) {
-    return console.log(
+    throw new Error(
       "\nYou are trying to run an operation on a production database. It's aborted :).\n"
     );
   }
