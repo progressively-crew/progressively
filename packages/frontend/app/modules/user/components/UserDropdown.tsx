@@ -3,6 +3,8 @@ import { Avatar } from "~/components/Avatar";
 import { Button } from "~/components/Buttons/Button";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { useProject } from "~/modules/projects/contexts/useProject";
+import { FeedbackFish } from "@feedback-fish/react";
+import { GoCommentDiscussion } from "react-icons/go";
 
 export interface UserDropdownProps {
   user: User;
@@ -24,6 +26,12 @@ export const UserDropdown = ({ user }: UserDropdownProps) => {
           Add a feature flag
         </CreateButton>
       )}
+
+      <FeedbackFish projectId="012aac85b784ee">
+        <Button variant="tertiary" icon={<GoCommentDiscussion />}>
+          Send feedback
+        </Button>
+      </FeedbackFish>
 
       <Button
         to="/dashboard/profile"
