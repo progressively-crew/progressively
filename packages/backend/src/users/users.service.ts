@@ -230,15 +230,14 @@ export class UsersService {
   }
 
   async isPlanValid(clientKey: string) {
-    const projectOwner = await this.getProjectOwnerFromEnvClientKey(clientKey);
-    if (!projectOwner) return false;
+    const activePlan = await this.getProjectOwnerFromEnvClientKey(clientKey);
+    if (!activePlan) return false;
 
     const flagHits = await this.getHitsForEnv(clientKey);
-    const lastPlan = projectOwner?.allPlanSubscribed?.[0];
 
     // Subscriber
-    if (lastPlan) {
-      return flagHits < lastPlan.evaluationCount;
+    if (activePlan) {
+      return flagHits < activePlan.evaluationCount;
     }
 
     // trialing
@@ -266,8 +265,8 @@ export class UsersService {
     });
   }
 
-  getProjectOwnerFromEnvClientKey(clientKey: string) {
-    return this.prisma.user.findFirst({
+  async getProjectOwnerFromEnvClientKey(clientKey: string) {
+    const userOwnerOfProject = await this.prisma.user.findFirst({
       where: {
         userProject: {
           some: {
@@ -282,9 +281,17 @@ export class UsersService {
           },
         },
       },
-      include: {
-        allPlanSubscribed: { orderBy: { createdAt: 'desc' }, take: 1 },
+    });
+
+    if (!userOwnerOfProject) return undefined;
+
+    const activePlan = await this.prisma.plan.findFirst({
+      where: {
+        status: PlanStatus.ACTIVE,
+        userUuid: userOwnerOfProject.uuid,
       },
     });
+
+    return activePlan;
   }
 }
