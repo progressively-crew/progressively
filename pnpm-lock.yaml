@@ -413,6 +413,7 @@ importers:
   packages/frontend:
     specifiers:
       '@babel/core': ^7.21.4
+      '@feedback-fish/react': ^1.2.2
       '@headlessui/react': ^1.7.14
       '@okta/okta-auth-js': ^7.2.0
       '@progressively/database': workspace:^1.0.0
@@ -456,6 +457,7 @@ importers:
       timeago.js: ^4.0.2
       typescript: ^5.0.4
     dependencies:
+      '@feedback-fish/react': 1.2.2_react@18.2.0
       '@headlessui/react': 1.7.14_biqbaboplfbrettd7655fr4n2y
       '@okta/okta-auth-js': 7.2.0
       '@progressively/react': link:../react
@@ -3750,6 +3752,15 @@ packages:
     resolution: {integrity: sha512-kf9RB0Fg7NZfap83B3QOqOGg9QmD9yBudqQXzzOtn3i4y7ZUXe5ONeW34Gwi+TxhH4mvj72R1Zc300KUMa9Bng==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
+
+  /@feedback-fish/react/1.2.2_react@18.2.0:
+    resolution: {integrity: sha512-T6VxMM8nNsD3b5ulVsrcvcrNDAc4d73RLYK8Iw+6PFPIdMU2I/mOiuAHvfGauBVIWYHflja4VOdjm3z4CtlvYQ==}
+    engines: {node: '>=10.16.0'}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /@flagship.io/js-sdk/3.1.2_encoding@0.1.13:
     resolution: {integrity: sha512-d0ZQp8S57m2ErRNJgsp2gYsrxvULLsxLYznVruKlQ2F6l9GtSlTeVE2DcRun6xNjZzRnCJxCnZQ9279TgzAuRA==}
