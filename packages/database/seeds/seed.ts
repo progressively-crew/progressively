@@ -15,6 +15,15 @@ const prismaClient = new PrismaClient();
 export const seedDb = async () => {
   await prismaClient.$connect();
 
+  const dbUrl = process.env.DATABASE_URL;
+  const isDevelopmentMigration = dbUrl.includes("localhost");
+
+  if (!isDevelopmentMigration) {
+    return console.log(
+      "You are trying to seed a production database. Changes will not apply"
+    );
+  }
+
   try {
     // Initial seeding
     const [marvin, john, jane] = await seedUsers(prismaClient);
@@ -367,6 +376,15 @@ export const seedDb = async () => {
 };
 
 export const cleanupDb = async () => {
+  const dbUrl = process.env.DATABASE_URL;
+  const isDevelopmentMigration = dbUrl.includes("localhost");
+
+  if (!isDevelopmentMigration) {
+    return console.log(
+      "\nYou are trying to cleanup a production database. Changes will not apply\n"
+    );
+  }
+
   await prismaClient.$connect();
   const tablenames = await prismaClient.$queryRaw<
     Array<{ tablename: string }>
