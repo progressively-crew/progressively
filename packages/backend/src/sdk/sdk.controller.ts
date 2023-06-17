@@ -116,7 +116,9 @@ export class SdkController {
         String(fields.clientKey),
       );
 
-      if (!isPlanValid) return {};
+      if (!isPlanValid) {
+        throw new BadRequestException();
+      }
     }
 
     const eventCreated = await this.sdkService.hitEvent(
