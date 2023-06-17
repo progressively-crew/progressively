@@ -231,7 +231,6 @@ export class UsersService {
 
   async isPlanValid(clientKey: string) {
     const activePlan = await this.getProjectOwnerFromEnvClientKey(clientKey);
-    if (!activePlan) return false;
 
     const flagHits = await this.getHitsForEnv(clientKey);
 
