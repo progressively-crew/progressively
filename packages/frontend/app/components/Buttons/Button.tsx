@@ -49,7 +49,7 @@ export const Button = ({
   ...props
 }: ButtonProps) => {
   const sharedButtonClass =
-    "whitespace-nowrap inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:hover:bg-slate-800 dark:hover:text-slate-100 disabled:opacity-50 dark:focus:ring-slate-400 disabled:pointer-events-none dark:focus:ring-offset-slate-900";
+    "relative whitespace-nowrap inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:hover:bg-slate-800 dark:hover:text-slate-100 disabled:opacity-50 dark:focus:ring-slate-400 disabled:pointer-events-none dark:focus:ring-offset-slate-900";
 
   const actuelScheme = scheme || "default";
   const actualVariant = variant || "primary";
@@ -97,10 +97,9 @@ export const Button = ({
       aria-disabled={isLoading}
       aria-label={isLoading ? loadingText : undefined}
     >
-      {isLoading && <Spinner />}
-      {icon && !isLoading && icon}
-
-      <span className={icon ? "text" : undefined}>{children}</span>
+      {isLoading && <Spinner className="text-xl absolute" />}
+      <span className={isLoading ? "opacity-0" : undefined}>{icon}</span>
+      <span className={isLoading ? "opacity-0" : undefined}>{children}</span>
     </button>
   );
 };

@@ -28,6 +28,7 @@ export const action: ActionFunction = async ({
 }): Promise<ActionData | Response> => {
   const formData = await request.formData();
   const projectName = formData.get("name")?.toString();
+  await new Promise((resolve) => setTimeout(resolve, 3000));
 
   const errors = validateProjectName({ name: projectName });
 
