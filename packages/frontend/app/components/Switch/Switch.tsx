@@ -1,4 +1,4 @@
-import { useId } from "react";
+import { useEffect, useId, useState } from "react";
 import { Label } from "./Label";
 import { RawSwitch } from "./RawSwitch";
 
@@ -18,6 +18,11 @@ export const Switch = ({
   type = "submit",
 }: SwitchProps) => {
   const id = useId();
+  const [isChecked, setIsChecked] = useState(checked);
+
+  useEffect(() => {
+    setIsChecked(checked);
+  }, [checked]);
 
   return (
     <div className="flex items-center gap-2">
@@ -26,11 +31,14 @@ export const Switch = ({
       </Label>
       <RawSwitch
         id={id}
-        checked={checked}
+        checked={isChecked}
         aria-label={label}
         type={type}
         form={form}
-        onClick={onClick}
+        onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+          setIsChecked((s) => !s);
+          onClick?.(e);
+        }}
       />
     </div>
   );
