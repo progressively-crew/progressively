@@ -135,7 +135,7 @@ export class ProjectsController {
         newMember.uuid,
       );
 
-      await this.mailService.sendResetPasswordMail(
+      await this.mailService.inviteUserProject(
         newMember.fullname,
         newMember.email,
         rawToken,

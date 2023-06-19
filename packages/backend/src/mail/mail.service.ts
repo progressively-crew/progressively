@@ -3,6 +3,7 @@ import * as nodemailer from 'nodemailer';
 import { Smtp } from './smtp-constants';
 import { ResetPasswordEmail } from './emails/reset-password';
 import { RegistrationEmail } from './emails/registration';
+import { InviteMemberEmail } from './emails/invite-member';
 
 @Injectable()
 export class MailService {
@@ -43,6 +44,20 @@ export class MailService {
     resetPasswordToken: string,
   ) {
     const html = ResetPasswordEmail({
+      fullname,
+      resetPasswordLink: `${process.env.FRONTEND_URL}/reset-password?token=${resetPasswordToken}&p=s`,
+    });
+
+    return this.transporter.sendMail({
+      from: '"The Progressively Team" <no-reply@Progressively.io>', // sender address
+      to,
+      subject: 'Reset your password', // Subject line
+      html,
+    });
+  }
+
+  inviteUserProject(fullname: string, to: string, resetPasswordToken: string) {
+    const html = InviteMemberEmail({
       fullname,
       resetPasswordLink: `${process.env.FRONTEND_URL}/reset-password?token=${resetPasswordToken}&p=s`,
     });
