@@ -11,7 +11,6 @@ import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Typography } from "~/components/Typography";
 import { Li, Ul } from "~/components/Ul";
-import { FormGroup } from "~/components/Fields/FormGroup";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ActionFunction, V2_MetaFunction } from "@remix-run/node";
 import { useActionData, Form, useTransition } from "@remix-run/react";
@@ -119,45 +118,39 @@ export default function CreateProjectPage() {
   const hasError = Object.keys(errorsToDisplay).length > 0;
 
   return (
-    <CreateEntityLayout
-      status={
-        data?.success ? (
-          <SuccessBox id="member-added">
-            The user has been invited invited to join the project.
-          </SuccessBox>
-        ) : hasError ? (
-          <ErrorBox list={errorsToDisplay} />
-        ) : null
-      }
-      titleSlot={<PageTitle value="Add member" />}
-      submitSlot={
-        <SubmitButton
-          isLoading={transition.state === "submitting"}
-          loadingText="Adding the member, please wait..."
-        >
-          Add the member
-        </SubmitButton>
-      }
-      backLinkSlot={
-        <BackLink to={`/dashboard/projects/${project.uuid}/settings`}>
-          Back to {project.name}
-        </BackLink>
-      }
-    >
-      <Section>
-        <Form method="post">
-          <FormGroup>
-            <TextInput
-              isInvalid={Boolean(errors?.email)}
-              name="email"
-              label="Member email"
-              placeholder="e.g: john.doe@gmail.com"
-            />
-
-            <div></div>
-          </FormGroup>
-        </Form>
-      </Section>
-    </CreateEntityLayout>
+    <Form method="post" className="flex flex-col flex-1">
+      <CreateEntityLayout
+        status={
+          data?.success ? (
+            <SuccessBox id="member-added">
+              The user has been invited invited to join the project.
+            </SuccessBox>
+          ) : hasError ? (
+            <ErrorBox list={errorsToDisplay} />
+          ) : null
+        }
+        titleSlot={<PageTitle value="Add member" />}
+        submitSlot={
+          <SubmitButton
+            isLoading={transition.state === "submitting"}
+            loadingText="Adding the member, please wait..."
+          >
+            Add the member
+          </SubmitButton>
+        }
+        backLinkSlot={
+          <BackLink to={`/dashboard/projects/${project.uuid}/settings`}>
+            Back to {project.name}
+          </BackLink>
+        }
+      >
+        <TextInput
+          isInvalid={Boolean(errors?.email)}
+          name="email"
+          label="Member email"
+          placeholder="e.g: john.doe@gmail.com"
+        />
+      </CreateEntityLayout>
+    </Form>
   );
 }
