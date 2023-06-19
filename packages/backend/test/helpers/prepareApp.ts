@@ -15,6 +15,15 @@ export const prepareApp = async () => {
     .useClass(TestLogger)
     .overrideProvider(MailService)
     .useValue({
+      inviteUserProject: async (
+        fullname: string,
+        to: string,
+        activationToken: string,
+      ) => {
+        await request(app.getHttpServer()).get(
+          `/users/activate/${activationToken}`,
+        );
+      },
       sendRegistrationMail: async (
         fullname: string,
         to: string,
