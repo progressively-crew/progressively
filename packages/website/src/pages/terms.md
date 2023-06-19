@@ -109,4 +109,4 @@ This agreement shall be governed by the laws of France, and the courts of France
 
 # Contact us
 
-If you have a question about any of the Terms of Service, please contact us at marvin.frachet@protonmail.com.
+If you have a question about any of the Terms of Service, please contact us at contact@progressively.app.

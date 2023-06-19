@@ -86,7 +86,7 @@ Also, in Progressively, it's possible to create "metrics". You can get navigatio
 
 ## Resolving Complaints
 
-If you have concerns about the way Progressively is handling your User Personal Information, please let us know immediately by emailing us at marvin.frachet@protonmail.com with the subject line "Privacy Concerns." We will respond within 45 days at the latest.
+If you have concerns about the way Progressively is handling your User Personal Information, please let us know immediately by emailing us at contact@progressively.app with the subject line "Privacy Concerns." We will respond within 45 days at the latest.
 
 ## How We Respond to Compelled Disclosure
 
@@ -96,7 +96,7 @@ In complying with court orders and similar legal processes, Progressively strive
 
 ## How You Can Access and Control the Information We Collect
 
-If you're already a Progressively user, you may access, update, alter your basic user profile information by editing your user profile or contacting marvin.frachet@protonmail.com.
+If you're already a Progressively user, you may access, update, alter your basic user profile information by editing your user profile or contacting contact@progressively.app.
 
 ### Data Retention and Deletion
 
@@ -114,4 +114,4 @@ We will communicate with you using:
 
 Although most changes are likely to be minor, Progressively may change our Privacy Statement from time to time. We will provide notification to Users of material changes to this Privacy Statement through our Website at least 30 days prior to the change taking effect by posting a notice on our home page. For changes to this Privacy Statement that do not affect your rights, we encourage visitors to check this page frequently.
 
-Questions regarding Progressively's Privacy Statement or information practices should be directed to marvin.frachet@protonmail.com.
+Questions regarding Progressively's Privacy Statement or information practices should be directed to contact@progressively.app.
