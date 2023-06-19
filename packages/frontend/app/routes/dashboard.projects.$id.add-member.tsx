@@ -19,6 +19,8 @@ import { useProject } from "~/modules/projects/contexts/useProject";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
+import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
+import { BackLink } from "~/components/BackLink";
 
 export const handle = {
   breadcrumb: (match: { params: any }) => {
@@ -117,8 +119,7 @@ export default function CreateProjectPage() {
   const hasError = Object.keys(errorsToDisplay).length > 0;
 
   return (
-    <DashboardLayout
-      user={user}
+    <CreateEntityLayout
       status={
         data?.success ? (
           <SuccessBox id="member-added">
@@ -128,8 +129,21 @@ export default function CreateProjectPage() {
           <ErrorBox list={errorsToDisplay} />
         ) : null
       }
+      titleSlot={<PageTitle value="Add member" />}
+      submitSlot={
+        <SubmitButton
+          isLoading={transition.state === "submitting"}
+          loadingText="Adding the member, please wait..."
+        >
+          Add the member
+        </SubmitButton>
+      }
+      backLinkSlot={
+        <BackLink to={`/dashboard/projects/${project.uuid}/settings`}>
+          Back to {project.name}
+        </BackLink>
+      }
     >
-      <PageTitle value="Add member" />
       <Section>
         <Form method="post">
           <FormGroup>
@@ -140,17 +154,10 @@ export default function CreateProjectPage() {
               placeholder="e.g: john.doe@gmail.com"
             />
 
-            <div>
-              <SubmitButton
-                isLoading={transition.state === "submitting"}
-                loadingText="Adding the member, please wait..."
-              >
-                Add the member
-              </SubmitButton>
-            </div>
+            <div></div>
           </FormGroup>
         </Form>
       </Section>
-    </DashboardLayout>
+    </CreateEntityLayout>
   );
 }
