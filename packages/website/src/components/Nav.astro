@@ -1,9 +1,6 @@
 ---
 import LinkButton from "./LinkButton.astro";
 import Logo from "./Logo.astro";
-import DiscordIcon from "./icons/DiscordIcon.astro";
-import GithubIcon from "./icons/GithubIcon.astro";
-import TwitterIcon from "./icons/TwitterIcon.astro";
 
 export interface Props {
   showPricing?: boolean;
@@ -13,7 +10,7 @@ const { showPricing } = Astro.props;
 ---
 
 <nav
-  class="flex justify-between h-14 items-center bg-white dark:bg-slate-800 border-b border-gray-200 px-8"
+  class="flex justify-between h-14 items-center bg-white dark:bg-slate-800 border-b border-gray-200 px-8 overflow-x-scroll"
 >
   <ul class="flex h-12 items-center gap-2">
     <li>
@@ -58,11 +55,15 @@ const { showPricing } = Astro.props;
     </li>
   </ul>
 
-  <LinkButton
-    variant="secondary"
-    href="https://dashboard.progressively.app/"
-    id="documentation"
-  >
-    Sign in
-  </LinkButton>
+  {
+    showPricing && (
+      <LinkButton
+        variant="secondary"
+        href="https://dashboard.progressively.app/"
+        id="documentation"
+      >
+        Sign in
+      </LinkButton>
+    )
+  }
 </nav>
