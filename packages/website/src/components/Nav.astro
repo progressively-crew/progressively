@@ -1,6 +1,9 @@
 ---
 import LinkButton from "./LinkButton.astro";
-import Container from "./Container.astro";
+import Logo from "./Logo.astro";
+import DiscordIcon from "./icons/DiscordIcon.astro";
+import GithubIcon from "./icons/GithubIcon.astro";
+import TwitterIcon from "./icons/TwitterIcon.astro";
 
 export interface Props {
   showPricing?: boolean;
@@ -9,41 +12,57 @@ export interface Props {
 const { showPricing } = Astro.props;
 ---
 
-<Container>
-  <nav class="flex flex-wrap md:justify-end container py-2 gap-2">
-    <LinkButton variant="tertiary" href="/">Home</LinkButton>
+<nav
+  class="flex justify-between h-14 items-center bg-white dark:bg-slate-800 border-b border-gray-200 px-8"
+>
+  <ul class="flex h-12 items-center gap-2">
+    <li>
+      <LinkButton variant="tertiary" href="/">
+        <span class="sr-only">Home</span>
+        <Logo />
+      </LinkButton>
+    </li>
 
-    <LinkButton variant="tertiary" href="/features">Features</LinkButton>
+    <li>
+      <LinkButton variant="tertiary" href="/features">Features</LinkButton>
+    </li>
 
     {
       showPricing && (
-        <LinkButton variant="tertiary" href="pricing" id="pricing">
-          Pricing
-        </LinkButton>
+        <li>
+          <LinkButton variant="tertiary" href="pricing" id="pricing">
+            Pricing
+          </LinkButton>
+        </li>
       )
     }
 
-    <LinkButton variant="tertiary" href="/why-it-s-different">
-      Why it's different
-    </LinkButton>
+    <li>
+      <LinkButton variant="tertiary" href="/why-it-s-different">
+        Why it's different
+      </LinkButton>
+    </li>
 
-    <LinkButton variant="tertiary" href="/blog">Blog</LinkButton>
+    <li>
+      <LinkButton variant="tertiary" href="/blog">Blog</LinkButton>
+    </li>
 
-    <LinkButton
-      variant="tertiary"
-      href="https://docs.progressively.app/"
-      id="documentation"
-    >
-      Documentation
-    </LinkButton>
+    <li>
+      <LinkButton
+        variant="tertiary"
+        href="https://docs.progressively.app/"
+        id="documentation"
+      >
+        Documentation
+      </LinkButton>
+    </li>
+  </ul>
 
-    <LinkButton
-      variant="tertiary"
-      href="https://github.com/progressively-crew/progressively"
-      target={"_blank"}
-      id="github"
-    >
-      Github
-    </LinkButton>
-  </nav>
-</Container>
+  <LinkButton
+    variant="secondary"
+    href="https://dashboard.progressively.app/"
+    id="documentation"
+  >
+    Sign in
+  </LinkButton>
+</nav>

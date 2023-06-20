@@ -1,6 +1,9 @@
 ---
 import Container from "../components/Container.astro";
 import LinkButton from "../components/LinkButton.astro";
+import DiscordIcon from "../components/icons/DiscordIcon.astro";
+import GithubIcon from "../components/icons/GithubIcon.astro";
+import TwitterIcon from "../components/icons/TwitterIcon.astro";
 import Layout from "../layouts/Layout.astro";
 ---
 
@@ -10,6 +13,41 @@ import Layout from "../layouts/Layout.astro";
       <div
         class="flex justify-center lg:items-center flex-col py-20 md:py-40 gap-4"
       >
+        <ul class="flex h-12 items-center">
+          <li>
+            <LinkButton
+              variant="tertiary"
+              href="https://github.com/progressively-crew/progressively"
+              target={"_blank"}
+              id="github"
+            >
+              <GithubIcon />
+            </LinkButton>
+          </li>
+
+          <li>
+            <LinkButton
+              variant="tertiary"
+              href="https://discord.gg/kJ55wBXC37"
+              target={"_blank"}
+              id="discord"
+            >
+              <DiscordIcon />
+            </LinkButton>
+          </li>
+
+          <li>
+            <LinkButton
+              variant="tertiary"
+              href="https://twitter.com/_progressively"
+              target={"_blank"}
+              id="twitter"
+            >
+              <TwitterIcon />
+            </LinkButton>
+          </li>
+        </ul>
+
         <h1 class="text-5xl md:text-6xl font-extrabold">
           Introducing <span>Progressively</span>
         </h1>
@@ -21,20 +59,21 @@ import Layout from "../layouts/Layout.astro";
 
         <div class="flex flex-col sm:flex-row gap-4">
           <LinkButton
-            href="https://docs.progressively.app/get-started/quick-start"
-            target={"_blank"}
-            id="get-started"
-          >
-            Get started locally
-          </LinkButton>
-
-          <LinkButton
-            variant="tertiary"
+            variant="primary"
             href="https://dashboard.progressively.app/signin"
             target={"_blank"}
             id="demo-instance"
           >
-            Demo instance
+            Get started with SaaS
+          </LinkButton>
+
+          <LinkButton
+            href="https://docs.progressively.app/get-started/quick-start"
+            target={"_blank"}
+            id="get-started"
+            variant="secondary"
+          >
+            Get started locally
           </LinkButton>
         </div>
       </div>
