@@ -1,12 +1,6 @@
 ---
 import LinkButton from "./LinkButton.astro";
 import Logo from "./Logo.astro";
-
-export interface Props {
-  showPricing?: boolean;
-}
-
-const { showPricing } = Astro.props;
 ---
 
 <nav
@@ -21,30 +15,6 @@ const { showPricing } = Astro.props;
     </li>
 
     <li>
-      <LinkButton variant="tertiary" href="/features">Features</LinkButton>
-    </li>
-
-    {
-      showPricing && (
-        <li>
-          <LinkButton variant="tertiary" href="pricing" id="pricing">
-            Pricing
-          </LinkButton>
-        </li>
-      )
-    }
-
-    <li>
-      <LinkButton variant="tertiary" href="/why-it-s-different">
-        Why it's different
-      </LinkButton>
-    </li>
-
-    <li>
-      <LinkButton variant="tertiary" href="/blog">Blog</LinkButton>
-    </li>
-
-    <li>
       <LinkButton
         variant="tertiary"
         href="https://docs.progressively.app/"
@@ -53,17 +23,23 @@ const { showPricing } = Astro.props;
         Documentation
       </LinkButton>
     </li>
+
+    <li>
+      <LinkButton variant="tertiary" href="/blog">Blog</LinkButton>
+    </li>
+
+    <li>
+      <LinkButton variant="tertiary" href="pricing" id="pricing">
+        Pricing
+      </LinkButton>
+    </li>
   </ul>
 
-  {
-    showPricing && (
-      <LinkButton
-        variant="secondary"
-        href="https://dashboard.progressively.app/"
-        id="documentation"
-      >
-        Sign in
-      </LinkButton>
-    )
-  }
+  <LinkButton
+    variant="secondary"
+    href="https://dashboard.progressively.app/"
+    id="documentation"
+  >
+    Sign in
+  </LinkButton>
 </nav>

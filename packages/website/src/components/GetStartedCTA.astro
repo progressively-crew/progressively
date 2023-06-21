@@ -1,0 +1,41 @@
+---
+import LinkButton from "./LinkButton.astro";
+---
+
+<div class="bg-white">
+  <div class="px-4 md:px-8 max-w-6xl mx-auto">
+    <section class={"py-20 md:py-40"}>
+      <h2
+        class="font-extrabold text-4xl md:text-5xl pb-4 md:text-center flex flex-row gap-4 justify-center items-center"
+      >
+        Want to give it a try?
+      </h2>
+
+      <p class="text-2xl leading-relaxed md:text-center">
+        Get 14 free days including 1000 flag evaluations when using the SaaS
+      </p>
+
+      <div
+        class="flex flex-col sm:flex-row gap-4 items-enter justify-center pt-4"
+      >
+        <LinkButton
+          variant="primary"
+          href="https://dashboard.progressively.app/register"
+          target={"_blank"}
+          id="demo-instance"
+        >
+          Get started with SaaS
+        </LinkButton>
+
+        <LinkButton
+          href="https://docs.progressively.app/get-started/quick-start"
+          target={"_blank"}
+          id="get-started"
+          variant="secondary"
+        >
+          Get started locally
+        </LinkButton>
+      </div>
+    </section>
+  </div>
+</div>

@@ -4,6 +4,7 @@ import Container from "../components/Container.astro";
 import { PricingCalculator } from "../components/PricingCalculator";
 import Faq from "../components/Faq.astro";
 import LinkButton from "../components/LinkButton.astro";
+import { Card } from "../components/Card";
 
 const frontendUrl = import.meta.env.FRONTEND_URL;
 
@@ -13,7 +14,7 @@ const trialUrl = `${frontendUrl}/register`;
 <Layout title="Pricing plans of Progressively">
   <Container>
     <header
-      class="flex flex-col pt-20 md:pt-40 pb-12 gap-4 text-center items-center justify-center"
+      class="flex flex-col pt-20 md:pt-40 pb-12 gap-4 md:text-center md:items-center md:justify-center"
     >
       <h1 class="text-5xl md:text-6xl font-extrabold">Pricing</h1>
       <p class="text-2xl leading-relaxed max-w-4xl">
@@ -26,18 +27,20 @@ const trialUrl = `${frontendUrl}/register`;
     </header>
 
     <main>
-      <div
-        class="bg-white rounded-lg drop-shadow-lg overflow-hidden px-32 py-20 max-w-4xl mx-auto"
-      >
-        <PricingCalculator client:load />
+      <div class="mx-auto max-w-2xl">
+        <Card>
+          <div class="p-4 md:p-12">
+            <PricingCalculator client:load />
+          </div>
+        </Card>
       </div>
 
       <div class="text-center pt-4 pb-20">
         <LinkButton href={trialUrl}>Start your free trial</LinkButton>
       </div>
 
-      <div class="pb-12">
-        <h2 class="font-extrabold text-4xl md:text-5xl pb-4 text-center">
+      <div class="py-20">
+        <h2 class="font-extrabold text-4xl md:text-5xl pb-4 md:text-center">
           FAQ
         </h2>
         <div class="flex flex-col gap-4 mx-auto max-w-4xl">
