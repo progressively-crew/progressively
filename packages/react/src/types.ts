@@ -4,7 +4,7 @@ import React from "react";
 export interface ProgressivelyProviderProps {
   clientKey: string;
   initialFlags?: FlagDict;
-  fields?: Record<string, string | number | boolean>;
+  fields?: Fields;
   apiUrl?: string;
   websocketUrl?: string;
   children?: React.ReactNode;

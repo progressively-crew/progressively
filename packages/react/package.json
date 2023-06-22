@@ -1,7 +1,7 @@
 {
   "name": "@progressively/react",
   "author": "mfrachet",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "./lib/cjs/index.cjs.js",
   "module": "./lib/esm/index.mjs",
   "exports": {
