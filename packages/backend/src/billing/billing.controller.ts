@@ -37,16 +37,20 @@ export class BillingController {
     const user: UserRetrieveDTO = req.user;
     try {
       const stripUser = await this.billingService.getStripeUser(user.uuid);
-      const existingSubscription =
-        await this.billingService.getUserCurrentSubscription(stripUser);
+      const activePlan = await this.billingService.getActivePlan(user.uuid);
 
-      if (existingSubscription) {
-        await this.billingService.updateSubscription(
-          checkoutDto.priceId,
-          stripUser,
-        );
+      if (activePlan) {
+        const existingSubscription =
+          await this.billingService.getUserCurrentSubscription(stripUser);
 
-        return { updated: true };
+        if (existingSubscription) {
+          await this.billingService.updateSubscription(
+            checkoutDto.priceId,
+            stripUser,
+          );
+
+          return { updated: true };
+        }
       }
 
       const sessionUrl = await this.billingService.getCheckoutUrl(

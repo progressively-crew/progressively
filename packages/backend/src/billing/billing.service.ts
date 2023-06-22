@@ -33,6 +33,15 @@ export class BillingService {
     return existingSubscription;
   }
 
+  getActivePlan(userUuid: string) {
+    return this.prisma.plan.findFirst({
+      where: {
+        status: PlanStatus.ACTIVE,
+        userUuid,
+      },
+    });
+  }
+
   async updateSubscription(priceId: string, stripeUser: StripeUser) {
     const existingSubscription = await this.prisma.stripeTransaction.findFirst({
       where: {
