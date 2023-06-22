@@ -63,10 +63,9 @@ describe("/dashboard/profile/billing/upgrade", () => {
         cy.injectAxe();
 
         cy.title().should("eq", "Progressively | Profile | Billing | Upgrade");
-        cy.findByRole("button", { name: "Update" }).click();
 
         cy.findByText(
-          "Something went wrong when trying to add the plan."
+          "No plan exists with the amount you've tried to set."
         ).should("be.visible");
 
         cy.checkA11y();

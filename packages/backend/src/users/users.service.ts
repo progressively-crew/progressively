@@ -233,14 +233,16 @@ export class UsersService {
     const activePlan = await this.getProjectOwnerFromEnvClientKey(clientKey);
 
     const flagHits = await this.getHitsForEnv(clientKey);
+    const metricHits = await this.getMetricHitPerEnv(clientKey);
+    const totalHits = flagHits + metricHits;
 
     // Subscriber
     if (activePlan) {
-      return flagHits < activePlan.evaluationCount;
+      return totalHits < activePlan.evaluationCount;
     }
 
     // trialing
-    return flagHits < FlagEvaluationLimitTrial;
+    return totalHits < FlagEvaluationLimitTrial;
   }
 
   getHitsForEnv(environmentKey: string) {
@@ -250,6 +252,27 @@ export class UsersService {
     const end = new Date(start.getFullYear(), start.getMonth() + 1, 0);
 
     return this.prisma.flagHit.count({
+      where: {
+        date: {
+          lte: end,
+          gte: start,
+        },
+        flagEnvironment: {
+          environment: {
+            clientKey: environmentKey,
+          },
+        },
+      },
+    });
+  }
+
+  getMetricHitPerEnv(environmentKey: string) {
+    const start = new Date();
+    start.setDate(1);
+
+    const end = new Date(start.getFullYear(), start.getMonth() + 1, 0);
+
+    return this.prisma.pMetricHit.count({
       where: {
         date: {
           lte: end,

@@ -57,7 +57,7 @@ describe('UsersController (e2e)', () => {
 
       expect(body).toMatchObject({
         activePlan: {
-          evaluationCount: 20000,
+          evaluationCount: 100000,
           uuid: '2',
         },
         plans: [

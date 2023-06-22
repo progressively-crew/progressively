@@ -13,7 +13,7 @@ import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { Typography } from "~/components/Typography";
 import { Form, useActionData, useSearchParams } from "@remix-run/react";
-import { EvaluationToPriceId, calculatePrice } from "@progressively/shared";
+import { EvaluationToPriceId, Prices } from "@progressively/shared";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { checkout } from "~/modules/billing/services/checkout";
 
@@ -119,7 +119,16 @@ export default function UpgradeBillingPage() {
     );
   }
 
-  const total = calculatePrice(Number(evalCount));
+  const actualPlan = Prices.find((price) => price.events === castedEvalCount);
+  if (!actualPlan) {
+    return (
+      <main>
+        <Typography as="h1">
+          No plan exists with the amount you've tried to set.
+        </Typography>
+      </main>
+    );
+  }
 
   return (
     <CreateEntityLayout
@@ -147,13 +156,13 @@ export default function UpgradeBillingPage() {
 
       <ul className="list-disc px-4 py-4 dark:text-white">
         <li>
-          <strong>{evalCount}</strong> flag evaluations
+          <strong>{actualPlan.events}</strong> flag evaluations
         </li>
       </ul>
 
       <Typography>
-        For a total of <strong>€{total}</strong> per month. This amount is
-        billed immediately when you validate the update.
+        For a total of <strong>{actualPlan.price}</strong> per month. This
+        amount is billed immediately when you validate the update.
       </Typography>
     </CreateEntityLayout>
   );

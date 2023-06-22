@@ -15,7 +15,7 @@ export const seedForSaas = async (prismaClient: PrismaClient, user: User) => {
     data: {
       uuid: "2",
       userUuid: user.uuid,
-      evaluationCount: 20000,
+      evaluationCount: 100000,
       status: "ACTIVE",
     },
   });

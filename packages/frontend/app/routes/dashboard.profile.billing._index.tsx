@@ -14,6 +14,7 @@ import { useState } from "react";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { useBillingInfo } from "~/modules/plans/hooks/useBillingInfo";
 import { Progress } from "~/components/Progress";
+import { Prices } from "@progressively/shared";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -42,9 +43,14 @@ export default function BillingPage() {
   const { plans, activePlan, remainingTrialingDays, hitsForMonth } =
     useBillingInfo();
 
-  const [evaluationCount, setEvaluationCount] = useState(
-    activePlan?.evaluationCount || 10_000
+  const indexFound = Prices.findIndex(
+    (x) => x.events === activePlan?.evaluationCount
   );
+
+  const initialIndex = indexFound === -1 ? 1 : indexFound + 1;
+
+  const [step, setStep] = useState(initialIndex);
+  const currentPlan = Prices[step - 1];
 
   const isSuccessPlanCreate = searchParams.get("success") === "true";
   const isSubscriptionUpdated =
@@ -92,7 +98,7 @@ export default function BillingPage() {
       <Card
         footer={
           <Button
-            href={`/dashboard/profile/billing/upgrade?evalCount=${evaluationCount}`}
+            href={`/dashboard/profile/billing/upgrade?evalCount=${currentPlan.events}`}
           >
             {activePlan ? "Adjust plan" : "Use this plan"}
           </Button>
@@ -124,8 +130,10 @@ export default function BillingPage() {
 
             <div className="pt-8 pb-6">
               <PricingCalculator
-                evaluationCount={evaluationCount}
-                onEvalCountChange={setEvaluationCount}
+                evaluationCount={currentPlan.events}
+                onEvalCountChange={setStep}
+                price={currentPlan.price}
+                step={step}
               />
             </div>
           </Section>
