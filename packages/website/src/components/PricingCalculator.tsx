@@ -1,5 +1,5 @@
 import { useId, useState } from "react";
-import { Prices, PriceIdToEvaluation } from "@progressively/shared";
+import { Prices } from "@progressively/shared";
 
 export const PricingCalculator = () => {
   const id = useId();

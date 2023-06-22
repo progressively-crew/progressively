@@ -1,4 +1,3 @@
-export const FlagEvaluationTenKCost = 12;
 export const FlagEvaluationLimitTrial = 1000;
 
 // const One = "price_1N8LrcIIMJ2kplmT99wSIcVE";
