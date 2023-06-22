@@ -29,10 +29,7 @@ describe("/dashboard/profile/billing", () => {
 
         cy.findByText("Passed plans").should("not.exist");
 
-        cy.findByLabelText("Flag evaluations/month").should(
-          "have.value",
-          10_000
-        );
+        cy.findByLabelText("Events/month").should("have.value", 1);
         cy.checkA11y();
       });
     });
@@ -52,10 +49,7 @@ describe("/dashboard/profile/billing", () => {
         ).should("be.visible");
         cy.findByText("Passed plans").should("be.visible");
 
-        cy.findByLabelText("Flag evaluations/month").should(
-          "have.value",
-          20_000
-        );
+        cy.findByLabelText("Events/month").should("have.value", 2);
         cy.checkA11y();
       });
     });

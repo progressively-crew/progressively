@@ -44,18 +44,19 @@ const trialUrl = `${frontendUrl}/register`;
           FAQ
         </h2>
         <div class="flex flex-col gap-4 mx-auto max-w-4xl">
-          <Faq title="What happens when the flag evaluation is reached?">
-            When the flag evaluation limit is reached, the users will receive
-            the flag has deactivated until the next month or an upgrade of your
-            plan.
-          </Faq>
-
-          <Faq title="What count as a flag evaluation?">
-            A flag evaluation corresponds to the computation of <strong
+          <Faq title="What count as an event?">
+            An event is a metric hit or a flag evaluation. A flag evaluation
+            corresponds to the computation of <strong
               >one feature flag value</strong
             >. If your project contains <strong
               >3 feature flags, there will be 3 flag evaluations</strong
             > when requesting the server.
+          </Faq>
+
+          <Faq title="What happens when the events count is reached?">
+            When the events count limit is reached, the users will receive the
+            flag has deactivated until the next month or an upgrade of your
+            plan.
           </Faq>
         </div>
       </div>
