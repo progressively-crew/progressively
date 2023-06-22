@@ -1,9 +1,6 @@
 ---
 import Footer from "../components/Footer.astro";
 import Nav from "../components/Nav.astro";
-import { getFlags } from "../helpers/featureFlags";
-
-const flags = await getFlags();
 
 export interface Props {
   title: string;
@@ -41,7 +38,7 @@ const description =
   </head>
   <body class="min-h-full h-full bg-gray-50">
     <div class="sr-only" aria-live="polite" id="notify-polite"></div>
-    <Nav showPricing={Boolean(flags.pricingPage)} />
+    <Nav />
     <slot />
 
     <Footer />
