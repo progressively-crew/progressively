@@ -32,10 +32,10 @@ const description =
     <meta name="description" content={description} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@mfrachet" />
-    <meta name="twitter:image" content="/pg.jpg" />
+    <meta name="twitter:image" content="/pg.png" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content="/pg.jpg" />
+    <meta property="og:image" content="/pg.png" />
 
     <title>{title}</title>
   </head>
@@ -44,6 +44,6 @@ const description =
     <Nav showPricing={Boolean(flags.pricingPage)} />
     <slot />
 
-    {flags.pricingPage && <Footer />}
+    <Footer />
   </body>
 </html>

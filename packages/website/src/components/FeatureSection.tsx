@@ -51,6 +51,11 @@ const devFeatures = [
     description:
       "All the codebase is Open Source and available in the Github Repository.",
   },
+  {
+    title: "Typesafe",
+    description:
+      "Auto completion for your available flags and variant values in your IDE.",
+  },
 ];
 
 const everyone = [
