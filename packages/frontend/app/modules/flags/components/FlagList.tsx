@@ -1,3 +1,4 @@
+import { HiOutlineCog6Tooth } from "react-icons/hi2";
 import { CardEntity } from "~/components/Entity/Entity";
 import { Flag } from "../types";
 import { ButtonCopy } from "~/components/ButtonCopy";
@@ -5,7 +6,6 @@ import { IconBox } from "~/components/IconBox";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { Environment } from "~/modules/environments/types";
 import { Button } from "~/components/Buttons/Button";
-import { Typography } from "~/components/Typography";
 import { EnvIcon } from "~/components/Icons/EnvIcon";
 
 export interface FlagEnvListProps {
@@ -39,18 +39,28 @@ export const FlagList = ({
               </>
             }
             footer={
-              <div className="flex flex-col md:flex-row gap-4 px-4 md:items-center">
-                {environments.map((env) => (
-                  <Button
-                    to={`/dashboard/projects/${projectId}/environments/${env.uuid}/flags/${flag.uuid}`}
-                    key={env.uuid}
-                    variant="secondary"
-                    icon={<EnvIcon />}
-                  >
-                    <span className="sr-only">See {flag.name} in</span>
-                    {env.name}
-                  </Button>
-                ))}
+              <div className="flex flex-col md:flex-row justify-between px-4 md:items-center gap-4">
+                <div className="flex flex-col md:flex-row gap-4 md:items-center">
+                  {environments.map((env) => (
+                    <Button
+                      to={`/dashboard/projects/${projectId}/environments/${env.uuid}/flags/${flag.uuid}`}
+                      key={env.uuid}
+                      variant="secondary"
+                      icon={<EnvIcon />}
+                    >
+                      <span className="sr-only">See {flag.name} in</span>
+                      {env.name}
+                    </Button>
+                  ))}
+                </div>
+
+                <Button
+                  to={`/dashboard/projects/${projectId}/flags/${flag.uuid}/settings`}
+                  variant="secondary"
+                  icon={<HiOutlineCog6Tooth />}
+                >
+                  Settings
+                </Button>
               </div>
             }
           />
