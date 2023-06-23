@@ -72,6 +72,11 @@ export const FlagEnvMenu = ({
       >
         Activity
       </NavItem>
+      <NavItem
+        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/dev-setup`}
+      >
+        Dev setup
+      </NavItem>
     </HorizontalNav>
   );
 };
