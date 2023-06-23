@@ -10,7 +10,7 @@ They mostly aim to verify that the flag provided to the N users are the good one
 
 ## How to start the load tests?
 
-- You first need to follow the [Raw installation guide](https://progressively-crew.github.io/docs/get-started/raw-installation)
+- You first need to follow the [Raw installation guide](https://docs.progressively.app/start-with-self-hosted/quick-start)
 - Then, start the backend using `pnpm run dev` in the `./packages/backend`
 - Then start the dedicated client application running `pnpm start` in `./packages/load-testing`
 - Finally, run one of the following command:
