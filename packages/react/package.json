@@ -1,13 +1,14 @@
 {
   "name": "@progressively/react",
   "author": "mfrachet",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "./lib/cjs/index.cjs.js",
   "module": "./lib/esm/index.mjs",
   "exports": {
     ".": {
       "require": "./lib/cjs/index.cjs.js",
-      "import": "./lib/esm/index.mjs"
+      "import": "./lib/esm/index.mjs",
+      "types": "./lib/esm/types/src/index.d.ts"
     }
   },
   "types": "./lib/esm/types/src/index.d.ts",
