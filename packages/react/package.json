@@ -1,7 +1,7 @@
 {
   "name": "@progressively/react",
   "author": "mfrachet",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "main": "./lib/cjs/index.cjs.js",
   "module": "./lib/esm/index.mjs",
   "exports": {
@@ -10,7 +10,7 @@
       "import": "./lib/esm/index.mjs"
     }
   },
-  "types": "./lib/cjs/types/src/index.d.ts",
+  "types": "./lib/esm/types/src/index.d.ts",
   "scripts": {
     "build": "rollup -c rollup.config.mjs",
     "build:dev": "pnpm run build -- --environment BUILD:development",
