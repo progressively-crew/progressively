@@ -77,9 +77,7 @@ export default function FlagInsights() {
 
       <Spacer size={2} />
 
-      <ButtonCopy toCopy={flagEnv.environment.clientKey}>
-        {flagEnv.flag.key}
-      </ButtonCopy>
+      <ButtonCopy toCopy={flagEnv.flag.key}>{flagEnv.flag.key}</ButtonCopy>
 
       <Spacer size={6} />
 
