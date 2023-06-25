@@ -57,7 +57,7 @@ export const DashboardLayout = ({
         )}
 
         <div className={gridClass}>
-          {subNav && <div className="md:pt-11">{subNav}</div>}
+          {subNav && <div className="md:pt-10">{subNav}</div>}
 
           <InertWhenNavOpened className="h-full dark:bg-slate-900 flex-1">
             <Main>
