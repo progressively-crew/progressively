@@ -51,7 +51,7 @@ export const action: ActionFunction = async ({
   }
 
   return redirect(
-    `/dashboard/projects/${projectId}?envRemoved=true#env-removed`
+    `/dashboard/projects/${projectId}/flags?envRemoved=true#env-removed`
   );
 };
 

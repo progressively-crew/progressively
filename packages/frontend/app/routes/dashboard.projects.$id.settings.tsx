@@ -18,6 +18,7 @@ import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
 import { ProjectNavBar } from "~/modules/projects/components/ProjectNavBar";
+import { Typography } from "~/components/Typography";
 
 export const meta: V2_MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -74,11 +75,16 @@ export default function SettingsPage() {
   const transition = useTransition();
 
   return (
-    <DashboardLayout
-      user={user}
-      subNav={<ProjectNavBar projectId={project.uuid} />}
-    >
-      <PageTitle value="Settings" />
+    <DashboardLayout user={user} subNav={<ProjectNavBar project={project} />}>
+      <PageTitle
+        value="Settings"
+        description={
+          <Typography as="span">
+            Settings available for{" "}
+            <strong className="font-bold">{project.name}</strong>.
+          </Typography>
+        }
+      />
 
       <Card>
         <Section id="members">

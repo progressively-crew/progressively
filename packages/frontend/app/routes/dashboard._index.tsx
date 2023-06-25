@@ -50,7 +50,6 @@ export default function DashboardRoot() {
   const { projects } = useLoaderData<LoaderData>();
   const { user } = useUser();
 
-  const newProjectId = searchParams.get("newProjectId") || undefined;
   const hasRemovedProject = searchParams.get("projectRemoved") || undefined;
   const isSearching = Boolean(searchParams.get("search") || undefined);
 
@@ -58,11 +57,7 @@ export default function DashboardRoot() {
     <DashboardLayout
       user={user}
       status={
-        newProjectId ? (
-          <SuccessBox id="project-added">
-            The project has been successfully created.
-          </SuccessBox>
-        ) : hasRemovedProject ? (
+        hasRemovedProject ? (
           <SuccessBox id="project-removed">
             The project has been successfully removed.
           </SuccessBox>

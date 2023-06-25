@@ -60,7 +60,7 @@ describe("/dashboard/projects/create", () => {
         cy.findByText("My new project").should("be.visible");
       });
 
-      cy.url().should("include", "/dashboard?newProjectId");
+      cy.url().should("include", "/dashboard/projects/");
       cy.checkA11y();
     });
   });

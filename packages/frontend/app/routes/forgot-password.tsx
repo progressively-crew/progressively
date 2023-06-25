@@ -11,6 +11,7 @@ import { validateEmail } from "~/modules/forms/utils/validateEmail";
 import { forgotPassword } from "~/modules/user/services/forgotPassword";
 import { H1Logo } from "~/components/H1Logo";
 import { Button } from "~/components/Buttons/Button";
+import { Spacer } from "~/components/Spacer";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -86,6 +87,7 @@ export default function ForgotPasswordPage() {
       }
     >
       <H1Logo>Password forgotten</H1Logo>
+      <Spacer size={2} />
 
       <Typography className="text-center">
         Enter your email to get a recovery link and reset your password.

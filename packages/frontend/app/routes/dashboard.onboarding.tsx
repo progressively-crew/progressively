@@ -47,7 +47,9 @@ export const action: ActionFunction = async ({
     session.get("auth-cookie")
   );
 
-  return redirect(`/dashboard?newProjectId=${project.uuid}#project-added`);
+  return redirect(
+    `/dashboard/projects/${project.uuid}/flags?projectCreated=true#project-added`
+  );
 };
 
 export default function OnboardingPage() {
@@ -58,56 +60,52 @@ export default function OnboardingPage() {
   const errors = data?.errors;
 
   return (
-    <NotAuthenticatedLayout>
-      <div className="mt-8 md:mt-36">
-        <Stack spacing={4}>
-          <div className="text-center motion-safe:animate-fade-enter-top">
-            <h1 className="font-bold text-4xl md:text-5xl" id="page-title">
-              <span className="dark:text-slate-100">Welcome aboard</span>
-              <Spacer size={2} />
-              <span className="text-indigo-700 dark:text-indigo-400">
-                {user.fullname}
-              </span>
-            </h1>
+    <NotAuthenticatedLayout status={errors?.name && <ErrorBox list={errors} />}>
+      <Stack spacing={4}>
+        <div className="text-center motion-safe:animate-fade-enter-top">
+          <h1 className="font-bold text-4xl md:text-5xl" id="page-title">
+            <span className="dark:text-slate-100">Welcome aboard</span>
             <Spacer size={2} />
-            <Typography>
-              Before being fully operational, you will need to create{" "}
-              <strong>a project</strong>. In general, a project is the name of
-              your application.
-            </Typography>
-          </div>
+            <span className="text-indigo-700 dark:text-indigo-400">
+              {user.fullname}
+            </span>
+          </h1>
+          <Spacer size={2} />
+          <Typography>
+            Before being fully operational, you will need to create{" "}
+            <strong>a project</strong>. In general, a project is the name of
+            your application.
+          </Typography>
+        </div>
 
-          {errors?.name && <ErrorBox list={errors} />}
-
-          <div
-            className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"
-            style={{
-              animationDelay: "500ms",
-            }}
-          >
-            <Form method="post">
-              <div className="flex flex-col md:flex-row gap-4 items-center">
-                <div className="flex-1">
-                  <TextInput
-                    isInvalid={Boolean(errors?.name)}
-                    label="Project name"
-                    name="name"
-                    placeholder="e.g: My super project"
-                    hiddenLabel
-                  />
-                </div>
-
-                <SubmitButton
-                  loadingText="Creating the project..."
-                  isLoading={navigation.state === "loading"}
-                >
-                  Create the project
-                </SubmitButton>
+        <div
+          className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"
+          style={{
+            animationDelay: "500ms",
+          }}
+        >
+          <Form method="post">
+            <div className="flex flex-col md:flex-row gap-4 items-center">
+              <div className="flex-1">
+                <TextInput
+                  isInvalid={Boolean(errors?.name)}
+                  label="Project name"
+                  name="name"
+                  placeholder="e.g: My super project"
+                  hiddenLabel
+                />
               </div>
-            </Form>
-          </div>
-        </Stack>
-      </div>
+
+              <SubmitButton
+                loadingText="Creating the project..."
+                isLoading={navigation.state === "loading"}
+              >
+                Create the project
+              </SubmitButton>
+            </div>
+          </Form>
+        </div>
+      </Stack>
 
       <Spacer size={2} />
 

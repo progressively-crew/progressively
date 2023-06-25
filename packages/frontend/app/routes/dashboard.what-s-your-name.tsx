@@ -8,6 +8,7 @@ import { validateUserFullname } from "~/modules/user/validators/validate-user-fu
 import { getSession } from "~/sessions";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import { Stack } from "~/components/Stack";
+import { H1Logo } from "~/components/H1Logo";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -46,44 +47,37 @@ export default function WhatsYourNamePage() {
   const errors = data?.errors;
 
   return (
-    <NotAuthenticatedLayout>
-      <div className="mt-8 md:mt-36">
-        <Stack spacing={4}>
-          <div className="text-center motion-safe:animate-fade-enter-top">
-            <h1
-              className="font-bold text-4xl md:text-5xl dark:text-slate-100"
-              id="page-title"
-            >
-              What's your name?
-            </h1>
-          </div>
+    <NotAuthenticatedLayout
+      status={errors?.fullname && <ErrorBox list={errors} />}
+    >
+      <Stack spacing={4}>
+        <div className="text-center motion-safe:animate-fade-enter-top">
+          <H1Logo> What's your name?</H1Logo>
+        </div>
 
-          {errors?.fullname && <ErrorBox list={errors} />}
-
-          <div
-            className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"
-            style={{
-              animationDelay: "500ms",
-            }}
-          >
-            <Form method="post">
-              <div className="flex flex-col md:flex-row gap-4 items-center">
-                <div className="flex-1">
-                  <TextInput
-                    isInvalid={Boolean(errors?.fullname)}
-                    label="Fullname"
-                    name="fullname"
-                    placeholder="e.g: John Doe"
-                    hiddenLabel
-                  />
-                </div>
-
-                <SubmitButton type="submit">Set my fullname</SubmitButton>
+        <div
+          className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0 pt-4"
+          style={{
+            animationDelay: "500ms",
+          }}
+        >
+          <Form method="post">
+            <div className="flex flex-col md:flex-row gap-4 items-center">
+              <div className="flex-1">
+                <TextInput
+                  isInvalid={Boolean(errors?.fullname)}
+                  label="Fullname"
+                  name="fullname"
+                  placeholder="e.g: John Doe"
+                  hiddenLabel
+                />
               </div>
-            </Form>
-          </div>
-        </Stack>
-      </div>
+
+              <SubmitButton type="submit">Set my fullname</SubmitButton>
+            </div>
+          </Form>
+        </div>
+      </Stack>
     </NotAuthenticatedLayout>
   );
 }

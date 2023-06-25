@@ -4,11 +4,7 @@ import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { EmptyState } from "~/components/EmptyState";
 import { CreateButton } from "~/components/Buttons/CreateButton";
-import {
-  V2_MetaFunction,
-  LoaderFunction,
-  V2_MetaFunction,
-} from "@remix-run/node";
+import { V2_MetaFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { Card, CardContent } from "~/components/Card";
 import { useProject } from "~/modules/projects/contexts/useProject";
@@ -48,6 +44,7 @@ export const loader: LoaderFunction = async ({
   return { flags };
 };
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 export default function FlagsByEnvPage() {
   const { flags } = useLoaderData<LoaderData>();
   const { user } = useUser();
@@ -56,6 +53,8 @@ export default function FlagsByEnvPage() {
   const [searchParams] = useSearchParams();
   const search = searchParams.get("search");
   const newFlagId = searchParams.get("newFlagId") || undefined;
+  const envRemoved = searchParams.get("envRemoved") || undefined;
+  const projectCreated = searchParams.get("projectCreated") || undefined;
 
   const isFlagRemoved = searchParams.get("flagRemoved") || undefined;
   const isSearching = Boolean(searchParams.get("search") || undefined);
@@ -69,9 +68,17 @@ export default function FlagsByEnvPage() {
   return (
     <DashboardLayout
       user={user}
-      subNav={<ProjectNavBar projectId={project.uuid} />}
+      subNav={<ProjectNavBar project={project} />}
       status={
-        isFlagRemoved ? (
+        projectCreated ? (
+          <SuccessBox id="env-removed">
+            The project has been successfully created.
+          </SuccessBox>
+        ) : envRemoved ? (
+          <SuccessBox id="env-removed">
+            The environment has been successfully deleted.
+          </SuccessBox>
+        ) : isFlagRemoved ? (
           <SuccessBox id="flag-removed">
             The flag has been successfully deleted.
           </SuccessBox>

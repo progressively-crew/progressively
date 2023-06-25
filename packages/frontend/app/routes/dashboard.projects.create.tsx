@@ -1,6 +1,10 @@
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { createProject } from "~/modules/projects/services/createProject";
-import { CreateProjectDTO, UserProject } from "~/modules/projects/types";
+import {
+  CreateProjectDTO,
+  Project,
+  UserProject,
+} from "~/modules/projects/types";
 import { validateProjectName } from "~/modules/projects/validators/validateProjectName";
 import { getSession } from "~/sessions";
 import { TextInput } from "~/components/Fields/TextInput";
@@ -38,13 +42,13 @@ export const action: ActionFunction = async ({
 
   const session = await getSession(request.headers.get("Cookie"));
 
-  const userProject: UserProject = await createProject(
+  const userProject: Project = await createProject(
     projectName!,
     session.get("auth-cookie")
   );
 
   return redirect(
-    `/dashboard?newProjectId=${userProject.projectId}#project-added`
+    `/dashboard/projects/${userProject.uuid}/flags?projectCreated=true#project-added`
   );
 };
 

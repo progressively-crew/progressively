@@ -13,6 +13,7 @@ import { PageTitle } from "~/components/PageTitle";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
 import { useFlag } from "~/modules/flags/contexts/useFlag";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
+import { Typography } from "~/components/Typography";
 
 export const meta: V2_MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -35,7 +36,15 @@ export default function FlagSettingPage() {
       user={user}
       subNav={<FlagMenu projectId={project.uuid} flag={flag} />}
     >
-      <PageTitle value="Settings" />
+      <PageTitle
+        value="Settings"
+        description={
+          <Typography as="span">
+            Settings available for{" "}
+            <strong className="font-bold">{flag.name}</strong>.
+          </Typography>
+        }
+      />
 
       <Card footer={<ButtonCopy toCopy={flag.key}>{flag.key}</ButtonCopy>}>
         <CardContent>

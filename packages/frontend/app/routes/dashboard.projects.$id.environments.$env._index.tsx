@@ -1,28 +1,21 @@
-import { getFlagsByProjectEnv } from "~/modules/flags/services/getFlagsByProjectEnv";
-import { FlagEnv } from "~/modules/flags/types";
-import { getSession } from "~/sessions";
+import { ButtonCopy } from "~/components/ButtonCopy";
+import { Section, SectionHeader } from "~/components/Section";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { EmptyState } from "~/components/EmptyState";
-import { CreateButton } from "~/components/Buttons/CreateButton";
-import { FlagEnvList } from "~/modules/flags/components/FlagEnvList";
-import { EnvNavBar } from "~/modules/environments/components/EnvNavbar";
-import {
-  ActionFunction,
-  LoaderFunction,
-  V2_MetaFunction,
-} from "@remix-run/node";
-import { useLoaderData, useSearchParams } from "@remix-run/react";
+import { UserRoles } from "~/modules/projects/types";
+import { DeleteButton } from "~/components/Buttons/DeleteButton";
+import { VisuallyHidden } from "~/components/VisuallyHidden";
+import { V2_MetaFunction } from "@remix-run/node";
 import { Card, CardContent } from "~/components/Card";
-import { useProject } from "~/modules/projects/contexts/useProject";
 import { useUser } from "~/modules/user/contexts/useUser";
+import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
-import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
 import { PageTitle } from "~/components/PageTitle";
-import { SearchLayout } from "~/layouts/SearchLayout";
-import { SearchBar } from "~/components/SearchBar";
+import { Spacer } from "~/components/Spacer";
 import { Typography } from "~/components/Typography";
+import { SuccessBox } from "~/components/Boxes/SuccessBox";
+import { useSearchParams } from "@remix-run/react";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -30,109 +23,90 @@ export const meta: V2_MetaFunction = ({ matches, params }) => {
 
   return [
     {
-      title: `Progressively | ${projectName} | ${envName} | Flags`,
+      title: `Progressively | ${projectName} | ${envName} | Settings`,
     },
   ];
 };
 
-export const action: ActionFunction = async ({
-  request,
-  params,
-}): Promise<null> => {
-  const session = await getSession(request.headers.get("Cookie"));
-  const authCookie = session.get("auth-cookie");
-  const formData = await request.formData();
-  const type = formData.get("_type");
-
-  if (type === "toggle-flag") {
-    return toggleFlagAction(formData, params, authCookie);
-  }
-
-  return null;
-};
-
-interface LoaderData {
-  flagsByEnv: Array<FlagEnv>;
-}
-
-export const loader: LoaderFunction = async ({
-  request,
-  params,
-}): Promise<LoaderData> => {
-  const session = await getSession(request.headers.get("Cookie"));
-  const authCookie = session.get("auth-cookie");
-
-  const flagsByEnv: Array<FlagEnv> = await getFlagsByProjectEnv(
-    params.env!,
-    authCookie
-  );
-
-  return { flagsByEnv };
-};
-
-export default function FlagsByEnvPage() {
-  const { flagsByEnv } = useLoaderData<LoaderData>();
+export default function EnvSettingsPage() {
   const { user } = useUser();
-  const { project } = useProject();
+  const { project, userRole } = useProject();
   const { environment } = useEnvironment();
   const [searchParams] = useSearchParams();
   const search = searchParams.get("search");
-
-  const isSearching = Boolean(searchParams.get("search") || undefined);
-
-  const filteredFlags = flagsByEnv.filter((flag) =>
-    flag.flag.name.toLocaleLowerCase().includes(search || "")
-  );
-
-  const hasFlags = flagsByEnv.length > 0;
+  const envCreated = searchParams.get("envCreated") || undefined;
 
   return (
     <DashboardLayout
       user={user}
-      subNav={<EnvNavBar projectId={project.uuid} envId={environment.uuid} />}
+      status={
+        envCreated ? (
+          <SuccessBox id="env-added">
+            The environment has been successfully created.
+          </SuccessBox>
+        ) : null
+      }
     >
       <PageTitle
-        value="Feature flags"
+        value="Settings"
         description={
           <Typography as="span">
-            The feature flags available in the{" "}
-            <strong className="font-bold">{environment.name}</strong>{" "}
-            environment.
+            Settings available for{" "}
+            <strong className="font-bold">{environment.name}</strong>.
           </Typography>
         }
       />
 
-      {hasFlags ? (
-        <>
-          <SearchLayout>
-            <SearchBar
-              label="Search for flags"
-              placeholder="e.g: The flag"
-              count={isSearching ? filteredFlags.length : undefined}
-            />
-          </SearchLayout>
-
-          <FlagEnvList
-            flags={filteredFlags}
-            envId={environment.uuid}
-            projectId={project.uuid}
-          />
-        </>
-      ) : (
-        <Card>
-          <CardContent>
-            <EmptyState
-              titleAs="h2"
-              title="No flags found"
-              description={"There are no flags yet on this environment."}
-              action={
-                <CreateButton
-                  to={`/dashboard/projects/${project.uuid}/flags/create`}
-                >
-                  Create a feature flag
-                </CreateButton>
+      <Card
+        footer={
+          <ButtonCopy toCopy={environment.clientKey}>
+            {environment.clientKey}
+          </ButtonCopy>
+        }
+      >
+        <CardContent>
+          <Section id="general">
+            <SectionHeader
+              title="General"
+              description={
+                "The following is the client key to use inside your application to retrieve the flags"
               }
             />
+          </Section>
+        </CardContent>
+      </Card>
+
+      {userRole === UserRoles.Admin && (
+        <Card
+          footer={
+            <DeleteButton
+              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/delete`}
+            >
+              <span aria-hidden>
+                Delete{" "}
+                <span className="hidden md:inline">
+                  {`"${environment.name}"`} forever
+                </span>
+              </span>
+
+              <VisuallyHidden>
+                Delete {`"${environment.name}"`} forever
+              </VisuallyHidden>
+            </DeleteButton>
+          }
+        >
+          <CardContent>
+            <Section id="danger">
+              <SectionHeader
+                title="Danger zone"
+                titleAs="h3"
+                description={
+                  "You can delete an environment at any time, but you won't be able to access its flags will be removed and be falsy in your applications. Be sure to know what you're doing before removing an environment."
+                }
+              />
+
+              <Spacer size={4} />
+            </Section>
           </CardContent>
         </Card>
       )}

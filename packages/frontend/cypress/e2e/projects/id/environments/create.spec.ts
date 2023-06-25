@@ -77,10 +77,10 @@ describe("/dashboard/projects/[id]/environments/create", () => {
           );
 
         cy.get("main").within(() => {
-          cy.findByRole("link", { name: "My new env" }).should("be.visible");
+          cy.findByText("My new env").should("be.visible");
         });
 
-        cy.url().should("include", "/dashboard/projects/1?newEnvId");
+        cy.url().should("include", "/dashboard/projects/1/environments");
         cy.checkA11y();
       });
     });
