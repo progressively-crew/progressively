@@ -14,6 +14,7 @@ import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
 import { Spacer } from "~/components/Spacer";
+import { Typography } from "~/components/Typography";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -36,7 +37,15 @@ export default function EnvSettingsPage() {
       user={user}
       subNav={<EnvNavBar projectId={project.uuid} envId={environment.uuid} />}
     >
-      <PageTitle value="Settings" />
+      <PageTitle
+        value="Settings"
+        description={
+          <Typography as="span">
+            Settings available for{" "}
+            <strong className="font-bold">{environment.name}</strong>.
+          </Typography>
+        }
+      />
 
       <Card
         footer={

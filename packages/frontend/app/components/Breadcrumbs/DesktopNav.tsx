@@ -1,10 +1,10 @@
+import { AiOutlineHome } from "react-icons/ai";
 import { HStack } from "../HStack";
 import { IconBox } from "../IconBox";
 import { EnvIcon } from "../Icons/EnvIcon";
 import { FlagIcon } from "../Icons/FlagIcon";
 import { ProjectIcon } from "../Icons/ProjectIcon";
 import { Link } from "../Link";
-import { Logo } from "../Logo/Logo";
 import { MenuButton } from "../MenuButton";
 import { Crumbs } from "./types";
 
@@ -19,7 +19,7 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
 
   return (
     <nav aria-label="Breadcrumbs">
-      <ol className="flex h-12 items-center">
+      <ol className="flex h-12 items-center -ml-4">
         {crumbs.map((crumb, index) => {
           const currentPage = index === lastItemIndex;
 
@@ -33,7 +33,7 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
               <Link
                 aria-current={currentPage ? "page" : undefined}
                 to={crumb.link}
-                className={`transition-background px-2 py-1 rounded hover:text-black hover:dark:text-slate-200 hover:bg-gray-100 dark:hover:bg-slate-700 no-underline text-sm ${focusStyles} ${
+                className={`text-sm transition-background px-2 py-1 rounded hover:text-black hover:dark:text-slate-200 hover:bg-gray-100 dark:hover:bg-slate-700 no-underline ${focusStyles} ${
                   currentPage
                     ? "text-black dark:text-slate-100"
                     : "text-gray-500 dark:text-slate-400"
@@ -42,7 +42,12 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
                 <div className={"rounded px-2 py-1"}>
                   <HStack spacing={2}>
                     {crumb.isRoot ? (
-                      <Logo aria-label={crumb.label} />
+                      <HStack spacing={2}>
+                        <IconBox content={crumb.label} size="S">
+                          <AiOutlineHome />
+                        </IconBox>
+                        My projects
+                      </HStack>
                     ) : (
                       <HStack spacing={2}>
                         <IconBox content={crumb.label} size="S">

@@ -1,34 +1,39 @@
 import { NavLink } from "@remix-run/react";
-import { useBillingInfo } from "~/modules/plans/hooks/useBillingInfo";
-import { useIsSaas } from "~/modules/saas/contexts/useIsSaas";
-import { Progress } from "./Progress";
 
 export interface HorizontalNavProps {
   children: React.ReactNode;
   label: string;
 }
 
-export const HorizontalNav = ({ children, label }: HorizontalNavProps) => {
-  const { activePlan, hitsForMonth } = useBillingInfo();
-  const isSaas = useIsSaas();
+export interface HorizontalNavSectionProps {
+  children: React.ReactNode;
+  icon: React.ReactNode;
+  title: string;
+}
 
+export const HorizontalNavSection = ({
+  title,
+  children,
+  icon,
+}: HorizontalNavSectionProps) => {
   return (
-    <nav aria-label={label}>
-      <div className="flex flex-col">
-        <ul className="overflow-x-scroll flex flex-col gap-4 py-3 px-1">
-          {children}
-        </ul>
+    <div>
+      <h2 className="font-bold text-sm uppercase text-xs text-slate-500 tracking-tight">
+        <div className="flex flex-row gap-4 items-center">
+          <span className="text-lg h-6 flex flex-row items-center">{icon}</span>
+          {title}
+        </div>
+      </h2>
 
-        {isSaas && (
-          <div className="hidden xl:block">
-            <Progress
-              max={activePlan?.evaluationCount || 1000}
-              value={hitsForMonth}
-              label={"Evaluation count this month"}
-            />
-          </div>
-        )}
-      </div>
+      <ul className="flex flex-col gap-2 py-3 px-1">{children}</ul>
+    </div>
+  );
+};
+
+export const HorizontalNav = ({ children, label }: HorizontalNavProps) => {
+  return (
+    <nav aria-label={label} className="py-3 px-1">
+      {children}
     </nav>
   );
 };
