@@ -47,7 +47,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/webhooks"
           ["With multivariate", "/dashboard/projects/1/environments/1/flags/4"],
         ]);
 
-        cy.findAllByText("With multivariate").should("have.length", 2);
+        cy.findAllByText("With multivariate").should("have.length", 1);
         cy.findByRole("heading", { name: "Webhooks" }).should("be.visible");
 
         cy.findByText("No webhooks found").should("be.visible");

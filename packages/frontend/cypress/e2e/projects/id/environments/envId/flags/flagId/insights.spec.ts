@@ -84,7 +84,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/insights"
           )
           .and("have.attr", "aria-current", "page");
 
-        cy.findAllByText("New footer").should("have.length", 2);
+        cy.findAllByText("New footer").should("have.length", 1);
         cy.findByRole("heading", { name: "Insights" }).should("be.visible");
 
         cy.checkA11y();

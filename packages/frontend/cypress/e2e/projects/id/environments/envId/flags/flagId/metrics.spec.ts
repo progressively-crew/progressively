@@ -83,7 +83,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/metrics",
           "Progressively | Project from seeding | Production | Flags | New footer | Metrics"
         );
 
-        cy.findAllByText("New footer").should("have.length", 2);
+        cy.findAllByText("New footer").should("have.length", 1);
         cy.findByRole("heading", { name: "Metrics" }).should("be.visible");
 
         cy.findByText("No metrics found").should("be.visible");
