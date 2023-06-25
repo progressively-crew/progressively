@@ -1,4 +1,7 @@
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
+import { EnvIcon } from "~/components/Icons/EnvIcon";
+import { FlagIcon } from "~/components/Icons/FlagIcon";
+import { SettingsIcon } from "~/components/Icons/SettingsIcon";
 
 export interface ProjectNavBarProps {
   projectId: string;
