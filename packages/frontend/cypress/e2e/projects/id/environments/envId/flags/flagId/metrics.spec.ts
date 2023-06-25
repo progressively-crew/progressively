@@ -68,7 +68,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/metrics",
           )
           .and("have.attr", "aria-current", "page");
 
-        cy.findAllByText("New homepage").should("have.length", 2);
+        cy.findAllByText("New homepage").should("have.length", 1);
         cy.findByRole("heading", { name: "Metrics" }).should("be.visible");
 
         cy.checkA11y();

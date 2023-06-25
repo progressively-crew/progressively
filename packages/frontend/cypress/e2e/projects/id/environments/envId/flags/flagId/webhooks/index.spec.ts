@@ -77,7 +77,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/webhooks"
           ["New homepage", "/dashboard/projects/1/environments/1/flags/1"],
         ]);
 
-        cy.findAllByText("New homepage").should("have.length", 2);
+        cy.findAllByText("New homepage").should("have.length", 1);
         cy.findByRole("heading", { name: "Webhooks" }).should("be.visible");
 
         cy.findByRole("link", { name: "Create a webhook" }).should(

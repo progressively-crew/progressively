@@ -47,7 +47,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/segments/
           ["New homepage", "/dashboard/projects/1/environments/1/flags/1"],
         ]);
 
-        cy.findAllByText("New homepage").should("have.length", 2);
+        cy.findAllByText("New homepage").should("have.length", 1);
         cy.findByRole("heading", {
           name: `Segments "By email address"`,
         }).should("be.visible");

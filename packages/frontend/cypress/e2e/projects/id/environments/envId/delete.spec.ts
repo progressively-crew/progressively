@@ -89,7 +89,10 @@ describe("/dashboard/projects/[id]/environments/[envId]/delete", () => {
           name: "Yes, delete the environment",
         }).click();
 
-        cy.url().should("contain", "/dashboard/projects/1?envRemoved=true");
+        cy.url().should(
+          "contain",
+          "/dashboard/projects/1/flags?envRemoved=true"
+        );
 
         cy.findByRole("link", { name: "Developer" }).should("be.visible");
         cy.findByRole("link", { name: "Production" }).should("not.exist");

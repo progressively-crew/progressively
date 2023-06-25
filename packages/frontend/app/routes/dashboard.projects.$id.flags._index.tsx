@@ -44,6 +44,7 @@ export const loader: LoaderFunction = async ({
   return { flags };
 };
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 export default function FlagsByEnvPage() {
   const { flags } = useLoaderData<LoaderData>();
   const { user } = useUser();
