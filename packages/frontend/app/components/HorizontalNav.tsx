@@ -1,4 +1,5 @@
 import { NavLink } from "@remix-run/react";
+import { HStack } from "./HStack";
 
 export interface HorizontalNavProps {
   children: React.ReactNode;
@@ -41,9 +42,10 @@ export const HorizontalNav = ({ children, label }: HorizontalNavProps) => {
 export interface NavItemProps {
   children: React.ReactNode;
   to: string;
+  icon?: React.ReactNode;
 }
 
-export const NavItem = ({ children, to }: NavItemProps) => {
+export const NavItem = ({ children, to, icon }: NavItemProps) => {
   const focusStyles =
     "focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:focus:ring-offset-slate-900";
 
@@ -56,11 +58,14 @@ export const NavItem = ({ children, to }: NavItemProps) => {
           isActive
             ? "h-8 text-sm block flex items-center rounded px-3 bg-gray-200 text-gray-900 dark:bg-slate-600 dark:text-slate-50 " +
               focusStyles
-            : "h-8 text-sm block flex items-center rounded px-3 hover:bg-gray-100 hover:dark:bg-slate-700 text-gray-900 dark:text-gray-300 " +
+            : "h-8 text-sm block flex items-center rounded px-3 text-gray-900 hover:bg-gray-100 hover:dark:bg-slate-700  dark:text-gray-300 " +
               focusStyles
         }
       >
-        {children}
+        <HStack spacing={2}>
+          {icon}
+          {children}
+        </HStack>
       </NavLink>
     </li>
   );

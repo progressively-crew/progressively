@@ -53,7 +53,7 @@ export const action: ActionFunction = async ({
   );
 
   return redirect(
-    `/dashboard/projects/${projectId}?newEnvId=${env.uuid}#env-added`
+    `/dashboard/projects/${projectId}/environments/${env.uuid}?created=true`
   );
 };
 
@@ -79,7 +79,7 @@ export default function CreateEnvironmentPage() {
           </SubmitButton>
         }
         backLinkSlot={
-          <BackLink to={`/dashboard/projects/${project.uuid}`}>
+          <BackLink to={`/dashboard/projects/${project.uuid}/flags`}>
             Back to project
           </BackLink>
         }

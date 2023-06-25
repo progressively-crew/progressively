@@ -75,10 +75,7 @@ export default function SettingsPage() {
   const transition = useTransition();
 
   return (
-    <DashboardLayout
-      user={user}
-      subNav={<ProjectNavBar projectId={project.uuid} />}
-    >
+    <DashboardLayout user={user} subNav={<ProjectNavBar project={project} />}>
       <PageTitle
         value="Settings"
         description={

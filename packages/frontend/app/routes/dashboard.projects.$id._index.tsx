@@ -31,6 +31,7 @@ export default function ProjectDetailPage() {
   const [searchParams] = useSearchParams();
   const search = searchParams.get("search");
   const newEnvId = searchParams.get("newEnvId") || undefined;
+  const projectCreated = searchParams.get("projectCreated") || undefined;
   const envRemoved = searchParams.get("envRemoved") || undefined;
   const isSearching = Boolean(searchParams.get("search") || undefined);
 
@@ -43,9 +44,13 @@ export default function ProjectDetailPage() {
   return (
     <DashboardLayout
       user={user}
-      subNav={<ProjectNavBar projectId={project.uuid} />}
+      subNav={<ProjectNavBar project={project} />}
       status={
-        newEnvId ? (
+        projectCreated ? (
+          <SuccessBox id="project-added">
+            The project has been successfully created.
+          </SuccessBox>
+        ) : newEnvId ? (
           <SuccessBox id="env-added">
             The environment has been successfully created.
           </SuccessBox>

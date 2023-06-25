@@ -4,11 +4,7 @@ import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { EmptyState } from "~/components/EmptyState";
 import { CreateButton } from "~/components/Buttons/CreateButton";
-import {
-  V2_MetaFunction,
-  LoaderFunction,
-  V2_MetaFunction,
-} from "@remix-run/node";
+import { V2_MetaFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { Card, CardContent } from "~/components/Card";
 import { useProject } from "~/modules/projects/contexts/useProject";
@@ -69,7 +65,7 @@ export default function FlagsByEnvPage() {
   return (
     <DashboardLayout
       user={user}
-      subNav={<ProjectNavBar projectId={project.uuid} />}
+      subNav={<ProjectNavBar project={project} />}
       status={
         isFlagRemoved ? (
           <SuccessBox id="flag-removed">
