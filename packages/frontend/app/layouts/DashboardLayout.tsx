@@ -34,8 +34,8 @@ export const DashboardLayout = ({
     navigation.state === "loading" && navigation.formData == null;
 
   const gridClass = subNav
-    ? "grid grid-cols-[260px_1fr] gap-12 max-w-7xl mx-auto"
-    : "max-w-7xl mx-auto";
+    ? "grid md:grid-cols-[260px_1fr] gap-4 md:gap-12 max-w-7xl mx-auto px-4"
+    : "max-w-7xl mx-auto px-4 pt-8";
 
   return (
     <NavProvider>
@@ -49,7 +49,7 @@ export const DashboardLayout = ({
 
       <div className="bg-gray-50 dark:bg-slate-900 h-full flex-1">
         {crumbs.length > 1 && (
-          <div className="py-1 border-b border-slate-200 dark:border-slate-800">
+          <div className="py-1 border-b border-slate-200 dark:border-slate-800 hidden md:block">
             <Container>
               <BreadCrumbs crumbs={crumbs} />
             </Container>
@@ -57,14 +57,14 @@ export const DashboardLayout = ({
         )}
 
         <div className={gridClass}>
-          {subNav && <div className="pt-11">{subNav}</div>}
+          {subNav && <div className="md:pt-11">{subNav}</div>}
 
           <InertWhenNavOpened className="h-full dark:bg-slate-900 flex-1">
             <Main>
               {status}
               <div className="flex-1">
                 <div>
-                  <Spacer size={12} />
+                  <div className="md:h-12" />
 
                   <div className="flex flex-col gap-4 md:gap-6">{children}</div>
 

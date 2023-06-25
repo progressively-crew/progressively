@@ -22,7 +22,7 @@ export const UserDropdown = ({ user }: UserDropdownProps) => {
   return (
     <nav
       aria-label="User related"
-      className="hidden lg:flex flex-row gap-2 items-center justify-between"
+      className="flex flex-row gap-2 items-center justify-between"
     >
       <Button to="/dashboard" variant="tertiary-inverse">
         <Logo aria-label="Progressively project list" />
@@ -38,11 +38,13 @@ export const UserDropdown = ({ user }: UserDropdownProps) => {
           </CreateButton>
         )}
 
-        <FeedbackFish projectId="012aac85b784ee">
-          <Button variant="tertiary-inverse" icon={<GoCommentDiscussion />}>
-            Send feedback
-          </Button>
-        </FeedbackFish>
+        <div className="hidden md:block">
+          <FeedbackFish projectId="012aac85b784ee">
+            <Button variant="tertiary-inverse" icon={<GoCommentDiscussion />}>
+              Send feedback
+            </Button>
+          </FeedbackFish>
+        </div>
 
         {isSaas && (
           <div className="hidden xl:block text-white">
