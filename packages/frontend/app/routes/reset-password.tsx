@@ -113,11 +113,13 @@ export default function ResetPasswordPage() {
           className="w-full"
         >{`Sign in`}</Button>
       }
+      status={
+        errors && Object.keys(errors).length > 0 && <ErrorBox list={errors} />
+      }
     >
       <H1Logo>{pageTitle}</H1Logo>
 
-      <Spacer size={1} />
-      {errors && Object.keys(errors).length > 0 && <ErrorBox list={errors} />}
+      <Spacer size={2} />
 
       {success && (
         <SuccessBox id="password-reset">

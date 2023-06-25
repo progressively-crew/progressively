@@ -1,3 +1,4 @@
+import { Card, CardContent } from "~/components/Card";
 import { Container } from "~/components/Container";
 import { Logo } from "~/components/Logo/Logo";
 import { Main } from "~/components/Main";
@@ -42,13 +43,20 @@ export const NotAuthenticatedLayout = ({
         <Spacer size={8} />
 
         <Main>
-          <Stack spacing={4}>
-            <Stack spacing={2}>
-              {header}
-              {status && <Stack spacing={4}>{status}</Stack>}
-            </Stack>
-            {children}
-          </Stack>
+          {status && (
+            <div className="pb-4">
+              <Stack spacing={4}>{status}</Stack>
+            </div>
+          )}
+
+          <Card>
+            <div className="py-12 px-8">
+              <Stack spacing={4}>
+                <Stack spacing={2}>{header}</Stack>
+                {children}
+              </Stack>
+            </div>
+          </Card>
         </Main>
       </div>
 

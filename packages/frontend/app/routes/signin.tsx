@@ -110,31 +110,30 @@ export default function Signin() {
           >{`Sign up`}</Button>
         )
       }
+      status={
+        oauthFailed ? (
+          <ErrorBox
+            list={{
+              oauth:
+                "An error appeared during the authentication. Please try again or contact your system administrator.",
+            }}
+          />
+        ) : errors?.password || errors?.email || errors?.badUser ? (
+          <ErrorBox list={errors} />
+        ) : userActivated ? (
+          <SuccessBox id="user-activated">
+            The account has been activated, you can now log in
+          </SuccessBox>
+        ) : userCreated ? (
+          <SuccessBox id="user-created">
+            The account has been created, you can now log in
+          </SuccessBox>
+        ) : null
+      }
     >
-      <H1Logo>Progressively</H1Logo>
+      <H1Logo>Sign in</H1Logo>
 
-      <Spacer size={1} />
-
-      {oauthFailed ? (
-        <ErrorBox
-          list={{
-            oauth:
-              "An error appeared during the authentication. Please try again or contact your system administrator.",
-          }}
-        />
-      ) : errors?.password || errors?.email || errors?.badUser ? (
-        <ErrorBox list={errors} />
-      ) : userActivated ? (
-        <SuccessBox id="user-activated">
-          The account has been activated, you can now log in
-        </SuccessBox>
-      ) : userCreated ? (
-        <SuccessBox id="user-created">
-          The account has been created, you can now log in
-        </SuccessBox>
-      ) : null}
-
-      <Spacer size={1} />
+      <Spacer size={2} />
 
       <Form method="post">
         <FormGroup>

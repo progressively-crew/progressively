@@ -7,7 +7,7 @@ export const H1Logo = ({ children }: H1LogoProps) => {
     <div className="flex flex-col items-center gap-2 justify-center">
       <h1
         id="page-title"
-        className="text-4xl font-bold text-center tracking-wide dark:text-slate-100"
+        className="text-4xl font-extrabold text-center tracking-wide dark:text-slate-100"
       >
         {children}
       </h1>
