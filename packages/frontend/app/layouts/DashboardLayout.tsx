@@ -47,13 +47,13 @@ export const DashboardLayout = ({
         </Container>
       </div>
 
-      <div className="bg-gray-50 dark:bg-slate-900 h-full flex-1 px-4 md:px-12">
+      <div className="bg-gray-50 dark:bg-slate-900 h-full flex-1">
         {crumbs.length > 1 && (
-          <Container>
-            <div className=" py-1 border-b border-slate-200 dark:border-slate-800">
+          <div className="py-1 border-b border-slate-200 dark:border-slate-800">
+            <Container>
               <BreadCrumbs crumbs={crumbs} />
-            </div>
-          </Container>
+            </Container>
+          </div>
         )}
 
         <div className={gridClass}>

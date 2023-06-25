@@ -19,7 +19,7 @@ export const DesktopNav = ({ crumbs }: DesktopNavProps) => {
 
   return (
     <nav aria-label="Breadcrumbs">
-      <ol className="flex h-12 items-center -ml-4">
+      <ol className="flex h-12 items-center">
         {crumbs.map((crumb, index) => {
           const currentPage = index === lastItemIndex;
 
