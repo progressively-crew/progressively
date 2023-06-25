@@ -24,9 +24,21 @@ export const UserDropdown = ({ user }: UserDropdownProps) => {
       aria-label="User related"
       className="flex flex-row gap-2 items-center justify-between"
     >
-      <Button to="/dashboard" variant="tertiary-inverse">
-        <Logo aria-label="Progressively project list" />
-      </Button>
+      <div className="flex flex-row gap-2 items-center">
+        <Button to="/dashboard" variant="tertiary-inverse">
+          <Logo aria-label="Progressively project list" />
+        </Button>
+
+        <div className="hidden md:block">
+          <Button
+            href="https://docs.progressively.app/"
+            variant="tertiary-inverse"
+            target="_blank"
+          >
+            Documentation
+          </Button>
+        </div>
+      </div>
 
       <div className="flex flex-row gap-2 items-center">
         {project && (

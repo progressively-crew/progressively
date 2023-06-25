@@ -35,7 +35,7 @@ export const DashboardLayout = ({
 
   const gridClass = subNav
     ? "grid md:grid-cols-[260px_1fr] gap-4 md:gap-12 max-w-7xl mx-auto px-4"
-    : "max-w-7xl mx-auto px-4 pt-8";
+    : "max-w-7xl mx-auto px-4 pt-8 md:pt-0";
 
   return (
     <NavProvider>
