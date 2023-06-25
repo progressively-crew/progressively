@@ -53,7 +53,7 @@ export const action: ActionFunction = async ({
   );
 
   return redirect(
-    `/dashboard/projects/${projectId}/environments/${env.uuid}?created=true`
+    `/dashboard/projects/${projectId}/environments/${env.uuid}?envCreated=true`
   );
 };
 

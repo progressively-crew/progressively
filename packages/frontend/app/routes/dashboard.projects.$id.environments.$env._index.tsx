@@ -14,6 +14,8 @@ import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle
 import { PageTitle } from "~/components/PageTitle";
 import { Spacer } from "~/components/Spacer";
 import { Typography } from "~/components/Typography";
+import { SuccessBox } from "~/components/Boxes/SuccessBox";
+import { useSearchParams } from "@remix-run/react";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -30,9 +32,21 @@ export default function EnvSettingsPage() {
   const { user } = useUser();
   const { project, userRole } = useProject();
   const { environment } = useEnvironment();
+  const [searchParams] = useSearchParams();
+  const search = searchParams.get("search");
+  const envCreated = searchParams.get("envCreated") || undefined;
 
   return (
-    <DashboardLayout user={user}>
+    <DashboardLayout
+      user={user}
+      status={
+        envCreated ? (
+          <SuccessBox id="env-added">
+            The environment has been successfully created.
+          </SuccessBox>
+        ) : null
+      }
+    >
       <PageTitle
         value="Settings"
         description={
