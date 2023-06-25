@@ -19,7 +19,7 @@ export const HorizontalNavSection = ({
 }: HorizontalNavSectionProps) => {
   return (
     <div className="">
-      <h2 className="font-bold text-sm uppercase text-xs text-slate-500 tracking-tight pl-2">
+      <h2 className="font-bold text-sm uppercase text-xs text-slate-500 dark:text-slate-400 tracking-tight pl-2">
         <div className="flex flex-row gap-4 items-center">
           <span className="text-lg h-6 flex flex-row items-center">{icon}</span>
           {title}
