@@ -71,6 +71,7 @@ export const resolveUserId = (fields: FieldRecord, cookieUserId?: string) => {
 export const prepareCookie = (response: Response, userId: string) => {
   response.cookie('progressively-id', userId, {
     secure: true,
+    sameSite: 'none',
   });
 
   response.header('X-progressively-id', userId);
