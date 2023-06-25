@@ -61,7 +61,7 @@ export const DashboardLayout = ({
 
           <InertWhenNavOpened className="h-full dark:bg-slate-900 flex-1">
             <Main>
-              {status}
+              {status && <div className="pt-8">{status}</div>}
               <div className="flex-1">
                 <div>
                   <div className="md:h-12" />
