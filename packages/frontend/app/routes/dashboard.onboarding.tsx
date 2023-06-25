@@ -47,7 +47,9 @@ export const action: ActionFunction = async ({
     session.get("auth-cookie")
   );
 
-  return redirect(`/dashboard?newProjectId=${project.uuid}#project-added`);
+  return redirect(
+    `/dashboard/projects/${project.uuid}/flags?projectCreated=true#project-added`
+  );
 };
 
 export default function OnboardingPage() {
@@ -58,7 +60,7 @@ export default function OnboardingPage() {
   const errors = data?.errors;
 
   return (
-    <NotAuthenticatedLayout>
+    <NotAuthenticatedLayout status={errors?.name && <ErrorBox list={errors} />}>
       <div className="mt-8 md:mt-36">
         <Stack spacing={4}>
           <div className="text-center motion-safe:animate-fade-enter-top">
@@ -76,8 +78,6 @@ export default function OnboardingPage() {
               your application.
             </Typography>
           </div>
-
-          {errors?.name && <ErrorBox list={errors} />}
 
           <div
             className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"

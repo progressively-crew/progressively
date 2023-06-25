@@ -41,7 +41,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/webhooks"
         );
 
         cy.verifyBreadcrumbs([
-          ["Projects", "/dashboard"],
+          ["My projects", "/dashboard"],
           ["Project from seeding", "/dashboard/projects/1/flags"],
           ["Production", "/dashboard/projects/1/environments/1"],
           ["With multivariate", "/dashboard/projects/1/environments/1/flags/4"],
@@ -71,7 +71,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/webhooks"
         );
 
         cy.verifyBreadcrumbs([
-          ["Projects", "/dashboard"],
+          ["My projects", "/dashboard"],
           ["Project from seeding", "/dashboard/projects/1/flags"],
           ["Production", "/dashboard/projects/1/environments/1"],
           ["New homepage", "/dashboard/projects/1/environments/1/flags/1"],

@@ -53,6 +53,7 @@ export default function FlagsByEnvPage() {
   const search = searchParams.get("search");
   const newFlagId = searchParams.get("newFlagId") || undefined;
   const envRemoved = searchParams.get("envRemoved") || undefined;
+  const projectCreated = searchParams.get("projectCreated") || undefined;
 
   const isFlagRemoved = searchParams.get("flagRemoved") || undefined;
   const isSearching = Boolean(searchParams.get("search") || undefined);
@@ -68,7 +69,11 @@ export default function FlagsByEnvPage() {
       user={user}
       subNav={<ProjectNavBar project={project} />}
       status={
-        envRemoved ? (
+        projectCreated ? (
+          <SuccessBox id="env-removed">
+            The project has been successfully created.
+          </SuccessBox>
+        ) : envRemoved ? (
           <SuccessBox id="env-removed">
             The environment has been successfully deleted.
           </SuccessBox>

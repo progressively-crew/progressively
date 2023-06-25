@@ -48,7 +48,7 @@ export const action: ActionFunction = async ({
   );
 
   return redirect(
-    `/dashboard/projects/${userProject.uuid}?projectCreated=true#project-added`
+    `/dashboard/projects/${userProject.uuid}/flags?projectCreated=true#project-added`
   );
 };
 

@@ -40,7 +40,7 @@ describe("/dashboard/projects/[id]/environments/[envId]", () => {
         );
 
         cy.verifyBreadcrumbs([
-          ["Projects", "/dashboard"],
+          ["My projects", "/dashboard"],
           ["Project from seeding", "/dashboard/projects/1/flags"],
           ["Developer", "/dashboard/projects/1/environments/2"],
         ]);
@@ -74,7 +74,7 @@ describe("/dashboard/projects/[id]/environments/[envId]", () => {
         );
 
         cy.verifyBreadcrumbs([
-          ["Projects", "/dashboard"],
+          ["My projects", "/dashboard"],
           ["Project from seeding", "/dashboard/projects/1/flags"],
           ["Production", "/dashboard/projects/1/environments/1"],
         ]);
