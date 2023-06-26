@@ -2,7 +2,7 @@
   "name": "root",
   "private": true,
   "devDependencies": {
-    "wait-on": "^6.0.1"
+    "wait-on": "^7.0.1"
   },
   "scripts": {
     "build": "turbo build",
@@ -19,7 +19,7 @@
     "start:frontend": "turbo run start --filter=@progressively/frontend"
   },
   "dependencies": {
-    "@changesets/cli": "^2.26.0",
-    "turbo": "^1.8.5"
+    "@changesets/cli": "^2.26.1",
+    "turbo": "^1.10.6"
   }
 }
