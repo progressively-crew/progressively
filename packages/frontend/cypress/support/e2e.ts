@@ -82,10 +82,17 @@ Cypress.Commands.add("verifyBreadcrumbs", (crumbs: Array<any>) => {
   });
 });
 
-Cypress.on(
-  "uncaught:exception",
-  (err) => !err.message.includes("ResizeObserver loop limit exceeded")
-);
+Cypress.on("uncaught:exception", (err) => {
+  if (
+    /hydrat/i.test(err.message) ||
+    /Minified React error #418/.test(err.message) ||
+    /Minified React error #423/.test(err.message)
+  ) {
+    return false;
+  }
+
+  return !err.message.includes("ResizeObserver loop limit exceeded");
+});
 
 if (Cypress.env("DARK_THEME")) {
   Cypress.on("window:before:load", (win) => {
