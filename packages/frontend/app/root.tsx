@@ -1,25 +1,12 @@
-import * as React from "react";
-import {
-  Links,
-  LiveReload,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-  isRouteErrorResponse,
-  useRouteError,
-} from "@remix-run/react";
+import { Outlet, isRouteErrorResponse, useRouteError } from "@remix-run/react";
 import UnauthorizedPage from "./routes/401";
 import ForbiddenPage from "./routes/403";
 import NotFoundPage from "./routes/404";
 import styles from "./styles/app.css";
-import { Background } from "./components/Background";
 import { LinksFunction } from "@remix-run/node";
-import { Typography } from "./components/Typography";
-import { Spacer } from "./components/Spacer";
-import { AiOutlineLogin } from "react-icons/ai";
-import { Button } from "./components/Buttons/Button";
 import { ThemeProvider } from "./modules/theme/ThemeProvider";
+import { Document } from "./Document";
+import { DefaultErrorLayout } from "./DefaultErrorLayout";
 
 /**
  * The `links` export is a function that returns an array of objects that map to
@@ -40,71 +27,6 @@ export const links: LinksFunction = () => {
   ];
 };
 
-interface DocumentProps {
-  children: React.ReactNode;
-  title?: string;
-}
-
-const Document = ({ children, title }: DocumentProps) => {
-  return (
-    <html lang="en" className="min-h-full h-full">
-      <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <link rel="shortcut icon" type="image/jpg" href="/favicon.png" />
-        {title ? <title>{title}</title> : null}
-        <Meta />
-        <Links />
-        <script
-          lang="javascript"
-          dangerouslySetInnerHTML={{
-            __html: `
-if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-document.documentElement.classList.add('dark')
-} else {
-document.documentElement.classList.remove('dark')
-}
-`,
-          }}
-        ></script>
-      </head>
-      <body className="h-full">
-        <Background>{children}</Background>
-
-        <ScrollRestoration />
-        <Scripts />
-        <LiveReload />
-      </body>
-    </html>
-  );
-};
-
-function DefaultError({ errorMessage }: { errorMessage: string }) {
-  return (
-    <Document title="Error!">
-      <main className="p-8">
-        <Typography as="h1" className="font-bold text-lg">
-          Outch, a wild error appeared!
-        </Typography>
-
-        <Typography>{errorMessage}</Typography>
-
-        <Spacer size={2} />
-
-        <div className="inline-block">
-          <Button
-            to="/signin"
-            variant="secondary"
-            icon={<AiOutlineLogin aria-hidden />}
-          >
-            Signin page
-          </Button>
-        </div>
-      </main>
-    </Document>
-  );
-}
-
 export function ErrorBoundary() {
   const error = useRouteError();
 
@@ -118,7 +40,9 @@ export function ErrorBoundary() {
         ) : error.status === 404 ? (
           <NotFoundPage />
         ) : (
-          <DefaultError errorMessage={error.data.message || error.statusText} />
+          <DefaultErrorLayout
+            errorMessage={error.data.message || error.statusText}
+          />
         )}
       </Document>
     );
@@ -128,7 +52,7 @@ export function ErrorBoundary() {
     ? ((error as any).message as string)
     : (error as any).data.message;
 
-  return <DefaultError errorMessage={message} />;
+  return <DefaultErrorLayout errorMessage={message} />;
 }
 
 /**
