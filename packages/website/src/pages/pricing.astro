@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { AiOutlineGithub } from "react-icons/ai";
 import Container from "../components/Container.astro";
 import { PricingCalculator } from "../components/PricingCalculator";
 import Faq from "../components/Faq.astro";
@@ -13,26 +14,48 @@ const trialUrl = `${frontendUrl}/register`;
 
 <Layout title="Pricing plans of Progressively">
   <Container>
-    <header
-      class="flex flex-col pt-20 md:pt-40 pb-12 gap-4 md:text-center md:items-center md:justify-center"
-    >
-      <h1 class="text-5xl md:text-6xl font-extrabold">Pricing</h1>
-    </header>
-
     <main>
-      <div class="mx-auto max-w-2xl">
+      <div class="flex flex-col pt-20 pb-12 gap-4">
+        <h1 class="text-5xl md:text-6xl font-extrabold">Pricing</h1>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-8">
         <Card>
-          <div class="p-4 md:p-12">
-            <PricingCalculator client:load />
-          </div>
+          <section class="h-full pb-4">
+            <h2 class="font-extrabold text-4xl pb-2">Self-hosted</h2>
+
+            <div class="flex flex-col gap-4 justify-center items-center h-full">
+              <AiOutlineGithub className="text-6xl" />
+              <p class="text-xl text-center text-slate-500">
+                Free and Open Source forever. Own your server, own your data.
+              </p>
+
+              <LinkButton
+                variant="secondary"
+                href="https://docs.progressively.app/start-with-self-hosted/quick-start"
+              >
+                Get started
+              </LinkButton>
+            </div>
+          </section>
+        </Card>
+
+        <Card>
+          <section>
+            <h2 class="font-extrabold text-4xl">SaaS</h2>
+
+            <div class="py-12 md:px-8">
+              <PricingCalculator client:load />
+            </div>
+
+            <div class="text-center">
+              <LinkButton href={trialUrl}>Start your free trial</LinkButton>
+            </div>
+          </section>
         </Card>
       </div>
 
-      <div class="text-center pt-4 pb-20">
-        <LinkButton href={trialUrl}>Start your free trial</LinkButton>
-      </div>
-
-      <div class="py-20">
+      <section class="py-20">
         <h2 class="font-extrabold text-4xl md:text-5xl pb-4 md:text-center">
           FAQ
         </h2>
@@ -60,7 +83,7 @@ const trialUrl = `${frontendUrl}/register`;
             at some point.
           </Faq>
         </div>
-      </div>
+      </section>
     </main>
   </Container>
 </Layout>

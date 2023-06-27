@@ -15,15 +15,15 @@ export const PricingCalculator = () => {
 
   return (
     <div>
-      <div aria-live="polite" className="text-center pb-16">
-        <strong className="text-7xl">{currentPlan.price}</strong>
-        <span className="text-4xl text-slate-500">/month</span>
+      <div aria-live="polite" className="text-center pb-8">
+        <strong className="text-6xl">{currentPlan.price}</strong>
+        <span className="text-3xl text-slate-500">/month</span>
       </div>
 
       <div>
         <label htmlFor={flagCountSliderId} className={labelClassName}>
           <span className={innerLabelClassName}>Events/month*</span>
-          <span className="block font-bold text-4xl">{currentPlan.events}</span>
+          <span className="block font-bold text-2xl">{currentPlan.events}</span>
         </label>
         <input
           name="evaluationCount"
