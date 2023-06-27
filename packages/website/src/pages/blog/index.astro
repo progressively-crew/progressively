@@ -13,7 +13,7 @@ const blogEntries = await getCollection("blog");
         <h1 class="text-5xl md:text-6xl font-extrabold">The blog</h1>
       </div>
       <div class="pb-20 md:pb-40">
-        <ul>
+        <ul class="flex flex-col gap-4">
           {
             blogEntries.map((blogPostEntry) => (
               <li>
