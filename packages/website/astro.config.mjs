@@ -1,15 +1,15 @@
 import { defineConfig } from "astro/config";
 import tailwind from "@astrojs/tailwind";
-import vercel from "@astrojs/vercel/edge";
-
 import react from "@astrojs/react";
+
+import netlify from "@astrojs/netlify/functions";
 
 // https://astro.build/config
 export default defineConfig({
   integrations: [tailwind(), react()],
   output: "server",
-  adapter: vercel(),
+  adapter: netlify(),
   server: {
-    port: 3001
-  }
+    port: 3001,
+  },
 });
