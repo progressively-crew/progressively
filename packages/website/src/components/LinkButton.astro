@@ -3,7 +3,13 @@ interface Props {
   href: string;
   id?: string;
   target?: "_blank";
-  variant?: "primary" | "secondary" | "tertiary";
+  variant?:
+    | "primary"
+    | "secondary"
+    | "tertiary"
+    | "tertiary-inverse"
+    | "primary-inverse"
+    | "secondary-inverse";
 }
 
 const { href, target, variant, id } = Astro.props;
@@ -15,6 +21,9 @@ const classCombination = {
   primary: "bg-gray-800 text-white hover:bg-gray-500",
   secondary: "bg-transparent border border-slate-200 hover:bg-slate-100",
   tertiary: "bg-transparent hover:bg-slate-100",
+  "tertiary-inverse": "text-white bg-transparent hover:bg-slate-700",
+  "primary-inverse": "bg-white hover:bg-slate-200",
+  "secondary-inverse": "text-white border border-slate-50 hover:bg-slate-800",
 };
 
 const variantClass = classCombination[variant || "primary"];

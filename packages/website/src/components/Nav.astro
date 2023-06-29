@@ -4,11 +4,11 @@ import Logo from "./Logo.astro";
 ---
 
 <nav
-  class="flex justify-between h-14 items-center bg-white border-b border-gray-200 px-8 overflow-x-scroll md:overflow-auto"
+  class="flex justify-between h-14 items-center bg-slate-800 px-8 overflow-x-scroll md:overflow-auto"
 >
   <ul class="flex h-12 items-center gap-2">
     <li>
-      <LinkButton variant="tertiary" href="/">
+      <LinkButton variant="tertiary-inverse" href="/">
         <span class="sr-only">Home</span>
         <Logo />
       </LinkButton>
@@ -16,7 +16,7 @@ import Logo from "./Logo.astro";
 
     <li>
       <LinkButton
-        variant="tertiary"
+        variant="tertiary-inverse"
         href="https://docs.progressively.app/"
         id="documentation"
       >
@@ -25,18 +25,18 @@ import Logo from "./Logo.astro";
     </li>
 
     <li>
-      <LinkButton variant="tertiary" href="/blog">Blog</LinkButton>
+      <LinkButton variant="tertiary-inverse" href="/blog">Blog</LinkButton>
     </li>
 
     <li>
-      <LinkButton variant="tertiary" href="pricing" id="pricing">
+      <LinkButton variant="tertiary-inverse" href="pricing" id="pricing">
         Pricing
       </LinkButton>
     </li>
   </ul>
 
   <LinkButton
-    variant="secondary"
+    variant="tertiary-inverse"
     href="https://dashboard.progressively.app/"
     id="documentation"
   >

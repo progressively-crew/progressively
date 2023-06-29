@@ -4,6 +4,7 @@ import { FeatureSection } from "../components/FeatureSection";
 import GetStartedCTA from "../components/GetStartedCTA.astro";
 import LinkButton from "../components/LinkButton.astro";
 import { PullTriggerSection } from "../components/PullTriggerSection";
+import { SpeedUpDevelopment } from "../components/SpeedUpDevelopment";
 import DiscordIcon from "../components/icons/DiscordIcon.astro";
 import GithubIcon from "../components/icons/GithubIcon.astro";
 import TwitterIcon from "../components/icons/TwitterIcon.astro";
@@ -11,15 +12,15 @@ import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout title="Welcome to Progressively, the new feature flag solution.">
-  <Container>
-    <header>
+  <header class="bg-slate-900 py-20 md:py-40">
+    <Container>
       <div
-        class="flex justify-center lg:items-center flex-col py-20 md:py-40 gap-4"
+        class="flex justify-center lg:items-center flex-col pb-20 md:pb-40 gap-4"
       >
         <ul class="flex h-12 items-center">
           <li>
             <LinkButton
-              variant="tertiary"
+              variant="tertiary-inverse"
               href="https://github.com/progressively-crew/progressively"
               target={"_blank"}
               id="github"
@@ -30,7 +31,7 @@ import Layout from "../layouts/Layout.astro";
 
           <li>
             <LinkButton
-              variant="tertiary"
+              variant="tertiary-inverse"
               href="https://discord.gg/kJ55wBXC37"
               target={"_blank"}
               id="discord"
@@ -41,7 +42,7 @@ import Layout from "../layouts/Layout.astro";
 
           <li>
             <LinkButton
-              variant="tertiary"
+              variant="tertiary-inverse"
               href="https://twitter.com/_progressively"
               target={"_blank"}
               id="twitter"
@@ -51,18 +52,18 @@ import Layout from "../layouts/Layout.astro";
           </li>
         </ul>
 
-        <h1 class="text-5xl md:text-6xl font-extrabold">
+        <h1 class="text-5xl md:text-6xl font-extrabold text-white">
           Introducing <span>Progressively</span>
         </h1>
 
-        <p class="text-2xl sm:text-center">
+        <p class="text-2xl sm:text-center text-slate-200">
           A simple, accessible, lightweight and OpenSource feature flag
           software.
         </p>
 
         <div class="flex flex-col sm:flex-row gap-4">
           <LinkButton
-            variant="primary"
+            variant="primary-inverse"
             href="https://dashboard.progressively.app/signin"
             target={"_blank"}
             id="demo-instance"
@@ -74,14 +75,14 @@ import Layout from "../layouts/Layout.astro";
             href="https://docs.progressively.app/start-with-self-hosted/quick-start"
             target={"_blank"}
             id="get-started"
-            variant="secondary"
+            variant="secondary-inverse"
           >
             Get started locally
           </LinkButton>
         </div>
       </div>
 
-      <div class="md:rounded-lg overflow-hidden border border-slate-300">
+      <div class="md:rounded-lg overflow-hidden border border-slate-700">
         <div style="padding:35.79% 0 0 0;position:relative;">
           <iframe
             src="https://player.vimeo.com/video/838070241?badge=0&autopause=0&player_id=0&app_id=58479"
@@ -93,11 +94,13 @@ import Layout from "../layouts/Layout.astro";
         </div>
         <!-- <img src="/capture.png" alt="" height="512px" /> -->
       </div>
-    </header>
-  </Container>
+    </Container>
+  </header>
 
   <main>
-    <div class="flex flex-col gap-12 pt-20">
+    <div class="flex flex-col pt-20">
+      <SpeedUpDevelopment />
+
       <PullTriggerSection client:load />
 
       <FeatureSection />
