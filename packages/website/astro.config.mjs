@@ -8,7 +8,9 @@ import netlify from "@astrojs/netlify/functions";
 export default defineConfig({
   integrations: [tailwind(), react()],
   output: "server",
-  adapter: netlify(),
+  adapter: netlify({
+    dist: new URL("./dist/", import.meta.url),
+  }),
   server: {
     port: 3001,
   },
