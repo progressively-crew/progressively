@@ -1,7 +1,10 @@
+import { AiOutlineBug, AiOutlineDeploymentUnit } from "react-icons/ai";
+import { TbBrowserCheck } from "react-icons/tb";
 import { Card } from "./Card";
 
 export const SpeedUpDevelopment = () => {
   const cardTitleClass = "font-bold text-xl pb-2";
+  const iconClass = "w-10 h-10 mb-4 rounded p-2 text-white";
 
   return (
     <div className="px-4 md:px-8 max-w-6xl mx-auto">
@@ -17,6 +20,10 @@ export const SpeedUpDevelopment = () => {
 
         <div className="grid md:grid-cols-3 pt-12 gap-9">
           <Card>
+            <AiOutlineDeploymentUnit
+              className={`${iconClass} bg-indigo-500`}
+              aria-hidden
+            />
             <h3 className={cardTitleClass}>Iterate faster</h3>
             <p>
               Separate code deployment from feature releases. Deploy code as
@@ -25,6 +32,10 @@ export const SpeedUpDevelopment = () => {
           </Card>
 
           <Card>
+            <AiOutlineBug
+              className={`${iconClass} bg-orange-500`}
+              aria-hidden
+            />
             <h3 className={cardTitleClass}>Managing risk and stress</h3>
             <p>
               If there is a bug, rollback the feature by switching a toggle. No
@@ -34,6 +45,10 @@ export const SpeedUpDevelopment = () => {
           </Card>
 
           <Card>
+            <TbBrowserCheck
+              className={`${iconClass} bg-green-500`}
+              aria-hidden
+            />
             <h3 className={cardTitleClass}>Test the reality</h3>
             <p>
               Create a flag just for you, and test your feature directly in

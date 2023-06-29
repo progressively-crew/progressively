@@ -24,11 +24,13 @@ export const Switch = ({
   }, [checked]);
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex flex-row items-center gap-2">
+      <label htmlFor={id} className="font-extrabold">
+        {label}
+      </label>
       <RawSwitch
         id={id}
         checked={isChecked}
-        aria-label={label}
         type={type}
         form={form}
         onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
