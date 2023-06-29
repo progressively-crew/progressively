@@ -10,45 +10,43 @@ import GithubIcon from "../components/icons/GithubIcon.astro";
 import TwitterIcon from "../components/icons/TwitterIcon.astro";
 import Layout from "../layouts/Layout.astro";
 import shapesSrc from "../images/shapes.svg";
-import { EasyToUse } from "../components/EasyToUse";
-import shiki from "shiki";
 
-const highlighter = await shiki.getHighlighter({
-  theme: "github-dark",
-  langs: ["jsx"],
-});
+// const highlighter = await shiki.getHighlighter({
+//   theme: "github-dark",
+//   langs: ["jsx"],
+// });
 
-const provider = highlighter.codeToHtml(
-  `import { ProgressivelyProvider } from "@progressively/react";
+// const provider = highlighter.codeToHtml(
+//   `import { ProgressivelyProvider } from "@progressively/react";
 
-const App = () => {
-  return (
-    <ProgressivelyProvider clientKey="YOUR_CLIENT_KEY">
-      <FlaggedComponent />
-    </ProgressivelyProvider>
-  );
-};`,
-  {
-    lang: "jsx",
-  }
-);
+// const App = () => {
+//   return (
+//     <ProgressivelyProvider clientKey="YOUR_CLIENT_KEY">
+//       <FlaggedComponent />
+//     </ProgressivelyProvider>
+//   );
+// };`,
+//   {
+//     lang: "jsx",
+//   }
+// );
 
-const clientComponent = highlighter.codeToHtml(
-  `import { useFlags } from "@progressively/react";
+// const clientComponent = highlighter.codeToHtml(
+//   `import { useFlags } from "@progressively/react";
 
-const FlaggedComponent = () => {
-  const { flags } = useFlags();
+// const FlaggedComponent = () => {
+//   const { flags } = useFlags();
 
-  if (flags.newFlag) {
-    return <div>New variant</div>;
-  }
+//   if (flags.newFlag) {
+//     return <div>New variant</div>;
+//   }
 
-  return <div>Old variant</div>;
-};`,
-  {
-    lang: "jsx",
-  }
-);
+//   return <div>Old variant</div>;
+// };`,
+//   {
+//     lang: "jsx",
+//   }
+// );
 ---
 
 <Layout title="Welcome to Progressively, the new feature flag solution.">
@@ -151,7 +149,7 @@ const FlaggedComponent = () => {
 
       <PullTriggerSection client:load />
 
-      <EasyToUse provider={provider} clientComponent={clientComponent} />
+      <!-- <EasyToUse provider={provider} clientComponent={clientComponent} /> -->
 
       <FeatureSection />
 
