@@ -2,28 +2,16 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import React from "react";
 import styles from "../styles/Home.module.css";
-import { ProgressivelyProvider, useFlags } from "@progressively/react";
-import { getProgressivelyData } from "@progressively/server-side";
+import { useFlags } from "@progressively/react";
 
 const FlaggedComponent = () => {
-  const { flags, setFields, track } = useFlags();
+  const { flags } = useFlags();
 
-  return (
-    <main>
-      <div>
-        <h1>New homepage</h1>
-        {flags.newHomepage ? "New variant" : "Old variant"}
-      </div>
+  if (flags.newFlag) {
+    return <div>New variant</div>;
+  }
 
-      <button onClick={() => track("A metric")}>Click me</button>
-
-      <button onClick={() => setFields({ id: "2" })}>
-        Remove from audience
-      </button>
-
-      <footer>{flags.newFooter ? "New footer" : "Old footer"}</footer>
-    </main>
-  );
+  return <div>Old variant</div>;
 };
 
 const Home: NextPage = ({ progressivelyProps }: any) => {
