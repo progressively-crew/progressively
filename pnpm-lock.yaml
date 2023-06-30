@@ -687,6 +687,7 @@ importers:
       '@types/react': ^18.0.21
       '@types/react-dom': ^18.0.6
       astro: ^2.7.1
+      highlight.js: ^11.8.0
       react: ^18.0.0
       react-dom: ^18.0.0
       react-icons: ^4.8.0
@@ -704,6 +705,7 @@ importers:
       '@types/react': 18.2.0
       '@types/react-dom': 18.2.1
       astro: 2.7.1
+      highlight.js: 11.8.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-icons: 4.8.0_react@18.2.0
@@ -16680,6 +16682,11 @@ packages:
     resolution: {integrity: sha512-QFLV0taWQOZtvIRIAdBChesmogZrtuXvVWsFHZTk2SU+anspqZ2vMnoLg7IE1+Uk16N19APic1BuF8bC8c2m5g==}
     engines: {node: '>=8'}
     dev: true
+
+  /highlight.js/11.8.0:
+    resolution: {integrity: sha512-MedQhoqVdr0U6SSnWPzfiadUcDHfN/Wzq25AkXiQv9oiOO/sG0S7XkvpFIqWBl9Yq1UYyYOOVORs5UW2XlPyzg==}
+    engines: {node: '>=12.0.0'}
+    dev: false
 
   /hoist-non-react-statics/3.3.2:
     resolution: {integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==}

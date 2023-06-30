@@ -10,9 +10,13 @@ import GithubIcon from "../components/icons/GithubIcon.astro";
 import TwitterIcon from "../components/icons/TwitterIcon.astro";
 import Layout from "../layouts/Layout.astro";
 import shapesSrc from "../images/shapes.svg";
-import { EasyToUse } from "../components/EasyToUse";
+import EasyToUse from "../components/EasyToUse.astro";
+import hljs from "highlight.js";
+import "highlight.js/styles/github-dark.css";
 
-const provider = `import { ProgressivelyProvider } from "@progressively/react";
+const provider = hljs.highlight(
+  `
+import { ProgressivelyProvider } from "@progressively/react";
 
 const App = () => {
   return (
@@ -20,9 +24,13 @@ const App = () => {
       <FlaggedComponent />
     </ProgressivelyProvider>
   );
-};`;
+};`,
+  { language: "jsx" }
+).value;
 
-const clientComponent = `import { useFlags } from "@progressively/react";
+const clientComponent = hljs.highlight(
+  `
+import { useFlags } from "@progressively/react";
 
 const FlaggedComponent = () => {
   const { flags } = useFlags();
@@ -32,7 +40,9 @@ const FlaggedComponent = () => {
   }
 
   return <div>Old variant</div>;
-};`;
+};`,
+  { language: "jsx" }
+).value;
 ---
 
 <Layout title="Welcome to Progressively, the new feature flag solution.">
