@@ -7,7 +7,7 @@ export interface EasyToUseProps {
 
 export const EasyToUse = ({ provider, clientComponent }: EasyToUseProps) => {
   const codeClass =
-    "bg-slate-800 p-4 rounded-lg border border-slate-700 text-xs h-full overflow-scroll";
+    "bg-slate-800 p-4 rounded-lg border border-slate-700 text-xs h-full overflow-x-scroll md:overflow-hidden";
 
   return (
     <section
