@@ -14,4 +14,9 @@ export default defineConfig({
   server: {
     port: 3001,
   },
+  vite: {
+    ssr: {
+      noExternal: ["vscode-oniguruma", "shiki"],
+    },
+  },
 });
