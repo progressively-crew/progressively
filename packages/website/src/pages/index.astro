@@ -11,10 +11,8 @@ import TwitterIcon from "../components/icons/TwitterIcon.astro";
 import Layout from "../layouts/Layout.astro";
 import shapesSrc from "../images/shapes.svg";
 import { EasyToUse } from "../components/EasyToUse";
-import { highlight } from "../helpers/highlight";
 
-const provider = await highlight(
-  `import { ProgressivelyProvider } from "@progressively/react";
+const provider = `import { ProgressivelyProvider } from "@progressively/react";
 
 const App = () => {
   return (
@@ -22,11 +20,9 @@ const App = () => {
       <FlaggedComponent />
     </ProgressivelyProvider>
   );
-};`
-);
+};`;
 
-const clientComponent = await highlight(
-  `import { useFlags } from "@progressively/react";
+const clientComponent = `import { useFlags } from "@progressively/react";
 
 const FlaggedComponent = () => {
   const { flags } = useFlags();
@@ -36,8 +32,7 @@ const FlaggedComponent = () => {
   }
 
   return <div>Old variant</div>;
-};`
-);
+};`;
 ---
 
 <Layout title="Welcome to Progressively, the new feature flag solution.">
