@@ -10,7 +10,7 @@ import GithubIcon from "../components/icons/GithubIcon.astro";
 import TwitterIcon from "../components/icons/TwitterIcon.astro";
 import Layout from "../layouts/Layout.astro";
 import shapesSrc from "../images/shapes.svg";
-import EasyToUse from "../components/EasyToUse.astro";
+import { EasyToUse } from "../components/EasyToUse";
 import hljs from "highlight.js";
 import "highlight.js/styles/github-dark.css";
 
@@ -122,13 +122,11 @@ const FlaggedComponent = () => {
       </div>
 
       <div
-        class="bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400 rounded-xl overflow-hidden"
+        class="bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400 rounded-xl overflow-hidden animate-fade-enter-bottom motion-safe:opacity-0"
+        style="animation-delay: 500ms;"
       >
         <div class="md:rounded-lg border border-slate-700 p-2">
-          <div
-            style="padding:35.79% 0 0 0;position:relative"
-            class="bg-slate-800 h-full"
-          >
+          <div style="padding:35.79% 0 0 0;position:relative">
             <iframe
               src="https://player.vimeo.com/video/838070241?badge=0&autopause=0&player_id=0&app_id=58479"
               frameborder="0"
@@ -148,7 +146,11 @@ const FlaggedComponent = () => {
 
       <PullTriggerSection client:load />
 
-      <EasyToUse provider={provider} clientComponent={clientComponent} />
+      <EasyToUse
+        provider={provider}
+        clientComponent={clientComponent}
+        client:load
+      />
 
       <FeatureSection />
 

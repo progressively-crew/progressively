@@ -20,7 +20,7 @@ export const Switch = ({
   const id = useId();
   const [isChecked, setIsChecked] = useState(checked);
   const ref = useRef<HTMLDivElement | null>(null);
-  const entry = useIntersectionObserver(ref, {});
+  const entry = useIntersectionObserver(ref, { freezeOnceVisible: true });
   const isVisible = !!entry?.isIntersecting;
 
   useEffect(() => {
