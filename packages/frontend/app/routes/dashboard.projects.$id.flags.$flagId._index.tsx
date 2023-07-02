@@ -1,18 +1,18 @@
 import { DashboardLayout } from "~/layouts/DashboardLayout";
+import { UserRoles } from "~/modules/projects/types";
+import { Section, SectionHeader } from "~/components/Section";
+import { DeleteButton } from "~/components/Buttons/DeleteButton";
+import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { V2_MetaFunction } from "@remix-run/node";
+import { Card, CardContent } from "~/components/Card";
+import { ButtonCopy } from "~/components/ButtonCopy";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
-import { getFlagEnvMetaTitle } from "~/modules/flags/services/getFlagEnvMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
-import { FlagMenu } from "~/modules/flags/components/FlagMenu";
 import { useFlag } from "~/modules/flags/contexts/useFlag";
-import { EnvList } from "~/modules/environments/components/EnvList";
-import { SearchBar } from "~/components/SearchBar";
-import { SearchLayout } from "~/layouts/SearchLayout";
-import { useSearchParams } from "@remix-run/react";
-import { Typography } from "~/components/Typography";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
+import { Typography } from "~/components/Typography";
 
 export const meta: V2_MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -20,56 +20,69 @@ export const meta: V2_MetaFunction = ({ matches }) => {
 
   return [
     {
-      title: `Progressively | ${projectName} | ${flagName}`,
+      title: `Progressively | ${projectName} | ${flagName} | Settings`,
     },
   ];
 };
 
 export default function FlagSettingPage() {
-  const { project } = useProject();
+  const { project, userRole } = useProject();
   const { user } = useUser();
   const { flag } = useFlag();
-  const [searchParams] = useSearchParams();
-  const search = searchParams.get("search");
-
-  const isSearching = Boolean(searchParams.get("search") || undefined);
-
-  const environments = flag.flagEnvironment.map(
-    (flagEnv) => flagEnv.environment
-  );
-  const filteredEnvironments = environments.filter((env) =>
-    env.name.toLowerCase().includes(search || "")
-  );
 
   return (
-    <DashboardLayout
-      user={user}
-      subNav={<FlagMenu projectId={project.uuid} flag={flag} />}
-    >
+    <DashboardLayout user={user}>
       <PageTitle
-        value="Environments"
+        value="Settings"
         description={
           <Typography as="span">
-            The feature flag <strong className="font-bold">{flag.name}</strong>{" "}
-            is available in the following environments.
+            Settings available for{" "}
+            <strong className="font-bold">{flag.name}</strong>.
           </Typography>
         }
       />
 
-      <SearchLayout>
-        <SearchBar
-          label="Search for environments"
-          placeholder="e.g: The environment"
-          count={isSearching ? filteredEnvironments.length : undefined}
-        />
-      </SearchLayout>
+      <Card footer={<ButtonCopy toCopy={flag.key}>{flag.key}</ButtonCopy>}>
+        <CardContent>
+          <Section id="general">
+            <SectionHeader
+              title="General"
+              description={
+                "The following is the flag key to use inside your application to get the flag variation"
+              }
+            />
+          </Section>
+        </CardContent>
+      </Card>
 
-      <EnvList
-        environments={filteredEnvironments}
-        makeLink={(env) =>
-          `/dashboard/projects/${project.uuid}/environments/${env.uuid}/flags/${flag.uuid}`
-        }
-      />
+      {userRole === UserRoles.Admin && (
+        <Card
+          footer={
+            <DeleteButton
+              to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}/delete`}
+            >
+              <span aria-hidden>
+                <span>Delete </span>
+                <span className="hidden md:inline">{flag.name} forever</span>
+              </span>
+
+              <VisuallyHidden>{`Delete ${flag.name} forever`}</VisuallyHidden>
+            </DeleteButton>
+          }
+        >
+          <CardContent>
+            <Section id="danger">
+              <SectionHeader
+                title="Danger zone"
+                titleAs="h3"
+                description={
+                  "You can delete a feature flag at any time, but you  won't be able to access its insights anymore and false will be served to the application using it."
+                }
+              />
+            </Section>
+          </CardContent>
+        </Card>
+      )}
     </DashboardLayout>
   );
 }

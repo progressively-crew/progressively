@@ -55,7 +55,7 @@ export const FlagList = ({
                 </div>
 
                 <Button
-                  to={`/dashboard/projects/${projectId}/flags/${flag.uuid}/settings`}
+                  to={`/dashboard/projects/${projectId}/flags/${flag.uuid}`}
                   variant="secondary"
                   icon={<HiOutlineCog6Tooth />}
                 >

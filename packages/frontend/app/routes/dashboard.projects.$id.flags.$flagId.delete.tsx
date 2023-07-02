@@ -80,7 +80,7 @@ export default function DeleteFlagPage() {
         <Button
           variant="tertiary"
           scheme="danger"
-          to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}/settings`}
+          to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}`}
         >
           Cancel
         </Button>
@@ -97,10 +97,8 @@ export default function DeleteFlagPage() {
         </Form>
       }
       backLinkSlot={
-        <BackLink
-          to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}/settings`}
-        >
-          Back to environment
+        <BackLink to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}`}>
+          Back to flag
         </BackLink>
       }
     >
