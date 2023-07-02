@@ -16,6 +16,7 @@ import { Spacer } from "~/components/Spacer";
 import { Typography } from "~/components/Typography";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { useSearchParams } from "@remix-run/react";
+import { ProjectNavBar } from "~/modules/projects/components/ProjectNavBar";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -33,7 +34,6 @@ export default function EnvSettingsPage() {
   const { project, userRole } = useProject();
   const { environment } = useEnvironment();
   const [searchParams] = useSearchParams();
-  const search = searchParams.get("search");
   const envCreated = searchParams.get("envCreated") || undefined;
 
   return (
@@ -46,9 +46,10 @@ export default function EnvSettingsPage() {
           </SuccessBox>
         ) : null
       }
+      subNav={<ProjectNavBar project={project} />}
     >
       <PageTitle
-        value="Settings"
+        value={environment.name}
         description={
           <Typography as="span">
             Settings available for{" "}

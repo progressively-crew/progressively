@@ -23,7 +23,7 @@ export const ProjectNavBar = ({ project }: ProjectNavBarProps) => {
           Feature flags
         </NavItem>
 
-        <li className="text-sm block rounded px-3 text-gray-900">
+        <li className="text-sm block rounded px-3 text-gray-900 dark:text-white">
           <div className="h-8">Environments</div>
           <ul className="flex flex-col gap-1">
             {project.environments.map((env) => (

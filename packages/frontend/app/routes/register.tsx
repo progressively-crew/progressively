@@ -12,7 +12,7 @@ import {
   redirect,
   V2_MetaFunction,
 } from "@remix-run/node";
-import { useActionData, useSearchParams } from "@remix-run/react";
+import { useActionData } from "@remix-run/react";
 import { H1Logo } from "~/components/H1Logo";
 import { Spacer } from "~/components/Spacer";
 import { Button } from "~/components/Buttons/Button";
@@ -43,8 +43,6 @@ export default function CreateAccountPage() {
   const data = useActionData<RegisterActionData>();
   const newUser = data?.newUser;
   const errors = data?.errors;
-  const [searchParams] = useSearchParams();
-  const plan = searchParams.get("plan");
 
   return (
     <NotAuthenticatedLayout
@@ -52,7 +50,7 @@ export default function CreateAccountPage() {
       action={
         <Button
           to="/signin"
-          variant="secondary"
+          variant="secondary-inverse"
           className="w-full"
         >{`Sign in`}</Button>
       }

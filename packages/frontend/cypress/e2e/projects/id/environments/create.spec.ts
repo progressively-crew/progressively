@@ -77,7 +77,7 @@ describe("/dashboard/projects/[id]/environments/create", () => {
           );
 
         cy.get("main").within(() => {
-          cy.findByText("My new env").should("be.visible");
+          cy.findAllByText("My new env").should("be.visible");
         });
 
         cy.url().should("include", "/dashboard/projects/1/environments");
