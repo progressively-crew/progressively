@@ -1,4 +1,4 @@
-describe("/dashboard/projects/[id]/flags/[flagId]/settings", () => {
+describe("/dashboard/projects/[id]/flags/[flagId]", () => {
   before(cy.seed);
   after(cy.cleanupDb);
 
