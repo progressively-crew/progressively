@@ -49,7 +49,7 @@ export const DashboardLayout = ({
 
       <div className="bg-gray-50 dark:bg-slate-900 h-full flex-1">
         {crumbs.length > 1 && (
-          <div className="py-1 bg-white dark:bg-slate-700 border-b border-slate-200 dark:border-slate-800 hidden md:block ">
+          <div className="py-1 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 hidden md:block ">
             <div className="max-w-7xl mx-auto px-2">
               <BreadCrumbs crumbs={crumbs} />
             </div>
