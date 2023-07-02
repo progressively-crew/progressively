@@ -71,7 +71,7 @@ export default function ForgotPasswordPage() {
       action={
         <Button
           to="/signin"
-          variant="secondary"
+          variant="secondary-inverse"
           className="w-full"
         >{`Sign in`}</Button>
       }

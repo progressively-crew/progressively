@@ -33,7 +33,7 @@ export default function FlagSettingPage() {
   return (
     <DashboardLayout user={user}>
       <PageTitle
-        value="Settings"
+        value={flag.name}
         description={
           <Typography as="span">
             Settings available for{" "}

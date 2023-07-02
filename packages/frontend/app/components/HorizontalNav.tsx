@@ -20,8 +20,8 @@ export const HorizontalNavSection = ({
   return (
     <div className="">
       <h2 className="font-bold text-sm uppercase text-xs text-slate-500 dark:text-slate-400 tracking-tight pl-2">
-        <div className="flex flex-row gap-4 items-center">
-          <span className="text-lg h-6 flex flex-row items-center">{icon}</span>
+        <div className="flex flex-row gap-2 items-center">
+          <span className="text-lg h-8 flex flex-row items-center">{icon}</span>
           {title}
         </div>
       </h2>
@@ -56,9 +56,9 @@ export const NavItem = ({ children, to, icon }: NavItemProps) => {
         end
         className={({ isActive }) =>
           isActive
-            ? "h-8 text-sm block flex items-center rounded px-3 bg-gray-200 text-gray-900 dark:bg-slate-600 dark:text-slate-50 " +
+            ? "font-bold h-8 text-sm block flex items-center rounded px-3 bg-gray-200 text-gray-700 dark:bg-slate-600 dark:text-slate-50 " +
               focusStyles
-            : "h-8 text-sm block flex items-center rounded px-3 text-gray-900 hover:bg-gray-100 hover:dark:bg-slate-700  dark:text-gray-300 " +
+            : "h-8 text-sm block flex items-center rounded px-3 text-gray-700 hover:bg-gray-100 hover:dark:bg-slate-700  dark:text-gray-300 " +
               focusStyles
         }
       >

@@ -1,4 +1,4 @@
-import { Card, CardContent } from "~/components/Card";
+import { Card } from "~/components/Card";
 import { Container } from "~/components/Container";
 import { Logo } from "~/components/Logo/Logo";
 import { Main } from "~/components/Main";
@@ -22,11 +22,8 @@ export const NotAuthenticatedLayout = ({
 }: NotAuthenticatedLayoutProps) => {
   const containerSize = size === "S" ? "md:max-w-[480px]" : "md:w-2/5";
   return (
-    <div className="h-full flex-1 bg-gray-50 dark:bg-slate-900">
-      <nav
-        aria-label="Breadcrumbs"
-        className="border-b border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800"
-      >
+    <div className="h-full flex-1 bg-slate-800 dark:bg-slate-900">
+      <nav className="bg-slate-800">
         <Container>
           <ol className="flex h-14 items-center justify-between">
             <li>

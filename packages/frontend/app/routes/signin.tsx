@@ -105,7 +105,7 @@ export default function Signin() {
         showRegister && (
           <Button
             to="/register"
-            variant="secondary"
+            variant="secondary-inverse"
             className="w-full"
           >{`Sign up`}</Button>
         )
