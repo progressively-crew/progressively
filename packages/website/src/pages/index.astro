@@ -122,7 +122,7 @@ const FlaggedComponent = () => {
       </div>
 
       <div
-        class="bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400 rounded-xl overflow-hidden animate-fade-enter-bottom motion-safe:opacity-0"
+        class="bg-slate-400 rounded-xl overflow-hidden animate-fade-enter-bottom motion-safe:opacity-0"
         style="animation-delay: 500ms;"
       >
         <div class="md:rounded-lg border border-slate-700 p-2">
@@ -140,22 +140,26 @@ const FlaggedComponent = () => {
     </Container>
   </header>
 
+  <div
+    aria-hidden
+    class="mx-auto w-0 h-0 border-l-[100px] border-l-transparent border-t-[100px] border-t-slate-900 border-r-[100px] border-r-transparent"
+  >
+  </div>
+
   <main>
-    <div>
-      <SpeedUpDevelopment client:load />
+    <SpeedUpDevelopment client:load />
 
-      <PullTriggerSection client:load />
+    <PullTriggerSection client:load />
 
-      <EasyToUse
-        provider={provider}
-        clientComponent={clientComponent}
-        client:load
-      />
+    <EasyToUse
+      provider={provider}
+      clientComponent={clientComponent}
+      client:load
+    />
 
-      <FeatureSection />
+    <FeatureSection />
 
-      <GetStartedCTA />
-    </div>
+    <GetStartedCTA />
   </main>
 </Layout>
 

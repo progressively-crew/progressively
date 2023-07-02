@@ -28,7 +28,7 @@ export const EasyToUse = ({ provider, clientComponent }: Props) => {
       }}
     >
       <div className="px-4 md:px-8 max-w-6xl mx-auto">
-        <h2 className="font-extrabold text-4xl md:text-5xl pb-4 md:text-center text-white">
+        <h2 className="font-extrabold text-4xl md:text-7xl pb-4 md:text-center text-white">
           With just a few lines of code
         </h2>
 

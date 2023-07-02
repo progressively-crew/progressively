@@ -22,7 +22,7 @@ export const SpeedUpDevelopment = () => {
   return (
     <div className="px-4 md:px-8 max-w-6xl mx-auto">
       <section className={"py-12 md:py-32"}>
-        <h2 className="font-extrabold text-4xl md:text-5xl pb-4 md:text-center flex flex-col md:flex-row gap-4 md:justify-center md:items-center">
+        <h2 className="font-extrabold text-4xl md:text-7xl pb-4 md:text-center flex flex-col md:flex-row gap-4 md:justify-center md:items-center">
           <span>Ship 3x more, safely {isVisible}</span>{" "}
         </h2>
         <p className="text-2xl leading-relaxed md:text-center">

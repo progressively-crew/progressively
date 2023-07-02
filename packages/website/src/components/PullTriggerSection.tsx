@@ -37,7 +37,7 @@ export const PullTriggerSection = () => {
     >
       <div className="px-4 md:px-8 max-w-6xl mx-auto">
         <section className={"py-20 md:py-40"}>
-          <h2 className="font-extrabold text-4xl md:text-5xl pb-4 md:text-center">
+          <h2 className="font-extrabold text-4xl md:text-7xl pb-4 md:text-center">
             <span>Pull a trigger, deploy a feature</span>{" "}
           </h2>
           <p className="text-2xl leading-relaxed md:text-center">
