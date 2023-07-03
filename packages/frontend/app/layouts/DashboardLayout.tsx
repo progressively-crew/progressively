@@ -34,8 +34,8 @@ export const DashboardLayout = ({
     navigation.state === "loading" && navigation.formData == null;
 
   const gridClass = subNav
-    ? "grid md:grid-cols-[260px_1fr] gap-4 md:gap-12 max-w-7xl mx-auto px-4"
-    : "max-w-7xl mx-auto px-4 pt-8 md:pt-0";
+    ? "grid grid-cols-[auto_1fr] items-start h-full"
+    : "";
 
   return (
     <NavProvider>
@@ -50,18 +50,22 @@ export const DashboardLayout = ({
       <div className="bg-gray-50 dark:bg-slate-900 h-full flex-1">
         {crumbs.length > 1 && (
           <div className="py-1 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 hidden md:block ">
-            <div className="max-w-7xl mx-auto px-2">
+            <div className="px-4">
               <BreadCrumbs crumbs={crumbs} />
             </div>
           </div>
         )}
 
         <div className={gridClass}>
-          {subNav && <div className="md:pt-10">{subNav}</div>}
+          {subNav && (
+            <div className="sticky left-0 top-0 w-[300px] border-r border-slate-200 h-screen">
+              {subNav}
+            </div>
+          )}
 
-          <InertWhenNavOpened className="h-full dark:bg-slate-900 flex-1">
+          <InertWhenNavOpened className="h-full dark:bg-slate-900 flex-1 max-w-7xl mx-auto px-20 pt-8 md:pt-0 w-full">
             <Main>
-              {status && <div className="pt-8">{status}</div>}
+              {status && <div className="pt-12">{status}</div>}
               <div className="flex-1">
                 <div>
                   <div className="md:h-12" />

@@ -6,35 +6,10 @@ export interface HorizontalNavProps {
   label: string;
 }
 
-export interface HorizontalNavSectionProps {
-  children: React.ReactNode;
-  icon: React.ReactNode;
-  title: string;
-}
-
-export const HorizontalNavSection = ({
-  title,
-  children,
-  icon,
-}: HorizontalNavSectionProps) => {
-  return (
-    <div className="">
-      <h2 className="font-bold text-sm uppercase text-xs text-slate-500 dark:text-slate-400 tracking-tight pl-2">
-        <div className="flex flex-row gap-2 items-center">
-          <span className="text-lg h-8 flex flex-row items-center">{icon}</span>
-          {title}
-        </div>
-      </h2>
-
-      <ul className="flex flex-col gap-2 py-3">{children}</ul>
-    </div>
-  );
-};
-
 export const HorizontalNav = ({ children, label }: HorizontalNavProps) => {
   return (
-    <nav aria-label={label} className="py-3">
-      {children}
+    <nav aria-label={label} className="p-4">
+      <ul className="flex flex-col gap-2">{children}</ul>
     </nav>
   );
 };
@@ -56,9 +31,9 @@ export const NavItem = ({ children, to, icon }: NavItemProps) => {
         end
         className={({ isActive }) =>
           isActive
-            ? "font-bold h-8 text-sm block flex items-center rounded px-3 bg-gray-200 text-gray-700 dark:bg-slate-600 dark:text-slate-50 " +
+            ? "font-bold h-10 block flex items-center rounded px-3 bg-gray-200 text-gray-700 dark:bg-slate-600 dark:text-slate-50 " +
               focusStyles
-            : "h-8 text-sm block flex items-center rounded px-3 text-gray-700 hover:bg-gray-100 hover:dark:bg-slate-700  dark:text-gray-300 " +
+            : "h-10 block flex items-center rounded px-3 text-gray-700 hover:bg-gray-100 hover:dark:bg-slate-700  dark:text-gray-300 " +
               focusStyles
         }
       >
