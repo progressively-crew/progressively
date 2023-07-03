@@ -31,7 +31,7 @@ export const FlagEnvMenu = ({
       <li
         className={`transition-all py-6 px-4 border-b border-gray-200 dark:border-slate-800 ${
           isActivated
-            ? "bg-emerald-100 dark:bg-emerald-600"
+            ? "bg-emerald-100 dark:bg-emerald-800"
             : "bg-gray-100 dark:bg-slate-800"
         }`}
       >
