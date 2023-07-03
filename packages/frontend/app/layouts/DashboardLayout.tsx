@@ -34,7 +34,7 @@ export const DashboardLayout = ({
     navigation.state === "loading" && navigation.formData == null;
 
   const gridClass = subNav
-    ? "grid grid-cols-[auto_1fr] items-start h-full"
+    ? "md:grid grid-cols-[auto_1fr] items-start h-full"
     : "";
 
   return (
@@ -58,12 +58,12 @@ export const DashboardLayout = ({
 
         <div className={gridClass}>
           {subNav && (
-            <div className="sticky left-0 top-0 w-[300px] border-r border-slate-200 h-screen">
+            <div className="md:sticky left-0 top-0 md:w-[300px] md:border-r border-slate-200 dark:border-slate-800 md:h-screen">
               {subNav}
             </div>
           )}
 
-          <InertWhenNavOpened className="h-full dark:bg-slate-900 flex-1 max-w-7xl mx-auto px-20 pt-8 md:pt-0 w-full">
+          <InertWhenNavOpened className="h-full dark:bg-slate-900 flex-1 max-w-7xl mx-auto px-4 md:px-20 pt-8 md:pt-0 w-full">
             <Main>
               {status && <div className="pt-12">{status}</div>}
               <div className="flex-1">

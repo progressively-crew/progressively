@@ -25,23 +25,22 @@ export const FlagEnvMenu = ({
   envId,
   flagEnv,
 }: FlagEnvMenuProps) => {
+  const isActivated = flagEnv.status === FlagStatus.ACTIVATED;
   return (
     <HorizontalNav label={`Navigate in flag in specific environment`}>
-      <li className="px-3 h-8 flex flex-row items-center">
-        <Form method="post" id={`form-${flagEnv.flagId}`}>
-          <ToggleFlag
-            isFlagActivated={flagEnv.status === FlagStatus.ACTIVATED}
-            flagId={flagEnv.flagId}
-          />
-        </Form>
-      </li>
-
-      <NavItem
-        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/dev-setup`}
-        icon={<TbDeviceImacCheck />}
+      <li
+        className={`transition-all py-6 px-4 border-b border-gray-200 dark:border-slate-800 ${
+          isActivated
+            ? "bg-emerald-100 dark:bg-emerald-600"
+            : "bg-gray-100 dark:bg-slate-800"
+        }`}
       >
-        Dev setup
-      </NavItem>
+        <div className="px-3 flex flex-row items-center">
+          <Form method="post" id={`form-${flagEnv.flagId}`}>
+            <ToggleFlag isFlagActivated={isActivated} flagId={flagEnv.flagId} />
+          </Form>
+        </div>
+      </li>
 
       <NavItem
         to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}`}
@@ -97,6 +96,13 @@ export const FlagEnvMenu = ({
         icon={<TbChartPie />}
       >
         Metrics
+      </NavItem>
+
+      <NavItem
+        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/dev-setup`}
+        icon={<TbDeviceImacCheck />}
+      >
+        Dev setup
       </NavItem>
     </HorizontalNav>
   );

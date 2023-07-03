@@ -8,7 +8,7 @@ export interface HorizontalNavProps {
 
 export const HorizontalNav = ({ children, label }: HorizontalNavProps) => {
   return (
-    <nav aria-label={label} className="p-4">
+    <nav aria-label={label} className="pb-4">
       <ul className="flex flex-col gap-2">{children}</ul>
     </nav>
   );
@@ -25,7 +25,7 @@ export const NavItem = ({ children, to, icon }: NavItemProps) => {
     "focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:focus:ring-offset-slate-900";
 
   return (
-    <li>
+    <li className="px-4">
       <NavLink
         to={to}
         end
