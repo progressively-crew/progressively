@@ -1,9 +1,5 @@
-import {
-  HorizontalNav,
-  HorizontalNavSection,
-  NavItem,
-} from "~/components/HorizontalNav";
-import { UserIcon } from "~/components/Icons/UserIcon";
+import { TbCurrencyDollar, TbUserEdit } from "react-icons/tb";
+import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { useIsSaas } from "~/modules/saas/contexts/useIsSaas";
 
 export interface FlagMenuProps {
@@ -16,15 +12,18 @@ export const UserMenu = () => {
   const isSaas = useIsSaas();
 
   return (
-    <HorizontalNav label={"Navigate in user's profile"}>
-      <HorizontalNavSection
-        icon={<UserIcon />}
-        title="Navigate in user's profile"
-      >
-        <NavItem to="/dashboard/profile">General</NavItem>
+    <div className="pt-4">
+      <HorizontalNav label={"Navigate in user's profile"}>
+        <NavItem to="/dashboard/profile" icon={<TbUserEdit />}>
+          General
+        </NavItem>
 
-        {isSaas && <NavItem to="/dashboard/profile/billing">Billing</NavItem>}
-      </HorizontalNavSection>
-    </HorizontalNav>
+        {isSaas && (
+          <NavItem to="/dashboard/profile/billing" icon={<TbCurrencyDollar />}>
+            Billing
+          </NavItem>
+        )}
+      </HorizontalNav>
+    </div>
   );
 };

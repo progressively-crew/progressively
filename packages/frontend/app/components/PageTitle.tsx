@@ -13,13 +13,13 @@ export const PageTitle = ({ value, action, description }: PageTitleProps) => {
         <HStack spacing={3}>
           <div>
             <h1
-              className="text-4xl font-extrabold tracking-tight lg:text-2xl dark:text-white"
+              className="text-4xl font-extrabold tracking-tight lg:text-5xl dark:text-white"
               id="page-title"
             >
               {value}
             </h1>
             {description && (
-              <div className="text-slate-700 dark:text-slate-400">
+              <div className="text-slate-700 dark:text-slate-400 pt-2 text-xl">
                 {description}
               </div>
             )}

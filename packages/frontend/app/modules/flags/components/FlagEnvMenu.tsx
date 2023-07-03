@@ -1,15 +1,18 @@
-import {
-  HorizontalNav,
-  HorizontalNavSection,
-  NavItem,
-} from "~/components/HorizontalNav";
-import { FaToggleOff } from "react-icons/fa";
+import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { FlagEnv, FlagStatus } from "../types";
 import { Form } from "@remix-run/react";
 import { ToggleFlag } from "./ToggleFlag";
-import { FlagIcon } from "~/components/Icons/FlagIcon";
-import { Stack } from "~/components/Stack";
-import { HiOutlinePresentationChartLine } from "react-icons/hi2";
+import {
+  TbActivity,
+  TbApps,
+  TbChartAreaLine,
+  TbChartPie,
+  TbClockEdit,
+  TbDeviceImacCheck,
+  TbTargetArrow,
+  TbUsersGroup,
+  TbWebhook,
+} from "react-icons/tb";
 
 export interface FlagEnvMenuProps {
   projectId: string;
@@ -22,81 +25,85 @@ export const FlagEnvMenu = ({
   envId,
   flagEnv,
 }: FlagEnvMenuProps) => {
+  const isActivated = flagEnv.status === FlagStatus.ACTIVATED;
   return (
     <HorizontalNav label={`Navigate in flag in specific environment`}>
-      <Stack spacing={6}>
-        <HorizontalNavSection icon={<FaToggleOff />} title={"Feature toggle"}>
-          <li className="px-3 h-8 flex flex-row items-center">
-            <Form method="post" id={`form-${flagEnv.flagId}`}>
-              <ToggleFlag
-                isFlagActivated={flagEnv.status === FlagStatus.ACTIVATED}
-                flagId={flagEnv.flagId}
-              />
-            </Form>
-          </li>
+      <li
+        className={`transition-all py-6 px-4 border-b border-gray-200 dark:border-slate-800 ${
+          isActivated
+            ? "bg-emerald-100 dark:bg-emerald-800"
+            : "bg-gray-100 dark:bg-slate-800"
+        }`}
+      >
+        <div className="px-3 flex flex-row items-center">
+          <Form method="post" id={`form-${flagEnv.flagId}`}>
+            <ToggleFlag isFlagActivated={isActivated} flagId={flagEnv.flagId} />
+          </Form>
+        </div>
+      </li>
 
-          <NavItem
-            to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/dev-setup`}
-          >
-            Dev setup
-          </NavItem>
-        </HorizontalNavSection>
+      <NavItem
+        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}`}
+        icon={<TbTargetArrow />}
+      >
+        Audience
+      </NavItem>
 
-        <HorizontalNavSection icon={<FlagIcon />} title={"Feature management"}>
-          <NavItem
-            to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}`}
-          >
-            Audience
-          </NavItem>
+      <NavItem
+        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/segments`}
+        icon={<TbUsersGroup />}
+      >
+        Segments
+      </NavItem>
 
-          <NavItem
-            to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/segments`}
-          >
-            Segments
-          </NavItem>
+      <NavItem
+        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/variants`}
+        icon={<TbApps />}
+      >
+        Variants
+      </NavItem>
 
-          <NavItem
-            to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/variants`}
-          >
-            Variants
-          </NavItem>
+      <NavItem
+        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/scheduling`}
+        icon={<TbClockEdit />}
+      >
+        Scheduling
+      </NavItem>
 
-          <NavItem
-            to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/scheduling`}
-          >
-            Scheduling
-          </NavItem>
+      <NavItem
+        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/webhooks`}
+        icon={<TbWebhook />}
+      >
+        Webhooks
+      </NavItem>
 
-          <NavItem
-            to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/webhooks`}
-          >
-            Webhooks
-          </NavItem>
+      <NavItem
+        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/activity`}
+        icon={<TbActivity />}
+      >
+        Activity
+      </NavItem>
 
-          <NavItem
-            to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/activity`}
-          >
-            Activity
-          </NavItem>
-        </HorizontalNavSection>
+      <NavItem
+        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/insights`}
+        icon={<TbChartAreaLine />}
+      >
+        Insights
+      </NavItem>
 
-        <HorizontalNavSection
-          icon={<HiOutlinePresentationChartLine />}
-          title={"Analysis"}
-        >
-          <NavItem
-            to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/insights`}
-          >
-            Insights
-          </NavItem>
+      <NavItem
+        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/metrics`}
+        icon={<TbChartPie />}
+      >
+        Metrics
+      </NavItem>
 
-          <NavItem
-            to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/metrics`}
-          >
-            Metrics
-          </NavItem>
-        </HorizontalNavSection>
-      </Stack>
+      <NavItem
+        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/dev-setup`}
+        icon={<TbDeviceImacCheck />}
+      >
+        Dev setup
+      </NavItem>
     </HorizontalNav>
   );
 };

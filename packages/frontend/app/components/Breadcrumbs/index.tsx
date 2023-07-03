@@ -19,7 +19,7 @@ export const BreadCrumbs = ({ crumbs }: BreadCrumbsProps) => {
 
   return (
     <nav aria-label="Breadcrumbs">
-      <ol className="flex h-12 items-center">
+      <ol className="flex h-12 items-center -ml-2">
         {crumbs.map((crumb, index) => {
           const currentPage = index === lastItemIndex;
 

@@ -26,14 +26,18 @@ export const Switch = ({
 
   return (
     <div className="flex items-center gap-2">
-      <Label htmlFor={id} aria-hidden>
+      <label
+        htmlFor={id}
+        className="text-slate-900 font-bold font-mono dark:text-white"
+        aria-hidden
+      >
         {label}
-      </Label>
+      </label>
       <RawSwitch
         id={id}
         checked={isChecked}
-        aria-label={label}
         type={type}
+        aria-label={label}
         form={form}
         onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
           setIsChecked((s) => !s);
