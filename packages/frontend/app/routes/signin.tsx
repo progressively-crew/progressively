@@ -164,6 +164,7 @@ export default function Signin() {
           </div>
 
           <Button
+            variant="primary"
             isLoading={transition.state === "submitting"}
             loadingText="Signin in progress, please wait..."
           >
