@@ -2,6 +2,7 @@ import { CardEntity } from "~/components/Entity/Entity";
 import { MenuButton } from "~/components/MenuButton";
 import { Variant } from "../types";
 import { VariantDot } from "./VariantDot";
+import { ButtonCopy } from "~/components/ButtonCopy";
 
 export interface VariantListProps {
   variants: Array<Variant>;
@@ -22,6 +23,11 @@ export const VariantList = ({
           <CardEntity
             title={variant.value}
             avatar={<VariantDot variant={variant.value} />}
+            actions={
+              <div className="hidden md:block">
+                <ButtonCopy toCopy={variant.value}>{variant.value}</ButtonCopy>
+              </div>
+            }
             menu={
               <MenuButton
                 items={[

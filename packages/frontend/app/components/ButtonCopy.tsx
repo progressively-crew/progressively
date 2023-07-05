@@ -16,11 +16,15 @@ import { VisuallyHidden } from "./VisuallyHidden";
 
 export interface ButtonCopyProps {
   toCopy: string;
+  toCopyAlternative?: string; // for hiding secrets values
   children: React.ReactNode;
 }
 
 export const ButtonCopy = forwardRef(
-  ({ toCopy, children, ...props }: ButtonCopyProps, ref: any) => {
+  (
+    { toCopy, children, toCopyAlternative, ...props }: ButtonCopyProps,
+    ref: any
+  ) => {
     const timerIdRef = useRef<NodeJS.Timeout>();
     const [isCopied, setIsCopied] = useState(false);
     const isHydrated = useHydrated();
@@ -75,7 +79,7 @@ export const ButtonCopy = forwardRef(
         <Tooltip
           tooltip={
             <p>
-              Copy <strong>{toCopy}</strong> to clipboard
+              Copy <strong>{toCopyAlternative || toCopy}</strong> to clipboard
             </p>
           }
         >
