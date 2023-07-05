@@ -150,9 +150,13 @@ export default function MetricCreatePage() {
         }
         backLinkSlot={
           <BackLink
-            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/metrics`}
+            to={
+              initialVariantUuid
+                ? `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/variants`
+                : `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/metrics`
+            }
           >
-            Back to metrics
+            {initialVariantUuid ? "Back to variants" : "Back to metrics"}
           </BackLink>
         }
       >

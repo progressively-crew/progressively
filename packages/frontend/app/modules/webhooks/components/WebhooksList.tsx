@@ -2,6 +2,7 @@ import { CardEntity } from "~/components/Entity/Entity";
 import { MenuButton } from "~/components/MenuButton";
 import { Webhook } from "../types";
 import { WebhookEvent } from "./WebhookEvent";
+import { ButtonCopy } from "~/components/ButtonCopy";
 
 export interface WebhooksListProps {
   webhooks: Array<Webhook>;
@@ -26,15 +27,19 @@ export const WebhooksList = ({
                 On event <WebhookEvent value={webhook.event} />
               </p>
             }
+            actions={
+              <div className="hidden md:block">
+                <ButtonCopy
+                  toCopyAlternative={"the webhook secret"}
+                  toCopy={webhook.secret}
+                >
+                  Secret *********
+                </ButtonCopy>
+              </div>
+            }
             menu={
               <MenuButton
                 items={[
-                  {
-                    label: "Copy secret",
-                    onClick: () => {
-                      navigator.clipboard.writeText(webhook.secret);
-                    },
-                  },
                   {
                     label: "Remove",
                     href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/webhooks/${webhook.uuid}/delete`,

@@ -4,14 +4,14 @@ import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaT
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { getFlagEnvMetaTitle } from "~/modules/flags/services/getFlagEnvMetaTitle";
-import { Button } from "~/components/Buttons/Button";
-import { BackLink } from "~/components/BackLink";
-import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
-import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 import { Typography } from "~/components/Typography";
 import { ButtonCopy } from "~/components/ButtonCopy";
-import { Spacer } from "~/components/Spacer";
 import { Link } from "~/components/Link";
+import { DashboardLayout } from "~/layouts/DashboardLayout";
+import { FlagEnvMenu } from "~/modules/flags/components/FlagEnvMenu";
+import { useUser } from "~/modules/user/contexts/useUser";
+import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
+import { PageTitle } from "~/components/PageTitle";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -25,69 +25,104 @@ export const meta: V2_MetaFunction = ({ matches, params }) => {
   ];
 };
 
-export default function FlagInsights() {
+interface NumberCircleProps {
+  children: React.ReactNode;
+}
+
+const NumberCircle = ({ children }: NumberCircleProps) => {
+  return (
+    <div className="shrink-0 w-12 h-12 rounded-full text-lg border border-slate-200 flex items-center justify-center">
+      <Typography as="span">{children}</Typography>
+    </div>
+  );
+};
+
+export default function DevSetup() {
   const { flagEnv } = useFlagEnv();
   const { project } = useProject();
+  const { user } = useUser();
+  const { environment } = useEnvironment();
 
-  const clientKey = flagEnv.environment.clientKey;
-  const flagKey = flagEnv.flag.key;
+  const liClass = "flex flex-row gap-4";
+  const titleClass = "leading-relaxed text-3xl font-bold";
+  const pClass = "leading-relaxed text-lg pb-2 text-slate-700";
 
   return (
-    <CreateEntityLayout
-      titleSlot={<CreateEntityTitle>Developper setup</CreateEntityTitle>}
-      submitSlot={
-        <Button
-          variant="primary"
-          to={`/dashboard/projects/${project.uuid}/environments/${flagEnv.environment.uuid}/flags/${flagEnv.flag.uuid}`}
-        >
-          Thank you
-        </Button>
-      }
-      backLinkSlot={
-        <BackLink
-          to={`/dashboard/projects/${project.uuid}/environments/${flagEnv.environment.uuid}/flags/${flagEnv.flag.uuid}`}
-        >
-          Back to flag audience
-        </BackLink>
+    <DashboardLayout
+      user={user}
+      subNav={
+        <FlagEnvMenu
+          projectId={project.uuid}
+          envId={environment.uuid}
+          flagEnv={flagEnv}
+        />
       }
     >
-      <Typography>
-        To setup Progressively in your project, you will need to get a client
-        key and a flag key.
-      </Typography>
+      <PageTitle
+        value="Dev setup"
+        description={
+          <Typography>
+            The information related to setting up Progressively in your
+            codebase.
+          </Typography>
+        }
+      />
 
-      <Spacer size={6} />
+      <ol className="flex flex-col gap-8">
+        <li className={liClass}>
+          <div className="pt-2" aria-hidden>
+            <NumberCircle>1</NumberCircle>
+          </div>
+          <div>
+            <Typography as="h2" className={titleClass}>
+              Get your client key
+            </Typography>
+            <Typography className={pClass}>
+              A client key is an auto generated identifier for{" "}
+              <strong>an environment</strong>. Thanks to this identifier, the
+              SDKs know on which environment they should evaluate your feature
+              flags
+            </Typography>
 
-      <Typography>
-        The client key for <strong>{project.name}</strong> in{" "}
-        <strong>{flagEnv.environment.name}</strong>:
-      </Typography>
-
-      <Spacer size={2} />
-
-      <ButtonCopy toCopy={flagEnv.environment.clientKey}>
-        {flagEnv.environment.clientKey}
-      </ButtonCopy>
-
-      <Spacer size={6} />
-
-      <Typography>
-        The flag key for <strong>{flagEnv.flag.name}</strong>:
-      </Typography>
-
-      <Spacer size={2} />
-
-      <ButtonCopy toCopy={flagEnv.flag.key}>{flagEnv.flag.key}</ButtonCopy>
-
-      <Spacer size={6} />
-
-      <Typography>
-        You can check{" "}
-        <Link href="https://docs.progressively.app/" target="_blank">
-          the documentation
-        </Link>{" "}
-        for additional details.
-      </Typography>
-    </CreateEntityLayout>
+            <ButtonCopy toCopy={flagEnv.environment.clientKey}>
+              {flagEnv.environment.clientKey}
+            </ButtonCopy>
+          </div>
+        </li>
+        <li className={liClass}>
+          <div className="pt-2" aria-hidden>
+            <NumberCircle>2</NumberCircle>
+          </div>
+          <div>
+            <Typography className={titleClass}>
+              Get your feature flag key
+            </Typography>
+            <Typography className={pClass}>
+              The feature flag key is the value on which you will make your
+              conditional statements in the codebase.
+            </Typography>
+            <ButtonCopy toCopy={flagEnv.flag.key}>
+              {flagEnv.flag.key}
+            </ButtonCopy>
+          </div>
+        </li>
+        <li className={liClass}>
+          <div className="pt-2" aria-hidden>
+            <NumberCircle>3</NumberCircle>
+          </div>
+          <div>
+            <Typography className={titleClass}>
+              Check the SDK setup in the documentation
+            </Typography>
+            <Typography className={pClass}>
+              <Link href="https://docs.progressively.app/" target="_blank">
+                Access the documentation
+              </Link>{" "}
+              and take the SDK that fits your need.
+            </Typography>
+          </div>
+        </li>
+      </ol>
+    </DashboardLayout>
   );
 }

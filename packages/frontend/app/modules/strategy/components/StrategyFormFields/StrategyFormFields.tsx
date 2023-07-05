@@ -3,8 +3,9 @@ import { SelectField } from "~/components/Fields/Select/SelectField";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Typography } from "~/components/Typography";
 import { Variant } from "~/modules/variants/types";
-import { ValueToServe } from "../types";
+import { ValueToServe } from "../../types";
 import { PercentageField } from "~/components/Fields/PercentageField";
+import { VariantFields } from "./VariantFields";
 
 export interface ValuesToServeFieldsProps {
   variants?: Array<Variant & { rolloutPercentage: number }>;
@@ -12,29 +13,6 @@ export interface ValuesToServeFieldsProps {
   valueToServeType?: ValueToServe;
   rolloutPercentage: number;
 }
-
-export interface VariantFieldsProps {
-  variants: Array<Variant & { rolloutPercentage: number }>;
-}
-
-const VariantFields = ({ variants }: VariantFieldsProps) => {
-  return (
-    <div className="flex flex-row gap-x-8 flex-wrap">
-      {variants.map((variant) => {
-        return (
-          <div key={variant.uuid}>
-            <input type="hidden" name="variantUuid" value={variant.uuid} />
-            <PercentageField
-              name={"variantRolloutPercentage"}
-              initialValue={variant.rolloutPercentage}
-              label={variant.value}
-            />
-          </div>
-        );
-      })}
-    </div>
-  );
-};
 
 export const StrategyFormFields = ({
   valueToServe,
@@ -51,7 +29,7 @@ export const StrategyFormFields = ({
   const valueOptions = [
     {
       value: ValueToServe.Boolean,
-      label: `the "true" boolean`,
+      label: `true`,
     },
     {
       value: ValueToServe.String,
@@ -89,13 +67,13 @@ export const StrategyFormFields = ({
             defaultValue={
               valueToServeType === ValueToServe.String ? valueToServe : ""
             }
-            className="w-40"
+            className="w-52"
           />
         )}
 
         {status !== ValueToServe.Variant && (
           <>
-            <Typography className="font-bold">to</Typography>
+            <Typography>to</Typography>
 
             <PercentageField
               name={"rolloutPercentage"}
@@ -104,14 +82,16 @@ export const StrategyFormFields = ({
               hiddenLabel
             />
 
-            <Typography className="font-bold">of the audience</Typography>
+            <Typography>of the audience</Typography>
           </>
         )}
-
-        {status === ValueToServe.Variant && hasVariants && (
-          <VariantFields variants={variants || []} />
-        )}
       </div>
+
+      {status === ValueToServe.Variant && hasVariants && (
+        <div className="pt-4">
+          <VariantFields variants={variants || []} />
+        </div>
+      )}
     </div>
   );
 };
