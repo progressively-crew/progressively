@@ -7,7 +7,7 @@ export interface IconButtonProps extends HTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean;
   loadingText?: string;
   icon: React.ReactNode;
-  tooltip: React.ReactNode;
+  tooltip: string;
   form?: string;
   type?: "button" | "submit" | "reset";
   value?: string;
@@ -26,7 +26,7 @@ export const IconButton = ({
       <button
         className="rounded bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800 dark:text-slate-100 dark:hover:text-slate-100 w-6 h-8 flex items-center justify-center"
         aria-disabled={isLoading}
-        aria-label={isLoading ? loadingText : undefined}
+        aria-label={isLoading ? loadingText : tooltip}
         {...props}
       >
         {isLoading ? <Spinner /> : icon}
