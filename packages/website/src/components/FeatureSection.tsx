@@ -15,6 +15,7 @@ import {
   TbAccessible,
 } from "react-icons/tb";
 import { BsServer } from "react-icons/bs";
+import React from "react";
 
 const dashboardFeatures = [
   {
@@ -46,6 +47,11 @@ const dashboardFeatures = [
     Icon: AiOutlineBarChart,
   },
 ];
+
+const sectionTitleClass = "font-bold text-2xl pb-4";
+const cardTitleClass = "font-bold text-xl pb-2";
+const gridClass = "grid md:grid-cols-3 gap-4";
+const iconClass = "w-10 h-10 mb-4 rounded p-2 text-white";
 
 const devFeatures = [
   {
@@ -101,19 +107,16 @@ const everyone = [
 ];
 
 export const FeatureSection = () => {
-  const sectionTitleClass = "font-bold text-2xl pb-4";
-  const cardTitleClass = "font-bold text-xl pb-2";
-  const gridClass = "grid md:grid-cols-3 gap-4";
-  const iconClass = "w-10 h-10 mb-4 rounded p-2 text-white";
-
   return (
     <section className="py-20">
       <div className="px-4 md:px-8 max-w-6xl mx-auto">
-        <h2 className="font-extrabold text-4xl md:text-5xl pb-4">
-          What's in the package?
-        </h2>
+        <h2 className="font-extrabold text-4xl md:text-7xl pb-4">What else?</h2>
+        <p className="text-2xl leading-relaxed pb-8">
+          We got some additional features to help you release with even more
+          confidence.
+        </p>
 
-        <div className="pt-4">
+        <div className="pt-8">
           <h3 className={sectionTitleClass}>For dashboard users</h3>
           <div className={gridClass}>
             {dashboardFeatures.map((feature) => (
@@ -131,7 +134,7 @@ export const FeatureSection = () => {
         </div>
 
         <div className="pt-8">
-          <h3 className={sectionTitleClass}>For developpers</h3>
+          <h3 className={sectionTitleClass}>Developpers, we got your back</h3>
           <div className={gridClass}>
             {devFeatures.map((feature) => (
               <article key={feature.title}>
@@ -148,7 +151,7 @@ export const FeatureSection = () => {
         </div>
 
         <div className="pt-8">
-          <h3 className={sectionTitleClass}>For everyone</h3>
+          <h3 className={sectionTitleClass}>And for everyone</h3>
           <div className={gridClass}>
             {everyone.map((feature) => (
               <article key={feature.title}>

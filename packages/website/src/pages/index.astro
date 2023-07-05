@@ -5,14 +5,13 @@ import GetStartedCTA from "../components/GetStartedCTA.astro";
 import LinkButton from "../components/LinkButton.astro";
 import { PullTriggerSection } from "../components/PullTriggerSection";
 import { SpeedUpDevelopment } from "../components/SpeedUpDevelopment";
-import DiscordIcon from "../components/icons/DiscordIcon.astro";
 import GithubIcon from "../components/icons/GithubIcon.astro";
 import TwitterIcon from "../components/icons/TwitterIcon.astro";
 import Layout from "../layouts/Layout.astro";
 import shapesSrc from "../images/shapes.svg";
-import EasyToUse from "../components/EasyToUse.astro";
 import hljs from "highlight.js";
 import "highlight.js/styles/github-dark.css";
+import { EasyToUse } from "../components/EasyToUse";
 
 const provider = hljs.highlight(
   `
@@ -54,7 +53,7 @@ const FlaggedComponent = () => {
   >
     <Container>
       <div
-        class="flex justify-center lg:items-center flex-col pb-20 md:pb-40 gap-4"
+        class="flex justify-center lg:items-center flex-col pb-20 md:pb-40 gap-4 motion-safe:animate-fade-enter-top"
       >
         <ul class="flex h-12 items-center">
           <li>
@@ -71,17 +70,6 @@ const FlaggedComponent = () => {
           <li>
             <LinkButton
               variant="tertiary-inverse"
-              href="https://discord.gg/kJ55wBXC37"
-              target={"_blank"}
-              id="discord"
-            >
-              <DiscordIcon />
-            </LinkButton>
-          </li>
-
-          <li>
-            <LinkButton
-              variant="tertiary-inverse"
               href="https://twitter.com/_progressively"
               target={"_blank"}
               id="twitter"
@@ -91,16 +79,16 @@ const FlaggedComponent = () => {
           </li>
         </ul>
 
-        <h1 class="text-5xl md:text-6xl font-extrabold text-white">
+        <h1 class="text-5xl md:text-7xl font-extrabold text-white">
           Introducing <span>Progressively</span>
         </h1>
 
-        <p class="text-2xl sm:text-center text-slate-200">
+        <p class="text-3xl sm:text-center text-slate-200">
           A simple, accessible, lightweight and OpenSource feature flag
           software.
         </p>
 
-        <div class="flex flex-col sm:flex-row gap-4">
+        <div class="flex flex-col sm:flex-row gap-4 pt-2">
           <LinkButton
             variant="primary-inverse"
             href="https://dashboard.progressively.app/signin"
@@ -122,10 +110,11 @@ const FlaggedComponent = () => {
       </div>
 
       <div
-        class="bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400 rounded-xl overflow-hidden"
+        class="bg-slate-400 rounded-xl overflow-hidden animate-fade-enter-bottom motion-safe:opacity-0"
+        style="animation-delay: 500ms;"
       >
         <div class="md:rounded-lg border border-slate-700 p-2">
-          <div style="padding:35.79% 0 0 0;position:relative;">
+          <div style="padding:35.79% 0 0 0;position:relative">
             <iframe
               src="https://player.vimeo.com/video/838070241?badge=0&autopause=0&player_id=0&app_id=58479"
               frameborder="0"
@@ -139,18 +128,26 @@ const FlaggedComponent = () => {
     </Container>
   </header>
 
+  <div
+    aria-hidden
+    class="mx-auto w-0 h-0 border-l-[100px] border-l-transparent border-t-[100px] border-t-slate-900 border-r-[100px] border-r-transparent"
+  >
+  </div>
+
   <main>
-    <div>
-      <SpeedUpDevelopment />
+    <SpeedUpDevelopment client:load />
 
-      <PullTriggerSection client:load />
+    <PullTriggerSection client:load />
 
-      <EasyToUse provider={provider} clientComponent={clientComponent} />
+    <EasyToUse
+      provider={provider}
+      clientComponent={clientComponent}
+      client:load
+    />
 
-      <FeatureSection />
+    <FeatureSection />
 
-      <GetStartedCTA />
-    </div>
+    <GetStartedCTA />
   </main>
 </Layout>
 

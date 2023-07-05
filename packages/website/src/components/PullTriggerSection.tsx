@@ -8,19 +8,22 @@ export const PullTriggerSection = () => {
   const [percentage, setPercentage] = useState(100);
 
   const browserContent = (target: number) => {
-    const className = checked && percentage >= target ? "font-mono" : "";
+    const className =
+      checked && percentage >= target
+        ? "font-mono bg-slate-900 text-white"
+        : "bg-slate-50 text-slate-900";
 
     return (
       <div
-        className={`text-center flex flex-col items-center justify-center gap-4 h-full ${className}`}
+        className={`text-center flex flex-col items-center justify-center gap-4 h-full transition-all ${className}`}
       >
-        <h1 className="text-3xl font-extrabold text-slate-900">
+        <h1 className="text-3xl font-extrabold">
           Introducing <span>Progressively</span>
         </h1>
 
         <hr />
 
-        <p className="text-lg sm:text-center text-slate-700">
+        <p className="text-lg sm:text-center">
           A simple, accessible, lightweight and OpenSource feature flag
           software.
         </p>
@@ -37,7 +40,7 @@ export const PullTriggerSection = () => {
     >
       <div className="px-4 md:px-8 max-w-6xl mx-auto">
         <section className={"py-20 md:py-40"}>
-          <h2 className="font-extrabold text-4xl md:text-5xl pb-4 md:text-center">
+          <h2 className="font-extrabold text-4xl md:text-7xl pb-4 md:text-center">
             <span>Pull a trigger, deploy a feature</span>{" "}
           </h2>
           <p className="text-2xl leading-relaxed md:text-center">
@@ -75,8 +78,9 @@ export const PullTriggerSection = () => {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-4 pt-4">
-            <Browser>{browserContent(50)}</Browser>
+          <div className="grid md:grid-cols-3 gap-4 pt-4">
+            <Browser>{browserContent(33)}</Browser>
+            <Browser>{browserContent(66)}</Browser>
             <Browser>{browserContent(100)}</Browser>
           </div>
         </section>
