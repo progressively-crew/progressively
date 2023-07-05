@@ -9,9 +9,9 @@ import GithubIcon from "../components/icons/GithubIcon.astro";
 import TwitterIcon from "../components/icons/TwitterIcon.astro";
 import Layout from "../layouts/Layout.astro";
 import shapesSrc from "../images/shapes.svg";
-import { EasyToUse } from "../components/EasyToUse";
 import hljs from "highlight.js";
 import "highlight.js/styles/github-dark.css";
+import { EasyToUse } from "../components/EasyToUse";
 
 const provider = hljs.highlight(
   `
@@ -79,16 +79,16 @@ const FlaggedComponent = () => {
           </li>
         </ul>
 
-        <h1 class="text-5xl md:text-6xl font-extrabold text-white">
+        <h1 class="text-5xl md:text-7xl font-extrabold text-white">
           Introducing <span>Progressively</span>
         </h1>
 
-        <p class="text-2xl sm:text-center text-slate-200">
+        <p class="text-3xl sm:text-center text-slate-200">
           A simple, accessible, lightweight and OpenSource feature flag
           software.
         </p>
 
-        <div class="flex flex-col sm:flex-row gap-4">
+        <div class="flex flex-col sm:flex-row gap-4 pt-2">
           <LinkButton
             variant="primary-inverse"
             href="https://dashboard.progressively.app/signin"

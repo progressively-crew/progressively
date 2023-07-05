@@ -1,5 +1,6 @@
 import { AiOutlineBug, AiOutlineDeploymentUnit } from "react-icons/ai";
 import { TbBrowserCheck } from "react-icons/tb";
+import { HiOutlineLightBulb } from "react-icons/hi2";
 import { Card } from "./Card";
 import { useRef } from "react";
 import { useIntersectionObserver } from "../hooks/useIntersectionObserver";
@@ -75,6 +76,22 @@ export const SpeedUpDevelopment = () => {
               </p>
             </Card>
           </div>
+        </div>
+
+        <div className="text-center pt-16 flex items-center flex-col px-4">
+          <div className="flex flex-row gap-2 pb-2 items-center md:text-lg">
+            <HiOutlineLightBulb />
+            <p>Still using GitFlow or old-school alternative?</p>
+          </div>
+
+          <a
+            href="/blog/is-gitflow-really-needed"
+            className="px-6 py-3 whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none bg-gray-800 text-white hover:bg-gray-500"
+          >
+            <span className="text-sm md:text-base">
+              See how feature flags can help ship faster
+            </span>
+          </a>
         </div>
       </section>
     </div>

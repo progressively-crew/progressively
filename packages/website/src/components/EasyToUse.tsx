@@ -16,9 +16,10 @@ export const EasyToUse = ({ provider, clientComponent }: Props) => {
   const isVisible = !!entry?.isIntersecting;
 
   const codeClass =
-    "leading-relaxed h-full block text-slate-100 bg-slate-800 px-4 rounded-lg border border-slate-700 text-xs overflow-x-scroll md:overflow-hidden";
+    "leading-relaxed h-full block text-slate-100 bg-slate-800 text-xs overflow-x-scroll md:overflow-hidden";
 
-  const preClass = "h-[260px] overflow-hidden md:overflow-visible	";
+  const preClass =
+    "h-[260px] overflow-hidden md:overflow-visible bg-slate-800 px-4 rounded-lg border border-slate-700";
 
   return (
     <section
@@ -44,8 +45,8 @@ export const EasyToUse = ({ provider, clientComponent }: Props) => {
           <div
             className={
               isVisible
-                ? "animate-fade-enter-left opacity-0"
-                : "motion-safe:opacity-0"
+                ? "animate-fade-enter-left opacity-0 overflow-hidden"
+                : "motion-safe:opacity-0 overflow-hidden"
             }
           >
             <pre className={preClass}>
@@ -59,8 +60,8 @@ export const EasyToUse = ({ provider, clientComponent }: Props) => {
           <div
             className={
               isVisible
-                ? "animate-fade-enter-right opacity-0"
-                : "motion-safe:opacity-0"
+                ? "animate-fade-enter-right opacity-0 overflow-hidden"
+                : "motion-safe:opacity-0 overflow-hidden"
             }
           >
             <pre className={preClass}>
