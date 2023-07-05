@@ -53,31 +53,6 @@ const cardTitleClass = "font-bold text-xl pb-2";
 const gridClass = "grid md:grid-cols-3 gap-4";
 const iconClass = "w-10 h-10 mb-4 rounded p-2 text-white";
 
-const DashboardFeatures = () => {
-  return (
-    <div className="pt-4">
-      <h3 className={"sr-only"}>For dashboard users</h3>
-
-      <div className="grid grid-cols-2 gap-x-32 gap-y-12 items-center">
-        {dashboardFeatures.map((feature) => (
-          <React.Fragment key={feature.title}>
-            <article>
-              <Card>
-                {feature.Icon && (
-                  <feature.Icon className={`${iconClass} bg-purple-500`} />
-                )}
-                <h4 className={cardTitleClass}>{feature.title}</h4>
-                <p>{feature.description}</p>
-              </Card>
-            </article>
-            <div className="h-[50%] bg-red-500 sticky top-32 z-20">feeee</div>
-          </React.Fragment>
-        ))}
-      </div>
-    </div>
-  );
-};
-
 const devFeatures = [
   {
     title: "Small bundle footprint",
@@ -141,7 +116,22 @@ export const FeatureSection = () => {
           confidence.
         </p>
 
-        <DashboardFeatures />
+        <div className="pt-8">
+          <h3 className={sectionTitleClass}>For dashboard users</h3>
+          <div className={gridClass}>
+            {dashboardFeatures.map((feature) => (
+              <article key={feature.title}>
+                <Card>
+                  {feature.Icon && (
+                    <feature.Icon className={`${iconClass} bg-purple-500`} />
+                  )}
+                  <h4 className={cardTitleClass}>{feature.title}</h4>
+                  <p>{feature.description}</p>
+                </Card>
+              </article>
+            ))}
+          </div>
+        </div>
 
         <div className="pt-8">
           <h3 className={sectionTitleClass}>Developpers, we got your back</h3>
