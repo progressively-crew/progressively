@@ -2,7 +2,7 @@ import { Card, CardContent } from "~/components/Card";
 import { Strategy } from "../types";
 import { Form, useNavigation } from "@remix-run/react";
 import { useId, useRef } from "react";
-import { StrategyFormFields } from "./StrategyFormFields";
+import { StrategyFormFields } from "./StrategyFormFields/StrategyFormFields";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { MenuButton } from "~/components/MenuButton";
 import { Variant } from "~/modules/variants/types";
@@ -12,6 +12,7 @@ import { Segment } from "~/modules/segments/types";
 import { Typography } from "~/components/Typography";
 import { Spinner } from "~/components/Spinner";
 import { CreateButton } from "~/components/Buttons/CreateButton";
+import { IconButton } from "~/components/Buttons/IconButton";
 
 export interface StrategyListProps {
   items: Array<Strategy>;
@@ -47,7 +48,6 @@ export interface StrategyItemProps {
 }
 
 const StrategyItem = ({ strategy, variants, segments }: StrategyItemProps) => {
-  const deleteStrategyForm = useRef<HTMLFormElement>(null);
   const navigation = useNavigation();
 
   const type = navigation?.formData?.get("_type");
@@ -59,8 +59,13 @@ const StrategyItem = ({ strategy, variants, segments }: StrategyItemProps) => {
     type === "edit-strategy" &&
     navigation?.formData?.get("uuid")?.toString() === strategy.uuid;
 
+  const isDeletingStrategy =
+    type === "delete-strategy" &&
+    navigation?.formData?.get("uuid")?.toString() === strategy.uuid;
+
   const id = useId();
   const updateStrategyFormId = `update-strategy-${id}`;
+  const deleteStrategyFormId = `delete-strategy-${id}`;
   const deleteStrategyRule = `delete-strategy-rule-${id}`;
   const addStrategyRuleFormId = `add-strategy-rule-${id}`;
 
@@ -88,7 +93,7 @@ const StrategyItem = ({ strategy, variants, segments }: StrategyItemProps) => {
             Save
           </SubmitButton>
 
-          <Form method="post" ref={deleteStrategyForm}>
+          <Form method="post" id={deleteStrategyFormId}>
             <input type="hidden" value="delete-strategy" name="_type" />
             <input type="hidden" value={strategy.uuid} name="uuid" />
           </Form>
@@ -126,16 +131,13 @@ const StrategyItem = ({ strategy, variants, segments }: StrategyItemProps) => {
               rolloutPercentage={strategy.rolloutPercentage || 0}
             />
 
-            <MenuButton
-              items={[
-                {
-                  label: "Delete strategy",
-                  onClick: () => {
-                    deleteStrategyForm.current?.submit();
-                  },
-                },
-              ]}
-              label={"Actions on strategy"}
+            <IconButton
+              form={deleteStrategyFormId}
+              type="submit"
+              isLoading={isDeletingStrategy}
+              loadingText="Deleting a strategy..."
+              icon={<IoCloseOutline />}
+              tooltip="Delete strategy"
             />
           </div>
         </CardContent>
@@ -161,23 +163,16 @@ const StrategyItem = ({ strategy, variants, segments }: StrategyItemProps) => {
                       />
                     </div>
 
-                    <button
-                      type="submit"
-                      value={rule.uuid}
+                    <IconButton
                       form={deleteStrategyRule}
+                      type="submit"
+                      isLoading={isDeletingRule}
+                      loadingText="Deleting a rule..."
+                      icon={<IoCloseOutline />}
+                      tooltip="Remove rule"
+                      value={rule.uuid}
                       name="ruleId"
-                      className="rounded bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800 dark:text-slate-100 dark:hover:text-slate-100 w-6 h-8 flex items-center justify-center"
-                      aria-disabled={isDeletingRule}
-                      aria-label={
-                        isDeletingRule ? "Deleting a rule..." : undefined
-                      }
-                    >
-                      {isDeletingRule ? (
-                        <Spinner />
-                      ) : (
-                        <IoCloseOutline title="Remove rule" />
-                      )}
-                    </button>
+                    />
                   </div>
                 </div>
 
