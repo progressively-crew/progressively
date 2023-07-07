@@ -1,6 +1,9 @@
 ---
 title: Is Gitflow really needed?
 publishedDate: 2023-05-02
+author: Marvin Frachet
+authorPicture: /authors/mf.jpg
+tag: Workflow
 ---
 
 While I'm sure it can _probably_ be useful in certain situations, I don't like Gitflow and the ideas behind it. I think it's way too complex and that there are other easier solutions for a smoother workflow.

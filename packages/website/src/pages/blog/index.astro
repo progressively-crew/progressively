@@ -1,39 +1,91 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
-import Container from "../../components/Container.astro";
 
-const blogEntries = await getCollection("blog");
+const blogPosts = await getCollection("blog");
+const lastPost = blogPosts.shift();
 ---
 
 <Layout title="Progressively blog posts">
-  <Container>
-    <main>
-      <div class="flex flex-col pt-20 pb-12 gap-4">
-        <h1 class="text-5xl md:text-6xl font-extrabold">The blog</h1>
-      </div>
-      <div class="pb-20 md:pb-40">
-        <ul class="flex flex-col gap-4">
-          {
-            blogEntries.map((blogPostEntry) => (
-              <li>
-                <a
-                  href={`/blog/${blogPostEntry.slug}`}
-                  class="text-xl font-semibold underline"
-                >
-                  {blogPostEntry.data.title}
-                </a>
+  <main class="mx-auto max-w-6xl px-4">
+    <div class="flex flex-col pt-20 pb-12 gap-4">
+      <h1 class="text-4xl md:text-6xl font-extrabold">The blog</h1>
+    </div>
+    <div class="pb-20 md:pb-40">
+      <article class="p-4 md:p-12 rounded bg-white border border-slate-100">
+        <div class="flex flex-row gap-4 pb-2 items-center">
+          <span class="bg-slate-700 text-white rounded-full px-4 py-1 text-sm">
+            {lastPost?.data.tag}
+          </span>
+
+          <time
+            datetime={lastPost?.data.publishedDate.toISOString()}
+            class="block text-sm text-slate-700"
+          >
+            {lastPost?.data.publishedDate.toDateString()}
+          </time>
+        </div>
+
+        <h2 class="text-3xl md:text-6xl font-semibold max-w-3xl leading-snug">
+          <a
+            href={`/blog/${lastPost?.slug}`}
+            class="no-underline hover:underline focus:underline"
+          >
+            {lastPost?.data.title}
+          </a>
+        </h2>
+
+        <div class="pt-4 flex flex-row gap-2 items-center">
+          <img
+            src={lastPost?.data.authorPicture}
+            class="rounded-full h-10 w-10"
+            alt={lastPost?.data.author}
+          />
+          <address class="not-italic">
+            {lastPost?.data.author}
+          </address>
+        </div>
+      </article>
+      <div class="gap-4 grid md:grid-cols-3 pt-4">
+        {
+          blogPosts.map((blogPostEntry) => (
+            <article class="p-4 rounded bg-white border border-slate-100">
+              <div class="flex flex-row gap-4 justify-between pb-2 items-center">
+                <span class="bg-slate-700 text-white rounded-full px-4 py-1 text-sm">
+                  {blogPostEntry.data.tag}
+                </span>
+
                 <time
                   datetime={blogPostEntry.data.publishedDate.toISOString()}
-                  class="text-sm text-slate-700 pl-4"
+                  class="block text-sm text-slate-700"
                 >
                   {blogPostEntry.data.publishedDate.toDateString()}
                 </time>
-              </li>
-            ))
-          }
-        </ul>
+              </div>
+
+              <h2 class="text-xl font-semibold">
+                <a
+                  href={`/blog/${blogPostEntry.slug}`}
+                  class="no-underline hover:underline focus:underline"
+                >
+                  {blogPostEntry.data.title}
+                </a>
+              </h2>
+
+              <div class="pt-4 flex flex-row gap-2 items-center">
+                <img
+                  src={blogPostEntry.data.authorPicture}
+                  class="rounded-full h-10 w-10"
+                  alt={blogPostEntry.data.author}
+                />
+                <address class="not-italic">
+                  {blogPostEntry.data.author}
+                </address>
+              </div>
+            </article>
+          ))
+        }
       </div>
-    </main>
-  </Container>
+    </div>
+  </main>
 </Layout>
