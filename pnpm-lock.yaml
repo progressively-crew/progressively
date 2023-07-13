@@ -685,6 +685,9 @@ importers:
       cypress-axe:
         specifier: ^1.4.0
         version: 1.4.0(axe-core@4.7.2)(cypress@12.15.0)
+      cypress-multi-reporters:
+        specifier: 1.6.3
+        version: 1.6.3(mocha@10.2.0)
       cypress-parallel:
         specifier: 0.13.0
         version: 0.13.0(cypress-multi-reporters@1.6.3)
