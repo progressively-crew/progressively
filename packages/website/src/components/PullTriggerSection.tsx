@@ -24,8 +24,7 @@ export const PullTriggerSection = () => {
         <hr />
 
         <p className="text-lg sm:text-center">
-          A simple, accessible, lightweight and OpenSource feature flag
-          software.
+          A simple, lightweight and OpenSource feature flag software.
         </p>
       </div>
     );

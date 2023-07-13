@@ -8,14 +8,8 @@ import {
 import { FiUsers } from "react-icons/fi";
 import { MdSchedule } from "react-icons/md";
 import { BiNetworkChart } from "react-icons/bi";
-import {
-  TbSend,
-  TbServer,
-  TbBrandTypescript,
-  TbAccessible,
-} from "react-icons/tb";
+import { TbSend, TbServer, TbBrandTypescript } from "react-icons/tb";
 import { BsServer } from "react-icons/bs";
-import React from "react";
 
 const dashboardFeatures = [
   {
@@ -97,12 +91,6 @@ const everyone = [
     description:
       "You can install the tool on your servers or use the online service.",
     Icon: BsServer,
-  },
-  {
-    title: "Accessible",
-    description:
-      "We do our best to make the dashboard accessible. Please help us getting there!",
-    Icon: TbAccessible,
   },
 ];
 
