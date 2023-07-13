@@ -71,7 +71,7 @@ jobs:
 
       # Uncomment for parallel
       - name: E2E tests
-        run: npx wait-on -t 60000 tcp:4000 && pnpm cypress-parallel -s test:e2e:ci -t 2
+        run: npx wait-on -t 60000 tcp:4000 && pnpm cypress-parallel -s test:e2e:ci -t 2 -d cypress/e2e
         working-directory: ./packages/frontend
         #   CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
         #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
