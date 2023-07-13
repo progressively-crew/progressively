@@ -2,6 +2,7 @@
   "name": "root",
   "private": true,
   "devDependencies": {
+    "cypress-parallel": "0.13.0",
     "wait-on": "^6.0.1"
   },
   "scripts": {
