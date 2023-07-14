@@ -96,9 +96,11 @@ const everyone = [
 
 export const FeatureSection = () => {
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20">
       <div className="px-4 md:px-8 max-w-6xl mx-auto">
-        <h2 className="font-extrabold text-4xl md:text-7xl pb-4">What else?</h2>
+        <h2 className="font-extrabold text-4xl md:text-7xl pb-4">
+          Everything is included
+        </h2>
         <p className="text-2xl leading-relaxed pb-8">
           We got some additional features to help you release with even more
           confidence.
