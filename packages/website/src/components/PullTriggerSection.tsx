@@ -1,88 +1,83 @@
 import { useState } from "react";
 import { Switch } from "./Switch/Switch";
 import { Browser } from "./Browser";
-import hexagon from "../images/Hexagon.svg";
+import { EasyToUse } from "./EasyToUse";
 
-export const PullTriggerSection = () => {
+export const PullTriggerSection = ({
+  clientComponent,
+}: {
+  clientComponent: string;
+}) => {
   const [checked, setChecked] = useState(false);
   const [percentage, setPercentage] = useState(100);
 
   const browserContent = (target: number) => {
-    const className =
-      checked && percentage >= target
-        ? "font-mono bg-slate-900 text-white"
-        : "bg-slate-50 text-slate-900";
+    const isSwitched = checked && percentage >= target;
+
+    const wrapperClass = isSwitched
+      ? "bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"
+      : "bg-slate-50";
+
+    const itemClass = isSwitched ? "bg-white" : "bg-slate-400";
 
     return (
       <div
-        className={`text-center flex flex-col items-center justify-center gap-4 h-full transition-all ${className}`}
+        className={`flex flex-col gap-1 h-full transition-all ${wrapperClass} p-4`}
       >
-        <h1 className="text-3xl font-extrabold">
-          Introducing <span>Progressively</span>
-        </h1>
-
-        <hr />
-
-        <p className="text-lg sm:text-center">
-          A simple, lightweight and OpenSource feature flag software.
-        </p>
+        <div
+          className={`font-extrabold rounded-full w-full h-3 ${itemClass}`}
+        ></div>
+        <div
+          className={`font-extrabold rounded-full w-[66%] h-3 ${itemClass}`}
+        ></div>
+        <div
+          className={`font-extrabold rounded-full w-[33%] h-3 ${itemClass}`}
+        ></div>
       </div>
     );
   };
 
   return (
-    <div
-      className="bg-white"
-      style={{
-        backgroundImage: `url("${hexagon}")`,
-      }}
-    >
-      <div className="px-4 md:px-8 max-w-6xl mx-auto">
-        <section className={"py-20 md:py-40"}>
-          <h2 className="font-extrabold text-4xl md:text-7xl pb-4 md:text-center">
-            <span>Pull a trigger, deploy a feature</span>{" "}
-          </h2>
-          <p className="text-2xl leading-relaxed md:text-center">
-            Instantly rollout your new feature to your audience, just by
-            switching a toggle.
-          </p>
+    <div className="bg-white p-4 rounded-lg">
+      <div className="flex flex-col md:flex-row justify-between md:items-center pb-2">
+        <Switch
+          checked={checked}
+          onClick={() => setChecked((s) => !s)}
+          label="Switch color scheme"
+        />
 
-          <div className="flex flex-col md:flex-row justify-between md:items-center pt-12">
-            <Switch
-              checked={checked}
-              onClick={() => setChecked((s) => !s)}
-              label="Switch to font mono"
+        <div className="flex flex-row items-center gap-2 md:justify-center">
+          <label htmlFor="percentage" className="font-extrabold">
+            Percentage of the audience
+          </label>
+          <div className="flex flex-row">
+            <input
+              type="number"
+              id="percentage"
+              min={0}
+              max={100}
+              className="bg-gray-100 h-10 rounded-l p-2"
+              value={percentage}
+              onChange={(e) => {
+                setPercentage(Number(e.target.value));
+              }}
             />
-
-            <div className="flex flex-row items-center gap-2 md:justify-center">
-              <label htmlFor="percentage" className="font-extrabold">
-                Percentage of the audience
-              </label>
-              <div className="flex flex-row">
-                <input
-                  type="number"
-                  id="percentage"
-                  min={0}
-                  max={100}
-                  className="bg-gray-100 h-10 rounded-l p-2"
-                  value={percentage}
-                  onChange={(e) => {
-                    setPercentage(Number(e.target.value));
-                  }}
-                />
-                <span className="p-2 h-10 rounded-r bg-gray-200 font-mono w-10 font-extrabold text-center text-xl">
-                  %
-                </span>
-              </div>
-            </div>
+            <span className="p-2 h-10 rounded-r bg-gray-200 font-mono w-10 font-extrabold text-center text-xl">
+              %
+            </span>
           </div>
+        </div>
+      </div>
 
-          <div className="grid md:grid-cols-3 gap-4 pt-4">
-            <Browser>{browserContent(33)}</Browser>
-            <Browser>{browserContent(66)}</Browser>
-            <Browser>{browserContent(100)}</Browser>
-          </div>
-        </section>
+      <EasyToUse
+        clientComponent={clientComponent}
+        alternate={checked && percentage === 100}
+      />
+
+      <div className="grid md:grid-cols-3 gap-4 pt-4">
+        <Browser>{browserContent(33)}</Browser>
+        <Browser>{browserContent(66)}</Browser>
+        <Browser>{browserContent(100)}</Browser>
       </div>
     </div>
   );

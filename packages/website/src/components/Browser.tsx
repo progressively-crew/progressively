@@ -10,7 +10,7 @@ export const Browser = ({ children }: BrowserProps) => {
         <span className="w-3 h-3 rounded-full bg-yellow-400"></span>
         <span className="w-3 h-3 rounded-full bg-green-400"></span>
       </div>
-      <div className="bg-gray-100 border-t-0 w-full h-96 p-4">{children}</div>
+      <div className="bg-gray-100 border-t-0 w-full">{children}</div>
     </div>
   );
 };

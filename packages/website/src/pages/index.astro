@@ -5,27 +5,8 @@ import GetStartedCTA from "../components/GetStartedCTA.astro";
 import LinkButton from "../components/LinkButton.astro";
 import { PullTriggerSection } from "../components/PullTriggerSection";
 import { SpeedUpDevelopment } from "../components/SpeedUpDevelopment";
-import GithubIcon from "../components/icons/GithubIcon.astro";
-import TwitterIcon from "../components/icons/TwitterIcon.astro";
 import Layout from "../layouts/Layout.astro";
-import shapesSrc from "../images/shapes.svg";
 import hljs from "highlight.js";
-import "highlight.js/styles/github-dark.css";
-import { EasyToUse } from "../components/EasyToUse";
-
-const provider = hljs.highlight(
-  `
-import { ProgressivelyProvider } from "@progressively/react";
-
-const App = () => {
-  return (
-    <ProgressivelyProvider clientKey="YOUR_CLIENT_KEY">
-      <FlaggedComponent />
-    </ProgressivelyProvider>
-  );
-};`,
-  { language: "jsx" }
-).value;
 
 const clientComponent = hljs.highlight(
   `
@@ -45,71 +26,46 @@ const FlaggedComponent = () => {
 ---
 
 <Layout title="Welcome to Progressively, the new feature flag solution.">
-  <header
-    class="bg-slate-900 py-20 md:py-40"
-    style={{
-      backgroundImage: `url("${shapesSrc}")`,
-    }}
-  >
-    <Container>
-      <div
-        class="flex justify-center lg:items-center flex-col pb-20 md:pb-40 gap-4 motion-safe:animate-fade-enter-top"
-      >
-        <ul class="flex h-12 items-center">
-          <li>
-            <LinkButton
-              variant="tertiary-inverse"
-              href="https://github.com/progressively-crew/progressively"
-              target={"_blank"}
-              id="github"
-            >
-              <GithubIcon />
-            </LinkButton>
-          </li>
-
-          <li>
-            <LinkButton
-              variant="tertiary-inverse"
-              href="https://twitter.com/_progressively"
-              target={"_blank"}
-              id="twitter"
-            >
-              <TwitterIcon />
-            </LinkButton>
-          </li>
-        </ul>
-
-        <h1 class="text-5xl md:text-7xl font-extrabold text-white">
+  <header class="bg-slate-900 py-20">
+    <div
+      class="flex flex-col md:grid md:grid-cols-2 gap-8 px-12 max-w-screen-2xl mx-auto items-center"
+    >
+      <div>
+        <h1 class="text-5xl font-extrabold text-white">
           Introducing <span>Progressively</span>
         </h1>
 
-        <p class="text-3xl sm:text-center text-slate-200">
+        <p class="text-3xl text-slate-200 pt-4 leading-relaxed">
           A simple, lightweight and OpenSource feature flag software.
         </p>
 
-        <div class="flex flex-col sm:flex-row gap-4 pt-2">
+        <div class="flex flex-col sm:flex-row gap-4 pt-8">
           <LinkButton
             variant="primary-inverse"
             href="https://dashboard.progressively.app/signin"
             target={"_blank"}
             id="demo-instance"
           >
-            Get started with SaaS
+            Get started
           </LinkButton>
 
           <LinkButton
-            href="https://docs.progressively.app/start-with-self-hosted/quick-start"
+            href="https://docs.progressively.app/"
             target={"_blank"}
             id="get-started"
             variant="secondary-inverse"
           >
-            Get started locally
+            Documentation
           </LinkButton>
         </div>
       </div>
 
+      <PullTriggerSection client:load clientComponent={clientComponent} />
+    </div>
+
+    <Container>
       <div
-        class="bg-slate-400 rounded-xl overflow-hidden animate-fade-enter-bottom motion-safe:opacity-0"
+        class="bg-slate-700 rounded-xl overflow-hidden animate-fade-enter-bottom motion-safe:opacity-0 hidden md:block mt-20"
         style="animation-delay: 500ms;"
       >
         <div class="md:rounded-lg border border-slate-700 p-2">
@@ -135,14 +91,6 @@ const FlaggedComponent = () => {
 
   <main>
     <SpeedUpDevelopment client:load />
-
-    <PullTriggerSection client:load />
-
-    <EasyToUse
-      provider={provider}
-      clientComponent={clientComponent}
-      client:load
-    />
 
     <FeatureSection />
 
