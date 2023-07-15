@@ -9,6 +9,9 @@ import { Logo } from "~/components/Logo/Logo";
 import { useBillingInfo } from "~/modules/plans/hooks/useBillingInfo";
 import { useIsSaas } from "~/modules/saas/contexts/useIsSaas";
 import { Progress } from "~/components/Progress";
+import { IconButton } from "~/components/Buttons/IconButton";
+import { Tooltip } from "~/components/Tooltip/Tooltip";
+import { FaBook } from "react-icons/fa";
 
 export interface UserDropdownProps {
   user: User;
@@ -29,35 +32,17 @@ export const UserDropdown = ({ user }: UserDropdownProps) => {
           <Logo aria-label="Progressively project list" />
         </Button>
 
-        <div className="hidden md:block">
-          <Button
-            href="https://docs.progressively.app/"
-            variant="tertiary-inverse"
-            target="_blank"
-          >
-            Documentation
-          </Button>
-        </div>
-      </div>
-
-      <div className="flex flex-row gap-2 items-center">
         {project && (
           <CreateButton
             to={`/dashboard/projects/${project.uuid}/flags/create`}
-            variant="tertiary-inverse"
+            variant="secondary-inverse"
           >
             Add a feature flag
           </CreateButton>
         )}
+      </div>
 
-        <div className="hidden md:block">
-          <FeedbackFish projectId="012aac85b784ee">
-            <Button variant="tertiary-inverse" icon={<GoCommentDiscussion />}>
-              Send feedback
-            </Button>
-          </FeedbackFish>
-        </div>
-
+      <div className="flex flex-row gap-2 items-center">
         {isSaas && (
           <div className="hidden xl:block text-white">
             <Progress
@@ -68,14 +53,39 @@ export const UserDropdown = ({ user }: UserDropdownProps) => {
           </div>
         )}
 
-        <Button
-          to="/dashboard/profile"
-          className="text-sm"
-          icon={<Avatar aria-hidden>{user.fullname}</Avatar>}
-          variant="tertiary-inverse"
-        >
-          <span className="sr-only">{user.fullname}</span>
-        </Button>
+        <div className="hidden md:block ">
+          <Tooltip tooltip={"Open documentation"}>
+            <Button
+              href="https://docs.progressively.app/"
+              variant="tertiary-inverse"
+              target="_blank"
+            >
+              <FaBook aria-label="Documentation" className="text-xl" />
+            </Button>
+          </Tooltip>
+        </div>
+
+        <div className="hidden md:block text-xl">
+          <FeedbackFish projectId="012aac85b784ee">
+            <IconButton
+              icon={<GoCommentDiscussion />}
+              tooltip={"Send feedback"}
+              variant="inverse"
+              size="L"
+            />
+          </FeedbackFish>
+        </div>
+
+        <Tooltip tooltip={"See profile"}>
+          <Button
+            to="/dashboard/profile"
+            className="text-sm"
+            icon={<Avatar aria-hidden>{user.fullname}</Avatar>}
+            variant="tertiary-inverse"
+          >
+            <span className="sr-only">{user.fullname}</span>
+          </Button>
+        </Tooltip>
       </div>
     </nav>
   );
