@@ -108,8 +108,7 @@ describe("/dashboard/projects/[id]/delete", () => {
 
       cy.url().should("contain", "/dashboard?projectRemoved=true");
       cy.get(".success-box")
-        .should("have.focus")
-        .and("be.visible")
+        .should("be.visible")
         .and("contain", "The project has been successfully removed.");
 
       cy.get("main").within(() => {

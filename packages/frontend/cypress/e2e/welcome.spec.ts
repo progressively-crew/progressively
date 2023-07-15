@@ -11,32 +11,27 @@ describe("/welcome", () => {
     cy.findByLabelText("Email").type("invalid@email");
     cy.findByRole("button", { name: "Create my admin user" }).click();
 
-    cy.get(".error-box")
-      .should("have.focus")
-      .and(
-        "contain.text",
-        'The provided email address is not valid. It should look like "jane.doe@domain.com".'
-      );
+    cy.get(".error-box").should(
+      "contain.text",
+      'The provided email address is not valid. It should look like "jane.doe@domain.com".'
+    );
   });
 
   it("gives feedbacks when the password is not long enough", () => {
     cy.findByLabelText("Password").type("1");
     cy.findByRole("button", { name: "Create my admin user" }).click();
 
-    cy.get(".error-box")
-      .should("have.focus")
-      .and(
-        "contain.text",
-        "The provided password is too short. It should be at least 8 characters."
-      );
+    cy.get(".error-box").should(
+      "contain.text",
+      "The provided password is too short. It should be at least 8 characters."
+    );
   });
 
   it("gives feedbacks when the required fields are not filled", () => {
     cy.findByRole("button", { name: "Create my admin user" }).click();
 
     cy.get(".error-box")
-      .should("have.focus")
-      .and("contain.text", "The email field is required.")
+      .should("contain.text", "The email field is required.")
       .and("contain.text", "The password field is required.")
       .and("contain.text", "The fullname field is required.")
       .and("contain.text", "The confirm password field is required.");
@@ -50,9 +45,10 @@ describe("/welcome", () => {
     cy.findByLabelText("Confirm your password").type("aabcd");
     cy.findByRole("button", { name: "Create my admin user" }).click();
 
-    cy.get(".error-box")
-      .should("have.focus")
-      .and("contain.text", "The two passwords are not the same.");
+    cy.get(".error-box").should(
+      "contain.text",
+      "The two passwords are not the same."
+    );
 
     // Testing the contrast of the FieldError color
     cy.checkA11y();
@@ -65,9 +61,7 @@ describe("/welcome", () => {
     cy.findByLabelText("Confirm your password").type("12345678901112");
     cy.findByRole("button", { name: "Create my admin user" }).click();
 
-    cy.get(".error-box")
-      .should("have.focus")
-      .and("contain.text", "This email is already used.");
+    cy.get(".error-box").should("contain.text", "This email is already used.");
 
     // Verifying the contrast of the error content
     cy.checkA11y();

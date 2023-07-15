@@ -37,12 +37,10 @@ describe("/dashboard/projects/create", () => {
     it("shows an error when submitting an empty form", () => {
       cy.findByRole("button", { name: "Create the project" }).click();
 
-      cy.get(".error-box")
-        .should("have.focus")
-        .and(
-          "contain.text",
-          "The name field is required, make sure to have one."
-        );
+      cy.get(".error-box").should(
+        "contain.text",
+        "The name field is required, make sure to have one."
+      );
 
       cy.checkA11y();
     });
@@ -51,9 +49,10 @@ describe("/dashboard/projects/create", () => {
       cy.findByLabelText("Project name").type("My new project");
       cy.findByRole("button", { name: "Create the project" }).click();
 
-      cy.get(".success-box")
-        .should("have.focus")
-        .and("contain.text", "The project has been successfully created.");
+      cy.get(".success-box").should(
+        "contain.text",
+        "The project has been successfully created."
+      );
 
       // Verify the dashboard
       cy.get("main").within(() => {

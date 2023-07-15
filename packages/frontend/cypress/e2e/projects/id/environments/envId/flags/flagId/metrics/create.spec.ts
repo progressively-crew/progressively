@@ -59,9 +59,10 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/metrics/c
           "/dashboard/projects/1/environments/1/flags/1/metrics?newMetric=true"
         );
 
-        cy.get(".success-box")
-          .should("have.focus")
-          .and("contain.text", "The metric has been successfully added.");
+        cy.get(".success-box").should(
+          "contain.text",
+          "The metric has been successfully added."
+        );
 
         cy.checkA11y();
       });

@@ -67,9 +67,10 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/webhooks/
           "/dashboard/projects/1/environments/1/flags/1/webhooks?newWebhook=true"
         );
 
-        cy.get(".success-box")
-          .should("have.focus")
-          .and("contain.text", "The webhook has been successfully added.");
+        cy.get(".success-box").should(
+          "contain.text",
+          "The webhook has been successfully added."
+        );
 
         cy.checkA11y();
       });

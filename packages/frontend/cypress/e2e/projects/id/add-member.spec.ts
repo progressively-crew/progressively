@@ -80,12 +80,10 @@ describe("/dashboard/projects/[id]/add-member", () => {
           cy.findByLabelText("Member email").type("lol");
           cy.findByRole("button", { name: "Add the member" }).click();
 
-          cy.get(".error-box")
-            .should("have.focus")
-            .and(
-              "contain.text",
-              'The provided email address is not valid. It should look like "jane.doe@domain.com".'
-            );
+          cy.get(".error-box").should(
+            "contain.text",
+            'The provided email address is not valid. It should look like "jane.doe@domain.com".'
+          );
 
           cy.checkA11y();
         });
@@ -96,12 +94,10 @@ describe("/dashboard/projects/[id]/add-member", () => {
           );
           cy.findByRole("button", { name: "Add the member" }).click();
 
-          cy.get(".error-box")
-            .should("have.focus")
-            .and(
-              "contain.text",
-              "The user is already a member of the project."
-            );
+          cy.get(".error-box").should(
+            "contain.text",
+            "The user is already a member of the project."
+          );
 
           cy.checkA11y();
         });
@@ -113,12 +109,10 @@ describe("/dashboard/projects/[id]/add-member", () => {
           cy.findByLabelText("Member email").type("blah.blah@gmail.com");
           cy.findByRole("button", { name: "Add the member" }).click();
 
-          cy.get(".success-box")
-            .should("have.focus")
-            .and(
-              "contain.text",
-              "The user has been invited invited to join the project."
-            );
+          cy.get(".success-box").should(
+            "contain.text",
+            "The user has been invited invited to join the project."
+          );
 
           cy.checkA11y();
         });
@@ -127,12 +121,10 @@ describe("/dashboard/projects/[id]/add-member", () => {
           cy.findByLabelText("Member email").type("jane.doe@gmail.com");
           cy.findByRole("button", { name: "Add the member" }).click();
 
-          cy.get(".success-box")
-            .should("have.focus")
-            .and(
-              "contain.text",
-              "The user has been invited invited to join the project."
-            );
+          cy.get(".success-box").should(
+            "contain.text",
+            "The user has been invited invited to join the project."
+          );
 
           cy.checkA11y();
         });

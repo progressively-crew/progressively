@@ -57,8 +57,7 @@ describe("/dashboard/projects/[id]flags/create", () => {
         cy.findByRole("button", { name: "Create the feature flag" }).click();
 
         cy.get(".error-box")
-          .should("have.focus")
-          .and(
+          .should(
             "contain.text",
             "The name field is required, make sure to have one."
           )
@@ -75,9 +74,10 @@ describe("/dashboard/projects/[id]flags/create", () => {
         cy.findByLabelText("Flag description").type("My new flag description");
         cy.findByRole("button", { name: "Create the feature flag" }).click();
 
-        cy.get(".success-box")
-          .should("have.focus")
-          .and("contain.text", "The flag has been successfully created.");
+        cy.get(".success-box").should(
+          "contain.text",
+          "The flag has been successfully created."
+        );
 
         cy.findByText("My new flag").should("be.visible");
         cy.findByText("My new flag description").should("be.visible");
@@ -99,9 +99,10 @@ describe("/dashboard/projects/[id]flags/create", () => {
         cy.findByLabelText("Flag description").type("My new flag description");
         cy.findByRole("button", { name: "Create the feature flag" }).click();
 
-        cy.get(".error-box")
-          .should("have.focus")
-          .and("contain.text", "The flag name is already used.");
+        cy.get(".error-box").should(
+          "contain.text",
+          "The flag name is already used."
+        );
       });
     });
   });

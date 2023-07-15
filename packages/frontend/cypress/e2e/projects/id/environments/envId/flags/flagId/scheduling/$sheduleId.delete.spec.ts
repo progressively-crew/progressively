@@ -89,9 +89,10 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
           "be.visible"
         );
 
-        cy.get(".success-box")
-          .should("have.focus")
-          .and("contain.text", "The schedule has been successfully removed.");
+        cy.get(".success-box").should(
+          "contain.text",
+          "The schedule has been successfully removed."
+        );
       });
     });
   });

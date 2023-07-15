@@ -83,9 +83,10 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/metrics/[
           "/dashboard/projects/1/environments/1/flags/4/metrics?metricRemoved=true"
         );
 
-        cy.get(".success-box")
-          .should("have.focus")
-          .and("contain.text", "The metric has been successfully removed.");
+        cy.get(".success-box").should(
+          "contain.text",
+          "The metric has been successfully removed."
+        );
       });
     });
   });

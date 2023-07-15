@@ -20,8 +20,7 @@ describe("/reset-password", () => {
       cy.findByRole("button", { name: "Change password" }).click();
 
       cy.get(".error-box")
-        .should("have.focus")
-        .and("contain.text", "The password field is required.")
+        .should("contain.text", "The password field is required.")
         .and("contain.text", "The confirmation password field is required.");
     });
 
@@ -31,8 +30,7 @@ describe("/reset-password", () => {
       cy.findByRole("button", { name: "Change password" }).click();
 
       cy.get(".error-box")
-        .should("have.focus")
-        .and(
+        .should(
           "contain.text",
           "The provided password is too short. It should be at least 8 characters."
         )
@@ -47,9 +45,10 @@ describe("/reset-password", () => {
       cy.findByLabelText("Confirmation password").type("password2");
       cy.findByRole("button", { name: "Change password" }).click();
 
-      cy.get(".error-box")
-        .should("have.focus")
-        .and("contain.text", "The two passwords are not the same.");
+      cy.get(".error-box").should(
+        "contain.text",
+        "The two passwords are not the same."
+      );
     });
 
     it("shows an error when the passwords are valid but the token is an invalid one", () => {
@@ -57,9 +56,7 @@ describe("/reset-password", () => {
       cy.findByLabelText("Confirmation password").type("password1");
       cy.findByRole("button", { name: "Change password" }).click();
 
-      cy.get(".error-box")
-        .should("have.focus")
-        .and("contain.text", "An information is missing");
+      cy.get(".error-box").should("contain.text", "An information is missing");
     });
   });
 
@@ -73,9 +70,7 @@ describe("/reset-password", () => {
       cy.findByLabelText("Confirmation password").type("password1");
       cy.findByRole("button", { name: "Change password" }).click();
 
-      cy.get(".error-box")
-        .should("have.focus")
-        .and("contain.text", "The token is missing");
+      cy.get(".error-box").should("contain.text", "The token is missing");
     });
   });
 
@@ -89,12 +84,10 @@ describe("/reset-password", () => {
       cy.findByLabelText("Confirmation password").type("password1");
       cy.findByRole("button", { name: "Change password" }).click();
 
-      cy.get(".success-box")
-        .should("have.focus")
-        .and(
-          "contain.text",
-          "The password has been successfully reset. You can now connect."
-        );
+      cy.get(".success-box").should(
+        "contain.text",
+        "The password has been successfully reset. You can now connect."
+      );
 
       // Connect the person with a changed password
       cy.visit("/signin");

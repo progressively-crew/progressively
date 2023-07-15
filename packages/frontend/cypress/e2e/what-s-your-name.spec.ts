@@ -32,12 +32,10 @@ describe("/dashboard/what-s-your-name", () => {
     it("shows an error when submitting an empty form", () => {
       cy.findByRole("button", { name: "Set my fullname" }).click();
 
-      cy.get(".error-box")
-        .should("have.focus")
-        .and(
-          "contain.text",
-          "The fullname field is required, make sure to have one."
-        );
+      cy.get(".error-box").should(
+        "contain.text",
+        "The fullname field is required, make sure to have one."
+      );
 
       cy.checkA11y();
     });

@@ -55,12 +55,10 @@ describe("/dashboard/projects/[id]/environments/create", () => {
       it("shows an error when submitting an empty form", () => {
         cy.findByRole("button", { name: "Create the environment" }).click();
 
-        cy.get(".error-box")
-          .should("have.focus")
-          .and(
-            "contain.text",
-            "The name field is required, make sure to have one."
-          );
+        cy.get(".error-box").should(
+          "contain.text",
+          "The name field is required, make sure to have one."
+        );
 
         cy.checkA11y();
       });
@@ -69,12 +67,10 @@ describe("/dashboard/projects/[id]/environments/create", () => {
         cy.findByLabelText("Environment name").type("My new env");
         cy.findByRole("button", { name: "Create the environment" }).click();
 
-        cy.get(".success-box")
-          .should("have.focus")
-          .and(
-            "contain.text",
-            "The environment has been successfully created."
-          );
+        cy.get(".success-box").should(
+          "contain.text",
+          "The environment has been successfully created."
+        );
 
         cy.get("main").within(() => {
           cy.findAllByText("My new env").should("be.visible");

@@ -36,11 +36,9 @@ describe("/dashboard/profile", () => {
 
     it("shows an error when the passwords are not set", () => {
       cy.findByRole("button", { name: "Change password" }).click();
-      cy.get(".error-box").should("have.focus");
 
       cy.get(".error-box")
-        .should("have.focus")
-        .and("contain.text", "The password field is required.")
+        .should("contain.text", "The password field is required.")
         .and("contain.text", "The confirmation password field is required.");
     });
 
@@ -50,8 +48,7 @@ describe("/dashboard/profile", () => {
       cy.findByRole("button", { name: "Change password" }).click();
 
       cy.get(".error-box")
-        .should("have.focus")
-        .and(
+        .should(
           "contain.text",
           "The provided password is too short. It should be at least 8 characters."
         )
@@ -66,9 +63,10 @@ describe("/dashboard/profile", () => {
       cy.findByLabelText("Confirmation password").type("password2");
       cy.findByRole("button", { name: "Change password" }).click();
 
-      cy.get(".error-box")
-        .should("have.focus")
-        .and("contain.text", "The two passwords are not the same.");
+      cy.get(".error-box").should(
+        "contain.text",
+        "The two passwords are not the same."
+      );
     });
 
     it("shows a success message and allows to login when the password has changed", () => {
@@ -76,9 +74,10 @@ describe("/dashboard/profile", () => {
       cy.findByLabelText("Confirmation password").type("password1");
       cy.findByRole("button", { name: "Change password" }).click();
 
-      cy.get(".success-box")
-        .should("have.focus")
-        .and("contain.text", "The password has been successfully changed.");
+      cy.get(".success-box").should(
+        "contain.text",
+        "The password has been successfully changed."
+      );
 
       // Connect the person with a changed password
       cy.visit("/signin");

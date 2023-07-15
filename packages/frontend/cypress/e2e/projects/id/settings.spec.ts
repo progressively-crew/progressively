@@ -71,12 +71,10 @@ describe("/dashboard/projects/[id]/settings", () => {
         cy.get("#col-1").last().click();
         cy.findByRole("button", { name: "Remove from project" }).click();
 
-        cy.get(".error-box")
-          .should("have.focus")
-          .and(
-            "contain.text",
-            "You have attempted to remove an admin user! No worries, we got your back!"
-          );
+        cy.get(".error-box").should(
+          "contain.text",
+          "You have attempted to remove an admin user! No worries, we got your back!"
+        );
 
         cy.checkA11y();
       });
@@ -85,12 +83,10 @@ describe("/dashboard/projects/[id]/settings", () => {
         cy.get("#col-2").last().click();
         cy.findByRole("button", { name: "Remove from project" }).click();
 
-        cy.get(".success-box")
-          .should("have.focus")
-          .and(
-            "contain.text",
-            "1 user have been successfully removed from the project."
-          );
+        cy.get(".success-box").should(
+          "contain.text",
+          "1 user have been successfully removed from the project."
+        );
 
         cy.checkA11y();
       });

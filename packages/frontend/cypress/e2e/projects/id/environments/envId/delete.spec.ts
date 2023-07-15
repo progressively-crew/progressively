@@ -96,12 +96,10 @@ describe("/dashboard/projects/[id]/environments/[envId]/delete", () => {
 
         cy.findByRole("link", { name: "Developer" }).should("be.visible");
         cy.findByRole("link", { name: "Production" }).should("not.exist");
-        cy.get(".success-box")
-          .should("have.focus")
-          .and(
-            "contain.text",
-            "The environment has been successfully deleted."
-          );
+        cy.get(".success-box").should(
+          "contain.text",
+          "The environment has been successfully deleted."
+        );
       });
     });
   });

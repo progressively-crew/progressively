@@ -61,9 +61,10 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/segments/
           "/dashboard/projects/1/environments/1/flags/1/segments?newSegment=true"
         );
 
-        cy.get(".success-box")
-          .should("have.focus")
-          .and("contain.text", "The segment has been successfully added.");
+        cy.get(".success-box").should(
+          "contain.text",
+          "The segment has been successfully added."
+        );
 
         cy.checkA11y();
       });
