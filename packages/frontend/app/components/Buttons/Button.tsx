@@ -1,11 +1,11 @@
 import { Link } from "@remix-run/react";
-import { HTMLAttributes } from "react";
+import { HTMLAttributes, forwardRef } from "react";
 import { Spinner } from "../Spinner";
 
 export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   to?: string;
   href?: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   isLoading?: boolean;
   loadingText?: string;
   type?: "button" | "submit" | "reset";
@@ -44,36 +44,62 @@ const sizeClasses = {
   M: "h-10 px-4 gap-4",
 };
 
-export const Button = ({
-  to,
-  href,
-  children,
-  type,
-  icon,
-  isLoading,
-  loadingText,
-  scheme,
-  variant,
-  className,
-  size = "M",
-  ...props
-}: ButtonProps) => {
-  const sharedButtonClass =
-    "relative whitespace-nowrap inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:opacity-50 dark:focus:ring-slate-400 disabled:pointer-events-none dark:focus:ring-offset-slate-900";
+export const Button = forwardRef(
+  (
+    {
+      to,
+      href,
+      children,
+      type,
+      icon,
+      isLoading,
+      loadingText,
+      scheme,
+      variant,
+      className,
+      size = "M",
+      ...props
+    }: ButtonProps,
+    ref: any
+  ) => {
+    const sharedButtonClass =
+      "relative whitespace-nowrap inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:opacity-50 dark:focus:ring-slate-400 disabled:pointer-events-none dark:focus:ring-offset-slate-900";
 
-  const actuelScheme = scheme || "default";
-  const actualVariant = variant || "primary";
-  const combinedClassName = classCombination[actuelScheme + actualVariant];
-  const sizeClass = sizeClasses[size];
+    const actuelScheme = scheme || "default";
+    const actualVariant = variant || "primary";
+    const combinedClassName = classCombination[actuelScheme + actualVariant];
+    const sizeClass = sizeClasses[size];
 
-  if (to || href) {
-    const linkProps = props as HTMLAttributes<HTMLAnchorElement>;
-    const Component = href ? "a" : Link;
+    if (to || href) {
+      const linkProps = props as HTMLAttributes<HTMLAnchorElement>;
+      const Component = href ? "a" : Link;
+
+      return (
+        <Component
+          ref={ref}
+          to={href ? undefined : to}
+          href={href}
+          className={
+            sharedButtonClass +
+            " " +
+            combinedClassName +
+            " " +
+            className +
+            " " +
+            sizeClass
+          }
+          {...linkProps}
+        >
+          {icon && <span>{icon}</span>}
+          {children}
+        </Component>
+      );
+    }
 
     return (
-      <Component
-        to={href ? undefined : to}
-        href={href}
+      <button
+        ref={ref}
+        type={type}
         className={
           sharedButtonClass +
           " " +
@@ -83,33 +109,20 @@ export const Button = ({
           " " +
           sizeClass
         }
-        {...linkProps}
+        {...props}
+        aria-disabled={isLoading}
+        aria-label={isLoading ? loadingText : props["aria-label"]}
       >
-        {icon && <span>{icon}</span>}
-        {children}
-      </Component>
+        {isLoading && <Spinner className="text-xl absolute" />}
+        <span className={isLoading ? "opacity-0" : undefined}>{icon}</span>
+        {children && (
+          <span className={isLoading ? "opacity-0" : undefined}>
+            {children}
+          </span>
+        )}
+      </button>
     );
   }
+);
 
-  return (
-    <button
-      type={type}
-      className={
-        sharedButtonClass +
-        " " +
-        combinedClassName +
-        " " +
-        className +
-        " " +
-        sizeClass
-      }
-      {...props}
-      aria-disabled={isLoading}
-      aria-label={isLoading ? loadingText : undefined}
-    >
-      {isLoading && <Spinner className="text-xl absolute" />}
-      <span className={isLoading ? "opacity-0" : undefined}>{icon}</span>
-      <span className={isLoading ? "opacity-0" : undefined}>{children}</span>
-    </button>
-  );
-};
+Button.displayName = "Button";

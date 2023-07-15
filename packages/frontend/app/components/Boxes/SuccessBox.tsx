@@ -19,10 +19,10 @@ export const SuccessBox = ({ children, id, ...props }: SuccessBoxProps) => {
 
   return (
     <div
-      className="p-4 bg-green-100 border border-green-200 text-green-700 rounded motion-safe:animate-fade-enter-top"
+      className="z-20 bg-white dark:bg-white shadow-lg p-4 bg-white border border-slate-200 rounded motion-safe:animate-fade-enter-bottom fixed right-4 bottom-4"
       key={id}
     >
-      <div className="max-w-5xl w-full mx-auto flex flex-row justify-between">
+      <div className="gap-2 max-w-5xl w-full mx-auto flex flex-row justify-between items-center">
         <p
           ref={boxRef}
           tabIndex={-1}
@@ -31,14 +31,14 @@ export const SuccessBox = ({ children, id, ...props }: SuccessBoxProps) => {
           className="success-box"
         >
           <HStack as="span" spacing={2}>
-            <AiOutlineCheckCircle aria-hidden />
-            <span>{children}</span>
+            <AiOutlineCheckCircle aria-hidden className="text-emerald-400" />
+            <span className="text-sm">{children}</span>
           </HStack>
         </p>
 
         <Link
           to={location.pathname}
-          className="text-xl rounded bg-transparent hover:bg-green-200 active:bg-green-300 flex items-center justify-center w-6 h-6"
+          className="text-xl rounded bg-transparent hover:bg-slate-100 active:bg-slate-200 flex items-center justify-center w-6 h-6"
           preventScrollReset={true}
         >
           <MdClose aria-label="Close the banner" />
