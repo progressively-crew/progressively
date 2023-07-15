@@ -15,7 +15,6 @@ import { BackLink } from "~/components/BackLink";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 import { useState } from "react";
 import camelcase from "camelcase";
-import { ButtonCopy } from "~/components/ButtonCopy";
 
 export const meta: V2_MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -101,25 +100,13 @@ export default function CreateFlagPage() {
         }
       >
         <FormGroup>
-          <div className="flex flex-row gap-4">
-            <TextInput
-              name="flag-name"
-              isInvalid={Boolean(errors?.name)}
-              label="Flag name"
-              placeholder="e.g: New Homepage"
-              onChange={(e) => setValue(e.target.value)}
-            />
-
-            <div className="text-gray-500 dark:text-slate-200 flex gap-2 flex-col">
-              <div>Flag key</div>
-
-              <div>
-                <ButtonCopy toCopy={camelValue}>
-                  {camelValue || "N/A"}
-                </ButtonCopy>
-              </div>
-            </div>
-          </div>
+          <TextInput
+            name="flag-name"
+            isInvalid={Boolean(errors?.name)}
+            label="Flag name"
+            placeholder="e.g: New Homepage"
+            onChange={(e) => setValue(e.target.value)}
+          />
 
           <TextInput
             name="flag-desc"

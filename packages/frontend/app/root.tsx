@@ -20,6 +20,7 @@ import { Spacer } from "./components/Spacer";
 import { AiOutlineLogin } from "react-icons/ai";
 import { Button } from "./components/Buttons/Button";
 import { ThemeProvider } from "./modules/theme/ThemeProvider";
+import { ToastProvider } from "./components/Toast/ToastProvider";
 
 /**
  * The `links` export is a function that returns an array of objects that map to
@@ -69,7 +70,9 @@ document.documentElement.classList.remove('dark')
         ></script>
       </head>
       <body className="h-full">
-        <Background>{children}</Background>
+        <ToastProvider>
+          <Background>{children}</Background>
+        </ToastProvider>
 
         <ScrollRestoration />
         <Scripts />
