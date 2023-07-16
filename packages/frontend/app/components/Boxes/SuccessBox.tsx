@@ -1,5 +1,5 @@
 import { Link, useLocation } from "@remix-run/react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 import { MdClose } from "react-icons/md";
 import { HStack } from "../HStack";
@@ -10,12 +10,27 @@ export interface SuccessBoxProps {
 }
 
 export const SuccessBox = ({ children, id, ...props }: SuccessBoxProps) => {
+  const [isVisible, setIsVisible] = useState(true);
   const boxRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
 
   useEffect(() => {
-    boxRef?.current?.focus();
-  }, []);
+    if (isVisible) {
+      const currentFocus = document.activeElement as HTMLElement;
+      boxRef?.current?.focus();
+
+      const timerId = setTimeout(() => {
+        setIsVisible(false);
+      }, 5000);
+
+      return () => {
+        clearTimeout(timerId);
+        currentFocus?.focus();
+      };
+    }
+  }, [isVisible]);
+
+  if (!isVisible) return null;
 
   return (
     <div

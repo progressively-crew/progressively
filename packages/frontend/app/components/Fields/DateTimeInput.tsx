@@ -22,6 +22,14 @@ const getFormattedToday = () => {
   )}-${completeWithZero(now.getDate())}`;
 };
 
+const getFormattedTime = () => {
+  const now = new Date();
+  const hour = now.getHours();
+  const minutes = now.getMinutes();
+
+  return `${completeWithZero(hour)}:${completeWithZero(minutes)}`;
+};
+
 export const DateTimeInput = ({
   isInvalid,
   name,
@@ -29,7 +37,7 @@ export const DateTimeInput = ({
   description,
 }: TextInputProps) => {
   const [date, setDate] = useState(getFormattedToday());
-  const [time, setTime] = useState("00:00");
+  const [time, setTime] = useState(getFormattedTime());
   let ariaDescription: string | undefined;
 
   if (isInvalid) {

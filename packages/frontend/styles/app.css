@@ -84,3 +84,23 @@ input[type="range"]:focus::-moz-range-thumb {
   outline: 3px solid var(--bg-slide);
   outline-offset: 0.125rem;
 }
+
+/* Number */
+input[type="number"] {
+  position: relative;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  opacity: 1;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: inner-spin-button !important;
+  width: 24px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+}
