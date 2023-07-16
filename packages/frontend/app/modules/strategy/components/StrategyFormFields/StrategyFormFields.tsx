@@ -31,10 +31,10 @@ export const StrategyFormFields = ({
       value: ValueToServe.Boolean,
       label: `true`,
     },
-    {
-      value: ValueToServe.String,
-      label: "the custom string",
-    },
+    // {
+    //   value: ValueToServe.String,
+    //   label: "the custom string",
+    // },
   ];
 
   if (hasVariants) {
