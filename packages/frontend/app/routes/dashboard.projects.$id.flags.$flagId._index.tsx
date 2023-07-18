@@ -13,6 +13,7 @@ import { PageTitle } from "~/components/PageTitle";
 import { useFlag } from "~/modules/flags/contexts/useFlag";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { Typography } from "~/components/Typography";
+import { Button } from "~/components/Buttons/Button";
 
 export const meta: V2_MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -39,6 +40,14 @@ export default function FlagSettingPage() {
             Settings available for{" "}
             <strong className="font-bold">{flag.name}</strong>.
           </Typography>
+        }
+        action={
+          <Button
+            to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}/edit`}
+            variant="secondary"
+          >
+            Edit
+          </Button>
         }
       />
 
