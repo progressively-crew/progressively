@@ -438,7 +438,6 @@ importers:
       autoprefixer: ^10.4.14
       axe-core: ^4.7.2
       babel-loader: ^9.1.2
-      camelcase: 6.3.0
       concurrently: ^8.2.0
       cypress: ^12.15.0
       cypress-axe: ^1.4.0
@@ -470,7 +469,6 @@ importers:
       '@remix-run/node': 1.17.1
       '@remix-run/react': 1.17.1_biqbaboplfbrettd7655fr4n2y
       '@remix-run/serve': 1.17.1
-      camelcase: 6.3.0
       nock: 13.3.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0

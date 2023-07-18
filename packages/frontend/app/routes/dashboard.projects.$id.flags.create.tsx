@@ -13,8 +13,6 @@ import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaT
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { BackLink } from "~/components/BackLink";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
-import { useState } from "react";
-import camelcase from "camelcase";
 
 export const meta: V2_MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -68,14 +66,11 @@ export const action: ActionFunction = async ({
 };
 
 export default function CreateFlagPage() {
-  const [value, setValue] = useState("");
   const { project } = useProject();
   const data = useActionData<ActionData>();
   const transition = useTransition();
 
   const errors = data?.errors;
-
-  const camelValue = camelcase(value);
 
   return (
     <Form method="post" className="flex flex-col flex-1">
@@ -105,7 +100,6 @@ export default function CreateFlagPage() {
             isInvalid={Boolean(errors?.name)}
             label="Flag name"
             placeholder="e.g: New Homepage"
-            onChange={(e) => setValue(e.target.value)}
           />
 
           <TextInput

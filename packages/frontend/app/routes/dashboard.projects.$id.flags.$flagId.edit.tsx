@@ -12,8 +12,8 @@ import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaT
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { BackLink } from "~/components/BackLink";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
-import { useState } from "react";
 import { editFlag } from "~/modules/flags/services/editFlag";
+import { useFlag } from "~/modules/flags/contexts/useFlag";
 
 export const meta: V2_MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -69,10 +69,10 @@ export const action: ActionFunction = async ({
 };
 
 export default function EditFlagPage() {
-  const [value, setValue] = useState("");
   const { project } = useProject();
   const data = useActionData<ActionData>();
   const transition = useTransition();
+  const { flag } = useFlag();
 
   const errors = data?.errors;
 
@@ -82,14 +82,14 @@ export default function EditFlagPage() {
         status={
           (errors?.name || errors?.description) && <ErrorBox list={errors} />
         }
-        titleSlot={<CreateEntityTitle>Create a feature flag</CreateEntityTitle>}
+        titleSlot={<CreateEntityTitle>Edit a feature flag</CreateEntityTitle>}
         submitSlot={
           <SubmitButton
             type="submit"
             isLoading={transition.state === "submitting"}
-            loadingText="Creating the feature flag, please wait..."
+            loadingText="Editting the feature flag, please wait..."
           >
-            Create the feature flag
+            Edit the feature flag
           </SubmitButton>
         }
         backLinkSlot={
@@ -104,7 +104,7 @@ export default function EditFlagPage() {
             isInvalid={Boolean(errors?.name)}
             label="Flag name"
             placeholder="e.g: New Homepage"
-            onChange={(e) => setValue(e.target.value)}
+            defaultValue={flag.name}
           />
 
           <TextInput
@@ -112,6 +112,7 @@ export default function EditFlagPage() {
             isInvalid={Boolean(errors?.description)}
             label="Flag description"
             placeholder="e.g: The new homepage"
+            defaultValue={flag.description}
           />
         </FormGroup>
       </CreateEntityLayout>
