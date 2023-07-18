@@ -2,7 +2,9 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
 import { FlagStatus } from './flags.status';
 import { Variant } from './types';
-import { VariantCreationDTO } from './flags.dto';
+import { FlagCreationDTO, VariantCreationDTO } from './flags.dto';
+import camelcase from 'camelcase';
+import { FlagAlreadyExists } from '../projects/errors';
 
 @Injectable()
 export class FlagsService {
@@ -514,5 +516,40 @@ export class FlagsService {
     const [, deletedMetric] = await this.prisma.$transaction(deleteQueries);
 
     return deletedMetric;
+  }
+
+  async editFlag(
+    projectId: string,
+    flagId: string,
+    name: string,
+    description: string,
+  ) {
+    const flagKey = camelcase(name);
+
+    const existingFlagEnv = await this.prisma.flagEnvironment.findFirst({
+      where: {
+        environment: {
+          projectId,
+        },
+        flag: {
+          key: flagKey,
+        },
+      },
+    });
+
+    if (existingFlagEnv) {
+      throw new FlagAlreadyExists();
+    }
+
+    return await this.prisma.flag.update({
+      where: {
+        uuid: flagId,
+      },
+      data: {
+        name,
+        description,
+        key: flagKey,
+      },
+    });
   }
 }

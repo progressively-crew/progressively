@@ -57,6 +57,13 @@ export const FlagEnvMenu = ({
       </NavItem>
 
       <NavItem
+        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/scheduling`}
+        icon={<TbClockEdit />}
+      >
+        Scheduling
+      </NavItem>
+
+      <NavItem
         to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/variants`}
         icon={<TbApps />}
       >
@@ -64,10 +71,17 @@ export const FlagEnvMenu = ({
       </NavItem>
 
       <NavItem
-        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/scheduling`}
-        icon={<TbClockEdit />}
+        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/metrics`}
+        icon={<TbChartPie />}
       >
-        Scheduling
+        Metrics
+      </NavItem>
+
+      <NavItem
+        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/insights`}
+        icon={<TbChartAreaLine />}
+      >
+        Insights
       </NavItem>
 
       <NavItem
@@ -82,20 +96,6 @@ export const FlagEnvMenu = ({
         icon={<TbActivity />}
       >
         Activity
-      </NavItem>
-
-      <NavItem
-        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/insights`}
-        icon={<TbChartAreaLine />}
-      >
-        Insights
-      </NavItem>
-
-      <NavItem
-        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/metrics`}
-        icon={<TbChartPie />}
-      >
-        Metrics
       </NavItem>
 
       <NavItem

@@ -53,6 +53,7 @@ export default function FlagsByEnvPage() {
   const [searchParams] = useSearchParams();
   const search = searchParams.get("search");
   const newFlagId = searchParams.get("newFlagId") || undefined;
+  const flagEdited = searchParams.get("flagEdited") || undefined;
   const envRemoved = searchParams.get("envRemoved") || undefined;
   const projectCreated = searchParams.get("projectCreated") || undefined;
 
@@ -70,7 +71,11 @@ export default function FlagsByEnvPage() {
       user={user}
       subNav={<ProjectNavBar project={project} />}
       status={
-        projectCreated ? (
+        flagEdited ? (
+          <SuccessBox id="flag-edited">
+            The flag has been successfully edited.
+          </SuccessBox>
+        ) : projectCreated ? (
           <SuccessBox id="env-removed">
             The project has been successfully created.
           </SuccessBox>
