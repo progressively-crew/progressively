@@ -24,6 +24,8 @@ import { ApiBearerAuth } from '@nestjs/swagger';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import {
   ActivateFlagDTO,
+  FlagCreationDTO,
+  FlagCreationSchema,
   MetricSchema,
   VariantCreationDTO,
   VariantSchema,
@@ -36,6 +38,7 @@ import { WebhooksService } from '../webhooks/webhooks.service';
 import { post, WebhooksEventsToFlagStatus } from '../webhooks/utils';
 import { ActivityLogService } from '../activity-log/activity-log.service';
 import { UserId } from '../users/users.decorator';
+import { FlagAlreadyExists } from '../projects/errors';
 
 @ApiBearerAuth()
 @Controller()
@@ -395,5 +398,30 @@ export class FlagsController {
   @UseGuards(JwtAuthGuard)
   getVariants(@Param('envId') envId: string, @Param('flagId') flagId: string) {
     return this.flagService.listVariants(envId, flagId);
+  }
+
+  @Put('/projects/:id/flags/:flagId')
+  @UseGuards(HasFlagAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(new ValidationPipe(FlagCreationSchema))
+  async editFlag(
+    @Param('id') id,
+    @Param('flagId') flagId,
+    @Body() flag: FlagCreationDTO,
+  ) {
+    try {
+      return await this.flagService.editFlag(
+        id,
+        flagId,
+        flag.name,
+        flag.description,
+      );
+    } catch (e) {
+      if (e instanceof FlagAlreadyExists) {
+        throw new BadRequestException('Flag already exists');
+      }
+
+      throw e;
+    }
   }
 }
