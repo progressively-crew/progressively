@@ -58,6 +58,44 @@ export class SdkController {
     return this.sdkService.computeFlags(fields, shouldSkipHits);
   }
 
+  /**
+   * Get One  flag values by client sdk key
+   */
+  @Get('/:params/:flagKey')
+  async getUniqueFlagByClientKey(
+    @Param('params') base64Params: string,
+    @Param('flagKey') flagKey: string,
+    @Res({ passthrough: true }) response: Response,
+    @Req() request: Request,
+    @Headers() headers,
+  ) {
+    const isSaas = process.env.IS_SAAS === 'true';
+    const fields = parseBase64Params(base64Params);
+
+    const clientKey = String(fields.clientKey);
+    const cookieUserId = request?.cookies?.[COOKIE_KEY];
+    const shouldSkipHits = headers['x-progressively-hit'] === 'skip';
+
+    fields.id = resolveUserId(fields, cookieUserId);
+    prepareCookie(response, fields.id);
+
+    if (isSaas) {
+      const isPlanValid = await this.userService.isPlanValid(clientKey);
+
+      if (isPlanValid) {
+        return this.sdkService.computeUniqueFlag(
+          flagKey,
+          fields,
+          shouldSkipHits,
+        );
+      }
+
+      return {};
+    }
+
+    return this.sdkService.computeUniqueFlag(flagKey, fields, shouldSkipHits);
+  }
+
   @Get('/:clientKey/types')
   async getTypesDefinitions(@Param('clientKey') clientKey: string) {
     const isSaas = process.env.IS_SAAS === 'true';
