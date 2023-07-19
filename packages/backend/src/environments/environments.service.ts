@@ -49,6 +49,44 @@ export class EnvironmentsService {
     }) as unknown as Promise<Array<PopulatedFlagEnv>>;
   }
 
+  getFlagEnvironmentByClientKeyAndFlagKey(clientKey: string, flagKey: string) {
+    return this.prisma.flagEnvironment.findFirst({
+      where: {
+        flag: {
+          key: flagKey,
+        },
+        environment: {
+          clientKey,
+        },
+      },
+      include: {
+        flag: true,
+        scheduling: true,
+        strategies: {
+          include: {
+            rules: {
+              include: {
+                Segment: {
+                  include: {
+                    rule: true,
+                  },
+                },
+              },
+            },
+            variants: {
+              include: {
+                variant: true,
+              },
+              orderBy: {
+                rolloutPercentage: 'asc',
+              },
+            },
+          },
+        },
+      },
+    }) as unknown as Promise<PopulatedFlagEnv>;
+  }
+
   async createEnvironment(projectId: string, environmentName: string) {
     const allMatchingFlagEnv = await this.prisma.flagEnvironment.findMany({
       where: {

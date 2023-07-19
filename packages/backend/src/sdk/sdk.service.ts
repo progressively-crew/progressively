@@ -150,6 +150,25 @@ export class SdkService {
     return flags;
   }
 
+  async computeUniqueFlag(
+    flagKey: string,
+    fields: FieldRecord,
+    skipHit: boolean,
+  ) {
+    const clientKey = String(fields.clientKey);
+    const flagEnv =
+      await this.envService.getFlagEnvironmentByClientKeyAndFlagKey(
+        clientKey,
+        flagKey,
+      );
+
+    const flags = {};
+
+    await this.computeFlag(flagEnv, clientKey, fields, flags, skipHit);
+
+    return flags;
+  }
+
   async hitEvent(clientKey: string, visitorId: string, hit: EventHit) {
     const metric = await this.prisma.pMetric.findFirst({
       where: {
