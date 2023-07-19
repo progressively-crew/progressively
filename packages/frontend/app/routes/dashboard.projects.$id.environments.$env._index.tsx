@@ -4,7 +4,7 @@ import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { UserRoles } from "~/modules/projects/types";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
-import { V2_MetaFunction } from "@remix-run/node";
+import { LoaderFunction, V2_MetaFunction } from "@remix-run/node";
 import { Card, CardContent } from "~/components/Card";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { useProject } from "~/modules/projects/contexts/useProject";
@@ -15,8 +15,12 @@ import { PageTitle } from "~/components/PageTitle";
 import { Spacer } from "~/components/Spacer";
 import { Typography } from "~/components/Typography";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
-import { useSearchParams } from "@remix-run/react";
+import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { ProjectNavBar } from "~/modules/projects/components/ProjectNavBar";
+import { getFlagsByProjectEnv } from "~/modules/flags/services/getFlagsByProjectEnv";
+import { FlagEnv } from "~/modules/flags/types";
+import { FlagEnvList } from "~/modules/flags/components/FlagEnvList";
+import { getSession } from "~/sessions";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -29,11 +33,28 @@ export const meta: V2_MetaFunction = ({ matches, params }) => {
   ];
 };
 
+interface LoaderData {
+  flagEnvs: Array<FlagEnv>;
+}
+
+export const loader: LoaderFunction = async ({ request, params }) => {
+  const session = await getSession(request.headers.get("Cookie"));
+  const authCookie = session.get("auth-cookie");
+
+  const flagEnvs: Array<FlagEnv> = await getFlagsByProjectEnv(
+    params.env!,
+    authCookie
+  );
+
+  return { flagEnvs };
+};
+
 export default function EnvSettingsPage() {
   const { user } = useUser();
   const { project, userRole } = useProject();
   const { environment } = useEnvironment();
   const [searchParams] = useSearchParams();
+  const { flagEnvs } = useLoaderData<LoaderData>();
   const envCreated = searchParams.get("envCreated") || undefined;
 
   return (
@@ -76,6 +97,23 @@ export default function EnvSettingsPage() {
           </Section>
         </CardContent>
       </Card>
+
+      {flagEnvs.length > 0 && (
+        <Card>
+          <CardContent>
+            <Section>
+              <SectionHeader
+                title="Feature flags"
+                description={
+                  "The feature flags status in this specific environment."
+                }
+              />
+              <Spacer size={4} />
+              <FlagEnvList flagEnvs={flagEnvs} projectId={project.uuid} />
+            </Section>
+          </CardContent>
+        </Card>
+      )}
 
       {userRole === UserRoles.Admin && (
         <Card

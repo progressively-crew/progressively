@@ -8,10 +8,7 @@ export interface FlagStatusProps {
 export const FlagStatus = ({ value }: FlagStatusProps) => {
   if (value === FlagStatusRaw.ACTIVATED) {
     return (
-      <Tag
-        className="bg-emerald-100 dark:bg-emerald-100 text-emerald-700 dark:text-emerald-700 text-sm"
-        size="S"
-      >
+      <Tag variant="SUCCESS" size="S">
         Activated
       </Tag>
     );
@@ -19,7 +16,7 @@ export const FlagStatus = ({ value }: FlagStatusProps) => {
 
   if (value === FlagStatusRaw.NOT_ACTIVATED) {
     return (
-      <Tag className="bg-gray-100 text-gray-600 text-sm" size="S">
+      <Tag variant="DEFAULT" size="S">
         Not activated
       </Tag>
     );
