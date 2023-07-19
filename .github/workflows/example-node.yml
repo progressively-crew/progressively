@@ -40,7 +40,7 @@ jobs:
         run: rm -rf ./packages/database/prisma/migrations && pnpm run db:prepare
 
       - name: Build the project
-        run: pnpm run build --filter=@progressively/backend --filter=@progressively/sdk-node...
+        run: pnpm run build --filter=@progressively/backend --filter=@progressively/server-side...
 
       - name: Start backend
         run: pnpm run start:backend &
