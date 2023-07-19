@@ -41,7 +41,6 @@ import { MailService } from '../mail/mail.service';
 import { Environment } from '../environments/types';
 import { FlagCreationDTO, FlagCreationSchema } from '../flags/flags.dto';
 import { FlagAlreadyExists } from './errors';
-import { HasFlagAccessGuard } from 'src/flags/guards/hasFlagAccess';
 @ApiBearerAuth()
 @Controller('projects')
 export class ProjectsController {

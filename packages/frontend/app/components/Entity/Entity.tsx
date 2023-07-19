@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { Link } from "../Link";
-import { Card, CardContent } from "../Card";
+import { Card } from "../Card";
 
 export interface EntityProps {
   title: React.ReactNode;
