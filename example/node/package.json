@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@progressively/playwright-helpers": "workspace:*",
-    "@progressively/sdk-node": "workspace:*"
+    "@progressively/server-side": "workspace:*"
   },
   "keywords": [],
   "author": "",

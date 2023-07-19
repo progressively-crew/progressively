@@ -1,21 +1,18 @@
-const { Progressively } = require("@progressively/sdk-node");
+const { getProgressivelyData } = require("@progressively/server-side");
 const http = require("http");
-
-const sdk = Progressively.init("valid-sdk-key", {
-  websocketUrl: "ws://localhost:4000",
-  apiUrl: "http://localhost:4000",
-  fields: {
-    email: "marvin.frachet@something.com",
-    id: "1",
-  },
-});
 
 const requestListener = function (req, res) {
   res.setHeader("Content-Type", "text/html");
   res.writeHead(200);
 
   (async () => {
-    const { flags } = await sdk.loadFlags();
+    const flags = await getProgressivelyData("valid-sdk-key", {
+      apiUrl: "http://localhost:4000",
+      fields: {
+        email: "marvin.frachet@something.com",
+        id: "1",
+      },
+    });
 
     if (flags.newHomepage) {
       res.end(`New variant`);
