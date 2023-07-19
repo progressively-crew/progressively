@@ -6,13 +6,15 @@ const requestListener = function (req, res) {
   res.writeHead(200);
 
   (async () => {
-    const flags = await getProgressivelyData("valid-sdk-key", {
+    const { data } = await getProgressivelyData("valid-sdk-key", {
       apiUrl: "http://localhost:4000",
       fields: {
         email: "marvin.frachet@something.com",
         id: "1",
       },
     });
+
+    const flags = data.initialFlags;
 
     if (flags.newHomepage) {
       res.end(`New variant`);
