@@ -47,7 +47,7 @@ jobs:
 
       - name: Start the Example AstroBuild project
         working-directory: ./example/astro
-        run: pnpm start &
+        run: pnpm run preview &
 
       - name: E2E tests
         working-directory: ./example/astro

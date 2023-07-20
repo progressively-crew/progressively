@@ -47,7 +47,7 @@ jobs:
 
       - name: Start project
         working-directory: ./example/nextjs
-        run: pnpm start &
+        run: pnpm run preview &
 
       - name: E2E tests
         working-directory: ./example/nextjs

@@ -47,7 +47,7 @@ jobs:
 
       - name: Start the Example node project
         working-directory: ./example/node
-        run: pnpm start &
+        run: pnpm run preview &
 
       - name: E2E tests
         working-directory: ./example/node
