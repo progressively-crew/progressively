@@ -4,7 +4,7 @@ export interface SDKOptions {
   fields?: Fields;
   apiUrl: string;
   websocketUrl?: string;
-  initialFlags?: FlagDict;
+  flags?: FlagDict;
   headers?: RequestInit["headers"];
 }
 export type LoadFlagsReturnType = {

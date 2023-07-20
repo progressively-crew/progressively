@@ -7,5 +7,5 @@ export const getFlags = async () => {
     shouldHit: true,
   });
 
-  return data.initialFlags || {};
+  return data.flags || {};
 };

@@ -27,7 +27,7 @@ export const useFlags = loader$(async ({ cookie }) => {
 
 export default component$(() => {
   const signal = useFlags();
-  const flags = useSignal<FlagDict>(signal.value.initialFlags || {});
+  const flags = useSignal<FlagDict>(signal.value.flags || {});
 
   useBrowserVisibleTask$(
     async () => {

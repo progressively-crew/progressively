@@ -21,7 +21,7 @@ interface Status {
 export const ProgressivelyProvider = ({
   children,
   clientKey,
-  initialFlags,
+  flags: initialFlags,
   apiUrl,
   websocketUrl,
   fields,

@@ -159,7 +159,7 @@ describe("SDK", () => {
       expect(flags).toEqual({ hello: true, world: false });
     });
 
-    it("loads the initial flag from the options when the initialFlags is passed", async () => {
+    it("loads the initial flag from the options when the flags is passed", async () => {
       worker.use(
         rest.get(FLAG_ENDPOINT, (_, res) => {
           return res.networkError("Failed to connect");
@@ -169,7 +169,7 @@ describe("SDK", () => {
       const sdk = Sdk.init("client-key", {
         websocketUrl: "ws://localhost:1234",
         apiUrl: "http://localhost:4000",
-        initialFlags: {
+        flags: {
           world: true,
         },
       });
@@ -184,7 +184,7 @@ describe("SDK", () => {
       expect(flags).toEqual({ world: true });
     });
 
-    it("loads the initial flag from the options when the initialFlags is passed", async () => {
+    it("loads the initial flag from the options when the flags is passed", async () => {
       worker.use(
         rest.get(FLAG_ENDPOINT, (_, res) => {
           return res.networkError("Failed to connect");
@@ -194,7 +194,7 @@ describe("SDK", () => {
       const sdk = Sdk.init("client-key", {
         websocketUrl: "ws://localhost:1234",
         apiUrl: "http://localhost:4000",
-        initialFlags: {
+        flags: {
           world: true,
         },
       });
@@ -209,7 +209,7 @@ describe("SDK", () => {
       expect(flags).toEqual({ world: true });
     });
 
-    it("loads the initial flag from the options when the initialFlags is passed", async () => {
+    it("loads the initial flag from the options when the flags is passed", async () => {
       worker.use(
         rest.get(FLAG_ENDPOINT, (_, res) => {
           return res.networkError("Failed to connect");
@@ -219,7 +219,7 @@ describe("SDK", () => {
       const sdk = Sdk.init("client-key", {
         websocketUrl: "ws://localhost:1234",
         apiUrl: "http://localhost:4000",
-        initialFlags: {
+        flags: {
           world: true,
         },
       });

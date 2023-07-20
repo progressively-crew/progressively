@@ -3,7 +3,7 @@
 	import { Progressively } from '@progressively/sdk-js';
 	/** @type {import('./$types').PageServerData} */ export let data;
 
-	let flags = data.initialFlags || {};
+	let flags = data.flags || {};
 
 	/**
 	 * @type {import('@progressively/sdk-js').ProgressivelySdkType}
