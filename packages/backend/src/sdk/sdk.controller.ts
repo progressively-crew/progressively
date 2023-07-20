@@ -9,12 +9,14 @@ import {
   Res,
   Headers,
   Header,
+  UseGuards,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { SdkService } from './sdk.service';
 import { EventHit } from './types';
 import { parseBase64Params, prepareCookie, resolveUserId } from './utils';
 import { UsersService } from '../users/users.service';
+import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
 
 export const COOKIE_KEY = 'progressively-id';
 
@@ -97,6 +99,7 @@ export class SdkController {
   }
 
   @Get('/:clientKey/types')
+  @UseGuards(JwtAuthGuard)
   async getTypesDefinitions(@Param('clientKey') clientKey: string) {
     const isSaas = process.env.IS_SAAS === 'true';
 
