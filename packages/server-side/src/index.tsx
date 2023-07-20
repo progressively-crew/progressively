@@ -6,7 +6,7 @@ export interface SDKOptions {
   fields?: Fields;
   apiUrl?: string;
   websocketUrl?: string;
-  initialFlags?: FlagDict;
+  flags?: FlagDict;
   shouldHit?: boolean;
   safeValueWhenFailing?: boolean;
 }
@@ -36,7 +36,7 @@ export function getProgressivelyData(clientKey: string, options?: SDKOptions) {
     .then((flags: FlagDict) => {
       return {
         data: {
-          initialFlags: flags,
+          flags,
           clientKey,
           ...options,
         },
@@ -47,7 +47,7 @@ export function getProgressivelyData(clientKey: string, options?: SDKOptions) {
     .catch(() => {
       return {
         data: {
-          initialFlags: options?.safeValueWhenFailing ? {} : undefined,
+          flags: options?.safeValueWhenFailing ? {} : undefined,
           clientKey,
           ...options,
         },

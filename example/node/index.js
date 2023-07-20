@@ -14,7 +14,7 @@ const requestListener = function (req, res) {
       },
     });
 
-    const flags = data.initialFlags;
+    const flags = data.flags;
 
     if (flags.newHomepage) {
       res.end(`New variant`);

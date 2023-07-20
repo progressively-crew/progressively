@@ -188,7 +188,7 @@ describe('SdkController (e2e)', () => {
       );
 
       expect(response.headers['content-type']).toBe(
-        'application/javascript; charset=utf-8',
+        'application/json; charset=utf-8',
       );
       expect(response.headers['cache-control']).toBe(
         'no-cache, no-store, must-revalidate',

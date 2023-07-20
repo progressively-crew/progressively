@@ -111,7 +111,7 @@ describe("React-sdk root", () => {
 
     it("shows the initial flags after loading (newHomepage is false)", async () => {
       render({
-        initialFlags: { newHomepage: false },
+        flags: { newHomepage: false },
         clientKey: "valid-sdk-key",
       });
 
@@ -122,7 +122,7 @@ describe("React-sdk root", () => {
 
     it("shows the initial flags after loading (newHomepage is true)", async () => {
       render({
-        initialFlags: { newHomepage: true },
+        flags: { newHomepage: true },
         clientKey: "valid-sdk-key",
       });
 

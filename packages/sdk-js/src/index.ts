@@ -14,7 +14,7 @@ function init(clientKey: string, options?: SDKOptions): ProgressivelySdkType {
   fields.clientKey = clientKey;
 
   let flags: FlagDict =
-    options?.initialFlags ||
+    options?.flags ||
     JSON.parse(window.localStorage.getItem(LocalStorageKey) || "{}");
 
   let socket: WebSocket;

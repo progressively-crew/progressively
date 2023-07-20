@@ -34,13 +34,13 @@ jobs:
       - uses: ./.github/actions/monorepo-setup
 
       - name: Dependencies install
-        run: pnpm install --filter=@progressively/backend... --filter=@progressively/example-node...
+        run: pnpm install
 
       - name: Db prepare
         run: rm -rf ./packages/database/prisma/migrations && pnpm run db:prepare
 
       - name: Build the project
-        run: pnpm run build --filter=@progressively/backend --filter=@progressively/server-side...
+        run: pnpm run build
 
       - name: Start backend
         run: pnpm run start:backend &
