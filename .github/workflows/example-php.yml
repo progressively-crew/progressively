@@ -51,7 +51,7 @@ jobs:
 
       - name: Start the Example PHP project
         working-directory: ./example/php
-        run: php -S localhost:3000 &
+        run: php -S localhost:3006 &
 
       - name: E2E tests
         working-directory: ./example/php

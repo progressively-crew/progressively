@@ -9,6 +9,6 @@ export default defineConfig({
   }),
   integrations: [react()],
   server: {
-    port: 3000,
+    port: 3002,
   },
 });

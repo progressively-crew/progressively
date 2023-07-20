@@ -109,29 +109,6 @@ export class SdkController {
     return this.sdkService.generateTypescriptTypes(clientKey);
   }
 
-  /**
-   * Get the flag values by client sdk key
-   */
-  @Get('/:params/progressively.js')
-  @Header('Cache-Control', 'no-cache, no-store, must-revalidate')
-  @Header('content-type', 'application/javascript')
-  @Header('Cross-Origin-Resource-Policy', 'cross-origin')
-  async getJavascriptScript(
-    @Param('params') base64Params: string,
-    @Res({ passthrough: true }) response: Response,
-    @Req() request: Request,
-    @Headers() headers,
-  ): Promise<string> {
-    const flags = await this.getByClientKey(
-      base64Params,
-      response,
-      request,
-      headers,
-    );
-
-    return `window.progressivelyFlags=${JSON.stringify(flags, null)};`;
-  }
-
   @Post('/:params')
   async hitEvent(
     @Param('params') base64Params: string,

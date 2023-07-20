@@ -16,12 +16,12 @@
     "fmt": "prettier --write .",
     "fmt.check": "prettier --check .",
     "lint": "eslint \"src/**/*.ts*\"",
-    "preview": "qwik build preview && vite preview --open --port 3000",
-    "start": "vite --open --mode ssr",
+    "preview": "qwik build preview && vite preview --open --port 3007",
+    "start": "vite --open --mode ssr --port 3007",
     "qwik": "qwik",
-    "test:e2e": "PROJECT_ROOT=$(pwd) pnpm --filter @progressively/playwright-helpers run test:e2e",
-    "test:e2e:debug": "PROJECT_ROOT=$(pwd) pnpm --filter @progressively/playwright-helpers run test:e2e:debug",
-    "test:e2e:ci": "PROJECT_ROOT=$(pwd) pnpm --filter @progressively/playwright-helpers run test:e2e:ci"
+    "test:e2e": "PORT=3007 PROJECT_ROOT=$(pwd) pnpm --filter @progressively/playwright-helpers run test:e2e",
+    "test:e2e:debug": "PORT=3007 PROJECT_ROOT=$(pwd) pnpm --filter @progressively/playwright-helpers run test:e2e:debug",
+    "test:e2e:ci": "PORT=3007 PROJECT_ROOT=$(pwd) pnpm --filter @progressively/playwright-helpers run test:e2e:ci"
   },
   "dependencies": {
     "@progressively/playwright-helpers": "workspace:*",
