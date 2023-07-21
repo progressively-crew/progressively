@@ -6,6 +6,7 @@ import LinkButton from "../components/LinkButton.astro";
 import { PullTriggerSection } from "../components/PullTriggerSection";
 import { SpeedUpDevelopment } from "../components/SpeedUpDevelopment";
 import { CorrelatePercentageError } from "../components/CorrelatePercentageError";
+import { ABTesting } from "../components/ABTesting";
 import Layout from "../layouts/Layout.astro";
 import hljs from "highlight.js";
 
@@ -22,6 +23,28 @@ const FlaggedComponent = () => {
 
   return <div>Old variant</div>;
 };`,
+  { language: "jsx" }
+).value;
+
+const abcVersions = hljs.highlight(
+  `
+import { useFlags } from "@progressively/react";
+
+const FlaggedComponent = () => {
+  const { flags } = useFlags();
+
+  if (flags.newFlag === "B") {
+    return <VersionB />;
+  }
+
+  if (flags.newFlag === "C") {
+    return <VersionC />;
+  }
+
+  return <VersionA />;
+};
+
+`,
   { language: "jsx" }
 ).value;
 ---
@@ -71,6 +94,8 @@ const FlaggedComponent = () => {
     <CanaryRelease client:load />
 
     <CorrelatePercentageError client:load />
+
+    <ABTesting code={abcVersions} />
 
     <FeatureSection />
 
