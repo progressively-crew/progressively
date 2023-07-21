@@ -6,7 +6,6 @@
   "private": true,
   "scripts": {
     "start": "node index.js",
-    "preview": "node index.js",
     "test:e2e": "PORT=3005 PROJECT_ROOT=$(pwd) pnpm --filter @progressively/playwright-helpers run test:e2e",
     "test:e2e:debug": "PORT=3005 PROJECT_ROOT=$(pwd) pnpm --filter @progressively/playwright-helpers run test:e2e:debug",
     "test:e2e:ci": "PORT=3005 PROJECT_ROOT=$(pwd) pnpm --filter @progressively/playwright-helpers run test:e2e:ci"

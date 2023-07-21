@@ -6,7 +6,8 @@ const FlaggedComponent = () => {
   return (
     <main>
       <div>
-        <h1>New homepage</h1>
+        <h1>Astro</h1>
+        <h2>New homepage</h2>
         {flags.newHomepage ? "New variant" : "Old variant"}
       </div>
 

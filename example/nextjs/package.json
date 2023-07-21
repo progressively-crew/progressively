@@ -5,7 +5,6 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start -p 3004",
-    "preview": "next start -p 3004",
     "lint": "next lint",
     "test:e2e": "PORT=3004 PROJECT_ROOT=$(pwd) pnpm --filter @progressively/playwright-helpers run test:e2e",
     "test:e2e:debug": "PORT=3004 PROJECT_ROOT=$(pwd) pnpm --filter @progressively/playwright-helpers run test:e2e:debug",

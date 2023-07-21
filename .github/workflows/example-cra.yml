@@ -47,7 +47,7 @@ jobs:
 
       - name: Start the Example CRA project
         working-directory: ./example/cra
-        run: pnpm run preview &
+        run: pnpm start &
 
       - name: E2E tests
         working-directory: ./example/cra

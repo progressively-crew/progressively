@@ -16,7 +16,8 @@
     "setup": "pnpm install",
     "start": "turbo run start --filter=@progressively/frontend --filter=@progressively/backend",
     "start:backend": "turbo run start --filter=@progressively/backend",
-    "start:frontend": "turbo run start --filter=@progressively/frontend"
+    "start:frontend": "turbo run start --filter=@progressively/frontend",
+    "start:examples": "turbo run build start --filter=@progressively/frontend --filter=@progressively/backend --filter='./example/*'"
   },
   "dependencies": {
     "@changesets/cli": "^2.26.0",
