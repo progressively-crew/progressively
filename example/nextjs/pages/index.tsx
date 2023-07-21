@@ -25,6 +25,8 @@ const Home: NextPage = ({ progressivelyProps }: any) => {
           <link rel="icon" href="/favicon.ico" />
         </Head>
 
+        <h1>Nextjs</h1>
+
         <FlaggedComponent />
       </div>
     </ProgressivelyProvider>

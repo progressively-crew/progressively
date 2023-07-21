@@ -14,12 +14,6 @@
     "start": {
       "dependsOn": []
     },
-    "start:frontend": {
-      "dependsOn": []
-    },
-    "start:backend": {
-      "dependsOn": []
-    },
     "dev": {
       "dependsOn": []
     },
