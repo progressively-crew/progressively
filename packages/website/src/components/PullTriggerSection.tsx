@@ -18,7 +18,7 @@ export const PullTriggerSection = ({
       ? "bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"
       : "bg-slate-50";
 
-    const itemClass = isSwitched ? "bg-white" : "bg-slate-400";
+    const itemClass = isSwitched ? "bg-white" : "bg-gray-300";
 
     return (
       <div
@@ -69,16 +69,16 @@ export const PullTriggerSection = ({
         </div>
       </div>
 
-      <EasyToUse
-        clientComponent={clientComponent}
-        alternate={checked && percentage === 100}
-      />
-
-      <div className="grid md:grid-cols-3 gap-4 pt-4">
+      <div className="grid md:grid-cols-3 gap-4 pb-4">
         <Browser>{browserContent(33)}</Browser>
         <Browser>{browserContent(66)}</Browser>
         <Browser>{browserContent(100)}</Browser>
       </div>
+
+      <EasyToUse
+        clientComponent={clientComponent}
+        alternate={checked && percentage === 100}
+      />
     </div>
   );
 };
