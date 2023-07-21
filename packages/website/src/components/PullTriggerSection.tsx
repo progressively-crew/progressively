@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Switch } from "./Switch/Switch";
 import { Browser } from "./Browser";
 import { EasyToUse } from "./EasyToUse";
+import { NumberInput } from "./NumberInput";
 
 export const PullTriggerSection = ({
   clientComponent,
@@ -46,27 +47,14 @@ export const PullTriggerSection = ({
           label="Switch color scheme"
         />
 
-        <div className="flex flex-row items-center gap-2 md:justify-center">
-          <label htmlFor="percentage" className="font-extrabold">
-            Percentage of the audience
-          </label>
-          <div className="flex flex-row">
-            <input
-              type="number"
-              id="percentage"
-              min={0}
-              max={100}
-              className="bg-gray-100 h-10 rounded-l p-2"
-              value={percentage}
-              onChange={(e) => {
-                setPercentage(Number(e.target.value));
-              }}
-            />
-            <span className="p-2 h-10 rounded-r bg-gray-200 font-mono w-10 font-extrabold text-center text-xl">
-              %
-            </span>
-          </div>
-        </div>
+        <NumberInput
+          value={percentage}
+          onChange={(n) => {
+            if (checked) {
+              setPercentage(n);
+            }
+          }}
+        />
       </div>
 
       <div className="grid md:grid-cols-3 gap-4 pb-4">

@@ -1,11 +1,11 @@
 ---
 import { CanaryRelease } from "../components/CanaryRelease";
-import Container from "../components/Container.astro";
 import { FeatureSection } from "../components/FeatureSection";
 import GetStartedCTA from "../components/GetStartedCTA.astro";
 import LinkButton from "../components/LinkButton.astro";
 import { PullTriggerSection } from "../components/PullTriggerSection";
 import { SpeedUpDevelopment } from "../components/SpeedUpDevelopment";
+import { CorrelatePercentageError } from "../components/CorrelatePercentageError";
 import Layout from "../layouts/Layout.astro";
 import hljs from "highlight.js";
 
@@ -69,6 +69,8 @@ const FlaggedComponent = () => {
     <SpeedUpDevelopment client:load />
 
     <CanaryRelease client:load />
+
+    <CorrelatePercentageError client:load />
 
     <FeatureSection />
 
