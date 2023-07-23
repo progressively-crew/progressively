@@ -16,9 +16,9 @@ export const ABTesting = ({ code }: { code: string }) => {
           </h2>
 
           <p className="text-2xl leading-relaxed pb-4">
-            Correlate errors raised in your tracking tool with your feature
-            rollout. When a feature generates too many errors,{" "}
-            <strong>you can deactivate it in one click</strong>.
+            Create multiple variants for a given feature flag and provide
+            different experiences to your users. Measure the impact of the
+            different versions and makes decisions to improve your apps.
           </p>
 
           <div className="grid grid-cols-[2fr_1fr] gap-4 items-center">
