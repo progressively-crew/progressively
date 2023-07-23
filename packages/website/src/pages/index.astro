@@ -9,6 +9,7 @@ import { CorrelatePercentageError } from "../components/CorrelatePercentageError
 import { ABTesting } from "../components/ABTesting";
 import Layout from "../layouts/Layout.astro";
 import hljs from "highlight.js";
+import { TimeBasedRollout } from "../components/TimeBasedRollout";
 
 const clientComponent = hljs.highlight(
   `
@@ -94,6 +95,8 @@ const FlaggedComponent = () => {
     <ABTesting code={abcVersions} />
 
     <CorrelatePercentageError client:load />
+
+    <TimeBasedRollout client:load />
 
     <FeatureSection />
 
