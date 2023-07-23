@@ -44,7 +44,7 @@ export const PullTriggerSection = ({
         <Switch
           checked={checked}
           onClick={() => setChecked((s) => !s)}
-          label="Switch color scheme"
+          label="Switch color"
         />
 
         <NumberInput
@@ -63,10 +63,7 @@ export const PullTriggerSection = ({
         <Browser>{browserContent(100)}</Browser>
       </div>
 
-      <EasyToUse
-        clientComponent={clientComponent}
-        alternate={checked && percentage === 100}
-      />
+      <EasyToUse clientComponent={clientComponent} />
     </div>
   );
 };
