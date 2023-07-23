@@ -50,42 +50,40 @@ const FlaggedComponent = () => {
 ---
 
 <Layout title="Welcome to Progressively, the new feature flag solution.">
-  <header class="bg-slate-900 py-20">
-    <div
-      class="flex flex-col md:grid md:grid-cols-2 gap-8 px-12 max-w-screen-2xl mx-auto items-center"
-    >
-      <div>
-        <h1 class="text-5xl font-extrabold text-white">
-          Introducing <span>Progressively</span>
-        </h1>
+  <header
+    class="bg-slate-900 py-20 min-h-screen flex flex-col md:grid md:grid-cols-2 gap-8 px-12 max-w-screen-2xl mx-auto items-center"
+  >
+    <div>
+      <h1 class="text-5xl font-extrabold text-white">
+        Introducing <span>Progressively</span>
+      </h1>
 
-        <p class="text-3xl text-slate-200 pt-4 leading-relaxed">
-          A simple, lightweight and OpenSource feature flag software.
-        </p>
+      <p class="text-3xl text-slate-200 pt-4 leading-relaxed">
+        A simple, lightweight and OpenSource feature flag software.
+      </p>
 
-        <div class="flex flex-col sm:flex-row gap-4 pt-8">
-          <LinkButton
-            variant="primary-inverse"
-            href="https://dashboard.progressively.app/signin"
-            target={"_blank"}
-            id="demo-instance"
-          >
-            Get started
-          </LinkButton>
+      <div class="flex flex-col sm:flex-row gap-4 pt-8">
+        <LinkButton
+          variant="primary-inverse"
+          href="https://dashboard.progressively.app/signin"
+          target={"_blank"}
+          id="demo-instance"
+        >
+          Get started
+        </LinkButton>
 
-          <LinkButton
-            href="https://docs.progressively.app/"
-            target={"_blank"}
-            id="get-started"
-            variant="secondary-inverse"
-          >
-            Documentation
-          </LinkButton>
-        </div>
+        <LinkButton
+          href="https://docs.progressively.app/"
+          target={"_blank"}
+          id="get-started"
+          variant="secondary-inverse"
+        >
+          Documentation
+        </LinkButton>
       </div>
-
-      <PullTriggerSection client:load clientComponent={clientComponent} />
     </div>
+
+    <PullTriggerSection client:load clientComponent={clientComponent} />
   </header>
 
   <main>

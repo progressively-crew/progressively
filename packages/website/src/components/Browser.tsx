@@ -73,8 +73,6 @@ export const AVersion = () => {
   return (
     <Browser>
       <div className="flex flex-row gap-4 p-4">
-        <div className="h-16 w-16 rounded-lg bg-gray-300"></div>
-
         <div className={`flex flex-col gap-1 h-full transition-all flex-1`}>
           <div
             className={`font-extrabold rounded-full w-full h-3 bg-gray-300`}
@@ -95,6 +93,8 @@ export const AVersion = () => {
             ></div>
           </div>
         </div>
+
+        <div className="h-16 w-16 rounded-lg bg-gray-300"></div>
       </div>
     </Browser>
   );
@@ -134,10 +134,10 @@ export const BVersion = () => {
 export const CVersion = () => {
   return (
     <Browser>
-      <div className="flex flex-row gap-4 p-4">
-        <div className="h-16 w-16 rounded-lg bg-gray-300"></div>
-
-        <div className={`flex flex-col gap-1 h-full transition-all flex-1`}>
+      <div className="flex flex-col gap-4 p-4 items-center">
+        <div
+          className={`flex flex-col gap-1 h-full transition-all w-full items-center`}
+        >
           <div
             className={`font-extrabold rounded-full w-full h-3 bg-gray-300`}
           ></div>
@@ -147,15 +147,15 @@ export const CVersion = () => {
           <div
             className={`font-extrabold rounded-full w-[33%] h-3 bg-gray-300`}
           ></div>
+        </div>
 
-          <div className="flex flex-row gap-1">
-            <div
-              className={`font-extrabold rounded-full w-[20%] h-3 bg-indigo-900`}
-            ></div>
-            <div
-              className={`font-extrabold rounded-full w-[20%] h-3 bg-indigo-200`}
-            ></div>
-          </div>
+        <div className="flex flex-row gap-1 w-full justify-center">
+          <div
+            className={`font-extrabold rounded-full w-[20%] h-3 bg-indigo-900`}
+          ></div>
+          <div
+            className={`font-extrabold rounded-full w-[20%] h-3 bg-indigo-200`}
+          ></div>
         </div>
       </div>
     </Browser>
