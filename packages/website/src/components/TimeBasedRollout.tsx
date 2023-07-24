@@ -45,17 +45,20 @@ export const TimeBasedRollout = () => {
           </p>
 
           <div
-            className="grid grid-cols-[auto_1fr] gap-8 items-center"
+            className="grid md:grid-cols-[auto_1fr] gap-8 items-center"
             ref={ref}
           >
             <Watch>
               <span className="font-mono">{`00:00:0${time}`}</span>
             </Watch>
 
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               <BrowserVersion isToggled={isActive} />
               <BrowserVersion isToggled={isActive} />
-              <BrowserVersion isToggled={isActive} />
+
+              <div className="hidden md:block">
+                <BrowserVersion isToggled={isActive} />
+              </div>
             </div>
           </div>
           <div className="flex w-full justify-end pt-1">

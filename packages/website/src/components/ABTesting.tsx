@@ -1,8 +1,20 @@
+import { useRef } from "react";
+import { useIntersectionObserver } from "../hooks/useIntersectionObserver";
 import { AVersion, BVersion, CVersion } from "./Browser";
 import { Code } from "./Code";
 
 export const ABTesting = ({ code }: { code: string }) => {
   const variantTextClass = "text-center font-bold text-xl pt-4";
+  const ref = useRef<HTMLDivElement | null>(null);
+  const entry = useIntersectionObserver(ref, {
+    threshold: 0.75,
+    freezeOnceVisible: true,
+  });
+  const isVisible = !!entry?.isIntersecting;
+
+  const animationClass = isVisible
+    ? `motion-safe:animate-fade-enter-left opacity-0`
+    : "motion-safe:opacity-0";
 
   return (
     <div className="bg-white">
@@ -19,17 +31,23 @@ export const ABTesting = ({ code }: { code: string }) => {
             different versions and makes decisions to improve your apps.
           </p>
 
-          <div className="grid grid-cols-[2fr_1fr] gap-4 items-center">
-            <div className="grid md:grid-cols-3 gap-4 pb-4">
-              <div>
+          <div className="grid md:grid-cols-[2fr_1fr] gap-4 items-center">
+            <div className="grid md:grid-cols-3 gap-4 pb-4" ref={ref}>
+              <div
+                className={animationClass}
+                style={{ animationDelay: "500ms" }}
+              >
                 <AVersion />
                 <p className={variantTextClass}>Version A</p>
               </div>
-              <div>
+              <div
+                className={animationClass}
+                style={{ animationDelay: "300ms" }}
+              >
                 <BVersion />
                 <p className={variantTextClass}>Version B</p>
               </div>
-              <div>
+              <div className={animationClass}>
                 <CVersion />
                 <p className={variantTextClass}>Version C</p>
               </div>
