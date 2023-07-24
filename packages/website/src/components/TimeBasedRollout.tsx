@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import { NewVersion, OldVersion } from "./Browser";
+import { Watch } from "./Watch";
 
 export const TimeBasedRollout = () => {
   const [isActive, setIsActive] = useState(false);
-  const [time, setTime] = useState(3);
+  const [time, setTime] = useState(5);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       if (time > 1) {
         setTime((n) => n - 1);
       } else {
+        setTime(0);
         setIsActive(true);
       }
     }, 1000);
@@ -28,13 +30,14 @@ export const TimeBasedRollout = () => {
           </h2>
 
           <p className="text-2xl leading-relaxed pb-4">
-            Create multiple variants for a given feature flag and provide
-            different experiences to your users. Measure the impact of the
-            different versions and makes decisions to improve your apps.
+            Activate or deactivate your features based on date and time. Want to
+            release something on Tuesday 10am PST? You can automate this.
           </p>
 
-          <div className="grid grid-cols-[1fr_2fr] gap-8 items-center">
-            <div className="text-center font-extrabold text-7xl">{time}</div>
+          <div className="grid grid-cols-[auto_1fr] gap-8 items-center">
+            <Watch>
+              <span className="font-mono">{`00:00:0${time}`}</span>
+            </Watch>
 
             <div className="grid grid-cols-3 gap-4">
               {isActive ? <NewVersion /> : <OldVersion />}
@@ -42,7 +45,7 @@ export const TimeBasedRollout = () => {
               {isActive ? <NewVersion /> : <OldVersion />}
             </div>
           </div>
-          <div className="flex w-full justify-end pt-4">
+          <div className="flex w-full justify-end pt-1">
             <button
               onClick={() => {
                 setIsActive(false);
