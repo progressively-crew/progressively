@@ -13,33 +13,23 @@ const trialUrl = `${frontendUrl}/register`;
 ---
 
 <Layout title="Pricing plans of Progressively">
-  <Container>
-    <main>
-      <div class="flex flex-col pt-20 pb-12 gap-4">
-        <h1 class="text-5xl md:text-6xl font-extrabold">Pricing</h1>
+  <main>
+    <div class="bg-slate-900 py-20 min-h-screen">
+      <div
+        class="flex flex-col md:grid md:grid-cols-2 gap-8 px-12 max-w-screen-2xl mx-auto items-center"
+      >
+        <div>
+          <h1 class="text-5xl font-extrabold text-white">Pricing</h1>
+
+          <p class="text-3xl text-slate-200 pt-4 leading-relaxed">
+            Choose between a self-hosted and a fully managed hosting solution.
+          </p>
+        </div>
       </div>
 
-      <div class="grid lg:grid-cols-2 gap-8">
-        <Card>
-          <section class="h-full pb-4">
-            <h2 class="font-extrabold text-4xl pb-2">Self-hosted</h2>
-
-            <div class="flex flex-col gap-4 justify-center items-center h-full">
-              <AiOutlineGithub className="text-6xl" />
-              <p class="text-xl text-center text-slate-500">
-                Free and Open Source forever. Own your server, own your data.
-              </p>
-
-              <LinkButton
-                variant="secondary"
-                href="https://docs.progressively.app/start-with-self-hosted/quick-start"
-              >
-                Get started
-              </LinkButton>
-            </div>
-          </section>
-        </Card>
-
+      <div
+        class="grid lg:grid-cols-2 gap-8 px-4 md:px-8 max-w-screen-2xl mx-auto pt-8"
+      >
         <Card>
           <section>
             <h2 class="font-extrabold text-4xl">SaaS</h2>
@@ -53,37 +43,58 @@ const trialUrl = `${frontendUrl}/register`;
             </div>
           </section>
         </Card>
+
+        <Card>
+          <section class="h-full pb-4">
+            <h2 class="font-extrabold text-4xl pb-2">Self-hosted</h2>
+
+            <div class="flex flex-col gap-4 justify-center items-center h-full">
+              <AiOutlineGithub className="text-6xl" />
+              <p class="text-xl text-center">
+                Free and Open Source forever. Own your server, own your data.
+              </p>
+
+              <LinkButton
+                variant="secondary"
+                href="https://docs.progressively.app/start-with-self-hosted/quick-start"
+              >
+                Get started
+              </LinkButton>
+            </div>
+          </section>
+        </Card>
       </div>
+    </div>
+  </main>
 
-      <section class="py-20">
-        <h2 class="font-extrabold text-4xl md:text-5xl pb-4 md:text-center">
-          FAQ
-        </h2>
-        <div class="flex flex-col gap-4 mx-auto max-w-4xl">
-          <Faq title="What count as an event?">
-            An event is a metric hit or a flag evaluation. A flag evaluation
-            corresponds to the computation of <strong
-              >one feature flag value</strong
-            >. If your project contains <strong
-              >3 feature flags, there will be 3 flag evaluations</strong
-            > when requesting the server.
-          </Faq>
+  <Container>
+    <section class="py-20">
+      <h2 class="font-extrabold text-4xl md:text-5xl pb-4">
+        Frequently Asked Questions
+      </h2>
+      <div class="flex flex-col gap-4 mx-auto max-w-6xl">
+        <Faq title="What count as an event?">
+          An event is a metric hit or a flag evaluation. A flag evaluation
+          corresponds to the computation of <strong
+            >one feature flag value</strong
+          >. If your project contains <strong
+            >3 feature flags, there will be 3 flag evaluations</strong
+          > when requesting the server.
+        </Faq>
 
-          <Faq title="What happens when the events count is reached?">
-            When the events count limit is reached, the users will receive the
-            flag has deactivated until the next month or an upgrade of your
-            plan.
-          </Faq>
+        <Faq title="What happens when the events count is reached?">
+          When the events count limit is reached, the users will receive the
+          flag has deactivated until the next month or an upgrade of your plan.
+        </Faq>
 
-          <Faq title="Will the price change in the future?">
-            The product is at an early pricing discovery stage. The pricing will
-            vary in the future, <strong>for more or for less</strong> depending on
-            the cost of servers and databases used under the hood. But don't worry,
-            pricing changes will not be so significant and it should reach stability
-            at some point.
-          </Faq>
-        </div>
-      </section>
-    </main>
+        <Faq title="Will the price change in the future?">
+          The product is at an early pricing discovery stage. The pricing will
+          vary in the future, <strong>for more or for less</strong> depending on
+          the cost of servers and databases used under the hood. But don't worry,
+          pricing changes will not be so significant and it should reach stability
+          at some point.
+        </Faq>
+      </div>
+    </section>
   </Container>
 </Layout>

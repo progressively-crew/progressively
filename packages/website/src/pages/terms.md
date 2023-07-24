@@ -1,6 +1,6 @@
 ---
 layout: ../layouts/MarkdownLayout.astro
-title: Astro in brief
+title: Terms of use
 ---
 
 # Terms of Service
