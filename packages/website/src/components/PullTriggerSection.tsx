@@ -18,7 +18,7 @@ export const PullTriggerSection = ({
         <Switch
           checked={checked}
           onClick={() => setChecked((s) => !s)}
-          label="Switch color"
+          label="Switch display"
         />
 
         <NumberInput
