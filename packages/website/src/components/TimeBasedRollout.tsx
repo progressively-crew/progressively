@@ -1,12 +1,22 @@
-import { useEffect, useState } from "react";
-import { NewVersion, OldVersion } from "./Browser";
+import { useEffect, useRef, useState } from "react";
+import { BrowserVersion } from "./Browser";
 import { Watch } from "./Watch";
+import { useIntersectionObserver } from "../hooks/useIntersectionObserver";
 
 export const TimeBasedRollout = () => {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const entry = useIntersectionObserver(ref, {
+    threshold: 0.75,
+    freezeOnceVisible: true,
+  });
+  const isVisible = !!entry?.isIntersecting;
+
   const [isActive, setIsActive] = useState(false);
   const [time, setTime] = useState(5);
 
   useEffect(() => {
+    if (!isVisible) return;
+
     const timeoutId = setTimeout(() => {
       if (time > 1) {
         setTime((n) => n - 1);
@@ -19,7 +29,7 @@ export const TimeBasedRollout = () => {
     return () => {
       clearTimeout(timeoutId);
     };
-  }, [time]);
+  }, [time, isVisible]);
 
   return (
     <div className="bg-white">
@@ -34,22 +44,25 @@ export const TimeBasedRollout = () => {
             release something on Tuesday 10am PST? You can automate this.
           </p>
 
-          <div className="grid grid-cols-[auto_1fr] gap-8 items-center">
+          <div
+            className="grid grid-cols-[auto_1fr] gap-8 items-center"
+            ref={ref}
+          >
             <Watch>
               <span className="font-mono">{`00:00:0${time}`}</span>
             </Watch>
 
             <div className="grid grid-cols-3 gap-4">
-              {isActive ? <NewVersion /> : <OldVersion />}
-              {isActive ? <NewVersion /> : <OldVersion />}
-              {isActive ? <NewVersion /> : <OldVersion />}
+              <BrowserVersion isToggled={isActive} />
+              <BrowserVersion isToggled={isActive} />
+              <BrowserVersion isToggled={isActive} />
             </div>
           </div>
           <div className="flex w-full justify-end pt-1">
             <button
               onClick={() => {
                 setIsActive(false);
-                setTime(3);
+                setTime(5);
               }}
             >
               Reset animation
