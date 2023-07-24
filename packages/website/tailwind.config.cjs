@@ -32,7 +32,7 @@ module.exports = {
         },
       },
       animation: {
-        "opacity-appearing": "opacity-appearing 1ms ease-in-out forwards",
+        "opacity-appearing": "opacity-appearing 300ms ease-in-out forwards",
         "fade-enter-top": "fade-enter-top 500ms ease-in-out forwards",
         "fade-enter-bottom": "fade-enter-bottom 500ms ease-in-out forwards",
         "fade-enter-left": "fade-enter-left 500ms ease-in-out forwards",

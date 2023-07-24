@@ -1,6 +1,5 @@
 export interface CardProps {
   children: React.ReactNode;
-  className?: string;
 }
 
 export const Card = ({ children }: CardProps) => {

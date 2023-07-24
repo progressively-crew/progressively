@@ -1,12 +1,15 @@
 ---
-import Container from "../components/Container.astro";
+import { CanaryRelease } from "../components/CanaryRelease";
 import { FeatureSection } from "../components/FeatureSection";
 import GetStartedCTA from "../components/GetStartedCTA.astro";
 import LinkButton from "../components/LinkButton.astro";
 import { PullTriggerSection } from "../components/PullTriggerSection";
 import { SpeedUpDevelopment } from "../components/SpeedUpDevelopment";
+import { CorrelatePercentageError } from "../components/CorrelatePercentageError";
+import { ABTesting } from "../components/ABTesting";
 import Layout from "../layouts/Layout.astro";
 import hljs from "highlight.js";
+import { TimeBasedRollout } from "../components/TimeBasedRollout";
 
 const clientComponent = hljs.highlight(
   `
@@ -20,15 +23,39 @@ const FlaggedComponent = () => {
   }
 
   return <div>Old variant</div>;
-};`,
+};
+
+`,
+  { language: "jsx" }
+).value;
+
+const abcVersions = hljs.highlight(
+  `
+import { useFlags } from "@progressively/react";
+
+const FlaggedComponent = () => {
+  const { flags } = useFlags();
+
+  if (flags.newFlag === "B") {
+    return <VersionB />;
+  }
+
+  if (flags.newFlag === "C") {
+    return <VersionC />;
+  }
+
+  return <VersionA />;
+};
+
+`,
   { language: "jsx" }
 ).value;
 ---
 
 <Layout title="Welcome to Progressively, the new feature flag solution.">
-  <header class="bg-slate-900 py-20">
-    <div
-      class="flex flex-col md:grid md:grid-cols-2 gap-8 px-12 max-w-screen-2xl mx-auto items-center"
+  <div class="bg-slate-900">
+    <header
+      class="py-20 min-h-screen flex flex-col md:grid md:grid-cols-2 gap-8 px-12 max-w-screen-2xl mx-auto items-center"
     >
       <div>
         <h1 class="text-5xl font-extrabold text-white">
@@ -61,47 +88,19 @@ const FlaggedComponent = () => {
       </div>
 
       <PullTriggerSection client:load clientComponent={clientComponent} />
-    </div>
-  </header>
-
-  <div
-    aria-hidden
-    class="mx-auto w-0 h-0 border-l-[100px] border-l-transparent border-t-[100px] border-t-slate-900 border-r-[100px] border-r-transparent"
-  >
+    </header>
   </div>
 
   <main>
-    <div class="py-20">
-      <Container>
-        <div class="max-w-prose">
-          <h2 class="font-extrabold text-4xl md:text-7xl pb-4">
-            See it in action
-          </h2>
-          <p class="text-2xl leading-relaxed pb-8">
-            The following video is an example of how we released the SaaS
-            version of Progressively, using itself and feature flags.
-          </p>
-        </div>
-        <div
-          class="bg-slate-700 rounded-xl overflow-hidden animate-fade-enter-bottom motion-safe:opacity-0 hidden md:block"
-          style="animation-delay: 500ms;"
-        >
-          <div class="md:rounded-lg border border-slate-700 p-2">
-            <div style="padding:35.79% 0 0 0;position:relative">
-              <iframe
-                src="https://player.vimeo.com/video/838070241?badge=0&autopause=0&player_id=0&app_id=58479"
-                frameborder="0"
-                allow="autoplay; fullscreen; picture-in-picture"
-                allowfullscreen
-                style="position:absolute;top:0;left:0;width:100%;height:100%;"
-                title="0620"></iframe>
-            </div>
-          </div>
-        </div>
-      </Container>
-    </div>
-
     <SpeedUpDevelopment client:load />
+
+    <CanaryRelease client:load />
+
+    <ABTesting code={abcVersions} client:load />
+
+    <CorrelatePercentageError client:load />
+
+    <TimeBasedRollout client:load />
 
     <FeatureSection />
 
