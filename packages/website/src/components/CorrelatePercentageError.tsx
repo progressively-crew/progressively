@@ -46,8 +46,11 @@ const Histogram = ({ percentage }: { percentage: number }) => {
 };
 
 export const CorrelatePercentageError = () => {
-  const [percentage, setPercentage] = useState(10);
+  const [percentage, setPercentage] = useState(20);
   const [checked, setChecked] = useState(false);
+
+  const errorLevelPercentage = checked ? percentage : 10;
+
   return (
     <div>
       <div className="px-4 md:px-8 max-w-6xl mx-auto">
@@ -75,9 +78,7 @@ export const CorrelatePercentageError = () => {
                 <NumberInput
                   value={percentage}
                   onChange={(n) => {
-                    if (checked) {
-                      setPercentage(n);
-                    }
+                    setPercentage(n);
                   }}
                 />
               </div>
@@ -98,7 +99,7 @@ export const CorrelatePercentageError = () => {
                 </p>
               </div>
 
-              <Histogram percentage={percentage} />
+              <Histogram percentage={errorLevelPercentage} />
             </Card>
           </div>
         </section>
