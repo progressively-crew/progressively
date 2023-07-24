@@ -46,7 +46,7 @@ const Histogram = ({ percentage }: { percentage: number }) => {
 };
 
 export const CorrelatePercentageError = () => {
-  const [percentage, setPercentage] = useState(20);
+  const [percentage, setPercentage] = useState(35);
   const [checked, setChecked] = useState(false);
 
   const errorLevelPercentage = checked ? percentage : 10;
