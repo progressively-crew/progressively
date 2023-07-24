@@ -1,9 +1,7 @@
 import { AVersion, BVersion, CVersion } from "./Browser";
+import { Code } from "./Code";
 
 export const ABTesting = ({ code }: { code: string }) => {
-  const codeClass = `leading-relaxed h-full block text-[11px] overflow-x-scroll md:overflow-hidden bg-slate-800 text-slate-100 border-slate-700`;
-  const preClass = `overflow-hidden md:overflow-visible px-4 rounded-lg border bg-slate-800 text-slate-100 border-slate-700`;
-
   const variantTextClass = "text-center font-bold text-xl pt-4";
 
   return (
@@ -37,12 +35,7 @@ export const ABTesting = ({ code }: { code: string }) => {
               </div>
             </div>
 
-            <pre className={preClass}>
-              <code
-                dangerouslySetInnerHTML={{ __html: code }}
-                className={`${codeClass}`}
-              />
-            </pre>
+            <Code html={code} />
           </div>
         </section>
       </div>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Switch } from "./Switch/Switch";
 import { Browser } from "./Browser";
-import { EasyToUse } from "./EasyToUse";
+import { Code } from "./Code";
 import { NumberInput } from "./NumberInput";
 
 export const PullTriggerSection = ({
@@ -63,7 +63,7 @@ export const PullTriggerSection = ({
         <Browser>{browserContent(100)}</Browser>
       </div>
 
-      <EasyToUse clientComponent={clientComponent} />
+      <Code html={clientComponent} />
     </div>
   );
 };
