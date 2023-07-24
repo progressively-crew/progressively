@@ -13,8 +13,8 @@ export const ABTesting = ({ code }: { code: string }) => {
   const isVisible = !!entry?.isIntersecting;
 
   const animationClass = isVisible
-    ? `motion-safe:animate-fade-enter-left opacity-0`
-    : "motion-safe:opacity-0";
+    ? `animate-fade-enter-left opacity-0`
+    : "opacity-0";
 
   return (
     <div className="bg-white">

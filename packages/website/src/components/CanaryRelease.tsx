@@ -13,8 +13,8 @@ export const CanaryRelease = () => {
   const isVisible = !!entry?.isIntersecting;
 
   const animationClass = isVisible
-    ? `motion-safe:animate-fade-enter-bottom opacity-0`
-    : "motion-safe:opacity-0";
+    ? `animate-fade-enter-bottom opacity-0`
+    : "opacity-0";
 
   const innerCardClass = "flex flex-row gap-4 pb-4";
   const successIconClass = `text-3xl text-emerald-600`;

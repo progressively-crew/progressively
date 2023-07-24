@@ -17,8 +17,8 @@ export const SpeedUpDevelopment = () => {
   const iconClass = "w-10 h-10 mb-4 rounded p-2 text-white";
 
   const animationClass = isVisible
-    ? `motion-safe:animate-fade-enter-bottom opacity-0`
-    : "motion-safe:opacity-0";
+    ? `animate-fade-enter-bottom opacity-0`
+    : "opacity-0";
 
   return (
     <div className="bg-white">
