@@ -9,15 +9,11 @@ import {
   Get,
   Param,
   UnauthorizedException,
-  Res,
   Response,
   Req,
   NotFoundException,
 } from '@nestjs/common';
-import {
-  Response as ExpressResponse,
-  Request as ExpressRequest,
-} from 'express';
+import { Request as ExpressRequest } from 'express';
 import { v4 as uuidv4 } from 'uuid';
 import { AuthGuard } from '@nestjs/passport';
 import { ValidationPipe } from '../shared/pipes/ValidationPipe';
@@ -31,6 +27,7 @@ import { AuthService } from './auth.service';
 import { CryptoService } from '../crypto/crypto.service';
 import { User } from '../users/types';
 import { sleep } from '../shared/utils/sleep';
+import { jwtConstants } from '../jwtConstants';
 
 const toB64 = (toTransform: string) =>
   Buffer.from(toTransform).toString('base64');
@@ -51,7 +48,6 @@ export class AuthController {
   @Post('/login')
   async login(
     @Request() req,
-    @Res({ passthrough: true }) res: ExpressResponse,
     /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
     @Body() _: LoginDTO,
   ) {
@@ -66,19 +62,28 @@ export class AuthController {
       fullname: user.fullname,
     };
 
-    const accessToken = await this.tokensService.createAccessToken(
+    const {
+      AccessTokenExpire,
+      AccessTokenSecret,
+      RefreshTokenExpire,
+      RefreshTokenSecret,
+    } = jwtConstants();
+
+    const accessToken = await this.tokensService.createToken(
       userDTO,
-      user.uuid,
+      AccessTokenSecret,
+      AccessTokenExpire,
     );
 
-    const refreshToken = await this.tokensService.createRefreshToken({
-      userId: user.uuid,
-    });
-
-    res.cookie('refresh-token', refreshToken, { httpOnly: true });
+    const refreshToken = await this.tokensService.createToken(
+      userDTO,
+      RefreshTokenSecret,
+      RefreshTokenExpire,
+    );
 
     return {
       access_token: accessToken,
+      refresh_token: refreshToken,
     };
   }
 
@@ -171,23 +176,23 @@ export class AuthController {
   }
 
   @Get('/refresh')
-  async refreshToken(
-    @Req() request: ExpressRequest,
-    @Res({ passthrough: true }) res: ExpressResponse,
-  ) {
-    const refreshToken = request.cookies['refresh-token'];
+  async refreshToken(@Req() request: ExpressRequest) {
+    const refreshToken = request.headers['refresh-token'];
+
+    if (!refreshToken) {
+      throw new BadRequestException();
+    }
 
     try {
       const { accessToken, nextRefreshToken } =
-        await this.tokensService.refreshTokens(refreshToken);
-
-      res.cookie('refresh-token', nextRefreshToken, { httpOnly: true });
+        await this.tokensService.refreshTokens(String(refreshToken));
 
       return {
+        refresh_token: nextRefreshToken,
         access_token: accessToken,
       };
     } catch (err) {
-      return err;
+      throw new UnauthorizedException();
     }
   }
 }

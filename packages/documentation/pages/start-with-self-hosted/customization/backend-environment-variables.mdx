@@ -12,6 +12,9 @@ REDIS_URL=redis://localhost:6379
 # The secret necessary to generate JWT tokens for authentication
 ACCESS_TOKEN_SECRET=abcd
 
+# The number of seconds before an access token expires (default to one day)
+ACCESS_TOKEN_EXPIRES=84600
+
 # The secret necessary to re-generate JWT tokens for authentication (refresh tokens)
 REFRESH_TOKEN_SECRET=efgh
 
