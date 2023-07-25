@@ -27,6 +27,7 @@ import { AuthService } from './auth.service';
 import { CryptoService } from '../crypto/crypto.service';
 import { User } from '../users/types';
 import { sleep } from '../shared/utils/sleep';
+import { jwtConstants } from '../jwtConstants';
 
 const toB64 = (toTransform: string) =>
   Buffer.from(toTransform).toString('base64');
@@ -61,14 +62,24 @@ export class AuthController {
       fullname: user.fullname,
     };
 
-    const accessToken = await this.tokensService.createAccessToken(
+    const {
+      AccessTokenExpire,
+      AccessTokenSecret,
+      RefreshTokenExpire,
+      RefreshTokenSecret,
+    } = jwtConstants();
+
+    const accessToken = await this.tokensService.createToken(
       userDTO,
-      user.uuid,
+      AccessTokenSecret,
+      AccessTokenExpire,
     );
 
-    const refreshToken = await this.tokensService.createRefreshToken({
-      userId: user.uuid,
-    });
+    const refreshToken = await this.tokensService.createToken(
+      userDTO,
+      RefreshTokenSecret,
+      RefreshTokenExpire,
+    );
 
     return {
       access_token: accessToken,
@@ -168,6 +179,10 @@ export class AuthController {
   async refreshToken(@Req() request: ExpressRequest) {
     const refreshToken = request.headers['refresh-token'];
 
+    if (!refreshToken) {
+      throw new BadRequestException();
+    }
+
     try {
       const { accessToken, nextRefreshToken } =
         await this.tokensService.refreshTokens(String(refreshToken));
@@ -177,7 +192,7 @@ export class AuthController {
         access_token: accessToken,
       };
     } catch (err) {
-      return err;
+      throw new UnauthorizedException();
     }
   }
 }

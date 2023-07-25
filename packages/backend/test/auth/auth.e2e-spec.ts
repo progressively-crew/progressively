@@ -245,4 +245,55 @@ describe('AuthController (e2e)', () => {
       });
     });
   });
+
+  describe('/auth/refresh (GET)', () => {
+    it("gives a 400 when there's no refresh token passed", () => {
+      return request(app.getHttpServer())
+        .get('/auth/refresh')
+        .expect(400)
+        .expect({
+          statusCode: 400,
+          message: 'Bad Request',
+        });
+    });
+
+    it('gives a 401 when the token is invalid', () => {
+      return request(app.getHttpServer())
+        .get('/auth/refresh')
+        .set('refresh-token', 'lol')
+        .expect(401)
+        .expect({ statusCode: 401, message: 'Unauthorized' });
+    });
+
+    it('brings back a valid token that gives a new valid access token', async () => {
+      // authenticate the user  --------------
+      const auth = await request(app.getHttpServer()).post('/auth/login').send({
+        username: 'marvin.frachet@something.com',
+        password: 'password',
+      });
+
+      expect(auth.body.refresh_token).toBeTruthy();
+      expect(auth.body.access_token).toBeTruthy();
+
+      // Refresh the tokens -----------------------------
+      const refresh = await request(app.getHttpServer())
+        .get('/auth/refresh')
+        .set('refresh-token', auth.body.refresh_token);
+
+      expect(refresh.body.refresh_token).toBeTruthy();
+      expect(refresh.body.access_token).toBeTruthy();
+      expect(refresh.body.refresh_token).not.toBe(auth.body.refresh_token);
+      expect(refresh.body.access_token).not.toBe(auth.body.access_token);
+
+      // Access data with new token -----------------------------
+      const { body: user } = await request(app.getHttpServer())
+        .get('/users/me')
+        .set('Authorization', `Bearer ${refresh.body.access_token}`);
+
+      expect(user.email).toEqual('marvin.frachet@something.com');
+      expect(user.fullname).toEqual('Marvin Frachet');
+      expect(user.uuid).toBeTruthy();
+      expect(user.password).toBeFalsy();
+    });
+  });
 });

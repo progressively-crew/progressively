@@ -7,18 +7,13 @@ export const authenticate = async (
   password = 'password',
 ) => {
   const {
-    body: { access_token },
-    header,
+    body: { access_token, refresh_token },
   } = await request(app.getHttpServer()).post('/auth/login').send({
     username,
     password,
   });
 
-  const refreshToken = header['set-cookie'].find((x) =>
-    x.startsWith('refresh-token='),
-  );
-
-  expect(refreshToken).toBeTruthy();
+  expect(refresh_token).toBeTruthy();
 
   return access_token;
 };

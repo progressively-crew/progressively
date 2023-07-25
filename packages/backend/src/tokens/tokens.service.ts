@@ -4,6 +4,7 @@ import { PrismaService } from '../database/prisma.service';
 import { jwtConstants } from '../jwtConstants';
 import { RefreshTokenPayload } from './types';
 import { UserRetrieveDTO } from '../users/users.dto';
+import { nanoid } from 'nanoid';
 
 @Injectable()
 export class TokensService {
@@ -12,19 +13,11 @@ export class TokensService {
     private jwtService: JwtService,
   ) {}
 
-  createAccessToken(payload: any, subject: string) {
-    return this.jwtService.signAsync(payload, { subject });
-  }
-
-  createRefreshToken(payload: any) {
-    const { RefreshTokenExpire, RefreshTokenSecret } = jwtConstants();
-    const expiration = new Date();
-
-    expiration.setTime(expiration.getTime() + RefreshTokenExpire);
-
+  createToken(payload: any, secret: string, expiresIn: number) {
     return this.jwtService.signAsync(payload, {
-      secret: RefreshTokenSecret,
-      expiresIn: `${RefreshTokenExpire}s`,
+      secret,
+      expiresIn: `${expiresIn}s`,
+      jwtid: nanoid(),
     });
   }
 
@@ -47,10 +40,24 @@ export class TokensService {
       fullname: user.fullname,
     };
 
-    const nextAccessToken = await this.createAccessToken(userDTO, user.uuid);
-    const nextRefreshToken = await this.createRefreshToken({
-      userId: user.uuid,
-    });
+    const {
+      AccessTokenExpire,
+      AccessTokenSecret,
+      RefreshTokenExpire,
+      RefreshTokenSecret,
+    } = jwtConstants();
+
+    const nextAccessToken = await this.createToken(
+      userDTO,
+      AccessTokenSecret,
+      AccessTokenExpire,
+    );
+
+    const nextRefreshToken = await this.createToken(
+      userDTO,
+      RefreshTokenSecret,
+      RefreshTokenExpire,
+    );
 
     return { accessToken: nextAccessToken, nextRefreshToken: nextRefreshToken };
   }

@@ -19,6 +19,7 @@ kill_timeout = 5
   BACKEND_URL = "https://api.progressively.app"
   FRONTEND_URL = "https://dashboard.progressively.app"
   REFRESH_TOKEN_EXPIRES = "84600"
+  ACCESS_TOKEN_EXPIRES = "84600"
   SMTP_PORT = "587"
   SOCKET_TIMEOUT = "10000"
   THROTTLING_LIMIT = "10000"

@@ -26,6 +26,7 @@ services:
       REDIS_URL: redis://redis-cache
       ACCESS_TOKEN_SECRET: abcd
       REFRESH_TOKEN_SECRET: efgh
+      ACCESS_TOKEN_EXPIRES: 84600
       REFRESH_TOKEN_EXPIRES: 84600
       SMTP_HOST: smtp.ethereal.email
       SMTP_PORT: 587
