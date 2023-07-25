@@ -2,11 +2,11 @@ import { Session } from "@remix-run/node";
 import { Constants } from "~/constants";
 
 const refreshToken = (session: Session) => {
-  const refreshTokenCookie = session.get("refresh-token-cookie");
+  const refreshTokenCookie = session.get("refresh-token");
 
   return fetch(`${Constants.BackendUrl}/auth/refresh`, {
     headers: {
-      Cookie: refreshTokenCookie,
+      "refresh-token": refreshTokenCookie,
     },
   });
 };
@@ -38,7 +38,7 @@ export const getMe = async (session: Session) => {
     const jsonResponse = await response.json();
 
     session.set("auth-cookie", jsonResponse.access_token);
-    session.set("refresh-token-cookie", response.headers.get("set-cookie"));
+    session.set("refresh-token", jsonResponse.access_token);
 
     return await getUserWithToken(session.get("auth-cookie"));
   }

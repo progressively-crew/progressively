@@ -56,6 +56,10 @@ export class TokensService {
   }
 
   decodeRefreshToken(token: string): Promise<RefreshTokenPayload> {
-    return this.jwtService.verifyAsync(token);
+    const { RefreshTokenSecret } = jwtConstants();
+
+    return this.jwtService.verifyAsync(token, {
+      secret: RefreshTokenSecret,
+    });
   }
 }

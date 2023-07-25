@@ -9,15 +9,11 @@ import {
   Get,
   Param,
   UnauthorizedException,
-  Res,
   Response,
   Req,
   NotFoundException,
 } from '@nestjs/common';
-import {
-  Response as ExpressResponse,
-  Request as ExpressRequest,
-} from 'express';
+import { Request as ExpressRequest } from 'express';
 import { v4 as uuidv4 } from 'uuid';
 import { AuthGuard } from '@nestjs/passport';
 import { ValidationPipe } from '../shared/pipes/ValidationPipe';
@@ -51,7 +47,6 @@ export class AuthController {
   @Post('/login')
   async login(
     @Request() req,
-    @Res({ passthrough: true }) res: ExpressResponse,
     /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
     @Body() _: LoginDTO,
   ) {
@@ -75,10 +70,9 @@ export class AuthController {
       userId: user.uuid,
     });
 
-    res.cookie('refresh-token', refreshToken, { httpOnly: true });
-
     return {
       access_token: accessToken,
+      refresh_token: refreshToken,
     };
   }
 
@@ -171,19 +165,15 @@ export class AuthController {
   }
 
   @Get('/refresh')
-  async refreshToken(
-    @Req() request: ExpressRequest,
-    @Res({ passthrough: true }) res: ExpressResponse,
-  ) {
-    const refreshToken = request.cookies['refresh-token'];
+  async refreshToken(@Req() request: ExpressRequest) {
+    const refreshToken = request.headers['refresh-token'];
 
     try {
       const { accessToken, nextRefreshToken } =
-        await this.tokensService.refreshTokens(refreshToken);
-
-      res.cookie('refresh-token', nextRefreshToken, { httpOnly: true });
+        await this.tokensService.refreshTokens(String(refreshToken));
 
       return {
+        refresh_token: nextRefreshToken,
         access_token: accessToken,
       };
     } catch (err) {

@@ -57,7 +57,10 @@ export const action: ActionFunction = async ({
 
   const authenticationSucceed = await res.json();
 
-  if (!authenticationSucceed.access_token || !res.headers.get("set-cookie")) {
+  if (
+    !authenticationSucceed.access_token ||
+    !authenticationSucceed.refresh_token
+  ) {
     return {
       errors: {
         badUser: "Woops! Looks the credentials are not valid.",
@@ -66,7 +69,7 @@ export const action: ActionFunction = async ({
   }
 
   session.set("auth-cookie", authenticationSucceed.access_token);
-  session.set("refresh-token-cookie", res.headers.get("set-cookie"));
+  session.set("refresh-token", authenticationSucceed.refresh_token);
 
   return redirect("/dashboard", {
     headers: {
