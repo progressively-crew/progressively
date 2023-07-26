@@ -15,5 +15,7 @@ services:
       POSTGRES_USER: admin
       POSTGRES_DB: progressively
   redis-cache:
-    image: redis
     restart: always
+    image: redis
+    ports:
+      - "6379:6379"
