@@ -1,4 +1,4 @@
-const { getProgressivelyData } = require("@progressively/server-side");
+const { Progressively } = require("@progressively/server-side");
 const http = require("http");
 
 const requestListener = function (req, res) {
@@ -6,13 +6,15 @@ const requestListener = function (req, res) {
   res.writeHead(200);
 
   (async () => {
-    const { data } = await getProgressivelyData("valid-sdk-key", {
+    const sdk = Progressively.init("valid-sdk-key", {
       apiUrl: "http://localhost:4000",
       fields: {
         email: "marvin.frachet@something.com",
         id: "1",
       },
     });
+
+    const { data } = await sdk.loadFlags();
 
     const flags = data.flags;
 

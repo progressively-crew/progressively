@@ -6,19 +6,21 @@ import {
 } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import type { FlagDict } from "@progressively/server-side";
-import { getProgressivelyData } from "@progressively/server-side";
+import { Progressively as PServer } from "@progressively/server-side";
 import { Progressively } from "@progressively/sdk-js";
 
 export const useFlags = loader$(async ({ cookie }) => {
   const id = cookie.get("progressively-id");
 
-  const { data, userId } = await getProgressivelyData("valid-sdk-key", {
+  const sdk = PServer.init("valid-sdk-key", {
     websocketUrl: "ws://localhost:4000",
     apiUrl: "http://localhost:4000",
     fields: {
       id: id?.value,
     },
   });
+
+  const { data, userId } = await sdk.loadFlags();
 
   cookie.set("progressively-id", userId);
 
@@ -31,7 +33,10 @@ export default component$(() => {
 
   useBrowserVisibleTask$(
     async () => {
-      const sdk = Progressively.init(signal.value.clientKey, signal.value);
+      const sdk = Progressively.init(
+        String(signal.value.clientKey),
+        signal.value
+      );
 
       sdk.onFlagUpdate((nextFlags: FlagDict) => {
         flags.value = nextFlags;

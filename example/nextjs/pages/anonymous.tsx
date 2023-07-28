@@ -3,7 +3,7 @@ import Head from "next/head";
 import { serialize } from "cookie";
 import styles from "../styles/Home.module.css";
 import { ProgressivelyProvider, useFlags } from "@progressively/react";
-import { getProgressivelyData } from "@progressively/server-side";
+import { Progressively } from "@progressively/server-side";
 
 const FlaggedComponent = () => {
   const { flags } = useFlags();
@@ -46,13 +46,15 @@ export async function getServerSideProps({
 }) {
   const id = (req as any).cookies?.["progressively-id"] ?? null;
 
-  const { data, userId } = await getProgressivelyData("valid-sdk-key", {
+  const sdk = Progressively.init("valid-sdk-key", {
     websocketUrl: "ws://localhost:4000",
     apiUrl: "http://localhost:4000",
     fields: {
       id,
     },
   });
+
+  const { data, userId } = await sdk.loadFlags();
 
   const cookie = serialize("progressively-id", userId, {
     httpOnly: true,
