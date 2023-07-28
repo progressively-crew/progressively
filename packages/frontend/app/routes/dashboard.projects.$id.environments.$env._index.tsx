@@ -12,7 +12,6 @@ import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
 import { Spacer } from "~/components/Spacer";
-import { Typography } from "~/components/Typography";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { ProjectNavBar } from "~/modules/projects/components/ProjectNavBar";
@@ -66,15 +65,7 @@ export default function EnvSettingsPage() {
       }
       subNav={<ProjectNavBar project={project} />}
     >
-      <PageTitle
-        value={environment.name}
-        description={
-          <Typography as="span">
-            Settings available for{" "}
-            <strong className="font-bold">{environment.name}</strong>.
-          </Typography>
-        }
-      />
+      <PageTitle value={environment.name} />
 
       <Card
         footer={

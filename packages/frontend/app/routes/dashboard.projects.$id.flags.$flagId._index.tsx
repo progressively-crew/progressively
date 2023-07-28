@@ -11,7 +11,6 @@ import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaT
 import { PageTitle } from "~/components/PageTitle";
 import { useFlag } from "~/modules/flags/contexts/useFlag";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
-import { Typography } from "~/components/Typography";
 import { Button } from "~/components/Buttons/Button";
 
 export const meta: V2_MetaFunction = ({ matches }) => {
@@ -33,12 +32,6 @@ export default function FlagSettingPage() {
     <DashboardLayout>
       <PageTitle
         value={flag.name}
-        description={
-          <Typography as="span">
-            Settings available for{" "}
-            <strong className="font-bold">{flag.name}</strong>.
-          </Typography>
-        }
         action={
           <Button
             to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}/edit`}
