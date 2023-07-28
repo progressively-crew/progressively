@@ -1,7 +1,7 @@
 import { LoaderFunction, V2_MetaFunction } from "@remix-run/node";
 import { useLoaderData, Outlet } from "@remix-run/react";
 import { ProgressivelyProvider } from "@progressively/react";
-import { getProgressivelyData } from "@progressively/server-side";
+import { Progressively } from "@progressively/server-side";
 import { getEnvVar } from "~/modules/misc/utils/getEnvVar";
 import { getMe } from "~/modules/user/services/getMe";
 import { getSession } from "~/sessions";
@@ -25,13 +25,15 @@ export const loader: LoaderFunction = async ({ request }) => {
   const progressivelyEnv = getEnvVar("PROGRESSIVELY_ENV")!;
   const progressivelyApiUrl = getEnvVar("BACKEND_URL")!;
 
-  const { data } = await getProgressivelyData(progressivelyEnv, {
+  const sdk = Progressively.init(progressivelyEnv, {
     apiUrl: progressivelyApiUrl,
     websocketUrl: progressivelyApiUrl.replace("http", "ws"),
     fields: {
       email: user.email,
     },
   });
+
+  const { data } = await sdk.loadFlags();
 
   return { data };
 };

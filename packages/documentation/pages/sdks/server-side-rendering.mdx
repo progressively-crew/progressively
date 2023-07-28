@@ -18,7 +18,7 @@ _This is an example using [Nextjs](https://nextjs.org/) but you can find how to 
 
 ```javascript
 import { ProgressivelyProvider, useFlags } from "@progressively/react";
-import { getProgressivelyData } from "@progressively/server-side";
+import { Progressively } from "@progressively/server-side";
 
 // React Specific Section
 const FlaggedComponent = () => {
@@ -43,13 +43,15 @@ export async function getServerSideProps({
   res: any,
 }) {
   // Agnostic cross-framework SSR call
-  const { data, response } = await getProgressivelyData("valid-sdk-key", {
+  const sdk = Progressively.init("valid-sdk-key", {
     websocketUrl: "ws://localhost:4000", // only necessary when self hosting
     apiUrl: "http://localhost:4000", // only necessary when self hosting
     fields: {
       id: userIdFromNextjsCookie,
     },
   });
+
+  const { data, response } = await sdk.loadFlags();
 
   return {
     props: {
@@ -67,7 +69,7 @@ The handling of creating IDs for anonymous users is done by Progressively under 
 
 ```javascript
 import { ProgressivelyProvider, useFlags } from "@progressively/react";
-import { getProgressivelyData } from "@progressively/server-side";
+import { Progressively } from "@progressively/server-side";
 
 const FlaggedComponent = () => {
   const { flags } = useFlags();
@@ -92,13 +94,15 @@ export async function getServerSideProps({
   const userIdFromNextjsCookie =
     (req as any).cookies?.["progressively-id"] || null;
 
-  const { data, response } = await getProgressivelyData("valid-sdk-key", {
-    websocketUrl: "ws://localhost:4000",
-    apiUrl: "http://localhost:4000",
-    fields: {
-      id: userIdFromNextjsCookie,
-    },
-  });
+  const sdk = Progressively.init("valid-sdk-key", {
+      websocketUrl: "ws://localhost:4000",
+      apiUrl: "http://localhost:4000",
+      fields: {
+        id: userIdFromNextjsCookie,
+      },
+    });
+
+  const { data, response } = await sdk.loadFlags();
 
   const progressivelyCookie = response?.headers?.get("set-cookie");
   res.setHeader("set-cookie", progressivelyCookie);
