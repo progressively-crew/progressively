@@ -44,11 +44,17 @@ export const StrategyFormFields = ({
     });
   }
 
-  return (
-    <div>
-      <div className="flex flex-row gap-2 items-center flex-wrap">
-        <Typography className="shrink-0 py-2 font-bold pr-2">Serve</Typography>
+  const isVariantChoice = status === ValueToServe.Variant && hasVariants;
 
+  return (
+    <div className="flex flex-row gap-2">
+      <div
+        className={
+          isVariantChoice
+            ? "flex flex-col gap-2 w-full"
+            : "flex flex-row gap-4 items-center w-full"
+        }
+      >
         <SelectField
           hiddenLabel
           label="What value to you want to serve?"
@@ -85,13 +91,9 @@ export const StrategyFormFields = ({
             <Typography>of the audience</Typography>
           </>
         )}
-      </div>
 
-      {status === ValueToServe.Variant && hasVariants && (
-        <div className="pt-4">
-          <VariantFields variants={variants || []} />
-        </div>
-      )}
+        {isVariantChoice && <VariantFields variants={variants || []} />}
+      </div>
     </div>
   );
 };

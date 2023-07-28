@@ -1,6 +1,6 @@
 /* eslint-disable sonarjs/cognitive-complexity */
 import { updateRule } from "~/modules/rules/services/updateRule";
-import { ComparatorEnum, Rule, RuleUpdateDto } from "~/modules/rules/types";
+import { ComparatorEnum, RuleUpdateDto } from "~/modules/rules/types";
 import { editStrategy } from "../services/editStrategy";
 import { StrategyVariant, ValueToServe } from "../types";
 
@@ -13,6 +13,7 @@ export const editStrategyAction = async (
   const rolloutPercentage = formData.get("rolloutPercentage")?.toString() || "";
   const valueToServeType =
     formData.get("value-to-serve-type")?.toString() || "";
+
   const valueToServe = formData.get("value-to-serve")?.toString();
   const allVariantUuids = formData.getAll("variantUuid");
   const allVariantPercentage = formData.getAll("variantRolloutPercentage");

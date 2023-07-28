@@ -21,7 +21,7 @@ export const RuleFormField = ({
         When field
       </Typography>
       <div className="flex-1">
-        <div className="flex flex-row gap-2 pb-2">
+        <div className="flex flex-row gap-2">
           <TextInput
             hiddenLabel
             label="Field name"
