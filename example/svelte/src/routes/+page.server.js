@@ -1,16 +1,17 @@
-import { getProgressivelyData } from '@progressively/server-side';
+import { Progressively } from '@progressively/server-side';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ cookies }) {
 	const id = cookies.get('progressively-id');
-
-	const { data, userId } = await getProgressivelyData('valid-sdk-key', {
+	const sdk = Progressively.init('valid-sdk-key', {
 		websocketUrl: 'ws://localhost:4000',
 		apiUrl: 'http://localhost:4000',
 		fields: {
 			id
 		}
 	});
+
+	const { data, userId } = await sdk.loadFlags();
 
 	cookies.set('progressively-id', userId);
 
