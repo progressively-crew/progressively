@@ -6,14 +6,12 @@ import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { LoaderFunction, V2_MetaFunction } from "@remix-run/node";
 import { Card, CardContent } from "~/components/Card";
-import { useUser } from "~/modules/user/contexts/useUser";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
 import { Spacer } from "~/components/Spacer";
-import { Typography } from "~/components/Typography";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { ProjectNavBar } from "~/modules/projects/components/ProjectNavBar";
@@ -50,7 +48,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 };
 
 export default function EnvSettingsPage() {
-  const { user } = useUser();
   const { project, userRole } = useProject();
   const { environment } = useEnvironment();
   const [searchParams] = useSearchParams();
@@ -59,7 +56,6 @@ export default function EnvSettingsPage() {
 
   return (
     <DashboardLayout
-      user={user}
       status={
         envCreated ? (
           <SuccessBox id="env-added">
@@ -69,15 +65,7 @@ export default function EnvSettingsPage() {
       }
       subNav={<ProjectNavBar project={project} />}
     >
-      <PageTitle
-        value={environment.name}
-        description={
-          <Typography as="span">
-            Settings available for{" "}
-            <strong className="font-bold">{environment.name}</strong>.
-          </Typography>
-        }
-      />
+      <PageTitle value={environment.name} />
 
       <Card
         footer={

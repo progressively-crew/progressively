@@ -14,7 +14,6 @@ import { useActionData, useTransition, Form } from "@remix-run/react";
 import { Card, CardContent } from "~/components/Card";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { useProject } from "~/modules/projects/contexts/useProject";
-import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
 import { ProjectNavBar } from "~/modules/projects/components/ProjectNavBar";
@@ -69,13 +68,12 @@ export const action: ActionFunction = async ({
 };
 
 export default function SettingsPage() {
-  const { user } = useUser();
   const { project, userRole } = useProject();
   const data = useActionData<ActionData>();
   const transition = useTransition();
 
   return (
-    <DashboardLayout user={user} subNav={<ProjectNavBar project={project} />}>
+    <DashboardLayout subNav={<ProjectNavBar project={project} />}>
       <PageTitle
         value="Settings"
         description={

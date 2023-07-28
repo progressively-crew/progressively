@@ -8,7 +8,6 @@ import { V2_MetaFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { Card, CardContent } from "~/components/Card";
 import { useProject } from "~/modules/projects/contexts/useProject";
-import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
 import { SearchLayout } from "~/layouts/SearchLayout";
@@ -16,7 +15,6 @@ import { SearchBar } from "~/components/SearchBar";
 import { ProjectNavBar } from "~/modules/projects/components/ProjectNavBar";
 import { getProjectFlags } from "~/modules/projects/services/getProjectFlags";
 import { FlagList } from "~/modules/flags/components/FlagList";
-import { Typography } from "~/components/Typography";
 
 export const meta: V2_MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -47,7 +45,6 @@ export const loader: LoaderFunction = async ({
 // eslint-disable-next-line sonarjs/cognitive-complexity
 export default function FlagsByEnvPage() {
   const { flags } = useLoaderData<LoaderData>();
-  const { user } = useUser();
   const { project } = useProject();
 
   const [searchParams] = useSearchParams();
@@ -68,7 +65,6 @@ export default function FlagsByEnvPage() {
 
   return (
     <DashboardLayout
-      user={user}
       subNav={<ProjectNavBar project={project} />}
       status={
         flagEdited ? (
@@ -96,11 +92,13 @@ export default function FlagsByEnvPage() {
     >
       <PageTitle
         value="Feature flags"
-        description={
-          <Typography as="span">
-            All the feature flags available for{" "}
-            <strong className="font-bold">{project.name}</strong>.
-          </Typography>
+        action={
+          <CreateButton
+            to={`/dashboard/projects/${project.uuid}/flags/create`}
+            variant="primary"
+          >
+            Add a feature flag
+          </CreateButton>
         }
       />
 

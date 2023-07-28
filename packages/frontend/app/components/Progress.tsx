@@ -34,7 +34,7 @@ export const Progress = ({ max, value, label }: ProgressProps) => {
           <strong>
             {value} / {max}
           </strong>{" "}
-          flag evaluations.
+          events.
         </Typography>
       </div>
     </div>

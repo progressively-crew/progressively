@@ -22,7 +22,6 @@ import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaT
 import { SchedulingList } from "~/modules/scheduling/components/SchedulingList";
 import { getScheduling } from "~/modules/scheduling/services/getScheduling";
 import { Schedule } from "~/modules/scheduling/types";
-import { useUser } from "~/modules/user/contexts/useUser";
 import { getSession } from "~/sessions";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
@@ -81,7 +80,6 @@ export const action: ActionFunction = async ({
 
 export default function SchedulingOfFlag() {
   const [searchParams] = useSearchParams();
-  const { user } = useUser();
   const { project } = useProject();
   const { environment } = useEnvironment();
   const { flagEnv } = useFlagEnv();
@@ -96,7 +94,6 @@ export default function SchedulingOfFlag() {
 
   return (
     <DashboardLayout
-      user={user}
       subNav={
         <FlagEnvMenu
           projectId={project.uuid}

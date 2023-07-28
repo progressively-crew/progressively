@@ -22,7 +22,6 @@ import { getMetrics } from "~/modules/flags/services/getMetrics";
 import { Metric } from "~/modules/flags/types";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
-import { useUser } from "~/modules/user/contexts/useUser";
 import { getSession } from "~/sessions";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
@@ -81,7 +80,6 @@ export const action: ActionFunction = async ({
 
 export default function Metrics() {
   const [searchParams] = useSearchParams();
-  const { user } = useUser();
   const { project } = useProject();
   const { environment } = useEnvironment();
   const { flagEnv } = useFlagEnv();
@@ -96,7 +94,6 @@ export default function Metrics() {
 
   return (
     <DashboardLayout
-      user={user}
       subNav={
         <FlagEnvMenu
           projectId={project.uuid}

@@ -9,7 +9,6 @@ import { ButtonCopy } from "~/components/ButtonCopy";
 import { Link } from "~/components/Link";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { FlagEnvMenu } from "~/modules/flags/components/FlagEnvMenu";
-import { useUser } from "~/modules/user/contexts/useUser";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { PageTitle } from "~/components/PageTitle";
 
@@ -40,7 +39,6 @@ const NumberCircle = ({ children }: NumberCircleProps) => {
 export default function DevSetup() {
   const { flagEnv } = useFlagEnv();
   const { project } = useProject();
-  const { user } = useUser();
   const { environment } = useEnvironment();
 
   const liClass = "flex flex-row gap-4";
@@ -49,7 +47,6 @@ export default function DevSetup() {
 
   return (
     <DashboardLayout
-      user={user}
       subNav={
         <FlagEnvMenu
           projectId={project.uuid}

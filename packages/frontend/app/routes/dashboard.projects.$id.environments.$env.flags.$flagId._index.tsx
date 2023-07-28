@@ -14,7 +14,6 @@ import {
 } from "@remix-run/react";
 import { FlagEnvMenu } from "~/modules/flags/components/FlagEnvMenu";
 import { useProject } from "~/modules/projects/contexts/useProject";
-import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
@@ -156,7 +155,6 @@ export const loader: LoaderFunction = async ({
 export default function FlagById() {
   const actionData = useActionData<ActionDataType>();
   const { project } = useProject();
-  const { user } = useUser();
   const { environment } = useEnvironment();
   const { flagEnv } = useFlagEnv();
   const { strategies, variants, segments } = useLoaderData<LoaderData>();
@@ -167,7 +165,6 @@ export default function FlagById() {
 
   return (
     <DashboardLayout
-      user={user}
       subNav={
         <FlagEnvMenu
           projectId={project.uuid}

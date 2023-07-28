@@ -7,7 +7,6 @@ import {
 } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { FlagEnvMenu } from "~/modules/flags/components/FlagEnvMenu";
-import { useUser } from "~/modules/user/contexts/useUser";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
@@ -75,13 +74,11 @@ export const loader: LoaderFunction = async ({
 export default function FlagInsights() {
   const { activities } = useLoaderData<LoaderData>();
   const { flagEnv } = useFlagEnv();
-  const { user } = useUser();
   const { project } = useProject();
   const { environment } = useEnvironment();
 
   return (
     <DashboardLayout
-      user={user}
       subNav={
         <FlagEnvMenu
           projectId={project.uuid}

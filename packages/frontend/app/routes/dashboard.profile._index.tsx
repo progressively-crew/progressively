@@ -20,7 +20,6 @@ import { Typography } from "~/components/Typography";
 import { Button } from "~/components/Buttons/Button";
 import { Spacer } from "~/components/Spacer";
 import { ThemeSwitch } from "~/components/ThemeSwitch";
-import { useUser } from "~/modules/user/contexts/useUser";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -78,14 +77,12 @@ export const action: ActionFunction = async ({
 export default function ProfilePage() {
   const transition = useTransition();
   const data = useActionData<ActionData>();
-  const { user } = useUser();
 
   const passwordUpdated = data?.passwordUpdated;
   const errors = data?.errors;
 
   return (
     <DashboardLayout
-      user={user}
       subNav={<UserMenu />}
       status={
         errors && Object.keys(errors).length > 0 ? (
