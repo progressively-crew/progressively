@@ -28,18 +28,10 @@ export const FlagEnvMenu = ({
   const isActivated = flagEnv.status === FlagStatus.ACTIVATED;
   return (
     <HorizontalNav label={`Navigate in flag in specific environment`}>
-      <li
-        className={`transition-all py-6 px-4 border-b border-gray-200 dark:border-slate-800 ${
-          isActivated
-            ? "bg-emerald-100 dark:bg-emerald-800"
-            : "bg-gray-100 dark:bg-slate-800"
-        }`}
-      >
-        <div className="px-3 flex flex-row items-center">
-          <Form method="post" id={`form-${flagEnv.flagId}`}>
-            <ToggleFlag isFlagActivated={isActivated} flagId={flagEnv.flagId} />
-          </Form>
-        </div>
+      <li className={`px-8 pb-4 border-b border-slate-200`}>
+        <Form method="post" id={`form-${flagEnv.flagId}`}>
+          <ToggleFlag isFlagActivated={isActivated} flagId={flagEnv.flagId} />
+        </Form>
       </li>
 
       <NavItem

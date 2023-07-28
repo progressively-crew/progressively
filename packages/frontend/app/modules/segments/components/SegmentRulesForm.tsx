@@ -1,4 +1,4 @@
-import { IoCloseOutline } from "react-icons/io5";
+import { TbTrashX } from "react-icons/tb";
 import { RuleFormField } from "~/modules/rules/components/RuleFormField";
 import { RuleType } from "~/modules/rules/types";
 
@@ -28,7 +28,7 @@ export const SegmentRulesForm = ({ rules }: SegmentRulesFormProps) => {
               name="ruleId"
               className="rounded bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800 dark:text-slate-100 dark:hover:text-slate-100 w-6 h-8 flex items-center justify-center"
             >
-              <IoCloseOutline title="Remove rule" />
+              <TbTrashX title="Remove rule" />
             </button>
           </div>
         </div>

@@ -13,7 +13,7 @@ const sizeStyle = {
 const variants = {
   DEFAULT:
     "bg-gray-100 text-gray-600 dark:bg-slate-900 dark:text-slate-100 rounded-full",
-  PRIMARY: "bg-indigo-100 text-indigo-700 rounded-full",
+  PRIMARY: "bg-slate-800 text-white rounded-full",
   SUCCESS: "bg-green-100 text-green-700 rounded-full",
 };
 

@@ -1,18 +1,16 @@
 import { Card, CardContent } from "~/components/Card";
 import { Strategy } from "../types";
 import { Form, useNavigation } from "@remix-run/react";
-import { useId, useRef } from "react";
+import { useId } from "react";
 import { StrategyFormFields } from "./StrategyFormFields/StrategyFormFields";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
-import { MenuButton } from "~/components/MenuButton";
 import { Variant } from "~/modules/variants/types";
-import { IoCloseOutline } from "react-icons/io5";
-import { StrategyRuleFormField } from "./StrategyRuleFormField";
 import { Segment } from "~/modules/segments/types";
-import { Typography } from "~/components/Typography";
-import { Spinner } from "~/components/Spinner";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { IconButton } from "~/components/Buttons/IconButton";
+import { RuleList } from "./StrategyFormFields/RuleList";
+import { Tag } from "~/components/Tag";
+import { TbTrashX } from "react-icons/tb";
 
 export interface StrategyListProps {
   items: Array<Strategy>;
@@ -70,36 +68,12 @@ const StrategyItem = ({ strategy, variants, segments }: StrategyItemProps) => {
   const addStrategyRuleFormId = `add-strategy-rule-${id}`;
 
   return (
-    <Card
-      footer={
-        <div className="flex flex-row gap-4">
-          <div className="px-1">
-            <CreateButton
-              type="submit"
-              isLoading={isCreatingRule}
-              loadingText="Adding a rule..."
-              form={addStrategyRuleFormId}
-              variant="secondary"
-            >
-              <Typography as="span">Add a rule</Typography>
-            </CreateButton>
-          </div>
+    <div>
+      <Form method="post" id={deleteStrategyFormId}>
+        <input type="hidden" value="delete-strategy" name="_type" />
+        <input type="hidden" value={strategy.uuid} name="uuid" />
+      </Form>
 
-          <SubmitButton
-            form={updateStrategyFormId}
-            loadingText="Saving the strategy..."
-            isLoading={isEditingStrategy}
-          >
-            Save
-          </SubmitButton>
-
-          <Form method="post" id={deleteStrategyFormId}>
-            <input type="hidden" value="delete-strategy" name="_type" />
-            <input type="hidden" value={strategy.uuid} name="uuid" />
-          </Form>
-        </div>
-      }
-    >
       <Form method="post" id={deleteStrategyRule}>
         <input type="hidden" value="delete-strategy-rule" name="_type" />
       </Form>
@@ -109,83 +83,93 @@ const StrategyItem = ({ strategy, variants, segments }: StrategyItemProps) => {
         <input type="hidden" value={strategy.uuid} name="uuid" />
       </Form>
 
-      <Form method="post" className="block" id={updateStrategyFormId}>
-        <input type="hidden" value="edit-strategy" name="_type" />
-        <input type="hidden" value={strategy.uuid} name="uuid" />
+      <Card
+        footer={
+          <div className="flex flex-row gap-4">
+            <SubmitButton
+              form={updateStrategyFormId}
+              loadingText="Saving the strategy..."
+              isLoading={isEditingStrategy}
+            >
+              Save
+            </SubmitButton>
+          </div>
+        }
+      >
         <CardContent>
           <div className="flex flex-row gap-4 justify-between">
-            <StrategyFormFields
-              valueToServe={strategy.valueToServe}
-              valueToServeType={strategy.valueToServeType}
-              variants={variants.map((variant) => {
-                const rolloutPercentage =
-                  strategy.variants?.find(
-                    (sv) => sv.variantUuid === variant.uuid
-                  )?.rolloutPercentage || 0;
+            <div className="flex-1">
+              <div className="grid grid-cols-[70px_1fr] gap-x-4 gap-y-2">
+                <div className="pt-2">
+                  <Tag variant="PRIMARY">Serve</Tag>
+                </div>
 
-                return {
-                  ...variant,
-                  rolloutPercentage,
-                };
-              })}
-              rolloutPercentage={strategy.rolloutPercentage || 0}
-            />
+                <Form method="post" className="block" id={updateStrategyFormId}>
+                  <input type="hidden" value="edit-strategy" name="_type" />
+                  <input type="hidden" value={strategy.uuid} name="uuid" />
+
+                  <StrategyFormFields
+                    valueToServe={strategy.valueToServe}
+                    valueToServeType={strategy.valueToServeType}
+                    variants={variants.map((variant) => {
+                      const rolloutPercentage =
+                        strategy.variants?.find(
+                          (sv) => sv.variantUuid === variant.uuid
+                        )?.rolloutPercentage || 0;
+
+                      return {
+                        ...variant,
+                        rolloutPercentage,
+                      };
+                    })}
+                    rolloutPercentage={strategy.rolloutPercentage || 0}
+                  />
+                </Form>
+
+                <div className="pt-2">
+                  {strategy.rules?.length > 0 && (
+                    <Tag variant="PRIMARY">When</Tag>
+                  )}
+                </div>
+
+                <div className="w-full">
+                  <RuleList
+                    rules={strategy.rules || []}
+                    currentlyDeletingRuleUuid={
+                      type === "delete-strategy-rule"
+                        ? navigation?.formData?.get("ruleId")?.toString()
+                        : undefined
+                    }
+                    formId={deleteStrategyRule}
+                    segments={segments}
+                  />
+
+                  <div className="pt-2">
+                    <CreateButton
+                      type="submit"
+                      isLoading={isCreatingRule}
+                      loadingText="Adding a rule..."
+                      form={addStrategyRuleFormId}
+                      variant="secondary"
+                    >
+                      Add a rule
+                    </CreateButton>
+                  </div>
+                </div>
+              </div>
+            </div>
 
             <IconButton
               form={deleteStrategyFormId}
               type="submit"
               isLoading={isDeletingStrategy}
               loadingText="Deleting a strategy..."
-              icon={<IoCloseOutline />}
+              icon={<TbTrashX />}
               tooltip="Delete strategy"
             />
           </div>
         </CardContent>
-
-        <div className={`flex flex-col gap-1 pb-1`}>
-          {strategy.rules?.map((rule, index) => {
-            const isDeletingRule =
-              type === "delete-strategy-rule" &&
-              navigation?.formData?.get("ruleId")?.toString() === rule.uuid;
-
-            return (
-              <div key={rule.uuid}>
-                <div className="bg-gray-50 dark:bg-slate-900 px-6 py-4">
-                  <input type="hidden" value={rule.uuid} name="ruleUuid" />
-                  <div className="flex flex-row gap-4 justify-between items-start">
-                    <div className="flex-1">
-                      <StrategyRuleFormField
-                        initialFieldName={rule.fieldName}
-                        initialFieldComparator={rule.fieldComparator}
-                        initialFieldValue={rule.fieldValue}
-                        initialSegmentUuid={rule.segmentUuid}
-                        segments={segments}
-                      />
-                    </div>
-
-                    <IconButton
-                      form={deleteStrategyRule}
-                      type="submit"
-                      isLoading={isDeletingRule}
-                      loadingText="Deleting a rule..."
-                      icon={<IoCloseOutline />}
-                      tooltip="Remove rule"
-                      value={rule.uuid}
-                      name="ruleId"
-                    />
-                  </div>
-                </div>
-
-                {index !== strategy.rules!.length - 1 && (
-                  <span className="-mt-3 absolute text-center bg-white rounded-full h-6 w-12 text-xs text-gray-500 flex items-center justify-center left-1/2 -ml-6">
-                    OR
-                  </span>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      </Form>
-    </Card>
+      </Card>
+    </div>
   );
 };
