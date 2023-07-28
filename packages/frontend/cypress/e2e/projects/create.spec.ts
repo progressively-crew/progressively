@@ -56,9 +56,7 @@ describe("/dashboard/projects/create", () => {
         .and("contain.text", "The project has been successfully created.");
 
       // Verify the dashboard
-      cy.get("main").within(() => {
-        cy.findByText("My new project").should("be.visible");
-      });
+      cy.findByText("My new project").should("be.visible");
 
       cy.url().should("include", "/dashboard/projects/");
       cy.checkA11y();
