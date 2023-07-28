@@ -33,7 +33,10 @@ export default component$(() => {
 
   useBrowserVisibleTask$(
     async () => {
-      const sdk = Progressively.init(signal.value.clientKey, signal.value);
+      const sdk = Progressively.init(
+        String(signal.value.clientKey),
+        signal.value
+      );
 
       sdk.onFlagUpdate((nextFlags: FlagDict) => {
         flags.value = nextFlags;
