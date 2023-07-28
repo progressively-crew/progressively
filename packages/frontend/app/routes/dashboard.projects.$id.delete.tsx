@@ -93,7 +93,11 @@ export default function DeleteProjectPage() {
           </DeleteButton>
         </Form>
       }
-      backLinkSlot={<BackLink to={`/dashboard`}>Back to projects</BackLink>}
+      backLinkSlot={
+        <BackLink to={`/dashboard/projects/${project.uuid}/settings`}>
+          Back to project
+        </BackLink>
+      }
     >
       <Stack spacing={4}>
         <Typography>

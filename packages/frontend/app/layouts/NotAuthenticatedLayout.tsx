@@ -22,7 +22,7 @@ export const NotAuthenticatedLayout = ({
 }: NotAuthenticatedLayoutProps) => {
   const containerSize = size === "S" ? "md:max-w-[480px]" : "md:w-2/5";
   return (
-    <div className="h-full flex-1 bg-slate-800 dark:bg-slate-900">
+    <div className="h-full flex-1 bg-white dark:bg-slate-900">
       <nav className="bg-slate-800">
         <Container>
           <ol className="flex h-14 items-center justify-between">

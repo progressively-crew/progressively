@@ -65,11 +65,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/delete", () => {
 
         cy.findByRole("link", { name: "Cancel" })
           .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/1/settings"
-          );
+          .and("have.attr", "href", "/dashboard/projects/1/environments/1");
 
         cy.checkA11y();
       });

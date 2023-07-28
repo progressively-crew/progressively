@@ -93,12 +93,14 @@ export default function FlagsByEnvPage() {
       <PageTitle
         value="Feature flags"
         action={
-          <CreateButton
-            to={`/dashboard/projects/${project.uuid}/flags/create`}
-            variant="primary"
-          >
-            Add a feature flag
-          </CreateButton>
+          flags.length > 0 && (
+            <CreateButton
+              to={`/dashboard/projects/${project.uuid}/flags/create`}
+              variant="primary"
+            >
+              Add a feature flag
+            </CreateButton>
+          )
         }
       />
 

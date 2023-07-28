@@ -11,9 +11,6 @@ import { getSession } from "~/sessions";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import { Spacer } from "~/components/Spacer";
 import { Stack } from "~/components/Stack";
-import { TipBox } from "~/components/Boxes/TipBox";
-import { Li, Ul } from "~/components/Ul";
-import { HStack } from "~/components/HStack";
 import { useUser } from "~/modules/user/contexts/useUser";
 
 export const meta: V2_MetaFunction = () => {
@@ -62,26 +59,30 @@ export default function OnboardingPage() {
   return (
     <NotAuthenticatedLayout status={errors?.name && <ErrorBox list={errors} />}>
       <Stack spacing={4}>
-        <div className="text-center motion-safe:animate-fade-enter-top">
-          <h1 className="font-bold text-4xl md:text-5xl" id="page-title">
-            <span className="dark:text-slate-100">Welcome aboard</span>
-            <Spacer size={2} />
-            <span className="text-indigo-700 dark:text-indigo-400">
-              {user.fullname}
-            </span>
-          </h1>
+        <h1
+          className="text-4xl md:text-5xl motion-safe:animate-fade-enter-bottom"
+          id="page-title"
+        >
+          <span className="dark:text-slate-100">Welcome aboard</span>
           <Spacer size={2} />
-          <Typography>
-            Before being fully operational, you will need to create{" "}
-            <strong>a project</strong>. In general, a project is the name of
-            your application.
+          <Typography as="span" className="font-extrabold">
+            {user.fullname}
           </Typography>
-        </div>
+        </h1>
+        <Spacer size={2} />
+        <Typography
+          className="motion-safe:opacity-0 motion-safe:animate-fade-enter-bottom"
+          style={{ animationDelay: "500ms" }}
+        >
+          Before being fully operational, you will need to create{" "}
+          <strong>a project</strong>. In general, a project is the name of your
+          application.
+        </Typography>
 
         <div
           className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"
           style={{
-            animationDelay: "500ms",
+            animationDelay: "700ms",
           }}
         >
           <Form method="post">
@@ -106,45 +107,6 @@ export default function OnboardingPage() {
           </Form>
         </div>
       </Stack>
-
-      <Spacer size={2} />
-
-      <div
-        className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"
-        style={{
-          animationDelay: "800ms",
-        }}
-      >
-        <TipBox
-          title={
-            <Typography className="font-bold text-inherit dark:text-inherit">
-              The welcome tips
-            </Typography>
-          }
-        >
-          <Typography className="text-inherit dark:text-inherit">
-            Progressively is built with 3 main entities:
-          </Typography>
-
-          <Ul>
-            <Li>
-              <HStack spacing={2}>
-                <span>Projects</span>
-              </HStack>
-            </Li>
-            <Li>
-              <HStack spacing={2}>
-                <span>Environments</span>
-              </HStack>
-            </Li>
-            <Li>
-              <HStack spacing={2}>
-                <span>Feature flags</span>
-              </HStack>
-            </Li>
-          </Ul>
-        </TipBox>
-      </div>
     </NotAuthenticatedLayout>
   );
 }

@@ -80,7 +80,7 @@ export default function DeleteEnvPage() {
         <Button
           variant="tertiary"
           scheme="danger"
-          to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/settings`}
+          to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}`}
         >
           Cancel
         </Button>
@@ -97,7 +97,9 @@ export default function DeleteEnvPage() {
         </Form>
       }
       backLinkSlot={
-        <BackLink to={`/dashboard/projects/${project.uuid}`}>
+        <BackLink
+          to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}`}
+        >
           Back to project
         </BackLink>
       }
