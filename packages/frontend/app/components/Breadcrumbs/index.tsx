@@ -7,6 +7,7 @@ import { ProjectIcon } from "../Icons/ProjectIcon";
 import { Link } from "../Link";
 import { MenuButton } from "../MenuButton";
 import { Crumbs } from "./types";
+import { Logo } from "../Logo/Logo";
 
 export interface BreadCrumbsProps {
   crumbs: Crumbs;
@@ -43,10 +44,8 @@ export const BreadCrumbs = ({ crumbs }: BreadCrumbsProps) => {
                   <HStack spacing={2}>
                     {crumb.isRoot ? (
                       <HStack spacing={2}>
-                        <IconBox content={crumb.label} size="S">
-                          <AiOutlineHome />
-                        </IconBox>
-                        My projects
+                        <Logo />
+                        <span className="sr-only">My projects</span>
                       </HStack>
                     ) : (
                       <HStack spacing={2}>

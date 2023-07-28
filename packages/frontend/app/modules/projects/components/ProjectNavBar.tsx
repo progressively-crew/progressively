@@ -1,10 +1,10 @@
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { Project } from "../types";
 import { EnvIcon } from "~/components/Icons/EnvIcon";
-import { IoAddCircleOutline } from "react-icons/io5";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { SettingsIcon } from "~/components/Icons/SettingsIcon";
-import { IconBox } from "~/components/IconBox";
+import { BsArrow90DegDown } from "react-icons/bs";
+import { AiOutlinePlus } from "react-icons/ai";
 
 export interface ProjectNavBarProps {
   project: Project;
@@ -25,16 +25,12 @@ export const ProjectNavBar = ({ project }: ProjectNavBarProps) => {
           <EnvIcon />
           Environments
         </div>
-        <ul className="flex flex-col gap-2 pl-6">
+        <ul className="flex flex-col gap-2 pl-2">
           {project.environments.map((env) => (
             <NavItem
               to={`/dashboard/projects/${project.uuid}/environments/${env.uuid}`}
               key={env.uuid}
-              icon={
-                <IconBox content={env.name} size="S">
-                  <EnvIcon />
-                </IconBox>
-              }
+              icon={<BsArrow90DegDown className="-rotate-90" />}
             >
               {env.name}
             </NavItem>
@@ -42,7 +38,7 @@ export const ProjectNavBar = ({ project }: ProjectNavBarProps) => {
 
           <NavItem
             to={`/dashboard/projects/${project.uuid}/environments/create`}
-            icon={<IoAddCircleOutline className="w-5 h-5" />}
+            icon={<AiOutlinePlus />}
           >
             Add an env
           </NavItem>

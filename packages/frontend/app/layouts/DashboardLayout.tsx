@@ -37,7 +37,7 @@ export const DashboardLayout = ({
       <SkipNavLink>Skip to content</SkipNavLink>
 
       <div className="bg-gray-50 dark:bg-slate-900 h-full flex-1">
-        {crumbs.length > 1 && (
+        {crumbs.length > 0 && (
           <div className="py-1 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 hidden md:block ">
             <div className="px-4">
               <BreadCrumbs crumbs={crumbs} />
@@ -47,7 +47,7 @@ export const DashboardLayout = ({
 
         <div className={gridClass}>
           {subNav && (
-            <div className="md:sticky left-0 top-0 md:w-[300px] md:border-r border-slate-200 dark:border-slate-800 md:h-screen bg-white">
+            <div className="md:sticky left-0 top-0 md:w-[300px] md:border-r border-slate-200 dark:border-slate-800 md:h-screen bg-white dark:bg-slate-800">
               {subNav}
             </div>
           )}

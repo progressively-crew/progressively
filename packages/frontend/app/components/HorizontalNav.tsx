@@ -24,7 +24,7 @@ export const HorizontalNav = ({ children, label }: HorizontalNavProps) => {
       style={{ height: "calc(100% - 72px)" }}
     >
       <ul className="flex flex-col gap-1 pt-4 flex-1">{children}</ul>
-      <ul className="border-t border-slate-200 pt-4 flex flex-col gap-1">
+      <ul className="border-t border-slate-200 dark:border-slate-700 pt-4 flex flex-col gap-1">
         <NavItem
           to={"https://docs.progressively.app/"}
           icon={<FaBook />}
