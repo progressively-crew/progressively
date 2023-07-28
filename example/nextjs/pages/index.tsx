@@ -6,13 +6,19 @@ import { ProgressivelyProvider, useFlags } from "@progressively/react";
 import { getProgressivelyData } from "@progressively/server-side";
 
 const FlaggedComponent = () => {
-  const { flags } = useFlags();
+  const { flags, setFields } = useFlags();
 
-  if (flags.newFlag) {
-    return <div>New variant</div>;
-  }
+  const handleClick = () => {
+    setFields({ id: 2 });
+  };
 
-  return <div>Old variant</div>;
+  return (
+    <div>
+      {flags.newHomepage ? "New variant" : "Old variant"}
+      <footer>{flags.newFooter ? "New footer" : "Old footer"}</footer>
+      <button onClick={handleClick}>Remove from audience</button>
+    </div>
+  );
 };
 
 const Home: NextPage = ({ progressivelyProps }: any) => {
