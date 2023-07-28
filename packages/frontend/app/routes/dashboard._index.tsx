@@ -7,7 +7,6 @@ import { LoaderFunction, redirect, V2_MetaFunction } from "@remix-run/node";
 import { useSearchParams, useLoaderData } from "@remix-run/react";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { ProjectList } from "~/modules/projects/components/ProjectList";
-import { useUser } from "~/modules/user/contexts/useUser";
 import { PageTitle } from "~/components/PageTitle";
 import { SearchBar } from "~/components/SearchBar";
 import { SearchLayout } from "~/layouts/SearchLayout";
@@ -48,14 +47,12 @@ export const loader: LoaderFunction = async ({
 export default function DashboardRoot() {
   const [searchParams] = useSearchParams();
   const { projects } = useLoaderData<LoaderData>();
-  const { user } = useUser();
 
   const hasRemovedProject = searchParams.get("projectRemoved") || undefined;
   const isSearching = Boolean(searchParams.get("search") || undefined);
 
   return (
     <DashboardLayout
-      user={user}
       status={
         hasRemovedProject ? (
           <SuccessBox id="project-removed">

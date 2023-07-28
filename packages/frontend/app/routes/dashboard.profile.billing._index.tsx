@@ -60,7 +60,6 @@ export default function BillingPage() {
 
   return (
     <DashboardLayout
-      user={user}
       subNav={<UserMenu />}
       status={
         isSuccessPlanCreate ? (

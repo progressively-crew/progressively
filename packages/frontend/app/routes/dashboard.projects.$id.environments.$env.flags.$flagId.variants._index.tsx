@@ -19,7 +19,6 @@ import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction"
 import { getFlagEnvMetaTitle } from "~/modules/flags/services/getFlagEnvMetaTitle";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
-import { useUser } from "~/modules/user/contexts/useUser";
 import { VariantList } from "~/modules/variants/components/VariantList";
 import { getVariants } from "~/modules/variants/services/getVariants";
 import { Variant } from "~/modules/variants/types";
@@ -80,7 +79,6 @@ export const action: ActionFunction = async ({
 };
 
 export default function Variants() {
-  const { user } = useUser();
   const { project } = useProject();
   const { environment } = useEnvironment();
   const { flagEnv } = useFlagEnv();
@@ -95,7 +93,6 @@ export default function Variants() {
 
   return (
     <DashboardLayout
-      user={user}
       subNav={
         <FlagEnvMenu
           projectId={project.uuid}

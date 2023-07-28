@@ -6,7 +6,6 @@ import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { LoaderFunction, V2_MetaFunction } from "@remix-run/node";
 import { Card, CardContent } from "~/components/Card";
-import { useUser } from "~/modules/user/contexts/useUser";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
@@ -50,7 +49,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 };
 
 export default function EnvSettingsPage() {
-  const { user } = useUser();
   const { project, userRole } = useProject();
   const { environment } = useEnvironment();
   const [searchParams] = useSearchParams();
@@ -59,7 +57,6 @@ export default function EnvSettingsPage() {
 
   return (
     <DashboardLayout
-      user={user}
       status={
         envCreated ? (
           <SuccessBox id="env-added">

@@ -7,7 +7,6 @@ import { V2_MetaFunction } from "@remix-run/node";
 import { Card, CardContent } from "~/components/Card";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { useProject } from "~/modules/projects/contexts/useProject";
-import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
 import { useFlag } from "~/modules/flags/contexts/useFlag";
@@ -28,11 +27,10 @@ export const meta: V2_MetaFunction = ({ matches }) => {
 
 export default function FlagSettingPage() {
   const { project, userRole } = useProject();
-  const { user } = useUser();
   const { flag } = useFlag();
 
   return (
-    <DashboardLayout user={user}>
+    <DashboardLayout>
       <PageTitle
         value={flag.name}
         description={

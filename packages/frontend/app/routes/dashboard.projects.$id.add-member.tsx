@@ -15,7 +15,6 @@ import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ActionFunction, V2_MetaFunction } from "@remix-run/node";
 import { useActionData, Form, useTransition } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
-import { useUser } from "~/modules/user/contexts/useUser";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
@@ -80,7 +79,6 @@ export default function CreateProjectPage() {
   const data = useActionData<ActionData>();
   const transition = useTransition();
   const { project, userRole } = useProject();
-  const { user } = useUser();
 
   const adminOfProject = (project?.userProject || [])
     ?.filter((up) => up.role === UserRoles.Admin)
@@ -90,7 +88,7 @@ export default function CreateProjectPage() {
 
   if (userRole !== UserRoles.Admin) {
     return (
-      <DashboardLayout user={user}>
+      <DashboardLayout>
         <PageTitle value="You are not allowed to add members to projects." />
         <Section>
           <figure>

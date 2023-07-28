@@ -18,7 +18,6 @@ import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { getFlagEnvMetaTitle } from "~/modules/flags/services/getFlagEnvMetaTitle";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
-import { useUser } from "~/modules/user/contexts/useUser";
 import { getWebhooks } from "~/modules/webhooks/services/getWebhooks";
 import { Webhook } from "~/modules/webhooks/types";
 import { getSession } from "~/sessions";
@@ -81,7 +80,6 @@ export const action: ActionFunction = async ({
 
 export default function WebhooksPage() {
   const [searchParams] = useSearchParams();
-  const { user } = useUser();
   const { project } = useProject();
   const { environment } = useEnvironment();
   const { flagEnv } = useFlagEnv();
@@ -96,7 +94,6 @@ export default function WebhooksPage() {
 
   return (
     <DashboardLayout
-      user={user}
       subNav={
         <FlagEnvMenu
           projectId={project.uuid}

@@ -1,24 +1,19 @@
 import { Main } from "~/components/Main";
-import { User } from "~/modules/user/types";
 import { SkipNavLink } from "~/components/SkipNav";
-import { Container } from "~/components/Container";
 import { Spacer } from "~/components/Spacer";
 import { NavProvider } from "~/components/Breadcrumbs/providers/NavProvider";
 import { InertWhenNavOpened } from "~/components/Breadcrumbs/InertWhenNavOpened";
-import { UserDropdown } from "~/modules/user/components/UserDropdown";
 import { useMatches, useNavigation } from "@remix-run/react";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { Spinner } from "~/components/Spinner";
 
 export interface DashboardLayoutProps {
-  user: User;
   children: React.ReactNode;
   subNav?: React.ReactNode;
   status?: React.ReactNode;
 }
 
 export const DashboardLayout = ({
-  user,
   children,
   subNav,
   status,
@@ -41,12 +36,6 @@ export const DashboardLayout = ({
     <NavProvider>
       <SkipNavLink>Skip to content</SkipNavLink>
 
-      <div className="bg-slate-800 py-2">
-        <Container>
-          <UserDropdown user={user} />
-        </Container>
-      </div>
-
       <div className="bg-gray-50 dark:bg-slate-900 h-full flex-1">
         {crumbs.length > 1 && (
           <div className="py-1 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 hidden md:block ">
@@ -58,7 +47,7 @@ export const DashboardLayout = ({
 
         <div className={gridClass}>
           {subNav && (
-            <div className="md:sticky left-0 top-0 md:w-[300px] md:border-r border-slate-200 dark:border-slate-800 md:h-screen">
+            <div className="md:sticky left-0 top-0 md:w-[300px] md:border-r border-slate-200 dark:border-slate-800 md:h-screen bg-white">
               {subNav}
             </div>
           )}

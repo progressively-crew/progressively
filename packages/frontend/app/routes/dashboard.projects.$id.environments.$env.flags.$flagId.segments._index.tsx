@@ -22,7 +22,6 @@ import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaT
 import { SegmentList } from "~/modules/segments/components/SegmentList";
 import { getSegments } from "~/modules/segments/services/getSegments";
 import { Segment } from "~/modules/segments/types";
-import { useUser } from "~/modules/user/contexts/useUser";
 import { getSession } from "~/sessions";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
@@ -80,7 +79,6 @@ export const action: ActionFunction = async ({
 };
 
 export default function Segments() {
-  const { user } = useUser();
   const { project } = useProject();
   const { environment } = useEnvironment();
   const { flagEnv } = useFlagEnv();
@@ -95,7 +93,6 @@ export default function Segments() {
 
   return (
     <DashboardLayout
-      user={user}
       subNav={
         <FlagEnvMenu
           projectId={project.uuid}

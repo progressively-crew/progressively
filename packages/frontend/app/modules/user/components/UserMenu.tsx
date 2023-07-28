@@ -12,18 +12,16 @@ export const UserMenu = () => {
   const isSaas = useIsSaas();
 
   return (
-    <div className="pt-4">
-      <HorizontalNav label={"Navigate in user's profile"}>
-        <NavItem to="/dashboard/profile" icon={<TbUserEdit />}>
-          General
-        </NavItem>
+    <HorizontalNav label={"Navigate in user's profile"}>
+      <NavItem to="/dashboard/profile" icon={<TbUserEdit />}>
+        General
+      </NavItem>
 
-        {isSaas && (
-          <NavItem to="/dashboard/profile/billing" icon={<TbCurrencyDollar />}>
-            Billing
-          </NavItem>
-        )}
-      </HorizontalNav>
-    </div>
+      {isSaas && (
+        <NavItem to="/dashboard/profile/billing" icon={<TbCurrencyDollar />}>
+          Billing
+        </NavItem>
+      )}
+    </HorizontalNav>
   );
 };

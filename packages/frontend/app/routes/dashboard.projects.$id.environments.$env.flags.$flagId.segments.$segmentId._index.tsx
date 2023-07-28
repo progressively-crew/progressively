@@ -35,7 +35,6 @@ import { createSegmentRuleAction } from "~/modules/segments/form-actions/createS
 import { editSegmentAction } from "~/modules/segments/form-actions/editSegmentAction";
 import { getSegment } from "~/modules/segments/services/getSegment";
 import { Segment } from "~/modules/segments/types";
-import { useUser } from "~/modules/user/contexts/useUser";
 import { getSession } from "~/sessions";
 
 export const meta: V2_MetaFunction = ({ matches, params, data }) => {
@@ -120,7 +119,6 @@ export const loader: LoaderFunction = async ({
 };
 
 export default function Segments() {
-  const { user } = useUser();
   const { project } = useProject();
   const { environment } = useEnvironment();
   const { flagEnv } = useFlagEnv();
@@ -132,7 +130,6 @@ export default function Segments() {
 
   return (
     <DashboardLayout
-      user={user}
       subNav={
         <FlagEnvMenu
           projectId={project.uuid}
