@@ -221,18 +221,18 @@ export default function Segments() {
                 </Typography>
               }
             />
+
+            <div className="pt-4">
+              <Form method="post" id="delete-rule">
+                <input type="hidden" value="delete-rule" name="_type" />
+              </Form>
+
+              <Form method="post" id="edit-rules">
+                <input type="hidden" name="_type" value="edit-segment-rules" />
+                <SegmentRulesForm rules={segment.rule} />
+              </Form>
+            </div>
           </CardContent>
-
-          <div>
-            <Form method="post" id="delete-rule">
-              <input type="hidden" value="delete-rule" name="_type" />
-            </Form>
-
-            <Form method="post" id="edit-rules">
-              <input type="hidden" name="_type" value="edit-segment-rules" />
-              <SegmentRulesForm rules={segment.rule} />
-            </Form>
-          </div>
         </Card>
       </Section>
     </DashboardLayout>

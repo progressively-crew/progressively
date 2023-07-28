@@ -1,4 +1,6 @@
 import { TbTrashX } from "react-icons/tb";
+import { IconButton } from "~/components/Buttons/IconButton";
+import { Tag } from "~/components/Tag";
 import { RuleFormField } from "~/modules/rules/components/RuleFormField";
 import { RuleType } from "~/modules/rules/types";
 
@@ -8,31 +10,37 @@ export interface SegmentRulesFormProps {
 
 export const SegmentRulesForm = ({ rules }: SegmentRulesFormProps) => {
   return (
-    <div className="flex flex-col gap-1">
-      {rules.map((rule) => (
-        <div className="bg-gray-50 dark:bg-slate-900 px-6 py-4" key={rule.uuid}>
-          <input type="hidden" name="uuid" value={rule.uuid} />
-          <div className="flex flex-row gap-4 justify-between items-start">
-            <div className="flex-1">
-              <RuleFormField
-                initialFieldName={rule.fieldName}
-                initialFieldComparator={rule.fieldComparator}
-                initialFieldValue={rule.fieldValue}
-              />
-            </div>
+    <div className="grid grid-cols-[70px_1fr] gap-x-4 gap-y-2">
+      <div className="pt-2">
+        <Tag variant="PRIMARY">When</Tag>
+      </div>
 
-            <button
-              type="submit"
-              value={rule.uuid}
+      <div className="w-full flex flex-col w-full gap-2">
+        {rules.map((rule) => (
+          <div
+            key={rule.uuid}
+            className="flex flex-row gap-4 justify-between items-start"
+          >
+            <input type="hidden" name="uuid" value={rule.uuid} />
+
+            <RuleFormField
+              initialFieldName={rule.fieldName}
+              initialFieldComparator={rule.fieldComparator}
+              initialFieldValue={rule.fieldValue}
+            />
+
+            <IconButton
               form={"delete-rule"}
+              type="submit"
+              loadingText="Deleting a rule..."
+              icon={<TbTrashX />}
+              tooltip="Remove rule"
+              value={rule.uuid}
               name="ruleId"
-              className="rounded bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800 dark:text-slate-100 dark:hover:text-slate-100 w-6 h-8 flex items-center justify-center"
-            >
-              <TbTrashX title="Remove rule" />
-            </button>
+            />
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };
