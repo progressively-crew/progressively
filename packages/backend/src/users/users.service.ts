@@ -201,11 +201,12 @@ export class UsersService {
     });
   }
 
-  getHitsForMonth(userId: string, d: Date) {
+  getHitsForMonth(userId: string) {
     const start = new Date();
     start.setDate(1);
 
-    const end = new Date(start.getFullYear(), start.getMonth() + 1, 0);
+    const end = new Date(start.getFullYear(), start.getMonth() + 2, 0);
+    end.setDate(1);
 
     return this.prisma.flagHit.count({
       where: {
