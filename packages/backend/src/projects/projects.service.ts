@@ -10,6 +10,9 @@ export class ProjectsService {
 
   flagsByProject(projectId: string) {
     return this.prisma.flag.findMany({
+      include: {
+        flagEnvironment: true,
+      },
       where: {
         flagEnvironment: {
           some: {
