@@ -217,6 +217,10 @@ export class SdkService {
         },
       },
     });
+    console.log(
+      '🚀 ~ file: sdk.service.ts:225 ~ SdkService ~ generateTypescriptTypes ~ env:',
+      env,
+    );
 
     const defaultDefinition = getStringOfTypes(env.flagEnvironment as any);
     const definitionWithCustomString = getStringOfTypesWithCustomStrings(

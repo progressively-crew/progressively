@@ -8,6 +8,7 @@ import {
   Req,
   Res,
   Headers,
+  Header,
   UseGuards,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
@@ -97,9 +98,11 @@ export class SdkController {
     return this.sdkService.computeUniqueFlag(flagKey, fields, shouldSkipHits);
   }
 
-  @Get('/:clientKey/types/gen')
-  @UseGuards(JwtAuthGuard)
+  @Get('/:clientKey/types')
+  // @UseGuards(JwtAuthGuard)
   async getTypesDefinitions(@Param('clientKey') clientKey: string) {
+    console.log('here at least');
+
     const isSaas = process.env.IS_SAAS === 'true';
 
     if (isSaas) {

@@ -9,6 +9,8 @@ const getRemoteTypes = (clientKey) => {
   const endpoint =
     process.env.PROGRESSIVELY_API || "https://api.progressively.app";
 
+  console.log(`${endpoint}/sdk/${clientKey}/types`);
+
   return fetch(`${endpoint}/sdk/${clientKey}/types`).then((res) => res.text());
 };
 
@@ -34,6 +36,10 @@ const genFromRemote = async () => {
 
   const filePath = path.join(directory, "index.d.ts");
   const content = await getRemoteTypes(envKey);
+  console.log(
+    "🚀 ~ file: gentypes-from-remote.js:39 ~ genFromRemote ~ content:",
+    content
+  );
 
   fs.writeFileSync(filePath, content, { encoding: "utf8", flag: "w" });
   console.log("\nTypes generated!\n");
