@@ -38,7 +38,7 @@ $ pnpm i
 $ pnpm db:seed
 
 # Start everything needed
-$ pnpm start:examples # or docker compose up -d
+$ pnpm start:examples
 ```
 
 You now have access to:
