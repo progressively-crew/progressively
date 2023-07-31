@@ -68,10 +68,7 @@ export class UsersController {
       PlanStatus.ACTIVE,
     );
     const user = await this.userService.findByUuid(userId);
-    const hitsForMonth = await this.userService.getHitsForMonth(
-      userId,
-      new Date(),
-    );
+    const hitsForMonth = await this.userService.getHitsForMonth(userId);
 
     let remainingTrialingDays = 0;
 
