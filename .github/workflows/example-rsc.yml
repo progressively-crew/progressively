@@ -1,0 +1,54 @@
+name: RSCs
+on:
+  pull_request:
+    branches: ["master"]
+  workflow_dispatch:
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    services:
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_DB: progressively
+          POSTGRES_USER: admin
+          POSTGRES_PASSWORD: admin
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/monorepo-setup
+
+      - name: Dependencies install
+        run: pnpm install --filter=@progressively/backend... --filter=@progressively/example-rsc...
+
+      - name: Db prepare
+        run: rm -rf ./packages/database/prisma/migrations && pnpm run db:prepare
+
+      - name: Build the project
+        run: pnpm run build --filter=@progressively/backend --filter=@progressively/example-rsc
+
+      - name: Start backend
+        run: pnpm run start:backend &
+
+      - name: Start project
+        working-directory: ./example/rsc
+        run: pnpm start &
+
+      - name: E2E tests
+        working-directory: ./example/rsc
+        run: npx wait-on -t 60000 tcp:4000 && pnpm run test:e2e:ci

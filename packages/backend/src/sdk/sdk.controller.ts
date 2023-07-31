@@ -98,7 +98,7 @@ export class SdkController {
     return this.sdkService.computeUniqueFlag(flagKey, fields, shouldSkipHits);
   }
 
-  @Get('/:clientKey/types')
+  @Get('/:clientKey/types/gen')
   @UseGuards(JwtAuthGuard)
   async getTypesDefinitions(@Param('clientKey') clientKey: string) {
     const isSaas = process.env.IS_SAAS === 'true';
