@@ -32,48 +32,46 @@ export const TimeBasedRollout = () => {
   }, [time, isVisible]);
 
   return (
-    <div className="bg-white">
-      <div className="px-4 md:px-8 max-w-6xl mx-auto">
-        <section className={"py-12 md:py-32"}>
-          <h2 className="font-extrabold text-3xl md:text-7xl pb-4">
-            Time based rollouts
-          </h2>
+    <div>
+      <h2 className="text-3xl pb-4 text-white">Time based rollouts</h2>
 
-          <p className="text-xl md:text-2xl leading-relaxed pb-4">
-            Activate or deactivate your features based on date and time. Want to
-            release something on Tuesday 10am PST? You can automate this.
-          </p>
+      <p className="text-lg text-white leading-relaxed pb-4">
+        Empower your feature deployment with time-based control! Seamlessly
+        activate or deactivate features at your desired date and time. Dreaming
+        of a Tuesday 10am PST launch? With automation at your fingertips, you
+        can effortlessly make it a reality, bringing unprecedented convenience
+        and precision to your feature releases!
+      </p>
 
-          <div
-            className="grid grid-cols-2 md:grid-cols-[auto_1fr] gap-8 items-center"
-            ref={ref}
-          >
-            <Watch>
-              <span className="font-mono">{`00:00:0${time}`}</span>
-            </Watch>
+      <div
+        className="grid grid-cols-2 md:grid-cols-[auto_1fr] gap-8 items-center"
+        ref={ref}
+      >
+        <Watch>
+          <span className="font-mono">{`00:00:0${time}`}</span>
+        </Watch>
 
-            <div className="grid md:grid-cols-3 gap-4">
-              <BrowserVersion isToggled={isActive} />
-              <div className="hidden md:block">
-                <BrowserVersion isToggled={isActive} />
-              </div>
-
-              <div className="hidden md:block">
-                <BrowserVersion isToggled={isActive} />
-              </div>
-            </div>
+        <div className="grid md:grid-cols-3 gap-4">
+          <BrowserVersion isToggled={isActive} />
+          <div className="hidden md:block">
+            <BrowserVersion isToggled={isActive} />
           </div>
-          <div className="flex w-full justify-end pt-1">
-            <button
-              onClick={() => {
-                setIsActive(false);
-                setTime(5);
-              }}
-            >
-              Reset animation
-            </button>
+
+          <div className="hidden md:block">
+            <BrowserVersion isToggled={isActive} />
           </div>
-        </section>
+        </div>
+      </div>
+      <div className="flex w-full justify-end pt-1">
+        <button
+          className="text-white"
+          onClick={() => {
+            setIsActive(false);
+            setTime(5);
+          }}
+        >
+          Reset animation
+        </button>
       </div>
     </div>
   );

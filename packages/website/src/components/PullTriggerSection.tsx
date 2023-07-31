@@ -10,31 +10,36 @@ export const PullTriggerSection = ({
   clientComponent: string;
 }) => {
   const [checked, setChecked] = useState(false);
-  const [percentage, setPercentage] = useState(100);
+  const [percentage, setPercentage] = useState(50);
 
   return (
-    <div className="bg-white p-4 rounded-lg">
-      <div className="flex flex-col md:flex-row justify-between md:items-center pb-2">
-        <Switch
-          checked={checked}
-          onClick={() => setChecked((s) => !s)}
-          label="Switch display"
-        />
+    <div className="grid lg:grid-cols-[2fr_1fr] gap-8">
+      <div className="rounded-lg p-12 bg-white">
+        <div className="flex flex-col xl:flex-row xl:items-center xl:justify-between pb-4 gap-2">
+          <Switch
+            checked={checked}
+            onClick={() => setChecked((s) => !s)}
+            label="Toggle feature"
+          />
 
-        <NumberInput
-          value={percentage}
-          onChange={(n) => {
-            if (checked) {
-              setPercentage(n);
-            }
-          }}
-        />
-      </div>
+          <NumberInput
+            value={percentage}
+            onChange={(n) => {
+              if (checked) {
+                setPercentage(n);
+              }
+            }}
+          />
+        </div>
 
-      <div className="grid md:grid-cols-3 gap-4 pb-4">
-        <BrowserVersion isToggled={checked && percentage >= 33} />
-        <BrowserVersion isToggled={checked && percentage >= 66} />
-        <BrowserVersion isToggled={checked && percentage >= 100} />
+        <div className="grid md:grid-cols-3 xl:grid-cols-4 gap-4">
+          <BrowserVersion isToggled={checked && percentage >= 25} />
+          <BrowserVersion isToggled={checked && percentage >= 50} />
+          <BrowserVersion isToggled={checked && percentage >= 75} />
+          <div className="hidden xl:block">
+            <BrowserVersion isToggled={checked && percentage >= 100} />
+          </div>
+        </div>
       </div>
 
       <Code html={clientComponent} />

@@ -23,68 +23,68 @@ export const CanaryRelease = () => {
   const pClass = "text-slate-700";
 
   return (
-    <div className="px-4 md:px-8 max-w-6xl mx-auto">
-      <section className={"py-12 md:py-32"}>
-        <h2 className="font-extrabold text-3xl md:text-7xl pb-4">
-          Unlock Canary & Beta versions.
-        </h2>
+    <div>
+      <h2 className="text-3xl pb-4 text-white">
+        Unlock Canary & Beta versions.
+      </h2>
 
-        <p className="text-xl md:text-2xl leading-relaxed pb-8">
-          Create user segments and audience targeting rules to only activate
-          your features to a subset of your audience, unlocking QA testing in
-          production, Canary and Beta versions.
-        </p>
+      <p className="text-lg leading-relaxed pb-8 text-white">
+        Accelerate feedback acquisition by establishing exclusive user groups
+        with specialized and controlled access to your cutting-edge features.
+        Leverage their invaluable insights to fine-tune your offerings even
+        before their widespread release, ensuring a remarkable user experience
+        for all!
+      </p>
 
-        <div className="grid md:grid-cols-3 gap-4" ref={ref}>
-          <div className={animationClass}>
-            <Card>
-              <div className={innerCardClass}>
-                <AiOutlineCheckCircle className={successIconClass} />
-                <div>
-                  <h3 className={titleClass}>QA team</h3>
-                  <p className={pClass}>
-                    They can see the content behind the flag.
-                  </p>
-                </div>
+      <div className="grid md:grid-cols-3 gap-4" ref={ref}>
+        <div className={animationClass}>
+          <Card>
+            <div className={innerCardClass}>
+              <AiOutlineCheckCircle className={successIconClass} />
+              <div>
+                <h3 className={titleClass}>QA team</h3>
+                <p className={pClass}>
+                  They can see the content behind the flag.
+                </p>
               </div>
+            </div>
 
-              <NewVersion />
-            </Card>
-          </div>
-
-          <div className={animationClass} style={{ animationDelay: "300ms" }}>
-            <Card>
-              <div className={innerCardClass}>
-                <AiOutlineCheckCircle className={successIconClass} />
-                <div>
-                  <h3 className={titleClass}>Canary users</h3>
-                  <p className={pClass}>
-                    They can see the content behind the flag.
-                  </p>
-                </div>
-              </div>
-
-              <NewVersion />
-            </Card>
-          </div>
-
-          <div className={animationClass} style={{ animationDelay: "500ms" }}>
-            <Card>
-              <div className={innerCardClass}>
-                <AiOutlineCloseCircle className={errorIconClass} />
-                <div>
-                  <h3 className={titleClass}>Beta users</h3>
-                  <p className={pClass}>
-                    Too early to give them access, they won't see the content.
-                  </p>
-                </div>
-              </div>
-
-              <OldVersion />
-            </Card>
-          </div>
+            <NewVersion />
+          </Card>
         </div>
-      </section>
+
+        <div className={animationClass} style={{ animationDelay: "300ms" }}>
+          <Card>
+            <div className={innerCardClass}>
+              <AiOutlineCheckCircle className={successIconClass} />
+              <div>
+                <h3 className={titleClass}>Canary users</h3>
+                <p className={pClass}>
+                  They can see the content behind the flag.
+                </p>
+              </div>
+            </div>
+
+            <NewVersion />
+          </Card>
+        </div>
+
+        <div className={animationClass} style={{ animationDelay: "500ms" }}>
+          <Card>
+            <div className={innerCardClass}>
+              <AiOutlineCloseCircle className={errorIconClass} />
+              <div>
+                <h3 className={titleClass}>Beta users</h3>
+                <p className={pClass}>
+                  Too early to give them access, they won't see the content.
+                </p>
+              </div>
+            </div>
+
+            <OldVersion />
+          </Card>
+        </div>
+      </div>
     </div>
   );
 };

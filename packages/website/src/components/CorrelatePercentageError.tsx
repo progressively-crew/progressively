@@ -8,7 +8,7 @@ import { BrowserVersion } from "./Browser";
 const iconClass = "w-10 h-10 rounded p-2 text-white bg-purple-500";
 
 const Histogram = ({ percentage }: { percentage: number }) => {
-  const barClass = "rounded-t w-4 md:w-8";
+  const barClass = "rounded-t w-4 md:w-8 transition-all";
   const dateClass = "text-xs";
 
   const bars = [
@@ -53,56 +53,52 @@ export const CorrelatePercentageError = () => {
 
   return (
     <div>
-      <div className="px-4 md:px-8 max-w-6xl mx-auto">
-        <section className={"py-12 md:py-32"}>
-          <h2 className="font-extrabold text-3xl md:text-7xl pb-4">
-            Correlate feature rollout
-            <br /> and error rising
-          </h2>
+      <h2 className="text-3xl pb-4 text-white">
+        Correlate rollout & and error rising
+      </h2>
 
-          <p className="text-xl md:text-2xl leading-relaxed pb-4">
-            Correlate errors raised in your tracking tool with your feature
-            rollout. When a feature generates too many errors,{" "}
-            <strong>you can deactivate it in one click</strong>.
-          </p>
+      <p className="text-lg leading-relaxed pb-8 text-white">
+        Supercharge your feature management with seamless error correlation in
+        your tracking tool. Effortlessly link error occurrences to specific
+        feature rollouts, allowing you to swiftly identify any feature that
+        triggers excessive errors. With just one click, you gain the power to
+        deactivate problematic features instantly, ensuring a smooth and
+        error-free user experience!
+      </p>
 
-          <div className="md:grid md:grid-cols-[3fr_2fr] gap-4 hidden">
-            <Card>
-              <div className="flex flex-col md:flex-row justify-between md:items-center pb-2">
-                <Switch
-                  checked={checked}
-                  onClick={() => setChecked((s) => !s)}
-                  label="Toggle feature"
-                />
+      <div className="md:grid md:grid-cols-[3fr_2fr] gap-4 hidden">
+        <Card>
+          <div className="flex flex-col md:flex-row justify-between md:items-center pb-2">
+            <Switch
+              checked={checked}
+              onClick={() => setChecked((s) => !s)}
+              label="Toggle feature"
+            />
 
-                <NumberInput
-                  value={percentage}
-                  onChange={(n) => {
-                    setPercentage(n);
-                  }}
-                />
-              </div>
-
-              <div className="grid md:grid-cols-3 gap-4 pb-4">
-                <BrowserVersion isToggled={checked && percentage >= 33} />
-                <BrowserVersion isToggled={checked && percentage >= 66} />
-                <BrowserVersion isToggled={checked && percentage >= 100} />
-              </div>
-            </Card>
-
-            <Card>
-              <div className="flex flex-row gap-4 items-center">
-                <FaChartLine className={iconClass} />
-
-                <p className="font-bold">
-                  Your error and exception tracking tool
-                </p>
-              </div>
-
-              <Histogram percentage={errorLevelPercentage} />
-            </Card>
+            <NumberInput
+              value={percentage}
+              onChange={(n) => {
+                setPercentage(n);
+              }}
+            />
           </div>
-        </section>
+
+          <div className="grid md:grid-cols-3 gap-4 pb-4">
+            <BrowserVersion isToggled={checked && percentage >= 33} />
+            <BrowserVersion isToggled={checked && percentage >= 66} />
+            <BrowserVersion isToggled={checked && percentage >= 100} />
+          </div>
+        </Card>
+
+        <Card>
+          <div className="flex flex-row gap-4 items-center">
+            <FaChartLine className={iconClass} />
+
+            <p className="font-bold">Your error and exception tracking tool</p>
+          </div>
+
+          <Histogram percentage={errorLevelPercentage} />
+        </Card>
       </div>
     </div>
   );
