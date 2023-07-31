@@ -55,14 +55,18 @@ const FlaggedComponent = () => {
 <Layout title="Welcome to Progressively, the new feature flag solution.">
   <div class="bg-slate-900">
     <header
-      class="py-20 min-h-screen flex flex-col md:grid md:grid-cols-2 gap-8 px-12 max-w-screen-2xl mx-auto items-center"
+      class="py-12 md:py-20 md:min-h-screen flex flex-col md:grid md:grid-cols-2 gap-8 px-12 max-w-screen-2xl mx-auto items-center"
     >
       <div>
-        <h1 class="text-5xl font-extrabold text-white">
+        <h1
+          class="text-center md:text-left text-4xl md:text-5xl font-extrabold text-white"
+        >
           Introducing <span>Progressively</span>
         </h1>
 
-        <p class="text-3xl text-slate-200 pt-4 leading-relaxed">
+        <p
+          class="text-center md:text-left text-xl md:text-3xl text-slate-200 pt-4 leading-relaxed"
+        >
           A simple, lightweight and OpenSource feature flag software.
         </p>
 
@@ -87,7 +91,9 @@ const FlaggedComponent = () => {
         </div>
       </div>
 
-      <PullTriggerSection client:load clientComponent={clientComponent} />
+      <div class="hidden md:block">
+        <PullTriggerSection client:load clientComponent={clientComponent} />
+      </div>
     </header>
   </div>
 
@@ -101,8 +107,6 @@ const FlaggedComponent = () => {
     <CorrelatePercentageError client:load />
 
     <TimeBasedRollout client:load />
-
-    <FeatureSection />
 
     <GetStartedCTA />
   </main>

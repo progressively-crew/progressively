@@ -24,16 +24,19 @@ export const SpeedUpDevelopment = () => {
     <div className="bg-white">
       <div className="px-4 md:px-8 max-w-6xl mx-auto">
         <section className={"py-12 md:py-32"}>
-          <h2 className="font-extrabold text-4xl md:text-7xl pb-4 md:text-center flex flex-col md:flex-row gap-4 md:justify-center md:items-center">
+          <h2 className="font-extrabold text-3xl md:text-7xl pb-4 md:text-center flex flex-col md:flex-row gap-4 md:justify-center md:items-center">
             <span>Ship 3x more, safely {isVisible}</span>{" "}
           </h2>
-          <p className="text-2xl leading-relaxed md:text-center">
+          <p className="text-xl md:text-2xl leading-relaxed md:text-center">
             Product people want features to be shipped. Developpers want to
             build things without stress. Feature flags is the missing piece to
             accomodate everyone.
           </p>
 
-          <div className="grid md:grid-cols-3 pt-12 gap-9" ref={ref}>
+          <div
+            className="grid md:grid-cols-3 pt-4 md:pt-12 gap-4 md:gap-8"
+            ref={ref}
+          >
             <div className={animationClass}>
               <Card>
                 <AiOutlineDeploymentUnit

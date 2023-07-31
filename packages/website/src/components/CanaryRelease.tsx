@@ -25,11 +25,11 @@ export const CanaryRelease = () => {
   return (
     <div className="px-4 md:px-8 max-w-6xl mx-auto">
       <section className={"py-12 md:py-32"}>
-        <h2 className="font-extrabold text-4xl md:text-7xl pb-4">
+        <h2 className="font-extrabold text-3xl md:text-7xl pb-4">
           Unlock Canary & Beta versions.
         </h2>
 
-        <p className="text-2xl leading-relaxed pb-8">
+        <p className="text-xl md:text-2xl leading-relaxed pb-8">
           Create user segments and audience targeting rules to only activate
           your features to a subset of your audience, unlocking QA testing in
           production, Canary and Beta versions.

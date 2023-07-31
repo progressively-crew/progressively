@@ -55,18 +55,18 @@ export const CorrelatePercentageError = () => {
     <div>
       <div className="px-4 md:px-8 max-w-6xl mx-auto">
         <section className={"py-12 md:py-32"}>
-          <h2 className="font-extrabold text-4xl md:text-7xl pb-4">
+          <h2 className="font-extrabold text-3xl md:text-7xl pb-4">
             Correlate feature rollout
             <br /> and error rising
           </h2>
 
-          <p className="text-2xl leading-relaxed pb-4">
+          <p className="text-xl md:text-2xl leading-relaxed pb-4">
             Correlate errors raised in your tracking tool with your feature
             rollout. When a feature generates too many errors,{" "}
             <strong>you can deactivate it in one click</strong>.
           </p>
 
-          <div className="grid md:grid-cols-[3fr_2fr] gap-4">
+          <div className="md:grid md:grid-cols-[3fr_2fr] gap-4 hidden">
             <Card>
               <div className="flex flex-col md:flex-row justify-between md:items-center pb-2">
                 <Switch

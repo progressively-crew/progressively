@@ -20,19 +20,22 @@ export const ABTesting = ({ code }: { code: string }) => {
     <div className="bg-white">
       <div className="px-4 md:px-8 max-w-6xl mx-auto">
         <section className={"py-12 md:py-32"}>
-          <h2 className="font-extrabold text-4xl md:text-7xl pb-4">
+          <h2 className="font-extrabold text-3xl md:text-7xl pb-4">
             Multi-variants
             <br /> and A/B testing
           </h2>
 
-          <p className="text-2xl leading-relaxed pb-4">
+          <p className="text-xl md:text-2xl leading-relaxed pb-4">
             Create multiple variants for a given feature flag and provide
             different experiences to your users. Measure the impact of the
             different versions and makes decisions to improve your apps.
           </p>
 
           <div className="grid md:grid-cols-[2fr_1fr] gap-4 items-center">
-            <div className="grid md:grid-cols-3 gap-4 pb-4" ref={ref}>
+            <div
+              className="grid grid-cols-2 md:grid-cols-3 gap-4 pb-4"
+              ref={ref}
+            >
               <div
                 className={animationClass}
                 style={{ animationDelay: "500ms" }}
@@ -47,13 +50,15 @@ export const ABTesting = ({ code }: { code: string }) => {
                 <BVersion />
                 <p className={variantTextClass}>Version B</p>
               </div>
-              <div className={animationClass}>
+              <div className={`${animationClass} hidden md:block`}>
                 <CVersion />
                 <p className={variantTextClass}>Version C</p>
               </div>
             </div>
 
-            <Code html={code} />
+            <div className="hidden md:block">
+              <Code html={code} />
+            </div>
           </div>
         </section>
       </div>
