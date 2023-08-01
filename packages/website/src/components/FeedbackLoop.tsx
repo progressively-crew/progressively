@@ -15,7 +15,7 @@ export const FeedbackLoop = ({ abcVersions }: { abcVersions: string }) => {
     "bg-gradient-to-r from-slate-900 via-slate-800 to-fuchsia-900 text-white hover:bg-slate-800 pl-8";
 
   return (
-    <div className="rounded-t-[10%] rounded-b-[10%] bg-gradient-to-t from-slate-900 via-slate-800 to-fuchsia-900 h-[860px]">
+    <div className="bg-gradient-to-t from-slate-900 via-slate-800 to-fuchsia-900 h-[860px]">
       <div className="px-4 md:px-8 max-w-screen-2xl mx-auto">
         <section className={"py-12 md:py-32"}>
           <h2 className="font-extrabold text-3xl md:text-7xl pb-4 text-white">

@@ -8,6 +8,11 @@ import hljs from "highlight.js";
 import Logo from "../components/Logo.astro";
 import { FeedbackLoop } from "../components/FeedbackLoop";
 import { InstallationStep } from "../components/InstallationStep";
+import { PricingSection } from "../components/PricingSection";
+
+const frontendUrl = import.meta.env.FRONTEND_URL;
+
+const trialUrl = `${frontendUrl}/register`;
 
 const clientComponent = hljs.highlight(
   `
@@ -50,12 +55,24 @@ const FlaggedComponent = () => {
 `,
   { language: "jsx" }
 ).value;
+
+const smallSnippet = hljs.highlight(
+  `
+const { flags } = useFlags();     
+
+if (flags.newFeature) {
+  return <NewFeature />;
+}
+
+return <OldFeature />;
+
+`,
+  { language: "jsx" }
+).value;
 ---
 
 <Layout title="Welcome to Progressively, the new feature flag solution.">
-  <div
-    class="bg-gradient-to-b from-slate-900 via-slate-800 to-fuchsia-900 rounded-b-[10%]"
-  >
+  <div class="bg-gradient-to-b from-slate-900 via-slate-800 to-fuchsia-900">
     <header
       class="py-12 md:py-32 gap-8 px-12 max-w-screen-2xl mx-auto items-center"
     >
@@ -111,7 +128,9 @@ const FlaggedComponent = () => {
 
     <FeedbackLoop client:load abcVersions={abcVersions} />
 
-    <InstallationStep client:load />
+    <InstallationStep client:load code={smallSnippet} />
+
+    <PricingSection client:load trialUrl={trialUrl} />
 
     <GetStartedCTA />
   </main>

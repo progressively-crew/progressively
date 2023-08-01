@@ -1,12 +1,8 @@
-import { AiOutlineUserAdd } from "react-icons/ai";
-import { Card } from "./Card";
-import { TbSdk } from "react-icons/tb";
-import { FaToggleOff } from "react-icons/fa";
-import { GoChevronRight } from "react-icons/go";
 import { useRef } from "react";
 import { useIntersectionObserver } from "../hooks/useIntersectionObserver";
+import { Code } from "./Code";
 
-export const InstallationStep = () => {
+export const InstallationStep = ({ code }: { code: string }) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const entry = useIntersectionObserver(ref, {
     threshold: 0.75,
@@ -28,11 +24,9 @@ export const InstallationStep = () => {
   const secondaryBtnClass =
     "bg-transparent border border-slate-200 hover:bg-slate-100";
 
-  const separatorClass = "text-2xl text-slate-400";
-
   const animationClass = isVisible
-    ? `animate-fade-enter-bottom opacity-0`
-    : "opacity-0";
+    ? `animate-fade-enter-bottom opacity-0 h-full`
+    : "opacity-0 h-full";
 
   return (
     <div className="px-4 md:px-8 max-w-6xl mx-auto">
@@ -49,62 +43,51 @@ export const InstallationStep = () => {
         </p>
 
         <div ref={ref}>
-          <ol className="flex flex-row gap-4 items-center">
+          <ol className="grid grid-cols-3 gap-8">
             <li className={animationClass}>
-              <Card>
-                <div>
-                  <AiOutlineUserAdd
-                    className={`${numberClass} bg-indigo-500`}
-                  />
-                  <h3 className={titleClass}>Create an account</h3>
-                  <p className={pClass}>
-                    Create your account, your first project and your first
-                    feature flag..
-                  </p>
-                  <a
-                    className={`${btnClass} ${primaryClass}`}
-                    href="https://dashboard.progressively.app/register"
-                  >
-                    Create my account
-                  </a>
-                </div>
-              </Card>
+              <div>
+                <span className={`${numberClass} bg-indigo-500`}>1</span>
+                <h3 className={titleClass}>Create an account</h3>
+                <p className={pClass}>
+                  Create your account, your first project and your first feature
+                  flag.
+                </p>
+                <a
+                  className={`${btnClass} ${primaryClass}`}
+                  href="https://dashboard.progressively.app/register"
+                >
+                  Create my account
+                </a>
+              </div>
             </li>
-            <li role="separator">
-              <GoChevronRight className={separatorClass} />
-            </li>
-            <li className={animationClass} style={{ animationDelay: "300ms" }}>
-              <Card>
-                <div>
-                  <TbSdk className={`${numberClass} bg-orange-500`} />
 
-                  <h3 className={titleClass}>Choose a SDK</h3>
-                  <p className={pClass}>
-                    Check the SDK page, choose one and add it to your codebase.
-                  </p>
-                  <a
-                    className={`${btnClass} ${secondaryBtnClass}`}
-                    href="https://docs.progressively.app/sdks/react"
-                  >
-                    Choose a SDK
-                  </a>
-                </div>
-              </Card>
+            <li className={animationClass} style={{ animationDelay: "300ms" }}>
+              <div>
+                <span className={`${numberClass} bg-orange-500`}>2</span>
+
+                <h3 className={titleClass}>Choose a SDK</h3>
+                <p className={pClass}>
+                  Check the SDK page, choose one and add it to your codebase.
+                </p>
+                <a
+                  className={`${btnClass} ${secondaryBtnClass}`}
+                  href="https://docs.progressively.app/sdks/react"
+                >
+                  Choose a SDK
+                </a>
+              </div>
             </li>
-            <li role="separator">
-              <GoChevronRight className={separatorClass} />
-            </li>
+
             <li className={animationClass} style={{ animationDelay: "500ms" }}>
-              <Card>
-                <div>
-                  <FaToggleOff className={`${numberClass} bg-green-500`} />
-                  <h3 className={titleClass}>Evaluate your flag</h3>
-                  <p className={pClass}>
-                    Make a conditional statement in your code base and play with
-                    the dashboard.
-                  </p>
-                </div>
-              </Card>
+              <div>
+                <span className={`${numberClass} bg-green-500`}>3</span>
+                <h3 className={titleClass}>Evaluate your flag</h3>
+                <p className={pClass}>
+                  Make a conditional statement in your code base and play with
+                  the dashboard.
+                </p>
+                <Code html={code} />
+              </div>
             </li>
           </ol>
         </div>
