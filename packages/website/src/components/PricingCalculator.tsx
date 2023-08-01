@@ -16,8 +16,8 @@ export const PricingCalculator = () => {
   return (
     <div>
       <div aria-live="polite" className="text-center pb-8">
-        <strong className="text-6xl">{currentPlan.price}</strong>
-        <span className="text-3xl text-slate-500">/month</span>
+        <strong className="text-3xl lg:text-6xl">{currentPlan.price}</strong>
+        <span className="text-xl lg:text-3xl text-slate-500">/month</span>
       </div>
 
       <div>

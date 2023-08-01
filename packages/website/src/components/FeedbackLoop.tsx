@@ -15,14 +15,14 @@ export const FeedbackLoop = ({ abcVersions }: { abcVersions: string }) => {
     "bg-gradient-to-r from-slate-900 via-slate-800 to-fuchsia-900 text-white hover:bg-slate-800 pl-8";
 
   return (
-    <div className="bg-gradient-to-t from-slate-900 via-slate-800 to-fuchsia-900 h-[860px]">
+    <div className="bg-gradient-to-t from-slate-900 via-slate-800 to-fuchsia-900 lg:h-[860px]">
       <div className="px-4 md:px-8 max-w-screen-2xl mx-auto">
         <section className={"py-12 md:py-32"}>
           <h2 className="font-extrabold text-3xl md:text-7xl pb-4 text-white">
             Enhance the feedback loop
           </h2>
 
-          <div className="grid grid-cols-[340px_1fr] gap-12 pt-4 md:pt-12">
+          <div className="grid lg:grid-cols-[340px_1fr] gap-12 pt-4 md:pt-12">
             <div>
               <ul className="bg-white p-2 rounded-lg flex flex-col gap-2 border border-gray-200">
                 <li>

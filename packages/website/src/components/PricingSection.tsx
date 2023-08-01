@@ -50,7 +50,7 @@ export const PricingSection = ({ trialUrl }: { trialUrl: string }) => {
             className="grid gap-4 px-4 md:px-8 max-w-4xl mx-auto pt-8"
             ref={ref}
           >
-            <div className="grid grid-cols-2 gap-4 items-center">
+            <div className="grid md:grid-cols-2 gap-4 items-center">
               <div
                 className={`rounded-xl bg-gradient-to-r from-slate-500 via-purple-500 to-fuchsia-500 p-2 ${animationClass}`}
               >
