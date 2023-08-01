@@ -101,7 +101,7 @@ return <OldFeature />;
             variant="primary-inverse"
             href="https://dashboard.progressively.app/signin"
             target={"_blank"}
-            id="demo-instance"
+            id="get-started"
           >
             Get started
           </LinkButton>
@@ -109,8 +109,8 @@ return <OldFeature />;
           <LinkButton
             href="https://docs.progressively.app/"
             target={"_blank"}
-            id="get-started"
             variant="secondary-inverse"
+            id="documentation-btn"
           >
             Documentation
           </LinkButton>
@@ -136,4 +136,20 @@ return <OldFeature />;
   </main>
 </Layout>
 
-<script src="https://player.vimeo.com/api/player.js"></script>
+<script>
+  import { Progressively } from "@progressively/sdk-js";
+
+  const sdk = Progressively.init("f2432529-0da2-4702-850e-b96d70267308");
+  const getStarted = document.querySelector("#get-started");
+  const documentation = document.querySelector("#documentation-btn");
+
+  await sdk.loadFlags(); // make sure to it the endpoint
+
+  getStarted?.addEventListener("click", function () {
+    sdk.track("Hit get started");
+  });
+
+  documentation?.addEventListener("click", function () {
+    sdk.track("Hit documentation");
+  });
+</script>
