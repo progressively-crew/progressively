@@ -30,6 +30,11 @@ module.exports = {
           "0%": { transform: "translateX(1rem)", opacity: 0 },
           "100%": { transform: "translateX(0)", opacity: 1 },
         },
+        "scale-in-out": {
+          "0%": { transform: "scale(0.95)" },
+          "30%": { transform: "scale(1.1)" },
+          "100%": { transform: "scale(1)" },
+        },
       },
       animation: {
         "opacity-appearing": "opacity-appearing 300ms ease-in-out forwards",
@@ -37,6 +42,7 @@ module.exports = {
         "fade-enter-bottom": "fade-enter-bottom 500ms ease-in-out forwards",
         "fade-enter-left": "fade-enter-left 500ms ease-in-out forwards",
         "fade-enter-right": "fade-enter-right 500ms ease-in-out forwards",
+        "scale-in-out": "scale-in-out 500ms ease-in-out forwards",
       },
     },
   },

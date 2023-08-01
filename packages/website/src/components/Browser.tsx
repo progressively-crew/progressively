@@ -42,10 +42,10 @@ export const BrowserVersion = ({ isToggled }: { isToggled: boolean }) => {
               style={{ animationDelay: "300ms" }}
             >
               <div
-                className={`font-extrabold rounded-full w-[20%] h-3 bg-indigo-900`}
+                className={`font-extrabold rounded-full w-[20%] h-3 bg-fuchsia-900`}
               ></div>
               <div
-                className={`font-extrabold rounded-full w-[20%] h-3 bg-indigo-200`}
+                className={`font-extrabold rounded-full w-[20%] h-3 bg-fuchsia-200`}
               ></div>
             </div>
           )}
@@ -92,10 +92,10 @@ export const NewVersion = () => {
 
           <div className="flex flex-row gap-1">
             <div
-              className={`font-extrabold rounded-full w-[20%] h-3 bg-indigo-900`}
+              className={`font-extrabold rounded-full w-[20%] h-3 bg-fuchsia-900`}
             ></div>
             <div
-              className={`font-extrabold rounded-full w-[20%] h-3 bg-indigo-200`}
+              className={`font-extrabold rounded-full w-[20%] h-3 bg-fuchsia-200`}
             ></div>
           </div>
         </div>
@@ -121,10 +121,10 @@ export const AVersion = () => {
 
           <div className="flex flex-row gap-1">
             <div
-              className={`font-extrabold rounded-full w-[20%] h-3 bg-indigo-900`}
+              className={`font-extrabold rounded-full w-[20%] h-3 bg-fuchsia-900`}
             ></div>
             <div
-              className={`font-extrabold rounded-full w-[20%] h-3 bg-indigo-200`}
+              className={`font-extrabold rounded-full w-[20%] h-3 bg-fuchsia-200`}
             ></div>
           </div>
         </div>
@@ -154,10 +154,10 @@ export const BVersion = () => {
 
           <div className="flex flex-row gap-1">
             <div
-              className={`font-extrabold rounded-full w-[20%] h-3 bg-indigo-900`}
+              className={`font-extrabold rounded-full w-[20%] h-3 bg-fuchsia-900`}
             ></div>
             <div
-              className={`font-extrabold rounded-full w-[20%] h-3 bg-indigo-200`}
+              className={`font-extrabold rounded-full w-[20%] h-3 bg-fuchsia-200`}
             ></div>
           </div>
         </div>
@@ -186,10 +186,10 @@ export const CVersion = () => {
 
         <div className="flex flex-row gap-1 w-full justify-center">
           <div
-            className={`font-extrabold rounded-full w-[20%] h-3 bg-indigo-900`}
+            className={`font-extrabold rounded-full w-[20%] h-3 bg-fuchsia-900`}
           ></div>
           <div
-            className={`font-extrabold rounded-full w-[20%] h-3 bg-indigo-200`}
+            className={`font-extrabold rounded-full w-[20%] h-3 bg-fuchsia-200`}
           ></div>
         </div>
       </div>

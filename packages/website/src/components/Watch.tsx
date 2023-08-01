@@ -6,7 +6,7 @@ export const Watch = ({ children }: WatchProps) => {
   return (
     <div className="flex flex-col items-center justify-center">
       <div
-        className="h-8 bg-slate-800 w-24 -mb-[8px] mr-2"
+        className="h-8 bg-slate-200 w-24 -mb-[8px] mr-2"
         style={{
           transform: "perspective(200px) rotateX(60deg)",
         }}
@@ -14,7 +14,7 @@ export const Watch = ({ children }: WatchProps) => {
 
       <div className="flex flex-row">
         <div className="border-[6px] border-[#F4CDA8] rounded-[32px]">
-          <div className="border-[12px] border-slate-900 rounded-[24px]">
+          <div className="border-[12px] border-slate-50 rounded-[24px]">
             <div className="w-32 h-40 flex items-center justify-center bg-slate-800 text-white text-2xl">
               {children}
             </div>
@@ -26,7 +26,7 @@ export const Watch = ({ children }: WatchProps) => {
       </div>
 
       <div
-        className="h-8 bg-slate-800 w-24 -mt-[8px] mr-2"
+        className="h-8 bg-slate-200 w-24 -mt-[8px] mr-2"
         style={{
           transform: "perspective(200px) rotateX(-60deg)",
         }}

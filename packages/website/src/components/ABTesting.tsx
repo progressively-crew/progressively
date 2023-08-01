@@ -4,7 +4,7 @@ import { AVersion, BVersion, CVersion } from "./Browser";
 import { Code } from "./Code";
 
 export const ABTesting = ({ code }: { code: string }) => {
-  const variantTextClass = "text-center font-bold text-xl pt-4";
+  const variantTextClass = "text-center font-bold text-xl pt-4 text-white";
   const ref = useRef<HTMLDivElement | null>(null);
   const entry = useIntersectionObserver(ref, {
     threshold: 0.75,
@@ -17,50 +17,35 @@ export const ABTesting = ({ code }: { code: string }) => {
     : "opacity-0";
 
   return (
-    <div className="bg-white">
-      <div className="px-4 md:px-8 max-w-6xl mx-auto">
-        <section className={"py-12 md:py-32"}>
-          <h2 className="font-extrabold text-3xl md:text-7xl pb-4">
-            Multi-variants
-            <br /> and A/B testing
-          </h2>
+    <div>
+      <h2 className="text-3xl pb-4 text-white">Multi-variants & A/B testing</h2>
 
-          <p className="text-xl md:text-2xl leading-relaxed pb-4">
-            Create multiple variants for a given feature flag and provide
-            different experiences to your users. Measure the impact of the
-            different versions and makes decisions to improve your apps.
-          </p>
+      <p className="text-lg text-white leading-relaxed pb-4">
+        Unleash the power of dynamic feature flags by crafting multiple
+        captivating variants that deliver diverse experiences to your users.
+        Gauge the impact of these distinct versions and make data-driven
+        decisions to elevate and optimize your apps for unprecedented success!
+      </p>
 
-          <div className="grid md:grid-cols-[2fr_1fr] gap-4 items-center">
-            <div
-              className="grid grid-cols-2 md:grid-cols-3 gap-4 pb-4"
-              ref={ref}
-            >
-              <div
-                className={animationClass}
-                style={{ animationDelay: "500ms" }}
-              >
-                <AVersion />
-                <p className={variantTextClass}>Version A</p>
-              </div>
-              <div
-                className={animationClass}
-                style={{ animationDelay: "300ms" }}
-              >
-                <BVersion />
-                <p className={variantTextClass}>Version B</p>
-              </div>
-              <div className={`${animationClass} hidden md:block`}>
-                <CVersion />
-                <p className={variantTextClass}>Version C</p>
-              </div>
-            </div>
-
-            <div className="hidden md:block">
-              <Code html={code} />
-            </div>
+      <div className="grid md:grid-cols-[2fr_1fr] gap-4 items-center">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 pb-4" ref={ref}>
+          <div className={animationClass} style={{ animationDelay: "500ms" }}>
+            <AVersion />
+            <p className={variantTextClass}>Version A</p>
           </div>
-        </section>
+          <div className={animationClass} style={{ animationDelay: "300ms" }}>
+            <BVersion />
+            <p className={variantTextClass}>Version B</p>
+          </div>
+          <div className={`${animationClass} hidden md:block`}>
+            <CVersion />
+            <p className={variantTextClass}>Version C</p>
+          </div>
+        </div>
+
+        <div className="hidden md:block">
+          <Code html={code} />
+        </div>
       </div>
     </div>
   );

@@ -1,15 +1,18 @@
 ---
-import { CanaryRelease } from "../components/CanaryRelease";
-import { FeatureSection } from "../components/FeatureSection";
 import GetStartedCTA from "../components/GetStartedCTA.astro";
 import LinkButton from "../components/LinkButton.astro";
 import { PullTriggerSection } from "../components/PullTriggerSection";
 import { SpeedUpDevelopment } from "../components/SpeedUpDevelopment";
-import { CorrelatePercentageError } from "../components/CorrelatePercentageError";
-import { ABTesting } from "../components/ABTesting";
 import Layout from "../layouts/Layout.astro";
 import hljs from "highlight.js";
-import { TimeBasedRollout } from "../components/TimeBasedRollout";
+import Logo from "../components/Logo.astro";
+import { FeedbackLoop } from "../components/FeedbackLoop";
+import { InstallationStep } from "../components/InstallationStep";
+import { PricingSection } from "../components/PricingSection";
+
+const frontendUrl = import.meta.env.FRONTEND_URL;
+
+const trialUrl = `${frontendUrl}/register`;
 
 const clientComponent = hljs.highlight(
   `
@@ -24,6 +27,8 @@ const FlaggedComponent = () => {
 
   return <div>Old variant</div>;
 };
+
+// It's as simple as that.
 
 `,
   { language: "jsx" }
@@ -50,27 +55,48 @@ const FlaggedComponent = () => {
 `,
   { language: "jsx" }
 ).value;
+
+const smallSnippet = hljs.highlight(
+  `
+const { flags } = useFlags();     
+
+if (flags.newFeature) {
+  return <NewFeature />;
+}
+
+return <OldFeature />;
+
+`,
+  { language: "jsx" }
+).value;
 ---
 
 <Layout title="Welcome to Progressively, the new feature flag solution.">
-  <div class="bg-slate-900">
+  <div class="bg-gradient-to-b from-slate-900 via-slate-800 to-fuchsia-900">
     <header
-      class="py-12 md:py-20 md:min-h-screen flex flex-col md:grid md:grid-cols-2 gap-8 px-12 max-w-screen-2xl mx-auto items-center"
+      class="py-12 md:py-32 gap-8 px-12 max-w-screen-2xl mx-auto items-center"
     >
-      <div>
+      <div class="flex justify-center flex-col items-center">
+        <Logo width={60} height={60} />
         <h1
-          class="text-center md:text-left text-4xl md:text-5xl font-extrabold text-white"
+          class="text-center text-4xl md:text-5xl font-extrabold text-white pt-4 !leading-tight animate-fade-enter-top"
         >
-          Introducing <span>Progressively</span>
+          Stress-less & risk-free<br />feature deployments
         </h1>
 
         <p
-          class="text-center md:text-left text-xl md:text-3xl text-slate-200 pt-4 leading-relaxed"
+          class="text-center md:text-left text-xl md:text-2xl text-white pt-4 leading-relaxed animate-fade-enter-bottom opacity-0"
+          style={{ animationDelay: "300ms" }}
         >
-          A simple, lightweight and OpenSource feature flag software.
+          Deploy your features confidently, without stress, and <strong
+            >progressively</strong
+          >.
         </p>
 
-        <div class="flex flex-col sm:flex-row gap-4 pt-8">
+        <div
+          class="flex flex-col sm:flex-row gap-4 pt-8 animate-fade-enter-bottom opacity-0"
+          style={{ animationDelay: "500ms" }}
+        >
           <LinkButton
             variant="primary-inverse"
             href="https://dashboard.progressively.app/signin"
@@ -91,7 +117,7 @@ const FlaggedComponent = () => {
         </div>
       </div>
 
-      <div class="hidden md:block">
+      <div class="hidden md:block pt-20">
         <PullTriggerSection client:load clientComponent={clientComponent} />
       </div>
     </header>
@@ -100,13 +126,11 @@ const FlaggedComponent = () => {
   <main>
     <SpeedUpDevelopment client:load />
 
-    <CanaryRelease client:load />
+    <FeedbackLoop client:load abcVersions={abcVersions} />
 
-    <ABTesting code={abcVersions} client:load />
+    <InstallationStep client:load code={smallSnippet} />
 
-    <CorrelatePercentageError client:load />
-
-    <TimeBasedRollout client:load />
+    <PricingSection client:load trialUrl={trialUrl} />
 
     <GetStartedCTA />
   </main>
