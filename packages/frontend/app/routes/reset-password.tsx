@@ -19,6 +19,9 @@ import { resetPassword } from "~/modules/user/services/resetPassword";
 import { H1Logo } from "~/components/H1Logo";
 import { Spacer } from "~/components/Spacer";
 import { Button } from "~/components/Buttons/Button";
+import { BackLink } from "~/components/BackLink";
+import { Logo } from "~/components/Logo/Logo";
+import { Typography } from "~/components/Typography";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -105,58 +108,57 @@ export default function ResetPasswordPage() {
 
   return (
     <NotAuthenticatedLayout
-      size="S"
-      action={
-        <Button
-          to="/signin"
-          variant="secondary-inverse"
-          className="w-full"
-        >{`Sign in`}</Button>
-      }
       status={
-        errors && Object.keys(errors).length > 0 && <ErrorBox list={errors} />
+        errors && Object.keys(errors).length > 0 ? (
+          <ErrorBox list={errors} />
+        ) : success ? (
+          <SuccessBox id="password-reset">
+            The password has been successfully reset. You can now connect.
+          </SuccessBox>
+        ) : null
       }
+      aside={<div />}
+      backLink={<BackLink to="/signin">Back to signin</BackLink>}
     >
-      <H1Logo>{pageTitle}</H1Logo>
+      <Logo size={60} fill="black" />
 
-      <Spacer size={2} />
+      <Typography
+        as="h1"
+        className="text-3xl font-extrabold pt-4 !leading-tight pb-8"
+      >
+        {pageTitle}
+      </Typography>
 
-      {success && (
-        <SuccessBox id="password-reset">
-          The password has been successfully reset. You can now connect.
-        </SuccessBox>
-      )}
+      <div className="w-full">
+        <Form method="post">
+          <input type="hidden" name="token" id="token" value={urlToken || ""} />
 
-      <Spacer size={1} />
+          <FormGroup>
+            <TextInput
+              isInvalid={Boolean(errors?.password)}
+              label="New password"
+              name="password"
+              placeholder="**********"
+              type="password"
+            />
 
-      <Form method="post">
-        <input type="hidden" name="token" id="token" value={urlToken || ""} />
+            <TextInput
+              isInvalid={Boolean(errors?.confirmationPassword)}
+              label="Confirmation password"
+              name="confirmationPassword"
+              placeholder="**********"
+              type="password"
+            />
 
-        <FormGroup>
-          <TextInput
-            isInvalid={Boolean(errors?.password)}
-            label="New password"
-            name="password"
-            placeholder="**********"
-            type="password"
-          />
-
-          <TextInput
-            isInvalid={Boolean(errors?.confirmationPassword)}
-            label="Confirmation password"
-            name="confirmationPassword"
-            placeholder="**********"
-            type="password"
-          />
-
-          <SubmitButton
-            isLoading={transition.state === "submitting"}
-            loadingText="Password changing in progress, please wait..."
-          >
-            Change password
-          </SubmitButton>
-        </FormGroup>
-      </Form>
+            <SubmitButton
+              isLoading={transition.state === "submitting"}
+              loadingText="Password changing in progress, please wait..."
+            >
+              Change password
+            </SubmitButton>
+          </FormGroup>
+        </Form>
+      </div>
     </NotAuthenticatedLayout>
   );
 }

@@ -114,7 +114,9 @@ export const Button = forwardRef(
         aria-label={isLoading ? loadingText : props["aria-label"]}
       >
         {isLoading && <Spinner className="text-xl absolute" />}
-        <span className={isLoading ? "opacity-0" : undefined}>{icon}</span>
+        {icon && (
+          <span className={isLoading ? "opacity-0" : undefined}>{icon}</span>
+        )}
         {children && (
           <span className={isLoading ? "opacity-0" : undefined}>
             {children}

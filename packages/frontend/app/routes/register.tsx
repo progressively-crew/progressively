@@ -13,9 +13,9 @@ import {
   V2_MetaFunction,
 } from "@remix-run/node";
 import { useActionData } from "@remix-run/react";
-import { H1Logo } from "~/components/H1Logo";
-import { Spacer } from "~/components/Spacer";
-import { Button } from "~/components/Buttons/Button";
+import { Logo } from "~/components/Logo/Logo";
+import { Typography } from "~/components/Typography";
+import { BackLink } from "~/components/BackLink";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -46,14 +46,6 @@ export default function CreateAccountPage() {
 
   return (
     <NotAuthenticatedLayout
-      size="S"
-      action={
-        <Button
-          to="/signin"
-          variant="secondary-inverse"
-          className="w-full"
-        >{`Sign in`}</Button>
-      }
       status={
         errors && Object.keys(errors).length > 0 ? (
           <ErrorBox list={errors} />
@@ -64,11 +56,21 @@ export default function CreateAccountPage() {
           </SuccessBox>
         ) : null
       }
+      aside={<div />}
+      backLink={<BackLink to="/signin">Back to signin</BackLink>}
     >
-      <H1Logo>Sign up</H1Logo>
+      <Logo size={60} fill="black" />
 
-      <Spacer size={2} />
-      <RegisterForm errors={errors} />
+      <Typography
+        as="h1"
+        className="text-3xl font-extrabold pt-4 !leading-tight animate-fade-enter-top pb-8"
+      >
+        Create an account
+      </Typography>
+
+      <div className="w-full">
+        <RegisterForm errors={errors} />
+      </div>
     </NotAuthenticatedLayout>
   );
 }
