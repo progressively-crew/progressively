@@ -1,63 +1,30 @@
-import { Card } from "~/components/Card";
-import { Container } from "~/components/Container";
-import { Logo } from "~/components/Logo/Logo";
-import { Main } from "~/components/Main";
-import { Spacer } from "~/components/Spacer";
-import { Stack } from "~/components/Stack";
-
 export interface NotAuthenticatedLayoutProps {
   children: React.ReactNode;
-  header?: React.ReactNode;
   status?: React.ReactNode;
-  size?: "S" | "M";
-  action?: React.ReactNode;
+  aside: React.ReactNode;
+  backLink?: React.ReactNode;
 }
 
 export const NotAuthenticatedLayout = ({
   children,
-  header,
   status,
-  size,
-  action,
+  aside,
+  backLink,
 }: NotAuthenticatedLayoutProps) => {
-  const containerSize = size === "S" ? "md:max-w-[480px]" : "md:w-2/5";
   return (
-    <div className="h-full flex-1 bg-white dark:bg-slate-900">
-      <nav className="bg-slate-800">
-        <Container>
-          <ol className="flex h-14 items-center justify-between">
-            <li>
-              <div className={"rounded px-4 py-1"}>
-                <Logo aria-label={"Progressively"} />
-              </div>
-            </li>
-            {action && <li>{action}</li>}
-          </ol>
-        </Container>
-      </nav>
+    <main className="h-full flex-1 grid md:grid-cols-2">
+      <div className="h-full">
+        {backLink && <div className="p-4 absolute">{backLink}</div>}
+        <div className="px-12 max-w-md mx-auto flex items-center flex-col justify-center h-full">
+          {status && <div className="pb-12">{status}</div>}
 
-      <div className={"w-full px-4 lg:px-8 mx-auto " + containerSize}>
-        <Spacer size={8} />
-
-        <Main>
-          {status && (
-            <div className="pb-4">
-              <Stack spacing={4}>{status}</Stack>
-            </div>
-          )}
-
-          <Card>
-            <div className="py-12 px-8">
-              <Stack spacing={4}>
-                <Stack spacing={2}>{header}</Stack>
-                {children}
-              </Stack>
-            </div>
-          </Card>
-        </Main>
+          {children}
+        </div>
       </div>
 
-      <Spacer size={10} />
-    </div>
+      <div className="hidden md:block bg-gradient-to-b from-slate-900 via-slate-800 to-fuchsia-900 h-full">
+        {aside}
+      </div>
+    </main>
   );
 };

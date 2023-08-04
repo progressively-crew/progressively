@@ -64,42 +64,67 @@ export const RegisterForm = ({ errors, actionLabel }: RegisterFormProps) => {
   return (
     <Form method="post">
       <FormGroup>
-        <TextInput
-          isInvalid={Boolean(errors?.fullname)}
-          label="Fullname"
-          name="fullname"
-          placeholder="e.g: James Bond"
-        />
-
-        <TextInput
-          isInvalid={Boolean(errors?.email)}
-          label="Email"
-          name="email"
-          placeholder="e.g: james.bond@mi6.com"
-        />
-
-        <TextInput
-          isInvalid={Boolean(errors?.password)}
-          label="Password"
-          name="password"
-          type="password"
-          placeholder="************"
-        />
-
-        <TextInput
-          isInvalid={Boolean(errors?.confirmPassword)}
-          label="Confirm your password"
-          name="confirmPassword"
-          type="password"
-          placeholder="************"
-        />
-
-        <SubmitButton
-          isLoading={transition.state === "submitting"}
-          loadingText="Creation in progress, please wait..."
+        <div
+          className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"
+          style={{ animationDelay: "300ms" }}
         >
-          {actionLabel || "Sign up"}
-        </SubmitButton>
+          <TextInput
+            isInvalid={Boolean(errors?.fullname)}
+            label="Fullname"
+            name="fullname"
+            placeholder="e.g: James Bond"
+          />
+        </div>
+
+        <div
+          className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"
+          style={{ animationDelay: "500ms" }}
+        >
+          <TextInput
+            isInvalid={Boolean(errors?.email)}
+            label="Email"
+            name="email"
+            placeholder="e.g: james.bond@mi6.com"
+          />
+        </div>
+
+        <div
+          className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"
+          style={{ animationDelay: "700ms" }}
+        >
+          <TextInput
+            isInvalid={Boolean(errors?.password)}
+            label="Password"
+            name="password"
+            type="password"
+            placeholder="************"
+          />
+        </div>
+
+        <div
+          className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"
+          style={{ animationDelay: "900ms" }}
+        >
+          <TextInput
+            isInvalid={Boolean(errors?.confirmPassword)}
+            label="Confirm your password"
+            name="confirmPassword"
+            type="password"
+            placeholder="************"
+          />
+        </div>
+
+        <div
+          className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"
+          style={{ animationDelay: "1100ms" }}
+        >
+          <SubmitButton
+            isLoading={transition.state === "submitting"}
+            loadingText="Creation in progress, please wait..."
+          >
+            {actionLabel || "Sign up"}
+          </SubmitButton>
+        </div>
       </FormGroup>
     </Form>
   );

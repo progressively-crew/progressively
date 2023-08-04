@@ -9,6 +9,7 @@ import { getSession } from "~/sessions";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import { Stack } from "~/components/Stack";
 import { H1Logo } from "~/components/H1Logo";
+import { Typography } from "~/components/Typography";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -49,35 +50,40 @@ export default function WhatsYourNamePage() {
   return (
     <NotAuthenticatedLayout
       status={errors?.fullname && <ErrorBox list={errors} />}
+      aside={<div />}
     >
-      <Stack spacing={4}>
-        <div className="text-center motion-safe:animate-fade-enter-top">
-          <H1Logo> What's your name?</H1Logo>
-        </div>
+      <Typography
+        as="h1"
+        className="text-center text-3xl font-extrabold pt-4 !leading-tight motion-safe:animate-fade-enter-top pb-4"
+      >
+        What's your name?
+      </Typography>
 
-        <div
-          className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0 pt-4"
-          style={{
-            animationDelay: "500ms",
-          }}
-        >
-          <Form method="post">
-            <div className="flex flex-col md:flex-row gap-4 items-center">
-              <div className="flex-1">
-                <TextInput
-                  isInvalid={Boolean(errors?.fullname)}
-                  label="Fullname"
-                  name="fullname"
-                  placeholder="e.g: John Doe"
-                  hiddenLabel
-                />
-              </div>
+      <div className="w-full">
+        <Form method="post">
+          <div className="flex flex-col gap-4">
+            <div
+              className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"
+              style={{ animationDelay: "300ms" }}
+            >
+              <TextInput
+                isInvalid={Boolean(errors?.fullname)}
+                label="Fullname"
+                name="fullname"
+                placeholder="e.g: John Doe"
+                hiddenLabel
+              />
+            </div>
 
+            <div
+              className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"
+              style={{ animationDelay: "500ms" }}
+            >
               <SubmitButton type="submit">Set my fullname</SubmitButton>
             </div>
-          </Form>
-        </div>
-      </Stack>
+          </div>
+        </Form>
+      </div>
     </NotAuthenticatedLayout>
   );
 }

@@ -27,6 +27,9 @@ import { getOktaConfig } from "~/modules/auth/services/get-okta-config";
 import { useOkta } from "~/modules/auth/hooks/useOkta";
 import { Spacer } from "~/components/Spacer";
 import { H1Logo } from "~/components/H1Logo";
+import { Card, CardContent } from "~/components/Card";
+import { Logo } from "~/components/Logo/Logo";
+import { Typography } from "~/components/Typography";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -101,45 +104,41 @@ export default function Signin() {
   const data = useActionData<ActionData>();
   const errors = data?.errors;
 
+  const status = oauthFailed ? (
+    <ErrorBox
+      list={{
+        oauth:
+          "An error appeared during the authentication. Please try again or contact your system administrator.",
+      }}
+    />
+  ) : errors?.password || errors?.email || errors?.badUser ? (
+    <ErrorBox list={errors} />
+  ) : userActivated ? (
+    <SuccessBox id="user-activated">
+      The account has been activated, you can now log in
+    </SuccessBox>
+  ) : userCreated ? (
+    <SuccessBox id="user-created">
+      The account has been created, you can now log in
+    </SuccessBox>
+  ) : null;
+
   return (
-    <NotAuthenticatedLayout
-      size="S"
-      action={
-        showRegister && (
-          <Button
-            to="/register"
-            variant="secondary-inverse"
-            className="w-full"
-          >{`Sign up`}</Button>
-        )
-      }
-      status={
-        oauthFailed ? (
-          <ErrorBox
-            list={{
-              oauth:
-                "An error appeared during the authentication. Please try again or contact your system administrator.",
-            }}
-          />
-        ) : errors?.password || errors?.email || errors?.badUser ? (
-          <ErrorBox list={errors} />
-        ) : userActivated ? (
-          <SuccessBox id="user-activated">
-            The account has been activated, you can now log in
-          </SuccessBox>
-        ) : userCreated ? (
-          <SuccessBox id="user-created">
-            The account has been created, you can now log in
-          </SuccessBox>
-        ) : null
-      }
-    >
-      <H1Logo>Sign in</H1Logo>
+    <NotAuthenticatedLayout status={status} aside={<div></div>}>
+      <Logo size={60} fill="black" />
 
-      <Spacer size={2} />
+      <Typography
+        as="h1"
+        className="text-center text-3xl font-extrabold pt-4 !leading-tight motion-safe:animate-fade-enter-top pb-8"
+      >
+        Signin to your account
+      </Typography>
 
-      <Form method="post">
-        <FormGroup>
+      <Form method="post" className="w-full">
+        <div
+          className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"
+          style={{ animationDelay: "300ms" }}
+        >
           <TextInput
             isInvalid={Boolean(errors?.email)}
             name="email"
@@ -147,8 +146,13 @@ export default function Signin() {
             placeholder="e.g: james.bond@mi6.com"
             autoComplete="username"
           />
+        </div>
 
-          <div>
+        <div className="pt-4">
+          <div
+            className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"
+            style={{ animationDelay: "500ms" }}
+          >
             <TextInput
               isInvalid={Boolean(errors?.password)}
               name="password"
@@ -157,15 +161,33 @@ export default function Signin() {
               placeholder="************"
               autoComplete="current-password"
             />
-
-            <div className="pt-1 flex justify-end">
-              <Link
-                to="/forgot-password"
-                className="text-xs text-gray-500 dark:text-slate-300"
-              >{`I forgot my password`}</Link>
-            </div>
           </div>
 
+          <div
+            className="pt-1 flex justify-end motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"
+            style={{ animationDelay: "700ms" }}
+          >
+            <Link
+              to="/forgot-password"
+              className="text-xs text-gray-500 dark:text-slate-300"
+            >{`I forgot my password`}</Link>
+          </div>
+        </div>
+
+        <div
+          className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0 pt-4 flex flex-col gap-2"
+          style={{ animationDelay: "900ms" }}
+        >
+          {oktaConfig.isOktaActivated && (
+            <Button
+              type="button"
+              variant="secondary"
+              icon={<SiOkta aria-hidden />}
+              onClick={okta?.openLoginPage}
+            >
+              Sign in with Okta
+            </Button>
+          )}
           <Button
             variant="primary"
             isLoading={transition.state === "submitting"}
@@ -173,19 +195,14 @@ export default function Signin() {
           >
             Sign in
           </Button>
-        </FormGroup>
-      </Form>
 
-      {oktaConfig.isOktaActivated && (
-        <Button
-          type="button"
-          variant="secondary"
-          icon={<SiOkta aria-hidden />}
-          onClick={okta?.openLoginPage}
-        >
-          Sign in with Okta
-        </Button>
-      )}
+          {showRegister && (
+            <Button to="/register" variant="tertiary">
+              Sign up
+            </Button>
+          )}
+        </div>
+      </Form>
     </NotAuthenticatedLayout>
   );
 }

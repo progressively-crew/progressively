@@ -4,5 +4,5 @@ export interface FormGroupProps {
   children: React.ReactNode;
 }
 export const FormGroup = ({ children }: FormGroupProps) => {
-  return <Stack spacing={6}>{children}</Stack>;
+  return <Stack spacing={4}>{children}</Stack>;
 };

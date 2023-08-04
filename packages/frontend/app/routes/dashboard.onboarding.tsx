@@ -12,6 +12,7 @@ import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import { Spacer } from "~/components/Spacer";
 import { Stack } from "~/components/Stack";
 import { useUser } from "~/modules/user/contexts/useUser";
+import { Logo } from "~/components/Logo/Logo";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -57,46 +58,48 @@ export default function OnboardingPage() {
   const errors = data?.errors;
 
   return (
-    <NotAuthenticatedLayout status={errors?.name && <ErrorBox list={errors} />}>
-      <Stack spacing={4}>
-        <h1
-          className="text-4xl md:text-5xl motion-safe:animate-fade-enter-bottom"
-          id="page-title"
-        >
-          <span className="dark:text-slate-100">Welcome aboard</span>
-          <Spacer size={2} />
-          <Typography as="span" className="font-extrabold">
-            {user.fullname}
-          </Typography>
-        </h1>
-        <Spacer size={2} />
-        <Typography
-          className="motion-safe:opacity-0 motion-safe:animate-fade-enter-bottom"
-          style={{ animationDelay: "500ms" }}
-        >
-          Before being fully operational, you will need to create{" "}
-          <strong>a project</strong>. In general, a project is the name of your
-          application.
-        </Typography>
+    <NotAuthenticatedLayout
+      status={errors?.name && <ErrorBox list={errors} />}
+      aside={<div />}
+    >
+      <Logo size={60} fill="black" />
 
-        <div
-          className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"
-          style={{
-            animationDelay: "700ms",
-          }}
-        >
-          <Form method="post">
-            <div className="flex flex-col md:flex-row gap-4 items-center">
-              <div className="flex-1">
-                <TextInput
-                  isInvalid={Boolean(errors?.name)}
-                  label="Project name"
-                  name="name"
-                  placeholder="e.g: My super project"
-                  hiddenLabel
-                />
-              </div>
+      <Typography
+        as="h1"
+        className="text-5xl pt-4 !leading-tight pb-2 motion-safe:animate-fade-enter-top"
+      >
+        Welcome aboard <strong>{user.fullname}</strong>
+      </Typography>
 
+      <Typography
+        className="motion-safe:opacity-0 motion-safe:animate-fade-enter-bottom pb-4"
+        style={{ animationDelay: "300ms" }}
+      >
+        Before being fully operational, you will need to create{" "}
+        <strong>a project</strong>. In general, a project is the name of your
+        application.
+      </Typography>
+
+      <div className="w-full">
+        <Form method="post">
+          <div className="flex flex-col gap-4">
+            <div
+              className="motion-safe:opacity-0 motion-safe:animate-fade-enter-bottom"
+              style={{ animationDelay: "500ms" }}
+            >
+              <TextInput
+                isInvalid={Boolean(errors?.name)}
+                label="Project name"
+                name="name"
+                placeholder="e.g: My super project"
+                hiddenLabel
+              />
+            </div>
+
+            <div
+              className="motion-safe:opacity-0 motion-safe:animate-fade-enter-bottom"
+              style={{ animationDelay: "700ms" }}
+            >
               <SubmitButton
                 loadingText="Creating the project..."
                 isLoading={navigation.state === "loading"}
@@ -104,9 +107,9 @@ export default function OnboardingPage() {
                 Create the project
               </SubmitButton>
             </div>
-          </Form>
-        </div>
-      </Stack>
+          </div>
+        </Form>
+      </div>
     </NotAuthenticatedLayout>
   );
 }

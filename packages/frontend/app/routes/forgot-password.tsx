@@ -9,9 +9,8 @@ import { Typography } from "~/components/Typography";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import { validateEmail } from "~/modules/forms/utils/validateEmail";
 import { forgotPassword } from "~/modules/user/services/forgotPassword";
-import { H1Logo } from "~/components/H1Logo";
-import { Button } from "~/components/Buttons/Button";
-import { Spacer } from "~/components/Spacer";
+import { Logo } from "~/components/Logo/Logo";
+import { BackLink } from "~/components/BackLink";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -67,14 +66,6 @@ export default function ForgotPasswordPage() {
 
   return (
     <NotAuthenticatedLayout
-      size="S"
-      action={
-        <Button
-          to="/signin"
-          variant="secondary-inverse"
-          className="w-full"
-        >{`Sign in`}</Button>
-      }
       status={
         errors && Object.keys(errors).length > 0 ? (
           <ErrorBox list={errors} />
@@ -85,33 +76,43 @@ export default function ForgotPasswordPage() {
           </SuccessBox>
         ) : null
       }
+      aside={<div />}
+      backLink={<BackLink to="/signin">Back to signin</BackLink>}
     >
-      <H1Logo>Password forgotten</H1Logo>
-      <Spacer size={2} />
+      <Logo size={60} fill="black" />
 
-      <Typography className="text-center">
+      <Typography
+        as="h1"
+        className="text-center text-3xl font-extrabold pt-4 !leading-tight pb-2"
+      >
+        Password forgotten
+      </Typography>
+
+      <Typography className="text-center pb-4">
         Enter your email to get a recovery link and reset your password.
       </Typography>
 
-      <Form method="post">
-        <FormGroup>
-          <TextInput
-            hiddenLabel
-            isInvalid={Boolean(errors?.email)}
-            label="Email"
-            name="email"
-            type="email"
-            placeholder="e.g: james.bond@mi6.com"
-          />
+      <div className="w-full">
+        <Form method="post">
+          <FormGroup>
+            <TextInput
+              hiddenLabel
+              isInvalid={Boolean(errors?.email)}
+              label="Email"
+              name="email"
+              type="email"
+              placeholder="e.g: james.bond@mi6.com"
+            />
 
-          <SubmitButton
-            isLoading={transition.state === "submitting"}
-            loadingText="Password resetting in progress, please wait..."
-          >
-            Reset password
-          </SubmitButton>
-        </FormGroup>
-      </Form>
+            <SubmitButton
+              isLoading={transition.state === "submitting"}
+              loadingText="Password resetting in progress, please wait..."
+            >
+              Reset password
+            </SubmitButton>
+          </FormGroup>
+        </Form>
+      </div>
     </NotAuthenticatedLayout>
   );
 }
