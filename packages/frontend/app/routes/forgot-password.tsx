@@ -83,7 +83,7 @@ export default function ForgotPasswordPage() {
 
       <Typography
         as="h1"
-        className="text-3xl font-extrabold pt-4 !leading-tight pb-2"
+        className="text-center text-3xl font-extrabold pt-4 !leading-tight pb-2"
       >
         Password forgotten
       </Typography>
