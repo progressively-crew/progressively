@@ -54,7 +54,7 @@ export default function WhatsYourNamePage() {
     >
       <Typography
         as="h1"
-        className="text-center text-3xl font-extrabold pt-4 !leading-tight animate-fade-enter-top pb-4"
+        className="text-center text-3xl font-extrabold pt-4 !leading-tight motion-safe:animate-fade-enter-top pb-4"
       >
         What's your name?
       </Typography>

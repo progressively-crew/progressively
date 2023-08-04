@@ -66,11 +66,9 @@ export default function OnboardingPage() {
 
       <Typography
         as="h1"
-        className="text-5xl pt-4 !leading-tight pb-2 animate-fade-enter-top"
+        className="text-5xl pt-4 !leading-tight pb-2 motion-safe:animate-fade-enter-top"
       >
-        Welcome aboard
-        <br />
-        <strong>{user.fullname}</strong>
+        Welcome aboard <strong>{user.fullname}</strong>
       </Typography>
 
       <Typography

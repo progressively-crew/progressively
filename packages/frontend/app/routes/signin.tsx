@@ -129,7 +129,7 @@ export default function Signin() {
 
       <Typography
         as="h1"
-        className="text-center text-3xl font-extrabold pt-4 !leading-tight animate-fade-enter-top pb-8"
+        className="text-center text-3xl font-extrabold pt-4 !leading-tight motion-safe:animate-fade-enter-top pb-8"
       >
         Signin to your account
       </Typography>
