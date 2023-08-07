@@ -15,7 +15,7 @@
       "dependsOn": []
     },
     "dev": {
-      "dependsOn": []
+      "dependsOn": ["^build"]
     },
     "db:migrate:init": {
       "dependsOn": []
