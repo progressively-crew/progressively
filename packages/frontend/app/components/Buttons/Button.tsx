@@ -17,7 +17,7 @@ export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
     | "secondary-inverse";
   scheme?: "default" | "danger";
   icon?: React.ReactNode;
-  size?: "M";
+  size?: "M" | "S";
   form?: string;
 }
 
@@ -42,6 +42,7 @@ const classCombination = {
 
 const sizeClasses = {
   M: "h-10 px-4 gap-4",
+  S: "h-7 px-2 gap-2 text-sm",
 };
 
 export const Button = forwardRef(

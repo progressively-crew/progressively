@@ -1,12 +1,11 @@
 import { HiOutlineCog6Tooth } from "react-icons/hi2";
-import { CardEntity } from "~/components/Entity/Entity";
 import { Flag } from "../types";
-import { ButtonCopy } from "~/components/ButtonCopy";
 import { IconBox } from "~/components/IconBox";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { Environment } from "~/modules/environments/types";
 import { Button } from "~/components/Buttons/Button";
 import { EnvIcon } from "~/components/Icons/EnvIcon";
+import { Table, Tbody, Td, Th, Tr } from "~/components/Table";
 
 export interface FlagEnvListProps {
   flags: Array<Flag>;
@@ -20,52 +19,55 @@ export const FlagList = ({
   environments,
 }: FlagEnvListProps) => {
   return (
-    <ul className="flex flex-col gap-4">
-      {flags.map((flag) => (
-        <li key={flag.uuid}>
-          <CardEntity
-            avatar={
+    <Table>
+      <caption className="sr-only">Feature flag list for the project</caption>
+      <thead>
+        <tr>
+          <Th>
+            <span className="sr-only">Flag icon</span>
+          </Th>
+          <Th>Flag name</Th>
+          <Th>Environments</Th>
+          <Th>Actions</Th>
+        </tr>
+      </thead>
+      <Tbody>
+        {flags.map((flag) => (
+          <Tr key={flag.uuid}>
+            <Td>
               <IconBox content={flag.name}>
                 <FlagIcon />
               </IconBox>
-            }
-            title={flag.name}
-            description={flag.description}
-            actions={
-              <>
-                <div className="hidden md:block">
-                  <ButtonCopy toCopy={flag.key}>{flag.key}</ButtonCopy>
-                </div>
-              </>
-            }
-            footer={
-              <div className="flex flex-col md:flex-row justify-between px-4 md:items-center gap-4">
-                <div className="flex flex-col md:flex-row gap-4 md:items-center">
-                  {environments.map((env) => (
-                    <Button
-                      to={`/dashboard/projects/${projectId}/environments/${env.uuid}/flags/${flag.uuid}`}
-                      key={env.uuid}
-                      variant="secondary"
-                      icon={<EnvIcon />}
-                    >
-                      <span className="sr-only">See {flag.name} in</span>
-                      {env.name}
-                    </Button>
-                  ))}
-                </div>
-
-                <Button
-                  to={`/dashboard/projects/${projectId}/flags/${flag.uuid}`}
-                  variant="secondary"
-                  icon={<HiOutlineCog6Tooth />}
-                >
-                  Settings
-                </Button>
+            </Td>
+            <Td>{flag.name}</Td>
+            <Td>
+              <div className="flex flex-row gap-2 flex-wrap">
+                {environments.map((env) => (
+                  <Button
+                    variant="secondary"
+                    key={`${flag.uuid}-${env.uuid}`}
+                    to={`/dashboard/projects/${projectId}/environments/${env.uuid}/flags/${flag.uuid}`}
+                    icon={<EnvIcon />}
+                    size="S"
+                  >
+                    {env.name}
+                  </Button>
+                ))}
               </div>
-            }
-          />
-        </li>
-      ))}
-    </ul>
+            </Td>
+            <Td>
+              <Button
+                to={`/dashboard/projects/${projectId}/flags/${flag.uuid}`}
+                variant="secondary"
+                icon={<HiOutlineCog6Tooth />}
+                size="S"
+              >
+                Settings
+              </Button>
+            </Td>
+          </Tr>
+        ))}
+      </Tbody>
+    </Table>
   );
 };
