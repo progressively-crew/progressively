@@ -12,7 +12,6 @@ import {
   useTransition,
 } from "@remix-run/react";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
-import { FormGroup } from "~/components/Fields/FormGroup";
 import { TextInput } from "~/components/Fields/TextInput";
 import { Link } from "~/components/Link";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
@@ -25,11 +24,9 @@ import { Button } from "~/components/Buttons/Button";
 import { SiOkta } from "react-icons/si";
 import { getOktaConfig } from "~/modules/auth/services/get-okta-config";
 import { useOkta } from "~/modules/auth/hooks/useOkta";
-import { Spacer } from "~/components/Spacer";
-import { H1Logo } from "~/components/H1Logo";
-import { Card, CardContent } from "~/components/Card";
 import { Logo } from "~/components/Logo/Logo";
 import { Typography } from "~/components/Typography";
+import { getProjects } from "~/modules/projects/services/getProjects";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -74,7 +71,16 @@ export const action: ActionFunction = async ({
   session.set("auth-cookie", authenticationSucceed.access_token);
   session.set("refresh-token", authenticationSucceed.refresh_token);
 
-  return redirect("/dashboard", {
+  // If only one project, redirect to it
+  const projects = await getProjects(authenticationSucceed.access_token);
+
+  let url = "/dashboard";
+
+  if (projects?.length === 1) {
+    url += `/projects/${projects[0].projectId}/flags`;
+  }
+
+  return redirect(url, {
     headers: {
       "Set-Cookie": await commitSession(session),
     },
