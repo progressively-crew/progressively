@@ -26,6 +26,8 @@ import { LineChart } from "~/components/LineChart";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
 import { VariantCard } from "~/modules/insights/components/VariantCard";
 import { Typography } from "~/components/Typography";
+import { Table, Tbody, Td, Th, Tr } from "~/components/Table";
+import { VariantDot } from "~/modules/variants/components/VariantDot";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -217,8 +219,8 @@ export default function FlagInsights() {
         <Card>
           <CardContent>
             <SectionHeader
-              title="Variants evaluations"
-              description="Number of times the different variants have been calculated for the users"
+              title={`${flagEvaluationsCount} flag evaluations`}
+              description="Number of times the flag has been evaluated."
             />
 
             {hitsPerVariantPerDate.length > 0 ? (
@@ -229,29 +231,41 @@ export default function FlagInsights() {
                 description={"There are no flag evaluations for this period."}
               />
             )}
-
-            <div>
-              <Typography as="h3" className="text-xl font-semibold pb-4">
-                Total for period
-                <span className="bg-slate-100 rounded-full px-2 py-1 font-normal text-gray-600 text-xs ml-2">
-                  {flagEvaluationsCount} eval.
-                </span>
-              </Typography>
-              <div className="flex flex-row gap-4 flex-wrap">
-                {flagEvaluations.map((fe) => (
-                  <VariantCard
-                    key={`variant-card-${fe.valueResolved}`}
-                    variant={fe.valueResolved}
-                    hit={fe._count}
-                    ratio={
-                      Math.round((fe._count / flagEvaluationsCount) * 10_000) /
-                      100
-                    }
-                  />
-                ))}
-              </div>
-            </div>
           </CardContent>
+
+          <Table>
+            <caption className="sr-only">
+              Evaluation count per variant for the given flag
+            </caption>
+            <thead>
+              <tr>
+                <Th>Value</Th>
+                <Th>Evaluation count</Th>
+                <Th>Ratio</Th>
+              </tr>
+            </thead>
+
+            <Tbody>
+              {flagEvaluations.map((fe) => (
+                <Tr key={`variant-card-${fe.valueResolved}`}>
+                  <Td>
+                    <div className="flex flex-row gap-2 items-center">
+                      <VariantDot variant={fe.valueResolved} />
+                      {fe.valueResolved}
+                    </div>
+                  </Td>
+                  <Td>{fe._count}</Td>
+                  <Td>
+                    <strong>
+                      {Math.round((fe._count / flagEvaluationsCount) * 10_000) /
+                        100}
+                      %
+                    </strong>
+                  </Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
         </Card>
       </Section>
 
@@ -262,9 +276,8 @@ export default function FlagInsights() {
               title="Hits on metrics"
               description="Multiple information regarding metrics that have been tracked."
             />
-
-            <MetricPerVariantList items={metricsByVariantCount} />
           </CardContent>
+          <MetricPerVariantList items={metricsByVariantCount} />
         </Card>
       </Section>
     </DashboardLayout>
