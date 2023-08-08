@@ -152,12 +152,14 @@ export default function Variants() {
       )}
 
       {hasVariants && (
-        <VariantList
-          variants={variants}
-          projectId={project.uuid}
-          envId={environment.uuid}
-          flagId={currentFlag.uuid}
-        />
+        <Card>
+          <VariantList
+            variants={variants}
+            projectId={project.uuid}
+            envId={environment.uuid}
+            flagId={currentFlag.uuid}
+          />
+        </Card>
       )}
     </DashboardLayout>
   );

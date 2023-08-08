@@ -150,12 +150,14 @@ export default function Segments() {
       )}
 
       {hasSegments && (
-        <SegmentList
-          segments={segments}
-          projectId={project.uuid}
-          envId={environment.uuid}
-          flagId={currentFlag.uuid}
-        />
+        <Card>
+          <SegmentList
+            segments={segments}
+            projectId={project.uuid}
+            envId={environment.uuid}
+            flagId={currentFlag.uuid}
+          />
+        </Card>
       )}
     </DashboardLayout>
   );
