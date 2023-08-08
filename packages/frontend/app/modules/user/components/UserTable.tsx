@@ -40,20 +40,21 @@ export const UserTable = ({ userProjects }: UserTableProps) => {
               <Tag>{userProject.role}</Tag>
             </Td>
             <Td style={{ width: 100 }}>
-              {userRole === UserRoles.Admin && (
-                <div className="flex justify-center w-full">
-                  <MenuButton
-                    items={[
-                      {
-                        label: "Remove from project",
-                        href: `/dashboard/projects/${userProject.projectId}/delete-member/${userProject.userId}`,
-                      },
-                    ]}
-                    label={"Actions on user table"}
-                    variant="action"
-                  />
-                </div>
-              )}
+              {userRole === UserRoles.Admin &&
+                userProject.role !== UserRoles.Admin && (
+                  <div className="flex justify-center w-full">
+                    <MenuButton
+                      items={[
+                        {
+                          label: "Remove from project",
+                          href: `/dashboard/projects/${userProject.projectId}/delete-member/${userProject.userId}`,
+                        },
+                      ]}
+                      label={"Actions on user table"}
+                      variant="action"
+                    />
+                  </div>
+                )}
             </Td>
           </Tr>
         ))}
