@@ -67,7 +67,7 @@ export const VariantList = ({
                       href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/variants/${variant.uuid}/delete`,
                     },
                   ]}
-                  label={"Actions on webhook"}
+                  label={"Actions on variant"}
                   variant="action"
                 />
               </div>

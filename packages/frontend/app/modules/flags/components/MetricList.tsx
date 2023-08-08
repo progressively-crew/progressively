@@ -52,7 +52,7 @@ export const MetricList = ({
                       href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/metrics/${metric.uuid}/delete`,
                     },
                   ]}
-                  label={"Actions on webhook"}
+                  label={"Actions on metric"}
                   variant="action"
                 />
               </div>
