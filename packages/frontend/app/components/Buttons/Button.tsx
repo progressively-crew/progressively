@@ -17,7 +17,7 @@ export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
     | "secondary-inverse";
   scheme?: "default" | "danger";
   icon?: React.ReactNode;
-  size?: "M";
+  size?: "M" | "S";
   form?: string;
 }
 
@@ -29,7 +29,7 @@ const classCombination = {
   defaulttertiary:
     "bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800 dark:text-slate-100 dark:hover:text-slate-100",
 
-  dangerprimary: "bg-red-600 text-white hover:bg-red-500",
+  dangerprimary: "bg-red-700 text-white hover:bg-red-600",
   dangersecondary:
     "bg-transparent border border-red-200 hover:bg-red-100 dark:border-red-700 dark:text-red-100 text-red-700",
   dangertertiary:
@@ -42,6 +42,7 @@ const classCombination = {
 
 const sizeClasses = {
   M: "h-10 px-4 gap-4",
+  S: "h-7 px-2 gap-2 text-sm",
 };
 
 export const Button = forwardRef(

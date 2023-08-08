@@ -1,6 +1,5 @@
-import React, { useRef } from "react";
+import React from "react";
 import { Link } from "../Link";
-import { Card } from "../Card";
 
 export interface EntityProps {
   title: React.ReactNode;
@@ -12,46 +11,7 @@ export interface EntityProps {
   children?: React.ReactNode;
   menu?: React.ReactNode;
   breakAvatar?: boolean;
-  footer?: React.ReactNode;
 }
-
-export const CardEntity = ({
-  title,
-  description,
-  avatar,
-  link,
-  actions,
-  children,
-  menu,
-  breakAvatar,
-  footer,
-}: EntityProps) => {
-  const linkRef = useRef<HTMLAnchorElement>(null);
-
-  const handleClick = link ? () => linkRef.current?.click() : undefined;
-  return (
-    <Card onClick={handleClick}>
-      <Entity
-        menu={menu}
-        title={title}
-        description={description}
-        avatar={avatar}
-        link={link}
-        actions={actions}
-        linkRef={linkRef}
-        breakAvatar={breakAvatar}
-      >
-        {children}
-      </Entity>
-
-      {footer && (
-        <div className="bg-slate-50 dark:bg-slate-700 py-4 rounded-b">
-          {footer}
-        </div>
-      )}
-    </Card>
-  );
-};
 
 export const Entity = ({
   title,

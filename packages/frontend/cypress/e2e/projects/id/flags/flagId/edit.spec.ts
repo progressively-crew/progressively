@@ -82,7 +82,6 @@ describe("/dashboard/projects/[id]/flags/[flagId]/edit", () => {
           .and("contain.text", "The flag has been successfully edited.");
 
         cy.findByText("New homepage 2").should("be.visible");
-        cy.findByText("Switch the new homepage design 2").should("be.visible");
 
         cy.url().should("include", "/dashboard/projects/1/flags?flagEdited");
 

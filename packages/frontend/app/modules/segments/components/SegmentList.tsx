@@ -1,6 +1,6 @@
-import { CardEntity } from "~/components/Entity/Entity";
 import { MenuButton } from "~/components/MenuButton";
 import { Segment } from "../types";
+import { Table, Tbody, Th, Tr, Td } from "~/components/Table";
 
 export interface SegmentListProps {
   segments: Array<Segment>;
@@ -15,30 +15,39 @@ export const SegmentList = ({
   flagId,
 }: SegmentListProps) => {
   return (
-    <ul className="flex flex-col gap-4">
-      {segments.map((segment) => (
-        <li key={segment.uuid}>
-          <CardEntity
-            title={segment.name}
-            menu={
-              <MenuButton
-                items={[
-                  {
-                    label: "Edit",
-                    href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/segments/${segment.uuid}`,
-                  },
-                  {
-                    label: "Remove",
-                    href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/segments/${segment.uuid}/delete`,
-                  },
-                ]}
-                label={"Actions on segment"}
-                variant="action"
-              />
-            }
-          />
-        </li>
-      ))}
-    </ul>
+    <Table>
+      <caption className="sr-only">Feature flag list for the project</caption>
+      <thead>
+        <tr>
+          <Th>Segment name</Th>
+          <Th>Actions</Th>
+        </tr>
+      </thead>
+      <Tbody>
+        {segments.map((segment) => (
+          <Tr key={segment.uuid}>
+            <Td>{segment.name}</Td>
+            <Td style={{ width: 100 }}>
+              <div className="flex justify-center w-full">
+                <MenuButton
+                  items={[
+                    {
+                      label: "Edit",
+                      href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/segments/${segment.uuid}`,
+                    },
+                    {
+                      label: "Remove",
+                      href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/segments/${segment.uuid}/delete`,
+                    },
+                  ]}
+                  label={"Actions on segment"}
+                  variant="action"
+                />
+              </div>
+            </Td>
+          </Tr>
+        ))}
+      </Tbody>
+    </Table>
   );
 };

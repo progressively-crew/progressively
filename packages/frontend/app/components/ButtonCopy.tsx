@@ -18,11 +18,23 @@ export interface ButtonCopyProps {
   toCopy: string;
   toCopyAlternative?: string; // for hiding secrets values
   children: React.ReactNode;
+  size?: "M" | "S";
 }
+
+const sizeClasses = {
+  M: "h-10 pl-4",
+  S: "h-7 text-sm pl-2",
+};
 
 export const ButtonCopy = forwardRef(
   (
-    { toCopy, children, toCopyAlternative, ...props }: ButtonCopyProps,
+    {
+      toCopy,
+      children,
+      toCopyAlternative,
+      size = "M",
+      ...props
+    }: ButtonCopyProps,
     ref: any
   ) => {
     const timerIdRef = useRef<NodeJS.Timeout>();
@@ -50,8 +62,9 @@ export const ButtonCopy = forwardRef(
       };
     }, [isCopied]);
 
-    const sharedClassName =
-      "rounded h-10 pl-4 font-mono text-xs whitespace-nowrap inline-flex flex-row items-center border border-gray-300 text-gray-500 dark:border-slate-500 dark:text-gray-200 hover:bg-slate-50 active:bg-slate-100 dark:hover:bg-slate-800";
+    const sizeClass = sizeClasses[size];
+
+    const sharedClassName = `${sizeClass} rounded font-mono text-xs whitespace-nowrap inline-flex flex-row items-center border border-gray-300 text-gray-500 dark:border-slate-500 dark:text-gray-200 hover:bg-slate-50 active:bg-slate-100 dark:hover:bg-slate-800`;
 
     const sharedIconClassName =
       "rounded-xs flex items-center justify-center text-lg h-10 w-10";

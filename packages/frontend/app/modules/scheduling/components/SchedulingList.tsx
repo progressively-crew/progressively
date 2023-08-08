@@ -1,10 +1,10 @@
-import { AiFillCheckCircle } from "react-icons/ai";
-import { TbCircle } from "react-icons/tb";
-import { CardEntity } from "~/components/Entity/Entity";
 import { MenuButton } from "~/components/MenuButton";
 import { FlagStatus } from "~/modules/flags/components/FlagStatus";
 import { FormattedDate } from "~/modules/misc/components/FormattedDate";
 import { Schedule, SchedulingStatus } from "../types";
+import { Table, Tbody, Th, Tr, Td } from "~/components/Table";
+import { IoPause } from "react-icons/io5";
+import { BsCheck } from "react-icons/bs";
 
 export interface SchedulingListProps {
   scheduling: Array<Schedule>;
@@ -19,33 +19,44 @@ export const SchedulingList = ({
   flagId,
 }: SchedulingListProps) => {
   return (
-    <ul className="flex flex-col gap-4">
-      {scheduling.map((schedule) => {
-        return (
-          <li className="scheduling-row" key={schedule.uuid}>
-            <CardEntity
-              key={schedule.uuid}
-              title={<FormattedDate utc={schedule.utc} />}
-              breakAvatar
-              avatar={
-                schedule.schedulingStatus === SchedulingStatus.HAS_RUN ? (
-                  <AiFillCheckCircle
-                    aria-hidden
-                    className="text-emerald-500 h-10 w-10"
+    <Table>
+      <caption className="sr-only">
+        List of modifications that should happen on a given date
+      </caption>
+      <thead>
+        <tr>
+          <Th>Has run</Th>
+          <Th>Date/time of modification</Th>
+          <Th>New value at date</Th>
+          <Th>Actions</Th>
+        </tr>
+      </thead>
+      <Tbody>
+        {scheduling.map((schedule) => (
+          <Tr key={schedule.uuid}>
+            <Td style={{ width: 100 }}>
+              <div className="flex justify-center w-full">
+                {schedule.schedulingStatus === SchedulingStatus.HAS_RUN ? (
+                  <BsCheck
+                    className="text-3xl text-emerald-400"
+                    aria-label="The update has already run."
                   />
                 ) : (
-                  <TbCircle
-                    aria-hidden
-                    className="text-gray-300 text-lg h-10 w-10"
+                  <IoPause
+                    className="text-3xl text-slate-400"
+                    aria-label="The update has not run yet."
                   />
-                )
-              }
-              description={
-                <p>
-                  Updating status to <FlagStatus value={schedule.status} />
-                </p>
-              }
-              menu={
+                )}
+              </div>
+            </Td>
+            <Td>
+              <FormattedDate utc={schedule.utc} />
+            </Td>
+            <Td>
+              <FlagStatus value={schedule.status} />
+            </Td>
+            <Td style={{ width: 100 }}>
+              <div className="flex justify-center w-full">
                 <MenuButton
                   items={[
                     {
@@ -56,11 +67,11 @@ export const SchedulingList = ({
                   label={"Actions on scheduling"}
                   variant="action"
                 />
-              }
-            />
-          </li>
-        );
-      })}
-    </ul>
+              </div>
+            </Td>
+          </Tr>
+        ))}
+      </Tbody>
+    </Table>
   );
 };

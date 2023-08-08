@@ -151,12 +151,14 @@ export default function Metrics() {
       )}
 
       {hasMetrics && (
-        <MetricList
-          metrics={metrics}
-          projectId={project.uuid}
-          envId={environment.uuid}
-          flagId={currentFlag.uuid}
-        />
+        <Card>
+          <MetricList
+            metrics={metrics}
+            projectId={project.uuid}
+            envId={environment.uuid}
+            flagId={currentFlag.uuid}
+          />
+        </Card>
       )}
     </DashboardLayout>
   );

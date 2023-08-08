@@ -81,7 +81,7 @@ export const NavItem = ({ children, to, icon, target }: NavItemProps) => {
           isActive
             ? "text-sm font-bold h-8 block flex items-center rounded px-3 bg-gray-100 text-gray-700 dark:bg-slate-600 dark:text-slate-50 " +
               focusStyles
-            : "text-sm h-8 block flex items-center rounded px-3 text-gray-700 hover:bg-gray-50 hover:dark:bg-slate-700  dark:text-gray-300 " +
+            : "text-sm h-8 block flex items-center rounded px-3 text-gray-700 hover:bg-gray-50 hover:dark:bg-slate-700 dark:text-gray-300 " +
               focusStyles
         }
       >

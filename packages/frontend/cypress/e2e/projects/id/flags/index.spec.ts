@@ -42,15 +42,7 @@ describe("/dashboard/projects/[id]/flags", () => {
         ]);
 
         cy.findByRole("heading", { name: "Feature flags" }).should("exist");
-        cy.findByRole("link", {
-          name: "See With multivariate in Production",
-        }).should("be.visible");
-        cy.findByRole("link", { name: "See New footer in Production" }).should(
-          "be.visible"
-        );
-        cy.findByRole("link", {
-          name: "See New homepage in Production",
-        }).should("be.visible");
+        cy.findAllByRole("link", { name: "Production" }).should("be.visible");
 
         cy.checkA11y();
       });

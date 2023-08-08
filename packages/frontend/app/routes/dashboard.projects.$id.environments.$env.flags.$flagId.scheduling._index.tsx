@@ -151,12 +151,14 @@ export default function SchedulingOfFlag() {
       )}
 
       {hasScheduling && (
-        <SchedulingList
-          scheduling={scheduling}
-          projectId={project.uuid}
-          envId={environment.uuid}
-          flagId={currentFlag.uuid}
-        />
+        <Card>
+          <SchedulingList
+            scheduling={scheduling}
+            projectId={project.uuid}
+            envId={environment.uuid}
+            flagId={currentFlag.uuid}
+          />
+        </Card>
       )}
     </DashboardLayout>
   );
