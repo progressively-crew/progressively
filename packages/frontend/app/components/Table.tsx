@@ -6,7 +6,7 @@ export interface TableProps {
 
 export const Table = ({ children }: TableProps) => {
   return (
-    <div className="rounded-lg overflow-hidden">
+    <div className="rounded-lg">
       <table className="border-collapse table-auto w-full text-sm">
         {children}
       </table>

@@ -1,48 +1,61 @@
-import { useState } from "react";
-import { Cell, Col, Row, Table, Tbody, Thead } from "../../a11y/Table";
-import { UserProject } from "../../projects/types";
+import { UserProject, UserRoles } from "../../projects/types";
 import { Tag } from "~/components/Tag";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { Typography } from "~/components/Typography";
+import { Table, Tbody, Td, Tr } from "~/components/Table";
+import { MenuButton } from "~/components/MenuButton";
+import { useProject } from "~/modules/projects/contexts/useProject";
 
 export interface UserTableProps {
   userProjects: Array<UserProject>;
-  canEdit: boolean;
 }
 
-export const UserTable = ({ userProjects, canEdit }: UserTableProps) => {
-  const [selected, setSelected] = useState<Array<string>>([]);
+export const UserTable = ({ userProjects }: UserTableProps) => {
+  const { userRole } = useProject();
 
   return (
-    <Table
-      caption={"Members of the project"}
-      onSelect={setSelected}
-      selected={selected}
-    >
-      <Thead disabled={!canEdit}>
-        <Col>Full name</Col>
-        <Col>Email</Col>
-        <Col>Role</Col>
-      </Thead>
+    <Table>
+      <caption className="sr-only">List of members of the project</caption>
+      <thead>
+        <tr>
+          <Td>Full name</Td>
+          <Td>Email</Td>
+          <Td>Role</Td>
+          <Td>Actions</Td>
+        </tr>
+      </thead>
+
       <Tbody>
         {userProjects.map((userProject) => (
-          <Row
-            selection={userProject.userId}
-            key={userProject.userId}
-            disabled={!canEdit}
-          >
-            <Cell>
+          <Tr key={userProject.userId}>
+            <Td>
               <Typography as="span">{userProject.user?.fullname}</Typography>
-            </Cell>
-            <Cell>
-              <ButtonCopy toCopy={userProject.user?.email || ""}>
+            </Td>
+            <Td>
+              <ButtonCopy size="S" toCopy={userProject.user?.email || ""}>
                 {userProject.user?.email}
               </ButtonCopy>
-            </Cell>
-            <Cell>
+            </Td>
+            <Td>
               <Tag>{userProject.role}</Tag>
-            </Cell>
-          </Row>
+            </Td>
+            <Td style={{ width: 100 }}>
+              {userRole === UserRoles.Admin && (
+                <div className="flex justify-center w-full">
+                  <MenuButton
+                    items={[
+                      {
+                        label: "Remove from project",
+                        href: `/dashboard/projects/${userProject.projectId}/delete-member/${userProject.userId}`,
+                      },
+                    ]}
+                    label={"Actions on user table"}
+                    variant="action"
+                  />
+                </div>
+              )}
+            </Td>
+          </Tr>
         ))}
       </Tbody>
     </Table>
