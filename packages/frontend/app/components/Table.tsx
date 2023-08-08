@@ -15,7 +15,7 @@ export const Table = ({ children }: TableProps) => {
 };
 export const Th = ({ children }: TableProps) => {
   return (
-    <th className="bg-slate-50 border-b dark:border-slate-600 font-medium p-4 pl-8 py-3 text-slate-400 dark:text-slate-200 text-left">
+    <th className="bg-slate-50 border-b dark:border-slate-600 font-medium p-4 pl-8 py-3 text-slate-500 dark:text-slate-200 text-left">
       {children}
     </th>
   );
