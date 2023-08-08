@@ -20,7 +20,7 @@ const ProjectRow = ({ project }: ProjectRowProps) => {
   const linkRef = useRef<HTMLAnchorElement>(null);
   return (
     <Tr key={project.projectId} onClick={() => linkRef?.current?.click()}>
-      <Td>
+      <Td style={{ width: 40 }}>
         <IconBox content={project.project.name}>
           <ProjectIcon />
         </IconBox>
@@ -43,6 +43,7 @@ const ProjectRow = ({ project }: ProjectRowProps) => {
 export const ProjectList = ({ projects }: ProjectListProps) => {
   return (
     <Table>
+      <caption className="sr-only">List of your projects</caption>
       <thead>
         <tr>
           <Th>

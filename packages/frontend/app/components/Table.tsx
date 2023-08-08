@@ -1,3 +1,5 @@
+import { HTMLAttributes } from "react";
+
 export interface TableProps {
   children: React.ReactNode;
 }
@@ -16,9 +18,15 @@ export const Th = ({ children }: TableProps) => {
     </th>
   );
 };
-export const Td = ({ children }: TableProps) => {
+export const Td = ({
+  children,
+  style,
+}: TableProps & HTMLAttributes<HTMLTableCellElement>) => {
   return (
-    <td className="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
+    <td
+      className="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400"
+      style={style}
+    >
       {children}
     </td>
   );

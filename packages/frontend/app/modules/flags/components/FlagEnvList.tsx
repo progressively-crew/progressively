@@ -1,11 +1,10 @@
-import { Entity } from "~/components/Entity/Entity";
 import { FlagEnv } from "../types";
-import { ButtonCopy } from "~/components/ButtonCopy";
 import { IconBox } from "~/components/IconBox";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
-import { EntityField } from "~/components/Entity/EntityField";
 import { FlagStatus } from "./FlagStatus";
 import { useRef } from "react";
+import { Table, Tbody, Td, Th, Tr } from "~/components/Table";
+import { Link } from "@remix-run/react";
 
 export interface FlagEnvListProps {
   flagEnvs: Array<FlagEnv>;
@@ -22,47 +21,49 @@ const FlagEnvEntry = ({ flagEnv, projectId }: FlagEnvEntryProps) => {
   const handleClick = () => linkRef.current?.click();
 
   return (
-    <div
-      onClick={handleClick}
-      className="cursor-pointer hover:bg-slate-50 active:bg-slate-100 dark:hover:bg-slate-700 dark:active:bg-slate-600"
-    >
-      <Entity
-        linkRef={linkRef}
-        link={`/dashboard/projects/${projectId}/environments/${flagEnv.environmentId}/flags/${flagEnv.flagId}`}
-        avatar={
-          <IconBox content={flagEnv.flag.name}>
-            <FlagIcon />
-          </IconBox>
-        }
-        title={flagEnv.flag.name}
-        description={flagEnv.flag.description}
-        actions={
-          <>
-            <div className="hidden md:block">
-              <ButtonCopy toCopy={flagEnv.flag.key}>
-                {flagEnv.flag.key}
-              </ButtonCopy>
-            </div>
-          </>
-        }
-      >
-        <EntityField
-          name={"Flag status"}
-          value={<FlagStatus value={flagEnv.status} />}
-        />
-      </Entity>
-    </div>
+    <Tr key={flagEnv.flagId} onClick={handleClick}>
+      <Td style={{ width: 40 }}>
+        <IconBox content={flagEnv.flag.name}>
+          <FlagIcon />
+        </IconBox>
+      </Td>
+      <Td>
+        <Link
+          ref={linkRef}
+          to={`/dashboard/projects/${projectId}/environments/${flagEnv.environmentId}/flags/${flagEnv.flagId}`}
+        >
+          {flagEnv.flag.name}
+        </Link>
+      </Td>
+      <Td>
+        <FlagStatus value={flagEnv.status} />
+      </Td>
+    </Tr>
   );
 };
 
 export const FlagEnvList = ({ flagEnvs, projectId }: FlagEnvListProps) => {
   return (
-    <ul className="flex flex-col gap-4">
-      {flagEnvs.map((flagEnv) => (
-        <li key={flagEnv.flagId}>
-          <FlagEnvEntry flagEnv={flagEnv} projectId={projectId} />
-        </li>
-      ))}
-    </ul>
+    <Table>
+      <caption className="sr-only">Feature flag list for the project</caption>
+      <thead>
+        <tr>
+          <Th>
+            <span className="sr-only">Flag icon</span>
+          </Th>
+          <Th>Flag name</Th>
+          <Th>Status</Th>
+        </tr>
+      </thead>
+      <Tbody>
+        {flagEnvs.map((flagEnv) => (
+          <FlagEnvEntry
+            key={flagEnv.flagId}
+            flagEnv={flagEnv}
+            projectId={projectId}
+          />
+        ))}
+      </Tbody>
+    </Table>
   );
 };

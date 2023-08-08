@@ -34,7 +34,7 @@ export const FlagList = ({
       <Tbody>
         {flags.map((flag) => (
           <Tr key={flag.uuid}>
-            <Td>
+            <Td style={{ width: 40 }}>
               <IconBox content={flag.name}>
                 <FlagIcon />
               </IconBox>

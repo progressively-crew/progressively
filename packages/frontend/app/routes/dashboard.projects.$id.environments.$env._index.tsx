@@ -87,20 +87,21 @@ export default function EnvSettingsPage() {
       </Card>
 
       {flagEnvs.length > 0 && (
-        <Card>
-          <CardContent>
-            <Section>
+        <Section>
+          <Card>
+            <CardContent>
               <SectionHeader
                 title="Feature flags"
                 description={
                   "The feature flags status in this specific environment."
                 }
               />
-              <Spacer size={4} />
-              <FlagEnvList flagEnvs={flagEnvs} projectId={project.uuid} />
-            </Section>
-          </CardContent>
-        </Card>
+            </CardContent>
+
+            <Spacer size={2} />
+            <FlagEnvList flagEnvs={flagEnvs} projectId={project.uuid} />
+          </Card>
+        </Section>
       )}
 
       {userRole === UserRoles.Admin && (
