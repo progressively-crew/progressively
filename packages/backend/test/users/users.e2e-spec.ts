@@ -67,7 +67,7 @@ describe('UsersController (e2e)', () => {
           },
         ],
         remainingTrialingDays: 14,
-        hitsForMonth: 0,
+        hitsForMonth: 19,
       });
     });
 
