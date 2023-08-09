@@ -2,7 +2,7 @@ import { IconButton } from "~/components/Buttons/IconButton";
 import { Rule } from "~/modules/rules/types";
 import { StrategyRuleFormField } from "../StrategyRuleFormField";
 import { Segment } from "~/modules/segments/types";
-import { TbTrashX } from "react-icons/tb";
+import { PiTrashThin } from "react-icons/pi";
 
 export interface RuleListProps {
   rules: Array<Rule>;
@@ -42,7 +42,7 @@ export const RuleList = ({
               type="submit"
               isLoading={isDeleting}
               loadingText="Deleting a rule..."
-              icon={<TbTrashX />}
+              icon={<PiTrashThin className="text-xl text-slate-400" />}
               tooltip="Remove rule"
               value={rule.uuid}
               name="ruleId"
