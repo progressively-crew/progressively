@@ -185,34 +185,33 @@ export default function FlagInsights() {
         />
       }
     >
-      <div className="flex flex-row gap-8 justify-between">
-        <PageTitle
-          value="Insights"
-          description={
-            <Typography>
-              Information related to flag evaluations, variants and metrics.
-            </Typography>
-          }
-        />
+      <PageTitle
+        value="Insights"
+        description={
+          <Typography>
+            The events (flag evaluations and metric hits) are stored for{" "}
+            <strong>90 days</strong> and erased after this period.
+          </Typography>
+        }
+      />
 
-        <Form action=".">
-          <div className="flex flex-col md:flex-row gap-3 md:items-end">
-            <TextInput
-              type="date"
-              name={"startDate"}
-              label={"Start date"}
-              defaultValue={formatDefaultDate(startDate)}
-            />
-            <TextInput
-              type="date"
-              name={"endDate"}
-              label={"End date"}
-              defaultValue={formatDefaultDate(endDate)}
-            />
-            <SubmitButton>Filter</SubmitButton>
-          </div>
-        </Form>
-      </div>
+      <Form action=".">
+        <div className="flex flex-col md:flex-row gap-3 md:items-end">
+          <TextInput
+            type="date"
+            name={"startDate"}
+            label={"Start date"}
+            defaultValue={formatDefaultDate(startDate)}
+          />
+          <TextInput
+            type="date"
+            name={"endDate"}
+            label={"End date"}
+            defaultValue={formatDefaultDate(endDate)}
+          />
+          <SubmitButton>Filter</SubmitButton>
+        </div>
+      </Form>
 
       <Section id="variant-evaluations">
         <Card>
