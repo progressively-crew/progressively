@@ -1,39 +1,39 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "@prisma/client";
 
 export const seedFlags = async (prismaClient: PrismaClient) => {
   const homePageFlag = await prismaClient.flag.create({
     data: {
-      uuid: '1',
-      name: 'New homepage',
-      description: 'Switch the new homepage design',
-      key: 'newHomepage',
+      uuid: "1",
+      name: "New homepage",
+      description: "Switch the new homepage design",
+      key: "newHomepage",
     },
   });
 
   const footerFlag = await prismaClient.flag.create({
     data: {
-      uuid: '2',
-      name: 'New footer',
-      description: 'Switch the new footer design',
-      key: 'newFooter',
+      uuid: "2",
+      name: "New footer",
+      description: "Switch the new footer design",
+      key: "newFooter",
     },
   });
 
   const asideFlag = await prismaClient.flag.create({
     data: {
-      uuid: '3',
-      name: 'New aside',
-      description: 'Switch the new aside design',
-      key: 'newAside',
+      uuid: "3",
+      name: "New aside",
+      description: "Switch the new aside design",
+      key: "newAside",
     },
   });
 
   const multiVariate = await prismaClient.flag.create({
     data: {
-      uuid: '4',
-      name: 'With multivariate',
-      description: 'Switch the multivariate flag',
-      key: 'multivariate',
+      uuid: "4",
+      name: "With multivariate",
+      description: "Switch the multivariate flag",
+      key: "multivariate",
     },
   });
 
@@ -44,7 +44,7 @@ export const seedFlagHits = async (
   prismaClient: PrismaClient,
   flagEnv: any,
   date: Date,
-  count = 10,
+  count = 10
 ) => {
   date.setHours(2);
   date.setMinutes(2);
@@ -52,24 +52,26 @@ export const seedFlagHits = async (
   date.setMilliseconds(2);
 
   for (let i = 0; i < count; i++) {
-    await prismaClient.flagHit.create({
+    await prismaClient.event.create({
       data: {
         flagEnvironmentFlagId: flagEnv.flagId,
         flagEnvironmentEnvironmentId: flagEnv.environmentId,
-        valueResolved: 'true',
+        data: "true",
         date,
-        visitorId: '1',
+        visitorId: "1",
+        type: "evaluation",
       },
     });
 
     if (i < count / 2) {
-      await prismaClient.flagHit.create({
+      await prismaClient.event.create({
         data: {
           flagEnvironmentFlagId: flagEnv.flagId,
           flagEnvironmentEnvironmentId: flagEnv.environmentId,
-          valueResolved: 'false',
+          data: "false",
           date,
-          visitorId: '1',
+          visitorId: "1",
+          type: "evaluation",
         },
       });
     }
@@ -80,7 +82,7 @@ export const seedFlagHitsVariants = async (
   prismaClient: PrismaClient,
   flagEnv: any,
   date: Date,
-  count = 10,
+  count = 10
 ) => {
   date.setHours(2);
   date.setMinutes(2);
@@ -88,24 +90,26 @@ export const seedFlagHitsVariants = async (
   date.setMilliseconds(2);
 
   for (let i = 0; i < count; i++) {
-    await prismaClient.flagHit.create({
+    await prismaClient.event.create({
       data: {
         flagEnvironmentFlagId: flagEnv.flagId,
         flagEnvironmentEnvironmentId: flagEnv.environmentId,
-        valueResolved: 'Control',
+        data: "Control",
         date,
-        visitorId: '1',
+        visitorId: "1",
+        type: "evaluation",
       },
     });
 
     if (i < count / 2) {
-      await prismaClient.flagHit.create({
+      await prismaClient.event.create({
         data: {
           flagEnvironmentFlagId: flagEnv.flagId,
           flagEnvironmentEnvironmentId: flagEnv.environmentId,
-          valueResolved: 'Second',
+          data: "Second",
           date,
-          visitorId: '1',
+          visitorId: "1",
+          type: "evaluation",
         },
       });
     }
@@ -117,7 +121,7 @@ export const seedFlagMetricHits = async (
   flagEnv: any,
   metric: any,
   date: Date,
-  count = 10,
+  count = 10
 ) => {
   date.setHours(2);
   date.setMinutes(2);
@@ -125,13 +129,14 @@ export const seedFlagMetricHits = async (
   date.setMilliseconds(2);
 
   for (let i = 0; i < count; i++) {
-    await prismaClient.pMetricHit.create({
+    await prismaClient.event.create({
       data: {
         flagEnvironmentFlagId: flagEnv.flagId,
         flagEnvironmentEnvironmentId: flagEnv.environmentId,
         date,
         pMetricUuid: metric.uuid,
-        visitorId: '1',
+        visitorId: "1",
+        type: "metric",
       },
     });
   }

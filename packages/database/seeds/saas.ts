@@ -64,13 +64,14 @@ export const seedForSaas = async (prismaClient: PrismaClient, user: User) => {
   date.setMonth(date.getMonth() - 1);
 
   for (let i = 0; i < 21; i++) {
-    await prismaClient.flagHit.create({
+    await prismaClient.event.create({
       data: {
-        valueResolved: "true",
+        data: "true",
         flagEnvironmentEnvironmentId: env.uuid,
         flagEnvironmentFlagId: flag.uuid,
         visitorId: "123",
         date,
+        type: "evaluation",
       },
     });
   }
@@ -79,13 +80,14 @@ export const seedForSaas = async (prismaClient: PrismaClient, user: User) => {
   const date2 = new Date();
 
   for (let i = 0; i < 19; i++) {
-    await prismaClient.flagHit.create({
+    await prismaClient.event.create({
       data: {
-        valueResolved: "true",
+        data: "true",
         flagEnvironmentEnvironmentId: env.uuid,
         flagEnvironmentFlagId: flag.uuid,
         visitorId: "123",
         date: date2,
+        type: "evaluation",
       },
     });
   }
