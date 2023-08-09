@@ -3,7 +3,7 @@ import { Project } from "../types";
 import { EnvIcon } from "~/components/Icons/EnvIcon";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { SettingsIcon } from "~/components/Icons/SettingsIcon";
-import { BsArrow90DegDown, BsCaretRightFill } from "react-icons/bs";
+import { BsCaretRightFill } from "react-icons/bs";
 import { AiOutlinePlus } from "react-icons/ai";
 import { useState } from "react";
 import { IconBox } from "~/components/IconBox";
