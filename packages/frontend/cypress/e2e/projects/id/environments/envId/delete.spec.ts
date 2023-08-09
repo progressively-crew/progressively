@@ -90,14 +90,16 @@ describe("/dashboard/projects/[id]/environments/[envId]/delete", () => {
           "/dashboard/projects/1/flags?envRemoved=true"
         );
 
-        cy.findByRole("link", { name: "Developer" }).should("be.visible");
-        cy.findByRole("link", { name: "Production" }).should("not.exist");
         cy.get(".success-box")
           .should("have.focus")
           .and(
             "contain.text",
             "The environment has been successfully deleted."
           );
+
+        cy.findByRole("button", { name: "Environments" }).click();
+        cy.findByRole("link", { name: "Developer" }).should("be.visible");
+        cy.findByRole("link", { name: "Production" }).should("not.exist");
       });
     });
   });
