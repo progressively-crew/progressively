@@ -120,9 +120,8 @@ model FlagEnvironment {
   status        String?       @default("NOT_ACTIVATED")
   environment   Environment   @relation(fields: [environmentId], references: [uuid])
   flag          Flag          @relation(fields: [flagId], references: [uuid])
-  flagHit       FlagHit[]
+  events        Event[]
   metrics       PMetric[]
-  metricHits    PMetricHit[]
   scheduling    Schedule[]
   variants      Variant[]
   webhooks      Webhook[]
@@ -164,30 +163,22 @@ model PMetric {
   variantUuid                  String?
   flagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
   variant                      Variant?         @relation(fields: [variantUuid], references: [uuid])
-  PMetricHit                   PMetricHit[]
   createdAt                    DateTime?        @default(now())
+  Event                        Event[]
 }
 
-model PMetricHit {
-  id                           Int              @id @default(autoincrement())
-  date                         DateTime         @default(now())
-  data                         String?
-  flagEnvironmentFlagId        String?
-  flagEnvironmentEnvironmentId String?
-  pMetricUuid                  String
-  visitorId                    String
-  flagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
-  metric                       PMetric          @relation(fields: [pMetricUuid], references: [uuid])
-}
+model Event {
+  uuid      String   @id @default(uuid())
+  date      DateTime @default(now())
+  visitorId String
+  type      String // metric or evaluation see EventTypes
+  data      String? // previously valueResolved on flagHit
 
-model FlagHit {
-  id                           Int             @id @default(autoincrement())
-  date                         DateTime        @default(now())
+  pMetricUuid                  String?
   flagEnvironmentFlagId        String
   flagEnvironmentEnvironmentId String
-  valueResolved                String
-  visitorId                    String
-  flagEnvironment              FlagEnvironment @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
+  metric                       PMetric?        @relation(fields: [pMetricUuid], references: [uuid])
+  FlagEnvironment              FlagEnvironment @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
 }
 
 model Rule {

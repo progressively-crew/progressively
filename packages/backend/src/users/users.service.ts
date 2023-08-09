@@ -208,13 +208,13 @@ export class UsersService {
     const end = new Date(start.getFullYear(), start.getMonth() + 2, 0);
     end.setDate(1);
 
-    return this.prisma.flagHit.count({
+    return this.prisma.event.count({
       where: {
         date: {
           lte: end,
           gte: start,
         },
-        flagEnvironment: {
+        FlagEnvironment: {
           environment: {
             project: {
               userProject: {
@@ -232,10 +232,7 @@ export class UsersService {
 
   async isPlanValid(clientKey: string) {
     const activePlan = await this.getProjectOwnerFromEnvClientKey(clientKey);
-
-    const flagHits = await this.getHitsForEnv(clientKey);
-    const metricHits = await this.getMetricHitPerEnv(clientKey);
-    const totalHits = flagHits + metricHits;
+    const totalHits = await this.getHitsForEnv(clientKey);
 
     // Subscriber
     if (activePlan) {
@@ -252,34 +249,13 @@ export class UsersService {
 
     const end = new Date(start.getFullYear(), start.getMonth() + 1, 0);
 
-    return this.prisma.flagHit.count({
+    return this.prisma.event.count({
       where: {
         date: {
           lte: end,
           gte: start,
         },
-        flagEnvironment: {
-          environment: {
-            clientKey: environmentKey,
-          },
-        },
-      },
-    });
-  }
-
-  getMetricHitPerEnv(environmentKey: string) {
-    const start = new Date();
-    start.setDate(1);
-
-    const end = new Date(start.getFullYear(), start.getMonth() + 1, 0);
-
-    return this.prisma.pMetricHit.count({
-      where: {
-        date: {
-          lte: end,
-          gte: start,
-        },
-        flagEnvironment: {
+        FlagEnvironment: {
           environment: {
             clientKey: environmentKey,
           },

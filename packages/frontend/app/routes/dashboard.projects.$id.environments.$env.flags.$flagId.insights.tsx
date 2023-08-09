@@ -53,7 +53,7 @@ interface MetricHit {
 }
 
 interface FlagEvaluation {
-  valueResolved: string;
+  data: string;
   _count: number;
 }
 
@@ -115,8 +115,7 @@ export const loader: LoaderFunction = async ({
     metric: nbv.metric,
     variant: nbv.variant,
     // eslint-disable-next-line unicorn/no-array-reduce
-    variantCount: flagEvaluations.find((f) => f.valueResolved === nbv.variant)
-      ?._count,
+    variantCount: flagEvaluations.find((f) => f.data === nbv.variant)?._count,
   }));
 
   const barChartData = computedMetricsByVariantCount
@@ -247,11 +246,11 @@ export default function FlagInsights() {
 
             <Tbody>
               {flagEvaluations.map((fe) => (
-                <Tr key={`variant-card-${fe.valueResolved}`}>
+                <Tr key={`variant-card-${fe.data}`}>
                   <Td>
                     <div className="flex flex-row gap-2 items-center">
-                      <VariantDot variant={fe.valueResolved} />
-                      {fe.valueResolved}
+                      <VariantDot variant={fe.data} />
+                      {fe.data}
                     </div>
                   </Td>
                   <Td>{fe._count}</Td>
