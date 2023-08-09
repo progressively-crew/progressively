@@ -31,10 +31,6 @@ export const StrategyFormFields = ({
       value: ValueToServe.Boolean,
       label: `true`,
     },
-    // {
-    //   value: ValueToServe.String,
-    //   label: "the custom string",
-    // },
   ];
 
   if (hasVariants) {
@@ -46,24 +42,39 @@ export const StrategyFormFields = ({
 
   const isVariantChoice = status === ValueToServe.Variant && hasVariants;
 
-  return (
-    <div className="flex flex-row gap-2">
-      <div
-        className={
-          isVariantChoice
-            ? "flex flex-col gap-2 w-full"
-            : "flex flex-row gap-4 items-center w-full"
-        }
-      >
-        <SelectField
-          hiddenLabel
-          label="What value to you want to serve?"
-          name={"value-to-serve-type"}
-          defaultValue={valueToServeType || valueOptions[0].value}
-          options={valueOptions}
-          onValueChange={(str) => setStatus(str as ValueToServe)}
-        />
+  if (isVariantChoice) {
+    return (
+      <div className="flex flex-row gap-4 flex-wrap items-center">
+        <div className="">
+          <SelectField
+            hiddenLabel
+            label="What value to you want to serve?"
+            name={"value-to-serve-type"}
+            defaultValue={valueToServeType || valueOptions[0].value}
+            options={valueOptions}
+            onValueChange={(str) => setStatus(str as ValueToServe)}
+          />
+        </div>
 
+        <div className="flex-1">
+          <VariantFields variants={variants || []} />
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-row gap-4">
+      <SelectField
+        hiddenLabel
+        label="What value to you want to serve?"
+        name={"value-to-serve-type"}
+        defaultValue={valueToServeType || valueOptions[0].value}
+        options={valueOptions}
+        onValueChange={(str) => setStatus(str as ValueToServe)}
+      />
+
+      <div className="flex-1 flex flex-row items-center gap-2">
         {status === ValueToServe.String && (
           <TextInput
             label="String value to serve"
@@ -91,8 +102,6 @@ export const StrategyFormFields = ({
             <Typography>of the audience</Typography>
           </>
         )}
-
-        {isVariantChoice && <VariantFields variants={variants || []} />}
       </div>
     </div>
   );

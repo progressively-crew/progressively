@@ -16,7 +16,7 @@ export const TagInput = ({ defaultValue }: TagInputProps) => {
       (e.target as HTMLInputElement).value === "" &&
       tags.length > 0
     ) {
-      removeTag(tags[tags.length - 1]);
+      removeTag(tags.at(-1));
     }
 
     if (
@@ -70,6 +70,20 @@ export const TagInput = ({ defaultValue }: TagInputProps) => {
           value={value}
           onChange={(e) => setValue(e.target.value)}
         />
+
+        <button
+          className="text-slate-500 bg-slate-50 px-2 rounded text-xs font-mono uppercase items-center flex justify-center"
+          onClick={() => {
+            if (!value) return;
+
+            if (!tags.includes(value)) {
+              setTags((s) => [...s, value]);
+              setValue("");
+            }
+          }}
+        >
+          Add value
+        </button>
       </div>
 
       <input type="hidden" name="field-value" value={tags.join("\n")} />
