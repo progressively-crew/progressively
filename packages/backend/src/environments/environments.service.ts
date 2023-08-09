@@ -149,7 +149,7 @@ export class EnvironmentsService {
           flagEnvironmentEnvironmentId: envId,
         },
       }),
-      this.prisma.flagHit.deleteMany({
+      this.prisma.event.deleteMany({
         where: {
           flagEnvironmentEnvironmentId: envId,
         },
@@ -176,11 +176,6 @@ export class EnvironmentsService {
         },
       }),
       this.prisma.strategy.deleteMany({
-        where: {
-          flagEnvironmentEnvironmentId: envId,
-        },
-      }),
-      this.prisma.pMetricHit.deleteMany({
         where: {
           flagEnvironmentEnvironmentId: envId,
         },

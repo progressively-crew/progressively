@@ -2,9 +2,10 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
 import { FlagStatus } from './flags.status';
 import { Variant } from './types';
-import { FlagCreationDTO, VariantCreationDTO } from './flags.dto';
+import { VariantCreationDTO } from './flags.dto';
 import camelcase from 'camelcase';
 import { FlagAlreadyExists } from '../projects/errors';
+import { EventTypes } from '../events/types';
 
 @Injectable()
 export class FlagsService {
@@ -109,13 +110,14 @@ export class FlagsService {
     date.setSeconds(2);
     date.setMilliseconds(2);
 
-    return this.prisma.flagHit.create({
+    return this.prisma.event.create({
       data: {
         flagEnvironmentFlagId: flagId,
         flagEnvironmentEnvironmentId: environmentId,
-        valueResolved,
+        data: valueResolved,
         date,
         visitorId,
+        type: EventTypes.Evaluation,
       },
     });
   }
@@ -126,10 +128,11 @@ export class FlagsService {
     startDate: string,
     endDate: string,
   ) {
-    return await this.prisma.flagHit.count({
+    return await this.prisma.event.count({
       where: {
         flagEnvironmentFlagId: flagId,
         flagEnvironmentEnvironmentId: envId,
+        type: EventTypes.Evaluation,
         date: {
           gte: new Date(startDate),
           lte: new Date(endDate),
@@ -157,10 +160,11 @@ export class FlagsService {
     const metricsHit = [];
 
     for (const metric of metrics) {
-      const count = await this.prisma.pMetricHit.count({
+      const count = await this.prisma.event.count({
         where: {
           flagEnvironmentFlagId: flagId,
           flagEnvironmentEnvironmentId: envId,
+          type: EventTypes.Metric,
           date: {
             gte: new Date(startDate),
             lte: new Date(endDate),
@@ -185,10 +189,11 @@ export class FlagsService {
     startDate: string,
     endDate: string,
   ) {
-    return this.prisma.flagHit.groupBy({
-      by: ['valueResolved'],
+    return this.prisma.event.groupBy({
+      by: ['data'],
       _count: true,
       where: {
+        type: EventTypes.Evaluation,
         flagEnvironmentFlagId: flagId,
         flagEnvironmentEnvironmentId: envId,
         date: {
@@ -205,9 +210,10 @@ export class FlagsService {
     startDate: string,
     endDate: string,
   ) {
-    const disctintHitValue = await this.prisma.flagHit.findMany({
-      distinct: ['valueResolved'],
+    const disctintHitValue = await this.prisma.event.findMany({
+      distinct: ['data'],
       where: {
+        type: EventTypes.Evaluation,
         flagEnvironmentFlagId: flagId,
         flagEnvironmentEnvironmentId: envId,
         date: {
@@ -220,17 +226,18 @@ export class FlagsService {
     const dictByDates = {};
 
     for (const dhv of disctintHitValue) {
-      const hitsByDate = await this.prisma.flagHit.groupBy({
+      const hitsByDate = await this.prisma.event.groupBy({
         _count: true,
         by: ['date'],
         where: {
+          type: EventTypes.Evaluation,
           flagEnvironmentFlagId: flagId,
           flagEnvironmentEnvironmentId: envId,
           date: {
             gte: new Date(startDate),
             lte: new Date(endDate),
           },
-          valueResolved: dhv.valueResolved,
+          data: dhv.data,
         },
         orderBy: {
           date: 'asc',
@@ -245,7 +252,7 @@ export class FlagsService {
         }
 
         dictByDates[isoDate]['date'] = isoDate;
-        dictByDates[isoDate][dhv.valueResolved] = hbd._count;
+        dictByDates[isoDate][dhv.data] = hbd._count;
       });
     }
 
@@ -261,12 +268,7 @@ export class FlagsService {
           flagEnvironmentFlagId: flagId,
         },
       }),
-      this.prisma.flagHit.deleteMany({
-        where: {
-          flagEnvironmentFlagId: flagId,
-        },
-      }),
-      this.prisma.pMetricHit.deleteMany({
+      this.prisma.event.deleteMany({
         where: {
           flagEnvironmentFlagId: flagId,
         },
@@ -499,8 +501,9 @@ export class FlagsService {
 
   async deleteMetricFlag(envId: string, flagId: string, metricId: string) {
     const deleteQueries = [
-      this.prisma.pMetricHit.deleteMany({
+      this.prisma.event.deleteMany({
         where: {
+          type: EventTypes.Metric,
           pMetricUuid: metricId,
           flagEnvironmentFlagId: flagId,
           flagEnvironmentEnvironmentId: envId,

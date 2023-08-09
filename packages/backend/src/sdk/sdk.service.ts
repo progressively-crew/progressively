@@ -16,6 +16,7 @@ import {
 import { SchedulingService } from '../scheduling/scheduling.service';
 import { RuleService } from '../rule/rule.service';
 import { ValueToServe } from '../strategy/types';
+import { EventTypes } from '../events/types';
 
 @Injectable()
 export class SdkService {
@@ -191,13 +192,14 @@ export class SdkService {
     date.setSeconds(2);
     date.setMilliseconds(2);
 
-    return this.prisma.pMetricHit.create({
+    return this.prisma.event.create({
       data: {
         flagEnvironmentFlagId: metric.flagEnvironmentFlagId,
         flagEnvironmentEnvironmentId: metric.flagEnvironmentEnvironmentId,
         pMetricUuid: metric.uuid,
         visitorId,
         date,
+        type: EventTypes.Metric,
         data:
           typeof hit.data === 'object'
             ? JSON.stringify(hit.data)
