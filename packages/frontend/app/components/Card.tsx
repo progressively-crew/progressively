@@ -27,7 +27,7 @@ export const Card = ({
 
   return (
     <div
-      className={`border border-gray-200 dark:border-slate-700 rounded-md bg-white dark:border-slate-700 dark:bg-slate-800 ${clickableClasses} ${
+      className={`h-full border border-gray-200 dark:border-slate-700 rounded-md bg-white dark:border-slate-700 dark:bg-slate-800 ${clickableClasses} ${
         className || ""
       }`}
       onClick={onClick}

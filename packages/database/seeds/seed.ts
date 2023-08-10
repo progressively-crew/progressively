@@ -304,69 +304,10 @@ export const seedDb = async () => {
       prismaClient,
       multiVariateFlagEnv,
       aMetric,
-      new Date(1992, 0, 1, 1),
-      10
+      bMetric
     );
 
-    await seedFlagMetricHits(
-      prismaClient,
-      multiVariateFlagEnv,
-      aMetric,
-      new Date(1992, 0, 3, 1),
-      20
-    );
-    await seedFlagMetricHits(
-      prismaClient,
-      multiVariateFlagEnv,
-      bMetric,
-      new Date(1992, 0, 2, 1),
-      40
-    );
-    await seedFlagMetricHits(
-      prismaClient,
-      multiVariateFlagEnv,
-      aMetric,
-      new Date(1992, 0, 2, 1),
-      17
-    );
-    await seedFlagMetricHits(
-      prismaClient,
-      multiVariateFlagEnv,
-      bMetric,
-      new Date(1992, 0, 6, 1),
-      10
-    );
-
-    await seedFlagHitsVariants(
-      prismaClient,
-      multiVariateFlagEnv,
-      new Date(1992, 0, 1, 1),
-      10
-    );
-    await seedFlagHitsVariants(
-      prismaClient,
-      multiVariateFlagEnv,
-      new Date(1992, 0, 4, 1),
-      50
-    );
-    await seedFlagHitsVariants(
-      prismaClient,
-      multiVariateFlagEnv,
-      new Date(1992, 0, 7, 1),
-      20
-    );
-    await seedFlagHitsVariants(
-      prismaClient,
-      multiVariateFlagEnv,
-      new Date(1992, 0, 2, 1),
-      100
-    );
-    await seedFlagHitsVariants(
-      prismaClient,
-      multiVariateFlagEnv,
-      new Date(1992, 0, 22, 1),
-      13
-    );
+    await seedFlagHitsVariants(prismaClient, multiVariateFlagEnv);
 
     await seedForSaas(prismaClient, jane);
 

@@ -1,36 +1,36 @@
-import { useRef } from "react";
+import { TbApps } from "react-icons/tb";
+import { Card, CardContent } from "./Card";
+import { NumberValue } from "./NumberValue";
+import { Typography } from "./Typography";
 
 export interface BigStatProps {
-  name: string;
-  id?: string;
-  unit?: string;
-  count: number;
-  type?: "variant";
+  label: string;
+  value: number;
+  unit: string;
 }
 
-export const BigStat = ({ name, count, id, unit, type }: BigStatProps) => {
-  const formatterRef = useRef(
-    new Intl.NumberFormat("en-US", {
-      notation: "compact",
-      maximumFractionDigits: 1,
-    })
-  );
-
+export const BigStat = ({ label, value, unit }: BigStatProps) => {
   return (
-    <div>
-      <h2 id={id} className="font-semibold">
-        {name}
-      </h2>
+    <Card>
+      <CardContent>
+        <div className="flex flex-row gap-4 items-center">
+          <div>
+            <Typography className="text-xs text-slate-500 dark:text-slate-300 uppercase">
+              {label}
+            </Typography>
+            <Typography as="h2" className="text-3xl">
+              <strong>
+                <NumberValue value={value} />
+              </strong>{" "}
+              <span className="text-slate-500 dark:text-slate-300 text-xl">
+                {unit}
+              </span>
+            </Typography>
+          </div>
 
-      <div
-        className={
-          type === "variant"
-            ? "text-indigo-700 text-4xl font-bold"
-            : "text-orange-700 text-4xl font-bold"
-        }
-      >
-        {formatterRef.current.format(count)} {unit && <span>{unit}</span>}
-      </div>
-    </div>
+          <TbApps className="text-6xl text-slate-200" />
+        </div>
+      </CardContent>
+    </Card>
   );
 };

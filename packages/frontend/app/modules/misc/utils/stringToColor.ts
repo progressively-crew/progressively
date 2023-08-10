@@ -1,4 +1,4 @@
-type PredefinedLightness = 90 | 25 | 75;
+type PredefinedLightness = 90 | 25 | 75 | 95;
 
 const PredefinedBgColors = {
   A: "hsl(10, 100%, 75%)",
