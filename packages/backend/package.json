@@ -18,7 +18,7 @@
     "test:watch": "cross-env TZ=UTC jest --watch",
     "test:cov": "cross-env TZ=UTC jest --coverage",
     "test:debug": "cross-env TZ=UTC node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "cross-env TZ=UTC jest --runInBand --config ./test/jest-e2e.json"
+    "test:e2e": "SEED_ROUND_EVENT_HITS=1 cross-env TZ=UTC jest --runInBand --config ./test/jest-e2e.json"
   },
   "dependencies": {
     "@nestjs/common": "^9.4.0",
