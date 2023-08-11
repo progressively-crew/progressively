@@ -1,4 +1,3 @@
-import { TbApps } from "react-icons/tb";
 import { Card, CardContent } from "./Card";
 import { NumberValue } from "./NumberValue";
 import { Typography } from "./Typography";
@@ -7,9 +6,10 @@ export interface BigStatProps {
   label: string;
   value: number;
   unit: string;
+  icon: React.ReactNode;
 }
 
-export const BigStat = ({ label, value, unit }: BigStatProps) => {
+export const BigStat = ({ label, value, unit, icon }: BigStatProps) => {
   return (
     <Card>
       <CardContent>
@@ -28,7 +28,7 @@ export const BigStat = ({ label, value, unit }: BigStatProps) => {
             </Typography>
           </div>
 
-          <TbApps className="text-6xl text-slate-200" />
+          {icon}
         </div>
       </CardContent>
     </Card>

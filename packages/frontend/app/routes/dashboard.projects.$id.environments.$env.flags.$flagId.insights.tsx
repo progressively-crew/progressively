@@ -7,6 +7,7 @@ import {
   V2_MetaFunction,
 } from "@remix-run/node";
 import { Link, useLoaderData, useSearchParams } from "@remix-run/react";
+import { TbApps, TbChartPie } from "react-icons/tb";
 import { FlagEnvMenu } from "~/modules/flags/components/FlagEnvMenu";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
@@ -224,12 +225,14 @@ export default function FlagInsights() {
             label={"Flag eval. count"}
             value={flagEvaluationsCount}
             unit={"evals."}
+            icon={<TbApps className="text-6xl text-slate-200" />}
           />
 
           <BigStat
             label={" Metric hits count"}
             value={metricCount}
             unit={"hits"}
+            icon={<TbChartPie className="text-6xl text-slate-200" />}
           />
         </div>
       </Section>
