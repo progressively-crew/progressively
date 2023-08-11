@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from "react";
 import {
-  LineChart as RLineChart,
   ResponsiveContainer,
   Legend,
   Tooltip,
@@ -9,6 +8,8 @@ import {
   YAxis,
   Line,
   CartesianGrid,
+  AreaChart,
+  Area,
 } from "recharts";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
 import { useTheme } from "~/modules/theme/useTheme";
@@ -29,7 +30,15 @@ const CustomizedAxisTick = ({ color, ...props }: any) => {
 
   return (
     <g transform={`translate(${x},${y})`}>
-      <text x={0} y={0} dy={16} textAnchor="middle" fill={color}>
+      <text
+        x={0}
+        y={0}
+        dy={16}
+        textAnchor="middle"
+        fill={color}
+        fontWeight={400}
+        fontSize={"0.8em"}
+      >
         {date}
       </text>
     </g>
@@ -78,9 +87,24 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 export const LineChart = ({ data }: LineChartProps) => {
   const { theme } = useTheme();
 
-  const legendColor = theme === "dark" ? "#ccc" : "#aaa";
-  const glowEffect = (key: string) =>
-    theme === "dark" ? stringToColor(key, 25) : stringToColor(key, 90);
+  const themeValues =
+    theme === "dark"
+      ? {
+          legendFg: "#e2e8f0",
+          legendBg: "#0f172a",
+          stroke: "#334155",
+          legendBorder: "1px solid #1e293b",
+          areaStroke: (k: string) => stringToColor(k, 75),
+          areaFill: (k: string) => stringToColor(k, 95),
+        }
+      : {
+          legendFg: "#64748b",
+          legendBg: "#f8fafc",
+          stroke: "#f1f5f9",
+          legendBorder: "1px solid #e5e7eb",
+          areaStroke: (k: string) => stringToColor(k, 75),
+          areaFill: (k: string) => stringToColor(k, 95),
+        };
 
   const keysDict: { [key: string]: boolean } = {};
   for (const d of data) {
@@ -94,53 +118,48 @@ export const LineChart = ({ data }: LineChartProps) => {
 
   return (
     <ResponsiveContainer width="100%" height={300}>
-      <RLineChart
+      <AreaChart
         width={500}
         height={300}
         data={data}
-        margin={{
-          top: 20,
-          right: 10,
-          bottom: 40,
-        }}
+        style={{ marginTop: "-5px" }}
       >
-        <CartesianGrid vertical={false} stroke={legendColor} />
+        <CartesianGrid vertical={false} stroke={themeValues.stroke} />
+
         <Legend
-          verticalAlign="top"
           wrapperStyle={{
-            paddingTop: "16px",
-            paddingBottom: "20px",
+            paddingTop: 10,
+            paddingBottom: 10,
+            background: themeValues.legendBg,
+            borderBottom: themeValues.legendBorder,
+            fontWeight: "500",
           }}
+          verticalAlign="top"
           formatter={(value, entry, index) => (
             <span className={stringToColor(lineKeys[index], 75)}>{value}</span>
           )}
         />
+
         <XAxis
           dataKey="date"
           axisLine={false}
-          tick={<CustomizedAxisTick color={legendColor} />}
+          tick={<CustomizedAxisTick color={themeValues.legendFg} />}
         />
-        <YAxis
-          tick={{ stroke: legendColor }}
-          axisLine={false}
-          tickLine={false}
-        />
+
         <Tooltip content={<CustomTooltip />} />
 
         {lineKeys.map((key) => (
-          <Line
-            style={{
-              filter: `drop-shadow(0px 0px 14px ${glowEffect(key)})`,
-            }}
+          <Area
             key={key}
             type="monotone"
             dataKey={key}
-            stroke={stringToColor(key, 75)}
+            stroke={themeValues.areaStroke(key)}
+            fill={themeValues.areaFill(key)}
             activeDot={{ r: 8 }}
-            strokeWidth={4}
+            strokeWidth={2}
           />
         ))}
-      </RLineChart>
+      </AreaChart>
     </ResponsiveContainer>
   );
 };

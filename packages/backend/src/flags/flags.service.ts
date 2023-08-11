@@ -204,16 +204,17 @@ export class FlagsService {
     });
   }
 
-  async flagHitsPerVariantPerDate(
+  getDistinctEvents(
     envId: string,
     flagId: string,
     startDate: string,
     endDate: string,
+    eventType: EventTypes,
   ) {
-    const disctintHitValue = await this.prisma.event.findMany({
-      distinct: ['data'],
+    return this.prisma.event.findMany({
+      distinct: eventType === EventTypes.Metric ? ['pMetricUuid'] : ['data'],
       where: {
-        type: EventTypes.Evaluation,
+        type: eventType,
         flagEnvironmentFlagId: flagId,
         flagEnvironmentEnvironmentId: envId,
         date: {
@@ -221,7 +222,25 @@ export class FlagsService {
           lte: new Date(endDate),
         },
       },
+      include: {
+        metric: eventType === EventTypes.Metric,
+      },
     });
+  }
+
+  async flagHitsPerVariantPerDate(
+    envId: string,
+    flagId: string,
+    startDate: string,
+    endDate: string,
+  ) {
+    const disctintHitValue = await this.getDistinctEvents(
+      envId,
+      flagId,
+      startDate,
+      endDate,
+      EventTypes.Evaluation,
+    );
 
     const dictByDates = {};
 
@@ -253,6 +272,58 @@ export class FlagsService {
 
         dictByDates[isoDate]['date'] = isoDate;
         dictByDates[isoDate][dhv.data] = hbd._count;
+      });
+    }
+
+    return Object.keys(dictByDates)
+      .sort()
+      .map((k) => dictByDates[k]);
+  }
+
+  async metricHitsPerDate(
+    envId: string,
+    flagId: string,
+    startDate: string,
+    endDate: string,
+  ) {
+    const eventsOnMetrics = await this.getDistinctEvents(
+      envId,
+      flagId,
+      startDate,
+      endDate,
+      EventTypes.Metric,
+    );
+
+    const dictByDates = {};
+
+    for (const eom of eventsOnMetrics) {
+      const hitsByDate = await this.prisma.event.groupBy({
+        _count: true,
+        by: ['date'],
+        where: {
+          type: EventTypes.Metric,
+          flagEnvironmentFlagId: flagId,
+          flagEnvironmentEnvironmentId: envId,
+          date: {
+            gte: new Date(startDate),
+            lte: new Date(endDate),
+          },
+          pMetricUuid: eom.pMetricUuid,
+        },
+        orderBy: {
+          date: 'asc',
+        },
+      });
+
+      hitsByDate.forEach((hbd) => {
+        const isoDate = hbd.date.toISOString();
+
+        if (!dictByDates[isoDate]) {
+          dictByDates[isoDate] = {};
+        }
+
+        dictByDates[isoDate]['date'] = isoDate;
+        dictByDates[isoDate][eom.metric.name] = hbd._count;
       });
     }
 

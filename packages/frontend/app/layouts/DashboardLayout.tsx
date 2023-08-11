@@ -32,6 +32,8 @@ export const DashboardLayout = ({
     ? "md:grid grid-cols-[auto_1fr] items-start h-full"
     : "";
 
+  const layoutClassName = "max-w-7xl mx-auto";
+
   return (
     <NavProvider>
       <SkipNavLink>Skip to content</SkipNavLink>
@@ -52,7 +54,9 @@ export const DashboardLayout = ({
             </div>
           )}
 
-          <InertWhenNavOpened className="h-full dark:bg-slate-900 flex-1 max-w-7xl mx-auto px-4 md:px-20 pt-8 md:pt-0 w-full">
+          <InertWhenNavOpened
+            className={`${layoutClassName} h-full dark:bg-slate-900 flex-1 px-4 md:px-20 pt-8 md:pt-0 w-full`}
+          >
             <Main>
               {status}
               <div className="flex-1">

@@ -6,6 +6,8 @@ on:
 
 jobs:
   e2e:
+    env:
+      SEED_ROUND_EVENT_HITS: 1
     runs-on: ubuntu-latest
     services:
       redis:

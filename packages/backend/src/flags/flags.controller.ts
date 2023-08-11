@@ -190,7 +190,7 @@ export class FlagsController {
         endDate,
       );
 
-    const flagEvaluationsCount = await this.flagService.flagEvaluationsCount(
+    const metricsPerDate = await this.flagService.metricHitsPerDate(
       envId,
       flagId,
       startDate,
@@ -213,9 +213,9 @@ export class FlagsController {
 
     return {
       hitsPerVariantPerDate,
-      flagEvaluationsCount,
       metricsByVariantCount,
       flagEvaluations,
+      metricsPerDate,
     };
   }
 

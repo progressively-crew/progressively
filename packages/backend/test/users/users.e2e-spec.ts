@@ -81,7 +81,7 @@ describe('UsersController (e2e)', () => {
       expect(body).toMatchObject({
         plans: [],
         remainingTrialingDays: 0,
-        hitsForMonth: 0,
+        hitsForMonth: 4,
       });
     });
 
