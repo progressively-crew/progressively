@@ -74,7 +74,7 @@ export const InstallationStep = ({ code }: { code: string }) => {
   return (
     <div className="px-4 md:px-8 max-w-6xl mx-auto">
       <section className={"py-20 md:py-40"}>
-        <h2 className="font-extrabold text-3xl md:text-7xl pb-20 text-center">
+        <h2 className="font-extrabold text-3xl md:text-5xl pb-20 text-center">
           Dreaming of an amazing workflow?
         </h2>
 

@@ -33,7 +33,7 @@ export const PricingSection = ({ trialUrl }: { trialUrl: string }) => {
       <div className="px-4 md:px-8 max-w-screen-2xl mx-auto">
         <section className={"py-12 md:py-32"}>
           <h2
-            className="font-extrabold text-3xl md:text-7xl pb-4 text-center text-white"
+            className="font-extrabold text-3xl md:text-5xl pb-4 text-center text-white"
             id="pricing"
           >
             Adapted pricing

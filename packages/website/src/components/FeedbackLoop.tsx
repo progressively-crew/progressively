@@ -18,7 +18,7 @@ export const FeedbackLoop = ({ abcVersions }: { abcVersions: string }) => {
     <div className="bg-gradient-to-t from-slate-900 via-slate-800 to-fuchsia-900 lg:h-[860px]">
       <div className="px-4 md:px-8 max-w-screen-2xl mx-auto">
         <section className={"py-12 md:py-32"}>
-          <h2 className="font-extrabold text-3xl md:text-7xl pb-4 text-white">
+          <h2 className="font-extrabold text-3xl md:text-5xl pb-4 text-white">
             Enhance the feedback loop
           </h2>
 
@@ -32,7 +32,7 @@ export const FeedbackLoop = ({ abcVersions }: { abcVersions: string }) => {
                     }`}
                     onClick={() => setStep("release")}
                   >
-                    Unlock Canary & Beta versions.
+                    Unlock Canary / Beta versions.
                   </button>
                 </li>
                 <li>

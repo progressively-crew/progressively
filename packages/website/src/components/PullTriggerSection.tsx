@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Switch } from "./Switch/Switch";
-import { BrowserVersion } from "./Browser";
+import { Browser, BrowserVersion } from "./Browser";
 import { Code } from "./Code";
 import { NumberInput } from "./NumberInput";
 
@@ -9,40 +9,110 @@ export const PullTriggerSection = ({
 }: {
   clientComponent: string;
 }) => {
-  const [checked, setChecked] = useState(false);
-  const [percentage, setPercentage] = useState(50);
+  const [abChecked, setAbChecked] = useState(false);
+  const [newCtaCheck, setNewCtaCheck] = useState(false);
+  const [newPricingSection, setNewPricingSection] = useState(false);
+
+  const sharedLineClass = `bg-slate-200 rounded-full h-4`;
 
   return (
-    <div className="grid lg:grid-cols-[2fr_1fr] gap-8">
-      <div className="rounded-lg p-12 bg-white">
-        <div className="flex flex-col xl:flex-row xl:items-center xl:justify-between pb-4 gap-2">
-          <Switch
-            checked={checked}
-            onClick={() => setChecked((s) => !s)}
-            label="Toggle feature"
-          />
+    <div className="grid lg:grid-cols-[2fr_3fr] gap-8">
+      <div className="">
+        <h2 className="font-bold text-white text-2xl">Progressively</h2>
+        <div className="rounded-lg p-12 bg-white">
+          <div className="border-b border-slate-100 pb-2">
+            <Switch
+              checked={abChecked}
+              onClick={() => setAbChecked((s) => !s)}
+              label="A/B test layout"
+            />
+            <p className="text-xs text-slate-700">
+              Visible for 50% of the audience
+            </p>
+          </div>
+          <div className="border-b border-slate-100 py-2">
+            <Switch
+              checked={newCtaCheck}
+              onClick={() => setNewCtaCheck((s) => !s)}
+              label="New CTA for conversion"
+            />
 
-          <NumberInput
-            value={percentage}
-            onChange={(n) => {
-              if (checked) {
-                setPercentage(n);
-              }
-            }}
-          />
-        </div>
+            <p className="text-xs text-slate-700">Activated</p>
+          </div>
 
-        <div className="grid md:grid-cols-3 xl:grid-cols-4 gap-4">
-          <BrowserVersion isToggled={checked && percentage >= 25} />
-          <BrowserVersion isToggled={checked && percentage >= 50} />
-          <BrowserVersion isToggled={checked && percentage >= 75} />
-          <div className="hidden xl:block">
-            <BrowserVersion isToggled={checked && percentage >= 100} />
+          <div className="pt-2">
+            <Switch
+              checked={newPricingSection}
+              onClick={() => setNewPricingSection((s) => !s)}
+              label="New pricing section"
+            />
+
+            <p className="text-xs text-slate-700">Activated</p>
           </div>
         </div>
       </div>
 
-      <Code html={clientComponent} />
+      <div className="">
+        <h2 className="font-bold text-white text-2xl">Your website</h2>
+        <Browser>
+          {newPricingSection && (
+            <div
+              className={`${sharedLineClass} motion-safe:animate-fade-enter-top !rounded-none !bg-fuchsia-800 !h-8 absolute z-10 w-full flex flex-row items-center justify-center gap-2`}
+            >
+              <p className="text-xs text-white">Get 20% for free!</p>
+
+              <button
+                className={`${sharedLineClass} bg-slate-50 transition-all hover:outline hover:outline-2 outline-blue-500 active:bg-slate-200`}
+                style={{ width: "10%" }}
+                aria-label="Convert!"
+              />
+            </div>
+          )}
+          <div className="p-4">
+            <div className="flex flex-row justify-between">
+              <div className="flex flex-row gap-2">
+                <div
+                  className={`${sharedLineClass} transition-all`}
+                  style={{ width: 40 }}
+                />
+                <div className={sharedLineClass} style={{ width: 60 }} />
+              </div>
+              <div className="flex flex-row gap-2">
+                <div className={sharedLineClass} style={{ width: 30 }} />
+                <div className={sharedLineClass} style={{ width: 30 }} />
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-2 max-w-lg mx-auto pt-4">
+              <div
+                className={"flex flex-col items-center gap-2 transition-all"}
+              >
+                <div className={`${sharedLineClass} !rounded-lg w-20 h-20`} />
+                <div className={sharedLineClass} style={{ width: "50%" }} />
+                <div className={sharedLineClass} style={{ width: "60%" }} />
+                <div className="flex flex-row gap-2 w-full justify-center">
+                  <div
+                    className={`${sharedLineClass}`}
+                    style={{ width: "10%" }}
+                  />
+                  {newCtaCheck && (
+                    <button
+                      className={`${sharedLineClass} motion-safe:animate-fade-enter-bottom bg-slate-700 transition-all hover:outline hover:outline-2 outline-blue-500 active:bg-slate-800`}
+                      style={{ width: "10%" }}
+                      aria-label="Convert!"
+                    />
+                  )}
+                </div>
+              </div>
+              <div className="pt-8 flex flex-col gap-2">
+                <div className={sharedLineClass} style={{ width: "100%" }} />
+                <div className={sharedLineClass} style={{ width: "80%" }} />
+                <div className={sharedLineClass} style={{ width: "30%" }} />
+              </div>
+            </div>
+          </div>
+        </Browser>
+      </div>
     </div>
   );
 };

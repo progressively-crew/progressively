@@ -22,10 +22,10 @@ const FlaggedComponent = () => {
   const { flags } = useFlags();
 
   if (flags.newFlag) {
-    return <div>New variant</div>;
+    return <BrandNewFeature />;
   }
 
-  return <div>Old variant</div>;
+  return <BrandNewFeature />;
 };
 
 // It's as simple as that.
@@ -81,16 +81,15 @@ return <OldFeature />;
         <h1
           class="text-center text-4xl md:text-5xl font-extrabold text-white pt-4 !leading-tight animate-fade-enter-top"
         >
-          Stress-less & risk-free<br />feature deployments
+          Deploy your features <br />without stress & without risk
         </h1>
 
         <p
           class="text-center md:text-left text-xl md:text-2xl text-white pt-4 leading-relaxed animate-fade-enter-bottom opacity-0"
           style={{ animationDelay: "300ms" }}
         >
-          Deploy your features confidently, without stress, and <strong
-            >progressively</strong
-          >.
+          We provide tools around features flags to faciliate your feature
+          deployments.
         </p>
 
         <div
@@ -117,7 +116,7 @@ return <OldFeature />;
         </div>
       </div>
 
-      <div class="hidden md:block pt-20">
+      <div class="hidden md:block pt-20 max-w-screen-xl mx-auto">
         <PullTriggerSection client:load clientComponent={clientComponent} />
       </div>
     </header>
