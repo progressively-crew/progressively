@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { Switch } from "./Switch/Switch";
-import { Browser, BrowserVersion } from "./Browser";
-import { Code } from "./Code";
-import { NumberInput } from "./NumberInput";
+import { Browser } from "./Browser";
 
 export const PullTriggerSection = ({
   clientComponent,
@@ -12,6 +10,7 @@ export const PullTriggerSection = ({
   const [abChecked, setAbChecked] = useState(false);
   const [newCtaCheck, setNewCtaCheck] = useState(false);
   const [newPricingSection, setNewPricingSection] = useState(false);
+  const [newDashboard, setNewDashboard] = useState(false);
 
   const sharedLineClass = `bg-slate-200 rounded-full h-4`;
 
@@ -27,27 +26,43 @@ export const PullTriggerSection = ({
               label="A/B test layout"
             />
             <p className="text-xs text-slate-700">
-              Visible for 50% of the audience
+              {abChecked ? "Visible for 50% of the audience" : "Not activated"}
             </p>
           </div>
           <div className="border-b border-slate-100 py-2">
             <Switch
               checked={newCtaCheck}
               onClick={() => setNewCtaCheck((s) => !s)}
-              label="New CTA for conversion"
+              label="CTA for conversion"
             />
 
-            <p className="text-xs text-slate-700">Activated</p>
+            <p className="text-xs text-slate-700">
+              {newCtaCheck ? "Activated" : "Not activated"}
+            </p>
+          </div>
+
+          <div className="border-b border-slate-100 py-2">
+            <Switch
+              checked={newPricingSection}
+              onClick={() => setNewPricingSection((s) => !s)}
+              label="Promotion banner"
+            />
+
+            <p className="text-xs text-slate-700">
+              {newPricingSection ? "Activated" : "Not activated"}
+            </p>
           </div>
 
           <div className="pt-2">
             <Switch
-              checked={newPricingSection}
-              onClick={() => setNewPricingSection((s) => !s)}
-              label="New pricing section"
+              checked={newDashboard}
+              onClick={() => setNewDashboard((s) => !s)}
+              label="New showcase (alpha)"
             />
 
-            <p className="text-xs text-slate-700">Activated</p>
+            <p className="text-xs text-slate-700">
+              {newDashboard ? "Only for Canary users" : "Not activated"}
+            </p>
           </div>
         </div>
       </div>
@@ -76,6 +91,12 @@ export const PullTriggerSection = ({
                   style={{ width: 40 }}
                 />
                 <div className={sharedLineClass} style={{ width: 60 }} />
+                {newDashboard && (
+                  <div
+                    className={`${sharedLineClass} motion-safe:animate-fade-enter-right !bg-orange-500`}
+                    style={{ width: 60 }}
+                  />
+                )}
               </div>
               <div className="flex flex-row gap-2">
                 <div className={sharedLineClass} style={{ width: 30 }} />
