@@ -78,6 +78,7 @@ export const CorrelatePercentageError = () => {
               onChange={(n) => {
                 setPercentage(n);
               }}
+              disabled={!checked}
             />
           </div>
 

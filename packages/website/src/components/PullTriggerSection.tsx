@@ -75,20 +75,13 @@ export const PullTriggerSection = ({
 
       <div className="">
         <h2 className="font-bold text-2xl pb-4 flex flex-row gap-2 items-center">
-          <BsCodeSlash className="h-6" /> Your code
-        </h2>
-        <Code html={clientComponent}></Code>
-      </div>
-
-      <div className="">
-        <h2 className="font-bold text-2xl pb-4 flex flex-row gap-2 items-center">
           <TbWorld /> Your website
         </h2>
         <div className="border border-slate-200 rounded-xl overflow-hidden">
           <Browser>
             {newPricingSection && (
               <div
-                className={`${sharedLineClass} motion-safe:animate-fade-enter-top !rounded-none !bg-fuchsia-800 !h-8 absolute z-10 w-full flex flex-row items-center justify-center gap-2`}
+                className={`${sharedLineClass} motion-safe:animate-fade-enter-top !rounded-none !bg-[#44BCFF] !h-8 absolute z-10 w-full flex flex-row items-center justify-center gap-2`}
               >
                 <p className="text-xs text-white">Get 20% for free!</p>
 
@@ -109,7 +102,7 @@ export const PullTriggerSection = ({
                   <div className={sharedLineClass} style={{ width: 60 }} />
                   {newDashboard && (
                     <div
-                      className={`${sharedLineClass} motion-safe:animate-fade-enter-right !bg-orange-500`}
+                      className={`${sharedLineClass} motion-safe:animate-fade-enter-right !bg-[#FF44EC]`}
                       style={{ width: 60 }}
                     />
                   )}
@@ -124,7 +117,9 @@ export const PullTriggerSection = ({
                 <div
                   className={"flex flex-col items-center gap-2 transition-all"}
                 >
-                  <div className={`${sharedLineClass} !rounded-lg w-20 h-20`} />
+                  <div
+                    className={`${sharedLineClass} !rounded-lg w-20 !h-12`}
+                  />
                   <div className={sharedLineClass} style={{ width: "50%" }} />
                   <div className={sharedLineClass} style={{ width: "60%" }} />
                   <div className="flex flex-row gap-2 w-full justify-center">
@@ -134,7 +129,7 @@ export const PullTriggerSection = ({
                     />
                     {newCtaCheck && (
                       <button
-                        className={`${sharedLineClass} motion-safe:animate-fade-enter-bottom bg-slate-700 transition-all hover:outline hover:outline-2 outline-blue-500 active:bg-slate-800`}
+                        className={`${sharedLineClass} motion-safe:animate-fade-enter-bottom !bg-[#FF675E] transition-all hover:outline hover:outline-2 outline-blue-500 active:bg-slate-800`}
                         style={{ width: "10%" }}
                         aria-label="Convert!"
                       />
@@ -142,14 +137,20 @@ export const PullTriggerSection = ({
                   </div>
                 </div>
                 <div className="pt-8 flex flex-col gap-2">
-                  <div className={sharedLineClass} style={{ width: "100%" }} />
                   <div className={sharedLineClass} style={{ width: "80%" }} />
-                  <div className={sharedLineClass} style={{ width: "30%" }} />
+                  <div className={sharedLineClass} style={{ width: "40%" }} />
                 </div>
               </div>
             </div>
           </Browser>
         </div>
+      </div>
+
+      <div className="">
+        <h2 className="font-bold text-2xl pb-4 flex flex-row gap-2 items-center">
+          <BsCodeSlash className="h-6" /> Your code
+        </h2>
+        <Code html={clientComponent}></Code>
       </div>
     </div>
   );
