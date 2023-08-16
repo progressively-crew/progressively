@@ -54,7 +54,7 @@ const TimeFrame = ({
           </div>
         </div>
 
-        <p className={pClass}>{content}</p>
+        <div className={pClass}>{content}</div>
         <div className="px-8 text-center mt-auto">{cta}</div>
       </Card>
     </li>

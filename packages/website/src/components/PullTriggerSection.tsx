@@ -115,25 +115,42 @@ export const PullTriggerSection = ({
 
               <div className="flex flex-col gap-2 max-w-lg mx-auto pt-4">
                 <div
-                  className={"flex flex-col items-center gap-2 transition-all"}
+                  className={`flex ${
+                    abChecked ? "flex-row items-center" : "flex-col"
+                  } items-center gap-2 transition-all`}
                 >
                   <div
-                    className={`${sharedLineClass} !rounded-lg w-20 !h-12`}
+                    className={`${sharedLineClass} !rounded-lg ${
+                      abChecked ? "w-1/2 !h-20" : "w-20 !h-12"
+                    }`}
                   />
-                  <div className={sharedLineClass} style={{ width: "50%" }} />
-                  <div className={sharedLineClass} style={{ width: "60%" }} />
-                  <div className="flex flex-row gap-2 w-full justify-center">
+                  <div
+                    className={`flex flex-col ${
+                      abChecked ? "" : "items-center"
+                    } gap-2 transition-all w-full`}
+                  >
                     <div
-                      className={`${sharedLineClass}`}
-                      style={{ width: "10%" }}
+                      className={sharedLineClass}
+                      style={{ width: abChecked ? "100%" : "50%" }}
                     />
-                    {newCtaCheck && (
-                      <button
-                        className={`${sharedLineClass} motion-safe:animate-fade-enter-bottom !bg-[#FF675E] transition-all hover:outline hover:outline-2 outline-blue-500 active:bg-slate-800`}
-                        style={{ width: "10%" }}
-                        aria-label="Convert!"
+                    <div className={sharedLineClass} style={{ width: "60%" }} />
+                    <div
+                      className={`flex flex-row gap-2 w-full ${
+                        abChecked ? "" : "justify-center"
+                      }`}
+                    >
+                      <div
+                        className={`${sharedLineClass}`}
+                        style={{ width: abChecked ? "20%" : "10%" }}
                       />
-                    )}
+                      {newCtaCheck && (
+                        <button
+                          className={`${sharedLineClass} motion-safe:animate-fade-enter-bottom !bg-[#FF675E] transition-all hover:outline hover:outline-2 outline-blue-500 active:bg-slate-800`}
+                          style={{ width: abChecked ? "20%" : "10%" }}
+                          aria-label="Convert!"
+                        />
+                      )}
+                    </div>
                   </div>
                 </div>
                 <div className="pt-8 flex flex-col gap-2">
