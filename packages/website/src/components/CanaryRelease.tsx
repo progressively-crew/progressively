@@ -24,11 +24,9 @@ export const CanaryRelease = () => {
 
   return (
     <div>
-      <h2 className="text-3xl pb-4 text-white">
-        Unlock Canary / Beta versions.
-      </h2>
+      <h2 className="text-xl pb-4 font-bold">Unlock Canary / Beta versions.</h2>
 
-      <p className="text-lg leading-relaxed pb-8 text-white">
+      <p className="text-lg leading-relaxed pb-8">
         Accelerate feedback acquisition by establishing exclusive user groups
         with specialized and controlled access to your cutting-edge features.
         Leverage their invaluable insights to fine-tune your offerings even

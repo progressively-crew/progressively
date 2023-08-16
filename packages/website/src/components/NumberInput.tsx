@@ -11,7 +11,7 @@ export const NumberInput = ({ onChange, value }: NumberInputProps) => {
       </label>
       <div className="flex flex-row">
         <input
-          type="number"
+          type="range"
           id="percentage"
           min={0}
           max={100}
@@ -21,8 +21,8 @@ export const NumberInput = ({ onChange, value }: NumberInputProps) => {
             onChange(Number(e.target.value));
           }}
         />
-        <span className="p-2 h-10 rounded-r bg-gray-200 font-mono w-10 font-extrabold text-center text-xl">
-          %
+        <span className="p-2 h-10 rounded bg-slate-200 text-slate-700 font-mono w-14 text-center">
+          {value}%
         </span>
       </div>
     </div>

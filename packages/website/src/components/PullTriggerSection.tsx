@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Switch } from "./Switch/Switch";
 import { Browser } from "./Browser";
+import { Logo } from "./Logo";
 
 export const PullTriggerSection = ({
   clientComponent,
@@ -17,9 +18,23 @@ export const PullTriggerSection = ({
   return (
     <div className="grid lg:grid-cols-[2fr_3fr] gap-8">
       <div className="">
-        <h2 className="font-bold text-white text-2xl">Progressively</h2>
-        <div className="rounded-lg p-12 bg-white">
-          <div className="border-b border-slate-100 pb-2">
+        <h2 className="text-2xl pb-4 pt-2">
+          <Logo />
+        </h2>
+        <div className="rounded-lg p-12 bg-white border border-gray-200 shadow-sm">
+          <div className="pb-2 border-b border-slate-100">
+            <Switch
+              checked={newDashboard}
+              onClick={() => setNewDashboard((s) => !s)}
+              label="New showcase (alpha)"
+            />
+
+            <p className="text-xs text-slate-700">
+              {newDashboard ? "Only for Canary users" : "Not activated"}
+            </p>
+          </div>
+
+          <div className="border-b border-slate-100 py-2">
             <Switch
               checked={abChecked}
               onClick={() => setAbChecked((s) => !s)}
@@ -41,7 +56,7 @@ export const PullTriggerSection = ({
             </p>
           </div>
 
-          <div className="border-b border-slate-100 py-2">
+          <div className="pt-2">
             <Switch
               checked={newPricingSection}
               onClick={() => setNewPricingSection((s) => !s)}
@@ -52,23 +67,11 @@ export const PullTriggerSection = ({
               {newPricingSection ? "Activated" : "Not activated"}
             </p>
           </div>
-
-          <div className="pt-2">
-            <Switch
-              checked={newDashboard}
-              onClick={() => setNewDashboard((s) => !s)}
-              label="New showcase (alpha)"
-            />
-
-            <p className="text-xs text-slate-700">
-              {newDashboard ? "Only for Canary users" : "Not activated"}
-            </p>
-          </div>
         </div>
       </div>
 
       <div className="">
-        <h2 className="font-bold text-white text-2xl">Your website</h2>
+        <h2 className="font-bold text-2xl pb-4">Your website</h2>
         <Browser>
           {newPricingSection && (
             <div

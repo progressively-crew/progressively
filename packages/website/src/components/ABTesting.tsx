@@ -4,7 +4,7 @@ import { AVersion, BVersion, CVersion } from "./Browser";
 import { Code } from "./Code";
 
 export const ABTesting = ({ code }: { code: string }) => {
-  const variantTextClass = "text-center font-bold text-xl pt-4 text-white";
+  const variantTextClass = "text-center font-bold text-xl pt-4";
   const ref = useRef<HTMLDivElement | null>(null);
   const entry = useIntersectionObserver(ref, {
     threshold: 0.75,
@@ -18,9 +18,9 @@ export const ABTesting = ({ code }: { code: string }) => {
 
   return (
     <div>
-      <h2 className="text-3xl pb-4 text-white">Multi-variants & A/B testing</h2>
+      <h2 className="text-xl pb-4 font-bold">Multi-variants & A/B testing</h2>
 
-      <p className="text-lg text-white leading-relaxed pb-4">
+      <p className="text-lg leading-relaxed pb-4">
         Unleash the power of dynamic feature flags by crafting multiple
         captivating variants that deliver diverse experiences to your users.
         Gauge the impact of these distinct versions and make data-driven

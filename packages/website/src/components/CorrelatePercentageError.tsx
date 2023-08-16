@@ -53,11 +53,11 @@ export const CorrelatePercentageError = () => {
 
   return (
     <div>
-      <h2 className="text-3xl pb-4 text-white">
+      <h2 className="text-xl pb-4 font-bold">
         Correlate rollout & and error rising
       </h2>
 
-      <p className="text-lg leading-relaxed pb-8 text-white">
+      <p className="text-lg leading-relaxed pb-8">
         Supercharge your feature management with seamless error correlation in
         your tracking tool. Effortlessly link error occurrences to specific
         feature rollouts, allowing you to swiftly identify any feature that

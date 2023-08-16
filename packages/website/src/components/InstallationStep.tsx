@@ -18,10 +18,10 @@ const TimeFrame = ({
   shouldAnimate,
 }: TimeFrameProps) => {
   const titleClass = "font-bold text-xl px-8 text-center";
-  const pClass = "text-slate-700 pb-4 px-8 text-center";
+  const pClass = "text-slate-700 pb-4 px-8 text-center text-lg";
 
   const numberClass =
-    "relative z-10 w-10 h-10 flex items-center justify-center text-white rounded-full p-2";
+    "relative z-10 w-10 h-10 flex items-center justify-center rounded-full p-2";
 
   return (
     <li>
@@ -30,7 +30,7 @@ const TimeFrame = ({
           <h3 className={titleClass}>{title}</h3>
 
           <div className="flex items-center relative justify-center py-4">
-            <div className="hidden md:block border-t-4 border-dashed border-slate-100 absolute w-full" />
+            <div className="hidden md:block border-t-4 border-dashed border-slate-300 absolute w-full" />
 
             <div className="relative">
               <span
@@ -72,8 +72,8 @@ export const InstallationStep = ({ code }: { code: string }) => {
     "bg-transparent border border-slate-200 hover:bg-slate-100";
 
   return (
-    <div className="px-4 md:px-8 max-w-6xl mx-auto">
-      <section className={"py-20 md:py-40"}>
+    <div className="bg-slate-50 border-t border-b border-slate-200">
+      <section className="px-4 md:px-8 max-w-6xl mx-auto py-20 md:py-32">
         <h2 className="font-extrabold text-3xl md:text-5xl pb-20 text-center">
           Dreaming of an amazing workflow?
         </h2>

@@ -33,9 +33,9 @@ export const TimeBasedRollout = () => {
 
   return (
     <div>
-      <h2 className="text-3xl pb-4 text-white">Time based rollouts</h2>
+      <h2 className="text-xl pb-4 font-bold">Time based rollouts</h2>
 
-      <p className="text-lg text-white leading-relaxed pb-4">
+      <p className="text-lg leading-relaxed pb-4">
         Empower your feature deployment with time-based control! Seamlessly
         activate or deactivate features at your desired date and time. Dreaming
         of a Tuesday 10am PST launch? With automation at your fingertips, you
@@ -64,7 +64,6 @@ export const TimeBasedRollout = () => {
       </div>
       <div className="flex w-full justify-end pt-1">
         <button
-          className="text-white"
           onClick={() => {
             setIsActive(false);
             setTime(5);

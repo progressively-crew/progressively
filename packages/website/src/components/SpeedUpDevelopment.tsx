@@ -21,8 +21,8 @@ export const SpeedUpDevelopment = () => {
     : "opacity-0";
 
   return (
-    <div className="px-4 md:px-8 max-w-6xl mx-auto">
-      <section className={"py-12 md:py-32"}>
+    <div className="bg-slate-50 border-t border-b border-slate-200">
+      <section className={"py-12 md:py-32 px-4 md:px-8 max-w-6xl mx-auto"}>
         <h2 className="font-extrabold text-3xl md:text-5xl pb-4 md:text-center flex flex-col md:flex-row gap-4 md:justify-center md:items-center">
           <span>Ship 3x more, safely {isVisible}</span>{" "}
         </h2>
