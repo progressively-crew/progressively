@@ -1,11 +1,15 @@
 import { useRef } from "react";
 import { useIntersectionObserver } from "../hooks/useIntersectionObserver";
 import { Code } from "./Code";
+import { Highlight } from "./Highlight";
+import { Card } from "./Card";
+import { BsCheck } from "react-icons/bs";
+import { GlowyLink } from "./GlowyLink";
 
 interface TimeFrameProps {
-  cta: React.ReactNode;
+  cta?: React.ReactNode;
   title: string;
-  content: string;
+  content: React.ReactNode;
   step: number;
   shouldAnimate: boolean;
 }
@@ -18,19 +22,19 @@ const TimeFrame = ({
   shouldAnimate,
 }: TimeFrameProps) => {
   const titleClass = "font-bold text-xl px-8 text-center";
-  const pClass = "text-slate-700 pb-4 px-8 text-center";
+  const pClass = "text-slate-500 pb-4 px-8";
 
   const numberClass =
-    "relative z-10 w-10 h-10 flex items-center justify-center text-white rounded-full p-2";
+    "relative z-10 w-10 h-10 flex items-center justify-center rounded-full p-2";
 
   return (
-    <li>
-      <div>
-        <div className="flex flex-col-reverse md:flex-col">
+    <li className="h-full">
+      <Card>
+        <div className="flex md:flex-col">
           <h3 className={titleClass}>{title}</h3>
 
-          <div className="flex items-center relative justify-center py-4">
-            <div className="hidden md:block border-t-4 border-dashed border-slate-100 absolute w-full" />
+          <div className="flex items-center justify-center py-4">
+            <div className="hidden md:block border-t-4 border-dashed border-slate-300 absolute w-full max-w-lg" />
 
             <div className="relative">
               <span
@@ -43,14 +47,16 @@ const TimeFrame = ({
                   animationIterationCount: 1,
                 }}
               />
-              <span className={`${numberClass} bg-slate-900`}>{step}</span>
+              <span className={`${numberClass} bg-slate-900 text-white`}>
+                {step}
+              </span>
             </div>
           </div>
         </div>
 
-        <p className={pClass}>{content}</p>
-        <div className="px-8 text-center">{cta}</div>
-      </div>
+        <div className={pClass}>{content}</div>
+        <div className="px-8 text-center mt-auto">{cta}</div>
+      </Card>
     </li>
   );
 };
@@ -64,7 +70,7 @@ export const InstallationStep = ({ code }: { code: string }) => {
   const isVisible = !!entry?.isIntersecting;
 
   const btnClass =
-    "px-6 py-2 whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none";
+    "w-full px-6 py-2 whitespace-nowrap inline-flex items-center justify-center rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none";
 
   const primaryClass = "bg-gray-800 text-white hover:bg-gray-500";
 
@@ -72,28 +78,37 @@ export const InstallationStep = ({ code }: { code: string }) => {
     "bg-transparent border border-slate-200 hover:bg-slate-100";
 
   return (
-    <div className="px-4 md:px-8 max-w-6xl mx-auto">
-      <section className={"py-20 md:py-40"}>
-        <h2 className="font-extrabold text-3xl md:text-7xl pb-20 text-center">
-          Dreaming of an amazing workflow?
+    <div className="bg-slate-50 border-t border-b border-slate-200">
+      <section className="px-4 md:px-8 max-w-6xl mx-auto py-20 md:py-32">
+        <h2 className="font-extrabold text-3xl md:text-5xl pb-4 md:pb-20 text-center">
+          Dreaming of an <Highlight>amazing workflow</Highlight>?
         </h2>
 
         <div ref={ref}>
           <div className="relative flex flex-col justify-center">
-            <ol className="grid md:grid-cols-3 gap-20 md:gap-0">
+            <ol className="grid md:grid-cols-3 gap-4 md:gap-8">
               <TimeFrame
                 shouldAnimate={isVisible}
                 cta={
-                  <a
-                    className={`${btnClass} ${primaryClass}`}
-                    href="https://dashboard.progressively.app/register"
-                  >
+                  <GlowyLink href="https://dashboard.progressively.app/register">
                     Create my account
-                  </a>
+                  </GlowyLink>
                 }
                 title={"Create an account"}
                 content={
-                  "Create your account, your first project and your first feature flag."
+                  <ol className="flex flex-col gap-2 py-4">
+                    <li className="flex flex-row gap-2 items-center">
+                      <BsCheck className="text-[#44BCFF]" /> Setup your account
+                    </li>
+                    <li className="flex flex-row gap-2 items-center">
+                      <BsCheck className="text-[#44BCFF]" /> Create your first
+                      project
+                    </li>
+                    <li className="flex flex-row gap-2 items-center">
+                      <BsCheck className="text-[#44BCFF]" /> Create your first
+                      flag
+                    </li>
+                  </ol>
                 }
                 step={1}
               />
@@ -109,22 +124,47 @@ export const InstallationStep = ({ code }: { code: string }) => {
                   </a>
                 }
                 title={"Choose a SDK"}
-                content={"Choose a SDK, and install it in your project."}
+                content={
+                  <ol className="flex flex-col gap-2 py-4">
+                    <li className="flex flex-row gap-2 items-center">
+                      <BsCheck className="text-[#FF44EC]" /> Choose a SDK
+                    </li>
+                    <li className="flex flex-row gap-2 items-center">
+                      <BsCheck className="text-[#FF44EC]" /> Install it
+                    </li>
+                    <li className="flex flex-row gap-2 items-center">
+                      <BsCheck className="text-[#FF44EC]" /> Evaluate the flags
+                    </li>
+                  </ol>
+                }
                 step={2}
               />
 
               <TimeFrame
                 shouldAnimate={isVisible}
-                cta={
-                  <div className="text-left">
-                    <Code html={code} />
-                  </div>
-                }
-                title={"Evaluate your flag"}
+                title={"Enjoy"}
                 content={
-                  "Create a condition in your components and toggle the flag in the dashboard."
+                  <ol className="flex flex-col gap-2 py-4">
+                    <li className="flex flex-row gap-2 items-center">
+                      <BsCheck className="text-[#FF675E]" /> Get insights
+                    </li>
+                    <li className="flex flex-row gap-2 items-center">
+                      <BsCheck className="text-[#FF675E]" /> Get feedbacks
+                    </li>
+                    <li className="flex flex-row gap-2 items-center">
+                      <BsCheck className="text-[#FF675E]" /> Iterate fast
+                    </li>
+                  </ol>
                 }
                 step={3}
+                cta={
+                  <a
+                    className={`${btnClass} ${secondaryBtnClass}`}
+                    href="https://github.com/progressively-crew/progressively/stargazers"
+                  >
+                    Show support
+                  </a>
+                }
               />
             </ol>
           </div>

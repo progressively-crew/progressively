@@ -53,18 +53,16 @@ export const CorrelatePercentageError = () => {
 
   return (
     <div>
-      <h2 className="text-3xl pb-4 text-white">
-        Correlate rollout & and error rising
-      </h2>
-
-      <p className="text-lg leading-relaxed pb-8 text-white">
-        Supercharge your feature management with seamless error correlation in
-        your tracking tool. Effortlessly link error occurrences to specific
-        feature rollouts, allowing you to swiftly identify any feature that
-        triggers excessive errors. With just one click, you gain the power to
-        deactivate problematic features instantly, ensuring a smooth and
-        error-free user experience!
-      </p>
+      <div className="max-w-screen-lg mx-auto w-full">
+        <p className="text-lg leading-relaxed pb-8 text-slate-500">
+          Supercharge your feature management with seamless error correlation in
+          your tracking tool. Effortlessly link error occurrences to specific
+          feature rollouts, allowing you to swiftly identify any feature that
+          triggers excessive errors. With just one click, you gain the power to
+          deactivate problematic features instantly, ensuring a smooth and
+          error-free user experience!
+        </p>
+      </div>
 
       <div className="md:grid md:grid-cols-[3fr_2fr] gap-4 hidden">
         <Card>
@@ -80,6 +78,7 @@ export const CorrelatePercentageError = () => {
               onChange={(n) => {
                 setPercentage(n);
               }}
+              disabled={!checked}
             />
           </div>
 

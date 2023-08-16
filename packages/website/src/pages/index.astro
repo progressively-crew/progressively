@@ -5,10 +5,11 @@ import { PullTriggerSection } from "../components/PullTriggerSection";
 import { SpeedUpDevelopment } from "../components/SpeedUpDevelopment";
 import Layout from "../layouts/Layout.astro";
 import hljs from "highlight.js";
-import Logo from "../components/Logo.astro";
 import { FeedbackLoop } from "../components/FeedbackLoop";
 import { InstallationStep } from "../components/InstallationStep";
 import { PricingSection } from "../components/PricingSection";
+import { GlowyLink } from "../components/GlowyLink";
+import { Highlight } from "../components/Highlight";
 
 const frontendUrl = import.meta.env.FRONTEND_URL;
 
@@ -22,10 +23,10 @@ const FlaggedComponent = () => {
   const { flags } = useFlags();
 
   if (flags.newFlag) {
-    return <div>New variant</div>;
+    return <BrandNewFeature />;
   }
 
-  return <div>Old variant</div>;
+  return <BrandNewFeature />;
 };
 
 // It's as simple as that.
@@ -72,44 +73,43 @@ return <OldFeature />;
 ---
 
 <Layout title="Welcome to Progressively, the new feature flag solution.">
-  <div class="bg-gradient-to-b from-slate-900 via-slate-800 to-fuchsia-900">
+  <div class="">
     <header
-      class="py-12 md:py-32 gap-8 px-12 max-w-screen-2xl mx-auto items-center"
+      class="py-12 md:py-20 gap-8 px-12 max-w-screen-2xl mx-auto items-center"
     >
       <div class="flex justify-center flex-col items-center">
-        <Logo width={60} height={60} />
         <h1
-          class="text-center text-4xl md:text-5xl font-extrabold text-white pt-4 !leading-tight animate-fade-enter-top"
+          class="text-center text-4xl md:text-5xl font-extrabold pt-4 !leading-tight animate-fade-enter-top"
         >
-          Stress-less & risk-free<br />feature deployments
+          <Highlight>Deploy your features</Highlight>
+
+          <br />without stress & without risk
         </h1>
 
         <p
-          class="text-center md:text-left text-xl md:text-2xl text-white pt-4 leading-relaxed animate-fade-enter-bottom opacity-0"
+          class="text-center md:text-left text-xl md:text-2xl pt-2 leading-relaxed animate-fade-enter-bottom opacity-0 text-slate-500"
           style={{ animationDelay: "300ms" }}
         >
-          Deploy your features confidently, without stress, and <strong
-            >progressively</strong
-          >.
+          We provide tools around features flags to faciliate your feature
+          deployments.
         </p>
 
         <div
-          class="flex flex-col sm:flex-row gap-4 pt-8 animate-fade-enter-bottom opacity-0"
+          class="flex flex-col sm:flex-row items-center gap-4 pt-8 animate-fade-enter-bottom opacity-0"
           style={{ animationDelay: "500ms" }}
         >
-          <LinkButton
-            variant="primary-inverse"
+          <GlowyLink
             href="https://dashboard.progressively.app/signin"
             target={"_blank"}
             id="get-started"
           >
             Get started
-          </LinkButton>
+          </GlowyLink>
 
           <LinkButton
             href="https://docs.progressively.app/"
             target={"_blank"}
-            variant="secondary-inverse"
+            variant="secondary"
             id="documentation-btn"
           >
             Documentation
@@ -117,7 +117,7 @@ return <OldFeature />;
         </div>
       </div>
 
-      <div class="hidden md:block pt-20">
+      <div class="hidden md:block pt-24 max-w-screen-xl mx-auto">
         <PullTriggerSection client:load clientComponent={clientComponent} />
       </div>
     </header>

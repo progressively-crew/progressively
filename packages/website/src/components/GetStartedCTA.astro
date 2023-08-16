@@ -1,37 +1,39 @@
 ---
+import { GlowyLink } from "./GlowyLink";
 import LinkButton from "./LinkButton.astro";
 ---
 
-<div class="px-4 md:px-8 max-w-screen-2xl mx-auto">
-  <section class={"py-12 md:py-32"}>
-    <h2 class="font-extrabold text-3xl md:text-7xl pb-4 text-center">
-      Want to give it a try?
-    </h2>
+<div class="bg-slate-50 border-t border-b border-slate-200">
+  <div class="px-4 md:px-8 max-w-screen-2xl mx-auto">
+    <section class={"py-12 md:py-32"}>
+      <h2 class="font-extrabold text-3xl md:text-5xl pb-4 text-center">
+        Want to give it a try?
+      </h2>
 
-    <p class="text-xl md:text-2xl leading-relaxed text-center">
-      Get 14 free days including 1000 flag evaluations when using the SaaS
-    </p>
+      <p class="text-xl md:text-2xl leading-relaxed text-center text-slate-500">
+        Get 14 free days including 1000 flag evaluations when using the SaaS
+      </p>
 
-    <div
-      class="flex flex-col sm:flex-row gap-4 items-enter justify-center pt-4"
-    >
-      <LinkButton
-        variant="primary"
-        href="https://dashboard.progressively.app/register"
-        target={"_blank"}
-        id="demo-instance"
+      <div
+        class="flex flex-col sm:flex-row gap-4 items-center justify-center pt-4"
       >
-        Get started with SaaS
-      </LinkButton>
+        <GlowyLink
+          href="https://dashboard.progressively.app/register"
+          target={"_blank"}
+          id="demo-instance"
+        >
+          Get started with SaaS
+        </GlowyLink>
 
-      <LinkButton
-        href="https://docs.progressively.app/start-with-self-hosted/quick-start"
-        target={"_blank"}
-        id="get-started"
-        variant="secondary"
-      >
-        Get started locally
-      </LinkButton>
-    </div>
-  </section>
+        <LinkButton
+          href="https://docs.progressively.app/start-with-self-hosted/quick-start"
+          target={"_blank"}
+          id="get-started"
+          variant="secondary"
+        >
+          Get started locally
+        </LinkButton>
+      </div>
+    </section>
+  </div>
 </div>
