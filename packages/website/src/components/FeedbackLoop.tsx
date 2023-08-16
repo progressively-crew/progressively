@@ -23,7 +23,7 @@ export const FeedbackLoop = ({ abcVersions }: { abcVersions: string }) => {
           </h2>
 
           <div className="pt-2 pb-4">
-            <ul className="gap-2 flex flex-row  max-w-screen-lg mx-auto w-full p-2 border border-slate-200 rounded-full">
+            <ul className="gap-2 flex flex-row flex-wrap justify-center max-w-screen-lg mx-auto w-full p-2 md:border md:border-slate-200 rounded-full">
               <li>
                 <button
                   className={`${buttonClass} ${

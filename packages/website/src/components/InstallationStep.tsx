@@ -80,13 +80,13 @@ export const InstallationStep = ({ code }: { code: string }) => {
   return (
     <div className="bg-slate-50 border-t border-b border-slate-200">
       <section className="px-4 md:px-8 max-w-6xl mx-auto py-20 md:py-32">
-        <h2 className="font-extrabold text-3xl md:text-5xl pb-20 text-center">
+        <h2 className="font-extrabold text-3xl md:text-5xl pb-4 md:pb-20 text-center">
           Dreaming of an <Highlight>amazing workflow</Highlight>?
         </h2>
 
         <div ref={ref}>
           <div className="relative flex flex-col justify-center">
-            <ol className="grid md:grid-cols-3 gap-20 md:gap-8">
+            <ol className="grid md:grid-cols-3 gap-4 md:gap-8">
               <TimeFrame
                 shouldAnimate={isVisible}
                 cta={

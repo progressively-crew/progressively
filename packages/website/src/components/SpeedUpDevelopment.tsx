@@ -24,7 +24,7 @@ export const SpeedUpDevelopment = () => {
   return (
     <div className="bg-slate-50 border-t border-b border-slate-200">
       <section className={"py-12 md:py-32 px-4 md:px-8 max-w-6xl mx-auto"}>
-        <h2 className="font-extrabold text-3xl md:text-5xl pb-4 md:text-center flex flex-col md:flex-row gap-4 md:justify-center md:items-center">
+        <h2 className="font-extrabold text-3xl md:text-5xl pb-4 text-center flex flex-col md:flex-row gap-4 md:justify-center md:items-center">
           <Highlight>Ship 3x more,</Highlight> safely
         </h2>
         <p className="text-xl md:text-2xl leading-relaxed md:text-center text-slate-500">

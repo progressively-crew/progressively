@@ -6,7 +6,7 @@ import { Logo } from "./Logo";
 <nav
   class="flex justify-between items-center px-6 overflow-x-scroll md:overflow-auto py-1"
 >
-  <ul class="flex items-center gap-2">
+  <ul class="flex flex-row items-center gap-2">
     <li>
       <LinkButton variant="tertiary" href="/">
         <span class="sr-only">Home</span>
@@ -14,7 +14,7 @@ import { Logo } from "./Logo";
       </LinkButton>
     </li>
 
-    <li>
+    <li class="hidden md:block">
       <LinkButton
         variant="tertiary"
         href="https://docs.progressively.app/"
@@ -28,7 +28,7 @@ import { Logo } from "./Logo";
       <LinkButton variant="tertiary-inverse" href="/blog">Blog</LinkButton>
     </li> -->
 
-    <li>
+    <li class="hidden md:block">
       <LinkButton variant="tertiary" href="/#pricing">Pricing</LinkButton>
     </li>
   </ul>
