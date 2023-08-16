@@ -5,6 +5,7 @@ import { useIntersectionObserver } from "../hooks/useIntersectionObserver";
 import { useRef } from "react";
 import { TbWorld } from "react-icons/tb";
 import { GlowyLink } from "./GlowyLink";
+import { Highlight } from "./Highlight";
 
 export const PricingSection = ({ trialUrl }: { trialUrl: string }) => {
   const ref = useRef<HTMLDivElement | null>(null);
@@ -35,28 +36,20 @@ export const PricingSection = ({ trialUrl }: { trialUrl: string }) => {
         className="font-extrabold text-3xl md:text-5xl pb-4 text-center"
         id="pricing"
       >
-        Flexible pricing
+        <Highlight>Flexible pricing</Highlight>
       </h2>
 
-      <p className="text-xl md:text-2xl leading-relaxed text-center">
+      <p className="text-xl md:text-2xl leading-relaxed text-center text-slate-500">
         Enjoy an extraordinary <strong>14-day trial</strong> with an incredible{" "}
         <strong>1000 events</strong> included, all while
         <br /> experiencing the sheer brilliance of our fully managed service!
       </p>
 
-      <div className="grid gap-4 px-4 md:px-8 max-w-3xl mx-auto pt-8" ref={ref}>
-        <div className={`rounded-xl p-2 ${animationClass}`}>
+      <div className="grid gap-2 px-4 md:px-8 max-w-xl mx-auto pt-8" ref={ref}>
+        <div
+          className={`rounded-xl p-2 ${animationClass} bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E]`}
+        >
           <Card>
-            <div className={innerCardClass}>
-              <TbWorld className={iconClass} />
-              <div>
-                <h3 className={titleClass}>Fully managed online</h3>
-                <p className={pClass}>
-                  Let's us manage the server and database, enjoy the tool.
-                </p>
-              </div>
-            </div>
-
             <div className="py-12 px-8 my-4">
               <PricingCalculator />
             </div>

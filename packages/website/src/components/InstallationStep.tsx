@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { useIntersectionObserver } from "../hooks/useIntersectionObserver";
 import { Code } from "./Code";
+import { Highlight } from "./Highlight";
 
 interface TimeFrameProps {
   cta: React.ReactNode;
@@ -18,7 +19,7 @@ const TimeFrame = ({
   shouldAnimate,
 }: TimeFrameProps) => {
   const titleClass = "font-bold text-xl px-8 text-center";
-  const pClass = "text-slate-700 pb-4 px-8 text-center text-lg";
+  const pClass = "text-slate-500 pb-4 px-8 text-center text-lg";
 
   const numberClass =
     "relative z-10 w-10 h-10 flex items-center justify-center rounded-full p-2";
@@ -75,7 +76,7 @@ export const InstallationStep = ({ code }: { code: string }) => {
     <div className="bg-slate-50 border-t border-b border-slate-200">
       <section className="px-4 md:px-8 max-w-6xl mx-auto py-20 md:py-32">
         <h2 className="font-extrabold text-3xl md:text-5xl pb-20 text-center">
-          Dreaming of an amazing workflow?
+          Dreaming of an <Highlight>amazing workflow</Highlight>?
         </h2>
 
         <div ref={ref}>

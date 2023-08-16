@@ -9,6 +9,7 @@ import { FeedbackLoop } from "../components/FeedbackLoop";
 import { InstallationStep } from "../components/InstallationStep";
 import { PricingSection } from "../components/PricingSection";
 import { GlowyLink } from "../components/GlowyLink";
+import { Highlight } from "../components/Highlight";
 
 const frontendUrl = import.meta.env.FRONTEND_URL;
 
@@ -80,15 +81,13 @@ return <OldFeature />;
         <h1
           class="text-center text-4xl md:text-5xl font-extrabold pt-4 !leading-tight animate-fade-enter-top"
         >
-          <span
-            class="bg-clip-text text-transparent bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E]"
-            >Deploy your features</span
-          >
+          <Highlight>Deploy your features</Highlight>
+
           <br />without stress & without risk
         </h1>
 
         <p
-          class="text-center md:text-left text-xl md:text-2xl pt-2 leading-relaxed animate-fade-enter-bottom opacity-0"
+          class="text-center md:text-left text-xl md:text-2xl pt-2 leading-relaxed animate-fade-enter-bottom opacity-0 text-slate-500"
           style={{ animationDelay: "300ms" }}
         >
           We provide tools around features flags to faciliate your feature

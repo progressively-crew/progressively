@@ -18,14 +18,14 @@ export const ABTesting = ({ code }: { code: string }) => {
 
   return (
     <div>
-      <h2 className="text-xl pb-4 font-bold">Multi-variants & A/B testing</h2>
-
-      <p className="text-lg leading-relaxed pb-4">
-        Unleash the power of dynamic feature flags by crafting multiple
-        captivating variants that deliver diverse experiences to your users.
-        Gauge the impact of these distinct versions and make data-driven
-        decisions to elevate and optimize your apps for unprecedented success!
-      </p>
+      <div className="max-w-screen-lg mx-auto w-full">
+        <p className="text-lg leading-relaxed pb-4 text-slate-500">
+          Unleash the power of dynamic feature flags by crafting multiple
+          captivating variants that deliver diverse experiences to your users.
+          Gauge the impact of these distinct versions and make data-driven
+          decisions to elevate and optimize your apps for unprecedented success!
+        </p>
+      </div>
 
       <div className="grid md:grid-cols-[2fr_1fr] gap-4 items-center">
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 pb-4" ref={ref}>

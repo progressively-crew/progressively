@@ -3,6 +3,7 @@ import { ABTesting } from "./ABTesting";
 import { CanaryRelease } from "./CanaryRelease";
 import { CorrelatePercentageError } from "./CorrelatePercentageError";
 import { TimeBasedRollout } from "./TimeBasedRollout";
+import { Highlight } from "./Highlight";
 
 type Step = "release" | "ab" | "error" | "time";
 
@@ -18,11 +19,11 @@ export const FeedbackLoop = ({ abcVersions }: { abcVersions: string }) => {
       <div className="px-4 md:px-8 max-w-screen-xl mx-auto">
         <section className={"py-12 md:py-32"}>
           <h2 className="font-extrabold text-3xl md:text-5xl pb-4 text-center">
-            Enhance the feedback loop
+            Enhance <Highlight>the feedback loop</Highlight>
           </h2>
 
-          <div className="flex justify-center pt-2 pb-8">
-            <ul className="bg-white p-2 rounded-full inline-flex flex-row gap-2 border border-gray-200">
+          <div className="pt-2 pb-4">
+            <ul className="gap-2 flex flex-row  max-w-screen-lg mx-auto w-full p-2 border border-slate-200 rounded-full">
               <li>
                 <button
                   className={`${buttonClass} ${

@@ -24,15 +24,15 @@ export const CanaryRelease = () => {
 
   return (
     <div>
-      <h2 className="text-xl pb-4 font-bold">Unlock Canary / Beta versions.</h2>
-
-      <p className="text-lg leading-relaxed pb-8">
-        Accelerate feedback acquisition by establishing exclusive user groups
-        with specialized and controlled access to your cutting-edge features.
-        Leverage their invaluable insights to fine-tune your offerings even
-        before their widespread release, ensuring a remarkable user experience
-        for all!
-      </p>
+      <div className="max-w-screen-lg mx-auto w-full">
+        <p className="text-lg leading-relaxed pb-8 text-slate-500">
+          Accelerate feedback acquisition by establishing exclusive user groups
+          with specialized and controlled access to your cutting-edge features.
+          Leverage their invaluable insights to fine-tune your offerings even
+          before their widespread release, ensuring a remarkable user experience
+          for all!
+        </p>
+      </div>
 
       <div className="grid md:grid-cols-3 gap-4" ref={ref}>
         <div className={animationClass}>

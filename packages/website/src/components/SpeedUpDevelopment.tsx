@@ -4,6 +4,7 @@ import { HiOutlineLightBulb } from "react-icons/hi2";
 import { Card } from "./Card";
 import { useRef } from "react";
 import { useIntersectionObserver } from "../hooks/useIntersectionObserver";
+import { Highlight } from "./Highlight";
 
 export const SpeedUpDevelopment = () => {
   const ref = useRef<HTMLDivElement | null>(null);
@@ -24,9 +25,9 @@ export const SpeedUpDevelopment = () => {
     <div className="bg-slate-50 border-t border-b border-slate-200">
       <section className={"py-12 md:py-32 px-4 md:px-8 max-w-6xl mx-auto"}>
         <h2 className="font-extrabold text-3xl md:text-5xl pb-4 md:text-center flex flex-col md:flex-row gap-4 md:justify-center md:items-center">
-          <span>Ship 3x more, safely {isVisible}</span>{" "}
+          <Highlight>Ship 3x more,</Highlight> safely
         </h2>
-        <p className="text-xl md:text-2xl leading-relaxed md:text-center">
+        <p className="text-xl md:text-2xl leading-relaxed md:text-center text-slate-500">
           Product people want features to be shipped. Developpers want to build
           things without stress. Feature flags is the missing piece to
           accomodate everyone.
@@ -36,11 +37,11 @@ export const SpeedUpDevelopment = () => {
           <div className={animationClass}>
             <Card>
               <AiOutlineDeploymentUnit
-                className={`${iconClass} bg-indigo-500`}
+                className={`${iconClass} bg-[#44BCFF]`}
                 aria-hidden
               />
               <h3 className={cardTitleClass}>Iterate faster</h3>
-              <p>
+              <p className="text-slate-500">
                 Separate code deployment from feature releases. Deploy code as
                 often as possible and only rollout the feature when it's ready.
               </p>
@@ -50,11 +51,11 @@ export const SpeedUpDevelopment = () => {
           <div className={animationClass} style={{ animationDelay: "300ms" }}>
             <Card>
               <AiOutlineBug
-                className={`${iconClass} bg-orange-500`}
+                className={`${iconClass} bg-[#FF44EC]`}
                 aria-hidden
               />
               <h3 className={cardTitleClass}>Managing risk and stress</h3>
-              <p>
+              <p className="text-slate-500">
                 If there is a bug, rollback the feature by switching a toggle.
                 No need to deploy code, the feature will be disabled instantly
                 for the users.
@@ -65,11 +66,11 @@ export const SpeedUpDevelopment = () => {
           <div className={animationClass} style={{ animationDelay: "500ms" }}>
             <Card>
               <TbBrowserCheck
-                className={`${iconClass} bg-green-500`}
+                className={`${iconClass} bg-[#FF675E]`}
                 aria-hidden
               />
               <h3 className={cardTitleClass}>Test the reality</h3>
-              <p>
+              <p className="text-slate-500">
                 Create a flag just for you, and test your feature directly in
                 production. When you are ready, make the feature available to
                 everyone.
