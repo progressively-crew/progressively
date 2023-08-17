@@ -49,7 +49,7 @@ describe("/dashboard/profile/billing", () => {
         ).should("be.visible");
         cy.findByText("Passed plans").should("be.visible");
 
-        cy.findByLabelText("Events/month").should("have.value", 2);
+        cy.findByLabelText("Events/month").should("have.value", 3);
         cy.checkA11y();
       });
     });
