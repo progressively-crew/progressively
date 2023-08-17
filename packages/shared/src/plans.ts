@@ -9,6 +9,7 @@ export const FlagEvaluationLimitTrial = 1000;
 // const Seven = "price_1N8LrcIIMJ2kplmT99wSIcVE";
 // const Eight = "price_1N8LrcIIMJ2kplmT99wSIcVE";
 
+const Small = "price_1Ng0FoIIMJ2kplmT1dIgsrsw";
 const One = "price_1N9SEYIIMJ2kplmTeVqemn0k";
 const Two = "price_1N9SFIIIMJ2kplmTjDubzE4F";
 const Three = "price_1N9SFtIIMJ2kplmTIigIBKOB";
@@ -19,7 +20,8 @@ const Seven = "price_1N9SHoIIMJ2kplmTgWLSHcue";
 const Eight = "price_1N9SIDIIMJ2kplmTVKZyXbvu";
 
 export const EvaluationToPriceId: Record<number, string> = {
-  10000: One,
+  10000: Small,
+  50000: One,
   100000: Two,
   200000: Three,
   300000: Four,
@@ -30,7 +32,8 @@ export const EvaluationToPriceId: Record<number, string> = {
 };
 
 export const PriceIdToEvaluation: Record<string, number> = {
-  [One]: 10000,
+  [Small]: 10000,
+  [One]: 50000,
   [Two]: 100000,
   [Three]: 200000,
   [Four]: 300000,
@@ -44,6 +47,10 @@ export const PriceIdToEvaluation: Record<string, number> = {
 export const Prices = [
   {
     events: PriceIdToEvaluation[EvaluationToPriceId["10000"]],
+    price: "€4.90",
+  },
+  {
+    events: PriceIdToEvaluation[EvaluationToPriceId["50000"]],
     price: "€12.00",
   },
   {

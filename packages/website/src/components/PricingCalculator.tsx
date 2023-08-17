@@ -30,7 +30,7 @@ export const PricingCalculator = () => {
           type="range"
           min={1}
           step={1}
-          max={8}
+          max={Prices.length}
           id={flagCountSliderId}
           value={step}
           onChange={(e) => setStep(Number(e.target.value))}
