@@ -1,3 +1,4 @@
+import { Prices } from "@progressively/shared";
 import { useId } from "react";
 import { Typography } from "~/components/Typography";
 
@@ -44,7 +45,7 @@ export const PricingCalculator = ({
           type="range"
           min={1}
           step={1}
-          max={8}
+          max={Prices.length}
           id={flagCountSliderId}
           value={step}
           onChange={(e) => onEvalCountChange(Number(e.target.value))}
