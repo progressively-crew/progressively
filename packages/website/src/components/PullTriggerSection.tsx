@@ -81,7 +81,7 @@ export const PullTriggerSection = ({
           <Browser>
             {newPricingSection && (
               <div
-                className={`${sharedLineClass} motion-safe:animate-fade-enter-top !rounded-none !bg-[#44BCFF] !h-8 absolute z-10 w-full flex flex-row items-center justify-center gap-2`}
+                className={`${sharedLineClass} motion-safe:animate-fade-enter-top !rounded-none !bg-[#44BCFF] !h-8 absolute bottom-0 z-10 w-full flex flex-row items-center justify-center gap-2`}
               >
                 <p className="text-xs text-white">Get 20% for free!</p>
 
