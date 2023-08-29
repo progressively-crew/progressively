@@ -82,7 +82,7 @@ describe('Environments (e2e)', () => {
       const access_token = await authenticate(app);
 
       // Pre-create a flag to verify it still exists in other envs
-      const createdFlag = await request(app.getHttpServer())
+      await request(app.getHttpServer())
         .post('/environments/1/flags')
         .set('Authorization', `Bearer ${access_token}`)
         .send({

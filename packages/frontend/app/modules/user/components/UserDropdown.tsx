@@ -1,15 +1,10 @@
-import { User } from "~/modules/user/types";
 import { Button } from "~/components/Buttons/Button";
 import { Logo } from "~/components/Logo/Logo";
 import { useBillingInfo } from "~/modules/plans/hooks/useBillingInfo";
 import { useIsSaas } from "~/modules/saas/contexts/useIsSaas";
 import { Progress } from "~/components/Progress";
 
-export interface UserDropdownProps {
-  user: User;
-}
-
-export const UserDropdown = ({ user }: UserDropdownProps) => {
+export const UserDropdown = () => {
   const { activePlan, hitsForMonth } = useBillingInfo();
   const isSaas = useIsSaas();
 

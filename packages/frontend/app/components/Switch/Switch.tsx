@@ -1,5 +1,4 @@
 import { useEffect, useId, useState } from "react";
-import { Label } from "./Label";
 import { RawSwitch } from "./RawSwitch";
 
 export interface SwitchProps {

@@ -9,8 +9,6 @@ import { CreateProjectDTO, Project } from "~/modules/projects/types";
 import { validateProjectName } from "~/modules/projects/validators/validateProjectName";
 import { getSession } from "~/sessions";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
-import { Spacer } from "~/components/Spacer";
-import { Stack } from "~/components/Stack";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { Logo } from "~/components/Logo/Logo";
 

@@ -13,7 +13,6 @@ import {
   NotFoundException,
   ConflictException,
   BadRequestException,
-  Put,
 } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';

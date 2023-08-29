@@ -24,13 +24,11 @@ export class BillingService {
   }
 
   async getUserCurrentSubscription(stripeUser: StripeUser) {
-    const existingSubscription = await this.prisma.stripeTransaction.findFirst({
+    return await this.prisma.stripeTransaction.findFirst({
       where: {
         customerId: stripeUser?.customerId,
       },
     });
-
-    return existingSubscription;
   }
 
   getActivePlan(userUuid: string) {
@@ -57,23 +55,20 @@ export class BillingService {
 
       const previousItemId = subscription.items.data[0].id;
 
-      const updatedSubscription = await this.stripe.subscriptions.update(
-        subscription.id,
-        {
-          cancel_at_period_end: false,
-          proration_behavior: 'create_prorations',
-          items: [
-            {
-              id: previousItemId,
-              deleted: true,
-            },
-            {
-              price: priceId,
-              quantity: 1,
-            },
-          ],
-        },
-      );
+      await this.stripe.subscriptions.update(subscription.id, {
+        cancel_at_period_end: false,
+        proration_behavior: 'create_prorations',
+        items: [
+          {
+            id: previousItemId,
+            deleted: true,
+          },
+          {
+            price: priceId,
+            quantity: 1,
+          },
+        ],
+      });
 
       const evaluationCount = PriceIdToEvaluation[priceId];
 
@@ -123,13 +118,7 @@ export class BillingService {
   }
 
   getStripeEvent(webhookSecret: string, signature: string, body: any) {
-    const event = this.stripe.webhooks.constructEvent(
-      body,
-      signature,
-      webhookSecret,
-    );
-
-    return event;
+    return this.stripe.webhooks.constructEvent(body, signature, webhookSecret);
   }
 
   async handleSubscriptionCancellation(event: Stripe.Event) {

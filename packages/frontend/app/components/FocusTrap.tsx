@@ -68,7 +68,7 @@ export const FocusTrap = ({
 
     if (focusableChildren.length > 0) {
       const firstElement = focusableChildren[0] as HTMLElement | undefined;
-      const lastElement = focusableChildren[focusableChildren.length - 1] as
+      const lastElement = focusableChildren.at(-1) as
         | HTMLElement
         | undefined;
 

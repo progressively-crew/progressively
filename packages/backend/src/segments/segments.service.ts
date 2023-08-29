@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
 import { SegmentCreationDTO } from './types';
 import { ComparatorEnum } from '../rule/comparators/types';
-import { RuleService } from '../rule/rule.service';
 
 @Injectable()
 export class SegmentsService {

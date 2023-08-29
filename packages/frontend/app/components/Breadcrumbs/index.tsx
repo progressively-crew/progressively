@@ -1,4 +1,3 @@
-import { AiOutlineHome } from "react-icons/ai";
 import { HStack } from "../HStack";
 import { IconBox } from "../IconBox";
 import { EnvIcon } from "../Icons/EnvIcon";

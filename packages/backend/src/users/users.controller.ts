@@ -18,8 +18,6 @@ import {
   ForgotPasswordDTO,
   ResetPasswordDTO,
   ChangePasswordDTO,
-  PlanSchema,
-  PlanCreateDTO,
 } from './users.dto';
 import { UsersService } from './users.service';
 import { MailService } from '../mail/mail.service';
