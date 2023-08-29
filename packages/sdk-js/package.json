@@ -15,8 +15,8 @@
     "@progressively/types": "^1.0.0"
   },
   "devDependencies": {
-    "@types/node-fetch": "2.6.2",
-    "@types/ws": "^8.5.3",
+    "@types/node-fetch": "2.6.4",
+    "@types/ws": "^8.5.5",
     "bundlesize2": "^0.0.31",
     "msw": "^1.0.1",
     "node-fetch": "2.6.7",

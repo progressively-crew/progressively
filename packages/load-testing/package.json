@@ -12,8 +12,8 @@
   "devDependencies": {
     "@playwright/test": "^1.27.1",
     "@progressively/database": "workspace:*",
-    "@types/node": "^18.11.9",
-    "@types/node-fetch": "^2.6.2",
+    "@types/node": "^20.5.7",
+    "@types/node-fetch": "^2.6.4",
     "chalk": "^5",
     "node-fetch": "^2.6.7",
     "playwright": "^1.27.1",

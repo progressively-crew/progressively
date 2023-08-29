@@ -30,9 +30,9 @@
   "devDependencies": {
     "@builder.io/qwik": "0.19.2",
     "@builder.io/qwik-city": "0.4.0",
-    "@types/eslint": "8.21.1",
-    "@types/node": "^18.14.0",
-    "@types/node-fetch": "latest",
+    "@types/eslint": "8.44.2",
+    "@types/node": "^20.5.7",
+    "@types/node-fetch": "^2.6.4",
     "@typescript-eslint/eslint-plugin": "5.53.0",
     "@typescript-eslint/parser": "5.53.0",
     "eslint": "8.34.0",
