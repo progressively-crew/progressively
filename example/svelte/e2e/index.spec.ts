@@ -6,7 +6,7 @@ test.describe('/', () => {
 		await seed();
 	});
 
-	test.afterEach(async ({ page }) => {
+	test.afterEach(async () => {
 		await cleanup();
 	});
 
