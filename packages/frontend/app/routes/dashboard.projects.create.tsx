@@ -1,10 +1,6 @@
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { createProject } from "~/modules/projects/services/createProject";
-import {
-  CreateProjectDTO,
-  Project,
-  UserProject,
-} from "~/modules/projects/types";
+import { CreateProjectDTO, Project } from "~/modules/projects/types";
 import { validateProjectName } from "~/modules/projects/validators/validateProjectName";
 import { getSession } from "~/sessions";
 import { TextInput } from "~/components/Fields/TextInput";

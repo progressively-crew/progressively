@@ -7,8 +7,6 @@ import { changeFullname } from "~/modules/user/services/changeFullname";
 import { validateUserFullname } from "~/modules/user/validators/validate-user-fullname";
 import { getSession } from "~/sessions";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
-import { Stack } from "~/components/Stack";
-import { H1Logo } from "~/components/H1Logo";
 import { Typography } from "~/components/Typography";
 
 export const meta: V2_MetaFunction = () => {

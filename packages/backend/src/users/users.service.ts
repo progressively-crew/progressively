@@ -284,13 +284,11 @@ export class UsersService {
 
     if (!userOwnerOfProject) return undefined;
 
-    const activePlan = await this.prisma.plan.findFirst({
+    return await this.prisma.plan.findFirst({
       where: {
         status: PlanStatus.ACTIVE,
         userUuid: userOwnerOfProject.uuid,
       },
     });
-
-    return activePlan;
   }
 }

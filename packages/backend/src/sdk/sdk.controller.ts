@@ -8,7 +8,6 @@ import {
   Req,
   Res,
   Headers,
-  Header,
   UseGuards,
 } from '@nestjs/common';
 import { Response, Request } from 'express';

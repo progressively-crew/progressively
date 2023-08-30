@@ -17,7 +17,7 @@ export class WebsocketGateway
 {
   private rooms: Rooms;
   private subscribers: Array<Subscriber<PopulatedFlagEnv>>;
-  private heartBeatIntervalId: NodeJS.Timer;
+  private heartBeatIntervalId: NodeJS.Timeout;
 
   constructor(private readonly redisService: RedisService) {
     this.rooms = new Rooms();

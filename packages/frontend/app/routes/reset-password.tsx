@@ -16,9 +16,6 @@ import {
   validatePassword,
 } from "~/modules/forms/utils/validatePassword";
 import { resetPassword } from "~/modules/user/services/resetPassword";
-import { H1Logo } from "~/components/H1Logo";
-import { Spacer } from "~/components/Spacer";
-import { Button } from "~/components/Buttons/Button";
 import { BackLink } from "~/components/BackLink";
 import { Logo } from "~/components/Logo/Logo";
 import { Typography } from "~/components/Typography";

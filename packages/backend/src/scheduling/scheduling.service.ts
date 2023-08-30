@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { WebsocketGateway } from '../websocket/websocket.gateway';
 import { PrismaService } from '../database/prisma.service';
-import { SchedulingCreationDTO, SchedulingType } from './types';
+import { SchedulingCreationDTO } from './types';
 import { PopulatedFlagEnv, SchedulingStatus } from '../flags/types';
 import { Schedule } from '@progressively/database';
 

@@ -13,7 +13,7 @@ export const handle = {
       (env) => env.uuid === match.params.env
     )!;
 
-    const currentPath = matches[matches.length - 1].pathname;
+    const currentPath = matches.at(-1).pathname;
 
     return {
       link: `/dashboard/projects/${match.params.id}/environments/${match.params.env}`,
@@ -26,7 +26,7 @@ export const handle = {
         );
 
         const href =
-          nextPath[nextPath.length - 1] === "/"
+          nextPath.at(-1) === "/"
             ? nextPath.slice(0, -1)
             : nextPath;
 
