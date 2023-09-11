@@ -1,7 +1,6 @@
 ---
 import Footer from "../components/Footer.astro";
 import Nav from "../components/Nav.astro";
-import bgImage from "../images/Hexagon.svg";
 
 export interface Props {
   title: string;
@@ -38,7 +37,11 @@ const description =
 
     <title>{title}</title>
 
-    <script defer data-domain="progressively.app" src="https://vps-4b57c244.vps.ovh.net/js/plausible.js"></script>
+    <script
+      defer
+      data-domain="progressively.app"
+      src="https://vps-4b57c244.vps.ovh.net/js/plausible.js"
+    ></script>
   </head>
   <body>
     <div class="sr-only" aria-live="polite" id="notify-polite"></div>
@@ -47,5 +50,13 @@ const description =
     <slot />
 
     <Footer />
+
+    <style is:global>
+      body {
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+    </style>
   </body>
 </html>
