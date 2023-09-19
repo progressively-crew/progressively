@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -15,8 +16,7 @@ import { Roles } from '../shared/decorators/Roles';
 import { UserRoles } from '../users/roles';
 import { EnvironmentsService } from './environments.service';
 import { HasEnvironmentAccessGuard } from './guards/hasEnvAccess';
-import { UserId } from '../users/users.decorator';
-import { MetricSchema } from 'src/flags/flags.dto';
+import { MetricSchema } from '../flags/flags.dto';
 import { ValidationPipe } from '../shared/pipes/ValidationPipe';
 import { MetricDto } from './types';
 
@@ -35,10 +35,10 @@ export class EnvironmentsController {
     return this.envService.flagsByEnv(envId);
   }
 
-  @Get('environments/:envId/metrics')
+  @Get(':envId/metrics')
   @UseGuards(HasEnvironmentAccessGuard)
   @UseGuards(JwtAuthGuard)
-  getMetrics(@Param('envId') envId: string, @Param('flagId') flagId: string) {
+  getMetrics(@Param('envId') envId: string) {
     return this.envService.listMetrics(envId);
   }
 
@@ -53,15 +53,18 @@ export class EnvironmentsController {
     return this.envService.deleteEnv(envId);
   }
 
-  @Get('environments/:envId/metrics')
+  @Get(':envId/hits')
   @UseGuards(HasEnvironmentAccessGuard)
   @UseGuards(JwtAuthGuard)
   async getmetricsByDate(
     @Param('envId') envId: string,
-    @Param('flagId') flagId: string,
     @Query('startDate') startDate: string | undefined,
     @Query('endDate') endDate: string | undefined,
   ) {
+    if (!endDate || !startDate) {
+      throw new BadRequestException('startDate and endDate are required.');
+    }
+
     const metricsPerDate = await this.envService.metricHitsPerDate(
       envId,
       startDate,
@@ -77,14 +80,12 @@ export class EnvironmentsController {
     return { metricsPerDate, metricsByVariantCount };
   }
 
-  @Post('environments/:envId/metrics')
+  @Post(':envId/metrics')
   @UseGuards(HasEnvironmentAccessGuard)
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(MetricSchema))
   async addMetricToFlag(
-    @UserId() userId: string,
     @Param('envId') envId: string,
-    @Param('flagId') flagId: string,
     @Body() metricDto: MetricDto,
   ) {
     const metric = await this.envService.addMetricToFlagEnv(
