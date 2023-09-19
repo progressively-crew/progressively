@@ -1,10 +1,24 @@
-import { Controller, Delete, Get, Param, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Query,
+  UseGuards,
+  UsePipes,
+} from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
 import { Roles } from '../shared/decorators/Roles';
 import { UserRoles } from '../users/roles';
 import { EnvironmentsService } from './environments.service';
 import { HasEnvironmentAccessGuard } from './guards/hasEnvAccess';
+import { UserId } from '../users/users.decorator';
+import { MetricSchema } from 'src/flags/flags.dto';
+import { ValidationPipe } from '../shared/pipes/ValidationPipe';
+import { MetricDto } from './types';
 
 @ApiBearerAuth()
 @Controller('environments')
@@ -21,6 +35,13 @@ export class EnvironmentsController {
     return this.envService.flagsByEnv(envId);
   }
 
+  @Get('environments/:envId/metrics')
+  @UseGuards(HasEnvironmentAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  getMetrics(@Param('envId') envId: string, @Param('flagId') flagId: string) {
+    return this.envService.listMetrics(envId);
+  }
+
   /**
    * Delete an environment on a given project (by project id AND env id)
    */
@@ -30,5 +51,47 @@ export class EnvironmentsController {
   @UseGuards(JwtAuthGuard)
   deleteEnv(@Param('envId') envId: string) {
     return this.envService.deleteEnv(envId);
+  }
+
+  @Get('environments/:envId/metrics')
+  @UseGuards(HasEnvironmentAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  async getmetricsByDate(
+    @Param('envId') envId: string,
+    @Param('flagId') flagId: string,
+    @Query('startDate') startDate: string | undefined,
+    @Query('endDate') endDate: string | undefined,
+  ) {
+    const metricsPerDate = await this.envService.metricHitsPerDate(
+      envId,
+      startDate,
+      endDate,
+    );
+
+    const metricsByVariantCount = await this.envService.metricsByVariantCount(
+      envId,
+      startDate,
+      endDate,
+    );
+
+    return { metricsPerDate, metricsByVariantCount };
+  }
+
+  @Post('environments/:envId/metrics')
+  @UseGuards(HasEnvironmentAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(new ValidationPipe(MetricSchema))
+  async addMetricToFlag(
+    @UserId() userId: string,
+    @Param('envId') envId: string,
+    @Param('flagId') flagId: string,
+    @Body() metricDto: MetricDto,
+  ) {
+    const metric = await this.envService.addMetricToFlagEnv(
+      envId,
+      metricDto.name,
+    );
+
+    return metric;
   }
 }

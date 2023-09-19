@@ -69,34 +69,6 @@ export class FlagsService {
     });
   }
 
-  async addMetricToFlagEnv(
-    envId: string,
-    flagId: string,
-    metricName: string,
-    variantId?: string,
-  ) {
-    const alreadyExistingMetric = await this.prisma.pMetric.findFirst({
-      where: {
-        name: metricName,
-        flagEnvironmentEnvironmentId: envId,
-        flagEnvironmentFlagId: flagId,
-      },
-    });
-
-    if (alreadyExistingMetric) {
-      throw new BadRequestException('This metric name is already used.');
-    }
-
-    return this.prisma.pMetric.create({
-      data: {
-        name: metricName,
-        flagEnvironmentEnvironmentId: envId,
-        flagEnvironmentFlagId: flagId,
-        variantUuid: variantId,
-      },
-    });
-  }
-
   hitFlag(
     environmentId: string,
     flagId: string,
@@ -139,48 +111,6 @@ export class FlagsService {
         },
       },
     });
-  }
-
-  async metricsByVariantCount(
-    envId: string,
-    flagId: string,
-    startDate: string,
-    endDate: string,
-  ) {
-    const metrics = await this.prisma.pMetric.findMany({
-      where: {
-        flagEnvironmentFlagId: flagId,
-        flagEnvironmentEnvironmentId: envId,
-      },
-      include: {
-        variant: true,
-      },
-    });
-
-    const metricsHit = [];
-
-    for (const metric of metrics) {
-      const count = await this.prisma.event.count({
-        where: {
-          flagEnvironmentFlagId: flagId,
-          flagEnvironmentEnvironmentId: envId,
-          type: EventTypes.Metric,
-          date: {
-            gte: new Date(startDate),
-            lte: new Date(endDate),
-          },
-          pMetricUuid: metric.uuid,
-        },
-      });
-
-      metricsHit.push({
-        metric: metric.name,
-        variant: metric.variant?.value,
-        count,
-      });
-    }
-
-    return metricsHit;
   }
 
   async flagEvaluations(
@@ -375,11 +305,6 @@ export class FlagsService {
           flagEnvironmentFlagId: flagId,
         },
       }),
-      this.prisma.pMetric.deleteMany({
-        where: {
-          flagEnvironmentFlagId: flagId,
-        },
-      }),
       this.prisma.variant.deleteMany({
         where: {
           flagEnvironmentFlagId: flagId,
@@ -471,18 +396,6 @@ export class FlagsService {
       where: {
         flagEnvironmentEnvironmentId: envId,
         flagEnvironmentFlagId: flagId,
-      },
-    });
-  }
-
-  listMetrics(envId: string, flagId: string) {
-    return this.prisma.pMetric.findMany({
-      where: {
-        flagEnvironmentEnvironmentId: envId,
-        flagEnvironmentFlagId: flagId,
-      },
-      include: {
-        variant: true,
       },
     });
   }

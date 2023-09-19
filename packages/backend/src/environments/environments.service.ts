@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
 import { PopulatedFlagEnv } from '../flags/types';
+import { EventTypes } from '../events/types';
 
 @Injectable()
 export class EnvironmentsService {
@@ -112,6 +113,26 @@ export class EnvironmentsService {
     });
   }
 
+  async addMetricToFlagEnv(envId: string, metricName: string) {
+    const alreadyExistingMetric = await this.prisma.pMetric.findFirst({
+      where: {
+        name: metricName,
+        environmentUuid: envId,
+      },
+    });
+
+    if (alreadyExistingMetric) {
+      throw new BadRequestException('This metric name is already used.');
+    }
+
+    return this.prisma.pMetric.create({
+      data: {
+        name: metricName,
+        environmentUuid: envId,
+      },
+    });
+  }
+
   flagsByEnv(environmentId: string) {
     return this.prisma.flagEnvironment.findMany({
       where: {
@@ -182,7 +203,7 @@ export class EnvironmentsService {
       }),
       this.prisma.pMetric.deleteMany({
         where: {
-          flagEnvironmentEnvironmentId: envId,
+          environmentUuid: envId,
         },
       }),
       this.prisma.variant.deleteMany({
@@ -260,5 +281,118 @@ export class EnvironmentsService {
     }
 
     return roles.includes(environmentOfProject.role);
+  }
+
+  listMetrics(envId: string) {
+    return this.prisma.pMetric.findMany({
+      where: {
+        environmentUuid: envId,
+      },
+    });
+  }
+
+  async metricsByVariantCount(
+    envId: string,
+    startDate: string,
+    endDate: string,
+  ) {
+    const metrics = await this.prisma.pMetric.findMany({
+      where: {
+        environmentUuid: envId,
+      },
+    });
+
+    const metricsHit = [];
+
+    for (const metric of metrics) {
+      const count = await this.prisma.event.count({
+        where: {
+          flagEnvironmentFlagId: null,
+          flagEnvironmentEnvironmentId: envId,
+          type: EventTypes.Metric,
+          date: {
+            gte: new Date(startDate),
+            lte: new Date(endDate),
+          },
+          pMetricUuid: metric.uuid,
+        },
+      });
+
+      metricsHit.push({
+        metric: metric.name,
+        count,
+      });
+    }
+
+    return metricsHit;
+  }
+
+  getDistinctEvents(
+    envId: string,
+    startDate: string,
+    endDate: string,
+    eventType: EventTypes,
+  ) {
+    return this.prisma.event.findMany({
+      distinct: eventType === EventTypes.Metric ? ['pMetricUuid'] : ['data'],
+      where: {
+        type: eventType,
+        flagEnvironmentFlagId: null,
+        flagEnvironmentEnvironmentId: envId,
+        date: {
+          gte: new Date(startDate),
+          lte: new Date(endDate),
+        },
+      },
+      include: {
+        metric: eventType === EventTypes.Metric,
+      },
+    });
+  }
+
+  async metricHitsPerDate(envId: string, startDate: string, endDate: string) {
+    const eventsOnMetrics = await this.getDistinctEvents(
+      envId,
+      startDate,
+      endDate,
+      EventTypes.Metric,
+    );
+
+    const dictByDates = {};
+
+    for (const eom of eventsOnMetrics) {
+      const hitsByDate = await this.prisma.event.groupBy({
+        _count: true,
+        by: ['date'],
+        where: {
+          type: EventTypes.Metric,
+          flagEnvironmentFlagId: null,
+          flagEnvironmentEnvironmentId: envId,
+          date: {
+            gte: new Date(startDate),
+            lte: new Date(endDate),
+          },
+          pMetricUuid: eom.pMetricUuid,
+        },
+        orderBy: {
+          date: 'asc',
+        },
+      });
+
+      hitsByDate.forEach((hbd) => {
+        const isoDate = hbd.date.toISOString();
+
+        if (!dictByDates[isoDate]) {
+          dictByDates[isoDate] = {};
+        }
+
+        dictByDates[isoDate]['date'] = isoDate;
+        dictByDates[isoDate][eom.metric.name] = hbd._count;
+      });
+    }
+
+    return Object.keys(dictByDates)
+      .sort()
+      .map((k) => dictByDates[k]);
   }
 }

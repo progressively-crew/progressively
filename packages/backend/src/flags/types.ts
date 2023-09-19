@@ -61,8 +61,3 @@ export interface Variant {
   isControl: boolean;
   value: string;
 }
-
-export interface MetricDto {
-  name: string;
-  variantId?: string;
-}

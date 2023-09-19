@@ -165,8 +165,7 @@ export const seedDb = async () => {
       data: {
         uuid: "1",
         name: "A metric",
-        flagEnvironmentEnvironmentId: multiVariateFlagEnv.environmentId,
-        flagEnvironmentFlagId: multiVariateFlagEnv.flagId,
+        environmentUuid: production.uuid,
       },
     });
 
@@ -174,9 +173,7 @@ export const seedDb = async () => {
       data: {
         uuid: "100",
         name: "B metric",
-        flagEnvironmentEnvironmentId: multiVariateFlagEnv.environmentId,
-        flagEnvironmentFlagId: multiVariateFlagEnv.flagId,
-        variantUuid: firstVariant.uuid,
+        environmentUuid: production.uuid,
       },
     });
     // End of multi variate setup

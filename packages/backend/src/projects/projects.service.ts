@@ -229,10 +229,8 @@ export class ProjectsService {
       }),
       this.prisma.pMetric.deleteMany({
         where: {
-          flagEnvironment: {
-            environment: {
-              projectId,
-            },
+          Environment: {
+            projectId,
           },
         },
       }),

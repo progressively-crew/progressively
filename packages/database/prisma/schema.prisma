@@ -84,6 +84,7 @@ model Environment {
   name            String
   projectId       String
   clientKey       String            @default(uuid())
+  metrics         PMetric[]
   project         Project           @relation(fields: [projectId], references: [uuid])
   flagEnvironment FlagEnvironment[]
   createdAt       DateTime?         @default(now())
@@ -121,7 +122,6 @@ model FlagEnvironment {
   environment   Environment   @relation(fields: [environmentId], references: [uuid])
   flag          Flag          @relation(fields: [flagId], references: [uuid])
   events        Event[]
-  metrics       PMetric[]
   scheduling    Schedule[]
   variants      Variant[]
   webhooks      Webhook[]
@@ -149,22 +149,18 @@ model Variant {
   value                        String
   flagEnvironmentFlagId        String?
   flagEnvironmentEnvironmentId String?
-  PMetric                      PMetric[]
   flagEnvironment              FlagEnvironment?  @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
   StrategyVariant              StrategyVariant[]
   createdAt                    DateTime?         @default(now())
 }
 
 model PMetric {
-  uuid                         String           @id @default(uuid())
-  name                         String
-  flagEnvironmentFlagId        String?
-  flagEnvironmentEnvironmentId String?
-  variantUuid                  String?
-  flagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
-  variant                      Variant?         @relation(fields: [variantUuid], references: [uuid])
-  createdAt                    DateTime?        @default(now())
-  Event                        Event[]
+  uuid            String       @id @default(uuid())
+  name            String
+  createdAt       DateTime?    @default(now())
+  Event           Event[]
+  Environment     Environment? @relation(fields: [environmentUuid], references: [uuid])
+  environmentUuid String?
 }
 
 model Event {
@@ -175,10 +171,10 @@ model Event {
   data      String? // previously valueResolved on flagHit
 
   pMetricUuid                  String?
-  flagEnvironmentFlagId        String
-  flagEnvironmentEnvironmentId String
-  metric                       PMetric?        @relation(fields: [pMetricUuid], references: [uuid])
-  FlagEnvironment              FlagEnvironment @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
+  flagEnvironmentFlagId        String?
+  flagEnvironmentEnvironmentId String?
+  metric                       PMetric?         @relation(fields: [pMetricUuid], references: [uuid])
+  FlagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
 }
 
 model Rule {
