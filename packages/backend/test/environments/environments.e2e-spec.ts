@@ -248,4 +248,106 @@ describe('Environments (e2e)', () => {
       expect(res.status).toBe(200);
     });
   });
+
+  describe('/environments/:envId/metrics (POST)', () => {
+    it('gives a 401 when the user is not authenticated', () =>
+      verifyAuthGuard(app, '/environments/1/metrics', 'post'));
+
+    it('gives a 403 when the user requests a forbidden project', async () => {
+      const access_token = await authenticate(
+        app,
+        'jane.doe@gmail.com',
+        'password',
+      );
+
+      return request(app.getHttpServer())
+        .post('/environments/1/metrics')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send({
+          name: 'metric name',
+        })
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('gives 400 when the variants has an invalid name', async () => {
+      const access_token = await authenticate(app);
+
+      await request(app.getHttpServer())
+        .post('/environments/1/metrics')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send({})
+        .expect(400)
+        .expect({
+          statusCode: 400,
+          message: 'Validation failed',
+          error: 'Bad Request',
+        });
+    });
+
+    it('creates a metric', async () => {
+      const access_token = await authenticate(app);
+
+      const metric: any = {
+        name: 'test',
+      };
+
+      const response = await request(app.getHttpServer())
+        .post('/environments/1/metrics')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send(metric)
+        .expect(201);
+
+      expect(response.body).toMatchObject({
+        name: 'test',
+      });
+    });
+  });
+
+  describe('/environments/1/metrics (GET)', () => {
+    it('gives a 401 when the user is not authenticated', () =>
+      verifyAuthGuard(app, '/environments/1/metrics', 'get'));
+
+    it('gives a 403 when the user requests a forbidden project', async () => {
+      const access_token = await authenticate(
+        app,
+        'jane.doe@gmail.com',
+        'password',
+      );
+
+      return request(app.getHttpServer())
+        .get('/environments/1/metrics')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it('gives the metrics information when the user is authenticated and authorized', async () => {
+      const access_token = await authenticate(app);
+
+      const response = await request(app.getHttpServer())
+        .get('/environments/1/metrics')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(200);
+
+      expect(response.body).toMatchObject([
+        {
+          uuid: '1',
+          name: 'A metric',
+        },
+        {
+          uuid: '100',
+          name: 'B metric',
+        },
+      ]);
+    });
+  });
 });
