@@ -629,66 +629,6 @@ describe('FlagsController (e2e)', () => {
     });
   });
 
-  describe('/environments/1/flags/4/metrics/1 (DELETE)', () => {
-    it('gives a 401 when the user is not authenticated', () =>
-      verifyAuthGuard(app, '/environments/1/flags/4/metrics/1', 'delete'));
-
-    it('gives a 403 when trying to access a valid project but an invalid env', async () => {
-      const access_token = await authenticate(app);
-
-      return request(app.getHttpServer())
-        .delete('/environments/3/flags/4/metrics/1')
-        .set('Authorization', `Bearer ${access_token}`)
-        .expect(403)
-        .expect({
-          statusCode: 403,
-          message: 'Forbidden resource',
-          error: 'Forbidden',
-        });
-    });
-
-    it('gives a 403 when the user requests a forbidden project', async () => {
-      const access_token = await authenticate(
-        app,
-        'jane.doe@gmail.com',
-        'password',
-      );
-
-      return request(app.getHttpServer())
-        .delete('/environments/1/flags/4/metrics/1')
-        .set('Authorization', `Bearer ${access_token}`)
-        .expect(403)
-        .expect({
-          statusCode: 403,
-          message: 'Forbidden resource',
-          error: 'Forbidden',
-        });
-    });
-
-    it('gives a 200 when the metric has been deleted', async () => {
-      const access_token = await authenticate(app);
-
-      const prevResponse = await request(app.getHttpServer())
-        .get('/environments/1/flags/4/metrics')
-        .set('Authorization', `Bearer ${access_token}`)
-        .expect(200);
-
-      expect(prevResponse.body.length).toBe(2);
-
-      const response = await request(app.getHttpServer())
-        .delete('/environments/1/flags/4/metrics/1')
-        .set('Authorization', `Bearer ${access_token}`);
-
-      expect(response.status).toBe(200);
-
-      const afterResponse = await request(app.getHttpServer())
-        .get('/environments/1/flags/4/metrics')
-        .set('Authorization', `Bearer ${access_token}`);
-
-      expect(afterResponse.body.length).toBe(1);
-    });
-  });
-
   describe('/environments/:envId/flags/:flagId/webhooks (POST)', () => {
     it('gives a 401 when the user is not authenticated', () =>
       verifyAuthGuard(app, '/environments/1/flags/1/webhooks', 'post'));

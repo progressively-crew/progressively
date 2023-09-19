@@ -95,4 +95,19 @@ export class EnvironmentsController {
 
     return metric;
   }
+
+  @Delete(':envId/metrics/:metricId')
+  @UseGuards(HasEnvironmentAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  async deleteMetricFlag(
+    @Param('envId') envId: string,
+    @Param('metricId') metricId: string,
+  ) {
+    const deletedMetric = await this.envService.deleteMetricFlag(
+      envId,
+      metricId,
+    );
+
+    return deletedMetric;
+  }
 }

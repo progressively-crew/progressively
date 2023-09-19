@@ -483,28 +483,6 @@ export class FlagsService {
     return result[result.length - 1];
   }
 
-  async deleteMetricFlag(envId: string, flagId: string, metricId: string) {
-    const deleteQueries = [
-      this.prisma.event.deleteMany({
-        where: {
-          type: EventTypes.Metric,
-          pMetricUuid: metricId,
-          flagEnvironmentFlagId: flagId,
-          flagEnvironmentEnvironmentId: envId,
-        },
-      }),
-      this.prisma.pMetric.delete({
-        where: {
-          uuid: metricId,
-        },
-      }),
-    ];
-
-    const [, deletedMetric] = await this.prisma.$transaction(deleteQueries);
-
-    return deletedMetric;
-  }
-
   async editFlag(
     projectId: string,
     flagId: string,

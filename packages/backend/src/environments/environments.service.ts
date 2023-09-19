@@ -395,4 +395,25 @@ export class EnvironmentsService {
       .sort()
       .map((k) => dictByDates[k]);
   }
+
+  async deleteMetricFlag(envId: string, metricId: string) {
+    const deleteQueries = [
+      this.prisma.event.deleteMany({
+        where: {
+          type: EventTypes.Metric,
+          pMetricUuid: metricId,
+          flagEnvironmentEnvironmentId: envId,
+        },
+      }),
+      this.prisma.pMetric.delete({
+        where: {
+          uuid: metricId,
+        },
+      }),
+    ];
+
+    const [, deletedMetric] = await this.prisma.$transaction(deleteQueries);
+
+    return deletedMetric;
+  }
 }

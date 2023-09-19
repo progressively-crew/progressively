@@ -139,33 +139,6 @@ export class FlagsController {
     return variantDeleted;
   }
 
-  @Delete('environments/:envId/flags/:flagId/metrics/:metricId')
-  @UseGuards(HasFlagEnvAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  async deleteMetricFlag(
-    @UserId() userId: string,
-    @Param('envId') envId: string,
-    @Param('flagId') flagId: string,
-    @Param('metricId') metricId: string,
-  ) {
-    const deletedMetric = await this.flagService.deleteMetricFlag(
-      envId,
-      flagId,
-      metricId,
-    );
-
-    await this.activityLogService.register({
-      userId,
-      flagId: flagId,
-      envId: envId,
-      concernedEntity: 'flag',
-      type: 'delete-metric',
-      data: JSON.stringify(deletedMetric),
-    });
-
-    return deletedMetric;
-  }
-
   /**
    * Get the flag hits grouped by date
    */
