@@ -38,11 +38,7 @@ export const loader: LoaderFunction = async ({
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
 
-  const metrics: Array<Metric> = await getMetrics(
-    params.env!,
-    params.flagId!,
-    authCookie
-  );
+  const metrics: Array<Metric> = await getMetrics(params.env!, authCookie);
 
   return {
     metrics,
