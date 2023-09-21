@@ -88,12 +88,7 @@ export class EnvironmentsController {
     @Param('envId') envId: string,
     @Body() metricDto: MetricDto,
   ) {
-    const metric = await this.envService.addMetricToFlagEnv(
-      envId,
-      metricDto.name,
-    );
-
-    return metric;
+    return await this.envService.addMetricToFlagEnv(envId, metricDto.name);
   }
 
   @Delete(':envId/metrics/:metricId')
@@ -103,11 +98,6 @@ export class EnvironmentsController {
     @Param('envId') envId: string,
     @Param('metricId') metricId: string,
   ) {
-    const deletedMetric = await this.envService.deleteMetricFlag(
-      envId,
-      metricId,
-    );
-
-    return deletedMetric;
+    return await this.envService.deleteMetricFlag(envId, metricId);
   }
 }
