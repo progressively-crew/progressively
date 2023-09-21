@@ -4,9 +4,6 @@ import { FaBook } from "react-icons/fa";
 import { AiOutlineUser } from "react-icons/ai";
 import { FeedbackFish } from "@feedback-fish/react";
 import { GoCommentDiscussion } from "react-icons/go";
-import { useBillingInfo } from "~/modules/plans/hooks/useBillingInfo";
-import { useIsSaas } from "~/modules/saas/contexts/useIsSaas";
-import { Progress } from "./Progress";
 
 export interface HorizontalNavProps {
   children: React.ReactNode;
@@ -14,9 +11,6 @@ export interface HorizontalNavProps {
 }
 
 export const HorizontalNav = ({ children, label }: HorizontalNavProps) => {
-  const { activePlan, hitsForMonth } = useBillingInfo();
-  const isSaas = useIsSaas();
-
   return (
     <nav
       aria-label={label}
@@ -45,16 +39,6 @@ export const HorizontalNav = ({ children, label }: HorizontalNavProps) => {
         <NavItem to="/dashboard/profile" icon={<AiOutlineUser />}>
           My profile
         </NavItem>
-
-        {isSaas && (
-          <li className="hidden xl:block px-7 pt-2">
-            <Progress
-              max={activePlan?.evaluationCount || 1000}
-              value={hitsForMonth}
-              label={"Evaluation count this month"}
-            />
-          </li>
-        )}
       </ul>
     </nav>
   );
