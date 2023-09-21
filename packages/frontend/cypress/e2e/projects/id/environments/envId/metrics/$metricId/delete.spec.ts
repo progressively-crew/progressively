@@ -1,10 +1,10 @@
-describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/metrics/[stratId]/delete", () => {
+describe("/dashboard/projects/[id]/environments/[envId]/metrics/[stratId]/delete", () => {
   before(cy.seed);
   after(cy.cleanupDb);
 
   describe("not authenticated", () => {
     beforeEach(() => {
-      cy.visit("/dashboard/projects/1/environments/1/flags/1/metrics/1/delete");
+      cy.visit("/dashboard/projects/1/environments/1/metrics/1/delete");
     });
 
     it("checks that the route is protected", () => {
@@ -16,12 +16,9 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/metrics/[
     describe("user: Jane", () => {
       beforeEach(() => {
         cy.signIn("Jane");
-        cy.visit(
-          "/dashboard/projects/1/environments/1/flags/1/metrics/1/delete",
-          {
-            failOnStatusCode: false,
-          }
-        );
+        cy.visit("/dashboard/projects/1/environments/1/metrics/1/delete", {
+          failOnStatusCode: false,
+        });
       });
 
       it("shouldnt show anything when Jane tries to visit Marvin s project", () => {
@@ -32,16 +29,14 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/metrics/[
     describe("user: Marvin", () => {
       beforeEach(() => {
         cy.signIn("Marvin");
-        cy.visit(
-          "/dashboard/projects/1/environments/1/flags/1/metrics/1/delete"
-        );
+        cy.visit("/dashboard/projects/1/environments/1/metrics/1/delete");
         cy.injectAxe();
       });
 
       it("shows the layout of the page", () => {
         cy.title().should(
           "eq",
-          "Progressively | Project from seeding | Production | New homepage | Metrics | Delete"
+          "Progressively | Project from seeding | Production | Metrics | Delete"
         );
 
         cy.findByText("Deleting a metric").should("be.visible");
@@ -55,7 +50,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/metrics/[
           .and(
             "have.attr",
             "href",
-            "/dashboard/projects/1/environments/1/flags/1/metrics"
+            "/dashboard/projects/1/environments/1/metrics"
           );
 
         cy.checkA11y();
@@ -68,19 +63,17 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/metrics/[
 
       beforeEach(() => {
         cy.signIn("Marvin");
-        cy.visit(
-          "/dashboard/projects/1/environments/1/flags/4/metrics/1/delete"
-        );
+        cy.visit("/dashboard/projects/1/environments/1/metrics/1/delete");
       });
 
-      it("removes the metric and get me back to the flags page", () => {
+      it("removes the metric and get me back to the env page", () => {
         cy.findByRole("button", {
           name: "Yes, delete the metric",
         }).click();
 
         cy.url().should(
           "contain",
-          "/dashboard/projects/1/environments/1/flags/4/metrics?metricRemoved=true"
+          "/dashboard/projects/1/environments/1/metrics?metricRemoved=true"
         );
 
         cy.get(".success-box")

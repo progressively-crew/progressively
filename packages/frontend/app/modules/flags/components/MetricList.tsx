@@ -8,14 +8,8 @@ export interface MetricListProps {
   metrics: Array<Metric>;
   projectId: string;
   envId: string;
-  flagId: string;
 }
-export const MetricList = ({
-  metrics,
-  projectId,
-  envId,
-  flagId,
-}: MetricListProps) => {
+export const MetricList = ({ metrics, projectId, envId }: MetricListProps) => {
   return (
     <Table>
       <caption className="sr-only">List of metrics available</caption>
@@ -49,7 +43,7 @@ export const MetricList = ({
                   items={[
                     {
                       label: "Remove",
-                      href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/metrics/${metric.uuid}/delete`,
+                      href: `/dashboard/projects/${projectId}/environments/${envId}/metrics/${metric.uuid}/delete`,
                     },
                   ]}
                   label={"Actions on metric"}

@@ -4,3 +4,8 @@ export interface Environment {
   projectId: string;
   clientKey: string;
 }
+
+export interface MetricDto {
+  name: string;
+  variantId?: string;
+}

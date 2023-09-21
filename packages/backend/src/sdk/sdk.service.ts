@@ -174,10 +174,8 @@ export class SdkService {
     const metric = await this.prisma.pMetric.findFirst({
       where: {
         name: hit.name,
-        flagEnvironment: {
-          environment: {
-            clientKey,
-          },
+        Environment: {
+          clientKey,
         },
       },
     });
@@ -194,8 +192,7 @@ export class SdkService {
 
     return this.prisma.event.create({
       data: {
-        flagEnvironmentFlagId: metric.flagEnvironmentFlagId,
-        flagEnvironmentEnvironmentId: metric.flagEnvironmentEnvironmentId,
+        flagEnvironmentEnvironmentId: metric.environmentUuid,
         pMetricUuid: metric.uuid,
         visitorId,
         date,

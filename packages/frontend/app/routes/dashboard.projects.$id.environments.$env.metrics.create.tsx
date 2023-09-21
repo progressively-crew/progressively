@@ -1,33 +1,15 @@
 import { getSession } from "~/sessions";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
-import {
-  ActionFunction,
-  redirect,
-  LoaderFunction,
-  V2_MetaFunction,
-} from "@remix-run/node";
-import {
-  useActionData,
-  Form,
-  useTransition,
-  useLoaderData,
-} from "@remix-run/react";
+import { ActionFunction, redirect, V2_MetaFunction } from "@remix-run/node";
+import { useActionData, Form, useTransition } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
-import { getFlagEnvMetaTitle } from "~/modules/flags/services/getFlagEnvMetaTitle";
-import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { createMetric } from "~/modules/flags/services/createMetric";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { TextInput } from "~/components/Fields/TextInput";
-import { getVariants } from "~/modules/variants/services/getVariants";
-import {
-  SelectField,
-  SelectOption,
-} from "~/components/Fields/Select/SelectField";
-import { Variant } from "~/modules/variants/types";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { BackLink } from "~/components/BackLink";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
@@ -35,11 +17,10 @@ import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
   const envName = getEnvMetaTitle(matches, params.env!);
-  const flagName = getFlagEnvMetaTitle(matches);
 
   return [
     {
-      title: `Progressively | ${projectName} | ${envName} | Flags | ${flagName} | Metrics | Create`,
+      title: `Progressively | ${projectName} | ${envName} | Metrics | Create`,
     },
   ];
 };
@@ -69,14 +50,13 @@ export const action: ActionFunction = async ({
   try {
     await createMetric(
       params.env!,
-      params.flagId!,
       session.get("auth-cookie"),
       name,
       optionalVariant || undefined
     );
 
     return redirect(
-      `/dashboard/projects/${params.id}/environments/${params.env}/flags/${params.flagId}/metrics?newMetric=true#metric-added`
+      `/dashboard/projects/${params.id}/environments/${params.env}/metrics?newMetric=true#metric-added`
     );
   } catch (error: unknown) {
     if (error instanceof Error) {
@@ -87,52 +67,13 @@ export const action: ActionFunction = async ({
   }
 };
 
-interface LoaderData {
-  variants: Array<Variant>;
-  initialVariantUuid?: string;
-}
-
-export const loader: LoaderFunction = async ({
-  request,
-  params,
-}): Promise<LoaderData> => {
-  const session = await getSession(request.headers.get("Cookie"));
-  const authCookie = session.get("auth-cookie");
-  const url = new URL(request.url);
-  const search = new URLSearchParams(url.search);
-
-  const variants: Array<Variant> = await getVariants(
-    params.env!,
-    params.flagId!,
-    authCookie
-  );
-
-  return {
-    variants,
-    initialVariantUuid: search.get("variant") || undefined,
-  };
-};
-
 export default function MetricCreatePage() {
   const { project } = useProject();
-  const { flagEnv } = useFlagEnv();
   const { environment } = useEnvironment();
-  const { variants, initialVariantUuid } = useLoaderData<LoaderData>();
   const transition = useTransition();
-
-  const currentFlag = flagEnv.flag;
 
   const actionData = useActionData<ActionData>();
   const errors = actionData?.errors;
-
-  const options: Array<SelectOption> = [{ value: "", label: "No variant" }];
-
-  for (const variant of variants) {
-    options.push({
-      value: variant.uuid,
-      label: variant.value,
-    });
-  }
 
   return (
     <Form method="post" className="flex flex-col flex-1">
@@ -150,13 +91,9 @@ export default function MetricCreatePage() {
         }
         backLinkSlot={
           <BackLink
-            to={
-              initialVariantUuid
-                ? `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/variants`
-                : `/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/metrics`
-            }
+            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/metrics`}
           >
-            {initialVariantUuid ? "Back to variants" : "Back to metrics"}
+            Back to metrics
           </BackLink>
         }
       >
@@ -167,15 +104,6 @@ export default function MetricCreatePage() {
             name="name"
             placeholder="e.g: My super metric"
           />
-
-          {options.length > 1 && (
-            <SelectField
-              name="variant"
-              label="Variant (optional):"
-              options={options}
-              defaultValue={initialVariantUuid}
-            />
-          )}
         </FormGroup>
       </CreateEntityLayout>
     </Form>

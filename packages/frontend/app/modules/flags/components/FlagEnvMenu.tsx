@@ -6,7 +6,6 @@ import {
   TbActivity,
   TbApps,
   TbChartAreaLine,
-  TbChartPie,
   TbClockEdit,
   TbDeviceImacCheck,
   TbTargetArrow,
@@ -60,13 +59,6 @@ export const FlagEnvMenu = ({
         icon={<TbApps />}
       >
         Variants
-      </NavItem>
-
-      <NavItem
-        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/metrics`}
-        icon={<TbChartPie />}
-      >
-        Metrics
       </NavItem>
 
       <NavItem

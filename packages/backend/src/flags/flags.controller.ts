@@ -26,13 +26,12 @@ import {
   ActivateFlagDTO,
   FlagCreationDTO,
   FlagCreationSchema,
-  MetricSchema,
   VariantCreationDTO,
   VariantSchema,
   VariantsSchema,
 } from './flags.dto';
 import { HasFlagEnvAccessGuard } from './guards/hasFlagEnvAccess';
-import { MetricDto, Variant } from './types';
+import { Variant } from './types';
 import { Webhook, WebhookCreationDTO, WebhookSchema } from '../webhooks/types';
 import { WebhooksService } from '../webhooks/webhooks.service';
 import { post, WebhooksEventsToFlagStatus } from '../webhooks/utils';
@@ -140,33 +139,6 @@ export class FlagsController {
     return variantDeleted;
   }
 
-  @Delete('environments/:envId/flags/:flagId/metrics/:metricId')
-  @UseGuards(HasFlagEnvAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  async deleteMetricFlag(
-    @UserId() userId: string,
-    @Param('envId') envId: string,
-    @Param('flagId') flagId: string,
-    @Param('metricId') metricId: string,
-  ) {
-    const deletedMetric = await this.flagService.deleteMetricFlag(
-      envId,
-      flagId,
-      metricId,
-    );
-
-    await this.activityLogService.register({
-      userId,
-      flagId: flagId,
-      envId: envId,
-      concernedEntity: 'flag',
-      type: 'delete-metric',
-      data: JSON.stringify(deletedMetric),
-    });
-
-    return deletedMetric;
-  }
-
   /**
    * Get the flag hits grouped by date
    */
@@ -197,13 +169,6 @@ export class FlagsController {
       endDate,
     );
 
-    const metricsByVariantCount = await this.flagService.metricsByVariantCount(
-      envId,
-      flagId,
-      startDate,
-      endDate,
-    );
-
     const flagEvaluations = await this.flagService.flagEvaluations(
       envId,
       flagId,
@@ -213,7 +178,6 @@ export class FlagsController {
 
     return {
       hitsPerVariantPerDate,
-      metricsByVariantCount,
       flagEvaluations,
       metricsPerDate,
     };
@@ -269,35 +233,6 @@ export class FlagsController {
     });
 
     return webhook;
-  }
-
-  @Post('environments/:envId/flags/:flagId/metrics')
-  @UseGuards(HasFlagEnvAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  @UsePipes(new ValidationPipe(MetricSchema))
-  async addMetricToFlag(
-    @UserId() userId: string,
-    @Param('envId') envId: string,
-    @Param('flagId') flagId: string,
-    @Body() metricDto: MetricDto,
-  ) {
-    const metric = await this.flagService.addMetricToFlagEnv(
-      envId,
-      flagId,
-      metricDto.name,
-      metricDto.variantId,
-    );
-
-    await this.activityLogService.register({
-      userId,
-      flagId: flagId,
-      envId: envId,
-      concernedEntity: 'flag',
-      type: 'create-metric',
-      data: JSON.stringify(metric),
-    });
-
-    return metric;
   }
 
   @Post('environments/:envId/flags/:flagId/variants')
@@ -377,13 +312,6 @@ export class FlagsController {
     });
 
     return result;
-  }
-
-  @Get('environments/:envId/flags/:flagId/metrics')
-  @UseGuards(HasFlagEnvAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  getMetrics(@Param('envId') envId: string, @Param('flagId') flagId: string) {
-    return this.flagService.listMetrics(envId, flagId);
   }
 
   @Get('environments/:envId/flags/:flagId/webhooks')

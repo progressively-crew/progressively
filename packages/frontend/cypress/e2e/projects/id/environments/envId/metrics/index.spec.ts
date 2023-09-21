@@ -1,10 +1,10 @@
-describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/metrics", () => {
+describe("/dashboard/projects/[id]/environments/[envId]/metrics", () => {
   before(cy.seed);
   after(cy.cleanupDb);
 
   describe("not authenticated", () => {
     beforeEach(() => {
-      cy.visit("/dashboard/projects/1/environments/1/flags/1/metrics");
+      cy.visit("/dashboard/projects/1/environments/1/metrics");
     });
 
     it("checks that the route is protected", () => {
@@ -16,7 +16,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/metrics",
     describe("user: Jane", () => {
       beforeEach(() => {
         cy.signIn("Jane");
-        cy.visit("/dashboard/projects/1/environments/1/flags/1/metrics", {
+        cy.visit("/dashboard/projects/1/environments/1/metrics", {
           failOnStatusCode: false,
         });
       });
@@ -32,58 +32,34 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/metrics",
       });
 
       it("shows the layout (with data)", () => {
-        cy.visit("/dashboard/projects/1/environments/1/flags/1/metrics");
+        cy.visit("/dashboard/projects/1/environments/1/metrics");
         cy.injectAxe();
 
         cy.title().should(
           "eq",
-          "Progressively | Project from seeding | Production | Flags | New homepage | Metrics"
+          "Progressively | Project from seeding | Production | Metrics"
         );
 
         cy.verifyBreadcrumbs([
           ["My projects", "/dashboard"],
           ["Project from seeding", "/dashboard/projects/1/flags"],
           ["Production", "/dashboard/projects/1/environments/1"],
-          [
-            "New homepage",
-            "/dashboard/projects/1/environments/1/flags/1",
-            false,
-          ],
         ]);
 
-        cy.findByRole("link", { name: "Insights" })
-          .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/1/flags/1/insights"
-          );
-
-        cy.findByRole("link", { name: "Metrics" })
-          .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/1/flags/1/metrics"
-          )
-          .and("have.attr", "aria-current", "page");
-
-        cy.findAllByText("New homepage").should("have.length", 1);
         cy.findByRole("heading", { name: "Metrics" }).should("be.visible");
 
         cy.checkA11y();
       });
 
       it("shows the layout (without data)", () => {
-        cy.visit("/dashboard/projects/1/environments/1/flags/2/metrics");
+        cy.visit("/dashboard/projects/1/environments/2/metrics");
         cy.injectAxe();
 
         cy.title().should(
           "eq",
-          "Progressively | Project from seeding | Production | Flags | New footer | Metrics"
+          "Progressively | Project from seeding | Developer | Metrics"
         );
 
-        cy.findAllByText("New footer").should("have.length", 1);
         cy.findByRole("heading", { name: "Metrics" }).should("be.visible");
 
         cy.findByText("No metrics found").should("be.visible");
@@ -95,12 +71,12 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/metrics",
       });
 
       it("shows the layout (with data)", () => {
-        cy.visit("/dashboard/projects/1/environments/1/flags/4/metrics");
+        cy.visit("/dashboard/projects/1/environments/1/metrics");
         cy.injectAxe();
 
         cy.title().should(
           "eq",
-          "Progressively | Project from seeding | Production | Flags | With multivariate | Metrics"
+          "Progressively | Project from seeding | Production | Metrics"
         );
 
         cy.findByRole("heading", { name: "Metrics" }).should("be.visible");

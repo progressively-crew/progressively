@@ -90,23 +90,22 @@ export default function FlagsByEnvPage() {
         ) : null
       }
     >
-      <PageTitle
-        value="Feature flags"
-        action={
-          flags.length > 0 && (
-            <CreateButton
-              to={`/dashboard/projects/${project.uuid}/flags/create`}
-              variant="primary"
-            >
-              Add a feature flag
-            </CreateButton>
-          )
-        }
-      />
+      <PageTitle value="Feature flags" />
 
       {hasFlags ? (
         <>
-          <SearchLayout>
+          <SearchLayout
+            actions={
+              flags.length > 0 && (
+                <CreateButton
+                  to={`/dashboard/projects/${project.uuid}/flags/create`}
+                  variant="primary"
+                >
+                  Add a feature flag
+                </CreateButton>
+              )
+            }
+          >
             <SearchBar
               label="Search for flags"
               placeholder="e.g: The flag"
