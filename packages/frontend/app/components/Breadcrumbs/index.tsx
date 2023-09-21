@@ -42,7 +42,10 @@ export const BreadCrumbs = ({ crumbs }: BreadCrumbsProps) => {
                 <div className={"rounded px-2 py-1"}>
                   <HStack spacing={2}>
                     {crumb.isRoot ? (
-                      <span>All projects</span>
+                      <HStack spacing={2}>
+                        <Logo />
+                        <span className="sr-only">My projects</span>
+                      </HStack>
                     ) : (
                       <HStack spacing={2}>
                         <IconBox content={crumb.label} size="S">
