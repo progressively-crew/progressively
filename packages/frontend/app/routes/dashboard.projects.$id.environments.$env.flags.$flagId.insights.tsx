@@ -17,7 +17,6 @@ import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { getFlagEnvMetaTitle } from "~/modules/flags/services/getFlagEnvMetaTitle";
 import { Card, CardContent } from "~/components/Card";
 import { PageTitle } from "~/components/PageTitle";
-import { MetricPerVariantList } from "~/modules/flags/MetricPerVariantList";
 import { Section, SectionHeader } from "~/components/Section";
 import { EmptyState } from "~/components/EmptyState";
 import { LineChart } from "~/components/LineChart";
@@ -57,10 +56,8 @@ interface FlagEvaluation {
 interface LoaderData {
   flagEvaluationsCount: number;
   metricCount: number;
-  metricsByVariantCount: Array<MetricHit>;
   hitsPerVariantPerDate: Array<FlagHit>;
   flagEvaluations: Array<FlagEvaluation>;
-  metricsPerDate: Array<FlagHit>;
 }
 
 export const loader: LoaderFunction = async ({
@@ -86,29 +83,14 @@ export const loader: LoaderFunction = async ({
   const authCookie = session.get("auth-cookie");
   const {
     hitsPerVariantPerDate,
-    metricsPerDate,
-    metricsByVariantCount,
     flagEvaluations,
   }: {
     hitsPerVariantPerDate: Array<FlagHit>;
-    metricsPerDate: Array<FlagHit>;
     metricsByVariantCount: Array<Omit<MetricHit, "variantCount">>;
     flagEvaluations: Array<FlagEvaluation>;
   } = await getFlagHits(params.env!, params.flagId!, start, end, authCookie);
 
-  let metricCount = 0;
-
-  const computedMetricsByVariantCount = metricsByVariantCount.map((nbv) => {
-    metricCount += nbv.count;
-
-    return {
-      count: nbv.count,
-      metric: nbv.metric,
-      variant: nbv.variant,
-      // eslint-disable-next-line unicorn/no-array-reduce
-      variantCount: flagEvaluations.find((f) => f.data === nbv.variant)?._count,
-    };
-  });
+  const metricCount = 0;
 
   const flagEvaluationsCount = flagEvaluations.reduce(
     (acc, curr) => acc + curr._count,
@@ -118,10 +100,8 @@ export const loader: LoaderFunction = async ({
   return {
     flagEvaluationsCount,
     metricCount,
-    metricsPerDate,
     flagEvaluations,
     hitsPerVariantPerDate,
-    metricsByVariantCount: computedMetricsByVariantCount,
   };
 };
 
@@ -147,10 +127,8 @@ export const action: ActionFunction = async ({
 
 export default function FlagInsights() {
   const {
-    metricsByVariantCount,
     hitsPerVariantPerDate,
     flagEvaluations,
-    metricsPerDate,
     metricCount,
     flagEvaluationsCount,
   } = useLoaderData<LoaderData>();
@@ -258,30 +236,6 @@ export default function FlagInsights() {
               <EmptyState
                 title="No data"
                 description={"There are no flag evaluations for this period."}
-              />
-            </CardContent>
-          )}
-        </Card>
-      </Section>
-
-      <Section id="metric-hits">
-        <Card>
-          <CardContent>
-            <SectionHeader title="Hits on metrics" />
-          </CardContent>
-
-          {metricsPerDate.length > 0 ? (
-            <div>
-              <div className="pb-2 -mx-1">
-                <LineChart data={metricsPerDate} />
-              </div>
-              <MetricPerVariantList items={metricsByVariantCount} />
-            </div>
-          ) : (
-            <CardContent>
-              <EmptyState
-                title="No data"
-                description={"There are no metric evaluations for this period."}
               />
             </CardContent>
           )}
