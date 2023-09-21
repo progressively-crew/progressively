@@ -7,7 +7,7 @@ import {
   V2_MetaFunction,
 } from "@remix-run/node";
 import { Link, useLoaderData, useSearchParams } from "@remix-run/react";
-import { TbApps, TbChartPie } from "react-icons/tb";
+import { TbApps } from "react-icons/tb";
 import { FlagEnvMenu } from "~/modules/flags/components/FlagEnvMenu";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
@@ -55,7 +55,6 @@ interface FlagEvaluation {
 
 interface LoaderData {
   flagEvaluationsCount: number;
-  metricCount: number;
   hitsPerVariantPerDate: Array<FlagHit>;
   flagEvaluations: Array<FlagEvaluation>;
 }
@@ -90,8 +89,6 @@ export const loader: LoaderFunction = async ({
     flagEvaluations: Array<FlagEvaluation>;
   } = await getFlagHits(params.env!, params.flagId!, start, end, authCookie);
 
-  const metricCount = 0;
-
   const flagEvaluationsCount = flagEvaluations.reduce(
     (acc, curr) => acc + curr._count,
     0
@@ -99,7 +96,6 @@ export const loader: LoaderFunction = async ({
 
   return {
     flagEvaluationsCount,
-    metricCount,
     flagEvaluations,
     hitsPerVariantPerDate,
   };
@@ -126,12 +122,8 @@ export const action: ActionFunction = async ({
 };
 
 export default function FlagInsights() {
-  const {
-    hitsPerVariantPerDate,
-    flagEvaluations,
-    metricCount,
-    flagEvaluationsCount,
-  } = useLoaderData<LoaderData>();
+  const { hitsPerVariantPerDate, flagEvaluations, flagEvaluationsCount } =
+    useLoaderData<LoaderData>();
   const { flagEnv } = useFlagEnv();
   const { project } = useProject();
   const { environment } = useEnvironment();
@@ -204,13 +196,6 @@ export default function FlagInsights() {
             value={flagEvaluationsCount}
             unit={"evals."}
             icon={<TbApps className="text-6xl text-slate-200" />}
-          />
-
-          <BigStat
-            label={" Metric hits count"}
-            value={metricCount}
-            unit={"hits"}
-            icon={<TbChartPie className="text-6xl text-slate-200" />}
           />
         </div>
       </Section>
