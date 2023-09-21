@@ -1,6 +1,5 @@
 import { Button } from "~/components/Buttons/Button";
 import { Logo } from "~/components/Logo/Logo";
-import { Progress } from "~/components/Progress";
 
 export const UserDropdown = () => {
   return (
