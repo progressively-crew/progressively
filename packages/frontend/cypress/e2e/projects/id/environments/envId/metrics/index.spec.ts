@@ -70,7 +70,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/metrics", () => {
         cy.checkA11y();
       });
 
-      it.only("shows the layout (with data)", () => {
+      it("shows the layout (with data)", () => {
         cy.visit("/dashboard/projects/1/environments/1/metrics");
         cy.injectAxe();
 
