@@ -1,13 +1,11 @@
 ---
 import GetStartedCTA from "../components/GetStartedCTA.astro";
-import LinkButton from "../components/LinkButton.astro";
 import { PullTriggerSection } from "../components/PullTriggerSection";
 import { SpeedUpDevelopment } from "../components/SpeedUpDevelopment";
 import Layout from "../layouts/Layout.astro";
 import hljs from "highlight.js";
 import { FeedbackLoop } from "../components/FeedbackLoop";
 import { InstallationStep } from "../components/InstallationStep";
-import { PricingSection } from "../components/PricingSection";
 import { GlowyLink } from "../components/GlowyLink";
 import { Highlight } from "../components/Highlight";
 
@@ -99,21 +97,12 @@ return <OldFeature />;
           style={{ animationDelay: "500ms" }}
         >
           <GlowyLink
-            href="https://dashboard.progressively.app/signin"
+            href="https://docs.progressively.app/"
             target={"_blank"}
             id="get-started"
           >
             Get started
           </GlowyLink>
-
-          <LinkButton
-            href="https://docs.progressively.app/"
-            target={"_blank"}
-            variant="secondary"
-            id="documentation-btn"
-          >
-            Documentation
-          </LinkButton>
         </div>
       </div>
 
@@ -129,8 +118,6 @@ return <OldFeature />;
     <FeedbackLoop client:load abcVersions={abcVersions} />
 
     <InstallationStep client:load code={smallSnippet} />
-
-    <PricingSection client:load trialUrl={trialUrl} />
 
     <GetStartedCTA />
   </main>

@@ -90,23 +90,23 @@ export const InstallationStep = ({ code }: { code: string }) => {
               <TimeFrame
                 shouldAnimate={isVisible}
                 cta={
-                  <GlowyLink href="https://dashboard.progressively.app/register">
-                    Create my account
+                  <GlowyLink href="https://docs.progressively.app">
+                    Install Progressively
                   </GlowyLink>
                 }
-                title={"Create an account"}
+                title={"Get your instance"}
                 content={
                   <ol className="flex flex-col gap-2 py-4">
                     <li className="flex flex-row gap-2 items-center">
-                      <BsCheck className="text-[#44BCFF]" /> Setup your account
+                      <BsCheck className="text-[#44BCFF]" /> Run the docker
+                      command
                     </li>
                     <li className="flex flex-row gap-2 items-center">
-                      <BsCheck className="text-[#44BCFF]" /> Create your first
-                      project
+                      <BsCheck className="text-[#44BCFF]" /> Create your admin
+                      account
                     </li>
                     <li className="flex flex-row gap-2 items-center">
-                      <BsCheck className="text-[#44BCFF]" /> Create your first
-                      flag
+                      <BsCheck className="text-[#44BCFF]" /> Start the journey
                     </li>
                   </ol>
                 }
