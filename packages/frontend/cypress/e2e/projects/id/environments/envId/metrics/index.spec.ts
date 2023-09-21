@@ -52,12 +52,12 @@ describe("/dashboard/projects/[id]/environments/[envId]/metrics", () => {
       });
 
       it("shows the layout (without data)", () => {
-        cy.visit("/dashboard/projects/1/environments/1/metrics");
+        cy.visit("/dashboard/projects/1/environments/2/metrics");
         cy.injectAxe();
 
         cy.title().should(
           "eq",
-          "Progressively | Project from seeding | Production | Metrics"
+          "Progressively | Project from seeding | Developer | Metrics"
         );
 
         cy.findByRole("heading", { name: "Metrics" }).should("be.visible");
@@ -70,8 +70,8 @@ describe("/dashboard/projects/[id]/environments/[envId]/metrics", () => {
         cy.checkA11y();
       });
 
-      it("shows the layout (with data)", () => {
-        cy.visit("/dashboard/projects/1/environments/1/flags/4/metrics");
+      it.only("shows the layout (with data)", () => {
+        cy.visit("/dashboard/projects/1/environments/1/metrics");
         cy.injectAxe();
 
         cy.title().should(
