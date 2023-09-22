@@ -44,19 +44,17 @@ export const StrategyFormFields = ({
 
   if (isVariantChoice) {
     return (
-      <div className="flex flex-row gap-4 flex-wrap items-center">
-        <div className="">
-          <SelectField
-            hiddenLabel
-            label="What value to you want to serve?"
-            name={"value-to-serve-type"}
-            defaultValue={valueToServeType || valueOptions[0].value}
-            options={valueOptions}
-            onValueChange={(str) => setStatus(str as ValueToServe)}
-          />
-        </div>
+      <div className="">
+        <SelectField
+          hiddenLabel
+          label="What value to you want to serve?"
+          name={"value-to-serve-type"}
+          defaultValue={valueToServeType || valueOptions[0].value}
+          options={valueOptions}
+          onValueChange={(str) => setStatus(str as ValueToServe)}
+        />
 
-        <div className="flex-1">
+        <div className="bg-slate-50">
           <VariantFields variants={variants || []} />
         </div>
       </div>

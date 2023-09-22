@@ -8,6 +8,7 @@ export interface PercentageFieldProps {
   label: string;
   hiddenLabel?: boolean;
   hiddenDot?: boolean;
+  thumbColor?: string;
 }
 
 export const PercentageField = ({
@@ -16,6 +17,7 @@ export const PercentageField = ({
   label,
   hiddenLabel,
   hiddenDot,
+  thumbColor = "black",
 }: PercentageFieldProps) => {
   const id = useId();
   const [value, setValue] = useState(initialValue);
@@ -49,11 +51,14 @@ export const PercentageField = ({
         onChange={(e) => setValue(Number(e.target.value))}
         defaultValue={initialValue}
         className="h-full px-4 w-40 pr-2 bg-transparent rounded-l outline-none"
+        style={{
+          "--color-slide-thumb": thumbColor,
+        }}
       />
 
       <Typography
         as="span"
-        className="bg-slate-100 dark:bg-slate-600 rounded h-full flex items-center justify-center px-2 w-16 font-mono"
+        className="bg-slate-100 dark:bg-slate-600 rounded h-full flex items-center justify-center px-2 w-16 font-mono font-bold"
         aria-hidden
       >
         {value}%
