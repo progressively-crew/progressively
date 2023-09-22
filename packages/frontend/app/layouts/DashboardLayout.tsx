@@ -3,9 +3,12 @@ import { SkipNavLink } from "~/components/SkipNav";
 import { Spacer } from "~/components/Spacer";
 import { NavProvider } from "~/components/Breadcrumbs/providers/NavProvider";
 import { InertWhenNavOpened } from "~/components/Breadcrumbs/InertWhenNavOpened";
-import { useMatches, useNavigation } from "@remix-run/react";
+import { Form, useMatches, useNavigation } from "@remix-run/react";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { Spinner } from "~/components/Spinner";
+import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
+import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
+import { FlagStatus } from "~/modules/flags/types";
 
 export interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -19,6 +22,7 @@ export const DashboardLayout = ({
   status,
 }: DashboardLayoutProps) => {
   const navigation = useNavigation();
+  const { flagEnv } = useFlagEnv();
   const matches = useMatches();
 
   const crumbs = matches
@@ -40,10 +44,23 @@ export const DashboardLayout = ({
 
       <div className="bg-gray-50 dark:bg-slate-900 h-full flex-1">
         {crumbs.length > 0 && (
-          <div className="py-1 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 hidden md:block ">
-            <div className="px-4">
+          <div className="py-1 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 hidden md:flex md:flex-row items-center">
+            <div className="pl-4 pr-2">
               <BreadCrumbs crumbs={crumbs} />
             </div>
+
+            {flagEnv && (
+              <Form
+                method="post"
+                id={`form-${flagEnv.flagId}`}
+                className="pr-4 pt-1"
+              >
+                <ToggleFlag
+                  isFlagActivated={flagEnv.status === FlagStatus.ACTIVATED}
+                  flagId={flagEnv.flagId}
+                />
+              </Form>
+            )}
           </div>
         )}
 

@@ -49,7 +49,6 @@ export const PercentageField = ({
         max="100"
         value={value}
         onChange={(e) => setValue(Number(e.target.value))}
-        defaultValue={initialValue}
         className="h-full px-4 w-40 pr-2 bg-transparent rounded-l outline-none"
         style={{
           "--color-slide-thumb": thumbColor,
