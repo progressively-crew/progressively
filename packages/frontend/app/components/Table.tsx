@@ -15,7 +15,7 @@ export const Table = ({ children }: TableProps) => {
 };
 export const Th = ({ children }: TableProps) => {
   return (
-    <th className="whitespace-nowrap bg-slate-50 dark:bg-slate-700 border-b dark:border-slate-600 font-medium p-4 pl-8 py-3 text-slate-500 dark:text-slate-200 text-left">
+    <th className="first:rounded-t last:rounded-t whitespace-nowrap bg-slate-50 dark:bg-slate-700 border-b dark:border-slate-600 font-medium p-4 pl-8 py-3 text-slate-500 dark:text-slate-200 text-left">
       {children}
     </th>
   );
@@ -35,7 +35,7 @@ export const Td = ({
 };
 
 export const Tbody = ({ children }: TableProps) => {
-  return <tbody className="bg-white dark:bg-slate-800">{children}</tbody>;
+  return <tbody className="">{children}</tbody>;
 };
 
 export const Tr = ({

@@ -50,7 +50,7 @@ export const action: ActionFunction = async ({
   }
 
   try {
-    await createSegment(
+    const segment = await createSegment(
       params.env!,
       params.flagId!,
       session.get("auth-cookie"),
@@ -58,7 +58,7 @@ export const action: ActionFunction = async ({
     );
 
     return redirect(
-      `/dashboard/projects/${params.id}/environments/${params.env}/flags/${params.flagId}/segments?newSegment=true#segment-added`
+      `/dashboard/projects/${params.id}/environments/${params.env}/flags/${params.flagId}/segments/${segment.uuid}?newSegment=true#segment-added`
     );
   } catch (error: unknown) {
     if (error instanceof Error) {

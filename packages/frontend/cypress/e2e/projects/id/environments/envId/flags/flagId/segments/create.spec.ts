@@ -56,9 +56,11 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/segments/
         cy.findByLabelText("Segment name").type("New segment");
         cy.findByRole("button", { name: "Create the segment" }).click();
 
+        cy.url().should("include", "?newSegment=true");
+
         cy.url().should(
           "include",
-          "/dashboard/projects/1/environments/1/flags/1/segments?newSegment=true"
+          "/dashboard/projects/1/environments/1/flags/1/segments"
         );
 
         cy.get(".success-box")
