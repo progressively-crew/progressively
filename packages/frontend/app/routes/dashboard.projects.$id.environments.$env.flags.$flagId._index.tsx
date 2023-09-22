@@ -102,8 +102,9 @@ export const action: ActionFunction = async ({
 
   if (type === "edit-strategy") {
     const strategyId = formData.get("uuid")?.toString();
+
     if (strategyId) {
-      return editStrategyAction(formData, strategyId, authCookie);
+      return await editStrategyAction(formData, strategyId, authCookie);
     }
   }
   if (type === "delete-strategy-rule") {

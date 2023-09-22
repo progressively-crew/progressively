@@ -133,20 +133,20 @@ const StrategyItem = ({ strategy, variants, segments }: StrategyItemProps) => {
                 })}
                 rolloutPercentage={strategy.rolloutPercentage || 0}
               />
-            </Form>
 
-            <div className="w-full pt-2">
-              <RuleList
-                rules={strategy.rules || []}
-                currentlyDeletingRuleUuid={
-                  type === "delete-strategy-rule"
-                    ? navigation?.formData?.get("ruleId")?.toString()
-                    : undefined
-                }
-                formId={deleteStrategyRule}
-                segments={segments}
-              />
-            </div>
+              <div className="w-full pt-2">
+                <RuleList
+                  rules={strategy.rules || []}
+                  currentlyDeletingRuleUuid={
+                    type === "delete-strategy-rule"
+                      ? navigation?.formData?.get("ruleId")?.toString()
+                      : undefined
+                  }
+                  formId={deleteStrategyRule}
+                  segments={segments}
+                />
+              </div>
+            </Form>
           </div>
         </CardContent>
       </Card>

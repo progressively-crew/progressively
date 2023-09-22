@@ -26,6 +26,7 @@ export const editStrategyAction = async (
 
   const toUpdate: Array<RuleUpdateDto & { uuid: string }> = [];
   const entries = allIds.entries();
+
   let hasError = false;
 
   for (const [i, uuid] of entries) {
