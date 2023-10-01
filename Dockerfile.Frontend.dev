@@ -1,57 +1,13 @@
-FROM node:18-bullseye-slim as build
-WORKDIR /app
+FROM node:18-bullseye-slim as base
 RUN npm i -g pnpm
-COPY ./package.json ./package.json
-COPY ./pnpm-lock.yaml ./pnpm-lock.yaml
-COPY ./pnpm-workspace.yaml ./pnpm-workspace.yaml
-COPY ./turbo.json ./turbo.json
-COPY ./packages/frontend ./packages/frontend
-COPY ./packages/react ./packages/react
-COPY ./packages/sdk-js ./packages/sdk-js
-COPY ./packages/server-side ./packages/server-side
-COPY ./packages/shared ./packages/shared
-COPY ./packages/database ./packages/database
-COPY ./packages/types ./packages/types
-# Hack to prevent cypress from installing
-RUN pnpm install --ignore-scripts --filter @progressively/frontend...
-RUN pnpm run build --filter @progressively/frontend
-
-
-FROM node:18-bullseye-slim as prodDeps
 WORKDIR /app
-RUN npm i -g pnpm
-COPY --from=build ./app/package.json ./package.json
-COPY --from=build ./app/pnpm-lock.yaml ./pnpm-lock.yaml
-COPY --from=build ./app/pnpm-workspace.yaml ./pnpm-workspace.yaml
-COPY --from=build ./app/turbo.json ./turbo.json
-
-COPY --from=build ./app/packages/frontend/build ./packages/frontend/build
-COPY --from=build ./app/packages/frontend/public ./packages/frontend/public
-COPY --from=build ./app/packages/frontend/package.json ./packages/frontend/package.json
-
-COPY --from=build ./app/packages/react/lib ./packages/react/lib
-COPY --from=build ./app/packages/react/package.json ./packages/react/package.json
-COPY --from=build ./app/packages/types ./packages/types
-
-COPY --from=build ./app/packages/sdk-js/dist ./packages/sdk-js/dist
-COPY --from=build ./app/packages/sdk-js/package.json ./packages/sdk-js/package.json
-
-COPY --from=build ./app/packages/server-side/lib ./packages/server-side/lib
-COPY --from=build ./app/packages/server-side/package.json ./packages/server-side/package.json
-
-COPY --from=build ./app/packages/shared/dist ./packages/shared/dist
-COPY --from=build ./app/packages/shared/package.json ./packages/shared/package.json
-
-COPY --from=build ./app/packages/database/dist ./packages/database/dist
-COPY --from=build ./app/packages/database/package.json ./packages/database/package.json
-
-RUN pnpm install --prod
-
-
-FROM node:18-bullseye-slim as runner
-WORKDIR /app
-RUN npm i -g pnpm
-COPY --from=prodDeps /app .
 EXPOSE 3000
 
-CMD [ "pnpm", "run", "start:frontend" ]
+FROM base as dev
+RUN --mount=type=bind,source=package.json,target=package.json \
+    --mount=type=bind,source=pnpm-lock.yaml,target=pnpm-lock.yaml \
+    --mount=type=bind,source=pnpm-workspace.yaml,target=pnpm-workspace.yaml \
+    pnpm install --prod
+USER node
+COPY . .
+CMD pnpm turbo run dev --filter=@progressively/frontend
