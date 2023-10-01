@@ -19,7 +19,7 @@ const FlaggedComponent = () => {
 
 export const AnonymousPage = () => {
   const progressivelyProps = {
-    clientKey: "e2d4c6b5-ca7c-4c54-8d37-c74b9608312f",
+    clientKey: "valid-sdk-key",
     websocketUrl: "ws://localhost:4000",
     apiUrl: "http://localhost:4000",
   };
