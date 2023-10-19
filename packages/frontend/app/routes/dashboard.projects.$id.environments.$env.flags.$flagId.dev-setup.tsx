@@ -120,7 +120,7 @@ export default function DevSetup() {
                 Check the SDK setup in the documentation
               </Typography>
               <Typography className={pClass}>
-                <Link href="https://docs.progressively.app/" target="_blank">
+                <Link href="https://progressively.app/" target="_blank">
                   Access the documentation
                 </Link>{" "}
                 and take the SDK that fits your need.
