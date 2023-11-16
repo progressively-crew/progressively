@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { FlagEvaluationLimitTrial } from '@progressively/shared';
 import { PrismaService } from '../database/prisma.service';
 import { CryptoService } from '../crypto/crypto.service';
 import { v4 as uuidv4 } from 'uuid';
@@ -7,7 +6,6 @@ import { User } from './types';
 import { UserStatus } from './status';
 import { AuthProviders } from '../auth/types';
 import { UserRoles } from './roles';
-import { PlanStatus } from '../billing/types';
 
 @Injectable()
 export class UsersService {
@@ -131,18 +129,6 @@ export class UsersService {
     });
   }
 
-  getPlans(uuid: string, planStatus: PlanStatus) {
-    return this.prisma.plan.findMany({
-      orderBy: {
-        createdAt: 'desc',
-      },
-      where: {
-        userUuid: uuid,
-        status: planStatus,
-      },
-    });
-  }
-
   async hasUsers() {
     const users = await this.prisma.user.findMany({});
 
@@ -230,19 +216,6 @@ export class UsersService {
     });
   }
 
-  async isPlanValid(clientKey: string) {
-    const activePlan = await this.getProjectOwnerFromEnvClientKey(clientKey);
-    const totalHits = await this.getHitsForEnv(clientKey);
-
-    // Subscriber
-    if (activePlan) {
-      return totalHits < activePlan.evaluationCount;
-    }
-
-    // trialing
-    return totalHits < FlagEvaluationLimitTrial;
-  }
-
   getHitsForEnv(environmentKey: string) {
     const start = new Date();
     start.setDate(1);
@@ -260,34 +233,6 @@ export class UsersService {
             clientKey: environmentKey,
           },
         },
-      },
-    });
-  }
-
-  async getProjectOwnerFromEnvClientKey(clientKey: string) {
-    const userOwnerOfProject = await this.prisma.user.findFirst({
-      where: {
-        userProject: {
-          some: {
-            role: UserRoles.Admin,
-            project: {
-              environments: {
-                some: {
-                  clientKey,
-                },
-              },
-            },
-          },
-        },
-      },
-    });
-
-    if (!userOwnerOfProject) return undefined;
-
-    return await this.prisma.plan.findFirst({
-      where: {
-        status: PlanStatus.ACTIVE,
-        userUuid: userOwnerOfProject.uuid,
       },
     });
   }

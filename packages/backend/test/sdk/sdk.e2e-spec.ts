@@ -26,15 +26,6 @@ describe('SdkController (e2e)', () => {
     await cleanupDb();
   });
 
-  const isSaas = process.env.IS_SAAS;
-  beforeAll(() => {
-    process.env.IS_SAAS = 'false';
-  });
-
-  afterAll(() => {
-    process.env.IS_SAAS = isSaas;
-  });
-
   describe('/sdk/unknown-key (GET)', () => {
     it('gives an empty array when the key is invalid', async () => {
       const response = await request(app.getHttpServer()).get(

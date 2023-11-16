@@ -36,7 +36,6 @@ export class SdkController {
     @Req() request: Request,
     @Headers() headers,
   ) {
-    const isSaas = process.env.IS_SAAS === 'true';
     const fields = parseBase64Params(base64Params);
 
     const clientKey = String(fields.clientKey);
@@ -45,16 +44,6 @@ export class SdkController {
 
     fields.id = resolveUserId(fields, cookieUserId);
     prepareCookie(response, fields.id);
-
-    if (isSaas) {
-      const isPlanValid = await this.userService.isPlanValid(clientKey);
-
-      if (isPlanValid) {
-        return this.sdkService.computeFlags(fields, shouldSkipHits);
-      }
-
-      return {};
-    }
 
     return this.sdkService.computeFlags(fields, shouldSkipHits);
   }
@@ -70,7 +59,6 @@ export class SdkController {
     @Req() request: Request,
     @Headers() headers,
   ) {
-    const isSaas = process.env.IS_SAAS === 'true';
     const fields = parseBase64Params(base64Params);
 
     const clientKey = String(fields.clientKey);
@@ -80,34 +68,12 @@ export class SdkController {
     fields.id = resolveUserId(fields, cookieUserId);
     prepareCookie(response, fields.id);
 
-    if (isSaas) {
-      const isPlanValid = await this.userService.isPlanValid(clientKey);
-
-      if (isPlanValid) {
-        return this.sdkService.computeUniqueFlag(
-          flagKey,
-          fields,
-          shouldSkipHits,
-        );
-      }
-
-      return {};
-    }
-
     return this.sdkService.computeUniqueFlag(flagKey, fields, shouldSkipHits);
   }
 
   @Get('/:clientKey/types/gen')
   @UseGuards(JwtAuthGuard)
   async getTypesDefinitions(@Param('clientKey') clientKey: string) {
-    const isSaas = process.env.IS_SAAS === 'true';
-
-    if (isSaas) {
-      const isPlanValid = await this.userService.isPlanValid(clientKey);
-
-      if (!isPlanValid) return ``;
-    }
-
     return this.sdkService.generateTypescriptTypes(clientKey);
   }
 
@@ -124,18 +90,6 @@ export class SdkController {
 
     if (!fields.clientKey) {
       throw new BadRequestException();
-    }
-
-    const isSaas = process.env.IS_SAAS === 'true';
-
-    if (isSaas) {
-      const isPlanValid = await this.userService.isPlanValid(
-        String(fields.clientKey),
-      );
-
-      if (!isPlanValid) {
-        throw new BadRequestException();
-      }
     }
 
     const eventCreated = await this.sdkService.hitEvent(

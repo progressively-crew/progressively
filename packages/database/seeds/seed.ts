@@ -8,7 +8,6 @@ import {
 } from "./flags";
 import { seedProjects } from "./projects";
 import { seedPasswordReset, seedUsers } from "./users";
-import { seedForSaas } from "./saas";
 
 const prismaClient = new PrismaClient();
 
@@ -305,8 +304,6 @@ export const seedDb = async () => {
     );
 
     await seedFlagHitsVariants(prismaClient, multiVariateFlagEnv);
-
-    await seedForSaas(prismaClient, jane);
 
     // End of Flag setup
   } catch (e) {
