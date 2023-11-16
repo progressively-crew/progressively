@@ -1,4 +1,4 @@
-import { FiExternalLink } from "react-icons/fi";
+import { FiExternalLink } from "react-icons/fi/index.js";
 import { Link } from "./Link";
 
 export interface ExternalLinkProps {

@@ -1,7 +1,7 @@
 /* eslint-disable sonarjs/cognitive-complexity */
-import { AiOutlineClockCircle, AiOutlineLink } from "react-icons/ai";
-import { GrGroup } from "react-icons/gr";
-import { RiSettingsLine } from "react-icons/ri";
+import { AiOutlineClockCircle, AiOutlineLink } from "react-icons/ai/index.js";
+import { GrGroup } from "react-icons/gr/index.js";
+import { RiSettingsLine } from "react-icons/ri/index.js";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { MetricIcon } from "~/components/Icons/MetricIcon";
 import { VariantIcon } from "~/components/Icons/VariantIcon";

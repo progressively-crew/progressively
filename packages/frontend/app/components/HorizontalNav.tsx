@@ -1,9 +1,9 @@
 import { NavLink } from "@remix-run/react";
 import { HStack } from "./HStack";
-import { FaBook } from "react-icons/fa";
-import { AiOutlineUser } from "react-icons/ai";
+import { FaBook } from "react-icons/fa/index.js";
+import { AiOutlineUser } from "react-icons/ai/index.js";
 import { FeedbackFish } from "@feedback-fish/react";
-import { GoCommentDiscussion } from "react-icons/go";
+import { GoCommentDiscussion } from "react-icons/go/index.js";
 
 export interface HorizontalNavProps {
   children: React.ReactNode;

@@ -1,9 +1,9 @@
-import { ActionFunction, V2_MetaFunction } from "@remix-run/node";
+import { ActionFunction, MetaFunction } from "@remix-run/node";
 import {
   useActionData,
   useSearchParams,
   Form,
-  useTransition,
+  useNavigation,
 } from "@remix-run/react";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
@@ -20,7 +20,7 @@ import { BackLink } from "~/components/BackLink";
 import { Logo } from "~/components/Logo/Logo";
 import { Typography } from "~/components/Typography";
 
-export const meta: V2_MetaFunction = () => {
+export const meta: MetaFunction = () => {
   return [
     {
       title: "Progressively | Reset password",
@@ -95,7 +95,7 @@ export const action: ActionFunction = async ({
 export default function ResetPasswordPage() {
   const data = useActionData<ActionData>();
   const [searchParams] = useSearchParams();
-  const transition = useTransition();
+  const navigation = useNavigation();
   const urlToken = searchParams.get("token");
   const pageType = searchParams.get("p");
   const success = data?.success;
@@ -148,7 +148,7 @@ export default function ResetPasswordPage() {
             />
 
             <SubmitButton
-              isLoading={transition.state === "submitting"}
+              isLoading={navigation.state === "submitting"}
               loadingText="Password changing in progress, please wait..."
             >
               Change password

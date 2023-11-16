@@ -1,4 +1,4 @@
-import { MdOutlineTipsAndUpdates } from "react-icons/md";
+import { MdOutlineTipsAndUpdates } from "react-icons/md/index.js";
 import { Spacer } from "../Spacer";
 
 export interface SuccessBoxProps {

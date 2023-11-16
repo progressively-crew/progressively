@@ -3,7 +3,7 @@ import { Variant } from "../types";
 import { VariantDot } from "./VariantDot";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { Table, Tbody, Th, Tr, Td } from "~/components/Table";
-import { BsCheck } from "react-icons/bs";
+import { BsCheck } from "react-icons/bs/index.js";
 
 export interface VariantListProps {
   variants: Array<Variant>;

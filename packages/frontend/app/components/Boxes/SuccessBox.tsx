@@ -1,7 +1,7 @@
 import { Link, useLocation } from "@remix-run/react";
 import { useEffect, useRef, useState } from "react";
-import { AiOutlineCheckCircle } from "react-icons/ai";
-import { MdClose } from "react-icons/md";
+import { AiOutlineCheckCircle } from "react-icons/ai/index.js";
+import { MdClose } from "react-icons/md/index.js";
 import { HStack } from "../HStack";
 
 export interface SuccessBoxProps {

@@ -1,7 +1,7 @@
 import { getSession } from "~/sessions";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
-import { ActionFunction, redirect, V2_MetaFunction } from "@remix-run/node";
-import { useActionData, Form, useTransition } from "@remix-run/react";
+import { ActionFunction, redirect, MetaFunction } from "@remix-run/node";
+import { useActionData, Form, useNavigation } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
@@ -14,7 +14,7 @@ import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { BackLink } from "~/components/BackLink";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 
-export const meta: V2_MetaFunction = ({ matches, params }) => {
+export const meta: MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
   const envName = getEnvMetaTitle(matches, params.env!);
 
@@ -70,7 +70,7 @@ export const action: ActionFunction = async ({
 export default function MetricCreatePage() {
   const { project } = useProject();
   const { environment } = useEnvironment();
-  const transition = useTransition();
+  const navigation = useNavigation();
 
   const actionData = useActionData<ActionData>();
   const errors = actionData?.errors;
@@ -83,7 +83,7 @@ export default function MetricCreatePage() {
         submitSlot={
           <SubmitButton
             type="submit"
-            isLoading={transition.state === "submitting"}
+            isLoading={navigation.state === "submitting"}
             loadingText="Creating the metric, please wait..."
           >
             Create the metric

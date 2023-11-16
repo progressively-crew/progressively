@@ -1,5 +1,5 @@
 import { Button, ButtonProps } from "./Button";
-import { FiEdit } from "react-icons/fi";
+import { FiEdit } from "react-icons/fi/index.js";
 
 export const SubmitButton = ({ children, ...props }: ButtonProps) => {
   return (

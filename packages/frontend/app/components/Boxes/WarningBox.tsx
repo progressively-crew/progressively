@@ -1,4 +1,4 @@
-import { AiOutlineWarning } from "react-icons/ai";
+import { AiOutlineWarning } from "react-icons/ai/index.js";
 import { HStack } from "../HStack";
 import { Spacer } from "../Spacer";
 import { Li, Ul } from "../Ul";

@@ -1,4 +1,4 @@
-import { TbTrashX } from "react-icons/tb";
+import { TbTrashX } from "react-icons/tb/index.js";
 import { IconButton } from "~/components/Buttons/IconButton";
 import { Tag } from "~/components/Tag";
 import { RuleFormField } from "~/modules/rules/components/RuleFormField";

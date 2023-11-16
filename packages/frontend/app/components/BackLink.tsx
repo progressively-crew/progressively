@@ -1,4 +1,4 @@
-import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
+import { HiOutlineArrowNarrowLeft } from "react-icons/hi/index.js";
 import { Button } from "./Buttons/Button";
 
 export interface BackLinkProps {

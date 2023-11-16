@@ -1,8 +1,8 @@
 import { Menu, Transition } from "@headlessui/react";
 import { NavLink } from "@remix-run/react";
 import React, { Fragment } from "react";
-import { HiOutlineDotsVertical } from "react-icons/hi";
-import { RxCaretSort } from "react-icons/rx";
+import { HiOutlineDotsVertical } from "react-icons/hi/index.js";
+import { RxCaretSort } from "react-icons/rx/index.js";
 import { Tooltip } from "./Tooltip/Tooltip";
 import { IconBox } from "./IconBox";
 

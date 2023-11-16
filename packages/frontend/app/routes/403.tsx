@@ -1,4 +1,4 @@
-import { AiOutlineLogin } from "react-icons/ai";
+import { AiOutlineLogin } from "react-icons/ai/index.js";
 import { Button } from "~/components/Buttons/Button";
 import { Spacer } from "~/components/Spacer";
 import { Typography } from "~/components/Typography";

@@ -11,7 +11,7 @@ import {
   TbTargetArrow,
   TbUsersGroup,
   TbWebhook,
-} from "react-icons/tb";
+} from "react-icons/tb/index.js";
 
 export interface FlagEnvMenuProps {
   projectId: string;

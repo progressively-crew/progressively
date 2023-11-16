@@ -17,7 +17,7 @@ import { Background } from "./components/Background";
 import { LinksFunction } from "@remix-run/node";
 import { Typography } from "./components/Typography";
 import { Spacer } from "./components/Spacer";
-import { AiOutlineLogin } from "react-icons/ai";
+import { AiOutlineLogin } from "react-icons/ai/index.js";
 import { Button } from "./components/Buttons/Button";
 import { ThemeProvider } from "./modules/theme/ThemeProvider";
 

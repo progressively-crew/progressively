@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { IoCloseOutline } from "react-icons/io5";
+import { IoCloseOutline } from "react-icons/io5/index.js";
 import { KeyboardKeys } from "~/modules/a11y/utils/keyboardKeys";
 
 export interface TagInputProps {

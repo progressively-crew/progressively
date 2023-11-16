@@ -1,3 +1,3 @@
-import { TbUser } from "react-icons/tb";
+import { TbUser } from "react-icons/tb/index.js";
 
 export const UserIcon = () => <TbUser />;

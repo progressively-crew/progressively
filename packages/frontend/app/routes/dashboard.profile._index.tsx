@@ -1,5 +1,5 @@
-import { ActionFunction, V2_MetaFunction } from "@remix-run/node";
-import { useActionData, Form, useTransition } from "@remix-run/react";
+import { ActionFunction, MetaFunction } from "@remix-run/node";
+import { useActionData, Form, useNavigation } from "@remix-run/react";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { FormGroup } from "~/components/Fields/FormGroup";
@@ -21,7 +21,7 @@ import { Button } from "~/components/Buttons/Button";
 import { Spacer } from "~/components/Spacer";
 import { ThemeSwitch } from "~/components/ThemeSwitch";
 
-export const meta: V2_MetaFunction = () => {
+export const meta: MetaFunction = () => {
   return [
     {
       title: "Progressively | Profile",
@@ -75,7 +75,7 @@ export const action: ActionFunction = async ({
 };
 
 export default function ProfilePage() {
-  const transition = useTransition();
+  const navigation = useNavigation();
   const data = useActionData<ActionData>();
 
   const passwordUpdated = data?.passwordUpdated;
@@ -126,7 +126,7 @@ export default function ProfilePage() {
                 <div>
                   <SubmitButton
                     variant="secondary"
-                    isLoading={transition.state === "submitting"}
+                    isLoading={navigation.state === "submitting"}
                     loadingText="Password changing in progress, please wait..."
                   >
                     Change password

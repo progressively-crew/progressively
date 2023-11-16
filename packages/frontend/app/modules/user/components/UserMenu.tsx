@@ -1,4 +1,4 @@
-import { TbUserEdit } from "react-icons/tb";
+import { TbUserEdit } from "react-icons/tb/index.js";
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 
 export interface FlagMenuProps {

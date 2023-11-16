@@ -1,4 +1,4 @@
-import { FiTrash } from "react-icons/fi";
+import { FiTrash } from "react-icons/fi/index.js";
 import { Button, ButtonProps } from "./Button";
 
 export const DeleteButton = ({ children, ...props }: ButtonProps) => {

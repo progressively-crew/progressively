@@ -1,4 +1,4 @@
-import { LoaderFunction, V2_MetaFunction } from "@remix-run/node";
+import { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { useLoaderData, Outlet } from "@remix-run/react";
 import { ProgressivelyProvider } from "@progressively/react";
 import { Progressively } from "@progressively/server-side";
@@ -7,7 +7,7 @@ import { getMe } from "~/modules/user/services/getMe";
 import { getSession } from "~/sessions";
 import { User } from "~/modules/user/types";
 
-export const meta: V2_MetaFunction = () => {
+export const meta: MetaFunction = () => {
   return [
     {
       title: "Progressively | Profile",

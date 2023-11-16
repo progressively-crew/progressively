@@ -1,4 +1,4 @@
-import { ActionFunction, V2_MetaFunction, redirect } from "@remix-run/node";
+import { ActionFunction, MetaFunction, redirect } from "@remix-run/node";
 import { useActionData, Form, useNavigation } from "@remix-run/react";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
@@ -12,7 +12,7 @@ import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import { useUser } from "~/modules/user/contexts/useUser";
 import { Logo } from "~/components/Logo/Logo";
 
-export const meta: V2_MetaFunction = () => {
+export const meta: MetaFunction = () => {
   return [
     {
       title: "Progressively | Onboarding",

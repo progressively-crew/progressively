@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "private": true,
   "main": "./dist/legacy/index.js",
+  "type": "module",
   "exports": {
     ".": {
       "require": "./dist/legacy/index.js",

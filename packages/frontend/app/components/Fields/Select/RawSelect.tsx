@@ -2,8 +2,8 @@
 
 import * as React from "react";
 import * as SelectPrimitive from "@radix-ui/react-select";
-import { HiOutlineChevronDown } from "react-icons/hi";
-import { AiOutlineCheck } from "react-icons/ai";
+import { HiOutlineChevronDown } from "react-icons/hi/index.js";
+import { AiOutlineCheck } from "react-icons/ai/index.js";
 
 const Select = SelectPrimitive.Root;
 const SelectGroup = SelectPrimitive.Group;

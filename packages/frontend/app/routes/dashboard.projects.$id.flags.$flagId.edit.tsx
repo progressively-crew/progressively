@@ -1,5 +1,5 @@
-import { ActionFunction, redirect, V2_MetaFunction } from "@remix-run/node";
-import { useActionData, Form, useTransition } from "@remix-run/react";
+import { ActionFunction, redirect, MetaFunction } from "@remix-run/node";
+import { useActionData, Form, useNavigation } from "@remix-run/react";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { FormGroup } from "~/components/Fields/FormGroup";
@@ -15,7 +15,7 @@ import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 import { editFlag } from "~/modules/flags/services/editFlag";
 import { useFlag } from "~/modules/flags/contexts/useFlag";
 
-export const meta: V2_MetaFunction = ({ matches }) => {
+export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
 
   return [
@@ -71,7 +71,7 @@ export const action: ActionFunction = async ({
 export default function EditFlagPage() {
   const { project } = useProject();
   const data = useActionData<ActionData>();
-  const transition = useTransition();
+  const navigation = useNavigation();
   const { flag } = useFlag();
 
   const errors = data?.errors;
@@ -86,7 +86,7 @@ export default function EditFlagPage() {
         submitSlot={
           <SubmitButton
             type="submit"
-            isLoading={transition.state === "submitting"}
+            isLoading={navigation.state === "submitting"}
             loadingText="Editting the feature flag, please wait..."
           >
             Edit the feature flag

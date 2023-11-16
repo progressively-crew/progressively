@@ -3,8 +3,8 @@ import { getSession } from "~/sessions";
 import { Button } from "~/components/Buttons/Button";
 import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
-import { ActionFunction, redirect, V2_MetaFunction } from "@remix-run/node";
-import { useActionData, Form, useTransition } from "@remix-run/react";
+import { ActionFunction, redirect, MetaFunction } from "@remix-run/node";
+import { useActionData, Form, useNavigation } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
@@ -17,7 +17,7 @@ import { deleteWebhook } from "~/modules/webhooks/services/deleteWebhook";
 import { BackLink } from "~/components/BackLink";
 import { DeleteEntityTitle } from "~/layouts/DeleteEntityTitle";
 
-export const meta: V2_MetaFunction = ({ matches, params }) => {
+export const meta: MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
   const envName = getEnvMetaTitle(matches, params.env!);
   const flagName = getFlagEnvMetaTitle(matches);
@@ -60,7 +60,7 @@ export const action: ActionFunction = async ({
 };
 
 export default function DeleteWebhookPage() {
-  const transition = useTransition();
+  const navigation = useNavigation();
   const data = useActionData<ActionData>();
   const { project } = useProject();
   const { environment } = useEnvironment();
@@ -88,7 +88,7 @@ export default function DeleteWebhookPage() {
         <Form method="post">
           <DeleteButton
             type="submit"
-            isLoading={transition.state === "submitting"}
+            isLoading={navigation.state === "submitting"}
             loadingText="Deleting the webhook, please wait..."
           >
             Yes, delete the webhook

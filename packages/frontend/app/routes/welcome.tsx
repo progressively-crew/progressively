@@ -1,4 +1,4 @@
-import { ActionFunction, redirect, V2_MetaFunction } from "@remix-run/node";
+import { ActionFunction, redirect, MetaFunction } from "@remix-run/node";
 import { useActionData } from "@remix-run/react";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { Logo } from "~/components/Logo/Logo";
@@ -10,7 +10,7 @@ import {
   RegisterForm,
 } from "~/modules/user/components/RegisterForm";
 
-export const meta: V2_MetaFunction = () => {
+export const meta: MetaFunction = () => {
   return [
     {
       title: "Progressively | Welcome",

@@ -1,11 +1,7 @@
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { getSession } from "~/sessions";
 import { Section } from "~/components/Section";
-import {
-  ActionFunction,
-  LoaderFunction,
-  V2_MetaFunction,
-} from "@remix-run/node";
+import { ActionFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
 import {
   Form,
   useActionData,
@@ -40,7 +36,7 @@ import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { Typography } from "~/components/Typography";
 
-export const meta: V2_MetaFunction = ({ matches, params }) => {
+export const meta: MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
   const envName = getEnvMetaTitle(matches, params.env!);
   const flagName = getFlagEnvMetaTitle(matches);

@@ -1,4 +1,4 @@
-import { HiOutlineCog6Tooth } from "react-icons/hi2";
+import { HiOutlineCog6Tooth } from "react-icons/hi2/index.js";
 import { Flag } from "../types";
 import { IconBox } from "~/components/IconBox";
 import { FlagIcon } from "~/components/Icons/FlagIcon";

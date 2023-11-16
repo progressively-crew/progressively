@@ -2,7 +2,7 @@ import { IconButton } from "~/components/Buttons/IconButton";
 import { Rule } from "~/modules/rules/types";
 import { StrategyRuleFormField } from "../StrategyRuleFormField";
 import { Segment } from "~/modules/segments/types";
-import { PiTrashThin } from "react-icons/pi";
+import { PiTrashThin } from "react-icons/pi/index.js";
 
 export interface RuleListProps {
   rules: Array<Rule>;

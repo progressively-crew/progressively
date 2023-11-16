@@ -3,7 +3,7 @@ import { getProjects } from "~/modules/projects/services/getProjects";
 import { UserProject } from "~/modules/projects/types";
 import { getSession } from "~/sessions";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { LoaderFunction, redirect, V2_MetaFunction } from "@remix-run/node";
+import { LoaderFunction, redirect, MetaFunction } from "@remix-run/node";
 import { useSearchParams, useLoaderData } from "@remix-run/react";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { ProjectList } from "~/modules/projects/components/ProjectList";
@@ -12,7 +12,7 @@ import { SearchBar } from "~/components/SearchBar";
 import { SearchLayout } from "~/layouts/SearchLayout";
 import { Card } from "~/components/Card";
 
-export const meta: V2_MetaFunction = () => {
+export const meta: MetaFunction = () => {
   return [
     {
       title: "Progressively | Projects list",

@@ -1,5 +1,5 @@
-import { BsSun } from "react-icons/bs";
-import { FiMoon } from "react-icons/fi";
+import { BsSun } from "react-icons/bs/index.js";
+import { FiMoon } from "react-icons/fi/index.js";
 import { useTheme } from "~/modules/theme/useTheme";
 import { Typography } from "./Typography";
 

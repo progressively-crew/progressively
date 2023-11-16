@@ -1,5 +1,5 @@
 import { Form } from "@remix-run/react";
-import { AiOutlineSearch } from "react-icons/ai";
+import { AiOutlineSearch } from "react-icons/ai/index.js";
 import { Spacer } from "./Spacer";
 import { Typography } from "./Typography";
 import { VisuallyHidden } from "./VisuallyHidden";

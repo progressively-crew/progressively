@@ -1,7 +1,7 @@
 import { getSession } from "~/sessions";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
-import { ActionFunction, redirect, V2_MetaFunction } from "@remix-run/node";
-import { useActionData, Form, useTransition } from "@remix-run/react";
+import { ActionFunction, redirect, MetaFunction } from "@remix-run/node";
+import { useActionData, Form, useNavigation } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
@@ -18,7 +18,7 @@ import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { BackLink } from "~/components/BackLink";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 
-export const meta: V2_MetaFunction = ({ matches, params }) => {
+export const meta: MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
   const envName = getEnvMetaTitle(matches, params.env!);
   const flagName = getFlagEnvMetaTitle(matches);
@@ -90,7 +90,7 @@ export default function CreateWebhookPage() {
   const { project } = useProject();
   const { flagEnv } = useFlagEnv();
   const { environment } = useEnvironment();
-  const transition = useTransition();
+  const navigation = useNavigation();
 
   const currentFlag = flagEnv.flag;
 
@@ -103,7 +103,7 @@ export default function CreateWebhookPage() {
         titleSlot={<CreateEntityTitle>Create a webhook</CreateEntityTitle>}
         submitSlot={
           <SubmitButton
-            isLoading={transition.state === "submitting"}
+            isLoading={navigation.state === "submitting"}
             loadingText="Saving the webhook, please wait..."
           >
             Save the webhook

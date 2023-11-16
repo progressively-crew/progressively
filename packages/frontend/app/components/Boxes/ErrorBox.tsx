@@ -1,6 +1,6 @@
 import { Link } from "@remix-run/react";
 import { useEffect, useRef } from "react";
-import { MdClose, MdErrorOutline } from "react-icons/md";
+import { MdClose, MdErrorOutline } from "react-icons/md/index.js";
 import { HStack } from "../HStack";
 
 import { Li, Ul } from "../Ul";

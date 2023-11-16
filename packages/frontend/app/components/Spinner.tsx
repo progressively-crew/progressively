@@ -1,5 +1,5 @@
 import { HTMLAttributes } from "react";
-import { CgSpinner } from "react-icons/cg";
+import { CgSpinner } from "react-icons/cg/index.js";
 
 export const Spinner = ({
   className,

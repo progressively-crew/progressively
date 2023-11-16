@@ -1,8 +1,8 @@
 import { FlagStatus } from "~/modules/flags/types";
 import { getSession } from "~/sessions";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
-import { ActionFunction, redirect, V2_MetaFunction } from "@remix-run/node";
-import { useActionData, Form, useTransition } from "@remix-run/react";
+import { ActionFunction, redirect, MetaFunction } from "@remix-run/node";
+import { useActionData, Form, useNavigation } from "@remix-run/react";
 import {
   SchedulingCreateDTO,
   SchedulingType,
@@ -30,7 +30,7 @@ export const handle = {
   },
 };
 
-export const meta: V2_MetaFunction = ({ matches, params }) => {
+export const meta: MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
   const envName = getEnvMetaTitle(matches, params.env!);
   const flagName = getFlagEnvMetaTitle(matches);
@@ -97,7 +97,7 @@ export default function SchedulingCreatePage() {
   const { project } = useProject();
   const { flagEnv } = useFlagEnv();
   const { environment } = useEnvironment();
-  const transition = useTransition();
+  const navigation = useNavigation();
 
   const currentFlag = flagEnv.flag;
 
@@ -110,7 +110,7 @@ export default function SchedulingCreatePage() {
         titleSlot={<CreateEntityTitle>Create a scheduling</CreateEntityTitle>}
         submitSlot={
           <SubmitButton
-            isLoading={transition.state === "submitting"}
+            isLoading={navigation.state === "submitting"}
             loadingText="Saving the scheduling, please wait..."
           >
             Save the schedule

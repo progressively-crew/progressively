@@ -1,8 +1,4 @@
-import {
-  ActionFunction,
-  LoaderFunction,
-  V2_MetaFunction,
-} from "@remix-run/node";
+import { ActionFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
 import {
   Form,
   useActionData,
@@ -37,7 +33,7 @@ import { getSegment } from "~/modules/segments/services/getSegment";
 import { Segment } from "~/modules/segments/types";
 import { getSession } from "~/sessions";
 
-export const meta: V2_MetaFunction = ({ matches, params, data }) => {
+export const meta: MetaFunction = ({ matches, params, data }) => {
   const projectName = getProjectMetaTitle(matches);
   const envName = getEnvMetaTitle(matches, params.env!);
   const flagName = getFlagEnvMetaTitle(matches);

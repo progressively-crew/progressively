@@ -3,8 +3,8 @@ import { FlagStatus } from "~/modules/flags/components/FlagStatus";
 import { FormattedDate } from "~/modules/misc/components/FormattedDate";
 import { Schedule, SchedulingStatus } from "../types";
 import { Table, Tbody, Th, Tr, Td } from "~/components/Table";
-import { IoPause } from "react-icons/io5";
-import { BsCheck } from "react-icons/bs";
+import { IoPause } from "react-icons/io5/index.js";
+import { BsCheck } from "react-icons/bs/index.js";
 
 export interface SchedulingListProps {
   scheduling: Array<Schedule>;

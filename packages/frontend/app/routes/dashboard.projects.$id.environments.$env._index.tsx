@@ -4,7 +4,7 @@ import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { UserRoles } from "~/modules/projects/types";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
-import { LoaderFunction, V2_MetaFunction } from "@remix-run/node";
+import { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { Card, CardContent } from "~/components/Card";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
@@ -20,7 +20,7 @@ import { FlagEnv } from "~/modules/flags/types";
 import { FlagEnvList } from "~/modules/flags/components/FlagEnvList";
 import { getSession } from "~/sessions";
 
-export const meta: V2_MetaFunction = ({ matches, params }) => {
+export const meta: MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
   const envName = getEnvMetaTitle(matches, params.env!);
 

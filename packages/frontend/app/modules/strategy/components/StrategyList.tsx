@@ -7,8 +7,8 @@ import { Variant } from "~/modules/variants/types";
 import { Segment } from "~/modules/segments/types";
 import { IconButton } from "~/components/Buttons/IconButton";
 import { RuleList } from "./StrategyFormFields/RuleList";
-import { PiTrashThin, PiPlusSquareThin } from "react-icons/pi";
-import { VscSave } from "react-icons/vsc";
+import { PiTrashThin, PiPlusSquareThin } from "react-icons/pi/index.js";
+import { VscSave } from "react-icons/vsc/index.js";
 
 export interface StrategyListProps {
   items: Array<Strategy>;

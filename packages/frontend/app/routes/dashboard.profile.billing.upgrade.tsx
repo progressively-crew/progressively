@@ -1,7 +1,7 @@
 import {
   ActionFunction,
   LoaderFunction,
-  V2_MetaFunction,
+  MetaFunction,
   redirect,
 } from "@remix-run/node";
 import { Plan } from "~/modules/plans/types";
@@ -17,7 +17,7 @@ import { EvaluationToPriceId, Prices } from "@progressively/shared";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { checkout } from "~/modules/billing/services/checkout";
 
-export const meta: V2_MetaFunction = () => {
+export const meta: MetaFunction = () => {
   return [
     {
       title: "Progressively | Profile | Billing | Upgrade",

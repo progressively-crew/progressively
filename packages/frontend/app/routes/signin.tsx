@@ -2,14 +2,14 @@ import {
   ActionFunction,
   redirect,
   LoaderFunction,
-  V2_MetaFunction,
+  MetaFunction,
 } from "@remix-run/node";
 import {
   useLoaderData,
   useSearchParams,
   useActionData,
   Form,
-  useTransition,
+  useNavigation,
 } from "@remix-run/react";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { TextInput } from "~/components/Fields/TextInput";
@@ -21,14 +21,14 @@ import { commitSession, getSession } from "~/sessions";
 import { authenticate } from "../modules/auth/services/authenticate";
 import { validateSigninForm } from "../modules/auth/validators/validate-signin-form";
 import { Button } from "~/components/Buttons/Button";
-import { SiOkta } from "react-icons/si";
+import { SiOkta } from "react-icons/si/index.js";
 import { getOktaConfig } from "~/modules/auth/services/get-okta-config";
 import { useOkta } from "~/modules/auth/hooks/useOkta";
 import { Logo } from "~/components/Logo/Logo";
 import { Typography } from "~/components/Typography";
 import { getProjects } from "~/modules/projects/services/getProjects";
 
-export const meta: V2_MetaFunction = () => {
+export const meta: MetaFunction = () => {
   return [
     {
       title: "Progressively | Sign in",
@@ -102,7 +102,7 @@ export const loader: LoaderFunction = (): LoaderData => {
 export default function Signin() {
   const { showRegister, oktaConfig } = useLoaderData<LoaderData>();
   const okta = useOkta(oktaConfig);
-  const transition = useTransition();
+  const navigation = useNavigation();
   const [searchParams] = useSearchParams();
   const userActivated = searchParams.get("userActivated");
   const userCreated = searchParams.get("userCreated");
@@ -196,7 +196,7 @@ export default function Signin() {
           )}
           <Button
             variant="primary"
-            isLoading={transition.state === "submitting"}
+            isLoading={navigation.state === "submitting"}
             loadingText="Signin in progress, please wait..."
           >
             Sign in

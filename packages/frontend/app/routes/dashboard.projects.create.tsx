@@ -5,13 +5,13 @@ import { validateProjectName } from "~/modules/projects/validators/validateProje
 import { getSession } from "~/sessions";
 import { TextInput } from "~/components/Fields/TextInput";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
-import { ActionFunction, redirect, V2_MetaFunction } from "@remix-run/node";
-import { useActionData, Form, useTransition } from "@remix-run/react";
+import { ActionFunction, redirect, MetaFunction } from "@remix-run/node";
+import { useActionData, Form, useNavigation } from "@remix-run/react";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { BackLink } from "~/components/BackLink";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 
-export const meta: V2_MetaFunction = () => {
+export const meta: MetaFunction = () => {
   return [
     {
       title: "Progressively | Create a project",
@@ -50,7 +50,7 @@ export const action: ActionFunction = async ({
 
 export default function CreateProjectPage() {
   const data = useActionData<ActionData>();
-  const transition = useTransition();
+  const navigation = useNavigation();
   const errors = data?.errors;
 
   return (
@@ -61,7 +61,7 @@ export default function CreateProjectPage() {
         submitSlot={
           <SubmitButton
             type="submit"
-            isLoading={transition.state === "submitting"}
+            isLoading={navigation.state === "submitting"}
             loadingText="Creating the project, please wait..."
           >
             Create the project

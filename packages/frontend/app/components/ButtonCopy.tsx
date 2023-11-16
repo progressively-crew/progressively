@@ -7,8 +7,8 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { BsCheck } from "react-icons/bs";
-import { MdContentCopy } from "react-icons/md";
+import { BsCheck } from "react-icons/bs/index.js";
+import { MdContentCopy } from "react-icons/md/index.js";
 import { KeyboardKeys } from "~/modules/a11y/utils/keyboardKeys";
 import { useHydrated } from "~/modules/misc/hooks/useHydrated";
 import { Tooltip } from "./Tooltip/Tooltip";
