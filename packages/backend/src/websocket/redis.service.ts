@@ -5,11 +5,9 @@ import { Redis } from 'ioredis';
 export class RedisService implements OnModuleDestroy {
   private publisher: Redis;
   private subscriber: Redis;
-  private alreadySubscribedChannels: { [key: string]: boolean };
 
   constructor() {
     const redisUrl = process.env.REDIS_URL;
-    this.alreadySubscribedChannels = {};
 
     this.publisher = new Redis(redisUrl);
     this.subscriber = new Redis(redisUrl);
@@ -34,10 +32,6 @@ export class RedisService implements OnModuleDestroy {
   }
 
   subscribe(channel: string, callback: (data: unknown) => void) {
-    // Prevent multiple subscriptions to the same channel
-    if (this.alreadySubscribedChannels[channel]) return;
-    this.alreadySubscribedChannels[channel] = true;
-
     this.subscriber.subscribe(channel);
 
     this.subscriber.on('message', (channelName: string, message: string) => {

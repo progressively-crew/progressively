@@ -112,6 +112,7 @@ export class SchedulingService {
           status: schedule.status,
         },
         include: {
+          environment: true,
           flag: true,
           scheduling: true,
           variants: true,
@@ -170,7 +171,7 @@ export class SchedulingService {
       const rawFlagEnv = result[result.length - 1];
       nextFlagEnv = rawFlagEnv as unknown as PopulatedFlagEnv;
 
-      this.wsGateway.notifyChanges(clientKey, nextFlagEnv);
+      this.wsGateway.notifyChanges(nextFlagEnv);
     }
 
     return nextFlagEnv;
