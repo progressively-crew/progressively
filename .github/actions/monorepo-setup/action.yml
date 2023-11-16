@@ -12,4 +12,4 @@ runs:
 
     - name: Creating .env files
       shell: bash
-      run: mv ./packages/frontend/.env.example ./packages/frontend/.env && mv ./packages/backend/.env.example ./packages/backend/.env && mv ./packages/database/.env.example ./packages/database/.env
+      run: mv ./websites/frontend/.env.example ./websites/frontend/.env && mv ./websites/backend/.env.example ./websites/backend/.env && mv ./packages/database/.env.example ./packages/database/.env

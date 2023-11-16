@@ -32,7 +32,7 @@ export default {
     link: "https://github.com/progressively-crew/progressively",
   },
   docsRepositoryBase:
-    "https://github.com/progressively-crew/progressively/tree/master/packages/documentation",
+    "https://github.com/progressively-crew/progressively/tree/master/websites/documentation",
   useNextSeoProps() {
     return {
       titleTemplate: "%s – Progressively",

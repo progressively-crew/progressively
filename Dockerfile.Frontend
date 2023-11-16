@@ -5,7 +5,7 @@ COPY ./package.json ./package.json
 COPY ./pnpm-lock.yaml ./pnpm-lock.yaml
 COPY ./pnpm-workspace.yaml ./pnpm-workspace.yaml
 COPY ./turbo.json ./turbo.json
-COPY ./packages/frontend ./packages/frontend
+COPY ./websites/frontend ./websites/frontend
 COPY ./packages/react ./packages/react
 COPY ./packages/sdk-js ./packages/sdk-js
 COPY ./packages/server-side ./packages/server-side
@@ -24,9 +24,9 @@ COPY --from=build ./app/pnpm-lock.yaml ./pnpm-lock.yaml
 COPY --from=build ./app/pnpm-workspace.yaml ./pnpm-workspace.yaml
 COPY --from=build ./app/turbo.json ./turbo.json
 
-COPY --from=build ./app/packages/frontend/build ./packages/frontend/build
-COPY --from=build ./app/packages/frontend/public ./packages/frontend/public
-COPY --from=build ./app/packages/frontend/package.json ./packages/frontend/package.json
+COPY --from=build ./app/websites/frontend/build ./websites/frontend/build
+COPY --from=build ./app/websites/frontend/public ./websites/frontend/public
+COPY --from=build ./app/websites/frontend/package.json ./websites/frontend/package.json
 
 COPY --from=build ./app/packages/react/lib ./packages/react/lib
 COPY --from=build ./app/packages/react/package.json ./packages/react/package.json
