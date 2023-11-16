@@ -31,7 +31,7 @@
     "@remix-run/serve": "^2.2.0",
     "isbot": "latest",
     "nock": "^13.3.8",
-    "react": "^18.2.0",
+    "react": "^18.3.0-canary-ddff50469-20230829",
     "react-dom": "^18.2.0",
     "react-icons": "^4.12.0",
     "recharts": "^2.9.3",

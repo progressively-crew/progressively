@@ -34,17 +34,23 @@ Cypress.Commands.add("cleanupDb", () => cy.task("cleanupDb"));
 Cypress.Commands.add("signIn", (userName?: keyof typeof AvailableUsers) => {
   const user = AvailableUsers[userName || "Marvin"];
 
-  cy.request({
-    url: "http://localhost:4000/auth/login",
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username: user.email, password: user.password }),
-  })
-    .then((res) => cy.task("serverLogin", res.body.access_token))
-    .then((cookies: string) => {
-      const [key, value] = cookies.split("=");
-      cy.setCookie(key, value.split(";")[0]);
-    });
+  cy.visit("/signin");
+  cy.findByRole("textbox", { name: "Email" }).type(user.email);
+  cy.findByRole("textbox", { name: "Password" }).type(user.password);
+  cy.findByRole("button", { name: "Sign in" }).click();
+
+  // Not working anymore because of ESM support of cypress
+  // cy.request({
+  //   url: "http://localhost:4000/auth/login",
+  //   method: "POST",
+  //   headers: { "Content-Type": "application/json" },
+  //   body: JSON.stringify({ username: user.email, password: user.password }),
+  // })
+  //   .then((res) => cy.task("serverLogin", res.body.access_token))
+  //   .then((cookies: string) => {
+  //     const [key, value] = cookies.split("=");
+  //     cy.setCookie(key, value.split(";")[0]);
+  //   });
 });
 
 Cypress.Commands.add("checkProtectedRoute", () => {
