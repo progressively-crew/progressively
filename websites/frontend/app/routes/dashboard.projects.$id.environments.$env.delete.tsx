@@ -98,7 +98,7 @@ export default function DeleteEnvPage() {
       }
       backLinkSlot={
         <BackLink
-          to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}`}
+          to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/settings`}
         >
           Back to project
         </BackLink>
