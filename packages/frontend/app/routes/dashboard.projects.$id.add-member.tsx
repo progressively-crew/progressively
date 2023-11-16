@@ -13,7 +13,7 @@ import { Typography } from "~/components/Typography";
 import { Li, Ul } from "~/components/Ul";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ActionFunction, V2_MetaFunction } from "@remix-run/node";
-import { useActionData, Form, useTransition } from "@remix-run/react";
+import { useActionData, Form, useNavigation } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
@@ -77,7 +77,7 @@ export const action: ActionFunction = async ({
 
 export default function CreateProjectPage() {
   const data = useActionData<ActionData>();
-  const transition = useTransition();
+  const navigation = useNavigation();
   const { project, userRole } = useProject();
 
   const adminOfProject = (project?.userProject || [])
@@ -130,7 +130,7 @@ export default function CreateProjectPage() {
         titleSlot={<PageTitle value="Add member" />}
         submitSlot={
           <SubmitButton
-            isLoading={transition.state === "submitting"}
+            isLoading={navigation.state === "submitting"}
             loadingText="Adding the member, please wait..."
           >
             Add the member

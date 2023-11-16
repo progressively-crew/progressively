@@ -19,7 +19,6 @@ kill_timeout = "5s"
   BACKEND_URL = "https://api.progressively.app"
   PRIMARY_REGION = "cdg"
   PROGRESSIVELY_ENV = "93b6b5ae-95d3-4f53-b0cf-21e60eb7ff00"
-  IS_SAAS = true
 
 [[services]]
   protocol = "tcp"

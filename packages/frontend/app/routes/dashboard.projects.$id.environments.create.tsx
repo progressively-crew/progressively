@@ -9,7 +9,7 @@ import { getSession } from "~/sessions";
 import { TextInput } from "~/components/Fields/TextInput";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ActionFunction, redirect, V2_MetaFunction } from "@remix-run/node";
-import { useActionData, Form, useTransition } from "@remix-run/react";
+import { useActionData, Form, useNavigation } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
@@ -58,7 +58,7 @@ export const action: ActionFunction = async ({
 };
 
 export default function CreateEnvironmentPage() {
-  const transition = useTransition();
+  const navigation = useNavigation();
   const data = useActionData<ActionData>();
   const { project } = useProject();
 
@@ -72,7 +72,7 @@ export default function CreateEnvironmentPage() {
         submitSlot={
           <SubmitButton
             type="submit"
-            isLoading={transition.state === "submitting"}
+            isLoading={navigation.state === "submitting"}
             loadingText="Creating the environment, please wait..."
           >
             Create the environment

@@ -10,7 +10,6 @@ on:
 jobs:
   integration-test:
     env:
-      IS_SAAS: true
       SEED_ROUND_EVENT_HITS: 1
     runs-on: ubuntu-latest
     strategy:

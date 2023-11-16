@@ -8,7 +8,7 @@ import { V2_MetaFunction, ActionFunction, redirect } from "@remix-run/node";
 import {
   useActionData,
   Form,
-  useTransition,
+  useNavigation,
   useParams,
 } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
@@ -61,7 +61,7 @@ export const action: ActionFunction = async ({
 };
 
 export default function DeleteMemberProjectPage() {
-  const transition = useTransition();
+  const navigation = useNavigation();
   const { project } = useProject();
   const { userId } = useParams();
 
@@ -104,7 +104,7 @@ export default function DeleteMemberProjectPage() {
         <Form method="post">
           <DeleteButton
             type="submit"
-            isLoading={transition.state === "submitting"}
+            isLoading={navigation.state === "submitting"}
             loadingText="Deleting the project, please wait..."
           >
             Yes, remove the user from the project

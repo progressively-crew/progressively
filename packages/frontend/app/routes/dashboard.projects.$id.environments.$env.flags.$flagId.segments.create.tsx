@@ -1,7 +1,7 @@
 import { getSession } from "~/sessions";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { ActionFunction, redirect, V2_MetaFunction } from "@remix-run/node";
-import { useActionData, Form, useTransition } from "@remix-run/react";
+import { useActionData, Form, useNavigation } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
@@ -73,7 +73,7 @@ export default function SegmentCreatePage() {
   const { project } = useProject();
   const { flagEnv } = useFlagEnv();
   const { environment } = useEnvironment();
-  const transition = useTransition();
+  const navigation = useNavigation();
 
   const currentFlag = flagEnv.flag;
 
@@ -88,7 +88,7 @@ export default function SegmentCreatePage() {
         submitSlot={
           <SubmitButton
             type="submit"
-            isLoading={transition.state === "submitting"}
+            isLoading={navigation.state === "submitting"}
             loadingText="Creating the segment, please wait..."
           >
             Create the segment

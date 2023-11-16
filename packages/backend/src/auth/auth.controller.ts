@@ -91,7 +91,6 @@ export class AuthController {
   @UsePipes(new ValidationPipe(RegistrationSchema))
   async register(@Body() userDto: UserCreationDTO): Promise<UserRetrieveDTO> {
     const isRegistrationActivated = process.env.ALLOW_REGISTRATION === 'true';
-    const isSaas = process.env.IS_SAAS === 'true';
 
     // Mitigate brute force
     await sleep();
@@ -119,13 +118,6 @@ export class AuthController {
       ? CryptoService.sha256(rawToken)
       : null;
 
-    let trialEnd: Date;
-
-    if (isSaas) {
-      trialEnd = new Date();
-      trialEnd.setDate(trialEnd.getDate() + 14);
-    }
-
     const user: Omit<User, 'uuid'> = {
       fullname: userDto.fullname,
       password: userDto.password,
@@ -133,9 +125,6 @@ export class AuthController {
       activationToken,
       // Activate only the first user, then, every body is pending
       status: alreadyHasUsers ? UserStatus.Pending : UserStatus.Active,
-
-      //trialEnd is only for SaaS users, allow people to register when self hosting
-      trialEnd,
     };
 
     const newUser = await this.userService.createUser(user);

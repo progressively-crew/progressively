@@ -9,7 +9,7 @@ import {
   useSearchParams,
   useActionData,
   Form,
-  useTransition,
+  useNavigation,
 } from "@remix-run/react";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { TextInput } from "~/components/Fields/TextInput";
@@ -102,7 +102,7 @@ export const loader: LoaderFunction = (): LoaderData => {
 export default function Signin() {
   const { showRegister, oktaConfig } = useLoaderData<LoaderData>();
   const okta = useOkta(oktaConfig);
-  const transition = useTransition();
+  const navigation = useNavigation();
   const [searchParams] = useSearchParams();
   const userActivated = searchParams.get("userActivated");
   const userCreated = searchParams.get("userCreated");
@@ -196,7 +196,7 @@ export default function Signin() {
           )}
           <Button
             variant="primary"
-            isLoading={transition.state === "submitting"}
+            isLoading={navigation.state === "submitting"}
             loadingText="Signin in progress, please wait..."
           >
             Sign in
