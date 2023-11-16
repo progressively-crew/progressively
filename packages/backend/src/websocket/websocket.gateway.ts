@@ -39,6 +39,8 @@ export class WebsocketGateway
         ws.ping();
       });
     }, timeout);
+
+    this.initRedisSubscription();
   }
 
   handleDisconnect(socket: LocalWebsocket) {
@@ -68,16 +70,16 @@ export class WebsocketGateway
       socket.__ROOMS = [];
 
       this.rooms.join(clientKey, socket);
-
-      this.initRedisSubscription(clientKey);
     }
   }
 
-  initRedisSubscription(clientKey: string) {
+  initRedisSubscription() {
     this.redisService.subscribe(
-      clientKey,
+      'flag-env-changed',
       async (subscribedEntity: PopulatedFlagEnv) => {
-        const sockets = this.rooms.getSockets(clientKey);
+        const sockets = this.rooms.getSockets(
+          subscribedEntity.environment.clientKey,
+        );
 
         for (const sock of sockets) {
           for (const subscriber of this.subscribers) {
@@ -99,7 +101,7 @@ export class WebsocketGateway
     this.subscribers.push(subscriber);
   }
 
-  notifyChanges(channel: string, entity: unknown) {
-    this.redisService.notifyChannel(channel, entity);
+  notifyChanges(entity: unknown) {
+    this.redisService.notifyChannel('flag-env-changed', entity);
   }
 }

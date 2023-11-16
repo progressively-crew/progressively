@@ -74,10 +74,7 @@ export class FlagsController {
       status,
     );
 
-    this.wsGateway.notifyChanges(
-      updatedFlagEnv.environment.clientKey,
-      updatedFlagEnv,
-    );
+    this.wsGateway.notifyChanges(updatedFlagEnv);
 
     for (const wh of updatedFlagEnv.webhooks) {
       if (WebhooksEventsToFlagStatus[wh.event] === status) {
