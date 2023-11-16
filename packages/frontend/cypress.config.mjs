@@ -14,7 +14,7 @@ const sign = async (value, secret) => {
   return cookieSignature.sign(value, secret);
 };
 
-(global as any).sign = sign;
+global.sign = sign;
 /** End of caution */
 
 module.exports = defineConfig({
