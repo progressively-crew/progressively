@@ -14,17 +14,14 @@ import { Response, Request } from 'express';
 import { SdkService } from './sdk.service';
 import { EventHit } from './types';
 import { parseBase64Params, prepareCookie, resolveUserId } from './utils';
-import { UsersService } from '../users/users.service';
+
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
 
 export const COOKIE_KEY = 'progressively-id';
 
 @Controller('sdk')
 export class SdkController {
-  constructor(
-    private readonly sdkService: SdkService,
-    private readonly userService: UsersService,
-  ) {}
+  constructor(private readonly sdkService: SdkService) {}
 
   /**
    * Get the flag values by client sdk key
@@ -37,8 +34,6 @@ export class SdkController {
     @Headers() headers,
   ) {
     const fields = parseBase64Params(base64Params);
-
-    const clientKey = String(fields.clientKey);
     const cookieUserId = request?.cookies?.[COOKIE_KEY];
     const shouldSkipHits = headers['x-progressively-hit'] === 'skip';
 
@@ -60,8 +55,6 @@ export class SdkController {
     @Headers() headers,
   ) {
     const fields = parseBase64Params(base64Params);
-
-    const clientKey = String(fields.clientKey);
     const cookieUserId = request?.cookies?.[COOKIE_KEY];
     const shouldSkipHits = headers['x-progressively-hit'] === 'skip';
 
