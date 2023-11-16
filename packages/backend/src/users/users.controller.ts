@@ -28,7 +28,6 @@ import {
 } from '../auth/types';
 import { ValidationPipe } from '../shared/pipes/ValidationPipe';
 import { sleep } from '../shared/utils/sleep';
-import { PlanStatus } from '../billing/types';
 
 @Controller('users')
 export class UsersController {
@@ -52,39 +51,6 @@ export class UsersController {
       fullname: user.fullname,
       uuid: user.uuid,
       trialEnd: user.trialEnd,
-    };
-  }
-
-  @ApiBearerAuth()
-  @Get('/billing')
-  @UseGuards(JwtAuthGuard)
-  async getBilling(@Request() req) {
-    const userId = req.user.uuid;
-    const plans = await this.userService.getPlans(userId, PlanStatus.INACTIVE);
-    const activePlans = await this.userService.getPlans(
-      userId,
-      PlanStatus.ACTIVE,
-    );
-    const user = await this.userService.findByUuid(userId);
-    const hitsForMonth = await this.userService.getHitsForMonth(userId);
-
-    let remainingTrialingDays = 0;
-
-    // trialEnd is only falsy when self-hosted. Should not happen on SaaS
-    if (user.trialEnd) {
-      const millisecondsPerDay = 1000 * 60 * 60 * 24;
-      const milliDiff = user.trialEnd.getTime() - new Date().getTime();
-      remainingTrialingDays = Math.max(
-        Math.round(milliDiff / millisecondsPerDay),
-        0,
-      );
-    }
-
-    return {
-      plans,
-      activePlan: activePlans[0],
-      remainingTrialingDays,
-      hitsForMonth,
     };
   }
 

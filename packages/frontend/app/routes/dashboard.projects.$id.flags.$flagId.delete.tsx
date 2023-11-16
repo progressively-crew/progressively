@@ -5,7 +5,7 @@ import { Button } from "~/components/Buttons/Button";
 import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { ActionFunction, redirect, V2_MetaFunction } from "@remix-run/node";
-import { useActionData, Form, useTransition } from "@remix-run/react";
+import { useActionData, Form, useNavigation } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { Stack } from "~/components/Stack";
@@ -56,7 +56,7 @@ export const action: ActionFunction = async ({
 };
 
 export default function DeleteFlagPage() {
-  const transition = useTransition();
+  const navigation = useNavigation();
   const { project } = useProject();
   const { flag } = useFlag();
   const data = useActionData<ActionData>();
@@ -89,7 +89,7 @@ export default function DeleteFlagPage() {
         <Form method="post">
           <DeleteButton
             type="submit"
-            isLoading={transition.state === "submitting"}
+            isLoading={navigation.state === "submitting"}
             loadingText="Deleting the environment, please wait..."
           >
             Delete

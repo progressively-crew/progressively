@@ -1,5 +1,5 @@
 import { V2_MetaFunction, ActionFunction } from "@remix-run/node";
-import { useActionData, Form, useTransition } from "@remix-run/react";
+import { useActionData, Form, useNavigation } from "@remix-run/react";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { FormGroup } from "~/components/Fields/FormGroup";
@@ -60,7 +60,7 @@ export const action: ActionFunction = async ({
 
 export default function ForgotPasswordPage() {
   const data = useActionData<ActionData>();
-  const transition = useTransition();
+  const navigation = useNavigation();
   const success = data?.success;
   const errors = data?.errors;
 
@@ -105,7 +105,7 @@ export default function ForgotPasswordPage() {
             />
 
             <SubmitButton
-              isLoading={transition.state === "submitting"}
+              isLoading={navigation.state === "submitting"}
               loadingText="Password resetting in progress, please wait..."
             >
               Reset password

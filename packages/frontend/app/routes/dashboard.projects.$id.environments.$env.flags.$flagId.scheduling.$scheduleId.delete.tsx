@@ -4,7 +4,7 @@ import { Button } from "~/components/Buttons/Button";
 import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { ActionFunction, redirect, V2_MetaFunction } from "@remix-run/node";
-import { useActionData, Form, useTransition } from "@remix-run/react";
+import { useActionData, Form, useNavigation } from "@remix-run/react";
 import { deleteSchedule } from "~/modules/scheduling/services/deleteSchedule";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
@@ -60,7 +60,7 @@ export const action: ActionFunction = async ({
 };
 
 export default function DeleteSchedulePage() {
-  const transition = useTransition();
+  const navigation = useNavigation();
   const data = useActionData<ActionData>();
   const { project } = useProject();
   const { environment } = useEnvironment();
@@ -88,7 +88,7 @@ export default function DeleteSchedulePage() {
         <Form method="post">
           <DeleteButton
             type="submit"
-            isLoading={transition.state === "submitting"}
+            isLoading={navigation.state === "submitting"}
             loadingText="Deleting the schedule, please wait..."
           >
             Yes, delete the schedule

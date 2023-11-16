@@ -34,7 +34,6 @@
     "@nestjs/websockets": "^10.2.2",
     "@okta/jwt-verifier": "^3.0.1",
     "@progressively/database": "workspace:*",
-    "@progressively/shared": "workspace:*",
     "@react-email/components": "^0.0.6",
     "@react-email/render": "^0.0.7",
     "@types/ws": "^8.5.5",

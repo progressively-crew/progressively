@@ -43,52 +43,6 @@ describe('UsersController (e2e)', () => {
       verifyAuthGuard(app, '/users/me', 'get'));
   });
 
-  describe('/users/billing (Get)', () => {
-    it('gives the current user billing details (jane)', async () => {
-      const access_token = await authenticate(
-        app,
-        'jane.doe@gmail.com',
-        'password',
-      );
-
-      const { body } = await request(app.getHttpServer())
-        .get('/users/billing')
-        .set('Authorization', `Bearer ${access_token}`);
-
-      expect(body).toMatchObject({
-        activePlan: {
-          evaluationCount: 100000,
-          uuid: '2',
-        },
-        plans: [
-          {
-            evaluationCount: 10000,
-            uuid: '1',
-          },
-        ],
-        remainingTrialingDays: 14,
-        hitsForMonth: 19,
-      });
-    });
-
-    it('gives the current user billing details (marvin)', async () => {
-      const access_token = await authenticate(app);
-
-      const { body } = await request(app.getHttpServer())
-        .get('/users/billing')
-        .set('Authorization', `Bearer ${access_token}`);
-
-      expect(body).toMatchObject({
-        plans: [],
-        remainingTrialingDays: 0,
-        hitsForMonth: 4,
-      });
-    });
-
-    it('gives a 401 when the token is invalid', () =>
-      verifyAuthGuard(app, '/users/billing', 'get'));
-  });
-
   describe('/users/forgot-password (Post)', () => {
     it('gives 400 when the email is not set', () =>
       request(app.getHttpServer())

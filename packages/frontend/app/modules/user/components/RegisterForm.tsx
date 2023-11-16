@@ -1,5 +1,5 @@
 import { ActionFunction } from "@remix-run/node";
-import { Form, useTransition } from "@remix-run/react";
+import { Form, useNavigation } from "@remix-run/react";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { TextInput } from "~/components/Fields/TextInput";
@@ -59,7 +59,7 @@ export const registerAction: ActionFunction = async ({
 };
 
 export const RegisterForm = ({ errors, actionLabel }: RegisterFormProps) => {
-  const transition = useTransition();
+  const navigation = useNavigation();
 
   return (
     <Form method="post">
@@ -119,7 +119,7 @@ export const RegisterForm = ({ errors, actionLabel }: RegisterFormProps) => {
           style={{ animationDelay: "1100ms" }}
         >
           <SubmitButton
-            isLoading={transition.state === "submitting"}
+            isLoading={navigation.state === "submitting"}
             loadingText="Creation in progress, please wait..."
           >
             {actionLabel || "Sign up"}

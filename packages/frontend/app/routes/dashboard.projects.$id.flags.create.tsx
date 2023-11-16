@@ -1,5 +1,5 @@
 import { ActionFunction, redirect, V2_MetaFunction } from "@remix-run/node";
-import { useActionData, Form, useTransition } from "@remix-run/react";
+import { useActionData, Form, useNavigation } from "@remix-run/react";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { FormGroup } from "~/components/Fields/FormGroup";
@@ -68,7 +68,7 @@ export const action: ActionFunction = async ({
 export default function CreateFlagPage() {
   const { project } = useProject();
   const data = useActionData<ActionData>();
-  const transition = useTransition();
+  const navigation = useNavigation();
 
   const errors = data?.errors;
 
@@ -82,7 +82,7 @@ export default function CreateFlagPage() {
         submitSlot={
           <SubmitButton
             type="submit"
-            isLoading={transition.state === "submitting"}
+            isLoading={navigation.state === "submitting"}
             loadingText="Creating the feature flag, please wait..."
           >
             Create the feature flag
