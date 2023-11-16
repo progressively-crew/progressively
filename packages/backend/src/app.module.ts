@@ -50,12 +50,16 @@ import 'winston-daily-rotate-file';
     ProjectsModule,
     UsersModule,
     AuthModule,
-    ThrottlerModule.forRoot({
-      ttl: process.env.THROTTLING_TTL ? Number(process.env.THROTTLING_TTL) : 60,
-      limit: process.env.THROTTLING_LIMIT
-        ? Number(process.env.THROTTLING_LIMIT)
-        : 10,
-    }),
+    ThrottlerModule.forRoot([
+      {
+        ttl: process.env.THROTTLING_TTL
+          ? Number(process.env.THROTTLING_TTL)
+          : 60,
+        limit: process.env.THROTTLING_LIMIT
+          ? Number(process.env.THROTTLING_LIMIT)
+          : 10,
+      },
+    ]),
     WebsocketModule,
     EnvironmentsModule,
     SdkModule,

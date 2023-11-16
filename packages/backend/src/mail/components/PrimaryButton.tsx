@@ -1,4 +1,11 @@
-import { Button, ButtonProps } from '@react-email/components';
+import { Button } from '@react-email/components';
+import { ReactNode } from 'react';
+
+
+export interface ButtonProps {
+  href: string;
+  children:ReactNode
+}
 
 export const PrimaryButton = (props: ButtonProps) => {
   return (
