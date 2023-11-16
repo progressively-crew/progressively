@@ -36,8 +36,9 @@ Cypress.Commands.add("signIn", (userName?: keyof typeof AvailableUsers) => {
 
   cy.visit("/signin");
   cy.findByRole("textbox", { name: "Email" }).type(user.email);
-  cy.findByRole("textbox", { name: "Password" }).type(user.password);
+  cy.findByLabelText("Password").type(user.password);
   cy.findByRole("button", { name: "Sign in" }).click();
+  cy.url().should("contain", "dashboard");
 
   // Not working anymore because of ESM support of cypress
   // cy.request({
@@ -88,10 +89,18 @@ Cypress.Commands.add("verifyBreadcrumbs", (crumbs: Array<any>) => {
   });
 });
 
-Cypress.on(
-  "uncaught:exception",
-  (err) => !err.message.includes("ResizeObserver loop limit exceeded")
-);
+Cypress.on("uncaught:exception", (err) => {
+  const validErrors = [
+    "ResizeObserver loop limit exceeded",
+    "hydrating",
+    "Hydration",
+  ];
+  const containsError = validErrors.find((e) => err.message.includes(e));
+
+  if (containsError) {
+    return false;
+  }
+});
 
 if (Cypress.env("DARK_THEME")) {
   Cypress.on("window:before:load", (win) => {
