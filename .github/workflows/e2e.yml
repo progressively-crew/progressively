@@ -60,18 +60,18 @@ jobs:
         run: pnpm run start:backend &
 
       - name: Install cypress
-        working-directory: ./packages/frontend
+        working-directory: ./websites/frontend
         shell: bash
         run: npx cypress install
 
       - name: Start the frontend project
-        working-directory: ./packages/frontend
+        working-directory: ./websites/frontend
         shell: bash
         run: pnpm start &
 
       # Uncomment for parallel
       - name: E2E tests
         run: npx wait-on -t 60000 tcp:4000 && pnpm run test:e2e:ci
-        working-directory: ./packages/frontend
+        working-directory: ./websites/frontend
         #   CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
         #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
