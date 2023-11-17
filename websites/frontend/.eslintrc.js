@@ -33,5 +33,6 @@ module.exports = {
     "unicorn/prevent-abbreviations": "off",
     "unicorn/no-null": "off",
     "unicorn/no-nested-ternary": "off",
+    "unicorn/no-empty-file": "off",
   },
 };

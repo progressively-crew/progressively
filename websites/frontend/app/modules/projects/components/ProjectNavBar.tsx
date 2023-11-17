@@ -48,7 +48,7 @@ export const ProjectNavBar = ({ project }: ProjectNavBarProps) => {
         >
           {project.environments.map((env) => (
             <NavItem
-              to={`/dashboard/projects/${project.uuid}/environments/${env.uuid}`}
+              to={`/dashboard/projects/${project.uuid}/environments/${env.uuid}/flags`}
               key={env.uuid}
               icon={
                 <IconBox content={env.name} size="S">

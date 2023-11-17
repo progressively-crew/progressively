@@ -43,7 +43,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
         cy.verifyBreadcrumbs([
           ["My projects", "/dashboard"],
           ["Project from seeding", "/dashboard/projects/1/flags"],
-          ["Production", "/dashboard/projects/1/environments/1"],
+          ["Production", "/dashboard/projects/1/environments/1/flags"],
           [
             "New homepage",
             "/dashboard/projects/1/environments/1/flags/1",
