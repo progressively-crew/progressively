@@ -22,9 +22,8 @@ COPY --from=build ./app/pnpm-lock.yaml ./pnpm-lock.yaml
 COPY --from=build ./app/pnpm-workspace.yaml ./pnpm-workspace.yaml
 COPY --from=build ./app/turbo.json ./turbo.json
 
-COPY --from=build ./app/websites/backend/.env ./websites/backend/.env
-COPY --from=build ./app/websites/backend/dist ./websites/backend/dist
-COPY --from=build ./app/websites/backend/package.json ./websites/backend/package.json
+COPY --from=build ./app/websites/backend/dist ./websites/frontend/dist
+COPY --from=build ./app/websites/backend/package.json ./websites/frontend/package.json
 
 COPY --from=build ./app/packages/database/dist ./packages/database/dist
 COPY --from=build ./app/packages/database/package.json ./packages/database/package.json

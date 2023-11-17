@@ -6,47 +6,49 @@ services:
       dockerfile: ./Dockerfile.Frontend
     ports:
       - "3000:3000"
-    depends_on:
-      - progressively-backend
     environment:
       BACKEND_URL: http://progressively-backend:4000
+      SESSION_SECRET: "abcd"
+      ALLOW_REGISTRATION: "true"
+      OKTA_ISSUER:
+      OKTA_CLIENT_ID:
+    depends_on:
+      - progressively-backend
   progressively-backend:
     build:
       context: .
       dockerfile: ./Dockerfile.Backend
     ports:
       - "4000:4000"
+    environment:
+      DATABASE_URL: postgresql://admin:admin@db/progressively
+      SHADOW_DATABASE_URL: postgresql://admin:admin@db/progressively
+      REDIS_URL: redis://redis-cache
+      ACCESS_TOKEN_SECRET: abcd
+      REFRESH_TOKEN_SECRET: efgh
+      ACCESS_TOKEN_EXPIRES: 84600
+      REFRESH_TOKEN_EXPIRES: 84600
+      SMTP_HOST: smtp.ethereal.email
+      SMTP_PORT: 587
+      SMTP_USER:
+      SMTP_PASSWORD:
+      FRONTEND_URL: http://localhost:3000
+      BACKEND_URL: http://localhost:4000
+      SOCKET_TIMEOUT: 10000
+      ALLOW_REGISTRATION: "true"
+      THROTTLING_TTL: 60
+      THROTTLING_LIMIT: 10000
+      OKTA_ISSUER:
+      OKTA_CLIENT_ID:
     depends_on:
       db:
         condition: service_healthy
-      db-shadow:
-        condition: service_healthy
-    environment:
-      DATABASE_URL: postgresql://admin:admin@db/progressively
-      SHADOW_DATABASE_URL: postgresql://admin:admin@db-shadow/progressively
-      REDIS_URL: redis://redis-cache
-      FRONTEND_URL: http://localhost:3000
-      BACKEND_URL: http://localhost:4000
     command: [scripts/docker-compose-init.sh]
   db:
     image: postgres
     restart: always
     ports:
       - "5432:5432"
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U admin -d progressively"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-    environment:
-      POSTGRES_PASSWORD: admin
-      POSTGRES_USER: admin
-      POSTGRES_DB: progressively
-  db-shadow:
-    image: postgres
-    restart: always
-    ports:
-      - "5433:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U admin -d progressively"]
       interval: 5s

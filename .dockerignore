@@ -2,6 +2,7 @@
 **/dist
 **/migrations
 **/*.db
+.env
 ./example
 /.cache
 *.log
