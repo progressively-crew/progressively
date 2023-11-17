@@ -8,6 +8,8 @@ services:
       - "3000:3000"
     depends_on:
       - progressively-backend
+    environment:
+      BACKEND_URL: http://progressively-backend:4000
   progressively-backend:
     build:
       context: .
@@ -19,6 +21,12 @@ services:
         condition: service_healthy
       db-shadow:
         condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://admin:admin@db/progressively
+      SHADOW_DATABASE_URL: postgresql://admin:admin@db-shadow/progressively
+      REDIS_URL: redis://redis-cache
+      FRONTEND_URL: http://localhost:3000
+      BACKEND_URL: http://localhost:4000
     command: [scripts/docker-compose-init.sh]
   db:
     image: postgres
