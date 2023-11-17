@@ -22,7 +22,7 @@ services:
       - "4000:4000"
     environment:
       DATABASE_URL: postgresql://admin:admin@db/progressively
-      SHADOW_DATABASE_URL: postgresql://admin:admin@db/progressively
+      SHADOW_DATABASE_URL: postgresql://admin:admin@db-shadow/progressively
       REDIS_URL: redis://redis-cache
       ACCESS_TOKEN_SECRET: abcd
       REFRESH_TOKEN_SECRET: efgh
@@ -43,12 +43,28 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      db-shadow:
+        condition: service_healthy
     command: [scripts/docker-compose-init.sh]
   db:
     image: postgres
     restart: always
     ports:
       - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d progressively"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: admin
+      POSTGRES_DB: progressively
+  db-shadow:
+    image: postgres
+    restart: always
+    ports:
+      - "5433:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U admin -d progressively"]
       interval: 5s
