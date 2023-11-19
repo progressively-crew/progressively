@@ -14,6 +14,8 @@
 ```sh
 $ git clone https://github.com/progressively-crew/progressively
 $ cd progressively
+$ cp ./websites/backend/.env.example ./websites/backend/.env
+$ cp ./websites/frontend/.env.example ./websites/frontend/.env
 $ docker-compose up -d # or docker compose up -d
 ```
 

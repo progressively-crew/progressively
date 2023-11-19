@@ -18,15 +18,19 @@
       "dependsOn": ["^build"]
     },
     "db:migrate:init": {
+      "cache": false,
       "dependsOn": []
     },
     "db:migrate:deploy": {
+      "cache": false,
       "dependsOn": []
     },
     "db:seed": {
+      "cache": false,
       "dependsOn": []
     },
     "db:cleanup": {
+      "cache": false,
       "dependsOn": []
     },
     "bundlesize": {

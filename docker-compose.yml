@@ -1,45 +1,23 @@
 version: "3.9"
 services:
   progressively-frontend:
-    build:
-      context: .
-      dockerfile: ./Dockerfile.Frontend
+    image: marvinfrachet/progressively-frontend:0.0.1
     ports:
       - "3000:3000"
     environment:
       BACKEND_URL: http://progressively-backend:4000
-      SESSION_SECRET: "abcd"
-      ALLOW_REGISTRATION: "true"
-      OKTA_ISSUER:
-      OKTA_CLIENT_ID:
+    env_file: ./websites/frontend/.env
     depends_on:
       - progressively-backend
   progressively-backend:
-    build:
-      context: .
-      dockerfile: ./Dockerfile.Backend
+    image: marvinfrachet/progressively-backend:0.0.1
     ports:
       - "4000:4000"
     environment:
       DATABASE_URL: postgresql://admin:admin@db/progressively
       SHADOW_DATABASE_URL: postgresql://admin:admin@db-shadow/progressively
       REDIS_URL: redis://redis-cache
-      ACCESS_TOKEN_SECRET: abcd
-      REFRESH_TOKEN_SECRET: efgh
-      ACCESS_TOKEN_EXPIRES: 84600
-      REFRESH_TOKEN_EXPIRES: 84600
-      SMTP_HOST: smtp.ethereal.email
-      SMTP_PORT: 587
-      SMTP_USER:
-      SMTP_PASSWORD:
-      FRONTEND_URL: http://localhost:3000
-      BACKEND_URL: http://localhost:4000
-      SOCKET_TIMEOUT: 10000
-      ALLOW_REGISTRATION: "true"
-      THROTTLING_TTL: 60
-      THROTTLING_LIMIT: 10000
-      OKTA_ISSUER:
-      OKTA_CLIENT_ID:
+    env_file: ./websites/backend/.env
     depends_on:
       db:
         condition: service_healthy
