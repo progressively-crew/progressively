@@ -3,7 +3,7 @@ name: Publish docker image
 on:
   push:
     tags:
-      - "v*.*.*"
+      - "v**.**.**apps"
 
 jobs:
   login:
@@ -18,22 +18,25 @@ jobs:
 
       - name: GitHub Tag Name example
         run: |
-          echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
-          echo "Tag name from github.ref_name: ${{  github.ref_name }}"
+          echo "APP_VERSION=$(echo "${{  github.ref_name }}" | sed 's/+apps//' | sed 's/v//')" >> $GITHUB_ENV
 
       - name: Build frontend image
         run: |
           docker build -t marvinfrachet/progressively-frontend -f Dockerfile.Frontend .
-          docker tag marvinfrachet/progressively-frontend:latest marvinfrachet/progressively-frontend:${{  github.ref_name }}
+          docker tag marvinfrachet/progressively-frontend:latest marvinfrachet/progressively-frontend:${APP_VERSION}
 
       - name: Build backend image
         run: |
           docker build -t marvinfrachet/progressively-backend -f Dockerfile.Backend .
-          docker tag marvinfrachet/progressively-backend:latest marvinfrachet/progressively-backend:${{  github.ref_name }}
+          docker tag marvinfrachet/progressively-backend:latest marvinfrachet/progressively-backend:${APP_VERSION}
 
-      - name: Pushing images
+      - name: Check image tags
         run: |
-          docker push marvinfrachet/progressively-frontend:${{  github.ref_name }}
-          docker push marvinfrachet/progressively-backend:${{  github.ref_name }}
-          docker push marvinfrachet/progressively-frontend:latest
-          docker push marvinfrachet/progressively-backend:latest
+          docker images
+
+      # - name: Pushing images
+      #   run: |
+      #     docker push marvinfrachet/progressively-frontend:${APP_VERSION}
+      #     docker push marvinfrachet/progressively-backend:${APP_VERSION}
+      #     docker push marvinfrachet/progressively-frontend:latest
+      #     docker push marvinfrachet/progressively-backend:latest
