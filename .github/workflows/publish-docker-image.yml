@@ -24,12 +24,16 @@ jobs:
       - name: Build frontend image
         run: |
           docker build -t marvinfrachet/progressively-frontend -f Dockerfile.Frontend .
-          docker tag marvinfrachet/progressively-frontend:latest marvinfrachet/progressively-frontend:0.0.1
+          docker tag marvinfrachet/progressively-frontend:latest marvinfrachet/progressively-frontend:${{  github.ref_name }}
 
       - name: Build backend image
         run: |
           docker build -t marvinfrachet/progressively-backend -f Dockerfile.Backend .
-          docker tag marvinfrachet/progressively-backend:latest marvinfrachet/progressively-backend:0.0.1
+          docker tag marvinfrachet/progressively-backend:latest marvinfrachet/progressively-backend:${{  github.ref_name }}
 
-      - name: Build backend image
-        run: docker images
+      - name: Pushing images
+        run: |
+          docker push marvinfrachet/progressively-frontend:${{  github.ref_name }}
+          docker push marvinfrachet/progressively-backend:${{  github.ref_name }}
+          docker push marvinfrachet/progressively-frontend:latest
+          docker push marvinfrachet/progressively-backend:latest
