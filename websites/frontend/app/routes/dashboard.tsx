@@ -13,6 +13,16 @@ interface LoaderData {
   projects: Array<Project>;
 }
 
+export const handle = {
+  breadcrumb: () => {
+    return {
+      link: `/dashboard`,
+      label: "Projects",
+      isRoot: true,
+    };
+  },
+};
+
 export const loader: LoaderFunction = async ({
   request,
 }): Promise<LoaderData> => {

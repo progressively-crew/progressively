@@ -50,8 +50,12 @@ export const DashboardLayout = ({
               <UserNav />
             </div>
 
-            <div className={`px-8 pb-4 ${crumbs.length > 0 ? "pt-6" : ""}`}>
-              <div className="flex flex-row gap-2 items-center">
+            {!lastCrumb.isRoot && (
+              <div
+                className={`px-8 pb-4 flex flex-row gap-2 items-center ${
+                  crumbs.length > 0 ? "pt-6" : ""
+                }`}
+              >
                 <IconBox content={lastCrumb.label} size="L">
                   {lastCrumb.isFlag && <FlagIcon />}
                   {lastCrumb.isProject && <ProjectIcon />}
@@ -62,7 +66,7 @@ export const DashboardLayout = ({
                   {lastCrumb.label}
                 </Typography>
               </div>
-            </div>
+            )}
 
             {subNav}
           </div>
