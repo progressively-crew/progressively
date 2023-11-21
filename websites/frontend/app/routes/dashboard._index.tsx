@@ -10,7 +10,6 @@ import { ProjectList } from "~/modules/projects/components/ProjectList";
 import { PageTitle } from "~/components/PageTitle";
 import { SearchBar } from "~/components/SearchBar";
 import { SearchLayout } from "~/layouts/SearchLayout";
-import { Card } from "~/components/Card";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -78,9 +77,7 @@ export default function DashboardRoot() {
         />
       </SearchLayout>
 
-      <Card>
-        <ProjectList projects={projects} />
-      </Card>
+      <ProjectList projects={projects} />
     </DashboardLayout>
   );
 }

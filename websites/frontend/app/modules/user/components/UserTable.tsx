@@ -14,7 +14,7 @@ export const UserTable = ({ userProjects }: UserTableProps) => {
   const { userRole } = useProject();
 
   return (
-    <Table>
+    <Table noBorder>
       <caption className="sr-only">List of members of the project</caption>
       <thead>
         <tr>

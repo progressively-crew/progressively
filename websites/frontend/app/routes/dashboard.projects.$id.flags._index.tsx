@@ -90,7 +90,10 @@ export default function FlagsByEnvPage() {
         ) : null
       }
     >
-      <PageTitle value="Feature flags" />
+      <PageTitle
+        value="Feature flags"
+        description="All the feature flags of the project."
+      />
 
       {hasFlags ? (
         <>
@@ -113,13 +116,11 @@ export default function FlagsByEnvPage() {
             />
           </SearchLayout>
 
-          <Card>
-            <FlagList
-              flags={filteredFlags}
-              projectId={project.uuid}
-              environments={project.environments}
-            />
-          </Card>
+          <FlagList
+            flags={filteredFlags}
+            projectId={project.uuid}
+            environments={project.environments}
+          />
         </>
       ) : (
         <Card>

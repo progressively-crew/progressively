@@ -2,11 +2,16 @@ import { HTMLAttributes } from "react";
 
 export interface TableProps {
   children: React.ReactNode;
+  noBorder?: boolean;
 }
 
-export const Table = ({ children }: TableProps) => {
+export const Table = ({ children, noBorder }: TableProps) => {
   return (
-    <div className="rounded-lg">
+    <div
+      className={
+        noBorder ? "" : "border border-slate-200 dark:border-slate-600"
+      }
+    >
       <table className="border-collapse table-auto w-full text-sm">
         {children}
       </table>
@@ -15,7 +20,7 @@ export const Table = ({ children }: TableProps) => {
 };
 export const Th = ({ children }: TableProps) => {
   return (
-    <th className="whitespace-nowrap bg-slate-50 dark:bg-slate-700 border-b dark:border-slate-600 font-medium p-4 pl-8 py-3 text-slate-500 dark:text-slate-200 text-left">
+    <th className="whitespace-nowrap bg-slate-50 dark:bg-slate-700 font-medium p-4 pl-8 py-3 text-slate-500 dark:text-slate-200 text-left">
       {children}
     </th>
   );
@@ -26,7 +31,7 @@ export const Td = ({
 }: TableProps & HTMLAttributes<HTMLTableCellElement>) => {
   return (
     <td
-      className="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400"
+      className="border-t border-slate-200 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400"
       style={style}
     >
       {children}
