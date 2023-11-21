@@ -51,7 +51,7 @@ export const DashboardLayout = ({
             </div>
 
             {!lastCrumb.isRoot && (
-              <div
+              <header
                 className={`px-8 pb-4 flex flex-row gap-2 items-center ${
                   crumbs.length > 0 ? "pt-6" : ""
                 }`}
@@ -65,7 +65,7 @@ export const DashboardLayout = ({
                 <Typography as="span" className="text-3xl font-extrabold">
                   {lastCrumb.label}
                 </Typography>
-              </div>
+              </header>
             )}
 
             {subNav}

@@ -1,4 +1,4 @@
-describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/segments/[segmentId]", () => {
+describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/segments/[segmentId] ", () => {
   beforeEach(cy.seed);
   afterEach(cy.cleanupDb);
 
@@ -44,7 +44,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/segments/
           ["All projects", "/dashboard"],
           ["Project from seeding", "/dashboard/projects/1/flags"],
           ["Production", "/dashboard/projects/1/environments/1/flags"],
-          ["New homepage", "/dashboard/projects/1/environments/1/flags/1"],
         ]);
 
         cy.findAllByText("New homepage").should("have.length", 1);
