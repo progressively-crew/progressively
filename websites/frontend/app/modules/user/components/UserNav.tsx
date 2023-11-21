@@ -8,7 +8,7 @@ import { useUser } from "../contexts/useUser";
 export const UserNav = () => {
   const { user } = useUser();
   return (
-    <ul className="flex flex-row gap-2 items-center">
+    <ul className="flex flex-row gap-2 items-center px-8">
       <NavItem
         to={"https://progressively.app/"}
         icon={<FaBook />}

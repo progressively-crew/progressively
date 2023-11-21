@@ -8,8 +8,8 @@ export interface HorizontalNavProps {
 
 export const HorizontalNav = ({ children, label }: HorizontalNavProps) => {
   return (
-    <nav aria-label={label}>
-      <ul className="flex flex-row gap-4">{children}</ul>
+    <nav aria-label={label} className="bg-slate-50 px-8">
+      <ul className="flex flex-row gap-4 items-center">{children}</ul>
     </nav>
   );
 };
@@ -25,6 +25,8 @@ export const NavItem = ({ children, to, icon, target }: NavItemProps) => {
   const focusStyles =
     "focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:focus:ring-offset-slate-900";
 
+  const shared = `${focusStyles} py-2 border-b-2 border-t-2 border-transparent whitespace-nowrap shrink-0 text-sm block flex items-center px-3 text-gray-700 hover:bg-slate-100 hover:dark:bg-slate-700 dark:text-slate-300`;
+
   return (
     <li>
       <NavLink
@@ -32,11 +34,7 @@ export const NavItem = ({ children, to, icon, target }: NavItemProps) => {
         end
         target={target}
         className={({ isActive }) =>
-          isActive
-            ? "whitespace-nowrap shrink-0 text-sm font-bold h-8 block flex items-center rounded px-3 bg-gray-100 text-gray-700 dark:bg-slate-600 dark:text-slate-50 " +
-              focusStyles
-            : "whitespace-nowrap shrink-0 text-sm h-8 block flex items-center rounded px-3 text-gray-700 hover:bg-gray-50 hover:dark:bg-slate-700 dark:text-gray-300 " +
-              focusStyles
+          isActive ? `${shared}  border-b-slate-900 text-slate-900` : shared
         }
       >
         <HStack spacing={2}>

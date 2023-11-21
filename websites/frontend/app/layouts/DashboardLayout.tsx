@@ -7,6 +7,11 @@ import { useMatches, useNavigation } from "@remix-run/react";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { Spinner } from "~/components/Spinner";
 import { UserNav } from "~/modules/user/components/UserNav";
+import { Typography } from "~/components/Typography";
+import { FlagIcon } from "~/components/Icons/FlagIcon";
+import { IconBox } from "~/components/IconBox";
+import { ProjectIcon } from "~/components/Icons/ProjectIcon";
+import { EnvIcon } from "~/components/Icons/EnvIcon";
 
 export interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -31,19 +36,35 @@ export const DashboardLayout = ({
 
   const layoutClassName = "max-w-7xl mx-auto";
 
+  const lastCrumb = crumbs.pop();
+
   return (
     <NavProvider>
       <SkipNavLink>Skip to content</SkipNavLink>
 
       <div className="bg-gray-50 dark:bg-slate-900 h-full flex-1">
-        {crumbs.length > 0 && (
-          <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-4 py-2">
-            <div className="flex flex-row items-center justify-between pb-4">
+        {lastCrumb && (
+          <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
+            <div className="flex flex-row items-center justify-between">
               <BreadCrumbs crumbs={crumbs} />
               <UserNav />
             </div>
 
-            {subNav && <div className="md:sticky left-0 top-0">{subNav}</div>}
+            <div className={`px-8 pb-4 ${crumbs.length > 0 ? "pt-6" : ""}`}>
+              <div className="flex flex-row gap-2 items-center">
+                <IconBox content={lastCrumb.label} size="L">
+                  {lastCrumb.isFlag && <FlagIcon />}
+                  {lastCrumb.isProject && <ProjectIcon />}
+                  {lastCrumb.isEnv && <EnvIcon />}
+                </IconBox>
+
+                <Typography as="span" className="text-3xl font-extrabold">
+                  {lastCrumb.label}
+                </Typography>
+              </div>
+            </div>
+
+            {subNav}
           </div>
         )}
 
