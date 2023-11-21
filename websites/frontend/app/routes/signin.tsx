@@ -24,7 +24,6 @@ import { Button } from "~/components/Buttons/Button";
 import { SiOkta } from "react-icons/si";
 import { getOktaConfig } from "~/modules/auth/services/get-okta-config";
 import { useOkta } from "~/modules/auth/hooks/useOkta";
-import { Logo } from "~/components/Logo/Logo";
 import { Typography } from "~/components/Typography";
 import { getProjects } from "~/modules/projects/services/getProjects";
 
@@ -131,11 +130,9 @@ export default function Signin() {
 
   return (
     <NotAuthenticatedLayout status={status}>
-      <Logo size={60} fill="black" />
-
       <Typography
         as="h1"
-        className="text-center text-3xl font-extrabold pt-4 !leading-tight motion-safe:animate-fade-enter-top pb-8"
+        className="text-center text-3xl font-extrabold !leading-tight motion-safe:animate-fade-enter-top pb-8"
       >
         Signin to your account
       </Typography>

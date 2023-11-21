@@ -1,7 +1,6 @@
 import { ActionFunction, redirect, V2_MetaFunction } from "@remix-run/node";
 import { useActionData } from "@remix-run/react";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
-import { Logo } from "~/components/Logo/Logo";
 import { Typography } from "~/components/Typography";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import { AuthCredentials } from "~/modules/auth/types";
@@ -44,11 +43,9 @@ export default function WelcomePage() {
         errors && Object.keys(errors).length > 0 && <ErrorBox list={errors} />
       }
     >
-      <Logo size={60} fill="black" />
-
       <Typography
         as="h1"
-        className="text-3xl font-extrabold pt-4 !leading-tight pb-2"
+        className="text-3xl font-extrabold !leading-tight pb-2"
       >
         Congratulations
       </Typography>

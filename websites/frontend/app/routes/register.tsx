@@ -13,7 +13,6 @@ import {
   V2_MetaFunction,
 } from "@remix-run/node";
 import { useActionData } from "@remix-run/react";
-import { Logo } from "~/components/Logo/Logo";
 import { Typography } from "~/components/Typography";
 import { BackLink } from "~/components/BackLink";
 
@@ -58,11 +57,9 @@ export default function CreateAccountPage() {
       }
       backLink={<BackLink to="/signin">Back to signin</BackLink>}
     >
-      <Logo size={60} fill="black" />
-
       <Typography
         as="h1"
-        className="text-center text-3xl font-extrabold pt-4 !leading-tight motion-safe:animate-fade-enter-top pb-8"
+        className="text-center text-3xl font-extrabold !leading-tight motion-safe:animate-fade-enter-top pb-8"
       >
         Create an account
       </Typography>
