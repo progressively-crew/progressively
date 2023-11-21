@@ -15,7 +15,7 @@ export const NotAuthenticatedLayout = ({
 
       {status && <div className="pb-12 max-w-md w-full">{status}</div>}
 
-      <div className="px-12 py-16 max-w-md w-full mx-auto flex items-center flex-col justify-center sm:border-2 rounded-2xl border-slate-100">
+      <div className="px-12 py-16 max-w-md w-full mx-auto flex items-center flex-col justify-center sm:border-2 rounded-2xl border-slate-100 dark:border-slate-700">
         {children}
       </div>
     </main>

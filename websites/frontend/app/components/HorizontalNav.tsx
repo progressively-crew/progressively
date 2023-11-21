@@ -8,7 +8,7 @@ export interface HorizontalNavProps {
 
 export const HorizontalNav = ({ children, label }: HorizontalNavProps) => {
   return (
-    <nav aria-label={label} className="bg-slate-50 px-8">
+    <nav aria-label={label} className="bg-slate-50 px-8 dark:bg-slate-800">
       <ul className="flex flex-row gap-4 items-center">{children}</ul>
     </nav>
   );
@@ -34,7 +34,9 @@ export const NavItem = ({ children, to, icon, target }: NavItemProps) => {
         end
         target={target}
         className={({ isActive }) =>
-          isActive ? `${shared}  border-b-slate-900 text-slate-900` : shared
+          isActive
+            ? `${shared} dark:border-b-slate-100 border-b-slate-900 text-slate-900`
+            : shared
         }
       >
         <HStack spacing={2}>
