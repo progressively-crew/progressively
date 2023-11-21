@@ -34,9 +34,9 @@ jobs:
         run: |
           docker images
 
-      # - name: Pushing images
-      #   run: |
-      #     docker push marvinfrachet/progressively-frontend:${APP_VERSION}
-      #     docker push marvinfrachet/progressively-backend:${APP_VERSION}
-      #     docker push marvinfrachet/progressively-frontend:latest
-      #     docker push marvinfrachet/progressively-backend:latest
+      - name: Pushing images
+        run: |
+          docker push marvinfrachet/progressively-frontend:${APP_VERSION}
+          docker push marvinfrachet/progressively-backend:${APP_VERSION}
+          docker push marvinfrachet/progressively-frontend:latest
+          docker push marvinfrachet/progressively-backend:latest
