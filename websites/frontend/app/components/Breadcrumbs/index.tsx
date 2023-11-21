@@ -6,8 +6,6 @@ import { ProjectIcon } from "../Icons/ProjectIcon";
 import { Link } from "../Link";
 import { MenuButton } from "../MenuButton";
 import { Crumbs } from "./types";
-import { Logo } from "../Logo/Logo";
-import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
 import { MdArrowBackIosNew } from "react-icons/md";
 
 export interface BreadCrumbsProps {
