@@ -6,6 +6,7 @@ import { InertWhenNavOpened } from "~/components/Breadcrumbs/InertWhenNavOpened"
 import { useMatches, useNavigation } from "@remix-run/react";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { Spinner } from "~/components/Spinner";
+import { UserNav } from "~/modules/user/components/UserNav";
 
 export interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -28,10 +29,6 @@ export const DashboardLayout = ({
   const isNormalLoad =
     navigation.state === "loading" && navigation.formData == null;
 
-  const gridClass = subNav
-    ? "md:grid grid-cols-[auto_1fr] items-start h-full"
-    : "";
-
   const layoutClassName = "max-w-7xl mx-auto";
 
   return (
@@ -40,20 +37,17 @@ export const DashboardLayout = ({
 
       <div className="bg-gray-50 dark:bg-slate-900 h-full flex-1">
         {crumbs.length > 0 && (
-          <div className="py-1 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 hidden md:block ">
-            <div className="px-4">
+          <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-4 py-2">
+            <div className="flex flex-row items-center justify-between pb-4">
               <BreadCrumbs crumbs={crumbs} />
+              <UserNav />
             </div>
+
+            {subNav && <div className="md:sticky left-0 top-0">{subNav}</div>}
           </div>
         )}
 
-        <div className={gridClass}>
-          {subNav && (
-            <div className="md:sticky left-0 top-0 md:w-[300px] md:border-r border-slate-200 dark:border-slate-800 md:h-screen bg-white dark:bg-slate-800">
-              {subNav}
-            </div>
-          )}
-
+        <div>
           <InertWhenNavOpened
             className={`${layoutClassName} h-full dark:bg-slate-900 flex-1 px-4 md:px-20 pt-8 md:pt-0 w-full`}
           >

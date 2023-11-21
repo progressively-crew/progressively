@@ -27,7 +27,7 @@ export const Switch = ({
     <div className="flex items-center gap-2">
       <label
         htmlFor={id}
-        className="text-slate-900 font-bold font-mono dark:text-white"
+        className="text-slate-900 font-bold dark:text-white"
         aria-hidden
       >
         {label}

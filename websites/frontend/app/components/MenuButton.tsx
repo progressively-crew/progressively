@@ -5,6 +5,7 @@ import { HiOutlineDotsVertical } from "react-icons/hi";
 import { RxCaretSort } from "react-icons/rx";
 import { Tooltip } from "./Tooltip/Tooltip";
 import { IconBox } from "./IconBox";
+import { Typography } from "./Typography";
 
 interface MenuItem {
   label: string;
@@ -16,28 +17,40 @@ interface MenuItem {
 export interface MenuButtonProps {
   items: Array<MenuItem>;
   label: string;
+  children?: React.ReactNode;
+  icon?: React.ReactNode;
   variant?: "action" | "switch";
 }
 
 export const MenuButton = ({
   items,
   label,
+  children,
   variant = "switch",
+  icon,
 }: MenuButtonProps) => {
-  const menuButtonClass =
-    "w-6 h-8 flex justify-center items-center hover:bg-gray-100 hover:dark:bg-slate-700 active:dark:bg-slate-600 rounded text-gray-500 dark:text-slate-200 text-xl focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:focus:ring-offset-slate-900";
+  let menuButtonClass =
+    "h-8 flex justify-center flex-row items-center hover:bg-gray-50 hover:dark:bg-slate-700 active:dark:bg-slate-600 rounded text-gray-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:focus:ring-offset-slate-900";
+
+  if (children) {
+    menuButtonClass += " text-sm gap-2 px-3";
+  }
 
   return (
     <div className="relative">
       <Menu>
         {variant === "switch" ? (
           <Menu.Button className={menuButtonClass} aria-label={label}>
-            <RxCaretSort />
+            {icon}
+            {children && <Typography as="span">{children}</Typography>}
+            <RxCaretSort className="text-xl" />
           </Menu.Button>
         ) : (
           <Tooltip tooltip={<p>{label}</p>}>
             <Menu.Button className={menuButtonClass} aria-label={label}>
-              <HiOutlineDotsVertical />
+              {icon}
+              {children && <Typography as="span">{children}</Typography>}
+              <HiOutlineDotsVertical className="text-xl" />
             </Menu.Button>
           </Tooltip>
         )}
