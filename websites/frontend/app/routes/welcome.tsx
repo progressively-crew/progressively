@@ -43,7 +43,6 @@ export default function WelcomePage() {
       status={
         errors && Object.keys(errors).length > 0 && <ErrorBox list={errors} />
       }
-      aside={<div />}
     >
       <Logo size={60} fill="black" />
 

@@ -48,7 +48,6 @@ export default function WhatsYourNamePage() {
   return (
     <NotAuthenticatedLayout
       status={errors?.fullname && <ErrorBox list={errors} />}
-      aside={<div />}
     >
       <Typography
         as="h1"

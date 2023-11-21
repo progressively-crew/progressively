@@ -130,7 +130,7 @@ export default function Signin() {
   ) : null;
 
   return (
-    <NotAuthenticatedLayout status={status} aside={<div></div>}>
+    <NotAuthenticatedLayout status={status}>
       <Logo size={60} fill="black" />
 
       <Typography

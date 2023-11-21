@@ -56,7 +56,6 @@ export default function CreateAccountPage() {
           </SuccessBox>
         ) : null
       }
-      aside={<div />}
       backLink={<BackLink to="/signin">Back to signin</BackLink>}
     >
       <Logo size={60} fill="black" />

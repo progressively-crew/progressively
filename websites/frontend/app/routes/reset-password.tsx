@@ -114,7 +114,6 @@ export default function ResetPasswordPage() {
           </SuccessBox>
         ) : null
       }
-      aside={<div />}
       backLink={<BackLink to="/signin">Back to signin</BackLink>}
     >
       <Logo size={60} fill="black" />

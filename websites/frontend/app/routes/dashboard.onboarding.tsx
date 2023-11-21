@@ -56,10 +56,7 @@ export default function OnboardingPage() {
   const errors = data?.errors;
 
   return (
-    <NotAuthenticatedLayout
-      status={errors?.name && <ErrorBox list={errors} />}
-      aside={<div />}
-    >
+    <NotAuthenticatedLayout status={errors?.name && <ErrorBox list={errors} />}>
       <Logo size={60} fill="black" />
 
       <Typography
