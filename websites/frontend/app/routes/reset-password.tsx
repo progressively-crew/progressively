@@ -17,7 +17,6 @@ import {
 } from "~/modules/forms/utils/validatePassword";
 import { resetPassword } from "~/modules/user/services/resetPassword";
 import { BackLink } from "~/components/BackLink";
-import { Logo } from "~/components/Logo/Logo";
 import { Typography } from "~/components/Typography";
 
 export const meta: V2_MetaFunction = () => {
@@ -114,14 +113,11 @@ export default function ResetPasswordPage() {
           </SuccessBox>
         ) : null
       }
-      aside={<div />}
       backLink={<BackLink to="/signin">Back to signin</BackLink>}
     >
-      <Logo size={60} fill="black" />
-
       <Typography
         as="h1"
-        className="text-center text-3xl font-extrabold pt-4 !leading-tight pb-8"
+        className="text-center text-3xl font-extrabold !leading-tight pb-8"
       >
         {pageTitle}
       </Typography>

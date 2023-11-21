@@ -115,7 +115,7 @@ export const RegisterForm = ({ errors, actionLabel }: RegisterFormProps) => {
         </div>
 
         <div
-          className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"
+          className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0 w-full [&>*]:w-full"
           style={{ animationDelay: "1100ms" }}
         >
           <SubmitButton

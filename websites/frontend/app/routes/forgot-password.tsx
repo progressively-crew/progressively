@@ -9,7 +9,6 @@ import { Typography } from "~/components/Typography";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import { validateEmail } from "~/modules/forms/utils/validateEmail";
 import { forgotPassword } from "~/modules/user/services/forgotPassword";
-import { Logo } from "~/components/Logo/Logo";
 import { BackLink } from "~/components/BackLink";
 
 export const meta: V2_MetaFunction = () => {
@@ -76,21 +75,20 @@ export default function ForgotPasswordPage() {
           </SuccessBox>
         ) : null
       }
-      aside={<div />}
       backLink={<BackLink to="/signin">Back to signin</BackLink>}
     >
-      <Logo size={60} fill="black" />
+      <div>
+        <Typography
+          as="h1"
+          className="text-3xl font-extrabold pb-2 !leading-tight"
+        >
+          Password forgotten
+        </Typography>
 
-      <Typography
-        as="h1"
-        className="text-center text-3xl font-extrabold pt-4 !leading-tight pb-2"
-      >
-        Password forgotten
-      </Typography>
-
-      <Typography className="text-center pb-4">
-        Enter your email to get a recovery link and reset your password.
-      </Typography>
+        <Typography className="pb-4">
+          Enter your email to get a recovery link and reset your password.
+        </Typography>
+      </div>
 
       <div className="w-full">
         <Form method="post">

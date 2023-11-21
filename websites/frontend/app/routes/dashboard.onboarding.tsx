@@ -10,7 +10,6 @@ import { validateProjectName } from "~/modules/projects/validators/validateProje
 import { getSession } from "~/sessions";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import { useUser } from "~/modules/user/contexts/useUser";
-import { Logo } from "~/components/Logo/Logo";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -56,27 +55,25 @@ export default function OnboardingPage() {
   const errors = data?.errors;
 
   return (
-    <NotAuthenticatedLayout
-      status={errors?.name && <ErrorBox list={errors} />}
-      aside={<div />}
-    >
-      <Logo size={60} fill="black" />
+    <NotAuthenticatedLayout status={errors?.name && <ErrorBox list={errors} />}>
+      <div>
+        <Typography
+          as="h1"
+          className="text-3xl font-semibold !leading-tight pb-2"
+        >
+          Welcome aboard{" "}
+          <strong className="font-extrabold">{user.fullname}</strong>
+        </Typography>
 
-      <Typography
-        as="h1"
-        className="text-5xl pt-4 !leading-tight pb-2 motion-safe:animate-fade-enter-top"
-      >
-        Welcome aboard <strong>{user.fullname}</strong>
-      </Typography>
-
-      <Typography
-        className="motion-safe:opacity-0 motion-safe:animate-fade-enter-bottom pb-4"
-        style={{ animationDelay: "300ms" }}
-      >
-        Before being fully operational, you will need to create{" "}
-        <strong>a project</strong>. In general, a project is the name of your
-        application.
-      </Typography>
+        <Typography
+          className="motion-safe:opacity-0 motion-safe:animate-fade-enter-bottom pb-4"
+          style={{ animationDelay: "300ms" }}
+        >
+          Before being fully operational, you will need to create{" "}
+          <strong>a project</strong>. In general, a project is the name of your
+          application.
+        </Typography>
+      </div>
 
       <div className="w-full">
         <Form method="post">
