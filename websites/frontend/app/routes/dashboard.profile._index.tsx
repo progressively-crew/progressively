@@ -15,11 +15,10 @@ import { changePassword } from "~/modules/user/services/changePassword";
 import { getSession } from "~/sessions";
 import { Card, CardContent } from "~/components/Card";
 import { PageTitle } from "~/components/PageTitle";
-import { UserMenu } from "~/modules/user/components/UserMenu";
 import { Typography } from "~/components/Typography";
 import { Button } from "~/components/Buttons/Button";
 import { Spacer } from "~/components/Spacer";
-import { ThemeSwitch } from "~/components/ThemeSwitch";
+import { BackLink } from "~/components/BackLink";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -83,7 +82,6 @@ export default function ProfilePage() {
 
   return (
     <DashboardLayout
-      subNav={<UserMenu />}
       status={
         errors && Object.keys(errors).length > 0 ? (
           <ErrorBox list={errors} />
@@ -94,8 +92,8 @@ export default function ProfilePage() {
         ) : null
       }
     >
-      <div className="h-8">
-        <ThemeSwitch />
+      <div>
+        <BackLink to="/dashboard">Back to dashboard</BackLink>
       </div>
 
       <PageTitle value="My profile" />

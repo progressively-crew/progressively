@@ -41,10 +41,9 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants"
         );
 
         cy.verifyBreadcrumbs([
-          ["My projects", "/dashboard"],
+          ["All projects", "/dashboard"],
           ["Project from seeding", "/dashboard/projects/1/flags"],
           ["Production", "/dashboard/projects/1/environments/1/flags"],
-          ["With multivariate", "/dashboard/projects/1/environments/1/flags/4"],
         ]);
 
         cy.findAllByText("With multivariate").should("have.length", 1);

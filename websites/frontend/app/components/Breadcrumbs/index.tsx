@@ -6,7 +6,7 @@ import { ProjectIcon } from "../Icons/ProjectIcon";
 import { Link } from "../Link";
 import { MenuButton } from "../MenuButton";
 import { Crumbs } from "./types";
-import { Logo } from "../Logo/Logo";
+import { MdArrowBackIosNew } from "react-icons/md";
 
 export interface BreadCrumbsProps {
   crumbs: Crumbs;
@@ -18,8 +18,8 @@ export const BreadCrumbs = ({ crumbs }: BreadCrumbsProps) => {
     "focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:focus:ring-offset-slate-900";
 
   return (
-    <nav aria-label="Breadcrumbs">
-      <ol className="flex h-12 items-center -ml-2">
+    <nav aria-label="Breadcrumbs" className="py-1 px-4">
+      <ol className="flex items-center">
         {crumbs.map((crumb, index) => {
           const currentPage = index === lastItemIndex;
 
@@ -43,8 +43,8 @@ export const BreadCrumbs = ({ crumbs }: BreadCrumbsProps) => {
                   <HStack spacing={2}>
                     {crumb.isRoot ? (
                       <HStack spacing={2}>
-                        <Logo />
-                        <span className="sr-only">My projects</span>
+                        <MdArrowBackIosNew aria-hidden />
+                        All projects
                       </HStack>
                     ) : (
                       <HStack spacing={2}>

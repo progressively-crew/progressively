@@ -80,7 +80,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/delete", () => {
         cy.visit("/dashboard/projects/1/environments/1/delete");
       });
 
-      it("removes the environment and get me back to the flags page", () => {
+      it("removes the environment and get me back to the flags page z", () => {
         cy.findByRole("button", {
           name: "Yes, delete the environment",
         }).click();
@@ -98,8 +98,8 @@ describe("/dashboard/projects/[id]/environments/[envId]/delete", () => {
           );
 
         cy.findByRole("button", { name: "Environments" }).click();
-        cy.findByRole("link", { name: "Developer" }).should("be.visible");
-        cy.findByRole("link", { name: "Production" }).should("not.exist");
+        cy.findByRole("menuitem", { name: "Developer" }).should("be.visible");
+        cy.findByRole("menuitem", { name: "Production" }).should("not.exist");
       });
     });
   });

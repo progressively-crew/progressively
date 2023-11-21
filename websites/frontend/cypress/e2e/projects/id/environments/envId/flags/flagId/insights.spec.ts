@@ -41,14 +41,9 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/insights"
         );
 
         cy.verifyBreadcrumbs([
-          ["My projects", "/dashboard"],
+          ["All projects", "/dashboard"],
           ["Project from seeding", "/dashboard/projects/1/flags"],
           ["Production", "/dashboard/projects/1/environments/1/flags"],
-          [
-            "New homepage",
-            "/dashboard/projects/1/environments/1/flags/1",
-            false,
-          ],
         ]);
 
         cy.findByRole("link", { name: "Insights" })

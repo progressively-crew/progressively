@@ -6,6 +6,12 @@ import { InertWhenNavOpened } from "~/components/Breadcrumbs/InertWhenNavOpened"
 import { useMatches, useNavigation } from "@remix-run/react";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { Spinner } from "~/components/Spinner";
+import { UserNav } from "~/modules/user/components/UserNav";
+import { Typography } from "~/components/Typography";
+import { FlagIcon } from "~/components/Icons/FlagIcon";
+import { IconBox } from "~/components/IconBox";
+import { ProjectIcon } from "~/components/Icons/ProjectIcon";
+import { EnvIcon } from "~/components/Icons/EnvIcon";
 
 export interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -28,32 +34,45 @@ export const DashboardLayout = ({
   const isNormalLoad =
     navigation.state === "loading" && navigation.formData == null;
 
-  const gridClass = subNav
-    ? "md:grid grid-cols-[auto_1fr] items-start h-full"
-    : "";
-
   const layoutClassName = "max-w-7xl mx-auto";
+
+  const lastCrumb = crumbs.pop();
 
   return (
     <NavProvider>
       <SkipNavLink>Skip to content</SkipNavLink>
 
       <div className="bg-gray-50 dark:bg-slate-900 h-full flex-1">
-        {crumbs.length > 0 && (
-          <div className="py-1 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 hidden md:block ">
-            <div className="px-4">
+        {lastCrumb && (
+          <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
+            <div className="flex flex-row items-center justify-between">
               <BreadCrumbs crumbs={crumbs} />
+              <UserNav />
             </div>
+
+            {!lastCrumb.isRoot && (
+              <header
+                className={`px-8 pb-4 flex flex-row gap-2 items-center ${
+                  crumbs.length > 0 ? "pt-6" : ""
+                }`}
+              >
+                <IconBox content={lastCrumb.label} size="L">
+                  {lastCrumb.isFlag && <FlagIcon />}
+                  {lastCrumb.isProject && <ProjectIcon />}
+                  {lastCrumb.isEnv && <EnvIcon />}
+                </IconBox>
+
+                <Typography as="span" className="text-3xl font-extrabold">
+                  {lastCrumb.label}
+                </Typography>
+              </header>
+            )}
+
+            {subNav}
           </div>
         )}
 
-        <div className={gridClass}>
-          {subNav && (
-            <div className="md:sticky left-0 top-0 md:w-[300px] md:border-r border-slate-200 dark:border-slate-800 md:h-screen bg-white dark:bg-slate-800">
-              {subNav}
-            </div>
-          )}
-
+        <div>
           <InertWhenNavOpened
             className={`${layoutClassName} h-full dark:bg-slate-900 flex-1 px-4 md:px-20 pt-8 md:pt-0 w-full`}
           >
