@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   progressively-frontend:
-    image: marvinfrachet/progressively-frontend:0.0.1
+    image: marvinfrachet/progressively-frontend:latest
     ports:
       - "3000:3000"
     environment:
@@ -10,7 +10,7 @@ services:
     depends_on:
       - progressively-backend
   progressively-backend:
-    image: marvinfrachet/progressively-backend:0.0.1
+    image: marvinfrachet/progressively-backend:latest
     ports:
       - "4000:4000"
     environment:
