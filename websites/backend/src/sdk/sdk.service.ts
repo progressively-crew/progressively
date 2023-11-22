@@ -15,6 +15,7 @@ import {
 import { SchedulingService } from '../scheduling/scheduling.service';
 import { RuleService } from '../rule/rule.service';
 import { ValueToServe } from '../strategy/types';
+import { EventHit } from './types';
 
 @Injectable()
 export class SdkService {
@@ -186,5 +187,38 @@ export class SdkService {
     );
 
     return `declare module "@progressively/types" { \n${defaultDefinition}\n\n${definitionWithCustomString}\n}`;
+  }
+
+  async hitEvent(clientKey: string, visitorId: string, hit: EventHit) {
+    const metric = await this.prisma.pMetric.findFirst({
+      where: {
+        name: hit.name,
+        Environment: {
+          clientKey,
+        },
+      },
+    });
+
+    if (!metric) {
+      return null;
+    }
+
+    const date = new Date();
+    date.setHours(2);
+    date.setMinutes(2);
+    date.setSeconds(2);
+    date.setMilliseconds(2);
+
+    return this.prisma.metricHit.create({
+      data: {
+        pMetricUuid: metric.uuid,
+        visitorId,
+        date,
+        data:
+          typeof hit.data === 'object'
+            ? JSON.stringify(hit.data)
+            : String(hit.data),
+      },
+    });
   }
 }

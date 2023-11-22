@@ -133,6 +133,7 @@ model PMetric {
   createdAt       DateTime?    @default(now())
   Environment     Environment? @relation(fields: [environmentUuid], references: [uuid])
   environmentUuid String?
+  MetricHit       MetricHit[]
 }
 
 model FlagHit {
@@ -143,6 +144,15 @@ model FlagHit {
   FlagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
   flagEnvironmentFlagId        String?
   flagEnvironmentEnvironmentId String?
+}
+
+model MetricHit {
+  uuid        String   @id @default(uuid())
+  date        DateTime @default(now())
+  visitorId   String
+  data        String? // additional data
+  metric      PMetric  @relation(fields: [pMetricUuid], references: [uuid])
+  pMetricUuid String
 }
 
 model Rule {
