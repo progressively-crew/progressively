@@ -41,13 +41,6 @@ type FlagHit = {
   [key: string]: number;
 } & { date: string };
 
-interface MetricHit {
-  metric: string;
-  variant: string;
-  variantCount?: number;
-  count: number;
-}
-
 interface FlagEvaluation {
   data: string;
   _count: number;
@@ -85,7 +78,6 @@ export const loader: LoaderFunction = async ({
     flagEvaluations,
   }: {
     hitsPerVariantPerDate: Array<FlagHit>;
-    metricsByVariantCount: Array<Omit<MetricHit, "variantCount">>;
     flagEvaluations: Array<FlagEvaluation>;
   } = await getFlagHits(params.env!, params.flagId!, start, end, authCookie);
 

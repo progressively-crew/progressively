@@ -3,7 +3,6 @@ import { EnvironmentsService } from '../environments/environments.service';
 import { FlagsService } from '../flags/flags.service';
 import { PopulatedFlagEnv, PopulatedStrategy, Variant } from '../flags/types';
 import { FieldRecord } from '../rule/types';
-import { EventHit } from './types';
 import { PrismaService } from '../database/prisma.service';
 import { FlagStatus } from '../flags/flags.status';
 import {
@@ -16,7 +15,6 @@ import {
 import { SchedulingService } from '../scheduling/scheduling.service';
 import { RuleService } from '../rule/rule.service';
 import { ValueToServe } from '../strategy/types';
-import { EventTypes } from '../events/types';
 
 @Injectable()
 export class SdkService {
@@ -136,9 +134,8 @@ export class SdkService {
 
   async computeFlags(fields: FieldRecord, skipHit: boolean) {
     const clientKey = String(fields.clientKey);
-    const flagEnvs = await this.envService.getFlagEnvironmentByClientKey(
-      clientKey,
-    );
+    const flagEnvs =
+      await this.envService.getFlagEnvironmentByClientKey(clientKey);
 
     const flags = {};
 
@@ -168,41 +165,6 @@ export class SdkService {
     await this.computeFlag(flagEnv, clientKey, fields, flags, skipHit);
 
     return flags;
-  }
-
-  async hitEvent(clientKey: string, visitorId: string, hit: EventHit) {
-    const metric = await this.prisma.pMetric.findFirst({
-      where: {
-        name: hit.name,
-        Environment: {
-          clientKey,
-        },
-      },
-    });
-
-    if (!metric) {
-      return null;
-    }
-
-    const date = new Date();
-    date.setHours(2);
-    date.setMinutes(2);
-    date.setSeconds(2);
-    date.setMilliseconds(2);
-
-    return this.prisma.event.create({
-      data: {
-        flagEnvironmentEnvironmentId: metric.environmentUuid,
-        pMetricUuid: metric.uuid,
-        visitorId,
-        date,
-        type: EventTypes.Metric,
-        data:
-          typeof hit.data === 'object'
-            ? JSON.stringify(hit.data)
-            : String(hit.data),
-      },
-    });
   }
 
   async generateTypescriptTypes(clientKey: string) {

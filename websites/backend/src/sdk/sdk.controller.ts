@@ -1,10 +1,7 @@
 import {
-  BadRequestException,
-  Body,
   Controller,
   Get,
   Param,
-  Post,
   Req,
   Res,
   Headers,
@@ -12,7 +9,6 @@ import {
 } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { SdkService } from './sdk.service';
-import { EventHit } from './types';
 import { parseBase64Params, prepareCookie, resolveUserId } from './utils';
 
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
@@ -68,33 +64,5 @@ export class SdkController {
   @UseGuards(JwtAuthGuard)
   async getTypesDefinitions(@Param('clientKey') clientKey: string) {
     return this.sdkService.generateTypescriptTypes(clientKey);
-  }
-
-  @Post('/:params')
-  async hitEvent(
-    @Param('params') base64Params: string,
-    @Body() body: EventHit,
-  ) {
-    if (!body.name) {
-      throw new BadRequestException();
-    }
-
-    const fields = parseBase64Params(base64Params);
-
-    if (!fields.clientKey) {
-      throw new BadRequestException();
-    }
-
-    const eventCreated = await this.sdkService.hitEvent(
-      fields.clientKey as string,
-      String(fields?.id || ''),
-      body,
-    );
-
-    if (!eventCreated) {
-      throw new BadRequestException();
-    }
-
-    return eventCreated;
   }
 }

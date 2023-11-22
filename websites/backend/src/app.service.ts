@@ -21,7 +21,7 @@ export class AppService {
     const date = new Date();
     date.setDate(date.getDate() - 90);
 
-    await this.prisma.event.deleteMany({
+    await this.prisma.flagHit.deleteMany({
       where: {
         date: {
           lte: date,

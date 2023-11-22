@@ -5,7 +5,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { User } from './types';
 import { UserStatus } from './status';
 import { AuthProviders } from '../auth/types';
-import { UserRoles } from './roles';
 
 @Injectable()
 export class UsersService {
@@ -183,56 +182,6 @@ export class UsersService {
       },
       where: {
         uuid: userId,
-      },
-    });
-  }
-
-  getHitsForMonth(userId: string) {
-    const start = new Date();
-    start.setDate(1);
-
-    const end = new Date(start.getFullYear(), start.getMonth() + 2, 0);
-    end.setDate(1);
-
-    return this.prisma.event.count({
-      where: {
-        date: {
-          lte: end,
-          gte: start,
-        },
-        FlagEnvironment: {
-          environment: {
-            project: {
-              userProject: {
-                some: {
-                  userId,
-                  role: UserRoles.Admin,
-                },
-              },
-            },
-          },
-        },
-      },
-    });
-  }
-
-  getHitsForEnv(environmentKey: string) {
-    const start = new Date();
-    start.setDate(1);
-
-    const end = new Date(start.getFullYear(), start.getMonth() + 1, 0);
-
-    return this.prisma.event.count({
-      where: {
-        date: {
-          lte: end,
-          gte: start,
-        },
-        FlagEnvironment: {
-          environment: {
-            clientKey: environmentKey,
-          },
-        },
       },
     });
   }

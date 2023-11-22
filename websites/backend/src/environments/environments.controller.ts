@@ -65,19 +65,7 @@ export class EnvironmentsController {
       throw new BadRequestException('startDate and endDate are required.');
     }
 
-    const metricsPerDate = await this.envService.metricHitsPerDate(
-      envId,
-      startDate,
-      endDate,
-    );
-
-    const metricsByVariantCount = await this.envService.metricsByVariantCount(
-      envId,
-      startDate,
-      endDate,
-    );
-
-    return { metricsPerDate, metricsByVariantCount };
+    return { metricsPerDate: [] };
   }
 
   @Post(':envId/metrics')
@@ -94,10 +82,7 @@ export class EnvironmentsController {
   @Delete(':envId/metrics/:metricId')
   @UseGuards(HasEnvironmentAccessGuard)
   @UseGuards(JwtAuthGuard)
-  async deleteMetricFlag(
-    @Param('envId') envId: string,
-    @Param('metricId') metricId: string,
-  ) {
-    return await this.envService.deleteMetricFlag(envId, metricId);
+  async deleteMetricFlag(@Param('metricId') metricId: string) {
+    return await this.envService.deleteMetricFlag(metricId);
   }
 }

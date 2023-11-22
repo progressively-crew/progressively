@@ -1,8 +1,3 @@
-export enum EventTypes {
-  Metric = 'metric',
-  Evaluation = 'evaluation',
-}
-
 export interface Variant {
   uuid: string;
   rolloutPercentage: number;

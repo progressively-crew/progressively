@@ -5,7 +5,6 @@ import { Variant } from './types';
 import { VariantCreationDTO } from './flags.dto';
 import camelcase from 'camelcase';
 import { FlagAlreadyExists } from '../projects/errors';
-import { EventTypes } from '../events/types';
 
 @Injectable()
 export class FlagsService {
@@ -82,33 +81,13 @@ export class FlagsService {
     date.setSeconds(2);
     date.setMilliseconds(2);
 
-    return this.prisma.event.create({
+    return this.prisma.flagHit.create({
       data: {
         flagEnvironmentFlagId: flagId,
         flagEnvironmentEnvironmentId: environmentId,
-        data: valueResolved,
+        valueResolved,
         date,
         visitorId,
-        type: EventTypes.Evaluation,
-      },
-    });
-  }
-
-  async flagEvaluationsCount(
-    envId: string,
-    flagId: string,
-    startDate: string,
-    endDate: string,
-  ) {
-    return await this.prisma.event.count({
-      where: {
-        flagEnvironmentFlagId: flagId,
-        flagEnvironmentEnvironmentId: envId,
-        type: EventTypes.Evaluation,
-        date: {
-          gte: new Date(startDate),
-          lte: new Date(endDate),
-        },
       },
     });
   }
@@ -119,11 +98,10 @@ export class FlagsService {
     startDate: string,
     endDate: string,
   ) {
-    return this.prisma.event.groupBy({
-      by: ['data'],
+    return this.prisma.flagHit.groupBy({
+      by: ['valueResolved'],
       _count: true,
       where: {
-        type: EventTypes.Evaluation,
         flagEnvironmentFlagId: flagId,
         flagEnvironmentEnvironmentId: envId,
         date: {
@@ -132,134 +110,6 @@ export class FlagsService {
         },
       },
     });
-  }
-
-  getDistinctEvents(
-    envId: string,
-    flagId: string,
-    startDate: string,
-    endDate: string,
-    eventType: EventTypes,
-  ) {
-    return this.prisma.event.findMany({
-      distinct: eventType === EventTypes.Metric ? ['pMetricUuid'] : ['data'],
-      where: {
-        type: eventType,
-        flagEnvironmentFlagId: flagId,
-        flagEnvironmentEnvironmentId: envId,
-        date: {
-          gte: new Date(startDate),
-          lte: new Date(endDate),
-        },
-      },
-      include: {
-        metric: eventType === EventTypes.Metric,
-      },
-    });
-  }
-
-  async flagHitsPerVariantPerDate(
-    envId: string,
-    flagId: string,
-    startDate: string,
-    endDate: string,
-  ) {
-    const disctintHitValue = await this.getDistinctEvents(
-      envId,
-      flagId,
-      startDate,
-      endDate,
-      EventTypes.Evaluation,
-    );
-
-    const dictByDates = {};
-
-    for (const dhv of disctintHitValue) {
-      const hitsByDate = await this.prisma.event.groupBy({
-        _count: true,
-        by: ['date'],
-        where: {
-          type: EventTypes.Evaluation,
-          flagEnvironmentFlagId: flagId,
-          flagEnvironmentEnvironmentId: envId,
-          date: {
-            gte: new Date(startDate),
-            lte: new Date(endDate),
-          },
-          data: dhv.data,
-        },
-        orderBy: {
-          date: 'asc',
-        },
-      });
-
-      hitsByDate.forEach((hbd) => {
-        const isoDate = hbd.date.toISOString();
-
-        if (!dictByDates[isoDate]) {
-          dictByDates[isoDate] = {};
-        }
-
-        dictByDates[isoDate]['date'] = isoDate;
-        dictByDates[isoDate][dhv.data] = hbd._count;
-      });
-    }
-
-    return Object.keys(dictByDates)
-      .sort()
-      .map((k) => dictByDates[k]);
-  }
-
-  async metricHitsPerDate(
-    envId: string,
-    flagId: string,
-    startDate: string,
-    endDate: string,
-  ) {
-    const eventsOnMetrics = await this.getDistinctEvents(
-      envId,
-      flagId,
-      startDate,
-      endDate,
-      EventTypes.Metric,
-    );
-
-    const dictByDates = {};
-
-    for (const eom of eventsOnMetrics) {
-      const hitsByDate = await this.prisma.event.groupBy({
-        _count: true,
-        by: ['date'],
-        where: {
-          type: EventTypes.Metric,
-          flagEnvironmentFlagId: flagId,
-          flagEnvironmentEnvironmentId: envId,
-          date: {
-            gte: new Date(startDate),
-            lte: new Date(endDate),
-          },
-          pMetricUuid: eom.pMetricUuid,
-        },
-        orderBy: {
-          date: 'asc',
-        },
-      });
-
-      hitsByDate.forEach((hbd) => {
-        const isoDate = hbd.date.toISOString();
-
-        if (!dictByDates[isoDate]) {
-          dictByDates[isoDate] = {};
-        }
-
-        dictByDates[isoDate]['date'] = isoDate;
-        dictByDates[isoDate][eom.metric.name] = hbd._count;
-      });
-    }
-
-    return Object.keys(dictByDates)
-      .sort()
-      .map((k) => dictByDates[k]);
   }
 
   async deleteFlag(flagId: string) {
@@ -269,7 +119,7 @@ export class FlagsService {
           flagEnvironmentFlagId: flagId,
         },
       }),
-      this.prisma.event.deleteMany({
+      this.prisma.flagHit.deleteMany({
         where: {
           flagEnvironmentFlagId: flagId,
         },
@@ -327,9 +177,8 @@ export class FlagsService {
       }),
     ];
 
-    const [, , , , , flagRemoved] = await this.prisma.$transaction(
-      deleteQueries,
-    );
+    const [, , , , , flagRemoved] =
+      await this.prisma.$transaction(deleteQueries);
 
     return flagRemoved;
   }
