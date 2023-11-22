@@ -24,6 +24,7 @@ import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction"
 import { Typography } from "~/components/Typography";
 import { VariantEvalList } from "~/modules/insights/components/VariantEvalList";
 import { BigStat } from "~/components/BigStat";
+import { VariantDot } from "~/modules/variants/components/VariantDot";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -42,7 +43,7 @@ type FlagHit = {
 } & { date: string };
 
 interface FlagEvaluation {
-  data: string;
+  valueResolved: string;
   _count: number;
 }
 
@@ -187,8 +188,18 @@ export default function FlagInsights() {
             label={"Flag eval. count"}
             value={flagEvaluationsCount}
             unit={"evals."}
-            icon={<TbApps className="text-6xl text-slate-200" />}
+            icon={<TbApps className="h-6 w-6 text-slate-200" />}
           />
+
+          {flagEvaluations.map((flagEval) => (
+            <BigStat
+              key={flagEval.valueResolved}
+              label={flagEval.valueResolved}
+              value={flagEval._count}
+              unit={"evals."}
+              icon={<VariantDot variant={flagEval.valueResolved} size="L" />}
+            />
+          ))}
         </div>
       </Section>
 
