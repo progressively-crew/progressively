@@ -111,7 +111,7 @@ const StrategyItem = ({ strategy, variants, segments }: StrategyItemProps) => {
         />
       </div>
 
-      <div className="bg-slate-100 p-4 rounded-lg">
+      <div className="bg-slate-100 dark:bg-slate-700 p-4 rounded-lg">
         <div className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 ">
           <Typography
             as="span"
