@@ -151,6 +151,7 @@ export class FlagsController {
     if (!endDate || !startDate) {
       throw new BadRequestException('startDate and endDate are required.');
     }
+
     const hitsPerVariantPerDate =
       await this.flagService.flagEvaluationsOverTime(
         envId,

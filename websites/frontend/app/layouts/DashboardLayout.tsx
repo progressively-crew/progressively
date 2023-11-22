@@ -36,7 +36,8 @@ export const DashboardLayout = ({
 
   const layoutClassName = "max-w-7xl mx-auto";
 
-  const lastCrumb = crumbs.pop();
+  const lastCrumb = crumbs.at(-1);
+  const hasMoreThanOneCrumb = crumbs.length > 1;
 
   return (
     <NavProvider>
@@ -45,8 +46,12 @@ export const DashboardLayout = ({
       <div className="bg-gray-50 dark:bg-slate-900 h-full flex-1">
         {lastCrumb && (
           <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
-            <div className="flex flex-row items-center justify-between">
-              <BreadCrumbs crumbs={crumbs} />
+            <div
+              className={`flex flex-row items-center ${
+                hasMoreThanOneCrumb ? "justify-between" : "justify-end"
+              }`}
+            >
+              {hasMoreThanOneCrumb && <BreadCrumbs crumbs={crumbs} />}
               <UserNav />
             </div>
 

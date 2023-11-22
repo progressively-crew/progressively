@@ -292,6 +292,7 @@ export const seedDb = async () => {
       10
     );
 
+    await seedFlagHitsVariants(prismaClient, multiVariateFlagEnv);
     await seedHitMetrics(prismaClient, aMetric, bMetric);
 
     // End of Flag setup

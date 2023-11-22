@@ -44,9 +44,10 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants"
           ["All projects", "/dashboard"],
           ["Project from seeding", "/dashboard/projects/1/flags"],
           ["Production", "/dashboard/projects/1/environments/1/flags"],
+          ["With multivariate", "/dashboard/projects/1/environments/1/flags/4"],
         ]);
 
-        cy.findAllByText("With multivariate").should("have.length", 1);
+        cy.findAllByText("With multivariate").should("have.length", 2);
         cy.findByRole("heading", { name: "Variants" }).should("be.visible");
 
         cy.findByRole("link", { name: "Create a variant" }).should(

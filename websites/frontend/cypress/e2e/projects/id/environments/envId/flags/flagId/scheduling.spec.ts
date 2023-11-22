@@ -44,6 +44,11 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
           ["All projects", "/dashboard"],
           ["Project from seeding", "/dashboard/projects/1/flags"],
           ["Production", "/dashboard/projects/1/environments/1/flags"],
+          [
+            "New homepage",
+            "/dashboard/projects/1/environments/1/flags/1",
+            false,
+          ],
         ]);
 
         cy.findByRole("link", { name: "Insights" })
@@ -63,7 +68,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
           )
           .and("have.attr", "aria-current", "page");
 
-        cy.findAllByText("New homepage").should("have.length", 1);
+        cy.findAllByText("New homepage").should("have.length", 2);
         cy.findByRole("heading", { name: "Scheduling" }).should("be.visible");
 
         cy.checkA11y();
@@ -78,7 +83,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
           "Progressively | Project from seeding | Production | Flags | New footer | Scheduling"
         );
 
-        cy.findAllByText("New footer").should("have.length", 1);
+        cy.findAllByText("New footer").should("have.length", 2);
         cy.findByRole("heading", { name: "Scheduling" }).should("be.visible");
 
         cy.findByText("No schedule found").should("be.visible");
