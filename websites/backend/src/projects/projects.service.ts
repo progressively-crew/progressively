@@ -227,6 +227,15 @@ export class ProjectsService {
           },
         },
       }),
+      this.prisma.metricHit.deleteMany({
+        where: {
+          metric: {
+            Environment: {
+              projectId,
+            },
+          },
+        },
+      }),
       this.prisma.pMetric.deleteMany({
         where: {
           Environment: {

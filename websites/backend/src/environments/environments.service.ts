@@ -200,6 +200,13 @@ export class EnvironmentsService {
           flagEnvironmentEnvironmentId: envId,
         },
       }),
+      this.prisma.metricHit.deleteMany({
+        where: {
+          metric: {
+            environmentUuid: envId,
+          },
+        },
+      }),
       this.prisma.pMetric.deleteMany({
         where: {
           environmentUuid: envId,
@@ -291,11 +298,22 @@ export class EnvironmentsService {
   }
 
   async deleteMetricFlag(metricId: string) {
-    return await this.prisma.pMetric.delete({
-      where: {
-        uuid: metricId,
-      },
-    });
+    const deleteQueries = [
+      this.prisma.metricHit.deleteMany({
+        where: {
+          pMetricUuid: metricId,
+        },
+      }),
+      this.prisma.pMetric.delete({
+        where: {
+          uuid: metricId,
+        },
+      }),
+    ];
+
+    const [, deletedMetric] = await this.prisma.$transaction(deleteQueries);
+
+    return deletedMetric;
   }
 
   metricHitsCount(envId: string, startDate: string, endDate: string) {
