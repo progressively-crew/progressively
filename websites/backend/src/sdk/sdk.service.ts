@@ -168,30 +168,6 @@ export class SdkService {
     return flags;
   }
 
-  // TODO: remember to fix this when adding metric hit
-  async hitEvent(clientKey: string, visitorId: string, hit: EventHit) {
-    const metric = await this.prisma.pMetric.findFirst({
-      where: {
-        name: hit.name,
-        Environment: {
-          clientKey,
-        },
-      },
-    });
-
-    if (!metric) {
-      return null;
-    }
-
-    const date = new Date();
-    date.setHours(2);
-    date.setMinutes(2);
-    date.setSeconds(2);
-    date.setMilliseconds(2);
-
-    return undefined;
-  }
-
   async generateTypescriptTypes(clientKey: string) {
     const env = await this.prisma.environment.findFirst({
       where: { clientKey },

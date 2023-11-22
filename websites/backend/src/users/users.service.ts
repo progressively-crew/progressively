@@ -5,7 +5,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { User } from './types';
 import { UserStatus } from './status';
 import { AuthProviders } from '../auth/types';
-import { UserRoles } from './roles';
 
 @Injectable()
 export class UsersService {
