@@ -2,7 +2,7 @@ import { Table, Th, Tbody, Tr, Td } from "~/components/Table";
 import { VariantDot } from "~/modules/variants/components/VariantDot";
 
 export interface FlagEvaluation {
-  data: string;
+  valueResolved: string;
   _count: number;
 }
 
@@ -30,11 +30,11 @@ export const VariantEvalList = ({
 
       <Tbody>
         {flagEvaluations.map((fe) => (
-          <Tr key={`variant-card-${fe.data}`}>
+          <Tr key={`variant-card-${fe.valueResolved}`}>
             <Td>
               <div className="flex flex-row gap-2 items-center">
-                <VariantDot variant={fe.data} />
-                {fe.data}
+                <VariantDot variant={fe.valueResolved} />
+                {fe.valueResolved}
               </div>
             </Td>
             <Td>{fe._count}</Td>

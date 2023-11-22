@@ -87,6 +87,8 @@ export const loader: LoaderFunction = async ({
     0
   );
 
+  console.log("lol", hitsPerVariantPerDate);
+
   return {
     flagEvaluationsCount,
     flagEvaluations,
