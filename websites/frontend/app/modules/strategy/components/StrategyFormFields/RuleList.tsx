@@ -37,16 +37,18 @@ export const RuleList = ({
               segments={segments}
             />
 
-            <IconButton
-              form={formId}
-              type="submit"
-              isLoading={isDeleting}
-              loadingText="Deleting a rule..."
-              icon={<PiTrashThin className="text-xl text-slate-400" />}
-              tooltip="Remove rule"
-              value={rule.uuid}
-              name="ruleId"
-            />
+            <div className="pt-1">
+              <IconButton
+                form={formId}
+                type="submit"
+                isLoading={isDeleting}
+                loadingText="Deleting a rule..."
+                icon={<PiTrashThin className="text-xl text-slate-400" />}
+                tooltip="Remove rule"
+                value={rule.uuid}
+                name="ruleId"
+              />
+            </div>
           </div>
         );
       })}

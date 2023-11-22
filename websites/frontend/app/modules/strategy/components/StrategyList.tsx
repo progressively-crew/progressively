@@ -7,7 +7,8 @@ import { Variant } from "~/modules/variants/types";
 import { Segment } from "~/modules/segments/types";
 import { IconButton } from "~/components/Buttons/IconButton";
 import { RuleList } from "./StrategyFormFields/RuleList";
-import { PiTrashThin, PiPlusSquareThin } from "react-icons/pi";
+import { PiTrashThin } from "react-icons/pi";
+import { GoPlus } from "react-icons/go";
 import { VscSave } from "react-icons/vsc";
 import { Typography } from "~/components/Typography";
 
@@ -24,13 +25,14 @@ export const StrategyList = ({
 }: StrategyListProps) => {
   return (
     <div className="flex flex-col gap-8">
-      {items.map((strategy) => {
+      {items.map((strategy, index) => {
         return (
           <StrategyItem
             key={strategy.uuid}
             strategy={strategy}
             variants={variants}
             segments={segments}
+            index={index + 1}
           />
         );
       })}
@@ -42,9 +44,15 @@ export interface StrategyItemProps {
   strategy: Strategy;
   variants: Array<Variant>;
   segments: Array<Segment>;
+  index: number;
 }
 
-const StrategyItem = ({ strategy, variants, segments }: StrategyItemProps) => {
+const StrategyItem = ({
+  strategy,
+  variants,
+  segments,
+  index,
+}: StrategyItemProps) => {
   const navigation = useNavigation();
 
   const type = navigation?.formData?.get("_type");
@@ -82,36 +90,30 @@ const StrategyItem = ({ strategy, variants, segments }: StrategyItemProps) => {
         <input type="hidden" value={strategy.uuid} name="uuid" />
       </Form>
 
-      <div className="inline-flex flex-row gap-4 px-4 rounded-full py-1 bg-slate-100 mb-2">
-        <IconButton
-          form={updateStrategyFormId}
-          loadingText="Saving the strategy..."
-          isLoading={isEditingStrategy}
-          type="submit"
-          icon={<VscSave className="text-xl text-purple-900" />}
-          tooltip="Save strategy"
-        />
-
-        <IconButton
-          type="submit"
-          isLoading={isCreatingRule}
-          loadingText="Adding a rule..."
-          form={addStrategyRuleFormId}
-          icon={<PiPlusSquareThin className="text-xl" />}
-          tooltip="Add a rule"
-        />
-
-        <IconButton
-          form={deleteStrategyFormId}
-          type="submit"
-          isLoading={isDeletingStrategy}
-          loadingText="Deleting a strategy..."
-          icon={<PiTrashThin className="text-xl" />}
-          tooltip="Delete strategy"
-        />
-      </div>
-
       <div className="bg-slate-100 dark:bg-slate-700 p-4 rounded-lg">
+        <div className="flex flex-row gap-4 justify-between items-center pb-2">
+          <Typography as="h2" className="text-sm text-slate-600">
+            Strategy #{index}
+          </Typography>
+          {/* <IconButton
+            form={updateStrategyFormId}
+            loadingText="Saving the strategy..."
+            isLoading={isEditingStrategy}
+            type="submit"
+            icon={<VscSave className="text-xl text-purple-900" />}
+            tooltip="Save strategy"
+          /> */}
+
+          <IconButton
+            form={deleteStrategyFormId}
+            type="submit"
+            isLoading={isDeletingStrategy}
+            loadingText="Deleting a strategy..."
+            icon={<PiTrashThin className="text-xl" />}
+            tooltip="Delete strategy"
+          />
+        </div>
+
         <div className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 ">
           <Typography
             as="span"
@@ -172,6 +174,20 @@ const StrategyItem = ({ strategy, variants, segments }: StrategyItemProps) => {
               </Card>
             </>
           )}
+        </div>
+
+        <div className="flex justify-center items-center pt-2">
+          <IconButton
+            type="submit"
+            isLoading={isCreatingRule}
+            loadingText="Adding a rule..."
+            form={addStrategyRuleFormId}
+            size="L"
+            icon={
+              <GoPlus className="text-xl p-1 w-8 h-8 block bg-slate-200 hover:bg-slate-300 active:bg-slate-400 rounded-full" />
+            }
+            tooltip="Add a rule"
+          />
         </div>
       </div>
     </div>
