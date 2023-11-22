@@ -112,6 +112,75 @@ export class FlagsService {
     });
   }
 
+  async flagEvaluationsOverTime(
+    envId: string,
+    flagId: string,
+    startDate: string,
+    endDate: string,
+  ) {
+    const distinctFlagHitValues = await this.getDistinctFlagHitValues(
+      envId,
+      flagId,
+      startDate,
+      endDate,
+    );
+
+    const dictByDates = {};
+
+    for (const dhv of distinctFlagHitValues) {
+      const hitsByDate = await this.prisma.flagHit.groupBy({
+        _count: true,
+        by: ['valueResolved', 'date'],
+        where: {
+          flagEnvironmentFlagId: flagId,
+          valueResolved: dhv.valueResolved,
+          flagEnvironmentEnvironmentId: envId,
+          date: {
+            gte: new Date(startDate),
+            lte: new Date(endDate),
+          },
+        },
+        orderBy: {
+          date: 'asc',
+        },
+      });
+
+      hitsByDate.forEach((hbd) => {
+        const isoDate = hbd.date.toISOString();
+
+        if (!dictByDates[isoDate]) {
+          dictByDates[isoDate] = {};
+        }
+
+        dictByDates[isoDate]['date'] = isoDate;
+        dictByDates[isoDate][dhv.valueResolved] = hbd._count;
+      });
+    }
+
+    return Object.keys(dictByDates)
+      .sort()
+      .map((k) => dictByDates[k]);
+  }
+
+  getDistinctFlagHitValues(
+    envId: string,
+    flagId: string,
+    startDate: string,
+    endDate: string,
+  ) {
+    return this.prisma.flagHit.findMany({
+      distinct: ['valueResolved'],
+      where: {
+        flagEnvironmentFlagId: flagId,
+        flagEnvironmentEnvironmentId: envId,
+        date: {
+          gte: new Date(startDate),
+          lte: new Date(endDate),
+        },
+      },
+    });
+  }
+
   async deleteFlag(flagId: string) {
     const deleteQueries = [
       this.prisma.webhook.deleteMany({
