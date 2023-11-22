@@ -7,7 +7,7 @@ export interface VariantFieldsProps {
 
 export const VariantFields = ({ variants }: VariantFieldsProps) => {
   return (
-    <div className="grid grid-cols-4 gap-4">
+    <div className="grid grid-cols-3 gap-4">
       {variants.map((variant) => {
         return (
           <div key={variant.uuid}>

@@ -1,4 +1,4 @@
-import { useId } from "react";
+import { useId, useState } from "react";
 import { VariantDot } from "../../modules/variants/components/VariantDot";
 import { Typography } from "../Typography";
 
@@ -18,6 +18,7 @@ export const PercentageField = ({
   hiddenDot,
 }: PercentageFieldProps) => {
   const id = useId();
+  const [value, setValue] = useState(initialValue);
 
   return (
     <div className="flex flex-row gap-2">
@@ -34,22 +35,31 @@ export const PercentageField = ({
         {label}
       </Typography>
 
-      <div className="overflow-hidden inline-block w-28 border border-gray-200 dark:border-slate-800 bg-white dark:text-slate-100 dark:bg-slate-700 h-10 rounded flex flex-row focus-within:outline-none focus-within:ring-2 focus-within:ring-slate-400 focus-within:ring-offset-2 dark:focus-within:ring-offset-slate-900">
+      <div className="inline-block h-10 flex flex-row items-center focus-within:outline-none focus-within:ring-2 focus-within:ring-slate-400 focus-within:ring-offset-2 dark:focus-within:ring-offset-slate-900">
         <input
-          type="number"
+          type="range"
           id={id}
           name={name}
           min="0"
           max="100"
-          defaultValue={initialValue}
-          className="h-full px-4 w-20 pr-2 bg-transparent rounded-l outline-none"
+          value={value}
+          onChange={(e) => setValue(Number(e.target.value))}
         />
+
+        <div
+          className="
+          ml-1
+          w-0 h-0 
+  border-t-[7px] border-t-transparent
+  border-r-[10px] border-r-slate-100 dark:border-r-slate-600
+  border-b-[7px] border-b-transparent"
+        ></div>
         <Typography
           as="span"
-          className="bg-slate-100 dark:bg-slate-600 rounded-r h-full flex items-center px-2 w-8"
+          className="bg-slate-100 dark:bg-slate-600 rounded-r h-full flex justify-center items-center w-[70px] text-sm font-semibold font-mono"
           aria-hidden
         >
-          %
+          {value}%
         </Typography>
       </div>
     </div>

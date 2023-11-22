@@ -4,8 +4,8 @@
 
 :root {
   --primary: #4f46e5;
-  --bg-slide: #e2e8f0;
-  --color-slide-thumb: black;
+  --bg-slide: #f1f5f9;
+  --color-slide-thumb: #94a3b8;
 }
 
 body {
@@ -58,6 +58,7 @@ input[type="range"]::-webkit-slider-thumb {
   background-color: var(--color-slide-thumb);
   height: 2rem;
   width: 1rem;
+  border-radius: 4px;
 }
 
 input[type="range"]:focus::-webkit-slider-thumb {
@@ -83,6 +84,7 @@ input[type="range"]::-moz-range-thumb {
   background-color: var(--color-slide-thumb);
   height: 2rem;
   width: 1rem;
+  border-radius: 4px;
 }
 
 input[type="range"]:focus::-moz-range-thumb {
