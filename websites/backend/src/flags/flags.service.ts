@@ -125,10 +125,6 @@ export class FlagsService {
       endDate,
     );
 
-    console.log(
-      '------------- yooooooo ---------------',
-      distinctFlagHitValues,
-    );
     const dictByDates = {};
 
     for (const dhv of distinctFlagHitValues) {
