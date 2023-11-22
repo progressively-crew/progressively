@@ -298,7 +298,7 @@ export class EnvironmentsService {
     });
   }
 
-  async metricHitsCount(envId: string, startDate: string, endDate: string) {
+  metricHitsCount(envId: string, startDate: string, endDate: string) {
     return this.prisma.metricHit.count({
       where: {
         metric: {
@@ -310,5 +310,48 @@ export class EnvironmentsService {
         },
       },
     });
+  }
+
+  async getMetricCountPerDate(
+    envId: string,
+    startDate: string,
+    endDate: string,
+  ) {
+    const metrics = await this.prisma.pMetric.findMany({
+      where: {
+        environmentUuid: envId,
+      },
+    });
+
+    const dictByDates = {};
+
+    for (const metric of metrics) {
+      const metricCountPerDate = await this.prisma.metricHit.groupBy({
+        _count: true,
+        by: ['date', 'pMetricUuid'],
+        where: {
+          pMetricUuid: metric.uuid,
+          date: {
+            gte: new Date(startDate),
+            lte: new Date(endDate),
+          },
+        },
+      });
+
+      metricCountPerDate.forEach((hbd) => {
+        const isoDate = hbd.date.toISOString();
+
+        if (!dictByDates[isoDate]) {
+          dictByDates[isoDate] = {};
+        }
+
+        dictByDates[isoDate]['date'] = isoDate;
+        dictByDates[isoDate][metric.name] = hbd._count;
+      });
+    }
+
+    return Object.keys(dictByDates)
+      .sort()
+      .map((k) => dictByDates[k]);
   }
 }

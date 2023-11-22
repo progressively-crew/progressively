@@ -71,7 +71,13 @@ export class EnvironmentsController {
       endDate,
     );
 
-    return { metricsHitCount };
+    const metricsHitsPerDate = await this.envService.getMetricCountPerDate(
+      envId,
+      startDate,
+      endDate,
+    );
+
+    return { metricsHitCount, metricsHitsPerDate };
   }
 
   @Post(':envId/metrics')
