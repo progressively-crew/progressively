@@ -36,8 +36,7 @@ type MetricHit = {
 
 interface LoaderData {
   metricsHitCount: number;
-  hitsPerMetricPerDate: Array<MetricHit>;
-  hitsPerMetric: Array<unknown>;
+  metricsHitsPerDate: Array<MetricHit>;
 }
 
 export const loader: LoaderFunction = async ({
@@ -62,7 +61,7 @@ export const loader: LoaderFunction = async ({
 
   const authCookie = session.get("auth-cookie");
 
-  const { metricsHitCount } = await getMetricHits(
+  const { metricsHitCount, metricsHitsPerDate } = await getMetricHits(
     params.env!,
     start,
     end,
@@ -71,14 +70,12 @@ export const loader: LoaderFunction = async ({
 
   return {
     metricsHitCount,
-    hitsPerMetricPerDate: [],
-    hitsPerMetric: [],
+    metricsHitsPerDate,
   };
 };
 
 export default function EnvInsights() {
-  const { metricsHitCount, hitsPerMetricPerDate, hitsPerMetric } =
-    useLoaderData<LoaderData>();
+  const { metricsHitCount, metricsHitsPerDate } = useLoaderData<LoaderData>();
   const { project } = useProject();
   const { environment } = useEnvironment();
   const [searchParams] = useSearchParams();
@@ -145,20 +142,6 @@ export default function EnvInsights() {
             unit={"hits."}
             icon={<MetricIcon className="h-6 w-6 text-slate-200" />}
           />
-
-          {/* {hitsPerMetric.map((hpm) => (
-            <BigStat
-              key={flagEval.valueResolved}
-              label={flagEval.valueResolved}
-              value={flagEval._count}
-              unit={"evals."}
-              icon={<VariantDot variant={flagEval.valueResolved} size="L" />}
-              detail={`${
-                Math.round((flagEval._count / flagEvaluationsCount) * 10_000) /
-                100
-              }%`}
-            />
-          ))} */}
         </div>
       </Section>
 
@@ -168,8 +151,8 @@ export default function EnvInsights() {
             <SectionHeader title={"Metric hits."} />
           </CardContent>
 
-          {hitsPerMetricPerDate.length > 0 ? (
-            <LineChart data={hitsPerMetricPerDate} />
+          {metricsHitsPerDate.length > 0 ? (
+            <LineChart data={metricsHitsPerDate} />
           ) : (
             <CardContent>
               <EmptyState
