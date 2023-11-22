@@ -41,9 +41,8 @@ export class SchedulingController {
     @UserId() userId: string,
     @Param('scheduleId') scheduleId: string,
   ) {
-    const deletedSchedule = await this.schedulingService.deleteSchedule(
-      scheduleId,
-    );
+    const deletedSchedule =
+      await this.schedulingService.deleteSchedule(scheduleId);
 
     await this.activityLogService.register({
       userId,

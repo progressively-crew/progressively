@@ -3,7 +3,6 @@ import { ThrottlerModule } from '@nestjs/throttler';
 import { ConfigModule } from '@nestjs/config';
 import { WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
-import { ScheduleModule } from '@nestjs/schedule';
 import { AppService } from './app.service';
 import { FlagsModule } from './flags/flags.module';
 import { ProjectsModule } from './projects/projects.module';
@@ -44,7 +43,6 @@ import 'winston-daily-rotate-file';
       ],
     }),
     ConfigModule.forRoot(),
-    ScheduleModule.forRoot(),
     TokensModule,
     FlagsModule,
     ProjectsModule,

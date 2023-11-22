@@ -3,6 +3,7 @@ import { seedActivity } from "./activity";
 import { seedFlagHits, seedFlagHitsVariants, seedFlags } from "./flags";
 import { seedProjects } from "./projects";
 import { seedPasswordReset, seedUsers } from "./users";
+import { seedHitMetrics } from "./env";
 
 const prismaClient = new PrismaClient();
 
@@ -291,7 +292,7 @@ export const seedDb = async () => {
       10
     );
 
-    await seedFlagHitsVariants(prismaClient, multiVariateFlagEnv);
+    await seedHitMetrics(prismaClient, aMetric, bMetric);
 
     // End of Flag setup
   } catch (e) {

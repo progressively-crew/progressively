@@ -200,6 +200,13 @@ export class EnvironmentsService {
           flagEnvironmentEnvironmentId: envId,
         },
       }),
+      this.prisma.metricHit.deleteMany({
+        where: {
+          metric: {
+            environmentUuid: envId,
+          },
+        },
+      }),
       this.prisma.pMetric.deleteMany({
         where: {
           environmentUuid: envId,
@@ -291,10 +298,78 @@ export class EnvironmentsService {
   }
 
   async deleteMetricFlag(metricId: string) {
-    return await this.prisma.pMetric.delete({
+    const deleteQueries = [
+      this.prisma.metricHit.deleteMany({
+        where: {
+          pMetricUuid: metricId,
+        },
+      }),
+      this.prisma.pMetric.delete({
+        where: {
+          uuid: metricId,
+        },
+      }),
+    ];
+
+    const [, deletedMetric] = await this.prisma.$transaction(deleteQueries);
+
+    return deletedMetric;
+  }
+
+  metricHitsCount(envId: string, startDate: string, endDate: string) {
+    return this.prisma.metricHit.count({
       where: {
-        uuid: metricId,
+        metric: {
+          environmentUuid: envId,
+        },
+        date: {
+          gte: new Date(startDate),
+          lte: new Date(endDate),
+        },
       },
     });
+  }
+
+  async getMetricCountPerDate(
+    envId: string,
+    startDate: string,
+    endDate: string,
+  ) {
+    const metrics = await this.prisma.pMetric.findMany({
+      where: {
+        environmentUuid: envId,
+      },
+    });
+
+    const dictByDates = {};
+
+    for (const metric of metrics) {
+      const metricCountPerDate = await this.prisma.metricHit.groupBy({
+        _count: true,
+        by: ['date', 'pMetricUuid'],
+        where: {
+          pMetricUuid: metric.uuid,
+          date: {
+            gte: new Date(startDate),
+            lte: new Date(endDate),
+          },
+        },
+      });
+
+      metricCountPerDate.forEach((hbd) => {
+        const isoDate = hbd.date.toISOString();
+
+        if (!dictByDates[isoDate]) {
+          dictByDates[isoDate] = {};
+        }
+
+        dictByDates[isoDate]['date'] = isoDate;
+        dictByDates[isoDate][metric.name] = hbd._count;
+      });
+    }
+
+    return Object.keys(dictByDates)
+      .sort()
+      .map((k) => dictByDates[k]);
   }
 }
