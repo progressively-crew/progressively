@@ -76,7 +76,7 @@ describe("/dashboard/projects/[id]/environments/create", () => {
             "The environment has been successfully created."
           );
 
-        cy.get("main").within(() => {
+        cy.get("header").within(() => {
           cy.findAllByText("My new env").should("be.visible");
         });
 

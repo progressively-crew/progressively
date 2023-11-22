@@ -151,14 +151,12 @@ export default function WebhooksPage() {
       )}
 
       {hasWebhooks && (
-        <Card>
-          <WebhooksList
-            webhooks={webhooks}
-            projectId={project.uuid}
-            envId={environment.uuid}
-            flagId={currentFlag.uuid}
-          />
-        </Card>
+        <WebhooksList
+          webhooks={webhooks}
+          projectId={project.uuid}
+          envId={environment.uuid}
+          flagId={currentFlag.uuid}
+        />
       )}
     </DashboardLayout>
   );

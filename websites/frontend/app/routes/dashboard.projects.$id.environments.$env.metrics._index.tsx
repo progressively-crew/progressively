@@ -7,6 +7,7 @@ import { EmptyState } from "~/components/EmptyState";
 import { PageTitle } from "~/components/PageTitle";
 import { Typography } from "~/components/Typography";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
+import { EnvNavBar } from "~/modules/environments/components/EnvNavBar";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { MetricList } from "~/modules/flags/components/MetricList";
@@ -58,6 +59,7 @@ export default function Metrics() {
 
   return (
     <DashboardLayout
+      subNav={<EnvNavBar project={project} environment={environment} />}
       status={
         isMetricRemoved ? (
           <SuccessBox id="metric-removed">
@@ -108,13 +110,11 @@ export default function Metrics() {
       )}
 
       {hasMetrics && (
-        <Card>
-          <MetricList
-            metrics={metrics}
-            projectId={project.uuid}
-            envId={environment.uuid}
-          />
-        </Card>
+        <MetricList
+          metrics={metrics}
+          projectId={project.uuid}
+          envId={environment.uuid}
+        />
       )}
     </DashboardLayout>
   );
