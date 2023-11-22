@@ -176,7 +176,7 @@ export class ProjectsService {
           },
         },
       }),
-      this.prisma.event.deleteMany({
+      this.prisma.flagHit.deleteMany({
         where: {
           FlagEnvironment: {
             environment: {

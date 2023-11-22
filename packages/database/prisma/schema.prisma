@@ -94,7 +94,7 @@ model FlagEnvironment {
   status        String?       @default("NOT_ACTIVATED")
   environment   Environment   @relation(fields: [environmentId], references: [uuid])
   flag          Flag          @relation(fields: [flagId], references: [uuid])
-  events        Event[]
+  flagHits      FlagHit[]
   scheduling    Schedule[]
   variants      Variant[]
   webhooks      Webhook[]
@@ -131,23 +131,18 @@ model PMetric {
   uuid            String       @id @default(uuid())
   name            String
   createdAt       DateTime?    @default(now())
-  Event           Event[]
   Environment     Environment? @relation(fields: [environmentUuid], references: [uuid])
   environmentUuid String?
 }
 
-model Event {
-  uuid      String   @id @default(uuid())
-  date      DateTime @default(now())
-  visitorId String
-  type      String // metric or evaluation see EventTypes
-  data      String? // previously valueResolved on flagHit
-
-  pMetricUuid                  String?
+model FlagHit {
+  uuid                         String           @id @default(uuid())
+  date                         DateTime         @default(now())
+  visitorId                    String
+  valueResolved                String? // previously valueResolved on flagHit, true / false
+  FlagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
   flagEnvironmentFlagId        String?
   flagEnvironmentEnvironmentId String?
-  metric                       PMetric?         @relation(fields: [pMetricUuid], references: [uuid])
-  FlagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
 }
 
 model Rule {

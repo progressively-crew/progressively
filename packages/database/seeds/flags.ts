@@ -56,26 +56,24 @@ export const seedFlagHits = async (
   date.setMilliseconds(2);
 
   for (let i = 0; i < count; i++) {
-    await prismaClient.event.create({
+    await prismaClient.flagHit.create({
       data: {
         flagEnvironmentFlagId: flagEnv.flagId,
         flagEnvironmentEnvironmentId: flagEnv.environmentId,
-        data: "true",
+        valueResolved: "true",
         date,
         visitorId: "1",
-        type: "evaluation",
       },
     });
 
     if (i < count / 2) {
-      await prismaClient.event.create({
+      await prismaClient.flagHit.create({
         data: {
           flagEnvironmentFlagId: flagEnv.flagId,
           flagEnvironmentEnvironmentId: flagEnv.environmentId,
-          data: "false",
+          valueResolved: "false",
           date,
           visitorId: "1",
-          type: "evaluation",
         },
       });
     }
@@ -100,72 +98,24 @@ export const seedFlagHitsVariants = async (
     const count = i / 2;
 
     for (let y = 0; y < count; y++) {
-      await prismaClient.event.create({
+      await prismaClient.flagHit.create({
         data: {
           flagEnvironmentFlagId: flagEnv.flagId,
           flagEnvironmentEnvironmentId: flagEnv.environmentId,
-          data: "Control",
+          valueResolved: "Control",
           date,
           visitorId: "1",
-          type: "evaluation",
         },
       });
 
       if (y < count / 2) {
-        await prismaClient.event.create({
+        await prismaClient.flagHit.create({
           data: {
             flagEnvironmentFlagId: flagEnv.flagId,
             flagEnvironmentEnvironmentId: flagEnv.environmentId,
-            data: "Second",
+            valueResolved: "Second",
             date,
             visitorId: "1",
-            type: "evaluation",
-          },
-        });
-      }
-    }
-  }
-};
-
-export const seedFlagMetricHits = async (
-  prismaClient: PrismaClient,
-  flagEnv: any,
-  metricA: any,
-  metricB: any
-) => {
-  const dayCount = SEED_ROUND_EVENT_HITS;
-  for (let i = 1; i <= dayCount; i++) {
-    const date = new Date();
-    date.setDate(date.getDate() - dayCount + i);
-
-    date.setHours(2);
-    date.setMinutes(2);
-    date.setSeconds(2);
-    date.setMilliseconds(2);
-
-    const count = i / 2;
-
-    for (let y = 0; y < count; y++) {
-      await prismaClient.event.create({
-        data: {
-          flagEnvironmentFlagId: flagEnv.flagId,
-          flagEnvironmentEnvironmentId: flagEnv.environmentId,
-          pMetricUuid: metricB.uuid,
-          date,
-          visitorId: "1",
-          type: "metric",
-        },
-      });
-
-      if (y < count / 2) {
-        await prismaClient.event.create({
-          data: {
-            flagEnvironmentFlagId: flagEnv.flagId,
-            flagEnvironmentEnvironmentId: flagEnv.environmentId,
-            pMetricUuid: metricA.uuid,
-            date,
-            visitorId: "1",
-            type: "metric",
           },
         });
       }

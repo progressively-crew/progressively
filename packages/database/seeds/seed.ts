@@ -1,11 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { seedActivity } from "./activity";
-import {
-  seedFlagHits,
-  seedFlagHitsVariants,
-  seedFlagMetricHits,
-  seedFlags,
-} from "./flags";
+import { seedFlagHits, seedFlagHitsVariants, seedFlags } from "./flags";
 import { seedProjects } from "./projects";
 import { seedPasswordReset, seedUsers } from "./users";
 
@@ -294,13 +289,6 @@ export const seedDb = async () => {
       multiVariateFlagEnv,
       new Date(1992, 0, 6, 1),
       10
-    );
-
-    await seedFlagMetricHits(
-      prismaClient,
-      multiVariateFlagEnv,
-      aMetric,
-      bMetric
     );
 
     await seedFlagHitsVariants(prismaClient, multiVariateFlagEnv);

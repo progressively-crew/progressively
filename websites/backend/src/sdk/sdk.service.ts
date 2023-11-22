@@ -16,7 +16,6 @@ import {
 import { SchedulingService } from '../scheduling/scheduling.service';
 import { RuleService } from '../rule/rule.service';
 import { ValueToServe } from '../strategy/types';
-import { EventTypes } from '../events/types';
 
 @Injectable()
 export class SdkService {
@@ -136,9 +135,8 @@ export class SdkService {
 
   async computeFlags(fields: FieldRecord, skipHit: boolean) {
     const clientKey = String(fields.clientKey);
-    const flagEnvs = await this.envService.getFlagEnvironmentByClientKey(
-      clientKey,
-    );
+    const flagEnvs =
+      await this.envService.getFlagEnvironmentByClientKey(clientKey);
 
     const flags = {};
 
@@ -170,6 +168,7 @@ export class SdkService {
     return flags;
   }
 
+  // TODO: remember to fix this when adding metric hit
   async hitEvent(clientKey: string, visitorId: string, hit: EventHit) {
     const metric = await this.prisma.pMetric.findFirst({
       where: {
@@ -190,19 +189,7 @@ export class SdkService {
     date.setSeconds(2);
     date.setMilliseconds(2);
 
-    return this.prisma.event.create({
-      data: {
-        flagEnvironmentEnvironmentId: metric.environmentUuid,
-        pMetricUuid: metric.uuid,
-        visitorId,
-        date,
-        type: EventTypes.Metric,
-        data:
-          typeof hit.data === 'object'
-            ? JSON.stringify(hit.data)
-            : String(hit.data),
-      },
-    });
+    return undefined;
   }
 
   async generateTypescriptTypes(clientKey: string) {
