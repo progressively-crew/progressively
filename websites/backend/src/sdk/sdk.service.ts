@@ -3,7 +3,6 @@ import { EnvironmentsService } from '../environments/environments.service';
 import { FlagsService } from '../flags/flags.service';
 import { PopulatedFlagEnv, PopulatedStrategy, Variant } from '../flags/types';
 import { FieldRecord } from '../rule/types';
-import { EventHit } from './types';
 import { PrismaService } from '../database/prisma.service';
 import { FlagStatus } from '../flags/flags.status';
 import {
