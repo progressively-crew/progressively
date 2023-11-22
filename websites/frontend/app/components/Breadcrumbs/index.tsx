@@ -18,7 +18,7 @@ export const BreadCrumbs = ({ crumbs }: BreadCrumbsProps) => {
     "focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:focus:ring-offset-slate-900";
 
   return (
-    <nav aria-label="Breadcrumbs" className="py-1 px-4">
+    <nav aria-label="Breadcrumbs" className="px-4">
       <ol className="flex items-center">
         {crumbs.map((crumb, index) => {
           const currentPage = index === lastItemIndex;
