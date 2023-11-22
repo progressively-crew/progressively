@@ -21,7 +21,6 @@ import { Section, SectionHeader } from "~/components/Section";
 import { EmptyState } from "~/components/EmptyState";
 import { LineChart } from "~/components/LineChart";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
-import { Typography } from "~/components/Typography";
 import { BigStat } from "~/components/BigStat";
 import { VariantDot } from "~/modules/variants/components/VariantDot";
 
@@ -138,15 +137,7 @@ export default function FlagInsights() {
         />
       }
     >
-      <PageTitle
-        value="Insights"
-        description={
-          <Typography>
-            The events (flag evaluations and metric hits) are stored for{" "}
-            <strong>90 days</strong> and erased after this period.
-          </Typography>
-        }
-      />
+      <PageTitle value="Insights" />
 
       <div className="inline-flex">
         <Card>

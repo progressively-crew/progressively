@@ -12,7 +12,6 @@ import { PageTitle } from "~/components/PageTitle";
 import { Section, SectionHeader } from "~/components/Section";
 import { EmptyState } from "~/components/EmptyState";
 import { LineChart } from "~/components/LineChart";
-import { Typography } from "~/components/Typography";
 import { BigStat } from "~/components/BigStat";
 import { MetricIcon } from "~/components/Icons/MetricIcon";
 import { EnvNavBar } from "~/modules/environments/components/EnvNavBar";
@@ -91,15 +90,7 @@ export default function EnvInsights() {
     <DashboardLayout
       subNav={<EnvNavBar project={project} environment={environment} />}
     >
-      <PageTitle
-        value="Insights"
-        description={
-          <Typography>
-            The events (flag evaluations and metric hits) are stored for{" "}
-            <strong>90 days</strong> and erased after this period.
-          </Typography>
-        }
-      />
+      <PageTitle value="Insights" />
 
       <div className="inline-flex">
         <Card>
