@@ -54,7 +54,7 @@ describe("/dashboard/onboarding", () => {
         .should("have.focus")
         .and("contain.text", "The project has been successfully created.");
 
-      cy.findByText("My new project").should("be.visible");
+      cy.findAllByText("My new project").should("have.length", 2);
 
       cy.url().should("include", "/dashboard/projects/");
       cy.checkA11y();
