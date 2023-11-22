@@ -297,4 +297,18 @@ export class EnvironmentsService {
       },
     });
   }
+
+  async metricHitsCount(envId: string, startDate: string, endDate: string) {
+    return this.prisma.metricHit.count({
+      where: {
+        metric: {
+          environmentUuid: envId,
+        },
+        date: {
+          gte: new Date(startDate),
+          lte: new Date(endDate),
+        },
+      },
+    });
+  }
 }

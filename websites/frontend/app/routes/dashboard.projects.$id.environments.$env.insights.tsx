@@ -16,6 +16,7 @@ import { Typography } from "~/components/Typography";
 import { BigStat } from "~/components/BigStat";
 import { MetricIcon } from "~/components/Icons/MetricIcon";
 import { EnvNavBar } from "~/modules/environments/components/EnvNavBar";
+import { getMetricHits } from "~/modules/environments/services/getMetricHits";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -34,7 +35,7 @@ type MetricHit = {
 } & { date: string };
 
 interface LoaderData {
-  hitsCount: number;
+  metricsHitCount: number;
   hitsPerMetricPerDate: Array<MetricHit>;
   hitsPerMetric: Array<unknown>;
 }
@@ -61,15 +62,22 @@ export const loader: LoaderFunction = async ({
 
   const authCookie = session.get("auth-cookie");
 
+  const { metricsHitCount } = await getMetricHits(
+    params.env!,
+    start,
+    end,
+    authCookie
+  );
+
   return {
-    hitsCount: 0,
+    metricsHitCount,
     hitsPerMetricPerDate: [],
     hitsPerMetric: [],
   };
 };
 
 export default function EnvInsights() {
-  const { hitsCount, hitsPerMetricPerDate, hitsPerMetric } =
+  const { metricsHitCount, hitsPerMetricPerDate, hitsPerMetric } =
     useLoaderData<LoaderData>();
   const { project } = useProject();
   const { environment } = useEnvironment();
@@ -133,7 +141,7 @@ export default function EnvInsights() {
         <div className="inline-flex flex-row gap-6">
           <BigStat
             label={"Total metric hits"}
-            value={hitsCount}
+            value={metricsHitCount}
             unit={"hits."}
             icon={<MetricIcon className="h-6 w-6 text-slate-200" />}
           />
