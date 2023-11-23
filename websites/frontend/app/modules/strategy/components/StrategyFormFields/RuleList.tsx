@@ -7,9 +7,10 @@ import { PiTrashThin } from "react-icons/pi";
 export interface RuleListProps {
   rules: Array<Rule>;
   segments: Array<Segment>;
+  onRemoveRule: (rule: Rule) => void;
 }
 
-export const RuleList = ({ rules, segments }: RuleListProps) => {
+export const RuleList = ({ rules, segments, onRemoveRule }: RuleListProps) => {
   return (
     <div className={`flex flex-col w-full gap-2`}>
       {rules.map((rule) => {
@@ -18,8 +19,6 @@ export const RuleList = ({ rules, segments }: RuleListProps) => {
             key={rule.uuid}
             className="flex flex-row gap-4 justify-between items-start"
           >
-            <input type="hidden" value={rule.uuid} name="ruleUuid" />
-
             <StrategyRuleFormField
               initialFieldName={rule.fieldName}
               initialFieldComparator={rule.fieldComparator}
@@ -33,8 +32,7 @@ export const RuleList = ({ rules, segments }: RuleListProps) => {
                 type="button"
                 icon={<PiTrashThin className="text-xl text-slate-400" />}
                 tooltip="Remove rule"
-                value={rule.uuid}
-                name="ruleId"
+                onClick={() => onRemoveRule(rule)}
               />
             </div>
           </div>

@@ -9,6 +9,9 @@ import { Strategy } from "../../types";
 import { RuleList } from "../StrategyFormFields/RuleList";
 import { StrategyFormFields } from "../StrategyFormFields/StrategyFormFields";
 import { useDeleteStrategy } from "./useDeleteStrategy";
+import { useState } from "react";
+import { Rule } from "~/modules/rules/types";
+import { createEmptyRule } from "~/modules/rules/services/createEmptyRule";
 
 export interface StrategyItemProps {
   strategy: Strategy;
@@ -23,8 +26,28 @@ export const StrategyItem = ({
   segments,
   index,
 }: StrategyItemProps) => {
+  const [ruleList, setRuleList] = useState<Array<Rule>>(strategy.rules || []);
   const { isDeletingStrategy, deleteStrategyFormId } =
     useDeleteStrategy(strategy);
+
+  const formVariants = variants.map((variant) => {
+    const rolloutPercentage =
+      strategy.variants?.find((sv) => sv.variantUuid === variant.uuid)
+        ?.rolloutPercentage || 0;
+
+    return {
+      ...variant,
+      rolloutPercentage,
+    };
+  });
+
+  const addRule = () => {
+    setRuleList((s) => [...s, createEmptyRule()]);
+  };
+
+  const removeRule = (rule: Rule) => {
+    setRuleList((s) => s.filter((r) => r.uuid !== rule.uuid));
+  };
 
   return (
     <div>
@@ -57,23 +80,13 @@ export const StrategyItem = ({
               <StrategyFormFields
                 valueToServe={strategy.valueToServe}
                 valueToServeType={strategy.valueToServeType}
-                variants={variants.map((variant) => {
-                  const rolloutPercentage =
-                    strategy.variants?.find(
-                      (sv) => sv.variantUuid === variant.uuid
-                    )?.rolloutPercentage || 0;
-
-                  return {
-                    ...variant,
-                    rolloutPercentage,
-                  };
-                })}
+                variants={formVariants}
                 rolloutPercentage={strategy.rolloutPercentage || 0}
               />
             </CardContent>
           </Card>
 
-          {strategy.rules && strategy.rules?.length > 0 && (
+          {ruleList.length > 0 && (
             <>
               <Typography
                 as="span"
@@ -83,7 +96,11 @@ export const StrategyItem = ({
               </Typography>
               <Card>
                 <CardContent>
-                  <RuleList rules={strategy.rules || []} segments={segments} />
+                  <RuleList
+                    rules={ruleList}
+                    segments={segments}
+                    onRemoveRule={removeRule}
+                  />
                 </CardContent>
               </Card>
             </>
@@ -98,6 +115,7 @@ export const StrategyItem = ({
               <GoPlus className="text-xl p-1 w-8 h-8 block bg-slate-200 hover:bg-slate-300 active:bg-slate-400 rounded-full" />
             }
             tooltip="Add a rule"
+            onClick={addRule}
           />
         </div>
       </div>
