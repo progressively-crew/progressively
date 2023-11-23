@@ -28,7 +28,6 @@ import { getFlagEnvMetaTitle } from "~/modules/flags/services/getFlagEnvMetaTitl
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { updateRuleAction } from "~/modules/rules/form-actions/updateRuleAction";
-import { deleteRule } from "~/modules/rules/services/deleteRule";
 import { RuleType } from "~/modules/rules/types";
 import { SegmentRulesForm } from "~/modules/segments/components/SegmentRulesForm";
 import { createSegmentRuleAction } from "~/modules/segments/form-actions/createSegmentRuleAction";
@@ -87,14 +86,6 @@ export const action: ActionFunction = async ({
 
   if (type === "edit-segment-rules") {
     return updateRuleAction(formData, authCookie);
-  }
-
-  if (type === "delete-rule") {
-    const ruleId = formData.get("ruleId")?.toString();
-
-    if (ruleId) {
-      return deleteRule(ruleId, authCookie);
-    }
   }
 
   return {};

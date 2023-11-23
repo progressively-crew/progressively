@@ -26,10 +26,8 @@ import { getStrategies } from "~/modules/strategy/services/getStrategies";
 import { StrategyList } from "~/modules/strategy/components/StrategyList/StrategyList";
 import { createStrategy } from "~/modules/strategy/services/createStrategy";
 import { deleteStrategy } from "~/modules/strategy/services/deleteStrategy";
-import { createStrategyRule } from "~/modules/strategy/services/createStrategyRule";
 import { editStrategyAction } from "~/modules/strategy/form-actions/editStrategyAction";
 import { CreateButton } from "~/components/Buttons/CreateButton";
-import { deleteRule } from "~/modules/rules/services/deleteRule";
 import { Variant } from "~/modules/variants/types";
 import { getVariants } from "~/modules/variants/services/getVariants";
 import { EmptyState } from "~/components/EmptyState";
@@ -39,6 +37,7 @@ import { getSegments } from "~/modules/segments/services/getSegments";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { Typography } from "~/components/Typography";
+import queryString from "qs";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -70,6 +69,8 @@ export const action: ActionFunction = async ({
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
 
+  const clonedRequest = request.clone();
+
   const formData = await request.formData();
   const type = formData.get("_type");
 
@@ -93,6 +94,12 @@ export const action: ActionFunction = async ({
   }
 
   if (type === "edit-strategy") {
+    const formQueryString = await clonedRequest.text();
+
+    console.log("yooo", formQueryString);
+    const obj = queryString.parse(formQueryString, { arrayFormat: "index" });
+    console.log("----f-zafzafa-----------", obj);
+
     // const strategyId = formData.get("uuid")?.toString();
     // if (strategyId) {
     //   return editStrategyAction(formData, strategyId, authCookie);

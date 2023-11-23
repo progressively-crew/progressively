@@ -41,7 +41,7 @@ export const StrategyList = ({
                 strategy={strategy}
                 variants={variants}
                 segments={segments}
-                index={index + 1}
+                index={index}
               />
             );
           })}
