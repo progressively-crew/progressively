@@ -1,44 +1,15 @@
-import { Card, CardContent } from "~/components/Card";
-import { Strategy } from "../types";
-import { Form, useNavigation } from "@remix-run/react";
+import { useNavigation, Form } from "@remix-run/react";
 import { useId } from "react";
-import { StrategyFormFields } from "./StrategyFormFields/StrategyFormFields";
-import { Variant } from "~/modules/variants/types";
-import { Segment } from "~/modules/segments/types";
-import { IconButton } from "~/components/Buttons/IconButton";
-import { RuleList } from "./StrategyFormFields/RuleList";
-import { PiTrashThin } from "react-icons/pi";
 import { GoPlus } from "react-icons/go";
-import { VscSave } from "react-icons/vsc";
+import { PiTrashThin } from "react-icons/pi";
+import { IconButton } from "~/components/Buttons/IconButton";
+import { Card, CardContent } from "~/components/Card";
 import { Typography } from "~/components/Typography";
-
-export interface StrategyListProps {
-  items: Array<Strategy>;
-  variants: Array<Variant>;
-  segments: Array<Segment>;
-}
-
-export const StrategyList = ({
-  items,
-  variants,
-  segments,
-}: StrategyListProps) => {
-  return (
-    <div className="flex flex-col gap-2">
-      {items.map((strategy, index) => {
-        return (
-          <StrategyItem
-            key={strategy.uuid}
-            strategy={strategy}
-            variants={variants}
-            segments={segments}
-            index={index + 1}
-          />
-        );
-      })}
-    </div>
-  );
-};
+import { Segment } from "~/modules/segments/types";
+import { Variant } from "~/modules/variants/types";
+import { Strategy } from "../../types";
+import { RuleList } from "../StrategyFormFields/RuleList";
+import { StrategyFormFields } from "../StrategyFormFields/StrategyFormFields";
 
 export interface StrategyItemProps {
   strategy: Strategy;
@@ -47,7 +18,7 @@ export interface StrategyItemProps {
   index: number;
 }
 
-const StrategyItem = ({
+export const StrategyItem = ({
   strategy,
   variants,
   segments,
@@ -95,14 +66,6 @@ const StrategyItem = ({
           <Typography as="h2" className="text-sm text-slate-600">
             Strategy #{index}
           </Typography>
-          {/* <IconButton
-            form={updateStrategyFormId}
-            loadingText="Saving the strategy..."
-            isLoading={isEditingStrategy}
-            type="submit"
-            icon={<VscSave className="text-xl text-purple-900" />}
-            tooltip="Save strategy"
-          /> */}
 
           <IconButton
             form={deleteStrategyFormId}
@@ -148,7 +111,7 @@ const StrategyItem = ({
             </CardContent>
           </Card>
 
-          {strategy.rules?.length > 0 && (
+          {strategy.rules && strategy.rules?.length > 0 && (
             <>
               <Typography
                 as="span"
@@ -158,18 +121,16 @@ const StrategyItem = ({
               </Typography>
               <Card>
                 <CardContent>
-                  <div className="w-full">
-                    <RuleList
-                      rules={strategy.rules || []}
-                      currentlyDeletingRuleUuid={
-                        type === "delete-strategy-rule"
-                          ? navigation?.formData?.get("ruleId")?.toString()
-                          : undefined
-                      }
-                      formId={deleteStrategyRule}
-                      segments={segments}
-                    />
-                  </div>
+                  <RuleList
+                    rules={strategy.rules || []}
+                    currentlyDeletingRuleUuid={
+                      type === "delete-strategy-rule"
+                        ? navigation?.formData?.get("ruleId")?.toString()
+                        : undefined
+                    }
+                    formId={deleteStrategyRule}
+                    segments={segments}
+                  />
                 </CardContent>
               </Card>
             </>

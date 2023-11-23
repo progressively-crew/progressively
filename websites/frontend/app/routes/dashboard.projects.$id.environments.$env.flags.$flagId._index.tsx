@@ -23,7 +23,7 @@ import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction"
 import { PageTitle } from "~/components/PageTitle";
 import { Strategy } from "~/modules/strategy/types";
 import { getStrategies } from "~/modules/strategy/services/getStrategies";
-import { StrategyList } from "~/modules/strategy/components/StrategyList";
+import { StrategyList } from "~/modules/strategy/components/StrategyList/StrategyList";
 import { createStrategy } from "~/modules/strategy/services/createStrategy";
 import { deleteStrategy } from "~/modules/strategy/services/deleteStrategy";
 import { createStrategyRule } from "~/modules/strategy/services/createStrategyRule";
@@ -192,9 +192,10 @@ export default function FlagById() {
         value="Audience"
         description={
           <Typography>
-            Configure strategies and customize rules to better target your
-            <br />
-            audience.
+            When one user requests flags evaluations from an SDK, if they match{" "}
+            <strong>at least one of the following strategies</strong>, they will
+            resolve an activated flag with the associated value (variant value
+            or "true").
           </Typography>
         }
         action={
