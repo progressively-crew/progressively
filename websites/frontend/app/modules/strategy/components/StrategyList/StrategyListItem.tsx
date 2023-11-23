@@ -1,4 +1,3 @@
-import { GoPlus } from "react-icons/go";
 import { PiTrashThin } from "react-icons/pi";
 import { IconButton } from "~/components/Buttons/IconButton";
 import { Card, CardContent } from "~/components/Card";
