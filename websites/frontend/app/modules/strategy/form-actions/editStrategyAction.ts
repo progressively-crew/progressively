@@ -1,93 +1,81 @@
-/* eslint-disable sonarjs/cognitive-complexity */
-import { updateRule } from "~/modules/rules/services/updateRule";
 import { ComparatorEnum, RuleUpdateDto } from "~/modules/rules/types";
+import { StrategyUpdateDto, StrategyVariant, ValueToServe } from "../types";
 import { editStrategy } from "../services/editStrategy";
-import { StrategyVariant, ValueToServe } from "../types";
 
-/* eslint-disable unicorn/no-array-for-each */
-export const editStrategyAction = async (
-  formData: FormData,
-  strategyId: string,
-  authCookie: string
-) => {
-  const rolloutPercentage = formData.get("rolloutPercentage")?.toString() || "";
-  const valueToServeType =
-    formData.get("value-to-serve-type")?.toString() || "";
+const mapRawVariantToActualVariant = (rawVariant: any): StrategyVariant => {
+  return {
+    variantUuid: rawVariant.uuid,
+    rolloutPercentage: Number(rawVariant.variantRolloutPercentage),
+  };
+};
 
-  const valueToServe = formData.get("value-to-serve")?.toString();
-  const allVariantUuids = formData.getAll("variantUuid");
-  const allVariantPercentage = formData.getAll("variantRolloutPercentage");
+const isValidRule = (rule: RuleUpdateDto) => {
+  if (rule.segmentUuid) return true;
 
-  const allIds = formData.getAll("ruleUuid");
-  const allFieldName = formData.getAll("field-name");
-  const allComparators = formData.getAll("field-comparator");
-  const allFieldValue = formData.getAll("field-value");
-  const allFieldSegmentsUuid = formData.getAll("segmentUuid");
+  return rule.fieldName && rule.fieldComparator && rule.fieldValue;
+};
 
-  const toUpdate: Array<RuleUpdateDto & { uuid: string }> = [];
-  const entries = allIds.entries();
-  let hasError = false;
+const mapRawRuleToActualRule = (rawRule: any): RuleUpdateDto => {
+  return {
+    fieldName: rawRule["field-name"],
+    fieldComparator:
+      rawRule["field-comparator"] === ComparatorEnum.Contains
+        ? ComparatorEnum.Contains
+        : ComparatorEnum.Equals,
+    fieldValue: rawRule["field-value"],
+    segmentUuid: rawRule["segmentUuid"],
+  };
+};
 
-  for (const [i, uuid] of entries) {
-    const fieldName = allFieldName[i]?.toString() || "";
-    const fieldComparator = allComparators[i]?.toString() || "";
-    const fieldValue = allFieldValue[i]?.toString() || "";
-    const segmentUuid = allFieldSegmentsUuid[i]?.toString() || "";
+const mapRawStrategyToActualStrategy = (
+  rawStrategy: any
+): StrategyUpdateDto => {
+  const rules: Array<RuleUpdateDto> = rawStrategy.rules
+    .map((rawRule: any) => mapRawRuleToActualRule(rawRule))
+    .filter((rule: RuleUpdateDto) => isValidRule(rule));
 
-    if (uuid && ((fieldName && fieldComparator && fieldValue) || segmentUuid)) {
-      const ruleDto: RuleUpdateDto & { uuid: string } = {
-        uuid: uuid.toString(),
-        fieldName: fieldName || undefined,
-        fieldValue: fieldValue || undefined,
-        fieldComparator: fieldComparator
-          ? (fieldComparator as ComparatorEnum)
-          : undefined,
-        segmentUuid: segmentUuid || undefined,
-      };
-
-      toUpdate.push(ruleDto);
-    } else {
-      hasError = true;
-    }
-  }
-
-  if (!hasError) {
-    for (const rule of toUpdate) {
-      const { uuid, ...dto } = rule;
-      await updateRule(uuid!, dto, authCookie);
-    }
-
-    const variants: Array<StrategyVariant> = allVariantUuids.map(
-      (variantUuid, index) => {
-        const rolloutPercentage = Number(
-          allVariantPercentage[index].toString()
-        );
-
-        return {
-          variantUuid: variantUuid.toString(),
-          rolloutPercentage,
-        };
-      }
-    );
-
-    await editStrategy(
-      strategyId,
-      {
-        valueToServeType: valueToServeType as ValueToServe,
-        valueToServe,
-        rolloutPercentage: Number(rolloutPercentage),
-        variants,
-      },
-      authCookie
-    );
-  }
+  const variants: Array<StrategyVariant> = (rawStrategy.variants || []).map(
+    (variant: any) => mapRawVariantToActualVariant(variant)
+  );
 
   return {
-    successStrategyEdited: !hasError,
-    ruleErrors: hasError
-      ? {
-          ruleAudience: "All the fields are required in every single rule.",
-        }
-      : undefined,
+    rolloutPercentage: rawStrategy.rolloutPercentage
+      ? Number(rawStrategy.rolloutPercentage)
+      : 0,
+    valueToServeType:
+      rawStrategy["value-to-serve-type"] === ValueToServe.Variant
+        ? ValueToServe.Variant
+        : ValueToServe.Boolean,
+    variants,
+    rules,
   };
+};
+
+export const editStrategyAction = async (
+  formObject: any,
+  authCookie: string
+) => {
+  const rawStrategies = formObject?.strategies || [];
+
+  const strategiesToUpdate: Array<StrategyUpdateDto> = rawStrategies.map(
+    (rawStrat: any) => mapRawStrategyToActualStrategy(rawStrat)
+  );
+
+  try {
+    await editStrategies(strategiesToUpdate, authCookie);
+
+    return {
+      successStrategyEdited: true,
+    };
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return {
+        errors: {
+          message: error.message,
+        },
+      };
+    }
+  }
+
+  console.log("yooo", JSON.stringify(strategiesToUpdate, null, 10));
 };

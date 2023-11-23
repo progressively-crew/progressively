@@ -9,16 +9,16 @@ export interface VariantFieldsProps {
 export const VariantFields = ({ variants, index }: VariantFieldsProps) => {
   return (
     <div className="grid grid-cols-3 gap-4">
-      {variants.map((variant) => {
+      {variants.map((variant, variantIndex: number) => {
         return (
           <div key={variant.uuid}>
             <input
               type="hidden"
-              name={`strategies[${index}][variantUuid]`}
+              name={`strategies[${index}][variants][${variantIndex}][uuid]`}
               value={variant.uuid}
             />
             <PercentageField
-              name={`strategies[${index}][variantRolloutPercentage]`}
+              name={`strategies[${index}][variants][${variantIndex}][variantRolloutPercentage]`}
               initialValue={variant.rolloutPercentage}
               label={variant.value}
             />

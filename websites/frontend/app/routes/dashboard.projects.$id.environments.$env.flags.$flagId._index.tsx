@@ -37,7 +37,7 @@ import { getSegments } from "~/modules/segments/services/getSegments";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { Typography } from "~/components/Typography";
-import queryString from "qs";
+import qs from "qs";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -57,9 +57,6 @@ type ActionDataType = null | {
   errors?: { [key: string]: string | undefined };
   successStrategyEdited?: boolean;
   successStrategyDeleted?: boolean;
-  ruleErrors?: {
-    ruleAudience: string;
-  };
 };
 
 export const action: ActionFunction = async ({
@@ -95,15 +92,9 @@ export const action: ActionFunction = async ({
 
   if (type === "edit-strategy") {
     const formQueryString = await clonedRequest.text();
+    const formObject = qs.parse(formQueryString, { depth: 4 });
 
-    console.log("yooo", formQueryString);
-    const obj = queryString.parse(formQueryString, { arrayFormat: "index" });
-    console.log("----f-zafzafa-----------", obj);
-
-    // const strategyId = formData.get("uuid")?.toString();
-    // if (strategyId) {
-    //   return editStrategyAction(formData, strategyId, authCookie);
-    // }
+    return editStrategyAction(formObject, authCookie);
   }
 
   return null;
@@ -175,8 +166,6 @@ export default function FlagById() {
           </SuccessBox>
         ) : actionData?.errors ? (
           <ErrorBox list={actionData.errors} />
-        ) : actionData?.ruleErrors ? (
-          <ErrorBox list={actionData.ruleErrors} />
         ) : null
       }
     >
