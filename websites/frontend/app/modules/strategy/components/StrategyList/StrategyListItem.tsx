@@ -1,4 +1,3 @@
-import { Form } from "@remix-run/react";
 import { GoPlus } from "react-icons/go";
 import { PiTrashThin } from "react-icons/pi";
 import { IconButton } from "~/components/Buttons/IconButton";
@@ -29,11 +28,6 @@ export const StrategyItem = ({
 
   return (
     <div>
-      <Form method="post" id={deleteStrategyFormId}>
-        <input type="hidden" value="delete-strategy" name="_type" />
-        <input type="hidden" value={strategy.uuid} name="uuid" />
-      </Form>
-
       <div className="bg-slate-100 dark:bg-slate-700 p-4 rounded-lg">
         <div className="flex flex-row gap-4 justify-between items-center pb-2">
           <Typography as="h2" className="text-sm text-slate-600">
@@ -60,24 +54,22 @@ export const StrategyItem = ({
 
           <Card>
             <CardContent>
-              <Form method="post" className="block">
-                <StrategyFormFields
-                  valueToServe={strategy.valueToServe}
-                  valueToServeType={strategy.valueToServeType}
-                  variants={variants.map((variant) => {
-                    const rolloutPercentage =
-                      strategy.variants?.find(
-                        (sv) => sv.variantUuid === variant.uuid
-                      )?.rolloutPercentage || 0;
+              <StrategyFormFields
+                valueToServe={strategy.valueToServe}
+                valueToServeType={strategy.valueToServeType}
+                variants={variants.map((variant) => {
+                  const rolloutPercentage =
+                    strategy.variants?.find(
+                      (sv) => sv.variantUuid === variant.uuid
+                    )?.rolloutPercentage || 0;
 
-                    return {
-                      ...variant,
-                      rolloutPercentage,
-                    };
-                  })}
-                  rolloutPercentage={strategy.rolloutPercentage || 0}
-                />
-              </Form>
+                  return {
+                    ...variant,
+                    rolloutPercentage,
+                  };
+                })}
+                rolloutPercentage={strategy.rolloutPercentage || 0}
+              />
             </CardContent>
           </Card>
 
