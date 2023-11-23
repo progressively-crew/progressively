@@ -10,8 +10,6 @@ const mapRawVariantToActualVariant = (rawVariant: any): StrategyVariant => {
 };
 
 const isValidRule = (rule: RuleUpdateDto) => {
-  if (rule.segmentUuid) return true;
-
   return rule.fieldName && rule.fieldComparator && rule.fieldValue;
 };
 
@@ -23,7 +21,6 @@ const mapRawRuleToActualRule = (rawRule: any): RuleUpdateDto => {
         ? ComparatorEnum.Contains
         : ComparatorEnum.Equals,
     fieldValue: rawRule["field-value"],
-    segmentUuid: rawRule["segmentUuid"],
   };
 };
 

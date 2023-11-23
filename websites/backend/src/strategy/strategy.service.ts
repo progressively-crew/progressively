@@ -87,14 +87,6 @@ export class StrategyService {
     const strategies = [];
     // Delete all and re-insert
     await this.purgeStrategyForFlagEnv(envId, flagId);
-    const flagEnvSegments = await this.prisma.segment.findMany({
-      where: {
-        flagEnvironmentEnvironmentId: envId,
-        flagEnvironmentFlagId: flagId,
-      },
-    });
-
-    const segmentUuids = flagEnvSegments.map((s) => s.uuid);
 
     const createQueries = [];
     for (const strategyDto of strategiesDto) {
@@ -127,36 +119,22 @@ export class StrategyService {
 
       const rules = strategyDto.rules || [];
       for (const rule of rules) {
-        if (!rule.segmentUuid || segmentUuids.includes(rule.segmentUuid)) {
-          createQueries.push(
-            this.prisma.rule.create({
-              data: {
-                strategyUuid: newStrategy.uuid,
-                segmentUuid: rule?.segmentUuid || null,
-                fieldComparator: rule.fieldComparator,
-                fieldName: rule.fieldName,
-                fieldValue: rule.fieldValue,
-              },
-            }),
-          );
-        }
+        createQueries.push(
+          this.prisma.rule.create({
+            data: {
+              strategyUuid: newStrategy.uuid,
+              fieldComparator: rule.fieldComparator,
+              fieldName: rule.fieldName,
+              fieldValue: rule.fieldValue,
+            },
+          }),
+        );
       }
     }
 
     await this.prisma.$transaction(createQueries);
 
     return strategies;
-  }
-
-  createStrategyRule(strategyId: string) {
-    return this.prisma.rule.create({
-      data: {
-        strategyUuid: strategyId,
-        fieldComparator: ComparatorEnum.Equals,
-        fieldName: '',
-        fieldValue: '',
-      },
-    });
   }
 
   async hasPermissionOnStrategy(

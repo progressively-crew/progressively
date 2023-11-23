@@ -1,22 +1,15 @@
 import { IconButton } from "~/components/Buttons/IconButton";
 import { Rule } from "~/modules/rules/types";
 import { StrategyRuleFormField } from "../StrategyRuleFormField";
-import { Segment } from "~/modules/segments/types";
 import { PiTrashThin } from "react-icons/pi";
 
 export interface RuleListProps {
   rules: Array<Rule>;
-  segments: Array<Segment>;
   onRemoveRule: (rule: Rule) => void;
   index: number;
 }
 
-export const RuleList = ({
-  rules,
-  segments,
-  onRemoveRule,
-  index,
-}: RuleListProps) => {
+export const RuleList = ({ rules, onRemoveRule, index }: RuleListProps) => {
   return (
     <div className={`flex flex-col w-full gap-2`}>
       {rules.map((rule, ruleIndex: number) => {
@@ -29,8 +22,6 @@ export const RuleList = ({
               initialFieldName={rule.fieldName}
               initialFieldComparator={rule.fieldComparator}
               initialFieldValue={rule.fieldValue}
-              initialSegmentUuid={rule.segmentUuid}
-              segments={segments}
               index={index}
               ruleIndex={ruleIndex}
             />

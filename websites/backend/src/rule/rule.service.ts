@@ -1,100 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../database/prisma.service';
-import { RuleType, RuleUpdateDto } from './types';
+import { RuleType } from './types';
 import { FieldRecord } from './types';
 import { Rule } from './Rule';
 
 @Injectable()
 export class RuleService {
-  constructor(private prisma: PrismaService) {}
-
-  async hasPermissionOnRule(
-    ruleId: string,
-    userId: string,
-    roles?: Array<string>,
-  ) {
-    const flagOfProjectOfSegment = await this.prisma.userProject.findFirst({
-      where: {
-        userId,
-        project: {
-          environments: {
-            some: {
-              flagEnvironment: {
-                some: {
-                  Segment: { some: { rule: { some: { uuid: ruleId } } } },
-                },
-              },
-            },
-          },
-        },
-      },
-    });
-
-    const flagOfProjectOfStrategies = await this.prisma.userProject.findFirst({
-      where: {
-        userId,
-        project: {
-          environments: {
-            some: {
-              flagEnvironment: {
-                some: {
-                  strategies: { some: { rules: { some: { uuid: ruleId } } } },
-                },
-              },
-            },
-          },
-        },
-      },
-    });
-
-    if (!flagOfProjectOfSegment && !flagOfProjectOfStrategies) {
-      return false;
-    }
-
-    if (!roles || roles.length === 0) {
-      return true;
-    }
-
-    return (
-      roles.includes(flagOfProjectOfSegment.role) ||
-      roles.includes(flagOfProjectOfStrategies.role)
-    );
-  }
-
-  editRule(ruleId: string, rule: RuleUpdateDto) {
-    return this.prisma.rule.update({
-      where: { uuid: ruleId },
-      data: {
-        fieldComparator: rule.fieldComparator || null,
-        fieldName: rule.fieldName || null,
-        fieldValue: rule.fieldValue || null,
-        segmentUuid: rule.segmentUuid, // dont fallback to null, important
-      },
-      include: {
-        Segment: true,
-        Strategy: true,
-      },
-    });
-  }
-
-  deleteRule(ruleId: string) {
-    return this.prisma.rule.delete({
-      where: {
-        uuid: ruleId,
-      },
-      include: {
-        Segment: true,
-        Strategy: true,
-      },
-    });
-  }
-
   isMatchingRule(rule: Partial<RuleType>, fields: FieldRecord) {
-    // Dealing with Segment first
-    if (rule.Segment) {
-      return this.isMatchingAllRules(rule.Segment.rule, fields);
-    }
-
     // Dealing with regular rules
     const clientFieldValue = fields[rule.fieldName] || '';
     const fieldValues = rule.fieldValue?.split('\n') || '';

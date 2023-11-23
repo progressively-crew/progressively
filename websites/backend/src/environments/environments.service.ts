@@ -26,15 +26,7 @@ export class EnvironmentsService {
         scheduling: true,
         strategies: {
           include: {
-            rules: {
-              include: {
-                Segment: {
-                  include: {
-                    rule: true,
-                  },
-                },
-              },
-            },
+            rules: true,
             variants: {
               include: {
                 variant: true,
@@ -64,15 +56,7 @@ export class EnvironmentsService {
         scheduling: true,
         strategies: {
           include: {
-            rules: {
-              include: {
-                Segment: {
-                  include: {
-                    rule: true,
-                  },
-                },
-              },
-            },
+            rules: true,
             variants: {
               include: {
                 variant: true,
@@ -176,13 +160,6 @@ export class EnvironmentsService {
       }),
       this.prisma.rule.deleteMany({
         where: {
-          Segment: {
-            flagEnvironmentEnvironmentId: envId,
-          },
-        },
-      }),
-      this.prisma.rule.deleteMany({
-        where: {
           Strategy: {
             flagEnvironmentEnvironmentId: envId,
           },
@@ -218,11 +195,6 @@ export class EnvironmentsService {
         },
       }),
       this.prisma.schedule.deleteMany({
-        where: {
-          flagEnvironmentEnvironmentId: envId,
-        },
-      }),
-      this.prisma.segment.deleteMany({
         where: {
           flagEnvironmentEnvironmentId: envId,
         },

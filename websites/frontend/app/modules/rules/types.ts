@@ -2,7 +2,6 @@ export interface RuleType {
   fieldName: string;
   fieldComparator: ComparatorEnum;
   fieldValue: string;
-  segmentUuid?: string;
 }
 
 export enum ComparatorEnum {
@@ -16,5 +15,4 @@ export type RuleUpdateDto = {
   fieldName?: string;
   fieldComparator?: ComparatorEnum;
   fieldValue?: string;
-  segmentUuid?: string;
 };

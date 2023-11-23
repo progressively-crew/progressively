@@ -1,6 +1,5 @@
 import { Strategy } from "../../types";
 import { Variant } from "~/modules/variants/types";
-import { Segment } from "~/modules/segments/types";
 import { StrategyItem } from "./StrategyListItem";
 import { Form } from "@remix-run/react";
 import { Button } from "~/components/Buttons/Button";
@@ -8,14 +7,9 @@ import { Button } from "~/components/Buttons/Button";
 export interface StrategyListProps {
   items: Array<Strategy>;
   variants: Array<Variant>;
-  segments: Array<Segment>;
 }
 
-export const StrategyList = ({
-  items,
-  variants,
-  segments,
-}: StrategyListProps) => {
+export const StrategyList = ({ items, variants }: StrategyListProps) => {
   return (
     <div>
       {items.map((strategy) => {
@@ -40,7 +34,6 @@ export const StrategyList = ({
                 key={strategy.uuid}
                 strategy={strategy}
                 variants={variants}
-                segments={segments}
                 index={index}
               />
             );

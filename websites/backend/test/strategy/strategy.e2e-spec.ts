@@ -4,7 +4,6 @@ import { seedDb, cleanupDb } from '@progressively/database/seed';
 import { authenticate } from '../helpers/authenticate';
 import { verifyAuthGuard } from '../helpers/verify-auth-guard';
 import { prepareApp } from '../helpers/prepareApp';
-import { StrategyUpdateDto, ValueToServe } from '../../src/strategy/types';
 
 describe('Strategy (e2e)', () => {
   let app: INestApplication;
@@ -249,7 +248,6 @@ describe('Strategy (e2e)', () => {
         fieldComparator: 'eq',
         fieldName: '',
         fieldValue: '',
-        segmentUuid: null,
         strategyUuid: '1',
       });
     });

@@ -1,6 +1,5 @@
 /* eslint-disable sonarjs/cognitive-complexity */
 import { AiOutlineClockCircle, AiOutlineLink } from "react-icons/ai";
-import { GrGroup } from "react-icons/gr";
 import { RiSettingsLine } from "react-icons/ri";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { MetricIcon } from "~/components/Icons/MetricIcon";
@@ -56,14 +55,6 @@ export const ActivityIcon = ({ type }: ActivityIconProps) => {
     return <VariantIcon />;
   }
 
-  if (type === "create-segment") {
-    return <GrGroup />;
-  }
-
-  if (type === "delete-segment") {
-    return <GrGroup />;
-  }
-
   if (type === "delete-strategy") {
     return <RiSettingsLine />;
   }
@@ -76,15 +67,7 @@ export const ActivityIcon = ({ type }: ActivityIconProps) => {
     return <RiSettingsLine />;
   }
 
-  if (type === "edit-segment-rule") {
-    return <RiSettingsLine />;
-  }
-
   if (type === "delete-rule") {
-    return <RiSettingsLine />;
-  }
-
-  if (type === "create-segment-rule") {
     return <RiSettingsLine />;
   }
 

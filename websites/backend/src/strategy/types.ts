@@ -31,7 +31,6 @@ export const StrategyUpdateDtoSchema = Joi.array().items(
       then: Joi.array().items(StrategyVariantDtoSchema),
       otherwise: Joi.optional(),
     }),
-    segmentUuid: Joi.string().optional(),
     rules: Joi.array().items(
       Joi.object({
         fieldName: Joi.string().allow(''),
@@ -39,7 +38,6 @@ export const StrategyUpdateDtoSchema = Joi.array().items(
           .allow('')
           .valid(ComparatorEnum.Contains, ComparatorEnum.Equals),
         fieldValue: Joi.string().allow(''),
-        segmentUuid: Joi.string().allow(''),
       }),
     ),
   }),

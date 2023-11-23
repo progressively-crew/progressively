@@ -3,7 +3,6 @@ import { PiTrashThin } from "react-icons/pi";
 import { IconButton } from "~/components/Buttons/IconButton";
 import { Card, CardContent } from "~/components/Card";
 import { Typography } from "~/components/Typography";
-import { Segment } from "~/modules/segments/types";
 import { Variant } from "~/modules/variants/types";
 import { Strategy } from "../../types";
 import { RuleList } from "../StrategyFormFields/RuleList";
@@ -16,14 +15,12 @@ import { createEmptyRule } from "~/modules/rules/services/createEmptyRule";
 export interface StrategyItemProps {
   strategy: Strategy;
   variants: Array<Variant>;
-  segments: Array<Segment>;
   index: number;
 }
 
 export const StrategyItem = ({
   strategy,
   variants,
-  segments,
   index,
 }: StrategyItemProps) => {
   const [ruleList, setRuleList] = useState<Array<Rule>>(strategy.rules || []);
@@ -99,7 +96,6 @@ export const StrategyItem = ({
                 <CardContent>
                   <RuleList
                     rules={ruleList}
-                    segments={segments}
                     onRemoveRule={removeRule}
                     index={index}
                   />

@@ -6,21 +6,14 @@ export type ActivityType =
   | "create-scheduling"
   | "create-metric"
   | "create-variant"
-  | "create-segment"
   | "create-strategy"
-  | "create-segment-rule"
-  | "create-segment-rule"
   | "delete-webhook"
   | "delete-variant"
   | "delete-metric"
   | "delete-scheduling"
-  | "delete-segment"
   | "delete-rule"
   | "delete-strategy"
-  | "edit-segment-name"
-  | "edit-segment-rule"
-  | "edit-strategy"
-  | "edit-segment-rule";
+  | "edit-strategy";
 
 export type ActivityEntity = "flag";
 
