@@ -106,15 +106,13 @@ export const StrategyItem = ({
         </div>
 
         <div className="flex justify-center items-center pt-2">
-          <IconButton
+          <button
             type="button"
-            size="L"
-            icon={
-              <GoPlus className="text-xl p-1 w-8 h-8 block bg-slate-200 hover:bg-slate-300 active:bg-slate-400 rounded-full" />
-            }
-            tooltip="Add a rule"
             onClick={addRule}
-          />
+            className="border border-dashed border-slate-300 dark:border-slate-600 w-full py-2 rounded text-slate-600 dark:text-slate-300 text-xs dark:hover:bg-slate-600 dark:active:bg-slate-500 hover:bg-slate-200 active:bg-slate-300"
+          >
+            Add a rule
+          </button>
         </div>
       </div>
     </div>

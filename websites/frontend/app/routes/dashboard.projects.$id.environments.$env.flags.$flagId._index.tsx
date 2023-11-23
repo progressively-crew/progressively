@@ -36,6 +36,7 @@ import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { Typography } from "~/components/Typography";
 import qs from "qs";
+import { Spinner } from "~/components/Spinner";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -175,47 +176,23 @@ export default function FlagById() {
             or "true").
           </Typography>
         }
-        action={
-          strategies.length > 0 && (
-            <Form method="post">
-              <input type="hidden" name="_type" value="add-strategy" />
-              <CreateButton
-                type="submit"
-                variant={"secondary"}
-                isLoading={isCreatingStrategy}
-                loadingText="Adding a new strategy..."
-              >
-                Add a strategy
-              </CreateButton>
-            </Form>
-          )
-        }
       />
 
       <Section id="rollout-target">
         {strategies.length > 0 ? (
           <StrategyList items={strategies} variants={variants} />
-        ) : (
-          <Card>
-            <CardContent>
-              <EmptyState
-                title="No strategies found"
-                description={`The persons requesting your flag will simply resolve "true" or "false" depending on the flag status toggle.`}
-                action={
-                  <Form method="post">
-                    <input type="hidden" name="_type" value="add-strategy" />
-                    <CreateButton
-                      type="submit"
-                      variant={strategies.length > 0 ? "secondary" : "primary"}
-                    >
-                      Add a strategy
-                    </CreateButton>
-                  </Form>
-                }
-              />
-            </CardContent>
-          </Card>
-        )}
+        ) : null}
+
+        <Form method="post" className="pt-2">
+          <input type="hidden" name="_type" value="add-strategy" />
+          <button
+            aria-busy={isCreatingStrategy}
+            type="submit"
+            className="relative border border-dashed border-slate-300 dark:border-slate-600 w-full py-4 rounded text-slate-600 dark:text-slate-300 dark:hover:bg-slate-600 dark:active:bg-slate-500 hover:bg-slate-100 active:bg-slate-200"
+          >
+            Add a strategy
+          </button>
+        </Form>
       </Section>
     </DashboardLayout>
   );
