@@ -84,7 +84,7 @@ export class StrategyService {
     flagId: string,
     strategiesDto: Array<StrategyUpdateDto>,
   ) {
-    console.log('--------- yooo 1');
+    console.log('--------- yooo 1', strategiesDto);
     const strategies = [];
     // Delete all and re-insert
     await this.purgeStrategyForFlagEnv(envId, flagId);
