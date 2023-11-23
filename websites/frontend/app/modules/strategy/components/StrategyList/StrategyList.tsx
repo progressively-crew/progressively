@@ -2,7 +2,6 @@ import { Strategy } from "../../types";
 import { Variant } from "~/modules/variants/types";
 import { StrategyItem } from "./StrategyListItem";
 import { Form } from "@remix-run/react";
-import { SubmitButton } from "~/components/Buttons/SubmitButton";
 
 export interface StrategyListProps {
   items: Array<Strategy>;
@@ -23,10 +22,7 @@ export const StrategyList = ({ items, variants }: StrategyListProps) => {
         );
       })}
 
-      <Form method="post">
-        <div className="flex justify-end">
-          <SubmitButton type="submit">Save strategies</SubmitButton>
-        </div>
+      <Form method="post" id="save-strategies">
         <input type="hidden" value="edit-strategy" name="_type" />
 
         <div className="flex flex-col gap-2 pt-4">

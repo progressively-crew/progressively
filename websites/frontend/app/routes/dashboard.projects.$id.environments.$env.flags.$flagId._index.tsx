@@ -27,16 +27,13 @@ import { StrategyList } from "~/modules/strategy/components/StrategyList/Strateg
 import { createStrategy } from "~/modules/strategy/services/createStrategy";
 import { deleteStrategy } from "~/modules/strategy/services/deleteStrategy";
 import { editStrategyAction } from "~/modules/strategy/form-actions/editStrategyAction";
-import { CreateButton } from "~/components/Buttons/CreateButton";
 import { Variant } from "~/modules/variants/types";
 import { getVariants } from "~/modules/variants/services/getVariants";
-import { EmptyState } from "~/components/EmptyState";
-import { Card, CardContent } from "~/components/Card";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { Typography } from "~/components/Typography";
 import qs from "qs";
-import { Spinner } from "~/components/Spinner";
+import { SubmitButton } from "~/components/Buttons/SubmitButton";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -175,6 +172,13 @@ export default function FlagById() {
             resolve an activated flag with the associated value (variant value
             or "true").
           </Typography>
+        }
+        action={
+          strategies.length > 0 && (
+            <SubmitButton type="submit" form="save-strategies">
+              Save strategies
+            </SubmitButton>
+          )
         }
       />
 
