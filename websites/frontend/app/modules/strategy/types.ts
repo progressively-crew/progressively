@@ -1,4 +1,4 @@
-import { Rule } from "../rules/types";
+import { Rule, RuleUpdateDto } from "../rules/types";
 
 export enum ValueToServe {
   Boolean = "Boolean",
@@ -17,6 +17,7 @@ export interface StrategyUpdateDto {
   valueToServeType: ValueToServe;
   valueToServe?: string;
   variants?: Array<StrategyVariant>;
+  rules: Array<RuleUpdateDto>;
 }
 
 export interface StrategyVariant {

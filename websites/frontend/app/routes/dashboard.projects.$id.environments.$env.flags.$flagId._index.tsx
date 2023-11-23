@@ -77,14 +77,6 @@ export const action: ActionFunction = async ({
     return await createStrategy(params.env!, params.flagId!, authCookie);
   }
 
-  if (type === "add-strategy-rule") {
-    const strategyId = formData.get("uuid")?.toString();
-
-    if (strategyId) {
-      return await createStrategyRule(strategyId, authCookie);
-    }
-  }
-
   if (type === "delete-strategy") {
     const strategyId = formData.get("uuid")?.toString();
     if (strategyId) {
@@ -101,17 +93,10 @@ export const action: ActionFunction = async ({
   }
 
   if (type === "edit-strategy") {
-    const strategyId = formData.get("uuid")?.toString();
-    if (strategyId) {
-      return editStrategyAction(formData, strategyId, authCookie);
-    }
-  }
-  if (type === "delete-strategy-rule") {
-    const ruleId = formData.get("ruleId")?.toString();
-
-    if (ruleId) {
-      return deleteRule(ruleId, authCookie);
-    }
+    // const strategyId = formData.get("uuid")?.toString();
+    // if (strategyId) {
+    //   return editStrategyAction(formData, strategyId, authCookie);
+    // }
   }
 
   return null;
