@@ -6,22 +6,13 @@ import { PiTrashThin } from "react-icons/pi";
 
 export interface RuleListProps {
   rules: Array<Rule>;
-  currentlyDeletingRuleUuid?: string;
-  formId: string;
   segments: Array<Segment>;
 }
 
-export const RuleList = ({
-  rules,
-  currentlyDeletingRuleUuid,
-  formId,
-  segments,
-}: RuleListProps) => {
+export const RuleList = ({ rules, segments }: RuleListProps) => {
   return (
     <div className={`flex flex-col w-full gap-2`}>
       {rules.map((rule) => {
-        const isDeleting = currentlyDeletingRuleUuid === rule.uuid;
-
         return (
           <div
             key={rule.uuid}
@@ -39,10 +30,7 @@ export const RuleList = ({
 
             <div className="pt-1">
               <IconButton
-                form={formId}
-                type="submit"
-                isLoading={isDeleting}
-                loadingText="Deleting a rule..."
+                type="button"
                 icon={<PiTrashThin className="text-xl text-slate-400" />}
                 tooltip="Remove rule"
                 value={rule.uuid}

@@ -1,5 +1,4 @@
-import { useNavigation, Form } from "@remix-run/react";
-import { useId } from "react";
+import { Form } from "@remix-run/react";
 import { GoPlus } from "react-icons/go";
 import { PiTrashThin } from "react-icons/pi";
 import { IconButton } from "~/components/Buttons/IconButton";
@@ -10,6 +9,7 @@ import { Variant } from "~/modules/variants/types";
 import { Strategy } from "../../types";
 import { RuleList } from "../StrategyFormFields/RuleList";
 import { StrategyFormFields } from "../StrategyFormFields/StrategyFormFields";
+import { useDeleteStrategy } from "./useDeleteStrategy";
 
 export interface StrategyItemProps {
   strategy: Strategy;
@@ -24,40 +24,13 @@ export const StrategyItem = ({
   segments,
   index,
 }: StrategyItemProps) => {
-  const navigation = useNavigation();
-
-  const type = navigation?.formData?.get("_type");
-  const isCreatingRule =
-    type === "add-strategy-rule" &&
-    navigation?.formData?.get("uuid")?.toString() === strategy.uuid;
-
-  const isEditingStrategy =
-    type === "edit-strategy" &&
-    navigation?.formData?.get("uuid")?.toString() === strategy.uuid;
-
-  const isDeletingStrategy =
-    type === "delete-strategy" &&
-    navigation?.formData?.get("uuid")?.toString() === strategy.uuid;
-
-  const id = useId();
-  const updateStrategyFormId = `update-strategy-${id}`;
-  const deleteStrategyFormId = `delete-strategy-${id}`;
-  const deleteStrategyRule = `delete-strategy-rule-${id}`;
-  const addStrategyRuleFormId = `add-strategy-rule-${id}`;
+  const { isDeletingStrategy, deleteStrategyFormId } =
+    useDeleteStrategy(strategy);
 
   return (
     <div>
       <Form method="post" id={deleteStrategyFormId}>
         <input type="hidden" value="delete-strategy" name="_type" />
-        <input type="hidden" value={strategy.uuid} name="uuid" />
-      </Form>
-
-      <Form method="post" id={deleteStrategyRule}>
-        <input type="hidden" value="delete-strategy-rule" name="_type" />
-      </Form>
-
-      <Form method="post" id={addStrategyRuleFormId}>
-        <input type="hidden" value="add-strategy-rule" name="_type" />
         <input type="hidden" value={strategy.uuid} name="uuid" />
       </Form>
 
@@ -87,10 +60,7 @@ export const StrategyItem = ({
 
           <Card>
             <CardContent>
-              <Form method="post" className="block" id={updateStrategyFormId}>
-                <input type="hidden" value="edit-strategy" name="_type" />
-                <input type="hidden" value={strategy.uuid} name="uuid" />
-
+              <Form method="post" className="block">
                 <StrategyFormFields
                   valueToServe={strategy.valueToServe}
                   valueToServeType={strategy.valueToServeType}
@@ -121,16 +91,7 @@ export const StrategyItem = ({
               </Typography>
               <Card>
                 <CardContent>
-                  <RuleList
-                    rules={strategy.rules || []}
-                    currentlyDeletingRuleUuid={
-                      type === "delete-strategy-rule"
-                        ? navigation?.formData?.get("ruleId")?.toString()
-                        : undefined
-                    }
-                    formId={deleteStrategyRule}
-                    segments={segments}
-                  />
+                  <RuleList rules={strategy.rules || []} segments={segments} />
                 </CardContent>
               </Card>
             </>
@@ -139,10 +100,7 @@ export const StrategyItem = ({
 
         <div className="flex justify-center items-center pt-2">
           <IconButton
-            type="submit"
-            isLoading={isCreatingRule}
-            loadingText="Adding a rule..."
-            form={addStrategyRuleFormId}
+            type="button"
             size="L"
             icon={
               <GoPlus className="text-xl p-1 w-8 h-8 block bg-slate-200 hover:bg-slate-300 active:bg-slate-400 rounded-full" />
