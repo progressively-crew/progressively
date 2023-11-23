@@ -94,7 +94,12 @@ export const action: ActionFunction = async ({
     const formQueryString = await clonedRequest.text();
     const formObject = qs.parse(formQueryString, { depth: 4 });
 
-    return editStrategyAction(formObject, authCookie);
+    return editStrategyAction(
+      params.env!,
+      params.flagId!,
+      formObject,
+      authCookie
+    );
   }
 
   return null;

@@ -88,29 +88,22 @@ export class StrategyController {
     return strategy;
   }
 
-  @Put('/strategies/:strategyId')
-  @UseGuards(HasStrategyAccessGuard)
+  @Put('/environments/:envId/flags/:flagId/strategies')
+  @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(StrategyUpdateDtoSchema))
   async updateStrategy(
     @UserId() userId: string,
-    @Param('strategyId') strategyId: string,
-    @Body() strategyDto: StrategyUpdateDto,
+    @Param('envId') envId: string,
+    @Param('flagId') flagId: string,
+    @Body() strategyDto: Array<StrategyUpdateDto>,
   ) {
-    const strategy = await this.strategyService.updateStrategy(
-      strategyId,
+    const strategies = await this.strategyService.upsertStrategies(
+      envId,
+      flagId,
       strategyDto,
     );
 
-    await this.activityLogService.register({
-      userId,
-      flagId: strategy.flagEnvironmentFlagId,
-      envId: strategy.flagEnvironmentEnvironmentId,
-      concernedEntity: 'flag',
-      type: 'edit-strategy',
-      data: JSON.stringify(strategy),
-    });
-
-    return strategy;
+    return strategies;
   }
 }

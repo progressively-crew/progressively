@@ -1,4 +1,6 @@
 import * as Joi from 'joi';
+import { RuleUpdateDto } from '../rule/types';
+import { ComparatorEnum } from '../rule/comparators/types';
 
 export enum ValueToServe {
   Boolean = 'Boolean',
@@ -12,24 +14,36 @@ const StrategyVariantDtoSchema = Joi.object({
   variantUuid: Joi.string().required(),
 });
 
-export const StrategyUpdateDtoSchema = Joi.object({
-  rolloutPercentage: Joi.number().integer().min(0).max(100),
-  valueToServe: Joi.string().optional(),
-  valueToServeType: Joi.string()
-    .valid(
-      ValueToServe.Boolean,
-      ValueToServe.Number,
-      ValueToServe.String,
-      ValueToServe.Variant,
-    )
-    .required(),
-  variants: Joi.any().when('valueToServeType', {
-    is: ValueToServe.Variant,
-    then: Joi.array().items(StrategyVariantDtoSchema),
-    otherwise: Joi.optional(),
+export const StrategyUpdateDtoSchema = Joi.array().items(
+  Joi.object({
+    rolloutPercentage: Joi.number().integer().min(0).max(100),
+    valueToServe: Joi.string().optional(),
+    valueToServeType: Joi.string()
+      .valid(
+        ValueToServe.Boolean,
+        ValueToServe.Number,
+        ValueToServe.String,
+        ValueToServe.Variant,
+      )
+      .required(),
+    variants: Joi.any().when('valueToServeType', {
+      is: ValueToServe.Variant,
+      then: Joi.array().items(StrategyVariantDtoSchema),
+      otherwise: Joi.optional(),
+    }),
+    segmentUuid: Joi.string().optional(),
+    rules: Joi.array().items(
+      Joi.object({
+        fieldName: Joi.string().optional(),
+        fieldComparator: Joi.string()
+          .optional()
+          .valid(ComparatorEnum.Contains, ComparatorEnum.Equals),
+        fieldValue: Joi.string().optional(),
+        segmentUuid: Joi.string().optional(),
+      }),
+    ),
   }),
-  segmentUuid: Joi.string().optional(),
-});
+);
 
 export interface StrategyVariant {
   rolloutPercentage: number;
@@ -40,4 +54,5 @@ export interface StrategyUpdateDto {
   valueToServeType: ValueToServe;
   valueToServe?: string;
   variants?: Array<StrategyVariant>;
+  rules: Array<RuleUpdateDto>;
 }

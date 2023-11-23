@@ -42,55 +42,110 @@ export class StrategyService {
     return result[result.length - 1] as Strategy;
   }
 
-  async updateStrategy(strategyId: string, strategyDto: StrategyUpdateDto) {
-    const queries = [];
-    const variants = strategyDto?.variants || [];
+  async purgeStrategyForFlagEnv(envId: string, flagId: string) {
+    const deleteQueries = [];
 
-    for (const variant of variants) {
-      queries.push(
-        this.prisma.strategyVariant.upsert({
-          where: {
-            strategyUuid_variantUuid: {
-              strategyUuid: strategyId,
-              variantUuid: variant.variantUuid,
-            },
-          },
-          update: {
-            rolloutPercentage: variant.rolloutPercentage
-              ? Number(variant.rolloutPercentage)
-              : 0,
-            variantUuid: variant.variantUuid,
-            strategyUuid: strategyId,
-          },
-          create: {
-            rolloutPercentage: variant.rolloutPercentage
-              ? Number(variant.rolloutPercentage)
-              : 0,
-            variantUuid: variant.variantUuid,
-            strategyUuid: strategyId,
-          },
-        }),
-      );
-    }
-
-    queries.push(
-      this.prisma.strategy.update({
+    deleteQueries.push(
+      this.prisma.rule.deleteMany({
         where: {
-          uuid: strategyId,
-        },
-        data: {
-          rolloutPercentage: strategyDto.rolloutPercentage,
-          valueToServe: strategyDto.valueToServe,
-          valueToServeType: strategyDto.valueToServeType,
-        },
-        include: {
-          variants: true,
+          Strategy: {
+            flagEnvironmentEnvironmentId: envId,
+            flagEnvironmentFlagId: flagId,
+          },
         },
       }),
     );
 
-    const result = await this.prisma.$transaction(queries);
-    return result[result.length - 1] as Strategy;
+    deleteQueries.push(
+      this.prisma.strategyVariant.deleteMany({
+        where: {
+          strategy: {
+            flagEnvironmentEnvironmentId: envId,
+            flagEnvironmentFlagId: flagId,
+          },
+        },
+      }),
+    );
+
+    deleteQueries.push(
+      this.prisma.strategy.deleteMany({
+        where: {
+          flagEnvironmentEnvironmentId: envId,
+          flagEnvironmentFlagId: flagId,
+        },
+      }),
+    );
+
+    return this.prisma.$transaction(deleteQueries);
+  }
+
+  async upsertStrategies(
+    envId: string,
+    flagId: string,
+    strategiesDto: Array<StrategyUpdateDto>,
+  ) {
+    console.log('--------- yooo 1');
+    const strategies = [];
+    // Delete all and re-insert
+    await this.purgeStrategyForFlagEnv(envId, flagId);
+    const flagEnvSegments = await this.prisma.segment.findMany({
+      where: {
+        flagEnvironmentEnvironmentId: envId,
+        flagEnvironmentFlagId: flagId,
+      },
+    });
+
+    const segmentUuids = flagEnvSegments.map((s) => s.uuid);
+
+    const createQueries = [];
+    for (const strategyDto of strategiesDto) {
+      const newStrategy = await this.prisma.strategy.create({
+        data: {
+          flagEnvironmentEnvironmentId: envId,
+          flagEnvironmentFlagId: flagId,
+          valueToServeType: strategyDto.valueToServeType,
+          valueToServe: strategyDto.valueToServe,
+          rolloutPercentage: strategyDto.rolloutPercentage,
+        },
+      });
+
+      strategies.push(newStrategy);
+
+      const variants = strategyDto.variants || [];
+      for (const variant of variants) {
+        createQueries.push(
+          this.prisma.strategyVariant.create({
+            data: {
+              rolloutPercentage: variant.rolloutPercentage
+                ? Number(variant.rolloutPercentage)
+                : 0,
+              variantUuid: variant.variantUuid,
+              strategyUuid: newStrategy.uuid,
+            },
+          }),
+        );
+      }
+
+      const rules = strategyDto.rules || [];
+      for (const rule of rules) {
+        if (segmentUuids.includes(rule.segmentUuid)) {
+          createQueries.push(
+            this.prisma.rule.create({
+              data: {
+                segmentUuid: rule.segmentUuid,
+                fieldComparator: ComparatorEnum.Equals,
+                fieldName: '',
+                fieldValue: '',
+              },
+            }),
+          );
+        }
+      }
+    }
+
+    console.log('--------- yooo 2');
+    await this.prisma.$transaction(createQueries);
+    return strategies;
   }
 
   createStrategyRule(strategyId: string) {

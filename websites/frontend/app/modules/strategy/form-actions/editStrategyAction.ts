@@ -1,6 +1,6 @@
 import { ComparatorEnum, RuleUpdateDto } from "~/modules/rules/types";
 import { StrategyUpdateDto, StrategyVariant, ValueToServe } from "../types";
-import { editStrategy } from "../services/editStrategy";
+import { editStrategies } from "../services/editStrategies";
 
 const mapRawVariantToActualVariant = (rawVariant: any): StrategyVariant => {
   return {
@@ -30,7 +30,8 @@ const mapRawRuleToActualRule = (rawRule: any): RuleUpdateDto => {
 const mapRawStrategyToActualStrategy = (
   rawStrategy: any
 ): StrategyUpdateDto => {
-  const rules: Array<RuleUpdateDto> = rawStrategy.rules
+  const rawRules = rawStrategy.rules || [];
+  const rules: Array<RuleUpdateDto> = rawRules
     .map((rawRule: any) => mapRawRuleToActualRule(rawRule))
     .filter((rule: RuleUpdateDto) => isValidRule(rule));
 
@@ -52,6 +53,8 @@ const mapRawStrategyToActualStrategy = (
 };
 
 export const editStrategyAction = async (
+  envId: string,
+  flagId: string,
   formObject: any,
   authCookie: string
 ) => {
@@ -62,7 +65,7 @@ export const editStrategyAction = async (
   );
 
   try {
-    await editStrategies(strategiesToUpdate, authCookie);
+    await editStrategies(envId, flagId, strategiesToUpdate, authCookie);
 
     return {
       successStrategyEdited: true,
