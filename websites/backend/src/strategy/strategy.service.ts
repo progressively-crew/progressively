@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
 import { StrategyUpdateDto, ValueToServe } from './types';
-import { ComparatorEnum } from '../rule/comparators/types';
 import { Strategy } from '@progressively/database';
 
 @Injectable()

@@ -5,7 +5,7 @@ import { authenticate } from '../helpers/authenticate';
 import { verifyAuthGuard } from '../helpers/verify-auth-guard';
 import { prepareApp } from '../helpers/prepareApp';
 import { ComparatorEnum } from '../../src/rule/comparators/types';
-import { RuleType, RuleUpdateDto } from '../../src/rule/types';
+import { RuleType } from '../../src/rule/types';
 
 describe('Rule (e2e)', () => {
   let app: INestApplication;
