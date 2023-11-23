@@ -82,6 +82,7 @@ export const StrategyItem = ({
                 valueToServeType={strategy.valueToServeType}
                 variants={formVariants}
                 rolloutPercentage={strategy.rolloutPercentage || 0}
+                index={index}
               />
             </CardContent>
           </Card>
@@ -100,6 +101,7 @@ export const StrategyItem = ({
                     rules={ruleList}
                     segments={segments}
                     onRemoveRule={removeRule}
+                    index={index}
                   />
                 </CardContent>
               </Card>

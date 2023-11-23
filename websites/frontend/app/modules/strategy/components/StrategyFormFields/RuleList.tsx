@@ -8,12 +8,18 @@ export interface RuleListProps {
   rules: Array<Rule>;
   segments: Array<Segment>;
   onRemoveRule: (rule: Rule) => void;
+  index: number;
 }
 
-export const RuleList = ({ rules, segments, onRemoveRule }: RuleListProps) => {
+export const RuleList = ({
+  rules,
+  segments,
+  onRemoveRule,
+  index,
+}: RuleListProps) => {
   return (
     <div className={`flex flex-col w-full gap-2`}>
-      {rules.map((rule) => {
+      {rules.map((rule, ruleIndex: number) => {
         return (
           <div
             key={rule.uuid}
@@ -25,6 +31,8 @@ export const RuleList = ({ rules, segments, onRemoveRule }: RuleListProps) => {
               initialFieldValue={rule.fieldValue}
               initialSegmentUuid={rule.segmentUuid}
               segments={segments}
+              index={index}
+              ruleIndex={ruleIndex}
             />
 
             <div className="pt-1">
