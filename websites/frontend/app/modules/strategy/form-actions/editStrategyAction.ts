@@ -59,7 +59,6 @@ export const editStrategyAction = async (
   authCookie: string
 ) => {
   const rawStrategies = formObject?.strategies || [];
-
   const strategiesToUpdate: Array<StrategyUpdateDto> = rawStrategies.map(
     (rawStrat: any) => mapRawStrategyToActualStrategy(rawStrat)
   );
@@ -71,14 +70,10 @@ export const editStrategyAction = async (
       successStrategyEdited: true,
     };
   } catch (error: unknown) {
-    if (error instanceof Error) {
-      return {
-        errors: {
-          message: error.message,
-        },
-      };
-    }
+    return {
+      errors: {
+        message: (error as Error).message,
+      },
+    };
   }
-
-  console.log("yooo", JSON.stringify(strategiesToUpdate, null, 10));
 };

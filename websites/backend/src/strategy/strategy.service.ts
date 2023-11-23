@@ -84,7 +84,6 @@ export class StrategyService {
     flagId: string,
     strategiesDto: Array<StrategyUpdateDto>,
   ) {
-    console.log('--------- yooo 1', strategiesDto);
     const strategies = [];
     // Delete all and re-insert
     await this.purgeStrategyForFlagEnv(envId, flagId);
@@ -134,8 +133,8 @@ export class StrategyService {
               data: {
                 segmentUuid: rule.segmentUuid,
                 fieldComparator: ComparatorEnum.Equals,
-                fieldName: '',
-                fieldValue: '',
+                fieldName: rule.fieldName,
+                fieldValue: rule.fieldComparator,
               },
             }),
           );
@@ -143,7 +142,6 @@ export class StrategyService {
       }
     }
 
-    console.log('--------- yooo 2');
     await this.prisma.$transaction(createQueries);
     return strategies;
   }

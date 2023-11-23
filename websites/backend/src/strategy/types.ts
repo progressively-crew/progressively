@@ -34,12 +34,12 @@ export const StrategyUpdateDtoSchema = Joi.array().items(
     segmentUuid: Joi.string().optional(),
     rules: Joi.array().items(
       Joi.object({
-        fieldName: Joi.string().optional(),
+        fieldName: Joi.string().allow(''),
         fieldComparator: Joi.string()
-          .optional()
+          .allow('')
           .valid(ComparatorEnum.Contains, ComparatorEnum.Equals),
-        fieldValue: Joi.string().optional(),
-        segmentUuid: Joi.string().optional(),
+        fieldValue: Joi.string().allow(''),
+        segmentUuid: Joi.string().allow(''),
       }),
     ),
   }),
