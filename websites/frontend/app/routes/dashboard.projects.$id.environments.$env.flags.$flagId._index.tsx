@@ -27,15 +27,13 @@ import { StrategyList } from "~/modules/strategy/components/StrategyList/Strateg
 import { createStrategy } from "~/modules/strategy/services/createStrategy";
 import { deleteStrategy } from "~/modules/strategy/services/deleteStrategy";
 import { editStrategyAction } from "~/modules/strategy/form-actions/editStrategyAction";
-import { CreateButton } from "~/components/Buttons/CreateButton";
 import { Variant } from "~/modules/variants/types";
 import { getVariants } from "~/modules/variants/services/getVariants";
-import { EmptyState } from "~/components/EmptyState";
-import { Card, CardContent } from "~/components/Card";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { Typography } from "~/components/Typography";
 import qs from "qs";
+import { SubmitButton } from "~/components/Buttons/SubmitButton";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -177,17 +175,9 @@ export default function FlagById() {
         }
         action={
           strategies.length > 0 && (
-            <Form method="post">
-              <input type="hidden" name="_type" value="add-strategy" />
-              <CreateButton
-                type="submit"
-                variant={"secondary"}
-                isLoading={isCreatingStrategy}
-                loadingText="Adding a new strategy..."
-              >
-                Add a strategy
-              </CreateButton>
-            </Form>
+            <SubmitButton type="submit" form="save-strategies">
+              Save strategies
+            </SubmitButton>
           )
         }
       />
@@ -195,27 +185,18 @@ export default function FlagById() {
       <Section id="rollout-target">
         {strategies.length > 0 ? (
           <StrategyList items={strategies} variants={variants} />
-        ) : (
-          <Card>
-            <CardContent>
-              <EmptyState
-                title="No strategies found"
-                description={`The persons requesting your flag will simply resolve "true" or "false" depending on the flag status toggle.`}
-                action={
-                  <Form method="post">
-                    <input type="hidden" name="_type" value="add-strategy" />
-                    <CreateButton
-                      type="submit"
-                      variant={strategies.length > 0 ? "secondary" : "primary"}
-                    >
-                      Add a strategy
-                    </CreateButton>
-                  </Form>
-                }
-              />
-            </CardContent>
-          </Card>
-        )}
+        ) : null}
+
+        <Form method="post" className="pt-2">
+          <input type="hidden" name="_type" value="add-strategy" />
+          <button
+            aria-busy={isCreatingStrategy}
+            type="submit"
+            className="relative border border-dashed border-slate-300 dark:border-slate-600 w-full py-4 rounded text-slate-600 dark:text-slate-300 dark:hover:bg-slate-600 dark:active:bg-slate-500 hover:bg-slate-100 active:bg-slate-200"
+          >
+            Add a strategy
+          </button>
+        </Form>
       </Section>
     </DashboardLayout>
   );

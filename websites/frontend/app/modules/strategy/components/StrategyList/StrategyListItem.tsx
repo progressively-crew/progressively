@@ -1,4 +1,3 @@
-import { GoPlus } from "react-icons/go";
 import { PiTrashThin } from "react-icons/pi";
 import { IconButton } from "~/components/Buttons/IconButton";
 import { Card, CardContent } from "~/components/Card";
@@ -84,37 +83,33 @@ export const StrategyItem = ({
             </CardContent>
           </Card>
 
-          {ruleList.length > 0 && (
-            <>
-              <Typography
-                as="span"
-                className="pt-7 font-mono text-sm font-semibold"
-              >
-                When
-              </Typography>
-              <Card>
-                <CardContent>
-                  <RuleList
-                    rules={ruleList}
-                    onRemoveRule={removeRule}
-                    index={index}
-                  />
-                </CardContent>
-              </Card>
-            </>
-          )}
-        </div>
+          <>
+            <Typography
+              as="span"
+              className="pt-7 font-mono text-sm font-semibold"
+            >
+              When
+            </Typography>
+            <Card>
+              <CardContent>
+                <RuleList
+                  rules={ruleList}
+                  onRemoveRule={removeRule}
+                  index={index}
+                />
 
-        <div className="flex justify-center items-center pt-2">
-          <IconButton
-            type="button"
-            size="L"
-            icon={
-              <GoPlus className="text-xl p-1 w-8 h-8 block bg-slate-200 hover:bg-slate-300 active:bg-slate-400 rounded-full" />
-            }
-            tooltip="Add a rule"
-            onClick={addRule}
-          />
+                <div className={ruleList.length === 0 ? "" : "pt-2"}>
+                  <button
+                    type="button"
+                    onClick={addRule}
+                    className="border border-dashed border-slate-300 dark:border-slate-600 w-full py-2 rounded text-slate-600 dark:text-slate-300 text-xs dark:hover:bg-slate-600 dark:active:bg-slate-500 hover:bg-slate-50 active:bg-slate-100"
+                  >
+                    Add a rule
+                  </button>
+                </div>
+              </CardContent>
+            </Card>
+          </>
         </div>
       </div>
     </div>
