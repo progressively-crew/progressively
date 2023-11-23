@@ -99,7 +99,6 @@ model FlagEnvironment {
   variants      Variant[]
   webhooks      Webhook[]
   ActivityLog   ActivityLog[]
-  Segment       Segment[]
   strategies    Strategy[]
 
   @@id([flagId, environmentId])
@@ -160,21 +159,9 @@ model Rule {
   fieldName       String?
   fieldComparator String?
   fieldValue      String?
-  Segment         Segment?  @relation(fields: [segmentUuid], references: [uuid])
-  segmentUuid     String?
   Strategy        Strategy? @relation(fields: [strategyUuid], references: [uuid])
   strategyUuid    String?
   createdAt       DateTime? @default(now())
-}
-
-model Segment {
-  uuid                         String          @id @default(uuid())
-  name                         String
-  rule                         Rule[]
-  flagEnvironment              FlagEnvironment @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
-  flagEnvironmentFlagId        String
-  flagEnvironmentEnvironmentId String
-  createdAt                    DateTime?       @default(now())
 }
 
 model Schedule {

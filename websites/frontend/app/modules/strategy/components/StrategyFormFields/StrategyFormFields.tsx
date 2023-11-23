@@ -12,6 +12,7 @@ export interface ValuesToServeFieldsProps {
   valueToServe?: string;
   valueToServeType?: ValueToServe;
   rolloutPercentage: number;
+  index: number;
 }
 
 export const StrategyFormFields = ({
@@ -19,6 +20,7 @@ export const StrategyFormFields = ({
   valueToServeType,
   variants,
   rolloutPercentage,
+  index,
 }: ValuesToServeFieldsProps) => {
   const [status, setStatus] = useState(
     valueToServeType || ValueToServe.Boolean
@@ -49,15 +51,14 @@ export const StrategyFormFields = ({
           <SelectField
             hiddenLabel
             label="What value to you want to serve?"
-            name={"value-to-serve-type"}
+            name={`strategies[${index}][value-to-serve-type]`}
             defaultValue={valueToServeType || valueOptions[0].value}
             options={valueOptions}
             onValueChange={(str) => setStatus(str as ValueToServe)}
           />
         </div>
-
         <div className="flex-1">
-          <VariantFields variants={variants || []} />
+          <VariantFields variants={variants || []} index={index} />
         </div>
       </div>
     );
@@ -68,18 +69,17 @@ export const StrategyFormFields = ({
       <SelectField
         hiddenLabel
         label="What value to you want to serve?"
-        name={"value-to-serve-type"}
+        name={`strategies[${index}][value-to-serve-type]`}
         defaultValue={valueToServeType || valueOptions[0].value}
         options={valueOptions}
         onValueChange={(str) => setStatus(str as ValueToServe)}
       />
-
       <div className="flex-1 flex flex-row items-center gap-2">
         {status === ValueToServe.String && (
           <TextInput
             label="String value to serve"
             placeholder="e.g: A"
-            name="value-to-serve"
+            name={`strategies[${index}][value-to-serve]`}
             hiddenLabel
             defaultValue={
               valueToServeType === ValueToServe.String ? valueToServe : ""
@@ -93,7 +93,7 @@ export const StrategyFormFields = ({
             <Typography>to</Typography>
 
             <PercentageField
-              name={"rolloutPercentage"}
+              name={`strategies[${index}][rolloutPercentage]`}
               initialValue={rolloutPercentage}
               label={"Rollout percentage"}
               hiddenLabel

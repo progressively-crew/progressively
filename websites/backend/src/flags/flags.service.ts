@@ -32,15 +32,7 @@ export class FlagsService {
         webhooks: true,
         strategies: {
           include: {
-            rules: {
-              include: {
-                Segment: {
-                  include: {
-                    rule: true,
-                  },
-                },
-              },
-            },
+            rules: true,
             variants: {
               include: {
                 variant: true,
@@ -195,13 +187,6 @@ export class FlagsService {
       }),
       this.prisma.rule.deleteMany({
         where: {
-          Segment: {
-            flagEnvironmentFlagId: flagId,
-          },
-        },
-      }),
-      this.prisma.rule.deleteMany({
-        where: {
           Strategy: {
             flagEnvironmentFlagId: flagId,
           },
@@ -215,11 +200,6 @@ export class FlagsService {
         },
       }),
       this.prisma.strategy.deleteMany({
-        where: {
-          flagEnvironmentFlagId: flagId,
-        },
-      }),
-      this.prisma.segment.deleteMany({
         where: {
           flagEnvironmentFlagId: flagId,
         },

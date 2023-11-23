@@ -9,7 +9,6 @@ import { FieldRecord } from '../rule/types';
 import { DatabaseModule } from '../database/database.module';
 import { SchedulingModule } from '../scheduling/scheduling.module';
 import { RuleModule } from '../rule/rule.module';
-import { SegmentsModule } from '../segments/segments.module';
 import { UsersModule } from '../users/users.module';
 
 @Module({
@@ -21,7 +20,6 @@ import { UsersModule } from '../users/users.module';
     SchedulingModule,
     DatabaseModule,
     RuleModule,
-    SegmentsModule,
     RuleModule,
     UsersModule,
   ],

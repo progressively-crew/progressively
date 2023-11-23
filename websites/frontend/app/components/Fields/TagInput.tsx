@@ -4,9 +4,10 @@ import { KeyboardKeys } from "~/modules/a11y/utils/keyboardKeys";
 
 export interface TagInputProps {
   defaultValue?: Array<string>;
+  name: string;
 }
 
-export const TagInput = ({ defaultValue }: TagInputProps) => {
+export const TagInput = ({ defaultValue, name }: TagInputProps) => {
   const [value, setValue] = useState("");
   const [tags, setTags] = useState<Array<string>>(defaultValue || []);
 
@@ -86,7 +87,7 @@ export const TagInput = ({ defaultValue }: TagInputProps) => {
         </button>
       </div>
 
-      <input type="hidden" name="field-value" value={tags.join("\n")} />
+      <input type="hidden" name={name} value={tags.join("\n")} />
     </div>
   );
 };

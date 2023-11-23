@@ -9,7 +9,6 @@ import {
   TbClockEdit,
   TbDeviceImacCheck,
   TbTargetArrow,
-  TbUsersGroup,
   TbWebhook,
 } from "react-icons/tb";
 
@@ -38,13 +37,6 @@ export const FlagEnvMenu = ({
         icon={<TbTargetArrow />}
       >
         Audience
-      </NavItem>
-
-      <NavItem
-        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/segments`}
-        icon={<TbUsersGroup />}
-      >
-        Segments
       </NavItem>
 
       <NavItem

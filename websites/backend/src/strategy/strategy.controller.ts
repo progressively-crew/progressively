@@ -57,16 +57,6 @@ export class StrategyController {
     return strategy;
   }
 
-  @Post('/strategies/:strategyId/rules')
-  @UseGuards(HasStrategyAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  createStrategyRule(
-    @UserId() userId: string,
-    @Param('strategyId') strategyId: string,
-  ) {
-    return this.strategyService.createStrategyRule(strategyId);
-  }
-
   @Delete('/strategies/:strategyId')
   @UseGuards(HasStrategyAccessGuard)
   @UseGuards(JwtAuthGuard)
@@ -88,29 +78,20 @@ export class StrategyController {
     return strategy;
   }
 
-  @Put('/strategies/:strategyId')
-  @UseGuards(HasStrategyAccessGuard)
+  @Put('/environments/:envId/flags/:flagId/strategies')
+  @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(StrategyUpdateDtoSchema))
   async updateStrategy(
     @UserId() userId: string,
-    @Param('strategyId') strategyId: string,
-    @Body() strategyDto: StrategyUpdateDto,
+    @Param('envId') envId: string,
+    @Param('flagId') flagId: string,
+    @Body() strategiesDto: Array<StrategyUpdateDto>,
   ) {
-    const strategy = await this.strategyService.updateStrategy(
-      strategyId,
-      strategyDto,
+    return await this.strategyService.upsertStrategies(
+      envId,
+      flagId,
+      strategiesDto,
     );
-
-    await this.activityLogService.register({
-      userId,
-      flagId: strategy.flagEnvironmentFlagId,
-      envId: strategy.flagEnvironmentEnvironmentId,
-      concernedEntity: 'flag',
-      type: 'edit-strategy',
-      data: JSON.stringify(strategy),
-    });
-
-    return strategy;
   }
 }

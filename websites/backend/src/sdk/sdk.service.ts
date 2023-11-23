@@ -13,9 +13,9 @@ import {
   isInBucket,
 } from './utils';
 import { SchedulingService } from '../scheduling/scheduling.service';
-import { RuleService } from '../rule/rule.service';
 import { ValueToServe } from '../strategy/types';
 import { EventHit } from './types';
+import { RuleService } from '../rule/rule.service';
 
 @Injectable()
 export class SdkService {

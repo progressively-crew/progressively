@@ -170,23 +170,6 @@ export const ActivityDescription = ({
     );
   }
 
-  if (type === "create-segment") {
-    return (
-      <p>
-        <strong>The segment {data.name}</strong> has been created:{" "}
-        <Link to={`../segments`}>{data.name}</Link>
-      </p>
-    );
-  }
-
-  if (type === "delete-segment") {
-    return (
-      <p>
-        <strong>The segment {data.name}</strong> has been deleted.
-      </p>
-    );
-  }
-
   if (type === "delete-strategy") {
     return (
       <p>
@@ -211,26 +194,10 @@ export const ActivityDescription = ({
     );
   }
 
-  if (type === "edit-segment-rule") {
-    return (
-      <p>
-        <strong>A strategy rule</strong> has been edited.
-      </p>
-    );
-  }
-
   if (type === "delete-rule") {
     return (
       <p>
         <strong>A rule</strong> has been deleted.
-      </p>
-    );
-  }
-
-  if (type === "create-segment-rule") {
-    return (
-      <p>
-        <strong>A rule</strong> has been created for a segment.
       </p>
     );
   }
