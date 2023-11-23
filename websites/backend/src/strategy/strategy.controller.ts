@@ -96,12 +96,12 @@ export class StrategyController {
     @UserId() userId: string,
     @Param('envId') envId: string,
     @Param('flagId') flagId: string,
-    @Body() strategyDto: Array<StrategyUpdateDto>,
+    @Body() strategiesDto: Array<StrategyUpdateDto>,
   ) {
     const strategies = await this.strategyService.upsertStrategies(
       envId,
       flagId,
-      strategyDto,
+      strategiesDto,
     );
 
     return strategies;

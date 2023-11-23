@@ -127,14 +127,15 @@ export class StrategyService {
 
       const rules = strategyDto.rules || [];
       for (const rule of rules) {
-        if (segmentUuids.includes(rule.segmentUuid)) {
+        if (!rule.segmentUuid || segmentUuids.includes(rule.segmentUuid)) {
           createQueries.push(
             this.prisma.rule.create({
               data: {
-                segmentUuid: rule.segmentUuid,
-                fieldComparator: ComparatorEnum.Equals,
+                strategyUuid: newStrategy.uuid,
+                segmentUuid: rule?.segmentUuid || null,
+                fieldComparator: rule.fieldComparator,
                 fieldName: rule.fieldName,
-                fieldValue: rule.fieldComparator,
+                fieldValue: rule.fieldValue,
               },
             }),
           );
@@ -143,6 +144,7 @@ export class StrategyService {
     }
 
     await this.prisma.$transaction(createQueries);
+
     return strategies;
   }
 

@@ -47,6 +47,7 @@ const mapRawStrategyToActualStrategy = (
       rawStrategy["value-to-serve-type"] === ValueToServe.Variant
         ? ValueToServe.Variant
         : ValueToServe.Boolean,
+    valueToServe: rawStrategy["value-to-serve"],
     variants,
     rules,
   };
