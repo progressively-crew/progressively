@@ -39,6 +39,7 @@ interface LoaderData {
   eventsPerDate: Array<EventHit>;
   eventsPerDatePerOs: Array<LocalCount>;
   eventsPerDatePerBrowser: Array<LocalCount>;
+  metricCount: number;
 }
 
 export const loader: LoaderFunction = async ({
@@ -62,8 +63,12 @@ export const loader: LoaderFunction = async ({
   end.setDate(end.getDate() + 1);
 
   const authCookie = session.get("auth-cookie");
-  const { eventsPerDate, eventsPerDatePerOs, eventsPerDatePerBrowser } =
-    await getEventsForEnv(params.env!, start, end, authCookie);
+  const {
+    eventsPerDate,
+    eventsPerDatePerOs,
+    eventsPerDatePerBrowser,
+    metricCount,
+  } = await getEventsForEnv(params.env!, start, end, authCookie);
 
   return {
     eventsPerDate,
@@ -72,12 +77,17 @@ export const loader: LoaderFunction = async ({
       eventsPerDatePerBrowser,
       "browser"
     ),
+    metricCount,
   };
 };
 
 export default function EnvInsights() {
-  const { eventsPerDate, eventsPerDatePerOs, eventsPerDatePerBrowser } =
-    useLoaderData<LoaderData>();
+  const {
+    eventsPerDate,
+    eventsPerDatePerOs,
+    eventsPerDatePerBrowser,
+    metricCount,
+  } = useLoaderData<LoaderData>();
   const { project } = useProject();
   const { environment } = useEnvironment();
   const [searchParams] = useSearchParams();
@@ -132,7 +142,7 @@ export default function EnvInsights() {
         <div className="inline-flex flex-row gap-6">
           <BigStat
             label={"Total metric hits"}
-            value={0}
+            value={metricCount}
             unit={"hits."}
             icon={<div />}
           />

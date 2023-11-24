@@ -84,6 +84,18 @@ export class EnvironmentsService {
     });
   }
 
+  getMetricCount(envId: string, startDate: string, endDate: string) {
+    return this.prisma.event.count({
+      where: {
+        environmentUuid: envId,
+        date: {
+          gte: new Date(startDate),
+          lte: new Date(endDate),
+        },
+      },
+    });
+  }
+
   getEventsPerDatePerGroup(
     envId: string,
     startDate: string,

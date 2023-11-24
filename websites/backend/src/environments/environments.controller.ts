@@ -72,6 +72,17 @@ export class EnvironmentsController {
         'browser',
       );
 
-    return { eventsPerDate, eventsPerDatePerOs, eventsPerDatePerBrowser };
+    const metricCount = await this.envService.getMetricCount(
+      envId,
+      startDate,
+      endDate,
+    );
+
+    return {
+      eventsPerDate,
+      eventsPerDatePerOs,
+      eventsPerDatePerBrowser,
+      metricCount,
+    };
   }
 }
