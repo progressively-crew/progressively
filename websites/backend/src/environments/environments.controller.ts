@@ -1,14 +1,11 @@
 import {
   BadRequestException,
-  Body,
   Controller,
   Delete,
   Get,
   Param,
-  Post,
   Query,
   UseGuards,
-  UsePipes,
 } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
@@ -16,9 +13,6 @@ import { Roles } from '../shared/decorators/Roles';
 import { UserRoles } from '../users/roles';
 import { EnvironmentsService } from './environments.service';
 import { HasEnvironmentAccessGuard } from './guards/hasEnvAccess';
-import { MetricSchema } from '../flags/flags.dto';
-import { ValidationPipe } from '../shared/pipes/ValidationPipe';
-import { MetricDto } from './types';
 
 @ApiBearerAuth()
 @Controller('environments')
@@ -35,13 +29,6 @@ export class EnvironmentsController {
     return this.envService.flagsByEnv(envId);
   }
 
-  @Get(':envId/metrics')
-  @UseGuards(HasEnvironmentAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  getMetrics(@Param('envId') envId: string) {
-    return this.envService.listMetrics(envId);
-  }
-
   /**
    * Delete an environment on a given project (by project id AND env id)
    */
@@ -53,10 +40,10 @@ export class EnvironmentsController {
     return this.envService.deleteEnv(envId);
   }
 
-  @Get(':envId/hits')
+  @Get(':envId/events')
   @UseGuards(HasEnvironmentAccessGuard)
   @UseGuards(JwtAuthGuard)
-  async getmetricsByDate(
+  async getEventsByDate(
     @Param('envId') envId: string,
     @Query('startDate') startDate: string | undefined,
     @Query('endDate') endDate: string | undefined,
@@ -65,36 +52,6 @@ export class EnvironmentsController {
       throw new BadRequestException('startDate and endDate are required.');
     }
 
-    const metricsHitCount = await this.envService.metricHitsCount(
-      envId,
-      startDate,
-      endDate,
-    );
-
-    const metricsHitsPerDate = await this.envService.getMetricCountPerDate(
-      envId,
-      startDate,
-      endDate,
-    );
-
-    return { metricsHitCount, metricsHitsPerDate };
-  }
-
-  @Post(':envId/metrics')
-  @UseGuards(HasEnvironmentAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  @UsePipes(new ValidationPipe(MetricSchema))
-  async addMetricToFlag(
-    @Param('envId') envId: string,
-    @Body() metricDto: MetricDto,
-  ) {
-    return await this.envService.addMetricToFlagEnv(envId, metricDto.name);
-  }
-
-  @Delete(':envId/metrics/:metricId')
-  @UseGuards(HasEnvironmentAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  async deleteMetricFlag(@Param('metricId') metricId: string) {
-    return await this.envService.deleteMetricFlag(metricId);
+    return { metricsHitCount: 0, metricsHitsPerDate: [] };
   }
 }

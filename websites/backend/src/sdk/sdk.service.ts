@@ -190,16 +190,13 @@ export class SdkService {
   }
 
   async hitEvent(clientKey: string, visitorId: string, hit: EventHit) {
-    const metric = await this.prisma.pMetric.findFirst({
+    const env = await this.prisma.environment.findFirst({
       where: {
-        name: hit.name,
-        Environment: {
-          clientKey,
-        },
+        clientKey,
       },
     });
 
-    if (!metric) {
+    if (!env) {
       return null;
     }
 
@@ -209,9 +206,9 @@ export class SdkService {
     date.setSeconds(2);
     date.setMilliseconds(2);
 
-    return this.prisma.metricHit.create({
+    return this.prisma.event.create({
       data: {
-        pMetricUuid: metric.uuid,
+        environmentUuid: env.uuid,
         visitorId,
         date,
         data:

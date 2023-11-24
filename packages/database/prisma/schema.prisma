@@ -57,10 +57,10 @@ model Environment {
   name            String
   projectId       String
   clientKey       String            @default(uuid())
-  metrics         PMetric[]
   project         Project           @relation(fields: [projectId], references: [uuid])
   flagEnvironment FlagEnvironment[]
   createdAt       DateTime?         @default(now())
+  events          Event[]
 }
 
 model RefreshToken {
@@ -126,15 +126,6 @@ model Variant {
   createdAt                    DateTime?         @default(now())
 }
 
-model PMetric {
-  uuid            String       @id @default(uuid())
-  name            String
-  createdAt       DateTime?    @default(now())
-  Environment     Environment? @relation(fields: [environmentUuid], references: [uuid])
-  environmentUuid String?
-  MetricHit       MetricHit[]
-}
-
 model FlagHit {
   uuid                         String           @id @default(uuid())
   date                         DateTime         @default(now())
@@ -145,13 +136,13 @@ model FlagHit {
   flagEnvironmentEnvironmentId String?
 }
 
-model MetricHit {
-  uuid        String   @id @default(uuid())
-  date        DateTime @default(now())
-  visitorId   String
-  data        String? // additional data
-  metric      PMetric  @relation(fields: [pMetricUuid], references: [uuid])
-  pMetricUuid String
+model Event {
+  uuid            String       @id @default(uuid())
+  date            DateTime     @default(now())
+  visitorId       String
+  data            String? // additional data
+  Environment     Environment? @relation(fields: [environmentUuid], references: [uuid])
+  environmentUuid String?
 }
 
 model Rule {

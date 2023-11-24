@@ -1,13 +1,12 @@
-import { PrismaClient } from "@prisma/client";
+import { Environment, PrismaClient } from "@prisma/client";
 
 const SEED_ROUND_EVENT_HITS = process.env.SEED_ROUND_EVENT_HITS
   ? Number(process.env.SEED_ROUND_EVENT_HITS)
   : 90;
 
-export const seedHitMetrics = async (
+export const seedHitEvents = async (
   prismaClient: PrismaClient,
-  aMetric: any,
-  bMetric: any
+  env: Environment
 ) => {
   // Modify this value to see more real logs on N days
   const dayCount = SEED_ROUND_EVENT_HITS;
@@ -23,18 +22,18 @@ export const seedHitMetrics = async (
     const count = i / 2;
 
     for (let y = 0; y < count; y++) {
-      await prismaClient.metricHit.create({
+      await prismaClient.event.create({
         data: {
-          pMetricUuid: aMetric.uuid,
           date,
           visitorId: "1",
+          environmentUuid: env.uuid,
         },
       });
 
       if (y < count / 2) {
-        await prismaClient.metricHit.create({
+        await prismaClient.event.create({
           data: {
-            pMetricUuid: bMetric.uuid,
+            environmentUuid: env.uuid,
             date,
             visitorId: "1",
           },

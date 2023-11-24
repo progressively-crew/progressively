@@ -144,23 +144,6 @@ export const ActivityDescription = ({
     );
   }
 
-  if (type === "create-metric") {
-    return (
-      <p>
-        <strong>A metric</strong> has been created:{" "}
-        <Link to={`../metrics`}>{data.name}</Link>
-      </p>
-    );
-  }
-
-  if (type === "delete-metric") {
-    return (
-      <p>
-        <strong>The metric</strong> {data.name} has been deleted.
-      </p>
-    );
-  }
-
   if (type === "create-variant") {
     return (
       <p>

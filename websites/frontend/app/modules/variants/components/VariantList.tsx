@@ -59,10 +59,6 @@ export const VariantList = ({
                 <MenuButton
                   items={[
                     {
-                      label: "Attach a metric",
-                      href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/metrics/create?variant=${variant.uuid}`,
-                    },
-                    {
                       label: "Remove",
                       href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/variants/${variant.uuid}/delete`,
                     },

@@ -2,7 +2,6 @@
 import { AiOutlineClockCircle, AiOutlineLink } from "react-icons/ai";
 import { RiSettingsLine } from "react-icons/ri";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
-import { MetricIcon } from "~/components/Icons/MetricIcon";
 import { VariantIcon } from "~/components/Icons/VariantIcon";
 import { ActivityType } from "../types";
 
@@ -41,14 +40,6 @@ export const ActivityIcon = ({ type }: ActivityIconProps) => {
 
   if (type === "create-scheduling") {
     return <AiOutlineClockCircle />;
-  }
-
-  if (type === "create-metric") {
-    return <MetricIcon />;
-  }
-
-  if (type === "delete-metric") {
-    return <MetricIcon />;
   }
 
   if (type === "create-variant") {

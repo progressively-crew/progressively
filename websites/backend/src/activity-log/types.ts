@@ -5,11 +5,9 @@ export type ActivityType =
   | 'create-webhook'
   | 'create-scheduling'
   | 'create-strategy'
-  | 'create-metric'
   | 'create-variant'
   | 'delete-webhook'
   | 'delete-variant'
-  | 'delete-metric'
   | 'delete-scheduling'
   | 'delete-strategy'
   | 'edit-strategy';

@@ -3,7 +3,6 @@ import { Environment } from "../types";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { SettingsIcon } from "~/components/Icons/SettingsIcon";
 import { Project } from "~/modules/projects/types";
-import { MetricIcon } from "~/components/Icons/MetricIcon";
 import { TbChartAreaLine } from "react-icons/tb";
 
 export interface EnvNavBarProps {
@@ -26,13 +25,6 @@ export const EnvNavBar = ({ project, environment }: EnvNavBarProps) => {
         icon={<TbChartAreaLine />}
       >
         Insights
-      </NavItem>
-
-      <NavItem
-        to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/metrics`}
-        icon={<MetricIcon />}
-      >
-        Metrics
       </NavItem>
 
       <NavItem

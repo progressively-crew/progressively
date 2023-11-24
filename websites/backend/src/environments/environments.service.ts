@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
 import { PopulatedFlagEnv } from '../flags/types';
 
@@ -96,26 +96,6 @@ export class EnvironmentsService {
     });
   }
 
-  async addMetricToFlagEnv(envId: string, metricName: string) {
-    const alreadyExistingMetric = await this.prisma.pMetric.findFirst({
-      where: {
-        name: metricName,
-        environmentUuid: envId,
-      },
-    });
-
-    if (alreadyExistingMetric) {
-      throw new BadRequestException('This metric name is already used.');
-    }
-
-    return this.prisma.pMetric.create({
-      data: {
-        name: metricName,
-        environmentUuid: envId,
-      },
-    });
-  }
-
   flagsByEnv(environmentId: string) {
     return this.prisma.flagEnvironment.findMany({
       where: {
@@ -177,14 +157,7 @@ export class EnvironmentsService {
           flagEnvironmentEnvironmentId: envId,
         },
       }),
-      this.prisma.metricHit.deleteMany({
-        where: {
-          metric: {
-            environmentUuid: envId,
-          },
-        },
-      }),
-      this.prisma.pMetric.deleteMany({
+      this.prisma.event.deleteMany({
         where: {
           environmentUuid: envId,
         },
@@ -259,89 +232,5 @@ export class EnvironmentsService {
     }
 
     return roles.includes(environmentOfProject.role);
-  }
-
-  listMetrics(envId: string) {
-    return this.prisma.pMetric.findMany({
-      where: {
-        environmentUuid: envId,
-      },
-    });
-  }
-
-  async deleteMetricFlag(metricId: string) {
-    const deleteQueries = [
-      this.prisma.metricHit.deleteMany({
-        where: {
-          pMetricUuid: metricId,
-        },
-      }),
-      this.prisma.pMetric.delete({
-        where: {
-          uuid: metricId,
-        },
-      }),
-    ];
-
-    const [, deletedMetric] = await this.prisma.$transaction(deleteQueries);
-
-    return deletedMetric;
-  }
-
-  metricHitsCount(envId: string, startDate: string, endDate: string) {
-    return this.prisma.metricHit.count({
-      where: {
-        metric: {
-          environmentUuid: envId,
-        },
-        date: {
-          gte: new Date(startDate),
-          lte: new Date(endDate),
-        },
-      },
-    });
-  }
-
-  async getMetricCountPerDate(
-    envId: string,
-    startDate: string,
-    endDate: string,
-  ) {
-    const metrics = await this.prisma.pMetric.findMany({
-      where: {
-        environmentUuid: envId,
-      },
-    });
-
-    const dictByDates = {};
-
-    for (const metric of metrics) {
-      const metricCountPerDate = await this.prisma.metricHit.groupBy({
-        _count: true,
-        by: ['date', 'pMetricUuid'],
-        where: {
-          pMetricUuid: metric.uuid,
-          date: {
-            gte: new Date(startDate),
-            lte: new Date(endDate),
-          },
-        },
-      });
-
-      metricCountPerDate.forEach((hbd) => {
-        const isoDate = hbd.date.toISOString();
-
-        if (!dictByDates[isoDate]) {
-          dictByDates[isoDate] = {};
-        }
-
-        dictByDates[isoDate]['date'] = isoDate;
-        dictByDates[isoDate][metric.name] = hbd._count;
-      });
-    }
-
-    return Object.keys(dictByDates)
-      .sort()
-      .map((k) => dictByDates[k]);
   }
 }
