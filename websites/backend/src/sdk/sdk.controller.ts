@@ -91,7 +91,7 @@ export class SdkController {
     const eventCreated = await this.sdkService.hitEvent(
       fields.clientKey as string,
       String(fields?.id || ''),
-      { ...body, ...deviceInfo },
+      { ...body, ...deviceInfo, url: body.url || 'Unknown URL' },
     );
 
     if (!eventCreated) {

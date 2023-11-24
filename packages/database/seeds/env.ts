@@ -30,6 +30,7 @@ export const seedHitEvents = async (
           environmentUuid: env.uuid,
           os: "Mac OS",
           browser: "Safari",
+          url: "/somepage",
         },
       });
 
@@ -42,6 +43,7 @@ export const seedHitEvents = async (
             visitorId: "1",
             os: "Windows",
             browser: "Chrome",
+            url: "/hello",
           },
         });
       }

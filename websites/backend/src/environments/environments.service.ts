@@ -84,6 +84,19 @@ export class EnvironmentsService {
     });
   }
 
+  getUniqueVisitor(envId: string, startDate: string, endDate: string) {
+    return this.prisma.event.findMany({
+      distinct: ['visitorId'],
+      where: {
+        environmentUuid: envId,
+        date: {
+          gte: new Date(startDate),
+          lte: new Date(endDate),
+        },
+      },
+    });
+  }
+
   getMetricCount(envId: string, startDate: string, endDate: string) {
     return this.prisma.event.count({
       where: {
@@ -100,7 +113,7 @@ export class EnvironmentsService {
     envId: string,
     startDate: string,
     endDate: string,
-    group: 'os' | 'browser',
+    group: 'os' | 'browser' | 'url',
   ) {
     return this.prisma.event.groupBy({
       by: [group],

@@ -39,7 +39,9 @@ interface LoaderData {
   eventsPerDate: Array<EventHit>;
   eventsPerDatePerOs: Array<LocalCount>;
   eventsPerDatePerBrowser: Array<LocalCount>;
+  eventsPerDatePerUrl: Array<LocalCount>;
   metricCount: number;
+  uniqueVisitorsCount: number;
 }
 
 export const loader: LoaderFunction = async ({
@@ -67,7 +69,9 @@ export const loader: LoaderFunction = async ({
     eventsPerDate,
     eventsPerDatePerOs,
     eventsPerDatePerBrowser,
+    eventsPerDatePerUrl,
     metricCount,
+    uniqueVisitorsCount,
   } = await getEventsForEnv(params.env!, start, end, authCookie);
 
   return {
@@ -78,6 +82,8 @@ export const loader: LoaderFunction = async ({
       "browser"
     ),
     metricCount,
+    eventsPerDatePerUrl: mapToLocaleCount(eventsPerDatePerUrl, "url"),
+    uniqueVisitorsCount,
   };
 };
 
@@ -86,7 +92,9 @@ export default function EnvInsights() {
     eventsPerDate,
     eventsPerDatePerOs,
     eventsPerDatePerBrowser,
+    eventsPerDatePerUrl,
     metricCount,
+    uniqueVisitorsCount,
   } = useLoaderData<LoaderData>();
   const { project } = useProject();
   const { environment } = useEnvironment();
@@ -146,6 +154,12 @@ export default function EnvInsights() {
             unit={"hits."}
             icon={<div />}
           />
+          <BigStat
+            label={"Unique visitors"}
+            value={uniqueVisitorsCount}
+            unit={"users."}
+            icon={<div />}
+          />
         </div>
       </Section>
 
@@ -191,6 +205,19 @@ export default function EnvInsights() {
               data={eventsPerDatePerOs}
               caption={"Events per OS"}
               cellName={"Os"}
+            />
+          </Card>
+        </Section>
+
+        <Section>
+          <Card>
+            <CardContent>
+              <SectionHeader title="Events per URL" />
+            </CardContent>
+            <CountTable
+              data={eventsPerDatePerUrl}
+              caption={"Events per Page URL"}
+              cellName={"Page URL"}
             />
           </Card>
         </Section>

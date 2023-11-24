@@ -64,6 +64,7 @@ export class EnvironmentsController {
       endDate,
       'os',
     );
+
     const eventsPerDatePerBrowser =
       await this.envService.getEventsPerDatePerGroup(
         envId,
@@ -72,7 +73,20 @@ export class EnvironmentsController {
         'browser',
       );
 
+    const eventsPerDatePerUrl = await this.envService.getEventsPerDatePerGroup(
+      envId,
+      startDate,
+      endDate,
+      'url',
+    );
+
     const metricCount = await this.envService.getMetricCount(
+      envId,
+      startDate,
+      endDate,
+    );
+
+    const uniqueVisitors = await this.envService.getUniqueVisitor(
       envId,
       startDate,
       endDate,
@@ -82,7 +96,9 @@ export class EnvironmentsController {
       eventsPerDate,
       eventsPerDatePerOs,
       eventsPerDatePerBrowser,
+      eventsPerDatePerUrl,
       metricCount,
+      uniqueVisitorsCount: uniqueVisitors.length,
     };
   }
 }
