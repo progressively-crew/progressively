@@ -211,10 +211,11 @@ export class SdkService {
         environmentUuid: env.uuid,
         visitorId,
         date,
-        data:
-          typeof hit.data === 'object'
+        data: hit.data
+          ? typeof hit.data === 'object'
             ? JSON.stringify(hit.data)
-            : String(hit.data),
+            : String(hit.data)
+          : null,
       },
     });
   }
