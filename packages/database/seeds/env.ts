@@ -28,6 +28,8 @@ export const seedHitEvents = async (
           name: "Event A",
           visitorId: "1",
           environmentUuid: env.uuid,
+          os: "Mac OS",
+          browser: "Safari",
         },
       });
 
@@ -38,6 +40,8 @@ export const seedHitEvents = async (
             environmentUuid: env.uuid,
             date,
             visitorId: "1",
+            os: "Windows",
+            browser: "Chrome",
           },
         });
       }

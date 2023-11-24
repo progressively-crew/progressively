@@ -71,10 +71,30 @@ export class EnvironmentsService {
     }) as unknown as Promise<PopulatedFlagEnv>;
   }
 
-  getEventsPerDate(envId: string, startDate: string, endDate: string) {
+  getDistinctEventName(envId: string, startDate: string, endDate: string) {
+    return this.prisma.event.findMany({
+      distinct: ['name'],
+      where: {
+        environmentUuid: envId,
+        date: {
+          gte: new Date(startDate),
+          lte: new Date(endDate),
+        },
+      },
+    });
+  }
+
+  getEventsPerDatePerGroup(
+    envId: string,
+    startDate: string,
+    endDate: string,
+    group: 'os' | 'browser',
+  ) {
     return this.prisma.event.groupBy({
-      by: ['date'],
-      _count: true,
+      by: [group],
+      _count: {
+        uuid: true,
+      },
       where: {
         environmentUuid: envId,
         date: {
@@ -83,9 +103,54 @@ export class EnvironmentsService {
         },
       },
       orderBy: {
-        date: 'asc',
+        _count: {
+          uuid: 'desc',
+        },
       },
     });
+  }
+
+  async getEventsPerDate(envId: string, startDate: string, endDate: string) {
+    const distinctEventName = await this.getDistinctEventName(
+      envId,
+      startDate,
+      endDate,
+    );
+
+    const dictByDates = {};
+
+    for (const dhv of distinctEventName) {
+      const hitsByDate = await this.prisma.event.groupBy({
+        _count: true,
+        by: ['name', 'date'],
+        where: {
+          environmentUuid: envId,
+          name: dhv.name,
+          date: {
+            gte: new Date(startDate),
+            lte: new Date(endDate),
+          },
+        },
+        orderBy: {
+          date: 'asc',
+        },
+      });
+
+      hitsByDate.forEach((hbd) => {
+        const isoDate = hbd.date.toISOString();
+
+        if (!dictByDates[isoDate]) {
+          dictByDates[isoDate] = {};
+        }
+
+        dictByDates[isoDate]['date'] = isoDate;
+        dictByDates[isoDate][dhv.name] = hbd._count;
+      });
+    }
+
+    return Object.keys(dictByDates)
+      .sort()
+      .map((k) => dictByDates[k]);
   }
 
   async createEnvironment(projectId: string, environmentName: string) {

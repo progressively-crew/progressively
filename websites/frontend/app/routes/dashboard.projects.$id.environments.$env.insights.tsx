@@ -15,6 +15,9 @@ import { BigStat } from "~/components/BigStat";
 import { EnvNavBar } from "~/modules/environments/components/EnvNavBar";
 import { getEventsForEnv } from "~/modules/environments/services/getEventsForEnv";
 import { getSession } from "~/sessions";
+import { mapToLocaleCount } from "~/modules/environments/services/mapToLocaleCount";
+import { LocalCount } from "~/modules/environments/types";
+import { CountTable } from "~/modules/environments/components/CountTable";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -33,8 +36,9 @@ type EventHit = {
 } & { date: string };
 
 interface LoaderData {
-  eventsPerDate: number;
-  metricsHitsPerDate: Array<EventHit>;
+  eventsPerDate: Array<EventHit>;
+  eventsPerDatePerOs: Array<LocalCount>;
+  eventsPerDatePerBrowser: Array<LocalCount>;
 }
 
 export const loader: LoaderFunction = async ({
@@ -58,21 +62,22 @@ export const loader: LoaderFunction = async ({
   end.setDate(end.getDate() + 1);
 
   const authCookie = session.get("auth-cookie");
-  const eventsPerDate = await getEventsForEnv(
-    params.env!,
-    start,
-    end,
-    authCookie
-  );
+  const { eventsPerDate, eventsPerDatePerOs, eventsPerDatePerBrowser } =
+    await getEventsForEnv(params.env!, start, end, authCookie);
 
   return {
     eventsPerDate,
-    metricsHitsPerDate: [],
+    eventsPerDatePerOs: mapToLocaleCount(eventsPerDatePerOs, "os"),
+    eventsPerDatePerBrowser: mapToLocaleCount(
+      eventsPerDatePerBrowser,
+      "browser"
+    ),
   };
 };
 
 export default function EnvInsights() {
-  const { eventsPerDate, metricsHitsPerDate } = useLoaderData<LoaderData>();
+  const { eventsPerDate, eventsPerDatePerOs, eventsPerDatePerBrowser } =
+    useLoaderData<LoaderData>();
   const { project } = useProject();
   const { environment } = useEnvironment();
   const [searchParams] = useSearchParams();
@@ -127,7 +132,7 @@ export default function EnvInsights() {
         <div className="inline-flex flex-row gap-6">
           <BigStat
             label={"Total metric hits"}
-            value={eventsPerDate}
+            value={0}
             unit={"hits."}
             icon={<div />}
           />
@@ -140,8 +145,8 @@ export default function EnvInsights() {
             <SectionHeader title={"Metric hits."} />
           </CardContent>
 
-          {metricsHitsPerDate.length > 0 ? (
-            <LineChart data={metricsHitsPerDate} />
+          {eventsPerDate.length > 0 ? (
+            <LineChart data={eventsPerDate} />
           ) : (
             <CardContent>
               <EmptyState
@@ -152,6 +157,34 @@ export default function EnvInsights() {
           )}
         </Card>
       </Section>
+
+      <div className="grid grid-cols-3 gap-6">
+        <Section>
+          <Card>
+            <CardContent>
+              <SectionHeader title="Events per browser" />
+            </CardContent>
+            <CountTable
+              data={eventsPerDatePerBrowser}
+              caption={"Events per browser"}
+              cellName={"Browser"}
+            />
+          </Card>
+        </Section>
+
+        <Section>
+          <Card>
+            <CardContent>
+              <SectionHeader title="Events per Os" />
+            </CardContent>
+            <CountTable
+              data={eventsPerDatePerOs}
+              caption={"Events per OS"}
+              cellName={"Os"}
+            />
+          </Card>
+        </Section>
+      </div>
     </DashboardLayout>
   );
 }

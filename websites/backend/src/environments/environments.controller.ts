@@ -58,6 +58,20 @@ export class EnvironmentsController {
       endDate,
     );
 
-    return { eventsPerDate, metricsHitsPerDate: [] };
+    const eventsPerDatePerOs = await this.envService.getEventsPerDatePerGroup(
+      envId,
+      startDate,
+      endDate,
+      'os',
+    );
+    const eventsPerDatePerBrowser =
+      await this.envService.getEventsPerDatePerGroup(
+        envId,
+        startDate,
+        endDate,
+        'browser',
+      );
+
+    return { eventsPerDate, eventsPerDatePerOs, eventsPerDatePerBrowser };
   }
 }

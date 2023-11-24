@@ -11,3 +11,8 @@ export interface Environment {
 export interface CreateEnvironmentDTO {
   name?: string;
 }
+
+export interface LocalCount {
+  count: number;
+  name: string;
+}
