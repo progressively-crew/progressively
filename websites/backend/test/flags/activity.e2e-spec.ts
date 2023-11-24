@@ -104,24 +104,6 @@ describe('FlagsController (e2e)', () => {
         {
           concernedEntity: 'flag',
           data: {
-            uuid: '543ef936-4399-4b98-89f2-c4b5f7cd86fc',
-            name: 'New super metric',
-            flagEnvironmentFlagId: '4',
-            flagEnvironmentEnvironmentId: '1',
-            variantUuid: null,
-          },
-          flagEnvironmentEnvironmentId: '1',
-          flagEnvironmentFlagId: '1',
-          type: 'create-metric',
-          userUuid: '1',
-          utc: '2023-01-21T00:00:00.000Z',
-          user: {
-            fullname: 'Marvin Frachet',
-          },
-        },
-        {
-          concernedEntity: 'flag',
-          data: {
             uuid: 'c680494a-7545-4567-bd79-df016de141b0',
             type: 'UpdateVariantPercentage',
             data: [

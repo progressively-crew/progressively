@@ -1,5 +1,4 @@
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { getSession } from "~/sessions";
 import { LoaderFunction, V2_MetaFunction } from "@remix-run/node";
 import { Link, useLoaderData, useSearchParams } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
@@ -13,9 +12,7 @@ import { Section, SectionHeader } from "~/components/Section";
 import { EmptyState } from "~/components/EmptyState";
 import { LineChart } from "~/components/LineChart";
 import { BigStat } from "~/components/BigStat";
-import { MetricIcon } from "~/components/Icons/MetricIcon";
 import { EnvNavBar } from "~/modules/environments/components/EnvNavBar";
-import { getMetricHits } from "~/modules/environments/services/getMetricHits";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -29,20 +26,19 @@ export const meta: V2_MetaFunction = ({ matches, params }) => {
   ];
 };
 
-type MetricHit = {
+type EventHit = {
   [key: string]: number;
 } & { date: string };
 
 interface LoaderData {
   metricsHitCount: number;
-  metricsHitsPerDate: Array<MetricHit>;
+  metricsHitsPerDate: Array<EventHit>;
 }
 
 export const loader: LoaderFunction = async ({
   request,
-  params,
 }): Promise<LoaderData> => {
-  const session = await getSession(request.headers.get("Cookie"));
+  // const session = await getSession(request.headers.get("Cookie"));
   const url = new URL(request.url);
   const search = new URLSearchParams(url.search);
 
@@ -58,18 +54,11 @@ export const loader: LoaderFunction = async ({
   const end = new Date();
   end.setDate(end.getDate() + 1);
 
-  const authCookie = session.get("auth-cookie");
-
-  const { metricsHitCount, metricsHitsPerDate } = await getMetricHits(
-    params.env!,
-    start,
-    end,
-    authCookie
-  );
+  // const authCookie = session.get("auth-cookie");
 
   return {
-    metricsHitCount,
-    metricsHitsPerDate,
+    metricsHitCount: 0,
+    metricsHitsPerDate: [],
   };
 };
 
@@ -131,7 +120,7 @@ export default function EnvInsights() {
             label={"Total metric hits"}
             value={metricsHitCount}
             unit={"hits."}
-            icon={<MetricIcon className="h-6 w-6 text-slate-200" />}
+            icon={<div />}
           />
         </div>
       </Section>
@@ -148,7 +137,7 @@ export default function EnvInsights() {
             <CardContent>
               <EmptyState
                 title="No data"
-                description={"There are no metric hits for this period."}
+                description={"There are no events hits for this period."}
               />
             </CardContent>
           )}

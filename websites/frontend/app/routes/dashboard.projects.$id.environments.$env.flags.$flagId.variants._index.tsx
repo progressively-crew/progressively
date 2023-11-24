@@ -9,7 +9,6 @@ import { CreateButton } from "~/components/Buttons/CreateButton";
 import { Card, CardContent } from "~/components/Card";
 import { EmptyState } from "~/components/EmptyState";
 import { PageTitle } from "~/components/PageTitle";
-import { Typography } from "~/components/Typography";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
@@ -114,13 +113,6 @@ export default function Variants() {
     >
       <PageTitle
         value="Variants"
-        description={
-          <Typography>
-            Manage different variants to display different information to the
-            <br />
-            users. Measure the impact with metrics.
-          </Typography>
-        }
         action={
           hasVariants && (
             <CreateButton

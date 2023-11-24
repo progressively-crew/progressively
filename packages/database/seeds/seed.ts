@@ -3,7 +3,7 @@ import { seedActivity } from "./activity";
 import { seedFlagHits, seedFlagHitsVariants, seedFlags } from "./flags";
 import { seedProjects } from "./projects";
 import { seedPasswordReset, seedUsers } from "./users";
-import { seedHitMetrics } from "./env";
+import { seedHitEvents } from "./env";
 
 const prismaClient = new PrismaClient();
 
@@ -156,21 +156,6 @@ export const seedDb = async () => {
       },
     });
 
-    const aMetric = await prismaClient.pMetric.create({
-      data: {
-        uuid: "1",
-        name: "A metric",
-        environmentUuid: production.uuid,
-      },
-    });
-
-    const bMetric = await prismaClient.pMetric.create({
-      data: {
-        uuid: "100",
-        name: "B metric",
-        environmentUuid: production.uuid,
-      },
-    });
     // End of multi variate setup
 
     await prismaClient.strategy.create({
@@ -255,7 +240,7 @@ export const seedDb = async () => {
     );
 
     await seedFlagHitsVariants(prismaClient, multiVariateFlagEnv);
-    await seedHitMetrics(prismaClient, aMetric, bMetric);
+    await seedHitEvents(prismaClient, production);
 
     // End of Flag setup
   } catch (e) {
