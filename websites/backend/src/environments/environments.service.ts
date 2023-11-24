@@ -340,4 +340,52 @@ export class EnvironmentsService {
 
     return roles.includes(environmentOfProject.role);
   }
+
+  async getPageViewAndClosestOne() {
+    return this.prisma.$queryRaw`
+   SELECT pv.date AS page_view_date,pv.name AS page_view_name,
+(
+  SELECT MIN(date) as min
+  FROM "Event" e2 
+  WHERE e2.name != 'page view' 
+  AND e2.date > pv.date
+  LIMIT 1
+) AS closest_non_page_view_date
+FROM "Event" pv
+WHERE pv.name = 'page view'
+    `;
+  }
+
+  async computeMostDoneJourney(
+    envId: string,
+    startDate: string,
+    endDate: string,
+  ) {
+    const eventsPerDateAndUser = await this.prisma.event.findMany({
+      where: {
+        environmentUuid: envId,
+        date: {
+          gte: new Date(startDate),
+          lte: new Date(endDate),
+        },
+      },
+      orderBy: { date: 'desc' },
+    });
+
+    let actualUser = '';
+    let userJourney = [];
+    const journeys = [];
+
+    for (const event of eventsPerDateAndUser) {
+      if (event.visitorId !== actualUser) {
+        journeys.push(userJourney);
+        actualUser = event.visitorId;
+        userJourney = [];
+      }
+
+      userJourney.push(event.name);
+    }
+
+    console.log('lol', userJourney);
+  }
 }
