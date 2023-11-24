@@ -139,6 +139,7 @@ model FlagHit {
 model Event {
   uuid            String       @id @default(uuid())
   date            DateTime     @default(now())
+  name            String
   visitorId       String
   data            String? // additional data
   Environment     Environment? @relation(fields: [environmentUuid], references: [uuid])

@@ -211,6 +211,7 @@ export class SdkService {
         environmentUuid: env.uuid,
         visitorId,
         date,
+        name: hit.name,
         data: hit.data
           ? typeof hit.data === 'object'
             ? JSON.stringify(hit.data)

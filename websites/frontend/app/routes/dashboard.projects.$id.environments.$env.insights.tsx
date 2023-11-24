@@ -13,6 +13,8 @@ import { EmptyState } from "~/components/EmptyState";
 import { LineChart } from "~/components/LineChart";
 import { BigStat } from "~/components/BigStat";
 import { EnvNavBar } from "~/modules/environments/components/EnvNavBar";
+import { getEventsForEnv } from "~/modules/environments/services/getEventsForEnv";
+import { getSession } from "~/sessions";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -31,14 +33,15 @@ type EventHit = {
 } & { date: string };
 
 interface LoaderData {
-  metricsHitCount: number;
+  eventsPerDate: number;
   metricsHitsPerDate: Array<EventHit>;
 }
 
 export const loader: LoaderFunction = async ({
   request,
+  params,
 }): Promise<LoaderData> => {
-  // const session = await getSession(request.headers.get("Cookie"));
+  const session = await getSession(request.headers.get("Cookie"));
   const url = new URL(request.url);
   const search = new URLSearchParams(url.search);
 
@@ -54,16 +57,22 @@ export const loader: LoaderFunction = async ({
   const end = new Date();
   end.setDate(end.getDate() + 1);
 
-  // const authCookie = session.get("auth-cookie");
+  const authCookie = session.get("auth-cookie");
+  const eventsPerDate = await getEventsForEnv(
+    params.env!,
+    start,
+    end,
+    authCookie
+  );
 
   return {
-    metricsHitCount: 0,
+    eventsPerDate,
     metricsHitsPerDate: [],
   };
 };
 
 export default function EnvInsights() {
-  const { metricsHitCount, metricsHitsPerDate } = useLoaderData<LoaderData>();
+  const { eventsPerDate, metricsHitsPerDate } = useLoaderData<LoaderData>();
   const { project } = useProject();
   const { environment } = useEnvironment();
   const [searchParams] = useSearchParams();
@@ -118,7 +127,7 @@ export default function EnvInsights() {
         <div className="inline-flex flex-row gap-6">
           <BigStat
             label={"Total metric hits"}
-            value={metricsHitCount}
+            value={eventsPerDate}
             unit={"hits."}
             icon={<div />}
           />

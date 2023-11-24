@@ -52,6 +52,12 @@ export class EnvironmentsController {
       throw new BadRequestException('startDate and endDate are required.');
     }
 
-    return { metricsHitCount: 0, metricsHitsPerDate: [] };
+    const eventsPerDate = await this.envService.getEventsPerDate(
+      envId,
+      startDate,
+      endDate,
+    );
+
+    return { eventsPerDate, metricsHitsPerDate: [] };
   }
 }

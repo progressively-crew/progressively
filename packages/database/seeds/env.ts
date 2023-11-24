@@ -25,6 +25,7 @@ export const seedHitEvents = async (
       await prismaClient.event.create({
         data: {
           date,
+          name: "Event A",
           visitorId: "1",
           environmentUuid: env.uuid,
         },
@@ -33,6 +34,7 @@ export const seedHitEvents = async (
       if (y < count / 2) {
         await prismaClient.event.create({
           data: {
+            name: "Event B",
             environmentUuid: env.uuid,
             date,
             visitorId: "1",

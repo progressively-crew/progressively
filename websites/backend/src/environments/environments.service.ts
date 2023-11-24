@@ -71,6 +71,23 @@ export class EnvironmentsService {
     }) as unknown as Promise<PopulatedFlagEnv>;
   }
 
+  getEventsPerDate(envId: string, startDate: string, endDate: string) {
+    return this.prisma.event.groupBy({
+      by: ['date'],
+      _count: true,
+      where: {
+        environmentUuid: envId,
+        date: {
+          gte: new Date(startDate),
+          lte: new Date(endDate),
+        },
+      },
+      orderBy: {
+        date: 'asc',
+      },
+    });
+  }
+
   async createEnvironment(projectId: string, environmentName: string) {
     const allMatchingFlagEnv = await this.prisma.flagEnvironment.findMany({
       where: {
