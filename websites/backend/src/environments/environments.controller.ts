@@ -92,8 +92,6 @@ export class EnvironmentsController {
       endDate,
     );
 
-    console.log(await this.envService.getPageViewAndClosestOne());
-
     return {
       eventsPerDate,
       eventsPerDatePerOs,

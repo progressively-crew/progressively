@@ -341,21 +341,6 @@ export class EnvironmentsService {
     return roles.includes(environmentOfProject.role);
   }
 
-  async getPageViewAndClosestOne() {
-    return this.prisma.$queryRaw`
-   SELECT pv.date AS page_view_date,pv.name AS page_view_name,
-(
-  SELECT MIN(date) as min
-  FROM "Event" e2 
-  WHERE e2.name != 'page view' 
-  AND e2.date > pv.date
-  LIMIT 1
-) AS closest_non_page_view_date
-FROM "Event" pv
-WHERE pv.name = 'page view'
-    `;
-  }
-
   async computeMostDoneJourney(
     envId: string,
     startDate: string,
