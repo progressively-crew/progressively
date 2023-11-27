@@ -340,37 +340,4 @@ export class EnvironmentsService {
 
     return roles.includes(environmentOfProject.role);
   }
-
-  async computeMostDoneJourney(
-    envId: string,
-    startDate: string,
-    endDate: string,
-  ) {
-    const eventsPerDateAndUser = await this.prisma.event.findMany({
-      where: {
-        environmentUuid: envId,
-        date: {
-          gte: new Date(startDate),
-          lte: new Date(endDate),
-        },
-      },
-      orderBy: { date: 'desc' },
-    });
-
-    let actualUser = '';
-    let userJourney = [];
-    const journeys = [];
-
-    for (const event of eventsPerDateAndUser) {
-      if (event.visitorId !== actualUser) {
-        journeys.push(userJourney);
-        actualUser = event.visitorId;
-        userJourney = [];
-      }
-
-      userJourney.push(event.name);
-    }
-
-    console.log('lol', userJourney);
-  }
 }
