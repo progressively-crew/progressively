@@ -88,8 +88,10 @@ export class SdkController {
       throw new BadRequestException();
     }
 
+    const visitorId = `${fields.clientKey}-${fields?.id || ''}`;
+
     const eventCreated = await this.sdkService.hitEvent(
-      fields.clientKey as string,
+      visitorId,
       String(fields?.id || ''),
       { ...body, ...deviceInfo, url: body.url || 'Unknown URL' },
     );

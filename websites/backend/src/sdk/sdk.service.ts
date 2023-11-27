@@ -91,10 +91,12 @@ export class SdkService {
   ) {
     const flagStatusRecord = this.resolveFlagStatus(flagEnv, fields);
 
+    const visitorId = `${flagEnv.environment.clientKey}-${fields?.id || ''}`;
+
     await this.flagService.hitFlag(
       flagEnv.environmentId,
       flagEnv.flagId,
-      String(fields?.id || ''),
+      visitorId,
       String(flagStatusRecord),
     );
 
@@ -124,10 +126,12 @@ export class SdkService {
     flagsByRef[nextFlag.flag.key] = flagStatusOrVariant;
 
     if (!skipHit) {
+      const visitorId = `${clientKey}-${fields?.id || ''}`;
+
       await this.flagService.hitFlag(
         nextFlag.environmentId,
         nextFlag.flagId,
-        String(fields?.id || ''),
+        visitorId,
         String(flagStatusOrVariant),
       );
     }
