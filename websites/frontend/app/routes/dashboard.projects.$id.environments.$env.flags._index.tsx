@@ -1,4 +1,3 @@
-import { Section } from "~/components/Section";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { LoaderFunction, V2_MetaFunction } from "@remix-run/node";
 import { useProject } from "~/modules/projects/contexts/useProject";
