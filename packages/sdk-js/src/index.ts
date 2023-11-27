@@ -80,6 +80,7 @@ function init(clientKey: string, options?: SDKOptions): ProgressivelySdkType {
       credentials: "include",
       body: JSON.stringify({
         name: eventName,
+        url: window?.location?.href,
       }),
       headers: { "Content-Type": "application/json" },
     }).then(() => undefined);

@@ -13,6 +13,11 @@ import { EmptyState } from "~/components/EmptyState";
 import { LineChart } from "~/components/LineChart";
 import { BigStat } from "~/components/BigStat";
 import { EnvNavBar } from "~/modules/environments/components/EnvNavBar";
+import { getEventsForEnv } from "~/modules/environments/services/getEventsForEnv";
+import { getSession } from "~/sessions";
+import { mapToLocaleCount } from "~/modules/environments/services/mapToLocaleCount";
+import { LocalCount } from "~/modules/environments/types";
+import { CountTable } from "~/modules/environments/components/CountTable";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -31,14 +36,19 @@ type EventHit = {
 } & { date: string };
 
 interface LoaderData {
-  metricsHitCount: number;
-  metricsHitsPerDate: Array<EventHit>;
+  eventsPerDate: Array<EventHit>;
+  eventsPerDatePerOs: Array<LocalCount>;
+  eventsPerDatePerBrowser: Array<LocalCount>;
+  eventsPerDatePerUrl: Array<LocalCount>;
+  metricCount: number;
+  uniqueVisitorsCount: number;
 }
 
 export const loader: LoaderFunction = async ({
   request,
+  params,
 }): Promise<LoaderData> => {
-  // const session = await getSession(request.headers.get("Cookie"));
+  const session = await getSession(request.headers.get("Cookie"));
   const url = new URL(request.url);
   const search = new URLSearchParams(url.search);
 
@@ -54,16 +64,38 @@ export const loader: LoaderFunction = async ({
   const end = new Date();
   end.setDate(end.getDate() + 1);
 
-  // const authCookie = session.get("auth-cookie");
+  const authCookie = session.get("auth-cookie");
+  const {
+    eventsPerDate,
+    eventsPerDatePerOs,
+    eventsPerDatePerBrowser,
+    eventsPerDatePerUrl,
+    metricCount,
+    uniqueVisitorsCount,
+  } = await getEventsForEnv(params.env!, start, end, authCookie);
 
   return {
-    metricsHitCount: 0,
-    metricsHitsPerDate: [],
+    eventsPerDate,
+    eventsPerDatePerOs: mapToLocaleCount(eventsPerDatePerOs, "os"),
+    eventsPerDatePerBrowser: mapToLocaleCount(
+      eventsPerDatePerBrowser,
+      "browser"
+    ),
+    metricCount,
+    eventsPerDatePerUrl: mapToLocaleCount(eventsPerDatePerUrl, "url"),
+    uniqueVisitorsCount,
   };
 };
 
 export default function EnvInsights() {
-  const { metricsHitCount, metricsHitsPerDate } = useLoaderData<LoaderData>();
+  const {
+    eventsPerDate,
+    eventsPerDatePerOs,
+    eventsPerDatePerBrowser,
+    eventsPerDatePerUrl,
+    metricCount,
+    uniqueVisitorsCount,
+  } = useLoaderData<LoaderData>();
   const { project } = useProject();
   const { environment } = useEnvironment();
   const [searchParams] = useSearchParams();
@@ -118,8 +150,14 @@ export default function EnvInsights() {
         <div className="inline-flex flex-row gap-6">
           <BigStat
             label={"Total metric hits"}
-            value={metricsHitCount}
+            value={metricCount}
             unit={"hits."}
+            icon={<div />}
+          />
+          <BigStat
+            label={"Unique visitors"}
+            value={uniqueVisitorsCount}
+            unit={"users."}
             icon={<div />}
           />
         </div>
@@ -131,8 +169,8 @@ export default function EnvInsights() {
             <SectionHeader title={"Metric hits."} />
           </CardContent>
 
-          {metricsHitsPerDate.length > 0 ? (
-            <LineChart data={metricsHitsPerDate} />
+          {eventsPerDate.length > 0 ? (
+            <LineChart data={eventsPerDate} />
           ) : (
             <CardContent>
               <EmptyState
@@ -143,6 +181,47 @@ export default function EnvInsights() {
           )}
         </Card>
       </Section>
+
+      <div className="grid grid-cols-3 gap-6">
+        <Section>
+          <Card>
+            <CardContent>
+              <SectionHeader title="Events per browser" />
+            </CardContent>
+            <CountTable
+              data={eventsPerDatePerBrowser}
+              caption={"Events per browser"}
+              cellName={"Browser"}
+            />
+          </Card>
+        </Section>
+
+        <Section>
+          <Card>
+            <CardContent>
+              <SectionHeader title="Events per Os" />
+            </CardContent>
+            <CountTable
+              data={eventsPerDatePerOs}
+              caption={"Events per OS"}
+              cellName={"Os"}
+            />
+          </Card>
+        </Section>
+
+        <Section>
+          <Card>
+            <CardContent>
+              <SectionHeader title="Events per URL" />
+            </CardContent>
+            <CountTable
+              data={eventsPerDatePerUrl}
+              caption={"Events per Page URL"}
+              cellName={"Page URL"}
+            />
+          </Card>
+        </Section>
+      </div>
     </DashboardLayout>
   );
 }

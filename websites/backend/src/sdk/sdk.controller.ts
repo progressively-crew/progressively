@@ -13,9 +13,9 @@ import {
 import { Response, Request } from 'express';
 import { SdkService } from './sdk.service';
 import { parseBase64Params, prepareCookie, resolveUserId } from './utils';
-
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
 import { EventHit } from './types';
+import { getDeviceInfo } from '../shared/utils/getDeviceInfo';
 
 export const COOKIE_KEY = 'progressively-id';
 
@@ -72,12 +72,15 @@ export class SdkController {
 
   @Post('/:params')
   async hitEvent(
+    @Req() request: Request,
     @Param('params') base64Params: string,
     @Body() body: EventHit,
   ) {
     if (!body.name) {
       throw new BadRequestException();
     }
+
+    const deviceInfo = getDeviceInfo(request);
 
     const fields = parseBase64Params(base64Params);
 
@@ -88,7 +91,7 @@ export class SdkController {
     const eventCreated = await this.sdkService.hitEvent(
       fields.clientKey as string,
       String(fields?.id || ''),
-      body,
+      { ...body, ...deviceInfo, url: body.url || 'Unknown URL' },
     );
 
     if (!eventCreated) {

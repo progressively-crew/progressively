@@ -189,7 +189,11 @@ export class SdkService {
     return `declare module "@progressively/types" { \n${defaultDefinition}\n\n${definitionWithCustomString}\n}`;
   }
 
-  async hitEvent(clientKey: string, visitorId: string, hit: EventHit) {
+  async hitEvent(
+    clientKey: string,
+    visitorId: string,
+    hit: EventHit & { os: string; browser: string; url: string },
+  ) {
     const env = await this.prisma.environment.findFirst({
       where: {
         clientKey,
@@ -211,10 +215,15 @@ export class SdkService {
         environmentUuid: env.uuid,
         visitorId,
         date,
-        data:
-          typeof hit.data === 'object'
+        name: hit.name,
+        os: hit.os,
+        browser: hit.browser,
+        url: hit.url,
+        data: hit.data
+          ? typeof hit.data === 'object'
             ? JSON.stringify(hit.data)
-            : String(hit.data),
+            : String(hit.data)
+          : null,
       },
     });
   }

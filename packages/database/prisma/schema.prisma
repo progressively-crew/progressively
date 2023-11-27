@@ -139,7 +139,11 @@ model FlagHit {
 model Event {
   uuid            String       @id @default(uuid())
   date            DateTime     @default(now())
+  name            String
   visitorId       String
+  browser         String
+  os              String
+  url             String
   data            String? // additional data
   Environment     Environment? @relation(fields: [environmentUuid], references: [uuid])
   environmentUuid String?

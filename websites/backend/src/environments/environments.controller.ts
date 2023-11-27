@@ -52,6 +52,53 @@ export class EnvironmentsController {
       throw new BadRequestException('startDate and endDate are required.');
     }
 
-    return { metricsHitCount: 0, metricsHitsPerDate: [] };
+    const eventsPerDate = await this.envService.getEventsPerDate(
+      envId,
+      startDate,
+      endDate,
+    );
+
+    const eventsPerDatePerOs = await this.envService.getEventsPerDatePerGroup(
+      envId,
+      startDate,
+      endDate,
+      'os',
+    );
+
+    const eventsPerDatePerBrowser =
+      await this.envService.getEventsPerDatePerGroup(
+        envId,
+        startDate,
+        endDate,
+        'browser',
+      );
+
+    const eventsPerDatePerUrl = await this.envService.getEventsPerDatePerGroup(
+      envId,
+      startDate,
+      endDate,
+      'url',
+    );
+
+    const metricCount = await this.envService.getMetricCount(
+      envId,
+      startDate,
+      endDate,
+    );
+
+    const uniqueVisitors = await this.envService.getUniqueVisitor(
+      envId,
+      startDate,
+      endDate,
+    );
+
+    return {
+      eventsPerDate,
+      eventsPerDatePerOs,
+      eventsPerDatePerBrowser,
+      eventsPerDatePerUrl,
+      metricCount,
+      uniqueVisitorsCount: uniqueVisitors.length,
+    };
   }
 }
