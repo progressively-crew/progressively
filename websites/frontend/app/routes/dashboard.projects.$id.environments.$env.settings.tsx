@@ -1,6 +1,5 @@
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { Section, SectionHeader } from "~/components/Section";
-import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { UserRoles } from "~/modules/projects/types";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
@@ -14,6 +13,8 @@ import { PageTitle } from "~/components/PageTitle";
 import { Spacer } from "~/components/Spacer";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { useSearchParams } from "@remix-run/react";
+import { SettingLayout } from "~/layouts/SettingLayout";
+import { BackLink } from "~/components/BackLink";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -33,7 +34,7 @@ export default function EnvSettingsPage() {
   const envCreated = searchParams.get("envCreated") || undefined;
 
   return (
-    <DashboardLayout
+    <SettingLayout
       status={
         envCreated ? (
           <SuccessBox id="env-added">
@@ -41,8 +42,20 @@ export default function EnvSettingsPage() {
           </SuccessBox>
         ) : null
       }
+      backLink={
+        <BackLink to={`/dashboard/projects/${project.uuid}/settings`}>
+          {project.name}
+        </BackLink>
+      }
     >
-      <PageTitle value={environment.name} />
+      <PageTitle
+        value={environment.name}
+        description={
+          <>
+            Settings of the environment <strong>{environment.name}</strong>.
+          </>
+        }
+      />
 
       <Card
         footer={
@@ -97,6 +110,6 @@ export default function EnvSettingsPage() {
           </CardContent>
         </Card>
       )}
-    </DashboardLayout>
+    </SettingLayout>
   );
 }
