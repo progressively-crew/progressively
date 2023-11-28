@@ -5,7 +5,6 @@ import {
   TbApps,
   TbChartAreaLine,
   TbClockEdit,
-  TbDeviceImacCheck,
   TbTargetArrow,
   TbWebhook,
 } from "react-icons/tb";
@@ -63,13 +62,6 @@ export const FlagEnvMenu = ({
         icon={<TbActivity />}
       >
         Activity
-      </NavItem>
-
-      <NavItem
-        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/dev-setup`}
-        icon={<TbDeviceImacCheck />}
-      >
-        Dev setup
       </NavItem>
     </HorizontalNav>
   );

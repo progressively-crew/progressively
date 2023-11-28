@@ -52,13 +52,14 @@ export const InsightsFilters = ({
           90 days
         </button>
 
-        <div className="h-6 w-px bg-slate-100 mx-px" />
-
         {!hideEnvList && (
-          <EnvMenuButtonFilter
-            projectId={projectId}
-            environments={environments}
-          />
+          <>
+            <div className="h-6 w-px bg-slate-100 mx-px" />
+            <EnvMenuButtonFilter
+              projectId={projectId}
+              environments={environments}
+            />
+          </>
         )}
       </div>
     </Card>
