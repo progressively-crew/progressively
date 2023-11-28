@@ -1,7 +1,6 @@
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { Project } from "../types";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
-import { SettingsIcon } from "~/components/Icons/SettingsIcon";
 import { TbChartAreaLine } from "react-icons/tb";
 
 export interface ProjectNavBarProps {
@@ -28,13 +27,6 @@ export const ProjectNavBar = ({ project }: ProjectNavBarProps) => {
           Analytics
         </NavItem>
       )}
-
-      <NavItem
-        to={`/dashboard/projects/${project.uuid}/settings`}
-        icon={<SettingsIcon />}
-      >
-        Settings
-      </NavItem>
     </HorizontalNav>
   );
 };
