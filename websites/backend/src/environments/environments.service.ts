@@ -113,7 +113,7 @@ export class EnvironmentsService {
     envId: string,
     startDate: string,
     endDate: string,
-    group: 'os' | 'browser' | 'url',
+    group: 'os' | 'browser' | 'url' | 'referer',
   ) {
     return this.prisma.event.groupBy({
       by: [group],

@@ -39,6 +39,7 @@ interface LoaderData {
   eventsPerDate: Array<EventHit>;
   eventsPerDatePerOs: Array<LocalCount>;
   eventsPerDatePerBrowser: Array<LocalCount>;
+  eventsPerDatePerReferer: Array<LocalCount>;
   eventsPerDatePerUrl: Array<LocalCount>;
   metricCount: number;
   uniqueVisitorsCount: number;
@@ -76,6 +77,7 @@ export const loader: LoaderFunction = async ({
     eventsPerDatePerUrl,
     metricCount,
     uniqueVisitorsCount,
+    eventsPerDatePerReferer,
   } = await getEventsForEnv(envId, start, end, authCookie);
 
   return {
@@ -88,6 +90,7 @@ export const loader: LoaderFunction = async ({
     metricCount,
     eventsPerDatePerUrl: mapToLocaleCount(eventsPerDatePerUrl, "url"),
     uniqueVisitorsCount,
+    eventsPerDatePerReferer,
   };
 };
 
@@ -99,6 +102,7 @@ export default function EnvInsights() {
     eventsPerDatePerUrl,
     metricCount,
     uniqueVisitorsCount,
+    eventsPerDatePerReferer,
   } = useLoaderData<LoaderData>();
   const { project } = useProject();
 
@@ -173,6 +177,19 @@ export default function EnvInsights() {
               data={eventsPerDatePerOs}
               caption={"Events per OS"}
               cellName={"Os"}
+            />
+          </Card>
+        </Section>
+
+        <Section>
+          <Card>
+            <CardContent>
+              <SectionHeader title="Events per referer" />
+            </CardContent>
+            <CountTable
+              data={eventsPerDatePerReferer}
+              caption={"Events per referer"}
+              cellName={"Referer"}
             />
           </Card>
         </Section>

@@ -80,6 +80,16 @@ export class EnvironmentsController {
       'url',
     );
 
+    const eventsPerDatePerReferer =
+      await this.envService.getEventsPerDatePerGroup(
+        envId,
+        startDate,
+        endDate,
+        'referer',
+      );
+
+    console.log('lol', eventsPerDatePerReferer);
+
     const metricCount = await this.envService.getMetricCount(
       envId,
       startDate,
@@ -97,6 +107,7 @@ export class EnvironmentsController {
       eventsPerDatePerOs,
       eventsPerDatePerBrowser,
       eventsPerDatePerUrl,
+      eventsPerDatePerReferer,
       metricCount,
       uniqueVisitorsCount: uniqueVisitors.length,
     };

@@ -74,13 +74,14 @@ function init(clientKey: string, options?: SDKOptions): ProgressivelySdkType {
     });
   }
 
-  function track(eventName: string) {
+  function track(eventName?: string) {
     return fetch(`${apiRoot}/sdk/${btoa(JSON.stringify(fields))}`, {
       method: "POST",
       credentials: "include",
       body: JSON.stringify({
-        name: eventName,
+        name: eventName || "Page View",
         url: window?.location?.href,
+        referer: window.document.referrer || null,
       }),
       headers: { "Content-Type": "application/json" },
     }).then(() => undefined);

@@ -95,7 +95,7 @@ export class SdkController {
         ...body,
         ...deviceInfo,
         url: body.url || 'Unknown URL',
-        referer: request.headers.referer,
+        referer: body.referer,
       },
     );
 
