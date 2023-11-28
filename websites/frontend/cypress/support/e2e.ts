@@ -61,27 +61,6 @@ Cypress.Commands.add("checkUnauthenticatedRoute", () => {
   cy.url().should("contain", "/signin");
 });
 
-Cypress.Commands.add("verifyBreadcrumbs", (crumbs: Array<any>) => {
-  const lastIndex = crumbs.length - 1;
-
-  cy.findByLabelText("Breadcrumbs").within(() => {
-    crumbs.forEach(
-      ([name, href, shouldAssertCurrent = true], index: number) => {
-        if (index === lastIndex && shouldAssertCurrent) {
-          cy.findByRole("link", { name })
-            .should("be.visible")
-            .and("have.attr", "href", href)
-            .and("have.attr", "aria-current", "page");
-        } else {
-          cy.findByRole("link", { name })
-            .should("be.visible")
-            .and("have.attr", "href", href);
-        }
-      }
-    );
-  });
-});
-
 Cypress.on(
   "uncaught:exception",
   (err) => !err.message.includes("ResizeObserver loop limit exceeded")

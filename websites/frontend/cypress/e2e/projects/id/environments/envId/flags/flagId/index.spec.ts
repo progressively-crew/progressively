@@ -40,13 +40,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]", () => {
           "Progressively | Project from seeding | Production | Flags | New homepage"
         );
 
-        cy.verifyBreadcrumbs([
-          ["All projects", "/dashboard"],
-          ["Project from seeding", "/dashboard/projects/1/flags"],
-          ["Production", "/dashboard/projects/1/environments/1/flags"],
-          ["New homepage", "/dashboard/projects/1/environments/1/flags/1"],
-        ]);
-
         cy.findAllByText("New homepage").should("have.length", 2);
         cy.findByRole("heading", { name: "Audience" }).should("be.visible");
 

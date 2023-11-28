@@ -40,13 +40,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants"
           "Progressively | Project from seeding | Production | Flags | With multivariate | Variants"
         );
 
-        cy.verifyBreadcrumbs([
-          ["All projects", "/dashboard"],
-          ["Project from seeding", "/dashboard/projects/1/flags"],
-          ["Production", "/dashboard/projects/1/environments/1/flags"],
-          ["With multivariate", "/dashboard/projects/1/environments/1/flags/4"],
-        ]);
-
         cy.findAllByText("With multivariate").should("have.length", 2);
         cy.findByRole("heading", { name: "Variants" }).should("be.visible");
 

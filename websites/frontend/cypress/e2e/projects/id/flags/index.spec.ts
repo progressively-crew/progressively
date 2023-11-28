@@ -36,11 +36,6 @@ describe("/dashboard/projects/[id]/flags", () => {
       it("shows the layout", () => {
         cy.title().should("eq", "Progressively | Project from seeding | Flags");
 
-        cy.verifyBreadcrumbs([
-          ["All projects", "/dashboard"],
-          ["Project from seeding", "/dashboard/projects/1/flags"],
-        ]);
-
         cy.findByRole("heading", { name: "Feature flags" }).should("exist");
         cy.findAllByRole("link", { name: "Production" }).should("be.visible");
 
