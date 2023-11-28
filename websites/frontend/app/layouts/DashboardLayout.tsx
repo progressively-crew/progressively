@@ -3,7 +3,7 @@ import { SkipNavLink } from "~/components/SkipNav";
 import { Spacer } from "~/components/Spacer";
 import { NavProvider } from "~/components/Breadcrumbs/providers/NavProvider";
 import { InertWhenNavOpened } from "~/components/Breadcrumbs/InertWhenNavOpened";
-import { Form, useMatches, useNavigation } from "@remix-run/react";
+import { Form, Link, useMatches, useNavigation } from "@remix-run/react";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { Spinner } from "~/components/Spinner";
 import { UserNav } from "~/modules/user/components/UserNav";
@@ -17,6 +17,8 @@ import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { FlagStatus } from "~/modules/flags/types";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { EnvMenuButton } from "~/modules/environments/components/EnvMenuButton";
+import { SettingsIcon } from "~/components/Icons/SettingsIcon";
+import { IconButton } from "~/components/Buttons/IconButton";
 
 export interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -78,6 +80,15 @@ export const DashboardLayout = ({
                   <Typography as="span" className="text-3xl font-extrabold">
                     {lastCrumb.label}
                   </Typography>
+
+                  {flagEnv && (
+                    <IconButton
+                      icon={<SettingsIcon />}
+                      tooltip={"Settings"}
+                      as={Link}
+                      to={`/dashboard/projects/${project.uuid}/flags/${flagEnv.flagId}`}
+                    />
+                  )}
                 </div>
 
                 {flagEnv && project && (
