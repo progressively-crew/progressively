@@ -144,6 +144,7 @@ model Event {
   browser         String
   os              String
   url             String
+  referer         String?
   data            String? // additional data
   Environment     Environment? @relation(fields: [environmentUuid], references: [uuid])
   environmentUuid String?
