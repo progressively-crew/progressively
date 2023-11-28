@@ -22,10 +22,10 @@ export const ProjectNavBar = ({ project }: ProjectNavBarProps) => {
 
       {firstEnv && (
         <NavItem
-          to={`/dashboard/projects/${project.uuid}/insights?envId=${firstEnv.uuid}`}
+          to={`/dashboard/projects/${project.uuid}/analytics?envId=${firstEnv.uuid}`}
           icon={<TbChartAreaLine />}
         >
-          Insights
+          Analytics
         </NavItem>
       )}
 

@@ -14,7 +14,6 @@ import { PageTitle } from "~/components/PageTitle";
 import { Spacer } from "~/components/Spacer";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { useSearchParams } from "@remix-run/react";
-import { EnvNavBar } from "~/modules/environments/components/EnvNavBar";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -42,7 +41,6 @@ export default function EnvSettingsPage() {
           </SuccessBox>
         ) : null
       }
-      subNav={<EnvNavBar project={project} environment={environment} />}
     >
       <PageTitle value={environment.name} />
 

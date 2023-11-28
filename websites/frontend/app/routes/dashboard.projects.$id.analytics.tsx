@@ -105,7 +105,7 @@ export default function EnvInsights() {
   return (
     <DashboardLayout subNav={<ProjectNavBar project={project} />}>
       <PageTitle
-        value="Insights"
+        value="Analytics"
         action={
           <InsightsFilters
             projectId={project.uuid}

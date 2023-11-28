@@ -29,7 +29,7 @@ const EnvEntry = ({ env, projectId }: EnvEntryProps) => {
       <Td>
         <Link
           ref={linkRef}
-          to={`/dashboard/projects/${projectId}/environments/${env.uuid}/flags`}
+          to={`/dashboard/projects/${projectId}/environments/${env.uuid}/settings`}
         >
           {env.name}
         </Link>
