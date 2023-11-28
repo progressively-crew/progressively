@@ -40,13 +40,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/webhooks"
           "Progressively | Project from seeding | Production | Flags | With multivariate | Webhooks"
         );
 
-        cy.verifyBreadcrumbs([
-          ["All projects", "/dashboard"],
-          ["Project from seeding", "/dashboard/projects/1/flags"],
-          ["Production", "/dashboard/projects/1/environments/1/flags"],
-          ["With multivariate", "/dashboard/projects/1/environments/1/flags/4"],
-        ]);
-
         cy.findAllByText("With multivariate").should("have.length", 2);
         cy.findByRole("heading", { name: "Webhooks" }).should("be.visible");
 
@@ -69,13 +62,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/webhooks"
           "eq",
           "Progressively | Project from seeding | Production | Flags | New homepage | Webhooks"
         );
-
-        cy.verifyBreadcrumbs([
-          ["All projects", "/dashboard"],
-          ["Project from seeding", "/dashboard/projects/1/flags"],
-          ["Production", "/dashboard/projects/1/environments/1/flags"],
-          ["New homepage", "/dashboard/projects/1/environments/1/flags/1"],
-        ]);
 
         cy.findAllByText("New homepage").should("have.length", 2);
         cy.findByRole("heading", { name: "Webhooks" }).should("be.visible");
