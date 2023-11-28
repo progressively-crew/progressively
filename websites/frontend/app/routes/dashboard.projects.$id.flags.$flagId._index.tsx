@@ -32,7 +32,7 @@ export default function FlagSettingPage() {
   return (
     <SettingLayout
       backLink={
-        <BackLink to={`/dashboard/projects/${project.uuid}/settings`}>
+        <BackLink to={`/dashboard/projects/${project.uuid}/flags`}>
           {project.name}
         </BackLink>
       }
