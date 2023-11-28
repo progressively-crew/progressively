@@ -9,9 +9,9 @@ export interface PageTitleProps {
 export const PageTitle = ({ value, action, description }: PageTitleProps) => {
   return (
     <div className="flex flex-col md:flex-row md:justify-between gap-3 md:items-center">
-      <div className="shrink-0">
+      <div>
         <HStack spacing={3}>
-          <div className="shrink-0">
+          <div>
             <h1
               className="text-4xl font-extrabold tracking-tight lg:text-5xl dark:text-white"
               id="page-title"
