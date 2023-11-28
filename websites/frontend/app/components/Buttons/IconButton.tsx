@@ -1,4 +1,4 @@
-import { HTMLAttributes } from "react";
+import { ElementType, HTMLAttributes } from "react";
 
 import { Spinner } from "../Spinner";
 import { Tooltip } from "../Tooltip/Tooltip";
@@ -14,6 +14,8 @@ export interface IconButtonProps extends HTMLAttributes<HTMLButtonElement> {
   name?: string;
   variant?: "inverse" | "default";
   size?: "M" | "L";
+  as?: ElementType;
+  to?: string;
 }
 
 const variantStyles = {
@@ -34,6 +36,8 @@ export const IconButton = ({
   tooltip,
   variant = "default",
   size = "M",
+  to,
+  as: Root = "button",
   ...props
 }: IconButtonProps) => {
   const variantStyle = variantStyles[variant];
@@ -41,14 +45,15 @@ export const IconButton = ({
 
   return (
     <Tooltip tooltip={tooltip}>
-      <button
+      <Root
+        to={to}
         className={`rounded bg-transparent flex items-center justify-center ${variantStyle} ${sizeStyle}`}
         aria-disabled={isLoading}
         aria-label={isLoading ? loadingText : tooltip}
         {...props}
       >
         {isLoading ? <Spinner /> : icon}
-      </button>
+      </Root>
     </Tooltip>
   );
 };

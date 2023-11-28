@@ -2,7 +2,7 @@ import { UserProject, UserRoles } from "../../projects/types";
 import { Tag } from "~/components/Tag";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { Typography } from "~/components/Typography";
-import { Table, Tbody, Td, Tr } from "~/components/Table";
+import { Table, Tbody, Td, Th, Tr } from "~/components/Table";
 import { MenuButton } from "~/components/MenuButton";
 import { useProject } from "~/modules/projects/contexts/useProject";
 
@@ -18,10 +18,10 @@ export const UserTable = ({ userProjects }: UserTableProps) => {
       <caption className="sr-only">List of members of the project</caption>
       <thead>
         <tr>
-          <Td>Full name</Td>
-          <Td>Email</Td>
-          <Td>Role</Td>
-          <Td>Actions</Td>
+          <Th>Full name</Th>
+          <Th>Email</Th>
+          <Th>Role</Th>
+          <Th>Actions</Th>
         </tr>
       </thead>
 

@@ -1,5 +1,6 @@
 import { LoaderFunction } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
+import { AiOutlinePlus } from "react-icons/ai";
 import { ProjectIcon } from "~/components/Icons/ProjectIcon";
 import { ProjectProvider } from "~/modules/projects/contexts/ProjectProvider";
 import { getProject } from "~/modules/projects/services/getProject";
@@ -21,11 +22,18 @@ export const handle = {
       link: `/dashboard/projects/${match.params.id}/flags`,
       label: match.data.project.name,
       isProject: true,
-      menuItems: routeWithProjects.data.projects.map((p: any) => ({
-        href: `/dashboard/projects/${p.project.uuid}/flags`,
-        label: p.project.name,
-        icon: <ProjectIcon />,
-      })),
+      menuItems: [
+        ...routeWithProjects.data.projects.map((p: any) => ({
+          href: `/dashboard/projects/${p.project.uuid}/flags`,
+          label: p.project.name,
+          icon: <ProjectIcon />,
+        })),
+        {
+          label: "Add a project",
+          href: `/dashboard/projects/create`,
+          icon: <AiOutlinePlus />,
+        },
+      ],
       menuLabel: `Change project`,
     };
   },

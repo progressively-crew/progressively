@@ -1,27 +1,33 @@
+import { AiOutlinePlus } from "react-icons/ai";
 import { IconBox } from "~/components/IconBox";
 import { EnvIcon } from "~/components/Icons/EnvIcon";
 import { Environment } from "../types";
 import { MenuButton, MenuButtonProps } from "~/components/MenuButton";
-import { useParams } from "@remix-run/react";
+import { useSearchParams } from "@remix-run/react";
 
-export interface EnvMenuButtonProps {
+export interface EnvMenuButtonFilterProps {
   projectId: string;
-  flagId: string;
   environments: Array<Environment>;
 }
 
-export const EnvMenuButton = ({
+export const EnvMenuButtonFilter = ({
   projectId,
-  flagId,
   environments,
-}: EnvMenuButtonProps) => {
-  const params = useParams();
+}: EnvMenuButtonFilterProps) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const envId = searchParams.get("envId") || environments[0] || "";
 
-  const activeEnv = environments.find((env) => env.uuid === params.env);
+  const setEnvId = (nextEnvId: string) =>
+    setSearchParams((prev) => {
+      prev.set("envId", nextEnvId);
+      return prev;
+    });
+
+  const activeEnv = environments.find((env) => env.uuid === envId);
 
   const items: MenuButtonProps["items"] = environments.map((env) => ({
     label: env.name,
-    href: `/dashboard/projects/${projectId}/environments/${env.uuid}/flags/${flagId}`,
+    onClick: () => setEnvId(env.uuid),
     icon: (
       <IconBox content={env.name} size="S">
         <EnvIcon />
@@ -29,9 +35,14 @@ export const EnvMenuButton = ({
     ),
   }));
 
+  items.push({
+    label: "Add an env",
+    href: `/dashboard/projects/${projectId}/environments/create`,
+    icon: <AiOutlinePlus />,
+  });
+
   return (
     <MenuButton
-      position="right"
       icon={
         activeEnv ? (
           <IconBox content={activeEnv.name} size="S">

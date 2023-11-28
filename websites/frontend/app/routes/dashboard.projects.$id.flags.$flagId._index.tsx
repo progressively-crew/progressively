@@ -1,4 +1,3 @@
-import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { UserRoles } from "~/modules/projects/types";
 import { Section, SectionHeader } from "~/components/Section";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
@@ -12,6 +11,8 @@ import { PageTitle } from "~/components/PageTitle";
 import { useFlag } from "~/modules/flags/contexts/useFlag";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { Button } from "~/components/Buttons/Button";
+import { SettingLayout } from "~/layouts/SettingLayout";
+import { BackLink } from "~/components/BackLink";
 
 export const meta: V2_MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -29,7 +30,13 @@ export default function FlagSettingPage() {
   const { flag } = useFlag();
 
   return (
-    <DashboardLayout>
+    <SettingLayout
+      backLink={
+        <BackLink to={`/dashboard/projects/${project.uuid}/flags`}>
+          {project.name}
+        </BackLink>
+      }
+    >
       <PageTitle
         value={flag.name}
         action={
@@ -39,6 +46,11 @@ export default function FlagSettingPage() {
           >
             Edit
           </Button>
+        }
+        description={
+          <>
+            Settings of the feature flag <strong>{flag.name}</strong>.
+          </>
         }
       />
 
@@ -83,6 +95,6 @@ export default function FlagSettingPage() {
           </CardContent>
         </Card>
       )}
-    </DashboardLayout>
+    </SettingLayout>
   );
 }

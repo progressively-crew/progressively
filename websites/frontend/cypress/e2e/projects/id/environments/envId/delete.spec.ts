@@ -96,10 +96,6 @@ describe("/dashboard/projects/[id]/environments/[envId]/delete", () => {
             "contain.text",
             "The environment has been successfully deleted."
           );
-
-        cy.findByRole("button", { name: "Environments" }).click();
-        cy.findByRole("menuitem", { name: "Developer" }).should("be.visible");
-        cy.findByRole("menuitem", { name: "Production" }).should("not.exist");
       });
     });
   });
