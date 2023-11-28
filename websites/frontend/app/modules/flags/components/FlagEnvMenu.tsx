@@ -23,15 +23,8 @@ export const FlagEnvMenu = ({
   envId,
   flagEnv,
 }: FlagEnvMenuProps) => {
-  const isActivated = flagEnv.status === FlagStatus.ACTIVATED;
   return (
     <HorizontalNav label={`Navigate in flag in specific environment`}>
-      <li className="flex items-center">
-        <Form method="post" id={`form-${flagEnv.flagId}`}>
-          <ToggleFlag isFlagActivated={isActivated} flagId={flagEnv.flagId} />
-        </Form>
-      </li>
-
       <NavItem
         to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}`}
         icon={<TbTargetArrow />}

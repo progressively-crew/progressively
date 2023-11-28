@@ -3,7 +3,7 @@ import { SkipNavLink } from "~/components/SkipNav";
 import { Spacer } from "~/components/Spacer";
 import { NavProvider } from "~/components/Breadcrumbs/providers/NavProvider";
 import { InertWhenNavOpened } from "~/components/Breadcrumbs/InertWhenNavOpened";
-import { useMatches, useNavigation } from "@remix-run/react";
+import { Form, useMatches, useNavigation } from "@remix-run/react";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { Spinner } from "~/components/Spinner";
 import { UserNav } from "~/modules/user/components/UserNav";
@@ -12,6 +12,11 @@ import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { IconBox } from "~/components/IconBox";
 import { ProjectIcon } from "~/components/Icons/ProjectIcon";
 import { EnvIcon } from "~/components/Icons/EnvIcon";
+import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
+import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
+import { FlagStatus } from "~/modules/flags/types";
+import { useProject } from "~/modules/projects/contexts/useProject";
+import { EnvMenuButton } from "~/modules/environments/components/EnvMenuButton";
 
 export interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -26,6 +31,8 @@ export const DashboardLayout = ({
 }: DashboardLayoutProps) => {
   const navigation = useNavigation();
   const matches = useMatches();
+  const { flagEnv } = useFlagEnv();
+  const { project } = useProject();
 
   const crumbs = matches
     .filter((match) => match.handle && match.handle.breadcrumb)
@@ -38,6 +45,8 @@ export const DashboardLayout = ({
 
   const lastCrumb = crumbs.at(-1);
   const hasMoreThanOneCrumb = crumbs.length > 1;
+
+  const isActivated = flagEnv?.status === FlagStatus.ACTIVATED;
 
   return (
     <NavProvider>
@@ -57,19 +66,36 @@ export const DashboardLayout = ({
 
             {!lastCrumb.isRoot && (
               <header
-                className={`px-8 pb-4 flex flex-row gap-2 items-center ${
-                  crumbs.length > 0 ? "pt-6" : ""
-                }`}
+                className={`px-8 pb-4 ${crumbs.length > 0 ? "pt-6" : ""}`}
               >
-                <IconBox content={lastCrumb.label} size="L">
-                  {lastCrumb.isFlag && <FlagIcon />}
-                  {lastCrumb.isProject && <ProjectIcon />}
-                  {lastCrumb.isEnv && <EnvIcon />}
-                </IconBox>
+                <div className="flex flex-row gap-2 items-center">
+                  <IconBox content={lastCrumb.label} size="L">
+                    {lastCrumb.isFlag && <FlagIcon />}
+                    {lastCrumb.isProject && <ProjectIcon />}
+                    {lastCrumb.isEnv && <EnvIcon />}
+                  </IconBox>
 
-                <Typography as="span" className="text-3xl font-extrabold">
-                  {lastCrumb.label}
-                </Typography>
+                  <Typography as="span" className="text-3xl font-extrabold">
+                    {lastCrumb.label}
+                  </Typography>
+                </div>
+
+                {flagEnv && project && (
+                  <div className="flex flex-row gap-4 items-center pt-2 -mx-3">
+                    <EnvMenuButton
+                      projectId={project.uuid}
+                      flagId={flagEnv.flagId}
+                      environments={project.environments}
+                    />
+
+                    <Form method="post" id={`form-${flagEnv.flagId}`}>
+                      <ToggleFlag
+                        isFlagActivated={isActivated}
+                        flagId={flagEnv.flagId}
+                      />
+                    </Form>
+                  </div>
+                )}
               </header>
             )}
 
