@@ -19,6 +19,7 @@ import { Typography } from "~/components/Typography";
 import { Button } from "~/components/Buttons/Button";
 import { Spacer } from "~/components/Spacer";
 import { BackLink } from "~/components/BackLink";
+import { ThemeSwitch } from "~/components/ThemeSwitch";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -96,7 +97,7 @@ export default function ProfilePage() {
         <BackLink to="/dashboard">Back to dashboard</BackLink>
       </div>
 
-      <PageTitle value="My profile" />
+      <PageTitle value="My profile" action={<ThemeSwitch />} />
 
       <Section id="change-password">
         <Card>

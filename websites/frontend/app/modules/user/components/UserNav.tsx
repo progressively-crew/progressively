@@ -4,17 +4,12 @@ import { FeedbackFish } from "@feedback-fish/react";
 import { GoCommentDiscussion } from "react-icons/go";
 import { NavItem } from "~/components/HorizontalNav";
 import { useUser } from "../contexts/useUser";
-import { ThemeSwitch } from "~/components/ThemeSwitch";
 
 export const UserNav = () => {
   const { user } = useUser();
   return (
     <nav aria-label="User related navigation">
       <ul className="flex flex-row gap-2 items-center px-8">
-        <li>
-          <ThemeSwitch />
-        </li>
-
         <NavItem
           to={"https://progressively.app/"}
           icon={<FaBook />}

@@ -81,12 +81,21 @@ export const DashboardLayout = ({
                     {lastCrumb.label}
                   </Typography>
 
-                  {flagEnv && (
+                  {project && flagEnv && (
                     <IconButton
                       icon={<SettingsIcon />}
                       tooltip={"Settings"}
                       as={Link}
                       to={`/dashboard/projects/${project.uuid}/flags/${flagEnv.flagId}`}
+                    />
+                  )}
+
+                  {project && !flagEnv && (
+                    <IconButton
+                      icon={<SettingsIcon />}
+                      tooltip={"Settings"}
+                      as={Link}
+                      to={`/dashboard/projects/${project.uuid}/settings`}
                     />
                   )}
                 </div>
