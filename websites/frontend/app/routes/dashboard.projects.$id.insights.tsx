@@ -1,9 +1,8 @@
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { LoaderFunction, V2_MetaFunction } from "@remix-run/node";
-import { Link, useLoaderData, useSearchParams } from "@remix-run/react";
+import { LoaderFunction, V2_MetaFunction, redirect } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
-import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { getFlagEnvMetaTitle } from "~/modules/flags/services/getFlagEnvMetaTitle";
 import { Card, CardContent } from "~/components/Card";
@@ -12,12 +11,13 @@ import { Section, SectionHeader } from "~/components/Section";
 import { EmptyState } from "~/components/EmptyState";
 import { LineChart } from "~/components/LineChart";
 import { BigStat } from "~/components/BigStat";
-import { EnvNavBar } from "~/modules/environments/components/EnvNavBar";
 import { getEventsForEnv } from "~/modules/environments/services/getEventsForEnv";
 import { getSession } from "~/sessions";
 import { mapToLocaleCount } from "~/modules/environments/services/mapToLocaleCount";
 import { LocalCount } from "~/modules/environments/types";
 import { CountTable } from "~/modules/environments/components/CountTable";
+import { ProjectNavBar } from "~/modules/projects/components/ProjectNavBar";
+import { InsightsFilters } from "~/modules/projects/components/InsightsFilters";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -46,11 +46,15 @@ interface LoaderData {
 
 export const loader: LoaderFunction = async ({
   request,
-  params,
 }): Promise<LoaderData> => {
   const session = await getSession(request.headers.get("Cookie"));
   const url = new URL(request.url);
   const search = new URLSearchParams(url.search);
+  const envId = search.get("envId");
+
+  if (!envId) {
+    throw redirect("/401");
+  }
 
   const strDays = search.get("days");
   let day = Number(strDays);
@@ -72,7 +76,7 @@ export const loader: LoaderFunction = async ({
     eventsPerDatePerUrl,
     metricCount,
     uniqueVisitorsCount,
-  } = await getEventsForEnv(params.env!, start, end, authCookie);
+  } = await getEventsForEnv(envId, start, end, authCookie);
 
   return {
     eventsPerDate,
@@ -97,54 +101,18 @@ export default function EnvInsights() {
     uniqueVisitorsCount,
   } = useLoaderData<LoaderData>();
   const { project } = useProject();
-  const { environment } = useEnvironment();
-  const [searchParams] = useSearchParams();
-
-  const days = searchParams.get("days") || "7";
-
-  const shareButtonClass =
-    "h-10 px-4 gap-4 bg-transparent hover:bg-slate-100 dark:border-slate-600 dark:text-slate-100 dark:hover:bg-slate-600 relative whitespace-nowrap inline-flex items-center justify-center rounded-sm text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:opacity-50 dark:focus:ring-slate-400 disabled:pointer-events-none dark:focus:ring-offset-slate-900";
-
-  const activeClass = `!bg-slate-100`;
 
   return (
-    <DashboardLayout
-      subNav={<EnvNavBar project={project} environment={environment} />}
-    >
-      <PageTitle value="Insights" />
-
-      <div className="inline-flex">
-        <Card>
-          <div className="inline-flex flex-row gap-1 p-1">
-            <Link
-              to="?days=7"
-              className={`${shareButtonClass} ${
-                days === "7" ? activeClass : ""
-              }`}
-            >
-              7 days
-            </Link>
-
-            <Link
-              to="?days=30"
-              className={`${shareButtonClass} ${
-                days === "30" ? activeClass : ""
-              }`}
-            >
-              30 days
-            </Link>
-
-            <Link
-              to="?days=90"
-              className={`${shareButtonClass} ${
-                days === "90" ? activeClass : ""
-              }`}
-            >
-              90 days
-            </Link>
-          </div>
-        </Card>
-      </div>
+    <DashboardLayout subNav={<ProjectNavBar project={project} />}>
+      <PageTitle
+        value="Insights"
+        action={
+          <InsightsFilters
+            projectId={project.uuid}
+            environments={project.environments}
+          />
+        }
+      />
 
       <Section>
         <div className="inline-flex flex-row gap-6">

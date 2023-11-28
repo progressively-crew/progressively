@@ -1,5 +1,5 @@
 import { Menu, Transition } from "@headlessui/react";
-import { NavLink } from "@remix-run/react";
+import { Link, NavLink } from "@remix-run/react";
 import React, { Fragment } from "react";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { RxCaretSort } from "react-icons/rx";
@@ -67,23 +67,26 @@ export const MenuButton = ({
           <Menu.Items className="z-20 absolute right-0 mt-2 w-auto origin-top-right divide-y divide-gray-100 dark:divide-slate-700 rounded-md bg-white dark:bg-slate-800 shadow-lg ring-1 ring-black ring-opacity-5">
             {items.map((item) => (
               <Menu.Item key={item.label}>
-                {({ active }) => (
-                  <NavLink
-                    as={item.onClick ? "button" : undefined}
-                    className={`whitespace-nowrap flex gap-2 min-w-[200px] items-center first:rounded-t-md last:rounded-b-md px-3 py-3 text-sm text-gray-700 dark:text-slate-200 font-normal focus:bg-gray-100 ${
-                      active ? "bg-gray-100 dark:bg-slate-700" : ""
-                    }`}
-                    to={item.href || ""}
-                    onClick={item.onClick}
-                  >
-                    {item.icon && (
-                      <IconBox content={item.label} size="S">
-                        {item.icon}
-                      </IconBox>
-                    )}
-                    {item.label}
-                  </NavLink>
-                )}
+                {({ active }) => {
+                  const Root = item.onClick ? "button" : Link;
+
+                  return (
+                    <Root
+                      className={`whitespace-nowrap flex gap-2 min-w-[200px] items-center first:rounded-t-md last:rounded-b-md px-3 py-3 text-sm text-gray-700 dark:text-slate-200 font-normal focus:bg-gray-100 ${
+                        active ? "bg-gray-100 dark:bg-slate-700" : ""
+                      }`}
+                      to={item.href || ""}
+                      onClick={item.onClick}
+                    >
+                      {item.icon && (
+                        <IconBox content={item.label} size="S">
+                          {item.icon}
+                        </IconBox>
+                      )}
+                      {item.label}
+                    </Root>
+                  );
+                }}
               </Menu.Item>
             ))}
           </Menu.Items>
