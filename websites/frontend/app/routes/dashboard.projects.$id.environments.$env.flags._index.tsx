@@ -1,4 +1,3 @@
-import { Section } from "~/components/Section";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { LoaderFunction, V2_MetaFunction } from "@remix-run/node";
 import { useProject } from "~/modules/projects/contexts/useProject";
@@ -16,6 +15,8 @@ import { EnvNavBar } from "~/modules/environments/components/EnvNavBar";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { Card, CardContent } from "~/components/Card";
 import { EmptyState } from "~/components/EmptyState";
+import { SearchBar } from "~/components/SearchBar";
+import { SearchLayout } from "~/layouts/SearchLayout";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -48,8 +49,15 @@ export default function EnvSettingsPage() {
   const { project } = useProject();
   const { environment } = useEnvironment();
   const [searchParams] = useSearchParams();
+  const search = searchParams.get("search");
   const { flagEnvs } = useLoaderData<LoaderData>();
   const envCreated = searchParams.get("envCreated") || undefined;
+
+  const isSearching = Boolean(searchParams.get("search") || undefined);
+
+  const filteredFlags = flagEnvs.filter((flag) =>
+    flag.flag.name.toLocaleLowerCase().includes(search || "")
+  );
 
   return (
     <DashboardLayout
@@ -68,9 +76,27 @@ export default function EnvSettingsPage() {
       />
 
       {flagEnvs.length > 0 ? (
-        <Section>
-          <FlagEnvList flagEnvs={flagEnvs} projectId={project.uuid} />
-        </Section>
+        <>
+          <SearchLayout
+            actions={
+              filteredFlags.length > 0 && (
+                <CreateButton
+                  to={`/dashboard/projects/${project.uuid}/flags/create`}
+                  variant="primary"
+                >
+                  Add a feature flag
+                </CreateButton>
+              )
+            }
+          >
+            <SearchBar
+              label="Search for flags"
+              placeholder="e.g: The flag"
+              count={isSearching ? filteredFlags.length : undefined}
+            />
+          </SearchLayout>
+          <FlagEnvList flagEnvs={filteredFlags} projectId={project.uuid} />
+        </>
       ) : (
         <Card>
           <CardContent>
