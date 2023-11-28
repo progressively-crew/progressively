@@ -6,7 +6,7 @@ import {
   ActionFunction,
   V2_MetaFunction,
 } from "@remix-run/node";
-import { Link, useLoaderData, useSearchParams } from "@remix-run/react";
+import { useLoaderData } from "@remix-run/react";
 import { TbApps } from "react-icons/tb";
 import { FlagEnvMenu } from "~/modules/flags/components/FlagEnvMenu";
 import { useProject } from "~/modules/projects/contexts/useProject";
@@ -23,6 +23,7 @@ import { LineChart } from "~/components/LineChart";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
 import { BigStat } from "~/components/BigStat";
 import { VariantDot } from "~/modules/variants/components/VariantDot";
+import { InsightsFilters } from "~/modules/projects/components/InsightsFilters";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -118,14 +119,6 @@ export default function FlagInsights() {
   const { flagEnv } = useFlagEnv();
   const { project } = useProject();
   const { environment } = useEnvironment();
-  const [searchParams] = useSearchParams();
-
-  const days = searchParams.get("days") || "7";
-
-  const shareButtonClass =
-    "h-10 px-4 gap-4 bg-transparent hover:bg-slate-100 dark:border-slate-600 dark:text-slate-100 dark:hover:bg-slate-600 relative whitespace-nowrap inline-flex items-center justify-center rounded-sm text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:opacity-50 dark:focus:ring-slate-400 disabled:pointer-events-none dark:focus:ring-offset-slate-900";
-
-  const activeClass = `!bg-slate-100`;
 
   return (
     <DashboardLayout
@@ -137,40 +130,16 @@ export default function FlagInsights() {
         />
       }
     >
-      <PageTitle value="Insights" />
-
-      <div className="inline-flex">
-        <Card>
-          <div className="inline-flex flex-row gap-1 p-1">
-            <Link
-              to="?days=7"
-              className={`${shareButtonClass} ${
-                days === "7" ? activeClass : ""
-              }`}
-            >
-              7 days
-            </Link>
-
-            <Link
-              to="?days=30"
-              className={`${shareButtonClass} ${
-                days === "30" ? activeClass : ""
-              }`}
-            >
-              30 days
-            </Link>
-
-            <Link
-              to="?days=90"
-              className={`${shareButtonClass} ${
-                days === "90" ? activeClass : ""
-              }`}
-            >
-              90 days
-            </Link>
-          </div>
-        </Card>
-      </div>
+      <PageTitle
+        value="Insights"
+        action={
+          <InsightsFilters
+            projectId={project.uuid}
+            environments={project.environments}
+            hideEnvList
+          />
+        }
+      />
 
       <Section>
         <div className="inline-flex flex-row gap-6">
