@@ -6,10 +6,12 @@ import { Environment } from "~/modules/environments/types";
 export interface InsightsFiltersProps {
   projectId: string;
   environments: Array<Environment>;
+  hideEnvList?: boolean;
 }
 export const InsightsFilters = ({
   projectId,
   environments,
+  hideEnvList,
 }: InsightsFiltersProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -52,10 +54,12 @@ export const InsightsFilters = ({
 
         <div className="h-6 w-px bg-slate-100 mx-px" />
 
-        <EnvMenuButtonFilter
-          projectId={projectId}
-          environments={environments}
-        />
+        {!hideEnvList && (
+          <EnvMenuButtonFilter
+            projectId={projectId}
+            environments={environments}
+          />
+        )}
       </div>
     </Card>
   );
