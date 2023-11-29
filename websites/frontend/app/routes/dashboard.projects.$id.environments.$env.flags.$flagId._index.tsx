@@ -90,6 +90,8 @@ export const action: ActionFunction = async ({
     const formQueryString = await clonedRequest.text();
     const formObject = qs.parse(formQueryString, { depth: 4 });
 
+    console.log(JSON.stringify(formObject, null, 2));
+
     return editStrategyAction(
       params.env!,
       params.flagId!,

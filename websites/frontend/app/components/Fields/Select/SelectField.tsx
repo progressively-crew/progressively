@@ -18,6 +18,7 @@ export interface SelectFieldProps {
   label: string;
   options: Array<SelectOption>;
   defaultValue?: string;
+  value?: string;
   hiddenLabel?: boolean;
   name: string;
   onValueChange?: (next: string) => void;
@@ -27,6 +28,7 @@ export const SelectField = ({
   label,
   options,
   defaultValue,
+  value,
   hiddenLabel,
   name,
   onValueChange,
@@ -47,6 +49,7 @@ export const SelectField = ({
         defaultValue={defaultValue}
         name={name}
         onValueChange={onValueChange}
+        value={value}
       >
         <SelectTrigger id={id} aria-label={label}>
           <SelectValue placeholder={label} />
