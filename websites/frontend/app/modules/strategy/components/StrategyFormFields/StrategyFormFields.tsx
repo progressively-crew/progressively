@@ -61,7 +61,7 @@ export const StrategyFormFields = ({
         </div>
 
         {variants && variants.length > 0 && (
-          <div className="pt-2">
+          <div className="pt-4">
             <VariantFields variants={variants || []} index={index} />
           </div>
         )}
