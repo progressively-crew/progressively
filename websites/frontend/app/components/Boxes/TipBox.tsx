@@ -9,7 +9,7 @@ export interface SuccessBoxProps {
 export const TipBox = ({ children, title, ...props }: SuccessBoxProps) => {
   return (
     <div
-      className="success-box p-4 bg-gray-100 text-gray-700 rounded border-l-8 border-l-gray-500"
+      className="success-box p-4 bg-blue-100 text-blue-700 rounded border-l-8 border-l-blue-500"
       {...props}
     >
       <div className="flex flex-row gap-2">

@@ -34,6 +34,8 @@ import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { Typography } from "~/components/Typography";
 import qs from "qs";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
+import { TipBox } from "~/components/Boxes/TipBox";
+import { FlagStatus } from "~/modules/flags/types";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -163,6 +165,13 @@ export default function FlagById() {
         ) : null
       }
     >
+      {flagEnv.status === FlagStatus.NOT_ACTIVATED ? (
+        <TipBox title="Flag is not activated">
+          Your flag is not actived. Every user will resolve the{" "}
+          <strong>false</strong> variation of the feature flag.
+        </TipBox>
+      ) : null}
+
       <PageTitle
         value="Audience"
         description={
