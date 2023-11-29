@@ -37,6 +37,7 @@ export const StrategyRuleFormField = ({
           name={`strategies[${index}][rules][${ruleIndex}][target-entity]`}
           label="Target entity"
           defaultValue={targetEntity}
+          value={targetEntity}
           options={targetOptions}
           onValueChange={(str) => setTargetEntity(str as TargetEntity)}
         />

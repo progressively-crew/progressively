@@ -22,10 +22,6 @@ export const StrategyFormFields = ({
   rolloutPercentage,
   index,
 }: ValuesToServeFieldsProps) => {
-  const [status, setStatus] = useState(
-    valueToServeType || ValueToServe.Boolean
-  );
-
   const hasVariants = variants && variants.length > 0;
 
   const valueOptions = [
@@ -34,6 +30,10 @@ export const StrategyFormFields = ({
       label: `true`,
     },
   ];
+
+  const [status, setStatus] = useState(
+    valueToServeType || valueOptions[0].value
+  );
 
   if (hasVariants) {
     valueOptions.push({
@@ -52,7 +52,7 @@ export const StrategyFormFields = ({
             hiddenLabel
             label="What value to you want to serve?"
             name={`strategies[${index}][value-to-serve-type]`}
-            defaultValue={valueToServeType || valueOptions[0].value}
+            value={status}
             options={valueOptions}
             onValueChange={(str) => setStatus(str as ValueToServe)}
           />
@@ -70,7 +70,7 @@ export const StrategyFormFields = ({
         hiddenLabel
         label="What value to you want to serve?"
         name={`strategies[${index}][value-to-serve-type]`}
-        defaultValue={valueToServeType || valueOptions[0].value}
+        value={status}
         options={valueOptions}
         onValueChange={(str) => setStatus(str as ValueToServe)}
       />
