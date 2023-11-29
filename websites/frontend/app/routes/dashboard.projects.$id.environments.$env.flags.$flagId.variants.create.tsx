@@ -78,7 +78,7 @@ export default function CteateVariantPage() {
         }
         backLinkSlot={
           <BackLink
-            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/variants`}
+            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`}
           >
             Back to variants
           </BackLink>

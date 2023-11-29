@@ -106,12 +106,13 @@ export default function DeleteVariantPage() {
     >
       <Stack spacing={4}>
         <Typography>
-          The variant will be removed from the <strong>feature flag</strong>.
+          The variant will be removed from the{" "}
+          <strong>entire feature flag configuration</strong>.
         </Typography>
 
         <Typography>
-          When a user will resolve a feature flag, this variant will be taken
-          into consideration anymore.
+          When a user will resolve a feature flag, this variant will not be
+          taken into consideration anymore.
         </Typography>
       </Stack>
     </DeleteEntityLayout>
