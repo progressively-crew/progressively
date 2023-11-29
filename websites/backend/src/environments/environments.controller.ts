@@ -88,8 +88,6 @@ export class EnvironmentsController {
         'referer',
       );
 
-    console.log('lol', eventsPerDatePerReferer);
-
     const metricCount = await this.envService.getMetricCount(
       envId,
       startDate,

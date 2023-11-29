@@ -115,6 +115,8 @@ export class EnvironmentsService {
     endDate: string,
     group: 'os' | 'browser' | 'url' | 'referer',
   ) {
+    const notConstrains = group === 'referer' ? { NOT: { referer: null } } : {};
+
     return this.prisma.event.groupBy({
       by: [group],
       _count: {
@@ -126,6 +128,7 @@ export class EnvironmentsService {
           gte: new Date(startDate),
           lte: new Date(endDate),
         },
+        ...notConstrains,
       },
       orderBy: {
         _count: {

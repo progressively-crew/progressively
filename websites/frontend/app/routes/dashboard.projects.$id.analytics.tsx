@@ -90,7 +90,10 @@ export const loader: LoaderFunction = async ({
     metricCount,
     eventsPerDatePerUrl: mapToLocaleCount(eventsPerDatePerUrl, "url"),
     uniqueVisitorsCount,
-    eventsPerDatePerReferer,
+    eventsPerDatePerReferer: mapToLocaleCount(
+      eventsPerDatePerReferer,
+      "referer"
+    ),
   };
 };
 
