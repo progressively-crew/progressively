@@ -84,6 +84,7 @@ export class EnvironmentsService {
           "Event"
         WHERE "Event"."date" BETWEEN ${startDate}::timestamp AND ${endDate}::timestamp
         AND "Event"."environmentUuid"=${envId}
+        AND "Event"."name"='Page View'
         GROUP BY
           "Event"."visitorId"
       ) AS SessionCounts;

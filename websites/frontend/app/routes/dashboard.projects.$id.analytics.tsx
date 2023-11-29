@@ -168,7 +168,7 @@ export default function EnvInsights() {
         </Card>
       </Section>
 
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-2 gap-6">
         <Section>
           <Card>
             <CardContent>
