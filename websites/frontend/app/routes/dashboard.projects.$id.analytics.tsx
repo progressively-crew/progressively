@@ -39,9 +39,11 @@ interface LoaderData {
   eventsPerDate: Array<EventHit>;
   eventsPerDatePerOs: Array<LocalCount>;
   eventsPerDatePerBrowser: Array<LocalCount>;
+  eventsPerDatePerReferer: Array<LocalCount>;
   eventsPerDatePerUrl: Array<LocalCount>;
   metricCount: number;
   uniqueVisitorsCount: number;
+  bounceRate: number;
 }
 
 export const loader: LoaderFunction = async ({
@@ -76,6 +78,8 @@ export const loader: LoaderFunction = async ({
     eventsPerDatePerUrl,
     metricCount,
     uniqueVisitorsCount,
+    eventsPerDatePerReferer,
+    bounceRate,
   } = await getEventsForEnv(envId, start, end, authCookie);
 
   return {
@@ -88,6 +92,11 @@ export const loader: LoaderFunction = async ({
     metricCount,
     eventsPerDatePerUrl: mapToLocaleCount(eventsPerDatePerUrl, "url"),
     uniqueVisitorsCount,
+    eventsPerDatePerReferer: mapToLocaleCount(
+      eventsPerDatePerReferer,
+      "referer"
+    ),
+    bounceRate,
   };
 };
 
@@ -99,6 +108,8 @@ export default function EnvInsights() {
     eventsPerDatePerUrl,
     metricCount,
     uniqueVisitorsCount,
+    eventsPerDatePerReferer,
+    bounceRate,
   } = useLoaderData<LoaderData>();
   const { project } = useProject();
 
@@ -128,6 +139,13 @@ export default function EnvInsights() {
             unit={"users."}
             icon={<div />}
           />
+
+          <BigStat
+            label={"Bounce Rate"}
+            value={bounceRate}
+            unit={"%"}
+            icon={<div />}
+          />
         </div>
       </Section>
 
@@ -150,7 +168,7 @@ export default function EnvInsights() {
         </Card>
       </Section>
 
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-2 gap-6">
         <Section>
           <Card>
             <CardContent>
@@ -173,6 +191,19 @@ export default function EnvInsights() {
               data={eventsPerDatePerOs}
               caption={"Events per OS"}
               cellName={"Os"}
+            />
+          </Card>
+        </Section>
+
+        <Section>
+          <Card>
+            <CardContent>
+              <SectionHeader title="Events per referer" />
+            </CardContent>
+            <CountTable
+              data={eventsPerDatePerReferer}
+              caption={"Events per referer"}
+              cellName={"Referer"}
             />
           </Card>
         </Section>

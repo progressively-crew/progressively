@@ -80,6 +80,14 @@ export class EnvironmentsController {
       'url',
     );
 
+    const eventsPerDatePerReferer =
+      await this.envService.getEventsPerDatePerGroup(
+        envId,
+        startDate,
+        endDate,
+        'referer',
+      );
+
     const metricCount = await this.envService.getMetricCount(
       envId,
       startDate,
@@ -92,13 +100,21 @@ export class EnvironmentsController {
       endDate,
     );
 
+    const bounceRate = await this.envService.getBounceRate(
+      envId,
+      startDate,
+      endDate,
+    );
+
     return {
       eventsPerDate,
       eventsPerDatePerOs,
       eventsPerDatePerBrowser,
       eventsPerDatePerUrl,
+      eventsPerDatePerReferer,
       metricCount,
       uniqueVisitorsCount: uniqueVisitors.length,
+      bounceRate,
     };
   }
 }

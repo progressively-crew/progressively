@@ -192,7 +192,12 @@ export class SdkService {
   async hitEvent(
     clientKey: string,
     visitorId: string,
-    hit: EventHit & { os: string; browser: string; url: string },
+    hit: EventHit & {
+      os: string;
+      browser: string;
+      url: string;
+      referer?: string;
+    },
   ) {
     const env = await this.prisma.environment.findFirst({
       where: {
@@ -219,6 +224,7 @@ export class SdkService {
         os: hit.os,
         browser: hit.browser,
         url: hit.url,
+        referer: hit.referer,
         data: hit.data
           ? typeof hit.data === 'object'
             ? JSON.stringify(hit.data)

@@ -21,8 +21,8 @@ export const CountTable = ({ data, caption, cellName }: CountTableProps) => {
           </tr>
         </thead>
         <Tbody>
-          {data.map((d) => (
-            <Tr key={d.name}>
+          {data.map((d, index: number) => (
+            <Tr key={`${cellName}-${d.name}-${index}`}>
               <Td>
                 <div className="truncate w-[200px]">{d.name}</div>
               </Td>
