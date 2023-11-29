@@ -85,7 +85,7 @@ export class EnvironmentsService {
           "Event"
         WHERE "Event"."date" BETWEEN ${startDate}::timestamp AND ${endDate}::timestamp
         AND "Event"."environmentUuid"=${envId}
-        AND "Event"."name"='PV'
+        AND "Event"."name"='Page View'
         GROUP BY
           "Event"."visitorId"
       ) AS SessionCounts;
@@ -106,7 +106,14 @@ export class EnvironmentsService {
     return bounceRate;
   }
 
-  getDistinctEventName(envId: string, startDate: string, endDate: string) {
+  getDistinctEventName(
+    envId: string,
+    startDate: string,
+    endDate: string,
+    eventFilter?: string,
+  ) {
+    const eventFilterObj = eventFilter ? { name: eventFilter } : {};
+
     return this.prisma.event.findMany({
       distinct: ['name'],
       where: {
@@ -115,6 +122,7 @@ export class EnvironmentsService {
           gte: new Date(startDate),
           lte: new Date(endDate),
         },
+        ...eventFilterObj,
       },
     });
   }
@@ -132,7 +140,14 @@ export class EnvironmentsService {
     });
   }
 
-  getMetricCount(envId: string, startDate: string, endDate: string) {
+  getMetricCount(
+    envId: string,
+    startDate: string,
+    endDate: string,
+    eventFilter?: string,
+  ) {
+    const eventFilterObj = eventFilter ? { name: eventFilter } : {};
+
     return this.prisma.event.count({
       where: {
         environmentUuid: envId,
@@ -140,6 +155,7 @@ export class EnvironmentsService {
           gte: new Date(startDate),
           lte: new Date(endDate),
         },
+        ...eventFilterObj,
       },
     });
   }
@@ -163,6 +179,7 @@ export class EnvironmentsService {
           gte: new Date(startDate),
           lte: new Date(endDate),
         },
+        name: 'Page View',
         ...notConstrains,
       },
       orderBy: {
@@ -173,11 +190,21 @@ export class EnvironmentsService {
     });
   }
 
-  async getEventsPerDate(envId: string, startDate: string, endDate: string) {
+  async getEventsPerDate(
+    envId: string,
+    startDate: string,
+    endDate: string,
+    pageView: boolean,
+  ) {
+    const eventFilter = pageView
+      ? { name: 'Page View' }
+      : { NOT: { name: 'Page View' } };
+
     const distinctEventName = await this.getDistinctEventName(
       envId,
       startDate,
       endDate,
+      pageView ? 'Page View' : undefined,
     );
 
     const dictByDates = {};
@@ -193,6 +220,7 @@ export class EnvironmentsService {
             gte: new Date(startDate),
             lte: new Date(endDate),
           },
+          ...eventFilter,
         },
         orderBy: {
           date: 'asc',

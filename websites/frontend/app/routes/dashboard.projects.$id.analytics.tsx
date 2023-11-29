@@ -36,12 +36,14 @@ type EventHit = {
 } & { date: string };
 
 interface LoaderData {
+  pageViewsPerDate: Array<EventHit>;
   eventsPerDate: Array<EventHit>;
   eventsPerDatePerOs: Array<LocalCount>;
   eventsPerDatePerBrowser: Array<LocalCount>;
   eventsPerDatePerReferer: Array<LocalCount>;
   eventsPerDatePerUrl: Array<LocalCount>;
   metricCount: number;
+  pageViewCount: number;
   uniqueVisitorsCount: number;
   bounceRate: number;
 }
@@ -72,17 +74,20 @@ export const loader: LoaderFunction = async ({
 
   const authCookie = session.get("auth-cookie");
   const {
+    pageViewsPerDate,
     eventsPerDate,
     eventsPerDatePerOs,
     eventsPerDatePerBrowser,
     eventsPerDatePerUrl,
     metricCount,
+    pageViewCount,
     uniqueVisitorsCount,
     eventsPerDatePerReferer,
     bounceRate,
   } = await getEventsForEnv(envId, start, end, authCookie);
 
   return {
+    pageViewsPerDate,
     eventsPerDate,
     eventsPerDatePerOs: mapToLocaleCount(eventsPerDatePerOs, "os"),
     eventsPerDatePerBrowser: mapToLocaleCount(
@@ -90,6 +95,7 @@ export const loader: LoaderFunction = async ({
       "browser"
     ),
     metricCount,
+    pageViewCount,
     eventsPerDatePerUrl: mapToLocaleCount(eventsPerDatePerUrl, "url"),
     uniqueVisitorsCount,
     eventsPerDatePerReferer: mapToLocaleCount(
@@ -102,11 +108,13 @@ export const loader: LoaderFunction = async ({
 
 export default function EnvInsights() {
   const {
+    pageViewsPerDate,
     eventsPerDate,
     eventsPerDatePerOs,
     eventsPerDatePerBrowser,
     eventsPerDatePerUrl,
     metricCount,
+    pageViewCount,
     uniqueVisitorsCount,
     eventsPerDatePerReferer,
     bounceRate,
@@ -128,11 +136,12 @@ export default function EnvInsights() {
       <Section>
         <div className="inline-flex flex-row gap-6">
           <BigStat
-            label={"Total metric hits"}
-            value={metricCount}
-            unit={"hits."}
+            label={"Page views"}
+            value={pageViewCount}
+            unit={"visits."}
             icon={<div />}
           />
+
           <BigStat
             label={"Unique visitors"}
             value={uniqueVisitorsCount}
@@ -149,14 +158,14 @@ export default function EnvInsights() {
         </div>
       </Section>
 
-      <Section id="metric-hits">
+      <Section id="pageview-hits">
         <Card>
           <CardContent>
-            <SectionHeader title={"Metric hits."} />
+            <SectionHeader title={"Page views over time."} />
           </CardContent>
 
-          {eventsPerDate.length > 0 ? (
-            <LineChart data={eventsPerDate} />
+          {pageViewsPerDate.length > 0 ? (
+            <LineChart data={pageViewsPerDate} />
           ) : (
             <CardContent>
               <EmptyState
@@ -172,11 +181,11 @@ export default function EnvInsights() {
         <Section>
           <Card>
             <CardContent>
-              <SectionHeader title="Events per browser" />
+              <SectionHeader title="Page views / browser" />
             </CardContent>
             <CountTable
               data={eventsPerDatePerBrowser}
-              caption={"Events per browser"}
+              caption="Page views / browser"
               cellName={"Browser"}
             />
           </Card>
@@ -185,11 +194,11 @@ export default function EnvInsights() {
         <Section>
           <Card>
             <CardContent>
-              <SectionHeader title="Events per Os" />
+              <SectionHeader title="Page views / Os" />
             </CardContent>
             <CountTable
               data={eventsPerDatePerOs}
-              caption={"Events per OS"}
+              caption="Page views / Os"
               cellName={"Os"}
             />
           </Card>
@@ -198,11 +207,11 @@ export default function EnvInsights() {
         <Section>
           <Card>
             <CardContent>
-              <SectionHeader title="Events per referer" />
+              <SectionHeader title="Page views / referer" />
             </CardContent>
             <CountTable
               data={eventsPerDatePerReferer}
-              caption={"Events per referer"}
+              caption="Page views / referer"
               cellName={"Referer"}
             />
           </Card>
@@ -211,16 +220,46 @@ export default function EnvInsights() {
         <Section>
           <Card>
             <CardContent>
-              <SectionHeader title="Events per URL" />
+              <SectionHeader title="Page views / URL" />
             </CardContent>
             <CountTable
               data={eventsPerDatePerUrl}
-              caption={"Events per Page URL"}
+              caption="Page views / URL"
               cellName={"Page URL"}
             />
           </Card>
         </Section>
       </div>
+
+      <Section>
+        <div className="inline-flex flex-row gap-6">
+          <BigStat
+            label={"Total metric hits"}
+            value={metricCount}
+            unit={"hits."}
+            icon={<div />}
+          />
+        </div>
+      </Section>
+
+      <Section id="other-metric-hits">
+        <Card>
+          <CardContent>
+            <SectionHeader title={"Other metrics over time."} />
+          </CardContent>
+
+          {eventsPerDate.length > 0 ? (
+            <LineChart data={eventsPerDate} />
+          ) : (
+            <CardContent>
+              <EmptyState
+                title="No data"
+                description={"There are no events hits for this period."}
+              />
+            </CardContent>
+          )}
+        </Card>
+      </Section>
     </DashboardLayout>
   );
 }
