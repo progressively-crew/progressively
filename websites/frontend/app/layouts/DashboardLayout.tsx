@@ -19,6 +19,7 @@ import { useProject } from "~/modules/projects/contexts/useProject";
 import { EnvMenuButton } from "~/modules/environments/components/EnvMenuButton";
 import { SettingsIcon } from "~/components/Icons/SettingsIcon";
 import { IconButton } from "~/components/Buttons/IconButton";
+import { ButtonCopy } from "~/components/ButtonCopy";
 
 export interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -107,6 +108,10 @@ export const DashboardLayout = ({
                       flagId={flagEnv.flagId}
                       environments={project.environments}
                     />
+
+                    <ButtonCopy toCopy={flagEnv.flag.key} size="S">
+                      {flagEnv.flag.key}
+                    </ButtonCopy>
 
                     <Form method="post" id={`form-${flagEnv.flagId}`}>
                       <ToggleFlag
