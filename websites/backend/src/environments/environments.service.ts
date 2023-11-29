@@ -72,6 +72,7 @@ export class EnvironmentsService {
   }
 
   async getBounceRate(envId: string, startDate: string, endDate: string) {
+    // Hint: "PV" name is "PageView" but shorter for bundle size
     const bounceRateData = await this.prisma.$queryRaw`
      SELECT
         COUNT(CASE WHEN numPages = 1 THEN 1 ELSE NULL END) AS SinglePageSessions,
@@ -84,7 +85,7 @@ export class EnvironmentsService {
           "Event"
         WHERE "Event"."date" BETWEEN ${startDate}::timestamp AND ${endDate}::timestamp
         AND "Event"."environmentUuid"=${envId}
-        AND "Event"."name"='Page View'
+        AND "Event"."name"='PV'
         GROUP BY
           "Event"."visitorId"
       ) AS SessionCounts;
