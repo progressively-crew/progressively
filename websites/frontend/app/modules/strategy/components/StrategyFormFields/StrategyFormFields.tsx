@@ -7,7 +7,6 @@ import { PercentageField } from "~/components/Fields/PercentageField";
 import { VariantFields } from "./VariantFields";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
-import { useFlag } from "~/modules/flags/contexts/useFlag";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 
 export interface ValuesToServeFieldsProps {

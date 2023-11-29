@@ -80,7 +80,7 @@ export default function DeleteVariantPage() {
         <Button
           variant="tertiary"
           scheme="danger"
-          to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/variants`}
+          to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`}
         >
           {`Cancel`}
         </Button>
@@ -98,7 +98,7 @@ export default function DeleteVariantPage() {
       }
       backLinkSlot={
         <BackLink
-          to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/variants`}
+          to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`}
         >
           Back to flag
         </BackLink>

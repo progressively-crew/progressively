@@ -1,4 +1,6 @@
-import { DeleteButton } from "~/components/Buttons/DeleteButton";
+import { Link } from "@remix-run/react";
+import { IoMdClose } from "react-icons/io";
+import { IconButton } from "~/components/Buttons/IconButton";
 import { PercentageField } from "~/components/Fields/PercentageField";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
@@ -23,17 +25,20 @@ export const VariantFields = ({ variants, index }: VariantFieldsProps) => {
               name={`strategies[${index}][variants][${variantIndex}][uuid]`}
               value={variant.uuid}
             />
-            <PercentageField
-              name={`strategies[${index}][variants][${variantIndex}][variantRolloutPercentage]`}
-              initialValue={variant.rolloutPercentage}
-              label={variant.value}
-            />
-            <DeleteButton
-              to={`/dashboard/projects/${environment.projectId}/environments/${environment.uuid}/flags/${flagEnv.flagId}/variants/${variant.uuid}/delete`}
-              variant="tertiary"
-            >
-              Delete a variant
-            </DeleteButton>
+            <div className="flex flex-row gap-2 items-center">
+              <PercentageField
+                name={`strategies[${index}][variants][${variantIndex}][variantRolloutPercentage]`}
+                initialValue={variant.rolloutPercentage}
+                label={variant.value}
+              />
+
+              <IconButton
+                as={Link}
+                to={`/dashboard/projects/${environment.projectId}/environments/${environment.uuid}/flags/${flagEnv.flagId}/variants/${variant.uuid}/delete`}
+                icon={<IoMdClose />}
+                tooltip={`Remove ${variant.value}`}
+              />
+            </div>
           </div>
         );
       })}

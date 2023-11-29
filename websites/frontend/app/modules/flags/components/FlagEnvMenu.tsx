@@ -2,7 +2,6 @@ import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
 import { FlagEnv } from "../types";
 import {
   TbActivity,
-  TbApps,
   TbChartAreaLine,
   TbClockEdit,
   TbTargetArrow,
@@ -34,13 +33,6 @@ export const FlagEnvMenu = ({
         icon={<TbClockEdit />}
       >
         Scheduling
-      </NavItem>
-
-      <NavItem
-        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/variants`}
-        icon={<TbApps />}
-      >
-        Variants
       </NavItem>
 
       <NavItem
