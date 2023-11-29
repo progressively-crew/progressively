@@ -74,7 +74,6 @@ export const StrategyItem = ({
           <Card>
             <CardContent>
               <StrategyFormFields
-                valueToServe={strategy.valueToServe}
                 valueToServeType={strategy.valueToServeType}
                 variants={formVariants}
                 rolloutPercentage={strategy.rolloutPercentage || 0}
@@ -94,6 +93,7 @@ export const StrategyItem = ({
             ) : (
               <div />
             )}
+
             <Card>
               <CardContent>
                 <RuleList

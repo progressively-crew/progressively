@@ -56,7 +56,7 @@ export const action: ActionFunction = async ({
   }
 
   return redirect(
-    `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/variants?variantRemoved=true#variant-removed`
+    `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}?variantRemoved=true#variant-removed`
   );
 };
 
@@ -80,7 +80,7 @@ export default function DeleteVariantPage() {
         <Button
           variant="tertiary"
           scheme="danger"
-          to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/variants`}
+          to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`}
         >
           {`Cancel`}
         </Button>
@@ -98,7 +98,7 @@ export default function DeleteVariantPage() {
       }
       backLinkSlot={
         <BackLink
-          to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/variants`}
+          to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`}
         >
           Back to flag
         </BackLink>
@@ -106,12 +106,13 @@ export default function DeleteVariantPage() {
     >
       <Stack spacing={4}>
         <Typography>
-          The variant will be removed from the <strong>feature flag</strong>.
+          The variant will be removed from the{" "}
+          <strong>entire feature flag configuration</strong>.
         </Typography>
 
         <Typography>
-          When a user will resolve a feature flag, this variant will be taken
-          into consideration anymore.
+          When a user will resolve a feature flag, this variant will not be
+          taken into consideration anymore.
         </Typography>
       </Stack>
     </DeleteEntityLayout>

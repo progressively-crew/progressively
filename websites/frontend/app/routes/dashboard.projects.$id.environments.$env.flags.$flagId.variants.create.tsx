@@ -47,7 +47,7 @@ export const action: ActionFunction = async ({
   }
 
   return redirect(
-    `/dashboard/projects/${params.id}/environments/${params.env}/flags/${params.flagId}/variants?newVariant=true#variant-added`
+    `/dashboard/projects/${params.id}/environments/${params.env}/flags/${params.flagId}?newVariant=true#variant-added`
   );
 };
 
@@ -78,7 +78,7 @@ export default function CteateVariantPage() {
         }
         backLinkSlot={
           <BackLink
-            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/variants`}
+            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`}
           >
             Back to variants
           </BackLink>

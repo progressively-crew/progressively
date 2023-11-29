@@ -51,12 +51,12 @@ export const PercentageField = ({
           ml-1
           w-0 h-0 
   border-t-[7px] border-t-transparent
-  border-r-[10px] border-r-slate-100 dark:border-r-slate-600
+  border-r-[10px] border-r-slate-700 dark:border-r-slate-600
   border-b-[7px] border-b-transparent"
         ></div>
         <Typography
           as="span"
-          className="bg-slate-100 dark:bg-slate-600 rounded-r h-full flex justify-center items-center w-[70px] text-sm font-semibold font-mono"
+          className="bg-slate-700 text-white dark:bg-slate-600 rounded h-full flex justify-center items-center w-[70px] text-sm font-semibold font-mono"
           aria-hidden
         >
           {value}%
