@@ -4,6 +4,7 @@ import { Table, Tbody, Td, Th, Tr } from "~/components/Table";
 import { Link } from "@remix-run/react";
 import { Environment } from "../types";
 import { EnvIcon } from "~/components/Icons/EnvIcon";
+import { ButtonCopy } from "~/components/ButtonCopy";
 
 export interface EnvListProps {
   environments: Array<Environment>;
@@ -34,6 +35,11 @@ const EnvEntry = ({ env, projectId }: EnvEntryProps) => {
           {env.name}
         </Link>
       </Td>
+      <Td>
+        <ButtonCopy toCopy={env.clientKey} size="S">
+          {env.clientKey}
+        </ButtonCopy>
+      </Td>
     </Tr>
   );
 };
@@ -48,6 +54,7 @@ export const EnvList = ({ environments, projectId }: EnvListProps) => {
             <span className="sr-only">Environment icon</span>
           </Th>
           <Th>Environment name</Th>
+          <Th>Environment key</Th>
         </tr>
       </thead>
       <Tbody>
