@@ -93,8 +93,10 @@ export default function EditFlagPage() {
           </SubmitButton>
         }
         backLinkSlot={
-          <BackLink to={`/dashboard/projects/${project.uuid}/flags`}>
-            Back to project
+          <BackLink
+            to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}`}
+          >
+            Back to flag
           </BackLink>
         }
       >
