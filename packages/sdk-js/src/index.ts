@@ -74,7 +74,7 @@ function init(clientKey: string, options?: SDKOptions): ProgressivelySdkType {
     });
   }
 
-  function track(eventName: string = "PV") {
+  function track(eventName: string = "Page View") {
     return fetch(`${apiRoot}/sdk/${btoa(JSON.stringify(fields))}`, {
       method: "POST",
       credentials: "include",

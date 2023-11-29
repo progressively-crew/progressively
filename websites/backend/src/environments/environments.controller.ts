@@ -94,6 +94,13 @@ export class EnvironmentsController {
       endDate,
     );
 
+    const pageViewCount = await this.envService.getMetricCount(
+      envId,
+      startDate,
+      endDate,
+      'Page View',
+    );
+
     const uniqueVisitors = await this.envService.getUniqueVisitor(
       envId,
       startDate,
@@ -113,6 +120,7 @@ export class EnvironmentsController {
       eventsPerDatePerUrl,
       eventsPerDatePerReferer,
       metricCount,
+      pageViewCount,
       uniqueVisitorsCount: uniqueVisitors.length,
       bounceRate,
     };

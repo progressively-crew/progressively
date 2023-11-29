@@ -85,7 +85,7 @@ export class EnvironmentsService {
           "Event"
         WHERE "Event"."date" BETWEEN ${startDate}::timestamp AND ${endDate}::timestamp
         AND "Event"."environmentUuid"=${envId}
-        AND "Event"."name"='PV'
+        AND "Event"."name"='Page View'
         GROUP BY
           "Event"."visitorId"
       ) AS SessionCounts;
@@ -132,7 +132,14 @@ export class EnvironmentsService {
     });
   }
 
-  getMetricCount(envId: string, startDate: string, endDate: string) {
+  getMetricCount(
+    envId: string,
+    startDate: string,
+    endDate: string,
+    eventFilter?: string,
+  ) {
+    const eventFilterObj = eventFilter ? { name: eventFilter } : {};
+
     return this.prisma.event.count({
       where: {
         environmentUuid: envId,
@@ -140,6 +147,7 @@ export class EnvironmentsService {
           gte: new Date(startDate),
           lte: new Date(endDate),
         },
+        ...eventFilterObj,
       },
     });
   }
@@ -163,6 +171,7 @@ export class EnvironmentsService {
           gte: new Date(startDate),
           lte: new Date(endDate),
         },
+        name: 'Page View',
         ...notConstrains,
       },
       orderBy: {

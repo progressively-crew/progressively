@@ -7,7 +7,7 @@ export interface ProgressivelyContextType {
   isLoading: boolean;
   status: StateMachineConstants;
   error?: Error;
-  track: (eventName: string) => Promise<void>;
+  track: (eventName?: string) => Promise<void>;
   setFields: (newFields: Fields, ctrl?: AbortController | undefined) => void;
 }
 
