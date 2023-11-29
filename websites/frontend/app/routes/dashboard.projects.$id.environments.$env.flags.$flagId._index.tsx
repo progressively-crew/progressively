@@ -11,6 +11,7 @@ import {
   useActionData,
   useLoaderData,
   useNavigation,
+  useSearchParams,
 } from "@remix-run/react";
 import { FlagEnvMenu } from "~/modules/flags/components/FlagEnvMenu";
 import { useProject } from "~/modules/projects/contexts/useProject";
@@ -133,6 +134,7 @@ export const loader: LoaderFunction = async ({
 /* eslint-disable sonarjs/cognitive-complexity */
 export default function FlagById() {
   const actionData = useActionData<ActionDataType>();
+  const [searchParams] = useSearchParams();
   const { project } = useProject();
   const { environment } = useEnvironment();
   const { flagEnv } = useFlagEnv();
@@ -141,6 +143,9 @@ export default function FlagById() {
 
   const type = navigation?.formData?.get("_type");
   const isCreatingStrategy = type === "add-strategy";
+
+  const isVariantRemoved = searchParams.get("variantRemoved") || undefined;
+  const isVariantAdded = searchParams.get("newVariant") || undefined;
 
   return (
     <DashboardLayout
@@ -162,6 +167,14 @@ export default function FlagById() {
           </SuccessBox>
         ) : actionData?.errors ? (
           <ErrorBox list={actionData.errors} />
+        ) : isVariantRemoved ? (
+          <SuccessBox id="variant-removed">
+            The variant has been successfully removed.
+          </SuccessBox>
+        ) : isVariantAdded ? (
+          <SuccessBox id="variant-added">
+            The variant has been successfully created.
+          </SuccessBox>
         ) : null
       }
     >

@@ -1,4 +1,7 @@
+import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { PercentageField } from "~/components/Fields/PercentageField";
+import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
+import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { Variant } from "~/modules/variants/types";
 
 export interface VariantFieldsProps {
@@ -7,6 +10,9 @@ export interface VariantFieldsProps {
 }
 
 export const VariantFields = ({ variants, index }: VariantFieldsProps) => {
+  const { flagEnv } = useFlagEnv();
+  const { environment } = useEnvironment();
+
   return (
     <div className="grid grid-cols-3 gap-4">
       {variants.map((variant, variantIndex: number) => {
@@ -22,6 +28,12 @@ export const VariantFields = ({ variants, index }: VariantFieldsProps) => {
               initialValue={variant.rolloutPercentage}
               label={variant.value}
             />
+            <DeleteButton
+              to={`/dashboard/projects/${environment.projectId}/environments/${environment.uuid}/flags/${flagEnv.flagId}/variants/${variant.uuid}/delete`}
+              variant="tertiary"
+            >
+              Delete a variant
+            </DeleteButton>
           </div>
         );
       })}

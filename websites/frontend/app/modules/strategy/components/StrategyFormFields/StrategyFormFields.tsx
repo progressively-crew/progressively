@@ -1,33 +1,38 @@
 import { useState } from "react";
 import { SelectField } from "~/components/Fields/Select/SelectField";
-import { TextInput } from "~/components/Fields/TextInput";
 import { Typography } from "~/components/Typography";
 import { Variant } from "~/modules/variants/types";
 import { ValueToServe } from "../../types";
 import { PercentageField } from "~/components/Fields/PercentageField";
 import { VariantFields } from "./VariantFields";
+import { CreateButton } from "~/components/Buttons/CreateButton";
+import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
+import { useFlag } from "~/modules/flags/contexts/useFlag";
+import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 
 export interface ValuesToServeFieldsProps {
   variants?: Array<Variant & { rolloutPercentage: number }>;
-  valueToServe?: string;
   valueToServeType?: ValueToServe;
   rolloutPercentage: number;
   index: number;
 }
 
 export const StrategyFormFields = ({
-  valueToServe,
   valueToServeType,
   variants,
   rolloutPercentage,
   index,
 }: ValuesToServeFieldsProps) => {
-  const hasVariants = variants && variants.length > 0;
-
+  const { flagEnv } = useFlagEnv();
+  const { environment } = useEnvironment();
   const valueOptions = [
     {
       value: ValueToServe.Boolean,
       label: `true`,
+    },
+    {
+      value: ValueToServe.Variant,
+      label: "the variants",
     },
   ];
 
@@ -35,19 +40,10 @@ export const StrategyFormFields = ({
     valueToServeType || valueOptions[0].value
   );
 
-  if (hasVariants) {
-    valueOptions.push({
-      value: ValueToServe.Variant,
-      label: "the variants",
-    });
-  }
-
-  const isVariantChoice = status === ValueToServe.Variant && hasVariants;
-
-  if (isVariantChoice) {
+  if (status === ValueToServe.Variant) {
     return (
-      <div className="flex flex-row gap-4 flex-wrap items-center">
-        <div className="">
+      <div>
+        <div className="flex flex-row gap-4 flex-wrap items-center">
           <SelectField
             hiddenLabel
             label="What value to you want to serve?"
@@ -56,10 +52,20 @@ export const StrategyFormFields = ({
             options={valueOptions}
             onValueChange={(str) => setStatus(str as ValueToServe)}
           />
+
+          <CreateButton
+            to={`/dashboard/projects/${environment.projectId}/environments/${environment.uuid}/flags/${flagEnv.flagId}/variants/create`}
+            variant="tertiary"
+          >
+            Add a variant
+          </CreateButton>
         </div>
-        <div className="flex-1">
-          <VariantFields variants={variants || []} index={index} />
-        </div>
+
+        {variants && variants.length > 0 && (
+          <div className="pt-2">
+            <VariantFields variants={variants || []} index={index} />
+          </div>
+        )}
       </div>
     );
   }
@@ -75,20 +81,7 @@ export const StrategyFormFields = ({
         onValueChange={(str) => setStatus(str as ValueToServe)}
       />
       <div className="flex-1 flex flex-row items-center gap-2">
-        {status === ValueToServe.String && (
-          <TextInput
-            label="String value to serve"
-            placeholder="e.g: A"
-            name={`strategies[${index}][value-to-serve]`}
-            hiddenLabel
-            defaultValue={
-              valueToServeType === ValueToServe.String ? valueToServe : ""
-            }
-            className="w-52"
-          />
-        )}
-
-        {status !== ValueToServe.Variant && (
+        {status === ValueToServe.Boolean && (
           <>
             <Typography>to</Typography>
 
