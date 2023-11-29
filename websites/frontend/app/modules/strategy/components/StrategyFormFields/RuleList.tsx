@@ -1,7 +1,7 @@
 import { IconButton } from "~/components/Buttons/IconButton";
 import { Rule } from "~/modules/rules/types";
 import { StrategyRuleFormField } from "../StrategyRuleFormField";
-import { PiTrashThin } from "react-icons/pi";
+import { IoMdClose } from "react-icons/io";
 
 export interface RuleListProps {
   rules: Array<Rule>;
@@ -29,7 +29,7 @@ export const RuleList = ({ rules, onRemoveRule, index }: RuleListProps) => {
             <div className="pt-1">
               <IconButton
                 type="button"
-                icon={<PiTrashThin className="text-xl text-slate-400" />}
+                icon={<IoMdClose className="text-xl text-slate-400" />}
                 tooltip="Remove rule"
                 onClick={() => onRemoveRule(rule)}
               />

@@ -1,4 +1,4 @@
-import { PiTrashThin } from "react-icons/pi";
+import { IoMdClose } from "react-icons/io";
 import { IconButton } from "~/components/Buttons/IconButton";
 import { Card, CardContent } from "~/components/Card";
 import { Typography } from "~/components/Typography";
@@ -58,7 +58,7 @@ export const StrategyItem = ({
             type="submit"
             isLoading={isDeletingStrategy}
             loadingText="Deleting a strategy..."
-            icon={<PiTrashThin className="text-xl" />}
+            icon={<IoMdClose className="text-xl" />}
             tooltip="Delete strategy"
           />
         </div>
