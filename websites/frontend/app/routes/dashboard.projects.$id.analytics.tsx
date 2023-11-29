@@ -36,6 +36,7 @@ type EventHit = {
 } & { date: string };
 
 interface LoaderData {
+  pageViewsPerDate: Array<EventHit>;
   eventsPerDate: Array<EventHit>;
   eventsPerDatePerOs: Array<LocalCount>;
   eventsPerDatePerBrowser: Array<LocalCount>;
@@ -73,6 +74,7 @@ export const loader: LoaderFunction = async ({
 
   const authCookie = session.get("auth-cookie");
   const {
+    pageViewsPerDate,
     eventsPerDate,
     eventsPerDatePerOs,
     eventsPerDatePerBrowser,
@@ -85,6 +87,7 @@ export const loader: LoaderFunction = async ({
   } = await getEventsForEnv(envId, start, end, authCookie);
 
   return {
+    pageViewsPerDate,
     eventsPerDate,
     eventsPerDatePerOs: mapToLocaleCount(eventsPerDatePerOs, "os"),
     eventsPerDatePerBrowser: mapToLocaleCount(
@@ -105,6 +108,7 @@ export const loader: LoaderFunction = async ({
 
 export default function EnvInsights() {
   const {
+    pageViewsPerDate,
     eventsPerDate,
     eventsPerDatePerOs,
     eventsPerDatePerBrowser,
@@ -151,24 +155,17 @@ export default function EnvInsights() {
             unit={"%"}
             icon={<div />}
           />
-
-          <BigStat
-            label={"Total metric hits"}
-            value={metricCount}
-            unit={"hits."}
-            icon={<div />}
-          />
         </div>
       </Section>
 
-      <Section id="metric-hits">
+      <Section id="pageview-hits">
         <Card>
           <CardContent>
-            <SectionHeader title={"Metric hits."} />
+            <SectionHeader title={"Page views over time."} />
           </CardContent>
 
-          {eventsPerDate.length > 0 ? (
-            <LineChart data={eventsPerDate} />
+          {pageViewsPerDate.length > 0 ? (
+            <LineChart data={pageViewsPerDate} />
           ) : (
             <CardContent>
               <EmptyState
@@ -233,6 +230,36 @@ export default function EnvInsights() {
           </Card>
         </Section>
       </div>
+
+      <Section>
+        <div className="inline-flex flex-row gap-6">
+          <BigStat
+            label={"Total metric hits"}
+            value={metricCount}
+            unit={"hits."}
+            icon={<div />}
+          />
+        </div>
+      </Section>
+
+      <Section id="other-metric-hits">
+        <Card>
+          <CardContent>
+            <SectionHeader title={"Other metrics over time."} />
+          </CardContent>
+
+          {eventsPerDate.length > 0 ? (
+            <LineChart data={eventsPerDate} />
+          ) : (
+            <CardContent>
+              <EmptyState
+                title="No data"
+                description={"There are no events hits for this period."}
+              />
+            </CardContent>
+          )}
+        </Card>
+      </Section>
     </DashboardLayout>
   );
 }
