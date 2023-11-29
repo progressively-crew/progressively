@@ -84,12 +84,16 @@ export const StrategyItem = ({
           </Card>
 
           <>
-            <Typography
-              as="span"
-              className="pt-7 font-mono text-sm font-semibold"
-            >
-              When
-            </Typography>
+            {ruleList.length > 0 ? (
+              <Typography
+                as="span"
+                className="pt-7 font-mono text-sm font-semibold"
+              >
+                When
+              </Typography>
+            ) : (
+              <div />
+            )}
             <Card>
               <CardContent>
                 <RuleList
