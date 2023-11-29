@@ -100,6 +100,12 @@ export class EnvironmentsController {
       endDate,
     );
 
+    const bounceRate = await this.envService.getBounceRate(
+      envId,
+      startDate,
+      endDate,
+    );
+
     return {
       eventsPerDate,
       eventsPerDatePerOs,
@@ -108,6 +114,7 @@ export class EnvironmentsController {
       eventsPerDatePerReferer,
       metricCount,
       uniqueVisitorsCount: uniqueVisitors.length,
+      bounceRate,
     };
   }
 }

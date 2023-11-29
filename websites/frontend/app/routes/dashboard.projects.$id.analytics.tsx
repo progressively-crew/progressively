@@ -43,6 +43,7 @@ interface LoaderData {
   eventsPerDatePerUrl: Array<LocalCount>;
   metricCount: number;
   uniqueVisitorsCount: number;
+  bounceRate: number;
 }
 
 export const loader: LoaderFunction = async ({
@@ -78,6 +79,7 @@ export const loader: LoaderFunction = async ({
     metricCount,
     uniqueVisitorsCount,
     eventsPerDatePerReferer,
+    bounceRate,
   } = await getEventsForEnv(envId, start, end, authCookie);
 
   return {
@@ -94,6 +96,7 @@ export const loader: LoaderFunction = async ({
       eventsPerDatePerReferer,
       "referer"
     ),
+    bounceRate,
   };
 };
 
@@ -106,6 +109,7 @@ export default function EnvInsights() {
     metricCount,
     uniqueVisitorsCount,
     eventsPerDatePerReferer,
+    bounceRate,
   } = useLoaderData<LoaderData>();
   const { project } = useProject();
 
@@ -133,6 +137,13 @@ export default function EnvInsights() {
             label={"Unique visitors"}
             value={uniqueVisitorsCount}
             unit={"users."}
+            icon={<div />}
+          />
+
+          <BigStat
+            label={"Bounce Rate"}
+            value={bounceRate}
+            unit={"%"}
             icon={<div />}
           />
         </div>

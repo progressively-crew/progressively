@@ -71,6 +71,39 @@ export class EnvironmentsService {
     }) as unknown as Promise<PopulatedFlagEnv>;
   }
 
+  async getBounceRate(envId: string, startDate: string, endDate: string) {
+    const bounceRateData = await this.prisma.$queryRaw`
+     SELECT
+        COUNT(CASE WHEN numPages = 1 THEN 1 ELSE NULL END) AS SinglePageSessions,
+        COUNT(*) AS TotalSessions
+      FROM (
+        SELECT
+          "Event"."visitorId",
+          COUNT(DISTINCT "Event"."url") AS numPages
+        FROM
+          "Event"
+        WHERE "Event"."date" BETWEEN ${startDate}::timestamp AND ${endDate}::timestamp
+        AND "Event"."environmentUuid"=${envId}
+        GROUP BY
+          "Event"."visitorId"
+      ) AS SessionCounts;
+    `;
+
+    let bounceRate = 0;
+    if (
+      bounceRateData[0]?.singlepagesessions &&
+      bounceRateData[0]?.totalsessions
+    ) {
+      bounceRate =
+        Number(
+          bounceRateData[0]?.singlepagesessions /
+            bounceRateData[0]?.totalsessions,
+        ) * 100;
+    }
+
+    return bounceRate;
+  }
+
   getDistinctEventName(envId: string, startDate: string, endDate: string) {
     return this.prisma.event.findMany({
       distinct: ['name'],
