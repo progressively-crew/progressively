@@ -37,7 +37,7 @@ export const VariantFields = ({ variants, index }: VariantFieldsProps) => {
 
               <IconButton
                 as={Link}
-                to={`/dashboard/projects/${environment.projectId}/environments/${environment.uuid}/flags/${flagEnv.flagId}/variants/${variant.uuid}/delete`}
+                to={`/dashboard/projects/${environment.projectId}/environments/${environment.uuid}/flags/${flagEnv.flagId}/audience/variants/${variant.uuid}/delete`}
                 icon={<IoMdClose />}
                 tooltip={`Remove ${variant.value}`}
               />

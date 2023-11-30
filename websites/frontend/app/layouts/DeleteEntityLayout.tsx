@@ -30,7 +30,7 @@ export const DeleteEntityLayout = ({
   }
 
   return (
-    <div className="bg-gray-50 dark:bg-slate-900 h-full flex-1">
+    <div className="fixed h-full w-full inset-0 backdrop-blur-md bg-slate-300/30">
       <main
         className="mx-auto max-w-2xl lg:pt-20 px-4 md:px-12"
         aria-labelledby="page-title"
