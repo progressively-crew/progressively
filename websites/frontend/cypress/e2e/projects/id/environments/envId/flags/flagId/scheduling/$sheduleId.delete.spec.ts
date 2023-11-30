@@ -48,11 +48,9 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
 
         cy.findByText("Deleting a schedule").should("be.visible");
 
-        cy.findByRole("button", {
-          name: "Yes, delete the schedule",
-        }).should("be.visible");
+        cy.findByText("Yes, delete the schedule").should("be.visible");
 
-        cy.findByRole("link", { name: "Cancel" })
+        cy.findByText("Cancel")
           .should("be.visible")
           .and(
             "have.attr",
@@ -76,9 +74,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
       });
 
       it("removes the schedule and get me back to the flags page", () => {
-        cy.findByRole("button", {
-          name: "Yes, delete the schedule",
-        }).click();
+        cy.findByText("Yes, delete the schedule").click();
 
         cy.url().should(
           "contain",

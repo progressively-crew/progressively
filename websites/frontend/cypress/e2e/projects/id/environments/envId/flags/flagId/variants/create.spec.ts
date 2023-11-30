@@ -1,10 +1,12 @@
-describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants/create", () => {
+describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/audience/variants/create", () => {
   before(cy.seed);
   after(cy.cleanupDb);
 
   describe("not authenticated", () => {
     beforeEach(() => {
-      cy.visit("/dashboard/projects/1/environments/1/flags/1/variants/create");
+      cy.visit(
+        "/dashboard/projects/1/environments/1/flags/1/audience/variants/create"
+      );
     });
 
     it("checks that the route is protected", () => {
@@ -17,7 +19,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants/
       beforeEach(() => {
         cy.signIn("Jane");
         cy.visit(
-          "/dashboard/projects/1/environments/1/flags/1/variants/create",
+          "/dashboard/projects/1/environments/1/flags/1/audience/variants/create",
           {
             failOnStatusCode: false,
           }
@@ -33,7 +35,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants/
       beforeEach(() => {
         cy.signIn("Marvin");
         cy.visit(
-          "/dashboard/projects/1/environments/1/flags/1/variants/create"
+          "/dashboard/projects/1/environments/1/flags/1/audience/variants/create"
         );
 
         cy.injectAxe();
@@ -58,7 +60,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants/
 
         cy.url().should(
           "include",
-          "/dashboard/projects/1/environments/1/flags/1?newVariant=true"
+          "/dashboard/projects/1/environments/1/flags/1/audience?newVariant=true"
         );
 
         cy.get(".success-box")

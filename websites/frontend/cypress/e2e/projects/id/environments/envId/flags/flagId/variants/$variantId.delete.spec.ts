@@ -1,11 +1,11 @@
-describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants/[variantId]/delete", () => {
+describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/audience/variants/[variantId]/delete", () => {
   before(cy.seed);
   after(cy.cleanupDb);
 
   describe("not authenticated", () => {
     beforeEach(() => {
       cy.visit(
-        "/dashboard/projects/1/environments/1/flags/1/variants/1/delete"
+        "/dashboard/projects/1/environments/1/flags/1/audience/variants/1/delete"
       );
     });
 
@@ -19,7 +19,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants/
       beforeEach(() => {
         cy.signIn("Jane");
         cy.visit(
-          "/dashboard/projects/1/environments/1/flags/1/variants/1/delete",
+          "/dashboard/projects/1/environments/1/flags/1/audience/variants/1/delete",
           {
             failOnStatusCode: false,
           }
@@ -35,7 +35,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants/
       beforeEach(() => {
         cy.signIn("Marvin");
         cy.visit(
-          "/dashboard/projects/1/environments/1/flags/1/variants/1/delete"
+          "/dashboard/projects/1/environments/1/flags/1/audience/variants/1/delete"
         );
         cy.injectAxe();
       });
@@ -57,7 +57,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants/
           .and(
             "have.attr",
             "href",
-            "/dashboard/projects/1/environments/1/flags/1"
+            "/dashboard/projects/1/environments/1/flags/1/audience"
           );
 
         cy.checkA11y();
@@ -71,7 +71,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants/
       beforeEach(() => {
         cy.signIn("Marvin");
         cy.visit(
-          "/dashboard/projects/1/environments/1/flags/1/variants/1/delete"
+          "/dashboard/projects/1/environments/1/flags/1/audience/variants/1/delete"
         );
       });
 
@@ -82,7 +82,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/variants/
 
         cy.url().should(
           "contain",
-          "/dashboard/projects/1/environments/1/flags/1?variantRemoved=true#variant-removed"
+          "/dashboard/projects/1/environments/1/flags/1/audience?variantRemoved=true#variant-removed"
         );
 
         cy.get(".success-box")
