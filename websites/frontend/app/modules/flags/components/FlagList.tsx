@@ -46,7 +46,7 @@ export const FlagList = ({
                   <Button
                     variant="secondary"
                     key={`${flag.uuid}-${env.uuid}`}
-                    to={`/dashboard/projects/${projectId}/environments/${env.uuid}/flags/${flag.uuid}`}
+                    to={`/dashboard/projects/${projectId}/environments/${env.uuid}/flags/${flag.uuid}/audience`}
                     icon={<EnvIcon />}
                     size="S"
                   >

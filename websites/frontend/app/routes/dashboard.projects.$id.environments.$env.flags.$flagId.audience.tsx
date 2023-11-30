@@ -8,6 +8,7 @@ import {
 } from "@remix-run/node";
 import {
   Form,
+  Outlet,
   useActionData,
   useLoaderData,
   useNavigation,
@@ -220,6 +221,8 @@ export default function FlagById() {
           </button>
         </Form>
       </Section>
+
+      <Outlet />
     </DashboardLayout>
   );
 }

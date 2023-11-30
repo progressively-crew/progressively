@@ -22,7 +22,7 @@ export const FlagEnvMenu = ({
   return (
     <HorizontalNav label={`Navigate in flag in specific environment`}>
       <NavItem
-        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}`}
+        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/audience`}
         icon={<TbTargetArrow />}
       >
         Audience

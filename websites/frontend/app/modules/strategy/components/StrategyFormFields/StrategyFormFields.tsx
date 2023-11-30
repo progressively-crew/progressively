@@ -53,7 +53,7 @@ export const StrategyFormFields = ({
           />
 
           <CreateButton
-            to={`/dashboard/projects/${environment.projectId}/environments/${environment.uuid}/flags/${flagEnv.flagId}/variants/create`}
+            to={`/dashboard/projects/${environment.projectId}/environments/${environment.uuid}/flags/${flagEnv.flagId}/audience/variants/create`}
             variant="tertiary"
           >
             Add a variant

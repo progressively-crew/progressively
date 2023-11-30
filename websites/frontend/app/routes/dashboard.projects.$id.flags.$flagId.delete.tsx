@@ -97,7 +97,9 @@ export default function DeleteFlagPage() {
         </Form>
       }
       backLinkSlot={
-        <BackLink to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}`}>
+        <BackLink
+          to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}/audience`}
+        >
           Back to flag
         </BackLink>
       }
