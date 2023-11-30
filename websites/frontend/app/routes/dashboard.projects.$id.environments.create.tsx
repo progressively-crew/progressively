@@ -13,8 +13,8 @@ import { useActionData, Form, useNavigation } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
-import { BackLink } from "~/components/BackLink";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
+import { DialogCloseBtn } from "~/components/Dialog/Dialog";
 
 export const meta: V2_MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -78,10 +78,11 @@ export default function CreateEnvironmentPage() {
             Create the environment
           </SubmitButton>
         }
-        backLinkSlot={
-          <BackLink to={`/dashboard/projects/${project.uuid}/settings`}>
-            Back to project
-          </BackLink>
+        closeSlot={
+          <DialogCloseBtn
+            to={`/dashboard/projects/${project.uuid}/settings`}
+            label={`Back to project`}
+          />
         }
       >
         <TextInput

@@ -16,10 +16,10 @@ import { getFlagEnvMetaTitle } from "~/modules/flags/services/getFlagEnvMetaTitl
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
-import { BackLink } from "~/components/BackLink";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 import { validateScheduling } from "~/modules/scheduling/validators/validateScheduling";
 import { CreateSchedulingFrom } from "~/modules/scheduling/components/CreateSchedulingForm";
+import { DialogCloseBtn } from "~/components/Dialog/Dialog";
 
 export const handle = {
   breadcrumb: (match: { params: any }) => {
@@ -116,12 +116,11 @@ export default function SchedulingCreatePage() {
             Save the schedule
           </SubmitButton>
         }
-        backLinkSlot={
-          <BackLink
+        closeSlot={
+          <DialogCloseBtn
             to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/scheduling`}
-          >
-            Back to scheduling
-          </BackLink>
+            label={`Back to scheduling`}
+          />
         }
       >
         <CreateSchedulingFrom />

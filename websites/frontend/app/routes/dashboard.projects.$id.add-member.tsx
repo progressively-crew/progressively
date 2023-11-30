@@ -18,7 +18,7 @@ import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
-import { BackLink } from "~/components/BackLink";
+import { DialogCloseBtn } from "~/components/Dialog/Dialog";
 
 export const handle = {
   breadcrumb: (match: { params: any }) => {
@@ -136,10 +136,11 @@ export default function CreateProjectPage() {
             Add the member
           </SubmitButton>
         }
-        backLinkSlot={
-          <BackLink to={`/dashboard/projects/${project.uuid}/settings`}>
-            Back to {project.name}
-          </BackLink>
+        closeSlot={
+          <DialogCloseBtn
+            to={`/dashboard/projects/${project.uuid}/settings`}
+            label={`Back to {project.name}`}
+          />
         }
       >
         <TextInput

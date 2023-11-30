@@ -10,10 +10,10 @@ import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { Stack } from "~/components/Stack";
 import { Typography } from "~/components/Typography";
-import { BackLink } from "~/components/BackLink";
 import { DeleteEntityTitle } from "~/layouts/DeleteEntityTitle";
 import { useFlag } from "~/modules/flags/contexts/useFlag";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
+import { DialogCloseBtn } from "~/components/Dialog/Dialog";
 
 export const meta: V2_MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -96,10 +96,11 @@ export default function DeleteFlagPage() {
           </DeleteButton>
         </Form>
       }
-      backLinkSlot={
-        <BackLink to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}`}>
-          Back to flag
-        </BackLink>
+      closeSlot={
+        <DialogCloseBtn
+          to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}`}
+          label={`Back to flag`}
+        />
       }
     >
       <Stack spacing={4}>

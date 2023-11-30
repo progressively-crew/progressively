@@ -32,7 +32,6 @@ import { editStrategyAction } from "~/modules/strategy/form-actions/editStrategy
 import { Variant } from "~/modules/variants/types";
 import { getVariants } from "~/modules/variants/services/getVariants";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
-import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { Typography } from "~/components/Typography";
 import qs from "qs";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
@@ -167,8 +166,6 @@ export default function FlagById() {
             <SuccessBox id="strategy-deleted">
               The strategy has been removed.
             </SuccessBox>
-          ) : actionData?.errors ? (
-            <ErrorBox list={actionData.errors} />
           ) : isVariantRemoved ? (
             <SuccessBox id="variant-removed">
               The variant has been successfully removed.

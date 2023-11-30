@@ -10,10 +10,10 @@ import { getSession } from "~/sessions";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
-import { BackLink } from "~/components/BackLink";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 import { editFlag } from "~/modules/flags/services/editFlag";
 import { useFlag } from "~/modules/flags/contexts/useFlag";
+import { DialogCloseBtn } from "~/components/Dialog/Dialog";
 
 export const meta: V2_MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -92,12 +92,11 @@ export default function EditFlagPage() {
             Edit the feature flag
           </SubmitButton>
         }
-        backLinkSlot={
-          <BackLink
+        closeSlot={
+          <DialogCloseBtn
             to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}`}
-          >
-            Back to flag
-          </BackLink>
+            label={`Back to flag`}
+          />
         }
       >
         <FormGroup>
