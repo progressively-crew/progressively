@@ -4,8 +4,6 @@ import { Spacer } from "~/components/Spacer";
 import { useNavigation } from "@remix-run/react";
 import { Spinner } from "~/components/Spinner";
 import { UserNav } from "~/modules/user/components/UserNav";
-import { useInert } from "~/components/Inert/hooks/useInert";
-import { useEffect } from "react";
 import { Inert } from "~/components/Inert/Inert";
 
 export interface SettingLayoutProps {
@@ -25,16 +23,6 @@ export const SettingLayout = ({
     navigation.state === "loading" && navigation.formData == null;
 
   const layoutClassName = "max-w-7xl mx-auto";
-
-  const { setInert } = useInert();
-
-  useEffect(() => {
-    setInert(true);
-
-    return () => {
-      setInert(false);
-    };
-  }, []);
 
   return (
     <Inert>
