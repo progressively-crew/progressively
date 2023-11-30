@@ -4,6 +4,7 @@ import { Spacer } from "~/components/Spacer";
 import { useNavigation } from "@remix-run/react";
 import { Spinner } from "~/components/Spinner";
 import { UserNav } from "~/modules/user/components/UserNav";
+import { Inert } from "~/components/Inert/Inert";
 
 export interface SettingLayoutProps {
   children: React.ReactNode;
@@ -24,7 +25,7 @@ export const SettingLayout = ({
   const layoutClassName = "max-w-7xl mx-auto";
 
   return (
-    <div>
+    <Inert>
       <SkipNavLink>Skip to content</SkipNavLink>
 
       <div className="bg-gray-50 dark:bg-slate-900 h-full flex-1">
@@ -61,6 +62,6 @@ export const SettingLayout = ({
           </Main>
         </div>
       </div>
-    </div>
+    </Inert>
   );
 };
