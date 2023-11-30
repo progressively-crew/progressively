@@ -3,7 +3,7 @@ import {
   LoaderFunction,
   V2_MetaFunction,
 } from "@remix-run/node";
-import { useLoaderData, useSearchParams } from "@remix-run/react";
+import { Outlet, useLoaderData, useSearchParams } from "@remix-run/react";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { Card, CardContent } from "~/components/Card";
@@ -158,6 +158,8 @@ export default function SchedulingOfFlag() {
           flagId={currentFlag.uuid}
         />
       )}
+
+      <Outlet />
     </DashboardLayout>
   );
 }
