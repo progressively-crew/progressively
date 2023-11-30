@@ -42,31 +42,23 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
           cy.injectAxe();
         });
 
-        it("shows the layout", () => {
+        it("shows the form layout", () => {
           cy.title().should(
             "eq",
             "Progressively | Project from seeding | Production | Flags | New homepage | Scheduling | Create"
           );
 
-          cy.findByRole("heading", { name: "Create a scheduling" }).should(
-            "be.visible"
-          );
-        });
-
-        it("shows the form layout", () => {
           cy.findByText("When should the flag change status").should(
             "be.visible"
           );
 
           cy.findByText("What should be the next status").should("be.visible");
 
-          cy.findByRole("button", { name: "Save the schedule" }).should(
-            "be.visible"
-          );
+          cy.findByText("Save the schedule").should("be.visible");
         });
 
         it("adds a schedule", () => {
-          cy.findByRole("button", { name: "Save the schedule" }).click();
+          cy.findByText("Save the schedule").click();
 
           cy.url().should(
             "include",

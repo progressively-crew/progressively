@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Card, CardContent } from "~/components/Card";
+import { useInert } from "~/components/Inert/hooks/useInert";
 import { Spacer } from "~/components/Spacer";
 
 export interface CreateEntityLayoutProps {
@@ -19,46 +20,53 @@ export const CreateEntityLayout = ({
   submitSlot,
   backLinkSlot,
 }: CreateEntityLayoutProps) => {
+  const { setInert } = useInert();
+
+  useEffect(() => {
+    setInert(true);
+
+    return () => {
+      setInert(false);
+    };
+  }, []);
+
   return (
-    <div className="flex-1 bg-gray-50 dark:bg-slate-900">
-      <main
-        className="mx-auto max-w-2xl lg:pt-20 px-4 md:px-12"
-        aria-labelledby="page-title"
-      >
-        {error}
+    <div className="fixed h-full w-full inset-0 backdrop-blur-md bg-slate-300/30">
+      <div className="mx-auto max-w-2xl lg:pt-20 px-4 md:px-12">
+        <main>
+          {error}
 
-        <Spacer size={4} />
+          <Spacer size={4} />
 
-        {status && (
-          <div>
-            {status}
-            <Spacer size={4} />
+          {status && (
+            <div>
+              {status}
+              <Spacer size={4} />
+            </div>
+          )}
+
+          <div className="inline-block motion-safe:animate-fade-enter-bottom motion-safe:opacity-0">
+            {backLinkSlot}
           </div>
-        )}
 
-        <div className="inline-block motion-safe:animate-fade-enter-bottom motion-safe:opacity-0">
-          {backLinkSlot}
-        </div>
+          <Spacer size={2} />
 
-        <Spacer size={2} />
-
-        <div
-          className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"
-          style={{
-            animationDelay: "300ms",
-          }}
-        >
-          <Card footer={submitSlot}>
-            <CardContent>
-              {titleSlot}
-              <Spacer size={8} />
-              {children}
-            </CardContent>
-          </Card>
-        </div>
-
-        <Spacer size={6} />
-      </main>
+          <div
+            className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"
+            style={{
+              animationDelay: "300ms",
+            }}
+          >
+            <Card footer={submitSlot}>
+              <CardContent>
+                {titleSlot}
+                <Spacer size={8} />
+                {children}
+              </CardContent>
+            </Card>
+          </div>
+        </main>
+      </div>
     </div>
   );
 };

@@ -1,7 +1,6 @@
 import { Main } from "~/components/Main";
 import { SkipNavLink } from "~/components/SkipNav";
 import { Spacer } from "~/components/Spacer";
-import { NavProvider } from "~/components/Breadcrumbs/providers/NavProvider";
 import { useNavigation } from "@remix-run/react";
 import { Spinner } from "~/components/Spinner";
 import { UserNav } from "~/modules/user/components/UserNav";
@@ -25,7 +24,7 @@ export const SettingLayout = ({
   const layoutClassName = "max-w-7xl mx-auto";
 
   return (
-    <NavProvider>
+    <div>
       <SkipNavLink>Skip to content</SkipNavLink>
 
       <div className="bg-gray-50 dark:bg-slate-900 h-full flex-1">
@@ -62,6 +61,6 @@ export const SettingLayout = ({
           </Main>
         </div>
       </div>
-    </NavProvider>
+    </div>
   );
 };

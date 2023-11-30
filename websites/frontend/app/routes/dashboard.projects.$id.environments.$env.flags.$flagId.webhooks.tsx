@@ -3,7 +3,7 @@ import {
   LoaderFunction,
   V2_MetaFunction,
 } from "@remix-run/node";
-import { useLoaderData, useSearchParams } from "@remix-run/react";
+import { Outlet, useLoaderData, useSearchParams } from "@remix-run/react";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { Card, CardContent } from "~/components/Card";
@@ -93,71 +93,74 @@ export default function WebhooksPage() {
   const hasWebhooks = webhooks.length > 0;
 
   return (
-    <DashboardLayout
-      subNav={
-        <FlagEnvMenu
-          projectId={project.uuid}
-          envId={environment.uuid}
-          flagEnv={flagEnv}
-        />
-      }
-      status={
-        isWebhookRemoved ? (
-          <SuccessBox id="webhook-removed">
-            The webhook has been successfully removed.
-          </SuccessBox>
-        ) : isWebhookAdded ? (
-          <SuccessBox id="webhook-added">
-            The webhook has been successfully added.
-          </SuccessBox>
-        ) : null
-      }
-    >
-      <PageTitle
-        value="Webhooks"
-        description={
-          <Typography>
-            The different webhooks to request when specific events occur.
-          </Typography>
+    <>
+      <DashboardLayout
+        subNav={
+          <FlagEnvMenu
+            projectId={project.uuid}
+            envId={environment.uuid}
+            flagEnv={flagEnv}
+          />
         }
-        action={
-          hasWebhooks && (
-            <CreateButton
-              to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/webhooks/create`}
-            >
-              Create a webhook
-            </CreateButton>
-          )
+        status={
+          isWebhookRemoved ? (
+            <SuccessBox id="webhook-removed">
+              The webhook has been successfully removed.
+            </SuccessBox>
+          ) : isWebhookAdded ? (
+            <SuccessBox id="webhook-added">
+              The webhook has been successfully added.
+            </SuccessBox>
+          ) : null
         }
-      />
-
-      {!hasWebhooks && (
-        <Card>
-          <CardContent>
-            <EmptyState
-              titleAs="h2"
-              title="No webhooks found"
-              description={"There are no webhooks for this flag."}
-              action={
-                <CreateButton
-                  to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/webhooks/create`}
-                >
-                  Create a webhook
-                </CreateButton>
-              }
-            />
-          </CardContent>
-        </Card>
-      )}
-
-      {hasWebhooks && (
-        <WebhooksList
-          webhooks={webhooks}
-          projectId={project.uuid}
-          envId={environment.uuid}
-          flagId={currentFlag.uuid}
+      >
+        <PageTitle
+          value="Webhooks"
+          description={
+            <Typography>
+              The different webhooks to request when specific events occur.
+            </Typography>
+          }
+          action={
+            hasWebhooks && (
+              <CreateButton
+                to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/webhooks/create`}
+              >
+                Create a webhook
+              </CreateButton>
+            )
+          }
         />
-      )}
-    </DashboardLayout>
+
+        {!hasWebhooks && (
+          <Card>
+            <CardContent>
+              <EmptyState
+                titleAs="h2"
+                title="No webhooks found"
+                description={"There are no webhooks for this flag."}
+                action={
+                  <CreateButton
+                    to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/webhooks/create`}
+                  >
+                    Create a webhook
+                  </CreateButton>
+                }
+              />
+            </CardContent>
+          </Card>
+        )}
+
+        {hasWebhooks && (
+          <WebhooksList
+            webhooks={webhooks}
+            projectId={project.uuid}
+            envId={environment.uuid}
+            flagId={currentFlag.uuid}
+          />
+        )}
+      </DashboardLayout>
+      <Outlet />
+    </>
   );
 }

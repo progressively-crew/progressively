@@ -8,6 +8,7 @@ import {
 } from "@remix-run/node";
 import {
   Form,
+  Outlet,
   useActionData,
   useLoaderData,
   useNavigation,
@@ -148,78 +149,81 @@ export default function FlagById() {
   const isVariantAdded = searchParams.get("newVariant") || undefined;
 
   return (
-    <DashboardLayout
-      subNav={
-        <FlagEnvMenu
-          projectId={project.uuid}
-          envId={environment.uuid}
-          flagEnv={flagEnv}
-        />
-      }
-      status={
-        actionData?.successStrategyEdited ? (
-          <SuccessBox id={"strategy-edited"}>
-            The strategy has been successfully edited.
-          </SuccessBox>
-        ) : actionData?.successStrategyDeleted ? (
-          <SuccessBox id="strategy-deleted">
-            The strategy has been removed.
-          </SuccessBox>
-        ) : actionData?.errors ? (
-          <ErrorBox list={actionData.errors} />
-        ) : isVariantRemoved ? (
-          <SuccessBox id="variant-removed">
-            The variant has been successfully removed.
-          </SuccessBox>
-        ) : isVariantAdded ? (
-          <SuccessBox id="variant-added">
-            The variant has been successfully created.
-          </SuccessBox>
-        ) : null
-      }
-    >
-      {flagEnv.status === FlagStatus.NOT_ACTIVATED ? (
-        <TipBox title="Flag is not activated">
-          Your flag is not actived. Every user will resolve the{" "}
-          <strong>false</strong> variation of the feature flag.
-        </TipBox>
-      ) : null}
-
-      <PageTitle
-        value="Audience"
-        description={
-          <Typography>
-            When one user requests flags evaluations from an SDK, if they match{" "}
-            <strong>at least one of the following strategies</strong>, they will
-            resolve an activated flag with the associated value (variant value
-            or "true").
-          </Typography>
+    <>
+      <DashboardLayout
+        subNav={
+          <FlagEnvMenu
+            projectId={project.uuid}
+            envId={environment.uuid}
+            flagEnv={flagEnv}
+          />
         }
-        action={
-          strategies.length > 0 && (
-            <SubmitButton type="submit" form="save-strategies">
-              Save strategies
-            </SubmitButton>
-          )
+        status={
+          actionData?.successStrategyEdited ? (
+            <SuccessBox id={"strategy-edited"}>
+              The strategy has been successfully edited.
+            </SuccessBox>
+          ) : actionData?.successStrategyDeleted ? (
+            <SuccessBox id="strategy-deleted">
+              The strategy has been removed.
+            </SuccessBox>
+          ) : actionData?.errors ? (
+            <ErrorBox list={actionData.errors} />
+          ) : isVariantRemoved ? (
+            <SuccessBox id="variant-removed">
+              The variant has been successfully removed.
+            </SuccessBox>
+          ) : isVariantAdded ? (
+            <SuccessBox id="variant-added">
+              The variant has been successfully created.
+            </SuccessBox>
+          ) : null
         }
-      />
-
-      <Section id="rollout-target">
-        {strategies.length > 0 ? (
-          <StrategyList items={strategies} variants={variants} />
+      >
+        {flagEnv.status === FlagStatus.NOT_ACTIVATED ? (
+          <TipBox title="Flag is not activated">
+            Your flag is not actived. Every user will resolve the{" "}
+            <strong>false</strong> variation of the feature flag.
+          </TipBox>
         ) : null}
 
-        <Form method="post" className="pt-2">
-          <input type="hidden" name="_type" value="add-strategy" />
-          <button
-            aria-busy={isCreatingStrategy}
-            type="submit"
-            className="relative border border-dashed border-slate-300 dark:border-slate-600 w-full py-4 rounded text-slate-600 dark:text-slate-300 dark:hover:bg-slate-600 dark:active:bg-slate-500 hover:bg-slate-100 active:bg-slate-200"
-          >
-            Add a strategy
-          </button>
-        </Form>
-      </Section>
-    </DashboardLayout>
+        <PageTitle
+          value="Audience"
+          description={
+            <Typography>
+              When one user requests flags evaluations from an SDK, if they
+              match <strong>at least one of the following strategies</strong>,
+              they will resolve an activated flag with the associated value
+              (variant value or "true").
+            </Typography>
+          }
+          action={
+            strategies.length > 0 && (
+              <SubmitButton type="submit" form="save-strategies">
+                Save strategies
+              </SubmitButton>
+            )
+          }
+        />
+
+        <Section id="rollout-target">
+          {strategies.length > 0 ? (
+            <StrategyList items={strategies} variants={variants} />
+          ) : null}
+
+          <Form method="post" className="pt-2">
+            <input type="hidden" name="_type" value="add-strategy" />
+            <button
+              aria-busy={isCreatingStrategy}
+              type="submit"
+              className="relative border border-dashed border-slate-300 dark:border-slate-600 w-full py-4 rounded text-slate-600 dark:text-slate-300 dark:hover:bg-slate-600 dark:active:bg-slate-500 hover:bg-slate-100 active:bg-slate-200"
+            >
+              Add a strategy
+            </button>
+          </Form>
+        </Section>
+      </DashboardLayout>
+      <Outlet />
+    </>
   );
 }

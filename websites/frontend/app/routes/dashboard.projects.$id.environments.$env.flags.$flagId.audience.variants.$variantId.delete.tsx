@@ -56,7 +56,7 @@ export const action: ActionFunction = async ({
   }
 
   return redirect(
-    `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}?variantRemoved=true#variant-removed`
+    `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/audience?variantRemoved=true#variant-removed`
   );
 };
 
@@ -80,7 +80,7 @@ export default function DeleteVariantPage() {
         <Button
           variant="tertiary"
           scheme="danger"
-          to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`}
+          to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/audience`}
         >
           {`Cancel`}
         </Button>
@@ -98,7 +98,7 @@ export default function DeleteVariantPage() {
       }
       backLinkSlot={
         <BackLink
-          to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}`}
+          to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/audience`}
         >
           Back to flag
         </BackLink>

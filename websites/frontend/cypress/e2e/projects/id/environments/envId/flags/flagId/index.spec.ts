@@ -1,10 +1,10 @@
-describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]", () => {
+describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/audience", () => {
   before(cy.seed);
   after(cy.cleanupDb);
 
   describe("not authenticated", () => {
     beforeEach(() => {
-      cy.visit("/dashboard/projects/1/environments/1/flags/1");
+      cy.visit("/dashboard/projects/1/environments/1/flags/1/audience");
     });
 
     it("checks that the route is protected", () => {
@@ -16,7 +16,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]", () => {
     describe("user: Jane", () => {
       beforeEach(() => {
         cy.signIn("Jane");
-        cy.visit("/dashboard/projects/1/environments/1/flags/1", {
+        cy.visit("/dashboard/projects/1/environments/1/flags/1/audience", {
           failOnStatusCode: false,
         });
       });
@@ -32,7 +32,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]", () => {
       });
 
       it("shows the layout", () => {
-        cy.visit("/dashboard/projects/1/environments/1/flags/1");
+        cy.visit("/dashboard/projects/1/environments/1/flags/1/audience");
         cy.injectAxe();
 
         cy.title().should(

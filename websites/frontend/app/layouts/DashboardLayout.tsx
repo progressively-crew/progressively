@@ -1,8 +1,7 @@
 import { Main } from "~/components/Main";
 import { SkipNavLink } from "~/components/SkipNav";
 import { Spacer } from "~/components/Spacer";
-import { NavProvider } from "~/components/Breadcrumbs/providers/NavProvider";
-import { InertWhenNavOpened } from "~/components/Breadcrumbs/InertWhenNavOpened";
+import { Inert } from "~/components/Inert/Inert";
 import { Form, Link, useMatches, useNavigation } from "@remix-run/react";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { Spinner } from "~/components/Spinner";
@@ -52,7 +51,7 @@ export const DashboardLayout = ({
   const isActivated = flagEnv?.status === FlagStatus.ACTIVATED;
 
   return (
-    <NavProvider>
+    <Inert>
       <SkipNavLink>Skip to content</SkipNavLink>
 
       <div className="bg-gray-50 dark:bg-slate-900 h-full flex-1">
@@ -128,37 +127,35 @@ export const DashboardLayout = ({
           </div>
         )}
 
-        <div>
-          <InertWhenNavOpened
-            className={`${layoutClassName} h-full dark:bg-slate-900 flex-1 px-4 md:px-20 pt-8 md:pt-0 w-full`}
-          >
-            <Main>
-              {status}
-              <div className="flex-1">
-                <div>
-                  <div className="md:h-12" />
+        <div
+          className={`${layoutClassName} h-full dark:bg-slate-900 flex-1 px-4 md:px-20 pt-8 md:pt-0 w-full`}
+        >
+          <Main>
+            {status}
+            <div className="flex-1">
+              <div>
+                <div className="md:h-12" />
 
-                  <div className="flex flex-col gap-4 md:gap-6">{children}</div>
+                <div className="flex flex-col gap-4 md:gap-6">{children}</div>
 
-                  <Spacer size={10} />
-                </div>
-
-                {isNormalLoad && (
-                  <div
-                    className="fixed left-4 bottom-4 animate-opacity-appearing"
-                    style={{
-                      animationDelay: "300ms",
-                      opacity: 0,
-                    }}
-                  >
-                    <Spinner className="text-3xl text-gray-400" />
-                  </div>
-                )}
+                <Spacer size={10} />
               </div>
-            </Main>
-          </InertWhenNavOpened>
+
+              {isNormalLoad && (
+                <div
+                  className="fixed left-4 bottom-4 animate-opacity-appearing"
+                  style={{
+                    animationDelay: "300ms",
+                    opacity: 0,
+                  }}
+                >
+                  <Spinner className="text-3xl text-gray-400" />
+                </div>
+              )}
+            </div>
+          </Main>
         </div>
       </div>
-    </NavProvider>
+    </Inert>
   );
 };
