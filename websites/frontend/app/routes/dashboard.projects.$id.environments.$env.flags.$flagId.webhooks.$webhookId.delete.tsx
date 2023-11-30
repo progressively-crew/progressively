@@ -85,11 +85,12 @@ export default function DeleteWebhookPage() {
         </Button>
       }
       confirmAction={
-        <Form method="post">
+        <Form method="post" id="delete-webhooks">
           <DeleteButton
             type="submit"
             isLoading={navigation.state === "submitting"}
             loadingText="Deleting the webhook, please wait..."
+            form="delete-webhooks"
           >
             Yes, delete the webhook
           </DeleteButton>

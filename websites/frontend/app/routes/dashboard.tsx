@@ -1,5 +1,6 @@
 import { LoaderFunction } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
+import { InertProvider } from "~/components/Inert/providers/InertProvider";
 import { authGuard } from "~/modules/auth/services/auth-guard";
 import { ProjectsProvider } from "~/modules/projects/contexts/ProjectsProvider";
 import { getProjects } from "~/modules/projects/services/getProjects";
@@ -42,10 +43,12 @@ export default function DashboardLayout() {
   const { user, projects } = useLoaderData<LoaderData>();
 
   return (
-    <ProjectsProvider projects={projects}>
-      <UserProvider user={user}>
-        <Outlet />
-      </UserProvider>
-    </ProjectsProvider>
+    <InertProvider>
+      <ProjectsProvider projects={projects}>
+        <UserProvider user={user}>
+          <Outlet />
+        </UserProvider>
+      </ProjectsProvider>
+    </InertProvider>
   );
 }

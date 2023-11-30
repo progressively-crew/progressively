@@ -97,26 +97,27 @@ export default function CreateWebhookPage() {
   const actionData = useActionData<ActionData>();
 
   return (
-    <Form method="post" className="flex flex-col flex-1">
-      <CreateEntityLayout
-        status={actionData?.errors && <ErrorBox list={actionData.errors} />}
-        titleSlot={<CreateEntityTitle>Create a webhook</CreateEntityTitle>}
-        submitSlot={
-          <SubmitButton
-            isLoading={navigation.state === "submitting"}
-            loadingText="Saving the webhook, please wait..."
-          >
-            Save the webhook
-          </SubmitButton>
-        }
-        backLinkSlot={
-          <BackLink
-            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/webhooks`}
-          >
-            Back to webhooks
-          </BackLink>
-        }
-      >
+    <CreateEntityLayout
+      status={actionData?.errors && <ErrorBox list={actionData.errors} />}
+      titleSlot={<CreateEntityTitle>Create a webhook</CreateEntityTitle>}
+      submitSlot={
+        <SubmitButton
+          isLoading={navigation.state === "submitting"}
+          loadingText="Saving the webhook, please wait..."
+          form="create-webhook"
+        >
+          Save the webhook
+        </SubmitButton>
+      }
+      backLinkSlot={
+        <BackLink
+          to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/webhooks`}
+        >
+          Back to webhooks
+        </BackLink>
+      }
+    >
+      <Form method="post" id="create-webhook">
         <FormGroup>
           <TextInput
             isInvalid={Boolean(actionData?.errors?.["endpoint"])}
@@ -140,7 +141,7 @@ export default function CreateWebhookPage() {
             ]}
           />
         </FormGroup>
-      </CreateEntityLayout>
-    </Form>
+      </Form>
+    </CreateEntityLayout>
   );
 }

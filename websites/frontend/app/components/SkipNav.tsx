@@ -1,4 +1,4 @@
-import { useNavToggle } from "./Breadcrumbs/hooks/useNavToggle";
+import { useInert } from "./Inert/hooks/useInert";
 
 export interface SkipNavContentProps {
   children: React.ReactNode;
@@ -11,13 +11,13 @@ export interface SkipNavLinkProps {
   children: React.ReactNode;
 }
 export const SkipNavLink = ({ children }: SkipNavLinkProps) => {
-  const { isNavOpened } = useNavToggle();
+  const { inert } = useInert();
 
   return (
     <a
       href="#content"
-      tabIndex={isNavOpened ? -1 : 0}
-      aria-hidden={isNavOpened}
+      tabIndex={inert ? -1 : 0}
+      aria-hidden={inert}
       className="sr-only focus:not-sr-only focus:absolute bg-slate-800 text-white dark:bg-white dark:text-slate-900 focus:p-4 rounded focus:m-4 z-30"
     >
       {children}
