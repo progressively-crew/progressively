@@ -8,8 +8,8 @@ import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ActionFunction, redirect, V2_MetaFunction } from "@remix-run/node";
 import { useActionData, Form, useNavigation } from "@remix-run/react";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
-import { BackLink } from "~/components/BackLink";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
+import { DialogCloseBtn } from "~/components/Dialog/Dialog";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -67,7 +67,9 @@ export default function CreateProjectPage() {
             Create the project
           </SubmitButton>
         }
-        backLinkSlot={<BackLink to={`/dashboard`}>Back to projects</BackLink>}
+        closeSlot={
+          <DialogCloseBtn to={`/dashboard`} label={`Back to projects`} />
+        }
       >
         <TextInput
           isInvalid={Boolean(errors?.name)}

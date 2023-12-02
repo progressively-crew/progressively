@@ -12,8 +12,8 @@ import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaT
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { Stack } from "~/components/Stack";
-import { BackLink } from "~/components/BackLink";
 import { DeleteEntityTitle } from "~/layouts/DeleteEntityTitle";
+import { DialogCloseBtn } from "~/components/Dialog/Dialog";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -96,12 +96,11 @@ export default function DeleteEnvPage() {
           </DeleteButton>
         </Form>
       }
-      backLinkSlot={
-        <BackLink
+      closeSlot={
+        <DialogCloseBtn
           to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/settings`}
-        >
-          Back to project
-        </BackLink>
+          label={`Back to project`}
+        />
       }
     >
       <Stack spacing={4}>

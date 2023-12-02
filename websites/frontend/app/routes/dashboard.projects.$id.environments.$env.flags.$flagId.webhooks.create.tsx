@@ -15,8 +15,8 @@ import { FormGroup } from "~/components/Fields/FormGroup";
 import { SelectField } from "~/components/Fields/Select/SelectField";
 import { TextInput } from "~/components/Fields/TextInput";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
-import { BackLink } from "~/components/BackLink";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
+import { DialogCloseBtn } from "~/components/Dialog/Dialog";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -109,12 +109,11 @@ export default function CreateWebhookPage() {
           Save the webhook
         </SubmitButton>
       }
-      backLinkSlot={
-        <BackLink
+      closeSlot={
+        <DialogCloseBtn
           to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/webhooks`}
-        >
-          Back to webhooks
-        </BackLink>
+          label={`Back to webhooks`}
+        />
       }
     >
       <Form method="post" id="create-webhook">

@@ -11,9 +11,9 @@ import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { TextInput } from "~/components/Fields/TextInput";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
-import { BackLink } from "~/components/BackLink";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 import { addVariantAction } from "~/modules/variants/form-actions/addVariantAction";
+import { DialogCloseBtn } from "~/components/Dialog/Dialog";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -76,12 +76,11 @@ export default function CteateVariantPage() {
             Create the variant
           </SubmitButton>
         }
-        backLinkSlot={
-          <BackLink
+        closeSlot={
+          <DialogCloseBtn
             to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/audience`}
-          >
-            Back to variants
-          </BackLink>
+            label={`Back to variants`}
+          />
         }
       >
         <TextInput

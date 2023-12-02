@@ -13,9 +13,9 @@ import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { getFlagEnvMetaTitle } from "~/modules/flags/services/getFlagEnvMetaTitle";
 import { Stack } from "~/components/Stack";
 import { Typography } from "~/components/Typography";
-import { BackLink } from "~/components/BackLink";
 import { DeleteEntityTitle } from "~/layouts/DeleteEntityTitle";
 import { deleteVariant } from "~/modules/variants/services/deleteVariant";
+import { DialogCloseBtn } from "~/components/Dialog/Dialog";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -96,12 +96,11 @@ export default function DeleteVariantPage() {
           </DeleteButton>
         </Form>
       }
-      backLinkSlot={
-        <BackLink
+      closeSlot={
+        <DialogCloseBtn
           to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/audience`}
-        >
-          Back to flag
-        </BackLink>
+          label={`Back to flag`}
+        />
       }
     >
       <Stack spacing={4}>

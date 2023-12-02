@@ -14,8 +14,8 @@ import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { getFlagEnvMetaTitle } from "~/modules/flags/services/getFlagEnvMetaTitle";
 import { Stack } from "~/components/Stack";
 import { Typography } from "~/components/Typography";
-import { BackLink } from "~/components/BackLink";
 import { DeleteEntityTitle } from "~/layouts/DeleteEntityTitle";
+import { DialogCloseBtn } from "~/components/Dialog/Dialog";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -95,12 +95,11 @@ export default function DeleteSchedulePage() {
           </DeleteButton>
         </Form>
       }
-      backLinkSlot={
-        <BackLink
+      closeSlot={
+        <DialogCloseBtn
           to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/scheduling`}
-        >
-          Back to scheduling
-        </BackLink>
+          label={`Back to scheduling`}
+        />
       }
     >
       <Stack spacing={4}>
