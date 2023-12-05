@@ -86,9 +86,6 @@ importers:
       '@progressively/server-side':
         specifier: workspace:*
         version: link:../../packages/server-side
-      '@progressively/typegen':
-        specifier: workspace:*
-        version: link:../../packages/typegen
       cookie:
         specifier: ^0.5.0
         version: 0.5.0
@@ -464,6 +461,9 @@ importers:
       '@types/base-64':
         specifier: ^1.0.0
         version: 1.0.0
+      '@types/react':
+        specifier: ^18.2.42
+        version: 18.2.42
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -541,12 +541,6 @@ importers:
       typescript:
         specifier: 5.1.6
         version: 5.1.6
-
-  packages/typegen:
-    dependencies:
-      dotenv:
-        specifier: ^16.0.3
-        version: 16.0.3
 
   packages/types: {}
 
@@ -1505,7 +1499,7 @@ packages:
       '@babel/core': ^7.4.0-0
     dependencies:
       '@babel/core': 7.22.11
-      '@babel/helper-compilation-targets': 7.22.10
+      '@babel/helper-compilation-targets': 7.22.5(@babel/core@7.22.11)
       '@babel/helper-plugin-utils': 7.22.5
       debug: 4.3.4(supports-color@8.1.1)
       lodash.debounce: 4.0.8
@@ -10847,6 +10841,14 @@ packages:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.3
       csstype: 3.1.2
+
+  /@types/react@18.2.42:
+    resolution: {integrity: sha512-c1zEr96MjakLYus/wPnuWDo1/zErfdU9rNsIGmE+NV71nx88FG9Ttgo5dqorXTu/LImX2f63WBP986gJkMPNbA==}
+    dependencies:
+      '@types/prop-types': 15.7.5
+      '@types/scheduler': 0.16.3
+      csstype: 3.1.2
+    dev: true
 
   /@types/resolve@1.17.1:
     resolution: {integrity: sha512-yy7HuzQhj0dhGpD8RLXSZWEkLsV9ibvxvi6EiJ3bkqLAO1RGo0WbkWQiwpRlSFymTJRz0d3k5LM3kkx8ArDbLw==}

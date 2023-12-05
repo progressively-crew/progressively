@@ -3,7 +3,7 @@ import { Fields, FlagDict } from "@progressively/types";
 export { Fields, FlagDict };
 export interface SDKOptions {
   fields?: Fields;
-  apiUrl?: string;
+  apiUrl: string;
   websocketUrl?: string;
   flags?: FlagDict;
   headers?: RequestInit["headers"];
@@ -17,7 +17,7 @@ export type LoadFlagsReturnType = {
 };
 
 export interface ProgressivelySdkType {
-  loadFlags: (args?: LoadFlagsArgs) => Promise<LoadFlagsReturnType>;
+  loadFlags: () => Promise<LoadFlagsReturnType>;
   disconnect: () => void;
   onFlagUpdate: (
     callback: (data: FlagDict) => void,
@@ -29,8 +29,4 @@ export interface ProgressivelySdkType {
     ctrl?: AbortController
   ) => Promise<LoadFlagsReturnType>;
   flags: FlagDict;
-}
-
-export interface LoadFlagsArgs {
-  ctrl?: AbortController;
 }

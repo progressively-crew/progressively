@@ -4,7 +4,7 @@ export { Fields, FlagDict };
 
 export interface SDKOptions {
   fields?: Fields;
-  apiUrl?: string;
+  apiUrl: string;
   websocketUrl?: string;
   flags?: FlagDict;
   shouldHit?: boolean;
@@ -55,10 +55,10 @@ const fetchEndpoint = (url: string, fields: Fields, options?: SDKOptions) => {
 };
 
 export const Progressively = {
-  init(clientKey: string, options?: SDKOptions) {
+  init(clientKey: string, options: SDKOptions) {
     return {
       loadFlags: () => {
-        const apiRoot = options?.apiUrl || "https://api.progressively.app";
+        const apiRoot = options.apiUrl;
         const fields: Fields = options?.fields || {};
         fields.clientKey = clientKey;
 
@@ -66,7 +66,7 @@ export const Progressively = {
         return fetchEndpoint(url, fields, options);
       },
       evaluateFlag: (flagKey: string) => {
-        const apiRoot = options?.apiUrl || "https://api.progressively.app";
+        const apiRoot = options.apiUrl;
         const fields: Fields = options?.fields || {};
         fields.clientKey = clientKey;
 

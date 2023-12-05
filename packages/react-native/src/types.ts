@@ -14,4 +14,6 @@ export type LoadFlagsReturnType = {
   userId?: string | null;
 };
 
+export { Fields, FlagDict };
+
 export type StateMachineConstants = "idle" | "loading" | "success" | "failure";
