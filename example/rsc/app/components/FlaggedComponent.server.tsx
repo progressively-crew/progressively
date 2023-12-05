@@ -12,7 +12,7 @@ export async function FlaggedComponent() {
 
   const {
     data: { flags },
-  } = await sdk.evaluateFlag("newHomepage");
+  } = await sdk.loadFlags();
 
   if (flags?.newHomepage) {
     return <div>New variant</div>;

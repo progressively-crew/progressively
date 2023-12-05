@@ -149,25 +149,6 @@ export class SdkService {
     return flags;
   }
 
-  async computeUniqueFlag(
-    flagKey: string,
-    fields: FieldRecord,
-    skipHit: boolean,
-  ) {
-    const clientKey = String(fields.clientKey);
-    const flagEnv =
-      await this.envService.getFlagEnvironmentByClientKeyAndFlagKey(
-        clientKey,
-        flagKey,
-      );
-
-    const flags = {};
-
-    await this.computeFlag(flagEnv, clientKey, fields, flags, skipHit);
-
-    return flags;
-  }
-
   async generateTypescriptTypes(clientKey: string) {
     const env = await this.prisma.environment.findFirst({
       where: { clientKey },

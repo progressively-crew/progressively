@@ -65,14 +65,6 @@ export const Progressively = {
         const url = `${apiRoot}/sdk/${btoA(JSON.stringify(fields))}`;
         return fetchEndpoint(url, fields, options);
       },
-      evaluateFlag: (flagKey: string) => {
-        const apiRoot = options.apiUrl;
-        const fields: Fields = options?.fields || {};
-        fields.clientKey = clientKey;
-
-        const url = `${apiRoot}/sdk/${btoA(JSON.stringify(fields))}/${flagKey}`;
-        return fetchEndpoint(url, fields, options);
-      },
     };
   },
 };
