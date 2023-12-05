@@ -15,6 +15,8 @@ import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { useSearchParams } from "@remix-run/react";
 import { SettingLayout } from "~/layouts/SettingLayout";
 import { BackLink } from "~/components/BackLink";
+import { Typography } from "~/components/Typography";
+import { Dd, Dl, Dt } from "~/components/Dl";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -57,21 +59,36 @@ export default function EnvSettingsPage() {
         }
       />
 
-      <Card
-        footer={
-          <ButtonCopy toCopy={environment.clientKey}>
-            {environment.clientKey}
-          </ButtonCopy>
-        }
-      >
+      <Card>
         <CardContent>
           <Section id="general">
-            <SectionHeader
-              title="General"
-              description={
-                "The following is the client key to use inside your application to retrieve the flags"
-              }
-            />
+            <SectionHeader title="General" />
+
+            <Spacer size={6} />
+
+            <Dl>
+              <Dt>Domain (client):</Dt>
+              <Dd>{environment.domain || "N/A"}</Dd>
+
+              <Dt>Client key (public):</Dt>
+              <Dd>
+                <ButtonCopy toCopy={environment.clientKey} size="S">
+                  {environment.clientKey}
+                </ButtonCopy>
+              </Dd>
+
+              <Dt>Server key (secret):</Dt>
+              <Dd>
+                <ButtonCopy
+                  toCopy={environment.secretKey}
+                  size="S"
+                  toCopyAlternative="**************"
+                >
+                  **************
+                </ButtonCopy>
+              </Dd>
+            </Dl>
+            <Typography as="p"></Typography>
           </Section>
         </CardContent>
       </Card>
@@ -104,8 +121,6 @@ export default function EnvSettingsPage() {
                   "You can delete an environment at any time, but you won't be able to access its flags will be removed and be falsy in your applications. Be sure to know what you're doing before removing an environment."
                 }
               />
-
-              <Spacer size={4} />
             </Section>
           </CardContent>
         </Card>
