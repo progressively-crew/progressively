@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ProgressivelyContext } from "./ProgressivelyContext";
 import {
   Fields,
@@ -26,7 +26,6 @@ export const ProgressivelyProvider = ({
   websocketUrl,
   fields,
 }: ProgressivelyProviderProps) => {
-  const abortCtrlRef = useRef<AbortController>();
   const [trackFn, setTrackFn] = useState<ProgressivelySdkType["track"]>(() =>
     Promise.resolve(undefined)
   );
@@ -42,11 +41,8 @@ export const ProgressivelyProvider = ({
       fields,
       apiUrl,
       websocketUrl,
-      initialFlags,
+      flags: initialFlags,
     });
-
-    abortCtrlRef.current = new AbortController();
-    const ctrl = abortCtrlRef.current;
 
     const handleLoadFlag = (res: LoadFlagsReturnType) => {
       setFlags(res.flags);
@@ -58,14 +54,13 @@ export const ProgressivelyProvider = ({
       () => (newFields: Fields) => sdk.setFields(newFields).then(handleLoadFlag)
     );
 
-    sdk.loadFlags({ ctrl }).then((res) => {
+    sdk.loadFlags().then((res) => {
       sdk.onFlagUpdate(setFlags, res.userId);
       handleLoadFlag(res);
     });
 
     return () => {
       sdk.disconnect();
-      ctrl.abort();
     };
   }, []);
 

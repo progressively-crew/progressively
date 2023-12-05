@@ -1,13 +1,8 @@
-export function loadFlags(
-  apiUrl: string,
-  sdkParams: string,
-  ctrl?: AbortController
-) {
+export function loadFlags(apiUrl: string, sdkParams: string) {
   let response: Response;
 
   return fetch(`${apiUrl}/sdk/${sdkParams}}`, {
     credentials: "include",
-    signal: ctrl?.signal,
   })
     .then((res) => {
       response = res;

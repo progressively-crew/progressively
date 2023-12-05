@@ -18,7 +18,7 @@ interface Status {
 export interface ProgressivelyProviderProps {
   clientKey: string;
   fields?: Fields;
-  apiUrl?: string;
+  apiUrl: string;
   websocketUrl?: string;
   children?: React.ReactNode;
 }
@@ -26,8 +26,8 @@ export interface ProgressivelyProviderProps {
 export const ProgressivelyProvider = ({
   children,
   clientKey,
-  apiUrl = "https://api.progressively.app",
-  websocketUrl = "wss://api.progressively.app",
+  apiUrl,
+  websocketUrl,
   fields: initialFields = {},
 }: ProgressivelyProviderProps) => {
   const [fields] = useState({ ...initialFields, clientKey });
@@ -38,7 +38,6 @@ export const ProgressivelyProvider = ({
     const sdkParams = base64.encode(JSON.stringify(fields));
 
     let ws: WebSocket;
-    const ctrl = new AbortController();
 
     const handleLoadFlag = (res: LoadFlagsReturnType) => {
       setFlags(res.flags);
@@ -46,6 +45,8 @@ export const ProgressivelyProvider = ({
     };
 
     const handleWsConnect = (userId: string | null | undefined) => {
+      if (!websocketUrl) return;
+
       const wsFields = { ...fields, id: userId };
 
       ws = new WebSocket(
@@ -57,14 +58,13 @@ export const ProgressivelyProvider = ({
       };
     };
 
-    loadFlags(apiUrl, sdkParams, ctrl).then((res) => {
+    loadFlags(apiUrl, sdkParams).then((res) => {
       handleWsConnect(res.userId);
       handleLoadFlag(res);
     });
 
     return () => {
       ws?.close();
-      ctrl.abort();
     };
   }, [apiUrl, websocketUrl, fields]);
 

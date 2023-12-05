@@ -8,7 +8,7 @@ export interface ProgressivelyContextType {
   status: StateMachineConstants;
   error?: Error;
   track: (eventName?: string) => Promise<void>;
-  setFields: (newFields: Fields, ctrl?: AbortController | undefined) => void;
+  setFields: (newFields: Fields) => void;
 }
 
 export const ProgressivelyContext = createContext<ProgressivelyContextType>({
