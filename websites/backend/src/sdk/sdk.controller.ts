@@ -12,6 +12,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
+import { minimatch } from 'minimatch';
 import { SdkService } from './sdk.service';
 import { parseBase64Params, prepareCookie, resolveUserId } from './utils';
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
@@ -47,7 +48,7 @@ export class SdkController {
     }
 
     const domain = request.get('host');
-    if (fields.clientKey && domain !== concernedEnv.domain) {
+    if (fields.clientKey && !minimatch(domain, concernedEnv.domain)) {
       throw new UnauthorizedException();
     }
 
