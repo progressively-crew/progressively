@@ -15,6 +15,7 @@ import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaT
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 import { DialogCloseBtn } from "~/components/Dialog/Dialog";
+import { FormGroup } from "~/components/Fields/FormGroup";
 
 export const meta: V2_MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -87,19 +88,21 @@ export default function CreateEnvironmentPage() {
           />
         }
       >
-        <TextInput
-          isInvalid={Boolean(errors?.name)}
-          name="env-name"
-          placeholder="e.g: Staging"
-          label="Environment name"
-        />
+        <FormGroup>
+          <TextInput
+            isInvalid={Boolean(errors?.name)}
+            name="env-name"
+            placeholder="e.g: Staging"
+            label="Environment name"
+          />
 
-        <TextInput
-          isInvalid={Boolean(errors?.domain)}
-          name="domain"
-          placeholder="progressively.app"
-          label="Domain"
-        />
+          <TextInput
+            isInvalid={Boolean(errors?.domain)}
+            name="domain"
+            placeholder="progressively.app"
+            label="Domain"
+          />
+        </FormGroup>
       </CreateEntityLayout>
     </Form>
   );
