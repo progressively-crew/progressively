@@ -106,7 +106,6 @@ export class SdkService {
 
   async computeFlag(
     flagEnv: PopulatedFlagEnv,
-    clientKey: string,
     fields: FieldRecord,
     flagsByRef: Record<string, boolean | string>,
     skipHit: boolean,
@@ -114,10 +113,7 @@ export class SdkService {
     let nextFlag = flagEnv;
 
     if (flagEnv.scheduling.length > 0) {
-      nextFlag = await this.scheduleService.manageFlagScheduling(
-        clientKey,
-        flagEnv,
-      );
+      nextFlag = await this.scheduleService.manageFlagScheduling(flagEnv);
     }
 
     const flagStatusOrVariant = this.resolveFlagStatus(nextFlag, fields);
@@ -149,7 +145,7 @@ export class SdkService {
     const flags = {};
 
     const promises = flagEnvs.map((flagEnv) =>
-      this.computeFlag(flagEnv, env.clientKey, fields, flags, skipHit),
+      this.computeFlag(flagEnv, fields, flags, skipHit),
     );
 
     await Promise.all(promises);
