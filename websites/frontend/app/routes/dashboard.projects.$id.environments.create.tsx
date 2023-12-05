@@ -36,9 +36,10 @@ export const action: ActionFunction = async ({
 }): Promise<ActionData | Response> => {
   const projectId = params.id!;
   const formData = await request.formData();
-  const projectName = formData.get("env-name")?.toString();
+  const envName = formData.get("env-name")?.toString();
+  const domain = formData.get("domain")?.toString();
 
-  const errors = validateEnvName({ name: projectName });
+  const errors = validateEnvName({ name: envName, domain });
 
   if (errors?.name) {
     return { errors };
@@ -48,8 +49,9 @@ export const action: ActionFunction = async ({
 
   const env: Environment = await createEnv(
     projectId,
-    projectName!,
-    session.get("auth-cookie")
+    envName!,
+    session.get("auth-cookie"),
+    domain
   );
 
   return redirect(
@@ -90,6 +92,13 @@ export default function CreateEnvironmentPage() {
           name="env-name"
           placeholder="e.g: Staging"
           label="Environment name"
+        />
+
+        <TextInput
+          isInvalid={Boolean(errors?.domain)}
+          name="domain"
+          placeholder="progressively.app"
+          label="Domain"
         />
       </CreateEntityLayout>
     </Form>

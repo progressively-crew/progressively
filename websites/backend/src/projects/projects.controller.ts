@@ -184,7 +184,7 @@ export class ProjectsController {
     @Param('id') id: string,
     @Body() envDto: EnvironmentCreationDTO,
   ): Promise<Environment> {
-    return this.envService.createEnvironment(id, envDto.name);
+    return this.envService.createEnvironment(id, envDto.name, envDto.domain);
   }
 
   /**

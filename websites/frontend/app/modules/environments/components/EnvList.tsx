@@ -35,9 +35,19 @@ const EnvEntry = ({ env, projectId }: EnvEntryProps) => {
           {env.name}
         </Link>
       </Td>
+      <Td>{env.domain || "N/A"}</Td>
       <Td>
         <ButtonCopy toCopy={env.clientKey} size="S">
           {env.clientKey}
+        </ButtonCopy>
+      </Td>
+      <Td>
+        <ButtonCopy
+          toCopy={env.secretKey}
+          toCopyAlternative="**************"
+          size="S"
+        >
+          **************
         </ButtonCopy>
       </Td>
     </Tr>
@@ -54,7 +64,9 @@ export const EnvList = ({ environments, projectId }: EnvListProps) => {
             <span className="sr-only">Environment icon</span>
           </Th>
           <Th>Environment name</Th>
-          <Th>Environment key</Th>
+          <Th>Domain (client)</Th>
+          <Th>Client key</Th>
+          <Th>Secret key</Th>
         </tr>
       </thead>
       <Tbody>

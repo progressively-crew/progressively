@@ -6,10 +6,13 @@ export interface Environment {
   projectId: string;
   flagEnvironment?: Array<FlagEnv>;
   clientKey: string;
+  secretKey: string;
+  domain?: string;
 }
 
 export interface CreateEnvironmentDTO {
   name?: string;
+  domain?: string;
 }
 
 export interface LocalCount {
