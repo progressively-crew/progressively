@@ -46,6 +46,11 @@ export class SdkController {
       throw new UnauthorizedException();
     }
 
+    const domain = request.get('host');
+    if (fields.clientKey && domain !== concernedEnv.domain) {
+      throw new UnauthorizedException();
+    }
+
     const cookieUserId = request?.cookies?.[COOKIE_KEY];
     const shouldSkipHits = headers['x-progressively-hit'] === 'skip';
 
