@@ -14,12 +14,10 @@ export class EnvironmentsService {
     });
   }
 
-  getFlagEnvironmentByClientKey(clientKey: string) {
+  getPopulatedFlagEnvs(envId: string) {
     return this.prisma.flagEnvironment.findMany({
       where: {
-        environment: {
-          clientKey,
-        },
+        environmentId: envId,
       },
       include: {
         flag: true,
