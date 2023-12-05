@@ -175,7 +175,7 @@ export class SdkService {
   }
 
   async hitEvent(
-    clientKey: string,
+    envId: string,
     visitorId: string,
     hit: EventHit & {
       os: string;
@@ -184,16 +184,6 @@ export class SdkService {
       referer?: string;
     },
   ) {
-    const env = await this.prisma.environment.findFirst({
-      where: {
-        clientKey,
-      },
-    });
-
-    if (!env) {
-      return null;
-    }
-
     const date = new Date();
     date.setHours(2);
     date.setMinutes(2);
@@ -202,7 +192,7 @@ export class SdkService {
 
     return this.prisma.event.create({
       data: {
-        environmentUuid: env.uuid,
+        environmentUuid: envId,
         visitorId,
         date,
         name: hit.name,

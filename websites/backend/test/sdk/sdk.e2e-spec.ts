@@ -18,11 +18,11 @@ describe('SdkController (e2e)', () => {
     await app.close();
   });
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     await seedDb();
   });
 
-  afterEach(async () => {
+  afterAll(async () => {
     await cleanupDb();
   });
 
@@ -41,6 +41,43 @@ describe('SdkController (e2e)', () => {
   });
 
   describe('/sdk/:params (GET)', () => {
+    it('gives a 401 when the domain requesting does not match the clientKey', async () => {
+      const fields = btoa(JSON.stringify({ clientKey: 'valid-sdk-key-2' }));
+      const response = await request(app.getHttpServer()).get(`/sdk/${fields}`);
+
+      expect(response.status).toBe(401);
+    });
+
+    it('gives a 401 when the secretKey dont match', async () => {
+      const fields = btoa(JSON.stringify({}));
+      const response = await request(app.getHttpServer())
+        .get(`/sdk/${fields}`)
+        .set('X-Api-key', 'secret-key-23');
+
+      expect(response.status).toBe(401);
+    });
+
+    it('gives a 401 when the secretKey and client key are not passed', async () => {
+      const fields = btoa(JSON.stringify({}));
+      const response = await request(app.getHttpServer()).get(`/sdk/${fields}`);
+
+      expect(response.status).toBe(401);
+    });
+
+    it('gives a 200 when the secretKey matches', async () => {
+      const fields = btoa(JSON.stringify({}));
+      const response = await request(app.getHttpServer())
+        .get(`/sdk/${fields}`)
+        .set('X-Api-key', 'secret-key');
+
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual({
+        multivariate: false,
+        newFooter: false,
+        newHomepage: false,
+      });
+    });
+
     it('gives a list of flags when the key is valid for anonymous user (no field id, no cookies)', async () => {
       const fields = btoa(JSON.stringify({ clientKey: 'valid-sdk-key' }));
       const response = await request(app.getHttpServer()).get(`/sdk/${fields}`);
@@ -191,13 +228,13 @@ describe('SdkController (e2e)', () => {
         .expect(400);
     });
 
-    it('gives a 400 when there s no env associated to the clientkey', () => {
+    it('gives a 401 when there s no env associated to the clientkey', () => {
       const fields = btoa(JSON.stringify({ clientKey: 'valid-sdk-kefey' }));
 
       return request(app.getHttpServer())
         .post(`/sdk/${fields}`)
         .send({ name: 'hello' })
-        .expect(400);
+        .expect(401);
     });
 
     it('gives a 201 when the hit is valid', () => {

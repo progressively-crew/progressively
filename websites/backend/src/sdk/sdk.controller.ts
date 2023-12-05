@@ -35,8 +35,12 @@ export class SdkController {
     @Req() request: Request,
     @Headers() headers,
   ) {
-    const secretKey = request.headers['X-Api-key'] as string | undefined;
+    const secretKey = request.headers['x-api-key'] as string | undefined;
     const fields = parseBase64Params(base64Params);
+
+    if (!secretKey && !fields.clientKey) {
+      throw new UnauthorizedException();
+    }
 
     const concernedEnv = await this.sdkService.getEnvByKeys(
       fields.clientKey ? String(fields.clientKey) : undefined,
@@ -48,8 +52,11 @@ export class SdkController {
     }
 
     const domain = request.get('host');
-    if (fields.clientKey && !minimatch(domain, concernedEnv.domain)) {
-      throw new UnauthorizedException();
+
+    if (fields.clientKey) {
+      if (!concernedEnv.domain || !minimatch(domain, concernedEnv.domain)) {
+        throw new UnauthorizedException();
+      }
     }
 
     const cookieUserId = request?.cookies?.[COOKIE_KEY];
@@ -80,15 +87,30 @@ export class SdkController {
     }
 
     const deviceInfo = getDeviceInfo(request);
-
     const fields = parseBase64Params(base64Params);
 
     if (!fields.clientKey) {
       throw new BadRequestException();
     }
 
+    const concernedEnv = await this.sdkService.getEnvByKeys(
+      String(fields.clientKey),
+    );
+
+    if (!concernedEnv) {
+      throw new UnauthorizedException();
+    }
+
+    const domain = request.get('host');
+
+    if (fields.clientKey) {
+      if (!concernedEnv.domain || !minimatch(domain, concernedEnv.domain)) {
+        throw new UnauthorizedException();
+      }
+    }
+
     const eventCreated = await this.sdkService.hitEvent(
-      fields.clientKey as string,
+      concernedEnv.uuid,
       String(fields?.id || ''),
       {
         ...body,
