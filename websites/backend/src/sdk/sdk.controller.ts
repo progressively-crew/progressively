@@ -43,27 +43,6 @@ export class SdkController {
     return this.sdkService.computeFlags(fields, shouldSkipHits);
   }
 
-  /**
-   * Get One  flag values by client sdk key
-   */
-  @Get('/:params/:flagKey')
-  async getUniqueFlagByClientKey(
-    @Param('params') base64Params: string,
-    @Param('flagKey') flagKey: string,
-    @Res({ passthrough: true }) response: Response,
-    @Req() request: Request,
-    @Headers() headers,
-  ) {
-    const fields = parseBase64Params(base64Params);
-    const cookieUserId = request?.cookies?.[COOKIE_KEY];
-    const shouldSkipHits = headers['x-progressively-hit'] === 'skip';
-
-    fields.id = resolveUserId(fields, cookieUserId);
-    prepareCookie(response, fields.id);
-
-    return this.sdkService.computeUniqueFlag(flagKey, fields, shouldSkipHits);
-  }
-
   @Get('/:clientKey/types/gen')
   @UseGuards(JwtAuthGuard)
   async getTypesDefinitions(@Param('clientKey') clientKey: string) {

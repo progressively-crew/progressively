@@ -41,36 +41,6 @@ export class EnvironmentsService {
     }) as unknown as Promise<Array<PopulatedFlagEnv>>;
   }
 
-  getFlagEnvironmentByClientKeyAndFlagKey(clientKey: string, flagKey: string) {
-    return this.prisma.flagEnvironment.findFirst({
-      where: {
-        flag: {
-          key: flagKey,
-        },
-        environment: {
-          clientKey,
-        },
-      },
-      include: {
-        flag: true,
-        scheduling: true,
-        strategies: {
-          include: {
-            rules: true,
-            variants: {
-              include: {
-                variant: true,
-              },
-              orderBy: {
-                rolloutPercentage: 'asc',
-              },
-            },
-          },
-        },
-      },
-    }) as unknown as Promise<PopulatedFlagEnv>;
-  }
-
   async getBounceRate(envId: string, startDate: string, endDate: string) {
     // Hint: "PV" name is "PageView" but shorter for bundle size
     const bounceRateData = await this.prisma.$queryRaw`
