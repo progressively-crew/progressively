@@ -15,6 +15,7 @@ import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaT
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 import { DialogCloseBtn } from "~/components/Dialog/Dialog";
+import { FormGroup } from "~/components/Fields/FormGroup";
 
 export const meta: V2_MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -36,9 +37,10 @@ export const action: ActionFunction = async ({
 }): Promise<ActionData | Response> => {
   const projectId = params.id!;
   const formData = await request.formData();
-  const projectName = formData.get("env-name")?.toString();
+  const envName = formData.get("env-name")?.toString();
+  const domain = formData.get("domain")?.toString();
 
-  const errors = validateEnvName({ name: projectName });
+  const errors = validateEnvName({ name: envName, domain });
 
   if (errors?.name) {
     return { errors };
@@ -48,8 +50,9 @@ export const action: ActionFunction = async ({
 
   const env: Environment = await createEnv(
     projectId,
-    projectName!,
-    session.get("auth-cookie")
+    envName!,
+    session.get("auth-cookie"),
+    domain
   );
 
   return redirect(
@@ -85,12 +88,21 @@ export default function CreateEnvironmentPage() {
           />
         }
       >
-        <TextInput
-          isInvalid={Boolean(errors?.name)}
-          name="env-name"
-          placeholder="e.g: Staging"
-          label="Environment name"
-        />
+        <FormGroup>
+          <TextInput
+            isInvalid={Boolean(errors?.name)}
+            name="env-name"
+            placeholder="e.g: Staging"
+            label="Environment name"
+          />
+
+          <TextInput
+            isInvalid={Boolean(errors?.domain)}
+            name="domain"
+            placeholder="progressively.app"
+            label="Domain"
+          />
+        </FormGroup>
       </CreateEntityLayout>
     </Form>
   );

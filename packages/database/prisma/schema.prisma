@@ -57,6 +57,8 @@ model Environment {
   name            String
   projectId       String
   clientKey       String            @default(uuid())
+  secretKey       String            @default(uuid())
+  domain          String?
   project         Project           @relation(fields: [projectId], references: [uuid])
   flagEnvironment FlagEnvironment[]
   createdAt       DateTime?         @default(now())

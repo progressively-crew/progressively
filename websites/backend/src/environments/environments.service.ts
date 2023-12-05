@@ -244,7 +244,11 @@ export class EnvironmentsService {
       .map((k) => dictByDates[k]);
   }
 
-  async createEnvironment(projectId: string, environmentName: string) {
+  async createEnvironment(
+    projectId: string,
+    environmentName: string,
+    domain?: string,
+  ) {
     const allMatchingFlagEnv = await this.prisma.flagEnvironment.findMany({
       where: {
         environment: {
@@ -257,6 +261,7 @@ export class EnvironmentsService {
     return await this.prisma.environment.create({
       data: {
         name: environmentName,
+        domain: domain || null,
         projectId: projectId,
         flagEnvironment: {
           createMany: {
