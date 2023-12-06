@@ -18,6 +18,7 @@ import { parseBase64Params, prepareCookie, resolveUserId } from './utils';
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
 import { EventHit } from './types';
 import { getDeviceInfo } from '../shared/utils/getDeviceInfo';
+import { FieldRecord } from '../rule/types';
 
 export const COOKIE_KEY = 'progressively-id';
 
@@ -25,18 +26,8 @@ export const COOKIE_KEY = 'progressively-id';
 export class SdkController {
   constructor(private readonly sdkService: SdkService) {}
 
-  /**
-   * Get the flag values by client sdk key
-   */
-  @Get('/:params')
-  async getByClientKey(
-    @Param('params') base64Params: string,
-    @Res({ passthrough: true }) response: Response,
-    @Req() request: Request,
-    @Headers() headers,
-  ) {
+  async _guardSdkEndpoint(request: Request, fields: FieldRecord) {
     const secretKey = request.headers['x-api-key'] as string | undefined;
-    const fields = parseBase64Params(base64Params);
 
     if (!secretKey && !fields.clientKey) {
       throw new UnauthorizedException();
@@ -60,6 +51,22 @@ export class SdkController {
     ) {
       throw new UnauthorizedException();
     }
+
+    return concernedEnv;
+  }
+
+  /**
+   * Get the flag values by client sdk key
+   */
+  @Get('/:params')
+  async getByClientKey(
+    @Param('params') base64Params: string,
+    @Res({ passthrough: true }) response: Response,
+    @Req() request: Request,
+    @Headers() headers,
+  ) {
+    const fields = parseBase64Params(base64Params);
+    const concernedEnv = await this._guardSdkEndpoint(request, fields);
 
     const cookieUserId = request?.cookies?.[COOKIE_KEY];
     const shouldSkipHits = headers['x-progressively-hit'] === 'skip';
@@ -86,30 +93,10 @@ export class SdkController {
       throw new BadRequestException();
     }
 
-    const deviceInfo = getDeviceInfo(request);
     const fields = parseBase64Params(base64Params);
+    const concernedEnv = await this._guardSdkEndpoint(request, fields);
 
-    if (!fields.clientKey) {
-      throw new BadRequestException();
-    }
-
-    const concernedEnv = await this.sdkService.getEnvByKeys(
-      String(fields.clientKey),
-    );
-
-    if (!concernedEnv) {
-      throw new UnauthorizedException();
-    }
-
-    const domain = request.get('host');
-
-    if (
-      fields.clientKey &&
-      (!concernedEnv.domain || !minimatch(domain, concernedEnv.domain))
-    ) {
-      throw new UnauthorizedException();
-    }
-
+    const deviceInfo = getDeviceInfo(request);
     const eventCreated = await this.sdkService.hitEvent(
       concernedEnv.uuid,
       String(fields?.id || ''),

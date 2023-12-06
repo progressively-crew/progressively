@@ -229,15 +229,6 @@ describe('SdkController (e2e)', () => {
         .expect(400);
     });
 
-    it('gives a 400 when there is no clientkey', () => {
-      const fields = btoa(JSON.stringify({}));
-
-      return request(app.getHttpServer())
-        .post(`/sdk/${fields}invalid`)
-        .send({ name: 'hello' })
-        .expect(400);
-    });
-
     it('gives a 401 when there s no env associated to the clientkey', () => {
       const fields = btoa(JSON.stringify({ clientKey: 'valid-sdk-kefey' }));
 
@@ -281,6 +272,45 @@ describe('SdkController (e2e)', () => {
         .post(`/sdk/${fields}`)
         .send({ name: 'A metric', data: { hello: 'world' } })
         .expect(201);
+    });
+
+    it('gives a 401 when the secretKey dont match', async () => {
+      const fields = btoa(JSON.stringify({}));
+      const response = await request(app.getHttpServer())
+        .post(`/sdk/${fields}`)
+        .send({ name: 'hello' })
+        .set('X-Api-key', 'secret-key-23');
+
+      expect(response.status).toBe(401);
+    });
+
+    it('gives a 401 when the secretKey and client key are not passed', async () => {
+      const fields = btoa(JSON.stringify({}));
+      const response = await request(app.getHttpServer())
+        .post(`/sdk/${fields}`)
+        .send({ name: 'A metric', data: { hello: 'world' } });
+
+      expect(response.status).toBe(401);
+    });
+
+    it('gives a 200 when the secretKey matches', async () => {
+      const fields = btoa(JSON.stringify({}));
+      const response = await request(app.getHttpServer())
+        .post(`/sdk/${fields}`)
+        .send({ name: 'hello' })
+        .set('X-Api-key', 'secret-key');
+
+      expect(response.status).toBe(201);
+    });
+
+    it('gives a 200 when the secretKey AND client key matches matches', async () => {
+      const fields = btoa(JSON.stringify({ clientKey: 'valid-sdk-key-2' }));
+      const response = await request(app.getHttpServer())
+        .post(`/sdk/${fields}`)
+        .send({ name: 'hello' })
+        .set('X-Api-key', 'secret-key-2');
+
+      expect(response.status).toBe(201);
     });
   });
 });
