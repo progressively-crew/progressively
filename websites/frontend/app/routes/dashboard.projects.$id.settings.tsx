@@ -2,7 +2,7 @@ import { Section, SectionHeader } from "~/components/Section";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { UserRoles } from "~/modules/projects/types";
 import { UserTable } from "~/modules/user/components/UserTable";
-import { V2_MetaFunction } from "@remix-run/node";
+import { ActionFunction, V2_MetaFunction } from "@remix-run/node";
 import { Card, CardContent } from "~/components/Card";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { useProject } from "~/modules/projects/contexts/useProject";
@@ -10,11 +10,14 @@ import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaT
 import { PageTitle } from "~/components/PageTitle";
 import { ProjectNavBar } from "~/modules/projects/components/ProjectNavBar";
 import { Typography } from "~/components/Typography";
-import { useSearchParams } from "@remix-run/react";
+import { useActionData, useSearchParams } from "@remix-run/react";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { EnvList } from "~/modules/environments/components/EnvList";
+import { getSession } from "~/sessions";
+import { rotateSecretKey } from "~/modules/environments/services/rotateSecretKey";
+import { ErrorBox } from "~/components/Boxes/ErrorBox";
 
 export const meta: V2_MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -26,20 +29,55 @@ export const meta: V2_MetaFunction = ({ matches }) => {
   ];
 };
 
+interface ActionDataType {
+  success: boolean;
+}
+
+export const action: ActionFunction = async ({
+  request,
+}): Promise<ActionDataType> => {
+  const session = await getSession(request.headers.get("Cookie"));
+  const authCookie = session.get("auth-cookie");
+  const formData = await request.formData();
+  const envId = formData.get("envId")?.toString();
+
+  try {
+    await rotateSecretKey(envId!, authCookie);
+    return { success: true };
+  } catch {
+    return { success: false };
+  }
+};
+
 export default function SettingsPage() {
   const { project, userRole } = useProject();
   const [searchParams] = useSearchParams();
+  const actionData = useActionData<ActionDataType>();
   const isMemberRemoved = searchParams.get("memberRemoved") || undefined;
+
+  const actionResult =
+    actionData?.success === true ? (
+      <SuccessBox id="secret-key-rotated">
+        The secret key has been rotated.
+      </SuccessBox>
+    ) : actionData?.success === false ? (
+      <ErrorBox
+        list={{
+          error: "A problem occured when trying to rotate the secret key.",
+        }}
+      ></ErrorBox>
+    ) : null;
 
   return (
     <DashboardLayout
       subNav={<ProjectNavBar project={project} />}
       status={
-        isMemberRemoved ? (
+        actionResult ??
+        (isMemberRemoved ? (
           <SuccessBox id={"plan-add-success"}>
             The member has been successfully removed.
           </SuccessBox>
-        ) : null
+        ) : null)
       }
     >
       <PageTitle

@@ -92,7 +92,11 @@ export class ProjectsService {
         uuid,
       },
       include: {
-        environments: true,
+        environments: {
+          orderBy: {
+            createdAt: 'asc',
+          },
+        },
         userProject,
       },
     });
