@@ -6,7 +6,8 @@ const requestListener = function (req, res) {
   res.writeHead(200);
 
   (async () => {
-    const sdk = Progressively.init("valid-sdk-key", {
+    const sdk = Progressively.init({
+      secretKey: "secret-key",
       apiUrl: "http://localhost:4000",
       fields: {
         email: "marvin.frachet@something.com",

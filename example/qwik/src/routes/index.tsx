@@ -12,7 +12,9 @@ import { Progressively } from "@progressively/sdk-js";
 export const useFlags = loader$(async ({ cookie }) => {
   const id = cookie.get("progressively-id");
 
-  const sdk = PServer.init("valid-sdk-key", {
+  const sdk = PServer.init({
+    secretKey: "secret-key",
+    clientKey: "valid-sdk-key",
     websocketUrl: "ws://localhost:4000",
     apiUrl: "http://localhost:4000",
     fields: {

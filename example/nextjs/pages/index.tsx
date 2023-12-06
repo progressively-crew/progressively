@@ -46,7 +46,9 @@ export async function getServerSideProps({
   req: Request;
   res: any;
 }) {
-  const sdk = Progressively.init("valid-sdk-key", {
+  const sdk = Progressively.init({
+    secretKey: "secret-key",
+    clientKey: "valid-sdk-key",
     websocketUrl: "ws://localhost:4000",
     apiUrl: "http://localhost:4000",
     fields: {
