@@ -135,7 +135,6 @@ export class SchedulingService {
   }
 
   async manageFlagScheduling(
-    clientKey: string,
     flagEnv: PopulatedFlagEnv,
   ): Promise<PopulatedFlagEnv> {
     let nextFlagEnv: PopulatedFlagEnv = flagEnv;

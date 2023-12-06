@@ -38,6 +38,8 @@ export const seedDb = async () => {
         name: "Production",
         projectId: projectFromSeeding.uuid,
         clientKey: "valid-sdk-key",
+        secretKey: "secret-key",
+        domain: "**",
       },
     });
 
@@ -47,6 +49,8 @@ export const seedDb = async () => {
         name: "Developer",
         projectId: projectFromSeeding.uuid,
         clientKey: "valid-sdk-key-2",
+        secretKey: "secret-key-2",
+        domain: "localhost",
       },
     });
 
@@ -56,6 +60,8 @@ export const seedDb = async () => {
         name: "Staging",
         projectId: otherFromSeeding.uuid,
         clientKey: "valid-sdk-key-3",
+        secretKey: "secret-key-3",
+        domain: "**",
       },
     });
 

@@ -9,8 +9,10 @@ import {
   Post,
   Body,
   BadRequestException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
+import { minimatch } from 'minimatch';
 import { SdkService } from './sdk.service';
 import { parseBase64Params, prepareCookie, resolveUserId } from './utils';
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
@@ -33,14 +35,38 @@ export class SdkController {
     @Req() request: Request,
     @Headers() headers,
   ) {
+    const secretKey = request.headers['x-api-key'] as string | undefined;
     const fields = parseBase64Params(base64Params);
+
+    if (!secretKey && !fields.clientKey) {
+      throw new UnauthorizedException();
+    }
+
+    const concernedEnv = await this.sdkService.getEnvByKeys(
+      fields.clientKey ? String(fields.clientKey) : undefined,
+      secretKey,
+    );
+
+    if (!concernedEnv) {
+      throw new UnauthorizedException();
+    }
+
+    const domain = request.get('host');
+
+    if (
+      fields.clientKey &&
+      (!concernedEnv.domain || !minimatch(domain, concernedEnv.domain))
+    ) {
+      throw new UnauthorizedException();
+    }
+
     const cookieUserId = request?.cookies?.[COOKIE_KEY];
     const shouldSkipHits = headers['x-progressively-hit'] === 'skip';
 
     fields.id = resolveUserId(fields, cookieUserId);
     prepareCookie(response, fields.id);
 
-    return this.sdkService.computeFlags(fields, shouldSkipHits);
+    return this.sdkService.computeFlags(concernedEnv, fields, shouldSkipHits);
   }
 
   @Get('/:clientKey/types/gen')
@@ -60,15 +86,31 @@ export class SdkController {
     }
 
     const deviceInfo = getDeviceInfo(request);
-
     const fields = parseBase64Params(base64Params);
 
     if (!fields.clientKey) {
       throw new BadRequestException();
     }
 
+    const concernedEnv = await this.sdkService.getEnvByKeys(
+      String(fields.clientKey),
+    );
+
+    if (!concernedEnv) {
+      throw new UnauthorizedException();
+    }
+
+    const domain = request.get('host');
+
+    if (
+      fields.clientKey &&
+      (!concernedEnv.domain || !minimatch(domain, concernedEnv.domain))
+    ) {
+      throw new UnauthorizedException();
+    }
+
     const eventCreated = await this.sdkService.hitEvent(
-      fields.clientKey as string,
+      concernedEnv.uuid,
       String(fields?.id || ''),
       {
         ...body,

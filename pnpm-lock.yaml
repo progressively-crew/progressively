@@ -615,6 +615,9 @@ importers:
       jsonwebtoken:
         specifier: ^9.0.2
         version: 9.0.2
+      minimatch:
+        specifier: ^9.0.3
+        version: 9.0.3
       murmurhash3js:
         specifier: ^3.0.1
         version: 3.0.1

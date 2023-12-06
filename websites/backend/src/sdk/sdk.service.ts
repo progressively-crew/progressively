@@ -16,6 +16,7 @@ import { SchedulingService } from '../scheduling/scheduling.service';
 import { ValueToServe } from '../strategy/types';
 import { EventHit } from './types';
 import { RuleService } from '../rule/rule.service';
+import { Environment } from '../environments/types';
 
 @Injectable()
 export class SdkService {
@@ -105,7 +106,6 @@ export class SdkService {
 
   async computeFlag(
     flagEnv: PopulatedFlagEnv,
-    clientKey: string,
     fields: FieldRecord,
     flagsByRef: Record<string, boolean | string>,
     skipHit: boolean,
@@ -113,10 +113,7 @@ export class SdkService {
     let nextFlag = flagEnv;
 
     if (flagEnv.scheduling.length > 0) {
-      nextFlag = await this.scheduleService.manageFlagScheduling(
-        clientKey,
-        flagEnv,
-      );
+      nextFlag = await this.scheduleService.manageFlagScheduling(flagEnv);
     }
 
     const flagStatusOrVariant = this.resolveFlagStatus(nextFlag, fields);
@@ -133,15 +130,22 @@ export class SdkService {
     }
   }
 
-  async computeFlags(fields: FieldRecord, skipHit: boolean) {
-    const clientKey = String(fields.clientKey);
-    const flagEnvs =
-      await this.envService.getFlagEnvironmentByClientKey(clientKey);
+  getEnvByKeys(clientKey?: string, secretKey?: string) {
+    return this.prisma.environment.findFirst({
+      where: {
+        clientKey,
+        secretKey,
+      },
+    });
+  }
+
+  async computeFlags(env: Environment, fields: FieldRecord, skipHit: boolean) {
+    const flagEnvs = await this.envService.getPopulatedFlagEnvs(env.uuid);
 
     const flags = {};
 
     const promises = flagEnvs.map((flagEnv) =>
-      this.computeFlag(flagEnv, clientKey, fields, flags, skipHit),
+      this.computeFlag(flagEnv, fields, flags, skipHit),
     );
 
     await Promise.all(promises);
@@ -171,7 +175,7 @@ export class SdkService {
   }
 
   async hitEvent(
-    clientKey: string,
+    envId: string,
     visitorId: string,
     hit: EventHit & {
       os: string;
@@ -180,16 +184,6 @@ export class SdkService {
       referer?: string;
     },
   ) {
-    const env = await this.prisma.environment.findFirst({
-      where: {
-        clientKey,
-      },
-    });
-
-    if (!env) {
-      return null;
-    }
-
     const date = new Date();
     date.setHours(2);
     date.setMinutes(2);
@@ -198,7 +192,7 @@ export class SdkService {
 
     return this.prisma.event.create({
       data: {
-        environmentUuid: env.uuid,
+        environmentUuid: envId,
         visitorId,
         date,
         name: hit.name,
