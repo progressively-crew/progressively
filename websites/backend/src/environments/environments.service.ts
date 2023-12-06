@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { v4 as uuidv4 } from 'uuid';
 import { PrismaService } from '../database/prisma.service';
 import { PopulatedFlagEnv } from '../flags/types';
 
@@ -378,5 +379,16 @@ export class EnvironmentsService {
     }
 
     return roles.includes(environmentOfProject.role);
+  }
+
+  rotateSecretKey(envId: string) {
+    return this.prisma.environment.updateMany({
+      where: {
+        uuid: envId,
+      },
+      data: {
+        secretKey: uuidv4(),
+      },
+    });
   }
 }

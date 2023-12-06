@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  Post,
   Query,
   UseGuards,
 } from '@nestjs/common';
@@ -38,6 +39,17 @@ export class EnvironmentsController {
   @UseGuards(JwtAuthGuard)
   deleteEnv(@Param('envId') envId: string) {
     return this.envService.deleteEnv(envId);
+  }
+
+  /**
+   * Delete an environment on a given project (by project id AND env id)
+   */
+  @Post(':envId/rotate')
+  @Roles(UserRoles.Admin)
+  @UseGuards(HasEnvironmentAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  rotateSecretKey(@Param('envId') envId: string) {
+    return this.envService.rotateSecretKey(envId);
   }
 
   @Get(':envId/events')

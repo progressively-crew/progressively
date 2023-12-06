@@ -1,4 +1,4 @@
-import { Link } from "@remix-run/react";
+import { Link, useLocation } from "@remix-run/react";
 import { useEffect, useRef } from "react";
 import { MdClose, MdErrorOutline } from "react-icons/md";
 import { HStack } from "../HStack";
@@ -12,6 +12,7 @@ export interface ErrorBoxProps {
 }
 
 export const ErrorBox = ({ list }: ErrorBoxProps) => {
+  const location = useLocation();
   const boxRef = useRef<HTMLDivElement>(null);
 
   const errors = Object.keys(list);
