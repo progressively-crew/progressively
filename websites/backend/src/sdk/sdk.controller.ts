@@ -53,10 +53,11 @@ export class SdkController {
 
     const domain = request.get('host');
 
-    if (fields.clientKey) {
-      if (!concernedEnv.domain || !minimatch(domain, concernedEnv.domain)) {
-        throw new UnauthorizedException();
-      }
+    if (
+      fields.clientKey &&
+      (!concernedEnv.domain || !minimatch(domain, concernedEnv.domain))
+    ) {
+      throw new UnauthorizedException();
     }
 
     const cookieUserId = request?.cookies?.[COOKIE_KEY];
@@ -65,9 +66,7 @@ export class SdkController {
     fields.id = resolveUserId(fields, cookieUserId);
     prepareCookie(response, fields.id);
 
-    const { clientKey, ..._fields } = fields;
-
-    return this.sdkService.computeFlags(concernedEnv, _fields, shouldSkipHits);
+    return this.sdkService.computeFlags(concernedEnv, fields, shouldSkipHits);
   }
 
   @Get('/:clientKey/types/gen')
@@ -103,10 +102,11 @@ export class SdkController {
 
     const domain = request.get('host');
 
-    if (fields.clientKey) {
-      if (!concernedEnv.domain || !minimatch(domain, concernedEnv.domain)) {
-        throw new UnauthorizedException();
-      }
+    if (
+      fields.clientKey &&
+      (!concernedEnv.domain || !minimatch(domain, concernedEnv.domain))
+    ) {
+      throw new UnauthorizedException();
     }
 
     const eventCreated = await this.sdkService.hitEvent(
