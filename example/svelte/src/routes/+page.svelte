@@ -11,7 +11,7 @@
 	let sdk;
 
 	onMount(() => {
-		sdk = Progressively.init(data.clientKey, data);
+		sdk = Progressively.init(String(data.clientKey), data);
 
 		sdk.onFlagUpdate((nextFlags) => {
 			flags = nextFlags;

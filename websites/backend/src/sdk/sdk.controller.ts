@@ -54,6 +54,7 @@ export class SdkController {
     const domain = request.get('host');
 
     if (
+      !secretKey &&
       fields.clientKey &&
       (!concernedEnv.domain || !minimatch(domain, concernedEnv.domain))
     ) {

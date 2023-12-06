@@ -3,27 +3,31 @@ import { Fields, FlagDict } from "@progressively/types";
 export { Fields, FlagDict };
 
 export interface SDKOptions {
-  fields?: Fields;
+  clientKey?: string;
+  secretKey: string;
   apiUrl: string;
   websocketUrl?: string;
   flags?: FlagDict;
   shouldHit?: boolean;
   safeValueWhenFailing?: boolean;
+  fields?: Fields;
 }
 
 const btoA = (toTransform: string) => btoa(toTransform);
 
-const fetchEndpoint = (url: string, fields: Fields, options?: SDKOptions) => {
+const fetchEndpoint = (url: string, _options: SDKOptions) => {
+  const { clientKey, secretKey, shouldHit, safeValueWhenFailing, ...options } =
+    _options;
   let response: Response | undefined;
   let userId = "";
 
+  const headers: HeadersInit = shouldHit
+    ? { "x-api-key": secretKey }
+    : { "x-api-key": secretKey, "X-progressively-hit": "skip" };
+
   return fetch(url, {
     credentials: "include",
-    headers: options?.shouldHit
-      ? undefined
-      : {
-          "X-progressively-hit": "skip",
-        },
+    headers,
   })
     .then((res: Response) => {
       response = res;
@@ -34,7 +38,7 @@ const fetchEndpoint = (url: string, fields: Fields, options?: SDKOptions) => {
       return {
         data: {
           flags,
-          clientKey: fields.clientKey,
+          clientKey,
           ...options,
         },
         response,
@@ -44,8 +48,8 @@ const fetchEndpoint = (url: string, fields: Fields, options?: SDKOptions) => {
     .catch(() => {
       return {
         data: {
-          flags: options?.safeValueWhenFailing ? {} : undefined,
-          clientKey: fields.clientKey,
+          flags: safeValueWhenFailing ? {} : undefined,
+          clientKey,
           ...options,
         },
         response,
@@ -55,15 +59,14 @@ const fetchEndpoint = (url: string, fields: Fields, options?: SDKOptions) => {
 };
 
 export const Progressively = {
-  init(clientKey: string, options: SDKOptions) {
+  init(options: SDKOptions) {
     return {
       loadFlags: () => {
         const apiRoot = options.apiUrl;
         const fields: Fields = options?.fields || {};
-        fields.clientKey = clientKey;
 
         const url = `${apiRoot}/sdk/${btoA(JSON.stringify(fields))}`;
-        return fetchEndpoint(url, fields, options);
+        return fetchEndpoint(url, options);
       },
     };
   },

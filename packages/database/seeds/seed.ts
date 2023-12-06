@@ -50,7 +50,7 @@ export const seedDb = async () => {
         projectId: projectFromSeeding.uuid,
         clientKey: "valid-sdk-key-2",
         secretKey: "secret-key-2",
-        domain: "localhost",
+        domain: "hello-world",
       },
     });
 
