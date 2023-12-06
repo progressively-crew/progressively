@@ -77,10 +77,16 @@ export class SdkController {
     return this.sdkService.computeFlags(concernedEnv, fields, shouldSkipHits);
   }
 
-  @Get('/:clientKey/types/gen')
+  @Get('/types/gen')
   @UseGuards(JwtAuthGuard)
-  async getTypesDefinitions(@Param('clientKey') clientKey: string) {
-    return this.sdkService.generateTypescriptTypes(clientKey);
+  async getTypesDefinitions(@Req() request: Request) {
+    const secretKey = request.headers['x-api-key'] as string | undefined;
+
+    if (!secretKey) {
+      throw new UnauthorizedException();
+    }
+
+    return this.sdkService.generateTypescriptTypes(secretKey);
   }
 
   @Post('/:params')
