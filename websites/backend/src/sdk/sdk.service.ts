@@ -153,9 +153,9 @@ export class SdkService {
     return flags;
   }
 
-  async generateTypescriptTypes(clientKey: string) {
+  async generateTypescriptTypes(secretKey: string) {
     const env = await this.prisma.environment.findFirst({
-      where: { clientKey },
+      where: { secretKey },
       include: {
         flagEnvironment: {
           include: {
