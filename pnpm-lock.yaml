@@ -397,7 +397,7 @@ importers:
   packages/react:
     dependencies:
       '@progressively/sdk-js':
-        specifier: ^1.0.0
+        specifier: ^1.0.2
         version: link:../sdk-js
     devDependencies:
       '@rollup/plugin-node-resolve':
