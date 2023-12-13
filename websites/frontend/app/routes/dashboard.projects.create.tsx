@@ -28,9 +28,13 @@ export const action: ActionFunction = async ({
 }): Promise<ActionData | Response> => {
   const formData = await request.formData();
   const projectName = formData.get("name")?.toString();
+  const domain = formData.get("domain")?.toString();
   await new Promise((resolve) => setTimeout(resolve, 3000));
 
-  const errors = validateProjectName({ name: projectName });
+  const errors = validateProjectName({
+    name: projectName || "",
+    domain: domain || "",
+  });
 
   if (errors?.name) {
     return { errors };
@@ -40,6 +44,7 @@ export const action: ActionFunction = async ({
 
   const userProject: Project = await createProject(
     projectName!,
+    domain!,
     session.get("auth-cookie")
   );
 
@@ -76,6 +81,13 @@ export default function CreateProjectPage() {
           label="Project name"
           name="name"
           placeholder="e.g: My super project"
+        />
+
+        <TextInput
+          isInvalid={Boolean(errors?.domain)}
+          label="Domain"
+          name="domain"
+          placeholder="e.g: mfrachet.com"
         />
       </CreateEntityLayout>
     </Form>

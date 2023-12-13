@@ -28,8 +28,12 @@ export const action: ActionFunction = async ({
 }): Promise<ActionData | Response> => {
   const formData = await request.formData();
   const projectName = formData.get("name")?.toString();
+  const domain = formData.get("domain")?.toString();
 
-  const errors = validateProjectName({ name: projectName });
+  const errors = validateProjectName({
+    name: projectName || "",
+    domain: domain || "",
+  });
 
   if (errors?.name) {
     return { errors };
@@ -39,6 +43,7 @@ export const action: ActionFunction = async ({
 
   const project: Project = await createProject(
     projectName!,
+    domain!,
     session.get("auth-cookie")
   );
 
@@ -88,6 +93,13 @@ export default function OnboardingPage() {
                 name="name"
                 placeholder="e.g: My super project"
                 hiddenLabel
+              />
+
+              <TextInput
+                isInvalid={Boolean(errors?.domain)}
+                label="Domain"
+                name="domain"
+                placeholder="e.g: mfrachet.com"
               />
             </div>
 
