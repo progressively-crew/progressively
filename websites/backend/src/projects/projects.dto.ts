@@ -2,6 +2,7 @@ import * as Joi from 'joi';
 
 export class ProjectCreationDTO {
   name: string;
+  domain: string;
 }
 
 export interface ProjectRetrieveDTO {
@@ -16,4 +17,5 @@ export class AddMemberProjectDTO {
 
 export const ProjectCreationSchema = Joi.object({
   name: Joi.string().required(),
+  domain: Joi.string().required(),
 });

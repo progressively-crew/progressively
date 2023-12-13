@@ -28,7 +28,7 @@ export class ProjectsService {
     });
   }
 
-  createProject(name: string, userId: string) {
+  createProject(name: string, userId: string, prodDomain: string) {
     return this.prisma.project.create({
       data: {
         name,
@@ -40,7 +40,10 @@ export class ProjectsService {
         },
         environments: {
           createMany: {
-            data: [{ name: 'Production' }, { name: 'Development' }],
+            data: [
+              { name: 'Production', domain: prodDomain },
+              { name: 'Development', domain: '**' },
+            ],
           },
         },
       },
