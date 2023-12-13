@@ -10,6 +10,7 @@ import { useActionData, Form, useNavigation } from "@remix-run/react";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 import { DialogCloseBtn } from "~/components/Dialog/Dialog";
+import { FormGroup } from "~/components/Fields/FormGroup";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -76,19 +77,21 @@ export default function CreateProjectPage() {
           <DialogCloseBtn to={`/dashboard`} label={`Back to projects`} />
         }
       >
-        <TextInput
-          isInvalid={Boolean(errors?.name)}
-          label="Project name"
-          name="name"
-          placeholder="e.g: My super project"
-        />
+        <FormGroup>
+          <TextInput
+            isInvalid={Boolean(errors?.name)}
+            label="Project name"
+            name="name"
+            placeholder="e.g: My super project"
+          />
 
-        <TextInput
-          isInvalid={Boolean(errors?.domain)}
-          label="Domain"
-          name="domain"
-          placeholder="e.g: mfrachet.com"
-        />
+          <TextInput
+            isInvalid={Boolean(errors?.domain)}
+            label="Domain"
+            name="domain"
+            placeholder="e.g: mfrachet.com"
+          />
+        </FormGroup>
       </CreateEntityLayout>
     </Form>
   );

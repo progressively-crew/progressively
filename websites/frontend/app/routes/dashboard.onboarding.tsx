@@ -10,6 +10,7 @@ import { validateProjectName } from "~/modules/projects/validators/validateProje
 import { getSession } from "~/sessions";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import { useUser } from "~/modules/user/contexts/useUser";
+import { FormGroup } from "~/components/Fields/FormGroup";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -87,20 +88,21 @@ export default function OnboardingPage() {
               className="motion-safe:opacity-0 motion-safe:animate-fade-enter-bottom"
               style={{ animationDelay: "500ms" }}
             >
-              <TextInput
-                isInvalid={Boolean(errors?.name)}
-                label="Project name"
-                name="name"
-                placeholder="e.g: My super project"
-                hiddenLabel
-              />
+              <FormGroup>
+                <TextInput
+                  isInvalid={Boolean(errors?.name)}
+                  label="Project name"
+                  name="name"
+                  placeholder="e.g: My super project"
+                />
 
-              <TextInput
-                isInvalid={Boolean(errors?.domain)}
-                label="Domain"
-                name="domain"
-                placeholder="e.g: mfrachet.com"
-              />
+                <TextInput
+                  isInvalid={Boolean(errors?.domain)}
+                  label="Domain"
+                  name="domain"
+                  placeholder="e.g: mfrachet.com"
+                />
+              </FormGroup>
             </div>
 
             <div
