@@ -103,7 +103,7 @@ describe('SdkController (e2e)', () => {
       });
       expect(response.headers['set-cookie']).toMatchInlineSnapshot(`
         [
-          "progressively-id=12345-marvin; Path=/; Secure; SameSite=None",
+          "progressively-id=12345-marvin; Max-Age=31536000; Path=/; Expires=Thu, 12 Dec 2024 16:03:40 GMT; HttpOnly; Secure; SameSite=None",
         ]
       `);
     });
@@ -125,7 +125,7 @@ describe('SdkController (e2e)', () => {
       });
       expect(response.headers['set-cookie']).toMatchInlineSnapshot(`
         [
-          "progressively-id=1; Path=/; Secure; SameSite=None",
+          "progressively-id=1; Max-Age=31536000; Path=/; Expires=Thu, 12 Dec 2024 16:03:40 GMT; HttpOnly; Secure; SameSite=None",
         ]
       `);
     });
@@ -150,7 +150,7 @@ describe('SdkController (e2e)', () => {
       });
       expect(response.headers['set-cookie']).toMatchInlineSnapshot(`
         [
-          "progressively-id=2; Path=/; Secure; SameSite=None",
+          "progressively-id=2; Max-Age=31536000; Path=/; Expires=Thu, 12 Dec 2024 16:03:40 GMT; HttpOnly; Secure; SameSite=None",
         ]
       `);
     });
@@ -171,7 +171,7 @@ describe('SdkController (e2e)', () => {
       });
       expect(response.headers['set-cookie']).toMatchInlineSnapshot(`
         [
-          "progressively-id=1; Path=/; Secure; SameSite=None",
+          "progressively-id=1; Max-Age=31536000; Path=/; Expires=Thu, 12 Dec 2024 16:03:40 GMT; HttpOnly; Secure; SameSite=None",
         ]
       `);
     });
@@ -192,7 +192,7 @@ describe('SdkController (e2e)', () => {
       });
       expect(response.headers['set-cookie']).toMatchInlineSnapshot(`
         [
-          "progressively-id=2; Path=/; Secure; SameSite=None",
+          "progressively-id=2; Max-Age=31536000; Path=/; Expires=Thu, 12 Dec 2024 16:03:40 GMT; HttpOnly; Secure; SameSite=None",
         ]
       `);
     });

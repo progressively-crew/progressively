@@ -72,7 +72,7 @@ export const prepareCookie = (response: Response, userId: string) => {
     secure: true,
     sameSite: 'none',
     httpOnly: true,
-    maxAge: 31536000,
+    maxAge: 31536000000,
   });
 
   response.header('X-progressively-id', userId);
