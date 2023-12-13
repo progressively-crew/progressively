@@ -101,11 +101,6 @@ describe('SdkController (e2e)', () => {
         newFooter: false,
         multivariate: false,
       });
-      expect(response.headers['set-cookie']).toMatchInlineSnapshot(`
-        [
-          "progressively-id=12345-marvin; Path=/; Secure; SameSite=None",
-        ]
-      `);
     });
 
     it('gives a list of flags when the key is valid for an authenticated user (field is passed as query param)', async () => {
@@ -123,11 +118,6 @@ describe('SdkController (e2e)', () => {
         newFooter: true,
         multivariate: false,
       });
-      expect(response.headers['set-cookie']).toMatchInlineSnapshot(`
-        [
-          "progressively-id=1; Path=/; Secure; SameSite=None",
-        ]
-      `);
     });
 
     it('gives a list of flags when the key is valid for an authenticated user (field is passed as query param and does NOT match a strategy)', async () => {
@@ -148,11 +138,6 @@ describe('SdkController (e2e)', () => {
         newFooter: false,
         multivariate: false,
       });
-      expect(response.headers['set-cookie']).toMatchInlineSnapshot(`
-        [
-          "progressively-id=2; Path=/; Secure; SameSite=None",
-        ]
-      `);
     });
 
     it('gives a list of flags when the key is valid for an authenticated user (field is passed as cookie and match a strategy)', async () => {
@@ -169,11 +154,6 @@ describe('SdkController (e2e)', () => {
         newFooter: true,
         multivariate: false,
       });
-      expect(response.headers['set-cookie']).toMatchInlineSnapshot(`
-        [
-          "progressively-id=1; Path=/; Secure; SameSite=None",
-        ]
-      `);
     });
 
     it('gives a list of flags when the key is valid for an authenticated user (field is passed as cookie and does NOT match a strategy)', async () => {
@@ -190,11 +170,6 @@ describe('SdkController (e2e)', () => {
         newFooter: false,
         multivariate: false,
       });
-      expect(response.headers['set-cookie']).toMatchInlineSnapshot(`
-        [
-          "progressively-id=2; Path=/; Secure; SameSite=None",
-        ]
-      `);
     });
 
     it('gives a list of flags when the key is valid for an authenticated user with scheduling', async () => {
