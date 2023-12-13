@@ -2,3 +2,100 @@
 title: Installation
 description: Install the software and the needed tooling.
 ---
+
+
+## Using Docker compose
+
+The fastest way to get up and running is to use [docker compose](https://docs.docker.com/compose/). Run the following command in your terminal:
+
+```sh
+$ git clone https://github.com/progressively-crew/progressively
+$ cd progressively
+$ cp ./websites/backend/.env.example ./websites/backend/.env
+$ cp ./websites/frontend/.env.example ./websites/frontend/.env
+$ docker-compose up -d # or docker compose up -d
+```
+
+You can now open `http://localhost:3000/welcome` to setup your admin user.
+
+## Using Docker
+
+Another way to start the application for production use, or at scale, is to use the official docker images directly.
+
+### Get the project locally
+
+```sh
+$ git clone https://github.com/progressively-crew/progressively
+$ cd progressively
+$ cp ./websites/backend/.env.example ./websites/backend/.env
+$ cp ./websites/frontend/.env.example ./websites/frontend/.env
+```
+
+_You can modify the `.env` files to point on `host.docker.internal` instead of `localhost` when referencing the frontend/backend URL._
+
+### Setup the databases
+
+```sh
+# Run the Prisma shadow DB (for migration purpose)
+$ docker run --name progressively-shadow -e POSTGRES_PASSWORD=admin -e POSTGRES_USER=admin -e POSTGRES_DB=progressively -p 5433:5432 -d postgres
+
+# Run the real database (you can connect to a third party service if you prefer)
+$ docker run --name progressively-db -e POSTGRES_PASSWORD=admin -e POSTGRES_USER=admin -e POSTGRES_DB=progressively -p 5432:5432 -d postgres
+
+# Run redis for scaling the websocket server
+$ docker run -it --name progressively-redis -p 6379:6379 -d redis
+```
+
+### Run the official images
+
+```sh
+$ docker run --env-file websites/frontend/.env -p 3000:3000 marvinfrachet/progressively-frontend
+$ docker run --env-file websites/backend/.env -p 4000:4000 progressively-backend
+```
+
+You can now open `http://localhost:3000/welcome` to setup your admin user.
+
+
+## Development setup (contribution)
+
+This aims to be used for local development and contributions.
+
+### Prerequisite
+
+- [Postgres](https://www.postgresql.org/) (2 databases)
+- [Redis](https://redis.io/)
+- [PNPM](https://pnpm.io/)
+- [Node 18+](https://nodejs.org/en)
+
+### Get the project locally
+
+```sh
+$ git clone https://github.com/progressively-crew/progressively
+$ cd progressively
+$ cp ./websites/backend/.env.example ./websites/backend/.env
+$ cp ./websites/frontend/.env.example ./websites/frontend/.env
+```
+
+### Setup the databases
+
+```sh
+# Run the Prisma shadow DB (for migration purpose)
+$ docker run --name progressively-shadow -e POSTGRES_PASSWORD=admin -e POSTGRES_USER=admin -e POSTGRES_DB=progressively -p 5433:5432 -d postgres
+
+# Run the real database (you can connect to a third party service if you prefer)
+$ docker run --name progressively-db -e POSTGRES_PASSWORD=admin -e POSTGRES_USER=admin -e POSTGRES_DB=progressively -p 5432:5432 -d postgres
+
+# Run redis for scaling the websocket server
+$ docker run -it --name progressively-redis -p 6379:6379 -d redis
+```
+
+### Setup the codebase
+
+```sh
+$ pnpm i
+$ pnpm run build
+$ pnpm run start:backend
+$ pnpm run start:frontend
+```
+
+You can now open `http://localhost:3000/welcome` to setup your admin user.
