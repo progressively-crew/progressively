@@ -2,3 +2,37 @@
 title: The CLI
 description: Use Progressively with the CLI
 ---
+
+With Progressively, it's possible to manage your feature flag from your terminal using `@progressively/cli`.
+
+
+## Installation
+
+```sh
+$ npm i -g @progressively/cli
+```
+
+## Usage 
+
+```sh
+$ progressively help
+
+CLI to manage Progressively feature flags
+
+VERSION
+  @progressively/cli/1.0.0-alpha.4 darwin-arm64 node-v18.17.1
+
+USAGE
+  $ progressively [COMMAND]
+
+COMMANDS
+  config    Configure the Progressively CLI
+  env       List the environments of the active project
+  flag      Manipulate flags
+  help      Display help for progressively.
+  login     Authenticate to store tokens in config
+  me        Provide fullname and email of the current user
+  project   Manage project (select current, create or delete one)
+  register  Register an admin user
+  types     Generate types based on your Progressively instance
+```
