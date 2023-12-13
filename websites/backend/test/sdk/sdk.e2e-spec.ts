@@ -52,7 +52,7 @@ describe('SdkController (e2e)', () => {
       const fields = btoa(JSON.stringify({}));
       const response = await request(app.getHttpServer())
         .get(`/sdk/${fields}`)
-        .set('X-Api-key', 'secret-key-23');
+        .set('x-api-key', 'secret-key-23');
 
       expect(response.status).toBe(401);
     });
@@ -68,7 +68,7 @@ describe('SdkController (e2e)', () => {
       const fields = btoa(JSON.stringify({}));
       const response = await request(app.getHttpServer())
         .get(`/sdk/${fields}`)
-        .set('X-Api-key', 'secret-key');
+        .set('x-api-key', 'secret-key');
 
       expect(response.status).toBe(200);
       expect(response.body).toEqual({
@@ -82,7 +82,8 @@ describe('SdkController (e2e)', () => {
       const fields = btoa(JSON.stringify({ clientKey: 'valid-sdk-key-2' }));
       const response = await request(app.getHttpServer())
         .get(`/sdk/${fields}`)
-        .set('X-Api-key', 'secret-key-2');
+        .set('x-api-key', 'secret-key-2')
+        .set('origin', 'hello-world');
 
       expect(response.status).toBe(200);
       expect(response.body).toEqual({});
@@ -90,7 +91,9 @@ describe('SdkController (e2e)', () => {
 
     it('gives a list of flags when the key is valid for anonymous user (no field id, no cookies)', async () => {
       const fields = btoa(JSON.stringify({ clientKey: 'valid-sdk-key' }));
-      const response = await request(app.getHttpServer()).get(`/sdk/${fields}`);
+      const response = await request(app.getHttpServer())
+        .get(`/sdk/${fields}`)
+        .set('origin', 'hello-world');
 
       expect(response.status).toBe(200);
       expect(response.body).toEqual({
@@ -110,7 +113,9 @@ describe('SdkController (e2e)', () => {
         JSON.stringify({ clientKey: 'valid-sdk-key', id: '1' }),
       );
 
-      const response = await request(app.getHttpServer()).get(`/sdk/${fields}`);
+      const response = await request(app.getHttpServer())
+        .get(`/sdk/${fields}`)
+        .set('origin', 'hello-world');
 
       expect(response.status).toBe(200);
       expect(response.body).toEqual({
@@ -133,7 +138,9 @@ describe('SdkController (e2e)', () => {
         }),
       );
 
-      const response = await request(app.getHttpServer()).get(`/sdk/${fields}`);
+      const response = await request(app.getHttpServer())
+        .get(`/sdk/${fields}`)
+        .set('origin', 'hello-world');
 
       expect(response.status).toBe(200);
       expect(response.body).toEqual({
@@ -153,7 +160,8 @@ describe('SdkController (e2e)', () => {
 
       const response = await request(app.getHttpServer())
         .get(`/sdk/${fields}`)
-        .set('Cookie', ['progressively-id=1; Path=/; Secure; SameSite=Lax']);
+        .set('Cookie', ['progressively-id=1; Path=/; Secure; SameSite=Lax'])
+        .set('origin', 'hello-world');
 
       expect(response.status).toBe(200);
       expect(response.body).toEqual({
@@ -173,7 +181,8 @@ describe('SdkController (e2e)', () => {
 
       const response = await request(app.getHttpServer())
         .get(`/sdk/${fields}`)
-        .set('Cookie', ['progressively-id=2; Path=/; Secure; SameSite=Lax']);
+        .set('Cookie', ['progressively-id=2; Path=/; Secure; SameSite=Lax'])
+        .set('origin', 'hello-world');
 
       expect(response.status).toBe(200);
       expect(response.body).toEqual({
@@ -193,7 +202,8 @@ describe('SdkController (e2e)', () => {
 
       const response = await request(app.getHttpServer())
         .get(`/sdk/${fields}`)
-        .set('Cookie', ['progressively-id=2; Path=/; Secure; SameSite=Lax']);
+        .set('Cookie', ['progressively-id=2; Path=/; Secure; SameSite=Lax'])
+        .set('origin', 'hello-world');
 
       expect(response.status).toBe(200);
       expect(response.body).toEqual({
@@ -226,6 +236,7 @@ describe('SdkController (e2e)', () => {
       return request(app.getHttpServer())
         .post(`/sdk/${fields}`)
         .send({})
+        .set('origin', 'hello-world')
         .expect(400);
     });
 
@@ -235,6 +246,7 @@ describe('SdkController (e2e)', () => {
       return request(app.getHttpServer())
         .post(`/sdk/${fields}`)
         .send({ name: 'hello' })
+        .set('origin', 'hello-world')
         .expect(401);
     });
 
@@ -244,6 +256,7 @@ describe('SdkController (e2e)', () => {
       return request(app.getHttpServer())
         .post(`/sdk/${fields}`)
         .send({ name: 'A metric' })
+        .set('origin', 'hello-world')
         .expect(201);
     });
 
@@ -253,6 +266,7 @@ describe('SdkController (e2e)', () => {
       return request(app.getHttpServer())
         .post(`/sdk/${fields}`)
         .send({ name: 'A metric', data: 1 })
+        .set('origin', 'hello-world')
         .expect(201);
     });
 
@@ -262,6 +276,7 @@ describe('SdkController (e2e)', () => {
       return request(app.getHttpServer())
         .post(`/sdk/${fields}`)
         .send({ name: 'A metric', data: '1' })
+        .set('origin', 'hello-world')
         .expect(201);
     });
 
@@ -271,6 +286,7 @@ describe('SdkController (e2e)', () => {
       return request(app.getHttpServer())
         .post(`/sdk/${fields}`)
         .send({ name: 'A metric', data: { hello: 'world' } })
+        .set('origin', 'hello-world')
         .expect(201);
     });
 
@@ -279,7 +295,7 @@ describe('SdkController (e2e)', () => {
       const response = await request(app.getHttpServer())
         .post(`/sdk/${fields}`)
         .send({ name: 'hello' })
-        .set('X-Api-key', 'secret-key-23');
+        .set('x-api-key', 'secret-key-23');
 
       expect(response.status).toBe(401);
     });
@@ -298,7 +314,7 @@ describe('SdkController (e2e)', () => {
       const response = await request(app.getHttpServer())
         .post(`/sdk/${fields}`)
         .send({ name: 'hello' })
-        .set('X-Api-key', 'secret-key');
+        .set('x-api-key', 'secret-key');
 
       expect(response.status).toBe(201);
     });
@@ -308,7 +324,7 @@ describe('SdkController (e2e)', () => {
       const response = await request(app.getHttpServer())
         .post(`/sdk/${fields}`)
         .send({ name: 'hello' })
-        .set('X-Api-key', 'secret-key-2');
+        .set('x-api-key', 'secret-key-2');
 
       expect(response.status).toBe(201);
     });

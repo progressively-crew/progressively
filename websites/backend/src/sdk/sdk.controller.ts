@@ -42,7 +42,7 @@ export class SdkController {
       throw new UnauthorizedException();
     }
 
-    const domain = request.headers['origin'];
+    const domain = request.headers['origin'] || '';
 
     if (
       !secretKey &&
