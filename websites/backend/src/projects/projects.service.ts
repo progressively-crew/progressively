@@ -41,8 +41,8 @@ export class ProjectsService {
         environments: {
           createMany: {
             data: [
-              { name: 'Production', domain: prodDomain },
               { name: 'Development', domain: '**' },
+              { name: 'Production', domain: prodDomain },
             ],
           },
         },

@@ -92,6 +92,7 @@ export class SdkController {
   @Post('/:params')
   async hitEvent(
     @Req() request: Request,
+    @Res({ passthrough: true }) response: Response,
     @Param('params') base64Params: string,
     @Body() body: EventHit,
   ) {
@@ -99,7 +100,11 @@ export class SdkController {
       throw new BadRequestException();
     }
 
+    const cookieUserId = request?.cookies?.[COOKIE_KEY];
     const fields = parseBase64Params(base64Params);
+    fields.id = resolveUserId(fields, cookieUserId);
+    prepareCookie(response, fields.id);
+
     const concernedEnv = await this._guardSdkEndpoint(request, fields);
 
     const deviceInfo = getDeviceInfo(request);
@@ -118,6 +123,6 @@ export class SdkController {
       throw new BadRequestException();
     }
 
-    return eventCreated;
+    return null;
   }
 }
