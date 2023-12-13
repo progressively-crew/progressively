@@ -26,7 +26,11 @@ export const COOKIE_KEY = 'progressively-id';
 export class SdkController {
   constructor(private readonly sdkService: SdkService) {}
 
-  async _guardSdkEndpoint(request: Request, fields: FieldRecord) {
+  async _guardSdkEndpoint(
+    request: Request,
+    fields: FieldRecord,
+    domain: string,
+  ) {
     const secretKey = request.headers['x-api-key'] as string | undefined;
 
     if (!secretKey && !fields.clientKey) {
@@ -41,8 +45,6 @@ export class SdkController {
     if (!concernedEnv) {
       throw new UnauthorizedException();
     }
-
-    const domain = request.get('host');
 
     if (
       !secretKey &&
@@ -64,9 +66,10 @@ export class SdkController {
     @Res({ passthrough: true }) response: Response,
     @Req() request: Request,
     @Headers() headers,
+    @Headers('origin') domain: string,
   ) {
     const fields = parseBase64Params(base64Params);
-    const concernedEnv = await this._guardSdkEndpoint(request, fields);
+    const concernedEnv = await this._guardSdkEndpoint(request, fields, domain);
 
     const cookieUserId = request?.cookies?.[COOKIE_KEY];
     const shouldSkipHits = headers['x-progressively-hit'] === 'skip';
@@ -94,13 +97,14 @@ export class SdkController {
     @Req() request: Request,
     @Param('params') base64Params: string,
     @Body() body: EventHit,
+    @Headers('origin') domain: string,
   ) {
     if (!body.name) {
       throw new BadRequestException();
     }
 
     const fields = parseBase64Params(base64Params);
-    const concernedEnv = await this._guardSdkEndpoint(request, fields);
+    const concernedEnv = await this._guardSdkEndpoint(request, fields, domain);
 
     const deviceInfo = getDeviceInfo(request);
     const eventCreated = await this.sdkService.hitEvent(

@@ -11,7 +11,7 @@ export class AppLoggerMiddleware implements NestMiddleware {
     response.on('finish', () => {
       const endDate = Date.now();
       const userAgent = request.get('user-agent') || '';
-      const { method, ip } = request;
+      const { method, ip, originalUrl } = request;
 
       const domain = request.get('host');
       const { statusCode, statusMessage } = response;
@@ -19,7 +19,7 @@ export class AppLoggerMiddleware implements NestMiddleware {
 
       this.logger.log({
         method,
-        url: request.url.toString(),
+        url: originalUrl,
         domain,
         statusCode,
         statusMessage,
