@@ -47,7 +47,11 @@ describe('ProjectsController (e2e)', () => {
     });
 
     it('creates a project when authenticated and providing a good name', async () => {
-      const [res] = await createProject(app, 'New project of the street');
+      const [res] = await createProject(
+        app,
+        'New project of the street',
+        'hello',
+      );
 
       expect(res.statusCode).toBe(201);
       expect(res.body.uuid).toBeTruthy();
@@ -63,6 +67,7 @@ describe('ProjectsController (e2e)', () => {
       const [, access_token] = await createProject(
         app,
         'New project of the street',
+        'hello',
       );
 
       const response = await request(app.getHttpServer())

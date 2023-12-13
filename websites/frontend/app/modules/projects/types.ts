@@ -24,5 +24,6 @@ export interface UserProject {
 }
 
 export interface CreateProjectDTO {
-  name?: string;
+  name: string;
+  domain: string;
 }

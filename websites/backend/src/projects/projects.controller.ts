@@ -87,7 +87,11 @@ export class ProjectsController {
   ): Promise<ProjectRetrieveDTO> {
     const user: UserRetrieveDTO = req.user;
 
-    return this.projectService.createProject(projectDto.name, user.uuid);
+    return this.projectService.createProject(
+      projectDto.name,
+      user.uuid,
+      projectDto.domain,
+    );
   }
 
   @Delete(':id/members/:memberId')
