@@ -7,7 +7,7 @@ export default defineConfig({
     starlight({
       title: "Progressively",
       social: {
-        github: "https://github.com/withastro/starlight",
+        github: "https://github.com/progressively-crew/progressively",
       },
       sidebar: [
         {
