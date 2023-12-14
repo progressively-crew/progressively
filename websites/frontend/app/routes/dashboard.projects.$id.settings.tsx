@@ -125,7 +125,7 @@ export default function SettingsPage() {
                   userRole === UserRoles.Admin && (
                     <CreateButton
                       variant="secondary"
-                      to={`/dashboard/projects/${project.uuid}/add-member`}
+                      to={`/dashboard/projects/${project.uuid}/settings/add-member`}
                     >
                       Add member
                     </CreateButton>
@@ -141,7 +141,9 @@ export default function SettingsPage() {
         {userRole === UserRoles.Admin && (
           <Card
             footer={
-              <DeleteButton to={`/dashboard/projects/${project.uuid}/delete`}>
+              <DeleteButton
+                to={`/dashboard/projects/${project.uuid}/settings/delete`}
+              >
                 <span aria-hidden>
                   Delete{" "}
                   <span className="hidden md:inline">

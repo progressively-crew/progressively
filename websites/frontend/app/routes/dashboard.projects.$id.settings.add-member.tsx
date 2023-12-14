@@ -19,6 +19,7 @@ import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaT
 import { PageTitle } from "~/components/PageTitle";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { DialogCloseBtn } from "~/components/Dialog/Dialog";
+import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 
 export const handle = {
   breadcrumb: (match: { params: any }) => {
@@ -127,7 +128,7 @@ export default function CreateProjectPage() {
             <ErrorBox list={errorsToDisplay} />
           ) : null
         }
-        titleSlot={<PageTitle value="Add member" />}
+        titleSlot={<CreateEntityTitle>Add member</CreateEntityTitle>}
         submitSlot={
           <SubmitButton
             isLoading={navigation.state === "submitting"}
