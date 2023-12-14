@@ -89,27 +89,30 @@ export default function CreateProjectPage() {
 
   if (userRole !== UserRoles.Admin) {
     return (
-      <DashboardLayout>
-        <PageTitle value="You are not allowed to add members to projects." />
-        <Section>
-          <figure>
-            <Typography as="figcaption">
-              If you think this is an error, make sure to contact one of the
-              project administrators:
-            </Typography>
+      <CreateEntityLayout
+        titleSlot={
+          <CreateEntityTitle>
+            You are not allowed to add members to projects.
+          </CreateEntityTitle>
+        }
+      >
+        <figure>
+          <Typography as="figcaption">
+            If you think this is an error, make sure to contact one of the
+            project administrators:
+          </Typography>
 
-            <Ul>
-              {adminOfProject.map((user) => (
-                <Li key={user.uuid}>
-                  <Typography>{user.fullname}</Typography>
+          <Ul>
+            {adminOfProject.map((user) => (
+              <Li key={user.uuid}>
+                <Typography>{user.fullname}</Typography>
 
-                  <ButtonCopy toCopy={user.email}>{user.email}</ButtonCopy>
-                </Li>
-              ))}
-            </Ul>
-          </figure>
-        </Section>
-      </DashboardLayout>
+                <ButtonCopy toCopy={user.email}>{user.email}</ButtonCopy>
+              </Li>
+            ))}
+          </Ul>
+        </figure>
+      </CreateEntityLayout>
     );
   }
 

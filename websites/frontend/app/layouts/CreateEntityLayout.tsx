@@ -6,8 +6,8 @@ export interface CreateEntityLayoutProps {
   children: React.ReactNode;
   status?: React.ReactNode;
   titleSlot: React.ReactNode;
-  submitSlot: React.ReactNode;
-  closeSlot: React.ReactNode;
+  submitSlot?: React.ReactNode;
+  closeSlot?: React.ReactNode;
 }
 
 export const CreateEntityLayout = ({

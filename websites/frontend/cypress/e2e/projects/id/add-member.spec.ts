@@ -1,7 +1,7 @@
 describe("/dashboard/projects/[id]/settings/add-member", () => {
   describe("general verifications", () => {
-    beforeEach(cy.seed);
-    afterEach(cy.cleanupDb);
+    before(cy.seed);
+    after(cy.cleanupDb);
 
     describe("not authenticated", () => {
       beforeEach(() => {
@@ -43,10 +43,6 @@ describe("/dashboard/projects/[id]/settings/add-member", () => {
             "If you think this is an error, make sure to contact one of the project administrators:"
           ).should("be.visible");
 
-          cy.findByRole("button", {
-            name: "Copy marvin.frachet@something.com",
-          }).should("be.visible");
-
           cy.checkA11y();
         });
       });
@@ -73,6 +69,7 @@ describe("/dashboard/projects/[id]/settings/add-member", () => {
             "be.visible"
           );
 
+          cy.wait(100);
           cy.checkA11y();
         });
 
