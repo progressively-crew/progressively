@@ -12,15 +12,13 @@ export default defineConfig({
       sidebar: [
         {
           label: "Start here",
-          items: [
-            { label: "Getting started", link: "/getting-started" },
-            { label: "The CLI", link: "/cli" },
-          ],
+          items: [{ label: "Getting started", link: "/getting-started" }],
         },
 
         {
           label: "Guides",
           items: [
+            { label: "Using the CLI", link: "/guides/using-the-cli" },
             // Each item here is one entry in the navigation menu.
             { label: "Deploy to Render", link: "/guides/deploy-to-render" },
             {
