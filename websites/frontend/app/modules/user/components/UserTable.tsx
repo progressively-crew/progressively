@@ -47,7 +47,7 @@ export const UserTable = ({ userProjects }: UserTableProps) => {
                       items={[
                         {
                           label: "Remove from project",
-                          href: `/dashboard/projects/${userProject.projectId}/delete-member/${userProject.userId}`,
+                          href: `/dashboard/projects/${userProject.projectId}/settings/delete-member/${userProject.userId}`,
                         },
                       ]}
                       label={"Actions on user table"}
