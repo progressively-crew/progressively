@@ -4,6 +4,8 @@ description: A page documentation the server side SDK usage.
 ---
 
 
+_This SDK can be used on frameworks leveraging Server Side Rendering but also on raw Node.js applications._
+
 ## Installation
 
 ```shell
@@ -12,20 +14,19 @@ $ npm install --save @progressively/server-side
 
 ## Usage
 
-_This is an example using [Nextjs](https://nextjs.org/) but you can find how to use it in your own framework in [the example folder of the Github repository](https://github.com/progressively-crew/progressively/tree/master/example)._
+### Initial setup
 
-### Default SSR usage
+Let's imagine that we work on a Nextjs. In this application, we have the following page:
 
 ```javascript
 import { ProgressivelyProvider, useFlags } from "@progressively/react";
-import { Progressively } from "@progressively/server-side";
 
-// React Specific Section
 const FlaggedComponent = () => {
   const { flags } = useFlags();
   /* ... */
 };
 
+// The progressivelyProps will be passed from the server
 const YourPage = ({ progressivelyProps }) => {
   return (
     <ProgressivelyProvider {...progressivelyProps}>
@@ -33,24 +34,22 @@ const YourPage = ({ progressivelyProps }) => {
     </ProgressivelyProvider>
   );
 };
-// End of React Specific Section
+```
 
-export async function getServerSideProps({
-  req,
-  res,
-}: {
-  req: Request,
-  res: any,
-}) {
+### Server usage without stickiness
+
+You may see different variants of the feature flag when not using stickiness.
+
+```javascript
+import { Progressively } from "@progressively/server-side";
+
+export async function getServerSideProps({ req }) {
   // Agnostic cross-framework SSR call
   const sdk = Progressively.init({
 	  secretKey: "secret-key", // necessary AND: SECRET DO NOT SHARE
     clientKey: "valid-sdk-key", // useful for passing it down to the client
     websocketUrl: "ws://localhost:4000", // only necessary when self hosting
     apiUrl: "http://localhost:4000", // only necessary when self hosting
-    fields: {
-      id: userIdFromNextjsCookie,
-    },
   });
 
   const { data, response } = await sdk.loadFlags();
@@ -63,53 +62,64 @@ export async function getServerSideProps({
 }
 ```
 
-### SSR with sticky user
+### Server usage with explicit stickiness
 
-When using Progressively with a rollout percentage that is not 100%, you want your users to have a consistent experience. In order to do so, Progressively needs a way to stick a variant to a user id.
 
-The handling of creating IDs for anonymous users is done by Progressively under the hood. However, we need an extra step on your side to make it work properly: you have to set a cookie and forward the cookie to the Progressively instance:
 
 ```javascript
-import { ProgressivelyProvider, useFlags } from "@progressively/react";
 import { Progressively } from "@progressively/server-side";
 
-const FlaggedComponent = () => {
-  const { flags } = useFlags();
-  /* ... */
-};
-
-const YourPage = ({ progressivelyProps }) => {
-  return (
-    <ProgressivelyProvider {...progressivelyProps}>
-      <FlaggedComponent />
-    </ProgressivelyProvider>
-  );
-};
-
-export async function getServerSideProps({
-  req,
-  res,
-}: {
-  req: Request;
-  res: any;
-}) {
-  const userIdFromNextjsCookie =
-    (req as any).cookies?.["progressively-id"] || null;
-
+export async function getServerSideProps({ req }) {
   const sdk = Progressively.init({
-	    secretKey: "secret-key", // necessary AND: SECRET DO NOT SHARE
-      clientKey: "valid-sdk-key", // useful for passing it down to the client
+	    secretKey: "secret-key",
+      clientKey: "valid-sdk-key",
       websocketUrl: "ws://localhost:4000",
       apiUrl: "http://localhost:4000",
       fields: {
-        id: userIdFromNextjsCookie,
+        id, // You know this ID, it's yours, get it from your place
       },
     });
 
-  const { data, response } = await sdk.loadFlags();
+  const { data } = await sdk.loadFlags();
 
-  const progressivelyCookie = response?.headers?.get("set-cookie");
-  res.setHeader("set-cookie", progressivelyCookie);
+  return {
+    props: {
+      progressivelyProps: data,
+    },
+  };
+}
+```
+
+### Server usage with implicit stickiness
+
+If you don't provide an `id` field, Progressively generates one for you. However, you need to spread it down to the client application for the stickiness to be complete (if you use the client side SDK in addition).
+
+```js
+import { serialize } from "cookie";
+import { Progressively } from "@progressively/server-side";
+
+export async function getServerSideProps({ req, res }) {
+  const id = req.cookies?.["progressively-id"] ?? null;
+
+  const sdk = Progressively.init({
+    secretKey: "secret-key",
+    clientKey: "valid-sdk-key",
+    websocketUrl: "ws://localhost:4000",
+    apiUrl: "http://localhost:4000",
+    fields: {
+      id,
+    },
+  });
+
+  const { data, userId } = await sdk.loadFlags();
+
+  const cookie = serialize("progressively-id", userId, {
+    httpOnly: true,
+    path: "/",
+    secure: true,
+  });
+
+  res.setHeader("set-cookie", cookie);
 
   return {
     props: {
