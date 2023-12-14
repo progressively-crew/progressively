@@ -93,7 +93,7 @@ describe("/dashboard/projects/[id]/settings/delete", () => {
       cy.url().should("contain", "/dashboard/onboarding");
     });
 
-    it.only("removes the project and get me back to the project list when I have other projects", () => {
+    it("removes the project and get me back to the project list when I have other projects", () => {
       // Create another project as a test setup
       cy.visit("/dashboard/projects/create");
       cy.findByRole("textbox", { name: "Project name" }).type("My new project");
