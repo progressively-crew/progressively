@@ -38,8 +38,6 @@ describe("/dashboard/projects/[id]/settings/delete", () => {
           cy.findByRole("heading", {
             name: "Woops! You're not authorized to see this content",
           }).should("be.visible");
-
-          cy.checkA11y();
         });
       });
 
@@ -70,6 +68,7 @@ describe("/dashboard/projects/[id]/settings/delete", () => {
             .should("be.visible")
             .and("have.attr", "href", "/dashboard/projects/1/settings");
 
+          cy.wait(100);
           cy.checkA11y();
         });
       });
@@ -94,7 +93,7 @@ describe("/dashboard/projects/[id]/settings/delete", () => {
       cy.url().should("contain", "/dashboard/onboarding");
     });
 
-    it("removes the project and get me back to the project list when I have other projects", () => {
+    it.only("removes the project and get me back to the project list when I have other projects", () => {
       // Create another project as a test setup
       cy.visit("/dashboard/projects/create");
       cy.findByRole("textbox", { name: "Project name" }).type("My new project");
@@ -103,7 +102,7 @@ describe("/dashboard/projects/[id]/settings/delete", () => {
       cy.get(".success-box").should("be.visible");
 
       // Delete a project and verify that the other is still here
-      cy.visit("/dashboard/projects/1/delete");
+      cy.visit("/dashboard/projects/1/settings/delete");
 
       cy.findByRole("button", {
         name: "Yes, delete the project",

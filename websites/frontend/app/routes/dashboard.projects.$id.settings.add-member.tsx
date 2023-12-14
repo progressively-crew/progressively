@@ -1,9 +1,7 @@
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { UserRoles } from "~/modules/projects/types";
-import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { getSession } from "~/sessions";
 import { User } from "~/modules/user/types";
-import { Section } from "~/components/Section";
 import { validateEmail } from "~/modules/forms/utils/validateEmail";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { addMemberToProject } from "~/modules/projects/services/addMemberToProject";
@@ -16,7 +14,6 @@ import { ActionFunction, V2_MetaFunction } from "@remix-run/node";
 import { useActionData, Form, useNavigation } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
-import { PageTitle } from "~/components/PageTitle";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { DialogCloseBtn } from "~/components/Dialog/Dialog";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
