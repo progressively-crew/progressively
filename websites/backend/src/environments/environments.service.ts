@@ -60,16 +60,12 @@ export class EnvironmentsService {
       ) AS SessionCounts;
     `;
 
+    const singlepagesessions = bounceRateData[0]?.singlepagesessions;
+    const totalsessions = bounceRateData[0]?.totalsessions;
+
     let bounceRate = 0;
-    if (
-      bounceRateData[0]?.singlepagesessions &&
-      bounceRateData[0]?.totalsessions
-    ) {
-      bounceRate =
-        Number(
-          bounceRateData[0]?.singlepagesessions /
-            bounceRateData[0]?.totalsessions,
-        ) * 100;
+    if (singlepagesessions && totalsessions) {
+      bounceRate = (Number(singlepagesessions) / Number(totalsessions)) * 100;
     }
 
     return bounceRate;
@@ -115,7 +111,13 @@ export class EnvironmentsService {
     endDate: string,
     eventFilter?: string,
   ) {
-    const eventFilterObj = eventFilter ? { name: eventFilter } : {};
+    const eventFilterObj = eventFilter
+      ? { name: eventFilter }
+      : {
+          NOT: {
+            name: 'Page View',
+          },
+        };
 
     return this.prisma.event.count({
       where: {
@@ -124,6 +126,7 @@ export class EnvironmentsService {
           gte: new Date(startDate),
           lte: new Date(endDate),
         },
+
         ...eventFilterObj,
       },
     });

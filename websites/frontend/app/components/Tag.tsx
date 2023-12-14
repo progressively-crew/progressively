@@ -2,7 +2,7 @@ export interface TagProps extends React.HTMLAttributes<HTMLElement> {
   children: React.ReactNode;
   size?: "S" | "M";
   className?: string;
-  variant?: "PRIMARY" | "DEFAULT" | "SUCCESS";
+  variant?: "PRIMARY" | "DEFAULT" | "SUCCESS" | "DANGER";
 }
 
 const sizeStyle = {
@@ -15,6 +15,7 @@ const variants = {
     "bg-gray-100 text-gray-600 dark:bg-slate-900 dark:text-slate-100 rounded-full",
   PRIMARY: "bg-slate-800 text-white rounded-full",
   SUCCESS: "bg-emerald-100 text-emerald-700 rounded-full",
+  DANGER: "bg-red-100 text-red-700 rounded-full",
 };
 
 export const Tag = ({

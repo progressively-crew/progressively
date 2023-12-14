@@ -18,6 +18,7 @@ import { LocalCount } from "~/modules/environments/types";
 import { CountTable } from "~/modules/environments/components/CountTable";
 import { ProjectNavBar } from "~/modules/projects/components/ProjectNavBar";
 import { InsightsFilters } from "~/modules/projects/components/InsightsFilters";
+import { getMetricsCount } from "~/modules/environments/services/getMetricsCount";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -43,7 +44,9 @@ interface LoaderData {
   eventsPerDatePerReferer: Array<LocalCount>;
   eventsPerDatePerUrl: Array<LocalCount>;
   metricCount: number;
+  prevMetricCount: number;
   pageViewCount: number;
+  prevPageViewCount: number;
   uniqueVisitorsCount: number;
   bounceRate: number;
 }
@@ -79,12 +82,22 @@ export const loader: LoaderFunction = async ({
     eventsPerDatePerOs,
     eventsPerDatePerBrowser,
     eventsPerDatePerUrl,
-    metricCount,
-    pageViewCount,
     uniqueVisitorsCount,
     eventsPerDatePerReferer,
     bounceRate,
   } = await getEventsForEnv(envId, start, end, authCookie);
+
+  const metricForDate = await getMetricsCount(envId, start, end, authCookie);
+
+  start.setDate(start.getDate() - day);
+  end.setDate(end.getDate() + 1);
+
+  const prevMetricForDate = await getMetricsCount(
+    envId,
+    start,
+    end,
+    authCookie
+  );
 
   return {
     pageViewsPerDate,
@@ -94,8 +107,10 @@ export const loader: LoaderFunction = async ({
       eventsPerDatePerBrowser,
       "browser"
     ),
-    metricCount,
-    pageViewCount,
+    metricCount: metricForDate.metricCount,
+    prevMetricCount: prevMetricForDate.metricCount,
+    pageViewCount: metricForDate.pageViewCount,
+    prevPageViewCount: prevMetricForDate.pageViewCount,
     eventsPerDatePerUrl: mapToLocaleCount(eventsPerDatePerUrl, "url"),
     uniqueVisitorsCount,
     eventsPerDatePerReferer: mapToLocaleCount(
@@ -114,12 +129,24 @@ export default function EnvInsights() {
     eventsPerDatePerBrowser,
     eventsPerDatePerUrl,
     metricCount,
+    prevMetricCount,
     pageViewCount,
+    prevPageViewCount,
     uniqueVisitorsCount,
     eventsPerDatePerReferer,
     bounceRate,
   } = useLoaderData<LoaderData>();
   const { project } = useProject();
+
+  const pageViewCountEvolution =
+    prevPageViewCount > 0
+      ? ((pageViewCount - prevPageViewCount) / prevPageViewCount) * 100
+      : 0;
+
+  const metricCountViewEvolution =
+    prevMetricCount > 0
+      ? ((metricCount - prevMetricCount) / prevMetricCount) * 100
+      : 0;
 
   return (
     <DashboardLayout subNav={<ProjectNavBar project={project} />}>
@@ -140,6 +167,7 @@ export default function EnvInsights() {
             value={pageViewCount}
             unit={"visits."}
             icon={<div />}
+            evolution={pageViewCountEvolution}
           />
 
           <BigStat
@@ -223,6 +251,7 @@ export default function EnvInsights() {
               <SectionHeader title="Page views / URL" />
             </CardContent>
             <CountTable
+              shouldLink
               data={eventsPerDatePerUrl}
               caption="Page views / URL"
               cellName={"Page URL"}
@@ -238,6 +267,7 @@ export default function EnvInsights() {
             value={metricCount}
             unit={"hits."}
             icon={<div />}
+            evolution={metricCountViewEvolution}
           />
         </div>
       </Section>
