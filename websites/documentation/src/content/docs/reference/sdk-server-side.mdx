@@ -44,7 +44,7 @@ export async function getServerSideProps({
 }) {
   // Agnostic cross-framework SSR call
   const sdk = Progressively.init({
-	secretKey: "secret-key", // necessary AND: SECRET DO NOT SHARE
+	  secretKey: "secret-key", // necessary AND: SECRET DO NOT SHARE
     clientKey: "valid-sdk-key", // useful for passing it down to the client
     websocketUrl: "ws://localhost:4000", // only necessary when self hosting
     apiUrl: "http://localhost:4000", // only necessary when self hosting
@@ -97,8 +97,8 @@ export async function getServerSideProps({
     (req as any).cookies?.["progressively-id"] || null;
 
   const sdk = Progressively.init({
-	secretKey: "secret-key", // necessary AND: SECRET DO NOT SHARE
-    clientKey: "valid-sdk-key", // useful for passing it down to the client
+	    secretKey: "secret-key", // necessary AND: SECRET DO NOT SHARE
+      clientKey: "valid-sdk-key", // useful for passing it down to the client
       websocketUrl: "ws://localhost:4000",
       apiUrl: "http://localhost:4000",
       fields: {
