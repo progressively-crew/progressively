@@ -1,4 +1,4 @@
-import { Table, Th, Tbody, Tr, Td } from "~/components/Table";
+import { Table, Th, Tbody, Td } from "~/components/Table";
 import { LocalCount } from "../types";
 import { NumberValue } from "~/components/NumberValue";
 import { Link } from "~/components/Link";
