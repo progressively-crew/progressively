@@ -9,7 +9,7 @@ import { KeyboardKeys } from "~/modules/a11y/utils/keyboardKeys";
 
 export interface DialogProps {
   children: React.ReactNode;
-  action: React.ReactNode;
+  action?: React.ReactNode;
   scheme?: CardProps["scheme"];
 }
 

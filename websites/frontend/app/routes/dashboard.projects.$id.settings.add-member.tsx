@@ -1,9 +1,7 @@
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { UserRoles } from "~/modules/projects/types";
-import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { getSession } from "~/sessions";
 import { User } from "~/modules/user/types";
-import { Section } from "~/components/Section";
 import { validateEmail } from "~/modules/forms/utils/validateEmail";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { addMemberToProject } from "~/modules/projects/services/addMemberToProject";
@@ -16,9 +14,9 @@ import { ActionFunction, V2_MetaFunction } from "@remix-run/node";
 import { useActionData, Form, useNavigation } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
-import { PageTitle } from "~/components/PageTitle";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { DialogCloseBtn } from "~/components/Dialog/Dialog";
+import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 
 export const handle = {
   breadcrumb: (match: { params: any }) => {
@@ -88,27 +86,30 @@ export default function CreateProjectPage() {
 
   if (userRole !== UserRoles.Admin) {
     return (
-      <DashboardLayout>
-        <PageTitle value="You are not allowed to add members to projects." />
-        <Section>
-          <figure>
-            <Typography as="figcaption">
-              If you think this is an error, make sure to contact one of the
-              project administrators:
-            </Typography>
+      <CreateEntityLayout
+        titleSlot={
+          <CreateEntityTitle>
+            You are not allowed to add members to projects.
+          </CreateEntityTitle>
+        }
+      >
+        <figure>
+          <Typography as="figcaption">
+            If you think this is an error, make sure to contact one of the
+            project administrators:
+          </Typography>
 
-            <Ul>
-              {adminOfProject.map((user) => (
-                <Li key={user.uuid}>
-                  <Typography>{user.fullname}</Typography>
+          <Ul>
+            {adminOfProject.map((user) => (
+              <Li key={user.uuid}>
+                <Typography>{user.fullname}</Typography>
 
-                  <ButtonCopy toCopy={user.email}>{user.email}</ButtonCopy>
-                </Li>
-              ))}
-            </Ul>
-          </figure>
-        </Section>
-      </DashboardLayout>
+                <ButtonCopy toCopy={user.email}>{user.email}</ButtonCopy>
+              </Li>
+            ))}
+          </Ul>
+        </figure>
+      </CreateEntityLayout>
     );
   }
 
@@ -127,7 +128,7 @@ export default function CreateProjectPage() {
             <ErrorBox list={errorsToDisplay} />
           ) : null
         }
-        titleSlot={<PageTitle value="Add member" />}
+        titleSlot={<CreateEntityTitle>Add member</CreateEntityTitle>}
         submitSlot={
           <SubmitButton
             isLoading={navigation.state === "submitting"}

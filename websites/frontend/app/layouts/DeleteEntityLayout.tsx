@@ -27,7 +27,11 @@ export const DeleteEntityLayout = ({
   useSetInert();
 
   if (userRole !== UserRoles.Admin) {
-    return <ForbiddenPage />;
+    return (
+      <Dialog>
+        <ForbiddenPage />
+      </Dialog>
+    );
   }
 
   return (

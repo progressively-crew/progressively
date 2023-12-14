@@ -37,7 +37,7 @@ export const EnvMenuButtonFilter = ({
 
   items.push({
     label: "Add an env",
-    href: `/dashboard/projects/${projectId}/environments/create`,
+    href: `/dashboard/projects/${projectId}/settings/environments/create`,
     icon: <AiOutlinePlus />,
   });
 

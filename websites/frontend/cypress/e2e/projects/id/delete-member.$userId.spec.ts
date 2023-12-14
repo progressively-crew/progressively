@@ -1,11 +1,11 @@
-describe("/dashboard/projects/[id]/delete-member/[userId]", () => {
+describe("/dashboard/projects/[id]/settings/delete-member/[userId]", () => {
   describe("general verifications", () => {
     beforeEach(cy.seed);
     afterEach(cy.cleanupDb);
 
     describe("not authenticated", () => {
       beforeEach(() => {
-        cy.visit("/dashboard/projects/1/delete-member/2");
+        cy.visit("/dashboard/projects/1/settings/delete-member/2");
       });
 
       it("checks that the route is protected", () => {
@@ -17,7 +17,7 @@ describe("/dashboard/projects/[id]/delete-member/[userId]", () => {
       describe("user: Jane", () => {
         beforeEach(() => {
           cy.signIn("Jane");
-          cy.visit("/dashboard/projects/1/delete-member/2", {
+          cy.visit("/dashboard/projects/1/settings/delete-member/2", {
             failOnStatusCode: false,
           });
         });
@@ -33,7 +33,7 @@ describe("/dashboard/projects/[id]/delete-member/[userId]", () => {
         });
 
         it("does not show actions only allowed by the admin (john is a regular user)", () => {
-          cy.visit("/dashboard/projects/1/delete-member/2");
+          cy.visit("/dashboard/projects/1/settings/delete-member/2");
           cy.injectAxe();
 
           cy.findByRole("heading", {
@@ -50,7 +50,7 @@ describe("/dashboard/projects/[id]/delete-member/[userId]", () => {
         });
 
         it("shows the layout of the page", () => {
-          cy.visit("/dashboard/projects/1/delete-member/2");
+          cy.visit("/dashboard/projects/1/settings/delete-member/2");
           cy.injectAxe();
 
           cy.title().should(
@@ -79,7 +79,7 @@ describe("/dashboard/projects/[id]/delete-member/[userId]", () => {
           cy.visit("/dashboard/projects/1/settings");
           cy.findByText("john.doe@gmail.com").should("be.visible");
 
-          cy.visit("/dashboard/projects/1/delete-member/2");
+          cy.visit("/dashboard/projects/1/settings/delete-member/2");
           cy.injectAxe();
 
           cy.findByRole("button", {
@@ -100,7 +100,7 @@ describe("/dashboard/projects/[id]/delete-member/[userId]", () => {
           cy.visit("/dashboard/projects/1/settings");
           cy.findByText("marvin.frachet@something.com").should("be.visible");
 
-          cy.visit("/dashboard/projects/1/delete-member/1");
+          cy.visit("/dashboard/projects/1/settings/delete-member/1");
           cy.injectAxe();
 
           cy.findByRole("button", {

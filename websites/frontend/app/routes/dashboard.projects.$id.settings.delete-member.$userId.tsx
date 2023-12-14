@@ -17,7 +17,7 @@ import { Stack } from "~/components/Stack";
 import { DeleteEntityTitle } from "~/layouts/DeleteEntityTitle";
 import UnauthorizedPage from "./401";
 import { removeMember } from "~/modules/projects/services/removeMember";
-import { DialogCloseBtn } from "~/components/Dialog/Dialog";
+import { Dialog, DialogCloseBtn } from "~/components/Dialog/Dialog";
 
 export const meta: V2_MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -69,7 +69,23 @@ export default function DeleteMemberProjectPage() {
 
   const user = project.userProject?.find((up) => up.userId === userId);
 
-  if (!user?.user) return <UnauthorizedPage />;
+  if (!user?.user)
+    return (
+      <Dialog
+        action={
+          <Button
+            to={`/dashboard/projects/${project.uuid}/settings`}
+            variant="tertiary"
+            scheme="danger"
+          >
+            Cancel
+          </Button>
+        }
+      >
+        <UnauthorizedPage />
+      </Dialog>
+    );
+
   const userName = user.user?.fullname;
 
   return (

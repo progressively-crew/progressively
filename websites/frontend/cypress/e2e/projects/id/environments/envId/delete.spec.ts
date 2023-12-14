@@ -1,10 +1,10 @@
-describe("/dashboard/projects/[id]/environments/[envId]/delete", () => {
+describe("/dashboard/projects/[id]/environments/[envId]/settings/delete", () => {
   before(cy.seed);
   after(cy.cleanupDb);
 
   describe("not authenticated", () => {
     beforeEach(() => {
-      cy.visit("/dashboard/projects/1/environments/1/delete");
+      cy.visit("/dashboard/projects/1/environments/1/settings/delete");
     });
 
     it("checks that the route is protected", () => {
@@ -16,7 +16,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/delete", () => {
     describe("user: Jane", () => {
       beforeEach(() => {
         cy.signIn("Jane");
-        cy.visit("/dashboard/projects/1/environments/1/delete", {
+        cy.visit("/dashboard/projects/1/environments/1/settings/delete", {
           failOnStatusCode: false,
         });
       });
@@ -29,7 +29,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/delete", () => {
     describe("user: John", () => {
       beforeEach(() => {
         cy.signIn("John");
-        cy.visit("/dashboard/projects/1/environments/1/delete");
+        cy.visit("/dashboard/projects/1/environments/1/settings/delete");
         cy.injectAxe();
       });
 
@@ -45,7 +45,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/delete", () => {
     describe("user: Marvin", () => {
       beforeEach(() => {
         cy.signIn("Marvin");
-        cy.visit("/dashboard/projects/1/environments/1/delete");
+        cy.visit("/dashboard/projects/1/environments/1/settings/delete");
         cy.injectAxe();
       });
 
@@ -77,7 +77,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/delete", () => {
 
       beforeEach(() => {
         cy.signIn("Marvin");
-        cy.visit("/dashboard/projects/1/environments/1/delete");
+        cy.visit("/dashboard/projects/1/environments/1/settings/delete");
       });
 
       it("removes the environment and get me back to the flags page z", () => {

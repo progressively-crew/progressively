@@ -10,7 +10,7 @@ import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaT
 import { PageTitle } from "~/components/PageTitle";
 import { ProjectNavBar } from "~/modules/projects/components/ProjectNavBar";
 import { Typography } from "~/components/Typography";
-import { useActionData, useSearchParams } from "@remix-run/react";
+import { Outlet, useActionData, useSearchParams } from "@remix-run/react";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
@@ -69,103 +69,108 @@ export default function SettingsPage() {
     ) : null;
 
   return (
-    <DashboardLayout
-      subNav={<ProjectNavBar project={project} />}
-      status={
-        actionResult ??
-        (isMemberRemoved ? (
-          <SuccessBox id={"plan-add-success"}>
-            The member has been successfully removed.
-          </SuccessBox>
-        ) : null)
-      }
-    >
-      <PageTitle
-        value="Settings"
-        description={
-          <Typography as="span">
-            Settings available for{" "}
-            <strong className="font-bold">{project.name}</strong>.
-          </Typography>
+    <>
+      <DashboardLayout
+        subNav={<ProjectNavBar project={project} />}
+        status={
+          actionResult ??
+          (isMemberRemoved ? (
+            <SuccessBox id={"plan-add-success"}>
+              The member has been successfully removed.
+            </SuccessBox>
+          ) : null)
         }
-      />
-
-      <Card>
-        <Section id="environments">
-          <CardContent>
-            <SectionHeader
-              title="Environments"
-              action={
-                userRole === UserRoles.Admin && (
-                  <CreateButton
-                    variant="secondary"
-                    to={`/dashboard/projects/${project.uuid}/environments/create`}
-                  >
-                    Add environment
-                  </CreateButton>
-                )
-              }
-            />
-          </CardContent>
-
-          <EnvList
-            environments={project.environments}
-            projectId={project.uuid}
-          />
-        </Section>
-      </Card>
-
-      <Card>
-        <Section id="members">
-          <CardContent>
-            <SectionHeader
-              title="Project members"
-              action={
-                userRole === UserRoles.Admin && (
-                  <CreateButton
-                    variant="secondary"
-                    to={`/dashboard/projects/${project.uuid}/add-member`}
-                  >
-                    Add member
-                  </CreateButton>
-                )
-              }
-            />
-          </CardContent>
-
-          <UserTable userProjects={project.userProject || []} />
-        </Section>
-      </Card>
-
-      {userRole === UserRoles.Admin && (
-        <Card
-          footer={
-            <DeleteButton to={`/dashboard/projects/${project.uuid}/delete`}>
-              <span aria-hidden>
-                Delete{" "}
-                <span className="hidden md:inline">
-                  {`"${project.name}"`} forever
-                </span>
-              </span>
-
-              <VisuallyHidden>
-                Delete {`"${project.name}"`} forever
-              </VisuallyHidden>
-            </DeleteButton>
+      >
+        <PageTitle
+          value="Settings"
+          description={
+            <Typography as="span">
+              Settings available for{" "}
+              <strong className="font-bold">{project.name}</strong>.
+            </Typography>
           }
-        >
-          <CardContent>
-            <Section id="danger">
+        />
+
+        <Card>
+          <Section id="environments">
+            <CardContent>
               <SectionHeader
-                title="Danger zone"
-                description={
-                  "You can delete a project at any time, but you won't be able to access its environments and all the related flags will be removed and be falsy in your applications. Be sure to know what you're doing before removing a project."
+                title="Environments"
+                action={
+                  userRole === UserRoles.Admin && (
+                    <CreateButton
+                      variant="secondary"
+                      to={`/dashboard/projects/${project.uuid}/settings/environments/create`}
+                    >
+                      Add environment
+                    </CreateButton>
+                  )
                 }
               />
-            </Section>
-          </CardContent>
+            </CardContent>
+
+            <EnvList
+              environments={project.environments}
+              projectId={project.uuid}
+            />
+          </Section>
         </Card>
-      )}
-    </DashboardLayout>
+
+        <Card>
+          <Section id="members">
+            <CardContent>
+              <SectionHeader
+                title="Project members"
+                action={
+                  userRole === UserRoles.Admin && (
+                    <CreateButton
+                      variant="secondary"
+                      to={`/dashboard/projects/${project.uuid}/settings/add-member`}
+                    >
+                      Add member
+                    </CreateButton>
+                  )
+                }
+              />
+            </CardContent>
+
+            <UserTable userProjects={project.userProject || []} />
+          </Section>
+        </Card>
+
+        {userRole === UserRoles.Admin && (
+          <Card
+            footer={
+              <DeleteButton
+                to={`/dashboard/projects/${project.uuid}/settings/delete`}
+              >
+                <span aria-hidden>
+                  Delete{" "}
+                  <span className="hidden md:inline">
+                    {`"${project.name}"`} forever
+                  </span>
+                </span>
+
+                <VisuallyHidden>
+                  Delete {`"${project.name}"`} forever
+                </VisuallyHidden>
+              </DeleteButton>
+            }
+          >
+            <CardContent>
+              <Section id="danger">
+                <SectionHeader
+                  title="Danger zone"
+                  description={
+                    "You can delete a project at any time, but you won't be able to access its environments and all the related flags will be removed and be falsy in your applications. Be sure to know what you're doing before removing a project."
+                  }
+                />
+              </Section>
+            </CardContent>
+          </Card>
+        )}
+      </DashboardLayout>
+      <Outlet />
+    </>
   );
 }

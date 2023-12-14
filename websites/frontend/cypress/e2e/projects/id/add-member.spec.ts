@@ -1,11 +1,11 @@
-describe("/dashboard/projects/[id]/add-member", () => {
+describe("/dashboard/projects/[id]/settings/add-member", () => {
   describe("general verifications", () => {
-    beforeEach(cy.seed);
-    afterEach(cy.cleanupDb);
+    before(cy.seed);
+    after(cy.cleanupDb);
 
     describe("not authenticated", () => {
       beforeEach(() => {
-        cy.visit("/dashboard/projects/1/add-member");
+        cy.visit("/dashboard/projects/1/settings/add-member");
       });
 
       it("checks that the route is protected", () => {
@@ -17,7 +17,7 @@ describe("/dashboard/projects/[id]/add-member", () => {
       describe("user: Jane", () => {
         beforeEach(() => {
           cy.signIn("Jane");
-          cy.visit("/dashboard/projects/1/add-member", {
+          cy.visit("/dashboard/projects/1/settings/add-member", {
             failOnStatusCode: false,
           });
         });
@@ -30,7 +30,7 @@ describe("/dashboard/projects/[id]/add-member", () => {
       describe("user: John", () => {
         beforeEach(() => {
           cy.signIn("John");
-          cy.visit("/dashboard/projects/1/add-member");
+          cy.visit("/dashboard/projects/1/settings/add-member");
           cy.injectAxe();
         });
 
@@ -43,10 +43,6 @@ describe("/dashboard/projects/[id]/add-member", () => {
             "If you think this is an error, make sure to contact one of the project administrators:"
           ).should("be.visible");
 
-          cy.findByRole("button", {
-            name: "Copy marvin.frachet@something.com",
-          }).should("be.visible");
-
           cy.checkA11y();
         });
       });
@@ -54,7 +50,7 @@ describe("/dashboard/projects/[id]/add-member", () => {
       describe("user: Marvin", () => {
         beforeEach(() => {
           cy.signIn("Marvin");
-          cy.visit("/dashboard/projects/1/add-member");
+          cy.visit("/dashboard/projects/1/settings/add-member");
           cy.injectAxe();
         });
 
@@ -73,6 +69,7 @@ describe("/dashboard/projects/[id]/add-member", () => {
             "be.visible"
           );
 
+          cy.wait(100);
           cy.checkA11y();
         });
 

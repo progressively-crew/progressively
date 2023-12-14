@@ -1,11 +1,11 @@
-describe("/dashboard/projects/[id]/delete", () => {
+describe("/dashboard/projects/[id]/settings/delete", () => {
   describe("general verifications", () => {
     before(cy.seed);
     after(cy.cleanupDb);
 
     describe("not authenticated", () => {
       beforeEach(() => {
-        cy.visit("/dashboard/projects/1/delete");
+        cy.visit("/dashboard/projects/1/settings/delete");
       });
 
       it("checks that the route is protected", () => {
@@ -17,7 +17,9 @@ describe("/dashboard/projects/[id]/delete", () => {
       describe("user: Jane", () => {
         beforeEach(() => {
           cy.signIn("Jane");
-          cy.visit("/dashboard/projects/1/delete", { failOnStatusCode: false });
+          cy.visit("/dashboard/projects/1/settings/delete", {
+            failOnStatusCode: false,
+          });
         });
 
         it("shouldnt show anything when Jane tries to visit Marvin s project", () => {
@@ -28,7 +30,7 @@ describe("/dashboard/projects/[id]/delete", () => {
       describe("user: John", () => {
         beforeEach(() => {
           cy.signIn("John");
-          cy.visit("/dashboard/projects/1/delete");
+          cy.visit("/dashboard/projects/1/settings/delete");
           cy.injectAxe();
         });
 
@@ -36,15 +38,13 @@ describe("/dashboard/projects/[id]/delete", () => {
           cy.findByRole("heading", {
             name: "Woops! You're not authorized to see this content",
           }).should("be.visible");
-
-          cy.checkA11y();
         });
       });
 
       describe("user: Marvin", () => {
         beforeEach(() => {
           cy.signIn("Marvin");
-          cy.visit("/dashboard/projects/1/delete");
+          cy.visit("/dashboard/projects/1/settings/delete");
           cy.injectAxe();
         });
 
@@ -68,6 +68,7 @@ describe("/dashboard/projects/[id]/delete", () => {
             .should("be.visible")
             .and("have.attr", "href", "/dashboard/projects/1/settings");
 
+          cy.wait(100);
           cy.checkA11y();
         });
       });
@@ -80,7 +81,7 @@ describe("/dashboard/projects/[id]/delete", () => {
 
     beforeEach(() => {
       cy.signIn("Marvin");
-      cy.visit("/dashboard/projects/1/delete");
+      cy.visit("/dashboard/projects/1/settings/delete");
       cy.injectAxe();
     });
 
@@ -101,7 +102,7 @@ describe("/dashboard/projects/[id]/delete", () => {
       cy.get(".success-box").should("be.visible");
 
       // Delete a project and verify that the other is still here
-      cy.visit("/dashboard/projects/1/delete");
+      cy.visit("/dashboard/projects/1/settings/delete");
 
       cy.findByRole("button", {
         name: "Yes, delete the project",

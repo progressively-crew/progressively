@@ -1,10 +1,10 @@
-describe("/dashboard/projects/[id]/environments/create", () => {
+describe("/dashboard/projects/[id]/settings/environments/create", () => {
   before(cy.seed);
   after(cy.cleanupDb);
 
   describe("not authenticated", () => {
     beforeEach(() => {
-      cy.visit("/dashboard/projects/1/environments/create");
+      cy.visit("/dashboard/projects/1/settings/environments/create");
     });
 
     it("checks that the route is protected", () => {
@@ -16,7 +16,7 @@ describe("/dashboard/projects/[id]/environments/create", () => {
     describe("user: Jane", () => {
       beforeEach(() => {
         cy.signIn("Jane");
-        cy.visit("/dashboard/projects/1/environments/create", {
+        cy.visit("/dashboard/projects/1/settings/environments/create", {
           failOnStatusCode: false,
         });
       });
@@ -29,7 +29,7 @@ describe("/dashboard/projects/[id]/environments/create", () => {
     describe("user: Marvin", () => {
       beforeEach(() => {
         cy.signIn("Marvin");
-        cy.visit("/dashboard/projects/1/environments/create");
+        cy.visit("/dashboard/projects/1/settings/environments/create");
         cy.injectAxe();
       });
 
