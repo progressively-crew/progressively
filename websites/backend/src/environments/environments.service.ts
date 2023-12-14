@@ -60,16 +60,12 @@ export class EnvironmentsService {
       ) AS SessionCounts;
     `;
 
+    const singlepagesessions = bounceRateData[0]?.singlepagesessions;
+    const totalsessions = bounceRateData[0]?.totalsessions;
+
     let bounceRate = 0;
-    if (
-      bounceRateData[0]?.singlepagesessions &&
-      bounceRateData[0]?.totalsessions
-    ) {
-      bounceRate =
-        Number(
-          bounceRateData[0]?.singlepagesessions /
-            bounceRateData[0]?.totalsessions,
-        ) * 100;
+    if (singlepagesessions && totalsessions) {
+      bounceRate = (Number(singlepagesessions) / Number(totalsessions)) * 100;
     }
 
     return bounceRate;

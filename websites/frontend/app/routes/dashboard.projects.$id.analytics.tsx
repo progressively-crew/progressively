@@ -223,6 +223,7 @@ export default function EnvInsights() {
               <SectionHeader title="Page views / URL" />
             </CardContent>
             <CountTable
+              shouldLink
               data={eventsPerDatePerUrl}
               caption="Page views / URL"
               cellName={"Page URL"}
