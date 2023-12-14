@@ -111,7 +111,13 @@ export class EnvironmentsService {
     endDate: string,
     eventFilter?: string,
   ) {
-    const eventFilterObj = eventFilter ? { name: eventFilter } : {};
+    const eventFilterObj = eventFilter
+      ? { name: eventFilter }
+      : {
+          NOT: {
+            name: 'Page View',
+          },
+        };
 
     return this.prisma.event.count({
       where: {
@@ -120,6 +126,7 @@ export class EnvironmentsService {
           gte: new Date(startDate),
           lte: new Date(endDate),
         },
+
         ...eventFilterObj,
       },
     });

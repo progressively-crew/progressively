@@ -3,6 +3,7 @@ import { HTMLAttributes } from "react";
 export interface TableProps {
   children: React.ReactNode;
   noBorder?: boolean;
+  className?: string;
 }
 
 export const Table = ({ children, noBorder }: TableProps) => {
@@ -18,9 +19,14 @@ export const Table = ({ children, noBorder }: TableProps) => {
     </div>
   );
 };
-export const Th = ({ children }: TableProps) => {
+export const Th = ({ children, className }: TableProps) => {
   return (
-    <th className="whitespace-nowrap bg-slate-50 dark:bg-slate-700 font-medium p-4 pl-8 py-3 text-slate-500 dark:text-slate-200 text-left">
+    <th
+      className={
+        "whitespace-nowrap bg-slate-50 dark:bg-slate-700 font-medium p-4 pl-8 py-3 text-slate-500 dark:text-slate-200 text-left " +
+        (className || "")
+      }
+    >
       {children}
     </th>
   );
