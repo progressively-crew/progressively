@@ -1,0 +1,28 @@
+---
+title: Deploy with Docker
+description: How to deploy Progressively with Docker?
+---
+
+## Prerequisite
+
+- A connection string to a Postgres database (you can use [Neondb](https://neon.tech/) for example)
+- A connection string to a Postgres shadow database (you can use [Neondb](https://neon.tech/) for example)
+- A connection string to a Redis database (you can use [Upstash](https://upstash.com/) for example)
+- [Docker](https://www.docker.com/) installed on the machine (or available on the service)
+
+## Steps
+
+Using the following docker images to deploy your containers: 
+
+- [`marvinfrachet/progressively-backend:latest`](https://hub.docker.com/repository/docker/marvinfrachet/progressively-backend/general)
+- [`marvinfrachet/progressively-frontend:latest`](https://hub.docker.com/repository/docker/marvinfrachet/progressively-frontend/general)
+
+For instance:
+
+```sh
+$ docker run --env-file .env-backend -p 4000:4000 marvinfrachet/progressively-backend:latest
+$ docker run --env-file .env-frontend -p 3000:3000 marvinfrachet/progressively-frontend:latest
+```
+
+- Where `.env-backend` contains the environment variable defined in [this file](https://github.com/progressively-crew/progressively/blob/master/websites/backend/.env.example) 
+- Where `.env-frontend` contains the environment variable defined in [this file](https://github.com/progressively-crew/progressively/blob/master/websites/frontend/.env.example) 

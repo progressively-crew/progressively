@@ -27,6 +27,10 @@ export default defineConfig({
               label: "Deploy with Docker Compose",
               link: "/guides/deploy-docker-compose",
             },
+            {
+              label: "Deploy with Docker",
+              link: "/guides/deploy-docker",
+            },
 
             { label: "Development setup", link: "/guides/development-setup" },
           ],
