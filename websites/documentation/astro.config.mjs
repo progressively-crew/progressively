@@ -14,7 +14,6 @@ export default defineConfig({
           label: "Start here",
           items: [
             { label: "Getting started", link: "/getting-started" },
-            { label: "Installation", link: "/installation" },
             { label: "The CLI", link: "/cli" },
           ],
         },
@@ -23,7 +22,13 @@ export default defineConfig({
           label: "Guides",
           items: [
             // Each item here is one entry in the navigation menu.
-            { label: "Deploy to Fly", link: "/guides/deploy-to-fly" },
+            { label: "Deploy to Render", link: "/guides/deploy-to-render" },
+            {
+              label: "Deploy with Docker Compose",
+              link: "/guides/deploy-docker-compose",
+            },
+
+            { label: "Development setup", link: "/guides/development-setup" },
           ],
         },
         {
