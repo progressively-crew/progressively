@@ -10,12 +10,12 @@ export const NotAuthenticatedLayout = ({
   backLink,
 }: NotAuthenticatedLayoutProps) => {
   return (
-    <main className="h-full flex-1 flex flex-col items-center justify-center">
+    <main className="h-full flex-1 flex flex-col items-center justify-center bg-slate-50 dark:bg-slate-900">
       {backLink && <div className="p-4 absolute top-1 left-0">{backLink}</div>}
 
       {status && <div className="pb-12 max-w-md w-full">{status}</div>}
 
-      <div className="px-12 py-16 max-w-md w-full mx-auto flex items-center flex-col justify-center sm:border-2 rounded-2xl border-slate-100 dark:border-slate-700">
+      <div className="px-12 py-16 max-w-md w-full mx-auto flex items-center flex-col justify-center sm:border-2 rounded-2xl border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800">
         {children}
       </div>
     </main>

@@ -20,7 +20,7 @@ export const InsightsFilters = ({
   const shareButtonClass =
     "py-1 px-4 gap-4 bg-transparent hover:bg-slate-100 dark:border-slate-600 dark:text-slate-100 dark:hover:bg-slate-600 relative whitespace-nowrap inline-flex items-center justify-center rounded-sm text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:opacity-50 dark:focus:ring-slate-400 disabled:pointer-events-none dark:focus:ring-offset-slate-900";
 
-  const activeClass = `!bg-slate-100`;
+  const activeClass = `!bg-slate-100 dark:!bg-slate-700`;
 
   const setDays = (d: number) =>
     setSearchParams((prev) => {

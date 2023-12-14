@@ -10,12 +10,16 @@ export const Table = ({ children, noBorder }: TableProps) => {
   return (
     <div
       className={
-        noBorder ? "" : "border border-slate-200 dark:border-slate-600"
+        noBorder
+          ? "overflow-hidden w-full"
+          : "border border-slate-200 dark:border-slate-600 overflow-hidden"
       }
     >
-      <table className="border-collapse table-auto w-full text-sm">
-        {children}
-      </table>
+      <div className="overflow-x-scroll">
+        <table className="border-collapse table-auto w-full text-sm ">
+          {children}
+        </table>
+      </div>
     </div>
   );
 };
