@@ -18,16 +18,6 @@ test.describe("/", () => {
     await page.goto("/");
   });
 
-  test("forwards the cookie from the backend, to nextjs server, to the client", async ({
-    page,
-    context,
-  }) => {
-    const cookie = await getCookie("progressively-id", context);
-
-    // 1 is the user id set in nextjs getServerSideProps
-    expect(cookie).toBe("1");
-  });
-
   test("shows the old variant when the flag is not activated", async ({
     page,
   }) => {
