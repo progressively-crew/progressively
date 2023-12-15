@@ -4,4 +4,12 @@ description: The concept of a feature flag
 ---
 
 
-## Brief history
+## A brief history
+
+Deploying feature and deploying code is generally associated as being one operation. When developpers wants to add something to a website or an app, they add code.
+
+From this assumption, people have improved the way they manage their code and created workflows that facilitate the deployment of their apps. One common example is the Gitflow. When using Gitflow, only the commits that exist on the `main` branch are deployed to production.
+
+While this kind of flow make sense in some situation, we can question the strong link between deploying code and deploying features. Do we really need to couple the notion of deploying code to production and to rollout new features to the audience?
+
+## Separating the notions
