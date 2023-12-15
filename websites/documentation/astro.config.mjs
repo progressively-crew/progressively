@@ -14,7 +14,16 @@ export default defineConfig({
           label: "Start here",
           items: [{ label: "Getting started", link: "/getting-started" }],
         },
-
+        {
+          label: "Core concepts",
+          items: [
+            { label: "Feature flags", link: "/concepts/features-flags" },
+            {
+              label: "Anonymous analytics",
+              link: "/concepts/anonymous-analytics",
+            },
+          ],
+        },
         {
           label: "Guides",
           items: [
@@ -34,8 +43,8 @@ export default defineConfig({
           ],
         },
         {
-          label: "Reference",
-          autogenerate: { directory: "reference" },
+          label: "SDKs",
+          autogenerate: { directory: "sdks" },
         },
       ],
     }),
