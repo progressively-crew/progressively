@@ -12,6 +12,24 @@ description: How to deploy Progressively with Docker?
 
 ## Steps
 
+### Prepare the database
+
+```sh
+$ git clone https://github.com/progressively-crew/progressively
+$ cd progressively
+$ cp ./packages/database/.env.example ./packages/database/.env # modify the .env file with the connection string to postgres
+$ cp ./websites/backend/.env.example ./websites/backend/.env # modify the .env file with the connection string to postgres & Redis
+$ cp ./websites/frontend/.env.example ./websites/frontend/.env
+$ pnpm i
+$ pnpm run build
+$ pnpm run db:prepare
+```
+
+_This step might disappear or be reduced in the future. We know it's not optimal._
+
+
+### Start the containers
+
 Using the following docker images to deploy your containers: 
 
 - [`marvinfrachet/progressively-backend:latest`](https://hub.docker.com/repository/docker/marvinfrachet/progressively-backend/general)

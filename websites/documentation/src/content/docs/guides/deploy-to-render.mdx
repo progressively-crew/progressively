@@ -9,11 +9,29 @@ description: How to deploy Progressively to Render?
 - A connection string to a Postgres shadow database (you can use [Neondb](https://neon.tech/) for example)
 - A connection string to a Redis database (you can use [Upstash](https://upstash.com/) for example)
 - An account on [Render](https://render.com/)
+- [PNPM](https://pnpm.io/)
+- [Node 18+](https://nodejs.org/en)
+- [Docker](https://www.docker.com/) installed on the machine
 
 
 ## Steps
 
 Make sure to have the Postgres & Redis connection strings close to you.
+
+### Prepare the database
+
+```sh
+$ git clone https://github.com/progressively-crew/progressively
+$ cd progressively
+$ cp ./packages/database/.env.example ./packages/database/.env # modify the .env file with the connection string to postgres
+$ cp ./websites/backend/.env.example ./websites/backend/.env # modify the .env file with the connection string to postgres & Redis
+$ cp ./websites/frontend/.env.example ./websites/frontend/.env
+$ pnpm i
+$ pnpm run build
+$ pnpm run db:prepare
+```
+
+_This step might disappear or be reduced in the future. We know it's not optimal._
 
 ### Setup the backend (APIs)
 
