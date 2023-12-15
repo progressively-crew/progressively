@@ -4,5 +4,7 @@ export * from "@playwright/test";
 export const getCookie = async (name: string, ctx: BrowserContext) => {
   const cookies = await ctx.cookies();
 
+  console.log("wtf", cookies);
+
   return cookies.find((cookie) => cookie.name === name)?.value;
 };

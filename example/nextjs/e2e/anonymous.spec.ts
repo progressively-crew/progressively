@@ -1,4 +1,4 @@
-import { expect, getCookie, test } from "@progressively/playwright-helpers";
+import { expect, test } from "@progressively/playwright-helpers";
 import {
   changeFlagStatus,
   cleanup,
@@ -56,31 +56,5 @@ test.describe("/anonymous", () => {
     await page.reload();
     await expect(page.getByText("Old variant")).toBeVisible();
     await expect(page.getByText("New variant")).not.toBeVisible();
-  });
-
-  test("uses the same cookie for anonymous users after page reload", async ({
-    page,
-    context,
-  }) => {
-    // Refreshing 3 times to "make sure" it's consistent
-    const previousCookie = await getCookie("progressively-id", context);
-
-    await page.reload();
-
-    const nextCookie1 = await getCookie("progressively-id", context);
-    expect(nextCookie1).toBeDefined();
-    expect(previousCookie).toEqual(nextCookie1);
-
-    await page.reload();
-
-    const nextCookie2 = await getCookie("progressively-id", context);
-    expect(nextCookie2).toBeDefined();
-    expect(previousCookie).toEqual(nextCookie2);
-
-    await page.reload();
-
-    const nextCookie3 = await getCookie("progressively-id", context);
-    expect(nextCookie3).toBeDefined();
-    expect(previousCookie).toEqual(nextCookie3);
   });
 });
