@@ -6,10 +6,30 @@ description: The concept of a feature flag
 
 ## A brief history
 
-Deploying feature and deploying code is generally associated as being one operation. When developpers wants to add something to a website or an app, they add code.
+Deploying feature and deploying code is generally associated as being one operation. When developpers want to add something to a website or an app, they add code.
 
 From this assumption, people have improved the way they manage their code and created workflows that facilitate the deployment of their apps. One common example is the Gitflow. When using Gitflow, only the commits that exist on the `main` branch are deployed to production.
 
 While this kind of flow make sense in some situation, we can question the strong link between deploying code and deploying features. Do we really need to couple the notion of deploying code to production and to rollout new features to the audience?
 
 ## Separating the notions
+
+It's not necessary to couple code deployments and feature releases.
+
+For instance, in [trunk base development](https://trunkbaseddevelopment.com/), you deploy code as soon as you can. Deploying so often means that the production application contains code for features that are not finished _yet_. Obviously the audience should not have access to something that does not properly work.
+
+How to prevent your audience from accessing unfinished features? **using feature flags**.
+
+A feature flag is basically a toggle: **an on/off button**. When on `on`, the user will see the new feature. When on `off`, they won't.
+
+In a codebase, it's as simple as a condition:
+
+```js
+const flags = useFlags();
+
+if(flags.newDashboard) {
+	return <div>New dashboard</div>
+}
+
+return <div>Old dashboard</div>
+```
