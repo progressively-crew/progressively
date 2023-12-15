@@ -73,7 +73,10 @@ export const prepareCookie = (response: Response, userId: string) => {
     `progressively-id=${userId}; Max-Age=31536000; Path=/; HttpOnly; Secure; SameSite=None; Partitioned;`,
   );
   response.header('X-progressively-id', userId);
-  response.header('Access-Control-Expose-Headers', 'X-progressively-id');
+  response.header(
+    'Access-Control-Expose-Headers',
+    'X-progressively-id, Set-cookie',
+  );
 };
 
 export const getStringOfTypes = (flagEnvs: Array<PopulatedFlagEnv>) => {
