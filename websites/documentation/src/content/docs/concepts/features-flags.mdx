@@ -27,9 +27,20 @@ In a codebase, it's as simple as a condition:
 ```js
 const flags = useFlags();
 
-if(flags.newDashboard) {
+if (flags.newDashboard) {
 	return <div>New dashboard</div>
 }
 
 return <div>Old dashboard</div>
 ```
+
+From this simple concept of showing a feature based on a condition, it's possible to create an interesting toolkit: under which constraints should the flag show the new dashboard? To how many user?
+
+The benefits of such system are multiple, and quite interesting:
+
+- Separate code deployment from feature releases
+- Easy rollbacks when unexpected bugs happen
+- Makes possible testing in production (using targeting criteria)
+- Gradual rollout (a percentage of the audience)
+- Makes A/B testing possible (feature flags can have other values than `true`/`false`)
+- Time based rollout (feature flags can be activated at a given date)
