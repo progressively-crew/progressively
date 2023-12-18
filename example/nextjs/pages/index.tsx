@@ -47,10 +47,10 @@ export async function getServerSideProps({
   res: any;
 }) {
   const sdk = Progressively.init({
-    secretKey: "fc8dfc3d-9313-45a4-9866-63946d4e7124",
-    clientKey: "26af3e67-c8d1-4c28-a551-d2e962c3525b",
-    websocketUrl: "wss://progressively-backend.onrender.com",
-    apiUrl: "https://progressively-backend.onrender.com",
+    secretKey: "secret-key",
+    clientKey: "valid-sdk-key",
+    websocketUrl: "ws://localhost:4000",
+    apiUrl: "http://localhost:4000",
     fields: {
       email: "marvin.frachet@something.com",
       id: "1",
