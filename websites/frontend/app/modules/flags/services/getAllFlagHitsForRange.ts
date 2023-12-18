@@ -14,7 +14,6 @@ export const getAllFlagHitsForRange = async (
 
   url.searchParams.set("startDate", startDate.toISOString());
   url.searchParams.set("endDate", endDate.toISOString());
-  url.searchParams.set("variant", variant);
 
   return fetch(url, {
     headers: {

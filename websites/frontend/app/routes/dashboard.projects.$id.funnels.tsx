@@ -82,7 +82,7 @@ export const loader: LoaderFunction = async ({
   const search = new URLSearchParams(url.search);
   const envId = search.get("envId");
   const flagId = search.get("flagId");
-  const variant = search.get("variant");
+  const variant = search.get("variantId");
 
   if (!envId) {
     throw redirect("/401");
