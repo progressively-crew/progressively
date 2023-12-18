@@ -63,6 +63,7 @@ model Environment {
   flagEnvironment FlagEnvironment[]
   createdAt       DateTime?         @default(now())
   events          Event[]
+  Funnel          Funnel[]
 }
 
 model RefreshToken {
@@ -88,6 +89,26 @@ model Flag {
   description     String?
   createdAt       DateTime?         @default(now())
   flagEnvironment FlagEnvironment[]
+  FunnelEntry     FunnelEntry[]
+}
+
+model Funnel {
+  uuid            String        @id @default(uuid())
+  name            String
+  createdAt       DateTime?     @default(now())
+  environment     Environment   @relation(fields: [environmentUuid], references: [uuid])
+  environmentUuid String
+  funnelEntries   FunnelEntry[]
+}
+
+model FunnelEntry {
+  uuid        String  @id @default(uuid())
+  flag        Flag?   @relation(fields: [flagUuid], references: [uuid])
+  flagUuid    String?
+  flagVariant String?
+  eventName   String?
+  Funnel      Funnel  @relation(fields: [funnelUuid], references: [uuid])
+  funnelUuid  String
 }
 
 model FlagEnvironment {
