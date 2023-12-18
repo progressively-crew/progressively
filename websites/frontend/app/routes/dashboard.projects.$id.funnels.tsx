@@ -44,7 +44,9 @@ export const action: ActionFunction = async ({
   request,
 }): Promise<ActionData | Response> => {
   const formData = await request.formData();
-  const type = formData.get("_type");
+  const type = formData.get("_type")?.toString();
+
+  console.log("lfozjafoazjfoazjf", type);
 
   if (type === "add-metric-name") {
     const eventName = formData.get("event-name")?.toString() || "";
@@ -148,12 +150,8 @@ export default function FunnelsPage() {
           />
 
           <CardContent>
-            <Form method="POST">
-              {allEvents.map((ev) => (
-                <input type="hidden" value={ev} name="event" key={ev} />
-              ))}
-
-              <div className="grid grid-cols-2 gap-8">
+            <div className="grid grid-cols-2 gap-8">
+              <Form method="POST">
                 <FormGroup>
                   <input type="hidden" name="_type" value="set-flag" />
 
@@ -165,7 +163,12 @@ export default function FunnelsPage() {
 
                   <SubmitButton variant="secondary">Set flag</SubmitButton>
                 </FormGroup>
+              </Form>
 
+              <Form method="POST">
+                {allEvents.map((ev) => (
+                  <input type="hidden" value={ev} name="event" key={ev} />
+                ))}
                 <FormGroup>
                   <input type="hidden" name="_type" value="add-metric-name" />
 
@@ -176,8 +179,8 @@ export default function FunnelsPage() {
                   />
                   <SubmitButton variant="secondary">Add metric</SubmitButton>
                 </FormGroup>
-              </div>
-            </Form>
+              </Form>
+            </div>
           </CardContent>
         </Card>
       </Section>
