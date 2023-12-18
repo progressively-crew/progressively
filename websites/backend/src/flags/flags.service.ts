@@ -47,16 +47,18 @@ export class FlagsService {
     });
   }
 
-  getAllFlagHitsForRange(
+  getAllFlagHitsForRangForVariant(
     envId: string,
     flagId: string,
     startDate: string,
     endDate: string,
+    variant: string,
   ) {
     return this.prisma.flagHit.count({
       where: {
         flagEnvironmentFlagId: flagId,
         flagEnvironmentEnvironmentId: envId,
+        valueResolved: variant,
         date: {
           gte: new Date(startDate),
           lte: new Date(endDate),

@@ -176,12 +176,13 @@ export class FlagsController {
   /**
    * Get the flag hits grouped by date
    */
-  @Get('environments/:envId/flags/:flagId/all-hits')
+  @Get('environments/:envId/flags/:flagId/hits/:variant')
   @UseGuards(HasFlagEnvAccessGuard)
   @UseGuards(JwtAuthGuard)
   async getAllFlagHitsForRange(
     @Param('envId') envId: string,
     @Param('flagId') flagId: string,
+    @Param('variant') variant: string,
     @Query('startDate') startDate: string | undefined,
     @Query('endDate') endDate: string | undefined,
   ) {
@@ -189,11 +190,12 @@ export class FlagsController {
       throw new BadRequestException('startDate and endDate are required.');
     }
 
-    const hitsForRange = await this.flagService.getAllFlagHitsForRange(
+    const hitsForRange = await this.flagService.getAllFlagHitsForRangForVariant(
       envId,
       flagId,
       startDate,
       endDate,
+      variant,
     );
 
     return {

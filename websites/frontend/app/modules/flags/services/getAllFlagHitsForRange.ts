@@ -3,16 +3,18 @@ import { Constants } from "~/constants";
 export const getAllFlagHitsForRange = async (
   envId: string,
   flagId: string,
+  variant: string,
   startDate: Date,
   endDate: Date,
   accessToken: string
 ) => {
   const url = new URL(
-    `${Constants.BackendUrl}/environments/${envId}/flags/${flagId}/all-hits`
+    `${Constants.BackendUrl}/environments/${envId}/flags/${flagId}/hits/${variant}`
   );
 
   url.searchParams.set("startDate", startDate.toISOString());
   url.searchParams.set("endDate", endDate.toISOString());
+  url.searchParams.set("variant", variant);
 
   return fetch(url, {
     headers: {
