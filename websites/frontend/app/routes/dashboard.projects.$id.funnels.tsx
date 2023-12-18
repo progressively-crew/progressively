@@ -11,6 +11,8 @@ import { ProjectNavBar } from "~/modules/projects/components/ProjectNavBar";
 import { InsightsFilters } from "~/modules/projects/components/InsightsFilters";
 import { BarChart } from "~/components/BarChart";
 import { Typography } from "~/components/Typography";
+import { Button } from "~/components/Buttons/Button";
+import { CreateButton } from "~/components/Buttons/CreateButton";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -42,23 +44,34 @@ export default function FunnelsPage() {
       <PageTitle
         value="Funnels"
         action={
-          <InsightsFilters
-            projectId={project.uuid}
-            environments={project.environments}
-          />
+          <div className="flex flex-row items-center gap-8">
+            <CreateButton>Create a funnel</CreateButton>
+            <InsightsFilters
+              projectId={project.uuid}
+              environments={project.environments}
+            />
+          </div>
         }
       />
       <Section>
-        <Card>
-          <CardContent>
-            <div className="flex flex-row justify-between">
-              <Typography as="h2" className="font-semibold text-xl">
-                Funnel name
-              </Typography>
-              <BarChart data={chartData} />
-            </div>
-          </CardContent>
-        </Card>
+        <div className="grid grid-cols-2 gap-8">
+          {Array.from({ length: 4 })
+            .fill(0)
+            .map((_, idx) => (
+              <Card key={idx}>
+                <CardContent>
+                  <div className="flex flex-row justify-between">
+                    <Typography as="h2" className="font-semibold text-xl">
+                      Funnel name
+                    </Typography>
+                    <div className="flex flex-row gap-4 items-center">
+                      <BarChart data={chartData} />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+        </div>
       </Section>
     </DashboardLayout>
   );

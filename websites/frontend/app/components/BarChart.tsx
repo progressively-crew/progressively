@@ -1,3 +1,4 @@
+import { NumberValue } from "./NumberValue";
 import { Tooltip } from "./Tooltip/Tooltip";
 import { Typography } from "./Typography";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
@@ -25,13 +26,19 @@ export const BarChart = ({ data }: BarChartProps) => {
           <div className="h-[100px] relative">
             <div className="w-full h-full bg-slate-100 dark:bg-slate-700" />
             <div
-              className="w-full absolute bottom-0"
+              className="w-full absolute bottom-0 flex items-center justify-center"
               style={{
                 height: `${(d.value / max) * 100}%`,
                 background: stringToColor(d.name, 95),
-                border: `1px solid ${stringToColor(d.name, 75)}`,
+                borderLeft: `4px solid ${stringToColor(d.name, 75)}`,
+                borderRight: `4px solid ${stringToColor(d.name, 75)}`,
+                borderTop: `4px solid ${stringToColor(d.name, 75)}`,
               }}
-            ></div>
+            >
+              <Typography className="font-bold">
+                <NumberValue value={10_001_000} />
+              </Typography>
+            </div>
           </div>
 
           <Tooltip tooltip={d.name}>
