@@ -61,9 +61,17 @@ export default function FunnelsPage() {
               <Card key={idx}>
                 <CardContent>
                   <div className="flex flex-row justify-between">
-                    <Typography as="h2" className="font-semibold text-xl">
-                      Funnel name
-                    </Typography>
+                    <div>
+                      <Typography
+                        as="h2"
+                        className="font-semibold text-xl pb-4"
+                      >
+                        Funnel name
+                      </Typography>
+                      <Typography className="text-6xl font-extrabold">
+                        5%
+                      </Typography>
+                    </div>
                     <div className="flex flex-row gap-4 items-center">
                       <BarChart data={chartData} />
                     </div>
