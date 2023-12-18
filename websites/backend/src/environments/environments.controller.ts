@@ -159,4 +159,27 @@ export class EnvironmentsController {
       bounceRate,
     };
   }
+
+  @Get(':envId/events/distinct')
+  @UseGuards(HasEnvironmentAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  async getDistinctEventName(
+    @Param('envId') envId: string,
+    @Query('startDate') startDate: string | undefined,
+    @Query('endDate') endDate: string | undefined,
+  ) {
+    if (!endDate || !startDate) {
+      throw new BadRequestException('startDate and endDate are required.');
+    }
+
+    const distinctEvents = await this.envService.getDistinctEventName(
+      envId,
+      startDate,
+      endDate,
+    );
+
+    return {
+      distinctEventName: distinctEvents.map((ev) => ev.name),
+    };
+  }
 }

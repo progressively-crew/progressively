@@ -16,10 +16,11 @@ import { getSession } from "~/sessions";
 import { ProjectNavBar } from "~/modules/projects/components/ProjectNavBar";
 import { InsightsFilters } from "~/modules/projects/components/InsightsFilters";
 import { BarChart } from "~/components/BarChart";
-import { Form, useActionData } from "@remix-run/react";
+import { Form, useActionData, useLoaderData } from "@remix-run/react";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { SelectField } from "~/components/Fields/Select/SelectField";
+import { getDistinctEventName } from "~/modules/environments/services/getDistinctEventName";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -49,7 +50,9 @@ export const action: ActionFunction = async ({
   return { allEvents };
 };
 
-interface LoaderData {}
+interface LoaderData {
+  distinctEventName: Array<string>;
+}
 
 export const loader: LoaderFunction = async ({
   request,
@@ -76,16 +79,28 @@ export const loader: LoaderFunction = async ({
   end.setDate(end.getDate() + 1);
 
   const authCookie = session.get("auth-cookie");
+  const { distinctEventName } = await getDistinctEventName(
+    envId!,
+    start,
+    end,
+    authCookie
+  );
 
-  return null;
+  return { distinctEventName };
 };
 
 export default function EnvInsights() {
   const { project } = useProject();
+  const { distinctEventName } = useLoaderData<LoaderData>();
   const actionData = useActionData<ActionData>();
   const allEvents = actionData?.allEvents || [];
 
-  console.log("loool", allEvents);
+  const selectOptions = distinctEventName
+    .filter((eventName) => !allEvents.includes(eventName))
+    .map((eventName) => ({
+      value: eventName,
+      label: eventName,
+    }));
 
   return (
     <DashboardLayout subNav={<ProjectNavBar project={project} />}>
@@ -121,16 +136,7 @@ export default function EnvInsights() {
               <SelectField
                 name="event-name"
                 label="Event"
-                options={[
-                  {
-                    value: "Page view",
-                    label: "Page view",
-                  },
-                  {
-                    value: "Click A",
-                    label: "Click A",
-                  },
-                ]}
+                options={selectOptions}
               />
               <SubmitButton>Add metric</SubmitButton>
             </FormGroup>
