@@ -19,6 +19,7 @@ import { CountTable } from "~/modules/environments/components/CountTable";
 import { ProjectNavBar } from "~/modules/projects/components/ProjectNavBar";
 import { InsightsFilters } from "~/modules/projects/components/InsightsFilters";
 import { getMetricsCount } from "~/modules/environments/services/getMetricsCount";
+import { toPercentage } from "~/modules/misc/utils/toPercentage";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -140,12 +141,12 @@ export default function EnvInsights() {
 
   const pageViewCountEvolution =
     prevPageViewCount > 0
-      ? ((pageViewCount - prevPageViewCount) / prevPageViewCount) * 100
+      ? toPercentage((pageViewCount - prevPageViewCount) / prevPageViewCount)
       : 0;
 
   const metricCountViewEvolution =
     prevMetricCount > 0
-      ? ((metricCount - prevMetricCount) / prevMetricCount) * 100
+      ? toPercentage((metricCount - prevMetricCount) / prevMetricCount)
       : 0;
 
   return (
