@@ -1,0 +1,13 @@
+---
+title: Anonymous analytics
+description: The concept of anonymous analytics
+---
+
+An anonymous analytics system typically refers to a data analysis or tracking system that collects and processes information without directly associating it with specific individuals. The primary goal is to gather insights into user behavior, preferences, or other relevant metrics without compromising the privacy of individual users.
+
+This anonymous analytics feature exists in Progressively to provides insights on how your users are using your application. For example, in Progressively, it will be possible to understand how a given user interacts after having evaluated a given feature flag. It's basically an A/B testing tool built by crossing a feature flag platform and an analytics platform.
+
+To do that, **Progressively generates an identifier and put it in a cookie**. We don't have access to who the users are, and we don't have any ways to know who the users are. What we know is that a given browser owning a given cookie has evaluated a given flag and perform such actions. This technic allows YOU to get knowledge on how your audience behaves.
+
+Progressively is open source and transparency is in our DNA. If you are interested in checking how the analytics system works, it's as simple as [this endpoint](https://github.com/progressively-crew/progressively/blob/master/websites/backend/src/sdk/sdk.controller.ts#L93).
+

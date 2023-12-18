@@ -1,0 +1,48 @@
+---
+title: Development setup
+description: Install the software and the needed tooling.
+---
+
+
+If you want to contribute to the project, this is the guide to follow.
+
+### Prerequisite
+
+- [PNPM](https://pnpm.io/)
+- [Node 18+](https://nodejs.org/en)
+- [Docker](https://www.docker.com/) installed on the machine
+
+### Get the project locally
+
+```sh
+$ git clone https://github.com/progressively-crew/progressively
+$ cd progressively
+$ cp ./packages/database/.env.example ./packages/database/.env
+$ cp ./websites/backend/.env.example ./websites/backend/.env
+$ cp ./websites/frontend/.env.example ./websites/frontend/.env
+```
+
+### Setup the databases
+
+```sh
+# Run the Prisma shadow DB (for migration purpose)
+$ docker run --name progressively-shadow -e POSTGRES_PASSWORD=admin -e POSTGRES_USER=admin -e POSTGRES_DB=progressively -p 5433:5432 -d postgres
+
+# Run the real database (you can connect to a third party service if you prefer)
+$ docker run --name progressively-db -e POSTGRES_PASSWORD=admin -e POSTGRES_USER=admin -e POSTGRES_DB=progressively -p 5432:5432 -d postgres
+
+# Run redis for scaling the websocket server
+$ docker run -it --name progressively-redis -p 6379:6379 -d redis
+```
+
+### Setup the codebase
+
+```sh
+$ pnpm i
+$ pnpm run build
+$ pnpm run db:prepare
+$ pnpm run start:backend
+$ pnpm run start:frontend
+```
+
+You can now open `http://localhost:3000/welcome` to setup your admin user.

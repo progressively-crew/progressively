@@ -1,0 +1,131 @@
+---
+title: Server side SDK
+description: A page documentation the server side SDK usage.
+---
+
+
+_This SDK can be used on frameworks leveraging Server Side Rendering but also on raw Node.js applications._
+
+## Installation
+
+```shell
+$ npm install --save @progressively/server-side
+```
+
+## Usage
+
+### Initial setup
+
+Let's imagine that we work on a Nextjs. In this application, we have the following page:
+
+```javascript
+import { ProgressivelyProvider, useFlags } from "@progressively/react";
+
+const FlaggedComponent = () => {
+  const { flags } = useFlags();
+  /* ... */
+};
+
+// The progressivelyProps will be passed from the server
+const YourPage = ({ progressivelyProps }) => {
+  return (
+    <ProgressivelyProvider {...progressivelyProps}>
+      <FlaggedComponent />
+    </ProgressivelyProvider>
+  );
+};
+```
+
+### Server usage without stickiness
+
+You may see different variants of the feature flag when not using stickiness.
+
+```javascript
+import { Progressively } from "@progressively/server-side";
+
+export async function getServerSideProps({ req }) {
+  // Agnostic cross-framework SSR call
+  const sdk = Progressively.init({
+	  secretKey: "secret-key", // necessary AND: SECRET DO NOT SHARE
+    clientKey: "valid-sdk-key", // useful for passing it down to the client
+    websocketUrl: "ws://localhost:4000", // only necessary when self hosting
+    apiUrl: "http://localhost:4000", // only necessary when self hosting
+  });
+
+  const { data, response } = await sdk.loadFlags();
+
+  return {
+    props: {
+      progressivelyProps: data,
+    },
+  };
+}
+```
+
+### Server usage with explicit stickiness
+
+
+
+```javascript
+import { Progressively } from "@progressively/server-side";
+
+export async function getServerSideProps({ req }) {
+  const sdk = Progressively.init({
+	    secretKey: "secret-key",
+      clientKey: "valid-sdk-key",
+      websocketUrl: "ws://localhost:4000",
+      apiUrl: "http://localhost:4000",
+      fields: {
+        id, // You know this ID, it's yours, get it from your place
+      },
+    });
+
+  const { data } = await sdk.loadFlags();
+
+  return {
+    props: {
+      progressivelyProps: data,
+    },
+  };
+}
+```
+
+### Server usage with implicit stickiness
+
+If you don't provide an `id` field, Progressively generates one for you. However, you need to spread it down to the client application for the stickiness to be complete (if you use the client side SDK in addition).
+
+```js
+import { serialize } from "cookie";
+import { Progressively } from "@progressively/server-side";
+
+export async function getServerSideProps({ req, res }) {
+  const id = req.cookies?.["progressively-id"] ?? null;
+
+  const sdk = Progressively.init({
+    secretKey: "secret-key",
+    clientKey: "valid-sdk-key",
+    websocketUrl: "ws://localhost:4000",
+    apiUrl: "http://localhost:4000",
+    fields: {
+      id,
+    },
+  });
+
+  const { data, userId } = await sdk.loadFlags();
+
+  const cookie = serialize("progressively-id", userId, {
+    httpOnly: true,
+    path: "/",
+    secure: true,
+  });
+
+  res.setHeader("set-cookie", cookie);
+
+  return {
+    props: {
+      progressivelyProps: data,
+    },
+  };
+}
+```
+
