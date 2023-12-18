@@ -90,6 +90,15 @@ model Flag {
   flagEnvironment FlagEnvironment[]
 }
 
+model Funnel {
+  uuid                         String          @id @default(uuid())
+  name                         String
+  createdAt                    DateTime?       @default(now())
+  flagEnvironment              FlagEnvironment @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
+  flagEnvironmentFlagId        String
+  flagEnvironmentEnvironmentId String
+}
+
 model FlagEnvironment {
   flagId        String
   environmentId String
@@ -102,6 +111,7 @@ model FlagEnvironment {
   webhooks      Webhook[]
   ActivityLog   ActivityLog[]
   strategies    Strategy[]
+  Funnel        Funnel[]
 
   @@id([flagId, environmentId])
 }
