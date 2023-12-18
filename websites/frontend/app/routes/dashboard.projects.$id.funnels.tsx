@@ -16,7 +16,12 @@ import { getSession } from "~/sessions";
 import { ProjectNavBar } from "~/modules/projects/components/ProjectNavBar";
 import { InsightsFilters } from "~/modules/projects/components/InsightsFilters";
 import { BarChart } from "~/components/BarChart";
-import { Form, useActionData, useLoaderData } from "@remix-run/react";
+import {
+  Form,
+  useActionData,
+  useLoaderData,
+  useSearchParams,
+} from "@remix-run/react";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { SelectField } from "~/components/Fields/Select/SelectField";
@@ -55,10 +60,6 @@ export const action: ActionFunction = async ({
     allEvents.push(eventName);
 
     return { allEvents };
-  }
-
-  if (type === "set-flag") {
-    return {};
   }
 
   return {};
@@ -109,6 +110,7 @@ export const loader: LoaderFunction = async ({
 export default function FunnelsPage() {
   const { project } = useProject();
   const { distinctEventName, flags } = useLoaderData<LoaderData>();
+  const [searchParams, setSearchParams] = useSearchParams();
   const actionData = useActionData<ActionData>();
   const allEvents = actionData?.allEvents || [];
 
@@ -123,6 +125,13 @@ export default function FunnelsPage() {
     label: flag.name,
     value: flag.uuid,
   }));
+
+  const setSearchFlagId = (nextFlagId: string) =>
+    setSearchParams((prev) => {
+      prev.set("flagId", nextFlagId);
+
+      return prev;
+    });
 
   return (
     <DashboardLayout subNav={<ProjectNavBar project={project} />}>
@@ -150,20 +159,14 @@ export default function FunnelsPage() {
           />
 
           <CardContent>
-            <div className="grid grid-cols-2 gap-8">
-              <Form method="POST">
-                <FormGroup>
-                  <input type="hidden" name="_type" value="set-flag" />
-
-                  <SelectField
-                    name="flag-name"
-                    label="Feature flag"
-                    options={flagOptions}
-                  />
-
-                  <SubmitButton variant="secondary">Set flag</SubmitButton>
-                </FormGroup>
-              </Form>
+            <FormGroup>
+              <SelectField
+                name="flag-name"
+                label="Feature flag"
+                options={flagOptions}
+                onValueChange={(e) => setSearchFlagId(e)}
+                defaultValue={searchParams.get("flagId") || ""}
+              />
 
               <Form method="POST">
                 {allEvents.map((ev) => (
@@ -180,7 +183,7 @@ export default function FunnelsPage() {
                   <SubmitButton variant="secondary">Add metric</SubmitButton>
                 </FormGroup>
               </Form>
-            </div>
+            </FormGroup>
           </CardContent>
         </Card>
       </Section>
