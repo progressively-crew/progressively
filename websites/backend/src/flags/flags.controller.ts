@@ -176,6 +176,34 @@ export class FlagsController {
   /**
    * Get the flag hits grouped by date
    */
+  @Get('environments/:envId/flags/:flagId/all-hits')
+  @UseGuards(HasFlagEnvAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  async getAllFlagHitsForRange(
+    @Param('envId') envId: string,
+    @Param('flagId') flagId: string,
+    @Query('startDate') startDate: string | undefined,
+    @Query('endDate') endDate: string | undefined,
+  ) {
+    if (!endDate || !startDate) {
+      throw new BadRequestException('startDate and endDate are required.');
+    }
+
+    const hitsForRange = await this.flagService.getAllFlagHitsForRange(
+      envId,
+      flagId,
+      startDate,
+      endDate,
+    );
+
+    return {
+      hitsForRange,
+    };
+  }
+
+  /**
+   * Get the flag hits grouped by date
+   */
   @Get('flags/:flagId')
   @UseGuards(HasFlagAccessGuard)
   @UseGuards(JwtAuthGuard)

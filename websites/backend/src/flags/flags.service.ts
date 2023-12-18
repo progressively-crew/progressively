@@ -47,6 +47,24 @@ export class FlagsService {
     });
   }
 
+  getAllFlagHitsForRange(
+    envId: string,
+    flagId: string,
+    startDate: string,
+    endDate: string,
+  ) {
+    return this.prisma.flagHit.count({
+      where: {
+        flagEnvironmentFlagId: flagId,
+        flagEnvironmentEnvironmentId: envId,
+        date: {
+          gte: new Date(startDate),
+          lte: new Date(endDate),
+        },
+      },
+    });
+  }
+
   getFlagById(flagId: string) {
     return this.prisma.flag.findUnique({
       where: { uuid: flagId },
