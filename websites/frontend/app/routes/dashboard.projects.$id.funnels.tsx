@@ -21,6 +21,8 @@ import { FormGroup } from "~/components/Fields/FormGroup";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { SelectField } from "~/components/Fields/Select/SelectField";
 import { getDistinctEventName } from "~/modules/environments/services/getDistinctEventName";
+import { Flag } from "~/modules/flags/types";
+import { getProjectFlags } from "~/modules/projects/services/getProjectFlags";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -35,27 +37,39 @@ export const meta: V2_MetaFunction = ({ matches, params }) => {
 };
 
 interface ActionData {
-  allEvents: Array<string>;
+  allEvents?: Array<string>;
 }
 
 export const action: ActionFunction = async ({
   request,
 }): Promise<ActionData | Response> => {
   const formData = await request.formData();
-  const eventName = formData.get("event-name")?.toString() || "";
-  const allEvents = (formData.getAll("event") || []).map((x) => x.toString());
+  const type = formData.get("_type");
 
-  allEvents.push(eventName);
+  if (type === "add-metric-name") {
+    const eventName = formData.get("event-name")?.toString() || "";
+    const allEvents = (formData.getAll("event") || []).map((x) => x.toString());
 
-  return { allEvents };
+    allEvents.push(eventName);
+
+    return { allEvents };
+  }
+
+  if (type === "set-flag") {
+    return {};
+  }
+
+  return {};
 };
 
 interface LoaderData {
   distinctEventName: Array<string>;
+  flags: Array<Flag>;
 }
 
 export const loader: LoaderFunction = async ({
   request,
+  params,
 }): Promise<LoaderData> => {
   const session = await getSession(request.headers.get("Cookie"));
   const url = new URL(request.url);
@@ -79,6 +93,7 @@ export const loader: LoaderFunction = async ({
   end.setDate(end.getDate() + 1);
 
   const authCookie = session.get("auth-cookie");
+  const flags: Array<Flag> = await getProjectFlags(params.id!, authCookie);
   const { distinctEventName } = await getDistinctEventName(
     envId!,
     start,
@@ -86,12 +101,12 @@ export const loader: LoaderFunction = async ({
     authCookie
   );
 
-  return { distinctEventName };
+  return { distinctEventName, flags };
 };
 
-export default function EnvInsights() {
+export default function FunnelsPage() {
   const { project } = useProject();
-  const { distinctEventName } = useLoaderData<LoaderData>();
+  const { distinctEventName, flags } = useLoaderData<LoaderData>();
   const actionData = useActionData<ActionData>();
   const allEvents = actionData?.allEvents || [];
 
@@ -101,6 +116,11 @@ export default function EnvInsights() {
       value: eventName,
       label: eventName,
     }));
+
+  const flagOptions = flags.map((flag) => ({
+    label: flag.name,
+    value: flag.uuid,
+  }));
 
   return (
     <DashboardLayout subNav={<ProjectNavBar project={project} />}>
@@ -127,20 +147,38 @@ export default function EnvInsights() {
             }))}
           />
 
-          <Form method="POST">
-            {allEvents.map((ev) => (
-              <input type="hidden" value={ev} name="event" key={ev} />
-            ))}
+          <CardContent>
+            <Form method="POST">
+              {allEvents.map((ev) => (
+                <input type="hidden" value={ev} name="event" key={ev} />
+              ))}
 
-            <FormGroup>
-              <SelectField
-                name="event-name"
-                label="Event"
-                options={selectOptions}
-              />
-              <SubmitButton>Add metric</SubmitButton>
-            </FormGroup>
-          </Form>
+              <div className="grid grid-cols-2 gap-8">
+                <FormGroup>
+                  <input type="hidden" name="_type" value="set-flag" />
+
+                  <SelectField
+                    name="flag-name"
+                    label="Feature flag"
+                    options={flagOptions}
+                  />
+
+                  <SubmitButton variant="secondary">Set flag</SubmitButton>
+                </FormGroup>
+
+                <FormGroup>
+                  <input type="hidden" name="_type" value="add-metric-name" />
+
+                  <SelectField
+                    name="event-name"
+                    label="Event"
+                    options={selectOptions}
+                  />
+                  <SubmitButton variant="secondary">Add metric</SubmitButton>
+                </FormGroup>
+              </div>
+            </Form>
+          </CardContent>
         </Card>
       </Section>
     </DashboardLayout>
