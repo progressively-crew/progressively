@@ -29,6 +29,8 @@ import { getDistinctEventName } from "~/modules/environments/services/getDistinc
 import { Flag } from "~/modules/flags/types";
 import { getProjectFlags } from "~/modules/projects/services/getProjectFlags";
 import { getAllFlagHitsForRange } from "~/modules/flags/services/getAllFlagHitsForRange";
+import { Variant } from "~/modules/variants/types";
+import { getVariants } from "~/modules/variants/services/getVariants";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -67,6 +69,7 @@ export const action: ActionFunction = async ({
 interface LoaderData {
   distinctEventName: Array<string>;
   flags: Array<Flag>;
+  variants: Array<Variant>;
   allFlagHitsForRange: number;
 }
 
@@ -79,6 +82,7 @@ export const loader: LoaderFunction = async ({
   const search = new URLSearchParams(url.search);
   const envId = search.get("envId");
   const flagId = search.get("flagId");
+  const variant = search.get("variant");
 
   if (!envId) {
     throw redirect("/401");
@@ -99,16 +103,23 @@ export const loader: LoaderFunction = async ({
   const authCookie = session.get("auth-cookie");
 
   let allFlagHitsForRange = 0;
+  let variants: Array<Variant> = [];
 
   if (flagId) {
-    const { hitsForRange } = await getAllFlagHitsForRange(
-      envId,
-      flagId,
-      start,
-      end,
-      authCookie
-    );
-    allFlagHitsForRange = hitsForRange;
+    if (variant) {
+      const { hitsForRange } = await getAllFlagHitsForRange(
+        envId,
+        flagId,
+        variant,
+        start,
+        end,
+        authCookie
+      );
+
+      allFlagHitsForRange = hitsForRange;
+    }
+
+    variants = await getVariants(envId, flagId, authCookie);
   }
 
   const flags: Array<Flag> = await getProjectFlags(params.id!, authCookie);
@@ -119,18 +130,19 @@ export const loader: LoaderFunction = async ({
     authCookie
   );
 
-  return { distinctEventName, flags, allFlagHitsForRange };
+  return { distinctEventName, flags, allFlagHitsForRange, variants };
 };
 
 export default function FunnelsPage() {
   const { project } = useProject();
-  const { distinctEventName, flags, allFlagHitsForRange } =
+  const { distinctEventName, flags, allFlagHitsForRange, variants } =
     useLoaderData<LoaderData>();
   const [searchParams, setSearchParams] = useSearchParams();
   const actionData = useActionData<ActionData>();
   const allEvents = actionData?.allEvents || [];
 
   const flagId = searchParams.get("flagId");
+  const variantId = searchParams.get("variantId");
 
   const selectOptions = distinctEventName
     .filter((eventName) => !allEvents.includes(eventName))
@@ -147,6 +159,14 @@ export default function FunnelsPage() {
   const setSearchFlagId = (nextFlagId: string) =>
     setSearchParams((prev) => {
       prev.set("flagId", nextFlagId);
+      prev.delete("variantId");
+
+      return prev;
+    });
+
+  const setSearchVariant = (variantId: string) =>
+    setSearchParams((prev) => {
+      prev.set("variantId", variantId);
 
       return prev;
     });
@@ -158,6 +178,16 @@ export default function FunnelsPage() {
       eventName: "Flag evaluation",
       count: allFlagHitsForRange,
     });
+  }
+
+  const variantOptions = [{ label: "False", value: "false" }];
+
+  if (variants.length > 0) {
+    for (const variant of variants) {
+      variantOptions.push({ label: variant.value, value: variant.value });
+    }
+  } else {
+    variantOptions.push({ label: "True", value: "true" });
   }
 
   return (
@@ -188,6 +218,14 @@ export default function FunnelsPage() {
                 options={flagOptions}
                 onValueChange={(e) => setSearchFlagId(e)}
                 defaultValue={flagId || ""}
+              />
+
+              <SelectField
+                name="variant"
+                label="Feature flag variant"
+                options={variantOptions}
+                onValueChange={(e) => setSearchVariant(e)}
+                defaultValue={variantId || ""}
               />
 
               <Form method="POST">
