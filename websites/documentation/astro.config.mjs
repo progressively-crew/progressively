@@ -27,18 +27,14 @@ export default defineConfig({
         {
           label: "Guides",
           items: [
-            { label: "Using the CLI", link: "/guides/using-the-cli" },
-            // Each item here is one entry in the navigation menu.
-            { label: "Deploy to Render", link: "/guides/deploy-to-render" },
             {
-              label: "Deploy with Docker Compose",
-              link: "/guides/deploy-docker-compose",
+              label: "Deploy Progressively",
+              link: "/guides/deployments",
             },
             {
-              label: "Deploy with Docker",
-              link: "/guides/deploy-docker",
+              label: "Using the CLI",
+              link: "/guides/cli",
             },
-
             { label: "Development setup", link: "/guides/development-setup" },
           ],
         },

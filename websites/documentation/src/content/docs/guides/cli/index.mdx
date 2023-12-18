@@ -3,22 +3,14 @@ title: Using the CLI
 description: Use Progressively with the CLI
 ---
 
-With Progressively, it's possible to manage your feature flag from your terminal using `@progressively/cli`.
+import { LinkCard, CardGrid } from '@astrojs/starlight/components';
 
-## Prerequisite
-
-- [Node 18+](https://nodejs.org/en) (NPM basically)
-- A running instance of [Progressively](https://progressively.app/) (accessible on the http/https protocol)
+With Progressively, it's possible to manage your feature flag from your terminal using `@progressively/cli`. A running instance of [Progressively](https://progressively.app/) (accessible on the http/https protocol)
 
 ## Installation
 
 ```sh
 $ npm i -g @progressively/cli
-```
-
-## Usage 
-
-```sh
 $ progressively help
 
 CLI to manage Progressively feature flags
@@ -40,3 +32,10 @@ COMMANDS
   register  Register an admin user
   types     Generate types based on your Progressively instance
 ```
+
+## Usage
+
+<CardGrid>
+  <LinkCard title="Toggling a flag" href="/guides/cli/toggle-flag" description="Configure your local env and trigger a feature flag using the CLI." />
+  <LinkCard title="Generate TypeScript types" href="/guides/cli/typescript" description="Configure your local env and generate Typescript types for a given env."/>
+</CardGrid>
