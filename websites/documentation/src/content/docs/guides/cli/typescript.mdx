@@ -2,3 +2,45 @@
 title: Generate TypeScript types
 description: Configure your local env and generate Typescript types for a given env.
 ---
+
+With Progressively, you can generate TypeScript types from a remote feature flag configuration. For instance, if your feature flag can have 3 variants `A`, `B`, `C`, then Progressively can generates type matching these three values.
+
+To generate TypeScript types from the cli, you will use the following command:
+
+```sh
+$ progressively types
+```
+
+### The first run of the command
+
+One the first run of the command, you will be asked to answer a bunch of questions to setup your local env in accordance to your Progressively instance. On subsequent run, types will be generated directly without asking anything.
+
+```sh
+$ progressively types
+
+	You'll start the configuration of the Progressively CLI
+	What is URL of your Progressively instance? https://progressively-backend.onrender.com
+	
+	What is your email? marvin.frachet@gmail.com
+	What is your password? **************
+	Authentication... done
+
+	Your access token has been stored in the config located at ~/example/nextjs/config.json
+
+	Current project : mfrachet.com
+
+	Which env do you want to use? Production
+	Secret key set up. You can now request your flags
+
+	Your types file has been generated at ~/example/nextjs/node_modules/@types/@progressively/index.d.ts
+```
+
+### Subsequent runs
+
+On subsequent run, you'll only be asked to choose a flag on the given environment and generate the types for it. If you want to change the active environment, you can run `$ progressively env`.
+
+```sh
+$ progressively types
+
+	Your types file has been generated at ~/example/nextjs/node_modules/@types/@progressively/index.d.ts
+```
