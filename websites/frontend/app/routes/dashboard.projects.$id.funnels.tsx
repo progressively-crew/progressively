@@ -12,7 +12,7 @@ import { InsightsFilters } from "~/modules/projects/components/InsightsFilters";
 import { BarChart } from "~/components/BarChart";
 import { Typography } from "~/components/Typography";
 import { CreateButton } from "~/components/Buttons/CreateButton";
-import { Outlet } from "@remix-run/react";
+import { Outlet, useSearchParams } from "@remix-run/react";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -28,6 +28,7 @@ export const meta: V2_MetaFunction = ({ matches, params }) => {
 
 export default function FunnelsPage() {
   const { project } = useProject();
+  const [searchParams] = useSearchParams();
   const chartData = [
     {
       name: "New homepage",
@@ -39,6 +40,8 @@ export default function FunnelsPage() {
     },
   ];
 
+  const envId = searchParams.get("envId") || project.environments[0] || "";
+
   return (
     <>
       <DashboardLayout subNav={<ProjectNavBar project={project} />}>
@@ -46,7 +49,9 @@ export default function FunnelsPage() {
           value="Funnels"
           action={
             <div className="flex flex-row items-center gap-8">
-              <CreateButton to="./create">Create a funnel</CreateButton>
+              <CreateButton to={`./${envId}/create`}>
+                Create a funnel
+              </CreateButton>
               <InsightsFilters
                 projectId={project.uuid}
                 environments={project.environments}

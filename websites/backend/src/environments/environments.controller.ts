@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  Body,
   Controller,
   Delete,
   Get,
@@ -7,6 +8,7 @@ import {
   Post,
   Query,
   UseGuards,
+  UsePipes,
 } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
@@ -14,6 +16,11 @@ import { Roles } from '../shared/decorators/Roles';
 import { UserRoles } from '../users/roles';
 import { EnvironmentsService } from './environments.service';
 import { HasEnvironmentAccessGuard } from './guards/hasEnvAccess';
+import { ValidationPipe } from '../shared/pipes/ValidationPipe';
+import {
+  FunnelCreationDTO,
+  FunnelCreationSchema,
+} from '../funnels/funnels.dto';
 
 @ApiBearerAuth()
 @Controller('environments')
@@ -50,6 +57,17 @@ export class EnvironmentsController {
   @UseGuards(JwtAuthGuard)
   rotateSecretKey(@Param('envId') envId: string) {
     return this.envService.rotateSecretKey(envId);
+  }
+
+  /**
+   * Delete an environment on a given project (by project id AND env id)
+   */
+  @Post(':envId/funnels')
+  @UseGuards(HasEnvironmentAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(new ValidationPipe(FunnelCreationSchema))
+  createFunnel(@Param('envId') envId: string, @Body() body: FunnelCreationDTO) {
+    return this.envService.createFunnel(envId, body.name);
   }
 
   @Get(':envId/metrics/count')

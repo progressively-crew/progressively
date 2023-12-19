@@ -1,5 +1,11 @@
 import { ActionFunction, redirect, V2_MetaFunction } from "@remix-run/node";
-import { useActionData, Form, useNavigation } from "@remix-run/react";
+import {
+  useActionData,
+  Form,
+  useNavigation,
+  useParams,
+  useSearchParams,
+} from "@remix-run/react";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { FormGroup } from "~/components/Fields/FormGroup";
@@ -11,7 +17,7 @@ import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaT
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 import { DialogCloseBtn } from "~/components/Dialog/Dialog";
-import { createFunnel } from "~/modules/projects/services/createFunnel";
+import { createFunnel } from "~/modules/environments/services/createFunnel";
 
 export const meta: V2_MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -32,6 +38,7 @@ export const action: ActionFunction = async ({
   params,
 }): Promise<ActionData | Response> => {
   const projectId = params.id!;
+  const envId = params.env!;
   const formData = await request.formData();
   const name = formData.get("funnel-name")?.toString();
 
@@ -48,14 +55,14 @@ export const action: ActionFunction = async ({
   const session = await getSession(request.headers.get("Cookie"));
 
   try {
-    const newFlag: Flag = await createFunnel(
-      projectId,
+    const newFunnel: Flag = await createFunnel(
+      envId,
       name!,
       session.get("auth-cookie")
     );
 
     return redirect(
-      `/dashboard/projects/${projectId}/funnels?newFunnelId=${newFlag.uuid}#funnel-added`
+      `/dashboard/projects/${projectId}/funnels?newFunnelId=${newFunnel.uuid}&envId=${envId}#funnel-added`
     );
   } catch (error: unknown) {
     if (error instanceof Error) {
@@ -70,6 +77,7 @@ export default function CreateFunnel() {
   const { project } = useProject();
   const data = useActionData<ActionData>();
   const navigation = useNavigation();
+  const params = useParams();
 
   const errors = data?.errors;
 
@@ -91,7 +99,7 @@ export default function CreateFunnel() {
         }
         closeSlot={
           <DialogCloseBtn
-            to={`/dashboard/projects/${project.uuid}/funnels`}
+            to={`/dashboard/projects/${project.uuid}/funnels?envId=${params.env}`}
             label={`Back to funnels`}
           />
         }

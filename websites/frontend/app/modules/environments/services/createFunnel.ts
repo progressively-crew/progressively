@@ -1,11 +1,11 @@
 import { Constants } from "~/constants";
 
 export const createFunnel = (
-  projectId: string,
+  envId: string,
   name: string,
   accessToken: string
 ) =>
-  fetch(`${Constants.BackendUrl}/projects/${projectId}/funnels`, {
+  fetch(`${Constants.BackendUrl}/environments/${envId}/funnels`, {
     method: "POST",
     body: JSON.stringify({ name }),
     headers: {
