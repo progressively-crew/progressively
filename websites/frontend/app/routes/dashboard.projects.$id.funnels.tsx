@@ -11,8 +11,8 @@ import { ProjectNavBar } from "~/modules/projects/components/ProjectNavBar";
 import { InsightsFilters } from "~/modules/projects/components/InsightsFilters";
 import { BarChart } from "~/components/BarChart";
 import { Typography } from "~/components/Typography";
-import { Button } from "~/components/Buttons/Button";
 import { CreateButton } from "~/components/Buttons/CreateButton";
+import { Outlet } from "@remix-run/react";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -40,47 +40,51 @@ export default function FunnelsPage() {
   ];
 
   return (
-    <DashboardLayout subNav={<ProjectNavBar project={project} />}>
-      <PageTitle
-        value="Funnels"
-        action={
-          <div className="flex flex-row items-center gap-8">
-            <CreateButton>Create a funnel</CreateButton>
-            <InsightsFilters
-              projectId={project.uuid}
-              environments={project.environments}
-            />
+    <>
+      <DashboardLayout subNav={<ProjectNavBar project={project} />}>
+        <PageTitle
+          value="Funnels"
+          action={
+            <div className="flex flex-row items-center gap-8">
+              <CreateButton to="./create">Create a funnel</CreateButton>
+              <InsightsFilters
+                projectId={project.uuid}
+                environments={project.environments}
+              />
+            </div>
+          }
+        />
+        <Section>
+          <div className="grid grid-cols-2 gap-8">
+            {Array.from({ length: 4 })
+              .fill(0)
+              .map((_, idx) => (
+                <Card key={idx}>
+                  <CardContent>
+                    <div className="flex flex-row justify-between">
+                      <div>
+                        <Typography
+                          as="h2"
+                          className="font-semibold text-xl pb-4"
+                        >
+                          Funnel name
+                        </Typography>
+                        <Typography className="text-6xl font-extrabold">
+                          5%
+                        </Typography>
+                      </div>
+                      <div className="flex flex-row gap-4 items-center">
+                        <BarChart data={chartData} />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
           </div>
-        }
-      />
-      <Section>
-        <div className="grid grid-cols-2 gap-8">
-          {Array.from({ length: 4 })
-            .fill(0)
-            .map((_, idx) => (
-              <Card key={idx}>
-                <CardContent>
-                  <div className="flex flex-row justify-between">
-                    <div>
-                      <Typography
-                        as="h2"
-                        className="font-semibold text-xl pb-4"
-                      >
-                        Funnel name
-                      </Typography>
-                      <Typography className="text-6xl font-extrabold">
-                        5%
-                      </Typography>
-                    </div>
-                    <div className="flex flex-row gap-4 items-center">
-                      <BarChart data={chartData} />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-        </div>
-      </Section>
-    </DashboardLayout>
+        </Section>
+      </DashboardLayout>
+
+      <Outlet />
+    </>
   );
 }
