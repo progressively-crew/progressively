@@ -25,7 +25,7 @@ import { DialogCloseBtn } from "~/components/Dialog/Dialog";
 import { createFunnel } from "~/modules/environments/services/createFunnel";
 import { getDistinctEventName } from "~/modules/environments/services/getDistinctEventName";
 import { SelectField } from "~/components/Fields/Select/SelectField";
-import { useReducer } from "react";
+import { useMemo, useReducer } from "react";
 import { Typography } from "~/components/Typography";
 import { getFlagsByProjectEnv } from "~/modules/flags/services/getFlagsByProjectEnv";
 import {
@@ -33,6 +33,7 @@ import {
   getInitialState,
   initialState,
 } from "~/modules/environments/reducers/funnelCreationReducer";
+import { Variant } from "~/modules/variants/types";
 
 export const meta: V2_MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -150,12 +151,27 @@ export default function CreateFunnel() {
     () => getInitialState(flagEnvs, eventNames)
   );
 
+  const flagEnvDict = useMemo(() => {
+    // eslint-disable-next-line unicorn/no-array-reduce
+    return flagEnvs.reduce((acc, curr) => {
+      acc[curr.flagId] = curr;
+      return acc;
+    }, {} as Record<string, FlagEnv>);
+  }, []);
+
   const { funnelEntries, eventNameOptions, flagEnvsOptions } = state;
   const errors = data?.errors;
 
-  const selectFlag = (flagId: string) => dispatch({ type: "SET_FLAG", flagId });
+  const selectFlag = (flagId: string) => {
+    dispatch({ type: "SET_FLAG", flagId });
+  };
+
   const selectEventName = (eventName: string) =>
     dispatch({ type: "SET_EVENT", eventName });
+
+  const selectVariant = (flagId: string, variant: string) => {
+    dispatch({ type: "SET_VARIANT", flagId, variant });
+  };
 
   return (
     <Form method="post" className="flex flex-col flex-1">
@@ -206,6 +222,26 @@ export default function CreateFunnel() {
 
           <ol className="list-decimal px-4">
             {funnelEntries.map((funnelEntry) => {
+              const flagEnv = funnelEntry.flagUuid
+                ? flagEnvDict[funnelEntry.flagUuid]
+                : undefined;
+
+              let variants: Array<{ label: string; value: string }> | undefined;
+
+              if (flagEnv) {
+                variants = [];
+                variants =
+                  flagEnv.variants.length > 0
+                    ? flagEnv?.variants.map((v) => ({
+                        label: v.value,
+                        value: v.value,
+                      }))
+                    : [true, false].map((v) => ({
+                        label: String(v),
+                        value: String(v),
+                      }));
+              }
+
               return (
                 <li key={funnelEntry.eventName || funnelEntry.flagUuid}>
                   <input
@@ -216,6 +252,15 @@ export default function CreateFunnel() {
                   <Typography as="span" className="text-sm">
                     {funnelEntry.eventName || funnelEntry.flagName || ""}
                   </Typography>
+
+                  {variants && (
+                    <SelectField
+                      label={"Variant name"}
+                      options={variants}
+                      name={"variant-name"}
+                      onValueChange={(v) => selectVariant(flagEnv!.flagId!, v)}
+                    />
+                  )}
                 </li>
               );
             })}

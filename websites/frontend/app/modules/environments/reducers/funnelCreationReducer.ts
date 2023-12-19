@@ -3,7 +3,8 @@ import { CreateFunnelEntryDTO } from "../types";
 
 export type ActionType =
   | { type: "SET_FLAG"; flagId: string }
-  | { type: "SET_EVENT"; eventName: string };
+  | { type: "SET_EVENT"; eventName: string }
+  | { type: "SET_VARIANT"; flagId: string; variant: string };
 
 export interface FunnelCreationState {
   funnelEntries: Array<CreateFunnelEntryDTO>;
