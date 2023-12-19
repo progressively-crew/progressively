@@ -1,5 +1,5 @@
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { V2_MetaFunction } from "@remix-run/node";
+import { LoaderFunction, V2_MetaFunction, redirect } from "@remix-run/node";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
@@ -12,7 +12,10 @@ import { InsightsFilters } from "~/modules/projects/components/InsightsFilters";
 import { BarChart } from "~/components/BarChart";
 import { Typography } from "~/components/Typography";
 import { CreateButton } from "~/components/Buttons/CreateButton";
-import { Outlet, useSearchParams } from "@remix-run/react";
+import { Outlet, useLoaderData, useSearchParams } from "@remix-run/react";
+import { getFunnels } from "~/modules/environments/services/getFunnels";
+import { Funnel } from "~/modules/environments/types";
+import { getSession } from "~/sessions";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -26,8 +29,49 @@ export const meta: V2_MetaFunction = ({ matches, params }) => {
   ];
 };
 
+export interface LoaderData {
+  funnels: Array<Funnel>;
+}
+
+export const loader: LoaderFunction = async ({
+  request,
+}): Promise<LoaderData> => {
+  const session = await getSession(request.headers.get("Cookie"));
+  const url = new URL(request.url);
+  const search = new URLSearchParams(url.search);
+  const envId = search.get("envId");
+
+  if (!envId) {
+    throw redirect("/401");
+  }
+
+  const strDays = search.get("days");
+  let day = Number(strDays);
+  if (!day || Number.isNaN(day)) {
+    day = 7;
+  }
+
+  const start = new Date();
+  start.setDate(start.getDate() - day);
+
+  const end = new Date();
+  end.setDate(end.getDate() + 1);
+
+  const authCookie = session.get("auth-cookie");
+
+  const funnels: Array<Funnel> = await getFunnels(
+    envId,
+    start,
+    end,
+    authCookie
+  );
+
+  return { funnels };
+};
+
 export default function FunnelsPage() {
   const { project } = useProject();
+  const { funnels } = useLoaderData<LoaderData>();
   const [searchParams] = useSearchParams();
   const chartData = [
     {
@@ -61,30 +105,28 @@ export default function FunnelsPage() {
         />
         <Section>
           <div className="grid grid-cols-2 gap-8">
-            {Array.from({ length: 4 })
-              .fill(0)
-              .map((_, idx) => (
-                <Card key={idx}>
-                  <CardContent>
-                    <div className="flex flex-row justify-between">
-                      <div>
-                        <Typography
-                          as="h2"
-                          className="font-semibold text-xl pb-4"
-                        >
-                          Funnel name
-                        </Typography>
-                        <Typography className="text-6xl font-extrabold">
-                          5%
-                        </Typography>
-                      </div>
-                      <div className="flex flex-row gap-4 items-center">
-                        <BarChart data={chartData} />
-                      </div>
+            {funnels.map((funnel) => (
+              <Card key={funnel.uuid}>
+                <CardContent>
+                  <div className="flex flex-row justify-between">
+                    <div>
+                      <Typography
+                        as="h2"
+                        className="font-semibold text-xl pb-4"
+                      >
+                        {funnel.name}
+                      </Typography>
+                      <Typography className="text-6xl font-extrabold">
+                        5%
+                      </Typography>
                     </div>
-                  </CardContent>
-                </Card>
-              ))}
+                    <div className="flex flex-row gap-4 items-center">
+                      <BarChart data={chartData} />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </Section>
       </DashboardLayout>
