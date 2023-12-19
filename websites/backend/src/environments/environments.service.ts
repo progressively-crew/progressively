@@ -394,4 +394,13 @@ export class EnvironmentsService {
       },
     });
   }
+
+  createFunnel(envId: string, funnelName: string) {
+    return this.prisma.funnel.create({
+      data: {
+        environmentUuid: envId,
+        name: funnelName,
+      },
+    });
+  }
 }

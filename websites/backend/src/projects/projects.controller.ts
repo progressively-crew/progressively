@@ -40,6 +40,7 @@ import { MailService } from '../mail/mail.service';
 import { Environment } from '../environments/types';
 import { FlagCreationDTO, FlagCreationSchema } from '../flags/flags.dto';
 import { FlagAlreadyExists } from './errors';
+
 @ApiBearerAuth()
 @Controller('projects')
 export class ProjectsController {
