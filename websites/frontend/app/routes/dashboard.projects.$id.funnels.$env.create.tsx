@@ -240,14 +240,16 @@ export default function CreateFunnel() {
 
               return (
                 <li key={funnelEntry.eventName || funnelEntry.flagUuid}>
-                  <input
-                    type="hidden"
-                    name="funnel-entry"
-                    value={JSON.stringify(funnelEntry)}
-                  />
-                  <Typography as="span" className="text-sm">
-                    {funnelEntry.eventName || funnelEntry.flagName || ""}
-                  </Typography>
+                  <div>
+                    <input
+                      type="hidden"
+                      name="funnel-entry"
+                      value={JSON.stringify(funnelEntry)}
+                    />
+                    <Typography as="span" className="text-sm">
+                      {funnelEntry.eventName || funnelEntry.flagName || ""}
+                    </Typography>
+                  </div>
 
                   {variants && (
                     <SelectField
