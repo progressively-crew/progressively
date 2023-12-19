@@ -26,7 +26,7 @@ export interface Funnel {
 }
 
 export interface CreateFunnelEntryDTO {
-  flag?: Flag;
   flagUuid?: string;
+  flagName?: string;
   eventName?: string;
 }

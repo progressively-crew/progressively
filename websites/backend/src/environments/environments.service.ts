@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
 import { PrismaService } from '../database/prisma.service';
 import { PopulatedFlagEnv } from '../flags/types';
+import { CreateFunnelEntryDTO } from '../funnels/funnels.dto';
 
 @Injectable()
 export class EnvironmentsService {
@@ -395,11 +396,23 @@ export class EnvironmentsService {
     });
   }
 
-  createFunnel(envId: string, funnelName: string) {
+  createFunnel(
+    envId: string,
+    funnelName: string,
+    funnelEntries: Array<CreateFunnelEntryDTO>,
+  ) {
     return this.prisma.funnel.create({
       data: {
         environmentUuid: envId,
         name: funnelName,
+        funnelEntries: {
+          createMany: {
+            data: funnelEntries.map((funnelEntry) => ({
+              flagUuid: funnelEntry.flagUuid || null,
+              eventName: funnelEntry.eventName || null,
+            })),
+          },
+        },
       },
     });
   }

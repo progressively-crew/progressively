@@ -67,7 +67,7 @@ export class EnvironmentsController {
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(FunnelCreationSchema))
   createFunnel(@Param('envId') envId: string, @Body() body: FunnelCreationDTO) {
-    return this.envService.createFunnel(envId, body.name);
+    return this.envService.createFunnel(envId, body.name, body.funnelEntries);
   }
 
   @Get(':envId/metrics/count')
