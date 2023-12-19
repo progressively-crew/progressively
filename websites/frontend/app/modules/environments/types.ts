@@ -1,4 +1,4 @@
-import { Flag, FlagEnv } from "../flags/types";
+import { FlagEnv } from "../flags/types";
 
 export interface Environment {
   uuid: string;
