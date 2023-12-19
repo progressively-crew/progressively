@@ -216,7 +216,7 @@ export default function CreateFunnel() {
             />
           </div>
 
-          <ol className="list-decimal px-4">
+          <ol className="flex flex-col gap-1">
             {funnelEntries.map((funnelEntry) => {
               const flagEnv = funnelEntry.flagUuid
                 ? flagEnvDict[funnelEntry.flagUuid]
@@ -239,14 +239,17 @@ export default function CreateFunnel() {
               }
 
               return (
-                <li key={funnelEntry.eventName || funnelEntry.flagUuid}>
+                <li
+                  key={funnelEntry.eventName || funnelEntry.flagUuid}
+                  className="flex flex-row justify-between dark:bg-slate-700 bg-slate-50 pr-2 pl-4 rounded-lg items-center h-14"
+                >
                   <div>
                     <input
                       type="hidden"
                       name="funnel-entry"
                       value={JSON.stringify(funnelEntry)}
                     />
-                    <Typography as="span" className="text-sm">
+                    <Typography as="span" className="text-sm font-semibold">
                       {funnelEntry.eventName || funnelEntry.flagName || ""}
                     </Typography>
                   </div>
@@ -257,6 +260,7 @@ export default function CreateFunnel() {
                       options={variants}
                       name={"variant-name"}
                       onValueChange={(v) => selectVariant(flagEnv!.flagId!, v)}
+                      hiddenLabel
                     />
                   )}
                 </li>
