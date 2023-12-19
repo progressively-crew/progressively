@@ -98,6 +98,21 @@ export class EnvironmentsController {
     return { metricCount, pageViewCount };
   }
 
+  @Get(':envId/funnels')
+  @UseGuards(HasEnvironmentAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  async getFunnels(
+    @Param('envId') envId: string,
+    @Query('startDate') startDate: string | undefined,
+    @Query('endDate') endDate: string | undefined,
+  ) {
+    if (!endDate || !startDate) {
+      throw new BadRequestException('startDate and endDate are required.');
+    }
+
+    return this.envService.getFunnels(envId);
+  }
+
   @Get(':envId/events')
   @UseGuards(HasEnvironmentAccessGuard)
   @UseGuards(JwtAuthGuard)

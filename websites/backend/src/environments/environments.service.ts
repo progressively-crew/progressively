@@ -403,4 +403,12 @@ export class EnvironmentsService {
       },
     });
   }
+
+  getFunnels(envId: string) {
+    return this.prisma.funnel.findMany({
+      where: {
+        environmentUuid: envId,
+      },
+    });
+  }
 }
