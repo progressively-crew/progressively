@@ -25,6 +25,10 @@ import { DialogCloseBtn } from "~/components/Dialog/Dialog";
 import { createFunnel } from "~/modules/environments/services/createFunnel";
 import { getDistinctEventName } from "~/modules/environments/services/getDistinctEventName";
 import { SelectField } from "~/components/Fields/Select/SelectField";
+import { useState } from "react";
+import { CreateFunnelEntryDTO } from "~/modules/environments/types";
+import { getProjectFlags } from "~/modules/projects/services/getProjectFlags";
+import { Typography } from "~/components/Typography";
 
 export const meta: V2_MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -42,6 +46,7 @@ interface ActionData {
 
 interface LoaderData {
   eventNames: Array<string>;
+  flags: Array<Flag>;
 }
 
 export const action: ActionFunction = async ({
@@ -111,6 +116,7 @@ export const loader: LoaderFunction = async ({
 
   const authCookie = session.get("auth-cookie");
 
+  const flags: Array<Flag> = await getProjectFlags(params.id!, authCookie);
   const eventNames: Array<string> = await getDistinctEventName(
     envId,
     start,
@@ -118,19 +124,37 @@ export const loader: LoaderFunction = async ({
     authCookie
   );
 
-  return { eventNames };
+  return { eventNames, flags };
 };
 
 export default function CreateFunnel() {
   const { project } = useProject();
+  const [funnelEntries, setFunnelEntries] = useState<
+    Array<CreateFunnelEntryDTO>
+  >([]);
+
   const data = useActionData<ActionData>();
-  const { eventNames } = useLoaderData<LoaderData>();
+  const { eventNames, flags } = useLoaderData<LoaderData>();
   const navigation = useNavigation();
   const params = useParams();
 
   const errors = data?.errors;
 
-  const eventNamesOptions = eventNames.map((ev) => ({ label: ev, value: ev }));
+  const eventNamesOptions = eventNames
+    .filter((ev) => !funnelEntries.some((x) => x.eventName === ev))
+    .map((ev) => ({ label: ev, value: ev }));
+
+  const flagOptions = flags
+    .filter((flag) => !funnelEntries.some((x) => x.flagUuid === flag.uuid))
+    .map((flag) => ({ label: flag.name, value: flag.uuid }));
+
+  const selectEventName = (eventName: string) =>
+    setFunnelEntries((s) => [...s, { eventName }]);
+
+  const selectFlagName = (flagUuid: string) => {
+    const flag = flags.find((flag) => flag.uuid === flagUuid);
+    setFunnelEntries((s) => [...s, { flagUuid, flag }]);
+  };
 
   return (
     <Form method="post" className="flex flex-col flex-1">
@@ -162,11 +186,32 @@ export default function CreateFunnel() {
             label="Flag name"
             placeholder="e.g: New Homepage"
           />
-          <SelectField
-            label={"Event name"}
-            options={eventNamesOptions}
-            name={"event-name"}
-          />
+
+          <div className="grid grid-cols-2 gap-4">
+            <SelectField
+              label={"Event name"}
+              options={eventNamesOptions}
+              name={"event-name"}
+              onValueChange={selectEventName}
+            />
+
+            <SelectField
+              label={"Flag name"}
+              options={flagOptions}
+              name={"flag-name"}
+              onValueChange={selectFlagName}
+            />
+          </div>
+
+          <ol className="list-decimal px-4">
+            {funnelEntries.map((funnelEntry) => (
+              <li key={funnelEntry.eventName || funnelEntry.flagUuid}>
+                <Typography as="span" className="text-sm">
+                  {funnelEntry.eventName || funnelEntry.flag?.name || ""}
+                </Typography>
+              </li>
+            ))}
+          </ol>
         </FormGroup>
       </CreateEntityLayout>
     </Form>

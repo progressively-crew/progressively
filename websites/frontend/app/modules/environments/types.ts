@@ -1,4 +1,4 @@
-import { FlagEnv } from "../flags/types";
+import { Flag, FlagEnv } from "../flags/types";
 
 export interface Environment {
   uuid: string;
@@ -23,4 +23,10 @@ export interface LocalCount {
 export interface Funnel {
   uuid: string;
   name: string;
+}
+
+export interface CreateFunnelEntryDTO {
+  flag?: Flag;
+  flagUuid?: string;
+  eventName?: string;
 }
