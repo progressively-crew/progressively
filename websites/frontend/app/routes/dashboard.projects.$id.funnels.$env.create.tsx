@@ -162,16 +162,13 @@ export default function CreateFunnel() {
   const { funnelEntries, eventNameOptions, flagEnvsOptions } = state;
   const errors = data?.errors;
 
-  const selectFlag = (flagId: string) => {
-    dispatch({ type: "SET_FLAG", flagId });
-  };
+  const selectFlag = (flagId: string) => dispatch({ type: "SET_FLAG", flagId });
 
   const selectEventName = (eventName: string) =>
     dispatch({ type: "SET_EVENT", eventName });
 
-  const selectVariant = (flagId: string, variant: string) => {
+  const selectVariant = (flagId: string, variant: string) =>
     dispatch({ type: "SET_VARIANT", flagId, variant });
-  };
 
   return (
     <Form method="post" className="flex flex-col flex-1">
