@@ -1,9 +1,15 @@
-import { ActionFunction, redirect, V2_MetaFunction } from "@remix-run/node";
+import {
+  ActionFunction,
+  LoaderFunction,
+  redirect,
+  V2_MetaFunction,
+} from "@remix-run/node";
 import {
   useActionData,
   Form,
   useNavigation,
   useParams,
+  useLoaderData,
 } from "@remix-run/react";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
@@ -17,6 +23,8 @@ import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 import { DialogCloseBtn } from "~/components/Dialog/Dialog";
 import { createFunnel } from "~/modules/environments/services/createFunnel";
+import { getDistinctEventName } from "~/modules/environments/services/getDistinctEventName";
+import { SelectField } from "~/components/Fields/Select/SelectField";
 
 export const meta: V2_MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -30,6 +38,10 @@ export const meta: V2_MetaFunction = ({ matches }) => {
 
 interface ActionData {
   errors?: Partial<CreateFlagDTO>;
+}
+
+interface LoaderData {
+  eventNames: Array<string>;
 }
 
 export const action: ActionFunction = async ({
@@ -72,13 +84,53 @@ export const action: ActionFunction = async ({
   }
 };
 
+export const loader: LoaderFunction = async ({
+  request,
+  params,
+}): Promise<LoaderData> => {
+  const session = await getSession(request.headers.get("Cookie"));
+  const url = new URL(request.url);
+  const search = new URLSearchParams(url.search);
+  const envId = params.env;
+
+  if (!envId) {
+    throw redirect("/401");
+  }
+
+  const strDays = search.get("days");
+  let day = Number(strDays);
+  if (!day || Number.isNaN(day)) {
+    day = 7;
+  }
+
+  const start = new Date();
+  start.setDate(start.getDate() - day);
+
+  const end = new Date();
+  end.setDate(end.getDate() + 1);
+
+  const authCookie = session.get("auth-cookie");
+
+  const eventNames: Array<string> = await getDistinctEventName(
+    envId,
+    start,
+    end,
+    authCookie
+  );
+
+  return { eventNames };
+};
+
 export default function CreateFunnel() {
   const { project } = useProject();
   const data = useActionData<ActionData>();
+  const { eventNames } = useLoaderData<LoaderData>();
   const navigation = useNavigation();
   const params = useParams();
 
   const errors = data?.errors;
+
+  const eventNamesOptions = eventNames.map((ev) => ({ label: ev, value: ev }));
 
   return (
     <Form method="post" className="flex flex-col flex-1">
@@ -109,6 +161,11 @@ export default function CreateFunnel() {
             isInvalid={Boolean(errors?.name)}
             label="Flag name"
             placeholder="e.g: New Homepage"
+          />
+          <SelectField
+            label={"Event name"}
+            options={eventNamesOptions}
+            name={"event-name"}
           />
         </FormGroup>
       </CreateEntityLayout>
