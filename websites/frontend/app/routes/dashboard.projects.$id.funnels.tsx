@@ -35,11 +35,12 @@ export interface LoaderData {
 
 export const loader: LoaderFunction = async ({
   request,
+  params,
 }): Promise<LoaderData> => {
   const session = await getSession(request.headers.get("Cookie"));
   const url = new URL(request.url);
   const search = new URLSearchParams(url.search);
-  const envId = search.get("envId");
+  const envId = params.env || search.get("envId");
 
   if (!envId) {
     throw redirect("/401");
