@@ -29,4 +29,5 @@ export interface CreateFunnelEntryDTO {
   flagUuid?: string;
   flagName?: string;
   eventName?: string;
+  variant?: string;
 }

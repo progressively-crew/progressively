@@ -410,6 +410,7 @@ export class EnvironmentsService {
             data: funnelEntries.map((funnelEntry) => ({
               flagUuid: funnelEntry.flagUuid || null,
               eventName: funnelEntry.eventName || null,
+              flagVariant: funnelEntry.variant || null,
             })),
           },
         },

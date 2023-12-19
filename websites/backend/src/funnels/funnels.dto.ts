@@ -7,6 +7,7 @@ export const FunnelCreationSchema = Joi.object({
       flagUuid: Joi.string(),
       eventName: Joi.string(),
       flagName: Joi.string(),
+      variant: Joi.string(),
     }),
   ),
 });
@@ -20,4 +21,5 @@ export interface CreateFunnelEntryDTO {
   flagUuid?: string;
   flagName?: string;
   eventName?: string;
+  variant?: string;
 }

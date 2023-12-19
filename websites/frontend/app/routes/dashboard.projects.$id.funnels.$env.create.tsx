@@ -33,7 +33,6 @@ import {
   getInitialState,
   initialState,
 } from "~/modules/environments/reducers/funnelCreationReducer";
-import { Variant } from "~/modules/variants/types";
 
 export const meta: V2_MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);

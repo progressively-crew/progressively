@@ -63,6 +63,21 @@ export const funnelCreationReducer = (
       return { ...state, funnelEntries, flagEnvsOptions };
     }
 
+    case "SET_VARIANT": {
+      const funnelEntryIndex = state.funnelEntries.findIndex(
+        (x) => x.flagUuid === action.flagId
+      );
+
+      const prevFunnels = state.funnelEntries.slice(0, funnelEntryIndex);
+      const actualFunnel = state.funnelEntries[funnelEntryIndex];
+      const updatedFunnel = { ...actualFunnel, variant: action.variant };
+      const postFunnels = state.funnelEntries.slice(funnelEntryIndex + 1);
+
+      const nextFunnelEntries = [...prevFunnels, updatedFunnel, ...postFunnels];
+
+      return { ...state, funnelEntries: nextFunnelEntries };
+    }
+
     default: {
       return state;
     }
