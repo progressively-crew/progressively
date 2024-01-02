@@ -1,0 +1,42 @@
+---
+import Card from "../Card/Card.astro";
+import QuoteMark from "./QuoteMark.astro";
+export interface Props {
+  authorName: string;
+  authorPict: string;
+  authorJob: string;
+}
+const { authorJob, authorName, authorPict } = Astro.props;
+---
+
+<figure class="flex flex-row gap-8">
+  <blockquote class="flex-1 shrink-0">
+    <Card>
+      <div class="p-6">
+        <QuoteMark />
+
+        <slot />
+
+        <div class="flex items-end rotate-180">
+          <QuoteMark />
+        </div>
+      </div>
+    </Card>
+  </blockquote>
+
+  <figcaption class="flex justify-center mt-6 space-x-3">
+    <img
+      class="w-32 h-32 rounded-full object-cover"
+      src={authorPict}
+      alt={authorName}
+    />
+    <div class="">
+      <div class="text-slate-900 text-3xl font-semibold">
+        {authorName}
+      </div>
+      <div class="text-slate-700 text-xl">
+        {authorJob}
+      </div>
+    </div>
+  </figcaption>
+</figure>
