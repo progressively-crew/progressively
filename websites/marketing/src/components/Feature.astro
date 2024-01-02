@@ -1,0 +1,42 @@
+---
+import Title from "./Title.astro";
+export interface Props {
+  title: string;
+  imageSrc: string;
+  reversed?: boolean;
+}
+
+const { title, reversed } = Astro.props;
+---
+
+<article class="grid grid-cols-[1fr_1fr]">
+  {
+    reversed ? (
+      <img />
+    ) : (
+      <div>
+        <Title as="h3" size="M">
+          {title}
+        </Title>
+
+        <div class="h-4" />
+        <slot />
+      </div>
+    )
+  }
+
+  {
+    reversed ? (
+      <div>
+        <Title as="h3" size="M">
+          {title}
+        </Title>
+
+        <div class="h-4" />
+        <slot />
+      </div>
+    ) : (
+      <img />
+    )
+  }
+</article>

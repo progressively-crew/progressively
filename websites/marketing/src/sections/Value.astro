@@ -1,9 +1,50 @@
 ---
+import Feature from "../components/Feature.astro";
 import Title from "../components/Title.astro";
+import Text from "../components/Text.astro";
+
+const features = [
+  {
+    title: "A better workflow allowing for more frequent deployments",
+    content: [
+      "By simply pulling a trigger, Progressively will bring your hidden features live to your users.",
+      "Your new feature has introduced bugs? Deactivate the feature by pull the trigger the other way.",
+    ],
+    imageSrc: "",
+  },
+  {
+    title: "Gradual deployments",
+    content: [
+      "You don't feel super-safe about releasing your new feature? Start by only rolling it out to 1% or 2% of your audience.",
+      "If your error tracking system yells at you, deactivate your feature and continue gradually your release.",
+    ],
+    imageSrc: "",
+  },
+];
 ---
 
 <section class="max-w-6xl w-full mx-auto py-12">
   <div class="text-center">
     <Title as="h2" size="L">What can you expect from it?</Title>
   </div>
+
+  <ul class="pt-20 flex flex-col gap-12">
+    {
+      features.map((feat, i) => (
+        <li>
+          <Feature
+            title={feat.title}
+            imageSrc={feat.imageSrc}
+            reversed={i % 2 !== 0}
+          >
+            <div class="flex flex-col gap-2">
+              {feat.content.map((c) => (
+                <Text size="L">{c}</Text>
+              ))}
+            </div>
+          </Feature>
+        </li>
+      ))
+    }
+  </ul>
 </section>
