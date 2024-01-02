@@ -2,9 +2,10 @@
 export interface Props {
   variant?: "primary" | "secondary" | "tertiary";
   size?: "L" | "M";
+  href?: string;
 }
 
-const { variant, size } = Astro.props;
+const { variant, size, href } = Astro.props;
 
 const sizeStyles = {
   L: "py-3 px-9 text-xl",
@@ -24,6 +25,8 @@ const sharedStyles = "rounded-full  border-2";
 const styles = `${sharedStyles} ${variantStyles[variant || "primary"]} ${
   sizeStyles[size || "L"]
 }`;
+
+const El = href ? "a" : "button";
 ---
 
-<button class={styles}><slot /></button>
+<El class={styles} href={href}><slot /></El>

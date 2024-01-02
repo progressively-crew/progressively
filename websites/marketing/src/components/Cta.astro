@@ -1,0 +1,28 @@
+---
+import Button from "./Button.astro";
+import Card from "./Card/Card.astro";
+import Title from "./Title.astro";
+
+export interface Props {
+  title: string;
+  actionTxt: string;
+  href: string;
+}
+
+const { title, actionTxt, href } = Astro.props;
+---
+
+<Card variant="success">
+  <div class="p-12">
+    <slot />
+
+    <div class="pt-8 max-w-2xl">
+      <Title as="h2" size="L">
+        {title}
+      </Title>
+      <div class="pt-12">
+        <Button variant="secondary" href={href}>{actionTxt}</Button>
+      </div>
+    </div>
+  </div>
+</Card>

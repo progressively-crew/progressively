@@ -886,6 +886,9 @@ importers:
       '@astrojs/tailwind':
         specifier: ^5.1.0
         version: 5.1.0(astro@4.0.8)(tailwindcss@3.4.0)
+      '@fontsource-variable/playfair-display':
+        specifier: ^5.0.19
+        version: 5.0.19
       astro:
         specifier: ^4.0.8
         version: 4.0.8(typescript@5.3.3)
@@ -8358,6 +8361,10 @@ packages:
       '@floating-ui/dom': 1.4.2
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /@fontsource-variable/playfair-display@5.0.19:
+    resolution: {integrity: sha512-unFQVKMNGYuLeVxnP9ZX2GEyn+VvNYFG5Q5ScZOG8VFuo3z8bwwEMvwQQ2fCjfW/r3e0rmS/0+8tEGLbJEGAOQ==}
     dev: false
 
   /@gar/promisify@1.1.3:

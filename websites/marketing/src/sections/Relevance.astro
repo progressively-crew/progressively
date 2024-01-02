@@ -1,6 +1,7 @@
 ---
 import Card from "../components/Card/Card.astro";
 import CardTitle from "../components/Card/CardTitle.astro";
+import Cta from "../components/Cta.astro";
 import Quote from "../components/Quote/Quote.astro";
 import Text from "../components/Text.astro";
 import Title from "../components/Title.astro";
@@ -65,36 +66,38 @@ const whatProgressivelyBrings = [
       }
     </div>
 
-    <Card variant="success">
-      <div class="p-12">
-        <Quote
-          authorName="Marvin Frachet"
-          authorJob="Frontend Eng @Proton"
-          authorPict="https://avatars.githubusercontent.com/u/3874873?v=4"
-        >
-          <Text size="XL">
-            My intention when building <strong>Progressively</strong> was to create
-            a feature flags tool that is easy and intuitive to use for both the devs
-            and product folks.
-          </Text>
+    <Cta
+      title="Be part of the journey, setup your own instance"
+      actionTxt="Get started"
+      href="https://docs.progressively.app"
+    >
+      <Quote
+        authorName="Marvin Frachet"
+        authorJob="Frontend Eng @Proton"
+        authorPict="https://avatars.githubusercontent.com/u/3874873?v=4"
+      >
+        <Text size="XL">
+          My intention when building <strong>Progressively</strong> was to create
+          a feature flags tool that is easy and intuitive to use for both the devs
+          and product folks.
+        </Text>
 
-          <br />
+        <br />
 
-          <Text size="XL">
-            During the process of crafting it, I realized that <strong
-              >feature flags, A/B tests and analytics</strong
-            > are all in the same bucket and they work altogether.
-          </Text>
+        <Text size="XL">
+          During the process of crafting it, I realized that <strong
+            >feature flags, A/B tests and analytics</strong
+          > are all in the same bucket and they work altogether.
+        </Text>
 
-          <br />
+        <br />
 
-          <Text size="XL">
-            I'm now convinced that its future will be about providing <strong
-              >meaningful data to help people</strong
-            > make decisions when shipping features.
-          </Text>
-        </Quote>
-      </div>
-    </Card>
+        <Text size="XL">
+          I'm now convinced that its future will be about providing <strong
+            >meaningful data to help people</strong
+          > make decisions when shipping features.
+        </Text>
+      </Quote>
+    </Cta>
   </div>
 </section>
