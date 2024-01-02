@@ -1,1 +1,40 @@
-How it works?
+---
+import Card from "../components/Card/Card.astro";
+import Feature from "../components/Feature.astro";
+import Title from "../components/Title.astro";
+import Text from "../components/Text.astro";
+
+const howItWorks = [
+  { title: "1. You setup your instance", imageSrc: "", content: [""] },
+];
+---
+
+<section class="bg-slate-100">
+  <div class="max-w-6xl w-full mx-auto py-12">
+    <div class="text-center pb-12">
+      <Title as="h2" size="L">How it works?</Title>
+    </div>
+
+    <Card>
+      <ul class="pt-20 flex flex-col gap-12 pb-8">
+        {
+          howItWorks.map((feat, i) => (
+            <li>
+              <Feature
+                title={feat.title}
+                imageSrc={feat.imageSrc}
+                reversed={i % 2 !== 0}
+              >
+                <div class="flex flex-col gap-4">
+                  {feat.content.map((c) => (
+                    <Text size="L">{c}</Text>
+                  ))}
+                </div>
+              </Feature>
+            </li>
+          ))
+        }
+      </ul>
+    </Card>
+  </div>
+</section>
