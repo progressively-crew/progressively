@@ -32,3 +32,15 @@ const { title } = Astro.props;
       DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
   }
 </style>
+
+<script>
+  const clientKey = import.meta.env.PUBLIC_PROGRESSIVELY_CLIENT;
+
+  import { Progressively } from "@progressively/sdk-js";
+
+  const sdk = Progressively.init(clientKey, {
+    apiUrl: "https://progressively-backend.onrender.com",
+  });
+
+  sdk.track();
+</script>

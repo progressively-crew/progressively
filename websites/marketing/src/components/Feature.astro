@@ -11,7 +11,7 @@ export interface Props {
 const { title, reversed, imageSrc, noSizeConstraints } = Astro.props;
 ---
 
-<article class="grid grid-cols-[1fr_1fr] items-center">
+<article class="grid md:grid-cols-[1fr_1fr] items-center">
   {
     reversed ? (
       <div class="flex items-center justify-center">

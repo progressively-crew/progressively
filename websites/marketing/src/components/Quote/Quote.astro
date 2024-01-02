@@ -9,7 +9,7 @@ export interface Props {
 const { authorJob, authorName, authorPict } = Astro.props;
 ---
 
-<figure class="flex flex-row gap-8">
+<figure class="flex flex-col lg:flex-row gap-4 md:gap-8">
   <blockquote class="flex-1 shrink-0">
     <Card>
       <div class="p-6">
@@ -24,17 +24,17 @@ const { authorJob, authorName, authorPict } = Astro.props;
     </Card>
   </blockquote>
 
-  <figcaption class="flex justify-center mt-6 space-x-3">
+  <figcaption class="flex justify-center mt-2 md:mt-6 gap-4">
     <img
-      class="w-32 h-32 rounded-full object-cover border-4 border-white"
+      class="h-12 w-12 md:w-32 md:h-32 rounded-full object-cover border-4 border-white"
       src={authorPict}
       alt={authorName}
     />
     <div class="">
-      <div class="text-slate-900 text-3xl font-semibold">
+      <div class="text-slate-900 text-xl md:text-3xl font-semibold">
         {authorName}
       </div>
-      <div class="text-slate-700 text-xl">
+      <div class="text-slate-700 text-base md:text-xl">
         {authorJob}
       </div>
     </div>

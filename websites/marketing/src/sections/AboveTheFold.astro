@@ -7,9 +7,9 @@ import Title from "../components/Title.astro";
 import Text from "../components/Text.astro";
 ---
 
-<div class="relative">
+<div class="relative px-4">
   <div
-    class="max-w-3xl mx-auto pt-64 flex flex-col justify-center text-center relative z-10"
+    class="max-w-3xl mx-auto pt-48 md:pt-64 flex flex-col justify-center text-center relative z-10"
   >
     <Title as="h1" size="XL">
       Build the feature that matters to your audience
@@ -31,7 +31,7 @@ import Text from "../components/Text.astro";
     <Image src={aboveFoldSrc} alt="Analytics view of mfrachet.com" />
   </div>
 
-  <div class="absolute inset-0 w-full h-full">
+  <div class="absolute inset-0 w-full h-full hidden md:block">
     <HeroBg />
   </div>
 </div>

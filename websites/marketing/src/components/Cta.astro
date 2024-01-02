@@ -13,14 +13,14 @@ const { title, actionTxt, href } = Astro.props;
 ---
 
 <Card variant="success">
-  <div class="p-12">
+  <div class="p-2 md:p-12">
     <slot />
 
-    <div class="pt-8 max-w-2xl">
+    <div class="pt-16 md:pt-8 max-w-2xl text-center md:text-left">
       <Title as="h2" size="L">
         {title}
       </Title>
-      <div class="pt-12">
+      <div class="py-8 md:pt-12 md:pb-0">
         <Button variant="secondary" href={href}>{actionTxt}</Button>
       </div>
     </div>
