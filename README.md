@@ -6,7 +6,7 @@
 <br />
 
 <div align="center">
- <a href="https://progrressively-documentation.netlify.app/" target="_blank" rel="noopener noreferrer">Documentation</a>
+ <a href="https://progressively.app/" target="_blank" rel="noopener noreferrer">Documentation</a>
 </div>
 
 ## Get started
