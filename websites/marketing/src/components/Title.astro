@@ -1,0 +1,20 @@
+---
+export interface Props {
+  as?: "h1" | "h2";
+  size?: "XL" | "L";
+}
+
+const { size, as: el } = Astro.props;
+
+const sizeStyles = {
+  XL: "text-6xl",
+  L: "text-2xl",
+};
+
+const sharedStyle = "text-slate-900 font-extrabold font-title";
+const styles = `${sharedStyle} ${sizeStyles[size || "XL"]}`;
+
+const El = el || "p";
+---
+
+<El class={styles}><slot /></El>

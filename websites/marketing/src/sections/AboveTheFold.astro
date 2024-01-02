@@ -3,15 +3,16 @@ import { Image } from "astro:assets";
 import Button from "../components/Button.astro";
 import HeroBg from "../components/HeroBg.astro";
 import aboveFoldSrc from "./assets/above-fold.png";
+import Title from "../components/Title.astro";
 ---
 
-<div class="relative">
+<div class="relative border-b border-slate-50">
   <div
     class="max-w-3xl mx-auto pt-64 flex flex-col justify-center text-center relative z-10"
   >
-    <h1 class="text-6xl text-slate-900 font-extrabold">
+    <Title as="h1" size="XL">
       Build the feature that matters to your audience
-    </h1>
+    </Title>
     <p class="text-xl py-6 text-slate-700 leading-relaxed">
       <strong>Progressively</strong> makes it possible to build your features iteratively
       and to understand how your audience behaves when being exposed to them. Take
