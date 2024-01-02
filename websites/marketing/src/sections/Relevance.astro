@@ -1,9 +1,53 @@
 ---
+import Card from "../components/Card/Card.astro";
+import CardTitle from "../components/Card/CardTitle.astro";
+import Text from "../components/Text.astro";
 import Title from "../components/Title.astro";
+
+const whatProgressivelyBrings = [
+  {
+    title: "You want to ship faster",
+    content:
+      "Ship your incomplete features to production. Show them to your audience when you feel confident in one click.",
+  },
+  {
+    title: "You want to have control over your data and machines",
+    content: "",
+  },
+  { title: "You don't want an overly complex solution", content: "" },
+  {
+    title:
+      "You don't want to multiply your tooling for feature flags and analytics",
+    content: "",
+  },
+  { title: "You don't have time to build your own solution", content: "" },
+  { title: "You want to be part of a community", content: "" },
+];
 ---
 
-<section class="max-w-4xl w-full mx-auto py-12">
-  <div class="text-center">
-    <Title as="h2" size="L">Who is Progressively for?</Title>
+<section class="bg-slate-100">
+  <div class="max-w-6xl w-full mx-auto py-12">
+    <div class="text-center">
+      <Title as="h2" size="L">Who is Progressively for?</Title>
+
+      <div class="pt-2">
+        <Text>
+          No matter if you are a small team or a big company, <strong
+            >Progressively</strong
+          > can help if...
+        </Text>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-3 pt-6 gap-4">
+      {
+        whatProgressivelyBrings.map((wpb) => (
+          <Card>
+            <CardTitle>{wpb.title}</CardTitle>
+            <Text>{wpb.content}</Text>
+          </Card>
+        ))
+      }
+    </div>
   </div>
 </section>

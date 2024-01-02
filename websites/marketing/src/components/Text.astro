@@ -1,0 +1,17 @@
+---
+export interface Props {
+  size?: "L" | "M";
+}
+
+const sizeStyle = {
+  M: "text-base",
+  L: "text-xl ",
+};
+
+const { size } = Astro.props;
+
+const sharedStyles = "text-slate-700 leading-relaxed";
+const styles = `${sharedStyles} ${sizeStyle[size || "M"]}`;
+---
+
+<p class={styles}><slot /></p>

@@ -1,7 +1,7 @@
 ---
 export interface Props {
   as?: "h1" | "h2";
-  size?: "XL" | "L";
+  size?: "XL" | "L" | "M";
 }
 
 const { size, as: el } = Astro.props;
@@ -9,6 +9,7 @@ const { size, as: el } = Astro.props;
 const sizeStyles = {
   XL: "text-6xl",
   L: "text-5xl",
+  M: "text-xl",
 };
 
 const sharedStyle = "text-slate-900 font-extrabold font-title";
