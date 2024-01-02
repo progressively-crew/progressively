@@ -8,20 +8,34 @@ const whatProgressivelyBrings = [
   {
     title: "You want to ship faster",
     content:
-      "Ship your incomplete features to production. Show them to your audience when you feel confident in one click.",
+      "Delivering on time is a pain and a risky task. It's even more complex when deploying code and rolling out a feature is a coupled task.",
   },
   {
-    title: "You want to have control over your data and machines",
-    content: "",
+    title: "You don't want your data to be stored in a place you don't know",
+    content:
+      "Having data stored somewhere in the wild, when you don't know who has access to them can be a source of stress. Privacy matters.",
   },
-  { title: "You don't want an overly complex solution", content: "" },
+  {
+    title: "You don't want an overly complex solution",
+    content:
+      "Having access to a tool with 1 billion charts and tools is not for everyone. Simplicity is key.",
+  },
   {
     title:
       "You don't want to multiply your tooling for feature flags and analytics",
-    content: "",
+    content:
+      "Owning a bookmark folder with 20+ tools for a daily job is a pain. Context switching and experience switching is annoying.",
   },
-  { title: "You don't have time to build your own solution", content: "" },
-  { title: "You want to be part of a community", content: "" },
+  {
+    title: "You don't have time to build your own solution",
+    content:
+      "Focusing on building your own applications is what matters to you. And we can't agree more.",
+  },
+  {
+    title: "You want to be part of a community",
+    content:
+      "Being part of a community means that you will have an impact on the tool itself, but also on people.",
+  },
 ];
 ---
 
@@ -39,7 +53,7 @@ const whatProgressivelyBrings = [
       </div>
     </div>
 
-    <div class="grid grid-cols-3 pt-6 gap-4">
+    <div class="grid grid-cols-3 pt-6 gap-8">
       {
         whatProgressivelyBrings.map((wpb) => (
           <Card>
