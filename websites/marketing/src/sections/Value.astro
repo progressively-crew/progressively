@@ -2,6 +2,9 @@
 import Feature from "../components/Feature.astro";
 import Title from "../components/Title.astro";
 import Text from "../components/Text.astro";
+import toggleSrc from "./assets/value/toggle.jpg";
+import gradualSrc from "./assets/value/gradual.jpg";
+import qaSrc from "./assets/value/qa.jpg";
 
 const features = [
   {
@@ -10,7 +13,7 @@ const features = [
       "By simply pulling a trigger, Progressively will bring your hidden features live to your users.",
       "Your new feature has introduced bugs? Deactivate the feature by pull the trigger the other way.",
     ],
-    imageSrc: "",
+    imageSrc: toggleSrc,
   },
   {
     title: "Gradual deployments",
@@ -18,7 +21,16 @@ const features = [
       "You don't feel super-safe about releasing your new feature? Start by only rolling it out to 1% or 2% of your audience.",
       "If your error tracking system yells at you, deactivate your feature and continue gradually your release.",
     ],
-    imageSrc: "",
+    imageSrc: gradualSrc,
+  },
+  {
+    title: "Unlock QA directly in production",
+    content: [
+      "You don't need intermediate staging environments that don't work like your production one.",
+      "Instead, hide your features behind a feature flag, and target your users by qualitative criteria. For instance, every user with email address ending by X is able to see the feature.",
+      "And don't worry, we don't store your users data :).",
+    ],
+    imageSrc: qaSrc,
   },
 ];
 ---
@@ -37,7 +49,7 @@ const features = [
             imageSrc={feat.imageSrc}
             reversed={i % 2 !== 0}
           >
-            <div class="flex flex-col gap-2">
+            <div class="flex flex-col gap-4">
               {feat.content.map((c) => (
                 <Text size="L">{c}</Text>
               ))}
