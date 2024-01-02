@@ -3,6 +3,7 @@ import Title from "../components/Title.astro";
 import Text from "../components/Text.astro";
 import Card from "../components/Card/Card.astro";
 import CardTitle from "../components/Card/CardTitle.astro";
+import DifferenciatorBg from "../components/DifferenciatorBg.astro";
 
 const differentators = [
   {
@@ -38,8 +39,8 @@ const differentators = [
 ];
 ---
 
-<section class="bg-slate-900">
-  <div class="max-w-6xl w-full mx-auto py-24">
+<section class="bg-slate-900 relative overflow-hidden">
+  <div class="max-w-6xl w-full mx-auto py-24 relative z-10">
     <Title theme="dark" as="h2" size="L">Why choose Progressively?</Title>
     <div class="pt-2">
       <Text theme="dark">
@@ -59,5 +60,9 @@ const differentators = [
         ))
       }
     </div>
+  </div>
+
+  <div class="absolute inset-0 w-full h-full">
+    <DifferenciatorBg />
   </div>
 </section>
