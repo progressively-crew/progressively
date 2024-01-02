@@ -5,16 +5,17 @@ export interface Props {
   title: string;
   imageSrc: any;
   reversed?: boolean;
+  noSizeConstraints?: boolean;
 }
 
-const { title, reversed, imageSrc } = Astro.props;
+const { title, reversed, imageSrc, noSizeConstraints } = Astro.props;
 ---
 
 <article class="grid grid-cols-[1fr_1fr] items-center">
   {
     reversed ? (
       <div class="flex items-center justify-center">
-        <Image src={imageSrc} alt="" class="w-96" />
+        <Image src={imageSrc} alt="" class={noSizeConstraints ? "" : "w-96"} />
       </div>
     ) : (
       <div>
@@ -40,7 +41,7 @@ const { title, reversed, imageSrc } = Astro.props;
       </div>
     ) : (
       <div class="flex items-center justify-center">
-        <Image src={imageSrc} alt="" class="w-96" />
+        <Image src={imageSrc} alt="" class={noSizeConstraints ? "" : "w-96"} />
       </div>
     )
   }
