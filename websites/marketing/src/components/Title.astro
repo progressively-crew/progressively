@@ -2,9 +2,10 @@
 export interface Props {
   as?: "h1" | "h2";
   size?: "XL" | "L" | "M";
+  theme?: "light" | "dark";
 }
 
-const { size, as: el } = Astro.props;
+const { size, as: el, theme } = Astro.props;
 
 const sizeStyles = {
   XL: "text-6xl",
@@ -13,8 +14,15 @@ const sizeStyles = {
   S: "text-xl",
 };
 
-const sharedStyle = "text-slate-900 font-extrabold font-title";
-const styles = `${sharedStyle} ${sizeStyles[size || "XL"]}`;
+const themeColor = {
+  light: "text-slate-900",
+  dark: "text-slate-50",
+};
+
+const sharedStyle = "font-extrabold font-title";
+const styles = `${sharedStyle} ${themeColor[theme || "light"]} ${
+  sizeStyles[size || "XL"]
+}`;
 
 const El = el || "p";
 ---
