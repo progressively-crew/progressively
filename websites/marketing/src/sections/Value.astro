@@ -7,6 +7,7 @@ import gradualSrc from "./assets/value/gradual.jpg";
 import qaSrc from "./assets/value/qa.jpg";
 import clockSrc from "./assets/value/clock.jpg";
 import analyticsSrc from "./assets/value/analytics.jpg";
+import Button from "../components/Button.astro";
 
 const features = [
   {
@@ -58,7 +59,7 @@ const features = [
     <Title as="h2" size="L">What can you expect from it?</Title>
   </div>
 
-  <ul class="pt-20 flex flex-col gap-12">
+  <ul class="pt-20 flex flex-col gap-12 pb-8">
     {
       features.map((feat, i) => (
         <li>
@@ -77,4 +78,13 @@ const features = [
       ))
     }
   </ul>
+
+  <div
+    class="text-center py-4 bg-slate-100 rounded-2xl flex flex-row gap-4 items-center justify-center"
+  >
+    <Title size="S" as="p">And a lot more...</Title>
+    <Button href="https://docs.progressively.app" variant="secondary">
+      Get started
+    </Button>
+  </div>
 </section>
