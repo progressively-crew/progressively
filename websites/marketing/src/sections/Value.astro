@@ -5,6 +5,7 @@ import Text from "../components/Text.astro";
 import toggleSrc from "./assets/value/toggle.jpg";
 import gradualSrc from "./assets/value/gradual.jpg";
 import qaSrc from "./assets/value/qa.jpg";
+import clockSrc from "./assets/value/clock.jpg";
 
 const features = [
   {
@@ -24,11 +25,27 @@ const features = [
     imageSrc: gradualSrc,
   },
   {
+    title: "Scheduled deployments",
+    content: [
+      "Preparing a product or a feature launch is a huge task and it's generally time sensitive",
+      "If you don't want to think of yet another thing to achieve before the release, schedule the release deployments. One tick less on your list.",
+    ],
+    imageSrc: clockSrc,
+  },
+  {
     title: "QA directly in production",
     content: [
       "You don't need intermediate staging environments that don't work like your production one.",
       "Instead, hide your features behind a feature flag, and target your users by qualitative criteria. For instance, every user with email address ending by X is able to see the feature.",
       "And don't worry, we don't store your users data :).",
+    ],
+    imageSrc: qaSrc,
+  },
+  {
+    title: "Privacy aware analytics",
+    content: [
+      "Having insightful data is important to scale a product or a business. Making decision should be driven by meaningful data.",
+      "Feature flags, A/B testing and analytics are notions that are very bounded. Naturally, you can count on responsible analytics built-in Progressively.",
     ],
     imageSrc: qaSrc,
   },
