@@ -1,1 +1,16 @@
-Hello world
+---
+import { Image } from 'astro:assets';
+import Button from '../components/Button.astro'
+import aboveFoldSrc from './assets/above-fold.png'
+---
+
+<div class="max-w-3xl mx-auto pt-64 flex flex-col justify-center text-center">
+	<h1 class="text-6xl text-slate-900 font-extrabold">Build the feature that matters to your audience</h1>
+	<p class="text-xl py-6 text-slate-700 leading-relaxed"><strong>Progressively</strong> makes it possible to build your features iteratively and to understand how your audience behaves when being exposed to them. Take decision based on data and not guts feelings. <strong>We do that anonymously, with open source, and it's self-hosted.</strong></p>
+
+	<div>
+		<Button>Get me to the setup</Button>
+	</div>
+
+		<Image src={aboveFoldSrc} alt="Analytics view of mfrachet.com" />
+</div>
