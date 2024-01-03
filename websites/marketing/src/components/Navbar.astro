@@ -1,22 +1,38 @@
 ---
 import Button from "./Button.astro";
+import Text from "./Text.astro";
 ---
 
-<nav class="container py-2 fixed top-0 z-20 backdrop-blur-sm bg-white/30">
-  <ul class="flex flex-row justify-end gap-4">
-    <li>
-      <Button variant="tertiary" size="M" href="https://docs.progressively.app">
-        Documentation
-      </Button>
-    </li>
-    <li>
-      <Button
-        variant="secondary"
-        size="M"
-        href="https://docs.progressively.app/getting-started/"
-      >
-        Get started
-      </Button>
-    </li>
-  </ul>
+<nav class="py-2 fixed top-0 z-20 backdrop-blur-sm bg-white/30 w-full">
+  <div
+    class="px-4 max-w-6xl w-full mx-auto flex flex-row justify-between items-center"
+  >
+    <div class="flex flex-row gap-2 items-center">
+      <img src="/favicon.svg" alt="Progressively" class="w-8 h-8 block" />
+      <div class="font-bold text-lg hidden md:block">Progressively</div>
+    </div>
+
+    <ul class="flex flex-row justify-end gap-4">
+      <li>
+        <Button
+          variant="tertiary"
+          size="M"
+          href="https://docs.progressively.app"
+          id="nav-docs"
+        >
+          Documentation
+        </Button>
+      </li>
+      <li>
+        <Button
+          variant="secondary"
+          size="M"
+          href="https://docs.progressively.app/getting-started/"
+          id="nav-getstarted"
+        >
+          Get started
+        </Button>
+      </li>
+    </ul>
+  </div>
 </nav>
