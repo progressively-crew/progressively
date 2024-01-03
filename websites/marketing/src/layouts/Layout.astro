@@ -3,18 +3,39 @@ import "@fontsource-variable/playfair-display";
 import Navbar from "../components/Navbar.astro";
 interface Props {
   title: string;
+  description: string;
+  keywords: string;
 }
 
-const { title } = Astro.props;
+const { title, description, keywords } = Astro.props;
+const currentUrl = Astro.url.toString();
 ---
 
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Astro description" />
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
     <meta name="viewport" content="width=device-width" />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:url" content={currentUrl} />
+    <meta property="og:image" content="/meta-img.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content={description} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@_progressively" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="/favicon.svg" />
+
+    <link rel="image_src" href="/meta-img.png" />
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={currentUrl} />
+
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
@@ -23,6 +44,7 @@ const { title } = Astro.props;
     <slot />
   </body>
 </html>
+
 <style is:global>
   html {
     font-family: system-ui, sans-serif;
