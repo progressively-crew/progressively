@@ -7,9 +7,10 @@ export interface Props {
   title: string;
   actionTxt: string;
   href: string;
+  actionId?: string;
 }
 
-const { title, actionTxt, href } = Astro.props;
+const { title, actionTxt, href, actionId } = Astro.props;
 ---
 
 <Card variant="success">
@@ -21,7 +22,9 @@ const { title, actionTxt, href } = Astro.props;
         {title}
       </Title>
       <div class="py-8 md:pt-12 md:pb-0">
-        <Button variant="secondary" href={href}>{actionTxt}</Button>
+        <Button variant="secondary" href={href} id={actionId}>
+          {actionTxt}
+        </Button>
       </div>
     </div>
   </div>

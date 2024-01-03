@@ -65,4 +65,19 @@ const currentUrl = Astro.url.toString();
   });
 
   sdk.track();
+
+  [
+    "nav-docs",
+    "nav-getstarted",
+    "above-the-fold-cta",
+    "relevance-cta",
+    "value-cta",
+    "conclusion-cta",
+  ].forEach((id) => {
+    const el = document.getElementById(id);
+
+    if (el) {
+      el.addEventListener("click", () => sdk.track(id));
+    }
+  });
 </script>

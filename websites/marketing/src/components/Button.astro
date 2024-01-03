@@ -3,9 +3,10 @@ export interface Props {
   variant?: "primary" | "secondary" | "tertiary";
   size?: "L" | "M";
   href?: string;
+  id?: string;
 }
 
-const { variant, size, href } = Astro.props;
+const { variant, size, href, id } = Astro.props;
 
 const sizeStyles = {
   L: "py-3 px-9 text-xl",
@@ -29,4 +30,4 @@ const styles = `${sharedStyles} ${variantStyles[variant || "primary"]} ${
 const El = href ? "a" : "button";
 ---
 
-<El class={styles} href={href}><slot /></El>
+<El class={styles} href={href} id={id}><slot /></El>

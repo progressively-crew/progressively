@@ -5,7 +5,12 @@ import Button from "./Button.astro";
 <nav class="container py-2 fixed top-0 z-20 backdrop-blur-sm bg-white/30">
   <ul class="flex flex-row justify-end gap-4">
     <li>
-      <Button variant="tertiary" size="M" href="https://docs.progressively.app">
+      <Button
+        variant="tertiary"
+        size="M"
+        href="https://docs.progressively.app"
+        id="nav-docs"
+      >
         Documentation
       </Button>
     </li>
@@ -14,6 +19,7 @@ import Button from "./Button.astro";
         variant="secondary"
         size="M"
         href="https://docs.progressively.app/getting-started/"
+        id="nav-getstarted"
       >
         Get started
       </Button>
