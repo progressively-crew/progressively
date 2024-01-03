@@ -890,7 +890,7 @@ importers:
         specifier: ^5.0.19
         version: 5.0.19
       '@progressively/sdk-js':
-        specifier: workspace:^
+        specifier: ^1.0.2
         version: link:../../packages/sdk-js
       astro:
         specifier: ^4.0.8
