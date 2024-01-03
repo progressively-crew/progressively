@@ -1,0 +1,38 @@
+---
+import Cta from "../components/Cta.astro";
+import Quote from "../components/Quote/Quote.astro";
+import Text from "../components/Text.astro";
+---
+
+<section class="bg-slate-100">
+  <div class="max-w-6xl w-full mx-auto pb-20">
+    <h2 class="sr-only">Conclusion</h2>
+
+    <Cta
+      title="Be part of the journey, setup your own instance"
+      actionTxt="Get started"
+      href="https://docs.progressively.app"
+    >
+      <Quote
+        authorName="Marvin Frachet"
+        authorJob="Frontend Eng @Proton"
+        authorPict="https://avatars.githubusercontent.com/u/3874873?v=4"
+      >
+        <Text size="XL">
+          A quick message to thank you for having reached the end of the page,
+          and my last attempt to make you click the big button :).
+        </Text>
+
+        <br />
+
+        <Text size="XL">
+          If you are still not very enthusiast about the product, it would be
+          great if you could provide feedbacks at <a
+            class="font-semibold border-b border-slate-900"
+            href="mailto:marvin.frachet@gmail.com">marvin.frachet@gmail.com</a
+          >.
+        </Text>
+      </Quote>
+    </Cta>
+  </div>
+</section>

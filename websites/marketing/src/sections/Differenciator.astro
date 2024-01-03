@@ -1,0 +1,68 @@
+---
+import Title from "../components/Title.astro";
+import Text from "../components/Text.astro";
+import Card from "../components/Card/Card.astro";
+import CardTitle from "../components/Card/CardTitle.astro";
+import DifferenciatorBg from "../components/DifferenciatorBg.astro";
+
+const differentators = [
+  {
+    title: "Open Source",
+    content:
+      "We strongly believe in the community spirit. We don't built the tool on our side: we build it with you.",
+  },
+  {
+    title: "Self-hosted",
+    content:
+      "You get the tool and install it on your machines. Your store data on your databases. We know nothing :).",
+  },
+  {
+    title: "Privacy matters",
+    content:
+      "No information regarding your audience are stored. A cookie is used to recognize users subsequent visits, but it doesn't allow to identify them.",
+  },
+  {
+    title: "Server Side Rendering",
+    content:
+      "It works with your favorite tools such as Nextjs, Remix etc... both on the client, and the server.",
+  },
+  {
+    title: "The web library is small",
+    content:
+      "It does not impact the performance of your webpage like others tools. For instance, the React SDK is only 1.3kB.",
+  },
+  {
+    title: "Realtime updates",
+    content:
+      "It leverages Websockets (opt-in) to update the users feature flags in real time.",
+  },
+];
+---
+
+<section class="bg-slate-900 relative overflow-hidden px-4">
+  <div class="max-w-6xl w-full mx-auto py-24 relative z-10">
+    <Title theme="dark" tag="h2" size="L">Why choose Progressively?</Title>
+    <div class="pt-2">
+      <Text theme="dark">
+        If you share the following values and ideas, you should give <strong
+          >Progressively</strong
+        > a try.
+      </Text>
+    </div>
+
+    <div class="grid md:grid-cols-3 pt-6 gap-4 md:gap-8">
+      {
+        differentators.map((diff) => (
+          <Card variant="dark">
+            <CardTitle theme="dark">{diff.title}</CardTitle>
+            <Text theme="dark">{diff.content}</Text>
+          </Card>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="absolute inset-0 w-full h-full">
+    <DifferenciatorBg />
+  </div>
+</section>

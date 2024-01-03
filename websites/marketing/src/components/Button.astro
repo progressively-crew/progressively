@@ -1,0 +1,32 @@
+---
+export interface Props {
+  variant?: "primary" | "secondary" | "tertiary";
+  size?: "L" | "M";
+  href?: string;
+}
+
+const { variant, size, href } = Astro.props;
+
+const sizeStyles = {
+  L: "py-3 px-9 text-xl",
+  M: "py-1 px-4 text-sm",
+};
+
+const variantStyles = {
+  primary:
+    "bg-slate-900 hover:bg-slate-800 active:bg-slate-700 text-white border-transparent",
+  secondary:
+    "border-slate-900 text-slate-900 hover:border-slate-800 hover:text-slate-800 active:border-slate-700 active:text-slate-700",
+  tertiary:
+    "text-slate-900 hover:text-slate-800 active:text-slate-700 border-transparent hover:bg-slate-50 active:bg-slate-100",
+};
+
+const sharedStyles = "rounded-full  border-2";
+const styles = `${sharedStyles} ${variantStyles[variant || "primary"]} ${
+  sizeStyles[size || "L"]
+}`;
+
+const El = href ? "a" : "button";
+---
+
+<El class={styles} href={href}><slot /></El>

@@ -1,0 +1,31 @@
+---
+import { Image } from "astro:assets";
+import Title from "./Title.astro";
+export interface Props {
+  title: string;
+  imageSrc: any;
+  reversed?: boolean;
+  noSizeConstraints?: boolean;
+}
+
+const { title, reversed, imageSrc, noSizeConstraints } = Astro.props;
+
+const styles = `flex items-center justify-center ${
+  reversed ? "md:order-last" : "md:order-first"
+}`;
+---
+
+<article class="grid md:grid-cols-[1fr_1fr] items-center">
+  <div>
+    <Title tag="h3" size="M">
+      {title}
+    </Title>
+
+    <div class="h-4"></div>
+    <slot />
+  </div>
+
+  <div class={styles}>
+    <Image src={imageSrc} alt="" class={noSizeConstraints ? "" : "md:w-96"} />
+  </div>
+</article>
