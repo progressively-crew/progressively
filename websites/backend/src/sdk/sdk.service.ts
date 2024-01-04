@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { EnvironmentsService } from '../environments/environments.service';
 import { FlagsService } from '../flags/flags.service';
 import { PopulatedFlagEnv, PopulatedStrategy, Variant } from '../flags/types';
@@ -14,9 +14,11 @@ import {
 } from './utils';
 import { SchedulingService } from '../scheduling/scheduling.service';
 import { ValueToServe } from '../strategy/types';
-import { EventHit } from './types';
+import { QueuedEventHit } from './types';
 import { RuleService } from '../rule/rule.service';
 import { Environment } from '../environments/types';
+import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
+import { minimatch } from 'minimatch';
 
 @Injectable()
 export class SdkService {
@@ -26,6 +28,7 @@ export class SdkService {
     private readonly scheduleService: SchedulingService,
     private readonly flagService: FlagsService,
     private readonly ruleService: RuleService,
+    @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
   ) {}
 
   resolveFlagStatus(flagEnv: PopulatedFlagEnv, fields: FieldRecord) {
@@ -174,16 +177,7 @@ export class SdkService {
     return `declare module "@progressively/types" { \n${defaultDefinition}\n\n${definitionWithCustomString}\n}`;
   }
 
-  async hitEvent(
-    envId: string,
-    visitorId: string,
-    hit: EventHit & {
-      os: string;
-      browser: string;
-      url: string;
-      referer?: string;
-    },
-  ) {
+  async hitEvent(envId: string, queuedEvent: QueuedEventHit) {
     const date = new Date();
     date.setHours(2);
     date.setMinutes(2);
@@ -193,19 +187,61 @@ export class SdkService {
     return this.prisma.event.create({
       data: {
         environmentUuid: envId,
-        visitorId,
+        visitorId: queuedEvent.visitorId,
         date,
-        name: hit.name,
-        os: hit.os,
-        browser: hit.browser,
-        url: hit.url,
-        referer: hit.referer,
-        data: hit.data
-          ? typeof hit.data === 'object'
-            ? JSON.stringify(hit.data)
-            : String(hit.data)
+        name: queuedEvent.name,
+        os: queuedEvent.os,
+        browser: queuedEvent.browser,
+        url: queuedEvent.url || null,
+        referer: queuedEvent.referer,
+        data: queuedEvent.data
+          ? typeof queuedEvent.data === 'object'
+            ? JSON.stringify(queuedEvent.data)
+            : String(queuedEvent.data)
           : null,
       },
     });
+  }
+
+  async resolveQueuedHit(queuedEvent: QueuedEventHit) {
+    if (!queuedEvent.secretKey && !queuedEvent.clientKey) {
+      return this.logger.error({
+        error: 'Invalid secret key or client key provided',
+        level: 'error',
+        context: 'Queued hit',
+        payload: queuedEvent,
+      });
+    }
+
+    const concernedEnv = await this.getEnvByKeys(
+      queuedEvent.clientKey,
+      queuedEvent.secretKey,
+    );
+
+    if (!concernedEnv) {
+      return this.logger.error({
+        error: 'The client key does not match any environment',
+        level: 'error',
+        context: 'Queued hit',
+        payload: queuedEvent,
+      });
+    }
+
+    const domain = queuedEvent.domain;
+
+    if (
+      !queuedEvent.secretKey &&
+      queuedEvent.clientKey &&
+      (!concernedEnv.domain || !minimatch(domain, concernedEnv.domain))
+    ) {
+      return this.logger.error({
+        error: 'The client key does not match the authorized domains',
+        level: 'error',
+        context: 'Queued hit',
+        payload: queuedEvent,
+      });
+    }
+
+    return this.hitEvent(concernedEnv.uuid, queuedEvent);
   }
 }

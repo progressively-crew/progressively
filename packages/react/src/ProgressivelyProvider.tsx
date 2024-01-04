@@ -26,9 +26,9 @@ export const ProgressivelyProvider = ({
   websocketUrl,
   fields,
 }: ProgressivelyProviderProps) => {
-  const [trackFn, setTrackFn] = useState<ProgressivelySdkType["track"]>(() =>
-    Promise.resolve(undefined)
-  );
+  const [trackFn, setTrackFn] = useState<
+    ProgressivelySdkType["track"] | undefined
+  >();
 
   const [setFields, setSetFields] = useState<SetFieldsType>(() =>
     Promise.resolve(undefined)
@@ -73,7 +73,7 @@ export const ProgressivelyProvider = ({
         status: state.status,
         isLoading,
         error: state.error,
-        track: trackFn,
+        track: trackFn || (() => Promise.resolve(undefined)),
         setFields,
       }}
     >

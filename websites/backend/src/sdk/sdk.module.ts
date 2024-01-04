@@ -24,6 +24,7 @@ import { UsersModule } from '../users/users.module';
     UsersModule,
   ],
   providers: [SdkService],
+  exports: [SdkService],
 })
 export class SdkModule implements OnModuleInit {
   constructor(

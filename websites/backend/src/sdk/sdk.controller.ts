@@ -16,15 +16,22 @@ import { minimatch } from 'minimatch';
 import { SdkService } from './sdk.service';
 import { parseBase64Params, prepareCookie, resolveUserId } from './utils';
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
-import { EventHit } from './types';
+import { EventHit, QueuedEventHit } from './types';
 import { getDeviceInfo } from '../shared/utils/getDeviceInfo';
 import { FieldRecord } from '../rule/types';
+
+import { KafkaTopics } from '../queuing/topics';
+import { IQueuingService } from '../queuing/types';
+import { MakeQueuingService } from '../queuing/queuing.service.factory';
 
 export const COOKIE_KEY = 'progressively-id';
 
 @Controller('sdk')
 export class SdkController {
-  constructor(private readonly sdkService: SdkService) {}
+  private queuingService: IQueuingService;
+  constructor(private readonly sdkService: SdkService) {
+    this.queuingService = MakeQueuingService();
+  }
 
   async _guardSdkEndpoint(request: Request, fields: FieldRecord) {
     const secretKey = request.headers['x-api-key'] as string | undefined;
@@ -105,23 +112,26 @@ export class SdkController {
     fields.id = resolveUserId(fields, cookieUserId);
     prepareCookie(response, fields.id);
 
-    const concernedEnv = await this._guardSdkEndpoint(request, fields);
+    const secretKey = request.headers['x-api-key'] as string | undefined;
+    const clientKey = fields.clientKey;
+    const domain = request.headers['origin'] || '';
 
     const deviceInfo = getDeviceInfo(request);
-    const eventCreated = await this.sdkService.hitEvent(
-      concernedEnv.uuid,
-      String(fields?.id || ''),
-      {
-        ...body,
-        ...deviceInfo,
-        url: body.url || 'Unknown URL',
-        referer: body.referer,
-      },
-    );
 
-    if (!eventCreated) {
-      throw new BadRequestException();
-    }
+    const queuedEvent: QueuedEventHit = {
+      name: body.name,
+      os: deviceInfo.os,
+      browser: deviceInfo.browser,
+      clientKey: clientKey ? String(clientKey) : undefined,
+      secretKey,
+      domain,
+      referer: body.referer,
+      url: body.url,
+      visitorId: String(fields?.id || ''),
+      data: body.data,
+    };
+
+    await this.queuingService.send(KafkaTopics.AnalyticsHits, queuedEvent);
 
     return null;
   }
