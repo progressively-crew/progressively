@@ -1,6 +1,6 @@
 ---
 import Button from "./Button.astro";
-import Text from "./Text.astro";
+import Twitter from "./Icons/Twitter.astro";
 ---
 
 <nav class="py-2 fixed top-0 z-20 bg-white w-full">
@@ -26,6 +26,19 @@ import Text from "./Text.astro";
           /></a
         >
       </li>
+      <li>
+        <a
+          href="https://twitter.com/_progressively"
+          target="_blank"
+          class="h-6 flex flex-row gap-2 text-xs font-bold text-white bg-slate-900 rounded-full items-center px-3 hover:bg-slate-800 active:bg-slate-700"
+        >
+          <Twitter />
+          <span>Follow @_progressively</span>
+        </a>
+      </li>
+    </ul>
+
+    <ul class="flex flex-row justify-end gap-4 items-center">
       <li>
         <Button
           variant="tertiary"
