@@ -8,6 +8,7 @@ import reactSrc from "./assets/howitworks/react.png";
 import audienceSrc from "./assets/howitworks/audience.png";
 import aboveTheFoldSrc from "./assets/above-fold.png";
 import mfrachetSrc from "./assets/howitworks/mfrachet.png";
+import Button from "../components/Button.astro";
 
 const howItWorks = [
   {
@@ -18,6 +19,8 @@ const howItWorks = [
       "By following the get-started guide, you'll set up the dashboard, APIs, and database.",
       "Once done, you can create your admin user.",
     ],
+    ctaTitle: "Deploy an instance",
+    ctaLink: "https://docs.progressively.app/guides/deployments/",
   },
 
   {
@@ -36,6 +39,8 @@ const howItWorks = [
       "Select an available SDK, install it, configure it, and deploy your project.",
       "Once a feature flag is assessed, track it through the insights panel.",
     ],
+    ctaTitle: "Check the React SDK",
+    ctaLink: "https://docs.progressively.app/sdks/sdk-react/",
   },
   {
     title: "5. Your users will access your website",
@@ -73,10 +78,25 @@ const howItWorks = [
                 reversed={i % 2 !== 0}
                 noSizeConstraints
               >
-                <div class="flex flex-col gap-4">
-                  {feat.content.map((c) => (
-                    <Text size="L">{c}</Text>
-                  ))}
+                <div>
+                  <div class="flex flex-col gap-4">
+                    {feat.content.map((c) => (
+                      <Text size="L">{c}</Text>
+                    ))}
+                  </div>
+                  {feat.ctaLink && (
+                    <div class="pt-8">
+                      <Button
+                        size="M"
+                        href={feat.ctaLink}
+                        variant="secondary"
+                        target="_blank"
+                        id={feat.ctaTitle}
+                      >
+                        {feat.ctaTitle}
+                      </Button>
+                    </div>
+                  )}
                 </div>
               </Feature>
             </li>
