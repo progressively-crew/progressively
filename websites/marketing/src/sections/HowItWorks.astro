@@ -8,49 +8,54 @@ import reactSrc from "./assets/howitworks/react.png";
 import audienceSrc from "./assets/howitworks/audience.png";
 import aboveTheFoldSrc from "./assets/above-fold.png";
 import mfrachetSrc from "./assets/howitworks/mfrachet.png";
+import Button from "../components/Button.astro";
 
 const howItWorks = [
   {
     title: "1. You setup your instance",
     imageSrc: welcomeSrc,
     content: [
-      "First of all, since Progressively is self hosted, you have to setup the tool.",
-      "Following the get started guide, you will install the dashboard, the APIs and the database.",
-      "After that, you can create your admin user.",
+      "At the outset, as Progressively is self-hosted, the initial step is setting up the tool.",
+      "By following the get-started guide, you'll set up the dashboard, APIs, and database.",
+      "Once done, you can create your admin user.",
     ],
+    ctaTitle: "Deploy an instance",
+    ctaLink: "https://docs.progressively.app/guides/deployments/",
   },
 
   {
     title: "2. Configure your first feature flag",
     imageSrc: audienceSrc,
     content: [
-      "Once your instance is running, you can create a project, its environments, and your first feature flag.",
-      "Take some time to customize how your feature flag resolves, try to schedule an update, play with the dashboard.",
+      "After getting your instance up and running, dive in to create a project, set up environments, and craft your inaugural feature flag.",
+      "Take a moment to tailor how your feature flag behaves, experiment with scheduling updates, and explore the dashboard.",
     ],
   },
   {
     title: "3. Choose a SDK",
     imageSrc: reactSrc,
     content: [
-      "It's time to setup your codebase.",
-      "Choose one of the available SDKs, install it, set it up, and deploy your project.",
-      "Once a feature flag is evaluated, you will know it from the insights panel feature.",
+      "Now, let's configure your codebase.",
+      "Select an available SDK, install it, configure it, and deploy your project.",
+      "Once a feature flag is assessed, track it through the insights panel.",
     ],
+    ctaTitle: "Check the React SDK",
+    ctaLink: "https://docs.progressively.app/sdks/sdk-react/",
   },
   {
     title: "5. Your users will access your website",
     imageSrc: mfrachetSrc,
     content: [
-      "When your users hit your webpage, the feature flag evaluation will start.",
-      "The feature flag evaluation will check the user fields (provided by you), making computations between them and the feature flag rules, and finally resolves a value.",
-      "Depending on this value, the UI will adjust a show the expected variant.",
+      "As your users land on your webpage, the feature flag evaluation kicks off.",
+      "This process checks user fields (provided by you), computes them against the feature flag rules, and ultimately determines a value.",
+      "Based on this value, the UI adapts to display the intended variant.",
     ],
   },
   {
     title: "5. Enjoy your insights",
     imageSrc: aboveTheFoldSrc,
     content: [
-      "Once this is done, you are all setup and ready to build awesome feature and understand your audience behaviour.",
+      "With that completed, you're all set and geared up to create incredible features and comprehend your audience's behavior.",
     ],
   },
 ];
@@ -73,10 +78,25 @@ const howItWorks = [
                 reversed={i % 2 !== 0}
                 noSizeConstraints
               >
-                <div class="flex flex-col gap-4">
-                  {feat.content.map((c) => (
-                    <Text size="L">{c}</Text>
-                  ))}
+                <div>
+                  <div class="flex flex-col gap-4">
+                    {feat.content.map((c) => (
+                      <Text size="L">{c}</Text>
+                    ))}
+                  </div>
+                  {feat.ctaLink && (
+                    <div class="pt-8">
+                      <Button
+                        size="M"
+                        href={feat.ctaLink}
+                        variant="secondary"
+                        target="_blank"
+                        id={feat.ctaTitle}
+                      >
+                        {feat.ctaTitle}
+                      </Button>
+                    </div>
+                  )}
                 </div>
               </Feature>
             </li>

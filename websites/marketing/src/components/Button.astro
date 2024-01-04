@@ -1,16 +1,18 @@
 ---
 export interface Props {
   variant?: "primary" | "secondary" | "tertiary";
-  size?: "L" | "M";
+  size?: "L" | "M" | "S";
   href?: string;
   id?: string;
+  target?: "_blank";
 }
 
-const { variant, size, href, id } = Astro.props;
+const { variant, size, href, id, target } = Astro.props;
 
 const sizeStyles = {
-  L: "py-3 px-9 text-xl",
-  M: "py-1 px-4 text-sm",
+  L: "py-3 px-9 text-xl border-2",
+  S: "py-1 px-4 text-sm border",
+  M: "py-2 px-6 text-base border",
 };
 
 const variantStyles = {
@@ -22,7 +24,7 @@ const variantStyles = {
     "text-slate-900 hover:text-slate-800 active:text-slate-700 border-transparent hover:bg-slate-50 active:bg-slate-100",
 };
 
-const sharedStyles = "rounded-full  border-2";
+const sharedStyles = "rounded-full ";
 const styles = `${sharedStyles} ${variantStyles[variant || "primary"]} ${
   sizeStyles[size || "L"]
 }`;
@@ -30,4 +32,4 @@ const styles = `${sharedStyles} ${variantStyles[variant || "primary"]} ${
 const El = href ? "a" : "button";
 ---
 
-<El class={styles} href={href} id={id}><slot /></El>
+<El class={styles} href={href} id={id} target={target}><slot /></El>
