@@ -96,33 +96,42 @@ export default function FunnelsPage() {
         />
         <Section>
           <div className="grid grid-cols-2 gap-8">
-            {funnels.map((funnelChart) => (
-              <Card key={funnelChart.funnel.uuid}>
-                <CardContent>
-                  <div className="flex flex-row justify-between">
-                    <div>
-                      <Typography
-                        as="h2"
-                        className="font-semibold text-xl pb-4"
-                      >
-                        {funnelChart.funnel.name}
-                      </Typography>
-                      <Typography className="text-6xl font-extrabold">
-                        5%
-                      </Typography>
+            {funnels.map((funnelChart) => {
+              const firstChart = funnelChart.funnelStats[0];
+              const lastChart = funnelChart.funnelStats.at(-1);
+              const percentage =
+                firstChart && lastChart
+                  ? (lastChart.count / firstChart.count) * 100
+                  : 0;
+
+              return (
+                <Card key={funnelChart.funnel.uuid}>
+                  <CardContent>
+                    <div className="flex flex-row justify-between">
+                      <div>
+                        <Typography
+                          as="h2"
+                          className="font-semibold text-xl pb-4"
+                        >
+                          {funnelChart.funnel.name}
+                        </Typography>
+                        <Typography className="text-6xl font-extrabold">
+                          {percentage.toFixed(2)}%
+                        </Typography>
+                      </div>
+                      <div className="flex flex-row gap-4 items-center">
+                        <BarChart
+                          data={funnelChart.funnelStats.map((stat) => ({
+                            name: stat.event,
+                            value: stat.count,
+                          }))}
+                        />
+                      </div>
                     </div>
-                    <div className="flex flex-row gap-4 items-center">
-                      <BarChart
-                        data={funnelChart.funnelStats.map((stat) => ({
-                          name: stat.event,
-                          value: stat.count,
-                        }))}
-                      />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </Section>
       </DashboardLayout>
