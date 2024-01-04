@@ -21,8 +21,8 @@ import { getDeviceInfo } from '../shared/utils/getDeviceInfo';
 import { FieldRecord } from '../rule/types';
 
 import { KafkaTopics } from '../queuing/topics';
-import { IQueuingService } from 'src/queuing/types';
-import { MakeQueuingService } from 'src/queuing/queuing.service.factory';
+import { IQueuingService } from '../queuing/types';
+import { MakeQueuingService } from '../queuing/queuing.service.factory';
 
 export const COOKIE_KEY = 'progressively-id';
 
