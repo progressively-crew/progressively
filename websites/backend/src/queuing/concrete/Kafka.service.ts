@@ -1,9 +1,8 @@
 import { Consumer, Kafka, Producer, logLevel } from 'kafkajs';
-import { Injectable } from '@nestjs/common';
-import { getEnv } from './getEnv';
+import { getEnv } from '../getEnv';
+import { IQueuingService } from '../types';
 
-@Injectable()
-export class QueuingService {
+export class KafkaService implements IQueuingService {
   private kafka: Kafka | undefined;
   private producer: Producer;
   private consumer: Consumer;
@@ -11,23 +10,17 @@ export class QueuingService {
   constructor() {
     const env = getEnv();
 
-    if (env.KafkaBroker && env.KafkaPassword && env.KafkaUser) {
-      this.kafka = new Kafka({
-        clientId: 'progressively',
-        brokers: [env.KafkaBroker],
-        ssl: true,
-        sasl: {
-          mechanism: 'scram-sha-256',
-          username: env.KafkaUser,
-          password: env.KafkaPassword,
-        },
-        logLevel: logLevel.ERROR,
-      });
-    }
-  }
-
-  isQueuingReady() {
-    return Boolean(this.kafka);
+    this.kafka = new Kafka({
+      clientId: 'progressively',
+      brokers: [env.KafkaBroker],
+      ssl: true,
+      sasl: {
+        mechanism: 'scram-sha-256',
+        username: env.KafkaUser,
+        password: env.KafkaPassword,
+      },
+      logLevel: logLevel.ERROR,
+    });
   }
 
   async send(topic: string, message: any) {
@@ -36,7 +29,7 @@ export class QueuingService {
       await this.producer.connect();
     }
 
-    return this.producer.send({
+    await this.producer.send({
       topic: topic,
       messages: [{ value: JSON.stringify(message) }],
     });

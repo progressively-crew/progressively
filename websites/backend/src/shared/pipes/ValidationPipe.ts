@@ -15,9 +15,6 @@ export class ValidationPipe implements PipeTransform {
       const { error } = this.schema.validate(value);
 
       if (error) {
-        console.log('--------');
-        console.log(error);
-        console.log('--------');
         throw new BadRequestException('Validation failed');
       }
 

@@ -1,21 +1,31 @@
 import { Module, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
-import { QueuingService } from './queuing.service';
+import { MakeQueuingService } from './queuing.service.factory';
+import { IQueuingService } from './types';
+import { SdkService } from '../sdk/sdk.service';
+import { SdkModule } from '../sdk/sdk.module';
+import { QueuedEventHit } from 'src/sdk/types';
+import { KafkaTopics } from './topics';
 
 @Module({
-  providers: [QueuingService],
+  imports: [SdkModule],
 })
 export class QueuingModule implements OnModuleInit, OnModuleDestroy {
-  constructor(private readonly queuingService: QueuingService) {}
+  private queuingService: IQueuingService;
+
+  constructor(private readonly sdkService: SdkService) {
+    this.queuingService = MakeQueuingService();
+  }
 
   async onModuleDestroy() {
     await this.queuingService.teardown();
   }
 
   async onModuleInit() {
-    if (this.queuingService.isQueuingReady()) {
-      await this.queuingService.consume('analytics_hits', (x: object) => {
-        console.log('lol', x);
-      });
-    }
+    await this.queuingService.consume<QueuedEventHit>(
+      KafkaTopics.AnalyticsHits,
+      (queuedEvent) => {
+        this.sdkService.resolveQueuedHit(queuedEvent);
+      },
+    );
   }
 }
