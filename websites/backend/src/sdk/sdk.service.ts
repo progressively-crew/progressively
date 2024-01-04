@@ -14,7 +14,7 @@ import {
 } from './utils';
 import { SchedulingService } from '../scheduling/scheduling.service';
 import { ValueToServe } from '../strategy/types';
-import { EventHit, QueuedEventHit } from './types';
+import { QueuedEventHit } from './types';
 import { RuleService } from '../rule/rule.service';
 import { Environment } from '../environments/types';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
