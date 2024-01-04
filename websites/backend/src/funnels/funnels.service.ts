@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
 import { Funnel, FunnelChart } from './funnels.dto';
-import { FunnelEntry } from '@progressively/database';
 
 @Injectable()
 export class FunnelsService {
@@ -20,36 +19,52 @@ export class FunnelsService {
 
     const funnelStats: FunnelChart['funnelStats'] = [];
 
+    let previousVisitors: Array<string> = [];
+    const visitorIdWhere =
+      previousVisitors.length > 0
+        ? {
+            visitorId: {
+              in: previousVisitors,
+            },
+          }
+        : {};
+
     for (const funnelEntry of funnelEntries) {
       if (funnelEntry.flagUuid) {
-        const flagHits = await this.prisma.flagHit.count({
+        const flagHits = await this.prisma.flagHit.findMany({
           where: {
             flagEnvironmentFlagId: funnelEntry.flagUuid,
             date: {
               gte: new Date(startDate),
               lte: new Date(endDate),
             },
+            ...visitorIdWhere,
           },
         });
 
+        previousVisitors = flagHits.map((fh) => fh.visitorId);
+
         funnelStats.push({
           event: funnelEntry.flagVariant,
-          count: flagHits,
+          count: flagHits.length,
         });
       } else {
-        const events = await this.prisma.event.count({
+        const events = await this.prisma.event.findMany({
           where: {
             name: funnelEntry.eventName,
             date: {
               gte: new Date(startDate),
               lte: new Date(endDate),
             },
+            ...visitorIdWhere,
           },
         });
 
+        previousVisitors = events.map((fh) => fh.visitorId);
+
         funnelStats.push({
           event: funnelEntry.eventName,
-          count: events,
+          count: events.length,
         });
       }
     }
