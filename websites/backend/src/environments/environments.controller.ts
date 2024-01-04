@@ -21,11 +21,15 @@ import {
   FunnelCreationDTO,
   FunnelCreationSchema,
 } from '../funnels/funnels.dto';
+import { FunnelsService } from '../funnels/funnels.service';
 
 @ApiBearerAuth()
 @Controller('environments')
 export class EnvironmentsController {
-  constructor(private readonly envService: EnvironmentsService) {}
+  constructor(
+    private readonly envService: EnvironmentsService,
+    private readonly funnelService: FunnelsService,
+  ) {}
 
   /**
    * Get all the flag of a given project/env (by projectId and envId)
@@ -110,7 +114,14 @@ export class EnvironmentsController {
       throw new BadRequestException('startDate and endDate are required.');
     }
 
-    return this.envService.getFunnels(envId);
+    const funnels = await this.envService.getFunnels(envId);
+    const funnelCharts = await this.funnelService.buildFunnelCharts(
+      funnels,
+      startDate,
+      endDate,
+    );
+
+    return funnelCharts;
   }
 
   @Get(':envId/events')

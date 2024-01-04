@@ -3,6 +3,7 @@ import { Project } from "../types";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { TbChartAreaLine } from "react-icons/tb";
 import { IoFunnelOutline } from "react-icons/io5";
+import { Tag } from "~/components/Tag";
 
 export interface ProjectNavBarProps {
   project: Project;
@@ -34,7 +35,10 @@ export const ProjectNavBar = ({ project }: ProjectNavBarProps) => {
           to={`/dashboard/projects/${project.uuid}/funnels?envId=${firstEnv.uuid}`}
           icon={<IoFunnelOutline />}
         >
-          Funnels
+          Funnels{" "}
+          <Tag variant="SUCCESS" size="XS">
+            Build in progress
+          </Tag>
         </NavItem>
       )}
     </HorizontalNav>

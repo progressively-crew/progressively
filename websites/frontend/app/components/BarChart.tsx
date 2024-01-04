@@ -36,7 +36,7 @@ export const BarChart = ({ data }: BarChartProps) => {
               }}
             >
               <Typography className="font-bold">
-                <NumberValue value={10_001_000} />
+                <NumberValue value={d.value} />
               </Typography>
             </div>
           </div>

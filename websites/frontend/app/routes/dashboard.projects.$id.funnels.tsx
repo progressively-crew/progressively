@@ -14,8 +14,8 @@ import { Typography } from "~/components/Typography";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { Outlet, useLoaderData, useSearchParams } from "@remix-run/react";
 import { getFunnels } from "~/modules/environments/services/getFunnels";
-import { Funnel } from "~/modules/environments/types";
 import { getSession } from "~/sessions";
+import { FunnelChart } from "~/modules/funnels/types";
 
 export const meta: V2_MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -30,7 +30,7 @@ export const meta: V2_MetaFunction = ({ matches, params }) => {
 };
 
 export interface LoaderData {
-  funnels: Array<Funnel>;
+  funnels: Array<FunnelChart>;
 }
 
 export const loader: LoaderFunction = async ({
@@ -60,7 +60,7 @@ export const loader: LoaderFunction = async ({
 
   const authCookie = session.get("auth-cookie");
 
-  const funnels: Array<Funnel> = await getFunnels(
+  const funnels: Array<FunnelChart> = await getFunnels(
     envId,
     start,
     end,
@@ -74,16 +74,6 @@ export default function FunnelsPage() {
   const { project } = useProject();
   const { funnels } = useLoaderData<LoaderData>();
   const [searchParams] = useSearchParams();
-  const chartData = [
-    {
-      name: "New homepage",
-      value: 122,
-    },
-    {
-      name: "New homepage track cta",
-      value: 145,
-    },
-  ];
 
   const envId = searchParams.get("envId") || project.environments[0] || "";
 
@@ -106,28 +96,42 @@ export default function FunnelsPage() {
         />
         <Section>
           <div className="grid grid-cols-2 gap-8">
-            {funnels.map((funnel) => (
-              <Card key={funnel.uuid}>
-                <CardContent>
-                  <div className="flex flex-row justify-between">
-                    <div>
-                      <Typography
-                        as="h2"
-                        className="font-semibold text-xl pb-4"
-                      >
-                        {funnel.name}
-                      </Typography>
-                      <Typography className="text-6xl font-extrabold">
-                        5%
-                      </Typography>
+            {funnels.map((funnelChart) => {
+              const firstChart = funnelChart.funnelStats[0];
+              const lastChart = funnelChart.funnelStats.at(-1);
+              const percentage =
+                firstChart && lastChart
+                  ? (lastChart.count / firstChart.count) * 100
+                  : 0;
+
+              return (
+                <Card key={funnelChart.funnel.uuid}>
+                  <CardContent>
+                    <div className="flex flex-row justify-between">
+                      <div>
+                        <Typography
+                          as="h2"
+                          className="font-semibold text-xl pb-4"
+                        >
+                          {funnelChart.funnel.name}
+                        </Typography>
+                        <Typography className="text-6xl font-extrabold">
+                          {percentage.toFixed(2)}%
+                        </Typography>
+                      </div>
+                      <div className="flex flex-row gap-4 items-center">
+                        <BarChart
+                          data={funnelChart.funnelStats.map((stat) => ({
+                            name: stat.event,
+                            value: stat.count,
+                          }))}
+                        />
+                      </div>
                     </div>
-                    <div className="flex flex-row gap-4 items-center">
-                      <BarChart data={chartData} />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </Section>
       </DashboardLayout>

@@ -1,11 +1,12 @@
 export interface TagProps extends React.HTMLAttributes<HTMLElement> {
   children: React.ReactNode;
-  size?: "S" | "M";
+  size?: "XS" | "S" | "M";
   className?: string;
   variant?: "PRIMARY" | "DEFAULT" | "SUCCESS" | "DANGER";
 }
 
 const sizeStyle = {
+  XS: "px-2 py-1 text-xs",
   S: "px-2 py-1",
   M: "px-4 py-2",
 };
