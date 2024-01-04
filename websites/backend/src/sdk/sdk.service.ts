@@ -192,7 +192,7 @@ export class SdkService {
         name: queuedEvent.name,
         os: queuedEvent.os,
         browser: queuedEvent.browser,
-        url: queuedEvent.url,
+        url: queuedEvent.url || null,
         referer: queuedEvent.referer,
         data: queuedEvent.data
           ? typeof queuedEvent.data === 'object'
@@ -242,6 +242,6 @@ export class SdkService {
       });
     }
 
-    await this.hitEvent(concernedEnv.uuid, queuedEvent);
+    return this.hitEvent(concernedEnv.uuid, queuedEvent);
   }
 }

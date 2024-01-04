@@ -2,6 +2,11 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { seedDb, cleanupDb } from '@progressively/database/seed';
 import { prepareApp } from '../helpers/prepareApp';
+import { MockService } from '../../src/queuing/concrete/MockService';
+
+jest.mock('../../src/queuing/queuing.service.factory', () => ({
+  MakeQueuingService: () => new MockService(),
+}));
 
 jest.mock('nanoid', () => ({
   nanoid: () => '12345-marvin',
@@ -215,14 +220,14 @@ describe('SdkController (e2e)', () => {
         .expect(400);
     });
 
-    it('gives a 401 when there s no env associated to the clientkey', () => {
+    it('gives a 201 when there s no env associated to the clientkey (just queued but not handled)', () => {
       const fields = btoa(JSON.stringify({ clientKey: 'valid-sdk-kefey' }));
 
       return request(app.getHttpServer())
         .post(`/sdk/${fields}`)
         .send({ name: 'hello' })
         .set('origin', 'hello-world')
-        .expect(401);
+        .expect(201);
     });
 
     it('gives a 201 when the hit is valid', () => {
@@ -265,23 +270,23 @@ describe('SdkController (e2e)', () => {
         .expect(201);
     });
 
-    it('gives a 401 when the secretKey dont match', async () => {
+    it('gives a 201 when the secretKey dont match (handled in a queue)', async () => {
       const fields = btoa(JSON.stringify({}));
       const response = await request(app.getHttpServer())
         .post(`/sdk/${fields}`)
         .send({ name: 'hello' })
         .set('x-api-key', 'secret-key-23');
 
-      expect(response.status).toBe(401);
+      expect(response.status).toBe(201);
     });
 
-    it('gives a 401 when the secretKey and client key are not passed', async () => {
+    it('gives a 201 when the secretKey and client key are not passed (handled in a queue)', async () => {
       const fields = btoa(JSON.stringify({}));
       const response = await request(app.getHttpServer())
         .post(`/sdk/${fields}`)
         .send({ name: 'A metric', data: { hello: 'world' } });
 
-      expect(response.status).toBe(401);
+      expect(response.status).toBe(201);
     });
 
     it('gives a 200 when the secretKey matches', async () => {
