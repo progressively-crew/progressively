@@ -125,9 +125,10 @@ export const loader: LoaderFunction = async ({
   const authCookie = session.get("auth-cookie");
 
   const flagEnvs: Array<FlagEnv> = await getFlagsByProjectEnv(
-    params.id!,
+    envId,
     authCookie
   );
+
   const eventNames: Array<string> = await getDistinctEventName(
     envId,
     start,
