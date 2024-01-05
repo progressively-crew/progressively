@@ -2,15 +2,18 @@
 import { Image } from "astro:assets";
 import Button from "../components/Button.astro";
 import HeroBg from "../components/HeroBg.astro";
-import aboveFoldSrc from "./assets/above-fold.png";
+import ffSrc from "./assets/above-fold/ff.png";
+import analyticsSrc from "./assets/above-fold/analytics.png";
+import funnelsSrc from "./assets/above-fold/funnels.png";
 import Title from "../components/Title.astro";
 import Text from "../components/Text.astro";
+import Browser from "../components/Browser.astro";
 ---
 
-<div class="relative px-4">
-  <div
-    class="max-w-2xl mx-auto pt-48 md:pt-64 flex flex-col justify-center text-center relative z-10"
-  >
+<div
+  class="relative px-4 pt-48 md:pt-64 flex flex-col justify-center text-center"
+>
+  <div class="max-w-2xl mx-auto relative z-10">
     <Title tag="h1" size="XL">Craft Key Features for Your Audience</Title>
     <div class="py-6">
       <Text size="L">
@@ -25,8 +28,40 @@ import Text from "../components/Text.astro";
         Get me to the setup
       </Button>
     </div>
+  </div>
 
-    <Image src={aboveFoldSrc} alt="Analytics view of mfrachet.com" />
+  <div class="relative z-10 max-w-7xl mx-auto py-12">
+    <div class="grid md:grid-cols-3 gap-2 md:gap-8">
+      <div
+        class="motion-safe:opacity-0 motion-safe:animate-fade-enter-bottom"
+        style="animation-delay: 0.3s;"
+      >
+        <Browser>
+          <Image src={ffSrc} alt="Feature flags of progressively.app" />
+        </Browser>
+        <Text><strong>Feature flags</strong></Text>
+      </div>
+
+      <div
+        class="motion-safe:opacity-0 motion-safe:animate-fade-enter-bottom"
+        style="animation-delay: 0.6s;"
+      >
+        <Browser>
+          <Image src={analyticsSrc} alt="Analytics view of progressively.app" />
+        </Browser>
+        <Text><strong>Private Analytics</strong></Text>
+      </div>
+
+      <div
+        class="motion-safe:opacity-0 motion-safe:animate-fade-enter-bottom"
+        style="animation-delay: 0.9s;"
+      >
+        <Browser>
+          <Image src={funnelsSrc} alt="Funnels of progressively.app" />
+        </Browser>
+        <Text><strong>Funnels</strong></Text>
+      </div>
+    </div>
   </div>
 
   <div class="absolute inset-0 w-full h-full hidden md:block">
