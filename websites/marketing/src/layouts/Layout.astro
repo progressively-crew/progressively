@@ -18,6 +18,7 @@ const progressivelySecret = import.meta.env.PROGRESSIVELY_SECRET;
 const sdk = Progressively.init({
   secretKey: progressivelySecret,
   apiUrl: "https://progressively-backend.onrender.com", // only necessary when self hosting
+  shouldHit: true,
 });
 
 const { data } = await sdk.loadFlags();
