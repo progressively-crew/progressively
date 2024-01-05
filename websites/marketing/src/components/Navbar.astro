@@ -2,6 +2,7 @@
 import Button from "./Button.astro";
 import Twitter from "./Icons/Twitter.astro";
 import Github from "./Icons/Github.astro";
+import Discord from "./Icons/Discord.astro";
 ---
 
 <nav class="py-2 bg-white w-full">
@@ -13,7 +14,9 @@ import Github from "./Icons/Github.astro";
       <div class="font-bold text-lg hidden md:block">Progressively</div>
     </div>
 
-    <ul class="flex flex-row justify-end gap-4 items-center shrink-0">
+    <ul
+      class="flex flex-row justify-end gap-2 items-center shrink-0 border-r border-l border-slate-200 px-4"
+    >
       <li class="hidden md:block">
         <a
           href="https://www.producthunt.com/posts/progressively-2?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-progressively-2"
@@ -34,7 +37,7 @@ import Github from "./Icons/Github.astro";
           class="hidden md:flex h-6 flex-row gap-2 text-xs font-bold text-white bg-slate-900 rounded-full items-center px-3 hover:bg-slate-800 active:bg-slate-700"
         >
           <Twitter />
-          <span>Follow @_progressively</span>
+          <span>@_progressively</span>
         </a>
 
         <a
@@ -49,9 +52,29 @@ import Github from "./Icons/Github.astro";
 
       <li class="shrink-0">
         <a
+          href="https://discord.gg/BcrsFRSA"
+          target="_blank"
+          class="text-white bg-indigo-700 hidden md:flex h-6 flex-row gap-2 text-xs font-bold text-slate-900 rounded-full items-center px-3 hover:bg-indigo-600 active:bg-indigo-500"
+        >
+          <Discord />
+          <span>Discord</span>
+        </a>
+
+        <a
           href="https://github.com/progressively-crew/progressively"
           target="_blank"
-          class="hidden md:flex h-6 flex-row gap-2 text-xs font-bold text-slate-900 rounded-full items-center px-3"
+          aria-label="Follow on X"
+          class="md:hidden h-8 w-8 flex flex-row text-white text-white bg-indigo-700 rounded items-center justify-center active:bg-indigo-700"
+        >
+          <Discord />
+        </a>
+      </li>
+
+      <li class="shrink-0">
+        <a
+          href="https://github.com/progressively-crew/progressively"
+          target="_blank"
+          class="bg-slate-100 hidden md:flex h-6 flex-row gap-2 text-xs font-bold text-slate-900 rounded-full items-center px-3"
         >
           <Github />
           <span>Github</span>
