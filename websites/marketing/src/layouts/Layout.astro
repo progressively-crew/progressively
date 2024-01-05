@@ -1,6 +1,9 @@
 ---
 import "@fontsource-variable/playfair-display";
 import Navbar from "../components/Navbar.astro";
+import { Progressively } from "@progressively/server-side";
+import Banner from "../components/Banner.astro";
+
 interface Props {
   title: string;
   description: string;
@@ -9,6 +12,17 @@ interface Props {
 
 const { title, description, keywords } = Astro.props;
 const currentUrl = Astro.url.toString();
+
+const progressivelySecret = import.meta.env.PROGRESSIVELY_SECRET;
+
+const sdk = Progressively.init({
+  secretKey: progressivelySecret,
+  apiUrl: "https://progressively-backend.onrender.com", // only necessary when self hosting
+});
+
+const { data } = await sdk.loadFlags();
+
+const thanksBannerPh = Boolean(data.flags?.thanksBannerPh);
 ---
 
 <!DOCTYPE html>
@@ -40,7 +54,23 @@ const currentUrl = Astro.url.toString();
     <title>{title}</title>
   </head>
   <body>
-    <Navbar />
+    <header class="fixed top-0 z-20 w-full">
+      {
+        thanksBannerPh && (
+          <Banner>
+            Thanks for your support on{" "}
+            <a
+              class="font-bold underline"
+              href="https://www.producthunt.com/posts/progressively-2"
+            >
+              ProductHunt
+            </a>
+            ! We've reached <strong>#7 of the day!</strong> 🥰
+          </Banner>
+        )
+      }
+      <Navbar />
+    </header>
     <slot />
   </body>
 </html>

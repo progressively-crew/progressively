@@ -895,6 +895,9 @@ importers:
       '@progressively/sdk-js':
         specifier: ^1.0.2
         version: link:../../packages/sdk-js
+      '@progressively/server-side':
+        specifier: workspace:^
+        version: link:../../packages/server-side
       astro:
         specifier: ^4.0.8
         version: 4.0.8(typescript@5.3.3)
