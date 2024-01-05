@@ -111,7 +111,16 @@ const thanksBannerPh = true;
     const el = document.getElementById(id);
 
     if (el) {
-      el.addEventListener("click", () => sdk.track(id));
+      el.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        sdk.track(id).then(() => {
+          const anchor = e.target as HTMLAnchorElement | null;
+          if (anchor) {
+            window.location.href = anchor?.href;
+          }
+        });
+      });
     }
   });
 </script>
