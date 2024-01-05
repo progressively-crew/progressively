@@ -1,7 +1,6 @@
 ---
 import "@fontsource-variable/playfair-display";
 import Navbar from "../components/Navbar.astro";
-import { Progressively } from "@progressively/server-side";
 import Banner from "../components/Banner.astro";
 
 interface Props {
@@ -13,17 +12,17 @@ interface Props {
 const { title, description, keywords } = Astro.props;
 const currentUrl = Astro.url.toString();
 
-const progressivelySecret = import.meta.env.PROGRESSIVELY_SECRET;
+// const progressivelySecret = import.meta.env.PROGRESSIVELY_SECRET;
 
-const sdk = Progressively.init({
-  secretKey: progressivelySecret,
-  apiUrl: "https://progressively-backend.onrender.com", // only necessary when self hosting
-  shouldHit: true,
-});
+// const sdk = Progressively.init({
+//   secretKey: progressivelySecret,
+//   apiUrl: "https://progressively-backend.onrender.com", // only necessary when self hosting
+//   shouldHit: true,
+// });
 
-const { data } = await sdk.loadFlags();
+// const { data } = await sdk.loadFlags();
 
-const thanksBannerPh = Boolean(data.flags?.thanksBannerPh);
+const thanksBannerPh = true;
 ---
 
 <!DOCTYPE html>
