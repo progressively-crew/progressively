@@ -2,8 +2,6 @@ import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { LoaderFunction, V2_MetaFunction, redirect } from "@remix-run/node";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
-import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
-import { getFlagEnvMetaTitle } from "~/modules/flags/services/getFlagEnvMetaTitle";
 import { Card, CardContent } from "~/components/Card";
 import { PageTitle } from "~/components/PageTitle";
 import { Section } from "~/components/Section";
@@ -17,14 +15,12 @@ import { getFunnels } from "~/modules/environments/services/getFunnels";
 import { getSession } from "~/sessions";
 import { FunnelChart } from "~/modules/funnels/types";
 
-export const meta: V2_MetaFunction = ({ matches, params }) => {
+export const meta: V2_MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
-  const envName = getEnvMetaTitle(matches, params.env!);
-  const flagName = getFlagEnvMetaTitle(matches);
 
   return [
     {
-      title: `Progressively | ${projectName} | ${envName} | ${flagName} | Funnels`,
+      title: `Progressively | ${projectName} | Funnels`,
     },
   ];
 };
@@ -95,7 +91,7 @@ export default function FunnelsPage() {
           }
         />
         <Section>
-          <div className="grid grid-cols-2 gap-8">
+          <div className="flex flex-col gap-4">
             {funnels.map((funnelChart) => {
               const firstChart = funnelChart.funnelStats[0];
               const lastChart = funnelChart.funnelStats.at(-1);
@@ -106,29 +102,33 @@ export default function FunnelsPage() {
 
               return (
                 <Card key={funnelChart.funnel.uuid}>
-                  <CardContent>
-                    <div className="flex flex-row justify-between">
+                  <div className="grid grid-cols-[2fr_1fr]">
+                    <CardContent>
                       <div>
-                        <Typography
-                          as="h2"
-                          className="font-semibold text-xl pb-4"
-                        >
+                        <Typography as="h2" className="font-semibold pb-4">
                           {funnelChart.funnel.name}
                         </Typography>
-                        <Typography className="text-6xl font-extrabold">
-                          {percentage.toFixed(2)}%
-                        </Typography>
+
+                        <div className="flex flex-row gap-4 items-center">
+                          <BarChart
+                            data={funnelChart.funnelStats.map((stat) => ({
+                              name: stat.event,
+                              value: stat.count,
+                            }))}
+                          />
+                        </div>
                       </div>
-                      <div className="flex flex-row gap-4 items-center">
-                        <BarChart
-                          data={funnelChart.funnelStats.map((stat) => ({
-                            name: stat.event,
-                            value: stat.count,
-                          }))}
-                        />
-                      </div>
+                    </CardContent>
+
+                    <div className="bg-slate-50 border-l border-slate-200 flex flex-col justify-center items-center text-center px-4 rounded-r">
+                      <Typography className="text-6xl font-extrabold">
+                        {percentage.toFixed(2)}%
+                      </Typography>
+                      <Typography className="text-xs">
+                        of conversion from the first to the last event.
+                      </Typography>
                     </div>
-                  </CardContent>
+                  </div>
                 </Card>
               );
             })}

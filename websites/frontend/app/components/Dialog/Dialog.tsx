@@ -40,7 +40,7 @@ export const Dialog = ({
   return (
     <FocusTrap isActive={true}>
       <div
-        className="fixed h-full w-full inset-0 backdrop-blur-md bg-slate-300/30"
+        className="fixed h-full w-full inset-0 backdrop-blur-md bg-slate-300/30 z-20"
         onKeyUp={handleKeyDown}
       >
         <div className="mx-auto max-w-2xl w-full lg:pt-20 px-4 md:px-12">

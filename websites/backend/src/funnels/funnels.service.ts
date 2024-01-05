@@ -7,6 +7,7 @@ export class FunnelsService {
   constructor(private prisma: PrismaService) {}
 
   async resolveFunnelChart(
+    envId: string,
     funnel: Funnel,
     startDate: string,
     endDate: string,
@@ -20,19 +21,21 @@ export class FunnelsService {
     const funnelStats: FunnelChart['funnelStats'] = [];
 
     let previousVisitors: Array<string> = [];
-    const visitorIdWhere =
-      previousVisitors.length > 0
-        ? {
-            visitorId: {
-              in: previousVisitors,
-            },
-          }
-        : {};
 
     for (const funnelEntry of funnelEntries) {
+      const visitorIdWhere =
+        previousVisitors.length > 0
+          ? {
+              visitorId: {
+                in: previousVisitors,
+              },
+            }
+          : {};
+
       if (funnelEntry.flagUuid) {
         const flagHits = await this.prisma.flagHit.findMany({
           where: {
+            flagEnvironmentEnvironmentId: envId,
             flagEnvironmentFlagId: funnelEntry.flagUuid,
             date: {
               gte: new Date(startDate),
@@ -51,6 +54,7 @@ export class FunnelsService {
       } else {
         const events = await this.prisma.event.findMany({
           where: {
+            environmentUuid: envId,
             name: funnelEntry.eventName,
             date: {
               gte: new Date(startDate),
@@ -78,6 +82,7 @@ export class FunnelsService {
   }
 
   async buildFunnelCharts(
+    envId: string,
     funnels: Array<Funnel>,
     startDate: string,
     endDate: string,
@@ -86,7 +91,7 @@ export class FunnelsService {
 
     for (const funnel of funnels) {
       funnelChartsPromises.push(
-        this.resolveFunnelChart(funnel, startDate, endDate),
+        this.resolveFunnelChart(envId, funnel, startDate, endDate),
       );
     }
 

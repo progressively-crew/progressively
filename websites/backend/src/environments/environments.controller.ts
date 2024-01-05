@@ -116,6 +116,7 @@ export class EnvironmentsController {
 
     const funnels = await this.envService.getFunnels(envId);
     const funnelCharts = await this.funnelService.buildFunnelCharts(
+      envId,
       funnels,
       startDate,
       endDate,
