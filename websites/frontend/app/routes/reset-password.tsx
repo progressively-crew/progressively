@@ -117,7 +117,7 @@ export default function ResetPasswordPage() {
     >
       <Typography
         as="h1"
-        className="text-center text-3xl font-extrabold !leading-tight pb-8"
+        className="text-center text-3xl font-extrabold !leading-tight pb-8 font-title"
       >
         {pageTitle}
       </Typography>

@@ -27,7 +27,7 @@ export const BarChart = ({ data }: BarChartProps) => {
           <div className="shrink-0 w-[70px]">
             <div className="h-[100px] relative">
               <div className="absolute inset-0 flex items-center justify-center z-10">
-                <Typography className="font-bold">
+                <Typography className="font-bold dark:text-slate-900">
                   <NumberValue value={d.value} />
                 </Typography>
               </div>

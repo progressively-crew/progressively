@@ -45,7 +45,7 @@ export default function WelcomePage() {
     >
       <Typography
         as="h1"
-        className="text-3xl font-extrabold !leading-tight pb-2"
+        className="text-3xl font-extrabold !leading-tight pb-2 font-title"
       >
         Congratulations
       </Typography>

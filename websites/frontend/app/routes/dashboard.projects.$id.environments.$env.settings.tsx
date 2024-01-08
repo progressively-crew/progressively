@@ -68,7 +68,7 @@ export default function EnvSettingsPage() {
               <Spacer size={6} />
 
               <Dl>
-                <Dt>Domain (client):</Dt>
+                <Dt>Authorized domain (client):</Dt>
                 <Dd>{environment.domain || "N/A"}</Dd>
 
                 <Dt>Client key (public):</Dt>

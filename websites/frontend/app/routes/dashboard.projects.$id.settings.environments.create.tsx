@@ -100,7 +100,7 @@ export default function CreateEnvironmentPage() {
             isInvalid={Boolean(errors?.domain)}
             name="domain"
             placeholder="progressively.app"
-            label="Domain"
+            label="Authorized domain (glob pattern)"
           />
         </FormGroup>
       </CreateEntityLayout>

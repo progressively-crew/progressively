@@ -21,7 +21,7 @@ export const EnvMenuButton = ({
 
   const items: MenuButtonProps["items"] = environments.map((env) => ({
     label: env.name,
-    href: `/dashboard/projects/${projectId}/environments/${env.uuid}/flags/${flagId}`,
+    href: `/dashboard/projects/${projectId}/environments/${env.uuid}/flags/${flagId}/audience`,
     icon: (
       <IconBox content={env.name} size="S">
         <EnvIcon />

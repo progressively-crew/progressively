@@ -52,7 +52,7 @@ export const SectionHeader = ({
             <div className="flex-1">
               <HeadingComponent
                 as={titleAs}
-                className="text-2xl font-semibold tracking-tight dark:text-white"
+                className="text-2xl font-semibold tracking-tight dark:text-white font-title"
                 id={id}
                 name={name}
               >

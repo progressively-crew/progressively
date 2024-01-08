@@ -48,7 +48,9 @@ describe("/dashboard/onboarding", () => {
 
     it("creates a new project", () => {
       cy.findByRole("textbox", { name: "Project name" }).type("My new project");
-      cy.findByRole("textbox", { name: "Domain" }).type("project");
+      cy.findByRole("textbox", {
+        name: "Authorized domain (glob pattern)",
+      }).type("project");
       cy.findByRole("button", { name: "Create the project" }).click();
 
       cy.get(".success-box")

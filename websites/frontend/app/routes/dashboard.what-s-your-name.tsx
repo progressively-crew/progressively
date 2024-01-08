@@ -51,7 +51,7 @@ export default function WhatsYourNamePage() {
     >
       <Typography
         as="h1"
-        className="text-center text-3xl font-extrabold pt-4 !leading-tight motion-safe:animate-fade-enter-top pb-4"
+        className="text-center text-3xl font-extrabold !leading-tight motion-safe:animate-fade-enter-top pb-4 font-title"
       >
         What's your name?
       </Typography>
@@ -73,7 +73,7 @@ export default function WhatsYourNamePage() {
             </div>
 
             <div
-              className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"
+              className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0 flex flex-col"
               style={{ animationDelay: "500ms" }}
             >
               <SubmitButton type="submit">Set my fullname</SubmitButton>

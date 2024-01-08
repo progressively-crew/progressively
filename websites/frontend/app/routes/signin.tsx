@@ -132,7 +132,7 @@ export default function Signin() {
     <NotAuthenticatedLayout status={status}>
       <Typography
         as="h1"
-        className="text-center text-3xl font-extrabold !leading-tight motion-safe:animate-fade-enter-top pb-8"
+        className="text-center text-3xl font-extrabold !leading-tight motion-safe:animate-fade-enter-top pb-8 font-title"
       >
         Signin to your account
       </Typography>

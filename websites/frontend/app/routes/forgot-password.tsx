@@ -77,10 +77,10 @@ export default function ForgotPasswordPage() {
       }
       backLink={<BackLink to="/signin">Back to signin</BackLink>}
     >
-      <div>
+      <div className="motion-safe:animate-fade-enter-top">
         <Typography
           as="h1"
-          className="text-3xl font-extrabold pb-2 !leading-tight"
+          className="text-3xl font-extrabold pb-2 !leading-tight font-title"
         >
           Password forgotten
         </Typography>
@@ -93,21 +93,31 @@ export default function ForgotPasswordPage() {
       <div className="w-full">
         <Form method="post">
           <FormGroup>
-            <TextInput
-              hiddenLabel
-              isInvalid={Boolean(errors?.email)}
-              label="Email"
-              name="email"
-              type="email"
-              placeholder="e.g: james.bond@mi6.com"
-            />
-
-            <SubmitButton
-              isLoading={navigation.state === "submitting"}
-              loadingText="Password resetting in progress, please wait..."
+            <div
+              className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"
+              style={{ animationDelay: "300ms" }}
             >
-              Reset password
-            </SubmitButton>
+              <TextInput
+                hiddenLabel
+                isInvalid={Boolean(errors?.email)}
+                label="Email"
+                name="email"
+                type="email"
+                placeholder="e.g: james.bond@mi6.com"
+              />
+            </div>
+
+            <div
+              className="flex flex-col motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"
+              style={{ animationDelay: "500ms" }}
+            >
+              <SubmitButton
+                isLoading={navigation.state === "submitting"}
+                loadingText="Password resetting in progress, please wait..."
+              >
+                Reset password
+              </SubmitButton>
+            </div>
           </FormGroup>
         </Form>
       </div>

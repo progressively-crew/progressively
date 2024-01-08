@@ -6,7 +6,7 @@ export interface TagProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 const sizeStyle = {
-  XS: "px-2 py-1 text-xs",
+  XS: "px-2 text-xs",
   S: "px-2 py-1",
   M: "px-4 py-2",
 };

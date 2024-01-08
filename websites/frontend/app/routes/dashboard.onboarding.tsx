@@ -65,7 +65,7 @@ export default function OnboardingPage() {
       <div>
         <Typography
           as="h1"
-          className="text-3xl font-semibold !leading-tight pb-2"
+          className="text-3xl font-semibold !leading-tight pb-2 font-title"
         >
           Welcome aboard{" "}
           <strong className="font-extrabold">{user.fullname}</strong>
@@ -98,7 +98,7 @@ export default function OnboardingPage() {
 
                 <TextInput
                   isInvalid={Boolean(errors?.domain)}
-                  label="Domain"
+                  label="Authorized domain (glob pattern)"
                   name="domain"
                   placeholder="e.g: mfrachet.com"
                 />
@@ -106,7 +106,7 @@ export default function OnboardingPage() {
             </div>
 
             <div
-              className="motion-safe:opacity-0 motion-safe:animate-fade-enter-bottom"
+              className="motion-safe:opacity-0 motion-safe:animate-fade-enter-bottom flex flex-col"
               style={{ animationDelay: "700ms" }}
             >
               <SubmitButton

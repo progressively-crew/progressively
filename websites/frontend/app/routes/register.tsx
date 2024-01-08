@@ -59,7 +59,7 @@ export default function CreateAccountPage() {
     >
       <Typography
         as="h1"
-        className="text-center text-3xl font-extrabold !leading-tight motion-safe:animate-fade-enter-top pb-8"
+        className="text-center text-3xl font-extrabold !leading-tight motion-safe:animate-fade-enter-top pb-8 font-title"
       >
         Create an account
       </Typography>
