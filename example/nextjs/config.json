@@ -1,8 +1,0 @@
-{
-  "base_url": "https://progressively-backend.onrender.com",
-  "email": "marvin.frachet@gmail.com",
-  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiZGVhZDdhNzctNWY4My00MjNjLWFlODYtOTZjZmEzMTM5NTU2IiwiZW1haWwiOiJtYXJ2aW4uZnJhY2hldEBnbWFpbC5jb20iLCJmdWxsbmFtZSI6Ik1hcnZpbiBmcmFjaGV0IiwiaWF0IjoxNzAyODkwOTE2LCJleHAiOjE3MDI5NzU1MTYsImp0aSI6ImtvRXBkeXB6NzR3ck8zVkhBZno1TiJ9.EUMXWbiVigQ5a51o0zm3VAIRzOlHD-MYe8xt6qseTW8",
-  "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiZGVhZDdhNzctNWY4My00MjNjLWFlODYtOTZjZmEzMTM5NTU2IiwiZW1haWwiOiJtYXJ2aW4uZnJhY2hldEBnbWFpbC5jb20iLCJmdWxsbmFtZSI6Ik1hcnZpbiBmcmFjaGV0IiwiaWF0IjoxNzAyODkwOTE2LCJleHAiOjE3MDI5NzU1MTYsImp0aSI6IjMxdGVXRWRERHlCR21acVJ1VW90byJ9.y_SlRi3-LrUozkW_0fVG_ewcI7gFZTf2SlihPckQEaU",
-  "project_id": "2fdc32f9-f476-41cb-b9c6-c0e09112a51d",
-  "secret_key": "fc8dfc3d-9313-45a4-9866-63946d4e7124"
-}
