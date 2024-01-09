@@ -10,6 +10,7 @@ import {
   Body,
   BadRequestException,
   UnauthorizedException,
+  Inject,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { minimatch } from 'minimatch';
@@ -22,16 +23,15 @@ import { FieldRecord } from '../rule/types';
 
 import { KafkaTopics } from '../queuing/topics';
 import { IQueuingService } from '../queuing/types';
-import { MakeQueuingService } from '../queuing/queuing.service.factory';
 
 export const COOKIE_KEY = 'progressively-id';
 
 @Controller('sdk')
 export class SdkController {
-  private queuingService: IQueuingService;
-  constructor(private readonly sdkService: SdkService) {
-    this.queuingService = MakeQueuingService();
-  }
+  constructor(
+    private readonly sdkService: SdkService,
+    @Inject('QueueingService') private readonly queuingService: IQueuingService,
+  ) {}
 
   async _guardSdkEndpoint(request: Request, fields: FieldRecord) {
     const secretKey = request.headers['x-api-key'] as string | undefined;
@@ -81,7 +81,11 @@ export class SdkController {
     fields.id = resolveUserId(fields, cookieUserId);
     prepareCookie(response, fields.id);
 
-    return this.sdkService.computeFlags(concernedEnv, fields, shouldSkipHits);
+    return await this.sdkService.computeFlags(
+      concernedEnv,
+      fields,
+      shouldSkipHits,
+    );
   }
 
   @Get('/types/gen')

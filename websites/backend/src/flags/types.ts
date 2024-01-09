@@ -61,3 +61,10 @@ export interface Variant {
   isControl: boolean;
   value: string;
 }
+
+export interface QueuedFlagHit {
+  flagId: string;
+  envId: string;
+  visitorId: string;
+  valueResolved: string;
+}

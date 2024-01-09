@@ -1,7 +1,12 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { EnvironmentsService } from '../environments/environments.service';
 import { FlagsService } from '../flags/flags.service';
-import { PopulatedFlagEnv, PopulatedStrategy, Variant } from '../flags/types';
+import {
+  PopulatedFlagEnv,
+  PopulatedStrategy,
+  QueuedFlagHit,
+  Variant,
+} from '../flags/types';
 import { FieldRecord } from '../rule/types';
 import { PrismaService } from '../database/prisma.service';
 import { FlagStatus } from '../flags/flags.status';
@@ -19,6 +24,8 @@ import { RuleService } from '../rule/rule.service';
 import { Environment } from '../environments/types';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { minimatch } from 'minimatch';
+import { IQueuingService } from '../queuing/types';
+import { KafkaTopics } from '../queuing/topics';
 
 @Injectable()
 export class SdkService {
@@ -29,6 +36,7 @@ export class SdkService {
     private readonly flagService: FlagsService,
     private readonly ruleService: RuleService,
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
+    @Inject('QueueingService') private readonly queuingService: IQueuingService,
   ) {}
 
   resolveFlagStatus(flagEnv: PopulatedFlagEnv, fields: FieldRecord) {
@@ -95,12 +103,14 @@ export class SdkService {
   ) {
     const flagStatusRecord = this.resolveFlagStatus(flagEnv, fields);
 
-    await this.flagService.hitFlag(
-      flagEnv.environmentId,
-      flagEnv.flagId,
-      String(fields?.id || ''),
-      String(flagStatusRecord),
-    );
+    const queuedFlagHit: QueuedFlagHit = {
+      flagId: flagEnv.flagId,
+      envId: flagEnv.environmentId,
+      visitorId: String(fields?.id || ''),
+      valueResolved: String(flagStatusRecord),
+    };
+
+    await this.queuingService.send(KafkaTopics.FlagHits, queuedFlagHit);
 
     return {
       [flagEnv.flag.key]: flagStatusRecord,
@@ -124,12 +134,14 @@ export class SdkService {
     flagsByRef[nextFlag.flag.key] = flagStatusOrVariant;
 
     if (!skipHit) {
-      await this.flagService.hitFlag(
-        nextFlag.environmentId,
-        nextFlag.flagId,
-        String(fields?.id || ''),
-        String(flagStatusOrVariant),
-      );
+      const queuedFlagHit: QueuedFlagHit = {
+        flagId: nextFlag.flagId,
+        envId: nextFlag.environmentId,
+        visitorId: String(fields?.id || ''),
+        valueResolved: String(flagStatusOrVariant),
+      };
+
+      await this.queuingService.send(KafkaTopics.FlagHits, queuedFlagHit);
     }
   }
 

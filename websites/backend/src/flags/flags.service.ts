@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
 import { FlagStatus } from './flags.status';
-import { Variant } from './types';
+import { QueuedFlagHit, Variant } from './types';
 import { VariantCreationDTO } from './flags.dto';
 import camelcase from 'camelcase';
 import { FlagAlreadyExists } from '../projects/errors';
@@ -60,14 +60,10 @@ export class FlagsService {
     });
   }
 
-  hitFlag(
-    environmentId: string,
-    flagId: string,
-    visitorId: string,
-    valueResolved: string,
-  ) {
+  hitFlag(queuedFlagHit: QueuedFlagHit) {
     // Make it easier to group by date, 2 is arbitrary
     const date = new Date();
+
     date.setHours(2);
     date.setMinutes(2);
     date.setSeconds(2);
@@ -75,11 +71,11 @@ export class FlagsService {
 
     return this.prisma.flagHit.create({
       data: {
-        flagEnvironmentFlagId: flagId,
-        flagEnvironmentEnvironmentId: environmentId,
-        valueResolved,
+        flagEnvironmentFlagId: queuedFlagHit.flagId,
+        flagEnvironmentEnvironmentId: queuedFlagHit.envId,
+        valueResolved: queuedFlagHit.valueResolved,
         date,
-        visitorId,
+        visitorId: queuedFlagHit.visitorId,
       },
     });
   }

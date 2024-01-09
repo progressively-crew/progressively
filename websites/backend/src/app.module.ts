@@ -26,6 +26,7 @@ import 'winston-daily-rotate-file';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     WinstonModule.forRoot({
       transports: [
         new winston.transports.Console({
@@ -43,7 +44,7 @@ import 'winston-daily-rotate-file';
         }),
       ],
     }),
-    ConfigModule.forRoot(),
+
     TokensModule,
     FlagsModule,
     ProjectsModule,
