@@ -9,6 +9,7 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],
+        title: ['"Playfair Display Variable"'],
       },
       keyframes: {
         "opacity-appearing": {
