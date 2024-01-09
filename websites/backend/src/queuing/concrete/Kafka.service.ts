@@ -25,6 +25,7 @@ export class KafkaService implements IQueuingService {
 
   async send(topic: string, message: any) {
     if (!this.producer) {
+      console.log('QOLWLFJWOFJWOJW', topic);
       this.producer = this.kafka.producer();
       await this.producer.connect();
     }

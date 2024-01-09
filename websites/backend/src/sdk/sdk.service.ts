@@ -114,7 +114,7 @@ export class SdkService {
       valueResolved: String(flagStatusRecord),
     };
 
-    this.queuingService.send(KafkaTopics.FlagHits, queuedFlagHit);
+    await this.queuingService.send(KafkaTopics.FlagHits, queuedFlagHit);
 
     return {
       [flagEnv.flag.key]: flagStatusRecord,
@@ -145,7 +145,7 @@ export class SdkService {
         valueResolved: String(flagStatusOrVariant),
       };
 
-      this.queuingService.send(KafkaTopics.FlagHits, queuedFlagHit);
+      await this.queuingService.send(KafkaTopics.FlagHits, queuedFlagHit);
     }
   }
 

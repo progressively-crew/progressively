@@ -41,8 +41,9 @@ export class FlagsModule implements OnModuleInit, OnModuleDestroy {
 
   async onModuleInit() {
     await this.queuingService.consume<QueuedFlagHit>(
-      KafkaTopics.AnalyticsHits,
+      KafkaTopics.FlagHits,
       (queuedFlagHit) => {
+        console.log('WTF');
         this.flagService.hitFlag(queuedFlagHit);
       },
     );

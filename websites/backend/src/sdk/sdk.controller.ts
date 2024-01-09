@@ -81,7 +81,13 @@ export class SdkController {
     fields.id = resolveUserId(fields, cookieUserId);
     prepareCookie(response, fields.id);
 
-    return this.sdkService.computeFlags(concernedEnv, fields, shouldSkipHits);
+    const flags = await this.sdkService.computeFlags(
+      concernedEnv,
+      fields,
+      shouldSkipHits,
+    );
+
+    return flags;
   }
 
   @Get('/types/gen')
