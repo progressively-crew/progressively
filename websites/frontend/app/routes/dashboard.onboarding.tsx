@@ -98,7 +98,7 @@ export default function OnboardingPage() {
 
                 <TextInput
                   isInvalid={Boolean(errors?.domain)}
-                  label="Domain"
+                  label="Authorized domain (glob pattern)"
                   name="domain"
                   placeholder="e.g: mfrachet.com"
                 />
