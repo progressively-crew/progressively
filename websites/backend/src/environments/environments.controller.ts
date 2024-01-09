@@ -115,14 +115,12 @@ export class EnvironmentsController {
     }
 
     const funnels = await this.envService.getFunnels(envId);
-    const funnelCharts = await this.funnelService.buildFunnelCharts(
+    return await this.funnelService.buildFunnelCharts(
       envId,
       funnels,
       startDate,
       endDate,
     );
-
-    return funnelCharts;
   }
 
   @Get(':envId/events')

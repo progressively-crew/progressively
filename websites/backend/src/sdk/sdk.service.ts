@@ -25,13 +25,10 @@ import { Environment } from '../environments/types';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { minimatch } from 'minimatch';
 import { IQueuingService } from '../queuing/types';
-import { MakeQueuingService } from '../queuing/queuing.service.factory';
 import { KafkaTopics } from '../queuing/topics';
 
 @Injectable()
 export class SdkService {
-  private queuingService: IQueuingService;
-
   constructor(
     private prisma: PrismaService,
     private readonly envService: EnvironmentsService,
@@ -39,9 +36,8 @@ export class SdkService {
     private readonly flagService: FlagsService,
     private readonly ruleService: RuleService,
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
-  ) {
-    this.queuingService = MakeQueuingService();
-  }
+    @Inject('QueueingService') private readonly queuingService: IQueuingService,
+  ) {}
 
   resolveFlagStatus(flagEnv: PopulatedFlagEnv, fields: FieldRecord) {
     if (flagEnv.status !== FlagStatus.ACTIVATED) return false;

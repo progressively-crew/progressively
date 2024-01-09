@@ -1,4 +1,4 @@
-import { Module, OnModuleInit } from '@nestjs/common';
+import { Inject, Module, OnModuleInit } from '@nestjs/common';
 import { FlagsModule } from '../flags/flags.module';
 import { EnvironmentsModule } from '../environments/environments.module';
 import { SdkController } from './sdk.controller';
@@ -10,10 +10,10 @@ import { DatabaseModule } from '../database/database.module';
 import { SchedulingModule } from '../scheduling/scheduling.module';
 import { RuleModule } from '../rule/rule.module';
 import { UsersModule } from '../users/users.module';
-import { MakeQueuingService } from 'src/queuing/queuing.service.factory';
 import { KafkaTopics } from '../queuing/topics';
 import { IQueuingService } from '../queuing/types';
 import { QueuedEventHit } from './types';
+import { QueuingModule } from '../queuing/queuing.module';
 
 @Module({
   controllers: [SdkController],
@@ -26,19 +26,17 @@ import { QueuedEventHit } from './types';
     RuleModule,
     RuleModule,
     UsersModule,
+    QueuingModule,
   ],
   providers: [SdkService],
   exports: [SdkService],
 })
 export class SdkModule implements OnModuleInit {
-  private queuingService: IQueuingService;
-
   constructor(
     private readonly wsGateway: WebsocketGateway,
     private readonly sdkService: SdkService,
-  ) {
-    this.queuingService = MakeQueuingService();
-  }
+    @Inject('QueueingService') private readonly queuingService: IQueuingService,
+  ) {}
 
   async onModuleDestroy() {
     await this.queuingService.teardown();

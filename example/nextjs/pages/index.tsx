@@ -55,12 +55,9 @@ export async function getServerSideProps({
       email: "marvin.frachet@something.com",
       id: "1",
     },
-    shouldHit: true,
   });
 
   const { data, response } = await sdk.loadFlags();
-
-  console.log("OWJOWJF", data);
 
   const progressivelyCookie = response?.headers?.get("set-cookie") || "";
   res.setHeader("set-cookie", progressivelyCookie);

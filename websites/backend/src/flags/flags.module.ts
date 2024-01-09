@@ -1,4 +1,4 @@
-import { Module, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
+import { Inject, Module, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import { FlagsService } from './flags.service';
 import { FlagsController } from './flags.controller';
 import { EnvironmentsModule } from '../environments/environments.module';
@@ -11,7 +11,7 @@ import { WebhooksModule } from '../webhooks/webhooks.module';
 import { IQueuingService } from '../queuing/types';
 import { KafkaTopics } from '../queuing/topics';
 import { QueuedFlagHit } from './types';
-import { MakeQueuingService } from '../queuing/queuing.service.factory';
+import { QueuingModule } from '../queuing/queuing.module';
 
 @Module({
   imports: [
@@ -23,17 +23,17 @@ import { MakeQueuingService } from '../queuing/queuing.service.factory';
     SchedulingModule,
     WebhooksModule,
     ActivityLogModule,
+    QueuingModule,
   ],
   providers: [FlagsService],
   controllers: [FlagsController],
   exports: [FlagsService],
 })
 export class FlagsModule implements OnModuleInit, OnModuleDestroy {
-  private queuingService: IQueuingService;
-
-  constructor(private readonly flagService: FlagsService) {
-    this.queuingService = MakeQueuingService();
-  }
+  constructor(
+    private readonly flagService: FlagsService,
+    @Inject('QueueingService') private readonly queuingService: IQueuingService,
+  ) {}
 
   async onModuleDestroy() {
     await this.queuingService.teardown();
@@ -43,7 +43,6 @@ export class FlagsModule implements OnModuleInit, OnModuleDestroy {
     await this.queuingService.consume<QueuedFlagHit>(
       KafkaTopics.FlagHits,
       (queuedFlagHit) => {
-        console.log('WTF');
         this.flagService.hitFlag(queuedFlagHit);
       },
     );
