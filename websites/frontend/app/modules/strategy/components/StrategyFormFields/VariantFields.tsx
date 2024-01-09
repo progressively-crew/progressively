@@ -1,5 +1,6 @@
 import { Link } from "@remix-run/react";
 import { IoMdClose } from "react-icons/io";
+import { CreateButton } from "~/components/Buttons/CreateButton";
 import { IconButton } from "~/components/Buttons/IconButton";
 import { PercentageField } from "~/components/Fields/PercentageField";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
@@ -16,12 +17,12 @@ export const VariantFields = ({ variants, index }: VariantFieldsProps) => {
   const { environment } = useEnvironment();
 
   return (
-    <div className="grid grid-cols-3 gap-4">
+    <div className="flex flex-row gap-4 flex-wrap items-center">
       {variants.map((variant, variantIndex: number) => {
         return (
           <div
             key={variant.uuid}
-            className="bg-slate-100 px-2 py-2 rounded dark:bg-slate-600"
+            className="bg-slate-50 px-2 py-2 rounded dark:bg-slate-600"
           >
             <input
               type="hidden"
@@ -45,6 +46,13 @@ export const VariantFields = ({ variants, index }: VariantFieldsProps) => {
           </div>
         );
       })}
+
+      <CreateButton
+        to={`/dashboard/projects/${environment.projectId}/environments/${environment.uuid}/flags/${flagEnv.flagId}/audience/variants/create`}
+        variant="tertiary"
+      >
+        Add a variant
+      </CreateButton>
     </div>
   );
 };

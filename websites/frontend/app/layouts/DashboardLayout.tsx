@@ -77,7 +77,10 @@ export const DashboardLayout = ({
                     {lastCrumb.isEnv && <EnvIcon />}
                   </IconBox>
 
-                  <Typography as="span" className="text-3xl font-extrabold">
+                  <Typography
+                    as="span"
+                    className="text-3xl font-extrabold font-title"
+                  >
                     {lastCrumb.label}
                   </Typography>
 

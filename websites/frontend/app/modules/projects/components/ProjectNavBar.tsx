@@ -37,7 +37,7 @@ export const ProjectNavBar = ({ project }: ProjectNavBarProps) => {
         >
           Funnels{" "}
           <Tag variant="SUCCESS" size="XS">
-            Build in progress
+            In progress
           </Tag>
         </NavItem>
       )}

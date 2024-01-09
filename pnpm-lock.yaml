@@ -753,6 +753,9 @@ importers:
 
   websites/frontend:
     dependencies:
+      '@fontsource-variable/playfair-display':
+        specifier: ^5.0.19
+        version: 5.0.19
       '@headlessui/react':
         specifier: ^1.7.15
         version: 1.7.15(react-dom@18.2.0)(react@18.2.0)
@@ -5582,7 +5585,7 @@ packages:
       '@babel/helper-module-imports': 7.18.6
       '@babel/helper-plugin-utils': 7.20.2
       '@babel/plugin-syntax-jsx': 7.18.6(@babel/core@7.22.11)
-      '@babel/types': 7.22.11
+      '@babel/types': 7.21.4
     dev: true
 
   /@babel/plugin-transform-react-jsx@7.20.13(@babel/core@7.23.5):
@@ -5596,7 +5599,7 @@ packages:
       '@babel/helper-module-imports': 7.18.6
       '@babel/helper-plugin-utils': 7.20.2
       '@babel/plugin-syntax-jsx': 7.18.6(@babel/core@7.23.5)
-      '@babel/types': 7.22.11
+      '@babel/types': 7.21.4
     dev: true
 
   /@babel/plugin-transform-react-jsx@7.22.5(@babel/core@7.20.12):

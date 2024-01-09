@@ -16,6 +16,7 @@
     "test:e2e:ci:parallel": "cypress run --browser chrome --record --parallel"
   },
   "dependencies": {
+    "@fontsource-variable/playfair-display": "^5.0.19",
     "@headlessui/react": "^1.7.15",
     "@okta/okta-auth-js": "^7.3.0",
     "@progressively/react": "workspace:*",

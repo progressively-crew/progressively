@@ -52,12 +52,14 @@ export const StrategyFormFields = ({
             onValueChange={(str) => setStatus(str as ValueToServe)}
           />
 
-          <CreateButton
-            to={`/dashboard/projects/${environment.projectId}/environments/${environment.uuid}/flags/${flagEnv.flagId}/audience/variants/create`}
-            variant="tertiary"
-          >
-            Add a variant
-          </CreateButton>
+          {variants && variants.length === 0 ? (
+            <CreateButton
+              to={`/dashboard/projects/${environment.projectId}/environments/${environment.uuid}/flags/${flagEnv.flagId}/audience/variants/create`}
+              variant="tertiary"
+            >
+              Add a variant
+            </CreateButton>
+          ) : null}
         </div>
 
         {variants && variants.length > 0 && (
