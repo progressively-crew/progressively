@@ -146,14 +146,6 @@ export class SdkService {
       };
 
       this.queuingService.send(KafkaTopics.FlagHits, queuedFlagHit);
-
-      // TODO: REMOVE WHEN FINISHED
-      // await this.flagService.hitFlag(
-      //   nextFlag.environmentId,
-      //   nextFlag.flagId,
-      //   String(fields?.id || ''),
-      //   String(flagStatusOrVariant),
-      // );
     }
   }
 
