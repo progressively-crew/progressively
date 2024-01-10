@@ -18,7 +18,7 @@ export const BreadCrumbs = ({ crumbs }: BreadCrumbsProps) => {
     "focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:focus:ring-offset-slate-900";
 
   return (
-    <nav aria-label="Breadcrumbs" className="px-4">
+    <nav aria-label="Breadcrumbs">
       <ol className="flex items-center">
         {crumbs.map((crumb, index) => {
           const currentPage = index === lastItemIndex;
@@ -33,7 +33,7 @@ export const BreadCrumbs = ({ crumbs }: BreadCrumbsProps) => {
               <Link
                 aria-current={currentPage ? "page" : undefined}
                 to={crumb.link}
-                className={`text-xs transition-background px-1 py-1 rounded hover:text-black hover:dark:text-slate-200 hover:bg-gray-100 dark:hover:bg-slate-700 no-underline ${focusStyles} ${
+                className={`text-xs transition-background px-1 h-10 flex flex-row items-center rounded-lg hover:text-black hover:dark:text-slate-200 hover:bg-gray-100 dark:hover:bg-slate-700 no-underline ${focusStyles} ${
                   currentPage
                     ? "text-black dark:text-slate-100"
                     : "text-gray-500 dark:text-slate-400"

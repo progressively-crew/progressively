@@ -8,7 +8,7 @@ export const UserNav = () => {
   const { user } = useUser();
   return (
     <nav aria-label="User related navigation">
-      <ul className="flex flex-row gap-2 items-center px-8">
+      <ul className="flex flex-row gap-2 items-center">
         <NavItem
           to={"https://progressively.app/"}
           icon={<FaBook />}

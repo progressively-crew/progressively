@@ -25,7 +25,7 @@ export const NavItem = ({ children, to, icon, target }: NavItemProps) => {
   const focusStyles =
     "focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:focus:ring-offset-slate-900";
 
-  const shared = `${focusStyles} py-2 border-b-2 border-t-2 border-transparent whitespace-nowrap shrink-0 text-sm block flex items-center px-3 text-gray-700 hover:bg-slate-100 hover:dark:bg-slate-700 dark:text-slate-300`;
+  const shared = `${focusStyles} h-10 rounded-lg whitespace-nowrap shrink-0 text-sm block flex items-center px-3 text-gray-700 hover:bg-slate-100 hover:dark:bg-slate-700 dark:text-slate-300`;
 
   return (
     <li>
