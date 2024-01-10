@@ -54,111 +54,109 @@ export const DashboardLayout = ({
     <Inert>
       <SkipNavLink>Skip to content</SkipNavLink>
 
-      <div className="h-full flex-1 flex flex-col p-4 bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400 ">
-        <div className="bg-gray-50 dark:bg-slate-900 flex-1 h-full rounded-xl shadow-lg pt-1 px-1">
-          {lastCrumb && (
-            <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 rounded-t-lg">
-              <div
-                className={`flex flex-row items-center ${
-                  hasMoreThanOneCrumb ? "justify-between" : "justify-end"
-                }`}
-              >
-                {hasMoreThanOneCrumb && <BreadCrumbs crumbs={crumbs} />}
-                <UserNav />
-              </div>
-
-              {!lastCrumb.isRoot && (
-                <header
-                  className={`px-8 pb-4 ${crumbs.length > 0 ? "pt-6" : ""}`}
-                >
-                  <div className="flex flex-row gap-2 items-center">
-                    <IconBox content={lastCrumb.label} size="L">
-                      {lastCrumb.isFlag && <FlagIcon />}
-                      {lastCrumb.isProject && <ProjectIcon />}
-                      {lastCrumb.isEnv && <EnvIcon />}
-                    </IconBox>
-
-                    <Typography
-                      as="span"
-                      className="text-3xl font-extrabold font-title"
-                    >
-                      {lastCrumb.label}
-                    </Typography>
-
-                    {project && flagEnv && (
-                      <IconButton
-                        icon={<SettingsIcon />}
-                        tooltip={"Settings"}
-                        as={Link}
-                        to={`/dashboard/projects/${project.uuid}/flags/${flagEnv.flagId}`}
-                      />
-                    )}
-
-                    {project && !flagEnv && (
-                      <IconButton
-                        icon={<SettingsIcon />}
-                        tooltip={"Settings"}
-                        as={Link}
-                        to={`/dashboard/projects/${project.uuid}/settings`}
-                      />
-                    )}
-                  </div>
-
-                  {flagEnv && project && (
-                    <div className="flex flex-row gap-4 items-center pt-2 -mx-3">
-                      <EnvMenuButton
-                        projectId={project.uuid}
-                        flagId={flagEnv.flagId}
-                        environments={project.environments}
-                      />
-
-                      <ButtonCopy toCopy={flagEnv.flag.key} size="S">
-                        {flagEnv.flag.key}
-                      </ButtonCopy>
-
-                      <Form method="post" id={`form-${flagEnv.flagId}`}>
-                        <ToggleFlag
-                          isFlagActivated={isActivated}
-                          flagId={flagEnv.flagId}
-                        />
-                      </Form>
-                    </div>
-                  )}
-                </header>
-              )}
-
-              {subNav}
+      <div className="bg-gray-50 dark:bg-slate-900 h-full flex-1 rounded-xl shadow-xl">
+        {lastCrumb && (
+          <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 rounded-t-lg pt-1 px-1">
+            <div
+              className={`flex flex-row items-center ${
+                hasMoreThanOneCrumb ? "justify-between" : "justify-end"
+              }`}
+            >
+              {hasMoreThanOneCrumb && <BreadCrumbs crumbs={crumbs} />}
+              <UserNav />
             </div>
-          )}
 
-          <div
-            className={`${layoutClassName} h-full dark:bg-slate-900 flex-1 px-4 md:px-20 pt-8 md:pt-0 w-full`}
-          >
-            <Main>
-              {status}
-              <div className="flex-1">
-                <div>
-                  <div className="md:h-12" />
+            {!lastCrumb.isRoot && (
+              <header
+                className={`px-4 pb-4 ${crumbs.length > 0 ? "pt-6" : ""}`}
+              >
+                <div className="flex flex-row gap-2 items-center">
+                  <IconBox content={lastCrumb.label} size="L">
+                    {lastCrumb.isFlag && <FlagIcon />}
+                    {lastCrumb.isProject && <ProjectIcon />}
+                    {lastCrumb.isEnv && <EnvIcon />}
+                  </IconBox>
 
-                  <div className="flex flex-col gap-4 md:gap-6">{children}</div>
+                  <Typography
+                    as="span"
+                    className="text-3xl font-extrabold font-title"
+                  >
+                    {lastCrumb.label}
+                  </Typography>
 
-                  <Spacer size={10} />
+                  {project && flagEnv && (
+                    <IconButton
+                      icon={<SettingsIcon />}
+                      tooltip={"Settings"}
+                      as={Link}
+                      to={`/dashboard/projects/${project.uuid}/flags/${flagEnv.flagId}`}
+                    />
+                  )}
+
+                  {project && !flagEnv && (
+                    <IconButton
+                      icon={<SettingsIcon />}
+                      tooltip={"Settings"}
+                      as={Link}
+                      to={`/dashboard/projects/${project.uuid}/settings`}
+                    />
+                  )}
                 </div>
 
-                {isNormalLoad && (
-                  <div
-                    className="fixed left-4 bottom-4 animate-opacity-appearing"
-                    style={{
-                      animationDelay: "300ms",
-                      opacity: 0,
-                    }}
-                  >
-                    <Spinner className="text-3xl text-gray-400" />
+                {flagEnv && project && (
+                  <div className="flex flex-row gap-4 items-center pt-2 -mx-3">
+                    <EnvMenuButton
+                      projectId={project.uuid}
+                      flagId={flagEnv.flagId}
+                      environments={project.environments}
+                    />
+
+                    <ButtonCopy toCopy={flagEnv.flag.key} size="S">
+                      {flagEnv.flag.key}
+                    </ButtonCopy>
+
+                    <Form method="post" id={`form-${flagEnv.flagId}`}>
+                      <ToggleFlag
+                        isFlagActivated={isActivated}
+                        flagId={flagEnv.flagId}
+                      />
+                    </Form>
                   </div>
                 )}
-              </div>
-            </Main>
+              </header>
+            )}
+
+            {subNav}
           </div>
+        )}
+
+        <div
+          className={`${layoutClassName} h-full dark:bg-slate-900 flex-1 px-4 md:px-20 pt-8 md:pt-0 w-full`}
+        >
+          <Main>
+            {status}
+            <div className="flex-1">
+              <div>
+                <div className="md:h-12" />
+
+                <div className="flex flex-col gap-4 md:gap-6">{children}</div>
+
+                <Spacer size={10} />
+              </div>
+
+              {isNormalLoad && (
+                <div
+                  className="fixed left-4 bottom-4 animate-opacity-appearing"
+                  style={{
+                    animationDelay: "300ms",
+                    opacity: 0,
+                  }}
+                >
+                  <Spinner className="text-3xl text-gray-400" />
+                </div>
+              )}
+            </div>
+          </Main>
         </div>
       </div>
     </Inert>
