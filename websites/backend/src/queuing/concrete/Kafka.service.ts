@@ -3,14 +3,18 @@ import { getEnv } from '../getEnv';
 import { IQueuingService } from '../types';
 
 export class KafkaService implements IQueuingService {
-  private kafka: Kafka | undefined;
   private producer: Producer;
   private consumer: Consumer;
 
-  constructor() {
+  constructor(producer: Producer, consumer: Consumer) {
+    this.producer = producer;
+    this.consumer = consumer;
+  }
+
+  static async create() {
     const env = getEnv();
 
-    this.kafka = new Kafka({
+    const kafka = new Kafka({
       clientId: 'progressively',
       brokers: [env.KafkaBroker],
       ssl: true,
@@ -21,14 +25,20 @@ export class KafkaService implements IQueuingService {
       },
       logLevel: logLevel.ERROR,
     });
+
+    const producer = kafka.producer();
+    await producer.connect();
+
+    const consumer = kafka.consumer({
+      groupId: 'progressively-analytics-group',
+    });
+
+    await consumer.connect();
+
+    return new KafkaService(producer, consumer);
   }
 
   async send(topic: string, message: any) {
-    if (!this.producer) {
-      this.producer = this.kafka.producer();
-      await this.producer.connect();
-    }
-
     await this.producer.send({
       topic: topic,
       messages: [{ value: JSON.stringify(message) }],
@@ -36,18 +46,14 @@ export class KafkaService implements IQueuingService {
   }
 
   async consume<T>(topicName: string, callback: (parsedMsg: T) => void) {
-    if (!this.consumer) {
-      this.consumer = this.kafka.consumer({
-        groupId: 'progressively-analytics-group',
-      });
-      await this.consumer.connect();
-      await this.consumer.subscribe({ topics: [topicName] });
-    }
+    await this.consumer.subscribe({ topics: [topicName] });
 
     return this.consumer.run({
-      eachMessage: async ({ message }) => {
-        const obj = JSON.parse(message.value.toString()) as T;
-        callback(obj);
+      eachMessage: async ({ message, topic }) => {
+        if (topic === topicName) {
+          const obj = JSON.parse(message.value.toString()) as T;
+          callback(obj);
+        }
       },
     });
   }
