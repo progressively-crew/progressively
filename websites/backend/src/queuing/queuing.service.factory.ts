@@ -3,11 +3,11 @@ import { InMemoryService } from './concrete/InMemory.service';
 import { IQueuingService } from './types';
 import { KafkaService } from './concrete/Kafka.service';
 
-export const MakeQueuingService = (): IQueuingService => {
+export const MakeQueuingService = async (): Promise<IQueuingService> => {
   const env = getEnv();
 
   if (env.KafkaBroker && env.KafkaPassword && env.KafkaUser) {
-    return new KafkaService();
+    return KafkaService.create();
   }
 
   return new InMemoryService();

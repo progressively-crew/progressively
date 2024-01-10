@@ -6,7 +6,7 @@ import { MakeQueuingService } from './queuing.service.factory';
   providers: [
     {
       provide: 'QueueingService',
-      useFactory: MakeQueuingService,
+      useFactory: async () => await MakeQueuingService(),
     },
   ],
   exports: ['QueueingService'],

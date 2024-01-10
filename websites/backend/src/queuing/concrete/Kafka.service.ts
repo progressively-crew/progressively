@@ -3,14 +3,20 @@ import { getEnv } from '../getEnv';
 import { IQueuingService } from '../types';
 
 export class KafkaService implements IQueuingService {
-  private kafka: Kafka | undefined;
+  private kafka: Kafka;
   private producer: Producer;
-  private consumer: Consumer;
+  private consumers: Array<Consumer>;
 
-  constructor() {
+  constructor(producer: Producer, kafka: Kafka) {
+    this.producer = producer;
+    this.kafka = kafka;
+    this.consumers = [];
+  }
+
+  static async create() {
     const env = getEnv();
 
-    this.kafka = new Kafka({
+    const kafka = new Kafka({
       clientId: 'progressively',
       brokers: [env.KafkaBroker],
       ssl: true,
@@ -21,40 +27,47 @@ export class KafkaService implements IQueuingService {
       },
       logLevel: logLevel.ERROR,
     });
+
+    const producer = kafka.producer();
+    await producer.connect();
+
+    return new KafkaService(producer, kafka);
   }
 
   async send(topic: string, message: any) {
-    if (!this.producer) {
-      this.producer = this.kafka.producer();
-      await this.producer.connect();
-    }
-
     await this.producer.send({
       topic: topic,
       messages: [{ value: JSON.stringify(message) }],
     });
   }
 
-  async consume<T>(topicName: string, callback: (parsedMsg: T) => void) {
-    if (!this.consumer) {
-      this.consumer = this.kafka.consumer({
-        groupId: 'progressively-analytics-group',
-      });
-      await this.consumer.connect();
-      await this.consumer.subscribe({ topics: [topicName] });
-    }
+  async consume<T>(
+    topicName: string,
+    groupId: string,
+    callback: (parsedMsg: T) => void,
+  ) {
+    const consumer = this.kafka.consumer({
+      groupId,
+    });
 
-    return this.consumer.run({
-      eachMessage: async ({ message }) => {
-        const obj = JSON.parse(message.value.toString()) as T;
-        callback(obj);
+    await consumer.connect();
+    await consumer.subscribe({ topics: [topicName] });
+
+    this.consumers.push(consumer);
+
+    return consumer.run({
+      eachMessage: async ({ message, topic }) => {
+        if (topic === topicName) {
+          const obj = JSON.parse(message.value.toString()) as T;
+          callback(obj);
+        }
       },
     });
   }
 
   async teardown() {
-    if (this.consumer) {
-      await this.consumer.disconnect();
+    for (const consumer of this.consumers) {
+      await consumer.disconnect();
     }
 
     if (this.producer) {

@@ -51,8 +51,9 @@ export class SdkModule implements OnModuleInit {
 
     await this.queuingService.consume<QueuedEventHit>(
       KafkaTopics.AnalyticsHits,
-      (queuedEvent) => {
-        this.sdkService.resolveQueuedHit(queuedEvent);
+      'progressively-analytics-group',
+      async (queuedEvent) => {
+        await this.sdkService.resolveQueuedHit(queuedEvent);
       },
     );
   }

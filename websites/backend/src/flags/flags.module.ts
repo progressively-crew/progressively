@@ -42,8 +42,9 @@ export class FlagsModule implements OnModuleInit, OnModuleDestroy {
   async onModuleInit() {
     await this.queuingService.consume<QueuedFlagHit>(
       KafkaTopics.FlagHits,
-      (queuedFlagHit) => {
-        this.flagService.hitFlag(queuedFlagHit);
+      'progressively-flags-hits-group',
+      async (queuedFlagHit) => {
+        await this.flagService.hitFlag(queuedFlagHit);
       },
     );
   }
