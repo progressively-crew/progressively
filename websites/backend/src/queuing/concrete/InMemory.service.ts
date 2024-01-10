@@ -9,7 +9,11 @@ export class InMemoryService implements IQueuingService {
     }
   }
 
-  async consume<T>(topic: string, callback: (parsedMsg: T) => void) {
+  async consume<T>(
+    topic: string,
+    groupId: string,
+    callback: (parsedMsg: T) => void,
+  ) {
     if (!topics[topic]) {
       topics[topic] = [];
     }

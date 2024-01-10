@@ -3,12 +3,14 @@ import { getEnv } from '../getEnv';
 import { IQueuingService } from '../types';
 
 export class KafkaService implements IQueuingService {
+  private kafka: Kafka;
   private producer: Producer;
-  private consumer: Consumer;
+  private consumers: Array<Consumer>;
 
-  constructor(producer: Producer, consumer: Consumer) {
+  constructor(producer: Producer, kafka: Kafka) {
     this.producer = producer;
-    this.consumer = consumer;
+    this.kafka = kafka;
+    this.consumers = [];
   }
 
   static async create() {
@@ -29,13 +31,7 @@ export class KafkaService implements IQueuingService {
     const producer = kafka.producer();
     await producer.connect();
 
-    const consumer = kafka.consumer({
-      groupId: 'progressively-analytics-group',
-    });
-
-    await consumer.connect();
-
-    return new KafkaService(producer, consumer);
+    return new KafkaService(producer, kafka);
   }
 
   async send(topic: string, message: any) {
@@ -45,10 +41,21 @@ export class KafkaService implements IQueuingService {
     });
   }
 
-  async consume<T>(topicName: string, callback: (parsedMsg: T) => void) {
-    await this.consumer.subscribe({ topics: [topicName] });
+  async consume<T>(
+    topicName: string,
+    groupId: string,
+    callback: (parsedMsg: T) => void,
+  ) {
+    const consumer = this.kafka.consumer({
+      groupId,
+    });
 
-    return this.consumer.run({
+    await consumer.connect();
+    await consumer.subscribe({ topics: [topicName] });
+
+    this.consumers.push(consumer);
+
+    return consumer.run({
       eachMessage: async ({ message, topic }) => {
         if (topic === topicName) {
           const obj = JSON.parse(message.value.toString()) as T;
@@ -59,8 +66,8 @@ export class KafkaService implements IQueuingService {
   }
 
   async teardown() {
-    if (this.consumer) {
-      await this.consumer.disconnect();
+    for (const consumer of this.consumers) {
+      await consumer.disconnect();
     }
 
     if (this.producer) {
