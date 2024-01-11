@@ -8,7 +8,7 @@ import { WebSocketServer as WSServer } from 'ws';
 import { URL } from 'url';
 import { Rooms } from './rooms';
 import { LocalWebsocket, Subscriber } from './types';
-import { RedisService } from './redis.service';
+import { RedisService } from '../pubsub/concrete/redis.service';
 import { PopulatedFlagEnv } from '../flags/types';
 
 @WebSocketGateway()

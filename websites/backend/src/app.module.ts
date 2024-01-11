@@ -22,6 +22,7 @@ import { RuleModule } from './rule/rule.module';
 import { StrategyModule } from './strategy/strategy.module';
 import { QueuingModule } from './queuing/queuing.module';
 import { FunnelsModule } from './funnels/funnels.module';
+import { PubsubModule } from './pubsub/pubsub.module';
 import 'winston-daily-rotate-file';
 
 @Module({
@@ -72,6 +73,7 @@ import 'winston-daily-rotate-file';
     StrategyModule,
     QueuingModule,
     FunnelsModule,
+    PubsubModule,
   ],
   providers: [AppService],
 })

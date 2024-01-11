@@ -3,7 +3,7 @@ import { FlagStatus } from '../flags/flags.status';
 import { PopulatedFlagEnv, PopulatedStrategy } from '../flags/types';
 import { SdkService } from './sdk.service';
 import { AppModule } from '../app.module';
-import { RedisService } from '../websocket/redis.service';
+import { RedisService } from '../pubsub/concrete/redis.service';
 import { ComparatorEnum } from '../../src/rule/comparators/types';
 
 describe('SdkService', () => {

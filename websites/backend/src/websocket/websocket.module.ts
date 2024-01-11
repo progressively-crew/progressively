@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { RedisService } from './redis.service';
+import { RedisService } from '../pubsub/concrete/redis.service';
 import { WebsocketGateway } from './websocket.gateway';
 
 @Module({
