@@ -21,7 +21,7 @@ describe('SdkService', () => {
   });
 
   afterAll(async () => {
-    await redisService.close();
+    await redisService.teardown();
   });
 
   beforeEach(() => {
