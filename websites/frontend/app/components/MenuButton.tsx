@@ -32,7 +32,7 @@ export const MenuButton = ({
   position = "left",
 }: MenuButtonProps) => {
   let menuButtonClass =
-    "h-8 flex justify-center flex-row items-center hover:bg-gray-50 hover:dark:bg-slate-700 active:dark:bg-slate-600 rounded text-gray-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:focus:ring-offset-slate-900";
+    "h-8 flex justify-center flex-row items-center hover:bg-gray-50 hover:dark:bg-slate-700 active:dark:bg-slate-600 rounded text-gray-700 dark:text-slate-200";
 
   if (children) {
     menuButtonClass += " text-sm gap-2 px-3";
@@ -78,7 +78,7 @@ export const MenuButton = ({
 
                   return (
                     <Root
-                      className={`whitespace-nowrap flex gap-2 min-w-[200px] items-center first:rounded-t-md last:rounded-b-md px-3 py-3 text-sm text-gray-700 dark:text-slate-200 font-normal focus:bg-gray-100 ${
+                      className={`whitespace-nowrap flex gap-2 min-w-[200px] items-center first:rounded-t-md last:rounded-b-md px-3 py-3 text-sm text-gray-700 dark:text-slate-200 font-normal ${
                         active ? "bg-gray-100 dark:bg-slate-700" : ""
                       }`}
                       to={item.href || ""}

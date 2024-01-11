@@ -39,8 +39,7 @@ export const TagInput = ({ defaultValue, name }: TagInputProps) => {
     setTags((s) => s.filter((t) => t !== tag));
   };
 
-  const inputWrapperClasses =
-    "rounded w-full focus-within:outline-none focus-within:ring-2 focus-within:ring-slate-400 focus-within:ring-offset-2 dark:focus-within:ring-offset-slate-900";
+  const inputWrapperClasses = "rounded w-full";
 
   return (
     <div className={inputWrapperClasses}>
