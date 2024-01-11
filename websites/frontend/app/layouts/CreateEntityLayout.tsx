@@ -20,14 +20,9 @@ export const CreateEntityLayout = ({
   return (
     <main>
       <Dialog action={submitSlot} title={titleSlot} closeBtn={closeSlot}>
-        {status && (
-          <>
-            <Spacer size={4} />
-            {status}
-          </>
-        )}
+        {status && <>{status}</>}
 
-        <Spacer size={4} />
+        <Spacer size={2} />
         {children}
       </Dialog>
     </main>
