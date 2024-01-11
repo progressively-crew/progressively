@@ -32,7 +32,7 @@ export const MenuButton = ({
   position = "left",
 }: MenuButtonProps) => {
   let menuButtonClass =
-    "h-8 flex justify-center flex-row items-center hover:bg-gray-50 hover:dark:bg-slate-700 active:dark:bg-slate-600 rounded text-gray-700 dark:text-slate-200";
+    "h-10 flex justify-center flex-row items-center hover:bg-gray-50 hover:dark:bg-slate-700 active:dark:bg-slate-600 rounded text-gray-700 dark:text-slate-200";
 
   if (children) {
     menuButtonClass += " text-sm gap-2 px-3";
