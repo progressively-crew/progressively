@@ -5,6 +5,11 @@ import { seedDb, cleanupDb } from '@progressively/database/seed';
 import { prepareApp } from '../helpers/prepareApp';
 import { verifyAuthGuard } from '../helpers/verify-auth-guard';
 import { authenticate } from '../helpers/authenticate';
+import { InMemoryService } from '../../src/pubsub/concrete/InMemory.service';
+
+jest.mock('../../src/pubsub/pubsub.service.factory', () => ({
+  MakePubsubService: () => new InMemoryService(),
+}));
 
 jest.mock('got', () => ({
   ...jest.requireActual('got'),
