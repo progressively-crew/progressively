@@ -70,7 +70,11 @@ export const DashboardLayout = ({
                   : "justify-end"
               }`}
             >
-              {hasMoreThanOneCrumb ? <BreadCrumbs crumbs={crumbs} /> : backLink}
+              {hasMoreThanOneCrumb ? (
+                <BreadCrumbs crumbs={crumbs} />
+              ) : (
+                <nav>{backLink}</nav>
+              )}
               <UserNav />
             </div>
 
