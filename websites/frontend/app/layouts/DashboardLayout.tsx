@@ -24,12 +24,14 @@ export interface DashboardLayoutProps {
   children: React.ReactNode;
   subNav?: React.ReactNode;
   status?: React.ReactNode;
+  backLink?: React.ReactNode;
 }
 
 export const DashboardLayout = ({
   children,
   subNav,
   status,
+  backLink,
 }: DashboardLayoutProps) => {
   const navigation = useNavigation();
   const matches = useMatches();
@@ -63,10 +65,12 @@ export const DashboardLayout = ({
           >
             <div
               className={`flex flex-row items-center ${
-                hasMoreThanOneCrumb ? "justify-between" : "justify-end"
+                hasMoreThanOneCrumb || backLink
+                  ? "justify-between"
+                  : "justify-end"
               }`}
             >
-              {hasMoreThanOneCrumb && <BreadCrumbs crumbs={crumbs} />}
+              {hasMoreThanOneCrumb ? <BreadCrumbs crumbs={crumbs} /> : backLink}
               <UserNav />
             </div>
 

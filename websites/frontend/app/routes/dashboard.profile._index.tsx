@@ -92,11 +92,8 @@ export default function ProfilePage() {
           </SuccessBox>
         ) : null
       }
+      backLink={<BackLink to="/dashboard">Back to dashboard</BackLink>}
     >
-      <div>
-        <BackLink to="/dashboard">Back to dashboard</BackLink>
-      </div>
-
       <PageTitle value="My profile" action={<ThemeSwitch />} />
 
       <Section id="change-password">
