@@ -4,7 +4,7 @@ export interface BackgroundProps {
 
 export const Background = ({ children }: BackgroundProps) => {
   return (
-    <div className="min-h-full flex flex-col bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400 py-4 px-4">
+    <div className="min-h-full flex flex-col bg-gradient-to-r bg-gradient-to-r from-indigo-300 via-red-300 to-yellow-200 py-4 px-4">
       {children}
     </div>
   );
