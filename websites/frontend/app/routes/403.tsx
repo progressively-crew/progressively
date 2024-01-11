@@ -1,11 +1,18 @@
+import { ElementType } from "react";
 import { AiOutlineLogin } from "react-icons/ai";
 import { Button } from "~/components/Buttons/Button";
 import { Spacer } from "~/components/Spacer";
 import { Typography } from "~/components/Typography";
 
-export default function ForbiddenPage() {
+export interface ForbiddenPageProps {
+  rootAs?: ElementType;
+}
+
+export default function ForbiddenPage({ rootAs }: ForbiddenPageProps) {
+  const Root = rootAs || "main";
+
   return (
-    <main className="p-8">
+    <Root className="p-8">
       <Typography as="h1" className="font-bold text-lg">
         {`Woops! You're not authorized to see this content`}
       </Typography>
@@ -30,6 +37,6 @@ export default function ForbiddenPage() {
           Signin page
         </Button>
       </div>
-    </main>
+    </Root>
   );
 }

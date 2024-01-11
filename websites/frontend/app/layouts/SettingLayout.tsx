@@ -30,7 +30,7 @@ export const SettingLayout = ({
 
       <div className="bg-gray-50 dark:bg-slate-900 h-full flex-1 rounded-xl shadow-xl">
         <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 flex justify-between rounded-t-lg py-1 px-1">
-          <div>{backLink}</div>
+          <nav>{backLink}</nav>
           <UserNav />
         </div>
 
