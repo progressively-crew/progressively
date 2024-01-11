@@ -8,5 +8,6 @@ import { MakePubsubService } from './pubsub.service.factory';
       useFactory: MakePubsubService,
     },
   ],
+  exports: ['PubsubService'],
 })
 export class PubsubModule {}

@@ -8,8 +8,9 @@ import { WebSocketServer as WSServer } from 'ws';
 import { URL } from 'url';
 import { Rooms } from './rooms';
 import { LocalWebsocket, Subscriber } from './types';
-import { RedisService } from '../pubsub/concrete/redis.service';
 import { PopulatedFlagEnv } from '../flags/types';
+import { IPubsubService } from 'src/pubsub/types';
+import { Inject } from '@nestjs/common';
 
 @WebSocketGateway()
 export class WebsocketGateway
@@ -19,7 +20,9 @@ export class WebsocketGateway
   private subscribers: Array<Subscriber<PopulatedFlagEnv>>;
   private heartBeatIntervalId: NodeJS.Timeout;
 
-  constructor(private readonly redisService: RedisService) {
+  constructor(
+    @Inject('PubsubService') private readonly pubsubService: IPubsubService,
+  ) {
     this.rooms = new Rooms();
     this.subscribers = [];
   }
@@ -40,7 +43,7 @@ export class WebsocketGateway
       });
     }, timeout);
 
-    this.initRedisSubscription();
+    this.initSubscription();
   }
 
   handleDisconnect(socket: LocalWebsocket) {
@@ -73,8 +76,8 @@ export class WebsocketGateway
     }
   }
 
-  initRedisSubscription() {
-    this.redisService.subscribe(
+  initSubscription() {
+    this.pubsubService.subscribe(
       'flag-env-changed',
       async (subscribedEntity: PopulatedFlagEnv) => {
         const sockets = this.rooms.getSockets(
@@ -102,6 +105,6 @@ export class WebsocketGateway
   }
 
   notifyChanges(entity: unknown) {
-    this.redisService.notifyChannel('flag-env-changed', entity);
+    this.pubsubService.notifyChannel('flag-env-changed', entity);
   }
 }
