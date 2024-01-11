@@ -1,8 +1,7 @@
-import { Injectable, OnModuleDestroy } from '@nestjs/common';
 import { Redis } from 'ioredis';
+import { IPubsubService } from '../types';
 
-@Injectable()
-export class RedisService implements OnModuleDestroy {
+export class RedisService implements IPubsubService {
   private publisher: Redis;
   private subscriber: Redis;
 
@@ -12,11 +11,18 @@ export class RedisService implements OnModuleDestroy {
     this.publisher = new Redis(redisUrl);
     this.subscriber = new Redis(redisUrl);
   }
-  async onModuleDestroy() {
-    await this.close();
+
+  subscribe<T>(channel: string, callback: (parsedMsg: T) => void) {
+    this.subscriber.subscribe(channel);
+
+    this.subscriber.on('message', (channelName: string, message: string) => {
+      if (channelName === channel) {
+        callback(JSON.parse(message));
+      }
+    });
   }
 
-  async close() {
+  async teardown() {
     const teardown = async (redis: Redis) => {
       await new Promise((resolve) => {
         redis.quit();
@@ -27,17 +33,7 @@ export class RedisService implements OnModuleDestroy {
     await Promise.all([teardown(this.publisher), teardown(this.subscriber)]);
   }
 
-  notifyChannel(channel: string, message: unknown) {
+  async notifyChannel(channel: string, message: unknown) {
     this.publisher.publish(channel, JSON.stringify(message));
-  }
-
-  subscribe(channel: string, callback: (data: unknown) => void) {
-    this.subscriber.subscribe(channel);
-
-    this.subscriber.on('message', (channelName: string, message: string) => {
-      if (channelName === channel) {
-        callback(JSON.parse(message));
-      }
-    });
   }
 }

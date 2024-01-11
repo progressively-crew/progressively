@@ -3,13 +3,13 @@ import { FlagStatus } from '../flags/flags.status';
 import { PopulatedFlagEnv, PopulatedStrategy } from '../flags/types';
 import { SdkService } from './sdk.service';
 import { AppModule } from '../app.module';
-import { RedisService } from '../websocket/redis.service';
 import { ComparatorEnum } from '../../src/rule/comparators/types';
+import { IPubsubService } from 'src/pubsub/types';
 
 describe('SdkService', () => {
   let service: SdkService;
   let flagEnv: PopulatedFlagEnv;
-  let redisService: RedisService;
+  let pubsubService: IPubsubService;
 
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -17,11 +17,11 @@ describe('SdkService', () => {
     }).compile();
 
     service = module.get<SdkService>(SdkService);
-    redisService = module.get<RedisService>(RedisService);
+    pubsubService = module.get<IPubsubService>('PubsubService');
   });
 
   afterAll(async () => {
-    await redisService.close();
+    await pubsubService.teardown();
   });
 
   beforeEach(() => {
