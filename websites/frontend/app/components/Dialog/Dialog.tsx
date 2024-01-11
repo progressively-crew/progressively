@@ -1,6 +1,6 @@
 import { Link } from "@remix-run/react";
 import { MdClose } from "react-icons/md";
-import { Card, CardContent, CardProps } from "../Card";
+import { CardContent } from "../Card";
 import { useSetInert } from "../Inert/hooks/useSetInert";
 import { Tooltip } from "../Tooltip/Tooltip";
 import { FocusTrap } from "../FocusTrap";
@@ -9,13 +9,22 @@ import { KeyboardKeys } from "~/modules/a11y/utils/keyboardKeys";
 
 export interface DialogProps {
   children: React.ReactNode;
+  title: React.ReactNode;
+  closeBtn: React.ReactNode;
   action?: React.ReactNode;
-  scheme?: CardProps["scheme"];
+  scheme?: "ERROR" | "DEFAULT";
 }
+
+const schemeClasses = {
+  ERROR: "bg-red-50 dark:bg-slate-700",
+  DEFAULT: "bg-slate-100 dark:bg-slate-700",
+};
 
 export const Dialog = ({
   children,
   action,
+  closeBtn,
+  title,
   scheme = "DEFAULT",
 }: DialogProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -37,23 +46,32 @@ export const Dialog = ({
     }
   };
 
+  const schemeClass = schemeClasses[scheme];
+
   return (
     <FocusTrap isActive={true}>
       <div
-        className="fixed h-full w-full inset-0 backdrop-blur-md bg-slate-300/30 z-20"
+        className="fixed h-full w-full inset-0 backdrop-blur-md bg-slate-700/30 z-20"
         onKeyUp={handleKeyDown}
       >
         <div className="mx-auto max-w-2xl w-full lg:pt-20 px-4 md:px-12">
           <div
             ref={wrapperRef}
-            className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0"
+            className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0 bg-white rounded-xl shadow-xl"
             style={{
               animationDelay: "300ms",
             }}
           >
-            <Card footer={action} scheme={scheme}>
-              <CardContent>{children}</CardContent>
-            </Card>
+            <div className="flex justify-between gap-4 px-4 pt-4 border-b border-slate-200 dark:border-slate-800 pb-4 items-center">
+              {title}
+              {closeBtn}
+            </div>
+
+            <CardContent>{children}</CardContent>
+
+            <div className={`${schemeClass} rounded-b-xl py-4 px-4`}>
+              {action}
+            </div>
           </div>
         </div>
       </div>

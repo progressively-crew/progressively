@@ -72,6 +72,7 @@ export default function DeleteMemberProjectPage() {
   if (!user?.user)
     return (
       <Dialog
+        title="Unauthoriwed"
         action={
           <Button
             to={`/dashboard/projects/${project.uuid}/settings`}
@@ -80,6 +81,12 @@ export default function DeleteMemberProjectPage() {
           >
             Cancel
           </Button>
+        }
+        closeBtn={
+          <DialogCloseBtn
+            to={`/dashboard/projects/${project.uuid}/settings`}
+            label={`Back to project`}
+          />
         }
       >
         <UnauthorizedPage />

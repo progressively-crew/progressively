@@ -28,7 +28,7 @@ export const DeleteEntityLayout = ({
 
   if (userRole !== UserRoles.Admin) {
     return (
-      <Dialog>
+      <Dialog title={titleSlot} closeBtn={closeSlot}>
         <ForbiddenPage />
       </Dialog>
     );
@@ -44,12 +44,9 @@ export const DeleteEntityLayout = ({
             {confirmAction}
           </div>
         }
+        title={titleSlot}
+        closeBtn={closeSlot}
       >
-        <div className="flex justify-between gap-4">
-          {titleSlot}
-          {closeSlot}
-        </div>
-
         {error && (
           <>
             <Spacer size={4} />

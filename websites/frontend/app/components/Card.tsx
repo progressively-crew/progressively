@@ -4,23 +4,10 @@ export interface CardProps {
   children: React.ReactNode;
   footer?: React.ReactNode;
   onClick?: () => void;
-  scheme?: "ERROR" | "DEFAULT";
   className?: string;
 }
 
-const footerSchemeStyles = {
-  ERROR: "bg-red-50 dark:bg-slate-700",
-  DEFAULT: "bg-gray-50 dark:bg-slate-700",
-};
-
-export const Card = ({
-  children,
-  footer,
-  onClick,
-  scheme = "DEFAULT",
-  className,
-}: CardProps) => {
-  const footerSchemeClassName = footerSchemeStyles[scheme];
+export const Card = ({ children, footer, onClick, className }: CardProps) => {
   const clickableClasses = onClick
     ? "hover:border-gray-300 hover:shadow-sm hover:dark:bg-slate-700 active:bg-gray-50 active:dark:bg-slate-600 cursor-pointer transition-all"
     : "";
@@ -35,7 +22,9 @@ export const Card = ({
       {children}
 
       {footer && (
-        <div className={`rounded-b p-4 ${footerSchemeClassName}`}>{footer}</div>
+        <div className={`rounded-b p-4 bg-gray-50 dark:bg-slate-700`}>
+          {footer}
+        </div>
       )}
     </div>
   );
