@@ -28,9 +28,19 @@ export const DeleteEntityLayout = ({
 
   if (userRole !== UserRoles.Admin) {
     return (
-      <Dialog>
-        <ForbiddenPage />
-      </Dialog>
+      <main>
+        <Dialog
+          title={titleSlot}
+          closeBtn={closeSlot}
+          action={
+            <div className="flex flex-col md:flex-row justify-between gap-4 md:gap-8">
+              {cancelAction}
+            </div>
+          }
+        >
+          <ForbiddenPage rootAs="div" />
+        </Dialog>
+      </main>
     );
   }
 
@@ -44,12 +54,9 @@ export const DeleteEntityLayout = ({
             {confirmAction}
           </div>
         }
+        title={titleSlot}
+        closeBtn={closeSlot}
       >
-        <div className="flex justify-between gap-4">
-          {titleSlot}
-          {closeSlot}
-        </div>
-
         {error && (
           <>
             <Spacer size={4} />

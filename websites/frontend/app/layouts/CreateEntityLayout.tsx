@@ -18,23 +18,13 @@ export const CreateEntityLayout = ({
   closeSlot,
 }: CreateEntityLayoutProps) => {
   return (
-    <Dialog action={submitSlot}>
-      <main>
-        <div className="flex justify-between gap-4">
-          {titleSlot}
-          {closeSlot}
-        </div>
+    <main>
+      <Dialog action={submitSlot} title={titleSlot} closeBtn={closeSlot}>
+        {status && <>{status}</>}
 
-        {status && (
-          <>
-            <Spacer size={4} />
-            {status}
-          </>
-        )}
-
-        <Spacer size={4} />
+        <Spacer size={2} />
         {children}
-      </main>
-    </Dialog>
+      </Dialog>
+    </main>
   );
 };

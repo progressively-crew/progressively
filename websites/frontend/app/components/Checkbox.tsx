@@ -15,9 +15,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       aria-disabled={disabled}
       type="checkbox"
       checked={checked}
-      className={
-        "w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
-      }
+      className={"w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300"}
       {...props}
     />
   )

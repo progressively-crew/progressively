@@ -1,19 +1,6 @@
 import { NavLink } from "@remix-run/react";
 import { HStack } from "./HStack";
 
-export interface HorizontalNavProps {
-  children: React.ReactNode;
-  label: string;
-}
-
-export const HorizontalNav = ({ children, label }: HorizontalNavProps) => {
-  return (
-    <nav aria-label={label} className="bg-slate-50 dark:bg-slate-800">
-      <ul className="flex flex-row items-center">{children}</ul>
-    </nav>
-  );
-};
-
 export interface NavItemProps {
   children: React.ReactNode;
   to: string;
@@ -22,7 +9,7 @@ export interface NavItemProps {
 }
 
 export const NavItem = ({ children, to, icon, target }: NavItemProps) => {
-  const shared = `py-2 border-b-2 border-t-2 border-transparent whitespace-nowrap shrink-0 text-sm block flex items-center px-4 text-gray-700 hover:bg-slate-100 hover:dark:bg-slate-700 dark:text-slate-300`;
+  const shared = `h-10 rounded whitespace-nowrap shrink-0 text-sm block flex items-center px-3 text-gray-700 hover:bg-slate-100 hover:dark:bg-slate-700 dark:text-slate-300`;
 
   return (
     <li>
@@ -43,4 +30,13 @@ export const NavItem = ({ children, to, icon, target }: NavItemProps) => {
       </NavLink>
     </li>
   );
+};
+
+export interface NavbarProps {
+  children: React.ReactNode;
+  label: string;
+}
+
+export const Navbar = ({ children, label }: NavbarProps) => {
+  return <nav aria-label={label}>{children}</nav>;
 };

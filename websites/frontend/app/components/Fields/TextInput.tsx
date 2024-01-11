@@ -55,9 +55,6 @@ export const TextInput = ({
     inputClasses += ` ${className}`;
   }
 
-  inputClasses +=
-    " focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:focus:ring-offset-slate-900";
-
   return (
     <Stack spacing={2}>
       {hiddenLabel ? (

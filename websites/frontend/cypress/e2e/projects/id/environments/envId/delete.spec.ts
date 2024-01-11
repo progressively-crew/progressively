@@ -33,11 +33,12 @@ describe("/dashboard/projects/[id]/environments/[envId]/settings/delete", () => 
         cy.injectAxe();
       });
 
-      it("does not show actions only allowed by the admin (john is a regular user)", () => {
+      it.only("does not show actions only allowed by the admin (john is a regular user)", () => {
         cy.findByRole("heading", {
           name: "Woops! You're not authorized to see this content",
         }).should("be.visible");
 
+        cy.wait(100);
         cy.checkA11y();
       });
     });

@@ -14,6 +14,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+*:focus {
+  outline: none;
+}
+
+*:focus-visible {
+  outline: 3px solid #a5b4fc;
+}
+
 /* Radio */
 
 .custom-radio:checked {

@@ -35,7 +35,7 @@ export const PercentageField = ({
         {label}
       </Typography>
 
-      <div className="inline-block h-10 flex flex-row items-center focus-within:outline-none focus-within:ring-2 focus-within:ring-slate-400 focus-within:ring-offset-2 dark:focus-within:ring-offset-slate-900">
+      <div className="inline-block h-10 flex flex-row items-center">
         <input
           type="range"
           id={id}

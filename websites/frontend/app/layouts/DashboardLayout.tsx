@@ -24,12 +24,14 @@ export interface DashboardLayoutProps {
   children: React.ReactNode;
   subNav?: React.ReactNode;
   status?: React.ReactNode;
+  backLink?: React.ReactNode;
 }
 
 export const DashboardLayout = ({
   children,
   subNav,
   status,
+  backLink,
 }: DashboardLayoutProps) => {
   const navigation = useNavigation();
   const matches = useMatches();
@@ -54,21 +56,31 @@ export const DashboardLayout = ({
     <Inert>
       <SkipNavLink>Skip to content</SkipNavLink>
 
-      <div className="bg-gray-50 dark:bg-slate-900 h-full flex-1">
+      <div className="bg-gray-50 dark:bg-slate-900 h-full flex-1 rounded-xl shadow-xl">
         {lastCrumb && (
-          <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
+          <div
+            className={`bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 rounded-t-lg pt-1 px-1 ${
+              hasMoreThanOneCrumb ? "pt-1" : "py-1"
+            }`}
+          >
             <div
               className={`flex flex-row items-center ${
-                hasMoreThanOneCrumb ? "justify-between" : "justify-end"
+                hasMoreThanOneCrumb || backLink
+                  ? "justify-between"
+                  : "justify-end"
               }`}
             >
-              {hasMoreThanOneCrumb && <BreadCrumbs crumbs={crumbs} />}
+              {hasMoreThanOneCrumb ? (
+                <BreadCrumbs crumbs={crumbs} />
+              ) : (
+                <nav>{backLink}</nav>
+              )}
               <UserNav />
             </div>
 
             {!lastCrumb.isRoot && (
               <header
-                className={`px-8 pb-4 ${crumbs.length > 0 ? "pt-6" : ""}`}
+                className={`px-4 pb-4 ${crumbs.length > 0 ? "pt-6" : ""}`}
               >
                 <div className="flex flex-row gap-2 items-center">
                   <IconBox content={lastCrumb.label} size="L">
