@@ -25,7 +25,7 @@ export const BreadCrumbs = ({ crumbs }: BreadCrumbsProps) => {
             <li
               key={crumb.link}
               className={
-                "flex items-center last-of-type:text-indigo-700 last-of-type:font-bold"
+                "flex items-center last-of-type:text-indigo-700 last-of-type:font-bold shrink-0"
               }
             >
               <Link
