@@ -37,6 +37,7 @@ export class FunnelsService {
           where: {
             flagEnvironmentEnvironmentId: envId,
             flagEnvironmentFlagId: funnelEntry.flagUuid,
+            valueResolved: funnelEntry.flagVariant,
             date: {
               gte: new Date(startDate),
               lte: new Date(endDate),
@@ -56,6 +57,7 @@ export class FunnelsService {
           where: {
             environmentUuid: envId,
             name: funnelEntry.eventName,
+            url: funnelEntry.eventValue || undefined,
             date: {
               gte: new Date(startDate),
               lte: new Date(endDate),
