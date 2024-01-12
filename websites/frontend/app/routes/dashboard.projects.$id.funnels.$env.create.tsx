@@ -179,6 +179,9 @@ export default function CreateFunnel() {
   const selectVariant = (flagId: string, variant: string) =>
     dispatch({ type: "SET_VARIANT", flagId, variant });
 
+  const selectPageViewUrl = (url: string) =>
+    dispatch({ type: "SET_PAGE_VIEW_URL", url });
+
   return (
     <Form method="post" className="flex flex-col flex-1">
       <CreateEntityLayout
@@ -282,7 +285,7 @@ export default function CreateFunnel() {
                         value: url,
                       }))}
                       name={"url"}
-                      onValueChange={(v) => selectVariant(flagEnv!.flagId!, v)}
+                      onValueChange={(url) => selectPageViewUrl(url)}
                       hiddenLabel
                     />
                   )}

@@ -30,4 +30,5 @@ export interface CreateFunnelEntryDTO {
   flagName?: string;
   eventName?: string;
   variant?: string;
+  pageViewUrl?: string;
 }

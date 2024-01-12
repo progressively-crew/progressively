@@ -425,6 +425,7 @@ export class EnvironmentsService {
               flagUuid: funnelEntry.flagUuid || null,
               eventName: funnelEntry.eventName || null,
               flagVariant: funnelEntry.variant || null,
+              eventValue: funnelEntry.pageViewUrl || null,
             })),
           },
         },
