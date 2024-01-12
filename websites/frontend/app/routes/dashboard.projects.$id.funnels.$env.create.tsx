@@ -33,6 +33,7 @@ import {
   getInitialState,
   initialState,
 } from "~/modules/environments/reducers/funnelCreationReducer";
+import { getPageViewEvent } from "~/modules/environments/services/getPageViewEvent";
 
 export const meta: V2_MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -51,6 +52,7 @@ interface ActionData {
 interface LoaderData {
   eventNames: Array<string>;
   flagEnvs: Array<FlagEnv>;
+  pageViewUrls: Array<string>;
 }
 
 export const action: ActionFunction = async ({
@@ -136,7 +138,14 @@ export const loader: LoaderFunction = async ({
     authCookie
   );
 
-  return { eventNames, flagEnvs };
+  const pageViewUrls: Array<string> = await getPageViewEvent(
+    envId,
+    start,
+    end,
+    authCookie
+  );
+
+  return { eventNames, flagEnvs, pageViewUrls };
 };
 
 export default function CreateFunnel() {
@@ -144,7 +153,7 @@ export default function CreateFunnel() {
   const data = useActionData<ActionData>();
   const navigation = useNavigation();
   const params = useParams();
-  const { flagEnvs, eventNames } = useLoaderData<LoaderData>();
+  const { flagEnvs, eventNames, pageViewUrls } = useLoaderData<LoaderData>();
   const [state, dispatch] = useReducer(
     funnelCreationReducer,
     initialState,
@@ -260,6 +269,19 @@ export default function CreateFunnel() {
                       label={"Variant name"}
                       options={variants}
                       name={"variant-name"}
+                      onValueChange={(v) => selectVariant(flagEnv!.flagId!, v)}
+                      hiddenLabel
+                    />
+                  )}
+
+                  {funnelEntry.eventName === "Page View" && (
+                    <SelectField
+                      label={"URL"}
+                      options={pageViewUrls.map((url) => ({
+                        label: url,
+                        value: url,
+                      }))}
+                      name={"url"}
                       onValueChange={(v) => selectVariant(flagEnv!.flagId!, v)}
                       hiddenLabel
                     />
