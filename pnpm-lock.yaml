@@ -753,9 +753,6 @@ importers:
 
   websites/frontend:
     dependencies:
-      '@fontsource-variable/playfair-display':
-        specifier: ^5.0.19
-        version: 5.0.19
       '@headlessui/react':
         specifier: ^1.7.15
         version: 1.7.15(react-dom@18.2.0)(react@18.2.0)

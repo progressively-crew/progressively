@@ -1,5 +1,4 @@
 import * as React from "react";
-import "@fontsource-variable/playfair-display/wght.css";
 import {
   Links,
   LiveReload,
