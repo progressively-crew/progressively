@@ -52,9 +52,10 @@ describe("/dashboard/projects/create", () => {
       cy.findByRole("textbox", { name: "Domain" }).type("project");
       cy.findByRole("button", { name: "Create the project" }).click();
 
-      cy.get(".success-box")
-        .should("have.focus")
-        .and("contain.text", "The project has been successfully created.");
+      cy.get(".success-box").and(
+        "contain.text",
+        "The project has been successfully created."
+      );
 
       // Verify the dashboard
       cy.findAllByText("My new project").should("have.length", 2);

@@ -69,12 +69,10 @@ describe("/dashboard/projects/[id]/settings/environments/create", () => {
         cy.findByLabelText("Environment name").type("My new env");
         cy.findByRole("button", { name: "Create the environment" }).click();
 
-        cy.get(".success-box")
-          .should("have.focus")
-          .and(
-            "contain.text",
-            "The environment has been successfully created."
-          );
+        cy.get(".success-box").and(
+          "contain.text",
+          "The environment has been successfully created."
+        );
 
         cy.url().should("include", "/dashboard/projects/1/environments");
         cy.checkA11y();

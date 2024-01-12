@@ -76,9 +76,10 @@ describe("/dashboard/profile", () => {
       cy.findByLabelText("Confirmation password").type("password1");
       cy.findByRole("button", { name: "Change password" }).click();
 
-      cy.get(".success-box")
-        .should("have.focus")
-        .and("contain.text", "The password has been successfully changed.");
+      cy.get(".success-box").and(
+        "contain.text",
+        "The password has been successfully changed."
+      );
 
       // Connect the person with a changed password
       cy.visit("/signin");

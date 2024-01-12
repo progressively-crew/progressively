@@ -1,5 +1,5 @@
 import * as React from "react";
-import "@fontsource-variable/playfair-display/wght.css";
+import * as Toast from "@radix-ui/react-toast";
 import {
   Links,
   LiveReload,
@@ -70,7 +70,10 @@ document.documentElement.classList.remove('dark')
         ></script>
       </head>
       <body className="h-full">
-        <Background>{children}</Background>
+        <Toast.Provider swipeDirection="right">
+          <Background>{children}</Background>
+          <Toast.Viewport />
+        </Toast.Provider>
 
         <ScrollRestoration />
         <Scripts />

@@ -63,9 +63,10 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/audience/
           "/dashboard/projects/1/environments/1/flags/1/audience?newVariant=true"
         );
 
-        cy.get(".success-box")
-          .should("have.focus")
-          .and("contain.text", "The variant has been successfully created.");
+        cy.get(".success-box").and(
+          "contain.text",
+          "The variant has been successfully created."
+        );
 
         cy.checkA11y();
       });

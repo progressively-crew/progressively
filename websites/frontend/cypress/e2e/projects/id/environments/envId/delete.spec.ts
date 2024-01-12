@@ -91,12 +91,10 @@ describe("/dashboard/projects/[id]/environments/[envId]/settings/delete", () => 
           "/dashboard/projects/1/flags?envRemoved=true"
         );
 
-        cy.get(".success-box")
-          .should("have.focus")
-          .and(
-            "contain.text",
-            "The environment has been successfully deleted."
-          );
+        cy.get(".success-box").and(
+          "contain.text",
+          "The environment has been successfully deleted."
+        );
       });
     });
   });

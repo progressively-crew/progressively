@@ -77,9 +77,10 @@ describe("/dashboard/projects/[id]/flags/[flagId]/edit", () => {
         cy.findByLabelText("Flag description").type(" 2");
         cy.findByRole("button", { name: "Edit the feature flag" }).click();
 
-        cy.get(".success-box")
-          .should("have.focus")
-          .and("contain.text", "The flag has been successfully edited.");
+        cy.get(".success-box").and(
+          "contain.text",
+          "The flag has been successfully edited."
+        );
 
         cy.findByText("New homepage 2").should("be.visible");
 

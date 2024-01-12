@@ -86,9 +86,10 @@ describe("/dashboard/projects/[id]/flags/[flagId]/delete", () => {
           "/dashboard/projects/1/flags?flagRemoved=true"
         );
 
-        cy.get(".success-box")
-          .should("have.focus")
-          .and("contain.text", "The flag has been successfully deleted.");
+        cy.get(".success-box").and(
+          "contain.text",
+          "The flag has been successfully deleted."
+        );
       });
     });
   });

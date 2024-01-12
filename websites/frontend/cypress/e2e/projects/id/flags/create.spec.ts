@@ -75,9 +75,10 @@ describe("/dashboard/projects/[id]flags/create", () => {
         cy.findByLabelText("Flag description").type("My new flag description");
         cy.findByRole("button", { name: "Create the feature flag" }).click();
 
-        cy.get(".success-box")
-          .should("have.focus")
-          .and("contain.text", "The flag has been successfully created.");
+        cy.get(".success-box").and(
+          "contain.text",
+          "The flag has been successfully created."
+        );
 
         cy.findByText("My new flag").should("be.visible");
 

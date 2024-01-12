@@ -1,64 +1,44 @@
-import { Link, useLocation } from "@remix-run/react";
-import { useEffect, useRef, useState } from "react";
-import { AiOutlineCheckCircle } from "react-icons/ai";
+import * as Toast from "@radix-ui/react-toast";
+import { useState } from "react";
 import { MdClose } from "react-icons/md";
-import { HStack } from "../HStack";
+import { IconButton } from "../Buttons/IconButton";
+import { Background } from "../Background";
 
 export interface SuccessBoxProps {
   children: React.ReactNode;
   id: string;
 }
 
-export const SuccessBox = ({ children, id, ...props }: SuccessBoxProps) => {
-  const [isVisible, setIsVisible] = useState(true);
-  const boxRef = useRef<HTMLDivElement>(null);
-  const location = useLocation();
-
-  useEffect(() => {
-    if (isVisible) {
-      const currentFocus = document.activeElement as HTMLElement;
-      boxRef?.current?.focus();
-
-      const timerId = setTimeout(() => {
-        setIsVisible(false);
-      }, 5000);
-
-      return () => {
-        clearTimeout(timerId);
-        currentFocus?.focus();
-      };
-    }
-  }, [isVisible]);
-
-  if (!isVisible) return null;
+export const SuccessBox = ({ children, id }: SuccessBoxProps) => {
+  const [show, setShow] = useState(true);
 
   return (
-    <div
-      className="z-20 bg-white dark:bg-white shadow-lg p-4 bg-white border border-slate-200 rounded motion-safe:animate-fade-enter-bottom fixed right-4 bottom-4"
-      key={id}
+    <Toast.Root
+      className="motion-safe:animate-fade-enter-bottom fixed right-8 bottom-8"
+      open={show}
+      onOpenChange={() => setShow((s) => !s)}
+      id={id}
     >
-      <div className="gap-2 max-w-5xl w-full mx-auto flex flex-row justify-between items-center">
-        <p
-          ref={boxRef}
-          tabIndex={-1}
-          id={id}
-          {...props}
-          className="success-box"
-        >
-          <HStack as="span" spacing={2}>
-            <AiOutlineCheckCircle aria-hidden className="text-emerald-400" />
-            <span className="text-sm">{children}</span>
-          </HStack>
-        </p>
+      <div className="rounded-md shadow-lg overflow-hidden">
+        <Background spacing="S">
+          <div className="rounded bg-white dark:bg-slate-900 p-4 flex flex-row gap-4">
+            <div>
+              <Toast.Title className="font-bold text-sm dark:text-white">
+                🚀 Operation succeeded!
+              </Toast.Title>
+              <Toast.Description asChild>
+                <p className="success-box text-sm dark:text-white">
+                  {children}
+                </p>
+              </Toast.Description>
+            </div>
 
-        <Link
-          to={location.pathname}
-          className="text-xl rounded bg-transparent hover:bg-slate-100 active:bg-slate-200 flex items-center justify-center w-6 h-6"
-          preventScrollReset={true}
-        >
-          <MdClose aria-label="Close the banner" />
-        </Link>
+            <Toast.Close className="dark:text-white" asChild>
+              <IconButton icon={<MdClose />} tooltip={"Close"} />
+            </Toast.Close>
+          </div>
+        </Background>
       </div>
-    </div>
+    </Toast.Root>
   );
 };

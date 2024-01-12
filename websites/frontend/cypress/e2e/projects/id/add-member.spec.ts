@@ -110,12 +110,10 @@ describe("/dashboard/projects/[id]/settings/add-member", () => {
           cy.findByLabelText("Member email").type("blah.blah@gmail.com");
           cy.findByRole("button", { name: "Add the member" }).click();
 
-          cy.get(".success-box")
-            .should("have.focus")
-            .and(
-              "contain.text",
-              "The user has been invited invited to join the project."
-            );
+          cy.get(".success-box").and(
+            "contain.text",
+            "The user has been invited invited to join the project."
+          );
 
           cy.checkA11y();
         });
@@ -124,12 +122,10 @@ describe("/dashboard/projects/[id]/settings/add-member", () => {
           cy.findByLabelText("Member email").type("jane.doe@gmail.com");
           cy.findByRole("button", { name: "Add the member" }).click();
 
-          cy.get(".success-box")
-            .should("have.focus")
-            .and(
-              "contain.text",
-              "The user has been invited invited to join the project."
-            );
+          cy.get(".success-box").and(
+            "contain.text",
+            "The user has been invited invited to join the project."
+          );
 
           cy.checkA11y();
         });

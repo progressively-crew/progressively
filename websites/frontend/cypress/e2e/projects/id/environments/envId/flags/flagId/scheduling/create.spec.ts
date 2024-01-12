@@ -65,9 +65,10 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/schedulin
             "/dashboard/projects/1/environments/1/flags/1/scheduling?newSchedule=true"
           );
 
-          cy.get(".success-box")
-            .should("have.focus")
-            .and("contain.text", "The schedule has been successfully added.");
+          cy.get(".success-box").and(
+            "contain.text",
+            "The schedule has been successfully added."
+          );
 
           cy.checkA11y();
         });
