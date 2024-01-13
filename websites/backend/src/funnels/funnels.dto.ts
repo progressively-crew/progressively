@@ -8,6 +8,7 @@ export const FunnelCreationSchema = Joi.object({
       eventName: Joi.string(),
       flagName: Joi.string(),
       variant: Joi.string(),
+      pageViewUrl: Joi.string(),
     }),
   ),
 });
@@ -22,6 +23,7 @@ export interface CreateFunnelEntryDTO {
   flagName?: string;
   eventName?: string;
   variant?: string;
+  pageViewUrl?: string;
 }
 
 export interface Funnel {

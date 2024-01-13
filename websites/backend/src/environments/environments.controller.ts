@@ -223,4 +223,25 @@ export class EnvironmentsController {
 
     return distinctEvents.map((ev) => ev.name);
   }
+
+  @Get(':envId/events/pageview/urls')
+  @UseGuards(HasEnvironmentAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  async getPageViewEventUrl(
+    @Param('envId') envId: string,
+    @Query('startDate') startDate: string | undefined,
+    @Query('endDate') endDate: string | undefined,
+  ) {
+    if (!endDate || !startDate) {
+      throw new BadRequestException('startDate and endDate are required.');
+    }
+
+    const pageViewEvents = await this.envService.getPageViewEventUrl(
+      envId,
+      startDate,
+      endDate,
+    );
+
+    return pageViewEvents.map((e) => e.url);
+  }
 }

@@ -107,6 +107,7 @@ model FunnelEntry {
   flagUuid    String?
   flagVariant String?
   eventName   String?
+  eventValue  String?
   Funnel      Funnel  @relation(fields: [funnelUuid], references: [uuid])
   funnelUuid  String
 }

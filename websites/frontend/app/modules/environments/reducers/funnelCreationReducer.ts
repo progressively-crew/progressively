@@ -4,7 +4,8 @@ import { CreateFunnelEntryDTO } from "../types";
 export type ActionType =
   | { type: "SET_FLAG"; flagId: string }
   | { type: "SET_EVENT"; eventName: string }
-  | { type: "SET_VARIANT"; flagId: string; variant: string };
+  | { type: "SET_VARIANT"; flagId: string; variant: string }
+  | { type: "SET_PAGE_VIEW_URL"; url: string };
 
 export interface FunnelCreationState {
   funnelEntries: Array<CreateFunnelEntryDTO>;
@@ -71,6 +72,21 @@ export const funnelCreationReducer = (
       const prevFunnels = state.funnelEntries.slice(0, funnelEntryIndex);
       const actualFunnel = state.funnelEntries[funnelEntryIndex];
       const updatedFunnel = { ...actualFunnel, variant: action.variant };
+      const postFunnels = state.funnelEntries.slice(funnelEntryIndex + 1);
+
+      const nextFunnelEntries = [...prevFunnels, updatedFunnel, ...postFunnels];
+
+      return { ...state, funnelEntries: nextFunnelEntries };
+    }
+
+    case "SET_PAGE_VIEW_URL": {
+      const funnelEntryIndex = state.funnelEntries.findIndex(
+        (x) => x.eventName === "Page View"
+      );
+
+      const prevFunnels = state.funnelEntries.slice(0, funnelEntryIndex);
+      const actualFunnel = state.funnelEntries[funnelEntryIndex];
+      const updatedFunnel = { ...actualFunnel, pageViewUrl: action.url };
       const postFunnels = state.funnelEntries.slice(funnelEntryIndex + 1);
 
       const nextFunnelEntries = [...prevFunnels, updatedFunnel, ...postFunnels];

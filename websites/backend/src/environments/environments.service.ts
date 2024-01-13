@@ -133,6 +133,20 @@ export class EnvironmentsService {
     });
   }
 
+  getPageViewEventUrl(envId: string, startDate: string, endDate: string) {
+    return this.prisma.event.findMany({
+      distinct: ['url'],
+      where: {
+        environmentUuid: envId,
+        date: {
+          gte: new Date(startDate),
+          lte: new Date(endDate),
+        },
+        name: 'Page View',
+      },
+    });
+  }
+
   getEventsPerDatePerGroup(
     envId: string,
     startDate: string,
@@ -411,6 +425,7 @@ export class EnvironmentsService {
               flagUuid: funnelEntry.flagUuid || null,
               eventName: funnelEntry.eventName || null,
               flagVariant: funnelEntry.variant || null,
+              eventValue: funnelEntry.pageViewUrl || null,
             })),
           },
         },
