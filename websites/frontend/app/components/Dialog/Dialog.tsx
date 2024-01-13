@@ -1,6 +1,5 @@
 import { Link } from "@remix-run/react";
 import { MdClose } from "react-icons/md";
-import { CardContent } from "../Card";
 import { useSetInert } from "../Inert/hooks/useSetInert";
 import { Tooltip } from "../Tooltip/Tooltip";
 import { FocusTrap } from "../FocusTrap";
@@ -62,15 +61,17 @@ export const Dialog = ({
               animationDelay: "300ms",
             }}
           >
-            <div className="flex justify-between gap-4 px-4 pt-4 border-b border-slate-200 dark:border-slate-700 pb-4 items-center">
-              {title}
-              {closeBtn}
-            </div>
+            <div className="">
+              <div className="flex justify-between gap-4 border-b border-slate-200 dark:border-slate-700 items-center px-12 py-6">
+                {title}
+                {closeBtn}
+              </div>
 
-            <CardContent>{children}</CardContent>
+              <div className="px-12 py-6">{children}</div>
 
-            <div className={`${schemeClass} rounded-b-xl py-4 px-4`}>
-              {action}
+              <div className={`${schemeClass} rounded-b-xl py-6 px-12`}>
+                {action}
+              </div>
             </div>
           </div>
         </div>
