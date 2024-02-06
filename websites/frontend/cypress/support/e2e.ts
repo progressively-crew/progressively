@@ -61,6 +61,12 @@ Cypress.Commands.add("checkUnauthenticatedRoute", () => {
   cy.url().should("contain", "/signin");
 });
 
+Cypress.Commands.overwrite("checkA11y", (originalFn) => {
+  cy.wait(50);
+
+  return originalFn();
+});
+
 Cypress.on("uncaught:exception", (err) => {
   // Cypress and React Hydrating the document don't get along
   // for some unknown reason. Hopefully, we figure out why eventually
