@@ -12,7 +12,6 @@ import {
 import UnauthorizedPage from "./routes/401";
 import ForbiddenPage from "./routes/403";
 import NotFoundPage from "./routes/404";
-import styles from "./styles/app.css";
 import { Background } from "./components/Background";
 import { LinksFunction } from "@remix-run/node";
 import { Typography } from "./components/Typography";
@@ -20,6 +19,9 @@ import { Spacer } from "./components/Spacer";
 import { AiOutlineLogin } from "react-icons/ai";
 import { Button } from "./components/Buttons/Button";
 import { ThemeProvider } from "./modules/theme/ThemeProvider";
+
+import styles from "~/app.css";
+import stylesheet from "~/tailwind.css";
 
 /**
  * The `links` export is a function that returns an array of objects that map to
@@ -31,6 +33,7 @@ import { ThemeProvider } from "./modules/theme/ThemeProvider";
  */
 export const links: LinksFunction = () => {
   return [
+    { rel: "stylesheet", href: stylesheet },
     { rel: "stylesheet", href: styles },
     {
       as: "style",
