@@ -40,7 +40,6 @@ export const stringToColor = (
 
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
-    // eslint-disable-next-line unicorn/prefer-code-point
     hash = str.charCodeAt(i) + ((hash << 5) - hash);
     hash = hash & hash;
   }

@@ -17,7 +17,6 @@ export const CountTable = ({
   cellName,
   shouldLink,
 }: CountTableProps) => {
-  // eslint-disable-next-line unicorn/no-array-reduce
   const max = data.reduce(
     (currMax, curr) => (currMax < curr.count ? curr.count : currMax),
     0
@@ -47,7 +46,11 @@ export const CountTable = ({
                     <div className="truncate w-[200px] relative z-10">
                       {shouldLink ? (
                         <Tooltip tooltip={d.name}>
-                          <Link to={d.name} target="_blank">
+                          <Link
+                            to={d.name}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
                             {d.name}
                           </Link>
                         </Tooltip>

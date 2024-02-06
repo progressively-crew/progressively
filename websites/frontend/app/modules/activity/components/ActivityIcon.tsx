@@ -1,4 +1,3 @@
-/* eslint-disable sonarjs/cognitive-complexity */
 import { AiOutlineClockCircle, AiOutlineLink } from "react-icons/ai";
 import { RiSettingsLine } from "react-icons/ri";
 import { FlagIcon } from "~/components/Icons/FlagIcon";

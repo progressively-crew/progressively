@@ -4,7 +4,6 @@ export interface HStackProps {
   as?: any;
 }
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
 export const HStack = ({ children, spacing, as: asComponent }: HStackProps) => {
   const Component = asComponent || "div";
 

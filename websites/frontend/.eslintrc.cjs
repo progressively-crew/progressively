@@ -4,8 +4,20 @@
  * and should modify this configuration to best suit your team's needs.
  */
 
+const rules = {
+  "react/react-in-jsx-scope": "off",
+  "@typescript-eslint/no-empty-function": "off",
+  "@typescript-eslint/no-non-null-assertion": "off",
+  "@typescript-eslint/no-explicit-any": "off",
+  "react/prop-types": "off",
+  "react/no-unescaped-entities": "off",
+  "jsx-a11y/no-static-element-interactions": "off",
+  "jsx-a11y/click-events-have-key-events": "off",
+};
+
 /** @type {import('eslint').Linter.Config} */
 module.exports = {
+  ignorePatterns: ["**cypress**"],
   root: true,
   parserOptions: {
     ecmaVersion: "latest",
@@ -34,10 +46,12 @@ module.exports = {
         "plugin:react-hooks/recommended",
         "plugin:jsx-a11y/recommended",
       ],
+      rules,
       settings: {
         react: {
           version: "detect",
         },
+
         formComponents: ["Form"],
         linkComponents: [
           { name: "Link", linkAttribute: "to" },
@@ -54,6 +68,7 @@ module.exports = {
       files: ["**/*.{ts,tsx}"],
       plugins: ["@typescript-eslint", "import"],
       parser: "@typescript-eslint/parser",
+      rules,
       settings: {
         "import/internal-regex": "^~/",
         "import/resolver": {

@@ -53,7 +53,7 @@ export default function WhatsYourNamePage() {
         as="h1"
         className="text-center text-3xl font-extrabold !leading-tight motion-safe:animate-fade-enter-top pb-4 font-title"
       >
-        What's your name?
+        {`What's your name?`}
       </Typography>
 
       <div className="w-full">

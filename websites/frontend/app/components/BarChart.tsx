@@ -14,7 +14,6 @@ export interface BarChartProps {
 }
 
 export const BarChart = ({ data }: BarChartProps) => {
-  // eslint-disable-next-line unicorn/no-array-reduce
   const max = data.reduce(
     (actualMax, curr) => (curr.value > actualMax ? curr.value : actualMax),
     0

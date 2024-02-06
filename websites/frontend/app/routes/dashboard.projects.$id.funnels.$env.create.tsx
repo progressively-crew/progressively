@@ -161,7 +161,6 @@ export default function CreateFunnel() {
   );
 
   const flagEnvDict = useMemo(() => {
-    // eslint-disable-next-line unicorn/no-array-reduce
     return flagEnvs.reduce((acc, curr) => {
       acc[curr.flagId] = curr;
       return acc;

@@ -107,7 +107,8 @@ export default function DeleteProjectPage() {
         </Typography>
 
         <Typography>
-          You won't have access to the <strong>flags analytics</strong> anymore.
+          You {`won't`} have access to the <strong>flags analytics</strong>{" "}
+          anymore.
         </Typography>
 
         <Typography>There will be no way to get the data back.</Typography>
