@@ -43,14 +43,14 @@ export const TagInput = ({ defaultValue, name }: TagInputProps) => {
 
   return (
     <div className={inputWrapperClasses}>
-      <div className="min-h-10 rounded px-2 py-2 border border-gray-200 dark:border-slate-800 dark:text-slate-100 dark:bg-slate-700 flex flex-wrap gap-2 bg-white w-full text-gray-600 dark:text-slate-100">
+      <div className="min-h-10 rounded px-2 py-2 border border-gray-200 flex flex-wrap gap-2 bg-white w-full text-gray-600">
         {tags.length > 0 && (
           <ul className="flex flex-row flex-wrap items-center gap-2 h-full items-center">
             {tags.map((tag) => (
               <li key={tag}>
                 <button
                   aria-label="Remove"
-                  className="bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-slate-300 hover:bg-gray-200 active:bg-gray-300 dark:hover:bg-slate-700 dark:active:bg-slate-600 text-xs rounded p-1 h-full flex items-center justify-between"
+                  className="bg-gray-100 text-gray-600 hover:bg-gray-200 active:bg-gray-300 text-xs rounded p-1 h-full flex items-center justify-between"
                   type="button"
                   onClick={() => removeTag(tag)}
                 >
@@ -65,7 +65,7 @@ export const TagInput = ({ defaultValue, name }: TagInputProps) => {
           type="text"
           name="tag-name"
           aria-label="Add a new tag to the list"
-          className="dark:bg-transparent outline-none flex-1"
+          className="outline-none flex-1"
           onKeyDown={handleKeyDown}
           value={value}
           onChange={(e) => setValue(e.target.value)}

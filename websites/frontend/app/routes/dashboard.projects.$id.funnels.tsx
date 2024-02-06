@@ -120,7 +120,7 @@ export default function FunnelsPage() {
                       </div>
                     </CardContent>
 
-                    <div className="dark:bg-slate-700 dark:border-slate-600 bg-slate-50 border-l border-slate-200 flex flex-col justify-center items-center text-center px-4 rounded-r">
+                    <div className="bg-slate-50 border-l border-slate-200 flex flex-col justify-center items-center text-center px-4 rounded-r">
                       <Typography className="text-6xl font-extrabold">
                         {percentage.toFixed(2)}%
                       </Typography>

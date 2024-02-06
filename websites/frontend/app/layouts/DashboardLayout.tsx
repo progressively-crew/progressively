@@ -56,10 +56,10 @@ export const DashboardLayout = ({
     <Inert>
       <SkipNavLink>Skip to content</SkipNavLink>
 
-      <div className="bg-gray-50 dark:bg-slate-900 h-full flex-1 rounded-xl shadow-xl">
+      <div className="bg-gray-50 h-full flex-1 rounded-xl shadow-xl">
         {lastCrumb && (
           <div
-            className={`bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 rounded-t-lg pt-1 px-1 ${
+            className={`bg-white border-b border-slate-200 rounded-t-lg pt-1 px-1 ${
               hasMoreThanOneCrumb ? "pt-1" : "py-1"
             }`}
           >
@@ -143,7 +143,7 @@ export const DashboardLayout = ({
         )}
 
         <div
-          className={`${layoutClassName} h-full dark:bg-slate-900 flex-1 px-4 md:px-20 pt-8 md:pt-0 w-full`}
+          className={`${layoutClassName} h-full flex-1 px-4 md:px-20 pt-8 md:pt-0 w-full`}
         >
           <Main>
             {status}

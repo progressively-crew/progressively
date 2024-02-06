@@ -31,10 +31,8 @@ export const BreadCrumbs = ({ crumbs }: BreadCrumbsProps) => {
               <Link
                 aria-current={currentPage ? "page" : undefined}
                 to={crumb.link}
-                className={`text-xs transition-background px-1 h-10 flex flex-row items-center rounded hover:text-black hover:dark:text-slate-200 hover:bg-gray-100 dark:hover:bg-slate-700 no-underline ${
-                  currentPage
-                    ? "text-black dark:text-slate-100"
-                    : "text-gray-500 dark:text-slate-400"
+                className={`text-xs transition-background px-1 h-10 flex flex-row items-center rounded hover:text-black hover:bg-gray-100 no-underline ${
+                  currentPage ? "text-black" : "text-gray-500"
                 }`}
               >
                 <div className={"rounded px-2 py-1"}>
@@ -63,12 +61,9 @@ export const BreadCrumbs = ({ crumbs }: BreadCrumbsProps) => {
               ) : null}
 
               {!currentPage && (
-                <div
-                  className="flex text-gray-200 dark:text-slate-500 px-4"
-                  aria-hidden
-                >
+                <div className="flex text-gray-200 px-4" aria-hidden>
                   <div
-                    className="h-6 bg-gray-200 dark:bg-slate-700 w-[2px]"
+                    className="h-6 bg-gray-200 w-[2px]"
                     style={{ transform: "rotateZ(30deg)" }}
                   />
                 </div>

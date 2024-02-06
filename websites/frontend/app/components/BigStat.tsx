@@ -25,7 +25,7 @@ export const BigStat = ({
       <CardContent>
         <div className="flex flex-row gap-8">
           <div>
-            <Typography className="text-xs text-slate-500 dark:text-slate-300 uppercase">
+            <Typography className="text-xs text-slate-500 uppercase">
               {label}
             </Typography>
 
@@ -34,9 +34,7 @@ export const BigStat = ({
                 <NumberValue value={value} />
               </strong>{" "}
               <span className="inline-flex flex-row items-center">
-                <span className="text-slate-500 dark:text-slate-300 text-xl">
-                  {unit}
-                </span>
+                <span className="text-slate-500 text-xl">{unit}</span>
                 {evolution && evolution !== 0 ? (
                   <span className="text-xs ml-2">
                     <Tag
@@ -57,10 +55,7 @@ export const BigStat = ({
             </Typography>
 
             {detail && (
-              <Typography
-                as="p"
-                className="text-slate-500 dark:text-slate-300 text-xs"
-              >
+              <Typography as="p" className="text-slate-500 text-xs">
                 {detail}
               </Typography>
             )}

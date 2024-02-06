@@ -10,11 +10,7 @@ export const Typography = forwardRef(
     const Root = asHTML || "p";
 
     return (
-      <Root
-        ref={ref}
-        {...props}
-        className={`dark:text-gray-200 ${className}`}
-      />
+      <Root ref={ref} {...props} className={`text-slate-800 ${className}`} />
     );
   }
 );

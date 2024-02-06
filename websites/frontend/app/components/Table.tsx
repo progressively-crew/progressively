@@ -12,7 +12,7 @@ export const Table = ({ children, noBorder }: TableProps) => {
       className={
         noBorder
           ? "overflow-hidden w-full"
-          : "border border-slate-200 dark:border-slate-600 overflow-hidden"
+          : "border border-slate-200 overflow-hidden"
       }
     >
       <div className="overflow-x-scroll">
@@ -27,7 +27,7 @@ export const Th = ({ children, className }: TableProps) => {
   return (
     <th
       className={
-        "whitespace-nowrap bg-slate-50 dark:bg-slate-700 font-medium p-4 pl-8 py-3 text-slate-500 dark:text-slate-200 text-left " +
+        "whitespace-nowrap bg-slate-50 font-medium p-4 pl-8 py-3 text-slate-500 text-left " +
         (className || "")
       }
     >
@@ -41,7 +41,7 @@ export const Td = ({
 }: TableProps & HTMLAttributes<HTMLTableCellElement>) => {
   return (
     <td
-      className="border-t border-slate-200 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400"
+      className="border-t border-slate-200 p-4 pl-8 text-slate-500"
       style={style}
     >
       {children}
@@ -50,7 +50,7 @@ export const Td = ({
 };
 
 export const Tbody = ({ children }: TableProps) => {
-  return <tbody className="bg-white dark:bg-slate-800">{children}</tbody>;
+  return <tbody className="bg-white">{children}</tbody>;
 };
 
 export const Tr = ({
@@ -60,9 +60,7 @@ export const Tr = ({
   return (
     <tr
       className={
-        onClick
-          ? "cursor-pointer hover:bg-slate-50 active:bg-slate-100 hover:dark:bg-slate-700 active:dark:bg-slate-600"
-          : ""
+        onClick ? "cursor-pointer hover:bg-slate-50 active:bg-slate-100" : ""
       }
       onClick={onClick}
     >

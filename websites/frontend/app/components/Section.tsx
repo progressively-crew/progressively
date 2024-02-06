@@ -52,7 +52,7 @@ export const SectionHeader = ({
             <div className="flex-1">
               <HeadingComponent
                 as={titleAs}
-                className="text-2xl font-semibold tracking-tight dark:text-white font-title"
+                className="text-2xl font-semibold tracking-tight font-title"
                 id={id}
                 name={name}
               >
@@ -63,7 +63,7 @@ export const SectionHeader = ({
                 <>
                   <Spacer size={1} />
                   {description && (
-                    <div className="text-gray-500 dark:text-slate-400 max-w-2xl font-light">
+                    <div className="text-gray-500 max-w-2xl font-light">
                       {description}
                     </div>
                   )}

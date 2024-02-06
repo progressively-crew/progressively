@@ -32,7 +32,7 @@ export const MenuButton = ({
   position = "left",
 }: MenuButtonProps) => {
   let menuButtonClass =
-    "h-10 flex justify-center flex-row items-center hover:bg-gray-50 hover:dark:bg-slate-700 active:dark:bg-slate-600 rounded text-gray-700 dark:text-slate-200";
+    "h-10 flex justify-center flex-row items-center hover:bg-gray-50 rounded text-gray-700";
 
   if (children) {
     menuButtonClass += " text-sm gap-2 px-3";
@@ -69,7 +69,7 @@ export const MenuButton = ({
           <Menu.Items
             className={`${
               position === "left" ? "right-0" : ""
-            } z-20 absolute mt-2 w-auto origin-top-right divide-y divide-gray-100 dark:divide-slate-700 rounded-md bg-white dark:bg-slate-800 shadow-lg ring-1 ring-black ring-opacity-5`}
+            } z-20 absolute mt-2 w-auto origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5`}
           >
             {items.map((item) => (
               <Menu.Item key={item.label}>
@@ -78,8 +78,8 @@ export const MenuButton = ({
 
                   return (
                     <Root
-                      className={`whitespace-nowrap flex gap-2 min-w-[200px] items-center first:rounded-t-md last:rounded-b-md px-3 py-3 text-sm text-gray-700 dark:text-slate-200 font-normal ${
-                        active ? "bg-gray-100 dark:bg-slate-700" : ""
+                      className={`whitespace-nowrap flex gap-2 min-w-[200px] items-center first:rounded-t-md last:rounded-b-md px-3 py-3 text-sm text-gray-700 font-normal ${
+                        active ? "bg-gray-100" : ""
                       }`}
                       to={item.href || ""}
                       onClick={item.onClick}

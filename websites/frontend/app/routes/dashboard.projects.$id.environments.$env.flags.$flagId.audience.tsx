@@ -212,7 +212,7 @@ export default function FlagById() {
             <button
               aria-busy={isCreatingStrategy}
               type="submit"
-              className="relative border border-dashed border-slate-300 dark:border-slate-600 w-full py-4 rounded text-slate-600 dark:text-slate-300 dark:hover:bg-slate-600 dark:active:bg-slate-500 hover:bg-slate-100 active:bg-slate-200"
+              className="relative border border-dashed border-slate-300 w-full py-4 rounded text-slate-600 hover:bg-slate-100 active:bg-slate-200"
             >
               Add a strategy
             </button>

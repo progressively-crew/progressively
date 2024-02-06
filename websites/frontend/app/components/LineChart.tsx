@@ -12,7 +12,6 @@ import {
   Area,
 } from "recharts";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
-import { useTheme } from "~/modules/theme/useTheme";
 import { Spacer } from "./Spacer";
 
 export interface LineChartProps {
@@ -85,26 +84,14 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 };
 
 export const LineChart = ({ data }: LineChartProps) => {
-  const { theme } = useTheme();
-
-  const themeValues =
-    theme === "dark"
-      ? {
-          legendFg: "#e2e8f0",
-          legendBg: "#0f172a",
-          stroke: "#334155",
-          legendBorder: "1px solid #1e293b",
-          areaStroke: (k: string) => stringToColor(k, 75),
-          areaFill: (k: string) => stringToColor(k, 95),
-        }
-      : {
-          legendFg: "#64748b",
-          legendBg: "#f8fafc",
-          stroke: "#f1f5f9",
-          legendBorder: "1px solid #e5e7eb",
-          areaStroke: (k: string) => stringToColor(k, 75),
-          areaFill: (k: string) => stringToColor(k, 95),
-        };
+  const themeValues = {
+    legendFg: "#64748b",
+    legendBg: "#f8fafc",
+    stroke: "#f1f5f9",
+    legendBorder: "1px solid #e5e7eb",
+    areaStroke: (k: string) => stringToColor(k, 75),
+    areaFill: (k: string) => stringToColor(k, 95),
+  };
 
   const keysDict: { [key: string]: boolean } = {};
   for (const d of data) {
