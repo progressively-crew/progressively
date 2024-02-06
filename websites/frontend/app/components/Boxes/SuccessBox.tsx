@@ -34,18 +34,16 @@ export const SuccessBox = ({ children, id, ...props }: SuccessBoxProps) => {
   return (
     <div className="motion-safe:animate-fade-enter-bottom fixed right-8 bottom-8 z-10 rounded-lg overflow-hidden shadow-xl">
       <Background spacing="S">
-        <div className="rounded bg-white dark:bg-slate-900 p-4 flex flex-row gap-4">
+        <div className="rounded bg-white p-4 flex flex-row gap-4">
           <div>
-            <p className="font-bold text-sm dark:text-white">
-              🚀 Operation succeeded!
-            </p>
+            <p className="font-bold text-sm">🚀 Operation succeeded!</p>
 
             <p
               ref={boxRef}
               tabIndex={-1}
               id={id}
               {...props}
-              className="success-box text-sm dark:text-white"
+              className="success-box text-sm"
             >
               {children}
             </p>

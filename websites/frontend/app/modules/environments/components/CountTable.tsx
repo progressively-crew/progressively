@@ -59,7 +59,7 @@ export const CountTable = ({
                       )}
                     </div>
                     <div
-                      className="absolute h-8 bg-slate-100 dark:bg-slate-700 rounded -ml-6"
+                      className="absolute h-8 bg-slate-100 rounded -ml-6"
                       style={{ width }}
                     />
                   </div>

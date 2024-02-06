@@ -15,8 +15,8 @@ export interface DialogProps {
 }
 
 const schemeClasses = {
-  ERROR: "bg-red-50 dark:bg-slate-700",
-  DEFAULT: "bg-slate-100 dark:bg-slate-700",
+  ERROR: "bg-red-50",
+  DEFAULT: "bg-slate-100",
 };
 
 export const Dialog = ({
@@ -56,13 +56,13 @@ export const Dialog = ({
         <div className="mx-auto max-w-2xl w-full lg:pt-20 px-4 md:px-12">
           <div
             ref={wrapperRef}
-            className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0 bg-white dark:bg-slate-800 rounded-xl shadow-xl"
+            className="motion-safe:animate-fade-enter-bottom motion-safe:opacity-0 bg-white rounded-xl shadow-xl"
             style={{
               animationDelay: "300ms",
             }}
           >
             <div className="">
-              <div className="flex justify-between gap-4 border-b border-slate-200 dark:border-slate-700 items-center px-12 py-6">
+              <div className="flex justify-between gap-4 border-b border-slate-200 items-center px-12 py-6">
                 {title}
                 {closeBtn}
               </div>
@@ -90,7 +90,7 @@ export const DialogCloseBtn = ({ to, label }: DialogCloseBtnProps) => {
     <Tooltip tooltip={label}>
       <Link
         to={to}
-        className="text-xl dark:text-white rounded bg-transparent hover:bg-slate-200 active:bg-slate-300 flex items-center justify-center w-6 h-6 custom-dialog-close"
+        className="text-xl rounded bg-transparent hover:bg-slate-200 active:bg-slate-300 flex items-center justify-center w-6 h-6 custom-dialog-close"
       >
         <MdClose aria-label={label} />
       </Link>

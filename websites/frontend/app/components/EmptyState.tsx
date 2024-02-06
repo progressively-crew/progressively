@@ -26,19 +26,14 @@ export const EmptyState = ({
 
       <Spacer size={6} />
 
-      <HeadingComponent
-        id={id}
-        className="text-2xl text-gray-500 dark:text-slate-200"
-      >
+      <HeadingComponent id={id} className="text-2xl text-gray-500">
         {title}
       </HeadingComponent>
 
       <Spacer size={2} />
 
       <div className="max-w-lg text-center">
-        <Typography className="text-gray-500 dark:text-slate-200">
-          {description}
-        </Typography>
+        <Typography className="text-gray-500">{description}</Typography>
       </div>
 
       <Spacer size={2} />

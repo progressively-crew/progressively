@@ -66,9 +66,7 @@ export default function DeleteEnvPage() {
       titleSlot={
         <DeleteEntityTitle>
           Are you sure you want to delete{" "}
-          <span className="text-red-700 font-semibold dark:text-red-400">
-            {environment.name}
-          </span>
+          <span className="text-red-700 font-semibold">{environment.name}</span>
           ?
         </DeleteEntityTitle>
       }

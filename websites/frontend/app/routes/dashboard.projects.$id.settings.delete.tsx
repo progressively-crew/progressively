@@ -67,10 +67,7 @@ export default function DeleteProjectPage() {
       titleSlot={
         <DeleteEntityTitle>
           Are you sure you want to delete{" "}
-          <span className="text-red-700 dark:text-red-400 font-semibold">
-            {project.name}
-          </span>
-          ?
+          <span className="text-red-700 font-semibold">{project.name}</span>?
         </DeleteEntityTitle>
       }
       cancelAction={

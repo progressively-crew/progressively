@@ -23,7 +23,7 @@ export const Progress = ({ max, value, label }: ProgressProps) => {
         <div role="progressbar" aria-labelledby={id} aria-valuenow={value}>
           <div className="relative h-4 overflow-hidden rounded bg-gradient-to-r from-green-400 to-red-400 w-[100px]">
             <div
-              className="h-full bg-gray-200 dark:bg-slate-700 absolute right-0"
+              className="h-full bg-gray-200 absolute right-0"
               style={{
                 width: `${percentageWidth}%`,
               }}

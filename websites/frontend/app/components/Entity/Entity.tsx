@@ -39,7 +39,7 @@ export const Entity = ({
           {avatar}
 
           <div className="flex-1">
-            <div className="font-medium leading-none dark:text-slate-200">
+            <div className="font-medium leading-none">
               {link ? (
                 <Link ref={linkRef} to={link}>
                   {title}
@@ -49,9 +49,7 @@ export const Entity = ({
               )}
             </div>
             {description && (
-              <div className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-                {description}
-              </div>
+              <div className="text-sm text-slate-500 mt-1">{description}</div>
             )}
           </div>
         </div>

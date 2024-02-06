@@ -104,14 +104,8 @@ export default function DeleteMemberProjectPage() {
       titleSlot={
         <DeleteEntityTitle>
           Are you sure you want to remove{" "}
-          <span className="text-red-700 dark:text-red-400 font-semibold">
-            {userName}
-          </span>{" "}
-          from{" "}
-          <span className="text-red-700 dark:text-red-400 font-semibold">
-            {project.name}
-          </span>
-          ?
+          <span className="text-red-700 font-semibold">{userName}</span> from{" "}
+          <span className="text-red-700 font-semibold">{project.name}</span>?
         </DeleteEntityTitle>
       }
       cancelAction={

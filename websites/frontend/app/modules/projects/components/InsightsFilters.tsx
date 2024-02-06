@@ -18,9 +18,9 @@ export const InsightsFilters = ({
   const days = searchParams.get("days") || "7";
 
   const shareButtonClass =
-    "py-1 px-4 gap-4 bg-transparent hover:bg-slate-100 dark:border-slate-600 dark:text-slate-100 dark:hover:bg-slate-600 relative whitespace-nowrap inline-flex items-center justify-center rounded-sm text-sm font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none";
+    "py-1 px-4 gap-4 bg-transparent hover:bg-slate-100 relative whitespace-nowrap inline-flex items-center justify-center rounded-sm text-sm font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none";
 
-  const activeClass = `!bg-slate-100 dark:!bg-slate-700`;
+  const activeClass = `!bg-slate-100`;
 
   const setDays = (d: number) =>
     setSearchParams((prev) => {

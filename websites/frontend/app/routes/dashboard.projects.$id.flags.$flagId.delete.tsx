@@ -70,10 +70,7 @@ export default function DeleteFlagPage() {
       titleSlot={
         <DeleteEntityTitle>
           Are you sure you want to delete{" "}
-          <span className="text-red-700 font-semibold dark:text-red-400">
-            {flag.name}
-          </span>
-          ?
+          <span className="text-red-700 font-semibold">{flag.name}</span>?
         </DeleteEntityTitle>
       }
       cancelAction={

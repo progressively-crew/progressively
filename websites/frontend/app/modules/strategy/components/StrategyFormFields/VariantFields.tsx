@@ -20,10 +20,7 @@ export const VariantFields = ({ variants, index }: VariantFieldsProps) => {
     <div className="flex flex-row gap-4 flex-wrap items-center">
       {variants.map((variant, variantIndex: number) => {
         return (
-          <div
-            key={variant.uuid}
-            className="bg-slate-50 px-2 py-2 rounded dark:bg-slate-600"
-          >
+          <div key={variant.uuid} className="bg-slate-50 px-2 py-2 rounded">
             <input
               type="hidden"
               name={`strategies[${index}][variants][${variantIndex}][uuid]`}

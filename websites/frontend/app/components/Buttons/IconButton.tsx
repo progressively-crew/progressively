@@ -20,8 +20,7 @@ export interface IconButtonProps extends HTMLAttributes<HTMLButtonElement> {
 
 const variantStyles = {
   inverse: "text-white bg-transparent hover:bg-slate-700",
-  default:
-    "hover:bg-slate-100 dark:hover:bg-slate-800 dark:text-slate-100 dark:hover:text-slate-100",
+  default: "hover:bg-slate-100",
 };
 
 const sizeStyles = {

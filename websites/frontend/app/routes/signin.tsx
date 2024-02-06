@@ -172,7 +172,7 @@ export default function Signin() {
           >
             <Link
               to="/forgot-password"
-              className="text-xs text-gray-500 dark:text-slate-300"
+              className="text-xs text-gray-500"
             >{`I forgot my password`}</Link>
           </div>
         </div>

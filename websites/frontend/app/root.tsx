@@ -18,7 +18,6 @@ import { Typography } from "./components/Typography";
 import { Spacer } from "./components/Spacer";
 import { AiOutlineLogin } from "react-icons/ai";
 import { Button } from "./components/Buttons/Button";
-import { ThemeProvider } from "./modules/theme/ThemeProvider";
 
 import styles from "~/app.css";
 import stylesheet from "~/tailwind.css";
@@ -142,9 +141,7 @@ export function ErrorBoundary() {
 function App() {
   return (
     <Document>
-      <ThemeProvider>
-        <Outlet />
-      </ThemeProvider>
+      <Outlet />
     </Document>
   );
 }

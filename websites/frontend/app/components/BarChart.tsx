@@ -26,11 +26,11 @@ export const BarChart = ({ data }: BarChartProps) => {
           <div className="shrink-0 w-[70px]">
             <div className="h-[100px] relative">
               <div className="absolute inset-0 flex items-center justify-center z-10">
-                <Typography className="font-bold dark:text-slate-900">
+                <Typography className="font-bold">
                   <NumberValue value={d.value} />
                 </Typography>
               </div>
-              <div className="w-full h-full bg-slate-100 dark:bg-slate-700" />
+              <div className="w-full h-full bg-slate-100" />
               <div
                 className="w-full absolute bottom-0 flex items-center justify-center"
                 style={{

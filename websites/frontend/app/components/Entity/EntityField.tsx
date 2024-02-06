@@ -9,10 +9,7 @@ export const EntityField = ({ name, value }: EntityFieldProps) => {
   return (
     <div>
       <Typography className="text-sm text-gray-600">{name}</Typography>
-      <Typography
-        className="text-sm text-black dark:text-slate-50 mt-1"
-        as="span"
-      >
+      <Typography className="text-sm text-black mt-1" as="span">
         {value}
       </Typography>
     </div>
