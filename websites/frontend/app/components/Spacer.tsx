@@ -2,7 +2,6 @@ export interface SpacerProps {
   size?: number;
 }
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
 export const Spacer = ({ size }: SpacerProps) => {
   return (
     <div

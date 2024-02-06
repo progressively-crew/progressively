@@ -1,7 +1,6 @@
 import { ActionFunction, LoaderFunction, redirect } from "@remix-run/node";
-import { useLoaderData, useNavigate } from "@remix-run/react";
+import { useLoaderData, useNavigate, useFetcher } from "@remix-run/react";
 import { useEffect } from "react";
-import { useFetcher } from "@remix-run/react";
 import { useOkta } from "~/modules/auth/hooks/useOkta";
 import { getOktaConfig } from "~/modules/auth/services/get-okta-config";
 import { OktaConfig } from "~/modules/auth/types";
@@ -70,7 +69,8 @@ export default function OauthCallback() {
             Authentication in progress...
           </Typography>
           <Typography>
-            It shouldnt be too long, you'll be soon redirected to the dashbaord.
+            It shouldnt be too long, {`you'll`} be soon redirected to the
+            dashbaord.
           </Typography>
         </div>
       </HStack>

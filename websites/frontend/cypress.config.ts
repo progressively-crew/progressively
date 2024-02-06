@@ -10,14 +10,14 @@ import { cleanupDb, seedDb } from "@progressively/database/seed";
  * the "serverLogin" tasks allows to bypass it and send the request + se the cookie
  * directly. It's faster, but less safe. To keep an eye on
  */
-const sign = async (value, secret) => {
+const sign = async (value: any, secret: any) => {
   return cookieSignature.sign(value, secret);
 };
 
 (global as any).sign = sign;
 /** End of caution */
 
-module.exports = defineConfig({
+export default defineConfig({
   viewportWidth: 1400,
   viewportHeight: 800,
   e2e: {

@@ -3,7 +3,6 @@ export interface StackProps {
   spacing?: number;
 }
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
 export const Stack = ({ children, spacing }: StackProps) => {
   return (
     <div

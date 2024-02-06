@@ -131,7 +131,6 @@ export const loader: LoaderFunction = async ({
   return { strategies, variants };
 };
 
-/* eslint-disable sonarjs/cognitive-complexity */
 export default function FlagById() {
   const actionData = useActionData<ActionDataType>();
   const [searchParams] = useSearchParams();
