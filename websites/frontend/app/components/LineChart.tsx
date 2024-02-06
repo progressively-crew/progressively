@@ -12,7 +12,6 @@ import {
   Area,
 } from "recharts";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
-import { useTheme } from "~/modules/theme/useTheme";
 import { Spacer } from "./Spacer";
 
 export interface LineChartProps {
