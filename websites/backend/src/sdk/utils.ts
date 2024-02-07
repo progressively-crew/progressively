@@ -1,6 +1,5 @@
 import { x86 as murmur } from 'murmurhash3js';
 import { BadRequestException } from '@nestjs/common';
-import { Response } from 'express';
 import { FieldRecord } from '../rule/types';
 import { PopulatedFlagEnv, PopulatedVariant } from '../flags/types';
 
