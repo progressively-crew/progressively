@@ -41,6 +41,7 @@ model Project {
   userProject UserProject[]
   events      Event[]
   Funnel      Funnel[]
+  Flag        Flag[]
   clientKey   String        @default(uuid())
   secretKey   String        @default(uuid())
   domain      String?
@@ -84,6 +85,8 @@ model Flag {
   webhooks    Webhook[]
   activityLog ActivityLog[]
   strategies  Strategy[]
+  Project     Project?      @relation(fields: [projectUuid], references: [uuid])
+  projectUuid String?
 }
 
 model Funnel {
