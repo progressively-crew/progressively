@@ -1,4 +1,4 @@
-import { AiOutlineClockCircle, AiOutlineLink } from "react-icons/ai";
+import { AiOutlineLink } from "react-icons/ai";
 import { RiSettingsLine } from "react-icons/ri";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { VariantIcon } from "~/components/Icons/VariantIcon";
@@ -31,14 +31,6 @@ export const ActivityIcon = ({ type }: ActivityIconProps) => {
 
   if (type === "delete-webhook") {
     return <AiOutlineLink />;
-  }
-
-  if (type === "delete-scheduling") {
-    return <AiOutlineClockCircle />;
-  }
-
-  if (type === "create-scheduling") {
-    return <AiOutlineClockCircle />;
   }
 
   if (type === "create-variant") {

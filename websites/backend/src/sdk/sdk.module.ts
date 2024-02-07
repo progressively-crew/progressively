@@ -7,7 +7,6 @@ import { WebsocketModule } from '../websocket/websocket.module';
 import { WebsocketGateway } from '../websocket/websocket.gateway';
 import { FieldRecord } from '../rule/types';
 import { DatabaseModule } from '../database/database.module';
-import { SchedulingModule } from '../scheduling/scheduling.module';
 import { RuleModule } from '../rule/rule.module';
 import { UsersModule } from '../users/users.module';
 import { KafkaTopics } from '../queuing/topics';
@@ -21,7 +20,6 @@ import { QueuingModule } from '../queuing/queuing.module';
     EnvironmentsModule,
     FlagsModule,
     WebsocketModule,
-    SchedulingModule,
     DatabaseModule,
     RuleModule,
     RuleModule,

@@ -1,5 +1,4 @@
 import { Environment } from '../environments/types';
-import { FlagStatus } from './flags.status';
 import { Strategy } from '@progressively/database';
 import { RuleType } from '../rule/types';
 
@@ -16,14 +15,6 @@ export interface FlagEnvironment {
   environmentId: string;
   status: string;
   variants: Array<Variant>;
-}
-
-interface Schedule {
-  uuid: string;
-  utc: string;
-  rolloutPercentage: number;
-  status: FlagStatus;
-  schedulingStatus: SchedulingStatus;
 }
 
 export interface PopulatedVariant {
@@ -46,13 +37,7 @@ export interface PopulatedStrategy extends Strategy {
 export interface PopulatedFlagEnv extends FlagEnvironment {
   environment: Environment;
   flag: Flag;
-  scheduling: Array<Schedule>;
   strategies: Array<PopulatedStrategy>;
-}
-
-export enum SchedulingStatus {
-  NOT_RUN = 'NOT_RUN',
-  HAS_RUN = 'HAS_RUN',
 }
 
 export interface Variant {

@@ -1,6 +1,5 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { EnvironmentsService } from '../environments/environments.service';
-import { FlagsService } from '../flags/flags.service';
 import {
   PopulatedFlagEnv,
   PopulatedStrategy,
@@ -17,7 +16,6 @@ import {
   getVariation,
   isInBucket,
 } from './utils';
-import { SchedulingService } from '../scheduling/scheduling.service';
 import { ValueToServe } from '../strategy/types';
 import { QueuedEventHit } from './types';
 import { RuleService } from '../rule/rule.service';
@@ -32,8 +30,6 @@ export class SdkService {
   constructor(
     private prisma: PrismaService,
     private readonly envService: EnvironmentsService,
-    private readonly scheduleService: SchedulingService,
-    private readonly flagService: FlagsService,
     private readonly ruleService: RuleService,
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
     @Inject('QueueingService') private readonly queuingService: IQueuingService,
@@ -123,20 +119,14 @@ export class SdkService {
     flagsByRef: Record<string, boolean | string>,
     skipHit: boolean,
   ) {
-    let nextFlag = flagEnv;
+    const flagStatusOrVariant = this.resolveFlagStatus(flagEnv, fields);
 
-    if (flagEnv.scheduling.length > 0) {
-      nextFlag = await this.scheduleService.manageFlagScheduling(flagEnv);
-    }
-
-    const flagStatusOrVariant = this.resolveFlagStatus(nextFlag, fields);
-
-    flagsByRef[nextFlag.flag.key] = flagStatusOrVariant;
+    flagsByRef[flagEnv.flag.key] = flagStatusOrVariant;
 
     if (!skipHit) {
       const queuedFlagHit: QueuedFlagHit = {
-        flagId: nextFlag.flagId,
-        envId: nextFlag.environmentId,
+        flagId: flagEnv.flagId,
+        envId: flagEnv.environmentId,
         visitorId: String(fields?.id || ''),
         valueResolved: String(flagStatusOrVariant),
       };

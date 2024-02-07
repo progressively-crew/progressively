@@ -1,21 +1,14 @@
 import { Link } from "~/components/Link";
 import { Tag } from "~/components/Tag";
-import { FlagEnv, FlagStatus as FlagStatusType } from "~/modules/flags/types";
 import { FlagStatus } from "~/modules/flags/components/FlagStatus";
-import { FormattedDate } from "~/modules/misc/components/FormattedDate";
 import { WebhookEvent } from "~/modules/webhooks/components/WebhookEvent";
 import { Activity } from "../types";
-import { SchedulingType } from "~/modules/scheduling/types";
 
 export interface ActivityDescriptionProps {
   activity: Activity;
-  flagEnv: FlagEnv;
 }
 
-export const ActivityDescription = ({
-  activity,
-  flagEnv,
-}: ActivityDescriptionProps) => {
+export const ActivityDescription = ({ activity }: ActivityDescriptionProps) => {
   const { data, type, id } = activity;
 
   if (type === "change-flag-status") {
@@ -80,65 +73,6 @@ export const ActivityDescription = ({
           {data.endpoint}
         </Link>{" "}
         when <WebhookEvent value={data.event} />.
-      </p>
-    );
-  }
-
-  if (type === "delete-scheduling") {
-    return (
-      <p>
-        <strong>The scheduling</strong> supposed to run on{" "}
-        <FormattedDate utc={data.utc} /> has been removed.
-      </p>
-    );
-  }
-
-  if (type === "create-scheduling") {
-    if (data.status === FlagStatusType.NOT_ACTIVATED) {
-      return (
-        <p>
-          <strong>A scheduling</strong> has been created. It will{" "}
-          <strong>deactivate</strong> the flag on the{" "}
-          <strong>
-            <FormattedDate utc={data.utc} />
-          </strong>
-        </p>
-      );
-    }
-
-    if (data.type === SchedulingType.UpdateVariantPercentage) {
-      const getVariantValue = (variantId: string) =>
-        flagEnv.variants.find((variant) => variant.uuid === variantId)?.value;
-
-      return (
-        <div>
-          <strong>A scheduling</strong> has been created. It will{" "}
-          <strong>activate</strong> the flag on the{" "}
-          <strong>
-            <FormattedDate utc={data.utc} />
-          </strong>{" "}
-          with the variant values:{" "}
-          <ul className="list-disc pl-4">
-            {data.data.map((variant: any) => (
-              <li key={`${id}-${variant.variantId}`} className="pt-1">
-                Variant {getVariantValue(variant.variantId) || "N/A"}:{" "}
-                <strong>{variant.variantNewPercentage}%</strong>
-              </li>
-            ))}
-          </ul>
-        </div>
-      );
-    }
-
-    return (
-      <p>
-        <strong>A scheduling</strong> has been created. It will{" "}
-        <strong>activate</strong> the flag and target{" "}
-        <strong>{data.data.rolloutPercentage}%</strong> of the audience on the{" "}
-        <strong>
-          <FormattedDate utc={data.utc} />
-        </strong>
-        .
       </p>
     );
   }

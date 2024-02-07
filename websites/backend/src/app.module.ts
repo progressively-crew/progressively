@@ -15,7 +15,6 @@ import { AppLoggerMiddleware } from './logging.middleware';
 import { SdkModule } from './sdk/sdk.module';
 import { MailModule } from './mail/mail.module';
 import { DatabaseModule } from './database/database.module';
-import { SchedulingModule } from './scheduling/scheduling.module';
 import { WebhooksModule } from './webhooks/webhooks.module';
 import { ActivityLogModule } from './activity-log/activity-log.module';
 import { RuleModule } from './rule/rule.module';
@@ -66,7 +65,6 @@ import 'winston-daily-rotate-file';
     SdkModule,
     MailModule,
     DatabaseModule,
-    SchedulingModule,
     WebhooksModule,
     ActivityLogModule,
     RuleModule,

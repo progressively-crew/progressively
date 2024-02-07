@@ -23,7 +23,6 @@ export class EnvironmentsService {
       },
       include: {
         flag: true,
-        scheduling: true,
         strategies: {
           include: {
             rules: true,
@@ -328,11 +327,6 @@ export class EnvironmentsService {
         },
       }),
       this.prisma.variant.deleteMany({
-        where: {
-          flagEnvironmentEnvironmentId: envId,
-        },
-      }),
-      this.prisma.schedule.deleteMany({
         where: {
           flagEnvironmentEnvironmentId: envId,
         },

@@ -119,7 +119,6 @@ model FlagEnvironment {
   environment   Environment   @relation(fields: [environmentId], references: [uuid])
   flag          Flag          @relation(fields: [flagId], references: [uuid])
   flagHits      FlagHit[]
-  scheduling    Schedule[]
   variants      Variant[]
   webhooks      Webhook[]
   ActivityLog   ActivityLog[]
@@ -182,19 +181,6 @@ model Rule {
   Strategy        Strategy? @relation(fields: [strategyUuid], references: [uuid])
   strategyUuid    String?
   createdAt       DateTime? @default(now())
-}
-
-model Schedule {
-  uuid                         String           @id @default(uuid())
-  type                         String
-  data                         Json
-  utc                          DateTime
-  status                       String
-  schedulingStatus             String           @default("NOT_RUN")
-  flagEnvironmentFlagId        String?
-  flagEnvironmentEnvironmentId String?
-  flagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
-  createdAt                    DateTime?        @default(now())
 }
 
 model ActivityLog {

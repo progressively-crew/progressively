@@ -3,12 +3,10 @@ export type ActivityType =
   | "change-flag-percentage"
   | "change-variants-percentage"
   | "create-webhook"
-  | "create-scheduling"
   | "create-variant"
   | "create-strategy"
   | "delete-webhook"
   | "delete-variant"
-  | "delete-scheduling"
   | "delete-rule"
   | "delete-strategy"
   | "edit-strategy";

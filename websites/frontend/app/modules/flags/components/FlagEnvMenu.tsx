@@ -3,7 +3,6 @@ import { FlagEnv } from "../types";
 import {
   TbActivity,
   TbChartAreaLine,
-  TbClockEdit,
   TbTargetArrow,
   TbWebhook,
 } from "react-icons/tb";
@@ -26,13 +25,6 @@ export const FlagEnvMenu = ({
         icon={<TbTargetArrow />}
       >
         Audience
-      </NavItem>
-
-      <NavItem
-        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/scheduling`}
-        icon={<TbClockEdit />}
-      >
-        Scheduling
       </NavItem>
 
       <NavItem

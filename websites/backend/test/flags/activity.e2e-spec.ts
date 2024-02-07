@@ -104,34 +104,6 @@ describe('FlagsController (e2e)', () => {
         {
           concernedEntity: 'flag',
           data: {
-            uuid: 'c680494a-7545-4567-bd79-df016de141b0',
-            type: 'UpdateVariantPercentage',
-            data: [
-              { variantId: '1', variantNewPercentage: 5 },
-              { variantId: '2', variantNewPercentage: 60 },
-              {
-                variantId: '722200c6-6b1c-4926-9d56-e39b9d97ce83',
-                variantNewPercentage: 35,
-              },
-            ],
-            utc: '2023-01-29T23:00:00.000Z',
-            status: 'ACTIVATED',
-            schedulingStatus: 'NOT_RUN',
-            flagEnvironmentFlagId: '4',
-            flagEnvironmentEnvironmentId: '1',
-          },
-          flagEnvironmentEnvironmentId: '1',
-          flagEnvironmentFlagId: '1',
-          type: 'create-scheduling',
-          userUuid: '1',
-          utc: '2023-01-21T00:00:00.000Z',
-          user: {
-            fullname: 'Marvin Frachet',
-          },
-        },
-        {
-          concernedEntity: 'flag',
-          data: {
             uuid: '722200c6-6b1c-4926-9d56-e39b9d97ce83',
             rolloutPercentage: 0,
             isControl: false,

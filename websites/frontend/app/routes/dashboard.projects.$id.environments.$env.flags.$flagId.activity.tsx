@@ -99,7 +99,7 @@ export default function FlagInsights() {
       />
 
       {activities.length > 0 ? (
-        <ActivityLogList list={activities} flagEnv={flagEnv} />
+        <ActivityLogList list={activities} />
       ) : (
         <Card>
           <CardContent>

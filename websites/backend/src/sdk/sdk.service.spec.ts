@@ -37,7 +37,6 @@ describe('SdkService', () => {
       },
       status: FlagStatus.ACTIVATED,
       variants: [],
-      scheduling: [],
       environment: {
         name: 'First',
         uuid: '1',
