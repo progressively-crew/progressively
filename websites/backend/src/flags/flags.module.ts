@@ -6,7 +6,6 @@ import { WebsocketModule } from '../websocket/websocket.module';
 import { DatabaseModule } from '../database/database.module';
 import { ActivityLogModule } from '../activity-log/activity-log.module';
 import { RuleModule } from '../rule/rule.module';
-import { SchedulingModule } from '../scheduling/scheduling.module';
 import { WebhooksModule } from '../webhooks/webhooks.module';
 import { IQueuingService } from '../queuing/types';
 import { KafkaTopics } from '../queuing/topics';
@@ -20,7 +19,6 @@ import { QueuingModule } from '../queuing/queuing.module';
     DatabaseModule,
     ActivityLogModule,
     RuleModule,
-    SchedulingModule,
     WebhooksModule,
     ActivityLogModule,
     QueuingModule,

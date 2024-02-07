@@ -103,20 +103,6 @@ export const seedDb = async () => {
 
     await seedActivity(flagEnv, prismaClient);
 
-    const d = new Date(); // add 10 seconds so that the test don't break because of scheduling updates
-    d.setSeconds(d.getSeconds() + 10);
-    await prismaClient.schedule.create({
-      data: {
-        uuid: "1",
-        utc: d,
-        flagEnvironmentFlagId: flagEnv.flagId,
-        flagEnvironmentEnvironmentId: flagEnv.environmentId,
-        status: "ACTIVATED",
-        type: "UpdatePercentage",
-        data: {},
-      },
-    });
-
     const footerFlagEnv = await prismaClient.flagEnvironment.create({
       data: {
         environmentId: production.uuid,

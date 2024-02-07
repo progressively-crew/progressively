@@ -15,7 +15,7 @@ export class WebhooksController {
   @Delete(':webhookId')
   @UseGuards(HasWebhookAccessGuard)
   @UseGuards(JwtAuthGuard)
-  async deleteSchedule(
+  async deleteWebhook(
     @UserId() userId: string,
     @Param('webhookId') webhookId: string,
   ) {

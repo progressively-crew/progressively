@@ -205,11 +205,6 @@ export class FlagsService {
           flagEnvironmentFlagId: flagId,
         },
       }),
-      this.prisma.schedule.deleteMany({
-        where: {
-          flagEnvironmentFlagId: flagId,
-        },
-      }),
       this.prisma.flagEnvironment.deleteMany({
         where: {
           flagId: flagId,

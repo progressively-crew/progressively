@@ -176,37 +176,6 @@ describe('SdkController (e2e)', () => {
         multivariate: false,
       });
     });
-
-    it('gives a list of flags when the key is valid for an authenticated user with scheduling', async () => {
-      const fields = btoa(JSON.stringify({ clientKey: 'valid-sdk-key' }));
-
-      const response = await request(app.getHttpServer())
-        .get(`/sdk/${fields}`)
-        .set('user-agent', '2')
-        .set('origin', 'hello-world');
-
-      expect(response.status).toBe(200);
-      expect(response.body).toEqual({
-        newHomepage: false,
-        newFooter: false,
-        multivariate: false,
-      });
-
-      // The schedule should happen 10 seconds after the seeding process
-      // Waiting 12 seconds should ensure the flag is switching
-      await new Promise((resolve) => setTimeout(resolve, 12000));
-
-      const response2 = await request(app.getHttpServer())
-        .get(`/sdk/${fields}`)
-        .set('user-agent', '2');
-
-      expect(response2.status).toBe(200);
-      expect(response2.body).toEqual({
-        newHomepage: true,
-        newFooter: false,
-        multivariate: false,
-      });
-    }, 20000);
   });
 
   describe('/sdk/:params (Post)', () => {

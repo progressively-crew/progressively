@@ -239,13 +239,6 @@ export class ProjectsService {
           },
         },
       }),
-      this.prisma.schedule.deleteMany({
-        where: {
-          flagEnvironment: {
-            environment: { projectId },
-          },
-        },
-      }),
       this.prisma.flagEnvironment.deleteMany({
         where: {
           environment: {

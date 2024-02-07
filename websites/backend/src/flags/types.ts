@@ -18,14 +18,6 @@ export interface FlagEnvironment {
   variants: Array<Variant>;
 }
 
-interface Schedule {
-  uuid: string;
-  utc: string;
-  rolloutPercentage: number;
-  status: FlagStatus;
-  schedulingStatus: SchedulingStatus;
-}
-
 export interface PopulatedVariant {
   rolloutPercentage: number;
   variantUuid: string;
@@ -46,13 +38,7 @@ export interface PopulatedStrategy extends Strategy {
 export interface PopulatedFlagEnv extends FlagEnvironment {
   environment: Environment;
   flag: Flag;
-  scheduling: Array<Schedule>;
   strategies: Array<PopulatedStrategy>;
-}
-
-export enum SchedulingStatus {
-  NOT_RUN = 'NOT_RUN',
-  HAS_RUN = 'HAS_RUN',
 }
 
 export interface Variant {
