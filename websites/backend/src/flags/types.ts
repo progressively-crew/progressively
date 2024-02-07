@@ -50,7 +50,6 @@ export interface Variant {
 
 export interface QueuedFlagHit {
   flagId: string;
-  envId: string;
   visitorId: string;
   valueResolved: string;
 }

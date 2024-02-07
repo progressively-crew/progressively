@@ -1,5 +1,10 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { PopulatedStrategy, QueuedFlagHit, Variant } from '../flags/types';
+import {
+  PopulatedFlag,
+  PopulatedStrategy,
+  QueuedFlagHit,
+  Variant,
+} from '../flags/types';
 import { FieldRecord } from '../rule/types';
 import { PrismaService } from '../database/prisma.service';
 import { FlagStatus } from '../flags/flags.status';
@@ -30,11 +35,11 @@ export class SdkService {
     @Inject('QueueingService') private readonly queuingService: IQueuingService,
   ) {}
 
-  resolveFlagStatus(flagEnv: PopulatedFlagEnv, fields: FieldRecord) {
-    if (flagEnv.status !== FlagStatus.ACTIVATED) return false;
-    if (flagEnv.strategies.length === 0) return true;
+  resolveFlagStatus(flag: PopulatedFlag, fields: FieldRecord) {
+    if (flag.status !== FlagStatus.ACTIVATED) return false;
+    if (flag.strategies.length === 0) return true;
 
-    return this.resolveStrategies(flagEnv.flag.key, flagEnv.strategies, fields);
+    return this.resolveStrategies(flag.key, flag.strategies, fields);
   }
 
   resolveStrategies(
@@ -88,15 +93,11 @@ export class SdkService {
     return isInBucket(bucketId, strategy.rolloutPercentage);
   }
 
-  async resolveFlagStatusRecord(
-    flagEnv: PopulatedFlagEnv,
-    fields: FieldRecord,
-  ) {
-    const flagStatusRecord = this.resolveFlagStatus(flagEnv, fields);
+  async resolveFlagStatusRecord(flag: PopulatedFlag, fields: FieldRecord) {
+    const flagStatusRecord = this.resolveFlagStatus(flag, fields);
 
     const queuedFlagHit: QueuedFlagHit = {
-      flagId: flagEnv.flagId,
-      envId: flagEnv.environmentId,
+      flagId: flag.uuid,
       visitorId: String(fields?.id || ''),
       valueResolved: String(flagStatusRecord),
     };
@@ -104,24 +105,23 @@ export class SdkService {
     await this.queuingService.send(KafkaTopics.FlagHits, queuedFlagHit);
 
     return {
-      [flagEnv.flag.key]: flagStatusRecord,
+      [flag.key]: flagStatusRecord,
     };
   }
 
   async computeFlag(
-    flagEnv: PopulatedFlagEnv,
+    flag: PopulatedFlag,
     fields: FieldRecord,
     flagsByRef: Record<string, boolean | string>,
     skipHit: boolean,
   ) {
-    const flagStatusOrVariant = this.resolveFlagStatus(flagEnv, fields);
+    const flagStatusOrVariant = this.resolveFlagStatus(flag, fields);
 
-    flagsByRef[flagEnv.flag.key] = flagStatusOrVariant;
+    flagsByRef[flag.key] = flagStatusOrVariant;
 
     if (!skipHit) {
       const queuedFlagHit: QueuedFlagHit = {
-        flagId: flagEnv.flagId,
-        envId: flagEnv.environmentId,
+        flagId: flag.uuid,
         visitorId: String(fields?.id || ''),
         valueResolved: String(flagStatusOrVariant),
       };
