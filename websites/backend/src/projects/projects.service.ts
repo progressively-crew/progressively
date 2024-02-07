@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import camelcase from 'camelcase';
+import { v4 as uuidv4 } from 'uuid';
 import { UserRoles } from '../users/roles';
 import { PrismaService } from '../database/prisma.service';
 import { FlagAlreadyExists } from './errors';
@@ -24,6 +25,17 @@ export class ProjectsService {
       },
       orderBy: {
         createdAt: 'desc',
+      },
+    });
+  }
+
+  rotateSecretKey(uuid: string) {
+    return this.prisma.project.updateMany({
+      where: {
+        uuid,
+      },
+      data: {
+        secretKey: uuidv4(),
       },
     });
   }

@@ -24,20 +24,13 @@ import {
 } from './projects.dto';
 import { ProjectsService } from './projects.service';
 import { UserRetrieveDTO } from 'src/users/users.dto';
-
 import { Roles } from '../shared/decorators/Roles';
 import { UserRoles } from '../users/roles';
 import { HasProjectAccessGuard } from './guards/hasProjectAccess';
 import { ValidationPipe } from '../shared/pipes/ValidationPipe';
 import { UsersService } from '../users/users.service';
-import { EnvironmentsService } from '../environments/environments.service';
-import {
-  EnvironmentCreationSchema,
-  EnvironmentCreationDTO,
-} from '../environments/environments.dto';
 import { UserStatus } from '../users/status';
 import { MailService } from '../mail/mail.service';
-import { Environment } from '../environments/types';
 import { FlagCreationDTO, FlagCreationSchema } from '../flags/flags.dto';
 import { FlagAlreadyExists } from './errors';
 
@@ -47,7 +40,6 @@ export class ProjectsController {
   constructor(
     private readonly projectService: ProjectsService,
     private readonly userService: UsersService,
-    private readonly envService: EnvironmentsService,
     private readonly mailService: MailService,
   ) {}
 
@@ -93,6 +85,14 @@ export class ProjectsController {
       user.uuid,
       projectDto.domain,
     );
+  }
+
+  @Post(':id/rotate')
+  @Roles(UserRoles.Admin)
+  @UseGuards(HasProjectAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  rotateSecretKey(@Param('id') id: string) {
+    return this.projectService.rotateSecretKey(id);
   }
 
   @Delete(':id/members/:memberId')
@@ -166,30 +166,6 @@ export class ProjectsController {
   @UseGuards(JwtAuthGuard)
   delete(@Param('id') id: string) {
     return this.projectService.deleteProject(id);
-  }
-
-  /**
-   * Get all the environments of a given project (by id)
-   */
-  @Get(':id/environments')
-  @UseGuards(HasProjectAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  getProjectEnvironments(@Param('id') id: string) {
-    return this.envService.getProjectEnvironments(id);
-  }
-
-  /**
-   * Create an environment on a given project (by id)
-   */
-  @Post(':id/environments')
-  @UseGuards(HasProjectAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  @UsePipes(new ValidationPipe(EnvironmentCreationSchema))
-  createEnvironment(
-    @Param('id') id: string,
-    @Body() envDto: EnvironmentCreationDTO,
-  ): Promise<Environment> {
-    return this.envService.createEnvironment(id, envDto.name, envDto.domain);
   }
 
   /**

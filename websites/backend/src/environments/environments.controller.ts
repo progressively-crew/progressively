@@ -32,38 +32,6 @@ export class EnvironmentsController {
   ) {}
 
   /**
-   * Get all the flag of a given project/env (by projectId and envId)
-   */
-  @Get(':envId/flags')
-  @UseGuards(HasEnvironmentAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  getFlagsByProjectAndEnv(@Param('envId') envId: string) {
-    return this.envService.flagsByEnv(envId);
-  }
-
-  /**
-   * Delete an environment on a given project (by project id AND env id)
-   */
-  @Delete(':envId')
-  @Roles(UserRoles.Admin)
-  @UseGuards(HasEnvironmentAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  deleteEnv(@Param('envId') envId: string) {
-    return this.envService.deleteEnv(envId);
-  }
-
-  /**
-   * Delete an environment on a given project (by project id AND env id)
-   */
-  @Post(':envId/rotate')
-  @Roles(UserRoles.Admin)
-  @UseGuards(HasEnvironmentAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  rotateSecretKey(@Param('envId') envId: string) {
-    return this.envService.rotateSecretKey(envId);
-  }
-
-  /**
    * Delete an environment on a given project (by project id AND env id)
    */
   @Post(':envId/funnels')

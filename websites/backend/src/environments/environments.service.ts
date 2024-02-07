@@ -8,14 +8,6 @@ import { CreateFunnelEntryDTO } from '../funnels/funnels.dto';
 export class EnvironmentsService {
   constructor(private prisma: PrismaService) {}
 
-  getProjectEnvironments(projectId: string) {
-    return this.prisma.environment.findMany({
-      where: {
-        projectId,
-      },
-    });
-  }
-
   getPopulatedFlagEnvs(envId: string) {
     return this.prisma.flagEnvironment.findMany({
       where: {
@@ -228,36 +220,6 @@ export class EnvironmentsService {
     return Object.keys(dictByDates)
       .sort()
       .map((k) => dictByDates[k]);
-  }
-
-  async createEnvironment(
-    projectId: string,
-    environmentName: string,
-    domain?: string,
-  ) {
-    const allMatchingFlagEnv = await this.prisma.flagEnvironment.findMany({
-      where: {
-        environment: {
-          projectId,
-        },
-      },
-      distinct: ['flagId'],
-    });
-
-    return await this.prisma.environment.create({
-      data: {
-        name: environmentName,
-        domain: domain || null,
-        projectId: projectId,
-        flagEnvironment: {
-          createMany: {
-            data: allMatchingFlagEnv.map((flagEnv) => ({
-              flagId: flagEnv.flagId,
-            })),
-          },
-        },
-      },
-    });
   }
 
   flagsByEnv(environmentId: string) {
