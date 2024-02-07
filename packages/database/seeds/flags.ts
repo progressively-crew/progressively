@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { Flag, PrismaClient } from "@prisma/client";
 
 const SEED_ROUND_EVENT_HITS = process.env.SEED_ROUND_EVENT_HITS
   ? Number(process.env.SEED_ROUND_EVENT_HITS)
@@ -46,7 +46,7 @@ export const seedFlags = async (prismaClient: PrismaClient) => {
 
 export const seedFlagHits = async (
   prismaClient: PrismaClient,
-  flagEnv: any,
+  flag: Flag,
   date: Date,
   count = 10
 ) => {
@@ -58,8 +58,7 @@ export const seedFlagHits = async (
   for (let i = 0; i < count; i++) {
     await prismaClient.flagHit.create({
       data: {
-        flagEnvironmentFlagId: flagEnv.flagId,
-        flagEnvironmentEnvironmentId: flagEnv.environmentId,
+        flagUuid: flag.uuid,
         valueResolved: "true",
         date,
         visitorId: "1",
@@ -69,8 +68,7 @@ export const seedFlagHits = async (
     if (i < count / 2) {
       await prismaClient.flagHit.create({
         data: {
-          flagEnvironmentFlagId: flagEnv.flagId,
-          flagEnvironmentEnvironmentId: flagEnv.environmentId,
+          flagUuid: flag.uuid,
           valueResolved: "false",
           date,
           visitorId: "1",
@@ -82,7 +80,7 @@ export const seedFlagHits = async (
 
 export const seedFlagHitsVariants = async (
   prismaClient: PrismaClient,
-  flagEnv: any
+  flag: Flag
 ) => {
   // Modify this value to see more real logs on N days
   const dayCount = SEED_ROUND_EVENT_HITS;
@@ -100,8 +98,7 @@ export const seedFlagHitsVariants = async (
     for (let y = 0; y < count; y++) {
       await prismaClient.flagHit.create({
         data: {
-          flagEnvironmentFlagId: flagEnv.flagId,
-          flagEnvironmentEnvironmentId: flagEnv.environmentId,
+          flagUuid: flag.uuid,
           valueResolved: "Control",
           date,
           visitorId: "1",
@@ -111,8 +108,7 @@ export const seedFlagHitsVariants = async (
       if (y < count / 2) {
         await prismaClient.flagHit.create({
           data: {
-            flagEnvironmentFlagId: flagEnv.flagId,
-            flagEnvironmentEnvironmentId: flagEnv.environmentId,
+            flagUuid: flag.uuid,
             valueResolved: "Second",
             date,
             visitorId: "1",

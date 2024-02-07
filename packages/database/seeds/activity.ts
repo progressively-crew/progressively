@@ -1,4 +1,4 @@
-import { FlagEnvironment, PrismaClient } from "@prisma/client";
+import { Flag, PrismaClient } from "@prisma/client";
 
 const rawActivities = [
   {
@@ -12,17 +12,13 @@ const rawActivities = [
   { type: "change-flag-percentage", data: "39" },
 ];
 
-export const seedActivity = (
-  flagEnv: FlagEnvironment,
-  prismaClient: PrismaClient
-) => {
+export const seedActivity = (flag: Flag, prismaClient: PrismaClient) => {
   return prismaClient.activityLog.createMany({
     data: rawActivities.map((activity, index) => ({
       concernedEntity: "flag",
       type: activity.type,
       userUuid: "1",
-      flagEnvironmentFlagId: flagEnv.flagId,
-      flagEnvironmentEnvironmentId: flagEnv.environmentId,
+      flagUuid: flag.uuid,
       data: activity.data,
       utc: new Date("2023-01-21"),
     })),

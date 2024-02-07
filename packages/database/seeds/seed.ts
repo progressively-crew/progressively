@@ -32,38 +32,6 @@ export const seedDb = async () => {
     await seedPasswordReset(prismaClient, john); // Necessary to e2e test password reset
 
     //  Contextual seeding
-    const production = await prismaClient.environment.create({
-      data: {
-        uuid: "1",
-        name: "Production",
-        projectId: projectFromSeeding.uuid,
-        clientKey: "valid-sdk-key",
-        secretKey: "secret-key",
-        domain: "**",
-      },
-    });
-
-    await prismaClient.environment.create({
-      data: {
-        uuid: "2",
-        name: "Developer",
-        projectId: projectFromSeeding.uuid,
-        clientKey: "valid-sdk-key-2",
-        secretKey: "secret-key-2",
-        domain: "hello-world",
-      },
-    });
-
-    const otherEnv = await prismaClient.environment.create({
-      data: {
-        uuid: "3",
-        name: "Staging",
-        projectId: otherFromSeeding.uuid,
-        clientKey: "valid-sdk-key-3",
-        secretKey: "secret-key-3",
-        domain: "**",
-      },
-    });
 
     await prismaClient.userProject.create({
       data: {
@@ -86,55 +54,15 @@ export const seedDb = async () => {
       prismaClient
     );
 
-    const flagEnv = await prismaClient.flagEnvironment.create({
-      data: {
-        environmentId: production.uuid,
-        flagId: homePageFlag.uuid,
-        webhooks: {
-          create: {
-            uuid: "1",
-            endpoint: "http://localhost:4000",
-            secret: "this is secret",
-            event: "ACTIVATION",
-          },
-        },
-      },
-    });
-
-    await seedActivity(flagEnv, prismaClient);
-
-    const footerFlagEnv = await prismaClient.flagEnvironment.create({
-      data: {
-        environmentId: production.uuid,
-        flagId: footerFlag.uuid,
-        status: "ACTIVATED",
-      },
-    });
-
-    const otherFlagEnv = await prismaClient.flagEnvironment.create({
-      data: {
-        environmentId: otherEnv.uuid,
-        flagId: asideFlag.uuid,
-      },
-    });
+    await seedActivity(homePageFlag, prismaClient);
 
     // Multi variate setup
-
-    const multiVariateFlagEnv = await prismaClient.flagEnvironment.create({
-      data: {
-        environmentId: production.uuid,
-        flagId: multiVariate.uuid,
-        status: "NOT_ACTIVATED",
-      },
-    });
-
     const firstVariant = await prismaClient.variant.create({
       data: {
         uuid: "1",
         isControl: true,
         value: "Control",
-        flagEnvironmentEnvironmentId: multiVariateFlagEnv.environmentId,
-        flagEnvironmentFlagId: multiVariateFlagEnv.flagId,
+        flagUuid: multiVariate.uuid,
       },
     });
 
@@ -143,18 +71,15 @@ export const seedDb = async () => {
         uuid: "2",
         isControl: false,
         value: "Second",
-        flagEnvironmentEnvironmentId: multiVariateFlagEnv.environmentId,
-        flagEnvironmentFlagId: multiVariateFlagEnv.flagId,
+        flagUuid: multiVariate.uuid,
       },
     });
 
     // End of multi variate setup
-
     await prismaClient.strategy.create({
       data: {
         uuid: "1",
-        flagEnvironmentEnvironmentId: production.uuid,
-        flagEnvironmentFlagId: homePageFlag.uuid,
+        flagUuid: homePageFlag.uuid,
         valueToServeType: "Boolean",
       },
     });
@@ -162,8 +87,7 @@ export const seedDb = async () => {
     await prismaClient.strategy.create({
       data: {
         uuid: "2",
-        flagEnvironmentEnvironmentId: production.uuid,
-        flagEnvironmentFlagId: footerFlag.uuid,
+        flagUuid: footerFlag.uuid,
         valueToServe: undefined,
         valueToServeType: "Boolean",
         rolloutPercentage: 100,
@@ -182,8 +106,7 @@ export const seedDb = async () => {
     await prismaClient.strategy.create({
       data: {
         uuid: "3",
-        flagEnvironmentEnvironmentId: multiVariateFlagEnv.environmentId,
-        flagEnvironmentFlagId: multiVariateFlagEnv.flagId,
+        flagUuid: multiVariate.uuid,
         valueToServeType: "Variant",
         variants: {
           create: [
@@ -200,39 +123,19 @@ export const seedDb = async () => {
       },
     });
 
-    await seedFlagHits(prismaClient, flagEnv, new Date(1992, 0, 1, 1), 10);
-    await seedFlagHits(prismaClient, flagEnv, new Date(1992, 0, 3, 1), 20);
-    await seedFlagHits(prismaClient, flagEnv, new Date(1992, 0, 2, 1), 40);
-    await seedFlagHits(prismaClient, flagEnv, new Date(1992, 0, 6, 1), 10);
+    await seedFlagHits(prismaClient, homePageFlag, new Date(1992, 0, 1, 1), 10);
+    await seedFlagHits(prismaClient, homePageFlag, new Date(1992, 0, 3, 1), 20);
+    await seedFlagHits(prismaClient, homePageFlag, new Date(1992, 0, 2, 1), 40);
+    await seedFlagHits(prismaClient, homePageFlag, new Date(1992, 0, 6, 1), 10);
 
-    await seedFlagHits(
-      prismaClient,
-      multiVariateFlagEnv,
-      new Date(1992, 0, 1, 1),
-      10
-    );
+    await seedFlagHits(prismaClient, multiVariate, new Date(1992, 0, 1, 1), 10);
 
-    await seedFlagHits(
-      prismaClient,
-      multiVariateFlagEnv,
-      new Date(1992, 0, 3, 1),
-      20
-    );
-    await seedFlagHits(
-      prismaClient,
-      multiVariateFlagEnv,
-      new Date(1992, 0, 2, 1),
-      40
-    );
-    await seedFlagHits(
-      prismaClient,
-      multiVariateFlagEnv,
-      new Date(1992, 0, 6, 1),
-      10
-    );
+    await seedFlagHits(prismaClient, multiVariate, new Date(1992, 0, 3, 1), 20);
+    await seedFlagHits(prismaClient, multiVariate, new Date(1992, 0, 2, 1), 40);
+    await seedFlagHits(prismaClient, multiVariate, new Date(1992, 0, 6, 1), 10);
 
-    await seedFlagHitsVariants(prismaClient, multiVariateFlagEnv);
-    await seedHitEvents(prismaClient, production);
+    await seedFlagHitsVariants(prismaClient, multiVariate);
+    await seedHitEvents(prismaClient, projectFromSeeding);
 
     // End of Flag setup
   } catch (e) {
