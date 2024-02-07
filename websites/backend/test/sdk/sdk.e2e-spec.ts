@@ -94,7 +94,7 @@ describe('SdkController (e2e)', () => {
       expect(response.body).toEqual({});
     });
 
-    it('gives a list of flags when the key is valid for anonymous user (no field id, no cookies)', async () => {
+    it('gives a list of flags when the key is valid for anonymous user (no field id, no user agent)', async () => {
       const fields = btoa(JSON.stringify({ clientKey: 'valid-sdk-key' }));
       const response = await request(app.getHttpServer())
         .get(`/sdk/${fields}`)
@@ -145,12 +145,12 @@ describe('SdkController (e2e)', () => {
       });
     });
 
-    it('gives a list of flags when the key is valid for an authenticated user (field is passed as cookie and match a strategy)', async () => {
+    it('gives a list of flags when the key is valid for an authenticated user (field is passed as user agent and match a strategy)', async () => {
       const fields = btoa(JSON.stringify({ clientKey: 'valid-sdk-key' }));
 
       const response = await request(app.getHttpServer())
         .get(`/sdk/${fields}`)
-        .set('Cookie', ['progressively-id=1; Path=/; Secure; SameSite=Lax'])
+        .set('user-agent', '1')
         .set('origin', 'hello-world');
 
       expect(response.status).toBe(200);
@@ -161,12 +161,12 @@ describe('SdkController (e2e)', () => {
       });
     });
 
-    it('gives a list of flags when the key is valid for an authenticated user (field is passed as cookie and does NOT match a strategy)', async () => {
+    it('gives a list of flags when the key is valid for an authenticated user (field is passed as user agent and does NOT match a strategy)', async () => {
       const fields = btoa(JSON.stringify({ clientKey: 'valid-sdk-key' }));
 
       const response = await request(app.getHttpServer())
         .get(`/sdk/${fields}`)
-        .set('Cookie', ['progressively-id=2; Path=/; Secure; SameSite=Lax'])
+        .set('user-agent', '2')
         .set('origin', 'hello-world');
 
       expect(response.status).toBe(200);
@@ -182,7 +182,7 @@ describe('SdkController (e2e)', () => {
 
       const response = await request(app.getHttpServer())
         .get(`/sdk/${fields}`)
-        .set('Cookie', ['progressively-id=2; Path=/; Secure; SameSite=Lax'])
+        .set('user-agent', '2')
         .set('origin', 'hello-world');
 
       expect(response.status).toBe(200);
@@ -198,7 +198,7 @@ describe('SdkController (e2e)', () => {
 
       const response2 = await request(app.getHttpServer())
         .get(`/sdk/${fields}`)
-        .set('Cookie', ['progressively-id=2; Path=/; Secure; SameSite=Lax']);
+        .set('user-agent', '2');
 
       expect(response2.status).toBe(200);
       expect(response2.body).toEqual({

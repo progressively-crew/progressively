@@ -1,7 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import helmet from 'helmet';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import * as cookieParser from 'cookie-parser';
 import { WsAdapter } from '@nestjs/platform-ws';
 import { AppModule } from './app.module';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
@@ -21,7 +20,6 @@ async function bootstrap() {
 
   // Middlewares
   app.use(helmet());
-  app.use(cookieParser());
   app.useWebSocketAdapter(new WsAdapter(app));
 
   const config = new DocumentBuilder()
