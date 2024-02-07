@@ -8,6 +8,10 @@ jest.mock('../../src/queuing/queuing.service.factory', () => ({
   MakeQueuingService: () => new MockService(),
 }));
 
+jest.mock('../../src/crypto/crypto.service', () => ({
+  CryptoService: { hash: (x: string) => Promise.resolve(x) },
+}));
+
 jest.mock('nanoid', () => ({
   nanoid: () => '12345-marvin',
 }));
@@ -110,7 +114,7 @@ describe('SdkController (e2e)', () => {
 
     it('gives a list of flags when the key is valid for an authenticated user (field is passed as query param)', async () => {
       const fields = btoa(
-        JSON.stringify({ clientKey: 'valid-sdk-key', id: '1' }),
+        JSON.stringify({ clientKey: 'valid-sdk-key', id: '1::ffff:127.0.0.1' }),
       );
 
       const response = await request(app.getHttpServer())

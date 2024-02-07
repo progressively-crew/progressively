@@ -53,7 +53,7 @@ export async function getServerSideProps({
     apiUrl: "http://localhost:4000",
     fields: {
       email: "marvin.frachet@something.com",
-      id: "1",
+      id: "1::ffff:127.0.0.1",
     },
   });
 

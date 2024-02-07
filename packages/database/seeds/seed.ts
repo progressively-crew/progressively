@@ -172,7 +172,7 @@ export const seedDb = async () => {
             {
               fieldName: "id",
               fieldComparator: "eq",
-              fieldValue: "1",
+              fieldValue: "1::ffff:127.0.0.1",
             },
           ],
         },
