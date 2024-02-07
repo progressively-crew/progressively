@@ -1,4 +1,3 @@
-import { FlagEnv } from "~/modules/flags/types";
 import { formatDateAgo } from "~/modules/misc/utils/formatDateAgo";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
 import { Activity } from "../types";
@@ -8,10 +7,9 @@ import { Card } from "~/components/Card";
 
 interface ActivityItemProps {
   activity: Activity;
-  flagEnv: FlagEnv;
 }
 
-const ActivityItem = ({ activity, flagEnv }: ActivityItemProps) => {
+const ActivityItem = ({ activity }: ActivityItemProps) => {
   const background = stringToColor(activity.type, 90);
 
   return (
@@ -27,7 +25,7 @@ const ActivityItem = ({ activity, flagEnv }: ActivityItemProps) => {
         </div>
 
         <div className="py-1">
-          <ActivityDescription activity={activity} flagEnv={flagEnv} />
+          <ActivityDescription activity={activity} />
         </div>
       </div>
 
@@ -43,16 +41,15 @@ const ActivityItem = ({ activity, flagEnv }: ActivityItemProps) => {
 
 export interface ActivityLogListProps {
   list: Array<Activity>;
-  flagEnv: FlagEnv;
 }
 
-export const ActivityLogList = ({ list, flagEnv }: ActivityLogListProps) => {
+export const ActivityLogList = ({ list }: ActivityLogListProps) => {
   return (
     <Card>
       <ul className="flex flex-col px-4">
         {list.map((item) => (
           <li key={item.id}>
-            <ActivityItem activity={item} flagEnv={flagEnv} />
+            <ActivityItem activity={item} />
           </li>
         ))}
       </ul>

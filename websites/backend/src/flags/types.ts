@@ -1,5 +1,4 @@
 import { Environment } from '../environments/types';
-import { FlagStatus } from './flags.status';
 import { Strategy } from '@progressively/database';
 import { RuleType } from '../rule/types';
 

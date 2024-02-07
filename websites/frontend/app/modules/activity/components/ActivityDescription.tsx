@@ -1,20 +1,14 @@
 import { Link } from "~/components/Link";
 import { Tag } from "~/components/Tag";
-import { FlagEnv, FlagStatus as FlagStatusType } from "~/modules/flags/types";
 import { FlagStatus } from "~/modules/flags/components/FlagStatus";
-import { FormattedDate } from "~/modules/misc/components/FormattedDate";
 import { WebhookEvent } from "~/modules/webhooks/components/WebhookEvent";
 import { Activity } from "../types";
 
 export interface ActivityDescriptionProps {
   activity: Activity;
-  flagEnv: FlagEnv;
 }
 
-export const ActivityDescription = ({
-  activity,
-  flagEnv,
-}: ActivityDescriptionProps) => {
+export const ActivityDescription = ({ activity }: ActivityDescriptionProps) => {
   const { data, type, id } = activity;
 
   if (type === "change-flag-status") {
