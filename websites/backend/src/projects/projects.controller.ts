@@ -247,6 +247,7 @@ export class ProjectsController {
 
     const funnels = await this.projectService.getFunnels(id);
     return await this.funnelService.buildFunnelCharts(
+      id,
       funnels,
       startDate,
       endDate,
