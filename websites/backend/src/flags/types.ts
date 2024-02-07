@@ -34,7 +34,7 @@ export interface PopulatedStrategy extends Strategy {
   rules: Array<Partial<RuleType>>;
 }
 
-export interface PopulatedFlagEnv extends FlagEnvironment {
+export interface PopulatedFlag extends Flag {
   environment: Environment;
   flag: Flag;
   strategies: Array<PopulatedStrategy>;

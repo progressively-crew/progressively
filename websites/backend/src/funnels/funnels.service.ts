@@ -1,13 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
-import { Funnel, FunnelChart } from './funnels.dto';
+import { CreateFunnelEntryDTO, Funnel, FunnelChart } from './funnels.dto';
 
 @Injectable()
 export class FunnelsService {
   constructor(private prisma: PrismaService) {}
 
   async resolveFunnelChart(
-    envId: string,
     funnel: Funnel,
     startDate: string,
     endDate: string,
@@ -35,8 +34,7 @@ export class FunnelsService {
       if (funnelEntry.flagUuid) {
         const flagHits = await this.prisma.flagHit.findMany({
           where: {
-            flagEnvironmentEnvironmentId: envId,
-            flagEnvironmentFlagId: funnelEntry.flagUuid,
+            flagUuid: funnelEntry.flagUuid,
             valueResolved: funnelEntry.flagVariant,
             date: {
               gte: new Date(startDate),
@@ -84,7 +82,6 @@ export class FunnelsService {
   }
 
   async buildFunnelCharts(
-    envId: string,
     funnels: Array<Funnel>,
     startDate: string,
     endDate: string,
@@ -93,10 +90,33 @@ export class FunnelsService {
 
     for (const funnel of funnels) {
       funnelChartsPromises.push(
-        this.resolveFunnelChart(envId, funnel, startDate, endDate),
+        this.resolveFunnelChart(funnel, startDate, endDate),
       );
     }
 
     return Promise.all(funnelChartsPromises);
+  }
+
+  createFunnel(
+    projectId: string,
+    funnelName: string,
+    funnelEntries: Array<CreateFunnelEntryDTO>,
+  ) {
+    return this.prisma.funnel.create({
+      data: {
+        projectUuid: projectId,
+        name: funnelName,
+        funnelEntries: {
+          createMany: {
+            data: funnelEntries.map((funnelEntry) => ({
+              flagUuid: funnelEntry.flagUuid || null,
+              eventName: funnelEntry.eventName || null,
+              flagVariant: funnelEntry.variant || null,
+              eventValue: funnelEntry.pageViewUrl || null,
+            })),
+          },
+        },
+      },
+    });
   }
 }

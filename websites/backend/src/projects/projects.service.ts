@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { UserRoles } from '../users/roles';
 import { PrismaService } from '../database/prisma.service';
 import { FlagAlreadyExists } from './errors';
+import { CreateFunnelEntryDTO } from '../funnels/funnels.dto';
 
 @Injectable()
 export class ProjectsService {
@@ -230,6 +231,204 @@ export class ProjectsService {
         name,
         description,
         key: flagKey,
+      },
+    });
+  }
+
+  getMetricCount(
+    projectId: string,
+    startDate: string,
+    endDate: string,
+    eventFilter?: string,
+  ) {
+    const eventFilterObj = eventFilter
+      ? { name: eventFilter }
+      : {
+          NOT: {
+            name: 'Page View',
+          },
+        };
+
+    return this.prisma.event.count({
+      where: {
+        projectUuid: projectId,
+        date: {
+          gte: new Date(startDate),
+          lte: new Date(endDate),
+        },
+
+        ...eventFilterObj,
+      },
+    });
+  }
+
+  getFunnels(projectId: string) {
+    return this.prisma.funnel.findMany({
+      where: {
+        projectUuid: projectId,
+      },
+    });
+  }
+
+  getDistinctEventName(
+    projectId: string,
+    startDate: string,
+    endDate: string,
+    eventFilter?: string,
+  ) {
+    const eventFilterObj = eventFilter ? { name: eventFilter } : {};
+
+    return this.prisma.event.findMany({
+      distinct: ['name'],
+      where: {
+        projectUuid: projectId,
+        date: {
+          gte: new Date(startDate),
+          lte: new Date(endDate),
+        },
+        ...eventFilterObj,
+      },
+    });
+  }
+
+  async getEventsPerDate(
+    projectId: string,
+    startDate: string,
+    endDate: string,
+    pageView: boolean,
+  ) {
+    const eventFilter = pageView
+      ? { name: 'Page View' }
+      : { NOT: { name: 'Page View' } };
+
+    const distinctEventName = await this.getDistinctEventName(
+      projectId,
+      startDate,
+      endDate,
+      pageView ? 'Page View' : undefined,
+    );
+
+    const dictByDates = {};
+
+    for (const dhv of distinctEventName) {
+      const hitsByDate = await this.prisma.event.groupBy({
+        _count: true,
+        by: ['name', 'date'],
+        where: {
+          projectUuid: projectId,
+          name: dhv.name,
+          date: {
+            gte: new Date(startDate),
+            lte: new Date(endDate),
+          },
+          ...eventFilter,
+        },
+        orderBy: {
+          date: 'asc',
+        },
+      });
+
+      hitsByDate.forEach((hbd) => {
+        const isoDate = hbd.date.toISOString();
+
+        if (!dictByDates[isoDate]) {
+          dictByDates[isoDate] = {};
+        }
+
+        dictByDates[isoDate]['date'] = isoDate;
+        dictByDates[isoDate][dhv.name] = hbd._count;
+      });
+    }
+
+    return Object.keys(dictByDates)
+      .sort()
+      .map((k) => dictByDates[k]);
+  }
+
+  getEventsPerDatePerGroup(
+    projectId: string,
+    startDate: string,
+    endDate: string,
+    group: 'os' | 'browser' | 'url' | 'referer',
+  ) {
+    const notConstrains = group === 'referer' ? { NOT: { referer: null } } : {};
+
+    return this.prisma.event.groupBy({
+      by: [group],
+      _count: {
+        uuid: true,
+      },
+      where: {
+        projectUuid: projectId,
+        date: {
+          gte: new Date(startDate),
+          lte: new Date(endDate),
+        },
+        name: 'Page View',
+        ...notConstrains,
+      },
+      orderBy: {
+        _count: {
+          uuid: 'desc',
+        },
+      },
+    });
+  }
+
+  getUniqueVisitor(projectId: string, startDate: string, endDate: string) {
+    return this.prisma.event.findMany({
+      distinct: ['visitorId'],
+      where: {
+        projectUuid: projectId,
+        date: {
+          gte: new Date(startDate),
+          lte: new Date(endDate),
+        },
+      },
+    });
+  }
+
+  async getBounceRate(projectId: string, startDate: string, endDate: string) {
+    // Hint: "PV" name is "PageView" but shorter for bundle size
+    const bounceRateData = await this.prisma.$queryRaw`
+     SELECT
+        COUNT(CASE WHEN numPages = 1 THEN 1 ELSE NULL END) AS SinglePageSessions,
+        COUNT(*) AS TotalSessions
+      FROM (
+        SELECT
+          "Event"."visitorId",
+          COUNT(DISTINCT "Event"."url") AS numPages
+        FROM
+          "Event"
+        WHERE "Event"."date" BETWEEN ${startDate}::timestamp AND ${endDate}::timestamp
+        AND "Event"."projectUuid"=${projectId}
+        AND "Event"."name"='Page View'
+        GROUP BY
+          "Event"."visitorId"
+      ) AS SessionCounts;
+    `;
+
+    const singlepagesessions = bounceRateData[0]?.singlepagesessions;
+    const totalsessions = bounceRateData[0]?.totalsessions;
+
+    let bounceRate = 0;
+    if (singlepagesessions && totalsessions) {
+      bounceRate = (Number(singlepagesessions) / Number(totalsessions)) * 100;
+    }
+
+    return bounceRate;
+  }
+
+  getPageViewEventUrl(projectId: string, startDate: string, endDate: string) {
+    return this.prisma.event.findMany({
+      distinct: ['url'],
+      where: {
+        projectUuid: projectId,
+        date: {
+          gte: new Date(startDate),
+          lte: new Date(endDate),
+        },
+        name: 'Page View',
       },
     });
   }

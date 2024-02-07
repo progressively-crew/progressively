@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
 import { FlagStatus } from './flags.status';
-import { QueuedFlagHit, Variant } from './types';
+import { PopulatedFlag, QueuedFlagHit, Variant } from './types';
 import { VariantCreationDTO } from './flags.dto';
 import camelcase from 'camelcase';
 import { FlagAlreadyExists } from '../projects/errors';
@@ -9,6 +9,29 @@ import { FlagAlreadyExists } from '../projects/errors';
 @Injectable()
 export class FlagsService {
   constructor(private prisma: PrismaService) {}
+
+  getPopulatedFlags(projectId: string) {
+    return this.prisma.flag.findMany({
+      where: {
+        projectUuid: projectId,
+      },
+      include: {
+        strategies: {
+          include: {
+            rules: true,
+            variants: {
+              include: {
+                variant: true,
+              },
+              orderBy: {
+                rolloutPercentage: 'asc',
+              },
+            },
+          },
+        },
+      },
+    }) as unknown as Promise<Array<PopulatedFlag>>;
+  }
 
   changeFlagForEnvStatus(
     environmentId: string,
