@@ -36,12 +36,12 @@ export class SdkController {
       throw new UnauthorizedException();
     }
 
-    const concernedEnv = await this.sdkService.getEnvByKeys(
+    const concernedProject = await this.sdkService.getProjectByKeys(
       fields.clientKey ? String(fields.clientKey) : undefined,
       secretKey,
     );
 
-    if (!concernedEnv) {
+    if (!concernedProject) {
       throw new UnauthorizedException();
     }
 
@@ -50,12 +50,12 @@ export class SdkController {
     if (
       !secretKey &&
       fields.clientKey &&
-      (!concernedEnv.domain || !minimatch(domain, concernedEnv.domain))
+      (!concernedProject.domain || !minimatch(domain, concernedProject.domain))
     ) {
       throw new UnauthorizedException();
     }
 
-    return concernedEnv;
+    return concernedProject;
   }
 
   /**
@@ -73,11 +73,11 @@ export class SdkController {
 
     fields.id = await resolveUserId(fields, userAgent, ip);
 
-    const concernedEnv = await this._guardSdkEndpoint(request, fields);
+    const concernedProject = await this._guardSdkEndpoint(request, fields);
     const shouldSkipHits = headers['x-progressively-hit'] === 'skip';
 
     return await this.sdkService.computeFlags(
-      concernedEnv,
+      concernedProject,
       fields,
       shouldSkipHits,
     );

@@ -79,6 +79,7 @@ model Flag {
   key         String
   description String?
   createdAt   DateTime?     @default(now())
+  status      String?       @default("NOT_ACTIVATED")
   FunnelEntry FunnelEntry[]
   flagHits    FlagHit[]
   variants    Variant[]

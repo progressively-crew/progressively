@@ -1,11 +1,5 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { EnvironmentsService } from '../environments/environments.service';
-import {
-  PopulatedFlagEnv,
-  PopulatedStrategy,
-  QueuedFlagHit,
-  Variant,
-} from '../flags/types';
+import { PopulatedStrategy, QueuedFlagHit, Variant } from '../flags/types';
 import { FieldRecord } from '../rule/types';
 import { PrismaService } from '../database/prisma.service';
 import { FlagStatus } from '../flags/flags.status';
@@ -19,17 +13,18 @@ import {
 import { ValueToServe } from '../strategy/types';
 import { QueuedEventHit } from './types';
 import { RuleService } from '../rule/rule.service';
-import { Environment } from '../environments/types';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { minimatch } from 'minimatch';
 import { IQueuingService } from '../queuing/types';
 import { KafkaTopics } from '../queuing/topics';
+import { FlagsService } from '../flags/flags.service';
+import { Project } from '@progressively/database';
 
 @Injectable()
 export class SdkService {
   constructor(
     private prisma: PrismaService,
-    private readonly envService: EnvironmentsService,
+    private readonly flagService: FlagsService,
     private readonly ruleService: RuleService,
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
     @Inject('QueueingService') private readonly queuingService: IQueuingService,
@@ -135,8 +130,8 @@ export class SdkService {
     }
   }
 
-  getEnvByKeys(clientKey?: string, secretKey?: string) {
-    return this.prisma.environment.findFirst({
+  getProjectByKeys(clientKey?: string, secretKey?: string) {
+    return this.prisma.project.findFirst({
       where: {
         clientKey,
         secretKey,
@@ -144,42 +139,41 @@ export class SdkService {
     });
   }
 
-  async computeFlags(env: Environment, fields: FieldRecord, skipHit: boolean) {
-    const flagEnvs = await this.envService.getPopulatedFlagEnvs(env.uuid);
+  async computeFlags(project: Project, fields: FieldRecord, skipHit: boolean) {
+    const flags = await this.flagService.getPopulatedFlags(project.uuid);
 
-    const flags = {};
+    const resolveFlags = {};
 
-    const promises = flagEnvs.map((flagEnv) =>
-      this.computeFlag(flagEnv, fields, flags, skipHit),
+    const promises = flags.map((flag) =>
+      this.computeFlag(flag, fields, resolveFlags, skipHit),
     );
 
     await Promise.all(promises);
 
-    return flags;
+    return resolveFlags;
   }
 
   async generateTypescriptTypes(secretKey: string) {
-    const env = await this.prisma.environment.findFirst({
+    const project = await this.prisma.project.findFirst({
       where: { secretKey },
       include: {
-        flagEnvironment: {
+        Flag: {
           include: {
             variants: true,
-            flag: true,
           },
         },
       },
     });
 
-    const defaultDefinition = getStringOfTypes(env.flagEnvironment as any);
+    const defaultDefinition = getStringOfTypes(project);
     const definitionWithCustomString = getStringOfTypesWithCustomStrings(
-      env.flagEnvironment as any,
+      project.Flag,
     );
 
     return `declare module "@progressively/types" { \n${defaultDefinition}\n\n${definitionWithCustomString}\n}`;
   }
 
-  async hitEvent(envId: string, queuedEvent: QueuedEventHit) {
+  async hitEvent(projectId: string, queuedEvent: QueuedEventHit) {
     const date = new Date();
     date.setHours(2);
     date.setMinutes(2);
@@ -188,7 +182,7 @@ export class SdkService {
 
     return this.prisma.event.create({
       data: {
-        environmentUuid: envId,
+        projectUuid: projectId,
         visitorId: queuedEvent.visitorId,
         date,
         name: queuedEvent.name,
@@ -215,12 +209,12 @@ export class SdkService {
       });
     }
 
-    const concernedEnv = await this.getEnvByKeys(
+    const concernedProject = await this.getProjectByKeys(
       queuedEvent.clientKey,
       queuedEvent.secretKey,
     );
 
-    if (!concernedEnv) {
+    if (!concernedProject) {
       return this.logger.error({
         error: 'The client key does not match any environment',
         level: 'error',
@@ -234,7 +228,7 @@ export class SdkService {
     if (
       !queuedEvent.secretKey &&
       queuedEvent.clientKey &&
-      (!concernedEnv.domain || !minimatch(domain, concernedEnv.domain))
+      (!concernedProject.domain || !minimatch(domain, concernedProject.domain))
     ) {
       return this.logger.error({
         error: 'The client key does not match the authorized domains',
@@ -244,6 +238,6 @@ export class SdkService {
       });
     }
 
-    return this.hitEvent(concernedEnv.uuid, queuedEvent);
+    return this.hitEvent(concernedProject.uuid, queuedEvent);
   }
 }

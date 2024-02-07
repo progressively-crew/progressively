@@ -38,6 +38,7 @@ export interface PopulatedFlag extends Flag {
   environment: Environment;
   flag: Flag;
   strategies: Array<PopulatedStrategy>;
+  status: string;
 }
 
 export interface Variant {

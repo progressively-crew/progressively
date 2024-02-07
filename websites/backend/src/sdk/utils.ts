@@ -1,8 +1,9 @@
 import { x86 as murmur } from 'murmurhash3js';
 import { BadRequestException } from '@nestjs/common';
 import { FieldRecord } from '../rule/types';
-import { PopulatedFlagEnv, PopulatedVariant } from '../flags/types';
+import { PopulatedVariant } from '../flags/types';
 import { CryptoService } from '../crypto/crypto.service';
+import { Flag, Project, Variant } from '@progressively/database';
 
 const BUCKET_COUNT = 10000; // number of buckets
 const MAX_INT_32 = Math.pow(2, 32);
@@ -65,12 +66,14 @@ export const resolveUserId = async (
   return await CryptoService.hash(`${userAgent}${ip}`);
 };
 
-export const getStringOfTypes = (flagEnvs: Array<PopulatedFlagEnv>) => {
+export const getStringOfTypes = (
+  project: Project & { Flag: Array<Flag & { variants: Array<Variant> }> },
+) => {
   let definition = `export interface FlagDict {`;
 
-  flagEnvs.forEach((flagEnv) => {
-    const flagKey = flagEnv.flag.key;
-    const variants: Array<string | boolean> = flagEnv.variants.map(
+  project.Flag.forEach((flag) => {
+    const flagKey = flag.key;
+    const variants: Array<string | boolean> = flag.variants.map(
       (v) => `"${v.value}"`,
     );
 
@@ -86,13 +89,11 @@ export const getStringOfTypes = (flagEnvs: Array<PopulatedFlagEnv>) => {
   return definition;
 };
 
-export const getStringOfTypesWithCustomStrings = (
-  flagEnvs: Array<PopulatedFlagEnv>,
-) => {
+export const getStringOfTypesWithCustomStrings = (flags: Array<Flag>) => {
   let definition = `export interface FlagDictWithCustomString {`;
 
-  flagEnvs.forEach((flagEnv) => {
-    const flagKey = flagEnv.flag.key;
+  flags.forEach((flag) => {
+    const flagKey = flag.key;
 
     definition += `    ${flagKey}:  string | boolean;\n`;
   });
