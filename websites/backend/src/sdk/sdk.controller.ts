@@ -69,11 +69,12 @@ export class SdkController {
   ) {
     const fields = parseBase64Params(base64Params);
     const userAgent = request.headers['user-agent'] || '';
+    const ip = request.ip;
+
+    fields.id = await resolveUserId(fields, userAgent, ip);
+
     const concernedEnv = await this._guardSdkEndpoint(request, fields);
-
     const shouldSkipHits = headers['x-progressively-hit'] === 'skip';
-
-    fields.id = resolveUserId(fields, userAgent);
 
     return await this.sdkService.computeFlags(
       concernedEnv,
@@ -106,8 +107,9 @@ export class SdkController {
 
     const fields = parseBase64Params(base64Params);
     const userAgent = request.headers['user-agent'] || '';
+    const ip = request.ip;
 
-    fields.id = resolveUserId(fields, userAgent);
+    fields.id = await resolveUserId(fields, userAgent, ip);
 
     const secretKey = request.headers['x-api-key'] as string | undefined;
     const clientKey = fields.clientKey;

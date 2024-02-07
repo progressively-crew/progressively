@@ -8,6 +8,10 @@ jest.mock('../../src/queuing/queuing.service.factory', () => ({
   MakeQueuingService: () => new MockService(),
 }));
 
+jest.mock('../../src/crypto/crypto.service', () => ({
+  CryptoService: { hash: (x: string) => Promise.resolve(x) },
+}));
+
 jest.mock('nanoid', () => ({
   nanoid: () => '12345-marvin',
 }));

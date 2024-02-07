@@ -2,6 +2,7 @@ import { x86 as murmur } from 'murmurhash3js';
 import { BadRequestException } from '@nestjs/common';
 import { FieldRecord } from '../rule/types';
 import { PopulatedFlagEnv, PopulatedVariant } from '../flags/types';
+import { CryptoService } from '../crypto/crypto.service';
 
 const BUCKET_COUNT = 10000; // number of buckets
 const MAX_INT_32 = Math.pow(2, 32);
@@ -50,14 +51,18 @@ export const parseBase64Params = (b64: string): FieldRecord => {
   }
 };
 
-export const resolveUserId = (fields: FieldRecord, defaultUserId: string) => {
+export const resolveUserId = async (
+  fields: FieldRecord,
+  userAgent: string,
+  ip: string,
+) => {
   if (fields?.id) {
     // User exists, but initial request
     return String(fields.id);
   }
 
   // User exists, subsequent requests
-  return defaultUserId;
+  return await CryptoService.hash(`${userAgent}${ip}`);
 };
 
 export const getStringOfTypes = (flagEnvs: Array<PopulatedFlagEnv>) => {
