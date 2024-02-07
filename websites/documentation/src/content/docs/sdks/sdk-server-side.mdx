@@ -62,9 +62,9 @@ export async function getServerSideProps({ req }) {
 }
 ```
 
-### Server usage with explicit stickiness
+### Server usage with stickiness
 
-
+You are reponsible for setting the ID field if you want to have stickiness between the server rendering and the client rendering. This ID can be stored in database, in a cookie or wherever makes sense to you
 
 ```javascript
 import { Progressively } from "@progressively/server-side";
@@ -89,43 +89,3 @@ export async function getServerSideProps({ req }) {
   };
 }
 ```
-
-### Server usage with implicit stickiness
-
-If you don't provide an `id` field, Progressively generates one for you. However, you need to spread it down to the client application for the stickiness to be complete (if you use the client side SDK in addition).
-
-```js
-import { serialize } from "cookie";
-import { Progressively } from "@progressively/server-side";
-
-export async function getServerSideProps({ req, res }) {
-  const id = req.cookies?.["progressively-id"] ?? null;
-
-  const sdk = Progressively.init({
-    secretKey: "secret-key",
-    clientKey: "valid-sdk-key",
-    websocketUrl: "ws://localhost:4000",
-    apiUrl: "http://localhost:4000",
-    fields: {
-      id,
-    },
-  });
-
-  const { data, userId } = await sdk.loadFlags();
-
-  const cookie = serialize("progressively-id", userId, {
-    httpOnly: true,
-    path: "/",
-    secure: true,
-  });
-
-  res.setHeader("set-cookie", cookie);
-
-  return {
-    props: {
-      progressivelyProps: data,
-    },
-  };
-}
-```
-

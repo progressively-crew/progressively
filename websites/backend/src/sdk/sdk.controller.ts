@@ -3,7 +3,6 @@ import {
   Get,
   Param,
   Req,
-  Res,
   Headers,
   UseGuards,
   Post,
@@ -12,19 +11,16 @@ import {
   UnauthorizedException,
   Inject,
 } from '@nestjs/common';
-import { Response, Request } from 'express';
+import { Request } from 'express';
 import { minimatch } from 'minimatch';
 import { SdkService } from './sdk.service';
-import { parseBase64Params, prepareCookie, resolveUserId } from './utils';
+import { parseBase64Params, resolveUserId } from './utils';
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
 import { EventHit, QueuedEventHit } from './types';
 import { getDeviceInfo } from '../shared/utils/getDeviceInfo';
 import { FieldRecord } from '../rule/types';
-
 import { KafkaTopics } from '../queuing/topics';
 import { IQueuingService } from '../queuing/types';
-
-export const COOKIE_KEY = 'progressively-id';
 
 @Controller('sdk')
 export class SdkController {
@@ -68,18 +64,16 @@ export class SdkController {
   @Get('/:params')
   async getByClientKey(
     @Param('params') base64Params: string,
-    @Res({ passthrough: true }) response: Response,
     @Req() request: Request,
     @Headers() headers,
   ) {
     const fields = parseBase64Params(base64Params);
+    const userAgent = request.headers['user-agent'] || '';
     const concernedEnv = await this._guardSdkEndpoint(request, fields);
 
-    const cookieUserId = request?.cookies?.[COOKIE_KEY];
     const shouldSkipHits = headers['x-progressively-hit'] === 'skip';
 
-    fields.id = resolveUserId(fields, cookieUserId);
-    prepareCookie(response, fields.id);
+    fields.id = resolveUserId(fields, userAgent);
 
     return await this.sdkService.computeFlags(
       concernedEnv,
@@ -103,7 +97,6 @@ export class SdkController {
   @Post('/:params')
   async hitEvent(
     @Req() request: Request,
-    @Res({ passthrough: true }) response: Response,
     @Param('params') base64Params: string,
     @Body() body: EventHit,
   ) {
@@ -111,10 +104,10 @@ export class SdkController {
       throw new BadRequestException();
     }
 
-    const cookieUserId = request?.cookies?.[COOKIE_KEY];
     const fields = parseBase64Params(base64Params);
-    fields.id = resolveUserId(fields, cookieUserId);
-    prepareCookie(response, fields.id);
+    const userAgent = request.headers['user-agent'] || '';
+
+    fields.id = resolveUserId(fields, userAgent);
 
     const secretKey = request.headers['x-api-key'] as string | undefined;
     const clientKey = fields.clientKey;
@@ -137,6 +130,6 @@ export class SdkController {
 
     await this.queuingService.send(KafkaTopics.AnalyticsHits, queuedEvent);
 
-    return null;
+    return {};
   }
 }

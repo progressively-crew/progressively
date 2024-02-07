@@ -1,4 +1,3 @@
-import { nanoid } from 'nanoid';
 import { x86 as murmur } from 'murmurhash3js';
 import { BadRequestException } from '@nestjs/common';
 import { Response } from 'express';
@@ -52,31 +51,14 @@ export const parseBase64Params = (b64: string): FieldRecord => {
   }
 };
 
-export const resolveUserId = (fields: FieldRecord, cookieUserId?: string) => {
+export const resolveUserId = (fields: FieldRecord, defaultUserId: string) => {
   if (fields?.id) {
     // User exists, but initial request
     return String(fields.id);
   }
 
-  if (cookieUserId) {
-    // User exists, subsequent requests
-    return cookieUserId;
-  }
-
-  // first visit but anonymous
-  return nanoid();
-};
-
-export const prepareCookie = (response: Response, userId: string) => {
-  response.header(
-    'set-cookie',
-    `progressively-id=${userId}; Max-Age=31536000; Path=/; HttpOnly; Secure; SameSite=None; Partitioned;`,
-  );
-  response.header('X-progressively-id', userId);
-  response.header(
-    'Access-Control-Expose-Headers',
-    'X-progressively-id, Set-cookie',
-  );
+  // User exists, subsequent requests
+  return defaultUserId;
 };
 
 export const getStringOfTypes = (flagEnvs: Array<PopulatedFlagEnv>) => {
