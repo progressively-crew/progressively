@@ -1,4 +1,3 @@
-import { Environment } from '../environments/types';
 import { Strategy } from '@progressively/database';
 import { RuleType } from '../rule/types';
 
@@ -8,13 +7,6 @@ export interface Flag {
   key: string;
   description: string;
   createdAt: Date;
-}
-
-export interface FlagEnvironment {
-  flagId: string;
-  environmentId: string;
-  status: string;
-  variants: Array<Variant>;
 }
 
 export interface PopulatedVariant {
@@ -35,7 +27,6 @@ export interface PopulatedStrategy extends Strategy {
 }
 
 export interface PopulatedFlag extends Flag {
-  environment: Environment;
   flag: Flag;
   strategies: Array<PopulatedStrategy>;
   status: string;
