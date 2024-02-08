@@ -7,11 +7,10 @@ import { Strategy } from '@progressively/database';
 export class StrategyService {
   constructor(private prisma: PrismaService) {}
 
-  createStrategy(envId: string, flagId: string) {
+  createStrategy(flagId: string) {
     return this.prisma.strategy.create({
       data: {
-        flagEnvironmentEnvironmentId: envId,
-        flagEnvironmentFlagId: flagId,
+        flagUuid: flagId,
         valueToServeType: ValueToServe.Boolean,
       },
     });
@@ -41,58 +40,45 @@ export class StrategyService {
     return result[result.length - 1] as Strategy;
   }
 
-  async purgeStrategyForFlagEnv(envId: string, flagId: string) {
-    const deleteQueries = [];
-
-    deleteQueries.push(
+  async purgeStrategyForFlagEnv(flagId: string) {
+    const deleteQueries = [
       this.prisma.rule.deleteMany({
         where: {
           Strategy: {
-            flagEnvironmentEnvironmentId: envId,
-            flagEnvironmentFlagId: flagId,
+            flagUuid: flagId,
           },
         },
       }),
-    );
-
-    deleteQueries.push(
       this.prisma.strategyVariant.deleteMany({
         where: {
           strategy: {
-            flagEnvironmentEnvironmentId: envId,
-            flagEnvironmentFlagId: flagId,
+            flagUuid: flagId,
           },
         },
       }),
-    );
-
-    deleteQueries.push(
       this.prisma.strategy.deleteMany({
         where: {
-          flagEnvironmentEnvironmentId: envId,
-          flagEnvironmentFlagId: flagId,
+          flagUuid: flagId,
         },
       }),
-    );
+    ];
 
     return this.prisma.$transaction(deleteQueries);
   }
 
   async upsertStrategies(
-    envId: string,
     flagId: string,
     strategiesDto: Array<StrategyUpdateDto>,
   ) {
     const strategies = [];
     // Delete all and re-insert
-    await this.purgeStrategyForFlagEnv(envId, flagId);
+    await this.purgeStrategyForFlagEnv(flagId);
 
     const createQueries = [];
     for (const strategyDto of strategiesDto) {
       const newStrategy = await this.prisma.strategy.create({
         data: {
-          flagEnvironmentEnvironmentId: envId,
-          flagEnvironmentFlagId: flagId,
+          flagUuid: flagId,
           valueToServeType: strategyDto.valueToServeType,
           valueToServe: strategyDto.valueToServe,
           rolloutPercentage: strategyDto.rolloutPercentage,
@@ -167,11 +153,10 @@ export class StrategyService {
     return roles.includes(flagOfProject.role);
   }
 
-  getStrategies(envId: string, flagId: string) {
+  getStrategies(flagId: string) {
     return this.prisma.strategy.findMany({
       where: {
-        flagEnvironmentEnvironmentId: envId,
-        flagEnvironmentFlagId: flagId,
+        flagUuid: flagId,
       },
       include: {
         rules: {
