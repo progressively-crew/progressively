@@ -5,7 +5,6 @@ import { useActionData, Form, useNavigation } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
-import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { getFlagEnvMetaTitle } from "~/modules/flags/services/getFlagEnvMetaTitle";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
@@ -15,14 +14,13 @@ import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 import { addVariantAction } from "~/modules/variants/form-actions/addVariantAction";
 import { DialogCloseBtn } from "~/components/Dialog/Dialog";
 
-export const meta: MetaFunction = ({ matches, params }) => {
+export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
-  const envName = getEnvMetaTitle(matches, params.env!);
   const flagName = getFlagEnvMetaTitle(matches);
 
   return [
     {
-      title: `Progressively | ${projectName} | ${envName} | Flags | ${flagName} | Variants | Create`,
+      title: `Progressively | ${projectName} | Flags | ${flagName} | Variants | Create`,
     },
   ];
 };

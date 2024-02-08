@@ -14,7 +14,6 @@ import { FlagEnvMenu } from "~/modules/flags/components/FlagEnvMenu";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
-import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { getFlagEnvMetaTitle } from "~/modules/flags/services/getFlagEnvMetaTitle";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
@@ -36,12 +35,11 @@ import { FlagStatus } from "~/modules/flags/types";
 
 export const meta: MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
-  const envName = getEnvMetaTitle(matches, params.env!);
   const flagName = getFlagEnvMetaTitle(matches);
 
   return [
     {
-      title: `Progressively | ${projectName} | ${envName} | Flags | ${flagName}`,
+      title: `Progressively | ${projectName} | Flags | ${flagName}`,
     },
   ];
 };

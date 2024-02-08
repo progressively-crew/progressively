@@ -5,7 +5,6 @@ import { useActionData, Form, useNavigation } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
-import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { getFlagEnvMetaTitle } from "~/modules/flags/services/getFlagEnvMetaTitle";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { WebhookCreationDTO, WebhookEvents } from "~/modules/webhooks/types";
@@ -20,12 +19,11 @@ import { DialogCloseBtn } from "~/components/Dialog/Dialog";
 
 export const meta: MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
-  const envName = getEnvMetaTitle(matches, params.env!);
   const flagName = getFlagEnvMetaTitle(matches);
 
   return [
     {
-      title: `Progressively | ${projectName} | ${envName} | Flags | ${flagName} | Webhooks | Create`,
+      title: `Progressively | ${projectName} | Flags | ${flagName} | Webhooks | Create`,
     },
   ];
 };

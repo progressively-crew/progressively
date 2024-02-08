@@ -8,7 +8,6 @@ import { PageTitle } from "~/components/PageTitle";
 import { Typography } from "~/components/Typography";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
-import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
 import { FlagEnvMenu } from "~/modules/flags/components/FlagEnvMenu";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { getFlagEnvMetaTitle } from "~/modules/flags/services/getFlagEnvMetaTitle";
@@ -22,12 +21,11 @@ import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction"
 
 export const meta: MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
-  const envName = getEnvMetaTitle(matches, params.env!);
   const flagName = getFlagEnvMetaTitle(matches);
 
   return [
     {
-      title: `Progressively | ${projectName} | ${envName} | Flags | ${flagName} | Webhooks`,
+      title: `Progressively | ${projectName} | Flags | ${flagName} | Webhooks`,
     },
   ];
 };
