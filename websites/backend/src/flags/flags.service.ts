@@ -33,24 +33,15 @@ export class FlagsService {
     }) as unknown as Promise<Array<PopulatedFlag>>;
   }
 
-  changeFlagForEnvStatus(
-    environmentId: string,
-    flagId: string,
-    status: FlagStatus,
-  ) {
-    return this.prisma.flagEnvironment.update({
+  changeFlagForEnvStatus(flagId: string, status: FlagStatus) {
+    return this.prisma.flag.update({
       where: {
-        flagId_environmentId: {
-          flagId,
-          environmentId,
-        },
+        uuid: flagId,
       },
       data: {
         status,
       },
       include: {
-        environment: true,
-        flag: true,
         variants: true,
         webhooks: true,
         strategies: {
@@ -103,18 +94,12 @@ export class FlagsService {
     });
   }
 
-  async flagEvaluations(
-    envId: string,
-    flagId: string,
-    startDate: string,
-    endDate: string,
-  ) {
+  async flagEvaluations(flagId: string, startDate: string, endDate: string) {
     return this.prisma.flagHit.groupBy({
       by: ['valueResolved'],
       _count: true,
       where: {
-        flagEnvironmentFlagId: flagId,
-        flagEnvironmentEnvironmentId: envId,
+        flagUuid: flagId,
         date: {
           gte: new Date(startDate),
           lte: new Date(endDate),
@@ -124,13 +109,11 @@ export class FlagsService {
   }
 
   async flagEvaluationsOverTime(
-    envId: string,
     flagId: string,
     startDate: string,
     endDate: string,
   ) {
     const distinctFlagHitValues = await this.getDistinctFlagHitValues(
-      envId,
       flagId,
       startDate,
       endDate,
@@ -173,17 +156,11 @@ export class FlagsService {
       .map((k) => dictByDates[k]);
   }
 
-  getDistinctFlagHitValues(
-    envId: string,
-    flagId: string,
-    startDate: string,
-    endDate: string,
-  ) {
+  getDistinctFlagHitValues(flagId: string, startDate: string, endDate: string) {
     return this.prisma.flagHit.findMany({
       distinct: ['valueResolved'],
       where: {
-        flagEnvironmentFlagId: flagId,
-        flagEnvironmentEnvironmentId: envId,
+        flagUuid: flagId,
         date: {
           gte: new Date(startDate),
           lte: new Date(endDate),
@@ -303,20 +280,18 @@ export class FlagsService {
     return roles.includes(flagOfProject.role);
   }
 
-  listVariants(envId: string, flagId: string) {
+  listVariants(flagId: string) {
     return this.prisma.variant.findMany({
       where: {
-        flagEnvironmentEnvironmentId: envId,
-        flagEnvironmentFlagId: flagId,
+        flagUuid: flagId,
       },
     });
   }
 
-  listActivity(envId: string, flagId: string) {
+  listActivity(flagId: string) {
     return this.prisma.activityLog.findMany({
       where: {
-        flagEnvironmentEnvironmentId: envId,
-        flagEnvironmentFlagId: flagId,
+        flagUuid: flagId,
       },
       include: {
         user: {
@@ -332,15 +307,10 @@ export class FlagsService {
     });
   }
 
-  async createVariant(
-    envId: string,
-    flagId: string,
-    variant: VariantCreationDTO,
-  ) {
+  async createVariant(flagId: string, variant: VariantCreationDTO) {
     const variantsOfFlags = await this.prisma.variant.findMany({
       where: {
-        flagEnvironmentEnvironmentId: envId,
-        flagEnvironmentFlagId: flagId,
+        flagUuid: flagId,
       },
     });
 
@@ -348,21 +318,19 @@ export class FlagsService {
 
     return this.prisma.variant.create({
       data: {
-        flagEnvironmentEnvironmentId: envId,
-        flagEnvironmentFlagId: flagId,
+        flagUuid: flagId,
         isControl: isFirstVariantCreatedThusControl,
         value: variant.value,
       },
     });
   }
 
-  async editVariants(envId: string, flagId: string, variants: Array<Variant>) {
+  async editVariants(flagId: string, variants: Array<Variant>) {
     const updateQueries = variants.map((variant) =>
       this.prisma.variant.updateMany({
         where: {
           uuid: variant.uuid,
-          flagEnvironmentFlagId: flagId,
-          flagEnvironmentEnvironmentId: envId,
+          flagUuid: flagId,
         },
         data: {
           isControl: Boolean(variant.isControl),

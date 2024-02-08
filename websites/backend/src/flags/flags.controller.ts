@@ -30,7 +30,6 @@ import {
   VariantSchema,
   VariantsSchema,
 } from './flags.dto';
-import { HasFlagEnvAccessGuard } from './guards/hasFlagEnvAccess';
 import { Variant } from './types';
 import { Webhook, WebhookCreationDTO, WebhookSchema } from '../webhooks/types';
 import { WebhooksService } from '../webhooks/webhooks.service';
@@ -53,12 +52,11 @@ export class FlagsController {
   /**
    * Update a flag on a given project/env (by project id AND env id AND flagId)
    */
-  @Put('environments/:envId/flags/:flagId')
-  @UseGuards(HasFlagEnvAccessGuard)
+  @Put('/flags/:flagId')
+  @UseGuards(HasFlagAccessGuard)
   @UseGuards(JwtAuthGuard)
   async changeFlagForEnvStatus(
     @UserId() userId: string,
-    @Param('envId') envId: string,
     @Param('flagId') flagId: string,
     @Body() body: ActivateFlagDTO,
   ) {
@@ -69,7 +67,6 @@ export class FlagsController {
     }
 
     const updatedFlagEnv = await this.flagService.changeFlagForEnvStatus(
-      envId,
       flagId,
       status,
     );
@@ -94,7 +91,6 @@ export class FlagsController {
     await this.activityLogService.register({
       userId,
       flagId: flagId,
-      envId: envId,
       concernedEntity: 'flag',
       type: 'change-flag-status',
       data: JSON.stringify({ status }),
@@ -113,12 +109,11 @@ export class FlagsController {
     return this.flagService.deleteFlag(flagId);
   }
 
-  @Delete('environments/:envId/flags/:flagId/variants/:variantId')
-  @UseGuards(HasFlagEnvAccessGuard)
+  @Delete('/flags/:flagId/variants/:variantId')
+  @UseGuards(HasFlagAccessGuard)
   @UseGuards(JwtAuthGuard)
   async deleteVariantFlag(
     @UserId() userId: string,
-    @Param('envId') envId: string,
     @Param('flagId') flagId: string,
     @Param('variantId') variantId: string,
   ) {
@@ -127,7 +122,6 @@ export class FlagsController {
     await this.activityLogService.register({
       userId,
       flagId: flagId,
-      envId: envId,
       concernedEntity: 'flag',
       type: 'delete-variant',
       data: JSON.stringify(variantDeleted),
@@ -139,11 +133,10 @@ export class FlagsController {
   /**
    * Get the flag hits grouped by date
    */
-  @Get('environments/:envId/flags/:flagId/hits')
-  @UseGuards(HasFlagEnvAccessGuard)
+  @Get('/flags/:flagId/hits')
+  @UseGuards(HasFlagAccessGuard)
   @UseGuards(JwtAuthGuard)
   async getFlagHits(
-    @Param('envId') envId: string,
     @Param('flagId') flagId: string,
     @Query('startDate') startDate: string | undefined,
     @Query('endDate') endDate: string | undefined,
@@ -154,14 +147,12 @@ export class FlagsController {
 
     const hitsPerVariantPerDate =
       await this.flagService.flagEvaluationsOverTime(
-        envId,
         flagId,
         startDate,
         endDate,
       );
 
     const flagEvaluations = await this.flagService.flagEvaluations(
-      envId,
       flagId,
       startDate,
       endDate,
@@ -176,39 +167,34 @@ export class FlagsController {
   /**
    * Get the flag hits grouped by date
    */
-  @Get('flags/:flagId')
+  @Get('/flags/:flagId')
   @UseGuards(HasFlagAccessGuard)
   @UseGuards(JwtAuthGuard)
   getFlag(@Param('flagId') flagId: string) {
     return this.flagService.getFlagById(flagId);
   }
 
-  @Get('environments/:envId/flags/:flagId/activity')
-  @UseGuards(HasFlagEnvAccessGuard)
+  @Get('/flags/:flagId/activity')
+  @UseGuards(HasFlagAccessGuard)
   @UseGuards(JwtAuthGuard)
-  async getActivity(
-    @Param('envId') envId: string,
-    @Param('flagId') flagId: string,
-  ) {
-    const activities = await this.flagService.listActivity(envId, flagId);
+  async getActivity(@Param('flagId') flagId: string) {
+    const activities = await this.flagService.listActivity(flagId);
     return activities.map((activity) => ({
       ...activity,
       data: activity.data ? JSON.parse(activity.data) : undefined,
     }));
   }
 
-  @Post('environments/:envId/flags/:flagId/webhooks')
-  @UseGuards(HasFlagEnvAccessGuard)
+  @Post('/flags/:flagId/webhooks')
+  @UseGuards(HasFlagAccessGuard)
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(WebhookSchema))
   async addWebhookToFlagEnv(
     @UserId() userId: string,
-    @Param('envId') envId: string,
     @Param('flagId') flagId: string,
     @Body() webhookDto: WebhookCreationDTO,
   ) {
     const webhook = await this.webhookService.addWebhookToFlagEnv(
-      envId,
       flagId,
       webhookDto,
     );
@@ -216,7 +202,6 @@ export class FlagsController {
     await this.activityLogService.register({
       userId,
       flagId: flagId,
-      envId: envId,
       concernedEntity: 'flag',
       type: 'create-webhook',
       data: JSON.stringify(webhook),
@@ -225,26 +210,21 @@ export class FlagsController {
     return webhook;
   }
 
-  @Post('environments/:envId/flags/:flagId/variants')
-  @UseGuards(HasFlagEnvAccessGuard)
+  @Post('/flags/:flagId/variants')
+  @UseGuards(HasFlagAccessGuard)
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(VariantSchema))
   async addVariantsToFlag(
     @UserId() userId: string,
-    @Param('envId') envId: string,
     @Param('flagId') flagId: string,
     @Body() variantDto: VariantCreationDTO,
   ) {
-    const variant = await this.flagService.createVariant(
-      envId,
-      flagId,
-      variantDto,
-    );
+    const variant = await this.flagService.createVariant(flagId, variantDto);
 
     await this.activityLogService.register({
       userId,
       flagId: flagId,
-      envId: envId,
+
       concernedEntity: 'flag',
       type: 'create-variant',
       data: JSON.stringify(variant),
@@ -253,13 +233,12 @@ export class FlagsController {
     return variant;
   }
 
-  @Put('environments/:envId/flags/:flagId/variants')
-  @UseGuards(HasFlagEnvAccessGuard)
+  @Put('/flags/:flagId/variants')
+  @UseGuards(HasFlagAccessGuard)
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(VariantsSchema))
   async editVariantsOfFlag(
     @UserId() userId: string,
-    @Param('envId') envId: string,
     @Param('flagId') flagId: string,
     @Body() variantsDto: Array<Variant>,
   ) {
@@ -286,16 +265,11 @@ export class FlagsController {
       );
     }
 
-    const result = await this.flagService.editVariants(
-      envId,
-      flagId,
-      variantsDto,
-    );
+    const result = await this.flagService.editVariants(flagId, variantsDto);
 
     await this.activityLogService.register({
       userId,
       flagId: flagId,
-      envId: envId,
       concernedEntity: 'flag',
       type: 'change-variants-percentage',
       data: JSON.stringify(variantsDto),
@@ -304,18 +278,18 @@ export class FlagsController {
     return result;
   }
 
-  @Get('environments/:envId/flags/:flagId/webhooks')
-  @UseGuards(HasFlagEnvAccessGuard)
+  @Get('/flags/:flagId/webhooks')
+  @UseGuards(HasFlagAccessGuard)
   @UseGuards(JwtAuthGuard)
-  getWebhooks(@Param('envId') envId: string, @Param('flagId') flagId: string) {
-    return this.webhookService.listWebhooks(envId, flagId);
+  getWebhooks(@Param('flagId') flagId: string) {
+    return this.webhookService.listWebhooks(flagId);
   }
 
-  @Get('environments/:envId/flags/:flagId/variants')
-  @UseGuards(HasFlagEnvAccessGuard)
+  @Get('/flags/:flagId/variants')
+  @UseGuards(HasFlagAccessGuard)
   @UseGuards(JwtAuthGuard)
-  getVariants(@Param('envId') envId: string, @Param('flagId') flagId: string) {
-    return this.flagService.listVariants(envId, flagId);
+  getVariants(@Param('flagId') flagId: string) {
+    return this.flagService.listVariants(flagId);
   }
 
   @Put('/projects/:id/flags/:flagId')
