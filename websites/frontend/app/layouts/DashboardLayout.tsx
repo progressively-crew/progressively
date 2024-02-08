@@ -101,15 +101,6 @@ export const DashboardLayout = ({
                       to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}/settings`}
                     />
                   )}
-
-                  {project && !flag.uuid && (
-                    <IconButton
-                      icon={<SettingsIcon />}
-                      tooltip={"Settings"}
-                      as={Link}
-                      to={`/dashboard/projects/${project.uuid}/settings`}
-                    />
-                  )}
                 </div>
 
                 {flag?.uuid && project && (

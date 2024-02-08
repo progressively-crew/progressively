@@ -4,6 +4,7 @@ import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { TbChartAreaLine } from "react-icons/tb";
 import { IoFunnelOutline } from "react-icons/io5";
 import { Tag } from "~/components/Tag";
+import { SettingsIcon } from "~/components/Icons/SettingsIcon";
 
 export interface ProjectNavBarProps {
   project: Project;
@@ -34,6 +35,13 @@ export const ProjectNavBar = ({ project }: ProjectNavBarProps) => {
         <Tag variant="SUCCESS" size="XS">
           In progress
         </Tag>
+      </NavItem>
+
+      <NavItem
+        to={`/dashboard/projects/${project.uuid}/settings`}
+        icon={<SettingsIcon />}
+      >
+        Settings
       </NavItem>
     </HorizontalNav>
   );
