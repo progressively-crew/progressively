@@ -1,6 +1,5 @@
 import { useSearchParams } from "@remix-run/react";
 import { Card } from "~/components/Card";
-import { EnvMenuButtonFilter } from "~/modules/environments/components/EnvMenuButtonFilter";
 import { Environment } from "~/modules/environments/types";
 
 export interface InsightsFiltersProps {
@@ -51,16 +50,6 @@ export const InsightsFilters = ({
         >
           90 days
         </button>
-
-        {!hideEnvList && (
-          <>
-            <div className="h-6 w-px bg-slate-100 mx-px" />
-            <EnvMenuButtonFilter
-              projectId={projectId}
-              environments={environments}
-            />
-          </>
-        )}
       </div>
     </Card>
   );

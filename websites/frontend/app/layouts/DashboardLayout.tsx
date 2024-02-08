@@ -10,12 +10,10 @@ import { Typography } from "~/components/Typography";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { IconBox } from "~/components/IconBox";
 import { ProjectIcon } from "~/components/Icons/ProjectIcon";
-import { EnvIcon } from "~/components/Icons/EnvIcon";
 import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
 import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { FlagStatus } from "~/modules/flags/types";
 import { useProject } from "~/modules/projects/contexts/useProject";
-import { EnvMenuButton } from "~/modules/environments/components/EnvMenuButton";
 import { SettingsIcon } from "~/components/Icons/SettingsIcon";
 import { IconButton } from "~/components/Buttons/IconButton";
 import { ButtonCopy } from "~/components/ButtonCopy";
@@ -86,7 +84,6 @@ export const DashboardLayout = ({
                   <IconBox content={lastCrumb.label} size="L">
                     {lastCrumb.isFlag && <FlagIcon />}
                     {lastCrumb.isProject && <ProjectIcon />}
-                    {lastCrumb.isEnv && <EnvIcon />}
                   </IconBox>
 
                   <Typography
@@ -117,12 +114,6 @@ export const DashboardLayout = ({
 
                 {flagEnv && project && (
                   <div className="flex flex-row gap-4 items-center pt-2 -mx-3">
-                    <EnvMenuButton
-                      projectId={project.uuid}
-                      flagId={flagEnv.flagId}
-                      environments={project.environments}
-                    />
-
                     <ButtonCopy toCopy={flagEnv.flag.key} size="S">
                       {flagEnv.flag.key}
                     </ButtonCopy>

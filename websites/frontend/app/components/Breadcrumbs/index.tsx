@@ -1,6 +1,5 @@
 import { HStack } from "../HStack";
 import { IconBox } from "../IconBox";
-import { EnvIcon } from "../Icons/EnvIcon";
 import { FlagIcon } from "../Icons/FlagIcon";
 import { ProjectIcon } from "../Icons/ProjectIcon";
 import { Link } from "../Link";
@@ -46,7 +45,6 @@ export const BreadCrumbs = ({ crumbs }: BreadCrumbsProps) => {
                       <HStack spacing={2}>
                         <IconBox content={crumb.label} size="S">
                           {crumb.isProject && <ProjectIcon />}
-                          {crumb.isEnv && <EnvIcon />}
                           {crumb.isFlag && <FlagIcon />}
                         </IconBox>
                         {crumb.label}

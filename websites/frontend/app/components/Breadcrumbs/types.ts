@@ -7,7 +7,6 @@ export interface Crumb {
   icon?: React.ReactNode;
   isRoot?: boolean;
   isProject?: boolean;
-  isEnv?: boolean;
   isFlag?: boolean;
   menuItems?: Array<{
     label: string;

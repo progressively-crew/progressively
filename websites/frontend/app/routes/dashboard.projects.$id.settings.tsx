@@ -14,7 +14,6 @@ import { Outlet, useActionData, useSearchParams } from "@remix-run/react";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
-import { EnvList } from "~/modules/environments/components/EnvList";
 import { getSession } from "~/sessions";
 import { rotateSecretKey } from "~/modules/environments/services/rotateSecretKey";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
@@ -90,31 +89,6 @@ export default function SettingsPage() {
             </Typography>
           }
         />
-
-        <Card>
-          <Section id="environments">
-            <CardContent>
-              <SectionHeader
-                title="Environments"
-                action={
-                  userRole === UserRoles.Admin && (
-                    <CreateButton
-                      variant="secondary"
-                      to={`/dashboard/projects/${project.uuid}/settings/environments/create`}
-                    >
-                      Add environment
-                    </CreateButton>
-                  )
-                }
-              />
-            </CardContent>
-
-            <EnvList
-              environments={project.environments}
-              projectId={project.uuid}
-            />
-          </Section>
-        </Card>
 
         <Card>
           <Section id="members">
