@@ -6,6 +6,7 @@ import {
   TbTargetArrow,
   TbWebhook,
 } from "react-icons/tb";
+import { SettingsIcon } from "~/components/Icons/SettingsIcon";
 
 export interface FlagMenuProps {
   projectId: string;
@@ -41,6 +42,13 @@ export const FlagMenu = ({ projectId, flag }: FlagMenuProps) => {
         icon={<TbActivity />}
       >
         Activity
+      </NavItem>
+
+      <NavItem
+        to={`/dashboard/projects/${projectId}/flags/${flag.uuid}/settings`}
+        icon={<SettingsIcon />}
+      >
+        Settings
       </NavItem>
     </HorizontalNav>
   );

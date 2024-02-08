@@ -10,10 +10,10 @@ import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaT
 import { PageTitle } from "~/components/PageTitle";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { Button } from "~/components/Buttons/Button";
-import { SettingLayout } from "~/layouts/SettingLayout";
-import { BackLink } from "~/components/BackLink";
 import { Outlet } from "@remix-run/react";
 import { useFlag } from "~/modules/flags/contexts/useFlag";
+import { DashboardLayout } from "~/layouts/DashboardLayout";
+import { FlagMenu } from "~/modules/flags/components/FlagMenu";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -32,12 +32,8 @@ export default function FlagSettingPage() {
 
   return (
     <>
-      <SettingLayout
-        backLink={
-          <BackLink to={`/dashboard/projects/${project.uuid}/flags`}>
-            {project.name}
-          </BackLink>
-        }
+      <DashboardLayout
+        subNav={<FlagMenu projectId={project.uuid} flag={flag} />}
       >
         <PageTitle
           value={flag.name}
@@ -97,7 +93,7 @@ export default function FlagSettingPage() {
             </CardContent>
           </Card>
         )}
-      </SettingLayout>
+      </DashboardLayout>
       <Outlet />
     </>
   );

@@ -2,7 +2,7 @@ import { Main } from "~/components/Main";
 import { SkipNavLink } from "~/components/SkipNav";
 import { Spacer } from "~/components/Spacer";
 import { Inert } from "~/components/Inert/Inert";
-import { Form, Link, useMatches, useNavigation } from "@remix-run/react";
+import { Form, useMatches, useNavigation } from "@remix-run/react";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { Spinner } from "~/components/Spinner";
 import { UserNav } from "~/modules/user/components/UserNav";
@@ -13,8 +13,6 @@ import { ProjectIcon } from "~/components/Icons/ProjectIcon";
 import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
 import { FlagStatus } from "~/modules/flags/types";
 import { useProject } from "~/modules/projects/contexts/useProject";
-import { SettingsIcon } from "~/components/Icons/SettingsIcon";
-import { IconButton } from "~/components/Buttons/IconButton";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { useFlag } from "~/modules/flags/contexts/useFlag";
 
@@ -92,15 +90,6 @@ export const DashboardLayout = ({
                   >
                     {lastCrumb.label}
                   </Typography>
-
-                  {project && flag.uuid && (
-                    <IconButton
-                      icon={<SettingsIcon />}
-                      tooltip={"Settings"}
-                      as={Link}
-                      to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}/settings`}
-                    />
-                  )}
                 </div>
 
                 {flag?.uuid && project && (
