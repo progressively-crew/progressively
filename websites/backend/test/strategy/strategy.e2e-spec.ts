@@ -24,15 +24,15 @@ describe('Strategy (e2e)', () => {
     await cleanupDb();
   });
 
-  describe('/environments/1/flags/1/strategies (GET)', () => {
+  describe('/flags/1/strategies (GET)', () => {
     it('gives a 401 when the user is not authenticated', () =>
-      verifyAuthGuard(app, '/environments/1/flags/1/strategies', 'get'));
+      verifyAuthGuard(app, '/flags/1/strategies', 'get'));
 
     it('gives a 403 when trying to access a valid project but an invalid env', async () => {
       const access_token = await authenticate(app);
 
       return request(app.getHttpServer())
-        .get('/environments/1/flags/3/strategies')
+        .get('/flags/3/strategies')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(403)
         .expect({
@@ -50,7 +50,7 @@ describe('Strategy (e2e)', () => {
       );
 
       return request(app.getHttpServer())
-        .get('/environments/1/flags/1/strategies')
+        .get('/flags/1/strategies')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(403)
         .expect({
@@ -64,7 +64,7 @@ describe('Strategy (e2e)', () => {
       const access_token = await authenticate(app);
 
       const response = await request(app.getHttpServer())
-        .get('/environments/1/flags/1/strategies')
+        .get('/flags/1/strategies')
         .set('Authorization', `Bearer ${access_token}`);
 
       expect(response.status).toBe(200);
@@ -138,9 +138,9 @@ describe('Strategy (e2e)', () => {
     });
   });
 
-  describe('/environments/:envId/flags/:flagId/strategies (POST)', () => {
+  describe('/flags/:flagId/strategies (POST)', () => {
     it('gives a 401 when the user is not authenticated', () =>
-      verifyAuthGuard(app, '/environments/1/flags/1/strategies', 'post'));
+      verifyAuthGuard(app, '/flags/1/strategies', 'post'));
 
     it('gives a 403 when trying to access a valid project but an invalid env', async () => {
       const access_token = await authenticate(app);
@@ -148,7 +148,7 @@ describe('Strategy (e2e)', () => {
       const validRule: any = {};
 
       return request(app.getHttpServer())
-        .post('/environments/4/flags/1/strategies')
+        .post('/flags/1/strategies')
         .set('Authorization', `Bearer ${access_token}`)
         .send(validRule)
         .expect(403)
@@ -167,7 +167,7 @@ describe('Strategy (e2e)', () => {
       );
 
       return request(app.getHttpServer())
-        .post('/environments/1/flags/1/strategies')
+        .post('/flags/1/strategies')
         .set('Authorization', `Bearer ${access_token}`)
         .send({
           fieldName: 'email',
@@ -186,7 +186,7 @@ describe('Strategy (e2e)', () => {
       const access_token = await authenticate(app);
 
       const response = await request(app.getHttpServer())
-        .post('/environments/1/flags/1/strategies')
+        .post('/flags/1/strategies')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(201);
 
