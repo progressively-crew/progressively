@@ -1,4 +1,3 @@
-import { Environment } from "../environments/types";
 import { User } from "../user/types";
 
 // In Sync with the backend UserRoles type
@@ -11,7 +10,6 @@ export interface Project {
   uuid: string;
   createdAt: string;
   name: string;
-  environments: Array<Environment>;
   userProject?: Array<UserProject>;
 }
 

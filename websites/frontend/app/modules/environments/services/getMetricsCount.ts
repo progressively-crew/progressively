@@ -1,13 +1,13 @@
 import { Constants } from "~/constants";
 
 export const getMetricsCount = async (
-  envId: string,
+  projectId: string,
   startDate: Date,
   endDate: Date,
   accessToken: string
 ) => {
   const url = new URL(
-    `${Constants.BackendUrl}/environments/${envId}/metrics/count`
+    `${Constants.BackendUrl}/projects/${projectId}/metrics/count`
   );
 
   url.searchParams.set("startDate", startDate.toISOString());

@@ -22,8 +22,8 @@ import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaT
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 import { DialogCloseBtn } from "~/components/Dialog/Dialog";
-import { createFunnel } from "~/modules/environments/services/createFunnel";
-import { getDistinctEventName } from "~/modules/environments/services/getDistinctEventName";
+import { createFunnel } from "~/modules/projects/services/createFunnel";
+import { getDistinctEventName } from "~/modules/projects/services/getDistinctEventName";
 import { SelectField } from "~/components/Fields/Select/SelectField";
 import { useMemo, useReducer } from "react";
 import { Typography } from "~/components/Typography";

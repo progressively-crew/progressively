@@ -1,7 +1,7 @@
 import { Constants } from "~/constants";
 
-export const rotateSecretKey = (envId: string, accessToken: string) =>
-  fetch(`${Constants.BackendUrl}/environments/${envId}/rotate`, {
+export const rotateSecretKey = (projectId: string, accessToken: string) =>
+  fetch(`${Constants.BackendUrl}/projects/${projectId}/rotate`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${accessToken}`,

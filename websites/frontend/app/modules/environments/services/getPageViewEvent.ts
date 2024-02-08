@@ -1,13 +1,13 @@
 import { Constants } from "~/constants";
 
 export const getPageViewEvent = async (
-  envId: string,
+  projectId: string,
   startDate: Date,
   endDate: Date,
   accessToken: string
 ) => {
   const url = new URL(
-    `${Constants.BackendUrl}/environments/${envId}/events/pageview/urls`
+    `${Constants.BackendUrl}/projects/${projectId}/events/pageview/urls`
   );
 
   url.searchParams.set("startDate", startDate.toISOString());

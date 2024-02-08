@@ -1,12 +1,12 @@
 import { Constants } from "~/constants";
 
 export const getEventsForEnv = async (
-  envId: string,
+  projectId: string,
   startDate: Date,
   endDate: Date,
   accessToken: string
 ) => {
-  const url = new URL(`${Constants.BackendUrl}/environments/${envId}/events`);
+  const url = new URL(`${Constants.BackendUrl}/projects/${projectId}/events`);
 
   url.searchParams.set("startDate", startDate.toISOString());
   url.searchParams.set("endDate", endDate.toISOString());

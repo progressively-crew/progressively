@@ -1,13 +1,13 @@
 import { Constants } from "~/constants";
 
 export const getDistinctEventName = async (
-  envId: string,
+  projectId: string,
   startDate: Date,
   endDate: Date,
   accessToken: string
 ) => {
   const url = new URL(
-    `${Constants.BackendUrl}/environments/${envId}/events/distinct`
+    `${Constants.BackendUrl}/projects/${projectId}/events/distinct`
   );
 
   url.searchParams.set("startDate", startDate.toISOString());

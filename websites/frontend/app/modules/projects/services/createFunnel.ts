@@ -1,13 +1,13 @@
 import { Constants } from "~/constants";
-import { CreateFunnelEntryDTO } from "../types";
+import { CreateFunnelEntryDTO } from "../../environments/types";
 
 export const createFunnel = (
-  envId: string,
+  projectId: string,
   name: string,
   funnelEntries: Array<CreateFunnelEntryDTO>,
   accessToken: string
 ) =>
-  fetch(`${Constants.BackendUrl}/environments/${envId}/funnels`, {
+  fetch(`${Constants.BackendUrl}/projects/${projectId}/funnels`, {
     method: "POST",
     body: JSON.stringify({ name, funnelEntries }),
     headers: {
