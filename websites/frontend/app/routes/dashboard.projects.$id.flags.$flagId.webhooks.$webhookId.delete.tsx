@@ -7,14 +7,13 @@ import { ActionFunction, redirect, MetaFunction } from "@remix-run/node";
 import { useActionData, Form, useNavigation } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
-import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
-import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { getFlagEnvMetaTitle } from "~/modules/flags/services/getFlagEnvMetaTitle";
 import { Stack } from "~/components/Stack";
 import { Typography } from "~/components/Typography";
 import { deleteWebhook } from "~/modules/webhooks/services/deleteWebhook";
 import { DeleteEntityTitle } from "~/layouts/DeleteEntityTitle";
 import { DialogCloseBtn } from "~/components/Dialog/Dialog";
+import { useFlag } from "~/modules/flags/contexts/useFlag";
 
 export const meta: MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -61,10 +60,7 @@ export default function DeleteWebhookPage() {
   const navigation = useNavigation();
   const data = useActionData<ActionData>();
   const { project } = useProject();
-  const { environment } = useEnvironment();
-  const { flagEnv } = useFlagEnv();
-
-  const currentFlag = flagEnv.flag;
+  const { flag } = useFlag();
 
   return (
     <DeleteEntityLayout
@@ -77,7 +73,7 @@ export default function DeleteWebhookPage() {
         <Button
           variant="tertiary"
           scheme="danger"
-          to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/webhooks`}
+          to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}/webhooks`}
         >
           {`Cancel`}
         </Button>
@@ -96,7 +92,7 @@ export default function DeleteWebhookPage() {
       }
       closeSlot={
         <DialogCloseBtn
-          to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/webhooks`}
+          to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}/webhooks`}
           label={`Back to webhooks`}
         />
       }

@@ -3,8 +3,8 @@ import { IoMdClose } from "react-icons/io";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { IconButton } from "~/components/Buttons/IconButton";
 import { PercentageField } from "~/components/Fields/PercentageField";
-import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
-import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
+import { useFlag } from "~/modules/flags/contexts/useFlag";
+import { useProject } from "~/modules/projects/contexts/useProject";
 import { Variant } from "~/modules/variants/types";
 
 export interface VariantFieldsProps {
@@ -13,8 +13,8 @@ export interface VariantFieldsProps {
 }
 
 export const VariantFields = ({ variants, index }: VariantFieldsProps) => {
-  const { flagEnv } = useFlagEnv();
-  const { environment } = useEnvironment();
+  const { flag } = useFlag();
+  const { project } = useProject();
 
   return (
     <div className="flex flex-row gap-4 flex-wrap items-center">
@@ -35,7 +35,7 @@ export const VariantFields = ({ variants, index }: VariantFieldsProps) => {
 
               <IconButton
                 as={Link}
-                to={`/dashboard/projects/${environment.projectId}/environments/${environment.uuid}/flags/${flagEnv.flagId}/audience/variants/${variant.uuid}/delete`}
+                to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}/audience/variants/${variant.uuid}/delete`}
                 icon={<IoMdClose />}
                 tooltip={`Remove ${variant.value}`}
               />
@@ -45,7 +45,7 @@ export const VariantFields = ({ variants, index }: VariantFieldsProps) => {
       })}
 
       <CreateButton
-        to={`/dashboard/projects/${environment.projectId}/environments/${environment.uuid}/flags/${flagEnv.flagId}/audience/variants/create`}
+        to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}/audience/variants/create`}
         variant="tertiary"
       >
         Add a variant

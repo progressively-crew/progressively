@@ -2,11 +2,9 @@ import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { getSession } from "~/sessions";
 import { LoaderFunction, ActionFunction, MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { FlagEnvMenu } from "~/modules/flags/components/FlagEnvMenu";
+import { FlagMenu } from "~/modules/flags/components/FlagMenu";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
-import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
-import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { getFlagEnvMetaTitle } from "~/modules/flags/services/getFlagEnvMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
@@ -16,6 +14,7 @@ import { ActivityLogList } from "~/modules/activity/components/ActivityLogList";
 import { Typography } from "~/components/Typography";
 import { Card, CardContent } from "~/components/Card";
 import { EmptyState } from "~/components/EmptyState";
+import { useFlag } from "~/modules/flags/contexts/useFlag";
 
 export const meta: MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -67,20 +66,11 @@ export const loader: LoaderFunction = async ({
 
 export default function FlagInsights() {
   const { activities } = useLoaderData<LoaderData>();
-  const { flagEnv } = useFlagEnv();
+  const { flag } = useFlag();
   const { project } = useProject();
-  const { environment } = useEnvironment();
 
   return (
-    <DashboardLayout
-      subNav={
-        <FlagEnvMenu
-          projectId={project.uuid}
-          envId={environment.uuid}
-          flagEnv={flagEnv}
-        />
-      }
-    >
+    <DashboardLayout subNav={<FlagMenu projectId={project.uuid} flag={flag} />}>
       <PageTitle
         value="Activity"
         description={

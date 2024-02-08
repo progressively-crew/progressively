@@ -6,8 +6,8 @@ import { ValueToServe } from "../../types";
 import { PercentageField } from "~/components/Fields/PercentageField";
 import { VariantFields } from "./VariantFields";
 import { CreateButton } from "~/components/Buttons/CreateButton";
-import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
-import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
+import { useFlag } from "~/modules/flags/contexts/useFlag";
+import { useProject } from "~/modules/projects/contexts/useProject";
 
 export interface ValuesToServeFieldsProps {
   variants?: Array<Variant & { rolloutPercentage: number }>;
@@ -22,8 +22,9 @@ export const StrategyFormFields = ({
   rolloutPercentage,
   index,
 }: ValuesToServeFieldsProps) => {
-  const { flagEnv } = useFlagEnv();
-  const { environment } = useEnvironment();
+  const { flag } = useFlag();
+  const { project } = useProject();
+
   const valueOptions = [
     {
       value: ValueToServe.Boolean,
@@ -54,7 +55,7 @@ export const StrategyFormFields = ({
 
           {variants && variants.length === 0 ? (
             <CreateButton
-              to={`/dashboard/projects/${environment.projectId}/environments/${environment.uuid}/flags/${flagEnv.flagId}/audience/variants/create`}
+              to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}/audience/variants/create`}
               variant="tertiary"
             >
               Add a variant

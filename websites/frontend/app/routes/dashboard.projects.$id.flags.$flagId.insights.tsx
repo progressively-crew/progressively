@@ -4,11 +4,9 @@ import { getFlagHits } from "~/modules/flags/services/getFlagHits";
 import { LoaderFunction, ActionFunction, MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { TbApps } from "react-icons/tb";
-import { FlagEnvMenu } from "~/modules/flags/components/FlagEnvMenu";
+import { FlagMenu } from "~/modules/flags/components/FlagMenu";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
-import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
-import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { getFlagEnvMetaTitle } from "~/modules/flags/services/getFlagEnvMetaTitle";
 import { Card, CardContent } from "~/components/Card";
 import { PageTitle } from "~/components/PageTitle";
@@ -19,6 +17,7 @@ import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction"
 import { BigStat } from "~/components/BigStat";
 import { VariantDot } from "~/modules/variants/components/VariantDot";
 import { InsightsFilters } from "~/modules/projects/components/InsightsFilters";
+import { useFlag } from "~/modules/flags/contexts/useFlag";
 
 export const meta: MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -110,29 +109,14 @@ export const action: ActionFunction = async ({
 export default function FlagInsights() {
   const { hitsPerVariantPerDate, flagEvaluations, flagEvaluationsCount } =
     useLoaderData<LoaderData>();
-  const { flagEnv } = useFlagEnv();
+  const { flag } = useFlag();
   const { project } = useProject();
-  const { environment } = useEnvironment();
 
   return (
-    <DashboardLayout
-      subNav={
-        <FlagEnvMenu
-          projectId={project.uuid}
-          envId={environment.uuid}
-          flagEnv={flagEnv}
-        />
-      }
-    >
+    <DashboardLayout subNav={<FlagMenu projectId={project.uuid} flag={flag} />}>
       <PageTitle
         value="Insights"
-        action={
-          <InsightsFilters
-            projectId={project.uuid}
-            environments={project.environments}
-            hideEnvList
-          />
-        }
+        action={<InsightsFilters projectId={project.uuid} hideEnvList />}
       />
 
       <Section>

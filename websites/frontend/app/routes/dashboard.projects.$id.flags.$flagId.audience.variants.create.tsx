@@ -4,15 +4,14 @@ import { ActionFunction, redirect, MetaFunction } from "@remix-run/node";
 import { useActionData, Form, useNavigation } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
-import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getFlagEnvMetaTitle } from "~/modules/flags/services/getFlagEnvMetaTitle";
-import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { TextInput } from "~/components/Fields/TextInput";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 import { addVariantAction } from "~/modules/variants/form-actions/addVariantAction";
 import { DialogCloseBtn } from "~/components/Dialog/Dialog";
+import { useFlag } from "~/modules/flags/contexts/useFlag";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -51,11 +50,9 @@ export const action: ActionFunction = async ({
 
 export default function CteateVariantPage() {
   const { project } = useProject();
-  const { flagEnv } = useFlagEnv();
-  const { environment } = useEnvironment();
-  const navigation = useNavigation();
+  const { flag } = useFlag();
 
-  const currentFlag = flagEnv.flag;
+  const navigation = useNavigation();
 
   const actionData = useActionData<ActionData>();
   const errors = actionData?.errors;
@@ -76,7 +73,7 @@ export default function CteateVariantPage() {
         }
         closeSlot={
           <DialogCloseBtn
-            to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/audience`}
+            to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}/audience`}
             label={`Back to variants`}
           />
         }

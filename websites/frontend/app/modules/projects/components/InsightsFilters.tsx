@@ -1,17 +1,7 @@
 import { useSearchParams } from "@remix-run/react";
 import { Card } from "~/components/Card";
-import { Environment } from "~/modules/environments/types";
 
-export interface InsightsFiltersProps {
-  projectId: string;
-  environments: Array<Environment>;
-  hideEnvList?: boolean;
-}
-export const InsightsFilters = ({
-  projectId,
-  environments,
-  hideEnvList,
-}: InsightsFiltersProps) => {
+export const InsightsFilters = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const days = searchParams.get("days") || "7";

@@ -1,8 +1,8 @@
 import { createContext } from "react";
-import { FlagWithEnvs } from "../types";
+import { Flag } from "../types";
 
 export interface FlagContextType {
-  flag: FlagWithEnvs;
+  flag: Flag;
 }
 
-export const FlagContext = createContext<FlagContextType>({});
+export const FlagContext = createContext<{ flag: Flag }>({ flag: {} });

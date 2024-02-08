@@ -11,12 +11,12 @@ import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { IconBox } from "~/components/IconBox";
 import { ProjectIcon } from "~/components/Icons/ProjectIcon";
 import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
-import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { FlagStatus } from "~/modules/flags/types";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { SettingsIcon } from "~/components/Icons/SettingsIcon";
 import { IconButton } from "~/components/Buttons/IconButton";
 import { ButtonCopy } from "~/components/ButtonCopy";
+import { useFlag } from "~/modules/flags/contexts/useFlag";
 
 export interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -33,7 +33,7 @@ export const DashboardLayout = ({
 }: DashboardLayoutProps) => {
   const navigation = useNavigation();
   const matches = useMatches();
-  const { flagEnv } = useFlagEnv();
+  const { flag } = useFlag();
   const { project } = useProject();
 
   const crumbs = matches
@@ -48,7 +48,7 @@ export const DashboardLayout = ({
   const lastCrumb = crumbs.at(-1);
   const hasMoreThanOneCrumb = crumbs.length > 1;
 
-  const isActivated = flagEnv?.status === FlagStatus.ACTIVATED;
+  const isActivated = flag?.status === FlagStatus.ACTIVATED;
 
   return (
     <Inert>
@@ -93,16 +93,16 @@ export const DashboardLayout = ({
                     {lastCrumb.label}
                   </Typography>
 
-                  {project && flagEnv && (
+                  {project && flag && (
                     <IconButton
                       icon={<SettingsIcon />}
                       tooltip={"Settings"}
                       as={Link}
-                      to={`/dashboard/projects/${project.uuid}/flags/${flagEnv.flagId}`}
+                      to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}`}
                     />
                   )}
 
-                  {project && !flagEnv && (
+                  {project && !flag && (
                     <IconButton
                       icon={<SettingsIcon />}
                       tooltip={"Settings"}
@@ -112,16 +112,16 @@ export const DashboardLayout = ({
                   )}
                 </div>
 
-                {flagEnv && project && (
+                {flag && project && (
                   <div className="flex flex-row gap-4 items-center pt-2 -mx-3">
-                    <ButtonCopy toCopy={flagEnv.flag.key} size="S">
-                      {flagEnv.flag.key}
+                    <ButtonCopy toCopy={flag.key} size="S">
+                      {flag.key}
                     </ButtonCopy>
 
-                    <Form method="post" id={`form-${flagEnv.flagId}`}>
+                    <Form method="post" id={`form-${flag.uuid}`}>
                       <ToggleFlag
                         isFlagActivated={isActivated}
-                        flagId={flagEnv.flagId}
+                        flagId={flag.uuid}
                       />
                     </Form>
                   </div>

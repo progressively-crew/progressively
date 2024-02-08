@@ -1,5 +1,5 @@
 import { HorizontalNav, NavItem } from "~/components/HorizontalNav";
-import { FlagEnv } from "../types";
+import { Flag } from "../types";
 import {
   TbActivity,
   TbChartAreaLine,
@@ -9,40 +9,35 @@ import {
 
 export interface FlagEnvMenuProps {
   projectId: string;
-  envId: string;
-  flagEnv: FlagEnv;
+  flag: Flag;
 }
 
-export const FlagEnvMenu = ({
-  projectId,
-  envId,
-  flagEnv,
-}: FlagEnvMenuProps) => {
+export const FlagMenu = ({ projectId, flag }: FlagEnvMenuProps) => {
   return (
     <HorizontalNav label={`Navigate in flag in specific environment`}>
       <NavItem
-        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/audience`}
+        to={`/dashboard/projects/${projectId}/flags/${flag.uuid}/audience`}
         icon={<TbTargetArrow />}
       >
         Audience
       </NavItem>
 
       <NavItem
-        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/insights`}
+        to={`/dashboard/projects/${projectId}/flags/${flag.uuid}/insights`}
         icon={<TbChartAreaLine />}
       >
         Insights
       </NavItem>
 
       <NavItem
-        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/webhooks`}
+        to={`/dashboard/projects/${projectId}/flags/${flag.uuid}/webhooks`}
         icon={<TbWebhook />}
       >
         Webhooks
       </NavItem>
 
       <NavItem
-        to={`/dashboard/projects/${projectId}/environments/${envId}/flags/${flagEnv.flagId}/activity`}
+        to={`/dashboard/projects/${projectId}/flags/${flag.uuid}/activity`}
         icon={<TbActivity />}
       >
         Activity

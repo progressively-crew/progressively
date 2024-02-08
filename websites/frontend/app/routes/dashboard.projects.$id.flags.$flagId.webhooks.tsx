@@ -7,9 +7,7 @@ import { EmptyState } from "~/components/EmptyState";
 import { PageTitle } from "~/components/PageTitle";
 import { Typography } from "~/components/Typography";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
-import { FlagEnvMenu } from "~/modules/flags/components/FlagEnvMenu";
-import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
+import { FlagMenu } from "~/modules/flags/components/FlagMenu";
 import { getFlagEnvMetaTitle } from "~/modules/flags/services/getFlagEnvMetaTitle";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
@@ -18,8 +16,9 @@ import { Webhook } from "~/modules/webhooks/types";
 import { getSession } from "~/sessions";
 import { WebhooksList } from "~/modules/webhooks/components/WebhooksList";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
+import { useFlag } from "~/modules/flags/contexts/useFlag";
 
-export const meta: MetaFunction = ({ matches, params }) => {
+export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
   const flagName = getFlagEnvMetaTitle(matches);
 
@@ -75,27 +74,18 @@ export const action: ActionFunction = async ({
 export default function WebhooksPage() {
   const [searchParams] = useSearchParams();
   const { project } = useProject();
-  const { environment } = useEnvironment();
-  const { flagEnv } = useFlagEnv();
+  const { flag } = useFlag();
 
   const isWebhookRemoved = searchParams.get("webhookRemoved") || undefined;
   const isWebhookAdded = searchParams.get("newWebhook") || undefined;
   const { webhooks } = useLoaderData<LoaderData>();
-
-  const currentFlag = flagEnv.flag;
 
   const hasWebhooks = webhooks.length > 0;
 
   return (
     <>
       <DashboardLayout
-        subNav={
-          <FlagEnvMenu
-            projectId={project.uuid}
-            envId={environment.uuid}
-            flagEnv={flagEnv}
-          />
-        }
+        subNav={<FlagMenu projectId={project.uuid} flag={flag} />}
         status={
           isWebhookRemoved ? (
             <SuccessBox id="webhook-removed">
@@ -118,7 +108,7 @@ export default function WebhooksPage() {
           action={
             hasWebhooks && (
               <CreateButton
-                to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/webhooks/create`}
+                to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}/webhooks/create`}
               >
                 Create a webhook
               </CreateButton>
@@ -135,7 +125,7 @@ export default function WebhooksPage() {
                 description={"There are no webhooks for this flag."}
                 action={
                   <CreateButton
-                    to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/webhooks/create`}
+                    to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}/webhooks/create`}
                   >
                     Create a webhook
                   </CreateButton>
@@ -149,8 +139,7 @@ export default function WebhooksPage() {
           <WebhooksList
             webhooks={webhooks}
             projectId={project.uuid}
-            envId={environment.uuid}
-            flagId={currentFlag.uuid}
+            flagId={flag.uuid}
           />
         )}
       </DashboardLayout>

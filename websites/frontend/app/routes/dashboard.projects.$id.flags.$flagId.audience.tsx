@@ -10,11 +10,9 @@ import {
   useNavigation,
   useSearchParams,
 } from "@remix-run/react";
-import { FlagEnvMenu } from "~/modules/flags/components/FlagEnvMenu";
+import { FlagMenu } from "~/modules/flags/components/FlagMenu";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
-import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
-import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { getFlagEnvMetaTitle } from "~/modules/flags/services/getFlagEnvMetaTitle";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
 import { PageTitle } from "~/components/PageTitle";
@@ -32,6 +30,7 @@ import qs from "qs";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { TipBox } from "~/components/Boxes/TipBox";
 import { FlagStatus } from "~/modules/flags/types";
+import { useFlag } from "~/modules/flags/contexts/useFlag";
 
 export const meta: MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -129,8 +128,7 @@ export default function FlagById() {
   const actionData = useActionData<ActionDataType>();
   const [searchParams] = useSearchParams();
   const { project } = useProject();
-  const { environment } = useEnvironment();
-  const { flagEnv } = useFlagEnv();
+  const { flag } = useFlag();
   const { strategies, variants } = useLoaderData<LoaderData>();
   const navigation = useNavigation();
 
@@ -143,13 +141,7 @@ export default function FlagById() {
   return (
     <>
       <DashboardLayout
-        subNav={
-          <FlagEnvMenu
-            projectId={project.uuid}
-            envId={environment.uuid}
-            flagEnv={flagEnv}
-          />
-        }
+        subNav={<FlagMenu projectId={project.uuid} flag={flag} />}
         status={
           actionData?.successStrategyEdited ? (
             <SuccessBox id={"strategy-edited"}>
@@ -170,7 +162,7 @@ export default function FlagById() {
           ) : null
         }
       >
-        {flagEnv.status === FlagStatus.NOT_ACTIVATED ? (
+        {flag.status === FlagStatus.NOT_ACTIVATED ? (
           <TipBox title="Flag is not activated">
             Your flag is not actived. Every user will resolve the{" "}
             <strong>false</strong> variation of the feature flag.

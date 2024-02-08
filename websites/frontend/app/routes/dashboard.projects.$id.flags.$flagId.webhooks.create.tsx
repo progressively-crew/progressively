@@ -4,9 +4,7 @@ import { ActionFunction, redirect, MetaFunction } from "@remix-run/node";
 import { useActionData, Form, useNavigation } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
-import { useEnvironment } from "~/modules/environments/contexts/useEnvironment";
 import { getFlagEnvMetaTitle } from "~/modules/flags/services/getFlagEnvMetaTitle";
-import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { WebhookCreationDTO, WebhookEvents } from "~/modules/webhooks/types";
 import { createWebhook } from "~/modules/webhooks/services/createWebhook";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
@@ -16,6 +14,7 @@ import { TextInput } from "~/components/Fields/TextInput";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 import { DialogCloseBtn } from "~/components/Dialog/Dialog";
+import { useFlag } from "~/modules/flags/contexts/useFlag";
 
 export const meta: MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -86,11 +85,8 @@ export const action: ActionFunction = async ({
 
 export default function CreateWebhookPage() {
   const { project } = useProject();
-  const { flagEnv } = useFlagEnv();
-  const { environment } = useEnvironment();
+  const { flag } = useFlag();
   const navigation = useNavigation();
-
-  const currentFlag = flagEnv.flag;
 
   const actionData = useActionData<ActionData>();
 
@@ -109,7 +105,7 @@ export default function CreateWebhookPage() {
       }
       closeSlot={
         <DialogCloseBtn
-          to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/webhooks`}
+          to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}/webhooks`}
           label={`Back to webhooks`}
         />
       }
