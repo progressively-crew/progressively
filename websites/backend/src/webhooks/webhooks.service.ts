@@ -23,7 +23,7 @@ export class WebhooksService {
     });
   }
 
-  addWebhookToFlagEnv(flagId: string, webhook: WebhookCreationDTO) {
+  addWebhookToFlag(flagId: string, webhook: WebhookCreationDTO) {
     return this.prisma.webhook.create({
       data: {
         endpoint: webhook.endpoint,

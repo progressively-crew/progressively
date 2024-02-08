@@ -67,13 +67,10 @@ export class ProjectsController {
     return this.projectService.getAll(user.uuid);
   }
 
-  /**
-   * Get all the flag of a given project/env (by projectId and envId)
-   */
   @Get(':id/flags')
   @UseGuards(HasProjectAccessGuard)
   @UseGuards(JwtAuthGuard)
-  getFlagsByProjectAndEnv(@Param('id') id: string) {
+  getFlagsByProject(@Param('id') id: string) {
     return this.projectService.flagsByProject(id);
   }
 
@@ -182,9 +179,6 @@ export class ProjectsController {
     return this.funnelService.createFunnel(id, body.name, body.funnelEntries);
   }
 
-  /**
-   * Create a flag on a given project/env (by projectId and envId)
-   */
   @Post(':id/flags')
   @UseGuards(HasProjectAccessGuard)
   @UseGuards(JwtAuthGuard)

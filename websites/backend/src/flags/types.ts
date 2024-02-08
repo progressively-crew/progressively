@@ -17,8 +17,6 @@ export interface PopulatedVariant {
     uuid: string;
     isControl: boolean;
     value: string;
-    flagEnvironmentFlagId: string;
-    flagEnvironmentEnvironmentId: string;
   };
 }
 export interface PopulatedStrategy extends Strategy {
@@ -30,6 +28,7 @@ export interface PopulatedFlag extends Flag {
   flag: Flag;
   strategies: Array<PopulatedStrategy>;
   status: string;
+  variants: Array<PopulatedVariant>;
 }
 
 export interface Variant {

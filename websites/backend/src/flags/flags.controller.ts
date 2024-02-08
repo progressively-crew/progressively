@@ -49,13 +49,10 @@ export class FlagsController {
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
   ) {}
 
-  /**
-   * Update a flag on a given project/env (by project id AND env id AND flagId)
-   */
   @Put('/flags/:flagId')
   @UseGuards(HasFlagAccessGuard)
   @UseGuards(JwtAuthGuard)
-  async changeFlagForEnvStatus(
+  async changeFlagStatus(
     @UserId() userId: string,
     @Param('flagId') flagId: string,
     @Body() body: ActivateFlagDTO,
@@ -66,14 +63,11 @@ export class FlagsController {
       throw new BadRequestException('Invalid status code');
     }
 
-    const updatedFlagEnv = await this.flagService.changeFlagForEnvStatus(
-      flagId,
-      status,
-    );
+    const updatedFlag = await this.flagService.changeFlagStatus(flagId, status);
 
-    this.wsGateway.notifyChanges(updatedFlagEnv);
+    this.wsGateway.notifyChanges(updatedFlag);
 
-    for (const wh of updatedFlagEnv.webhooks) {
+    for (const wh of updatedFlag.webhooks) {
       if (WebhooksEventsToFlagStatus[wh.event] === status) {
         try {
           await post(wh as Webhook);
@@ -96,12 +90,9 @@ export class FlagsController {
       data: JSON.stringify({ status }),
     });
 
-    return updatedFlagEnv;
+    return updatedFlag;
   }
 
-  /**
-   * Delete a project by project/env/flag
-   */
   @Delete('/flags/:flagId')
   @UseGuards(HasFlagAccessGuard)
   @UseGuards(JwtAuthGuard)
@@ -189,12 +180,12 @@ export class FlagsController {
   @UseGuards(HasFlagAccessGuard)
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe(WebhookSchema))
-  async addWebhookToFlagEnv(
+  async addWebhookToFlag(
     @UserId() userId: string,
     @Param('flagId') flagId: string,
     @Body() webhookDto: WebhookCreationDTO,
   ) {
-    const webhook = await this.webhookService.addWebhookToFlagEnv(
+    const webhook = await this.webhookService.addWebhookToFlag(
       flagId,
       webhookDto,
     );

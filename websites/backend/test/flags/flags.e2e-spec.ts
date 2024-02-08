@@ -39,15 +39,15 @@ describe('FlagsController (e2e)', () => {
     await cleanupDb();
   });
 
-  describe('/environments/1/flags/1 (PUT)', () => {
+  describe('/flags/1 (PUT)', () => {
     it('gives a 401 when the user is not authenticated', () =>
-      verifyAuthGuard(app, '/environments/1/flags/1', 'put'));
+      verifyAuthGuard(app, '/flags/1', 'put'));
 
     it('gives a 403 when trying to access a valid project but an invalid env', async () => {
       const access_token = await authenticate(app);
 
       return request(app.getHttpServer())
-        .put('/environments/3/flags/1')
+        .put('/flags/1')
         .set('Authorization', `Bearer ${access_token}`)
         .send({
           status: 'ACTIVATED',
@@ -68,7 +68,7 @@ describe('FlagsController (e2e)', () => {
       );
 
       return request(app.getHttpServer())
-        .put('/environments/1/flags/1')
+        .put('/flags/1')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(403)
         .expect({
@@ -86,7 +86,7 @@ describe('FlagsController (e2e)', () => {
       );
 
       return request(app.getHttpServer())
-        .put('/environments/1/flags/1')
+        .put('/flags/1')
         .set('Authorization', `Bearer ${access_token}`)
         .send({
           status: 'invalid status',
@@ -108,7 +108,7 @@ describe('FlagsController (e2e)', () => {
         );
 
         const response = await request(app.getHttpServer())
-          .put('/environments/1/flags/1')
+          .put('/flags/1')
           .set('Authorization', `Bearer ${access_token}`)
           .send({
             status,
@@ -143,7 +143,7 @@ describe('FlagsController (e2e)', () => {
       );
 
       await request(app.getHttpServer())
-        .put('/environments/1/flags/1')
+        .put('/flags/1')
         .set('Authorization', `Bearer ${access_token}`)
         .send({
           status: 'ACTIVATED',
@@ -162,7 +162,7 @@ describe('FlagsController (e2e)', () => {
       );
 
       await request(app.getHttpServer())
-        .put('/environments/1/flags/1')
+        .put('/flags/1')
         .set('Authorization', `Bearer ${access_token}`)
         .send({
           status: 'NOT_ACTIVATED',
@@ -212,7 +212,7 @@ describe('FlagsController (e2e)', () => {
       const access_token = await authenticate(app);
 
       const prevResponse = await request(app.getHttpServer())
-        .get('/environments/1/flags')
+        .get('/flags')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(200);
       expect(prevResponse.body.length).toBe(3);
@@ -223,22 +223,22 @@ describe('FlagsController (e2e)', () => {
       expect(response.status).toBe(200);
 
       const afterResponse = await request(app.getHttpServer())
-        .get('/environments/1/flags')
+        .get('/flags')
         .set('Authorization', `Bearer ${access_token}`);
 
       expect(afterResponse.body.length).toBe(2);
     });
   });
 
-  describe('/environments/1/flags/4/variants (GET)', () => {
+  describe('/flags/4/variants (GET)', () => {
     it('gives a 401 when the user is not authenticated', () =>
-      verifyAuthGuard(app, '/environments/1/flags/4/variants', 'get'));
+      verifyAuthGuard(app, '/flags/4/variants', 'get'));
 
     it('gives a 403 when trying to access a valid project but an invalid env', async () => {
       const access_token = await authenticate(app);
 
       return request(app.getHttpServer())
-        .get('/environments/2/flags/4/variants')
+        .get('/flags/4/variants')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(403)
         .expect({
@@ -256,7 +256,7 @@ describe('FlagsController (e2e)', () => {
       );
 
       return request(app.getHttpServer())
-        .get('/environments/1/flags/4/variants')
+        .get('/flags/4/variants')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(403)
         .expect({
@@ -270,7 +270,7 @@ describe('FlagsController (e2e)', () => {
       const access_token = await authenticate(app);
 
       const response = await request(app.getHttpServer())
-        .get('/environments/1/flags/4/variants')
+        .get('/flags/4/variants')
         .set('Authorization', `Bearer ${access_token}`);
 
       expect(response.status).toBe(200);
@@ -294,15 +294,15 @@ describe('FlagsController (e2e)', () => {
     });
   });
 
-  describe('/environments/:envId/flags/:flagId/variants (POST)', () => {
+  describe('/flags/:flagId/variants (POST)', () => {
     it('gives a 401 when the user is not authenticated', () =>
-      verifyAuthGuard(app, '/environments/1/flags/1/variants', 'post'));
+      verifyAuthGuard(app, '/flags/1/variants', 'post'));
 
     it('gives a 403 when trying to access a valid project but an invalid env', async () => {
       const access_token = await authenticate(app);
 
       return request(app.getHttpServer())
-        .post('/environments/1/flags/6/variants')
+        .post('/flags/6/variants')
         .set('Authorization', `Bearer ${access_token}`)
         .send({
           isControl: false,
@@ -325,7 +325,7 @@ describe('FlagsController (e2e)', () => {
       );
 
       return request(app.getHttpServer())
-        .post('/environments/1/flags/1/variants')
+        .post('/flags/1/variants')
         .set('Authorization', `Bearer ${access_token}`)
         .send({
           isControl: false,
@@ -350,7 +350,7 @@ describe('FlagsController (e2e)', () => {
       };
 
       await request(app.getHttpServer())
-        .post('/environments/1/flags/1/variants')
+        .post('/flags/1/variants')
         .set('Authorization', `Bearer ${access_token}`)
         .send(invalidVariant)
         .expect(400)
@@ -371,7 +371,7 @@ describe('FlagsController (e2e)', () => {
       };
 
       await request(app.getHttpServer())
-        .post('/environments/1/flags/1/variants')
+        .post('/flags/1/variants')
         .set('Authorization', `Bearer ${access_token}`)
         .send(invalidVariant)
         .expect(400)
@@ -391,7 +391,7 @@ describe('FlagsController (e2e)', () => {
       };
 
       const response = await request(app.getHttpServer())
-        .post('/environments/1/flags/1/variants')
+        .post('/flags/1/variants')
         .set('Authorization', `Bearer ${access_token}`)
         .send(variant)
         .expect(201);
@@ -405,15 +405,15 @@ describe('FlagsController (e2e)', () => {
     });
   });
 
-  describe('/environments/1/flags/4/variants/1 (DELETE)', () => {
+  describe('/flags/4/variants/1 (DELETE)', () => {
     it('gives a 401 when the user is not authenticated', () =>
-      verifyAuthGuard(app, '/environments/1/flags/4/variants/1', 'delete'));
+      verifyAuthGuard(app, '/flags/4/variants/1', 'delete'));
 
     it('gives a 403 when trying to access a valid project but an invalid env', async () => {
       const access_token = await authenticate(app);
 
       return request(app.getHttpServer())
-        .delete('/environments/3/flags/4/variants/1')
+        .delete('/flags/4/variants/1')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(403)
         .expect({
@@ -431,7 +431,7 @@ describe('FlagsController (e2e)', () => {
       );
 
       return request(app.getHttpServer())
-        .delete('/environments/1/flags/4/variants/1')
+        .delete('/flags/4/variants/1')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(403)
         .expect({
@@ -445,34 +445,34 @@ describe('FlagsController (e2e)', () => {
       const access_token = await authenticate(app);
 
       const prevResponse = await request(app.getHttpServer())
-        .get('/environments/1/flags/4/variants')
+        .get('/flags/4/variants')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(200);
 
       expect(prevResponse.body.length).toBe(2);
 
       const response = await request(app.getHttpServer())
-        .delete('/environments/1/flags/4/variants/1')
+        .delete('/flags/4/variants/1')
         .set('Authorization', `Bearer ${access_token}`);
       expect(response.status).toBe(200);
 
       const afterResponse = await request(app.getHttpServer())
-        .get('/environments/1/flags/4/variants')
+        .get('/flags/4/variants')
         .set('Authorization', `Bearer ${access_token}`);
 
       expect(afterResponse.body.length).toBe(1);
     });
   });
 
-  describe('/environments/:envId/flags/:flagId/variants (PUT)', () => {
+  describe('/flags/:flagId/variants (PUT)', () => {
     it('gives a 401 when the user is not authenticated', () =>
-      verifyAuthGuard(app, '/environments/1/flags/1/variants', 'put'));
+      verifyAuthGuard(app, '/flags/1/variants', 'put'));
 
     it('gives a 403 when trying to access a valid project but an invalid env', async () => {
       const access_token = await authenticate(app);
 
       return request(app.getHttpServer())
-        .put('/environments/1/flags/6/variants')
+        .put('/flags/6/variants')
         .set('Authorization', `Bearer ${access_token}`)
         .send([])
         .expect(403)
@@ -491,7 +491,7 @@ describe('FlagsController (e2e)', () => {
       );
 
       return request(app.getHttpServer())
-        .put('/environments/1/flags/1/variants')
+        .put('/flags/1/variants')
         .set('Authorization', `Bearer ${access_token}`)
         .send([])
         .expect(403)
@@ -515,7 +515,7 @@ describe('FlagsController (e2e)', () => {
       ];
 
       await request(app.getHttpServer())
-        .put('/environments/1/flags/1/variants')
+        .put('/flags/1/variants')
         .set('Authorization', `Bearer ${access_token}`)
         .send(invalidVariant)
         .expect(400)
@@ -539,7 +539,7 @@ describe('FlagsController (e2e)', () => {
       ];
 
       await request(app.getHttpServer())
-        .put('/environments/1/flags/1/variants')
+        .put('/flags/1/variants')
         .set('Authorization', `Bearer ${access_token}`)
         .send(invalidVariant)
         .expect(400)
@@ -569,7 +569,7 @@ describe('FlagsController (e2e)', () => {
       ];
 
       await request(app.getHttpServer())
-        .put('/environments/1/flags/1/variants')
+        .put('/flags/1/variants')
         .set('Authorization', `Bearer ${access_token}`)
         .send(invalidVariant)
         .expect(400)
@@ -599,7 +599,7 @@ describe('FlagsController (e2e)', () => {
       ];
 
       await request(app.getHttpServer())
-        .put('/environments/1/flags/1/variants')
+        .put('/flags/1/variants')
         .set('Authorization', `Bearer ${access_token}`)
         .send(invalidVariant)
         .expect(400)
@@ -623,7 +623,7 @@ describe('FlagsController (e2e)', () => {
       ];
 
       const response = await request(app.getHttpServer())
-        .put('/environments/1/flags/4/variants')
+        .put('/flags/4/variants')
         .set('Authorization', `Bearer ${access_token}`)
         .send(variant)
         .expect(200);
@@ -634,15 +634,15 @@ describe('FlagsController (e2e)', () => {
     });
   });
 
-  describe('/environments/:envId/flags/:flagId/webhooks (POST)', () => {
+  describe('/flags/:flagId/webhooks (POST)', () => {
     it('gives a 401 when the user is not authenticated', () =>
-      verifyAuthGuard(app, '/environments/1/flags/1/webhooks', 'post'));
+      verifyAuthGuard(app, '/flags/1/webhooks', 'post'));
 
     it('gives a 403 when trying to access a valid project but an invalid env', async () => {
       const access_token = await authenticate(app);
 
       return request(app.getHttpServer())
-        .post('/environments/1/flags/3/webhooks')
+        .post('/flags/3/webhooks')
         .set('Authorization', `Bearer ${access_token}`)
         .send({})
         .expect(403)
@@ -661,7 +661,7 @@ describe('FlagsController (e2e)', () => {
       );
 
       return request(app.getHttpServer())
-        .post('/environments/1/flags/1/webhooks')
+        .post('/flags/1/webhooks')
         .set('Authorization', `Bearer ${access_token}`)
         .send({
           fieldName: 'email',
@@ -685,7 +685,7 @@ describe('FlagsController (e2e)', () => {
         };
 
         await request(app.getHttpServer())
-          .post('/environments/1/flags/1/webhooks')
+          .post('/flags/1/webhooks')
           .set('Authorization', `Bearer ${access_token}`)
           .send(invalidWebhook)
           .expect(400)
@@ -706,7 +706,7 @@ describe('FlagsController (e2e)', () => {
       };
 
       return request(app.getHttpServer())
-        .post('/environments/1/flags/1/webhooks')
+        .post('/flags/1/webhooks')
         .set('Authorization', `Bearer ${access_token}`)
         .send(validWebhook)
         .expect(400);
@@ -721,7 +721,7 @@ describe('FlagsController (e2e)', () => {
       };
 
       const response = await request(app.getHttpServer())
-        .post('/environments/1/flags/1/webhooks')
+        .post('/flags/1/webhooks')
         .set('Authorization', `Bearer ${access_token}`)
         .send(validWebhook)
         .expect(201);
@@ -736,15 +736,15 @@ describe('FlagsController (e2e)', () => {
     });
   });
 
-  describe('/environments/1/flags/1/webhooks (GET)', () => {
+  describe('/flags/1/webhooks (GET)', () => {
     it('gives a 401 when the user is not authenticated', () =>
-      verifyAuthGuard(app, '/environments/1/flags/1/webhooks', 'get'));
+      verifyAuthGuard(app, '/flags/1/webhooks', 'get'));
 
     it('gives a 403 when trying to access a valid project but an invalid env', async () => {
       const access_token = await authenticate(app);
 
       return request(app.getHttpServer())
-        .get('/environments/1/flags/3/webhooks')
+        .get('/flags/3/webhooks')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(403)
         .expect({
@@ -762,7 +762,7 @@ describe('FlagsController (e2e)', () => {
       );
 
       return request(app.getHttpServer())
-        .get('/environments/1/flags/1/webhooks')
+        .get('/flags/1/webhooks')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(403)
         .expect({
@@ -776,7 +776,7 @@ describe('FlagsController (e2e)', () => {
       const access_token = await authenticate(app);
 
       const response = await request(app.getHttpServer())
-        .get('/environments/1/flags/1/webhooks')
+        .get('/flags/1/webhooks')
         .set('Authorization', `Bearer ${access_token}`);
 
       const webhook = response.body[0];

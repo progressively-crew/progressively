@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { FlagStatus } from '../flags/flags.status';
-import { PopulatedFlagEnv, PopulatedStrategy } from '../flags/types';
+import { PopulatedFlag, PopulatedStrategy } from '../flags/types';
 import { SdkService } from './sdk.service';
 import { AppModule } from '../app.module';
 import { ComparatorEnum } from '../../src/rule/comparators/types';
@@ -8,7 +8,7 @@ import { IPubsubService } from 'src/pubsub/types';
 
 describe('SdkService', () => {
   let service: SdkService;
-  let flagEnv: PopulatedFlagEnv;
+  let flag: PopulatedFlag;
   let pubsubService: IPubsubService;
 
   beforeAll(async () => {
@@ -25,16 +25,13 @@ describe('SdkService', () => {
   });
 
   beforeEach(() => {
-    flagEnv = {
-      environmentId: '1',
-      flagId: '2',
-      flag: {
-        uuid: '1',
-        createdAt: new Date(),
-        description: 'Description of the flag',
-        key: 'flag-key',
-        name: 'Super flag',
-      },
+    flag = {
+      uuid: '1',
+      createdAt: new Date(),
+      description: 'Description of the flag',
+      key: 'flag-key',
+      name: 'Super flag',
+
       status: FlagStatus.ACTIVATED,
       variants: [],
       environment: {
@@ -50,9 +47,9 @@ describe('SdkService', () => {
   describe('resolveFlagStatus', () => {
     describe('No strategies (true / false)', () => {
       it('does not resolve the flag when not activated', () => {
-        flagEnv.status = FlagStatus.NOT_ACTIVATED;
+        flag.status = FlagStatus.NOT_ACTIVATED;
 
-        const shouldActivate = service.resolveFlagStatus(flagEnv, {
+        const shouldActivate = service.resolveFlagStatus(flag, {
           id: 'user-id-123',
         });
 
@@ -60,7 +57,7 @@ describe('SdkService', () => {
       });
 
       it('resolves "true" when the flag is activated', () => {
-        const shouldActivate = service.resolveFlagStatus(flagEnv, {
+        const shouldActivate = service.resolveFlagStatus(flag, {
           id: 'user-id-123',
         });
 
@@ -71,7 +68,7 @@ describe('SdkService', () => {
     describe('With strategies (no rules)', () => {
       describe('valueToServe: boolean', () => {
         it('resolves "true" when the strategy has a rollout of 100% and no rules', () => {
-          flagEnv.strategies = [
+          flag.strategies = [
             {
               flagEnvironmentEnvironmentId: '1',
               flagEnvironmentFlagId: '1',
@@ -85,7 +82,7 @@ describe('SdkService', () => {
             },
           ];
 
-          const shouldActivate = service.resolveFlagStatus(flagEnv, {
+          const shouldActivate = service.resolveFlagStatus(flag, {
             id: 'user-id-123',
           });
 
@@ -93,7 +90,7 @@ describe('SdkService', () => {
         });
 
         it('resolves "false" when the strategy has a rollout of 0% and no rules', () => {
-          flagEnv.strategies = [
+          flag.strategies = [
             {
               flagEnvironmentEnvironmentId: '1',
               flagEnvironmentFlagId: '1',
@@ -107,7 +104,7 @@ describe('SdkService', () => {
             },
           ];
 
-          const shouldActivate = service.resolveFlagStatus(flagEnv, {
+          const shouldActivate = service.resolveFlagStatus(flag, {
             id: 'user-id-123',
           });
 
@@ -115,7 +112,7 @@ describe('SdkService', () => {
         });
 
         it('resolves "false" when the strategy has a rollout of 10% and no rules', () => {
-          flagEnv.strategies = [
+          flag.strategies = [
             {
               flagEnvironmentEnvironmentId: '1',
               flagEnvironmentFlagId: '1',
@@ -129,7 +126,7 @@ describe('SdkService', () => {
             },
           ];
 
-          const shouldActivate = service.resolveFlagStatus(flagEnv, {
+          const shouldActivate = service.resolveFlagStatus(flag, {
             id: 'user-id-123',
           });
 
@@ -137,7 +134,7 @@ describe('SdkService', () => {
         });
 
         it('resolves "true" when the strategy has a rollout of 90% and no rules', () => {
-          flagEnv.strategies = [
+          flag.strategies = [
             {
               flagEnvironmentEnvironmentId: '1',
               flagEnvironmentFlagId: '1',
@@ -151,7 +148,7 @@ describe('SdkService', () => {
             },
           ];
 
-          const shouldActivate = service.resolveFlagStatus(flagEnv, {
+          const shouldActivate = service.resolveFlagStatus(flag, {
             id: 'user-id-123',
           });
 
@@ -161,7 +158,7 @@ describe('SdkService', () => {
 
       describe('valueToServe: string', () => {
         it('resolves "hello world" when the strategy has a rollout of 100% and no rules', () => {
-          flagEnv.strategies = [
+          flag.strategies = [
             {
               flagEnvironmentEnvironmentId: '1',
               flagEnvironmentFlagId: '1',
@@ -175,7 +172,7 @@ describe('SdkService', () => {
             },
           ];
 
-          const shouldActivate = service.resolveFlagStatus(flagEnv, {
+          const shouldActivate = service.resolveFlagStatus(flag, {
             id: 'user-id-123',
           });
 
@@ -183,7 +180,7 @@ describe('SdkService', () => {
         });
 
         it('resolves "false" when the strategy has a rollout of 0% and no rules', () => {
-          flagEnv.strategies = [
+          flag.strategies = [
             {
               flagEnvironmentEnvironmentId: '1',
               flagEnvironmentFlagId: '1',
@@ -197,7 +194,7 @@ describe('SdkService', () => {
             },
           ];
 
-          const shouldActivate = service.resolveFlagStatus(flagEnv, {
+          const shouldActivate = service.resolveFlagStatus(flag, {
             id: 'user-id-123',
           });
 
@@ -205,7 +202,7 @@ describe('SdkService', () => {
         });
 
         it('resolves "false" when the strategy has a rollout of 10% and no rules', () => {
-          flagEnv.strategies = [
+          flag.strategies = [
             {
               flagEnvironmentEnvironmentId: '1',
               flagEnvironmentFlagId: '1',
@@ -219,7 +216,7 @@ describe('SdkService', () => {
             },
           ];
 
-          const shouldActivate = service.resolveFlagStatus(flagEnv, {
+          const shouldActivate = service.resolveFlagStatus(flag, {
             id: 'user-id-123',
           });
 
@@ -227,7 +224,7 @@ describe('SdkService', () => {
         });
 
         it('resolves "hello-world" when the strategy has a rollout of 90% and no rules', () => {
-          flagEnv.strategies = [
+          flag.strategies = [
             {
               flagEnvironmentEnvironmentId: '1',
               flagEnvironmentFlagId: '1',
@@ -241,7 +238,7 @@ describe('SdkService', () => {
             },
           ];
 
-          const shouldActivate = service.resolveFlagStatus(flagEnv, {
+          const shouldActivate = service.resolveFlagStatus(flag, {
             id: 'user-id-123',
           });
 
@@ -282,7 +279,7 @@ describe('SdkService', () => {
         });
 
         it('resolves "Control" when the strategy has 2 variants with Control 100% and Second 0% (no rules)', () => {
-          flagEnv.strategies = [
+          flag.strategies = [
             {
               flagEnvironmentEnvironmentId: '1',
               flagEnvironmentFlagId: '1',
@@ -296,7 +293,7 @@ describe('SdkService', () => {
             },
           ];
 
-          const shouldActivate = service.resolveFlagStatus(flagEnv, {
+          const shouldActivate = service.resolveFlagStatus(flag, {
             id: 'user-id-123',
           });
 
@@ -307,7 +304,7 @@ describe('SdkService', () => {
           second.rolloutPercentage = 100;
           control.rolloutPercentage = 0;
 
-          flagEnv.strategies = [
+          flag.strategies = [
             {
               flagEnvironmentEnvironmentId: '1',
               flagEnvironmentFlagId: '1',
@@ -321,7 +318,7 @@ describe('SdkService', () => {
             },
           ];
 
-          const shouldActivate = service.resolveFlagStatus(flagEnv, {
+          const shouldActivate = service.resolveFlagStatus(flag, {
             id: 'user-id-123',
           });
 
@@ -332,7 +329,7 @@ describe('SdkService', () => {
           second.rolloutPercentage = 1;
           control.rolloutPercentage = 1;
 
-          flagEnv.strategies = [
+          flag.strategies = [
             {
               flagEnvironmentEnvironmentId: '1',
               flagEnvironmentFlagId: '1',
@@ -346,7 +343,7 @@ describe('SdkService', () => {
             },
           ];
 
-          const shouldActivate = service.resolveFlagStatus(flagEnv, {
+          const shouldActivate = service.resolveFlagStatus(flag, {
             id: 'user-id-123',
           });
 
@@ -396,9 +393,9 @@ describe('SdkService', () => {
             },
           ];
 
-          flagEnv.strategies = [stratOne, stratTwo];
+          flag.strategies = [stratOne, stratTwo];
 
-          const shouldActivate = service.resolveFlagStatus(flagEnv, {
+          const shouldActivate = service.resolveFlagStatus(flag, {
             id: 'user-id-123',
             email: 'marvin',
           });
@@ -407,9 +404,9 @@ describe('SdkService', () => {
         });
 
         it('resolves false when the rollout percentage is 100% and the user does not matches the rules', () => {
-          flagEnv.strategies = [stratOne, stratTwo];
+          flag.strategies = [stratOne, stratTwo];
 
-          const shouldActivate = service.resolveFlagStatus(flagEnv, {
+          const shouldActivate = service.resolveFlagStatus(flag, {
             id: 'user-id-123',
             email: 'marvinx',
           });
@@ -433,9 +430,9 @@ describe('SdkService', () => {
             },
           ];
 
-          flagEnv.strategies = [stratOne, stratTwo];
+          flag.strategies = [stratOne, stratTwo];
 
-          const shouldActivate = service.resolveFlagStatus(flagEnv, {
+          const shouldActivate = service.resolveFlagStatus(flag, {
             id: 'user-id-123',
             email: 'marvin',
           });
@@ -457,9 +454,9 @@ describe('SdkService', () => {
             },
           ];
 
-          flagEnv.strategies = [stratOne, stratTwo];
+          flag.strategies = [stratOne, stratTwo];
 
-          const shouldActivate = service.resolveFlagStatus(flagEnv, {
+          const shouldActivate = service.resolveFlagStatus(flag, {
             id: 'user-id-123',
             email: 'marvinx',
           });

@@ -33,7 +33,7 @@ export class FlagsService {
     }) as unknown as Promise<Array<PopulatedFlag>>;
   }
 
-  changeFlagForEnvStatus(flagId: string, status: FlagStatus) {
+  changeFlagStatus(flagId: string, status: FlagStatus) {
     return this.prisma.flag.update({
       where: {
         uuid: flagId,
@@ -64,13 +64,6 @@ export class FlagsService {
   getFlagById(flagId: string) {
     return this.prisma.flag.findUnique({
       where: { uuid: flagId },
-      include: {
-        flagEnvironment: {
-          include: {
-            environment: true,
-          },
-        },
-      },
     });
   }
 
@@ -85,8 +78,7 @@ export class FlagsService {
 
     return this.prisma.flagHit.create({
       data: {
-        flagEnvironmentFlagId: queuedFlagHit.flagId,
-        flagEnvironmentEnvironmentId: queuedFlagHit.envId,
+        flagUuid: queuedFlagHit.flagId,
         valueResolved: queuedFlagHit.valueResolved,
         date,
         visitorId: queuedFlagHit.visitorId,
@@ -126,9 +118,8 @@ export class FlagsService {
         _count: true,
         by: ['valueResolved', 'date'],
         where: {
-          flagEnvironmentFlagId: flagId,
           valueResolved: dhv.valueResolved,
-          flagEnvironmentEnvironmentId: envId,
+          flagUuid: flagId,
           date: {
             gte: new Date(startDate),
             lte: new Date(endDate),
@@ -173,41 +164,36 @@ export class FlagsService {
     const deleteQueries = [
       this.prisma.webhook.deleteMany({
         where: {
-          flagEnvironmentFlagId: flagId,
+          flagUuid: flagId,
         },
       }),
       this.prisma.flagHit.deleteMany({
         where: {
-          flagEnvironmentFlagId: flagId,
+          flagUuid: flagId,
         },
       }),
       this.prisma.rule.deleteMany({
         where: {
           Strategy: {
-            flagEnvironmentFlagId: flagId,
+            flagUuid: flagId,
           },
         },
       }),
       this.prisma.strategyVariant.deleteMany({
         where: {
           strategy: {
-            flagEnvironmentFlagId: flagId,
+            flagUuid: flagId,
           },
         },
       }),
       this.prisma.strategy.deleteMany({
         where: {
-          flagEnvironmentFlagId: flagId,
+          flagUuid: flagId,
         },
       }),
       this.prisma.variant.deleteMany({
         where: {
-          flagEnvironmentFlagId: flagId,
-        },
-      }),
-      this.prisma.flagEnvironment.deleteMany({
-        where: {
-          flagId: flagId,
+          flagUuid: flagId,
         },
       }),
       this.prisma.flag.deleteMany({
@@ -232,38 +218,8 @@ export class FlagsService {
       where: {
         userId,
         project: {
-          environments: {
-            some: { flagEnvironment: { some: { flagId } } },
-          },
-        },
-      },
-    });
-
-    if (!flagOfProject) {
-      return false;
-    }
-
-    if (!roles || roles.length === 0) {
-      return true;
-    }
-
-    return roles.includes(flagOfProject.role);
-  }
-
-  async hasPermissionOnFlagEnv(
-    envId: string,
-    flagId: string,
-    userId: string,
-    roles?: Array<string>,
-  ) {
-    const flagOfProject = await this.prisma.userProject.findFirst({
-      where: {
-        userId,
-        project: {
-          environments: {
-            some: {
-              flagEnvironment: { some: { flagId, environmentId: envId } },
-            },
+          Flag: {
+            some: { uuid: flagId },
           },
         },
       },
@@ -371,18 +327,14 @@ export class FlagsService {
   ) {
     const flagKey = camelcase(name);
 
-    const existingFlagEnv = await this.prisma.flagEnvironment.findFirst({
+    const exisitingFlag = await this.prisma.flag.findFirst({
       where: {
-        environment: {
-          projectId,
-        },
-        flag: {
-          key: flagKey,
-        },
+        projectUuid: projectId,
+        key: flagKey,
       },
     });
 
-    if (existingFlagEnv) {
+    if (exisitingFlag) {
       throw new FlagAlreadyExists();
     }
 

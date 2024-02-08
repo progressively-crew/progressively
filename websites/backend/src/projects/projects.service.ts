@@ -215,14 +215,14 @@ export class ProjectsService {
   ) {
     const flagKey = camelcase(name);
 
-    const existingFlagEnv = await this.prisma.flag.findFirst({
+    const existingFlag = await this.prisma.flag.findFirst({
       where: {
         projectUuid: projectId,
         key: flagKey,
       },
     });
 
-    if (existingFlagEnv) {
+    if (existingFlag) {
       throw new FlagAlreadyExists();
     }
 

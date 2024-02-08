@@ -23,8 +23,7 @@ export class WebhooksController {
 
     await this.activityLogService.register({
       userId,
-      flagId: deletedWebhook.flagEnvironmentFlagId,
-      envId: deletedWebhook.flagEnvironmentEnvironmentId,
+      flagId: deletedWebhook.flagUuid,
       concernedEntity: 'flag',
       type: 'delete-webhook',
       data: JSON.stringify(deletedWebhook),
