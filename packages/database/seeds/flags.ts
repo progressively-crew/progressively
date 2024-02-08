@@ -22,6 +22,7 @@ export const seedFlags = async (prismaClient: PrismaClient) => {
       description: "Switch the new footer design",
       key: "newFooter",
       projectUuid: "1",
+      status: "ACTIVATED",
     },
   });
 
@@ -31,7 +32,6 @@ export const seedFlags = async (prismaClient: PrismaClient) => {
       name: "New aside",
       description: "Switch the new aside design",
       key: "newAside",
-      projectUuid: "2",
     },
   });
 
