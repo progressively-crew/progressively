@@ -1,6 +1,6 @@
 import { Constants } from "~/constants";
 
-export const getEventsForEnv = async (
+export const getEventsForProject = async (
   projectId: string,
   startDate: Date,
   endDate: Date,

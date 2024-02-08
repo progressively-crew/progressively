@@ -9,18 +9,18 @@ import { Section, SectionHeader } from "~/components/Section";
 import { EmptyState } from "~/components/EmptyState";
 import { LineChart } from "~/components/LineChart";
 import { BigStat } from "~/components/BigStat";
-import { getEventsForEnv } from "~/modules/environments/services/getEventsForEnv";
+import { getEventsForProject } from "~/modules/projects/services/getEventsForProject";
 import { getSession } from "~/sessions";
-import { mapToLocaleCount } from "~/modules/environments/services/mapToLocaleCount";
-import { LocalCount } from "~/modules/environments/types";
-import { CountTable } from "~/modules/environments/components/CountTable";
+import { mapToLocaleCount } from "~/modules/projects/services/mapToLocaleCount";
+import { CountTable } from "~/modules/projects/components/CountTable";
 import { ProjectNavBar } from "~/modules/projects/components/ProjectNavBar";
 import { InsightsFilters } from "~/modules/projects/components/InsightsFilters";
-import { getMetricsCount } from "~/modules/environments/services/getMetricsCount";
+import { getMetricsCount } from "~/modules/projects/services/getMetricsCount";
 import { toPercentage } from "~/modules/misc/utils/toPercentage";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
+import { LocalCount } from "~/modules/projects/types";
 
-export const meta: MetaFunction = ({ matches, params }) => {
+export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
   const flagName = getFlagMetaTitle(matches);
 
@@ -84,7 +84,7 @@ export const loader: LoaderFunction = async ({
     uniqueVisitorsCount,
     eventsPerDatePerReferer,
     bounceRate,
-  } = await getEventsForEnv(envId, start, end, authCookie);
+  } = await getEventsForProject(envId, start, end, authCookie);
 
   const metricForDate = await getMetricsCount(envId, start, end, authCookie);
 
@@ -149,15 +149,7 @@ export default function EnvInsights() {
 
   return (
     <DashboardLayout subNav={<ProjectNavBar project={project} />}>
-      <PageTitle
-        value="Analytics"
-        action={
-          <InsightsFilters
-            projectId={project.uuid}
-            environments={project.environments}
-          />
-        }
-      />
+      <PageTitle value="Analytics" action={<InsightsFilters />} />
 
       <Section>
         <div className="inline-flex flex-row gap-6">

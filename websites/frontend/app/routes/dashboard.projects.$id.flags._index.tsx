@@ -50,7 +50,6 @@ export default function FlagsByEnvPage() {
   const search = searchParams.get("search");
   const newFlagId = searchParams.get("newFlagId") || undefined;
   const flagEdited = searchParams.get("flagEdited") || undefined;
-  const envRemoved = searchParams.get("envRemoved") || undefined;
   const projectCreated = searchParams.get("projectCreated") || undefined;
 
   const isFlagRemoved = searchParams.get("flagRemoved") || undefined;
@@ -73,10 +72,6 @@ export default function FlagsByEnvPage() {
         ) : projectCreated ? (
           <SuccessBox id="env-removed">
             The project has been successfully created.
-          </SuccessBox>
-        ) : envRemoved ? (
-          <SuccessBox id="env-removed">
-            The environment has been successfully deleted.
           </SuccessBox>
         ) : isFlagRemoved ? (
           <SuccessBox id="flag-removed">
@@ -123,7 +118,7 @@ export default function FlagsByEnvPage() {
             <EmptyState
               titleAs="h2"
               title="No flags found"
-              description={"There are no flags yet on this environment."}
+              description={"There are no flags yet on this project."}
               action={
                 <CreateButton
                   to={`/dashboard/projects/${project.uuid}/flags/create`}

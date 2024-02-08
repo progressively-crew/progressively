@@ -1,5 +1,5 @@
 import { Constants } from "~/constants";
-import { CreateFunnelEntryDTO } from "../../environments/types";
+import { CreateFunnelEntryDTO } from "../types";
 
 export const createFunnel = (
   projectId: string,
