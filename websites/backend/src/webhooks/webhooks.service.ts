@@ -43,12 +43,8 @@ export class WebhooksService {
       where: {
         userId,
         project: {
-          environments: {
-            some: {
-              flagEnvironment: {
-                some: { webhooks: { some: { uuid: webhookId } } },
-              },
-            },
+          Flag: {
+            some: { webhooks: { some: { uuid: webhookId } } },
           },
         },
       },

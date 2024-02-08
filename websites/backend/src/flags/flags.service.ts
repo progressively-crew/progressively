@@ -16,6 +16,7 @@ export class FlagsService {
         projectUuid: projectId,
       },
       include: {
+        Project: true,
         strategies: {
           include: {
             rules: true,
@@ -42,6 +43,7 @@ export class FlagsService {
         status,
       },
       include: {
+        Project: true,
         variants: true,
         webhooks: true,
         strategies: {

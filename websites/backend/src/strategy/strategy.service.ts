@@ -131,12 +131,8 @@ export class StrategyService {
       where: {
         userId,
         project: {
-          environments: {
-            some: {
-              flagEnvironment: {
-                some: { strategies: { some: { uuid: strategyId } } },
-              },
-            },
+          Flag: {
+            some: { strategies: { some: { uuid: strategyId } } },
           },
         },
       },

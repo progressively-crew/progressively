@@ -216,7 +216,7 @@ export class SdkService {
 
     if (!concernedProject) {
       return this.logger.error({
-        error: 'The client key does not match any environment',
+        error: 'The client key does not match any project',
         level: 'error',
         context: 'Queued hit',
         payload: queuedEvent,

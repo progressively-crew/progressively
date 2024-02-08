@@ -31,15 +31,8 @@ describe('SdkService', () => {
       description: 'Description of the flag',
       key: 'flag-key',
       name: 'Super flag',
-
       status: FlagStatus.ACTIVATED,
       variants: [],
-      environment: {
-        name: 'First',
-        uuid: '1',
-        clientKey: 'abc',
-        projectId: '12',
-      },
       strategies: [],
     };
   });
@@ -70,8 +63,7 @@ describe('SdkService', () => {
         it('resolves "true" when the strategy has a rollout of 100% and no rules', () => {
           flag.strategies = [
             {
-              flagEnvironmentEnvironmentId: '1',
-              flagEnvironmentFlagId: '1',
+              flagUuid: flag.uuid,
               valueToServe: 'true',
               valueToServeType: 'Boolean',
               uuid: '1',
@@ -92,8 +84,7 @@ describe('SdkService', () => {
         it('resolves "false" when the strategy has a rollout of 0% and no rules', () => {
           flag.strategies = [
             {
-              flagEnvironmentEnvironmentId: '1',
-              flagEnvironmentFlagId: '1',
+              flagUuid: flag.uuid,
               valueToServe: 'true',
               valueToServeType: 'Boolean',
               uuid: '1',
@@ -114,8 +105,7 @@ describe('SdkService', () => {
         it('resolves "false" when the strategy has a rollout of 10% and no rules', () => {
           flag.strategies = [
             {
-              flagEnvironmentEnvironmentId: '1',
-              flagEnvironmentFlagId: '1',
+              flagUuid: flag.uuid,
               valueToServe: 'true',
               valueToServeType: 'Boolean',
               uuid: '1',
@@ -136,8 +126,7 @@ describe('SdkService', () => {
         it('resolves "true" when the strategy has a rollout of 90% and no rules', () => {
           flag.strategies = [
             {
-              flagEnvironmentEnvironmentId: '1',
-              flagEnvironmentFlagId: '1',
+              flagUuid: flag.uuid,
               valueToServe: 'true',
               valueToServeType: 'Boolean',
               uuid: '1',
@@ -160,8 +149,7 @@ describe('SdkService', () => {
         it('resolves "hello world" when the strategy has a rollout of 100% and no rules', () => {
           flag.strategies = [
             {
-              flagEnvironmentEnvironmentId: '1',
-              flagEnvironmentFlagId: '1',
+              flagUuid: flag.uuid,
               valueToServe: 'hello world',
               valueToServeType: 'String',
               uuid: '1',
@@ -182,8 +170,7 @@ describe('SdkService', () => {
         it('resolves "false" when the strategy has a rollout of 0% and no rules', () => {
           flag.strategies = [
             {
-              flagEnvironmentEnvironmentId: '1',
-              flagEnvironmentFlagId: '1',
+              flagUuid: flag.uuid,
               valueToServe: 'hello world',
               valueToServeType: 'String',
               uuid: '1',
@@ -204,8 +191,7 @@ describe('SdkService', () => {
         it('resolves "false" when the strategy has a rollout of 10% and no rules', () => {
           flag.strategies = [
             {
-              flagEnvironmentEnvironmentId: '1',
-              flagEnvironmentFlagId: '1',
+              flagUuid: flag.uuid,
               valueToServe: 'hello world',
               valueToServeType: 'String',
               uuid: '1',
@@ -226,8 +212,7 @@ describe('SdkService', () => {
         it('resolves "hello-world" when the strategy has a rollout of 90% and no rules', () => {
           flag.strategies = [
             {
-              flagEnvironmentEnvironmentId: '1',
-              flagEnvironmentFlagId: '1',
+              flagUuid: flag.uuid,
               valueToServe: 'hello world',
               valueToServeType: 'String',
               uuid: '1',
@@ -258,8 +243,7 @@ describe('SdkService', () => {
             variant: {
               uuid: '1',
               value: 'Control',
-              flagEnvironmentEnvironmentId: '1',
-              flagEnvironmentFlagId: '1',
+              flagUuid: flag.uuid,
               isControl: true,
             },
           };
@@ -271,8 +255,7 @@ describe('SdkService', () => {
             variant: {
               uuid: '2',
               value: 'Second',
-              flagEnvironmentEnvironmentId: '1',
-              flagEnvironmentFlagId: '1',
+              flagUuid: flag.uuid,
               isControl: false,
             },
           };
@@ -281,8 +264,7 @@ describe('SdkService', () => {
         it('resolves "Control" when the strategy has 2 variants with Control 100% and Second 0% (no rules)', () => {
           flag.strategies = [
             {
-              flagEnvironmentEnvironmentId: '1',
-              flagEnvironmentFlagId: '1',
+              flagUuid: flag.uuid,
               valueToServe: 'hello world',
               valueToServeType: 'Variant',
               uuid: '1',
@@ -306,8 +288,7 @@ describe('SdkService', () => {
 
           flag.strategies = [
             {
-              flagEnvironmentEnvironmentId: '1',
-              flagEnvironmentFlagId: '1',
+              flagUuid: flag.uuid,
               valueToServe: 'hello world',
               valueToServeType: 'Variant',
               uuid: '1',
@@ -331,8 +312,7 @@ describe('SdkService', () => {
 
           flag.strategies = [
             {
-              flagEnvironmentEnvironmentId: '1',
-              flagEnvironmentFlagId: '1',
+              flagUuid: flag.uuid,
               valueToServe: 'hello world',
               valueToServeType: 'Variant',
               uuid: '1',
@@ -358,8 +338,7 @@ describe('SdkService', () => {
 
       beforeEach(() => {
         stratOne = {
-          flagEnvironmentEnvironmentId: '1',
-          flagEnvironmentFlagId: '1',
+          flagUuid: flag.uuid,
           valueToServe: undefined,
           valueToServeType: 'Boolean',
           uuid: '1',

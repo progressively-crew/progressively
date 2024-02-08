@@ -1,4 +1,4 @@
-import { Strategy } from '@progressively/database';
+import { Project, Strategy } from '@progressively/database';
 import { RuleType } from '../rule/types';
 
 export interface Flag {
@@ -25,10 +25,10 @@ export interface PopulatedStrategy extends Strategy {
 }
 
 export interface PopulatedFlag extends Flag {
-  flag: Flag;
   strategies: Array<PopulatedStrategy>;
   status: string;
   variants: Array<PopulatedVariant>;
+  Project: Project;
 }
 
 export interface Variant {
