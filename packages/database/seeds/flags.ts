@@ -11,6 +11,7 @@ export const seedFlags = async (prismaClient: PrismaClient) => {
       name: "New homepage",
       description: "Switch the new homepage design",
       key: "newHomepage",
+      projectUuid: "1",
     },
   });
 
@@ -20,6 +21,7 @@ export const seedFlags = async (prismaClient: PrismaClient) => {
       name: "New footer",
       description: "Switch the new footer design",
       key: "newFooter",
+      projectUuid: "1",
     },
   });
 
@@ -29,6 +31,7 @@ export const seedFlags = async (prismaClient: PrismaClient) => {
       name: "New aside",
       description: "Switch the new aside design",
       key: "newAside",
+      projectUuid: "2",
     },
   });
 
@@ -38,6 +41,7 @@ export const seedFlags = async (prismaClient: PrismaClient) => {
       name: "With multivariate",
       description: "Switch the multivariate flag",
       key: "multivariate",
+      projectUuid: "1",
     },
   });
 

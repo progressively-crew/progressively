@@ -1,14 +1,62 @@
 import { HiOutlineCog6Tooth } from "react-icons/hi2";
+import { Link } from "@remix-run/react";
 import { Flag } from "../types";
 import { IconBox } from "~/components/IconBox";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { Button } from "~/components/Buttons/Button";
 import { Table, Tbody, Td, Th, Tr } from "~/components/Table";
+import { useRef } from "react";
 
 export interface FlagListProps {
   flags: Array<Flag>;
   projectId: string;
 }
+
+export interface FlagListItemProps {
+  flag: Flag;
+  projectId: string;
+}
+
+export const FlagListItem = ({ flag, projectId }: FlagListItemProps) => {
+  const linkRef = useRef<HTMLAnchorElement>(null);
+
+  return (
+    <Tr
+      key={flag.uuid}
+      onClick={() => {
+        linkRef?.current?.click();
+      }}
+    >
+      <Td style={{ width: 40 }}>
+        <IconBox content={flag.name}>
+          <FlagIcon />
+        </IconBox>
+      </Td>
+      <Td>
+        <Link
+          ref={linkRef}
+          to={`/dashboard/projects/${projectId}/flags/${flag.uuid}/audience`}
+        >
+          {flag.name}
+        </Link>
+      </Td>
+
+      <Td>
+        <Button
+          to={`/dashboard/projects/${projectId}/flags/${flag.uuid}/settings`}
+          variant="secondary"
+          icon={<HiOutlineCog6Tooth />}
+          size="S"
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
+          Settings
+        </Button>
+      </Td>
+    </Tr>
+  );
+};
 
 export const FlagList = ({ flags, projectId }: FlagListProps) => {
   return (
@@ -25,25 +73,7 @@ export const FlagList = ({ flags, projectId }: FlagListProps) => {
       </thead>
       <Tbody>
         {flags.map((flag) => (
-          <Tr key={flag.uuid}>
-            <Td style={{ width: 40 }}>
-              <IconBox content={flag.name}>
-                <FlagIcon />
-              </IconBox>
-            </Td>
-            <Td>{flag.name}</Td>
-
-            <Td>
-              <Button
-                to={`/dashboard/projects/${projectId}/flags/${flag.uuid}`}
-                variant="secondary"
-                icon={<HiOutlineCog6Tooth />}
-                size="S"
-              >
-                Settings
-              </Button>
-            </Td>
-          </Tr>
+          <FlagListItem key={flag.uuid} flag={flag} projectId={projectId} />
         ))}
       </Tbody>
     </Table>

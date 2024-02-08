@@ -93,16 +93,16 @@ export const DashboardLayout = ({
                     {lastCrumb.label}
                   </Typography>
 
-                  {project && flag && (
+                  {project && flag.uuid && (
                     <IconButton
                       icon={<SettingsIcon />}
                       tooltip={"Settings"}
                       as={Link}
-                      to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}`}
+                      to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}/settings`}
                     />
                   )}
 
-                  {project && !flag && (
+                  {project && !flag.uuid && (
                     <IconButton
                       icon={<SettingsIcon />}
                       tooltip={"Settings"}
@@ -112,7 +112,7 @@ export const DashboardLayout = ({
                   )}
                 </div>
 
-                {flag && project && (
+                {flag?.uuid && project && (
                   <div className="flex flex-row gap-4 items-center pt-2 -mx-3">
                     <ButtonCopy toCopy={flag.key} size="S">
                       {flag.key}
