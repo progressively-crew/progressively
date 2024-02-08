@@ -51,6 +51,9 @@ export class ProjectsService {
       where: {
         userId,
       },
+      include: {
+        project: true,
+      },
     });
   }
 
