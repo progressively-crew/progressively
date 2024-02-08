@@ -4,7 +4,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { UserRoles } from '../users/roles';
 import { PrismaService } from '../database/prisma.service';
 import { FlagAlreadyExists } from './errors';
-import { CreateFunnelEntryDTO } from '../funnels/funnels.dto';
 
 @Injectable()
 export class ProjectsService {
@@ -36,6 +35,7 @@ export class ProjectsService {
     return this.prisma.project.create({
       data: {
         name,
+        domain: prodDomain,
         userProject: {
           create: {
             userId,
