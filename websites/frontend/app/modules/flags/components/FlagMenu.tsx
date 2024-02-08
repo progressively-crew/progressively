@@ -14,7 +14,7 @@ export interface FlagEnvMenuProps {
 
 export const FlagMenu = ({ projectId, flag }: FlagEnvMenuProps) => {
   return (
-    <HorizontalNav label={`Navigate in flag in specific environment`}>
+    <HorizontalNav label={`Navigate in the flag`}>
       <NavItem
         to={`/dashboard/projects/${projectId}/flags/${flag.uuid}/audience`}
         icon={<TbTargetArrow />}

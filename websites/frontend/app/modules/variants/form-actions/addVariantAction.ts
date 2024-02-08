@@ -8,8 +8,6 @@ export const addVariantAction = async (
   authCookie: string
 ) => {
   const flagId = String(params.flagId);
-  const envId = String(params.env);
-
   const value = String(formData.get("value"));
 
   if (!value) {
@@ -26,7 +24,7 @@ export const addVariantAction = async (
       value,
     };
 
-    await createVariant(envId, flagId as string, variant, authCookie);
+    await createVariant(flagId as string, variant, authCookie);
 
     return {
       successCreated: true,

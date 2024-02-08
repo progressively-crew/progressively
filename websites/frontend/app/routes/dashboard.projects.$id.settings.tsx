@@ -15,7 +15,7 @@ import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { getSession } from "~/sessions";
-import { rotateSecretKey } from "~/modules/environments/services/rotateSecretKey";
+import { rotateSecretKey } from "~/modules/projects/services/rotateSecretKey";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 
 export const meta: MetaFunction = ({ matches }) => {

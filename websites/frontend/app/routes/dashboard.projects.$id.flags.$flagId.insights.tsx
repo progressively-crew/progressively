@@ -7,7 +7,6 @@ import { TbApps } from "react-icons/tb";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
-import { getFlagEnvMetaTitle } from "~/modules/flags/services/getFlagEnvMetaTitle";
 import { Card, CardContent } from "~/components/Card";
 import { PageTitle } from "~/components/PageTitle";
 import { Section, SectionHeader } from "~/components/Section";
@@ -18,10 +17,11 @@ import { BigStat } from "~/components/BigStat";
 import { VariantDot } from "~/modules/variants/components/VariantDot";
 import { InsightsFilters } from "~/modules/projects/components/InsightsFilters";
 import { useFlag } from "~/modules/flags/contexts/useFlag";
+import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 
-export const meta: MetaFunction = ({ matches, params }) => {
+export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
-  const flagName = getFlagEnvMetaTitle(matches);
+  const flagName = getFlagMetaTitle(matches);
 
   return [
     {
@@ -72,7 +72,7 @@ export const loader: LoaderFunction = async ({
   }: {
     hitsPerVariantPerDate: Array<FlagHit>;
     flagEvaluations: Array<FlagEvaluation>;
-  } = await getFlagHits(params.env!, params.flagId!, start, end, authCookie);
+  } = await getFlagHits(params.flagId!, start, end, authCookie);
 
   const flagEvaluationsCount = flagEvaluations.reduce(
     (acc, curr) => acc + curr._count,

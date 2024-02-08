@@ -11,7 +11,7 @@ import { BarChart } from "~/components/BarChart";
 import { Typography } from "~/components/Typography";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { Outlet, useLoaderData, useSearchParams } from "@remix-run/react";
-import { getFunnels } from "~/modules/environments/services/getFunnels";
+import { getFunnels } from "~/modules/projects/services/getFunnels";
 import { getSession } from "~/sessions";
 import { FunnelChart } from "~/modules/funnels/types";
 
@@ -36,11 +36,6 @@ export const loader: LoaderFunction = async ({
   const session = await getSession(request.headers.get("Cookie"));
   const url = new URL(request.url);
   const search = new URLSearchParams(url.search);
-  const envId = params.env || search.get("envId");
-
-  if (!envId) {
-    throw redirect("/401");
-  }
 
   const strDays = search.get("days");
   let day = Number(strDays);
@@ -57,7 +52,7 @@ export const loader: LoaderFunction = async ({
   const authCookie = session.get("auth-cookie");
 
   const funnels: Array<FunnelChart> = await getFunnels(
-    envId,
+    params.id!,
     start,
     end,
     authCookie

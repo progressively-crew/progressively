@@ -16,8 +16,7 @@ export type ActivityEntity = "flag";
 export interface Activity {
   concernedEntity: ActivityEntity;
   data?: any;
-  flagEnvironmentEnvironmentId: string;
-  flagEnvironmentFlagId: string;
+  flagUuid: string;
   id: number;
   type: ActivityType;
   userUuid: string;

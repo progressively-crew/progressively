@@ -4,7 +4,6 @@ import { ActionFunction, redirect, MetaFunction } from "@remix-run/node";
 import { useActionData, Form, useNavigation } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
-import { getFlagEnvMetaTitle } from "~/modules/flags/services/getFlagEnvMetaTitle";
 import { WebhookCreationDTO, WebhookEvents } from "~/modules/webhooks/types";
 import { createWebhook } from "~/modules/webhooks/services/createWebhook";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
@@ -15,10 +14,11 @@ import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 import { DialogCloseBtn } from "~/components/Dialog/Dialog";
 import { useFlag } from "~/modules/flags/contexts/useFlag";
+import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 
-export const meta: MetaFunction = ({ matches, params }) => {
+export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
-  const flagName = getFlagEnvMetaTitle(matches);
+  const flagName = getFlagMetaTitle(matches);
 
   return [
     {
@@ -64,15 +64,10 @@ export const action: ActionFunction = async ({
   };
 
   try {
-    await createWebhook(
-      params.env!,
-      params.flagId!,
-      webhook,
-      session.get("auth-cookie")
-    );
+    await createWebhook(params.flagId!, webhook, session.get("auth-cookie"));
 
     return redirect(
-      `/dashboard/projects/${params.id}/environments/${params.env}/flags/${params.flagId}/webhooks?newWebhook=true#webhook-added`
+      `/dashboard/projects/${params.id}/flags/${params.flagId}/webhooks?newWebhook=true#webhook-added`
     );
   } catch (error: unknown) {
     if (error instanceof Error) {

@@ -7,17 +7,11 @@ export const toggleFlagAction = (
   params: Params<string>,
   authCookie: string
 ) => {
-  const envId = String(params.env);
   const nextStatus = formData.get("nextStatus");
   const flagId = formData.get("flagId");
 
   if (nextStatus && flagId) {
-    return activateFlag(
-      envId,
-      String(flagId),
-      nextStatus as FlagStatus,
-      authCookie
-    );
+    return activateFlag(String(flagId), nextStatus as FlagStatus, authCookie);
   }
 
   return null;

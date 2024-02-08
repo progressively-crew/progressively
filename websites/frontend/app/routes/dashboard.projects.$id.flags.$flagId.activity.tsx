@@ -5,7 +5,6 @@ import { useLoaderData } from "@remix-run/react";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
-import { getFlagEnvMetaTitle } from "~/modules/flags/services/getFlagEnvMetaTitle";
 import { PageTitle } from "~/components/PageTitle";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
 import { getActivity } from "~/modules/activity/services/getActivity";
@@ -15,10 +14,11 @@ import { Typography } from "~/components/Typography";
 import { Card, CardContent } from "~/components/Card";
 import { EmptyState } from "~/components/EmptyState";
 import { useFlag } from "~/modules/flags/contexts/useFlag";
+import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 
-export const meta: MetaFunction = ({ matches, params }) => {
+export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
-  const flagName = getFlagEnvMetaTitle(matches);
+  const flagName = getFlagMetaTitle(matches);
 
   return [
     {
@@ -57,7 +57,7 @@ export const loader: LoaderFunction = async ({
 }): Promise<LoaderData> => {
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
-  const activities = await getActivity(params.env!, params.flagId!, authCookie);
+  const activities = await getActivity(params.flagId!, authCookie);
 
   return {
     activities,

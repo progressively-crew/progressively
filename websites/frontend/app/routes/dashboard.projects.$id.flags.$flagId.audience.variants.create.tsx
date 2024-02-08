@@ -4,7 +4,6 @@ import { ActionFunction, redirect, MetaFunction } from "@remix-run/node";
 import { useActionData, Form, useNavigation } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
-import { getFlagEnvMetaTitle } from "~/modules/flags/services/getFlagEnvMetaTitle";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { TextInput } from "~/components/Fields/TextInput";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
@@ -12,10 +11,11 @@ import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 import { addVariantAction } from "~/modules/variants/form-actions/addVariantAction";
 import { DialogCloseBtn } from "~/components/Dialog/Dialog";
 import { useFlag } from "~/modules/flags/contexts/useFlag";
+import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
-  const flagName = getFlagEnvMetaTitle(matches);
+  const flagName = getFlagMetaTitle(matches);
 
   return [
     {
@@ -44,17 +44,16 @@ export const action: ActionFunction = async ({
   }
 
   return redirect(
-    `/dashboard/projects/${params.id}/environments/${params.env}/flags/${params.flagId}/audience?newVariant=true#variant-added`
+    `/dashboard/projects/${params.id}/flags/${params.flagId}/audience?newVariant=true#variant-added`
   );
 };
 
 export default function CteateVariantPage() {
   const { project } = useProject();
   const { flag } = useFlag();
-
   const navigation = useNavigation();
-
   const actionData = useActionData<ActionData>();
+
   const errors = actionData?.errors;
 
   return (

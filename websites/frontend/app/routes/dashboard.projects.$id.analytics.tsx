@@ -3,7 +3,6 @@ import { LoaderFunction, MetaFunction, redirect } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
-import { getFlagEnvMetaTitle } from "~/modules/flags/services/getFlagEnvMetaTitle";
 import { Card, CardContent } from "~/components/Card";
 import { PageTitle } from "~/components/PageTitle";
 import { Section, SectionHeader } from "~/components/Section";
@@ -19,10 +18,11 @@ import { ProjectNavBar } from "~/modules/projects/components/ProjectNavBar";
 import { InsightsFilters } from "~/modules/projects/components/InsightsFilters";
 import { getMetricsCount } from "~/modules/environments/services/getMetricsCount";
 import { toPercentage } from "~/modules/misc/utils/toPercentage";
+import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 
 export const meta: MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
-  const flagName = getFlagEnvMetaTitle(matches);
+  const flagName = getFlagMetaTitle(matches);
 
   return [
     {

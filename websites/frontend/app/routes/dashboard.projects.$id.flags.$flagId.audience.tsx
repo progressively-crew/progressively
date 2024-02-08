@@ -13,7 +13,6 @@ import {
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
-import { getFlagEnvMetaTitle } from "~/modules/flags/services/getFlagEnvMetaTitle";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
 import { PageTitle } from "~/components/PageTitle";
 import { Strategy } from "~/modules/strategy/types";
@@ -31,10 +30,11 @@ import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { TipBox } from "~/components/Boxes/TipBox";
 import { FlagStatus } from "~/modules/flags/types";
 import { useFlag } from "~/modules/flags/contexts/useFlag";
+import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 
-export const meta: MetaFunction = ({ matches, params }) => {
+export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
-  const flagName = getFlagEnvMetaTitle(matches);
+  const flagName = getFlagMetaTitle(matches);
 
   return [
     {
@@ -64,7 +64,7 @@ export const action: ActionFunction = async ({
   const type = formData.get("_type");
 
   if (type === "add-strategy") {
-    return await createStrategy(params.env!, params.flagId!, authCookie);
+    return await createStrategy(params.flagId!, authCookie);
   }
 
   if (type === "delete-strategy") {
@@ -86,12 +86,7 @@ export const action: ActionFunction = async ({
     const formQueryString = await clonedRequest.text();
     const formObject = qs.parse(formQueryString, { depth: 4 });
 
-    return editStrategyAction(
-      params.env!,
-      params.flagId!,
-      formObject,
-      authCookie
-    );
+    return editStrategyAction(params.flagId!, formObject, authCookie);
   }
 
   return null;
@@ -110,13 +105,11 @@ export const loader: LoaderFunction = async ({
   const authCookie = session.get("auth-cookie");
 
   const strategies: Array<Strategy> = await getStrategies(
-    params.env!,
     params.flagId!,
     authCookie
   );
 
   const variants: Array<Variant> = await getVariants(
-    params.env!,
     params.flagId!,
     authCookie
   );

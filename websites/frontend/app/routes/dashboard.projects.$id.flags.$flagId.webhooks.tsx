@@ -8,7 +8,6 @@ import { PageTitle } from "~/components/PageTitle";
 import { Typography } from "~/components/Typography";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { FlagMenu } from "~/modules/flags/components/FlagMenu";
-import { getFlagEnvMetaTitle } from "~/modules/flags/services/getFlagEnvMetaTitle";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { getWebhooks } from "~/modules/webhooks/services/getWebhooks";
@@ -17,10 +16,11 @@ import { getSession } from "~/sessions";
 import { WebhooksList } from "~/modules/webhooks/components/WebhooksList";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
 import { useFlag } from "~/modules/flags/contexts/useFlag";
+import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
-  const flagName = getFlagEnvMetaTitle(matches);
+  const flagName = getFlagMetaTitle(matches);
 
   return [
     {
@@ -41,7 +41,6 @@ export const loader: LoaderFunction = async ({
   const authCookie = session.get("auth-cookie");
 
   const webhooks: Array<Webhook> = await getWebhooks(
-    params.env!,
     params.flagId!,
     authCookie
   );

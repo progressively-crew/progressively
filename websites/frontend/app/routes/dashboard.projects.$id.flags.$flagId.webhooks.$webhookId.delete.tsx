@@ -7,17 +7,17 @@ import { ActionFunction, redirect, MetaFunction } from "@remix-run/node";
 import { useActionData, Form, useNavigation } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
-import { getFlagEnvMetaTitle } from "~/modules/flags/services/getFlagEnvMetaTitle";
 import { Stack } from "~/components/Stack";
 import { Typography } from "~/components/Typography";
 import { deleteWebhook } from "~/modules/webhooks/services/deleteWebhook";
 import { DeleteEntityTitle } from "~/layouts/DeleteEntityTitle";
 import { DialogCloseBtn } from "~/components/Dialog/Dialog";
 import { useFlag } from "~/modules/flags/contexts/useFlag";
+import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 
-export const meta: MetaFunction = ({ matches, params }) => {
+export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
-  const flagName = getFlagEnvMetaTitle(matches);
+  const flagName = getFlagMetaTitle(matches);
 
   return [
     {
@@ -38,7 +38,6 @@ export const action: ActionFunction = async ({
 }): Promise<ActionData | Response> => {
   const session = await getSession(request.headers.get("Cookie"));
   const projectId = params.id!;
-  const envId = params.env!;
   const flagId = params.flagId!;
 
   try {
@@ -52,7 +51,7 @@ export const action: ActionFunction = async ({
   }
 
   return redirect(
-    `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/webhooks?webhookRemoved=true#webhook-removed`
+    `/dashboard/projects/${projectId}/flags/${flagId}/webhooks?webhookRemoved=true#webhook-removed`
   );
 };
 
