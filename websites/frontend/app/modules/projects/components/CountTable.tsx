@@ -1,8 +1,8 @@
 import { Table, Th, Tbody, Td } from "~/components/Table";
-import { LocalCount } from "../../environments/types";
 import { NumberValue } from "~/components/NumberValue";
 import { Link } from "~/components/Link";
 import { Tooltip } from "~/components/Tooltip/Tooltip";
+import { LocalCount } from "../types";
 
 export interface CountTableProps {
   data: Array<LocalCount>;

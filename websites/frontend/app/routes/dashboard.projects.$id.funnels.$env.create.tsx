@@ -8,14 +8,13 @@ import {
   useActionData,
   Form,
   useNavigation,
-  useParams,
   useLoaderData,
 } from "@remix-run/react";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { TextInput } from "~/components/Fields/TextInput";
-import { CreateFlagDTO, Flag, FlagEnv } from "~/modules/flags/types";
+import { CreateFlagDTO, Flag } from "~/modules/flags/types";
 import { getSession } from "~/sessions";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
@@ -27,13 +26,14 @@ import { getDistinctEventName } from "~/modules/projects/services/getDistinctEve
 import { SelectField } from "~/components/Fields/Select/SelectField";
 import { useMemo, useReducer } from "react";
 import { Typography } from "~/components/Typography";
+
+import { getPageViewEvent } from "~/modules/projects/services/getPageViewEvent";
+import { getProjectFlags } from "~/modules/projects/services/getProjectFlags";
 import {
   funnelCreationReducer,
-  getInitialState,
   initialState,
-} from "~/modules/environments/reducers/funnelCreationReducer";
-import { getPageViewEvent } from "~/modules/environments/services/getPageViewEvent";
-import { getProjectFlags } from "~/modules/projects/services/getProjectFlags";
+  getInitialState,
+} from "~/modules/projects/reducers/funnelCreationReducer";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -82,7 +82,7 @@ export const action: ActionFunction = async ({
     );
 
     return redirect(
-      `/dashboard/projects/${projectId}/funnels?newFunnelId=${newFunnel.uuid}&envId=${envId}#funnel-added`
+      `/dashboard/projects/${projectId}/funnels?newFunnelId=${newFunnel.uuid}#funnel-added`
     );
   } catch (error: unknown) {
     if (error instanceof Error) {
@@ -137,7 +137,7 @@ export default function CreateFunnel() {
   const { project } = useProject();
   const data = useActionData<ActionData>();
   const navigation = useNavigation();
-  const params = useParams();
+
   const { flags, eventNames, pageViewUrls } = useLoaderData<typeof loader>();
   const [state, dispatch] = useReducer(
     funnelCreationReducer,
@@ -145,14 +145,14 @@ export default function CreateFunnel() {
     () => getInitialState(flags, eventNames)
   );
 
-  const flagEnvDict = useMemo(() => {
+  const flagDict = useMemo(() => {
     return flags.reduce((acc, curr) => {
       acc[curr.flagId] = curr;
       return acc;
-    }, {} as Record<string, FlagEnv>);
+    }, {} as Record<string, Flag>);
   }, []);
 
-  const { funnelEntries, eventNameOptions, flagEnvsOptions } = state;
+  const { funnelEntries, eventNameOptions, flagOptions } = state;
   const errors = data?.errors;
 
   const selectFlag = (flagId: string) => dispatch({ type: "SET_FLAG", flagId });
@@ -207,7 +207,7 @@ export default function CreateFunnel() {
 
             <SelectField
               label={"Flag name"}
-              options={flagEnvsOptions}
+              options={flagOptions}
               name={"flag-name"}
               onValueChange={selectFlag}
             />
@@ -215,17 +215,17 @@ export default function CreateFunnel() {
 
           <ol className="flex flex-col gap-1">
             {funnelEntries.map((funnelEntry) => {
-              const flagEnv = funnelEntry.flagUuid
-                ? flagEnvDict[funnelEntry.flagUuid]
+              const flag = funnelEntry.flagUuid
+                ? flagDict[funnelEntry.flagUuid]
                 : undefined;
 
               let variants: Array<{ label: string; value: string }> | undefined;
 
-              if (flagEnv) {
+              if (flag) {
                 variants = [];
                 variants =
-                  flagEnv.variants.length > 0
-                    ? flagEnv?.variants.map((v) => ({
+                  flag.variants.length > 0
+                    ? flag?.variants.map((v) => ({
                         label: v.value,
                         value: v.value,
                       }))
@@ -256,7 +256,7 @@ export default function CreateFunnel() {
                       label={"Variant name"}
                       options={variants}
                       name={"variant-name"}
-                      onValueChange={(v) => selectVariant(flagEnv!.flagId!, v)}
+                      onValueChange={(v) => selectVariant(flag!.flagId!, v)}
                       hiddenLabel
                     />
                   )}

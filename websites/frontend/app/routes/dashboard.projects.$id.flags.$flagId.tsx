@@ -14,7 +14,7 @@ import { SettingLayout } from "~/layouts/SettingLayout";
 import { BackLink } from "~/components/BackLink";
 import { FlagProvider } from "~/modules/flags/contexts/FlagProvider";
 import { getFlagById } from "~/modules/flags/services/getFlagById";
-import { FlagWithEnvs } from "~/modules/flags/types";
+import { Flag } from "~/modules/flags/types";
 import { Outlet, useLoaderData } from "@remix-run/react";
 import { getSession } from "~/sessions";
 
@@ -30,7 +30,7 @@ export const meta: MetaFunction = ({ matches }) => {
 };
 
 interface LoaderData {
-  flag: FlagWithEnvs;
+  flag: Flag;
 }
 
 export const loader: LoaderFunction = async ({
@@ -40,7 +40,7 @@ export const loader: LoaderFunction = async ({
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
 
-  const flag: FlagWithEnvs = await getFlagById(params.flagId!, authCookie);
+  const flag: Flag = await getFlagById(params.flagId!, authCookie);
 
   return {
     flag,

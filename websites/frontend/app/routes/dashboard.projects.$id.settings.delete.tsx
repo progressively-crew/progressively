@@ -99,8 +99,7 @@ export default function DeleteProjectPage() {
     >
       <Stack spacing={4}>
         <Typography>
-          All the <strong>environments</strong> of the project, and all the
-          associated <strong>feature flags</strong> will be removed.
+          All the associated <strong>feature flags</strong> will be removed.
         </Typography>
 
         <Typography>

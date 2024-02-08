@@ -5,12 +5,12 @@ import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { Button } from "~/components/Buttons/Button";
 import { Table, Tbody, Td, Th, Tr } from "~/components/Table";
 
-export interface FlagEnvListProps {
+export interface FlagListProps {
   flags: Array<Flag>;
   projectId: string;
 }
 
-export const FlagList = ({ flags, projectId }: FlagEnvListProps) => {
+export const FlagList = ({ flags, projectId }: FlagListProps) => {
   return (
     <Table>
       <caption className="sr-only">Feature flag list for the project</caption>

@@ -87,7 +87,7 @@ export default function DeleteFlagPage() {
           <DeleteButton
             type="submit"
             isLoading={navigation.state === "submitting"}
-            loadingText="Deleting the environment, please wait..."
+            loadingText="Deleting the flag, please wait..."
           >
             Delete
           </DeleteButton>
@@ -102,8 +102,8 @@ export default function DeleteFlagPage() {
     >
       <Stack spacing={4}>
         <Typography>
-          The flag will be removed from all the <strong>environments</strong> of
-          the <strong>{project.name}</strong> project.
+          The flag will be removed from the <strong>{project.name}</strong>{" "}
+          project.
         </Typography>
 
         <Typography>

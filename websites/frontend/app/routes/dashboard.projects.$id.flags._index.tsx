@@ -42,7 +42,7 @@ export const loader: LoaderFunction = async ({
   return { flags };
 };
 
-export default function FlagsByEnvPage() {
+export default function FlagsByProject() {
   const { flags } = useLoaderData<LoaderData>();
   const { project } = useProject();
 
@@ -70,7 +70,7 @@ export default function FlagsByEnvPage() {
             The flag has been successfully edited.
           </SuccessBox>
         ) : projectCreated ? (
-          <SuccessBox id="env-removed">
+          <SuccessBox id="project-created">
             The project has been successfully created.
           </SuccessBox>
         ) : isFlagRemoved ? (

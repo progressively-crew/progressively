@@ -1,4 +1,4 @@
-import { FlagEnv } from "~/modules/flags/types";
+import { Flag } from "~/modules/flags/types";
 import { CreateFunnelEntryDTO } from "../types";
 
 export type ActionType =
@@ -9,24 +9,24 @@ export type ActionType =
 
 export interface FunnelCreationState {
   funnelEntries: Array<CreateFunnelEntryDTO>;
-  flagEnvsOptions: Array<{ label: string; value: string }>;
+  flagOptions: Array<{ label: string; value: string }>;
   eventNameOptions: Array<{ label: string; value: string }>;
 }
 
 export const initialState: FunnelCreationState = {
   funnelEntries: [],
-  flagEnvsOptions: [],
+  flagOptions: [],
   eventNameOptions: [],
 };
 
 export const getInitialState = (
-  flagEnvs: Array<FlagEnv>,
+  flags: Array<Flag>,
   eventNames: Array<string>
 ): FunnelCreationState => ({
   funnelEntries: [],
-  flagEnvsOptions: flagEnvs.map((flagEnv) => ({
-    label: flagEnv.flag.name,
-    value: flagEnv.flagId,
+  flagOptions: flags.map((flag) => ({
+    label: flag.name,
+    value: flag.uuid,
   })),
   eventNameOptions: eventNames.map((ev) => ({ label: ev, value: ev })),
 });
@@ -47,9 +47,7 @@ export const funnelCreationReducer = (
     }
 
     case "SET_FLAG": {
-      const flagOpts = state.flagEnvsOptions.find(
-        (x) => x.value === action.flagId
-      );
+      const flagOpts = state.flagOptions.find((x) => x.value === action.flagId);
 
       const nextEntry: CreateFunnelEntryDTO = {
         flagUuid: action.flagId,
@@ -57,11 +55,11 @@ export const funnelCreationReducer = (
       };
 
       const funnelEntries = [...state.funnelEntries, nextEntry];
-      const flagEnvsOptions = state.flagEnvsOptions.filter(
+      const flagOptions = state.flagOptions.filter(
         (f) => f.value !== action.flagId
       );
 
-      return { ...state, funnelEntries, flagEnvsOptions };
+      return { ...state, funnelEntries, flagOptions };
     }
 
     case "SET_VARIANT": {

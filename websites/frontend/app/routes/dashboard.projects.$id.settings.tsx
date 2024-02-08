@@ -38,10 +38,10 @@ export const action: ActionFunction = async ({
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
   const formData = await request.formData();
-  const envId = formData.get("envId")?.toString();
+  const projectId = formData.get("projectId")?.toString();
 
   try {
-    await rotateSecretKey(envId!, authCookie);
+    await rotateSecretKey(projectId!, authCookie);
     return { success: true };
   } catch {
     return { success: false };
@@ -136,7 +136,7 @@ export default function SettingsPage() {
                 <SectionHeader
                   title="Danger zone"
                   description={
-                    "You can delete a project at any time, but you won't be able to access its environments and all the related flags will be removed and be falsy in your applications. Be sure to know what you're doing before removing a project."
+                    "You can delete a project at any time. Its related flags will be removed and be falsy in your applications. Be sure to know what you're doing before removing a project."
                   }
                 />
               </Section>

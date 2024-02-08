@@ -7,12 +7,12 @@ import {
   TbWebhook,
 } from "react-icons/tb";
 
-export interface FlagEnvMenuProps {
+export interface FlagMenuProps {
   projectId: string;
   flag: Flag;
 }
 
-export const FlagMenu = ({ projectId, flag }: FlagEnvMenuProps) => {
+export const FlagMenu = ({ projectId, flag }: FlagMenuProps) => {
   return (
     <HorizontalNav label={`Navigate in the flag`}>
       <NavItem

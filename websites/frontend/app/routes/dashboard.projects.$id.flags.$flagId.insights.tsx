@@ -114,10 +114,7 @@ export default function FlagInsights() {
 
   return (
     <DashboardLayout subNav={<FlagMenu projectId={project.uuid} flag={flag} />}>
-      <PageTitle
-        value="Insights"
-        action={<InsightsFilters projectId={project.uuid} hideEnvList />}
-      />
+      <PageTitle value="Insights" action={<InsightsFilters />} />
 
       <Section>
         <div className="inline-flex flex-row gap-6">

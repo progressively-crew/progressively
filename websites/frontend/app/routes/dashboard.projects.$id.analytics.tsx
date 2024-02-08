@@ -1,5 +1,5 @@
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { LoaderFunction, MetaFunction, redirect } from "@remix-run/node";
+import { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
@@ -52,15 +52,11 @@ interface LoaderData {
 
 export const loader: LoaderFunction = async ({
   request,
+  params,
 }): Promise<LoaderData> => {
   const session = await getSession(request.headers.get("Cookie"));
   const url = new URL(request.url);
   const search = new URLSearchParams(url.search);
-  const envId = search.get("envId");
-
-  if (!envId) {
-    throw redirect("/401");
-  }
 
   const strDays = search.get("days");
   let day = Number(strDays);
@@ -74,6 +70,8 @@ export const loader: LoaderFunction = async ({
   const end = new Date();
   end.setDate(end.getDate() + 1);
 
+  const projectId = params.id!;
+
   const authCookie = session.get("auth-cookie");
   const {
     pageViewsPerDate,
@@ -84,15 +82,20 @@ export const loader: LoaderFunction = async ({
     uniqueVisitorsCount,
     eventsPerDatePerReferer,
     bounceRate,
-  } = await getEventsForProject(envId, start, end, authCookie);
+  } = await getEventsForProject(projectId, start, end, authCookie);
 
-  const metricForDate = await getMetricsCount(envId, start, end, authCookie);
+  const metricForDate = await getMetricsCount(
+    projectId,
+    start,
+    end,
+    authCookie
+  );
 
   start.setDate(start.getDate() - day);
   end.setDate(end.getDate() + 1);
 
   const prevMetricForDate = await getMetricsCount(
-    envId,
+    projectId,
     start,
     end,
     authCookie
@@ -120,7 +123,7 @@ export const loader: LoaderFunction = async ({
   };
 };
 
-export default function EnvInsights() {
+export default function ProjectInsights() {
   const {
     pageViewsPerDate,
     eventsPerDate,

@@ -137,8 +137,8 @@ export default function DeleteMemberProjectPage() {
     >
       <Stack spacing={4}>
         <Typography>
-          The user will not have access to this project, environments and
-          feature flags anymore.
+          The user will not have access to this project and feature flags
+          anymore.
         </Typography>
       </Stack>
     </DeleteEntityLayout>
