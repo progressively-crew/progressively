@@ -2,7 +2,7 @@ import { Section, SectionHeader } from "~/components/Section";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { UserRoles } from "~/modules/projects/types";
 import { UserTable } from "~/modules/user/components/UserTable";
-import { ActionFunction, V2_MetaFunction } from "@remix-run/node";
+import { ActionFunction, MetaFunction } from "@remix-run/node";
 import { Card, CardContent } from "~/components/Card";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { useProject } from "~/modules/projects/contexts/useProject";
@@ -19,7 +19,7 @@ import { getSession } from "~/sessions";
 import { rotateSecretKey } from "~/modules/environments/services/rotateSecretKey";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 
-export const meta: V2_MetaFunction = ({ matches }) => {
+export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
 
   return [

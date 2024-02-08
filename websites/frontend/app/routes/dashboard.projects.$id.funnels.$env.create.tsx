@@ -2,7 +2,7 @@ import {
   ActionFunction,
   LoaderFunction,
   redirect,
-  V2_MetaFunction,
+  MetaFunction,
 } from "@remix-run/node";
 import {
   useActionData,
@@ -35,7 +35,7 @@ import {
 } from "~/modules/environments/reducers/funnelCreationReducer";
 import { getPageViewEvent } from "~/modules/environments/services/getPageViewEvent";
 
-export const meta: V2_MetaFunction = ({ matches }) => {
+export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
 
   return [

@@ -1,11 +1,7 @@
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { getSession } from "~/sessions";
 import { getFlagHits } from "~/modules/flags/services/getFlagHits";
-import {
-  LoaderFunction,
-  ActionFunction,
-  V2_MetaFunction,
-} from "@remix-run/node";
+import { LoaderFunction, ActionFunction, MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { TbApps } from "react-icons/tb";
 import { FlagEnvMenu } from "~/modules/flags/components/FlagEnvMenu";
@@ -25,7 +21,7 @@ import { BigStat } from "~/components/BigStat";
 import { VariantDot } from "~/modules/variants/components/VariantDot";
 import { InsightsFilters } from "~/modules/projects/components/InsightsFilters";
 
-export const meta: V2_MetaFunction = ({ matches, params }) => {
+export const meta: MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
   const envName = getEnvMetaTitle(matches, params.env!);
   const flagName = getFlagEnvMetaTitle(matches);

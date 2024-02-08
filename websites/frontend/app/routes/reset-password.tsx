@@ -1,4 +1,4 @@
-import { ActionFunction, V2_MetaFunction } from "@remix-run/node";
+import { ActionFunction, MetaFunction } from "@remix-run/node";
 import {
   useActionData,
   useSearchParams,
@@ -19,7 +19,7 @@ import { resetPassword } from "~/modules/user/services/resetPassword";
 import { BackLink } from "~/components/BackLink";
 import { Typography } from "~/components/Typography";
 
-export const meta: V2_MetaFunction = () => {
+export const meta: MetaFunction = () => {
   return [
     {
       title: "Progressively | Reset password",

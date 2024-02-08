@@ -10,7 +10,7 @@ import { TextInput } from "~/components/Fields/TextInput";
 import { Typography } from "~/components/Typography";
 import { Li, Ul } from "~/components/Ul";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
-import { ActionFunction, V2_MetaFunction } from "@remix-run/node";
+import { ActionFunction, MetaFunction } from "@remix-run/node";
 import { useActionData, Form, useNavigation } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
@@ -27,7 +27,7 @@ export const handle = {
   },
 };
 
-export const meta: V2_MetaFunction = ({ matches }) => {
+export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
 
   return [

@@ -4,7 +4,7 @@ import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { EmptyState } from "~/components/EmptyState";
 import { CreateButton } from "~/components/Buttons/CreateButton";
-import { V2_MetaFunction, LoaderFunction } from "@remix-run/node";
+import { MetaFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { Card, CardContent } from "~/components/Card";
 import { useProject } from "~/modules/projects/contexts/useProject";
@@ -16,7 +16,7 @@ import { ProjectNavBar } from "~/modules/projects/components/ProjectNavBar";
 import { getProjectFlags } from "~/modules/projects/services/getProjectFlags";
 import { FlagList } from "~/modules/flags/components/FlagList";
 
-export const meta: V2_MetaFunction = ({ matches }) => {
+export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
 
   return [

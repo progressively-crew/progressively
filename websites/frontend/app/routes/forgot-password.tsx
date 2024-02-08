@@ -1,4 +1,4 @@
-import { V2_MetaFunction, ActionFunction } from "@remix-run/node";
+import { MetaFunction, ActionFunction } from "@remix-run/node";
 import { useActionData, Form, useNavigation } from "@remix-run/react";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
@@ -11,7 +11,7 @@ import { validateEmail } from "~/modules/forms/utils/validateEmail";
 import { forgotPassword } from "~/modules/user/services/forgotPassword";
 import { BackLink } from "~/components/BackLink";
 
-export const meta: V2_MetaFunction = () => {
+export const meta: MetaFunction = () => {
   return [
     {
       title: "Progressively | Password forgotten",

@@ -1,4 +1,4 @@
-import { ActionFunction, V2_MetaFunction } from "@remix-run/node";
+import { ActionFunction, MetaFunction } from "@remix-run/node";
 import { useActionData, Form, useNavigation } from "@remix-run/react";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
@@ -20,7 +20,7 @@ import { Button } from "~/components/Buttons/Button";
 import { Spacer } from "~/components/Spacer";
 import { BackLink } from "~/components/BackLink";
 
-export const meta: V2_MetaFunction = () => {
+export const meta: MetaFunction = () => {
   return [
     {
       title: "Progressively | Profile",

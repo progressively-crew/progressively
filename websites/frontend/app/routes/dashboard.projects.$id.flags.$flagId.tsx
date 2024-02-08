@@ -2,7 +2,7 @@ import { UserRoles } from "~/modules/projects/types";
 import { Section, SectionHeader } from "~/components/Section";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
-import { LoaderFunction, V2_MetaFunction } from "@remix-run/node";
+import { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { Card, CardContent } from "~/components/Card";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { useProject } from "~/modules/projects/contexts/useProject";
@@ -18,7 +18,7 @@ import { FlagWithEnvs } from "~/modules/flags/types";
 import { Outlet, useLoaderData } from "@remix-run/react";
 import { getSession } from "~/sessions";
 
-export const meta: V2_MetaFunction = ({ matches }) => {
+export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
   const flagName = getFlagMetaTitle(matches);
 

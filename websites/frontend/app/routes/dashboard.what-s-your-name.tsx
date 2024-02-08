@@ -1,4 +1,4 @@
-import { ActionFunction, V2_MetaFunction, redirect } from "@remix-run/node";
+import { ActionFunction, MetaFunction, redirect } from "@remix-run/node";
 import { useActionData, Form } from "@remix-run/react";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
@@ -9,7 +9,7 @@ import { getSession } from "~/sessions";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
 import { Typography } from "~/components/Typography";
 
-export const meta: V2_MetaFunction = () => {
+export const meta: MetaFunction = () => {
   return [
     {
       title: "Progressively | What's your name?",

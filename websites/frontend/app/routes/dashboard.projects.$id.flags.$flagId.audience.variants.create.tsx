@@ -1,6 +1,6 @@
 import { getSession } from "~/sessions";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
-import { ActionFunction, redirect, V2_MetaFunction } from "@remix-run/node";
+import { ActionFunction, redirect, MetaFunction } from "@remix-run/node";
 import { useActionData, Form, useNavigation } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
@@ -15,7 +15,7 @@ import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 import { addVariantAction } from "~/modules/variants/form-actions/addVariantAction";
 import { DialogCloseBtn } from "~/components/Dialog/Dialog";
 
-export const meta: V2_MetaFunction = ({ matches, params }) => {
+export const meta: MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
   const envName = getEnvMetaTitle(matches, params.env!);
   const flagName = getFlagEnvMetaTitle(matches);

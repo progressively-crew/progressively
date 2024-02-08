@@ -2,7 +2,7 @@ import {
   ActionFunction,
   redirect,
   LoaderFunction,
-  V2_MetaFunction,
+  MetaFunction,
 } from "@remix-run/node";
 import {
   useLoaderData,
@@ -27,7 +27,7 @@ import { useOkta } from "~/modules/auth/hooks/useOkta";
 import { Typography } from "~/components/Typography";
 import { getProjects } from "~/modules/projects/services/getProjects";
 
-export const meta: V2_MetaFunction = () => {
+export const meta: MetaFunction = () => {
   return [
     {
       title: "Progressively | Sign in",

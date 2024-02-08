@@ -3,7 +3,7 @@ import { getSession } from "~/sessions";
 import { Button } from "~/components/Buttons/Button";
 import { DeleteEntityLayout } from "~/layouts/DeleteEntityLayout";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
-import { ActionFunction, redirect, V2_MetaFunction } from "@remix-run/node";
+import { ActionFunction, redirect, MetaFunction } from "@remix-run/node";
 import { useActionData, Form, useNavigation } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
@@ -13,18 +13,18 @@ import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { getFlagEnvMetaTitle } from "~/modules/flags/services/getFlagEnvMetaTitle";
 import { Stack } from "~/components/Stack";
 import { Typography } from "~/components/Typography";
-import { deleteWebhook } from "~/modules/webhooks/services/deleteWebhook";
 import { DeleteEntityTitle } from "~/layouts/DeleteEntityTitle";
+import { deleteVariant } from "~/modules/variants/services/deleteVariant";
 import { DialogCloseBtn } from "~/components/Dialog/Dialog";
 
-export const meta: V2_MetaFunction = ({ matches, params }) => {
+export const meta: MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
   const envName = getEnvMetaTitle(matches, params.env!);
   const flagName = getFlagEnvMetaTitle(matches);
 
   return [
     {
-      title: `Progressively | ${projectName} | ${envName} | ${flagName} | Webhooks | Delete`,
+      title: `Progressively | ${projectName} | ${envName} | ${flagName} | Variants | Delete`,
     },
   ];
 };
@@ -43,9 +43,10 @@ export const action: ActionFunction = async ({
   const projectId = params.id!;
   const envId = params.env!;
   const flagId = params.flagId!;
+  const variantId = params.variantId!;
 
   try {
-    await deleteWebhook(params.webhookId!, session.get("auth-cookie"));
+    await deleteVariant(envId, flagId, variantId, session.get("auth-cookie"));
   } catch (error: unknown) {
     if (error instanceof Error) {
       return { errors: { backendError: error.message } };
@@ -55,22 +56,22 @@ export const action: ActionFunction = async ({
   }
 
   return redirect(
-    `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/webhooks?webhookRemoved=true#webhook-removed`
+    `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/audience?variantRemoved=true#variant-removed`
   );
 };
 
-export default function DeleteWebhookPage() {
+export default function DeleteVariantPage() {
   const navigation = useNavigation();
-  const data = useActionData<ActionData>();
   const { project } = useProject();
   const { environment } = useEnvironment();
   const { flagEnv } = useFlagEnv();
+  const data = useActionData<ActionData>();
 
   const currentFlag = flagEnv.flag;
 
   return (
     <DeleteEntityLayout
-      titleSlot={<DeleteEntityTitle>Deleting a webhook</DeleteEntityTitle>}
+      titleSlot={<DeleteEntityTitle>Deleting a variant</DeleteEntityTitle>}
       error={
         data?.errors &&
         data.errors.backendError && <ErrorBox list={data.errors} />
@@ -79,34 +80,38 @@ export default function DeleteWebhookPage() {
         <Button
           variant="tertiary"
           scheme="danger"
-          to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/webhooks`}
+          to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/audience`}
         >
           {`Cancel`}
         </Button>
       }
       confirmAction={
-        <Form method="post" id="delete-webhooks">
+        <Form method="post">
           <DeleteButton
             type="submit"
             isLoading={navigation.state === "submitting"}
-            loadingText="Deleting the webhook, please wait..."
-            form="delete-webhooks"
+            loadingText="Deleting the variant, please wait..."
           >
-            Yes, delete the webhook
+            Yes, delete the variant
           </DeleteButton>
         </Form>
       }
       closeSlot={
         <DialogCloseBtn
-          to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/webhooks`}
-          label={`Back to webhooks`}
+          to={`/dashboard/projects/${project.uuid}/environments/${environment.uuid}/flags/${currentFlag.uuid}/audience`}
+          label={`Back to flag`}
         />
       }
     >
       <Stack spacing={4}>
         <Typography>
-          The webhook will not be triggered anymore when the associated event
-          will occur.
+          The variant will be removed from the{" "}
+          <strong>entire feature flag configuration</strong>.
+        </Typography>
+
+        <Typography>
+          When a user will resolve a feature flag, this variant will not be
+          taken into consideration anymore.
         </Typography>
       </Stack>
     </DeleteEntityLayout>

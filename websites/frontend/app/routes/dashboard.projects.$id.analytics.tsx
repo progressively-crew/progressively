@@ -1,5 +1,5 @@
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { LoaderFunction, V2_MetaFunction, redirect } from "@remix-run/node";
+import { LoaderFunction, MetaFunction, redirect } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
@@ -21,7 +21,7 @@ import { InsightsFilters } from "~/modules/projects/components/InsightsFilters";
 import { getMetricsCount } from "~/modules/environments/services/getMetricsCount";
 import { toPercentage } from "~/modules/misc/utils/toPercentage";
 
-export const meta: V2_MetaFunction = ({ matches, params }) => {
+export const meta: MetaFunction = ({ matches, params }) => {
   const projectName = getProjectMetaTitle(matches);
   const envName = getEnvMetaTitle(matches, params.env!);
   const flagName = getFlagEnvMetaTitle(matches);

@@ -1,5 +1,5 @@
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { LoaderFunction, V2_MetaFunction, redirect } from "@remix-run/node";
+import { LoaderFunction, MetaFunction, redirect } from "@remix-run/node";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { Card, CardContent } from "~/components/Card";
@@ -15,7 +15,7 @@ import { getFunnels } from "~/modules/environments/services/getFunnels";
 import { getSession } from "~/sessions";
 import { FunnelChart } from "~/modules/funnels/types";
 
-export const meta: V2_MetaFunction = ({ matches }) => {
+export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
 
   return [
