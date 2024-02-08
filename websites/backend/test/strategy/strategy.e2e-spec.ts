@@ -70,8 +70,7 @@ describe('Strategy (e2e)', () => {
       expect(response.status).toBe(200);
       expect(response.body).toMatchObject([
         {
-          flagEnvironmentEnvironmentId: '1',
-          flagEnvironmentFlagId: '1',
+          flagUuid: '1',
           rolloutPercentage: 100,
           rules: [],
           uuid: '1',
@@ -129,8 +128,7 @@ describe('Strategy (e2e)', () => {
 
       expect(result.body).toMatchObject({
         uuid: '1',
-        flagEnvironmentFlagId: '1',
-        flagEnvironmentEnvironmentId: '1',
+        flagUuid: '1',
         rolloutPercentage: 100,
         valueToServe: null,
         valueToServeType: 'Boolean',
@@ -192,8 +190,7 @@ describe('Strategy (e2e)', () => {
 
       expect(response.body.uuid).toBeDefined();
       expect(response.body).toMatchObject({
-        flagEnvironmentEnvironmentId: '1',
-        flagEnvironmentFlagId: '1',
+        flagUuid: '1',
         rolloutPercentage: 100,
       });
     });

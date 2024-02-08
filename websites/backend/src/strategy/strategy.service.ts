@@ -40,7 +40,7 @@ export class StrategyService {
     return result[result.length - 1] as Strategy;
   }
 
-  async purgeStrategyForFlagEnv(flagId: string) {
+  async purgeStrategyForFlag(flagId: string) {
     const deleteQueries = [
       this.prisma.rule.deleteMany({
         where: {
@@ -72,7 +72,7 @@ export class StrategyService {
   ) {
     const strategies = [];
     // Delete all and re-insert
-    await this.purgeStrategyForFlagEnv(flagId);
+    await this.purgeStrategyForFlag(flagId);
 
     const createQueries = [];
     for (const strategyDto of strategiesDto) {

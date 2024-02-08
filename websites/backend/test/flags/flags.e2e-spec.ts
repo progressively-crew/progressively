@@ -116,21 +116,11 @@ describe('FlagsController (e2e)', () => {
 
         expect(response.status).toBe(200);
         expect(response.body).toMatchObject({
-          flagId: '1',
-          environmentId: '1',
           status,
-          environment: {
-            uuid: '1',
-            name: 'Production',
-            projectId: '1',
-            clientKey: 'valid-sdk-key',
-          },
-          flag: {
-            uuid: '1',
-            name: 'New homepage',
-            key: 'newHomepage',
-            description: 'Switch the new homepage design',
-          },
+          uuid: '1',
+          name: 'New homepage',
+          key: 'newHomepage',
+          description: 'Switch the new homepage design',
         });
       });
     });
@@ -277,15 +267,13 @@ describe('FlagsController (e2e)', () => {
 
       expect(response.body).toMatchObject([
         {
-          flagEnvironmentEnvironmentId: '1',
-          flagEnvironmentFlagId: '4',
+          flagUuid: '4',
           isControl: true,
           uuid: '1',
           value: 'Control',
         },
         {
-          flagEnvironmentEnvironmentId: '1',
-          flagEnvironmentFlagId: '4',
+          flagUuid: '4',
           isControl: false,
           uuid: '2',
           value: 'Second',
@@ -397,8 +385,7 @@ describe('FlagsController (e2e)', () => {
         .expect(201);
 
       expect(response.body).toMatchObject({
-        flagEnvironmentEnvironmentId: '1',
-        flagEnvironmentFlagId: '1',
+        flagUuid: '1',
         isControl: true,
         value: 'test',
       });
@@ -786,8 +773,7 @@ describe('FlagsController (e2e)', () => {
       expect(webhook).toMatchObject({
         endpoint: 'http://localhost:4000',
         event: 'ACTIVATION',
-        flagEnvironmentEnvironmentId: '1',
-        flagEnvironmentFlagId: '1',
+        flagUuid: '1',
         secret: 'this is secret',
         uuid: '1',
       });
@@ -841,19 +827,6 @@ describe('FlagsController (e2e)', () => {
 
       expect(response.body).toMatchObject({
         description: 'Switch the new homepage design',
-        flagEnvironment: [
-          {
-            environment: {
-              clientKey: 'valid-sdk-key',
-              name: 'Production',
-              projectId: '1',
-              uuid: '1',
-            },
-            environmentId: '1',
-            flagId: '1',
-            status: 'NOT_ACTIVATED',
-          },
-        ],
         key: 'newHomepage',
         name: 'New homepage',
         uuid: '1',
