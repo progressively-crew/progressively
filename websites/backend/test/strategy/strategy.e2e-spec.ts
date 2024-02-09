@@ -146,7 +146,7 @@ describe('Strategy (e2e)', () => {
       const validRule: any = {};
 
       return request(app.getHttpServer())
-        .post('/flags/1/strategies')
+        .post('/flags/3/strategies')
         .set('Authorization', `Bearer ${access_token}`)
         .send(validRule)
         .expect(403)
