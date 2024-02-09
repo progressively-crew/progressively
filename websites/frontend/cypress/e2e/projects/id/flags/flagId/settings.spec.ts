@@ -1,10 +1,10 @@
-describe("/dashboard/projects/[id]/flags/[flagId]", () => {
+describe("/dashboard/projects/[id]/flags/[flagId]/settings", () => {
   before(cy.seed);
   after(cy.cleanupDb);
 
   describe("not authenticated", () => {
     beforeEach(() => {
-      cy.visit("/dashboard/projects/1/flags/1");
+      cy.visit("/dashboard/projects/1/flags/1/settings");
     });
 
     it("checks that the route is protected", () => {
@@ -16,7 +16,7 @@ describe("/dashboard/projects/[id]/flags/[flagId]", () => {
     describe("user: Jane", () => {
       beforeEach(() => {
         cy.signIn("Jane");
-        cy.visit("/dashboard/projects/1/flags/1", {
+        cy.visit("/dashboard/projects/1/flags/1/settings", {
           failOnStatusCode: false,
         });
       });
@@ -29,7 +29,7 @@ describe("/dashboard/projects/[id]/flags/[flagId]", () => {
     describe("user: Marvin", () => {
       beforeEach(() => {
         cy.signIn("Marvin");
-        cy.visit("/dashboard/projects/1/flags/1");
+        cy.visit("/dashboard/projects/1/flags/1/settings");
         cy.injectAxe();
       });
 
