@@ -37,7 +37,7 @@ describe("/dashboard/projects/[id]/flags/[flagId]/webhooks", () => {
 
         cy.title().should(
           "eq",
-          "Progressively | Project from seeding | Production | Flags | With multivariate | Webhooks"
+          "Progressively | Project from seeding | Flags | With multivariate | Webhooks"
         );
 
         cy.findAllByText("With multivariate").should("have.length", 2);
@@ -60,7 +60,7 @@ describe("/dashboard/projects/[id]/flags/[flagId]/webhooks", () => {
 
         cy.title().should(
           "eq",
-          "Progressively | Project from seeding | Production | Flags | New homepage | Webhooks"
+          "Progressively | Project from seeding | Flags | New homepage | Webhooks"
         );
 
         cy.findAllByText("New homepage").should("have.length", 2);

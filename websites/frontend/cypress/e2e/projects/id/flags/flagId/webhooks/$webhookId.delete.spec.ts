@@ -36,7 +36,7 @@ describe("/dashboard/projects/[id]/flags/[flagId]/webhooks/[webhookId]/delete", 
       it("shows the layout of the page", () => {
         cy.title().should(
           "eq",
-          "Progressively | Project from seeding | Production | New homepage | Webhooks | Delete"
+          "Progressively | Project from seeding | New homepage | Webhooks | Delete"
         );
 
         cy.findByText("Deleting a webhook").should("be.visible");

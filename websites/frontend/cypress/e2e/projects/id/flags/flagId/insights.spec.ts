@@ -37,7 +37,7 @@ describe("/dashboard/projects/[id]/flags/[flagId]/insights", () => {
 
         cy.title().should(
           "eq",
-          "Progressively | Project from seeding | Production | New homepage | Insights"
+          "Progressively | Project from seeding | New homepage | Insights"
         );
 
         cy.findByRole("link", { name: "Insights" })
@@ -57,7 +57,7 @@ describe("/dashboard/projects/[id]/flags/[flagId]/insights", () => {
 
         cy.title().should(
           "eq",
-          "Progressively | Project from seeding | Production | New footer | Insights"
+          "Progressively | Project from seeding | New footer | Insights"
         );
 
         cy.findByRole("link", { name: "Insights" })

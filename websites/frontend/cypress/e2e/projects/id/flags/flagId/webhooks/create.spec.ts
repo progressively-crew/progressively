@@ -37,7 +37,7 @@ describe("/dashboard/projects/[id]/flags/[flagId]/webhooks/create", () => {
       it("shows the layout", () => {
         cy.title().should(
           "eq",
-          "Progressively | Project from seeding | Production | Flags | New homepage | Webhooks | Create"
+          "Progressively | Project from seeding | Flags | New homepage | Webhooks | Create"
         );
 
         cy.findByRole("heading", { name: "Create a webhook" }).should(

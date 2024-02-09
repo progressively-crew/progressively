@@ -37,7 +37,7 @@ describe("/dashboard/projects/[id]/flags/[flagId]/audience", () => {
 
         cy.title().should(
           "eq",
-          "Progressively | Project from seeding | Production | Flags | New homepage"
+          "Progressively | Project from seeding | Flags | New homepage"
         );
 
         cy.findAllByText("New homepage").should("have.length", 2);

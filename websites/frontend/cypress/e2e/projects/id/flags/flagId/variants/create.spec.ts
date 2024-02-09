@@ -37,7 +37,7 @@ describe("/dashboard/projects/[id]/flags/[flagId]/audience/variants/create", () 
       it("shows the layout", () => {
         cy.title().should(
           "eq",
-          "Progressively | Project from seeding | Production | Flags | New homepage | Variants | Create"
+          "Progressively | Project from seeding | Flags | New homepage | Variants | Create"
         );
 
         cy.findByRole("heading", { name: "Create a variant" }).should(

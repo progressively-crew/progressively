@@ -36,7 +36,7 @@ describe("/dashboard/projects/[id]/flags/[flagId]/audience/variants/[variantId]/
       it("shows the layout of the page", () => {
         cy.title().should(
           "eq",
-          "Progressively | Project from seeding | Production | New homepage | Variants | Delete"
+          "Progressively | Project from seeding | New homepage | Variants | Delete"
         );
 
         cy.findByText("Deleting a variant").should("be.visible");
