@@ -1,12 +1,10 @@
-describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/webhooks/[webhookId]/delete", () => {
+describe("/dashboard/projects/[id]/flags/[flagId]/webhooks/[webhookId]/delete", () => {
   before(cy.seed);
   after(cy.cleanupDb);
 
   describe("not authenticated", () => {
     beforeEach(() => {
-      cy.visit(
-        "/dashboard/projects/1/environments/1/flags/1/webhooks/1/delete"
-      );
+      cy.visit("/dashboard/projects/1/flags/1/webhooks/1/delete");
     });
 
     it("checks that the route is protected", () => {
@@ -18,12 +16,9 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/webhooks/
     describe("user: Jane", () => {
       beforeEach(() => {
         cy.signIn("Jane");
-        cy.visit(
-          "/dashboard/projects/1/environments/1/flags/1/webhooks/1/delete",
-          {
-            failOnStatusCode: false,
-          }
-        );
+        cy.visit("/dashboard/projects/1/flags/1/webhooks/1/delete", {
+          failOnStatusCode: false,
+        });
       });
 
       it("shouldnt show anything when Jane tries to visit Marvin s project", () => {
@@ -34,9 +29,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/webhooks/
     describe("user: Marvin", () => {
       beforeEach(() => {
         cy.signIn("Marvin");
-        cy.visit(
-          "/dashboard/projects/1/environments/1/flags/1/webhooks/1/delete"
-        );
+        cy.visit("/dashboard/projects/1/flags/1/webhooks/1/delete");
         cy.injectAxe();
       });
 
@@ -54,11 +47,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/webhooks/
 
         cy.findByRole("link", { name: "Cancel" })
           .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/1/flags/1/webhooks"
-          );
+          .and("have.attr", "href", "/dashboard/projects/1/flags/1/webhooks");
 
         cy.checkA11y();
       });
@@ -70,9 +59,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/webhooks/
 
       beforeEach(() => {
         cy.signIn("Marvin");
-        cy.visit(
-          "/dashboard/projects/1/environments/1/flags/1/webhooks/1/delete"
-        );
+        cy.visit("/dashboard/projects/1/flags/1/webhooks/1/delete");
       });
 
       it("removes the webhook and get me back to the flags page", () => {
@@ -82,7 +69,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/webhooks/
 
         cy.url().should(
           "contain",
-          "/dashboard/projects/1/environments/1/flags/1/webhooks?webhookRemoved=true"
+          "/dashboard/projects/1/flags/1/webhooks?webhookRemoved=true"
         );
 
         cy.findByRole("heading", { name: "No webhooks found" }).should(

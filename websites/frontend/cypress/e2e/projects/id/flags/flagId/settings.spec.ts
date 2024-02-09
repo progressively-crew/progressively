@@ -1,10 +1,10 @@
-describe("/dashboard/projects/[id]/environments/[envId]/settings", () => {
+describe("/dashboard/projects/[id]/flags/[flagId]", () => {
   before(cy.seed);
   after(cy.cleanupDb);
 
   describe("not authenticated", () => {
     beforeEach(() => {
-      cy.visit("/dashboard/projects/1/environments/1/settings");
+      cy.visit("/dashboard/projects/1/flags/1");
     });
 
     it("checks that the route is protected", () => {
@@ -16,7 +16,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/settings", () => {
     describe("user: Jane", () => {
       beforeEach(() => {
         cy.signIn("Jane");
-        cy.visit("/dashboard/projects/1/environments/1/settings", {
+        cy.visit("/dashboard/projects/1/flags/1", {
           failOnStatusCode: false,
         });
       });
@@ -29,24 +29,25 @@ describe("/dashboard/projects/[id]/environments/[envId]/settings", () => {
     describe("user: Marvin", () => {
       beforeEach(() => {
         cy.signIn("Marvin");
-        cy.visit("/dashboard/projects/1/environments/1/settings");
+        cy.visit("/dashboard/projects/1/flags/1");
         cy.injectAxe();
       });
 
       it("shows a page layout", () => {
         cy.title().should(
           "eq",
-          "Progressively | Project from seeding | Production | Settings"
+          "Progressively | Project from seeding | New homepage | Settings"
         );
 
-        cy.findByRole("heading", { name: "Danger zone" }).should("be.visible");
-        cy.findByText(
-          "You can delete an environment at any time, but you won't be able to access its flags will be removed and be falsy in your applications. Be sure to know what you're doing before removing an environment."
-        ).should("be.visible");
+        // cy.findByRole("heading", { name: "Danger zone" }).should("be.visible");
 
-        cy.findByRole("link", { name: 'Delete "Production" forever' }).should(
-          "be.visible"
-        );
+        // cy.findByText(
+        //   "You can delete a feature flag at any time, but you won't be able to access its insights anymore and false will be served to the application using it."
+        // ).should("be.visible");
+
+        // cy.findByRole("link", { name: "Delete New homepage forever" })
+        //   .should("be.visible")
+        //   .and("have.attr", "href", "/dashboard/projects/1/flags/1/delete");
 
         cy.checkA11y();
       });

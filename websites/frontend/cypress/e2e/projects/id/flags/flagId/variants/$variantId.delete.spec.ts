@@ -1,12 +1,10 @@
-describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/audience/variants/[variantId]/delete", () => {
+describe("/dashboard/projects/[id]/flags/[flagId]/audience/variants/[variantId]/delete", () => {
   before(cy.seed);
   after(cy.cleanupDb);
 
   describe("not authenticated", () => {
     beforeEach(() => {
-      cy.visit(
-        "/dashboard/projects/1/environments/1/flags/1/audience/variants/1/delete"
-      );
+      cy.visit("/dashboard/projects/1/flags/1/audience/variants/1/delete");
     });
 
     it("checks that the route is protected", () => {
@@ -18,12 +16,9 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/audience/
     describe("user: Jane", () => {
       beforeEach(() => {
         cy.signIn("Jane");
-        cy.visit(
-          "/dashboard/projects/1/environments/1/flags/1/audience/variants/1/delete",
-          {
-            failOnStatusCode: false,
-          }
-        );
+        cy.visit("/dashboard/projects/1/flags/1/audience/variants/1/delete", {
+          failOnStatusCode: false,
+        });
       });
 
       it("shouldnt show anything when Jane tries to visit Marvin s project", () => {
@@ -34,9 +29,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/audience/
     describe("user: Marvin", () => {
       beforeEach(() => {
         cy.signIn("Marvin");
-        cy.visit(
-          "/dashboard/projects/1/environments/1/flags/1/audience/variants/1/delete"
-        );
+        cy.visit("/dashboard/projects/1/flags/1/audience/variants/1/delete");
         cy.injectAxe();
       });
 
@@ -54,11 +47,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/audience/
 
         cy.findByRole("link", { name: "Cancel" })
           .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/1/flags/1/audience"
-          );
+          .and("have.attr", "href", "/dashboard/projects/1/flags/1/audience");
 
         cy.checkA11y();
       });
@@ -70,9 +59,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/audience/
 
       beforeEach(() => {
         cy.signIn("Marvin");
-        cy.visit(
-          "/dashboard/projects/1/environments/1/flags/1/audience/variants/1/delete"
-        );
+        cy.visit("/dashboard/projects/1/flags/1/audience/variants/1/delete");
       });
 
       it("removes the variant and get me back to the flags page", () => {
@@ -82,7 +69,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/audience/
 
         cy.url().should(
           "contain",
-          "/dashboard/projects/1/environments/1/flags/1/audience?variantRemoved=true#variant-removed"
+          "/dashboard/projects/1/flags/1/audience?variantRemoved=true#variant-removed"
         );
 
         cy.get(".success-box")

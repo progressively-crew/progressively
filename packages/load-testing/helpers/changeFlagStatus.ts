@@ -15,7 +15,7 @@ export const changeFlagStatus = (
   })
     .then((res) => res.json())
     .then(({ access_token }) =>
-      fetch(`http://localhost:4000/environments/${envId}/flags/${flagId}`, {
+      fetch(`http://localhost:4000/${envId}/flags/${flagId}`, {
         method: "PUT",
         body: JSON.stringify({
           status,

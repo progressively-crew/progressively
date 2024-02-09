@@ -1,10 +1,10 @@
-describe("/dashboard/projects/[id]/flags/[flagId]", () => {
+describe("/dashboard/projects/[id]/flags/[flagId]/audience", () => {
   before(cy.seed);
   after(cy.cleanupDb);
 
   describe("not authenticated", () => {
     beforeEach(() => {
-      cy.visit("/dashboard/projects/1/flags/1");
+      cy.visit("/dashboard/projects/1/flags/1/audience");
     });
 
     it("checks that the route is protected", () => {
@@ -16,7 +16,7 @@ describe("/dashboard/projects/[id]/flags/[flagId]", () => {
     describe("user: Jane", () => {
       beforeEach(() => {
         cy.signIn("Jane");
-        cy.visit("/dashboard/projects/1/flags/1", {
+        cy.visit("/dashboard/projects/1/flags/1/audience", {
           failOnStatusCode: false,
         });
       });
@@ -29,25 +29,19 @@ describe("/dashboard/projects/[id]/flags/[flagId]", () => {
     describe("user: Marvin", () => {
       beforeEach(() => {
         cy.signIn("Marvin");
-        cy.visit("/dashboard/projects/1/flags/1");
-        cy.injectAxe();
       });
 
-      it("shows a page layout", () => {
+      it("shows the layout", () => {
+        cy.visit("/dashboard/projects/1/flags/1/audience");
+        cy.injectAxe();
+
         cy.title().should(
           "eq",
-          "Progressively | Project from seeding | New homepage | Settings"
+          "Progressively | Project from seeding | Production | Flags | New homepage"
         );
 
-        // cy.findByRole("heading", { name: "Danger zone" }).should("be.visible");
-
-        // cy.findByText(
-        //   "You can delete a feature flag at any time, but you won't be able to access its insights anymore and false will be served to the application using it."
-        // ).should("be.visible");
-
-        // cy.findByRole("link", { name: "Delete New homepage forever" })
-        //   .should("be.visible")
-        //   .and("have.attr", "href", "/dashboard/projects/1/flags/1/delete");
+        cy.findAllByText("New homepage").should("have.length", 2);
+        cy.findByRole("heading", { name: "Audience" }).should("be.visible");
 
         cy.checkA11y();
       });

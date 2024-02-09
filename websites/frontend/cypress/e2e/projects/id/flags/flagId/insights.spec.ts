@@ -1,10 +1,10 @@
-describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/insights", () => {
+describe("/dashboard/projects/[id]/flags/[flagId]/insights", () => {
   before(cy.seed);
   after(cy.cleanupDb);
 
   describe("not authenticated", () => {
     beforeEach(() => {
-      cy.visit("/dashboard/projects/1/environments/1/flags/1/insights");
+      cy.visit("/dashboard/projects/1/flags/1/insights");
     });
 
     it("checks that the route is protected", () => {
@@ -16,7 +16,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/insights"
     describe("user: Jane", () => {
       beforeEach(() => {
         cy.signIn("Jane");
-        cy.visit("/dashboard/projects/1/environments/1/flags/1/insights", {
+        cy.visit("/dashboard/projects/1/flags/1/insights", {
           failOnStatusCode: false,
         });
       });
@@ -32,7 +32,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/insights"
       });
 
       it("shows the layout (with data)", () => {
-        cy.visit("/dashboard/projects/1/environments/1/flags/1/insights");
+        cy.visit("/dashboard/projects/1/flags/1/insights");
         cy.injectAxe();
 
         cy.title().should(
@@ -42,11 +42,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/insights"
 
         cy.findByRole("link", { name: "Insights" })
           .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/1/flags/1/insights"
-          )
+          .and("have.attr", "href", "/dashboard/projects/1/flags/1/insights")
           .and("have.attr", "aria-current", "page");
 
         cy.findAllByText("New homepage").should("have.length", 2);
@@ -56,7 +52,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/insights"
       });
 
       it("shows the layout (without data)", () => {
-        cy.visit("/dashboard/projects/1/environments/1/flags/2/insights");
+        cy.visit("/dashboard/projects/1/flags/2/insights");
         cy.injectAxe();
 
         cy.title().should(
@@ -66,11 +62,7 @@ describe("/dashboard/projects/[id]/environments/[envId]/flags/[flagId]/insights"
 
         cy.findByRole("link", { name: "Insights" })
           .should("be.visible")
-          .and(
-            "have.attr",
-            "href",
-            "/dashboard/projects/1/environments/1/flags/2/insights"
-          )
+          .and("have.attr", "href", "/dashboard/projects/1/flags/2/insights")
           .and("have.attr", "aria-current", "page");
 
         cy.findAllByText("New footer").should("have.length", 2);
