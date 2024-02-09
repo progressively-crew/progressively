@@ -5,7 +5,7 @@ import { prepareApp } from '../helpers/prepareApp';
 import { verifyAuthGuard } from '../helpers/verify-auth-guard';
 import { authenticate } from '../helpers/authenticate';
 
-describe('FlagsController (e2e)', () => {
+describe('ActivityController (e2e)', () => {
   let app: INestApplication;
 
   beforeAll(async () => {
@@ -33,7 +33,7 @@ describe('FlagsController (e2e)', () => {
       const access_token = await authenticate(app);
 
       return request(app.getHttpServer())
-        .get('/flags/1/activity')
+        .get('/flags/3/activity')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(403)
         .expect({
@@ -88,7 +88,6 @@ describe('FlagsController (e2e)', () => {
             endpoint: 'https://hello-world.api',
             secret: 'FjB_C7iQDiI9adbAxKNOF',
             event: 'ACTIVATION',
-            flagUuid: '4',
           },
           flagUuid: '1',
           type: 'create-webhook',
@@ -105,7 +104,6 @@ describe('FlagsController (e2e)', () => {
             rolloutPercentage: 0,
             isControl: false,
             value: 'Hello world',
-            flagUuid: '4',
           },
           flagUuid: '1',
           type: 'create-variant',

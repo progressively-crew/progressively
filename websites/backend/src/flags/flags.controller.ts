@@ -170,6 +170,7 @@ export class FlagsController {
   @UseGuards(JwtAuthGuard)
   async getActivity(@Param('flagId') flagId: string) {
     const activities = await this.flagService.listActivity(flagId);
+
     return activities.map((activity) => ({
       ...activity,
       data: activity.data ? JSON.parse(activity.data) : undefined,
