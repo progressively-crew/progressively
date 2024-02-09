@@ -234,6 +234,7 @@ export class ProjectsService {
         name,
         description,
         key: flagKey,
+        projectUuid: projectId,
       },
     });
   }

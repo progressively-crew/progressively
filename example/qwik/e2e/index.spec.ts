@@ -31,7 +31,7 @@ test.describe("/", () => {
   test("shows the new variant when the flag is activated for homepage", async ({
     page,
   }) => {
-    await changeFlagStatus("1", "1", "ACTIVATED");
+    await changeFlagStatus("1", "ACTIVATED");
 
     // Verify the activation using sockets
     await expect(page.getByText("Old variant")).not.toBeVisible();
@@ -46,7 +46,7 @@ test.describe("/", () => {
   test("shows the old variant when the flag is activated for footer (by default activated)", async ({
     page,
   }) => {
-    await changeFlagStatus("1", "2", "NOT_ACTIVATED");
+    await changeFlagStatus("2", "NOT_ACTIVATED");
 
     // Verify the activation using sockets
     await expect(page.getByText("Old variant")).toBeVisible();

@@ -62,7 +62,7 @@ Cypress.Commands.add("checkUnauthenticatedRoute", () => {
 });
 
 Cypress.Commands.overwrite("checkA11y", (originalFn) => {
-  cy.wait(50);
+  cy.wait(100);
 
   return originalFn();
 });

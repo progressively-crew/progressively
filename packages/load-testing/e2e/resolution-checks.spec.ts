@@ -23,7 +23,7 @@ test("everybody receives the same variations at load and update time", async ({
     await expect(page.getByText("New variant")).toBeVisible();
   }
 
-  await changeFlagStatus("1", "1", "NOT_ACTIVATED");
+  await changeFlagStatus("1", "NOT_ACTIVATED");
 
   for (let i = 0; i < userCount; i++) {
     await page.goto("http://localhost:3000?id=" + i);
@@ -37,7 +37,7 @@ test("footer resolution should approximate 25% (load time)", async ({
   // 10 users give us 20%
   // 100 users give us 15%
   // 1000 users give us 25%
-  await changeFlagStatus("1", "2", "ACTIVATED");
+  await changeFlagStatus("2", "ACTIVATED");
 
   let activated = 0;
   let notActivated = 0;
@@ -71,11 +71,11 @@ test("footer resolution should approximate 25% (websockets time)", async ({
   let notActivated = 0;
 
   for (let i = 0; i < userCount; i++) {
-    await changeFlagStatus("1", "2", "NOT_ACTIVATED");
+    await changeFlagStatus("2", "NOT_ACTIVATED");
     await page.goto("http://localhost:3000?id=" + i);
     // Trigger websockets update
     await page.waitForSelector("text=Loading...", { state: "detached" });
-    await changeFlagStatus("1", "2", "ACTIVATED");
+    await changeFlagStatus("2", "ACTIVATED");
 
     await new Promise((resolve) => setTimeout(resolve, 100));
 

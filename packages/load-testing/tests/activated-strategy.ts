@@ -10,7 +10,7 @@ test("[Boolean activation]: everybody receives the same variations at load and u
     await expect(page).toHaveText(`New variant`);
   });
 
-  await changeFlagStatus("1", "1", "NOT_ACTIVATED");
+  await changeFlagStatus("1", "NOT_ACTIVATED");
 
   await browsers.run(async (page, index) => {
     await expect(page).toHaveText(`User ${index}`);
@@ -19,7 +19,7 @@ test("[Boolean activation]: everybody receives the same variations at load and u
 });
 
 test("[Percentage activation authenticated]: 25% of the people should receive the activated variant when activating it ON LOAD", async (browsers, config) => {
-  await changeFlagStatus("1", "2", "ACTIVATED");
+  await changeFlagStatus("2", "ACTIVATED");
 
   await browsers.open("http://localhost:3000");
 
@@ -51,7 +51,7 @@ test("[Percentage activation authenticated]: 25% of the people should receive th
     await expect(page).toHaveText(`Old footer variant`);
   });
 
-  await changeFlagStatus("1", "2", "ACTIVATED");
+  await changeFlagStatus("2", "ACTIVATED");
 
   // Checking numbers
   const activatedCounter = createCounter(
@@ -82,7 +82,7 @@ test("[Percentage activation anonymous]: 25% of the people should receive the ac
     await expect(page).toHaveText(`Old footer variant`);
   });
 
-  await changeFlagStatus("1", "2", "ACTIVATED");
+  await changeFlagStatus("2", "ACTIVATED");
 
   // Checking numbers
   const activatedCounter = createCounter(
