@@ -47,7 +47,7 @@ describe('FlagsController (e2e)', () => {
       const access_token = await authenticate(app);
 
       return request(app.getHttpServer())
-        .put('/flags/1')
+        .put('/flags/3')
         .set('Authorization', `Bearer ${access_token}`)
         .send({
           status: 'ACTIVATED',
@@ -202,7 +202,7 @@ describe('FlagsController (e2e)', () => {
       const access_token = await authenticate(app);
 
       const prevResponse = await request(app.getHttpServer())
-        .get('/flags')
+        .get('/projects/1/flags')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(200);
       expect(prevResponse.body.length).toBe(3);
@@ -213,7 +213,7 @@ describe('FlagsController (e2e)', () => {
       expect(response.status).toBe(200);
 
       const afterResponse = await request(app.getHttpServer())
-        .get('/flags')
+        .get('/projects/1/flags')
         .set('Authorization', `Bearer ${access_token}`);
 
       expect(afterResponse.body.length).toBe(2);
@@ -224,11 +224,11 @@ describe('FlagsController (e2e)', () => {
     it('gives a 401 when the user is not authenticated', () =>
       verifyAuthGuard(app, '/flags/4/variants', 'get'));
 
-    it('gives a 403 when trying to access a valid project but an invalid env', async () => {
+    it('gives a 403 when trying to access a valid flag but an invalid project', async () => {
       const access_token = await authenticate(app);
 
       return request(app.getHttpServer())
-        .get('/flags/4/variants')
+        .get('/flags/3/variants')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(403)
         .expect({
@@ -290,7 +290,7 @@ describe('FlagsController (e2e)', () => {
       const access_token = await authenticate(app);
 
       return request(app.getHttpServer())
-        .post('/flags/6/variants')
+        .post('/flags/68/variants')
         .set('Authorization', `Bearer ${access_token}`)
         .send({
           isControl: false,
@@ -400,7 +400,7 @@ describe('FlagsController (e2e)', () => {
       const access_token = await authenticate(app);
 
       return request(app.getHttpServer())
-        .delete('/flags/4/variants/1')
+        .delete('/flags/3/variants/1')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(403)
         .expect({
