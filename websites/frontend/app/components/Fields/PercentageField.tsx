@@ -36,15 +36,23 @@ export const PercentageField = ({
       </Typography>
 
       <div className="inline-block h-10 flex flex-row items-center">
-        <input
-          type="range"
-          id={id}
-          name={name}
-          min="0"
-          max="100"
-          value={value}
-          onChange={(e) => setValue(Number(e.target.value))}
-        />
+        <div className="relative flex flex-row items-center">
+          <div className="w-full absolute h-2 bg-slate-200 rounded-full" />
+          <div
+            className="h-2 bg-slate-700 absolute rounded-full"
+            style={{ width: `${value}%` }}
+          />
+          <input
+            type="range"
+            id={id}
+            name={name}
+            min="0"
+            max="100"
+            value={value}
+            onChange={(e) => setValue(Number(e.target.value))}
+            className="relative z-10"
+          />
+        </div>
 
         <div
           className="

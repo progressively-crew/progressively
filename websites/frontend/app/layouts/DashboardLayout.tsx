@@ -76,7 +76,7 @@ export const DashboardLayout = ({
 
             {!lastCrumb.isRoot && (
               <header
-                className={`px-4 pb-4 ${crumbs.length > 0 ? "pt-6" : ""}`}
+                className={`px-4 pb-4 ${crumbs.length > 0 ? "pt-4" : ""}`}
               >
                 <div className="flex flex-row gap-2 items-center">
                   <IconBox content={lastCrumb.label} size="L">
@@ -86,7 +86,7 @@ export const DashboardLayout = ({
 
                   <Typography
                     as="span"
-                    className="text-3xl font-extrabold font-title"
+                    className="text-xl font-extrabold font-title"
                   >
                     {lastCrumb.label}
                   </Typography>

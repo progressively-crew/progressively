@@ -4,6 +4,7 @@ import { IconBox } from "~/components/IconBox";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { Table, Tbody, Td, Th, Tr } from "~/components/Table";
 import { useRef } from "react";
+import { Typography } from "~/components/Typography";
 
 export interface FlagListProps {
   flags: Array<Flag>;
@@ -37,6 +38,7 @@ export const FlagListItem = ({ flag, projectId }: FlagListItemProps) => {
         >
           {flag.name}
         </Link>
+        <Typography className="text-xs">{flag.description}</Typography>
       </Td>
     </Tr>
   );
