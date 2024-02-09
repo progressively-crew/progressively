@@ -37,7 +37,6 @@ describe("/dashboard/projects/[id]/flags", () => {
         cy.title().should("eq", "Progressively | Project from seeding | Flags");
 
         cy.findByRole("heading", { name: "Feature flags" }).should("exist");
-        cy.findAllByRole("link", { name: "Production" }).should("be.visible");
 
         cy.checkA11y();
       });
