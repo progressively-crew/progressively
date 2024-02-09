@@ -34,6 +34,14 @@ describe('SdkService', () => {
       status: FlagStatus.ACTIVATED,
       variants: [],
       strategies: [],
+      Project: {
+        uuid: '1',
+        name: 'Project from seeding',
+        clientKey: 'valid-sdk-key',
+        secretKey: 'secret-key',
+        domain: '**',
+        createdAt: new Date(),
+      },
     };
   });
 
