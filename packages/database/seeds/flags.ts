@@ -12,6 +12,14 @@ export const seedFlags = async (prismaClient: PrismaClient) => {
       description: "Switch the new homepage design",
       key: "newHomepage",
       projectUuid: "1",
+      webhooks: {
+        create: {
+          uuid: "1",
+          endpoint: "http://localhost:4000",
+          secret: "this is secret",
+          event: "ACTIVATION",
+        },
+      },
     },
   });
 
