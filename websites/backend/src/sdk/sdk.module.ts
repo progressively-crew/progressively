@@ -1,6 +1,5 @@
 import { Inject, Module, OnModuleInit } from '@nestjs/common';
 import { FlagsModule } from '../flags/flags.module';
-import { EnvironmentsModule } from '../environments/environments.module';
 import { SdkController } from './sdk.controller';
 import { SdkService } from './sdk.service';
 import { WebsocketModule } from '../websocket/websocket.module';
@@ -17,7 +16,6 @@ import { QueuingModule } from '../queuing/queuing.module';
 @Module({
   controllers: [SdkController],
   imports: [
-    EnvironmentsModule,
     FlagsModule,
     WebsocketModule,
     DatabaseModule,

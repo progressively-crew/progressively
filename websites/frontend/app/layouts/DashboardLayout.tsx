@@ -2,7 +2,7 @@ import { Main } from "~/components/Main";
 import { SkipNavLink } from "~/components/SkipNav";
 import { Spacer } from "~/components/Spacer";
 import { Inert } from "~/components/Inert/Inert";
-import { Form, Link, useMatches, useNavigation } from "@remix-run/react";
+import { Form, useMatches, useNavigation } from "@remix-run/react";
 import { BreadCrumbs } from "~/components/Breadcrumbs";
 import { Spinner } from "~/components/Spinner";
 import { UserNav } from "~/modules/user/components/UserNav";
@@ -10,15 +10,11 @@ import { Typography } from "~/components/Typography";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
 import { IconBox } from "~/components/IconBox";
 import { ProjectIcon } from "~/components/Icons/ProjectIcon";
-import { EnvIcon } from "~/components/Icons/EnvIcon";
 import { ToggleFlag } from "~/modules/flags/components/ToggleFlag";
-import { useFlagEnv } from "~/modules/flags/contexts/useFlagEnv";
 import { FlagStatus } from "~/modules/flags/types";
 import { useProject } from "~/modules/projects/contexts/useProject";
-import { EnvMenuButton } from "~/modules/environments/components/EnvMenuButton";
-import { SettingsIcon } from "~/components/Icons/SettingsIcon";
-import { IconButton } from "~/components/Buttons/IconButton";
 import { ButtonCopy } from "~/components/ButtonCopy";
+import { useFlag } from "~/modules/flags/contexts/useFlag";
 
 export interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -35,7 +31,7 @@ export const DashboardLayout = ({
 }: DashboardLayoutProps) => {
   const navigation = useNavigation();
   const matches = useMatches();
-  const { flagEnv } = useFlagEnv();
+  const { flag } = useFlag();
   const { project } = useProject();
 
   const crumbs = matches
@@ -50,7 +46,7 @@ export const DashboardLayout = ({
   const lastCrumb = crumbs.at(-1);
   const hasMoreThanOneCrumb = crumbs.length > 1;
 
-  const isActivated = flagEnv?.status === FlagStatus.ACTIVATED;
+  const isActivated = flag?.status === FlagStatus.ACTIVATED;
 
   return (
     <Inert>
@@ -86,7 +82,6 @@ export const DashboardLayout = ({
                   <IconBox content={lastCrumb.label} size="L">
                     {lastCrumb.isFlag && <FlagIcon />}
                     {lastCrumb.isProject && <ProjectIcon />}
-                    {lastCrumb.isEnv && <EnvIcon />}
                   </IconBox>
 
                   <Typography
@@ -95,42 +90,18 @@ export const DashboardLayout = ({
                   >
                     {lastCrumb.label}
                   </Typography>
-
-                  {project && flagEnv && (
-                    <IconButton
-                      icon={<SettingsIcon />}
-                      tooltip={"Settings"}
-                      as={Link}
-                      to={`/dashboard/projects/${project.uuid}/flags/${flagEnv.flagId}`}
-                    />
-                  )}
-
-                  {project && !flagEnv && (
-                    <IconButton
-                      icon={<SettingsIcon />}
-                      tooltip={"Settings"}
-                      as={Link}
-                      to={`/dashboard/projects/${project.uuid}/settings`}
-                    />
-                  )}
                 </div>
 
-                {flagEnv && project && (
+                {flag?.uuid && project && (
                   <div className="flex flex-row gap-4 items-center pt-2 -mx-3">
-                    <EnvMenuButton
-                      projectId={project.uuid}
-                      flagId={flagEnv.flagId}
-                      environments={project.environments}
-                    />
-
-                    <ButtonCopy toCopy={flagEnv.flag.key} size="S">
-                      {flagEnv.flag.key}
+                    <ButtonCopy toCopy={flag.key} size="S">
+                      {flag.key}
                     </ButtonCopy>
 
-                    <Form method="post" id={`form-${flagEnv.flagId}`}>
+                    <Form method="post" id={`form-${flag.uuid}`}>
                       <ToggleFlag
                         isFlagActivated={isActivated}
-                        flagId={flagEnv.flagId}
+                        flagId={flag.uuid}
                       />
                     </Form>
                   </div>

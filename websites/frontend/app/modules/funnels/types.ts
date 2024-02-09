@@ -2,7 +2,7 @@ export interface Funnel {
   uuid: string;
   name: string;
   createdAt: Date;
-  environmentUuid: string;
+  projectUuid: string;
 }
 
 export interface FunnelChart {

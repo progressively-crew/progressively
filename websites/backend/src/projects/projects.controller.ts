@@ -24,22 +24,20 @@ import {
 } from './projects.dto';
 import { ProjectsService } from './projects.service';
 import { UserRetrieveDTO } from 'src/users/users.dto';
-
 import { Roles } from '../shared/decorators/Roles';
 import { UserRoles } from '../users/roles';
 import { HasProjectAccessGuard } from './guards/hasProjectAccess';
 import { ValidationPipe } from '../shared/pipes/ValidationPipe';
 import { UsersService } from '../users/users.service';
-import { EnvironmentsService } from '../environments/environments.service';
-import {
-  EnvironmentCreationSchema,
-  EnvironmentCreationDTO,
-} from '../environments/environments.dto';
 import { UserStatus } from '../users/status';
 import { MailService } from '../mail/mail.service';
-import { Environment } from '../environments/types';
 import { FlagCreationDTO, FlagCreationSchema } from '../flags/flags.dto';
 import { FlagAlreadyExists } from './errors';
+import {
+  FunnelCreationSchema,
+  FunnelCreationDTO,
+} from '../funnels/funnels.dto';
+import { FunnelsService } from '../funnels/funnels.service';
 
 @ApiBearerAuth()
 @Controller('projects')
@@ -47,8 +45,8 @@ export class ProjectsController {
   constructor(
     private readonly projectService: ProjectsService,
     private readonly userService: UsersService,
-    private readonly envService: EnvironmentsService,
     private readonly mailService: MailService,
+    private readonly funnelService: FunnelsService,
   ) {}
 
   @Get(':id')
@@ -69,13 +67,10 @@ export class ProjectsController {
     return this.projectService.getAll(user.uuid);
   }
 
-  /**
-   * Get all the flag of a given project/env (by projectId and envId)
-   */
   @Get(':id/flags')
   @UseGuards(HasProjectAccessGuard)
   @UseGuards(JwtAuthGuard)
-  getFlagsByProjectAndEnv(@Param('id') id: string) {
+  getFlagsByProject(@Param('id') id: string) {
     return this.projectService.flagsByProject(id);
   }
 
@@ -93,6 +88,14 @@ export class ProjectsController {
       user.uuid,
       projectDto.domain,
     );
+  }
+
+  @Post(':id/rotate')
+  @Roles(UserRoles.Admin)
+  @UseGuards(HasProjectAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  rotateSecretKey(@Param('id') id: string) {
+    return this.projectService.rotateSecretKey(id);
   }
 
   @Delete(':id/members/:memberId')
@@ -168,33 +171,14 @@ export class ProjectsController {
     return this.projectService.deleteProject(id);
   }
 
-  /**
-   * Get all the environments of a given project (by id)
-   */
-  @Get(':id/environments')
+  @Post(':id/funnels')
   @UseGuards(HasProjectAccessGuard)
   @UseGuards(JwtAuthGuard)
-  getProjectEnvironments(@Param('id') id: string) {
-    return this.envService.getProjectEnvironments(id);
+  @UsePipes(new ValidationPipe(FunnelCreationSchema))
+  createFunnel(@Param('id') id: string, @Body() body: FunnelCreationDTO) {
+    return this.funnelService.createFunnel(id, body.name, body.funnelEntries);
   }
 
-  /**
-   * Create an environment on a given project (by id)
-   */
-  @Post(':id/environments')
-  @UseGuards(HasProjectAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  @UsePipes(new ValidationPipe(EnvironmentCreationSchema))
-  createEnvironment(
-    @Param('id') id: string,
-    @Body() envDto: EnvironmentCreationDTO,
-  ): Promise<Environment> {
-    return this.envService.createEnvironment(id, envDto.name, envDto.domain);
-  }
-
-  /**
-   * Create a flag on a given project/env (by projectId and envId)
-   */
   @Post(':id/flags')
   @UseGuards(HasProjectAccessGuard)
   @UseGuards(JwtAuthGuard)
@@ -213,5 +197,178 @@ export class ProjectsController {
 
       throw e;
     }
+  }
+
+  @Get(':id/metrics/count')
+  @UseGuards(HasProjectAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  async getMetricCount(
+    @Param('id') id: string,
+    @Query('startDate') startDate: string | undefined,
+    @Query('endDate') endDate: string | undefined,
+  ) {
+    if (!endDate || !startDate) {
+      throw new BadRequestException('startDate and endDate are required.');
+    }
+
+    const metricCount = await this.projectService.getMetricCount(
+      id,
+      startDate,
+      endDate,
+    );
+
+    const pageViewCount = await this.projectService.getMetricCount(
+      id,
+      startDate,
+      endDate,
+      'Page View',
+    );
+
+    return { metricCount, pageViewCount };
+  }
+
+  @Get(':id/funnels')
+  @UseGuards(HasProjectAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  async getFunnels(
+    @Param('id') id: string,
+    @Query('startDate') startDate: string | undefined,
+    @Query('endDate') endDate: string | undefined,
+  ) {
+    if (!endDate || !startDate) {
+      throw new BadRequestException('startDate and endDate are required.');
+    }
+
+    const funnels = await this.projectService.getFunnels(id);
+    return await this.funnelService.buildFunnelCharts(
+      id,
+      funnels,
+      startDate,
+      endDate,
+    );
+  }
+
+  @Get(':id/events')
+  @UseGuards(HasProjectAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  async getEventsByDate(
+    @Param('id') id: string,
+    @Query('startDate') startDate: string | undefined,
+    @Query('endDate') endDate: string | undefined,
+  ) {
+    if (!endDate || !startDate) {
+      throw new BadRequestException('startDate and endDate are required.');
+    }
+
+    const pageViewsPerDate = await this.projectService.getEventsPerDate(
+      id,
+      startDate,
+      endDate,
+      true,
+    );
+
+    const eventsPerDate = await this.projectService.getEventsPerDate(
+      id,
+      startDate,
+      endDate,
+      false,
+    );
+
+    const eventsPerDatePerOs =
+      await this.projectService.getEventsPerDatePerGroup(
+        id,
+        startDate,
+        endDate,
+        'os',
+      );
+
+    const eventsPerDatePerBrowser =
+      await this.projectService.getEventsPerDatePerGroup(
+        id,
+        startDate,
+        endDate,
+        'browser',
+      );
+
+    const eventsPerDatePerUrl =
+      await this.projectService.getEventsPerDatePerGroup(
+        id,
+        startDate,
+        endDate,
+        'url',
+      );
+
+    const eventsPerDatePerReferer =
+      await this.projectService.getEventsPerDatePerGroup(
+        id,
+        startDate,
+        endDate,
+        'referer',
+      );
+
+    const uniqueVisitors = await this.projectService.getUniqueVisitor(
+      id,
+      startDate,
+      endDate,
+    );
+
+    const bounceRate = await this.projectService.getBounceRate(
+      id,
+      startDate,
+      endDate,
+    );
+
+    return {
+      pageViewsPerDate,
+      eventsPerDate,
+      eventsPerDatePerOs,
+      eventsPerDatePerBrowser,
+      eventsPerDatePerUrl,
+      eventsPerDatePerReferer,
+      uniqueVisitorsCount: uniqueVisitors.length,
+      bounceRate,
+    };
+  }
+
+  @Get(':id/events/distinct')
+  @UseGuards(HasProjectAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  async getDistinctEventName(
+    @Param('id') id: string,
+    @Query('startDate') startDate: string | undefined,
+    @Query('endDate') endDate: string | undefined,
+  ) {
+    if (!endDate || !startDate) {
+      throw new BadRequestException('startDate and endDate are required.');
+    }
+
+    const distinctEvents = await this.projectService.getDistinctEventName(
+      id,
+      startDate,
+      endDate,
+    );
+
+    return distinctEvents.map((ev) => ev.name);
+  }
+
+  @Get(':id/events/pageview/urls')
+  @UseGuards(HasProjectAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  async getPageViewEventUrl(
+    @Param('id') id: string,
+    @Query('startDate') startDate: string | undefined,
+    @Query('endDate') endDate: string | undefined,
+  ) {
+    if (!endDate || !startDate) {
+      throw new BadRequestException('startDate and endDate are required.');
+    }
+
+    const pageViewEvents = await this.projectService.getPageViewEventUrl(
+      id,
+      startDate,
+      endDate,
+    );
+
+    return pageViewEvents.map((e) => e.url);
   }
 }

@@ -1,5 +1,5 @@
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { LoaderFunction, V2_MetaFunction, redirect } from "@remix-run/node";
+import { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { Card, CardContent } from "~/components/Card";
@@ -10,12 +10,12 @@ import { InsightsFilters } from "~/modules/projects/components/InsightsFilters";
 import { BarChart } from "~/components/BarChart";
 import { Typography } from "~/components/Typography";
 import { CreateButton } from "~/components/Buttons/CreateButton";
-import { Outlet, useLoaderData, useSearchParams } from "@remix-run/react";
-import { getFunnels } from "~/modules/environments/services/getFunnels";
+import { Outlet, useLoaderData } from "@remix-run/react";
+import { getFunnels } from "~/modules/projects/services/getFunnels";
 import { getSession } from "~/sessions";
 import { FunnelChart } from "~/modules/funnels/types";
 
-export const meta: V2_MetaFunction = ({ matches }) => {
+export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
 
   return [
@@ -36,11 +36,6 @@ export const loader: LoaderFunction = async ({
   const session = await getSession(request.headers.get("Cookie"));
   const url = new URL(request.url);
   const search = new URLSearchParams(url.search);
-  const envId = params.env || search.get("envId");
-
-  if (!envId) {
-    throw redirect("/401");
-  }
 
   const strDays = search.get("days");
   let day = Number(strDays);
@@ -57,7 +52,7 @@ export const loader: LoaderFunction = async ({
   const authCookie = session.get("auth-cookie");
 
   const funnels: Array<FunnelChart> = await getFunnels(
-    envId,
+    params.id!,
     start,
     end,
     authCookie
@@ -69,9 +64,6 @@ export const loader: LoaderFunction = async ({
 export default function FunnelsPage() {
   const { project } = useProject();
   const { funnels } = useLoaderData<LoaderData>();
-  const [searchParams] = useSearchParams();
-
-  const envId = searchParams.get("envId") || project.environments[0] || "";
 
   return (
     <>
@@ -80,13 +72,10 @@ export default function FunnelsPage() {
           value="Funnels"
           action={
             <div className="flex flex-row items-center gap-8">
-              <CreateButton to={`./${envId}/create`}>
+              <CreateButton to={`./${project.uuid}/create`}>
                 Create a funnel
               </CreateButton>
-              <InsightsFilters
-                projectId={project.uuid}
-                environments={project.environments}
-              />
+              <InsightsFilters />
             </div>
           }
         />

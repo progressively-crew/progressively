@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Flag" ADD COLUMN     "status" TEXT DEFAULT 'NOT_ACTIVATED';

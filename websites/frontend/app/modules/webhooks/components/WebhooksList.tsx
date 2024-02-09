@@ -7,14 +7,12 @@ import { Table, Tbody, Th, Tr, Td } from "~/components/Table";
 export interface WebhooksListProps {
   webhooks: Array<Webhook>;
   projectId: string;
-  envId: string;
   flagId: string;
 }
 
 export const WebhooksList = ({
   webhooks,
   projectId,
-  envId,
   flagId,
 }: WebhooksListProps) => {
   return (
@@ -52,7 +50,7 @@ export const WebhooksList = ({
                   items={[
                     {
                       label: "Remove",
-                      href: `/dashboard/projects/${projectId}/environments/${envId}/flags/${flagId}/webhooks/${webhook.uuid}/delete`,
+                      href: `/dashboard/projects/${projectId}/flags/${flagId}/webhooks/${webhook.uuid}/delete`,
                     },
                   ]}
                   label={"Actions on webhook"}

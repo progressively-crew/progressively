@@ -1,20 +1,13 @@
 import { Constants } from "~/constants";
 
-export const createStrategy = (
-  envId: string,
-  flagId: string,
-  accessToken: string
-) =>
-  fetch(
-    `${Constants.BackendUrl}/environments/${envId}/flags/${flagId}/strategies`,
-    {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-      },
-    }
-  ).then((res) => {
+export const createStrategy = (flagId: string, accessToken: string) =>
+  fetch(`${Constants.BackendUrl}/flags/${flagId}/strategies`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+  }).then((res) => {
     if (!res.ok) {
       throw new Error(
         "Woops! Something went wrong when trying to create the strategy."

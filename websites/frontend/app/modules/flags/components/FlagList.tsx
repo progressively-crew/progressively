@@ -1,23 +1,48 @@
-import { HiOutlineCog6Tooth } from "react-icons/hi2";
+import { Link } from "@remix-run/react";
 import { Flag } from "../types";
 import { IconBox } from "~/components/IconBox";
 import { FlagIcon } from "~/components/Icons/FlagIcon";
-import { Environment } from "~/modules/environments/types";
-import { Button } from "~/components/Buttons/Button";
-import { EnvIcon } from "~/components/Icons/EnvIcon";
 import { Table, Tbody, Td, Th, Tr } from "~/components/Table";
+import { useRef } from "react";
 
-export interface FlagEnvListProps {
+export interface FlagListProps {
   flags: Array<Flag>;
   projectId: string;
-  environments: Array<Environment>;
 }
 
-export const FlagList = ({
-  flags,
-  projectId,
-  environments,
-}: FlagEnvListProps) => {
+export interface FlagListItemProps {
+  flag: Flag;
+  projectId: string;
+}
+
+export const FlagListItem = ({ flag, projectId }: FlagListItemProps) => {
+  const linkRef = useRef<HTMLAnchorElement>(null);
+
+  return (
+    <Tr
+      key={flag.uuid}
+      onClick={() => {
+        linkRef?.current?.click();
+      }}
+    >
+      <Td style={{ width: 40 }}>
+        <IconBox content={flag.name}>
+          <FlagIcon />
+        </IconBox>
+      </Td>
+      <Td>
+        <Link
+          ref={linkRef}
+          to={`/dashboard/projects/${projectId}/flags/${flag.uuid}/audience`}
+        >
+          {flag.name}
+        </Link>
+      </Td>
+    </Tr>
+  );
+};
+
+export const FlagList = ({ flags, projectId }: FlagListProps) => {
   return (
     <Table>
       <caption className="sr-only">Feature flag list for the project</caption>
@@ -27,45 +52,11 @@ export const FlagList = ({
             <span className="sr-only">Flag icon</span>
           </Th>
           <Th>Flag name</Th>
-          <Th>Environments</Th>
-          <Th>Actions</Th>
         </tr>
       </thead>
       <Tbody>
         {flags.map((flag) => (
-          <Tr key={flag.uuid}>
-            <Td style={{ width: 40 }}>
-              <IconBox content={flag.name}>
-                <FlagIcon />
-              </IconBox>
-            </Td>
-            <Td>{flag.name}</Td>
-            <Td>
-              <div className="flex flex-row gap-2 flex-wrap">
-                {environments.map((env) => (
-                  <Button
-                    variant="secondary"
-                    key={`${flag.uuid}-${env.uuid}`}
-                    to={`/dashboard/projects/${projectId}/environments/${env.uuid}/flags/${flag.uuid}/audience`}
-                    icon={<EnvIcon />}
-                    size="S"
-                  >
-                    {env.name}
-                  </Button>
-                ))}
-              </div>
-            </Td>
-            <Td>
-              <Button
-                to={`/dashboard/projects/${projectId}/flags/${flag.uuid}`}
-                variant="secondary"
-                icon={<HiOutlineCog6Tooth />}
-                size="S"
-              >
-                Settings
-              </Button>
-            </Td>
-          </Tr>
+          <FlagListItem key={flag.uuid} flag={flag} projectId={projectId} />
         ))}
       </Tbody>
     </Table>

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import camelcase from 'camelcase';
+import { v4 as uuidv4 } from 'uuid';
 import { UserRoles } from '../users/roles';
 import { PrismaService } from '../database/prisma.service';
 import { FlagAlreadyExists } from './errors';
@@ -10,20 +11,22 @@ export class ProjectsService {
 
   flagsByProject(projectId: string) {
     return this.prisma.flag.findMany({
-      include: {
-        flagEnvironment: true,
-      },
       where: {
-        flagEnvironment: {
-          some: {
-            environment: {
-              projectId,
-            },
-          },
-        },
+        projectUuid: projectId,
       },
       orderBy: {
         createdAt: 'desc',
+      },
+    });
+  }
+
+  rotateSecretKey(uuid: string) {
+    return this.prisma.project.updateMany({
+      where: {
+        uuid,
+      },
+      data: {
+        secretKey: uuidv4(),
       },
     });
   }
@@ -32,18 +35,11 @@ export class ProjectsService {
     return this.prisma.project.create({
       data: {
         name,
+        domain: prodDomain,
         userProject: {
           create: {
             userId,
             role: UserRoles.Admin,
-          },
-        },
-        environments: {
-          createMany: {
-            data: [
-              { name: 'Development', domain: '**' },
-              { name: 'Production', domain: prodDomain },
-            ],
           },
         },
       },
@@ -56,19 +52,7 @@ export class ProjectsService {
         userId,
       },
       include: {
-        project: {
-          include: {
-            environments: {
-              include: {
-                flagEnvironment: {
-                  include: {
-                    flag: true,
-                  },
-                },
-              },
-            },
-          },
-        },
+        project: true,
       },
     });
   }
@@ -95,11 +79,6 @@ export class ProjectsService {
         uuid,
       },
       include: {
-        environments: {
-          orderBy: {
-            createdAt: 'asc',
-          },
-        },
         userProject,
       },
     });
@@ -160,45 +139,26 @@ export class ProjectsService {
   }
 
   async deleteProject(projectId: string) {
-    const flagEnvs = await this.prisma.flagEnvironment.findMany({
-      where: {
-        environment: {
-          projectId,
-        },
-      },
-    });
-
-    const getDeleteFlagsQueries = () =>
-      flagEnvs.map((flagEnv) =>
-        this.prisma.flag.deleteMany({ where: { uuid: flagEnv.flagId } }),
-      );
-
     const deleteQueries = [
       this.prisma.webhook.deleteMany({
         where: {
-          flagEnvironment: {
-            environment: {
-              projectId,
-            },
+          Flag: {
+            projectUuid: projectId,
           },
         },
       }),
       this.prisma.flagHit.deleteMany({
         where: {
-          FlagEnvironment: {
-            environment: {
-              projectId,
-            },
+          Flag: {
+            projectUuid: projectId,
           },
         },
       }),
       this.prisma.rule.deleteMany({
         where: {
           Strategy: {
-            FlagEnvironment: {
-              environment: {
-                projectId,
-              },
+            Flag: {
+              projectUuid: projectId,
             },
           },
         },
@@ -206,52 +166,34 @@ export class ProjectsService {
       this.prisma.strategyVariant.deleteMany({
         where: {
           strategy: {
-            FlagEnvironment: {
-              environment: {
-                projectId,
-              },
+            Flag: {
+              projectUuid: projectId,
             },
           },
         },
       }),
       this.prisma.strategy.deleteMany({
         where: {
-          FlagEnvironment: {
-            environment: {
-              projectId,
-            },
+          Flag: {
+            projectUuid: projectId,
           },
         },
       }),
       this.prisma.event.deleteMany({
         where: {
-          Environment: {
-            projectId,
-          },
+          projectUuid: projectId,
         },
       }),
       this.prisma.variant.deleteMany({
         where: {
-          flagEnvironment: {
-            environment: {
-              projectId,
-            },
+          Flag: {
+            projectUuid: projectId,
           },
         },
       }),
-      this.prisma.flagEnvironment.deleteMany({
-        where: {
-          environment: {
-            projectId,
-          },
-        },
-      }),
-      ...getDeleteFlagsQueries(),
-      this.prisma.environment.deleteMany({
-        where: {
-          projectId,
-        },
-      }),
+
+      this.prisma.flag.deleteMany({ where: { projectUuid: projectId } }),
+
       this.prisma.userProject.deleteMany({
         where: {
           projectId,
@@ -276,39 +218,221 @@ export class ProjectsService {
   ) {
     const flagKey = camelcase(name);
 
-    const existingFlagEnv = await this.prisma.flagEnvironment.findFirst({
+    const existingFlag = await this.prisma.flag.findFirst({
       where: {
-        environment: {
-          projectId,
-        },
-        flag: {
-          key: flagKey,
-        },
+        projectUuid: projectId,
+        key: flagKey,
       },
     });
 
-    if (existingFlagEnv) {
+    if (existingFlag) {
       throw new FlagAlreadyExists();
     }
-
-    const envsOfProject = await this.prisma.environment.findMany({
-      where: {
-        projectId,
-      },
-    });
 
     return await this.prisma.flag.create({
       data: {
         name,
         description,
         key: flagKey,
-        flagEnvironment: {
-          createMany: {
-            data: envsOfProject.map((env) => ({
-              environmentId: env.uuid,
-            })),
+        projectUuid: projectId,
+      },
+    });
+  }
+
+  getMetricCount(
+    projectId: string,
+    startDate: string,
+    endDate: string,
+    eventFilter?: string,
+  ) {
+    const eventFilterObj = eventFilter
+      ? { name: eventFilter }
+      : {
+          NOT: {
+            name: 'Page View',
           },
+        };
+
+    return this.prisma.event.count({
+      where: {
+        projectUuid: projectId,
+        date: {
+          gte: new Date(startDate),
+          lte: new Date(endDate),
         },
+
+        ...eventFilterObj,
+      },
+    });
+  }
+
+  getFunnels(projectId: string) {
+    return this.prisma.funnel.findMany({
+      where: {
+        projectUuid: projectId,
+      },
+    });
+  }
+
+  getDistinctEventName(
+    projectId: string,
+    startDate: string,
+    endDate: string,
+    eventFilter?: string,
+  ) {
+    const eventFilterObj = eventFilter ? { name: eventFilter } : {};
+
+    return this.prisma.event.findMany({
+      distinct: ['name'],
+      where: {
+        projectUuid: projectId,
+        date: {
+          gte: new Date(startDate),
+          lte: new Date(endDate),
+        },
+        ...eventFilterObj,
+      },
+    });
+  }
+
+  async getEventsPerDate(
+    projectId: string,
+    startDate: string,
+    endDate: string,
+    pageView: boolean,
+  ) {
+    const eventFilter = pageView
+      ? { name: 'Page View' }
+      : { NOT: { name: 'Page View' } };
+
+    const distinctEventName = await this.getDistinctEventName(
+      projectId,
+      startDate,
+      endDate,
+      pageView ? 'Page View' : undefined,
+    );
+
+    const dictByDates = {};
+
+    for (const dhv of distinctEventName) {
+      const hitsByDate = await this.prisma.event.groupBy({
+        _count: true,
+        by: ['name', 'date'],
+        where: {
+          projectUuid: projectId,
+          name: dhv.name,
+          date: {
+            gte: new Date(startDate),
+            lte: new Date(endDate),
+          },
+          ...eventFilter,
+        },
+        orderBy: {
+          date: 'asc',
+        },
+      });
+
+      hitsByDate.forEach((hbd) => {
+        const isoDate = hbd.date.toISOString();
+
+        if (!dictByDates[isoDate]) {
+          dictByDates[isoDate] = {};
+        }
+
+        dictByDates[isoDate]['date'] = isoDate;
+        dictByDates[isoDate][dhv.name] = hbd._count;
+      });
+    }
+
+    return Object.keys(dictByDates)
+      .sort()
+      .map((k) => dictByDates[k]);
+  }
+
+  getEventsPerDatePerGroup(
+    projectId: string,
+    startDate: string,
+    endDate: string,
+    group: 'os' | 'browser' | 'url' | 'referer',
+  ) {
+    const notConstrains = group === 'referer' ? { NOT: { referer: null } } : {};
+
+    return this.prisma.event.groupBy({
+      by: [group],
+      _count: {
+        uuid: true,
+      },
+      where: {
+        projectUuid: projectId,
+        date: {
+          gte: new Date(startDate),
+          lte: new Date(endDate),
+        },
+        name: 'Page View',
+        ...notConstrains,
+      },
+      orderBy: {
+        _count: {
+          uuid: 'desc',
+        },
+      },
+    });
+  }
+
+  getUniqueVisitor(projectId: string, startDate: string, endDate: string) {
+    return this.prisma.event.findMany({
+      distinct: ['visitorId'],
+      where: {
+        projectUuid: projectId,
+        date: {
+          gte: new Date(startDate),
+          lte: new Date(endDate),
+        },
+      },
+    });
+  }
+
+  async getBounceRate(projectId: string, startDate: string, endDate: string) {
+    // Hint: "PV" name is "PageView" but shorter for bundle size
+    const bounceRateData = await this.prisma.$queryRaw`
+     SELECT
+        COUNT(CASE WHEN numPages = 1 THEN 1 ELSE NULL END) AS SinglePageSessions,
+        COUNT(*) AS TotalSessions
+      FROM (
+        SELECT
+          "Event"."visitorId",
+          COUNT(DISTINCT "Event"."url") AS numPages
+        FROM
+          "Event"
+        WHERE "Event"."date" BETWEEN ${startDate}::timestamp AND ${endDate}::timestamp
+        AND "Event"."projectUuid"=${projectId}
+        AND "Event"."name"='Page View'
+        GROUP BY
+          "Event"."visitorId"
+      ) AS SessionCounts;
+    `;
+
+    const singlepagesessions = bounceRateData[0]?.singlepagesessions;
+    const totalsessions = bounceRateData[0]?.totalsessions;
+
+    let bounceRate = 0;
+    if (singlepagesessions && totalsessions) {
+      bounceRate = (Number(singlepagesessions) / Number(totalsessions)) * 100;
+    }
+
+    return bounceRate;
+  }
+
+  getPageViewEventUrl(projectId: string, startDate: string, endDate: string) {
+    return this.prisma.event.findMany({
+      distinct: ['url'],
+      where: {
+        projectUuid: projectId,
+        date: {
+          gte: new Date(startDate),
+          lte: new Date(endDate),
+        },
+        name: 'Page View',
       },
     });
   }

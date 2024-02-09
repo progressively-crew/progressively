@@ -12,8 +12,7 @@ export class ActivityLogService {
         concernedEntity: activity.concernedEntity,
         type: activity.type,
         userUuid: activity.userId,
-        flagEnvironmentFlagId: activity.flagId,
-        flagEnvironmentEnvironmentId: activity.envId,
+        flagUuid: activity.flagId,
         data: activity.data,
       },
     });

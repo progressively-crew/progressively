@@ -1,4 +1,3 @@
-import { Environment } from "../environments/types";
 import { User } from "../user/types";
 
 // In Sync with the backend UserRoles type
@@ -11,7 +10,6 @@ export interface Project {
   uuid: string;
   createdAt: string;
   name: string;
-  environments: Array<Environment>;
   userProject?: Array<UserProject>;
 }
 
@@ -26,4 +24,22 @@ export interface UserProject {
 export interface CreateProjectDTO {
   name: string;
   domain: string;
+}
+
+export interface LocalCount {
+  count: number;
+  name: string;
+}
+
+export interface Funnel {
+  uuid: string;
+  name: string;
+}
+
+export interface CreateFunnelEntryDTO {
+  flagUuid?: string;
+  flagName?: string;
+  eventName?: string;
+  variant?: string;
+  pageViewUrl?: string;
 }

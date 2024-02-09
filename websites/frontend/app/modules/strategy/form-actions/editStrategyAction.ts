@@ -51,7 +51,6 @@ const mapRawStrategyToActualStrategy = (
 };
 
 export const editStrategyAction = async (
-  envId: string,
   flagId: string,
   formObject: any,
   authCookie: string
@@ -62,7 +61,7 @@ export const editStrategyAction = async (
   );
 
   try {
-    await editStrategies(envId, flagId, strategiesToUpdate, authCookie);
+    await editStrategies(flagId, strategiesToUpdate, authCookie);
 
     return {
       successStrategyEdited: true,

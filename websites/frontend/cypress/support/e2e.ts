@@ -62,7 +62,7 @@ Cypress.Commands.add("checkUnauthenticatedRoute", () => {
 });
 
 Cypress.Commands.overwrite("checkA11y", (originalFn) => {
-  cy.wait(50);
+  cy.wait(100);
 
   return originalFn();
 });
@@ -79,13 +79,3 @@ Cypress.on("uncaught:exception", (err) => {
     return false;
   }
 });
-
-if (Cypress.env("DARK_THEME")) {
-  Cypress.on("window:before:load", (win) => {
-    cy.stub(win, "matchMedia")
-      .withArgs("(prefers-color-scheme: dark)")
-      .returns({
-        matches: true,
-      });
-  });
-}

@@ -28,7 +28,7 @@ describe('Webhooks (e2e)', () => {
     it('gives a 401 when the user is not authenticated', () =>
       verifyAuthGuard(app, '/webhooks/1', 'delete'));
 
-    it('gives a 403 when trying to access a valid project but an invalid env', async () => {
+    it('gives a 403 when trying to delete a webhook that is not in the a project I own', async () => {
       const access_token = await authenticate(app);
 
       return request(app.getHttpServer())
@@ -73,8 +73,6 @@ describe('Webhooks (e2e)', () => {
         endpoint: 'http://localhost:4000',
         secret: 'this is secret',
         event: 'ACTIVATION',
-        flagEnvironmentFlagId: '1',
-        flagEnvironmentEnvironmentId: '1',
       });
     });
   });

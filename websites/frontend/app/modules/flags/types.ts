@@ -1,6 +1,3 @@
-import { Environment } from "../environments/types";
-import { Variant } from "../variants/types";
-
 export enum FlagStatus {
   ACTIVATED = "ACTIVATED",
   NOT_ACTIVATED = "NOT_ACTIVATED",
@@ -13,19 +10,7 @@ export interface Flag {
   key: string;
   name: string;
   uuid: string;
-}
-
-export interface FlagWithEnvs extends Flag {
-  flagEnvironment: Array<FlagEnv>;
-}
-
-export interface FlagEnv {
-  flagId: string;
-  environmentId: string;
   status: FlagStatus;
-  flag: Flag;
-  environment: Environment;
-  variants: Array<Variant>;
 }
 
 export interface CreateFlagDTO {

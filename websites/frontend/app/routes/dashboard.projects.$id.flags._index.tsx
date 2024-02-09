@@ -4,7 +4,7 @@ import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { EmptyState } from "~/components/EmptyState";
 import { CreateButton } from "~/components/Buttons/CreateButton";
-import { V2_MetaFunction, LoaderFunction } from "@remix-run/node";
+import { MetaFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { Card, CardContent } from "~/components/Card";
 import { useProject } from "~/modules/projects/contexts/useProject";
@@ -16,7 +16,7 @@ import { ProjectNavBar } from "~/modules/projects/components/ProjectNavBar";
 import { getProjectFlags } from "~/modules/projects/services/getProjectFlags";
 import { FlagList } from "~/modules/flags/components/FlagList";
 
-export const meta: V2_MetaFunction = ({ matches }) => {
+export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
 
   return [
@@ -42,7 +42,7 @@ export const loader: LoaderFunction = async ({
   return { flags };
 };
 
-export default function FlagsByEnvPage() {
+export default function FlagsByProject() {
   const { flags } = useLoaderData<LoaderData>();
   const { project } = useProject();
 
@@ -50,7 +50,6 @@ export default function FlagsByEnvPage() {
   const search = searchParams.get("search");
   const newFlagId = searchParams.get("newFlagId") || undefined;
   const flagEdited = searchParams.get("flagEdited") || undefined;
-  const envRemoved = searchParams.get("envRemoved") || undefined;
   const projectCreated = searchParams.get("projectCreated") || undefined;
 
   const isFlagRemoved = searchParams.get("flagRemoved") || undefined;
@@ -71,12 +70,8 @@ export default function FlagsByEnvPage() {
             The flag has been successfully edited.
           </SuccessBox>
         ) : projectCreated ? (
-          <SuccessBox id="env-removed">
+          <SuccessBox id="project-created">
             The project has been successfully created.
-          </SuccessBox>
-        ) : envRemoved ? (
-          <SuccessBox id="env-removed">
-            The environment has been successfully deleted.
           </SuccessBox>
         ) : isFlagRemoved ? (
           <SuccessBox id="flag-removed">
@@ -115,11 +110,7 @@ export default function FlagsByEnvPage() {
             />
           </SearchLayout>
 
-          <FlagList
-            flags={filteredFlags}
-            projectId={project.uuid}
-            environments={project.environments}
-          />
+          <FlagList flags={filteredFlags} projectId={project.uuid} />
         </>
       ) : (
         <Card>
@@ -127,7 +118,7 @@ export default function FlagsByEnvPage() {
             <EmptyState
               titleAs="h2"
               title="No flags found"
-              description={"There are no flags yet on this environment."}
+              description={"There are no flags yet on this project."}
               action={
                 <CreateButton
                   to={`/dashboard/projects/${project.uuid}/flags/create`}

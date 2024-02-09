@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { Flag, PrismaClient } from "@prisma/client";
 
 const SEED_ROUND_EVENT_HITS = process.env.SEED_ROUND_EVENT_HITS
   ? Number(process.env.SEED_ROUND_EVENT_HITS)
@@ -11,6 +11,15 @@ export const seedFlags = async (prismaClient: PrismaClient) => {
       name: "New homepage",
       description: "Switch the new homepage design",
       key: "newHomepage",
+      projectUuid: "1",
+      webhooks: {
+        create: {
+          uuid: "1",
+          endpoint: "http://localhost:4000",
+          secret: "this is secret",
+          event: "ACTIVATION",
+        },
+      },
     },
   });
 
@@ -20,6 +29,8 @@ export const seedFlags = async (prismaClient: PrismaClient) => {
       name: "New footer",
       description: "Switch the new footer design",
       key: "newFooter",
+      projectUuid: "1",
+      status: "ACTIVATED",
     },
   });
 
@@ -38,6 +49,7 @@ export const seedFlags = async (prismaClient: PrismaClient) => {
       name: "With multivariate",
       description: "Switch the multivariate flag",
       key: "multivariate",
+      projectUuid: "1",
     },
   });
 
@@ -46,7 +58,7 @@ export const seedFlags = async (prismaClient: PrismaClient) => {
 
 export const seedFlagHits = async (
   prismaClient: PrismaClient,
-  flagEnv: any,
+  flag: Flag,
   date: Date,
   count = 10
 ) => {
@@ -58,8 +70,7 @@ export const seedFlagHits = async (
   for (let i = 0; i < count; i++) {
     await prismaClient.flagHit.create({
       data: {
-        flagEnvironmentFlagId: flagEnv.flagId,
-        flagEnvironmentEnvironmentId: flagEnv.environmentId,
+        flagUuid: flag.uuid,
         valueResolved: "true",
         date,
         visitorId: "1",
@@ -69,8 +80,7 @@ export const seedFlagHits = async (
     if (i < count / 2) {
       await prismaClient.flagHit.create({
         data: {
-          flagEnvironmentFlagId: flagEnv.flagId,
-          flagEnvironmentEnvironmentId: flagEnv.environmentId,
+          flagUuid: flag.uuid,
           valueResolved: "false",
           date,
           visitorId: "1",
@@ -82,7 +92,7 @@ export const seedFlagHits = async (
 
 export const seedFlagHitsVariants = async (
   prismaClient: PrismaClient,
-  flagEnv: any
+  flag: Flag
 ) => {
   // Modify this value to see more real logs on N days
   const dayCount = SEED_ROUND_EVENT_HITS;
@@ -100,8 +110,7 @@ export const seedFlagHitsVariants = async (
     for (let y = 0; y < count; y++) {
       await prismaClient.flagHit.create({
         data: {
-          flagEnvironmentFlagId: flagEnv.flagId,
-          flagEnvironmentEnvironmentId: flagEnv.environmentId,
+          flagUuid: flag.uuid,
           valueResolved: "Control",
           date,
           visitorId: "1",
@@ -111,8 +120,7 @@ export const seedFlagHitsVariants = async (
       if (y < count / 2) {
         await prismaClient.flagHit.create({
           data: {
-            flagEnvironmentFlagId: flagEnv.flagId,
-            flagEnvironmentEnvironmentId: flagEnv.environmentId,
+            flagUuid: flag.uuid,
             valueResolved: "Second",
             date,
             visitorId: "1",

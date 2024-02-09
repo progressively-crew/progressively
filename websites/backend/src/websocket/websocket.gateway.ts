@@ -8,7 +8,7 @@ import { WebSocketServer as WSServer } from 'ws';
 import { URL } from 'url';
 import { Rooms } from './rooms';
 import { LocalWebsocket, Subscriber } from './types';
-import { PopulatedFlagEnv } from '../flags/types';
+import { PopulatedFlag } from '../flags/types';
 import { IPubsubService } from 'src/pubsub/types';
 import { Inject } from '@nestjs/common';
 
@@ -17,7 +17,7 @@ export class WebsocketGateway
   implements OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit
 {
   private rooms: Rooms;
-  private subscribers: Array<Subscriber<PopulatedFlagEnv>>;
+  private subscribers: Array<Subscriber<PopulatedFlag>>;
   private heartBeatIntervalId: NodeJS.Timeout;
 
   constructor(
@@ -79,9 +79,9 @@ export class WebsocketGateway
   initSubscription() {
     this.pubsubService.subscribe(
       'flag-env-changed',
-      async (subscribedEntity: PopulatedFlagEnv) => {
+      async (subscribedEntity: PopulatedFlag) => {
         const sockets = this.rooms.getSockets(
-          subscribedEntity.environment.clientKey,
+          subscribedEntity.Project.clientKey,
         );
 
         for (const sock of sockets) {
@@ -100,7 +100,7 @@ export class WebsocketGateway
     );
   }
 
-  registerSubscriptionHandler(subscriber: Subscriber<PopulatedFlagEnv>) {
+  registerSubscriptionHandler(subscriber: Subscriber<PopulatedFlag>) {
     this.subscribers.push(subscriber);
   }
 

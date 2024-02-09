@@ -2,40 +2,40 @@ import {
   ActionFunction,
   LoaderFunction,
   redirect,
-  V2_MetaFunction,
+  MetaFunction,
 } from "@remix-run/node";
 import {
   useActionData,
   Form,
   useNavigation,
-  useParams,
   useLoaderData,
 } from "@remix-run/react";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { TextInput } from "~/components/Fields/TextInput";
-import { CreateFlagDTO, Flag, FlagEnv } from "~/modules/flags/types";
+import { CreateFlagDTO, Flag } from "~/modules/flags/types";
 import { getSession } from "~/sessions";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 import { DialogCloseBtn } from "~/components/Dialog/Dialog";
-import { createFunnel } from "~/modules/environments/services/createFunnel";
-import { getDistinctEventName } from "~/modules/environments/services/getDistinctEventName";
+import { createFunnel } from "~/modules/projects/services/createFunnel";
+import { getDistinctEventName } from "~/modules/projects/services/getDistinctEventName";
 import { SelectField } from "~/components/Fields/Select/SelectField";
 import { useMemo, useReducer } from "react";
 import { Typography } from "~/components/Typography";
-import { getFlagsByProjectEnv } from "~/modules/flags/services/getFlagsByProjectEnv";
+
+import { getPageViewEvent } from "~/modules/projects/services/getPageViewEvent";
+import { getProjectFlags } from "~/modules/projects/services/getProjectFlags";
 import {
   funnelCreationReducer,
-  getInitialState,
   initialState,
-} from "~/modules/environments/reducers/funnelCreationReducer";
-import { getPageViewEvent } from "~/modules/environments/services/getPageViewEvent";
+  getInitialState,
+} from "~/modules/projects/reducers/funnelCreationReducer";
 
-export const meta: V2_MetaFunction = ({ matches }) => {
+export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
 
   return [
@@ -49,18 +49,12 @@ interface ActionData {
   errors?: Partial<CreateFlagDTO>;
 }
 
-interface LoaderData {
-  eventNames: Array<string>;
-  flagEnvs: Array<FlagEnv>;
-  pageViewUrls: Array<string>;
-}
-
 export const action: ActionFunction = async ({
   request,
   params,
 }): Promise<ActionData | Response> => {
   const projectId = params.id!;
-  const envId = params.env!;
+
   const formData = await request.formData();
   const name = formData.get("funnel-name")?.toString();
   const funnelEntries = formData
@@ -81,14 +75,14 @@ export const action: ActionFunction = async ({
 
   try {
     const newFunnel: Flag = await createFunnel(
-      envId,
+      projectId,
       name!,
       funnelEntries,
       session.get("auth-cookie")
     );
 
     return redirect(
-      `/dashboard/projects/${projectId}/funnels?newFunnelId=${newFunnel.uuid}&envId=${envId}#funnel-added`
+      `/dashboard/projects/${projectId}/funnels?newFunnelId=${newFunnel.uuid}#funnel-added`
     );
   } catch (error: unknown) {
     if (error instanceof Error) {
@@ -99,18 +93,10 @@ export const action: ActionFunction = async ({
   }
 };
 
-export const loader: LoaderFunction = async ({
-  request,
-  params,
-}): Promise<LoaderData> => {
+export const loader: LoaderFunction = async ({ request, params }) => {
   const session = await getSession(request.headers.get("Cookie"));
   const url = new URL(request.url);
   const search = new URLSearchParams(url.search);
-  const envId = params.env;
-
-  if (!envId) {
-    throw redirect("/401");
-  }
 
   const strDays = search.get("days");
   let day = Number(strDays);
@@ -126,48 +112,47 @@ export const loader: LoaderFunction = async ({
 
   const authCookie = session.get("auth-cookie");
 
-  const flagEnvs: Array<FlagEnv> = await getFlagsByProjectEnv(
-    envId,
-    authCookie
-  );
+  const projectId = params.id!;
+
+  const flags: Array<Flag> = await getProjectFlags(projectId, authCookie);
 
   const eventNames: Array<string> = await getDistinctEventName(
-    envId,
+    projectId,
     start,
     end,
     authCookie
   );
 
   const pageViewUrls: Array<string> = await getPageViewEvent(
-    envId,
+    projectId,
     start,
     end,
     authCookie
   );
 
-  return { eventNames, flagEnvs, pageViewUrls };
+  return { eventNames, flags, pageViewUrls };
 };
 
 export default function CreateFunnel() {
   const { project } = useProject();
   const data = useActionData<ActionData>();
   const navigation = useNavigation();
-  const params = useParams();
-  const { flagEnvs, eventNames, pageViewUrls } = useLoaderData<LoaderData>();
+
+  const { flags, eventNames, pageViewUrls } = useLoaderData<typeof loader>();
   const [state, dispatch] = useReducer(
     funnelCreationReducer,
     initialState,
-    () => getInitialState(flagEnvs, eventNames)
+    () => getInitialState(flags, eventNames)
   );
 
-  const flagEnvDict = useMemo(() => {
-    return flagEnvs.reduce((acc, curr) => {
+  const flagDict = useMemo(() => {
+    return flags.reduce((acc, curr) => {
       acc[curr.flagId] = curr;
       return acc;
-    }, {} as Record<string, FlagEnv>);
+    }, {} as Record<string, Flag>);
   }, []);
 
-  const { funnelEntries, eventNameOptions, flagEnvsOptions } = state;
+  const { funnelEntries, eventNameOptions, flagOptions } = state;
   const errors = data?.errors;
 
   const selectFlag = (flagId: string) => dispatch({ type: "SET_FLAG", flagId });
@@ -199,7 +184,7 @@ export default function CreateFunnel() {
         }
         closeSlot={
           <DialogCloseBtn
-            to={`/dashboard/projects/${project.uuid}/funnels?envId=${params.env}`}
+            to={`/dashboard/projects/${project.uuid}/funnels`}
             label={`Back to funnels`}
           />
         }
@@ -222,7 +207,7 @@ export default function CreateFunnel() {
 
             <SelectField
               label={"Flag name"}
-              options={flagEnvsOptions}
+              options={flagOptions}
               name={"flag-name"}
               onValueChange={selectFlag}
             />
@@ -230,17 +215,17 @@ export default function CreateFunnel() {
 
           <ol className="flex flex-col gap-1">
             {funnelEntries.map((funnelEntry) => {
-              const flagEnv = funnelEntry.flagUuid
-                ? flagEnvDict[funnelEntry.flagUuid]
+              const flag = funnelEntry.flagUuid
+                ? flagDict[funnelEntry.flagUuid]
                 : undefined;
 
               let variants: Array<{ label: string; value: string }> | undefined;
 
-              if (flagEnv) {
+              if (flag) {
                 variants = [];
                 variants =
-                  flagEnv.variants.length > 0
-                    ? flagEnv?.variants.map((v) => ({
+                  flag.variants.length > 0
+                    ? flag?.variants.map((v) => ({
                         label: v.value,
                         value: v.value,
                       }))
@@ -271,7 +256,7 @@ export default function CreateFunnel() {
                       label={"Variant name"}
                       options={variants}
                       name={"variant-name"}
-                      onValueChange={(v) => selectVariant(flagEnv!.flagId!, v)}
+                      onValueChange={(v) => selectVariant(flag!.flagId!, v)}
                       hiddenLabel
                     />
                   )}

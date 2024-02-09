@@ -2,7 +2,7 @@ import { Section, SectionHeader } from "~/components/Section";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { UserRoles } from "~/modules/projects/types";
 import { UserTable } from "~/modules/user/components/UserTable";
-import { ActionFunction, V2_MetaFunction } from "@remix-run/node";
+import { ActionFunction, MetaFunction } from "@remix-run/node";
 import { Card, CardContent } from "~/components/Card";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { useProject } from "~/modules/projects/contexts/useProject";
@@ -14,12 +14,11 @@ import { Outlet, useActionData, useSearchParams } from "@remix-run/react";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
-import { EnvList } from "~/modules/environments/components/EnvList";
 import { getSession } from "~/sessions";
-import { rotateSecretKey } from "~/modules/environments/services/rotateSecretKey";
+import { rotateSecretKey } from "~/modules/projects/services/rotateSecretKey";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 
-export const meta: V2_MetaFunction = ({ matches }) => {
+export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
 
   return [
@@ -39,10 +38,10 @@ export const action: ActionFunction = async ({
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
   const formData = await request.formData();
-  const envId = formData.get("envId")?.toString();
+  const projectId = formData.get("projectId")?.toString();
 
   try {
-    await rotateSecretKey(envId!, authCookie);
+    await rotateSecretKey(projectId!, authCookie);
     return { success: true };
   } catch {
     return { success: false };
@@ -92,31 +91,6 @@ export default function SettingsPage() {
         />
 
         <Card>
-          <Section id="environments">
-            <CardContent>
-              <SectionHeader
-                title="Environments"
-                action={
-                  userRole === UserRoles.Admin && (
-                    <CreateButton
-                      variant="secondary"
-                      to={`/dashboard/projects/${project.uuid}/settings/environments/create`}
-                    >
-                      Add environment
-                    </CreateButton>
-                  )
-                }
-              />
-            </CardContent>
-
-            <EnvList
-              environments={project.environments}
-              projectId={project.uuid}
-            />
-          </Section>
-        </Card>
-
-        <Card>
           <Section id="members">
             <CardContent>
               <SectionHeader
@@ -162,7 +136,7 @@ export default function SettingsPage() {
                 <SectionHeader
                   title="Danger zone"
                   description={
-                    "You can delete a project at any time, but you won't be able to access its environments and all the related flags will be removed and be falsy in your applications. Be sure to know what you're doing before removing a project."
+                    "You can delete a project at any time. Its related flags will be removed and be falsy in your applications. Be sure to know what you're doing before removing a project."
                   }
                 />
               </Section>

@@ -35,11 +35,16 @@ model User {
 }
 
 model Project {
-  uuid         String        @id @default(uuid())
-  createdAt    DateTime?     @default(now())
-  name         String
-  environments Environment[]
-  userProject  UserProject[]
+  uuid        String        @id @default(uuid())
+  createdAt   DateTime?     @default(now())
+  name        String
+  userProject UserProject[]
+  events      Event[]
+  Funnel      Funnel[]
+  Flag        Flag[]
+  clientKey   String        @default(uuid())
+  secretKey   String        @default(uuid())
+  domain      String?
 }
 
 model UserProject {
@@ -50,20 +55,6 @@ model UserProject {
   user      User    @relation(fields: [userId], references: [uuid])
 
   @@id([userId, projectId])
-}
-
-model Environment {
-  uuid            String            @id @default(uuid())
-  name            String
-  projectId       String
-  clientKey       String            @default(uuid())
-  secretKey       String            @default(uuid())
-  domain          String?
-  project         Project           @relation(fields: [projectId], references: [uuid])
-  flagEnvironment FlagEnvironment[]
-  createdAt       DateTime?         @default(now())
-  events          Event[]
-  Funnel          Funnel[]
 }
 
 model RefreshToken {
@@ -83,22 +74,29 @@ model PasswordResetTokens {
 }
 
 model Flag {
-  uuid            String            @id @default(uuid())
-  name            String
-  key             String
-  description     String?
-  createdAt       DateTime?         @default(now())
-  flagEnvironment FlagEnvironment[]
-  FunnelEntry     FunnelEntry[]
+  uuid        String        @id @default(uuid())
+  name        String
+  key         String
+  description String?
+  createdAt   DateTime?     @default(now())
+  status      String?       @default("NOT_ACTIVATED")
+  FunnelEntry FunnelEntry[]
+  flagHits    FlagHit[]
+  variants    Variant[]
+  webhooks    Webhook[]
+  activityLog ActivityLog[]
+  strategies  Strategy[]
+  Project     Project?      @relation(fields: [projectUuid], references: [uuid])
+  projectUuid String?
 }
 
 model Funnel {
-  uuid            String        @id @default(uuid())
-  name            String
-  createdAt       DateTime?     @default(now())
-  environment     Environment   @relation(fields: [environmentUuid], references: [uuid])
-  environmentUuid String
-  funnelEntries   FunnelEntry[]
+  uuid          String        @id @default(uuid())
+  name          String
+  createdAt     DateTime?     @default(now())
+  funnelEntries FunnelEntry[]
+  Project       Project?      @relation(fields: [projectUuid], references: [uuid])
+  projectUuid   String?
 }
 
 model FunnelEntry {
@@ -112,65 +110,47 @@ model FunnelEntry {
   funnelUuid  String
 }
 
-model FlagEnvironment {
-  flagId        String
-  environmentId String
-  status        String?       @default("NOT_ACTIVATED")
-  environment   Environment   @relation(fields: [environmentId], references: [uuid])
-  flag          Flag          @relation(fields: [flagId], references: [uuid])
-  flagHits      FlagHit[]
-  variants      Variant[]
-  webhooks      Webhook[]
-  ActivityLog   ActivityLog[]
-  strategies    Strategy[]
-
-  @@id([flagId, environmentId])
-}
-
 model Webhook {
-  uuid                         String           @id @default(uuid())
-  endpoint                     String
-  secret                       String
-  event                        String
-  flagEnvironmentFlagId        String?
-  flagEnvironmentEnvironmentId String?
-  flagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
-  createdAt                    DateTime?        @default(now())
+  uuid      String    @id @default(uuid())
+  endpoint  String
+  secret    String
+  event     String
+  createdAt DateTime? @default(now())
+  Flag      Flag?     @relation(fields: [flagUuid], references: [uuid])
+  flagUuid  String?
 }
 
 model Variant {
-  uuid                         String            @id @default(uuid())
-  isControl                    Boolean
-  value                        String
-  flagEnvironmentFlagId        String?
-  flagEnvironmentEnvironmentId String?
-  flagEnvironment              FlagEnvironment?  @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
-  StrategyVariant              StrategyVariant[]
-  createdAt                    DateTime?         @default(now())
+  uuid            String            @id @default(uuid())
+  isControl       Boolean
+  value           String
+  StrategyVariant StrategyVariant[]
+  createdAt       DateTime?         @default(now())
+  Flag            Flag?             @relation(fields: [flagUuid], references: [uuid])
+  flagUuid        String?
 }
 
 model FlagHit {
-  uuid                         String           @id @default(uuid())
-  date                         DateTime         @default(now())
-  visitorId                    String
-  valueResolved                String? // previously valueResolved on flagHit, true / false
-  FlagEnvironment              FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
-  flagEnvironmentFlagId        String?
-  flagEnvironmentEnvironmentId String?
+  uuid          String   @id @default(uuid())
+  date          DateTime @default(now())
+  visitorId     String
+  valueResolved String? // previously valueResolved on flagHit, true / false
+  Flag          Flag?    @relation(fields: [flagUuid], references: [uuid])
+  flagUuid      String?
 }
 
 model Event {
-  uuid            String       @id @default(uuid())
-  date            DateTime     @default(now())
-  name            String
-  visitorId       String
-  browser         String
-  os              String
-  url             String
-  referer         String?
-  data            String? // additional data
-  Environment     Environment? @relation(fields: [environmentUuid], references: [uuid])
-  environmentUuid String?
+  uuid        String   @id @default(uuid())
+  date        DateTime @default(now())
+  name        String
+  visitorId   String
+  browser     String
+  os          String
+  url         String
+  referer     String?
+  data        String? // additional data
+  Project     Project? @relation(fields: [projectUuid], references: [uuid])
+  projectUuid String?
 }
 
 model Rule {
@@ -188,28 +168,23 @@ model ActivityLog {
   utc             DateTime @default(now())
   type            String
   concernedEntity String
-
-  user     User   @relation(fields: [userUuid], references: [uuid])
-  userUuid String
-
-  flagEnv                      FlagEnvironment? @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
-  flagEnvironmentFlagId        String?
-  flagEnvironmentEnvironmentId String?
-
-  data String?
+  user            User     @relation(fields: [userUuid], references: [uuid])
+  userUuid        String
+  data            String?
+  Flag            Flag?    @relation(fields: [flagUuid], references: [uuid])
+  flagUuid        String?
 }
 
 model Strategy {
-  uuid                         String            @id @default(uuid())
-  rolloutPercentage            Int               @default(100)
-  FlagEnvironment              FlagEnvironment?  @relation(fields: [flagEnvironmentFlagId, flagEnvironmentEnvironmentId], references: [flagId, environmentId])
-  flagEnvironmentFlagId        String?
-  flagEnvironmentEnvironmentId String?
-  valueToServeType             String
-  valueToServe                 String?
-  rules                        Rule[]
-  variants                     StrategyVariant[]
-  createdAt                    DateTime?         @default(now())
+  uuid              String            @id @default(uuid())
+  rolloutPercentage Int               @default(100)
+  valueToServeType  String
+  valueToServe      String?
+  rules             Rule[]
+  variants          StrategyVariant[]
+  createdAt         DateTime?         @default(now())
+  Flag              Flag?             @relation(fields: [flagUuid], references: [uuid])
+  flagUuid          String?
 }
 
 model StrategyVariant {

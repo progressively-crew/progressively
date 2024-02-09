@@ -1,34 +1,32 @@
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { LoaderFunction, V2_MetaFunction, redirect } from "@remix-run/node";
+import { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
-import { getEnvMetaTitle } from "~/modules/environments/services/getEnvMetaTitle";
-import { getFlagEnvMetaTitle } from "~/modules/flags/services/getFlagEnvMetaTitle";
 import { Card, CardContent } from "~/components/Card";
 import { PageTitle } from "~/components/PageTitle";
 import { Section, SectionHeader } from "~/components/Section";
 import { EmptyState } from "~/components/EmptyState";
 import { LineChart } from "~/components/LineChart";
 import { BigStat } from "~/components/BigStat";
-import { getEventsForEnv } from "~/modules/environments/services/getEventsForEnv";
+import { getEventsForProject } from "~/modules/projects/services/getEventsForProject";
 import { getSession } from "~/sessions";
-import { mapToLocaleCount } from "~/modules/environments/services/mapToLocaleCount";
-import { LocalCount } from "~/modules/environments/types";
-import { CountTable } from "~/modules/environments/components/CountTable";
+import { mapToLocaleCount } from "~/modules/projects/services/mapToLocaleCount";
+import { CountTable } from "~/modules/projects/components/CountTable";
 import { ProjectNavBar } from "~/modules/projects/components/ProjectNavBar";
 import { InsightsFilters } from "~/modules/projects/components/InsightsFilters";
-import { getMetricsCount } from "~/modules/environments/services/getMetricsCount";
+import { getMetricsCount } from "~/modules/projects/services/getMetricsCount";
 import { toPercentage } from "~/modules/misc/utils/toPercentage";
+import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
+import { LocalCount } from "~/modules/projects/types";
 
-export const meta: V2_MetaFunction = ({ matches, params }) => {
+export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
-  const envName = getEnvMetaTitle(matches, params.env!);
-  const flagName = getFlagEnvMetaTitle(matches);
+  const flagName = getFlagMetaTitle(matches);
 
   return [
     {
-      title: `Progressively | ${projectName} | ${envName} | ${flagName} | Insights`,
+      title: `Progressively | ${projectName} | ${flagName} | Insights`,
     },
   ];
 };
@@ -54,15 +52,11 @@ interface LoaderData {
 
 export const loader: LoaderFunction = async ({
   request,
+  params,
 }): Promise<LoaderData> => {
   const session = await getSession(request.headers.get("Cookie"));
   const url = new URL(request.url);
   const search = new URLSearchParams(url.search);
-  const envId = search.get("envId");
-
-  if (!envId) {
-    throw redirect("/401");
-  }
 
   const strDays = search.get("days");
   let day = Number(strDays);
@@ -76,6 +70,8 @@ export const loader: LoaderFunction = async ({
   const end = new Date();
   end.setDate(end.getDate() + 1);
 
+  const projectId = params.id!;
+
   const authCookie = session.get("auth-cookie");
   const {
     pageViewsPerDate,
@@ -86,15 +82,20 @@ export const loader: LoaderFunction = async ({
     uniqueVisitorsCount,
     eventsPerDatePerReferer,
     bounceRate,
-  } = await getEventsForEnv(envId, start, end, authCookie);
+  } = await getEventsForProject(projectId, start, end, authCookie);
 
-  const metricForDate = await getMetricsCount(envId, start, end, authCookie);
+  const metricForDate = await getMetricsCount(
+    projectId,
+    start,
+    end,
+    authCookie
+  );
 
   start.setDate(start.getDate() - day);
   end.setDate(end.getDate() + 1);
 
   const prevMetricForDate = await getMetricsCount(
-    envId,
+    projectId,
     start,
     end,
     authCookie
@@ -122,7 +123,7 @@ export const loader: LoaderFunction = async ({
   };
 };
 
-export default function EnvInsights() {
+export default function ProjectInsights() {
   const {
     pageViewsPerDate,
     eventsPerDate,
@@ -151,15 +152,7 @@ export default function EnvInsights() {
 
   return (
     <DashboardLayout subNav={<ProjectNavBar project={project} />}>
-      <PageTitle
-        value="Analytics"
-        action={
-          <InsightsFilters
-            projectId={project.uuid}
-            environments={project.environments}
-          />
-        }
-      />
+      <PageTitle value="Analytics" action={<InsightsFilters />} />
 
       <Section>
         <div className="inline-flex flex-row gap-6">

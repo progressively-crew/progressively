@@ -1,4 +1,4 @@
-import { Environment, PrismaClient } from "@prisma/client";
+import { PrismaClient, Project } from "@prisma/client";
 
 const SEED_ROUND_EVENT_HITS = process.env.SEED_ROUND_EVENT_HITS
   ? Number(process.env.SEED_ROUND_EVENT_HITS)
@@ -6,7 +6,7 @@ const SEED_ROUND_EVENT_HITS = process.env.SEED_ROUND_EVENT_HITS
 
 export const seedHitEvents = async (
   prismaClient: PrismaClient,
-  env: Environment
+  project: Project
 ) => {
   // Modify this value to see more real logs on N days
   const dayCount = SEED_ROUND_EVENT_HITS;
@@ -27,7 +27,7 @@ export const seedHitEvents = async (
           date,
           name: "Page View",
           visitorId: "1",
-          environmentUuid: env.uuid,
+          projectUuid: project.uuid,
           os: "Mac OS",
           browser: "Safari",
           url: "/somepage",
@@ -38,7 +38,7 @@ export const seedHitEvents = async (
         await prismaClient.event.create({
           data: {
             name: "Client CTA",
-            environmentUuid: env.uuid,
+            projectUuid: project.uuid,
             date,
             visitorId: "1",
             os: "Windows",

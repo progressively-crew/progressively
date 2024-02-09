@@ -15,27 +15,21 @@ export class WebhooksService {
     });
   }
 
-  listWebhooks(envId: string, flagId: string) {
+  listWebhooks(flagId: string) {
     return this.prisma.webhook.findMany({
       where: {
-        flagEnvironmentEnvironmentId: envId,
-        flagEnvironmentFlagId: flagId,
+        flagUuid: flagId,
       },
     });
   }
 
-  addWebhookToFlagEnv(
-    envId: string,
-    flagId: string,
-    webhook: WebhookCreationDTO,
-  ) {
+  addWebhookToFlag(flagId: string, webhook: WebhookCreationDTO) {
     return this.prisma.webhook.create({
       data: {
         endpoint: webhook.endpoint,
         event: webhook.event,
         secret: nanoid(),
-        flagEnvironmentFlagId: flagId,
-        flagEnvironmentEnvironmentId: envId,
+        flagUuid: flagId,
       },
     });
   }
@@ -49,12 +43,8 @@ export class WebhooksService {
       where: {
         userId,
         project: {
-          environments: {
-            some: {
-              flagEnvironment: {
-                some: { webhooks: { some: { uuid: webhookId } } },
-              },
-            },
+          Flag: {
+            some: { webhooks: { some: { uuid: webhookId } } },
           },
         },
       },

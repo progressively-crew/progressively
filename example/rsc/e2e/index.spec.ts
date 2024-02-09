@@ -26,7 +26,7 @@ test.describe("/", () => {
   test("shows the new variant when the flag is activated for homepage", async ({
     page,
   }) => {
-    await changeFlagStatus("1", "1", "ACTIVATED");
+    await changeFlagStatus("1", "ACTIVATED");
 
     await page.goto("/");
 

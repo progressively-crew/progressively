@@ -1,18 +1,7 @@
 import { useSearchParams } from "@remix-run/react";
 import { Card } from "~/components/Card";
-import { EnvMenuButtonFilter } from "~/modules/environments/components/EnvMenuButtonFilter";
-import { Environment } from "~/modules/environments/types";
 
-export interface InsightsFiltersProps {
-  projectId: string;
-  environments: Array<Environment>;
-  hideEnvList?: boolean;
-}
-export const InsightsFilters = ({
-  projectId,
-  environments,
-  hideEnvList,
-}: InsightsFiltersProps) => {
+export const InsightsFilters = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const days = searchParams.get("days") || "7";
@@ -51,16 +40,6 @@ export const InsightsFilters = ({
         >
           90 days
         </button>
-
-        {!hideEnvList && (
-          <>
-            <div className="h-6 w-px bg-slate-100 mx-px" />
-            <EnvMenuButtonFilter
-              projectId={projectId}
-              environments={environments}
-            />
-          </>
-        )}
       </div>
     </Card>
   );

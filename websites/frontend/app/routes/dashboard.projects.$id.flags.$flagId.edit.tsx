@@ -1,4 +1,4 @@
-import { ActionFunction, redirect, V2_MetaFunction } from "@remix-run/node";
+import { ActionFunction, redirect, MetaFunction } from "@remix-run/node";
 import { useActionData, Form, useNavigation } from "@remix-run/react";
 import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
@@ -15,7 +15,7 @@ import { editFlag } from "~/modules/flags/services/editFlag";
 import { useFlag } from "~/modules/flags/contexts/useFlag";
 import { DialogCloseBtn } from "~/components/Dialog/Dialog";
 
-export const meta: V2_MetaFunction = ({ matches }) => {
+export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
 
   return [

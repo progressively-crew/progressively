@@ -5,7 +5,7 @@ import { prepareApp } from '../helpers/prepareApp';
 import { verifyAuthGuard } from '../helpers/verify-auth-guard';
 import { authenticate } from '../helpers/authenticate';
 
-describe('FlagsController (e2e)', () => {
+describe('ActivityController (e2e)', () => {
   let app: INestApplication;
 
   beforeAll(async () => {
@@ -25,15 +25,15 @@ describe('FlagsController (e2e)', () => {
     await cleanupDb();
   });
 
-  describe('environments/1/flags/1/activity (GET)', () => {
+  describe('/flags/1/activity (GET)', () => {
     it('gives a 401 when the user is not authenticated', () =>
-      verifyAuthGuard(app, '/environments/1/flags/1/activity', 'get'));
+      verifyAuthGuard(app, '/flags/1/activity', 'get'));
 
     it('gives a 403 when trying to access a valid project but an invalid env', async () => {
       const access_token = await authenticate(app);
 
       return request(app.getHttpServer())
-        .get('/environments/3/flags/1/activity')
+        .get('/flags/3/activity')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(403)
         .expect({
@@ -51,7 +51,7 @@ describe('FlagsController (e2e)', () => {
       );
 
       return request(app.getHttpServer())
-        .get('/environments/1/flags/1/activity')
+        .get('/flags/1/activity')
         .set('Authorization', `Bearer ${access_token}`)
         .expect(403)
         .expect({
@@ -65,7 +65,7 @@ describe('FlagsController (e2e)', () => {
       const access_token = await authenticate(app);
 
       const res = await request(app.getHttpServer())
-        .get('/environments/1/flags/1/activity')
+        .get('/flags/1/activity')
         .set('Authorization', `Bearer ${access_token}`);
 
       expect(res.status).toBe(200);
@@ -73,8 +73,7 @@ describe('FlagsController (e2e)', () => {
         {
           concernedEntity: 'flag',
           data: 39,
-          flagEnvironmentEnvironmentId: '1',
-          flagEnvironmentFlagId: '1',
+          flagUuid: '1',
           type: 'change-flag-percentage',
           userUuid: '1',
           utc: '2023-01-21T00:00:00.000Z',
@@ -89,11 +88,8 @@ describe('FlagsController (e2e)', () => {
             endpoint: 'https://hello-world.api',
             secret: 'FjB_C7iQDiI9adbAxKNOF',
             event: 'ACTIVATION',
-            flagEnvironmentFlagId: '4',
-            flagEnvironmentEnvironmentId: '1',
           },
-          flagEnvironmentEnvironmentId: '1',
-          flagEnvironmentFlagId: '1',
+          flagUuid: '1',
           type: 'create-webhook',
           userUuid: '1',
           utc: '2023-01-21T00:00:00.000Z',
@@ -108,11 +104,8 @@ describe('FlagsController (e2e)', () => {
             rolloutPercentage: 0,
             isControl: false,
             value: 'Hello world',
-            flagEnvironmentFlagId: '4',
-            flagEnvironmentEnvironmentId: '1',
           },
-          flagEnvironmentEnvironmentId: '1',
-          flagEnvironmentFlagId: '1',
+          flagUuid: '1',
           type: 'create-variant',
           userUuid: '1',
           utc: '2023-01-21T00:00:00.000Z',

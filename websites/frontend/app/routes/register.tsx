@@ -10,13 +10,13 @@ import {
   ActionFunction,
   LoaderFunction,
   redirect,
-  V2_MetaFunction,
+  MetaFunction,
 } from "@remix-run/node";
 import { useActionData } from "@remix-run/react";
 import { Typography } from "~/components/Typography";
 import { BackLink } from "~/components/BackLink";
 
-export const meta: V2_MetaFunction = () => {
+export const meta: MetaFunction = () => {
   return [
     {
       title: "Progressively| Sign up",

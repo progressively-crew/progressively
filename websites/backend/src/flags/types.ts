@@ -1,5 +1,4 @@
-import { Environment } from '../environments/types';
-import { Strategy } from '@progressively/database';
+import { Project, Strategy } from '@progressively/database';
 import { RuleType } from '../rule/types';
 
 export interface Flag {
@@ -10,13 +9,6 @@ export interface Flag {
   createdAt: Date;
 }
 
-export interface FlagEnvironment {
-  flagId: string;
-  environmentId: string;
-  status: string;
-  variants: Array<Variant>;
-}
-
 export interface PopulatedVariant {
   rolloutPercentage: number;
   variantUuid: string;
@@ -25,8 +17,6 @@ export interface PopulatedVariant {
     uuid: string;
     isControl: boolean;
     value: string;
-    flagEnvironmentFlagId: string;
-    flagEnvironmentEnvironmentId: string;
   };
 }
 export interface PopulatedStrategy extends Strategy {
@@ -34,10 +24,11 @@ export interface PopulatedStrategy extends Strategy {
   rules: Array<Partial<RuleType>>;
 }
 
-export interface PopulatedFlagEnv extends FlagEnvironment {
-  environment: Environment;
-  flag: Flag;
+export interface PopulatedFlag extends Flag {
   strategies: Array<PopulatedStrategy>;
+  status: string;
+  variants: Array<PopulatedVariant>;
+  Project: Project;
 }
 
 export interface Variant {
@@ -49,7 +40,6 @@ export interface Variant {
 
 export interface QueuedFlagHit {
   flagId: string;
-  envId: string;
   visitorId: string;
   valueResolved: string;
 }

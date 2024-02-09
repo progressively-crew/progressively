@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
 import { FlagStatus } from './flags.status';
-import { QueuedFlagHit, Variant } from './types';
+import { PopulatedFlag, QueuedFlagHit, Variant } from './types';
 import { VariantCreationDTO } from './flags.dto';
 import camelcase from 'camelcase';
 import { FlagAlreadyExists } from '../projects/errors';
@@ -10,24 +10,40 @@ import { FlagAlreadyExists } from '../projects/errors';
 export class FlagsService {
   constructor(private prisma: PrismaService) {}
 
-  changeFlagForEnvStatus(
-    environmentId: string,
-    flagId: string,
-    status: FlagStatus,
-  ) {
-    return this.prisma.flagEnvironment.update({
+  getPopulatedFlags(projectId: string) {
+    return this.prisma.flag.findMany({
       where: {
-        flagId_environmentId: {
-          flagId,
-          environmentId,
+        projectUuid: projectId,
+      },
+      include: {
+        Project: true,
+        strategies: {
+          include: {
+            rules: true,
+            variants: {
+              include: {
+                variant: true,
+              },
+              orderBy: {
+                rolloutPercentage: 'asc',
+              },
+            },
+          },
         },
+      },
+    }) as unknown as Promise<Array<PopulatedFlag>>;
+  }
+
+  changeFlagStatus(flagId: string, status: FlagStatus) {
+    return this.prisma.flag.update({
+      where: {
+        uuid: flagId,
       },
       data: {
         status,
       },
       include: {
-        environment: true,
-        flag: true,
+        Project: true,
         variants: true,
         webhooks: true,
         strategies: {
@@ -50,13 +66,6 @@ export class FlagsService {
   getFlagById(flagId: string) {
     return this.prisma.flag.findUnique({
       where: { uuid: flagId },
-      include: {
-        flagEnvironment: {
-          include: {
-            environment: true,
-          },
-        },
-      },
     });
   }
 
@@ -71,8 +80,7 @@ export class FlagsService {
 
     return this.prisma.flagHit.create({
       data: {
-        flagEnvironmentFlagId: queuedFlagHit.flagId,
-        flagEnvironmentEnvironmentId: queuedFlagHit.envId,
+        flagUuid: queuedFlagHit.flagId,
         valueResolved: queuedFlagHit.valueResolved,
         date,
         visitorId: queuedFlagHit.visitorId,
@@ -80,18 +88,12 @@ export class FlagsService {
     });
   }
 
-  async flagEvaluations(
-    envId: string,
-    flagId: string,
-    startDate: string,
-    endDate: string,
-  ) {
+  async flagEvaluations(flagId: string, startDate: string, endDate: string) {
     return this.prisma.flagHit.groupBy({
       by: ['valueResolved'],
       _count: true,
       where: {
-        flagEnvironmentFlagId: flagId,
-        flagEnvironmentEnvironmentId: envId,
+        flagUuid: flagId,
         date: {
           gte: new Date(startDate),
           lte: new Date(endDate),
@@ -101,13 +103,11 @@ export class FlagsService {
   }
 
   async flagEvaluationsOverTime(
-    envId: string,
     flagId: string,
     startDate: string,
     endDate: string,
   ) {
     const distinctFlagHitValues = await this.getDistinctFlagHitValues(
-      envId,
       flagId,
       startDate,
       endDate,
@@ -120,9 +120,8 @@ export class FlagsService {
         _count: true,
         by: ['valueResolved', 'date'],
         where: {
-          flagEnvironmentFlagId: flagId,
           valueResolved: dhv.valueResolved,
-          flagEnvironmentEnvironmentId: envId,
+          flagUuid: flagId,
           date: {
             gte: new Date(startDate),
             lte: new Date(endDate),
@@ -150,17 +149,11 @@ export class FlagsService {
       .map((k) => dictByDates[k]);
   }
 
-  getDistinctFlagHitValues(
-    envId: string,
-    flagId: string,
-    startDate: string,
-    endDate: string,
-  ) {
+  getDistinctFlagHitValues(flagId: string, startDate: string, endDate: string) {
     return this.prisma.flagHit.findMany({
       distinct: ['valueResolved'],
       where: {
-        flagEnvironmentFlagId: flagId,
-        flagEnvironmentEnvironmentId: envId,
+        flagUuid: flagId,
         date: {
           gte: new Date(startDate),
           lte: new Date(endDate),
@@ -173,41 +166,36 @@ export class FlagsService {
     const deleteQueries = [
       this.prisma.webhook.deleteMany({
         where: {
-          flagEnvironmentFlagId: flagId,
+          flagUuid: flagId,
         },
       }),
       this.prisma.flagHit.deleteMany({
         where: {
-          flagEnvironmentFlagId: flagId,
+          flagUuid: flagId,
         },
       }),
       this.prisma.rule.deleteMany({
         where: {
           Strategy: {
-            flagEnvironmentFlagId: flagId,
+            flagUuid: flagId,
           },
         },
       }),
       this.prisma.strategyVariant.deleteMany({
         where: {
           strategy: {
-            flagEnvironmentFlagId: flagId,
+            flagUuid: flagId,
           },
         },
       }),
       this.prisma.strategy.deleteMany({
         where: {
-          flagEnvironmentFlagId: flagId,
+          flagUuid: flagId,
         },
       }),
       this.prisma.variant.deleteMany({
         where: {
-          flagEnvironmentFlagId: flagId,
-        },
-      }),
-      this.prisma.flagEnvironment.deleteMany({
-        where: {
-          flagId: flagId,
+          flagUuid: flagId,
         },
       }),
       this.prisma.flag.deleteMany({
@@ -232,8 +220,8 @@ export class FlagsService {
       where: {
         userId,
         project: {
-          environments: {
-            some: { flagEnvironment: { some: { flagId } } },
+          Flag: {
+            some: { uuid: flagId },
           },
         },
       },
@@ -250,50 +238,18 @@ export class FlagsService {
     return roles.includes(flagOfProject.role);
   }
 
-  async hasPermissionOnFlagEnv(
-    envId: string,
-    flagId: string,
-    userId: string,
-    roles?: Array<string>,
-  ) {
-    const flagOfProject = await this.prisma.userProject.findFirst({
-      where: {
-        userId,
-        project: {
-          environments: {
-            some: {
-              flagEnvironment: { some: { flagId, environmentId: envId } },
-            },
-          },
-        },
-      },
-    });
-
-    if (!flagOfProject) {
-      return false;
-    }
-
-    if (!roles || roles.length === 0) {
-      return true;
-    }
-
-    return roles.includes(flagOfProject.role);
-  }
-
-  listVariants(envId: string, flagId: string) {
+  listVariants(flagId: string) {
     return this.prisma.variant.findMany({
       where: {
-        flagEnvironmentEnvironmentId: envId,
-        flagEnvironmentFlagId: flagId,
+        flagUuid: flagId,
       },
     });
   }
 
-  listActivity(envId: string, flagId: string) {
+  listActivity(flagId: string) {
     return this.prisma.activityLog.findMany({
       where: {
-        flagEnvironmentEnvironmentId: envId,
-        flagEnvironmentFlagId: flagId,
+        flagUuid: flagId,
       },
       include: {
         user: {
@@ -309,15 +265,10 @@ export class FlagsService {
     });
   }
 
-  async createVariant(
-    envId: string,
-    flagId: string,
-    variant: VariantCreationDTO,
-  ) {
+  async createVariant(flagId: string, variant: VariantCreationDTO) {
     const variantsOfFlags = await this.prisma.variant.findMany({
       where: {
-        flagEnvironmentEnvironmentId: envId,
-        flagEnvironmentFlagId: flagId,
+        flagUuid: flagId,
       },
     });
 
@@ -325,21 +276,19 @@ export class FlagsService {
 
     return this.prisma.variant.create({
       data: {
-        flagEnvironmentEnvironmentId: envId,
-        flagEnvironmentFlagId: flagId,
+        flagUuid: flagId,
         isControl: isFirstVariantCreatedThusControl,
         value: variant.value,
       },
     });
   }
 
-  async editVariants(envId: string, flagId: string, variants: Array<Variant>) {
+  async editVariants(flagId: string, variants: Array<Variant>) {
     const updateQueries = variants.map((variant) =>
       this.prisma.variant.updateMany({
         where: {
           uuid: variant.uuid,
-          flagEnvironmentFlagId: flagId,
-          flagEnvironmentEnvironmentId: envId,
+          flagUuid: flagId,
         },
         data: {
           isControl: Boolean(variant.isControl),
@@ -380,18 +329,14 @@ export class FlagsService {
   ) {
     const flagKey = camelcase(name);
 
-    const existingFlagEnv = await this.prisma.flagEnvironment.findFirst({
+    const exisitingFlag = await this.prisma.flag.findFirst({
       where: {
-        environment: {
-          projectId,
-        },
-        flag: {
-          key: flagKey,
-        },
+        projectUuid: projectId,
+        key: flagKey,
       },
     });
 
-    if (existingFlagEnv) {
+    if (exisitingFlag) {
       throw new FlagAlreadyExists();
     }
 
