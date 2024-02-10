@@ -478,4 +478,139 @@ describe('SdkService', () => {
       });
     });
   });
+
+  describe('scheduling', () => {
+    describe('ALWAYS predicate', () => {
+      it('resolves "hello world" when the strategy has a rollout of 100%, no rules and predicate ALWAYS', () => {
+        flag.strategies = [
+          {
+            flagUuid: flag.uuid,
+            valueToServe: 'hello world',
+            valueToServeType: 'String',
+            uuid: '1',
+            variants: [],
+            rolloutPercentage: 100,
+            rules: [],
+            createdAt: null,
+            whenPredicate: WhenPredicate.Always,
+            whenTimestamp: null,
+          },
+        ];
+
+        const shouldActivate = service.resolveFlagStatus(flag, {
+          id: 'user-id-123',
+        });
+
+        expect(shouldActivate).toBe('hello world');
+      });
+    });
+
+    describe('BeforeThe predicate', () => {
+      it('resolves "hello world" when the strategy has a rollout of 100%, no rules and predicate BeforeThe with date in the future', () => {
+        const date = new Date();
+        date.setSeconds(date.getSeconds() + 10);
+
+        flag.strategies = [
+          {
+            flagUuid: flag.uuid,
+            valueToServe: 'hello world',
+            valueToServeType: 'String',
+            uuid: '1',
+            variants: [],
+            rolloutPercentage: 100,
+            rules: [],
+            createdAt: null,
+            whenPredicate: WhenPredicate.BeforeThe,
+            whenTimestamp: date,
+          },
+        ];
+
+        const shouldActivate = service.resolveFlagStatus(flag, {
+          id: 'user-id-123',
+        });
+
+        expect(shouldActivate).toBe('hello world');
+      });
+
+      it('resolves "false" when the strategy has a rollout of 100%, no rules and predicate BeforeThe and date in the past', () => {
+        const date = new Date();
+        date.setSeconds(date.getSeconds() - 10);
+
+        flag.strategies = [
+          {
+            flagUuid: flag.uuid,
+            valueToServe: 'hello world',
+            valueToServeType: 'String',
+            uuid: '1',
+            variants: [],
+            rolloutPercentage: 100,
+            rules: [],
+            createdAt: null,
+            whenPredicate: WhenPredicate.BeforeThe,
+            whenTimestamp: date,
+          },
+        ];
+
+        const shouldActivate = service.resolveFlagStatus(flag, {
+          id: 'user-id-123',
+        });
+
+        expect(shouldActivate).toBe(false);
+      });
+    });
+
+    describe('AfterThe predicate', () => {
+      it('resolves "hello world" when the strategy has a rollout of 100%, no rules and predicate AfterThe with date in the past', () => {
+        const date = new Date();
+        date.setSeconds(date.getSeconds() - 10);
+
+        flag.strategies = [
+          {
+            flagUuid: flag.uuid,
+            valueToServe: 'hello world',
+            valueToServeType: 'String',
+            uuid: '1',
+            variants: [],
+            rolloutPercentage: 100,
+            rules: [],
+            createdAt: null,
+            whenPredicate: WhenPredicate.AfterThe,
+            whenTimestamp: date,
+          },
+        ];
+
+        const shouldActivate = service.resolveFlagStatus(flag, {
+          id: 'user-id-123',
+        });
+
+        expect(shouldActivate).toBe('hello world');
+      });
+
+      it('resolves "false" when the strategy has a rollout of 100%, no rules and predicate AfterThe and date in the future', () => {
+        const date = new Date();
+        date.setSeconds(date.getSeconds() + 10);
+
+        flag.strategies = [
+          {
+            flagUuid: flag.uuid,
+            valueToServe: 'hello world',
+            valueToServeType: 'String',
+            uuid: '1',
+            variants: [],
+            rolloutPercentage: 100,
+            rules: [],
+            createdAt: null,
+            whenPredicate: WhenPredicate.AfterThe,
+            whenTimestamp: date,
+          },
+        ];
+
+        const shouldActivate = service.resolveFlagStatus(flag, {
+          id: 'user-id-123',
+        });
+
+        expect(shouldActivate).toBe(false);
+      });
+    });
+  });
 });
