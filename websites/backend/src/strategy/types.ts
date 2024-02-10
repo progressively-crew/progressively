@@ -9,6 +9,12 @@ export enum ValueToServe {
   Number = 'Number',
 }
 
+export enum WhenPredicate {
+  Always = 'ALWAYS',
+  BeforeThe = 'BEFORE_THE',
+  AfterThe = 'AFTER_THE',
+}
+
 const StrategyVariantDtoSchema = Joi.object({
   rolloutPercentage: Joi.number().integer().min(0).max(100).required(),
   variantUuid: Joi.string().required(),
