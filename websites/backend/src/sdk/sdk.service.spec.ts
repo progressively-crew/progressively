@@ -3,8 +3,9 @@ import { FlagStatus } from '../flags/flags.status';
 import { PopulatedFlag, PopulatedStrategy } from '../flags/types';
 import { SdkService } from './sdk.service';
 import { AppModule } from '../app.module';
-import { ComparatorEnum } from '../../src/rule/comparators/types';
-import { IPubsubService } from 'src/pubsub/types';
+import { ComparatorEnum } from '../rule/comparators/types';
+import { IPubsubService } from '../pubsub/types';
+import { WhenPredicate } from '../strategy/types';
 
 describe('SdkService', () => {
   let service: SdkService;
@@ -79,6 +80,8 @@ describe('SdkService', () => {
               rolloutPercentage: 100,
               rules: [],
               createdAt: null,
+              whenPredicate: WhenPredicate.Always,
+              whenTimestamp: null,
             },
           ];
 
@@ -100,6 +103,8 @@ describe('SdkService', () => {
               rolloutPercentage: 0,
               rules: [],
               createdAt: null,
+              whenPredicate: WhenPredicate.Always,
+              whenTimestamp: null,
             },
           ];
 
@@ -121,6 +126,8 @@ describe('SdkService', () => {
               rolloutPercentage: 10,
               rules: [],
               createdAt: null,
+              whenPredicate: WhenPredicate.Always,
+              whenTimestamp: null,
             },
           ];
 
@@ -142,6 +149,8 @@ describe('SdkService', () => {
               rolloutPercentage: 90,
               rules: [],
               createdAt: null,
+              whenPredicate: WhenPredicate.Always,
+              whenTimestamp: null,
             },
           ];
 
@@ -165,6 +174,8 @@ describe('SdkService', () => {
               rolloutPercentage: 100,
               rules: [],
               createdAt: null,
+              whenPredicate: WhenPredicate.Always,
+              whenTimestamp: null,
             },
           ];
 
@@ -186,6 +197,8 @@ describe('SdkService', () => {
               rolloutPercentage: 0,
               rules: [],
               createdAt: null,
+              whenPredicate: WhenPredicate.Always,
+              whenTimestamp: null,
             },
           ];
 
@@ -207,6 +220,8 @@ describe('SdkService', () => {
               rolloutPercentage: 10,
               rules: [],
               createdAt: null,
+              whenPredicate: WhenPredicate.Always,
+              whenTimestamp: null,
             },
           ];
 
@@ -228,6 +243,8 @@ describe('SdkService', () => {
               rolloutPercentage: 90,
               rules: [],
               createdAt: null,
+              whenPredicate: WhenPredicate.Always,
+              whenTimestamp: null,
             },
           ];
 
@@ -280,6 +297,8 @@ describe('SdkService', () => {
               rolloutPercentage: undefined,
               rules: [],
               createdAt: null,
+              whenPredicate: WhenPredicate.Always,
+              whenTimestamp: null,
             },
           ];
 
@@ -304,6 +323,8 @@ describe('SdkService', () => {
               rolloutPercentage: undefined,
               rules: [],
               createdAt: null,
+              whenPredicate: WhenPredicate.Always,
+              whenTimestamp: null,
             },
           ];
 
@@ -328,6 +349,8 @@ describe('SdkService', () => {
               rolloutPercentage: undefined,
               rules: [],
               createdAt: null,
+              whenPredicate: WhenPredicate.Always,
+              whenTimestamp: null,
             },
           ];
 
@@ -365,6 +388,8 @@ describe('SdkService', () => {
             },
           ],
           createdAt: new Date(1992, 5, 21),
+          whenPredicate: WhenPredicate.Always,
+          whenTimestamp: null,
         };
 
         stratTwo = JSON.parse(JSON.stringify(stratOne));

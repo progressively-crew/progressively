@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
-import { StrategyUpdateDto, ValueToServe } from './types';
+import { StrategyUpdateDto, ValueToServe, WhenPredicate } from './types';
 import { Strategy } from '@progressively/database';
+import { PopulatedStrategy } from '../flags/types';
 
 @Injectable()
 export class StrategyService {
@@ -166,5 +167,23 @@ export class StrategyService {
         createdAt: 'asc',
       },
     });
+  }
+
+  isValidStrategyDate(strategy: PopulatedStrategy) {
+    if (strategy.whenPredicate === WhenPredicate.Always) {
+      return true;
+    }
+
+    const now = new Date();
+
+    if (strategy.whenPredicate === WhenPredicate.AfterThe) {
+      return strategy.whenTimestamp <= now;
+    }
+
+    if (strategy.whenPredicate === WhenPredicate.BeforeThe) {
+      return strategy.whenTimestamp >= now;
+    }
+
+    return false;
   }
 }

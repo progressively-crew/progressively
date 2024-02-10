@@ -24,6 +24,7 @@ import { IQueuingService } from '../queuing/types';
 import { KafkaTopics } from '../queuing/topics';
 import { FlagsService } from '../flags/flags.service';
 import { Project } from '@progressively/database';
+import { StrategyService } from '../strategy/strategy.service';
 
 @Injectable()
 export class SdkService {
@@ -31,6 +32,7 @@ export class SdkService {
     private prisma: PrismaService,
     private readonly flagService: FlagsService,
     private readonly ruleService: RuleService,
+    private readonly strategyService: StrategyService,
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
     @Inject('QueueingService') private readonly queuingService: IQueuingService,
   ) {}
@@ -48,6 +50,11 @@ export class SdkService {
     fields: FieldRecord,
   ) {
     for (const strategy of strategies) {
+      const isValidStrategyDate =
+        this.strategyService.isValidStrategyDate(strategy);
+
+      if (!isValidStrategyDate) continue;
+
       const isMatching = this.ruleService.isMatchingAtLeastOneRule(
         strategy.rules,
         fields,
