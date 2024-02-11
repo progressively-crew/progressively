@@ -44,8 +44,8 @@ export const TextInput = ({
   }
 
   let inputClasses = isInvalid
-    ? "h-10 rounded px-4 border border-red-500"
-    : "h-10 rounded px-4 border border-gray-200";
+    ? "h-10 rounded px-4 border border-red-500 text-sm"
+    : "h-10 rounded px-4 border border-gray-200 text-sm";
 
   if (isDisabled) {
     inputClasses += " border-gray-300 text-gray-600 bg-gray-50";

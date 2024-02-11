@@ -41,7 +41,7 @@ export const DashboardLayout = ({
   const isNormalLoad =
     navigation.state === "loading" && navigation.formData == null;
 
-  const layoutClassName = "max-w-7xl mx-auto";
+  const layoutClassName = "max-w-screen-2xl mx-auto";
 
   const lastCrumb = crumbs.at(-1);
   const hasMoreThanOneCrumb = crumbs.length > 1;

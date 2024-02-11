@@ -21,7 +21,7 @@ export const PercentageField = ({
   const [value, setValue] = useState(initialValue);
 
   return (
-    <div className="flex flex-row gap-2">
+    <div className="flex flex-row gap-2 items-center">
       <Typography
         as="label"
         htmlFor={id}
@@ -54,12 +54,13 @@ export const PercentageField = ({
           />
         </div>
 
-        <span
-          className="bg-slate-700 text-white rounded flex justify-center items-center w-[36px] text-sm py-1 text-xs font-semibold font-mono"
+        <Typography
+          as="span"
+          className="rounded flex justify-center items-center w-[36px] text-sm py-1 text-xs font-semibold font-mono"
           aria-hidden
         >
           {value}%
-        </span>
+        </Typography>
       </div>
     </div>
   );

@@ -88,7 +88,7 @@ export const StrategyItem = ({
                 as="span"
                 className="pt-7 font-mono text-sm font-semibold"
               >
-                When
+                If
               </Typography>
             ) : (
               <div />

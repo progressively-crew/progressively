@@ -46,6 +46,14 @@ export const StrategyUpdateDtoSchema = Joi.array().items(
         fieldValue: Joi.string().allow(''),
       }),
     ),
+    whenPredicate: Joi.string()
+      .valid(
+        WhenPredicate.Always,
+        WhenPredicate.AfterThe,
+        WhenPredicate.BeforeThe,
+      )
+      .required(),
+    whenTimestamp: Joi.date(),
   }),
 );
 
@@ -59,4 +67,6 @@ export interface StrategyUpdateDto {
   valueToServe?: string;
   variants?: Array<StrategyVariant>;
   rules: Array<RuleUpdateDto>;
+  whenPredicate: WhenPredicate;
+  whenTimestamp?: Date;
 }
