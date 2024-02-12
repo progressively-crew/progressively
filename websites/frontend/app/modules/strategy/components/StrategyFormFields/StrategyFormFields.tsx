@@ -2,7 +2,7 @@ import { useState } from "react";
 import { SelectField } from "~/components/Fields/Select/SelectField";
 import { Typography } from "~/components/Typography";
 import { Variant } from "~/modules/variants/types";
-import { ValueToServe } from "../../types";
+import { ValueToServe, WhenPredicate } from "../../types";
 import { PercentageField } from "~/components/Fields/PercentageField";
 import { VariantFields } from "./VariantFields";
 import { WhenField } from "../WhenField";
@@ -12,6 +12,8 @@ export interface ValuesToServeFieldsProps {
   valueToServeType?: ValueToServe;
   rolloutPercentage: number;
   index: number;
+  whenPredicate: WhenPredicate;
+  whenTimestamp?: string;
 }
 
 export const StrategyFormFields = ({
@@ -19,6 +21,8 @@ export const StrategyFormFields = ({
   variants,
   rolloutPercentage,
   index,
+  whenPredicate,
+  whenTimestamp,
 }: ValuesToServeFieldsProps) => {
   const valueOptions = [
     {
@@ -51,6 +55,8 @@ export const StrategyFormFields = ({
           <WhenField
             whenPredicateName={`strategies[${index}][whenPredicate]`}
             whenDateName={`strategies[${index}][whenTimestamp]`}
+            initialWhenPredicate={whenPredicate}
+            initialWhenTimestamp={whenTimestamp}
           />
         </div>
 
@@ -89,6 +95,8 @@ export const StrategyFormFields = ({
             <WhenField
               whenPredicateName={`strategies[${index}][whenPredicate]`}
               whenDateName={`strategies[${index}][whenTimestamp]`}
+              initialWhenPredicate={whenPredicate}
+              initialWhenTimestamp={whenTimestamp}
             />
           </div>
         )}

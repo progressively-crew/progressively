@@ -68,5 +68,5 @@ export interface StrategyUpdateDto {
   variants?: Array<StrategyVariant>;
   rules: Array<RuleUpdateDto>;
   whenPredicate: WhenPredicate;
-  whenTimestamp?: Date;
+  whenTimestamp?: string;
 }

@@ -1,17 +1,40 @@
 import { SelectField } from "~/components/Fields/Select/SelectField";
 import { WhenPredicate } from "../types";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { TextInput } from "~/components/Fields/TextInput";
 
 export interface WhenFieldProps {
   whenPredicateName: string;
   whenDateName: string;
+  initialWhenPredicate: WhenPredicate;
+  initialWhenTimestamp?: string;
 }
 export const WhenField = ({
   whenPredicateName,
   whenDateName,
+  initialWhenPredicate,
+  initialWhenTimestamp,
 }: WhenFieldProps) => {
-  const [value, setValue] = useState(WhenPredicate.Always);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [value, setValue] = useState(
+    initialWhenPredicate || WhenPredicate.Always
+  );
+
+  useEffect(() => {
+    if (inputRef.current) {
+      const date = initialWhenTimestamp
+        ? new Date(initialWhenTimestamp)
+        : new Date();
+
+      const initialValue = `${date.getFullYear()}-${String(
+        date.getMonth() + 1
+      ).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}T${String(
+        date.getHours()
+      ).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
+
+      inputRef.current.value = initialValue;
+    }
+  }, [initialWhenTimestamp]);
 
   const options = [
     { label: "always", value: WhenPredicate.Always },
@@ -32,10 +55,10 @@ export const WhenField = ({
 
       {value !== WhenPredicate.Always && (
         <TextInput
+          ref={inputRef}
           type="datetime-local"
           hiddenLabel
           label="Date of the strategy constraint"
-          defaultValue={new Date().toString()}
           name={whenDateName}
         />
       )}

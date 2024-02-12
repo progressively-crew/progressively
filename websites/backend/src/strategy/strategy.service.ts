@@ -83,6 +83,10 @@ export class StrategyService {
           valueToServeType: strategyDto.valueToServeType,
           valueToServe: strategyDto.valueToServe,
           rolloutPercentage: strategyDto.rolloutPercentage,
+          whenPredicate: strategyDto.whenPredicate,
+          whenTimestamp: strategyDto.whenTimestamp
+            ? new Date(strategyDto.whenTimestamp)
+            : null,
         },
       });
 

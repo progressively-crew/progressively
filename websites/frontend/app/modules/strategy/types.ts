@@ -31,6 +31,8 @@ export interface Strategy {
   rules?: Array<Rule>;
   valueToServe?: string;
   variants?: Array<StrategyVariant>;
+  whenPredicate: WhenPredicate;
+  whenTimestamp?: string;
 }
 
 export enum WhenPredicate {

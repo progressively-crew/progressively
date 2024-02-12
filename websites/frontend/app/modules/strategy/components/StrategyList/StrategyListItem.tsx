@@ -76,6 +76,8 @@ export const StrategyItem = ({
               <StrategyFormFields
                 valueToServeType={strategy.valueToServeType}
                 variants={formVariants}
+                whenPredicate={strategy.whenPredicate}
+                whenTimestamp={strategy.whenTimestamp}
                 rolloutPercentage={strategy.rolloutPercentage || 0}
                 index={index}
               />
