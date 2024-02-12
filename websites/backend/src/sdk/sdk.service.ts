@@ -180,7 +180,36 @@ export class SdkService {
     return `declare module "@progressively/types" { \n${defaultDefinition}\n\n${definitionWithCustomString}\n}`;
   }
 
+  async getOrCreateSession(visitorId: string, projectId: string) {
+    const sessionLimit = new Date();
+    sessionLimit.setMinutes(sessionLimit.getMinutes() - 30);
+
+    const session = await this.prisma.session.findFirst({
+      where: {
+        visitorId,
+        projectUuid: projectId,
+        startedAt: {
+          gte: sessionLimit,
+        },
+      },
+    });
+
+    if (session) return session;
+
+    return this.prisma.session.create({
+      data: {
+        visitorId,
+        projectUuid: projectId,
+      },
+    });
+  }
+
   async hitEvent(projectId: string, queuedEvent: QueuedEventHit) {
+    const session = await this.getOrCreateSession(
+      queuedEvent.visitorId,
+      projectId,
+    );
+
     const date = new Date();
     date.setHours(2);
     date.setMinutes(2);
@@ -202,6 +231,7 @@ export class SdkService {
             ? JSON.stringify(queuedEvent.data)
             : String(queuedEvent.data)
           : null,
+        sessionUuid: session.uuid,
       },
     });
   }

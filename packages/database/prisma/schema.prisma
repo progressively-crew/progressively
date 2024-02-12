@@ -45,6 +45,7 @@ model Project {
   clientKey   String        @default(uuid())
   secretKey   String        @default(uuid())
   domain      String?
+  Session     Session[]
 }
 
 model UserProject {
@@ -140,9 +141,12 @@ model FlagHit {
 }
 
 model Session {
-  uuid      String   @id @default(uuid())
-  startedAt DateTime @default(now())
-  events    Event[]
+  uuid        String   @id @default(uuid())
+  startedAt   DateTime @default(now())
+  events      Event[]
+  visitorId   String
+  Project     Project  @relation(fields: [projectUuid], references: [uuid])
+  projectUuid String
 }
 
 model Event {
