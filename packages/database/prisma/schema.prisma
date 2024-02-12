@@ -139,6 +139,12 @@ model FlagHit {
   flagUuid      String?
 }
 
+model Session {
+  uuid      String   @id @default(uuid())
+  startedAt DateTime @default(now())
+  events    Event[]
+}
+
 model Event {
   uuid        String   @id @default(uuid())
   date        DateTime @default(now())
@@ -151,6 +157,8 @@ model Event {
   data        String? // additional data
   Project     Project? @relation(fields: [projectUuid], references: [uuid])
   projectUuid String?
+  Session     Session? @relation(fields: [sessionUuid], references: [uuid])
+  sessionUuid String?
 }
 
 model Rule {
