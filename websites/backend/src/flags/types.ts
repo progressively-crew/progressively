@@ -1,5 +1,6 @@
 import { Project, Strategy } from '@progressively/database';
 import { RuleType } from '../rule/types';
+import { WhenPredicate } from '../strategy/types';
 
 export interface Flag {
   uuid: string;
@@ -19,9 +20,11 @@ export interface PopulatedVariant {
     value: string;
   };
 }
-export interface PopulatedStrategy extends Strategy {
+export interface PopulatedStrategy extends Omit<Strategy, 'whenPredicate'> {
   variants: Array<PopulatedVariant>;
   rules: Array<Partial<RuleType>>;
+  whenPredicate: WhenPredicate;
+  whenTimestamp: Date | null;
 }
 
 export interface PopulatedFlag extends Flag {

@@ -47,6 +47,8 @@ const mapRawStrategyToActualStrategy = (
     valueToServe: rawStrategy["value-to-serve"],
     variants,
     rules,
+    whenPredicate: rawStrategy.whenPredicate,
+    whenTimestamp: rawStrategy.whenTimestamp || undefined,
   };
 };
 

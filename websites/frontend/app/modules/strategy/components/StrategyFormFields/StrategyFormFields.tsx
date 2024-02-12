@@ -2,18 +2,18 @@ import { useState } from "react";
 import { SelectField } from "~/components/Fields/Select/SelectField";
 import { Typography } from "~/components/Typography";
 import { Variant } from "~/modules/variants/types";
-import { ValueToServe } from "../../types";
+import { ValueToServe, WhenPredicate } from "../../types";
 import { PercentageField } from "~/components/Fields/PercentageField";
 import { VariantFields } from "./VariantFields";
-import { CreateButton } from "~/components/Buttons/CreateButton";
-import { useFlag } from "~/modules/flags/contexts/useFlag";
-import { useProject } from "~/modules/projects/contexts/useProject";
+import { WhenField } from "../WhenField";
 
 export interface ValuesToServeFieldsProps {
   variants?: Array<Variant & { rolloutPercentage: number }>;
   valueToServeType?: ValueToServe;
   rolloutPercentage: number;
   index: number;
+  whenPredicate: WhenPredicate;
+  whenTimestamp?: string;
 }
 
 export const StrategyFormFields = ({
@@ -21,10 +21,9 @@ export const StrategyFormFields = ({
   variants,
   rolloutPercentage,
   index,
+  whenPredicate,
+  whenTimestamp,
 }: ValuesToServeFieldsProps) => {
-  const { flag } = useFlag();
-  const { project } = useProject();
-
   const valueOptions = [
     {
       value: ValueToServe.Boolean,
@@ -53,38 +52,35 @@ export const StrategyFormFields = ({
             onValueChange={(str) => setStatus(str as ValueToServe)}
           />
 
-          {variants && variants.length === 0 ? (
-            <CreateButton
-              to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}/audience/variants/create`}
-              variant="tertiary"
-            >
-              Add a variant
-            </CreateButton>
-          ) : null}
+          <WhenField
+            whenPredicateName={`strategies[${index}][whenPredicate]`}
+            whenDateName={`strategies[${index}][whenTimestamp]`}
+            initialWhenPredicate={whenPredicate}
+            initialWhenTimestamp={whenTimestamp}
+          />
         </div>
 
-        {variants && variants.length > 0 && (
-          <div className="pt-4">
-            <VariantFields variants={variants || []} index={index} />
-          </div>
-        )}
+        <div className="pt-4">
+          <VariantFields variants={variants || []} index={index} />
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-row gap-4">
-      <SelectField
-        hiddenLabel
-        label="What value to you want to serve?"
-        name={`strategies[${index}][value-to-serve-type]`}
-        value={status}
-        options={valueOptions}
-        onValueChange={(str) => setStatus(str as ValueToServe)}
-      />
-      <div className="flex-1 flex flex-row items-center gap-2">
+    <div className="flex flex-col gap-4">
+      <div className="flex flex-row gap-4">
+        <SelectField
+          hiddenLabel
+          label="What value to you want to serve?"
+          name={`strategies[${index}][value-to-serve-type]`}
+          value={status}
+          options={valueOptions}
+          onValueChange={(str) => setStatus(str as ValueToServe)}
+        />
+
         {status === ValueToServe.Boolean && (
-          <>
+          <div className="flex-1 flex flex-row items-center gap-2">
             <Typography>to</Typography>
 
             <PercentageField
@@ -95,7 +91,14 @@ export const StrategyFormFields = ({
             />
 
             <Typography>of the audience</Typography>
-          </>
+
+            <WhenField
+              whenPredicateName={`strategies[${index}][whenPredicate]`}
+              whenDateName={`strategies[${index}][whenTimestamp]`}
+              initialWhenPredicate={whenPredicate}
+              initialWhenTimestamp={whenTimestamp}
+            />
+          </div>
         )}
       </div>
     </div>

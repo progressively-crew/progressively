@@ -12,6 +12,7 @@ import { KafkaTopics } from '../queuing/topics';
 import { IQueuingService } from '../queuing/types';
 import { QueuedEventHit } from './types';
 import { QueuingModule } from '../queuing/queuing.module';
+import { StrategyModule } from '../strategy/strategy.module';
 
 @Module({
   controllers: [SdkController],
@@ -23,6 +24,7 @@ import { QueuingModule } from '../queuing/queuing.module';
     RuleModule,
     UsersModule,
     QueuingModule,
+    StrategyModule,
   ],
   providers: [SdkService],
   exports: [SdkService],

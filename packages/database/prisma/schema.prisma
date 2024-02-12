@@ -185,6 +185,8 @@ model Strategy {
   createdAt         DateTime?         @default(now())
   Flag              Flag?             @relation(fields: [flagUuid], references: [uuid])
   flagUuid          String?
+  whenPredicate     String            @default("ALWAYS")
+  whenTimestamp     DateTime?
 }
 
 model StrategyVariant {

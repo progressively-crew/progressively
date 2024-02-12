@@ -15,6 +15,8 @@ export interface StrategyUpdateDto {
   valueToServe?: string;
   variants?: Array<StrategyVariant>;
   rules: Array<RuleUpdateDto>;
+  whenPredicate: WhenPredicate;
+  whenTimestamp?: Date;
 }
 
 export interface StrategyVariant {
@@ -29,4 +31,12 @@ export interface Strategy {
   rules?: Array<Rule>;
   valueToServe?: string;
   variants?: Array<StrategyVariant>;
+  whenPredicate: WhenPredicate;
+  whenTimestamp?: string;
+}
+
+export enum WhenPredicate {
+  Always = "ALWAYS",
+  BeforeThe = "BEFORE_THE",
+  AfterThe = "AFTER_THE",
 }
