@@ -30,7 +30,7 @@ export const BreadCrumbs = ({ crumbs }: BreadCrumbsProps) => {
               <Link
                 aria-current={currentPage ? "page" : undefined}
                 to={crumb.link}
-                className={`text-xs transition-background px-1 h-10 flex flex-row items-center rounded hover:text-black hover:bg-gray-100 no-underline ${
+                className={`text-xs transition-background px-1 h-10 flex flex-row items-center rounded hover:text-black hover:bg-gray-100 active:bg-gray-200 no-underline ${
                   currentPage ? "text-black" : "text-gray-500"
                 }`}
               >

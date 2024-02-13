@@ -24,11 +24,13 @@ export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
 }
 
 const classCombination = {
-  defaultprimary: "bg-slate-800 text-white hover:bg-slate-600",
-  defaultsecondary: "bg-transparent border border-slate-200 hover:bg-slate-100",
-  defaulttertiary: "bg-transparent hover:bg-slate-100",
+  defaultprimary:
+    "bg-slate-800 text-white hover:bg-slate-600 active:bg-slate-500",
+  defaultsecondary:
+    "bg-transparent border border-slate-200 hover:bg-slate-50 active:bg-slate-100",
+  defaulttertiary: "bg-transparent hover:bg-slate-50 active:bg-slate-100",
 
-  dangerprimary: "bg-red-700 text-white hover:bg-red-600",
+  dangerprimary: "bg-red-700 text-white hover:bg-red-600 active:bg-red-500",
   dangersecondary:
     "bg-transparent border border-red-200 hover:bg-red-100 text-red-700",
   dangertertiary: "text-red-700 hover:bg-red-100",

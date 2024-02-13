@@ -22,7 +22,7 @@ export interface NavItemProps {
 }
 
 export const NavItem = ({ children, to, icon, target }: NavItemProps) => {
-  const shared = `py-2 border-b-2 border-t-2 border-transparent whitespace-nowrap shrink-0 text-sm block flex items-center px-4 text-gray-700 hover:bg-slate-100`;
+  const shared = `py-2 border-b-2 border-t-2 border-transparent whitespace-nowrap shrink-0 text-sm block flex items-center px-4 text-gray-700 hover:bg-slate-100 active:bg-slate-200`;
 
   return (
     <li>
