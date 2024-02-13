@@ -393,31 +393,34 @@ export class ProjectsService {
   }
 
   async getBounceRate(projectId: string, startDate: string, endDate: string) {
-    // Hint: "PV" name is "PageView" but shorter for bundle size
-    const bounceRateData = await this.prisma.$queryRaw`
-     SELECT
-        COUNT(CASE WHEN numPages = 1 THEN 1 ELSE NULL END) AS SinglePageSessions,
-        COUNT(*) AS TotalSessions
-      FROM (
-        SELECT
-          "Event"."visitorId",
-          COUNT(DISTINCT "Event"."url") AS numPages
-        FROM
-          "Event"
-        WHERE "Event"."date" BETWEEN ${startDate}::timestamp AND ${endDate}::timestamp
-        AND "Event"."projectUuid"=${projectId}
-        AND "Event"."name"='Page View'
-        GROUP BY
-          "Event"."visitorId"
-      ) AS SessionCounts;
+    const uniquePageViewSession = await this.prisma.$queryRaw`
+      SELECT Count("Session"."uuid")
+      FROM "Session"
+      INNER JOIN "Event" ON "Session"."uuid" = "Event"."sessionUuid"
+      WHERE "Session"."projectUuid" = ${projectId}
+      AND "Event"."date" BETWEEN ${startDate}::timestamp AND ${endDate}::timestamp
+      AND "Event"."name" = 'Page View'
+      GROUP BY "Session"."uuid"
+      HAVING COUNT("Event"."uuid") = 1
     `;
 
-    const singlepagesessions = bounceRateData[0]?.singlepagesessions;
-    const totalsessions = bounceRateData[0]?.totalsessions;
+    const allSessionCount = await this.prisma.session.count({
+      where: {
+        projectUuid: projectId,
+        startedAt: {
+          gte: new Date(startDate),
+          lte: new Date(endDate),
+        },
+      },
+    });
+
+    const singlepagesessions = (uniquePageViewSession[0] as any)?.count as
+      | number
+      | undefined;
 
     let bounceRate = 0;
-    if (singlepagesessions && totalsessions) {
-      bounceRate = (Number(singlepagesessions) / Number(totalsessions)) * 100;
+    if (singlepagesessions && allSessionCount) {
+      bounceRate = (Number(singlepagesessions) / Number(allSessionCount)) * 100;
     }
 
     return bounceRate;

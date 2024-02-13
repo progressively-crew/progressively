@@ -8,6 +8,32 @@ export const seedHitEvents = async (
   prismaClient: PrismaClient,
   project: Project
 ) => {
+  const uniqueSession = await prismaClient.session.create({
+    data: {
+      projectUuid: project.uuid,
+      visitorId: "2",
+    },
+  });
+
+  await prismaClient.event.create({
+    data: {
+      name: "Page View",
+      visitorId: "2",
+      projectUuid: project.uuid,
+      os: "Mac OS",
+      browser: "Safari",
+      url: "/somepage",
+      sessionUuid: uniqueSession.uuid,
+    },
+  });
+
+  const session = await prismaClient.session.create({
+    data: {
+      projectUuid: project.uuid,
+      visitorId: "1",
+    },
+  });
+
   // Modify this value to see more real logs on N days
   const dayCount = SEED_ROUND_EVENT_HITS;
   for (let i = 1; i <= dayCount; i++) {
@@ -31,6 +57,7 @@ export const seedHitEvents = async (
           os: "Mac OS",
           browser: "Safari",
           url: "/somepage",
+          sessionUuid: session.uuid,
         },
       });
 
@@ -44,6 +71,7 @@ export const seedHitEvents = async (
             os: "Windows",
             browser: "Chrome",
             url: "/hello",
+            sessionUuid: session.uuid,
           },
         });
       }
