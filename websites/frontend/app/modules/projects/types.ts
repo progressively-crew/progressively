@@ -11,6 +11,8 @@ export interface Project {
   createdAt: string;
   name: string;
   userProject?: Array<UserProject>;
+  clientKey: string;
+  secretKey: string;
 }
 
 export interface UserProject {

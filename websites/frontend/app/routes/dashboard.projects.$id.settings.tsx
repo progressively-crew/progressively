@@ -17,6 +17,9 @@ import { VisuallyHidden } from "~/components/VisuallyHidden";
 import { getSession } from "~/sessions";
 import { rotateSecretKey } from "~/modules/projects/services/rotateSecretKey";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
+import { ButtonCopy } from "~/components/ButtonCopy";
+import { Dd, Dl, Dt } from "~/components/Dl";
+import { Spacer } from "~/components/Spacer";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -89,6 +92,40 @@ export default function SettingsPage() {
             </Typography>
           }
         />
+
+        <Card>
+          <CardContent>
+            <Section id="general">
+              <SectionHeader
+                title="General"
+                description={
+                  "The following is the project keys to use inside your application to get the flag variation"
+                }
+              />
+
+              <Spacer size={4} />
+              <Dl>
+                <Dt>Client key</Dt>
+                <Dd>
+                  <ButtonCopy toCopy={project.clientKey} size="S">
+                    {project.clientKey}
+                  </ButtonCopy>
+                </Dd>
+
+                <Dt>Secret key</Dt>
+                <Dd>
+                  <ButtonCopy
+                    size="S"
+                    toCopy={project.secretKey}
+                    toCopyAlternative="**********"
+                  >
+                    **********
+                  </ButtonCopy>
+                </Dd>
+              </Dl>
+            </Section>
+          </CardContent>
+        </Card>
 
         <Card>
           <Section id="members">
