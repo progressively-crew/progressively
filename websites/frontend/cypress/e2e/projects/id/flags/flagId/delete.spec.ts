@@ -49,7 +49,7 @@ describe("/dashboard/projects/[id]/flags/[flagId]/settings/delete", () => {
 
         cy.contains("Cancel")
           .should("be.visible")
-          .and("have.attr", "href", "/dashboard/projects/1/flags/1");
+          .and("have.attr", "href", "/dashboard/projects/1/flags/1/settings");
 
         cy.checkA11y();
       });
