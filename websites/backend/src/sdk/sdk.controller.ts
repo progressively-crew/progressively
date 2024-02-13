@@ -101,6 +101,7 @@ export class SdkController {
     @Param('params') base64Params: string,
     @Body() body: EventHit,
   ) {
+    console.log('yooooo', body);
     if (!body.name) {
       throw new BadRequestException();
     }
