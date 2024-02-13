@@ -36,7 +36,7 @@ export default function FlagSettingPage() {
         subNav={<FlagMenu projectId={project.uuid} flag={flag} />}
       >
         <PageTitle
-          value={flag.name}
+          value="Settings"
           action={
             <Button
               to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}/edit`}
