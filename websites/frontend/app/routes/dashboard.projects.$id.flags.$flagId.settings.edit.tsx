@@ -94,7 +94,7 @@ export default function EditFlagPage() {
         }
         closeSlot={
           <DialogCloseBtn
-            to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}`}
+            to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}/settings`}
             label={`Back to flag`}
           />
         }
