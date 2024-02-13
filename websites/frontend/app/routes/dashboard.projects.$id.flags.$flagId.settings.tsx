@@ -39,7 +39,7 @@ export default function FlagSettingPage() {
           value="Settings"
           action={
             <Button
-              to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}/edit`}
+              to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}/settings/edit`}
               variant="secondary"
             >
               Edit
@@ -69,7 +69,7 @@ export default function FlagSettingPage() {
           <Card
             footer={
               <DeleteButton
-                to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}/delete`}
+                to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}/settings/delete`}
               >
                 <span aria-hidden>
                   <span>Delete </span>

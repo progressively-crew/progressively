@@ -1,10 +1,10 @@
-describe("/dashboard/projects/[id]/flags/[flagId]/delete", () => {
+describe("/dashboard/projects/[id]/flags/[flagId]/settings/delete", () => {
   before(cy.seed);
   after(cy.cleanupDb);
 
   describe("not authenticated", () => {
     beforeEach(() => {
-      cy.visit("/dashboard/projects/1/flags/1/delete");
+      cy.visit("/dashboard/projects/1/flags/1/settings/delete");
     });
 
     it("checks that the route is protected", () => {
@@ -16,7 +16,7 @@ describe("/dashboard/projects/[id]/flags/[flagId]/delete", () => {
     describe("user: Jane", () => {
       beforeEach(() => {
         cy.signIn("Jane");
-        cy.visit("/dashboard/projects/1/flags/1/delete", {
+        cy.visit("/dashboard/projects/1/flags/1/settings/delete", {
           failOnStatusCode: false,
         });
       });
@@ -29,7 +29,7 @@ describe("/dashboard/projects/[id]/flags/[flagId]/delete", () => {
     describe("user: Marvin", () => {
       beforeEach(() => {
         cy.signIn("Marvin");
-        cy.visit("/dashboard/projects/1/flags/1/delete");
+        cy.visit("/dashboard/projects/1/flags/1/settings/delete");
         cy.injectAxe();
       });
 
@@ -49,7 +49,7 @@ describe("/dashboard/projects/[id]/flags/[flagId]/delete", () => {
 
         cy.contains("Cancel")
           .should("be.visible")
-          .and("have.attr", "href", "/dashboard/projects/1/flags/1");
+          .and("have.attr", "href", "/dashboard/projects/1/flags/1/settings");
 
         cy.checkA11y();
       });
@@ -65,7 +65,7 @@ describe("/dashboard/projects/[id]/flags/[flagId]/delete", () => {
 
       it("removes the flag and get me back to the envs page (empty state)", () => {
         // Delete the first flag
-        cy.visit("/dashboard/projects/1/flags/1/delete");
+        cy.visit("/dashboard/projects/1/flags/1/settings/delete");
         cy.findByRole("button", {
           name: "Delete",
         }).click();
@@ -76,7 +76,7 @@ describe("/dashboard/projects/[id]/flags/[flagId]/delete", () => {
         );
 
         // Delete the second flag
-        cy.visit("/dashboard/projects/1/flags/2/delete");
+        cy.visit("/dashboard/projects/1/flags/2/settings/delete");
         cy.findByRole("button", {
           name: "Delete",
         }).click();

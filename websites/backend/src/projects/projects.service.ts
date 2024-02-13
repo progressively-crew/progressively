@@ -179,6 +179,11 @@ export class ProjectsService {
           },
         },
       }),
+      this.prisma.session.deleteMany({
+        where: {
+          projectUuid: projectId,
+        },
+      }),
       this.prisma.event.deleteMany({
         where: {
           projectUuid: projectId,

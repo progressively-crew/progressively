@@ -77,7 +77,7 @@ export default function DeleteFlagPage() {
         <Button
           variant="tertiary"
           scheme="danger"
-          to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}`}
+          to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}/settings`}
         >
           Cancel
         </Button>
@@ -95,7 +95,7 @@ export default function DeleteFlagPage() {
       }
       closeSlot={
         <DialogCloseBtn
-          to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}`}
+          to={`/dashboard/projects/${project.uuid}/flags/${flag.uuid}/settings`}
           label={`Back to flag`}
         />
       }
