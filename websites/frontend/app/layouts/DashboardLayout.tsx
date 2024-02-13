@@ -55,12 +55,12 @@ export const DashboardLayout = ({
       <div className="bg-gray-50 h-full flex-1 rounded-xl shadow-xl">
         {lastCrumb && (
           <div
-            className={`bg-white border-b border-slate-200 rounded-t-lg pt-1 px-1 ${
+            className={`bg-white border-b border-slate-200 rounded-t-lg pt-1 ${
               hasMoreThanOneCrumb ? "pt-1" : "py-1"
             }`}
           >
             <div
-              className={`flex flex-row items-center ${
+              className={`flex flex-row items-center px-1 ${
                 hasMoreThanOneCrumb || backLink
                   ? "justify-between"
                   : "justify-end"
@@ -93,7 +93,7 @@ export const DashboardLayout = ({
                 </div>
 
                 {flag?.uuid && project && (
-                  <div className="flex flex-row gap-4 items-center pt-2 -mx-3">
+                  <div className="flex flex-row gap-4 items-center pt-2">
                     <ButtonCopy toCopy={flag.key} size="S">
                       {flag.key}
                     </ButtonCopy>

@@ -8,7 +8,7 @@ export interface HorizontalNavProps {
 
 export const HorizontalNav = ({ children, label }: HorizontalNavProps) => {
   return (
-    <nav aria-label={label} className="bg-slate-50">
+    <nav aria-label={label} className="bg-slate-50 px-4">
       <ul className="flex flex-row items-center">{children}</ul>
     </nav>
   );
