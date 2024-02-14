@@ -49,4 +49,6 @@ history.replaceState = function (...args) {
   trackPageView();
 };
 
+trackPageView();
+
 (window as any).track = track;
