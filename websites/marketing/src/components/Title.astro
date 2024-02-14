@@ -3,6 +3,7 @@ export interface Props {
   tag?: "h1" | "h2" | "h3" | "p";
   size?: "XL" | "L" | "M" | "S";
   theme?: "light" | "dark";
+  className?: string;
 }
 
 const sizeStyles = {
@@ -17,12 +18,12 @@ const themeColor = {
   dark: "text-slate-50",
 };
 
-const { size, tag: el, theme } = Astro.props;
+const { size, tag: el, theme, className } = Astro.props;
 
 const sharedStyle = "font-extrabold font-title";
 const styles = `${sharedStyle} ${themeColor[theme || "light"]} ${
   sizeStyles[size || "XL"]
-}`;
+} ${className || ""}`;
 
 const El = el || "p";
 ---

@@ -1,5 +1,4 @@
 ---
-import "@fontsource-variable/playfair-display";
 import Navbar from "../components/Navbar.astro";
 import Banner from "../components/Banner.astro";
 
@@ -11,6 +10,8 @@ interface Props {
 
 const { title, description, keywords } = Astro.props;
 const currentUrl = Astro.url.toString();
+
+const scriptSrc = "/progressively.min.js";
 ---
 
 <!DOCTYPE html>
@@ -43,7 +44,7 @@ const currentUrl = Astro.url.toString();
   </head>
   <body>
     <header class="fixed top-0 z-20 w-full">
-      <Banner>
+      <!-- <Banner>
         Thanks for your support on{" "}
         <a
           class="font-bold underline"
@@ -52,7 +53,7 @@ const currentUrl = Astro.url.toString();
           ProductHunt
         </a>
         ! We've reached <strong>#7 of the day!</strong> 🥰
-      </Banner>
+      </Banner> -->
 
       <Navbar />
     </header>
@@ -69,6 +70,13 @@ const currentUrl = Astro.url.toString();
       DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
   }
 </style>
+
+<script
+  is:inline
+  src="/progressively.min.js"
+  data-progressively-endpoint="https://api.progressively.app"
+  data-progressively-client-key={import.meta.env.PUBLIC_PROGRESSIVELY_CLIENT}
+></script>
 
 <script>
   const clientKey = import.meta.env.PUBLIC_PROGRESSIVELY_CLIENT;
@@ -94,7 +102,6 @@ const currentUrl = Astro.url.toString();
 
     if (el) {
       el.addEventListener("click", (e) => {
-        e.preventDefault();
         // todo: fix
       });
     }

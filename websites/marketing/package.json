@@ -13,7 +13,6 @@
     "@astrojs/check": "^0.5.4",
     "@astrojs/tailwind": "^5.1.0",
     "@astrojs/vercel": "^7.3.1",
-    "@fontsource-variable/playfair-display": "^5.0.20",
     "@progressively/sdk-js": "^1.0.2",
     "@progressively/server-side": "workspace:^",
     "astro": "^4.3.7",

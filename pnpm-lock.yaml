@@ -926,9 +926,6 @@ importers:
       '@astrojs/vercel':
         specifier: ^7.3.1
         version: 7.3.1(astro@4.3.7)
-      '@fontsource-variable/playfair-display':
-        specifier: ^5.0.20
-        version: 5.0.20
       '@progressively/sdk-js':
         specifier: ^1.0.2
         version: link:../../packages/sdk-js
@@ -5697,10 +5694,6 @@ packages:
       '@floating-ui/dom': 1.4.2
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-    dev: false
-
-  /@fontsource-variable/playfair-display@5.0.20:
-    resolution: {integrity: sha512-NhvSejdb9V6WzWk9LP+8EbwgK50DMEiP7rnvPHNBmY0bGhtKZTL4Zq6ev6t+IoNibkm6dFC9hIkessBJj+sqWA==}
     dev: false
 
   /@hapi/hoek@9.3.0:

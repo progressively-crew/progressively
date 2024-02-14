@@ -1,7 +1,6 @@
 ---
 import { Image } from "astro:assets";
 import Button from "../components/Button.astro";
-import HeroBg from "../components/HeroBg.astro";
 import ffSrc from "./assets/above-fold/ff.png";
 import analyticsSrc from "./assets/above-fold/analytics.png";
 import funnelsSrc from "./assets/above-fold/funnels.png";
@@ -11,22 +10,25 @@ import Browser from "../components/Browser.astro";
 ---
 
 <div
-  class="relative px-4 pt-48 md:pt-64 flex flex-col justify-center text-center"
+  class="relative px-4 pt-48 md:pt-64 flex flex-col justify-center text-center bg-slate-50"
 >
-  <div class="max-w-2xl mx-auto relative z-10">
-    <Title tag="h1" size="XL">Craft Key Features for Your Audience</Title>
-    <div class="py-6">
-      <Text size="L">
-        The <strong
-          >all in one toolbox for feature flags, analytics & A/B testing</strong
-        >. <br />All that anonymously, Open Source & self-hosted.
-      </Text>
+  <div class="max-w-3xl mx-auto relative z-10">
+    <Title tag="h1" size="XL">
+      All in one toolbox for <span class="text-pink-500"
+        >feature flags & analytics</span
+      >
+    </Title>
+    <div class="pb-6 pt-4">
+      <Title size="M" tag="p" className="font-light text-slate-600">
+        Anonymous, Open Source & Self-hosted
+      </Title>
     </div>
 
     <div
       class="pt-2 flex flex-col md:flex-row md:gap-6 w-full justify-center items-center"
     >
       <Button
+        target="_blank"
         href="https://app.cal.com/mfrachet/30min"
         id="above-the-fold-get-in-touch"
       >
@@ -74,9 +76,5 @@ import Browser from "../components/Browser.astro";
         <Text><strong>Funnels</strong></Text>
       </div>
     </div>
-  </div>
-
-  <div class="absolute inset-0 w-full h-full hidden md:block">
-    <HeroBg />
   </div>
 </div>

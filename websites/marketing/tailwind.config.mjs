@@ -6,7 +6,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        title: ['"Playfair Display Variable"', ...defaultTheme.fontFamily.sans],
+        title: [...defaultTheme.fontFamily.sans],
       },
       keyframes: {
         "fade-enter-bottom": {
