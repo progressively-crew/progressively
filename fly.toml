@@ -1,0 +1,23 @@
+# fly.toml app configuration file generated for progressively on 2024-02-13T17:01:13+01:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'progressively'
+primary_region = 'cdg'
+
+[build]
+  dockerfile = 'Dockerfile.Backend'
+
+[http_service]
+  internal_port = 4000
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ['app']
+
+[[vm]]
+  cpu_kind = 'shared'
+  cpus = 2
+  memory_mb = 2048
