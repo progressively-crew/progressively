@@ -80,8 +80,6 @@ const currentUrl = Astro.url.toString();
     websocketUrl: "wss://api.progressively.app",
   });
 
-  sdk.track();
-
   [
     "nav-docs",
     "nav-getstarted",
@@ -97,13 +95,7 @@ const currentUrl = Astro.url.toString();
     if (el) {
       el.addEventListener("click", (e) => {
         e.preventDefault();
-
-        sdk.track(id).then(() => {
-          const anchor = e.target as HTMLAnchorElement | null;
-          if (anchor) {
-            window.location.href = anchor?.href;
-          }
-        });
+        // todo: fix
       });
     }
   });
