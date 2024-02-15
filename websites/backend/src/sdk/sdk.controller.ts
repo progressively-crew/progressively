@@ -12,7 +12,6 @@ import {
   Inject,
 } from '@nestjs/common';
 import { Request } from 'express';
-import { minimatch } from 'minimatch';
 import { SdkService } from './sdk.service';
 import { parseBase64Params, resolveUserId } from './utils';
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
@@ -50,7 +49,9 @@ export class SdkController {
     if (
       !secretKey &&
       fields.clientKey &&
-      (!concernedProject.domain || !minimatch(domain, concernedProject.domain))
+      (!concernedProject.domain ||
+        (concernedProject.domain !== '**' &&
+          !domain.includes(concernedProject.domain)))
     ) {
       throw new UnauthorizedException();
     }
