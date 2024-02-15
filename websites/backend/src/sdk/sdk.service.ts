@@ -265,7 +265,8 @@ export class SdkService {
       !queuedEvent.secretKey &&
       queuedEvent.clientKey &&
       (!concernedProject.domain ||
-        (domain !== '**' && !domain.includes(concernedProject.domain)))
+        (concernedProject.domain !== '**' &&
+          !domain.includes(concernedProject.domain)))
     ) {
       return this.logger.error({
         error: `The client key does not match the authorized domains. Project: "${concernedProject.domain}", received: "${domain}"`,
