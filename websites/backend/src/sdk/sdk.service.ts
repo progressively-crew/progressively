@@ -268,7 +268,7 @@ export class SdkService {
       (!concernedProject.domain || !minimatch(domain, concernedProject.domain))
     ) {
       return this.logger.error({
-        error: 'The client key does not match the authorized domains',
+        error: `The client key does not match the authorized domains. Project: "${concernedProject.domain}", received: "${domain}"`,
         level: 'error',
         context: 'Queued hit',
         payload: queuedEvent,
