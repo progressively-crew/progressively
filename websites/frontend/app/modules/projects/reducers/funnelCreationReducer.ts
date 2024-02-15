@@ -1,4 +1,4 @@
-import { Flag } from "~/modules/flags/types";
+import { FlagWithVariant } from "~/modules/flags/types";
 import { CreateFunnelEntryDTO } from "../types";
 
 export type ActionType =
@@ -20,7 +20,7 @@ export const initialState: FunnelCreationState = {
 };
 
 export const getInitialState = (
-  flags: Array<Flag>,
+  flags: Array<FlagWithVariant>,
   eventNames: Array<string>
 ): FunnelCreationState => ({
   funnelEntries: [],

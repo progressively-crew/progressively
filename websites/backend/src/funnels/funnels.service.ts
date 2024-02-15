@@ -23,9 +23,12 @@ export class FunnelsService {
 
     const funnelStats: FunnelChart['funnelStats'] = [];
 
+    let i = 0;
     let previousVisitors: Array<string> = [];
 
     for (const funnelEntry of funnelEntries) {
+      const shouldSkipRequest = i > 0 && previousVisitors.length === 0;
+
       const visitorIdWhere =
         previousVisitors.length > 0
           ? {
@@ -38,17 +41,19 @@ export class FunnelsService {
       if (funnelEntry.flag) {
         const valueResolved = funnelEntry.flagVariant || 'true';
 
-        const flagHits = await this.prisma.flagHit.findMany({
-          where: {
-            flagUuid: funnelEntry.flagUuid,
-            valueResolved,
-            date: {
-              gte: new Date(startDate),
-              lte: new Date(endDate),
-            },
-            ...visitorIdWhere,
-          },
-        });
+        const flagHits = shouldSkipRequest
+          ? []
+          : await this.prisma.flagHit.findMany({
+              where: {
+                flagUuid: funnelEntry.flagUuid,
+                valueResolved,
+                date: {
+                  gte: new Date(startDate),
+                  lte: new Date(endDate),
+                },
+                ...visitorIdWhere,
+              },
+            });
 
         previousVisitors = flagHits.map((fh) => fh.visitorId);
 
@@ -57,18 +62,20 @@ export class FunnelsService {
           count: flagHits.length,
         });
       } else {
-        const events = await this.prisma.event.findMany({
-          where: {
-            projectUuid: projectUuid,
-            name: funnelEntry.eventName,
-            url: funnelEntry.eventValue || undefined,
-            date: {
-              gte: new Date(startDate),
-              lte: new Date(endDate),
-            },
-            ...visitorIdWhere,
-          },
-        });
+        const events = shouldSkipRequest
+          ? []
+          : await this.prisma.event.findMany({
+              where: {
+                projectUuid: projectUuid,
+                name: funnelEntry.eventName,
+                url: funnelEntry.eventValue || undefined,
+                date: {
+                  gte: new Date(startDate),
+                  lte: new Date(endDate),
+                },
+                ...visitorIdWhere,
+              },
+            });
 
         previousVisitors = events.map((fh) => fh.visitorId);
 
@@ -77,6 +84,8 @@ export class FunnelsService {
           count: events.length,
         });
       }
+
+      i++;
     }
 
     const funnelEntry: FunnelChart = {

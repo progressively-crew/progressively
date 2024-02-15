@@ -14,7 +14,7 @@ import { SubmitButton } from "~/components/Buttons/SubmitButton";
 import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { FormGroup } from "~/components/Fields/FormGroup";
 import { TextInput } from "~/components/Fields/TextInput";
-import { CreateFlagDTO, Flag } from "~/modules/flags/types";
+import { CreateFlagDTO, FlagWithVariant } from "~/modules/flags/types";
 import { getSession } from "~/sessions";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
@@ -26,7 +26,6 @@ import { getDistinctEventName } from "~/modules/projects/services/getDistinctEve
 import { SelectField } from "~/components/Fields/Select/SelectField";
 import { useMemo, useReducer } from "react";
 import { Typography } from "~/components/Typography";
-
 import { getPageViewEvent } from "~/modules/projects/services/getPageViewEvent";
 import { getProjectFlags } from "~/modules/projects/services/getProjectFlags";
 import {
@@ -74,7 +73,7 @@ export const action: ActionFunction = async ({
   const session = await getSession(request.headers.get("Cookie"));
 
   try {
-    const newFunnel: Flag = await createFunnel(
+    const newFunnel = await createFunnel(
       projectId,
       name!,
       funnelEntries,
@@ -114,7 +113,10 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   const projectId = params.id!;
 
-  const flags: Array<Flag> = await getProjectFlags(projectId, authCookie);
+  const flags: Array<FlagWithVariant> = await getProjectFlags(
+    projectId,
+    authCookie
+  );
 
   const eventNames: Array<string> = await getDistinctEventName(
     projectId,
@@ -147,9 +149,9 @@ export default function CreateFunnel() {
 
   const flagDict = useMemo(() => {
     return flags.reduce((acc, curr) => {
-      acc[curr.flagId] = curr;
+      acc[curr.uuid] = curr;
       return acc;
-    }, {} as Record<string, Flag>);
+    }, {} as Record<string, FlagWithVariant>);
   }, []);
 
   const { funnelEntries, eventNameOptions, flagOptions } = state;
@@ -222,10 +224,9 @@ export default function CreateFunnel() {
               let variants: Array<{ label: string; value: string }> | undefined;
 
               if (flag) {
-                variants = [];
                 variants =
                   flag.variants.length > 0
-                    ? flag?.variants.map((v) => ({
+                    ? flag?.variants.map((v: { value: string }) => ({
                         label: v.value,
                         value: v.value,
                       }))
@@ -256,7 +257,7 @@ export default function CreateFunnel() {
                       label={"Variant name"}
                       options={variants}
                       name={"variant-name"}
-                      onValueChange={(v) => selectVariant(flag!.flagId!, v)}
+                      onValueChange={(v) => selectVariant(flag!.uuid, v)}
                       hiddenLabel
                     />
                   )}
