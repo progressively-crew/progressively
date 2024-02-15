@@ -106,7 +106,7 @@ export const loader: LoaderFunction = async ({
   const eventsByViewportCount: Array<LocalCount> = eventsByViewport.map(
     (agc: any) => ({
       count: agc._count.uuid,
-      name: `${agc.viewportWidth}/${agc.viewportheight}`,
+      name: `${agc.viewportWidth}/${agc.viewportHeight}`,
     })
   );
 
