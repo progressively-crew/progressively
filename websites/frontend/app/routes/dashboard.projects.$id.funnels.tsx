@@ -83,7 +83,7 @@ export default function FunnelsPage() {
               const firstChart = funnelChart.funnelStats[0];
               const lastChart = funnelChart.funnelStats.at(-1);
               const percentage =
-                firstChart && lastChart
+                firstChart?.count && lastChart?.count
                   ? (lastChart.count / firstChart.count) * 100
                   : 0;
 

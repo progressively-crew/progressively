@@ -14,6 +14,9 @@ export class ProjectsService {
       where: {
         projectUuid: projectId,
       },
+      include: {
+        variants: true,
+      },
       orderBy: {
         createdAt: 'desc',
       },
