@@ -16,6 +16,9 @@ export class FunnelsService {
       where: {
         funnelUuid: funnel.uuid,
       },
+      include: {
+        flag: true,
+      },
     });
 
     const funnelStats: FunnelChart['funnelStats'] = [];
@@ -32,11 +35,13 @@ export class FunnelsService {
             }
           : {};
 
-      if (funnelEntry.flagUuid) {
+      if (funnelEntry.flag) {
+        const valueResolved = funnelEntry.flagVariant || 'true';
+
         const flagHits = await this.prisma.flagHit.findMany({
           where: {
             flagUuid: funnelEntry.flagUuid,
-            valueResolved: funnelEntry.flagVariant,
+            valueResolved,
             date: {
               gte: new Date(startDate),
               lte: new Date(endDate),
@@ -48,7 +53,7 @@ export class FunnelsService {
         previousVisitors = flagHits.map((fh) => fh.visitorId);
 
         funnelStats.push({
-          event: funnelEntry.flagVariant,
+          event: `${funnelEntry.flag.name} (${valueResolved})`,
           count: flagHits.length,
         });
       } else {
