@@ -150,19 +150,21 @@ model Session {
 }
 
 model Event {
-  uuid        String   @id @default(uuid())
-  date        DateTime @default(now())
-  name        String
-  visitorId   String
-  browser     String
-  os          String
-  url         String
-  referer     String?
-  data        String? // additional data
-  Project     Project? @relation(fields: [projectUuid], references: [uuid])
-  projectUuid String?
-  Session     Session? @relation(fields: [sessionUuid], references: [uuid])
-  sessionUuid String?
+  uuid           String   @id @default(uuid())
+  date           DateTime @default(now())
+  name           String
+  visitorId      String
+  browser        String
+  os             String
+  url            String
+  referer        String?
+  data           String? // additional data
+  Project        Project? @relation(fields: [projectUuid], references: [uuid])
+  projectUuid    String?
+  Session        Session? @relation(fields: [sessionUuid], references: [uuid])
+  sessionUuid    String?
+  viewportHeight Int?
+  viewportWidth  Int?
 }
 
 model Rule {
