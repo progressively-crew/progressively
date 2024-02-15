@@ -72,7 +72,7 @@ export class SdkController {
     const userAgent = request.headers['user-agent'] || '';
     const ip = request.ip;
 
-    fields.id = await resolveUserId(fields, userAgent, ip);
+    fields.id = resolveUserId(fields, userAgent, ip);
 
     const concernedProject = await this._guardSdkEndpoint(request, fields);
     const shouldSkipHits = headers['x-progressively-hit'] === 'skip';
@@ -110,7 +110,7 @@ export class SdkController {
     const userAgent = request.headers['user-agent'] || '';
     const ip = request.ip;
 
-    fields.id = await resolveUserId(fields, userAgent, ip);
+    fields.id = resolveUserId(fields, userAgent, ip);
 
     const secretKey = request.headers['x-api-key'] as string | undefined;
     const clientKey = fields.clientKey;

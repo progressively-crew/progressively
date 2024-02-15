@@ -9,7 +9,7 @@ import { URL } from 'url';
 import { Rooms } from './rooms';
 import { LocalWebsocket, Subscriber } from './types';
 import { PopulatedFlag } from '../flags/types';
-import { IPubsubService } from 'src/pubsub/types';
+import { IPubsubService } from '../pubsub/types';
 import { Inject } from '@nestjs/common';
 
 @WebSocketGateway()

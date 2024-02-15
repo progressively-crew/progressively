@@ -1,4 +1,3 @@
-import { x86 as murmur } from 'murmurhash3js';
 import { BadRequestException } from '@nestjs/common';
 import { FieldRecord } from '../rule/types';
 import { PopulatedVariant } from '../flags/types';
@@ -39,7 +38,7 @@ export const isInBucket = (bucketId: number, rolloutPercentage: number) => {
 
 export const genBucket = (key: string, userId: string) => {
   const bucketKey = `${userId}-${key}`;
-  const bucketHash: number = murmur.hash32(bucketKey, 1);
+  const bucketHash: number = CryptoService.murmurhash(bucketKey);
   const bucketHashRatio = bucketHash / MAX_INT_32; // int 32 hash divided by the max number of int 32
   return Math.floor(bucketHashRatio * BUCKET_COUNT);
 };
@@ -52,7 +51,7 @@ export const parseBase64Params = (b64: string): FieldRecord => {
   }
 };
 
-export const resolveUserId = async (
+export const resolveUserId = (
   fields: FieldRecord,
   userAgent: string,
   ip: string,
@@ -63,7 +62,7 @@ export const resolveUserId = async (
   }
 
   // User exists, subsequent requests
-  return await CryptoService.hash(`${userAgent}${ip}`);
+  return String(CryptoService.murmurhash(`${userAgent}${ip}`));
 };
 
 export const getStringOfTypes = (
