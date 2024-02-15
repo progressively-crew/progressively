@@ -129,6 +129,8 @@ export class SdkController {
       url: body.url,
       visitorId: String(fields?.id || ''),
       data: body.data,
+      viewportHeight: body.viewportHeight,
+      viewportWidth: body.viewportWidth,
     };
 
     await this.queuingService.send(KafkaTopics.AnalyticsHits, queuedEvent);

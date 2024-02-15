@@ -231,6 +231,8 @@ export class SdkService {
             : String(queuedEvent.data)
           : null,
         sessionUuid: session.uuid,
+        viewportHeight: queuedEvent.viewportHeight,
+        viewportWidth: queuedEvent.viewportWidth,
       },
     });
   }

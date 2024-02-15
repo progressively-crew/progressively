@@ -5,6 +5,8 @@ export interface EventHit {
   data?: any;
   url?: string;
   referer?: string;
+  viewportWidth?: number;
+  viewportHeight?: number;
 }
 
 export interface QueuedEventHit extends EventHit, DeviceInfo {

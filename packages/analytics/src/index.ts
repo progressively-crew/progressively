@@ -20,6 +20,8 @@ const track = (eventName: string) => {
     name: eventName,
     url: window.location.href,
     referer: window.document.referrer || null,
+    viewportWidth: window.innerWidth,
+    viewportHeight: window.innerHeight,
   };
 
   return fetch(`${endpoint}/sdk/${bSixtyFour}`, {
