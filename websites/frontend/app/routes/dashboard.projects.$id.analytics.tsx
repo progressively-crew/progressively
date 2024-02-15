@@ -48,6 +48,7 @@ interface LoaderData {
   prevPageViewCount: number;
   uniqueVisitorsCount: number;
   bounceRate: number;
+  eventsByViewportCount: Array<LocalCount>;
 }
 
 export const loader: LoaderFunction = async ({
@@ -82,6 +83,7 @@ export const loader: LoaderFunction = async ({
     uniqueVisitorsCount,
     eventsPerDatePerReferer,
     bounceRate,
+    eventsByViewport,
   } = await getEventsForProject(projectId, start, end, authCookie);
 
   const metricForDate = await getMetricsCount(
@@ -99,6 +101,13 @@ export const loader: LoaderFunction = async ({
     start,
     end,
     authCookie
+  );
+
+  const eventsByViewportCount: Array<LocalCount> = eventsByViewport.map(
+    (agc: any) => ({
+      count: agc._count.uuid,
+      name: `${agc.viewportWidth}/${agc.viewportheight}`,
+    })
   );
 
   return {
@@ -120,6 +129,7 @@ export const loader: LoaderFunction = async ({
       "referer"
     ),
     bounceRate,
+    eventsByViewportCount,
   };
 };
 
@@ -137,6 +147,7 @@ export default function ProjectInsights() {
     uniqueVisitorsCount,
     eventsPerDatePerReferer,
     bounceRate,
+    eventsByViewportCount,
   } = useLoaderData<LoaderData>();
   const { project } = useProject();
 
@@ -199,7 +210,7 @@ export default function ProjectInsights() {
         </Card>
       </Section>
 
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-3 gap-6">
         <Section>
           <Card>
             <CardContent>
@@ -222,6 +233,19 @@ export default function ProjectInsights() {
               data={eventsPerDatePerOs}
               caption="Page views / Os"
               cellName={"Os"}
+            />
+          </Card>
+        </Section>
+
+        <Section>
+          <Card>
+            <CardContent>
+              <SectionHeader title="Page views / Viewport (Width x Height)" />
+            </CardContent>
+            <CountTable
+              data={eventsByViewportCount}
+              caption="Page views / Viewport (Width x Height)"
+              cellName={"Viewport"}
             />
           </Card>
         </Section>

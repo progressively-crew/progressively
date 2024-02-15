@@ -318,6 +318,12 @@ export class ProjectsController {
       endDate,
     );
 
+    const eventsByViewport = await this.projectService.getEventsByViewport(
+      id,
+      startDate,
+      endDate,
+    );
+
     return {
       pageViewsPerDate,
       eventsPerDate,
@@ -327,6 +333,7 @@ export class ProjectsController {
       eventsPerDatePerReferer,
       uniqueVisitorsCount: uniqueVisitors.length,
       bounceRate,
+      eventsByViewport,
     };
   }
 

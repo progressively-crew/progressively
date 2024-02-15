@@ -387,6 +387,34 @@ export class ProjectsService {
     });
   }
 
+  getEventsByViewport(projectId: string, startDate: string, endDate: string) {
+    return this.prisma.event.groupBy({
+      by: ['viewportWidth', 'viewportHeight'],
+      _count: {
+        uuid: true,
+      },
+      where: {
+        projectUuid: projectId,
+        date: {
+          gte: new Date(startDate),
+          lte: new Date(endDate),
+        },
+        name: 'Page View',
+        viewportHeight: {
+          not: null,
+        },
+        viewportWidth: {
+          not: null,
+        },
+      },
+      orderBy: {
+        _count: {
+          uuid: 'desc',
+        },
+      },
+    });
+  }
+
   getUniqueVisitor(projectId: string, startDate: string, endDate: string) {
     return this.prisma.event.findMany({
       distinct: ['visitorId'],
