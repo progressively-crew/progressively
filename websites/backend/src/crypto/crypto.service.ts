@@ -1,3 +1,4 @@
+import { x86 as murmur } from 'murmurhash3js';
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
 
@@ -13,5 +14,9 @@ export class CryptoService {
 
   static async isHashEqual(plainText: string, hash: string): Promise<boolean> {
     return bcrypt.compare(plainText, hash);
+  }
+
+  static mumurhash(toHash: string): number {
+    return murmur.hash32(toHash, 1);
   }
 }
