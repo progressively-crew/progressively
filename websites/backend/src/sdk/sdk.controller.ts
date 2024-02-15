@@ -49,7 +49,8 @@ export class SdkController {
     if (
       !secretKey &&
       fields.clientKey &&
-      (!concernedProject.domain || !domain.includes(concernedProject.domain))
+      (!concernedProject.domain ||
+        (domain !== '**' && !domain.includes(concernedProject.domain)))
     ) {
       throw new UnauthorizedException();
     }
