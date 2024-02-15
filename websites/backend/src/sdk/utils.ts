@@ -51,7 +51,7 @@ export const parseBase64Params = (b64: string): FieldRecord => {
   }
 };
 
-export const resolveUserId = async (
+export const resolveUserId = (
   fields: FieldRecord,
   userAgent: string,
   ip: string,
@@ -62,7 +62,7 @@ export const resolveUserId = async (
   }
 
   // User exists, subsequent requests
-  return await CryptoService.hash(`${userAgent}${ip}`);
+  return CryptoService.mumurhash(`${userAgent}${ip}`);
 };
 
 export const getStringOfTypes = (
