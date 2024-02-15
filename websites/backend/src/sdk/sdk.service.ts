@@ -19,7 +19,6 @@ import { ValueToServe } from '../strategy/types';
 import { QueuedEventHit } from './types';
 import { RuleService } from '../rule/rule.service';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
-import { minimatch } from 'minimatch';
 import { IQueuingService } from '../queuing/types';
 import { KafkaTopics } from '../queuing/topics';
 import { FlagsService } from '../flags/flags.service';
@@ -265,7 +264,7 @@ export class SdkService {
     if (
       !queuedEvent.secretKey &&
       queuedEvent.clientKey &&
-      (!concernedProject.domain || !minimatch(domain, concernedProject.domain))
+      (!concernedProject.domain || !domain.includes(concernedProject.domain))
     ) {
       return this.logger.error({
         error: `The client key does not match the authorized domains. Project: "${concernedProject.domain}", received: "${domain}"`,

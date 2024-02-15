@@ -615,9 +615,6 @@ importers:
       kafkajs:
         specifier: ^2.2.4
         version: 2.2.4
-      minimatch:
-        specifier: ^9.0.3
-        version: 9.0.3
       murmurhash3js:
         specifier: ^3.0.1
         version: 3.0.1
