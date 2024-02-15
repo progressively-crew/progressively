@@ -9,7 +9,10 @@ jest.mock('../../src/queuing/queuing.service.factory', () => ({
 }));
 
 jest.mock('../../src/crypto/crypto.service', () => ({
-  CryptoService: { hash: (x: string) => Promise.resolve(x) },
+  CryptoService: {
+    hash: (x: string) => Promise.resolve(x),
+    murmurhash: (x: string) => x,
+  },
 }));
 
 jest.mock('nanoid', () => ({

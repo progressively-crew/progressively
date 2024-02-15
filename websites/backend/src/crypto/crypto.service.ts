@@ -16,7 +16,7 @@ export class CryptoService {
     return bcrypt.compare(plainText, hash);
   }
 
-  static mumurhash(toHash: string): number {
+  static murmurhash(toHash: string): number {
     return murmur.hash32(toHash, 1);
   }
 }

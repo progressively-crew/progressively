@@ -38,7 +38,7 @@ export const isInBucket = (bucketId: number, rolloutPercentage: number) => {
 
 export const genBucket = (key: string, userId: string) => {
   const bucketKey = `${userId}-${key}`;
-  const bucketHash: number = CryptoService.mumurhash(bucketKey);
+  const bucketHash: number = CryptoService.murmurhash(bucketKey);
   const bucketHashRatio = bucketHash / MAX_INT_32; // int 32 hash divided by the max number of int 32
   return Math.floor(bucketHashRatio * BUCKET_COUNT);
 };
@@ -62,7 +62,7 @@ export const resolveUserId = (
   }
 
   // User exists, subsequent requests
-  return CryptoService.mumurhash(`${userAgent}${ip}`);
+  return String(CryptoService.murmurhash(`${userAgent}${ip}`));
 };
 
 export const getStringOfTypes = (

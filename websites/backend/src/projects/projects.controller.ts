@@ -23,7 +23,7 @@ import {
   ProjectRetrieveDTO,
 } from './projects.dto';
 import { ProjectsService } from './projects.service';
-import { UserRetrieveDTO } from 'src/users/users.dto';
+import { UserRetrieveDTO } from '../users/users.dto';
 import { Roles } from '../shared/decorators/Roles';
 import { UserRoles } from '../users/roles';
 import { HasProjectAccessGuard } from './guards/hasProjectAccess';
