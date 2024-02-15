@@ -72,9 +72,7 @@ export default function FunnelsPage() {
           value="Funnels"
           action={
             <div className="flex flex-row items-center gap-8">
-              <CreateButton to={`./${project.uuid}/create`}>
-                Create a funnel
-              </CreateButton>
+              <CreateButton to={`./create`}>Create a funnel</CreateButton>
               <InsightsFilters />
             </div>
           }

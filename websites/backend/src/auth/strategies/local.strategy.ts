@@ -4,6 +4,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserRetrieveDTO } from '../../users/users.dto';
 import { UserStatus } from '../../users/status';
 import { UsersService } from '../../users/users.service';
+import { sleep } from '../../shared/utils/sleep';
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
@@ -12,6 +13,8 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(username: string, password: string): Promise<UserRetrieveDTO> {
+    // Mitigate brute force
+    await sleep();
     const user = await this.userService.validateBasicEmailPasswordUser(
       username,
       password,

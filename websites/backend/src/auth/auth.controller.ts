@@ -51,9 +51,6 @@ export class AuthController {
     /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
     @Body() _: LoginDTO,
   ) {
-    // Mitigate brute force
-    await sleep();
-
     const user = req.user as User;
 
     const userDTO: UserRetrieveDTO = {
