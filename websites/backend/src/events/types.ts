@@ -4,3 +4,7 @@ export interface Variant {
   isControl: boolean;
   value: string;
 }
+
+export const ReservedEventName = {
+  PageView: 'Page View',
+};

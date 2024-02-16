@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { UserRoles } from '../users/roles';
 import { PrismaService } from '../database/prisma.service';
 import { FlagAlreadyExists } from './errors';
+import { ReservedEventName } from '../events/types';
 
 @Injectable()
 export class ProjectsService {
@@ -257,7 +258,7 @@ export class ProjectsService {
       ? { name: eventFilter }
       : {
           NOT: {
-            name: 'Page View',
+            name: ReservedEventName.PageView,
           },
         };
 
@@ -310,14 +311,14 @@ export class ProjectsService {
     pageView: boolean,
   ) {
     const eventFilter = pageView
-      ? { name: 'Page View' }
-      : { NOT: { name: 'Page View' } };
+      ? { name: ReservedEventName.PageView }
+      : { NOT: { name: ReservedEventName.PageView } };
 
     const distinctEventName = await this.getDistinctEventName(
       projectId,
       startDate,
       endDate,
-      pageView ? 'Page View' : undefined,
+      pageView ? ReservedEventName.PageView : undefined,
     );
 
     const dictByDates = {};
@@ -376,7 +377,7 @@ export class ProjectsService {
           gte: new Date(startDate),
           lte: new Date(endDate),
         },
-        name: 'Page View',
+        name: ReservedEventName.PageView,
         ...notConstrains,
       },
       orderBy: {
@@ -399,7 +400,7 @@ export class ProjectsService {
           gte: new Date(startDate),
           lte: new Date(endDate),
         },
-        name: 'Page View',
+        name: ReservedEventName.PageView,
         viewportHeight: {
           not: null,
         },
@@ -435,7 +436,7 @@ export class ProjectsService {
       INNER JOIN "Event" ON "Session"."uuid" = "Event"."sessionUuid"
       WHERE "Session"."projectUuid" = ${projectId}
       AND "Event"."date" BETWEEN ${startDate}::timestamp AND ${endDate}::timestamp
-      AND "Event"."name" = 'Page View'
+      AND "Event"."name" = ${ReservedEventName.PageView}
       GROUP BY "Session"."uuid"
       HAVING COUNT("Event"."uuid") = 1
     `;
@@ -471,7 +472,7 @@ export class ProjectsService {
           gte: new Date(startDate),
           lte: new Date(endDate),
         },
-        name: 'Page View',
+        name: ReservedEventName.PageView,
       },
     });
   }

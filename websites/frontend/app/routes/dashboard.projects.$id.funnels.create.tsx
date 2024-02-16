@@ -33,6 +33,7 @@ import {
   initialState,
   getInitialState,
 } from "~/modules/projects/reducers/funnelCreationReducer";
+import { ReservedEventName } from "~/modules/events/types";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -262,7 +263,7 @@ export default function CreateFunnel() {
                     />
                   )}
 
-                  {funnelEntry.eventName === "Page View" && (
+                  {funnelEntry.eventName === ReservedEventName.PageView && (
                     <SelectField
                       label={"URL"}
                       options={pageViewUrls.map((url) => ({

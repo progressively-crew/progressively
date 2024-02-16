@@ -38,6 +38,7 @@ import {
   FunnelCreationDTO,
 } from '../funnels/funnels.dto';
 import { FunnelsService } from '../funnels/funnels.service';
+import { ReservedEventName } from '../events/types';
 
 @ApiBearerAuth()
 @Controller('projects')
@@ -221,7 +222,7 @@ export class ProjectsController {
       id,
       startDate,
       endDate,
-      'Page View',
+      ReservedEventName.PageView,
     );
 
     return { metricCount, pageViewCount };
