@@ -1,5 +1,6 @@
 import { FlagWithVariant } from "~/modules/flags/types";
 import { CreateFunnelEntryDTO } from "../types";
+import { ReservedEventName } from "~/modules/events/types";
 
 export type ActionType =
   | { type: "SET_FLAG"; flagId: string }
@@ -79,7 +80,7 @@ export const funnelCreationReducer = (
 
     case "SET_PAGE_VIEW_URL": {
       const funnelEntryIndex = state.funnelEntries.findIndex(
-        (x) => x.eventName === "Page View"
+        (x) => x.eventName === ReservedEventName.PageView
       );
 
       const prevFunnels = state.funnelEntries.slice(0, funnelEntryIndex);
