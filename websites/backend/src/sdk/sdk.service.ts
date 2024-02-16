@@ -233,6 +233,8 @@ export class SdkService {
         sessionUuid: session.uuid,
         viewportHeight: queuedEvent.viewportHeight,
         viewportWidth: queuedEvent.viewportWidth,
+        posX: queuedEvent.posX,
+        posY: queuedEvent.posY,
       },
     });
   }

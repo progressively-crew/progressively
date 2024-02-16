@@ -7,6 +7,8 @@ export interface EventHit {
   referer?: string;
   viewportWidth?: number;
   viewportHeight?: number;
+  posX?: number;
+  posY?: number;
 }
 
 export interface QueuedEventHit extends EventHit, DeviceInfo {

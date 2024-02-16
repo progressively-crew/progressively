@@ -165,6 +165,8 @@ model Event {
   sessionUuid    String?
   viewportHeight Int?
   viewportWidth  Int?
+  posX           Int?
+  posY           Int?
 }
 
 model Rule {
