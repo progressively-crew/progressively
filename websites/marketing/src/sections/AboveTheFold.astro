@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import Button from "../components/Button.astro";
 import ffSrc from "./assets/above-fold/ff.png";
+import catchySrc from "./assets/catchy/catchy.png";
 import Title from "../components/Title.astro";
 import Browser from "../components/Browser.astro";
 import Twitter from "../components/Icons/Twitter.astro";
@@ -10,9 +11,9 @@ import Github from "../components/Icons/Github.astro";
 ---
 
 <div
-  class="relative px-4 pt-48 flex flex-col justify-center bg-gradient-to-t from-slate-200 to-slate-50"
+  class="relative pt-32 flex flex-col justify-center bg-gradient-to-t from-slate-200 to-slate-50"
 >
-  <div class="max-w-screen-2xl mx-auto relative z-10">
+  <div class="max-w-screen-2xl mx-auto relative z-10 px-4">
     <div class="grid grid-cols-2 gap-12 items-center">
       <div>
         <Title tag="h1" size="XL">
@@ -21,8 +22,8 @@ import Github from "../components/Icons/Github.astro";
           >
         </Title>
 
-        <div class="py-4">
-          <Title size="S" tag="p" className="font-light text-slate-600">
+        <div class="pt-2 pb-8">
+          <Title size="M" tag="p" className="font-light text-slate-500">
             Anonymous, Open Source & Self-hosted
           </Title>
         </div>
@@ -34,7 +35,7 @@ import Github from "../components/Icons/Github.astro";
             size="M"
             variant="secondary"
           >
-            Get me to the setup
+            Get started
           </Button>
         </div>
       </div>
@@ -43,36 +44,40 @@ import Github from "../components/Icons/Github.astro";
         <Image src={ffSrc} alt="Feature flags of progressively.app" />
       </Browser>
     </div>
+  </div>
 
-    <div class="flex flex-col items-center pb-12 pt-32">
-      <Title tag="h2" size="M" className="!font-normal">
-        Join the community on
-      </Title>
-      <div class="flex flex-row gap-4 justify-center pt-2">
-        <a
-          href="https://twitter.com/_progressively"
-          target="_blank"
-          class="h-12 w-12 flex items-center justify-center bg-slate-900 rounded-full text-white hover:bg-slate-800 active:bg-slate-700"
-        >
-          <Twitter className="h-6 w-6" />
-        </a>
+  <div class="px-4 flex flex-col items-center py-12 my-20 bg-slate-200">
+    <Title tag="h2" size="M" className="!font-medium">Join the community</Title>
+    <div class="flex flex-row gap-4 justify-center pt-2">
+      <a
+        href="https://twitter.com/_progressively"
+        target="_blank"
+        class="h-12 w-12 flex items-center justify-center bg-slate-900 rounded-full text-white hover:bg-slate-800 active:bg-slate-700"
+      >
+        <Twitter className="h-6 w-6" />
+      </a>
 
-        <a
-          href="https://discord.gg/BcrsFRSA"
-          target="_blank"
-          class="h-12 w-12 flex items-center justify-center text-white bg-indigo-700 text-slate-900 rounded-full hover:bg-indigo-600 active:bg-indigo-500"
-        >
-          <Discord className="h-8 w-8" />
-        </a>
+      <a
+        href="https://discord.gg/BcrsFRSA"
+        target="_blank"
+        class="h-12 w-12 flex items-center justify-center text-white bg-indigo-700 text-slate-900 rounded-full hover:bg-indigo-600 active:bg-indigo-500"
+      >
+        <Discord className="h-8 w-8" />
+      </a>
 
-        <a
-          href="https://github.com/progressively-crew/progressively"
-          target="_blank"
-          class="h-12 w-12 flex items-center justify-center bg-slate-100 text-slate-900 rounded-full"
-        >
-          <Github className="h-12 w-12" />
-        </a>
-      </div>
+      <a
+        href="https://github.com/progressively-crew/progressively"
+        target="_blank"
+        class="h-12 w-12 flex items-center justify-center bg-slate-100 text-slate-900 rounded-full"
+      >
+        <Github className="h-12 w-12" />
+      </a>
     </div>
+  </div>
+
+  <div class="w-1/2 mx-auto -mb-24 px-4">
+    <Browser bg="grey">
+      <Image src={catchySrc} alt="Analytics of progressively.app" />
+    </Browser>
   </div>
 </div>

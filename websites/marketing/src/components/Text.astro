@@ -18,7 +18,7 @@ const themeColor = {
 
 const { size, theme, className } = Astro.props;
 
-const sharedStyles = "leading-relaxed font-thin";
+const sharedStyles = "leading-relaxed font-light";
 const styles = `${sharedStyles} ${sizeStyle[size || "M"]}  ${
   themeColor[theme || "light"]
 } ${className || ""}`;
