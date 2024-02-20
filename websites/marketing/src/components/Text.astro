@@ -2,12 +2,13 @@
 export interface Props {
   size?: "XL" | "L" | "M";
   theme?: "light" | "dark";
+  className?: string;
 }
 
 const sizeStyle = {
   M: "text-xs md:text-base",
   L: "text-base md:text-xl",
-  XL: "text-base md:text-xl",
+  XL: "text-base md:text-2xl",
 };
 
 const themeColor = {
@@ -15,12 +16,12 @@ const themeColor = {
   dark: "text-slate-200",
 };
 
-const { size, theme } = Astro.props;
+const { size, theme, className } = Astro.props;
 
-const sharedStyles = "leading-relaxed";
+const sharedStyles = "leading-relaxed font-thin";
 const styles = `${sharedStyles} ${sizeStyle[size || "M"]}  ${
   themeColor[theme || "light"]
-}`;
+} ${className || ""}`;
 ---
 
 <p class={styles}><slot /></p>

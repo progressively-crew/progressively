@@ -20,7 +20,7 @@ const themeColor = {
 
 const { size, tag: el, theme, className } = Astro.props;
 
-const sharedStyle = "font-extrabold font-title";
+const sharedStyle = "font-bold font-title";
 const styles = `${sharedStyle} ${themeColor[theme || "light"]} ${
   sizeStyles[size || "XL"]
 } ${className || ""}`;

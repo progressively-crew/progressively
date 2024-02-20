@@ -1,127 +1,43 @@
 ---
-import Button from "./Button.astro";
-import Twitter from "./Icons/Twitter.astro";
-import Github from "./Icons/Github.astro";
-import Discord from "./Icons/Discord.astro";
+const navLinkStyles =
+  "px-6 py-2 text-lg text-slate-500 hover:bg-white active:bg-slate-50 rounded-xl block";
 ---
 
-<nav class="py-3 bg-white w-full border-b border-slate-200">
+<nav class="pt-12 bg-slate-50">
   <div
-    class="px-4 max-w-7xl w-full mx-auto flex flex-row justify-between items-center overflow-auto"
+    class="px-4 max-w-screen-2xl w-full mx-auto flex flex-row justify-between items-center overflow-auto"
   >
     <div class="flex flex-row gap-2 items-center shrink-0">
       <img src="/favicon.svg" alt="Progressively" class="w-8 h-8 block" />
       <div class="font-bold text-lg hidden md:block">Progressively</div>
     </div>
 
-    <ul
-      class="flex flex-row justify-end gap-2 items-center shrink-0 border-r border-l border-slate-200 px-4"
-    >
-      <li class="hidden md:block">
-        <a
-          href="https://www.producthunt.com/posts/progressively-2?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-progressively-2"
-          target="_blank"
-          ><img
-            src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=432705&theme=light"
-            alt="Progressively - Craft Key Features for Your Audience | Product Hunt"
-            style="width: 138px; height: 30px;"
-            width="138"
-            height="30"
-          /></a
-        >
-      </li>
+    <ul class="flex flex-row justify-end gap-4 items-center shrink-0">
       <li class="shrink-0">
         <a
-          href="https://twitter.com/_progressively"
-          target="_blank"
-          class="hidden md:flex h-6 flex-row gap-2 text-xs font-bold text-white bg-slate-900 rounded-full items-center px-3 hover:bg-slate-800 active:bg-slate-700"
-        >
-          <Twitter />
-          <span>@_progressively</span>
-        </a>
-
-        <a
-          href="https://twitter.com/_progressively"
-          target="_blank"
-          aria-label="Follow on X"
-          class="md:hidden h-8 w-8 flex flex-row text-white bg-slate-900 rounded items-center justify-center active:bg-slate-700"
-        >
-          <Twitter />
-        </a>
-      </li>
-
-      <li class="shrink-0">
-        <a
-          href="https://discord.gg/BcrsFRSA"
-          target="_blank"
-          class="text-white bg-indigo-700 hidden md:flex h-6 flex-row gap-2 text-xs font-bold text-slate-900 rounded-full items-center px-3 hover:bg-indigo-600 active:bg-indigo-500"
-        >
-          <Discord />
-          <span>Discord</span>
-        </a>
-
-        <a
-          href="https://github.com/progressively-crew/progressively"
-          target="_blank"
-          aria-label="Follow on X"
-          class="md:hidden h-8 w-8 flex flex-row text-white text-white bg-indigo-700 rounded items-center justify-center active:bg-indigo-700"
-        >
-          <Discord />
-        </a>
-      </li>
-
-      <li class="shrink-0">
-        <a
-          href="https://github.com/progressively-crew/progressively"
-          target="_blank"
-          class="bg-slate-100 hidden md:flex h-6 flex-row gap-2 text-xs font-bold text-slate-900 rounded-full items-center px-3"
-        >
-          <Github />
-          <span>Github</span>
-        </a>
-
-        <a
-          href="https://github.com/progressively-crew/progressively"
-          target="_blank"
-          aria-label="Follow on X"
-          class="md:hidden h-8 w-8 flex flex-row text-white bg-slate-900 rounded items-center justify-center active:bg-slate-700"
-        >
-          <Github />
-        </a>
-      </li>
-    </ul>
-
-    <ul class="flex flex-row justify-end gap-1 items-center shrink-0">
-      <li class="shrink-0">
-        <Button
-          variant="tertiary"
-          size="M"
+          class={navLinkStyles}
           href="https://il6hw4vp4rl.typeform.com/to/Ben1G63r"
           id="contact-us"
         >
           Contact us
-        </Button>
+        </a>
       </li>
 
       <li class="shrink-0">
-        <Button
-          variant="tertiary"
-          size="M"
+        <a
           href="https://docs.progressively.app"
           id="nav-docs"
+          class={navLinkStyles}>Docs</a
         >
-          Docs
-        </Button>
       </li>
       <li class="shrink-0">
-        <Button
-          variant="tertiary"
-          size="M"
+        <a
           href="https://docs.progressively.app/getting-started/"
           id="nav-getstarted"
+          class={navLinkStyles}
         >
           Get started
-        </Button>
+        </a>
       </li>
     </ul>
   </div>

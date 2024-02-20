@@ -1,0 +1,33 @@
+---
+import Title from "../components/Title.astro";
+import Text from "../components/Text.astro";
+import Button from "../components/Button.astro";
+---
+
+<section class="bg-slate-800 py-24">
+  <div class="max-w-4xl mx-auto text-center flex flex-col gap-8">
+    <Title theme="dark" size="L" className="font-medium">
+      One tool for all your products needs
+    </Title>
+
+    <Text size="XL" theme="dark" className="!leading-relaxed">
+      At Progressively, we believe in empowering creators with the essentials
+      for crafting exceptional products and websites. Our philosophy is simple:
+      merge simplicity with power, offering you a unified solution that
+      gracefully captures user activity and transforms data into actionable
+      insights. It's not just about monitoring—it's about enlightening your
+      decisions, all in one place.
+    </Text>
+
+    <div>
+      <Button
+        target="_blank"
+        href="https://app.cal.com/mfrachet/30min"
+        id="above-the-fold-get-in-touch"
+        size="L"
+      >
+        Get in touch
+      </Button>
+    </div>
+  </div>
+</section>
