@@ -7,8 +7,7 @@ import gradualSrc from "./assets/value/gradual.jpg";
 import qaSrc from "./assets/value/qa.jpg";
 import clockSrc from "./assets/value/clock.jpg";
 import analyticsSrc from "./assets/value/analytics.jpg";
-import Button from "../components/Button.astro";
-import { FeatureTabs } from "./FeatureTabs";
+import FeatureTabsWrapper from "./FeatureTabsWrapper.astro";
 
 const features = [
   {
@@ -60,6 +59,6 @@ const features = [
       <Title tag="h2" size="L">What can you expect from it?</Title>
     </div>
 
-    <FeatureTabs client:visible />
+    <FeatureTabsWrapper />
   </section>
 </div>

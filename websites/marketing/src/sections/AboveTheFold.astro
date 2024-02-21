@@ -4,7 +4,7 @@ import Button from "../components/Button.astro";
 import ffSrc from "./assets/above-fold/ff.png";
 import catchySrc from "./assets/catchy/catchy.png";
 import Title from "../components/Title.astro";
-import Browser from "../components/Browser.astro";
+import { Browser } from "../components/Browser";
 import Twitter from "../components/Icons/Twitter.astro";
 import Discord from "../components/Icons/Discord.astro";
 import Github from "../components/Icons/Github.astro";
@@ -41,7 +41,9 @@ import Github from "../components/Icons/Github.astro";
       </div>
 
       <Browser>
-        <Image src={ffSrc} alt="Feature flags of progressively.app" />
+        <div class="p-2">
+          <Image src={ffSrc} alt="Feature flags of progressively.app" />
+        </div>
       </Browser>
     </div>
   </div>
@@ -77,7 +79,9 @@ import Github from "../components/Icons/Github.astro";
 
   <div class="w-1/2 mx-auto -mb-24 px-4">
     <Browser bg="grey">
-      <Image src={catchySrc} alt="Analytics of progressively.app" />
+      <div class="p-2">
+        <Image src={catchySrc} alt="Analytics of progressively.app" />
+      </div>
     </Browser>
   </div>
-</div>
+</div>../components/Browser.tsx

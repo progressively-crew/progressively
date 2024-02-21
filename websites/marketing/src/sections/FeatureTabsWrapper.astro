@@ -1,0 +1,21 @@
+---
+import { FeatureTabs } from "./FeatureTabs";
+import { codeToHtml } from "shiki";
+
+const code = `
+<script
+  src="https://progressively.com/progressively.min.js"
+  data-progressively-endpoint="YOUR API INSTANCE URL"
+  data-progressively-client-key="YOUR CLIENT KEY MATCHING THE DOMAIN"
+/>
+`;
+
+const html = await codeToHtml(code, {
+  lang: "javascript",
+  theme: "dracula",
+});
+
+const codes = [html];
+---
+
+<FeatureTabs client:visible codes={codes} />

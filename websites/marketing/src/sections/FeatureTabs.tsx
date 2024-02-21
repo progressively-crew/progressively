@@ -1,7 +1,12 @@
 import { Tabs } from "@radix-ui/react-tabs";
 import { Tab, TabList, TabPanel } from "../components/Tabs";
+import { Browser } from "../components/Browser";
 
-export const FeatureTabs = () => {
+export interface FeatureTabsProps {
+  codes: Array<string>;
+}
+
+export const FeatureTabs = ({ codes }: FeatureTabsProps) => {
   return (
     <Tabs defaultValue="first">
       <TabList>
@@ -16,8 +21,24 @@ export const FeatureTabs = () => {
         </Tab>
       </TabList>
 
-      <TabPanel value="first">First panel</TabPanel>
-      <TabPanel value="second">Second panel</TabPanel>
+      <TabPanel value="first">
+        <Browser>
+          <div className="p-8">Blahblah</div>
+          <div
+            dangerouslySetInnerHTML={{ __html: codes[0]! }}
+            className="[&>*]:p-8"
+          ></div>
+        </Browser>
+      </TabPanel>
+      <TabPanel value="second">
+        <Browser>
+          <div className="p-8">fozjfozajfozaj</div>
+          <div
+            dangerouslySetInnerHTML={{ __html: codes[0]! }}
+            className="[&>*]:p-8"
+          ></div>
+        </Browser>
+      </TabPanel>
       <TabPanel value="third">Third panel</TabPanel>
     </Tabs>
   );
