@@ -2,7 +2,6 @@
 import { Image } from "astro:assets";
 import Button from "../components/Button.astro";
 import ffSrc from "./assets/above-fold/ff.png";
-import catchySrc from "./assets/catchy/catchy.png";
 import Title from "../components/Title.astro";
 import { Browser } from "../components/Browser";
 import Twitter from "../components/Icons/Twitter.astro";
@@ -48,7 +47,7 @@ import Github from "../components/Icons/Github.astro";
     </div>
   </div>
 
-  <div class="px-4 flex flex-col items-center py-12 my-20 bg-slate-200">
+  <div class="px-4 flex flex-col items-center py-12 mt-12 bg-slate-200">
     <Title tag="h2" size="M" className="!font-medium">Join the community</Title>
     <div class="flex flex-row gap-4 justify-center pt-2">
       <a
@@ -75,13 +74,5 @@ import Github from "../components/Icons/Github.astro";
         <Github className="h-12 w-12" />
       </a>
     </div>
-  </div>
-
-  <div class="w-1/2 mx-auto -mb-24 px-4">
-    <Browser bg="grey">
-      <div class="p-2">
-        <Image src={catchySrc} alt="Analytics of progressively.app" />
-      </div>
-    </Browser>
   </div>
 </div>

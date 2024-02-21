@@ -1,8 +1,11 @@
 ---
 import Title from "../components/Title.astro";
+import { Image } from "astro:assets";
 import Text from "../components/Text.astro";
 import Check from "../components/Icons/Check.astro";
 import Loader from "../components/Icons/Loader.astro";
+import { Browser } from "../components/Browser";
+import catchySrc from "./assets/catchy/catchy.png";
 
 const roadmaps = [
   {
@@ -89,4 +92,12 @@ const roadmaps = [
       ))
     }
   </ol>
+
+  <div class="w-1/2 mx-auto -mb-48 px-4 relative z-10 pt-20">
+    <Browser bg="grey">
+      <div class="p-2">
+        <Image src={catchySrc} alt="Analytics of progressively.app" />
+      </div>
+    </Browser>
+  </div>
 </div>

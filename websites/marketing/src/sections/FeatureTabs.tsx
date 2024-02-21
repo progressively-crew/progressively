@@ -1,19 +1,21 @@
 import { Tabs } from "@radix-ui/react-tabs";
 import { LuAlarmClock } from "react-icons/lu";
 import { MdOutlineAttractions } from "react-icons/md";
+import { PiSquareFill } from "react-icons/pi";
 import { IoMdLink } from "react-icons/io";
 import { SiWindows95 } from "react-icons/si";
 import { CgBrowser } from "react-icons/cg";
 import { BiStats } from "react-icons/bi";
 import { FaUserShield } from "react-icons/fa6";
 import { IoMdApps } from "react-icons/io";
+import { FaCog } from "react-icons/fa";
 import { AiOutlineLineChart } from "react-icons/ai";
 import { MdSmartphone } from "react-icons/md";
 import { Tab, TabList, TabPanel } from "../components/Tabs";
 import { Browser } from "../components/Browser";
 import ffSrc from "./assets/above-fold/ff.png";
 import catchySrc from "./assets/catchy/catchy.png";
-import { Code } from "../components/Code";
+import funnelSrc from "./assets/catchy/funnels.png";
 
 export interface FeatureTabsProps {
   codes: Array<string>;
@@ -158,7 +160,52 @@ export const FeatureTabs = ({ codes }: FeatureTabsProps) => {
           </Browser>
         </div>
       </TabPanel>
-      <TabPanel value="third">Third panel</TabPanel>
+      <TabPanel value="third">
+        <div className="grid grid-cols-2 gap-8 items-center">
+          <div className="flex flex-col gap-4">
+            <h3 className={titleClass}>Funnels</h3>
+
+            <p className={textClass}>
+              Enhance your conversion insights by combining flag evaluations
+              with analytics data, providing you with actionable intelligence to
+              boost your customer conversion rates.
+            </p>
+
+            <ul className="flex flex-col gap-2">
+              <li className={liClass}>
+                <Box>
+                  <PiSquareFill />
+                </Box>
+                Works with single variant feature flags
+              </li>
+              <li className={liClass}>
+                <Box>
+                  <IoMdApps />
+                </Box>
+                Works with multi variant feature flags
+              </li>
+              <li className={liClass}>
+                <Box>
+                  <CgBrowser />
+                </Box>
+                Works with page views
+              </li>
+              <li className={liClass}>
+                <Box>
+                  <FaCog />
+                </Box>
+                Works with custom events
+              </li>
+            </ul>
+          </div>
+
+          <Browser>
+            <div className="p-2">
+              <img src={funnelSrc.src} alt="Woop" />
+            </div>
+          </Browser>
+        </div>
+      </TabPanel>
     </Tabs>
   );
 };
