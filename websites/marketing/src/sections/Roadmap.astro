@@ -42,10 +42,20 @@ const roadmaps = [
 ];
 ---
 
-<div class="max-w-6xl mx-auto text-center flex flex-col gap-8 py-24">
-  <Title tag="h2" size="L">The roadmap</Title>
+<div class="text-center py-24">
+  <div class="max-w-4xl mx-auto text-center flex flex-col gap-8">
+    <Title tag="h2" size="L">The roadmap</Title>
 
-  <ol class="flex flex-row justify-center">
+    <Text size="XL" className="!leading-relaxed">
+      Fueled by community collaboration, Progressively thrives on openness and
+      transparency. Our roadmap is not just a plan, but a promise to evolve and
+      grow, reflecting the aspirations and feedback of our users. Together,
+      we're building a future that embraces change, guided by the voices of our
+      community.
+    </Text>
+  </div>
+
+  <ol class="flex flex-row justify-center pt-20 max-w-6xl mx-auto">
     {
       roadmaps.map((road) => (
         <li class="border-r border-slate-200 border-dashed last:border-0">
