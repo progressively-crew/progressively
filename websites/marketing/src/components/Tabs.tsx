@@ -40,7 +40,7 @@ export const Tab = ({ children, value, disabled }: TabProps) => {
 
 export const TabPanel = ({ children, value }: TabProps) => {
   return (
-    <TabR.Content value={value} className="py-4">
+    <TabR.Content value={value} className="py-8">
       {children}
     </TabR.Content>
   );
