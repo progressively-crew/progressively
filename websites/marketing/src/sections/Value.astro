@@ -8,6 +8,7 @@ import qaSrc from "./assets/value/qa.jpg";
 import clockSrc from "./assets/value/clock.jpg";
 import analyticsSrc from "./assets/value/analytics.jpg";
 import Button from "../components/Button.astro";
+import { FeatureTabs } from "./FeatureTabs";
 
 const features = [
   {
@@ -53,52 +54,12 @@ const features = [
 ];
 ---
 
-<section class="max-w-6xl w-full mx-auto py-12 px-4">
-  <div class="text-center">
-    <Title tag="h2" size="L">What can you expect from it?</Title>
-  </div>
-
-  <ul class="pt-8 md:pt-12 flex flex-col gap-12 pb-8">
-    {
-      features.map((feat, i) => (
-        <li>
-          <Feature
-            title={feat.title}
-            imageSrc={feat.imageSrc}
-            reversed={i % 2 !== 0}
-          >
-            <div class="flex flex-col gap-4">
-              {feat.content.map((c) => (
-                <Text size="L">{c}</Text>
-              ))}
-            </div>
-          </Feature>
-        </li>
-      ))
-    }
-  </ul>
-
-  <div
-    class="text-center py-4 bg-slate-100 rounded-2xl flex flex-col md:flex-row gap-4 items-center justify-center"
-  >
-    <Title size="S" tag="p">Not sure it's for you?</Title>
-
-    <div class="flex flex-col md:flex-row gap-4">
-      <Button
-        href="https://app.cal.com/mfrachet/30min"
-        variant="secondary"
-        id="value-cta-schedule"
-      >
-        Let's discuss
-      </Button>
-
-      <Button
-        href="https://il6hw4vp4rl.typeform.com/to/Ben1G63r"
-        variant="secondary"
-        id="value-cta-contact"
-      >
-        Contact us
-      </Button>
+<div class="bg-slate-50">
+  <section class="max-w-6xl w-full mx-auto py-12 px-4">
+    <div class="text-center pb-8">
+      <Title tag="h2" size="L">What can you expect from it?</Title>
     </div>
-  </div>
-</section>
+
+    <FeatureTabs client:visible />
+  </section>
+</div>

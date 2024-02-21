@@ -11,13 +11,22 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.5.4",
+    "@astrojs/react": "^3.0.10",
     "@astrojs/tailwind": "^5.1.0",
     "@astrojs/vercel": "^7.3.1",
     "@progressively/sdk-js": "^1.0.2",
     "@progressively/server-side": "workspace:^",
+    "@radix-ui/react-tabs": "^1.0.4",
     "astro": "^4.3.7",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^5.0.1",
     "sharp": "^0.33.2",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.3.3"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.57",
+    "@types/react-dom": "^18.2.19"
   }
 }
