@@ -1,27 +1,78 @@
 ---
 import Title from "../components/Title.astro";
 import Text from "../components/Text.astro";
-import Button from "../components/Button.astro";
+import Check from "../components/Icons/Check.astro";
+import Loader from "../components/Icons/Loader.astro";
 
 const roadmaps = [
   {
     title: "Feature flags",
-    description: "",
+    description:
+      "Single variants, multi variants, percentage based rollout, scheduled strategies & more...",
     state: "finished",
+  },
+  {
+    title: "Quantitative analytics",
+    description:
+      "Pages views per OS, browser, viewports, referrer, most visited page, custom events & more...",
+    state: "finished",
+  },
+  {
+    title: "Funnels",
+    description:
+      "Cross feature flags evaluations with analytics data to understand the audience behaviour.",
+    state: "partial",
+  },
+  {
+    title: "Qualitative analytics",
+    description:
+      "Understanding the user journey by highlighting the most active regions of your website.",
+    state: "not-started",
+  },
+  {
+    title: "Error & exceptions",
+    description: "",
+    state: "not-started",
+  },
+  {
+    title: "Session Recording",
+    description: "",
+    state: "not-started",
   },
 ];
 ---
 
-<div class="max-w-4xl mx-auto text-center flex flex-col gap-8 py-24">
+<div class="max-w-6xl mx-auto text-center flex flex-col gap-8 py-24">
   <Title tag="h2" size="L">The roadmap</Title>
-  <ol>
+
+  <ol class="flex flex-row justify-center">
     {
       roadmaps.map((road) => (
-        <li>
-          <Title tag="h4" size="S">
+        <li class="border-r border-slate-200 border-dashed last:border-0">
+          <Text tag="h4" className="font-semibold">
             {road.title}
-          </Title>
-          <Text>Hello moto</Text>
+          </Text>
+
+          <div class="relative flex flex-row items-center justify-center px-24 py-4">
+            <div class="bg-slate-200 h-px w-full absolute" />
+            <div class="flex flex-row items-center justify-center h-12 relative">
+              {road.state === "finished" ? (
+                <div class="bg-emerald-400 rounded-full h-12 w-12 flex items-center justify-center text-white">
+                  <Check />
+                </div>
+              ) : road.state === "partial" ? (
+                <div class="animate-spin bg-yellow-400 rounded-full h-8 w-8 flex items-center justify-center text-white">
+                  <Loader />
+                </div>
+              ) : (
+                <div class="bg-slate-200 rounded-full h-4 w-4" />
+              )}
+            </div>
+          </div>
+
+          <div class="px-4">
+            <Text className="text-left">{road.description}</Text>
+          </div>
         </li>
       ))
     }

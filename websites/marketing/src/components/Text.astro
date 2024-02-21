@@ -1,5 +1,6 @@
 ---
 export interface Props {
+  tag?: "span" | "p" | "h4";
   size?: "XL" | "L" | "M";
   theme?: "light" | "dark";
   className?: string;
@@ -16,7 +17,9 @@ const themeColor = {
   dark: "text-slate-200",
 };
 
-const { size, theme, className } = Astro.props;
+const { size, theme, className, tag } = Astro.props;
+
+const Root = tag || "p";
 
 const sharedStyles = "leading-relaxed font-light";
 const styles = `${sharedStyles} ${sizeStyle[size || "M"]}  ${
@@ -24,4 +27,4 @@ const styles = `${sharedStyles} ${sizeStyle[size || "M"]}  ${
 } ${className || ""}`;
 ---
 
-<p class={styles}><slot /></p>
+<Root class={styles}><slot /></Root>
