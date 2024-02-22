@@ -11,6 +11,9 @@ import { IoMdApps } from "react-icons/io";
 import { FaCog } from "react-icons/fa";
 import { AiOutlineLineChart } from "react-icons/ai";
 import { MdSmartphone } from "react-icons/md";
+import { IoToggle } from "react-icons/io5";
+import { IoMdFunnel } from "react-icons/io";
+
 import { Tab, TabList, TabPanel } from "../components/Tabs";
 import { Browser } from "../components/Browser";
 import ffSrc from "./assets/above-fold/ff.png";
@@ -34,13 +37,21 @@ export const FeatureTabs = ({ codes }: FeatureTabsProps) => {
   const textClass = "text-slate-600";
 
   const liClass = `${textClass} flex flex-row items-center gap-2`;
+  const gridClass =
+    "grid grid-rows-2 gap-4 md:grid-cols-2 md:gap-8 md:items-center";
 
   return (
     <Tabs defaultValue="first">
       <TabList>
-        <Tab value="first">Feature flags</Tab>
-        <Tab value="second">Quantitative analytics</Tab>
-        <Tab value="third">Funnels</Tab>
+        <Tab value="first" icon={<IoToggle />}>
+          Feature flags
+        </Tab>
+        <Tab value="second" icon={<BiStats />}>
+          Quantitative analytics
+        </Tab>
+        <Tab value="third" icon={<IoMdFunnel />}>
+          Funnels
+        </Tab>
         <Tab value="fourth" disabled>
           Qualitative analytics
         </Tab>
@@ -50,7 +61,7 @@ export const FeatureTabs = ({ codes }: FeatureTabsProps) => {
       </TabList>
 
       <TabPanel value="first">
-        <div className="grid grid-cols-2 gap-8 items-center">
+        <div className={gridClass}>
           <div className="flex flex-col gap-4">
             <h3 className={titleClass}>Feature flags</h3>
 
@@ -104,7 +115,7 @@ export const FeatureTabs = ({ codes }: FeatureTabsProps) => {
         </div>
       </TabPanel>
       <TabPanel value="second">
-        <div className="grid grid-cols-2 gap-8 items-center">
+        <div className={gridClass}>
           <div className="flex flex-col gap-4">
             <h3 className={titleClass}>Quantitative analytics</h3>
 
@@ -161,7 +172,7 @@ export const FeatureTabs = ({ codes }: FeatureTabsProps) => {
         </div>
       </TabPanel>
       <TabPanel value="third">
-        <div className="grid grid-cols-2 gap-8 items-center">
+        <div className={gridClass}>
           <div className="flex flex-col gap-4">
             <h3 className={titleClass}>Funnels</h3>
 

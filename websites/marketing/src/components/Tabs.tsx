@@ -11,6 +11,7 @@ export interface TabProps {
   children: React.ReactNode;
   value: string;
   disabled?: boolean;
+  icon?: React.ReactNode;
 }
 
 export const Tabs = ({ children, defaultValue }: TabsProps) => {
@@ -19,19 +20,20 @@ export const Tabs = ({ children, defaultValue }: TabsProps) => {
 
 export const TabList = ({ children }: TabsProps) => {
   return (
-    <TabR.List className="flex flex-row justify-center items-center border-b border-slate-200">
+    <TabR.List className="overflow-x-scroll flex flex-row md:justify-center items-center border-b border-slate-200">
       {children}
     </TabR.List>
   );
 };
 
-export const Tab = ({ children, value, disabled }: TabProps) => {
+export const Tab = ({ children, value, disabled, icon }: TabProps) => {
   return (
     <TabR.Trigger
       disabled={disabled}
       value={value}
-      className="flex flex-row gap-2 items-center py-2 px-6 data-[disabled]:text-slate-400 data-[state=active]:border-b-pink-500 border-b-transparent border-b-2 data-[state=active]:text-pink-500 font-semibold text-slate-600"
+      className="shrink-0 flex flex-row gap-2 items-center py-2 px-6 data-[disabled]:text-slate-400 data-[state=active]:border-b-pink-500 border-b-transparent border-b-2 data-[state=active]:text-pink-500 font-semibold text-slate-600"
     >
+      {icon}
       {disabled ? <CgUnavailable /> : null}
       {children}
     </TabR.Trigger>
