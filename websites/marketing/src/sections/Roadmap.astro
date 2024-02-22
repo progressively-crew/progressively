@@ -47,7 +47,7 @@ const roadmaps = [
 ];
 ---
 
-<div class="text-center py-24">
+<div class="text-center py-16 md:py-24 px-4">
   <div class="max-w-4xl mx-auto text-center flex flex-col gap-8">
     <Title tag="h2" size="L">The roadmap</Title>
 
@@ -60,7 +60,38 @@ const roadmaps = [
     </Text>
   </div>
 
-  <ol class="flex flex-row justify-center pt-20 max-w-6xl mx-auto">
+  <ol class="md:hidden relative flex flex-col gap-4">
+    <div class="bg-slate-200 h-full w-px absolute left-[23px]"></div>
+    {
+      roadmaps.map((road) => (
+        <li class="grid grid-cols-[auto_1fr] gap-4 relative items-center">
+          <div class="w-12 flex justify-center">
+            {road.state === "finished" ? (
+              <div class="bg-emerald-400 rounded-full h-6 w-6 flex items-center justify-center text-white">
+                <Check />
+              </div>
+            ) : road.state === "partial" ? (
+              <div class="animate-spin bg-yellow-400 rounded-full h-6 w-6 flex items-center justify-center text-white">
+                <Loader />
+              </div>
+            ) : (
+              <div class="bg-slate-200 rounded-full h-6 w-6" />
+            )}
+          </div>
+
+          <div class="text-left">
+            <Text tag="h4" className="font-semibold">
+              {road.title}
+            </Text>
+
+            <Text>{road.description}</Text>
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+
+  <ol class="hidden md:flex md:flex-row justify-center pt-20 max-w-6xl mx-auto">
     {
       roadmaps.map((road) => (
         <li class="border-r border-slate-200 border-dashed last:border-0">
@@ -93,7 +124,9 @@ const roadmaps = [
     }
   </ol>
 
-  <div class="w-1/2 mx-auto -mb-48 px-4 relative z-10 pt-20">
+  <div
+    class="w-full md:w-1/2 mx-auto -mb-36 md:-mb-48 px-4 relative z-10 pt-20"
+  >
     <Browser bg="grey">
       <div class="p-2">
         <Image src={catchySrc} alt="Analytics of progressively.app" />

@@ -31,7 +31,7 @@ export const Tab = ({ children, value, disabled, icon }: TabProps) => {
     <TabR.Trigger
       disabled={disabled}
       value={value}
-      className="shrink-0 flex flex-row gap-2 items-center py-2 px-6 data-[disabled]:text-slate-400 data-[state=active]:border-b-pink-500 border-b-transparent border-b-2 data-[state=active]:text-pink-500 font-semibold text-slate-600"
+      className="text-xs md:text-base shrink-0 flex flex-row gap-2 items-center py-2 px-6 data-[disabled]:text-slate-400 data-[state=active]:border-b-pink-500 border-b-transparent border-b-2 data-[state=active]:text-pink-500 font-semibold text-slate-600"
     >
       {icon}
       {disabled ? <CgUnavailable /> : null}

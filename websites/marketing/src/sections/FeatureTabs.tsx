@@ -38,7 +38,7 @@ export const FeatureTabs = ({ codes }: FeatureTabsProps) => {
 
   const liClass = `${textClass} flex flex-row items-center gap-2`;
   const gridClass =
-    "grid grid-rows-2 gap-4 md:grid-cols-2 md:gap-8 md:items-center";
+    "flex flex-col md:grid gap-4 md:grid-cols-2 md:gap-8 md:items-center";
 
   return (
     <Tabs defaultValue="first">
