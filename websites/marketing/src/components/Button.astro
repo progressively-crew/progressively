@@ -1,6 +1,6 @@
 ---
 export interface Props {
-  variant?: "primary" | "secondary" | "tertiary";
+  variant?: "primary" | "secondary" | "tertiary" | "gradient";
   size?: "L" | "M" | "S";
   href?: string;
   id?: string;
@@ -16,6 +16,8 @@ const sizeStyles = {
 };
 
 const variantStyles = {
+  gradient:
+    "bg-slate-900 border-2 border-pink-500 text-white hover:bg-slate-800 active:bg-slate-700",
   primary:
     "bg-slate-900 hover:bg-slate-800 active:bg-slate-700 text-white border-transparent",
   secondary:
@@ -24,7 +26,7 @@ const variantStyles = {
     "text-slate-900 hover:text-slate-800 active:text-slate-700 border-transparent hover:bg-slate-50 active:bg-slate-100",
 };
 
-const sharedStyles = "rounded-full ";
+const sharedStyles = "rounded-lg";
 const styles = `${sharedStyles} ${variantStyles[variant || "primary"]} ${
   sizeStyles[size || "L"]
 }`;

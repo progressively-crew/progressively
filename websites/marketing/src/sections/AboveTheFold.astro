@@ -2,79 +2,77 @@
 import { Image } from "astro:assets";
 import Button from "../components/Button.astro";
 import ffSrc from "./assets/above-fold/ff.png";
-import analyticsSrc from "./assets/above-fold/analytics.png";
-import funnelsSrc from "./assets/above-fold/funnels.png";
 import Title from "../components/Title.astro";
-import Text from "../components/Text.astro";
-import Browser from "../components/Browser.astro";
+import { Browser } from "../components/Browser";
+import Twitter from "../components/Icons/Twitter.astro";
+import Discord from "../components/Icons/Discord.astro";
+import Github from "../components/Icons/Github.astro";
 ---
 
 <div
-  class="relative px-4 pt-48 md:pt-64 flex flex-col justify-center text-center bg-slate-50"
+  class="relative pt-32 flex flex-col justify-center bg-gradient-to-t from-slate-200 to-slate-50"
 >
-  <div class="max-w-3xl mx-auto relative z-10">
-    <Title tag="h1" size="XL">
-      All in one toolbox for <span class="text-pink-500"
-        >feature flags & analytics</span
-      >
-    </Title>
-    <div class="pb-6 pt-4">
-      <Title size="M" tag="p" className="font-light text-slate-600">
-        Anonymous, Open Source & Self-hosted
-      </Title>
-    </div>
+  <div class="max-w-screen-xl mx-auto relative z-10 px-4">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div>
+        <Title tag="h1" size="L">
+          All in one toolbox for <span class="text-pink-500"
+            >feature flags & analytics</span
+          >
+        </Title>
 
-    <div
-      class="pt-2 flex flex-col md:flex-row md:gap-6 w-full justify-center items-center"
-    >
-      <Button
-        target="_blank"
-        href="https://app.cal.com/mfrachet/30min"
-        id="above-the-fold-get-in-touch"
-      >
-        Get in touch
-      </Button>
-      <Button
-        href="https://docs.progressively.app"
-        id="above-the-fold-cta"
-        variant="secondary"
-      >
-        Get me to the setup
-      </Button>
+        <div class="pt-2 pb-8">
+          <Title size="M" tag="p" className="font-light !text-slate-500">
+            Anonymous, Open Source & Self-hosted
+          </Title>
+        </div>
+
+        <div class="flex flex-row gap-4">
+          <Button
+            href="https://docs.progressively.app"
+            id="above-the-fold-cta"
+            size="M"
+            variant="secondary"
+          >
+            Get started
+          </Button>
+        </div>
+      </div>
+
+      <Browser>
+        <div class="p-2">
+          <Image src={ffSrc} alt="Feature flags of progressively.app" />
+        </div>
+      </Browser>
     </div>
   </div>
 
-  <div class="relative z-10 max-w-7xl mx-auto py-12">
-    <div class="grid md:grid-cols-3 gap-2 md:gap-8">
-      <div
-        class="motion-safe:opacity-0 motion-safe:animate-fade-enter-bottom"
-        style="animation-delay: 0.3s;"
+  <div class="px-4 flex flex-col items-center py-12 mt-12 bg-slate-200">
+    <Title tag="h2" size="M" className="!font-medium">Join the community</Title>
+    <div class="flex flex-row gap-4 justify-center pt-2">
+      <a
+        href="https://twitter.com/_progressively"
+        target="_blank"
+        class="h-12 w-12 flex items-center justify-center bg-slate-900 rounded-full text-white hover:bg-slate-800 active:bg-slate-700"
       >
-        <Browser>
-          <Image src={ffSrc} alt="Feature flags of progressively.app" />
-        </Browser>
-        <Text><strong>Feature flags</strong></Text>
-      </div>
+        <Twitter className="h-6 w-6" />
+      </a>
 
-      <div
-        class="motion-safe:opacity-0 motion-safe:animate-fade-enter-bottom"
-        style="animation-delay: 0.6s;"
+      <a
+        href="https://discord.gg/BcrsFRSA"
+        target="_blank"
+        class="h-12 w-12 flex items-center justify-center text-white bg-indigo-700 text-slate-900 rounded-full hover:bg-indigo-600 active:bg-indigo-500"
       >
-        <Browser>
-          <Image src={analyticsSrc} alt="Analytics view of progressively.app" />
-        </Browser>
-        <Text><strong>Private Analytics</strong></Text>
-      </div>
+        <Discord className="h-8 w-8" />
+      </a>
 
-      <div
-        class="motion-safe:opacity-0 motion-safe:animate-fade-enter-bottom"
-        style="animation-delay: 0.9s;"
+      <a
+        href="https://github.com/progressively-crew/progressively"
+        target="_blank"
+        class="h-12 w-12 flex items-center justify-center bg-slate-100 text-slate-900 rounded-full"
       >
-        <Browser>
-          <Image src={funnelsSrc} alt="Funnels of progressively.app" />
-        </Browser>
-        <Text><strong>Funnels</strong></Text>
-      </div>
+        <Github className="h-12 w-12" />
+      </a>
     </div>
   </div>
 </div>

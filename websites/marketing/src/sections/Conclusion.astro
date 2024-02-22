@@ -1,39 +1,31 @@
 ---
-import Cta from "../components/Cta.astro";
 import Quote from "../components/Quote/Quote.astro";
 import Text from "../components/Text.astro";
 ---
 
-<section class="bg-slate-100">
-  <div class="max-w-6xl w-full mx-auto pb-20">
+<section class="bg-slate-100 px-4">
+  <div class="max-w-6xl w-full mx-auto py-20">
     <h2 class="sr-only">Conclusion</h2>
 
-    <Cta
-      title="Join the journey, set up your instance."
-      actionTxt="Get started"
-      href="https://docs.progressively.app"
-      actionId="conclusion-cta"
+    <Quote
+      authorName="Marvin Frachet"
+      authorJob="Frontend Eng @Proton"
+      authorPict="https://avatars.githubusercontent.com/u/3874873?v=4"
     >
-      <Quote
-        authorName="Marvin Frachet"
-        authorJob="Frontend Eng @Proton"
-        authorPict="https://avatars.githubusercontent.com/u/3874873?v=4"
-      >
-        <Text size="XL">
-          Thanks a bunch for making it to the end of the page, and here's my
-          final shot at convincing you to click that big button
-        </Text>
+      <Text size="XL">
+        Thanks a bunch for making it to the end of the page, and here's my final
+        shot at convincing you to click that big button
+      </Text>
 
-        <br />
+      <br />
 
-        <Text size="XL">
-          If you're not quite as excited about the product yet, I'd love to hear
-          your thoughts! Feel free to share why on <a
-            class="font-semibold border-b border-slate-900"
-            href="https://il6hw4vp4rl.typeform.com/to/Ben1G63r">this form</a
-          >. Cheers!
-        </Text>
-      </Quote>
-    </Cta>
+      <Text size="XL">
+        If you're not quite as excited about the product yet, I'd love to hear
+        your thoughts! Feel free to share why on <a
+          class="font-semibold border-b border-slate-900"
+          href="https://il6hw4vp4rl.typeform.com/to/Ben1G63r">this form</a
+        >. Cheers!
+      </Text>
+    </Quote>
   </div>
 </section>

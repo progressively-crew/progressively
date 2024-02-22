@@ -1,68 +1,77 @@
 ---
 import Title from "../components/Title.astro";
 import Text from "../components/Text.astro";
-import Card from "../components/Card/Card.astro";
-import CardTitle from "../components/Card/CardTitle.astro";
-import DifferenciatorBg from "../components/DifferenciatorBg.astro";
+import { TbBrandNextjs, TbSdk } from "react-icons/tb";
+import { FaGithub, FaServer } from "react-icons/fa";
+import { MdOutlinePrivacyTip } from "react-icons/md";
+import { PiShareNetwork } from "react-icons/pi";
 
 const differentators = [
   {
+    Icon: FaGithub,
     title: "Open Source",
-    content:
-      "We're all about community spirit. We're not just building the tool on our end; we're building it with you.",
+    content: "We're all about community spirit",
   },
   {
+    Icon: FaServer,
     title: "Self-hosted",
-    content:
-      "You grab the tool, install it on your machines, store data in your databases. We remain in the dark :).You get the tool and install it on your machines. Your store data on your databases. We know nothing :).",
+    content: "Your machines, your data.",
   },
   {
+    Icon: MdOutlinePrivacyTip,
     title: "Privacy matters",
-    content:
-      "We don't store any info about your audience. A cookie recognizes users on return visits, but identification remains elusive.",
+    content: "Everything is made anonymously.",
   },
   {
+    Icon: TbBrandNextjs,
     title: "Server Side Rendering",
-    content:
-      "Compatible with your beloved tools like Next.js, Remix, etc., on both client and server sides.",
+    content: "Compatible with  Next.js, Remix, etc...",
   },
   {
-    title: "The web library is small",
-    content:
-      "No impact on your webpage's performance, unlike other tools. For example, the React SDK is just 1.3kB.",
+    Icon: TbSdk,
+    title: "Small libraries",
+    content: "The React SDK for feature flags is 1.3kB.",
   },
   {
+    Icon: PiShareNetwork,
     title: "Realtime updates",
-    content:
-      "It utilizes Websockets (optional) for real-time updates of user feature flags.",
+    content: "Websockets powered (opt-in)",
   },
 ];
 ---
 
-<section class="bg-slate-900 relative overflow-hidden px-4">
-  <div class="max-w-6xl w-full mx-auto py-24 relative z-10">
-    <Title theme="dark" tag="h2" size="L">Why choose Progressively?</Title>
-    <div class="pt-2">
-      <Text theme="dark">
-        If you share the following values and ideas, you should give <strong
-          >Progressively</strong
-        > a try.
-      </Text>
+<section class="bg-white relative overflow-hidden px-4">
+  <div class="max-w-6xl w-full mx-auto py-16 md:py-24 relative z-10">
+    <div class="flex flex-col gap-4">
+      <Title tag="h2" size="L">Key differentiators</Title>
+      <div class="max-w-4xl">
+        <Text size="XL" className="!leading-relaxed">
+          Progressively might be compact, but it packs a punch! What really sets
+          it apart is its philosophy and core values. We're big believers in
+          these principles, and they're at the heart of everything we do.
+        </Text>
+      </div>
     </div>
 
-    <div class="grid md:grid-cols-3 pt-6 gap-4 md:gap-8">
+    <div class="grid md:grid-cols-3 pt-12 gap-4 md:gap-12">
       {
         differentators.map((diff) => (
-          <Card variant="dark">
-            <CardTitle theme="dark">{diff.title}</CardTitle>
-            <Text theme="dark">{diff.content}</Text>
-          </Card>
+          <div class="flex flex-row md:flex-col gap-4">
+            <div class="w-16 h-16 rounded-lg bg-slate-100 flex items-center justify-center">
+              <diff.Icon className="text-4xl" />
+            </div>
+
+            <div class="pt-2">
+              <Title tag="h3" size="M">
+                {diff.title}
+              </Title>
+              <Title tag="p" size="S" className="font-light !text-slate-600">
+                {diff.content}
+              </Title>
+            </div>
+          </div>
         ))
       }
     </div>
-  </div>
-
-  <div class="absolute inset-0 w-full h-full">
-    <DifferenciatorBg />
   </div>
 </section>

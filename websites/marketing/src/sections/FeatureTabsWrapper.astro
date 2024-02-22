@@ -1,0 +1,37 @@
+---
+import { FeatureTabs } from "./FeatureTabs";
+import { codeToHtml } from "shiki";
+
+const ff = `import { useFlags } from "@progressively/react";
+
+export const Home = () => {
+  const { flags } = useFlags();
+
+  if (flags.newPage) {
+    return <NewPage />
+  }
+
+  return <OldPage />
+};`;
+
+const analytics = `<script
+  src="https://progressively.com/progressively.min.js"
+  data-progressively-endpoint="YOUR API INSTANCE URL"
+  data-progressively-client-key="YOUR CLIENT KEY MATCHING THE DOMAIN"
+/>
+`;
+
+const analyticsHtml = await codeToHtml(analytics, {
+  lang: "javascript",
+  theme: "dracula",
+});
+
+const ffHtml = await codeToHtml(ff, {
+  lang: "javascript",
+  theme: "dracula",
+});
+
+const codes = [ffHtml, analyticsHtml];
+---
+
+<FeatureTabs client:visible codes={codes} />

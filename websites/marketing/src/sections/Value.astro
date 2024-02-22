@@ -1,104 +1,14 @@
 ---
-import Feature from "../components/Feature.astro";
 import Title from "../components/Title.astro";
-import Text from "../components/Text.astro";
-import toggleSrc from "./assets/value/toggle.jpg";
-import gradualSrc from "./assets/value/gradual.jpg";
-import qaSrc from "./assets/value/qa.jpg";
-import clockSrc from "./assets/value/clock.jpg";
-import analyticsSrc from "./assets/value/analytics.jpg";
-import Button from "../components/Button.astro";
-
-const features = [
-  {
-    title: "Instant feature deployments",
-    content: [
-      "With a straightforward activation, gradually reveals concealed features to users.",
-      "Experience issues with your new feature? Toggle the activation in the opposite direction to disable it.",
-    ],
-    imageSrc: toggleSrc,
-  },
-  {
-    title: "Gradual deployments",
-    content: [
-      "Hesitant about unveiling your latest feature? Dip your toe in the water by introducing it to just 1% or 2% of your audience.",
-      "If your error tracking system raises an alarm, swiftly deactivate the feature and proceed with your release plan, taking it one step at a time.",
-    ],
-    imageSrc: gradualSrc,
-  },
-  {
-    title: "Scheduled deployments",
-    content: [
-      "Getting ready for a product or feature launch is a mammoth undertaking, often bound by time constraints.",
-      "To lighten your load and avoid adding another item to your pre-release checklist, consider scheduling the release deployments – one less box to check off your list.",
-    ],
-    imageSrc: clockSrc,
-  },
-  {
-    title: "QA directly in production",
-    content: [
-      "Skip the hassle of intermediate staging environments that deviate from your production setup. Opt for a smarter approach by concealing your features with a feature flag, directing them to users based on qualitative criteria.",
-      "For example, grant access to the feature for users with email addresses ending in X. Rest assured, we prioritize your privacy – no storing of user data.",
-    ],
-    imageSrc: qaSrc,
-  },
-  {
-    title: "Privacy-Focused Analytics",
-    content: [
-      "In the journey of scaling a product or business, the compass is set by insightful data, guiding decisions with purpose.",
-      "Within this narrative, the threads of feature flags, A/B testing, and analytics are tightly woven, with the promise of responsibly built-in progress shaping each step of the tale.",
-    ],
-    imageSrc: analyticsSrc,
-  },
-];
+import FeatureTabsWrapper from "./FeatureTabsWrapper.astro";
 ---
 
-<section class="max-w-6xl w-full mx-auto py-12 px-4">
-  <div class="text-center">
-    <Title tag="h2" size="L">What can you expect from it?</Title>
-  </div>
-
-  <ul class="pt-8 md:pt-12 flex flex-col gap-12 pb-8">
-    {
-      features.map((feat, i) => (
-        <li>
-          <Feature
-            title={feat.title}
-            imageSrc={feat.imageSrc}
-            reversed={i % 2 !== 0}
-          >
-            <div class="flex flex-col gap-4">
-              {feat.content.map((c) => (
-                <Text size="L">{c}</Text>
-              ))}
-            </div>
-          </Feature>
-        </li>
-      ))
-    }
-  </ul>
-
-  <div
-    class="text-center py-4 bg-slate-100 rounded-2xl flex flex-col md:flex-row gap-4 items-center justify-center"
-  >
-    <Title size="S" tag="p">Not sure it's for you?</Title>
-
-    <div class="flex flex-col md:flex-row gap-4">
-      <Button
-        href="https://app.cal.com/mfrachet/30min"
-        variant="secondary"
-        id="value-cta-schedule"
-      >
-        Let's discuss
-      </Button>
-
-      <Button
-        href="https://il6hw4vp4rl.typeform.com/to/Ben1G63r"
-        variant="secondary"
-        id="value-cta-contact"
-      >
-        Contact us
-      </Button>
+<div class="bg-slate-50">
+  <section class="max-w-6xl w-full mx-auto py-16 md:py-24 px-4">
+    <div class="text-center pb-4 md:pb-8">
+      <Title tag="h2" size="L">What can you expect?</Title>
     </div>
-  </div>
-</section>
+
+    <FeatureTabsWrapper />
+  </section>
+</div>

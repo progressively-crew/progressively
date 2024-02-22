@@ -1,6 +1,6 @@
 ---
 export interface Props {
-  tag?: "h1" | "h2" | "h3" | "p";
+  tag?: "h1" | "h2" | "h3" | "h4" | "p";
   size?: "XL" | "L" | "M" | "S";
   theme?: "light" | "dark";
   className?: string;
@@ -20,7 +20,7 @@ const themeColor = {
 
 const { size, tag: el, theme, className } = Astro.props;
 
-const sharedStyle = "font-extrabold font-title";
+const sharedStyle = "font-bold font-title";
 const styles = `${sharedStyle} ${themeColor[theme || "light"]} ${
   sizeStyles[size || "XL"]
 } ${className || ""}`;
