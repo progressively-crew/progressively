@@ -60,31 +60,31 @@ const roadmaps = [
     </Text>
   </div>
 
-  <ol class="md:hidden relative flex flex-col gap-4">
+  <ol class="md:hidden relative flex flex-col gap-4 pt-12">
     <div class="bg-slate-200 h-full w-px absolute left-[23px]"></div>
     {
       roadmaps.map((road) => (
         <li class="grid grid-cols-[auto_1fr] gap-4 relative items-center">
           <div class="w-12 flex justify-center">
             {road.state === "finished" ? (
-              <div class="bg-emerald-400 rounded-full h-6 w-6 flex items-center justify-center text-white">
+              <div class="bg-emerald-400 rounded-full h-8 w-8 flex items-center justify-center text-white">
                 <Check />
               </div>
             ) : road.state === "partial" ? (
-              <div class="animate-spin bg-yellow-400 rounded-full h-6 w-6 flex items-center justify-center text-white">
+              <div class="animate-spin bg-yellow-400 rounded-full h-8 w-8 flex items-center justify-center text-white">
                 <Loader />
               </div>
             ) : (
-              <div class="bg-slate-200 rounded-full h-6 w-6" />
+              <div class="bg-slate-200 rounded-full h-8 w-8" />
             )}
           </div>
 
           <div class="text-left">
-            <Text tag="h4" className="font-semibold">
+            <Text tag="h4" className="font-semibold" size="L">
               {road.title}
             </Text>
 
-            <Text>{road.description}</Text>
+            <Text size="M">{road.description}</Text>
           </div>
         </li>
       ))
