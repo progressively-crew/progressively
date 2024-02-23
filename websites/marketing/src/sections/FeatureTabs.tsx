@@ -16,7 +16,7 @@ import { IoMdFunnel } from "react-icons/io";
 
 import { Tab, TabList, TabPanel } from "../components/Tabs";
 import { Browser } from "../components/Browser";
-import ffSrc from "./assets/above-fold/ff.png";
+import ffSrc from "./assets/abovefold/ff.png";
 import catchySrc from "./assets/catchy/catchy.png";
 import funnelSrc from "./assets/catchy/funnels.png";
 

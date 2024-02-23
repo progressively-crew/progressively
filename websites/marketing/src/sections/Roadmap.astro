@@ -1,6 +1,5 @@
 ---
 import Title from "../components/Title.astro";
-import { Image } from "astro:assets";
 import Text from "../components/Text.astro";
 import Check from "../components/Icons/Check.astro";
 import Loader from "../components/Icons/Loader.astro";
@@ -129,7 +128,7 @@ const roadmaps = [
   >
     <Browser bg="grey">
       <div class="p-2">
-        <Image src={catchySrc} alt="Analytics of progressively.app" />
+        <img src={catchySrc.src} alt="Analytics of progressively.app" />
       </div>
     </Browser>
   </div>

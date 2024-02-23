@@ -1,7 +1,6 @@
 ---
-import { Image } from "astro:assets";
 import Button from "../components/Button.astro";
-import ffSrc from "./assets/above-fold/ff.png";
+import ffSrc from "./assets/abovefold/ff.png";
 import Title from "../components/Title.astro";
 import { Browser } from "../components/Browser";
 import Twitter from "../components/Icons/Twitter.astro";
@@ -41,7 +40,7 @@ import Github from "../components/Icons/Github.astro";
 
       <Browser>
         <div class="p-2">
-          <Image src={ffSrc} alt="Feature flags of progressively.app" />
+          <img src={ffSrc.src} alt="Feature flags of progressively.app" />
         </div>
       </Browser>
     </div>
