@@ -16,7 +16,7 @@ import { TextInput } from "~/components/Fields/TextInput";
 import { Link } from "~/components/Link";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
-import { AuthCredentials, OktaConfig } from "~/modules/auth/types";
+import { AuthCredentials } from "~/modules/auth/types";
 import { commitSession, getSession } from "~/sessions";
 import { authenticate } from "../modules/auth/services/authenticate";
 import { validateSigninForm } from "../modules/auth/validators/validate-signin-form";
@@ -86,20 +86,17 @@ export const action: ActionFunction = async ({
   });
 };
 
-export interface LoaderData {
-  showRegister: boolean;
-  oktaConfig: OktaConfig;
-}
-
-export const loader: LoaderFunction = (): LoaderData => {
+export const loader: LoaderFunction = () => {
   return {
+    isDemoInstance: process.env.IS_DEMO_INSTANCE === "true",
     showRegister: process.env.ALLOW_REGISTRATION === "true",
     oktaConfig: getOktaConfig(),
   };
 };
 
 export default function Signin() {
-  const { showRegister, oktaConfig } = useLoaderData<LoaderData>();
+  const { showRegister, oktaConfig, isDemoInstance } =
+    useLoaderData<typeof loader>();
   const okta = useOkta(oktaConfig);
   const navigation = useNavigation();
   const [searchParams] = useSearchParams();
@@ -148,6 +145,7 @@ export default function Signin() {
             label="Email"
             placeholder="e.g: james.bond@mi6.com"
             autoComplete="username"
+            defaultValue={isDemoInstance ? "demo@progressively.app" : undefined}
           />
         </div>
 
@@ -163,6 +161,9 @@ export default function Signin() {
               type="password"
               placeholder="************"
               autoComplete="current-password"
+              defaultValue={
+                isDemoInstance ? "demo@progressively.app" : undefined
+              }
             />
           </div>
 
