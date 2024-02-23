@@ -22,25 +22,38 @@ export default defineConfig({
               label: "Anonymous analytics",
               link: "/concepts/anonymous-analytics",
             },
+            {
+              label: "Funnels",
+              link: "/concepts/funnels",
+            },
+          ],
+        },
+        {
+          label: "Deployments",
+          autogenerate: { directory: "deployments" },
+        },
+        {
+          label: "Using the libraries",
+          items: [
+            {
+              label: "Feature flags",
+              autogenerate: { directory: "sdks/feature-flags" },
+            },
+            {
+              label: "Analytics",
+              autogenerate: { directory: "sdks/analytics" },
+            },
           ],
         },
         {
           label: "Guides",
           items: [
             {
-              label: "Deploy Progressively",
-              link: "/guides/deployments",
-            },
-            {
               label: "Using the CLI",
-              link: "/guides/cli",
+              autogenerate: { directory: "guides/cli" },
             },
             { label: "Development setup", link: "/guides/development-setup" },
           ],
-        },
-        {
-          label: "SDKs",
-          autogenerate: { directory: "sdks" },
         },
       ],
     }),
