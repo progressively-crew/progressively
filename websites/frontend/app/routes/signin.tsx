@@ -16,7 +16,7 @@ import { TextInput } from "~/components/Fields/TextInput";
 import { Link } from "~/components/Link";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { NotAuthenticatedLayout } from "~/layouts/NotAuthenticatedLayout";
-import { AuthCredentials, OktaConfig } from "~/modules/auth/types";
+import { AuthCredentials } from "~/modules/auth/types";
 import { commitSession, getSession } from "~/sessions";
 import { authenticate } from "../modules/auth/services/authenticate";
 import { validateSigninForm } from "../modules/auth/validators/validate-signin-form";
