@@ -34,7 +34,16 @@ export default defineConfig({
         },
         {
           label: "Using the libraries",
-          autogenerate: { directory: "sdks" },
+          items: [
+            {
+              label: "Feature flags",
+              autogenerate: { directory: "sdks/feature-flags" },
+            },
+            {
+              label: "Analytics",
+              autogenerate: { directory: "sdks/analytics" },
+            },
+          ],
         },
         {
           label: "Guides",
