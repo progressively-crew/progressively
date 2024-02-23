@@ -107,12 +107,12 @@ const scriptSrc = "/progressively.min.js";
   const { flags } = await sdk.loadFlags();
   const banner = document.getElementById("banner");
 
-  if (flags.thanksBannerPh) {
+  if (flags.thanksPhBanner) {
     banner?.classList.remove("hidden");
   }
 
   sdk.onFlagUpdate((nextFlags) => {
-    if (nextFlags.thanksBannerPh) {
+    if (nextFlags.thanksPhBanner) {
       banner?.classList.remove("hidden");
     } else {
       banner?.classList.add("hidden");
