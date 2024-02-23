@@ -44,7 +44,7 @@ const scriptSrc = "/progressively.min.js";
   </head>
   <body>
     <header>
-      <!-- <Banner>
+      <Banner>
         Thanks for your support on{" "}
         <a
           class="font-bold underline"
@@ -53,7 +53,7 @@ const scriptSrc = "/progressively.min.js";
           ProductHunt
         </a>
         ! We've reached <strong>#7 of the day!</strong> 🥰
-      </Banner> -->
+      </Banner>
 
       <Navbar />
     </header>
@@ -92,17 +92,14 @@ const scriptSrc = "/progressively.min.js";
     "nav-docs",
     "nav-getstarted",
     "above-the-fold-cta",
-    "relevance-cta",
-    "value-cta",
-    "conclusion-cta",
-    "how-it-works-deploy",
     "above-the-fold-get-in-touch",
+    "demo-cta",
   ].forEach((id) => {
     const el = document.getElementById(id);
 
     if (el) {
       el.addEventListener("click", (e) => {
-        // todo: fix
+        (window as any)?.track(id);
       });
     }
   });
