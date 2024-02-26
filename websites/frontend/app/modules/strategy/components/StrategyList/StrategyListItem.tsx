@@ -63,7 +63,7 @@ export const StrategyItem = ({
           />
         </div>
 
-        <div className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 ">
+        <div className="grid md:grid-cols-[auto_1fr] gap-x-4 gap-y-2 ">
           <Typography
             as="span"
             className="pt-7 font-mono text-sm font-semibold"
