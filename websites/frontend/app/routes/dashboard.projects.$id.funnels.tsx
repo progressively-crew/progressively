@@ -71,7 +71,7 @@ export default function FunnelsPage() {
         <PageTitle
           value="Funnels"
           action={
-            <div className="flex flex-row items-center gap-8">
+            <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
               <CreateButton to={`./create`}>Create a funnel</CreateButton>
               <InsightsFilters />
             </div>
@@ -89,7 +89,7 @@ export default function FunnelsPage() {
 
               return (
                 <Card key={funnelChart.funnel.uuid}>
-                  <div className="grid grid-cols-[2fr_1fr]">
+                  <div className="grid md:grid-cols-[2fr_1fr] overflow-x-scroll">
                     <CardContent>
                       <div>
                         <Typography as="h2" className="font-semibold pb-4">
@@ -107,7 +107,7 @@ export default function FunnelsPage() {
                       </div>
                     </CardContent>
 
-                    <div className="bg-slate-50 border-l border-slate-200 flex flex-col justify-center items-center text-center px-4 rounded-r">
+                    <div className="bg-slate-50 md:border-l md:border-slate-200 flex flex-col md:justify-center md:items-center md:text-center px-4 rounded-r py-4 md:py-0">
                       <Typography className="text-6xl font-extrabold">
                         {percentage.toFixed(2)}%
                       </Typography>
