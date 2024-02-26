@@ -166,7 +166,7 @@ export default function ProjectInsights() {
       <PageTitle value="Analytics" action={<InsightsFilters />} />
 
       <Section>
-        <div className="inline-flex flex-row gap-6">
+        <div className="grid grid-cols-2 md:inline-flex flex-row gap-6">
           <BigStat
             label={"Page views"}
             value={pageViewCount}
@@ -210,7 +210,7 @@ export default function ProjectInsights() {
         </Card>
       </Section>
 
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid md:grid-cols-3 gap-6">
         <Section>
           <Card>
             <CardContent>

@@ -52,7 +52,7 @@ export const DashboardLayout = ({
     <Inert>
       <SkipNavLink>Skip to content</SkipNavLink>
 
-      <div className="bg-gray-50 h-full flex-1 rounded-xl shadow-xl">
+      <div className="bg-gray-50 h-full flex-1 md:rounded-xl shadow-xl">
         {lastCrumb && (
           <div
             className={`bg-white border-b border-slate-200 rounded-t-lg pt-1 ${

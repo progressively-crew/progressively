@@ -137,7 +137,7 @@ export default function FlagById() {
         subNav={<FlagMenu projectId={project.uuid} flag={flag} />}
         status={
           actionData?.successStrategyEdited ? (
-            <SuccessBox id={"strategy-edited"}>
+            <SuccessBox id={"strategy-edited"} key={Math.random()}>
               The strategy has been successfully edited.
             </SuccessBox>
           ) : actionData?.successStrategyDeleted ? (
@@ -165,7 +165,7 @@ export default function FlagById() {
         <PageTitle
           value="Audience"
           description={
-            <Typography>
+            <Typography className="hidden md:inline">
               When one user requests flags evaluations from an SDK, if they
               match <strong>at least one of the following strategies</strong>,
               they will resolve an activated flag with the associated value

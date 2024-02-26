@@ -30,7 +30,7 @@ export const StrategyRuleFormField = ({
   ];
 
   return (
-    <div className="flex flex-row gap-2 w-full">
+    <div className="flex flex-col md:flex-row gap-2 w-full">
       {targetOptions.length > 1 ? (
         <SelectField
           hiddenLabel
