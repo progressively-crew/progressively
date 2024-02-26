@@ -137,7 +137,7 @@ export default function FlagById() {
         subNav={<FlagMenu projectId={project.uuid} flag={flag} />}
         status={
           actionData?.successStrategyEdited ? (
-            <SuccessBox id={"strategy-edited"}>
+            <SuccessBox id={"strategy-edited"} key={Math.random()}>
               The strategy has been successfully edited.
             </SuccessBox>
           ) : actionData?.successStrategyDeleted ? (

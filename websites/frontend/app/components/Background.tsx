@@ -4,8 +4,8 @@ export interface BackgroundProps {
 }
 
 const spacingStyles = {
-  S: "py-0.5 px-0.5",
-  M: "py-4 px-4",
+  S: "md:py-0.5 md:px-0.5",
+  M: "md:py-4 md:px-4",
 };
 
 export const Background = ({ children, spacing = "M" }: BackgroundProps) => {
