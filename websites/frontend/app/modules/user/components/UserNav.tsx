@@ -29,6 +29,7 @@ export const UserNav = () => {
           },
         ]}
         label={user.fullname}
+        icon={<AiOutlineUser />}
       >
         {user.fullname}
       </MenuButton>

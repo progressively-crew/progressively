@@ -44,7 +44,11 @@ export const MenuButton = ({
         {variant === "switch" ? (
           <Menu.Button className={menuButtonClass} aria-label={label}>
             {icon}
-            {children && <Typography as="span">{children}</Typography>}
+            {children && (
+              <span className="hidden md:inline">
+                <Typography as="span">{children}</Typography>
+              </span>
+            )}
             <RxCaretSort className="text-xl" />
           </Menu.Button>
         ) : (
