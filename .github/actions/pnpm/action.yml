@@ -3,11 +3,6 @@ description: "Handle caching and pnpm resolution"
 runs:
   using: "composite"
   steps:
-    - uses: actions/setup-node@v2
-      name: Install Node 18
-      with:
-        node-version: "18"
-
     - uses: pnpm/action-setup@v2
       name: Install pnpm
       id: pnpm-install
@@ -15,19 +10,11 @@ runs:
         version: 8
         run_install: false
 
-    - name: Get pnpm store directory
-      id: pnpm-cache
-      shell: bash
-      run: |
-        echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-
-    - uses: actions/cache@v3
-      name: Setup pnpm cache
+    - uses: actions/setup-node@v4
+      name: Install Node 18
       with:
-        path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-        restore-keys: |
-          ${{ runner.os }}-pnpm-store-
+        node-version: "18"
+        cache: pnpm
 
     - name: Store Playwright Version
       shell: bash
