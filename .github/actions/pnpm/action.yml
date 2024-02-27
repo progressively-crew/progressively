@@ -3,6 +3,11 @@ description: "Handle caching and pnpm resolution"
 runs:
   using: "composite"
   steps:
+    - uses: actions/setup-node@v2
+      name: Install Node 18
+      with:
+        node-version: "18"
+
     - uses: pnpm/action-setup@v2
       name: Install pnpm
       id: pnpm-install
@@ -10,21 +15,16 @@ runs:
         version: 8
         run_install: false
 
-    - uses: actions/setup-node@v4
-      name: Install Node 18
-      with:
-        node-version: "18"
-        cache: pnpm
-
-    - name: Store Playwright Version
+    - name: Get pnpm store directory
+      id: pnpm-cache
+      shell: bash
       run: |
-        PLAYWRIGHT_VERSION=$(pnpm playwright --version | sed 's/Version //')
-        echo "PLAYWRIGHT_VERSION=$PLAYWRIGHT_VERSION" >> $GITHUB_ENV
-      working-directory: example/playwright-helpers
+        echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
-    - name: Setup Playwright cache
-      id: cache-playwright
-      uses: actions/cache@v3
+    - uses: actions/cache@v3
+      name: Setup pnpm cache
       with:
-        key: playwright-${{ env.PLAYWRIGHT_VERSION }}
-        path: ~/.cache/ms-playwright
+        path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-pnpm-store-
