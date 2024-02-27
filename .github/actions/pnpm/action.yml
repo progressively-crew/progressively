@@ -28,3 +28,16 @@ runs:
         key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
         restore-keys: |
           ${{ runner.os }}-pnpm-store-
+
+    - name: Store Playwright Version
+      shell: bash
+      run: |
+        PLAYWRIGHT_VERSION=$(pnpm playwright --version | sed 's/Version //')
+        echo "PLAYWRIGHT_VERSION=$PLAYWRIGHT_VERSION" >> $GITHUB_ENV
+
+    - name: Setup Playwright cache
+      id: cache-playwright
+      uses: actions/cache@v3
+      with:
+        key: playwright-${{ env.PLAYWRIGHT_VERSION }}
+        path: ~/.cache/ms-playwright
