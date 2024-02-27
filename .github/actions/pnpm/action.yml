@@ -17,7 +17,6 @@ runs:
         cache: pnpm
 
     - name: Store Playwright Version
-      shell: bash
       run: |
         PLAYWRIGHT_VERSION=$(pnpm playwright --version | sed 's/Version //')
         echo "PLAYWRIGHT_VERSION=$PLAYWRIGHT_VERSION" >> $GITHUB_ENV
