@@ -37,7 +37,7 @@ export const action: ActionFunction = async ({
 
   await changeFullname(fullname!, session.get("auth-cookie"));
 
-  return redirect("/dashboard");
+  return redirect("/dashboard/projects/all");
 };
 
 export default function WhatsYourNamePage() {
