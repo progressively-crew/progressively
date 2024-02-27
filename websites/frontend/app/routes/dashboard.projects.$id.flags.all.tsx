@@ -132,6 +132,7 @@ export default function FlagsByProject() {
           </Card>
         )}
       </DashboardLayout>
+
       <Outlet />
     </>
   );
