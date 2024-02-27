@@ -1,5 +1,5 @@
-import { seedDb } from './seed';
+import { seedDb } from "./seed";
 
-seedDb().then(() => {
-  console.log('Seed finished');
+seedDb({ loadEvents: true }).then(() => {
+  console.log("Seed finished");
 });
