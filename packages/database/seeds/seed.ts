@@ -18,7 +18,11 @@ const guardSeeding = () => {
   }
 };
 
-export const seedDb = async () => {
+export interface SeedArgs {
+  loadEvents?: boolean;
+}
+
+export const seedDb = async (opts: SeedArgs = {}) => {
   guardSeeding();
   await prismaClient.$connect();
 
@@ -123,19 +127,61 @@ export const seedDb = async () => {
       },
     });
 
-    await seedFlagHits(prismaClient, homePageFlag, new Date(1992, 0, 1, 1), 10);
-    await seedFlagHits(prismaClient, homePageFlag, new Date(1992, 0, 3, 1), 20);
-    await seedFlagHits(prismaClient, homePageFlag, new Date(1992, 0, 2, 1), 40);
-    await seedFlagHits(prismaClient, homePageFlag, new Date(1992, 0, 6, 1), 10);
+    if (opts.loadEvents) {
+      await seedFlagHits(
+        prismaClient,
+        homePageFlag,
+        new Date(1992, 0, 1, 1),
+        10
+      );
+      await seedFlagHits(
+        prismaClient,
+        homePageFlag,
+        new Date(1992, 0, 3, 1),
+        20
+      );
+      await seedFlagHits(
+        prismaClient,
+        homePageFlag,
+        new Date(1992, 0, 2, 1),
+        40
+      );
+      await seedFlagHits(
+        prismaClient,
+        homePageFlag,
+        new Date(1992, 0, 6, 1),
+        10
+      );
 
-    await seedFlagHits(prismaClient, multiVariate, new Date(1992, 0, 1, 1), 10);
+      await seedFlagHits(
+        prismaClient,
+        multiVariate,
+        new Date(1992, 0, 1, 1),
+        10
+      );
 
-    await seedFlagHits(prismaClient, multiVariate, new Date(1992, 0, 3, 1), 20);
-    await seedFlagHits(prismaClient, multiVariate, new Date(1992, 0, 2, 1), 40);
-    await seedFlagHits(prismaClient, multiVariate, new Date(1992, 0, 6, 1), 10);
+      await seedFlagHits(
+        prismaClient,
+        multiVariate,
+        new Date(1992, 0, 3, 1),
+        20
+      );
+      await seedFlagHits(
+        prismaClient,
+        multiVariate,
+        new Date(1992, 0, 2, 1),
+        40
+      );
+      await seedFlagHits(
+        prismaClient,
+        multiVariate,
+        new Date(1992, 0, 6, 1),
+        10
+      );
 
-    await seedFlagHitsVariants(prismaClient, multiVariate);
-    await seedHitEvents(prismaClient, projectFromSeeding);
+      await seedFlagHitsVariants(prismaClient, multiVariate);
+      await seedHitEvents(prismaClient, projectFromSeeding);
+    }
 
     // End of Flag setup
   } catch (e) {
