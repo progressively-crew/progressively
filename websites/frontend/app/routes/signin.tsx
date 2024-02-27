@@ -73,10 +73,12 @@ export const action: ActionFunction = async ({
   // If only one project, redirect to it
   const projects = await getProjects(authenticationSucceed.access_token);
 
-  let url = "/dashboard";
+  let url = "";
 
   if (projects?.length === 1) {
-    url += `/projects/${projects[0].projectId}/flags`;
+    url += `/dashboard/projects/${projects[0].projectId}/flags/all`;
+  } else {
+    url = "/dashboard/projects/all";
   }
 
   return redirect(url, {

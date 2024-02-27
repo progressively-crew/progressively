@@ -83,7 +83,10 @@ describe("/dashboard/projects/[id]/flags/[flagId]/settings/edit", () => {
 
         cy.findByText("New homepage 2").should("be.visible");
 
-        cy.url().should("include", "/dashboard/projects/1/flags?flagEdited");
+        cy.url().should(
+          "include",
+          "/dashboard/projects/1/flags/all?flagEdited"
+        );
 
         cy.checkA11y();
       });

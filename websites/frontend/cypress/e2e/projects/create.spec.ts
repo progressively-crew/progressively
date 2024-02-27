@@ -1,9 +1,9 @@
-describe("/dashboard/projects/create", () => {
+describe("/dashboard/projects/all/create", () => {
   before(cy.seed);
   after(cy.cleanupDb);
 
   beforeEach(() => {
-    cy.visit("/dashboard/projects/create");
+    cy.visit("/dashboard/projects/all/create");
   });
 
   describe("not authenticated", () => {
@@ -15,7 +15,7 @@ describe("/dashboard/projects/create", () => {
   describe("authenticated", () => {
     beforeEach(() => {
       cy.signIn("Marvin");
-      cy.visit("/dashboard/projects/create");
+      cy.visit("/dashboard/projects/all/create");
       cy.injectAxe();
     });
 

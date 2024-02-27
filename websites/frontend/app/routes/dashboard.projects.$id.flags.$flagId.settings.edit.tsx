@@ -57,7 +57,7 @@ export const action: ActionFunction = async ({
     );
 
     return redirect(
-      `/dashboard/projects/${projectId}/flags?flagEdited=${newFlag.uuid}#flag-edited`
+      `/dashboard/projects/${projectId}/flags/all?flagEdited=${newFlag.uuid}#flag-edited`
     );
   } catch (error: unknown) {
     if (error instanceof Error) {

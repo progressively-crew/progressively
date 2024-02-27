@@ -50,7 +50,7 @@ export const action: ActionFunction = async ({
   );
 
   return redirect(
-    `/dashboard/projects/${userProject.uuid}/flags?projectCreated=true#project-added`
+    `/dashboard/projects/${userProject.uuid}/flags/all?projectCreated=true#project-added`
   );
 };
 
@@ -74,7 +74,10 @@ export default function CreateProjectPage() {
           </SubmitButton>
         }
         closeSlot={
-          <DialogCloseBtn to={`/dashboard`} label={`Back to projects`} />
+          <DialogCloseBtn
+            to={`/dashboard/projects/all`}
+            label={`Back to projects`}
+          />
         }
       >
         <FormGroup>

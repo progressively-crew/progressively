@@ -95,7 +95,7 @@ describe("/dashboard/projects/[id]/settings/delete", () => {
 
     it("removes the project and get me back to the project list when I have other projects", () => {
       // Create another project as a test setup
-      cy.visit("/dashboard/projects/create");
+      cy.visit("/dashboard/projects/all/create");
       cy.findByRole("textbox", { name: "Project name" }).type("My new project");
       cy.findByRole("textbox", { name: "Domain" }).type("project");
       cy.findByRole("button", { name: "Create the project" }).click();
@@ -108,7 +108,10 @@ describe("/dashboard/projects/[id]/settings/delete", () => {
         name: "Yes, delete the project",
       }).click();
 
-      cy.url().should("contain", "/dashboard?projectRemoved=true");
+      cy.url().should(
+        "contain",
+        "/dashboard/projects/all/?projectRemoved=true"
+      );
       cy.get(".success-box")
         .should("have.focus")
         .and("be.visible")

@@ -49,7 +49,9 @@ export const action: ActionFunction = async ({
     return { errors: { backendError: "An error ocurred" } };
   }
 
-  return redirect(`/dashboard?projectRemoved=true#project-removed`);
+  return redirect(
+    `/dashboard/projects/all/?projectRemoved=true#project-removed`
+  );
 };
 
 export default function DeleteProjectPage() {

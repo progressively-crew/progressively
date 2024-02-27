@@ -17,7 +17,7 @@ interface LoaderData {
 export const handle = {
   breadcrumb: () => {
     return {
-      link: `/dashboard`,
+      link: `/dashboard/projects/all`,
       label: "Projects",
       isRoot: true,
     };

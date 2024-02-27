@@ -49,7 +49,7 @@ export const action: ActionFunction = async ({
   );
 
   return redirect(
-    `/dashboard/projects/${project.uuid}/flags?projectCreated=true#project-added`
+    `/dashboard/projects/${project.uuid}/flags/all?projectCreated=true#project-added`
   );
 };
 
