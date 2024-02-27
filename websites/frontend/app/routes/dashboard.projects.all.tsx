@@ -4,7 +4,7 @@ import { UserProject } from "~/modules/projects/types";
 import { getSession } from "~/sessions";
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { LoaderFunction, redirect, MetaFunction } from "@remix-run/node";
-import { useSearchParams, useLoaderData } from "@remix-run/react";
+import { useSearchParams, useLoaderData, Outlet } from "@remix-run/react";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { ProjectList } from "~/modules/projects/components/ProjectList";
 import { PageTitle } from "~/components/PageTitle";
@@ -52,32 +52,35 @@ export default function DashboardRoot() {
   const isSearching = Boolean(searchParams.get("search") || undefined);
 
   return (
-    <DashboardLayout
-      status={
-        hasRemovedProject ? (
-          <SuccessBox id="project-removed">
-            The project has been successfully removed.
-          </SuccessBox>
-        ) : null
-      }
-    >
-      <PageTitle value="Projects" />
-
-      <SearchLayout
-        actions={
-          <CreateButton to="/dashboard/projects/create">
-            Create a project
-          </CreateButton>
+    <>
+      <DashboardLayout
+        status={
+          hasRemovedProject ? (
+            <SuccessBox id="project-removed">
+              The project has been successfully removed.
+            </SuccessBox>
+          ) : null
         }
       >
-        <SearchBar
-          label="Search for projects"
-          placeholder="e.g: The project"
-          count={isSearching ? projects.length : undefined}
-        />
-      </SearchLayout>
+        <PageTitle value="Projects" />
 
-      <ProjectList projects={projects} />
-    </DashboardLayout>
+        <SearchLayout
+          actions={
+            <CreateButton to="/dashboard/projects/all/create">
+              Create a project
+            </CreateButton>
+          }
+        >
+          <SearchBar
+            label="Search for projects"
+            placeholder="e.g: The project"
+            count={isSearching ? projects.length : undefined}
+          />
+        </SearchLayout>
+
+        <ProjectList projects={projects} />
+      </DashboardLayout>
+      <Outlet />
+    </>
   );
 }

@@ -1,10 +1,10 @@
-describe("/dashboard/projects/[id]flags/create", () => {
+describe("/dashboard/projects/[id]/flags/all/create", () => {
   before(cy.seed);
   after(cy.cleanupDb);
 
   describe("not authenticated", () => {
     beforeEach(() => {
-      cy.visit("/dashboard/projects/1/flags/create");
+      cy.visit("/dashboard/projects/1/flags/all/create");
     });
 
     it("checks that the route is protected", () => {
@@ -16,7 +16,7 @@ describe("/dashboard/projects/[id]flags/create", () => {
     describe("user: Jane", () => {
       beforeEach(() => {
         cy.signIn("Jane");
-        cy.visit("/dashboard/projects/1/flags/create", {
+        cy.visit("/dashboard/projects/1/flags/all/create", {
           failOnStatusCode: false,
         });
       });
@@ -29,7 +29,7 @@ describe("/dashboard/projects/[id]flags/create", () => {
     describe("user: Marvin", () => {
       beforeEach(() => {
         cy.signIn("Marvin");
-        cy.visit("/dashboard/projects/1/flags/create");
+        cy.visit("/dashboard/projects/1/flags/all/create");
         cy.injectAxe();
       });
 
@@ -81,7 +81,7 @@ describe("/dashboard/projects/[id]flags/create", () => {
 
         cy.findByText("My new flag").should("be.visible");
 
-        cy.url().should("include", "/dashboard/projects/1/flags?newFlagId");
+        cy.url().should("include", "/dashboard/projects/1/flags/all?newFlagId");
 
         cy.checkA11y();
       });
@@ -93,7 +93,7 @@ describe("/dashboard/projects/[id]flags/create", () => {
         cy.findByRole("button", { name: "Create the feature flag" }).click();
 
         // New flag creation
-        cy.visit("/dashboard/projects/1/flags/create");
+        cy.visit("/dashboard/projects/1/flags/all/create");
         cy.findByLabelText("Flag name").type("My new flag");
         cy.findByLabelText("Flag description").type("My new flag description");
         cy.findByRole("button", { name: "Create the feature flag" }).click();

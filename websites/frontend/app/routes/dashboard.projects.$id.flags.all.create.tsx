@@ -54,7 +54,7 @@ export const action: ActionFunction = async ({
     );
 
     return redirect(
-      `/dashboard/projects/${projectId}/flags?newFlagId=${newFlag.uuid}#flag-added`
+      `/dashboard/projects/${projectId}/flags/all?newFlagId=${newFlag.uuid}#flag-added`
     );
   } catch (error: unknown) {
     if (error instanceof Error) {
@@ -90,7 +90,7 @@ export default function CreateFlagPage() {
         }
         closeSlot={
           <DialogCloseBtn
-            to={`/dashboard/projects/${project.uuid}/flags`}
+            to={`/dashboard/projects/${project.uuid}/flags/all`}
             label={`Back to project`}
           />
         }

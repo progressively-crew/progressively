@@ -5,7 +5,7 @@ import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { EmptyState } from "~/components/EmptyState";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { MetaFunction, LoaderFunction } from "@remix-run/node";
-import { useLoaderData, useSearchParams } from "@remix-run/react";
+import { Outlet, useLoaderData, useSearchParams } from "@remix-run/react";
 import { Card, CardContent } from "~/components/Card";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
@@ -62,74 +62,77 @@ export default function FlagsByProject() {
   const hasFlags = flags.length > 0;
 
   return (
-    <DashboardLayout
-      subNav={<ProjectNavBar project={project} />}
-      status={
-        flagEdited ? (
-          <SuccessBox id="flag-edited">
-            The flag has been successfully edited.
-          </SuccessBox>
-        ) : projectCreated ? (
-          <SuccessBox id="project-created">
-            The project has been successfully created.
-          </SuccessBox>
-        ) : isFlagRemoved ? (
-          <SuccessBox id="flag-removed">
-            The flag has been successfully deleted.
-          </SuccessBox>
-        ) : newFlagId ? (
-          <SuccessBox id="flag-added">
-            The flag has been successfully created.
-          </SuccessBox>
-        ) : null
-      }
-    >
-      <PageTitle
-        value="Feature flags"
-        description="All the feature flags of the project."
-      />
+    <>
+      <DashboardLayout
+        subNav={<ProjectNavBar project={project} />}
+        status={
+          flagEdited ? (
+            <SuccessBox id="flag-edited">
+              The flag has been successfully edited.
+            </SuccessBox>
+          ) : projectCreated ? (
+            <SuccessBox id="project-created">
+              The project has been successfully created.
+            </SuccessBox>
+          ) : isFlagRemoved ? (
+            <SuccessBox id="flag-removed">
+              The flag has been successfully deleted.
+            </SuccessBox>
+          ) : newFlagId ? (
+            <SuccessBox id="flag-added">
+              The flag has been successfully created.
+            </SuccessBox>
+          ) : null
+        }
+      >
+        <PageTitle
+          value="Feature flags"
+          description="All the feature flags of the project."
+        />
 
-      {hasFlags ? (
-        <>
-          <SearchLayout
-            actions={
-              flags.length > 0 && (
-                <CreateButton
-                  to={`/dashboard/projects/${project.uuid}/flags/create`}
-                  variant="primary"
-                >
-                  Add a feature flag
-                </CreateButton>
-              )
-            }
-          >
-            <SearchBar
-              label="Search for flags"
-              placeholder="e.g: The flag"
-              count={isSearching ? filteredFlags.length : undefined}
-            />
-          </SearchLayout>
-
-          <FlagList flags={filteredFlags} projectId={project.uuid} />
-        </>
-      ) : (
-        <Card>
-          <CardContent>
-            <EmptyState
-              titleAs="h2"
-              title="No flags found"
-              description={"There are no flags yet on this project."}
-              action={
-                <CreateButton
-                  to={`/dashboard/projects/${project.uuid}/flags/create`}
-                >
-                  Create a feature flag
-                </CreateButton>
+        {hasFlags ? (
+          <>
+            <SearchLayout
+              actions={
+                flags.length > 0 && (
+                  <CreateButton
+                    to={`/dashboard/projects/${project.uuid}/flags/all/create`}
+                    variant="primary"
+                  >
+                    Add a feature flag
+                  </CreateButton>
+                )
               }
-            />
-          </CardContent>
-        </Card>
-      )}
-    </DashboardLayout>
+            >
+              <SearchBar
+                label="Search for flags"
+                placeholder="e.g: The flag"
+                count={isSearching ? filteredFlags.length : undefined}
+              />
+            </SearchLayout>
+
+            <FlagList flags={filteredFlags} projectId={project.uuid} />
+          </>
+        ) : (
+          <Card>
+            <CardContent>
+              <EmptyState
+                titleAs="h2"
+                title="No flags found"
+                description={"There are no flags yet on this project."}
+                action={
+                  <CreateButton
+                    to={`/dashboard/projects/${project.uuid}/flags/all/create`}
+                  >
+                    Create a feature flag
+                  </CreateButton>
+                }
+              />
+            </CardContent>
+          </Card>
+        )}
+      </DashboardLayout>
+      <Outlet />
+    </>
   );
 }

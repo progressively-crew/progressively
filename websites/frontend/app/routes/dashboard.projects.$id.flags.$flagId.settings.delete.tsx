@@ -51,7 +51,7 @@ export const action: ActionFunction = async ({
   }
 
   return redirect(
-    `/dashboard/projects/${projectId}/flags?flagRemoved=true#flag-removed`
+    `/dashboard/projects/${projectId}/flags/all?flagRemoved=true#flag-removed`
   );
 };
 

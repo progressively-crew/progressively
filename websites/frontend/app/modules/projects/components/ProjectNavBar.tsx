@@ -13,7 +13,7 @@ export const ProjectNavBar = ({ project }: ProjectNavBarProps) => {
   return (
     <HorizontalNav label={"Navigate in project"}>
       <NavItem
-        to={`/dashboard/projects/${project.uuid}/flags`}
+        to={`/dashboard/projects/${project.uuid}/flags/all`}
         icon={<FlagIcon />}
       >
         Feature flags

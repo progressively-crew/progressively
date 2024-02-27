@@ -72,7 +72,7 @@ describe("/dashboard/projects/[id]/flags/[flagId]/settings/delete", () => {
 
         cy.url().should(
           "contain",
-          "/dashboard/projects/1/flags?flagRemoved=true"
+          "/dashboard/projects/1/flags/all?flagRemoved=true"
         );
 
         // Delete the second flag
@@ -83,7 +83,7 @@ describe("/dashboard/projects/[id]/flags/[flagId]/settings/delete", () => {
 
         cy.url().should(
           "contain",
-          "/dashboard/projects/1/flags?flagRemoved=true"
+          "/dashboard/projects/1/flags/all?flagRemoved=true"
         );
 
         cy.get(".success-box")
