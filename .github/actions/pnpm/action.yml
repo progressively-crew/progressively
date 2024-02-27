@@ -21,6 +21,7 @@ runs:
       run: |
         PLAYWRIGHT_VERSION=$(pnpm playwright --version | sed 's/Version //')
         echo "PLAYWRIGHT_VERSION=$PLAYWRIGHT_VERSION" >> $GITHUB_ENV
+      working-directory: example/playwright-helpers
 
     - name: Setup Playwright cache
       id: cache-playwright
