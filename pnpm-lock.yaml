@@ -316,6 +316,9 @@ importers:
 
   packages/database:
     dependencies:
+      '@clickhouse/client':
+        specifier: ^0.2.10
+        version: 0.2.10
       '@prisma/client':
         specifier: ^5.6.0
         version: 5.6.0(prisma@5.6.0)
@@ -4730,6 +4733,17 @@ packages:
       fs-extra: 7.0.1
       human-id: 1.0.2
       prettier: 2.8.4
+    dev: false
+
+  /@clickhouse/client-common@0.2.10:
+    resolution: {integrity: sha512-BvTY0IXS96y9RUeNCpKL4HUzHmY80L0lDcGN0lmUD6zjOqYMn78+xyHYJ/AIAX7JQsc+/KwFt2soZutQTKxoGQ==}
+    dev: false
+
+  /@clickhouse/client@0.2.10:
+    resolution: {integrity: sha512-ZwBgzjEAFN/ogS0ym5KHVbR7Hx/oYCX01qGp2baEyfN2HM73kf/7Vp3GvMHWRy+zUXISONEtFv7UTViOXnmFrg==}
+    engines: {node: '>=16'}
+    dependencies:
+      '@clickhouse/client-common': 0.2.10
     dev: false
 
   /@colors/colors@1.5.0:
