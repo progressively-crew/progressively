@@ -5,7 +5,6 @@ const createDbQuery = `CREATE DATABASE IF NOT EXISTS default;`;
 const tableEventQuery = `
 CREATE TABLE events
 (
-    uuid String,
     date DateTime,
     name String,
     visitorId String,
@@ -20,7 +19,7 @@ CREATE TABLE events
     viewportWidth Nullable(Int32)
 )
 ENGINE = MergeTree()
-ORDER BY (date, uuid);
+PRIMARY KEY (date, projectUuid)
 `;
 
 export const seedEvents = async () => {
