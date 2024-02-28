@@ -1,4 +1,9 @@
-const creationQuery = `CREATE TABLE events
+import { createClient } from "@clickhouse/client";
+
+const createDbQuery = `CREATE DATABASE IF NOT EXISTS default;`;
+
+const tableEventQuery = `
+CREATE TABLE events
 (
     uuid String,
     date DateTime,
@@ -17,3 +22,38 @@ const creationQuery = `CREATE TABLE events
 ENGINE = MergeTree()
 ORDER BY (date, uuid);
 `;
+
+const getClient = () => {
+  const client = createClient({
+    host: process.env.CLICKHOUSE_HOST!,
+    username: process.env.CLICKHOUSE_USER!,
+    password: process.env.CLICKHOUSE_PASSWORD!,
+  });
+
+  return client;
+};
+
+export const seedEvents = async () => {
+  const client = getClient();
+  await client.query({
+    query: createDbQuery,
+    format: "JSONEachRow",
+  });
+  await client.query({
+    query: tableEventQuery,
+    format: "JSONEachRow",
+  });
+
+  client.close();
+  console.log("[Clickhouse] Db created");
+};
+
+export const cleanupEvents = async () => {
+  const client = getClient();
+  await client.query({
+    query: "DROP DATABASE IF EXISTS default",
+    format: "JSONEachRow",
+  });
+  client.close();
+  console.log("[Clickhouse] Db dropped");
+};

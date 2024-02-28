@@ -1,5 +1,6 @@
+import { seedEvents } from "../scripts/setup-clickhouse";
 import { seedDb } from "./seed";
 
-seedDb({ loadEvents: true }).then(() => {
+Promise.all([seedDb({ loadEvents: true }), seedEvents()]).then(() => {
   console.log("Seed finished");
 });
