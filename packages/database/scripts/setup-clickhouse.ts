@@ -1,4 +1,4 @@
-import { createClient } from "@clickhouse/client";
+import { getClient } from "../clickhouse-client";
 
 const createDbQuery = `CREATE DATABASE IF NOT EXISTS default;`;
 
@@ -22,16 +22,6 @@ CREATE TABLE events
 ENGINE = MergeTree()
 ORDER BY (date, uuid);
 `;
-
-const getClient = () => {
-  const client = createClient({
-    host: process.env.CLICKHOUSE_HOST!,
-    username: process.env.CLICKHOUSE_USER!,
-    password: process.env.CLICKHOUSE_PASSWORD!,
-  });
-
-  return client;
-};
 
 export const seedEvents = async () => {
   const client = getClient();

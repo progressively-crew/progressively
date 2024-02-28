@@ -1,2 +1,2 @@
 export * from "@prisma/client";
-export * from "@clickhouse/client";
+export * from "./clickhouse-client";
