@@ -9,7 +9,7 @@ import { Section, SectionHeader } from "~/components/Section";
 import { EmptyState } from "~/components/EmptyState";
 import { LineChart } from "~/components/LineChart";
 import { BigStat } from "~/components/BigStat";
-import { getEventsForProject } from "~/modules/projects/services/getEventsForProject";
+import { getEventsForFields } from "~/modules/projects/services/getEventsForFields";
 import { getSession } from "~/sessions";
 import { mapToLocaleCount } from "~/modules/projects/services/mapToLocaleCount";
 import { CountTable } from "~/modules/projects/components/CountTable";
@@ -31,30 +31,7 @@ export const meta: MetaFunction = ({ matches }) => {
   ];
 };
 
-type EventHit = {
-  [key: string]: number;
-} & { date: string };
-
-interface LoaderData {
-  pageViewsPerDate: Array<EventHit>;
-  eventsPerDate: Array<EventHit>;
-  eventsPerDatePerOs: Array<LocalCount>;
-  eventsPerDatePerBrowser: Array<LocalCount>;
-  eventsPerDatePerReferer: Array<LocalCount>;
-  eventsPerDatePerUrl: Array<LocalCount>;
-  metricCount: number;
-  prevMetricCount: number;
-  pageViewCount: number;
-  prevPageViewCount: number;
-  uniqueVisitorsCount: number;
-  bounceRate: number;
-  eventsByViewportCount: Array<LocalCount>;
-}
-
-export const loader: LoaderFunction = async ({
-  request,
-  params,
-}): Promise<LoaderData> => {
+export const loader: LoaderFunction = async ({ request, params }) => {
   const session = await getSession(request.headers.get("Cookie"));
   const url = new URL(request.url);
   const search = new URLSearchParams(url.search);
@@ -65,89 +42,28 @@ export const loader: LoaderFunction = async ({
     day = 7;
   }
 
-  const start = new Date();
-  start.setDate(start.getDate() - day);
-
-  const end = new Date();
-  end.setDate(end.getDate() + 1);
-
   const projectId = params.id!;
 
   const authCookie = session.get("auth-cookie");
-  const {
-    pageViewsPerDate,
-    eventsPerDate,
-    bounceRate,
 
-    browser,
-    os,
-    referrer,
-    viewport,
-  } = await getEventsForProject(projectId, day, authCookie);
-
-  const { pageViews, uniqueVisitors } = await getGlobalMetric(
-    projectId,
-    day,
-    authCookie
-  );
-
-  const eventsByViewportCount: Array<LocalCount> = eventsByViewport.map(
-    (agc: any) => ({
-      count: agc._count.uuid,
-      name: `${agc.viewportWidth}/${agc.viewportHeight}`,
-    })
-  );
+  const [globalMetrics, eventsForFields] = await Promise.all([
+    getGlobalMetric(projectId, day, authCookie),
+    getEventsForFields(projectId, day, authCookie),
+  ]);
 
   return {
-    pageViewsPerDate,
-    eventsPerDate,
-    eventsPerDatePerOs: mapToLocaleCount(eventsPerDatePerOs, "os"),
-    eventsPerDatePerBrowser: mapToLocaleCount(
-      eventsPerDatePerBrowser,
-      "browser"
-    ),
-    metricCount: metricForDate.metricCount,
-    prevMetricCount: prevMetricForDate.metricCount,
-    pageViewCount: metricForDate.pageViewCount,
-    prevPageViewCount: prevMetricForDate.pageViewCount,
-    eventsPerDatePerUrl: mapToLocaleCount(eventsPerDatePerUrl, "url"),
-    uniqueVisitorsCount,
-    eventsPerDatePerReferer: mapToLocaleCount(
-      eventsPerDatePerReferer,
-      "referer"
-    ),
-    bounceRate,
-    eventsByViewportCount,
+    globalMetrics,
+    eventsForFields,
   };
 };
 
 export default function ProjectInsights() {
-  const {
-    pageViewsPerDate,
-    eventsPerDate,
-    eventsPerDatePerOs,
-    eventsPerDatePerBrowser,
-    eventsPerDatePerUrl,
-    metricCount,
-    prevMetricCount,
-    pageViewCount,
-    prevPageViewCount,
-    uniqueVisitorsCount,
-    eventsPerDatePerReferer,
-    bounceRate,
-    eventsByViewportCount,
-  } = useLoaderData<LoaderData>();
+  const { globalMetrics, eventsForFields } = useLoaderData<typeof loader>();
   const { project } = useProject();
 
-  const pageViewCountEvolution =
-    prevPageViewCount > 0
-      ? toPercentage((pageViewCount - prevPageViewCount) / prevPageViewCount)
-      : 0;
+  const pageViewCountEvolution = 0;
 
-  const metricCountViewEvolution =
-    prevMetricCount > 0
-      ? toPercentage((metricCount - prevMetricCount) / prevMetricCount)
-      : 0;
+  const metricCountViewEvolution = 0;
 
   return (
     <DashboardLayout subNav={<ProjectNavBar project={project} />}>
@@ -157,7 +73,7 @@ export default function ProjectInsights() {
         <div className="grid grid-cols-2 md:inline-flex flex-row gap-6">
           <BigStat
             label={"Page views"}
-            value={pageViewCount}
+            value={globalMetrics.pageViews}
             unit={"visits."}
             icon={<div />}
             evolution={pageViewCountEvolution}
@@ -165,21 +81,16 @@ export default function ProjectInsights() {
 
           <BigStat
             label={"Unique visitors"}
-            value={uniqueVisitorsCount}
+            value={globalMetrics.uniqueVisitors}
             unit={"users."}
             icon={<div />}
           />
 
-          <BigStat
-            label={"Bounce Rate"}
-            value={bounceRate}
-            unit={"%"}
-            icon={<div />}
-          />
+          <BigStat label={"Bounce Rate"} value={10} unit={"%"} icon={<div />} />
         </div>
       </Section>
 
-      <Section id="pageview-hits">
+      {/* <Section id="pageview-hits">
         <Card>
           <CardContent>
             <SectionHeader title={"Page views over time."} />
@@ -196,7 +107,7 @@ export default function ProjectInsights() {
             </CardContent>
           )}
         </Card>
-      </Section>
+      </Section> */}
 
       <div className="grid md:grid-cols-3 gap-6">
         <Section>
@@ -205,7 +116,7 @@ export default function ProjectInsights() {
               <SectionHeader title="Page views / browser" />
             </CardContent>
             <CountTable
-              data={eventsPerDatePerBrowser}
+              data={eventsForFields.browser}
               caption="Page views / browser"
               cellName={"Browser"}
             />
@@ -218,7 +129,7 @@ export default function ProjectInsights() {
               <SectionHeader title="Page views / Os" />
             </CardContent>
             <CountTable
-              data={eventsPerDatePerOs}
+              data={eventsForFields.os}
               caption="Page views / Os"
               cellName={"Os"}
             />
@@ -231,7 +142,7 @@ export default function ProjectInsights() {
               <SectionHeader title="Page views / Viewport (Width x Height)" />
             </CardContent>
             <CountTable
-              data={eventsByViewportCount}
+              data={eventsForFields.viewport}
               caption="Page views / Viewport (Width x Height)"
               cellName={"Viewport"}
             />
@@ -244,7 +155,7 @@ export default function ProjectInsights() {
               <SectionHeader title="Page views / referer" />
             </CardContent>
             <CountTable
-              data={eventsPerDatePerReferer}
+              data={eventsForFields.referrer}
               caption="Page views / referer"
               cellName={"Referer"}
             />
@@ -258,7 +169,7 @@ export default function ProjectInsights() {
             </CardContent>
             <CountTable
               shouldLink
-              data={eventsPerDatePerUrl}
+              data={[]}
               caption="Page views / URL"
               cellName={"Page URL"}
             />
@@ -270,7 +181,7 @@ export default function ProjectInsights() {
         <div className="inline-flex flex-row gap-6">
           <BigStat
             label={"Total metric hits"}
-            value={metricCount}
+            value={0}
             unit={"hits."}
             icon={<div />}
             evolution={metricCountViewEvolution}
@@ -278,7 +189,7 @@ export default function ProjectInsights() {
         </div>
       </Section>
 
-      <Section id="other-metric-hits">
+      {/* <Section id="other-metric-hits">
         <Card>
           <CardContent>
             <SectionHeader title={"Other metrics over time."} />
@@ -295,7 +206,7 @@ export default function ProjectInsights() {
             </CardContent>
           )}
         </Card>
-      </Section>
+      </Section> */}
     </DashboardLayout>
   );
 }

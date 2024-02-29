@@ -10,4 +10,4 @@ export const ReservedEventName = {
 };
 
 export type Timeframe = 7 | 30 | 90;
-export const Timeframes: Array<number> = ['7', '30', '90'];
+export const Timeframes: Array<string> = ['7', '30', '90'];

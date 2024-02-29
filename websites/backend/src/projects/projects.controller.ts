@@ -207,15 +207,15 @@ export class ProjectsController {
   @UseGuards(JwtAuthGuard)
   async getMetricCount(
     @Param('id') id: string,
-    @Query('timeframe') timeframe: number,
+    @Query('timeframe') timeframe: string,
   ) {
     if (!Timeframes.includes(timeframe)) {
       throw new BadRequestException('timeframe is required.');
     }
 
     const [pageViews, uniqueVisitors] = await Promise.all([
-      this.eventService.getPageViews(id, timeframe as Timeframe),
-      this.eventService.getUniqueVisitors(id, timeframe as Timeframe),
+      this.eventService.getPageViews(id, Number(timeframe) as Timeframe),
+      this.eventService.getUniqueVisitors(id, Number(timeframe) as Timeframe),
     ]);
 
     return { pageViews, uniqueVisitors };
@@ -242,7 +242,7 @@ export class ProjectsController {
     );
   }
 
-  @Get(':id/events')
+  @Get(':id/events/fields')
   @UseGuards(HasProjectAccessGuard)
   @UseGuards(JwtAuthGuard)
   async getEventsByDate(
@@ -261,30 +261,7 @@ export class ProjectsController {
       this.eventService.getByViewport(id, 7),
     ]);
 
-    const pageViewsPerDate = await this.projectService.getEventsPerDate(
-      id,
-      startDate,
-      endDate,
-      true,
-    );
-
-    const eventsPerDate = await this.projectService.getEventsPerDate(
-      id,
-      startDate,
-      endDate,
-      false,
-    );
-
-    const bounceRate = await this.projectService.getBounceRate(
-      id,
-      startDate,
-      endDate,
-    );
-
     return {
-      pageViewsPerDate,
-      eventsPerDate,
-
       browser,
       os,
       referrer,
