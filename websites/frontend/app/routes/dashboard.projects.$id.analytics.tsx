@@ -60,9 +60,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 export default function ProjectInsights() {
   const { globalMetrics, eventsForFields } = useLoaderData<typeof loader>();
   const { project } = useProject();
-
   const pageViewCountEvolution = 0;
-
   const metricCountViewEvolution = 0;
 
   return (
@@ -120,6 +118,7 @@ export default function ProjectInsights() {
               caption="Page views / browser"
               cellName={"Browser"}
               cellKey="browser"
+              renderLabel={(d) => String(d.browser)}
             />
           </Card>
         </Section>
@@ -134,6 +133,7 @@ export default function ProjectInsights() {
               caption="Page views / Os"
               cellName={"Os"}
               cellKey="os"
+              renderLabel={(d) => String(d.os)}
             />
           </Card>
         </Section>
@@ -148,6 +148,7 @@ export default function ProjectInsights() {
               caption="Page views / Viewport (Width x Height)"
               cellName={"Viewport"}
               cellKey="viewport"
+              renderLabel={(d) => `${d.viewportWidth} / ${d.viewportHeight}`}
             />
           </Card>
         </Section>
@@ -162,6 +163,7 @@ export default function ProjectInsights() {
               caption="Page views / referer"
               cellName={"Referer"}
               cellKey="referrer"
+              renderLabel={(d) => String(d.referrer)}
             />
           </Card>
         </Section>
@@ -178,6 +180,7 @@ export default function ProjectInsights() {
               caption="Page views / URL"
               cellName={"Page URL"}
               cellKey="url"
+              renderLabel={(d) => String(d.url)}
             />
           </Card>
         </Section>

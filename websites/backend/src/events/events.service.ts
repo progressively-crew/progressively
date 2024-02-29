@@ -112,6 +112,8 @@ export class EventsService {
       FROM events
       WHERE date >= now() - INTERVAL ${timeframe} DAY
       AND projectUuid = '${projectId}'
+      AND isNotNull(viewportWidth)
+      AND isNotNull(viewportHeight)
       GROUP BY
           viewportWidth,
           viewportHeight

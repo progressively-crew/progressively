@@ -9,6 +9,10 @@ export interface CountTableProps {
   cellName: string;
   cellKey: string;
   shouldLink?: boolean;
+  renderLabel: (d: {
+    [key: string]: string | number;
+    pageViews: number;
+  }) => string;
 }
 
 export const CountTable = ({
@@ -16,6 +20,7 @@ export const CountTable = ({
   caption,
   cellName,
   shouldLink,
+  renderLabel,
   cellKey,
 }: CountTableProps) => {
   const max = data.reduce(
@@ -52,11 +57,11 @@ export const CountTable = ({
                             target="_blank"
                             rel="noopener noreferrer"
                           >
-                            {d[cellKey]}
+                            {renderLabel(d)}
                           </Link>
                         </Tooltip>
                       ) : (
-                        d[cellKey]
+                        renderLabel(d)
                       )}
                     </div>
                     <div
