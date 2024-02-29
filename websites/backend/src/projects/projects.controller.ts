@@ -38,7 +38,8 @@ import {
   FunnelCreationDTO,
 } from '../funnels/funnels.dto';
 import { FunnelsService } from '../funnels/funnels.service';
-import { ReservedEventName } from '../events/types';
+import { ReservedEventName, Timeframe, Timeframes } from '../events/types';
+import { EventsService } from '../events/events.service';
 
 @ApiBearerAuth()
 @Controller('projects')
@@ -48,6 +49,7 @@ export class ProjectsController {
     private readonly userService: UsersService,
     private readonly mailService: MailService,
     private readonly funnelService: FunnelsService,
+    private readonly eventService: EventsService,
   ) {}
 
   @Get(':id')
@@ -200,32 +202,23 @@ export class ProjectsController {
     }
   }
 
-  @Get(':id/metrics/count')
+  @Get(':id/metrics/global')
   @UseGuards(HasProjectAccessGuard)
   @UseGuards(JwtAuthGuard)
   async getMetricCount(
     @Param('id') id: string,
-    @Query('startDate') startDate: string | undefined,
-    @Query('endDate') endDate: string | undefined,
+    @Query('timeframe') timeframe: number,
   ) {
-    if (!endDate || !startDate) {
-      throw new BadRequestException('startDate and endDate are required.');
+    if (!Timeframes.includes(timeframe)) {
+      throw new BadRequestException('timeframe is required.');
     }
 
-    const metricCount = await this.projectService.getMetricCount(
-      id,
-      startDate,
-      endDate,
-    );
+    const [pageViews, uniqueVisitors] = await Promise.all([
+      this.eventService.getPageViews(id, timeframe as Timeframe),
+      this.eventService.getUniqueVisitors(id, timeframe as Timeframe),
+    ]);
 
-    const pageViewCount = await this.projectService.getMetricCount(
-      id,
-      startDate,
-      endDate,
-      ReservedEventName.PageView,
-    );
-
-    return { metricCount, pageViewCount };
+    return { pageViews, uniqueVisitors };
   }
 
   @Get(':id/funnels')
@@ -261,6 +254,13 @@ export class ProjectsController {
       throw new BadRequestException('startDate and endDate are required.');
     }
 
+    const [browser, os, referrer, viewport] = await Promise.all([
+      this.eventService.getByField(id, 7, 'browser'),
+      this.eventService.getByField(id, 7, 'os'),
+      this.eventService.getByField(id, 7, 'referer'),
+      this.eventService.getByViewport(id, 7),
+    ]);
+
     const pageViewsPerDate = await this.projectService.getEventsPerDate(
       id,
       startDate,
@@ -275,51 +275,7 @@ export class ProjectsController {
       false,
     );
 
-    const eventsPerDatePerOs =
-      await this.projectService.getEventsPerDatePerGroup(
-        id,
-        startDate,
-        endDate,
-        'os',
-      );
-
-    const eventsPerDatePerBrowser =
-      await this.projectService.getEventsPerDatePerGroup(
-        id,
-        startDate,
-        endDate,
-        'browser',
-      );
-
-    const eventsPerDatePerUrl =
-      await this.projectService.getEventsPerDatePerGroup(
-        id,
-        startDate,
-        endDate,
-        'url',
-      );
-
-    const eventsPerDatePerReferer =
-      await this.projectService.getEventsPerDatePerGroup(
-        id,
-        startDate,
-        endDate,
-        'referer',
-      );
-
-    const uniqueVisitors = await this.projectService.getUniqueVisitor(
-      id,
-      startDate,
-      endDate,
-    );
-
     const bounceRate = await this.projectService.getBounceRate(
-      id,
-      startDate,
-      endDate,
-    );
-
-    const eventsByViewport = await this.projectService.getEventsByViewport(
       id,
       startDate,
       endDate,
@@ -328,13 +284,11 @@ export class ProjectsController {
     return {
       pageViewsPerDate,
       eventsPerDate,
-      eventsPerDatePerOs,
-      eventsPerDatePerBrowser,
-      eventsPerDatePerUrl,
-      eventsPerDatePerReferer,
-      uniqueVisitorsCount: uniqueVisitors.length,
-      bounceRate,
-      eventsByViewport,
+
+      browser,
+      os,
+      referrer,
+      viewport,
     };
   }
 

@@ -15,7 +15,7 @@ import { mapToLocaleCount } from "~/modules/projects/services/mapToLocaleCount";
 import { CountTable } from "~/modules/projects/components/CountTable";
 import { ProjectNavBar } from "~/modules/projects/components/ProjectNavBar";
 import { InsightsFilters } from "~/modules/projects/components/InsightsFilters";
-import { getMetricsCount } from "~/modules/projects/services/getMetricsCount";
+import { getGlobalMetric } from "~/modules/projects/services/getGlobalMetric";
 import { toPercentage } from "~/modules/misc/utils/toPercentage";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { LocalCount } from "~/modules/projects/types";
@@ -77,29 +77,17 @@ export const loader: LoaderFunction = async ({
   const {
     pageViewsPerDate,
     eventsPerDate,
-    eventsPerDatePerOs,
-    eventsPerDatePerBrowser,
-    eventsPerDatePerUrl,
-    uniqueVisitorsCount,
-    eventsPerDatePerReferer,
     bounceRate,
-    eventsByViewport,
-  } = await getEventsForProject(projectId, start, end, authCookie);
 
-  const metricForDate = await getMetricsCount(
+    browser,
+    os,
+    referrer,
+    viewport,
+  } = await getEventsForProject(projectId, day, authCookie);
+
+  const { pageViews, uniqueVisitors } = await getGlobalMetric(
     projectId,
-    start,
-    end,
-    authCookie
-  );
-
-  start.setDate(start.getDate() - day);
-  end.setDate(end.getDate() + 1);
-
-  const prevMetricForDate = await getMetricsCount(
-    projectId,
-    start,
-    end,
+    day,
     authCookie
   );
 
