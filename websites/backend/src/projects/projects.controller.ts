@@ -247,18 +247,20 @@ export class ProjectsController {
   @UseGuards(JwtAuthGuard)
   async getEventsByDate(
     @Param('id') id: string,
-    @Query('startDate') startDate: string | undefined,
-    @Query('endDate') endDate: string | undefined,
+    @Query('timeframe') timeframe: string,
   ) {
-    if (!endDate || !startDate) {
-      throw new BadRequestException('startDate and endDate are required.');
+    if (!Timeframes.includes(timeframe)) {
+      throw new BadRequestException('timeframe is required.');
     }
 
-    const [browser, os, referrer, viewport] = await Promise.all([
-      this.eventService.getByField(id, 7, 'browser'),
-      this.eventService.getByField(id, 7, 'os'),
-      this.eventService.getByField(id, 7, 'referer'),
-      this.eventService.getByViewport(id, 7),
+    const tf = Number(timeframe) as Timeframe;
+
+    const [browser, os, referrer, viewport, url] = await Promise.all([
+      this.eventService.getByField(id, tf, 'browser'),
+      this.eventService.getByField(id, tf, 'os'),
+      this.eventService.getByField(id, tf, 'referer'),
+      this.eventService.getByViewport(id, tf),
+      this.eventService.getByField(id, tf, 'url'),
     ]);
 
     return {
@@ -266,6 +268,7 @@ export class ProjectsController {
       os,
       referrer,
       viewport,
+      url,
     };
   }
 

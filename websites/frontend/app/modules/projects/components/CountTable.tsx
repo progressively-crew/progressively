@@ -2,12 +2,12 @@ import { Table, Th, Tbody, Td } from "~/components/Table";
 import { NumberValue } from "~/components/NumberValue";
 import { Link } from "~/components/Link";
 import { Tooltip } from "~/components/Tooltip/Tooltip";
-import { LocalCount } from "../types";
 
 export interface CountTableProps {
-  data: Array<LocalCount>;
+  data: Array<{ [key: string]: string | number; pageViews: number }>;
   caption: string;
   cellName: string;
+  cellKey: string;
   shouldLink?: boolean;
 }
 
@@ -16,9 +16,10 @@ export const CountTable = ({
   caption,
   cellName,
   shouldLink,
+  cellKey,
 }: CountTableProps) => {
   const max = data.reduce(
-    (currMax, curr) => (currMax < curr.count ? curr.count : currMax),
+    (currMax, curr) => (currMax < curr.pageViews ? curr.pageViews : currMax),
     0
   );
 
@@ -37,25 +38,25 @@ export const CountTable = ({
         </thead>
         <Tbody>
           {data.map((d, index: number) => {
-            const width = `${(d.count / max) * 100}%`;
+            const width = `${(d.pageViews / max) * 100}%`;
 
             return (
-              <tr key={`${cellName}-${d.name}-${index}`}>
+              <tr key={`${cellName}-${cellKey}-${index}`}>
                 <Td>
                   <div className="relative flex items-center">
                     <div className="truncate w-[200px] relative z-10">
                       {shouldLink ? (
-                        <Tooltip tooltip={d.name}>
+                        <Tooltip tooltip={d[cellKey]}>
                           <Link
-                            to={d.name}
+                            to={d[cellKey]}
                             target="_blank"
                             rel="noopener noreferrer"
                           >
-                            {d.name}
+                            {d[cellKey]}
                           </Link>
                         </Tooltip>
                       ) : (
-                        d.name
+                        d[cellKey]
                       )}
                     </div>
                     <div
@@ -66,7 +67,7 @@ export const CountTable = ({
                 </Td>
                 <Td>
                   <div className="text-right font-bold">
-                    <NumberValue value={d.count} />
+                    <NumberValue value={d.pageViews} />
                   </div>
                 </Td>
               </tr>

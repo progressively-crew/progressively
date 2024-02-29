@@ -90,7 +90,9 @@ export class EventsService {
       FROM events
       WHERE date >= now() - INTERVAL ${timeframe} DAY
       AND projectUuid = '${projectId}'
-      GROUP BY ${field};
+      AND isNotNull(${field})
+      GROUP BY ${field}
+      ORDER BY pageViews DESC;
       `,
       format: 'JSONEachRow',
     });
@@ -112,7 +114,8 @@ export class EventsService {
       AND projectUuid = '${projectId}'
       GROUP BY
           viewportWidth,
-          viewportHeight;
+          viewportHeight
+      ORDER BY pageViews DESC;
       `,
       format: 'JSONEachRow',
     });

@@ -119,6 +119,7 @@ export default function ProjectInsights() {
               data={eventsForFields.browser}
               caption="Page views / browser"
               cellName={"Browser"}
+              cellKey="browser"
             />
           </Card>
         </Section>
@@ -132,6 +133,7 @@ export default function ProjectInsights() {
               data={eventsForFields.os}
               caption="Page views / Os"
               cellName={"Os"}
+              cellKey="os"
             />
           </Card>
         </Section>
@@ -145,6 +147,7 @@ export default function ProjectInsights() {
               data={eventsForFields.viewport}
               caption="Page views / Viewport (Width x Height)"
               cellName={"Viewport"}
+              cellKey="viewport"
             />
           </Card>
         </Section>
@@ -158,6 +161,7 @@ export default function ProjectInsights() {
               data={eventsForFields.referrer}
               caption="Page views / referer"
               cellName={"Referer"}
+              cellKey="referrer"
             />
           </Card>
         </Section>
@@ -167,11 +171,13 @@ export default function ProjectInsights() {
             <CardContent>
               <SectionHeader title="Page views / URL" />
             </CardContent>
+
             <CountTable
               shouldLink
-              data={[]}
+              data={eventsForFields.url}
               caption="Page views / URL"
               cellName={"Page URL"}
+              cellKey="url"
             />
           </Card>
         </Section>

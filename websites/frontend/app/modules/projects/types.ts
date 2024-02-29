@@ -28,11 +28,6 @@ export interface CreateProjectDTO {
   domain: string;
 }
 
-export interface LocalCount {
-  count: number;
-  name: string;
-}
-
 export interface Funnel {
   uuid: string;
   name: string;
