@@ -23,3 +23,9 @@ const { data } = await sdk.loadFlags();
 <title>Astro</title>
 
 <body><Page client:load progressivelyProps={data} /></body>
+
+<script
+  src="/progressively.min.js"
+  data-progressively-endpoint="http://localhost:4000"
+  data-progressively-client-key="valid-sdk-key"
+></script>

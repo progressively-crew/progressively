@@ -5,7 +5,7 @@ import { QueuedEventHit } from '../sdk/types';
 @Injectable()
 export class EventsService {
   constructor(
-    @Inject('ClickHouseClient') private readonly clickhouse: ClickHouseClient,
+    @Inject('ClickhouseService') private readonly clickhouse: ClickHouseClient,
   ) {}
 
   bulkAddEvents(
@@ -14,14 +14,18 @@ export class EventsService {
     sessionUuid: string,
   ) {
     const eventsToStore = events.map((ev) => ({
-      date: Date.now(),
+      date: new Date(),
       name: ev.name,
       visitorId: ev.visitorId,
       browser: ev.browser,
       os: ev.os,
       url: ev.url,
       referer: ev.referer,
-      data: ev.data,
+      data: ev.data
+        ? typeof ev.data === 'object'
+          ? JSON.stringify(ev.data)
+          : String(ev.data)
+        : null,
       projectUuid: projectId,
       sessionUuid,
       viewportHeight: ev.viewportHeight,
@@ -30,9 +34,12 @@ export class EventsService {
 
     return this.clickhouse.insert({
       table: Tables.Events,
-      // structure should match the desired format, JSONEachRow in this example
       values: eventsToStore,
       format: 'JSONEachRow',
+      clickhouse_settings: {
+        // Allows to insert serialized JS Dates (such as '2023-12-06T10:54:48.000Z')
+        date_time_input_format: 'best_effort',
+      },
     });
   }
 }

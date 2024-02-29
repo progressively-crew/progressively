@@ -13,6 +13,7 @@ import { IQueuingService } from '../queuing/types';
 import { QueuedEventHit } from './types';
 import { QueuingModule } from '../queuing/queuing.module';
 import { StrategyModule } from '../strategy/strategy.module';
+import { EventsModule } from '../events/events.module';
 
 @Module({
   controllers: [SdkController],
@@ -25,6 +26,7 @@ import { StrategyModule } from '../strategy/strategy.module';
     UsersModule,
     QueuingModule,
     StrategyModule,
+    EventsModule,
   ],
   providers: [SdkService],
   exports: [SdkService],

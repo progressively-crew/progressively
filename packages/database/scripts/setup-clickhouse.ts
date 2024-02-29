@@ -19,7 +19,7 @@ CREATE TABLE events
     viewportWidth Nullable(Int32)
 )
 ENGINE = MergeTree()
-PRIMARY KEY (date, projectUuid)
+PRIMARY KEY date
 `;
 
 export const seedEvents = async () => {

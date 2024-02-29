@@ -3,7 +3,6 @@ import { PrismaService } from './prisma.service';
 import { getClient } from '@progressively/database';
 
 @Module({
-  exports: [PrismaService],
   providers: [
     PrismaService,
     {
@@ -11,5 +10,6 @@ import { getClient } from '@progressively/database';
       useFactory: () => getClient(),
     },
   ],
+  exports: [PrismaService, 'ClickhouseService'],
 })
 export class DatabaseModule {}

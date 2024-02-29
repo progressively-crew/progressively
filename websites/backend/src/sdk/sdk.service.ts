@@ -24,6 +24,7 @@ import { KafkaTopics } from '../queuing/topics';
 import { FlagsService } from '../flags/flags.service';
 import { Project } from '@progressively/database';
 import { StrategyService } from '../strategy/strategy.service';
+import { EventsService } from '..//events/events.service';
 
 @Injectable()
 export class SdkService {
@@ -32,6 +33,7 @@ export class SdkService {
     private readonly flagService: FlagsService,
     private readonly ruleService: RuleService,
     private readonly strategyService: StrategyService,
+    private readonly eventService: EventsService,
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
     @Inject('QueueingService') private readonly queuingService: IQueuingService,
   ) {}
@@ -203,40 +205,6 @@ export class SdkService {
     });
   }
 
-  async hitEvent(projectId: string, queuedEvent: QueuedEventHit) {
-    const session = await this.getOrCreateSession(
-      queuedEvent.visitorId,
-      projectId,
-    );
-
-    const date = new Date();
-    date.setHours(2);
-    date.setMinutes(2);
-    date.setSeconds(2);
-    date.setMilliseconds(2);
-
-    return this.prisma.event.create({
-      data: {
-        projectUuid: projectId,
-        visitorId: queuedEvent.visitorId,
-        date,
-        name: queuedEvent.name,
-        os: queuedEvent.os,
-        browser: queuedEvent.browser,
-        url: queuedEvent.url || null,
-        referer: queuedEvent.referer,
-        data: queuedEvent.data
-          ? typeof queuedEvent.data === 'object'
-            ? JSON.stringify(queuedEvent.data)
-            : String(queuedEvent.data)
-          : null,
-        sessionUuid: session.uuid,
-        viewportHeight: queuedEvent.viewportHeight,
-        viewportWidth: queuedEvent.viewportWidth,
-      },
-    });
-  }
-
   async resolveQueuedHit(queuedEvent: QueuedEventHit) {
     if (!queuedEvent.secretKey && !queuedEvent.clientKey) {
       return this.logger.error({
@@ -278,6 +246,15 @@ export class SdkService {
       });
     }
 
-    return this.hitEvent(concernedProject.uuid, queuedEvent);
+    const session = await this.getOrCreateSession(
+      queuedEvent.visitorId,
+      concernedProject.uuid,
+    );
+
+    return this.eventService.bulkAddEvents(
+      [queuedEvent],
+      concernedProject.uuid,
+      session.uuid,
+    );
   }
 }
