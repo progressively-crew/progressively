@@ -1,8 +1,8 @@
 import { getClient } from "../clickhouse-client";
 
-const createDbQuery = `CREATE DATABASE IF NOT EXISTS default;`;
+export const createDbQuery = `CREATE DATABASE IF NOT EXISTS default;`;
 
-const tableEventQuery = `
+export const tableEventQuery = `
 CREATE TABLE events
 (
     date DateTime,
@@ -22,27 +22,32 @@ ENGINE = MergeTree()
 PRIMARY KEY date
 `;
 
-export const seedEvents = async () => {
+export const setupClickhouse = async () => {
   const client = getClient();
+
   await client.query({
     query: createDbQuery,
     format: "JSONEachRow",
   });
+
   await client.query({
     query: tableEventQuery,
     format: "JSONEachRow",
   });
 
-  client.close();
   console.log("[Clickhouse] Db created");
+  return client.close();
 };
 
 export const cleanupEvents = async () => {
   const client = getClient();
+
   await client.query({
     query: "DROP DATABASE IF EXISTS default",
     format: "JSONEachRow",
   });
-  client.close();
+
   console.log("[Clickhouse] Db dropped");
+
+  return client.close();
 };
