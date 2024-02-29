@@ -7,6 +7,6 @@ const createClickhouseDb = async () => {
   await seedEvents();
 };
 
-Promise.all([seedDb({ loadEvents: true }), createClickhouseDb()]).then(() => {
+Promise.all([seedDb(), createClickhouseDb()]).then(() => {
   console.log("Seed finished");
 });
