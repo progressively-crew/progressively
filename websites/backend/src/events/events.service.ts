@@ -131,11 +131,7 @@ export class EventsService {
     return dataset;
   }
 
-  async getEventsGroupedByDate(
-    projectId: string,
-    timeframe: Timeframe,
-    eventName: string,
-  ) {
+  async getPageViewsGroupedByDate(projectId: string, timeframe: Timeframe) {
     const resultSet = await this.clickhouse.query({
       query: `SELECT
         toDate(date) AS date,
@@ -143,7 +139,7 @@ export class EventsService {
       FROM events
       WHERE date >= now() - INTERVAL ${timeframe} DAY
       AND projectUuid = '${projectId}'
-      AND name = '${eventName}'
+      AND name = 'Page View'
       GROUP BY date
       ORDER BY date;`,
       format: 'JSONEachRow',

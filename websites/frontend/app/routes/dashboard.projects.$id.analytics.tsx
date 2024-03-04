@@ -19,7 +19,7 @@ import { getGlobalMetric } from "~/modules/projects/services/getGlobalMetric";
 import { toPercentage } from "~/modules/misc/utils/toPercentage";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { LocalCount } from "~/modules/projects/types";
-import { getEventsGroupedByDate } from "~/modules/projects/services/getEventsGroupedByDate";
+import { getPageViewsGroupedByDate } from "~/modules/projects/services/getPageViewsGroupedByDate";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -47,22 +47,22 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   const authCookie = session.get("auth-cookie");
 
-  const [globalMetrics, eventsForFields, eventsGroupedByDate] =
+  const [globalMetrics, eventsForFields, pagesViewsGroupedByDate] =
     await Promise.all([
       getGlobalMetric(projectId, day, authCookie),
       getEventsForFields(projectId, day, authCookie),
-      getEventsGroupedByDate(projectId, day, "Page View", authCookie),
+      getPageViewsGroupedByDate(projectId, day, "Page View", authCookie),
     ]);
 
   return {
     globalMetrics,
     eventsForFields,
-    eventsGroupedByDate,
+    pagesViewsGroupedByDate,
   };
 };
 
 export default function ProjectInsights() {
-  const { globalMetrics, eventsForFields, eventsGroupedByDate } =
+  const { globalMetrics, eventsForFields, pagesViewsGroupedByDate } =
     useLoaderData<typeof loader>();
   const { project } = useProject();
   const pageViewCountEvolution = 0;
@@ -99,8 +99,8 @@ export default function ProjectInsights() {
             <SectionHeader title={"Page views over time."} />
           </CardContent>
 
-          {eventsGroupedByDate.length > 0 ? (
-            <LineChart data={eventsGroupedByDate} />
+          {pagesViewsGroupedByDate.length > 0 ? (
+            <LineChart data={pagesViewsGroupedByDate} />
           ) : (
             <CardContent>
               <EmptyState
@@ -203,7 +203,7 @@ export default function ProjectInsights() {
         </div>
       </Section>
 
-      <Section id="other-metric-hits">
+      {/* <Section id="other-metric-hits">
         <Card>
           <CardContent>
             <SectionHeader title={"Other metrics over time."} />
@@ -220,7 +220,7 @@ export default function ProjectInsights() {
             </CardContent>
           )}
         </Card>
-      </Section>
+      </Section> */}
     </DashboardLayout>
   );
 }

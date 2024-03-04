@@ -272,18 +272,32 @@ export class ProjectsController {
     };
   }
 
-  @Get(':id/events/date')
+  @Get(':id/events/page-views')
+  @UseGuards(HasProjectAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  async getPageViewGroupedByDate(
+    @Param('id') id: string,
+    @Query('timeframe') timeframe: string,
+  ) {
+    if (!Timeframes.includes(timeframe)) {
+      throw new BadRequestException('timeframe is required.');
+    }
+
+    const tf = Number(timeframe) as Timeframe;
+
+    const eventsGroupedByDate =
+      await this.eventService.getPageViewsGroupedByDate(id, tf);
+
+    return eventsGroupedByDate;
+  }
+
+  @Get(':id/events/count')
   @UseGuards(HasProjectAccessGuard)
   @UseGuards(JwtAuthGuard)
   async getEventsGroupedByDate(
     @Param('id') id: string,
     @Query('timeframe') timeframe: string,
-    @Query('name') name: string,
   ) {
-    if (!name) {
-      throw new BadRequestException('The request requires a name paramter');
-    }
-
     if (!Timeframes.includes(timeframe)) {
       throw new BadRequestException('timeframe is required.');
     }
