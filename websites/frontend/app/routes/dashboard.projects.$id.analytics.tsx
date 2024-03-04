@@ -79,7 +79,22 @@ export default function ProjectInsights() {
   const pageViewCountEvolution = 0;
   const metricCountViewEvolution = 0;
 
-  console.log("lo", eventsGroupedByDate);
+  const dateDict: Record<any, any> = {};
+
+  for (const ev of eventsGroupedByDate) {
+    if (!dateDict[ev.date]) {
+      dateDict[ev.date] = {};
+    }
+
+    dateDict[ev.date][ev.name] = ev.count;
+  }
+
+  const rechartsData = Object.keys(dateDict).map((date) => ({
+    date,
+    ...dateDict[date],
+  }));
+
+  console.log("oooo", rechartsData);
 
   return (
     <DashboardLayout subNav={<ProjectNavBar project={project} />}>
@@ -216,14 +231,14 @@ export default function ProjectInsights() {
         </div>
       </Section>
 
-      {/* <Section id="other-metric-hits">
+      <Section id="other-metric-hits">
         <Card>
           <CardContent>
             <SectionHeader title={"Other metrics over time."} />
           </CardContent>
 
-          {eventsPerDate.length > 0 ? (
-            <LineChart data={eventsPerDate} />
+          {rechartsData.length > 0 ? (
+            <LineChart data={rechartsData} />
           ) : (
             <CardContent>
               <EmptyState
@@ -233,7 +248,7 @@ export default function ProjectInsights() {
             </CardContent>
           )}
         </Card>
-      </Section> */}
+      </Section>
     </DashboardLayout>
   );
 }
