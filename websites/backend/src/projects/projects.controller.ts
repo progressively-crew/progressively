@@ -307,7 +307,6 @@ export class ProjectsController {
     const eventsGroupedByDate = await this.eventService.getEventsGroupedByDate(
       id,
       tf,
-      name,
     );
 
     console.log('lol', eventsGroupedByDate);

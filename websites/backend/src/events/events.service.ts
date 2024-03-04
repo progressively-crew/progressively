@@ -152,4 +152,32 @@ export class EventsService {
 
     return dataset;
   }
+
+  async getEventsGroupedByDate(projectId: string, timeframe: Timeframe) {
+    const resultSet = await this.clickhouse.query({
+      query: `SELECT
+          toDate(date) AS date,
+          name,
+          CAST(COUNT(*) AS Int32) AS count
+      FROM events
+      WHERE date >= now() - INTERVAL ${timeframe} DAY
+      AND projectUuid = '${projectId}'
+      AND name <> 'Page View'
+      GROUP BY
+          date,
+          name
+      ORDER BY
+          name ASC,
+          date ASC`,
+      format: 'JSONEachRow',
+    });
+
+    const dataset: Array<{
+      name: string;
+      date: string;
+      count: number;
+    }> = await resultSet.json();
+
+    return dataset;
+  }
 }

@@ -20,6 +20,7 @@ import { toPercentage } from "~/modules/misc/utils/toPercentage";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { LocalCount } from "~/modules/projects/types";
 import { getPageViewsGroupedByDate } from "~/modules/projects/services/getPageViewsGroupedByDate";
+import { getEventsGroupedByDate } from "~/modules/projects/services/getEventsGroupedByDate";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -47,26 +48,38 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   const authCookie = session.get("auth-cookie");
 
-  const [globalMetrics, eventsForFields, pagesViewsGroupedByDate] =
-    await Promise.all([
-      getGlobalMetric(projectId, day, authCookie),
-      getEventsForFields(projectId, day, authCookie),
-      getPageViewsGroupedByDate(projectId, day, "Page View", authCookie),
-    ]);
+  const [
+    globalMetrics,
+    eventsForFields,
+    pagesViewsGroupedByDate,
+    eventsGroupedByDate,
+  ] = await Promise.all([
+    getGlobalMetric(projectId, day, authCookie),
+    getEventsForFields(projectId, day, authCookie),
+    getPageViewsGroupedByDate(projectId, day, authCookie),
+    getEventsGroupedByDate(projectId, day, authCookie),
+  ]);
 
   return {
     globalMetrics,
     eventsForFields,
     pagesViewsGroupedByDate,
+    eventsGroupedByDate,
   };
 };
 
 export default function ProjectInsights() {
-  const { globalMetrics, eventsForFields, pagesViewsGroupedByDate } =
-    useLoaderData<typeof loader>();
+  const {
+    globalMetrics,
+    eventsForFields,
+    pagesViewsGroupedByDate,
+    eventsGroupedByDate,
+  } = useLoaderData<typeof loader>();
   const { project } = useProject();
   const pageViewCountEvolution = 0;
   const metricCountViewEvolution = 0;
+
+  console.log("lo", eventsGroupedByDate);
 
   return (
     <DashboardLayout subNav={<ProjectNavBar project={project} />}>
