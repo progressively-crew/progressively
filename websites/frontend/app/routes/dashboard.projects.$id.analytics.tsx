@@ -52,13 +52,28 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     globalMetrics,
     eventsForFields,
     pagesViewsGroupedByDate,
-    eventsGroupedByDate,
+    eventsGroupedByDateData,
   ] = await Promise.all([
     getGlobalMetric(projectId, day, authCookie),
     getEventsForFields(projectId, day, authCookie),
     getPageViewsGroupedByDate(projectId, day, authCookie),
     getEventsGroupedByDate(projectId, day, authCookie),
   ]);
+
+  const dateDict: Record<any, any> = {};
+
+  for (const ev of eventsGroupedByDateData) {
+    if (!dateDict[ev.date]) {
+      dateDict[ev.date] = {};
+    }
+
+    dateDict[ev.date][ev.name] = ev.count;
+  }
+
+  const eventsGroupedByDate = Object.keys(dateDict).map((date) => ({
+    date,
+    ...dateDict[date],
+  }));
 
   return {
     globalMetrics,
@@ -78,23 +93,6 @@ export default function ProjectInsights() {
   const { project } = useProject();
   const pageViewCountEvolution = 0;
   const metricCountViewEvolution = 0;
-
-  const dateDict: Record<any, any> = {};
-
-  for (const ev of eventsGroupedByDate) {
-    if (!dateDict[ev.date]) {
-      dateDict[ev.date] = {};
-    }
-
-    dateDict[ev.date][ev.name] = ev.count;
-  }
-
-  const rechartsData = Object.keys(dateDict).map((date) => ({
-    date,
-    ...dateDict[date],
-  }));
-
-  console.log("oooo", rechartsData);
 
   return (
     <DashboardLayout subNav={<ProjectNavBar project={project} />}>
@@ -237,8 +235,8 @@ export default function ProjectInsights() {
             <SectionHeader title={"Other metrics over time."} />
           </CardContent>
 
-          {rechartsData.length > 0 ? (
-            <LineChart data={rechartsData} />
+          {eventsGroupedByDate.length > 0 ? (
+            <LineChart data={eventsGroupedByDate} />
           ) : (
             <CardContent>
               <EmptyState
