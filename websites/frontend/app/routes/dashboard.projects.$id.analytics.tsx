@@ -203,7 +203,7 @@ export default function ProjectInsights() {
         </div>
       </Section>
 
-      {/* <Section id="other-metric-hits">
+      <Section id="other-metric-hits">
         <Card>
           <CardContent>
             <SectionHeader title={"Other metrics over time."} />
@@ -220,7 +220,7 @@ export default function ProjectInsights() {
             </CardContent>
           )}
         </Card>
-      </Section> */}
+      </Section>
     </DashboardLayout>
   );
 }
