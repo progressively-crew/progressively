@@ -100,7 +100,6 @@ export const LineChart = ({ data }: LineChartProps) => {
     }
   }
   const lineKeys = Object.keys(keysDict);
-  console.log("lol", lineKeys);
 
   return (
     <ResponsiveContainer width="100%" height={300}>

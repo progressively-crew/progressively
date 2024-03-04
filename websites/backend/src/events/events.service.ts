@@ -139,7 +139,7 @@ export class EventsService {
     const resultSet = await this.clickhouse.query({
       query: `SELECT
         toDate(date) AS date,
-        COUNT(*) AS count
+        CAST(COUNT(*) AS Int32) AS count
       FROM events
       WHERE date >= now() - INTERVAL ${timeframe} DAY
       AND projectUuid = '${projectId}'

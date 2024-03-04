@@ -68,8 +68,6 @@ export default function ProjectInsights() {
   const pageViewCountEvolution = 0;
   const metricCountViewEvolution = 0;
 
-  console.log("loool", eventsGroupedByDate);
-
   return (
     <DashboardLayout subNav={<ProjectNavBar project={project} />}>
       <PageTitle value="Analytics" action={<InsightsFilters />} />
