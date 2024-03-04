@@ -272,6 +272,35 @@ export class ProjectsController {
     };
   }
 
+  @Get(':id/events/date')
+  @UseGuards(HasProjectAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  async getEventsGroupedByDate(
+    @Param('id') id: string,
+    @Query('timeframe') timeframe: string,
+    @Query('name') name: string,
+  ) {
+    if (!name) {
+      throw new BadRequestException('The request requires a name paramter');
+    }
+
+    if (!Timeframes.includes(timeframe)) {
+      throw new BadRequestException('timeframe is required.');
+    }
+
+    const tf = Number(timeframe) as Timeframe;
+
+    const eventsGroupedByDate = await this.eventService.getEventsGroupedByDate(
+      id,
+      tf,
+      name,
+    );
+
+    console.log('lol', eventsGroupedByDate);
+
+    return eventsGroupedByDate;
+  }
+
   @Get(':id/events/distinct')
   @UseGuards(HasProjectAccessGuard)
   @UseGuards(JwtAuthGuard)

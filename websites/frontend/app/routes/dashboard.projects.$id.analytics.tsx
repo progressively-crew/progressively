@@ -19,6 +19,7 @@ import { getGlobalMetric } from "~/modules/projects/services/getGlobalMetric";
 import { toPercentage } from "~/modules/misc/utils/toPercentage";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { LocalCount } from "~/modules/projects/types";
+import { getEventsGroupedByDate } from "~/modules/projects/services/getEventsGroupedByDate";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -46,22 +47,28 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   const authCookie = session.get("auth-cookie");
 
-  const [globalMetrics, eventsForFields] = await Promise.all([
-    getGlobalMetric(projectId, day, authCookie),
-    getEventsForFields(projectId, day, authCookie),
-  ]);
+  const [globalMetrics, eventsForFields, eventsGroupedByDate] =
+    await Promise.all([
+      getGlobalMetric(projectId, day, authCookie),
+      getEventsForFields(projectId, day, authCookie),
+      getEventsGroupedByDate(projectId, day, "Page View", authCookie),
+    ]);
 
   return {
     globalMetrics,
     eventsForFields,
+    eventsGroupedByDate,
   };
 };
 
 export default function ProjectInsights() {
-  const { globalMetrics, eventsForFields } = useLoaderData<typeof loader>();
+  const { globalMetrics, eventsForFields, eventsGroupedByDate } =
+    useLoaderData<typeof loader>();
   const { project } = useProject();
   const pageViewCountEvolution = 0;
   const metricCountViewEvolution = 0;
+
+  console.log("loool", eventsGroupedByDate);
 
   return (
     <DashboardLayout subNav={<ProjectNavBar project={project} />}>
@@ -88,14 +95,14 @@ export default function ProjectInsights() {
         </div>
       </Section>
 
-      {/* <Section id="pageview-hits">
+      <Section id="pageview-hits">
         <Card>
           <CardContent>
             <SectionHeader title={"Page views over time."} />
           </CardContent>
 
-          {pageViewsPerDate.length > 0 ? (
-            <LineChart data={pageViewsPerDate} />
+          {eventsGroupedByDate.length > 0 ? (
+            <LineChart data={eventsGroupedByDate} />
           ) : (
             <CardContent>
               <EmptyState
@@ -105,7 +112,7 @@ export default function ProjectInsights() {
             </CardContent>
           )}
         </Card>
-      </Section> */}
+      </Section>
 
       <div className="grid md:grid-cols-3 gap-6">
         <Section>
