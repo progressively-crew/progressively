@@ -11,14 +11,12 @@ import { LineChart } from "~/components/LineChart";
 import { BigStat } from "~/components/BigStat";
 import { getEventsForFields } from "~/modules/projects/services/getEventsForFields";
 import { getSession } from "~/sessions";
-import { mapToLocaleCount } from "~/modules/projects/services/mapToLocaleCount";
 import { CountTable } from "~/modules/projects/components/CountTable";
 import { ProjectNavBar } from "~/modules/projects/components/ProjectNavBar";
 import { InsightsFilters } from "~/modules/projects/components/InsightsFilters";
 import { getGlobalMetric } from "~/modules/projects/services/getGlobalMetric";
 import { toPercentage } from "~/modules/misc/utils/toPercentage";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
-import { LocalCount } from "~/modules/projects/types";
 import { getPageViewsGroupedByDate } from "~/modules/projects/services/getPageViewsGroupedByDate";
 import { getEventsGroupedByDate } from "~/modules/projects/services/getEventsGroupedByDate";
 
