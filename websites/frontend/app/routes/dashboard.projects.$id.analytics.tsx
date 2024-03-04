@@ -59,12 +59,14 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   ]);
 
   const dateDict: Record<any, any> = {};
+  let metricTotalCount: number = 0;
 
   for (const ev of eventsGroupedByDateData) {
     if (!dateDict[ev.date]) {
       dateDict[ev.date] = {};
     }
 
+    metricTotalCount += ev.count;
     dateDict[ev.date][ev.name] = ev.count;
   }
 
@@ -74,6 +76,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   }));
 
   return {
+    metricTotalCount,
     globalMetrics,
     eventsForFields,
     pagesViewsGroupedByDate,
@@ -83,6 +86,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
 export default function ProjectInsights() {
   const {
+    metricTotalCount,
     globalMetrics,
     eventsForFields,
     pagesViewsGroupedByDate,
@@ -219,7 +223,7 @@ export default function ProjectInsights() {
         <div className="inline-flex flex-row gap-6">
           <BigStat
             label={"Total metric hits"}
-            value={0}
+            value={metricTotalCount}
             unit={"hits."}
             icon={<div />}
             evolution={metricCountViewEvolution}
