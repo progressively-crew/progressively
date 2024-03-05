@@ -1,7 +1,9 @@
 version: "3.9"
 services:
   progressively-frontend:
-    image: marvinfrachet/progressively-frontend:latest
+    #image: #marvinfrachet/progressively-frontend:latest
+    build:
+      dockerfile: ./Dockerfile.Frontend
     ports:
       - "3000:3000"
     environment:
@@ -11,7 +13,9 @@ services:
       - progressively-backend
 
   progressively-backend:
-    image: marvinfrachet/progressively-backend:latest
+    image: progressively-backend
+    build:
+      dockerfile: ./Dockerfile.Backend
     ports:
       - "4000:4000"
     environment:

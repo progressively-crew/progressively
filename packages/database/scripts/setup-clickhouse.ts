@@ -30,12 +30,20 @@ export const setupClickhouse = async () => {
     format: "JSONEachRow",
   });
 
+  await createTables();
+
+  console.log("[Clickhouse] Db created");
+  return client.close();
+};
+
+export const createTables = async () => {
+  const client = getClient();
+
   await client.query({
     query: tableEventQuery,
     format: "JSONEachRow",
   });
 
-  console.log("[Clickhouse] Db created");
   return client.close();
 };
 
