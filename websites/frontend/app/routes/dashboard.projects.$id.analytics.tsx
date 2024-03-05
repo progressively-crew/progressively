@@ -117,7 +117,12 @@ export default function ProjectInsights() {
             icon={<div />}
           />
 
-          <BigStat label={"Bounce Rate"} value={10} unit={"%"} icon={<div />} />
+          <BigStat
+            label={"Bounce Rate"}
+            value={globalMetrics.bounceRate}
+            unit={"%"}
+            icon={<div />}
+          />
         </div>
       </Section>
 

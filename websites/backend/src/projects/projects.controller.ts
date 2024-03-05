@@ -212,13 +212,15 @@ export class ProjectsController {
     if (!Timeframes.includes(timeframe)) {
       throw new BadRequestException('timeframe is required.');
     }
+    const tf = Number(timeframe) as Timeframe;
 
-    const [pageViews, uniqueVisitors] = await Promise.all([
-      this.eventService.getPageViews(id, Number(timeframe) as Timeframe),
-      this.eventService.getUniqueVisitors(id, Number(timeframe) as Timeframe),
+    const [pageViews, uniqueVisitors, bounceRate] = await Promise.all([
+      this.eventService.getPageViews(id, tf),
+      this.eventService.getUniqueVisitors(id, tf),
+      this.eventService.getBounceRate(id, tf),
     ]);
 
-    return { pageViews, uniqueVisitors };
+    return { pageViews, uniqueVisitors, bounceRate };
   }
 
   @Get(':id/funnels')

@@ -4,7 +4,11 @@ export const getGlobalMetric = async (
   projectId: string,
   timeframe: number,
   accessToken: string
-): Promise<{ pageViews: number; uniqueVisitors: number }> => {
+): Promise<{
+  pageViews: number;
+  uniqueVisitors: number;
+  bounceRate: number;
+}> => {
   const url = new URL(
     `${Constants.BackendUrl}/projects/${projectId}/metrics/global`
   );

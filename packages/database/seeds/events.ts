@@ -22,7 +22,7 @@ const createEvent = (
     referer: null,
     data: null,
     projectUuid: "1",
-    sessionUuid: "2",
+    sessionUuid: visitorId,
     viewportHeight: null,
     viewportWidth: null,
   };

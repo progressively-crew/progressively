@@ -180,4 +180,72 @@ export class EventsService {
 
     return dataset;
   }
+
+  async getSessions(projectId: string, timeframe: Timeframe) {
+    const resultSet = await this.clickhouse.query({
+      query: `
+      SELECT
+        sessionUuid,
+        COUNTDistinct(url) AS pagesPerSession,
+        toDate(date) AS date,
+      FROM events
+      WHERE date >= now() - INTERVAL ${timeframe} DAY
+      AND projectUuid = '${projectId}'
+      GROUP BY
+          sessionUuid,
+          date;`,
+      format: 'JSONEachRow',
+    });
+
+    const dataset: Array<{
+      sessionUuid: string;
+      date: string;
+      pagesPerSession: number;
+    }> = await resultSet.json();
+
+    return dataset;
+  }
+
+  async getBounceRate(projectId: string, timeframe: Timeframe) {
+    const resultSet = await this.clickhouse.query({
+      query: `WITH
+      sessions AS
+      (
+          SELECT
+              sessionUuid,
+              COUNTDistinct(url) AS pages_per_session,
+              toDate(date) AS session_date
+          FROM events
+          WHERE date >= now() - INTERVAL ${timeframe} DAY
+          AND projectUuid = '${projectId}'
+          GROUP BY
+              sessionUuid,
+              session_date
+      ),
+      bounces AS
+      (
+          SELECT COUNT(*) AS bounce_count
+          FROM sessions
+          WHERE pages_per_session = 1
+      ),
+      total_sessions AS
+      (
+          SELECT COUNTDistinct(sessionUuid) AS total_sessions_count
+          FROM sessions
+      )
+      SELECT (bounces.bounce_count / total_sessions.total_sessions_count) * 100 AS bounceRate
+      FROM bounces, total_sessions`,
+      format: 'JSONEachRow',
+    });
+
+    const dataset: Array<{
+      bounceRate: number;
+    }> = await resultSet.json();
+
+    if (dataset.length === 1) {
+      return dataset[0].bounceRate;
+    }
+
+    return 0;
+  }
 }
