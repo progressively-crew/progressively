@@ -62,20 +62,20 @@ export class FunnelsService {
           count: flagHits.length,
         });
       } else {
-        const events = shouldSkipRequest
-          ? []
-          : await this.prisma.event.findMany({
-              where: {
-                projectUuid: projectUuid,
-                name: funnelEntry.eventName,
-                url: funnelEntry.eventValue || undefined,
-                date: {
-                  gte: new Date(startDate),
-                  lte: new Date(endDate),
-                },
-                ...visitorIdWhere,
-              },
-            });
+        const events = [];
+
+        // : await this.prisma.event.findMany({
+        //     where: {
+        //       projectUuid: projectUuid,
+        //       name: funnelEntry.eventName,
+        //       url: funnelEntry.eventValue || undefined,
+        //       date: {
+        //         gte: new Date(startDate),
+        //         lte: new Date(endDate),
+        //       },
+        //       ...visitorIdWhere,
+        //     },
+        //   });
 
         previousVisitors = events.map((fh) => fh.visitorId);
 

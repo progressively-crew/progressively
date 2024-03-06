@@ -205,7 +205,7 @@ export class ProjectsController {
   @Get(':id/metrics/global')
   @UseGuards(HasProjectAccessGuard)
   @UseGuards(JwtAuthGuard)
-  async getMetricCount(
+  async getGlobalMetric(
     @Param('id') id: string,
     @Query('timeframe') timeframe: string,
   ) {
@@ -311,47 +311,5 @@ export class ProjectsController {
     console.log('lol', eventsGroupedByDate);
 
     return eventsGroupedByDate;
-  }
-
-  @Get(':id/events/distinct')
-  @UseGuards(HasProjectAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  async getDistinctEventName(
-    @Param('id') id: string,
-    @Query('startDate') startDate: string | undefined,
-    @Query('endDate') endDate: string | undefined,
-  ) {
-    if (!endDate || !startDate) {
-      throw new BadRequestException('startDate and endDate are required.');
-    }
-
-    const distinctEvents = await this.projectService.getDistinctEventName(
-      id,
-      startDate,
-      endDate,
-    );
-
-    return distinctEvents.map((ev) => ev.name);
-  }
-
-  @Get(':id/events/pageview/urls')
-  @UseGuards(HasProjectAccessGuard)
-  @UseGuards(JwtAuthGuard)
-  async getPageViewEventUrl(
-    @Param('id') id: string,
-    @Query('startDate') startDate: string | undefined,
-    @Query('endDate') endDate: string | undefined,
-  ) {
-    if (!endDate || !startDate) {
-      throw new BadRequestException('startDate and endDate are required.');
-    }
-
-    const pageViewEvents = await this.projectService.getPageViewEventUrl(
-      id,
-      startDate,
-      endDate,
-    );
-
-    return pageViewEvents.map((e) => e.url);
   }
 }

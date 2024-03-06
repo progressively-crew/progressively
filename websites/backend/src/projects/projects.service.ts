@@ -4,11 +4,14 @@ import { v4 as uuidv4 } from 'uuid';
 import { UserRoles } from '../users/roles';
 import { PrismaService } from '../database/prisma.service';
 import { FlagAlreadyExists } from './errors';
-import { ReservedEventName } from '../events/types';
+import { EventsService } from '../events/events.service';
 
 @Injectable()
 export class ProjectsService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private eventService: EventsService,
+  ) {}
 
   flagsByProject(projectId: string) {
     return this.prisma.flag.findMany({
@@ -188,11 +191,6 @@ export class ProjectsService {
           projectUuid: projectId,
         },
       }),
-      this.prisma.event.deleteMany({
-        where: {
-          projectUuid: projectId,
-        },
-      }),
       this.prisma.variant.deleteMany({
         where: {
           Flag: {
@@ -217,6 +215,7 @@ export class ProjectsService {
     ];
 
     const result = await this.prisma.$transaction(deleteQueries);
+    await this.eventService.deleteForProject(projectId);
     return result[result.length - 1];
   }
 
@@ -248,113 +247,10 @@ export class ProjectsService {
     });
   }
 
-  getMetricCount(
-    projectId: string,
-    startDate: string,
-    endDate: string,
-    eventFilter?: string,
-  ) {
-    const eventFilterObj = eventFilter
-      ? { name: eventFilter }
-      : {
-          NOT: {
-            name: ReservedEventName.PageView,
-          },
-        };
-
-    return this.prisma.event.count({
-      where: {
-        projectUuid: projectId,
-        date: {
-          gte: new Date(startDate),
-          lte: new Date(endDate),
-        },
-
-        ...eventFilterObj,
-      },
-    });
-  }
-
   getFunnels(projectId: string) {
     return this.prisma.funnel.findMany({
       where: {
         projectUuid: projectId,
-      },
-    });
-  }
-
-  getDistinctEventName(
-    projectId: string,
-    startDate: string,
-    endDate: string,
-    eventFilter?: string,
-  ) {
-    const eventFilterObj = eventFilter ? { name: eventFilter } : {};
-
-    return this.prisma.event.findMany({
-      distinct: ['name'],
-      where: {
-        projectUuid: projectId,
-        date: {
-          gte: new Date(startDate),
-          lte: new Date(endDate),
-        },
-        ...eventFilterObj,
-      },
-    });
-  }
-
-  getEventsByViewport(projectId: string, startDate: string, endDate: string) {
-    return this.prisma.event.groupBy({
-      by: ['viewportWidth', 'viewportHeight'],
-      _count: {
-        uuid: true,
-      },
-      where: {
-        projectUuid: projectId,
-        date: {
-          gte: new Date(startDate),
-          lte: new Date(endDate),
-        },
-        name: ReservedEventName.PageView,
-        viewportHeight: {
-          not: null,
-        },
-        viewportWidth: {
-          not: null,
-        },
-      },
-      orderBy: {
-        _count: {
-          uuid: 'desc',
-        },
-      },
-    });
-  }
-
-  getUniqueVisitor(projectId: string, startDate: string, endDate: string) {
-    return this.prisma.event.findMany({
-      distinct: ['visitorId'],
-      where: {
-        projectUuid: projectId,
-        date: {
-          gte: new Date(startDate),
-          lte: new Date(endDate),
-        },
-      },
-    });
-  }
-
-  getPageViewEventUrl(projectId: string, startDate: string, endDate: string) {
-    return this.prisma.event.findMany({
-      distinct: ['url'],
-      where: {
-        projectUuid: projectId,
-        date: {
-          gte: new Date(startDate),
-          lte: new Date(endDate),
-        },
-        name: ReservedEventName.PageView,
       },
     });
   }
