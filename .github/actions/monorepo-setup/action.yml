@@ -9,6 +9,7 @@ runs:
         node-version: "18"
 
     - uses: ./.github/actions/pnpm
+    - uses: ./.github/actions/clickhouse
 
     - name: Creating .env files
       shell: bash
