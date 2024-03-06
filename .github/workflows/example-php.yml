@@ -34,6 +34,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: ./.github/actions/monorepo-setup
+      - uses: ./.github/actions/clickhouse
 
       - name: Dependencies install
         run: pnpm install --filter=@progressively/backend... --filter=@progressively/example-php...

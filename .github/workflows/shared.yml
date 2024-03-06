@@ -18,6 +18,7 @@ jobs:
 
       - uses: actions/checkout@v2
       - uses: ./.github/actions/monorepo-setup
+      - uses: ./.github/actions/clickhouse
 
       - name: Bootstrap projects
         shell: bash
