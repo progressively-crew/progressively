@@ -328,6 +328,9 @@ importers:
       prompts:
         specifier: ^2.4.2
         version: 2.4.2
+      ts-node:
+        specifier: ^10.9.1
+        version: 10.9.1(@types/node@20.9.2)(typescript@5.2.2)
     devDependencies:
       '@types/bcrypt':
         specifier: ^5.0.2
@@ -341,9 +344,6 @@ importers:
       dotenv:
         specifier: ^16.3.1
         version: 16.3.1
-      ts-node:
-        specifier: ^10.9.1
-        version: 10.9.1(@types/node@20.9.2)(typescript@5.2.2)
       typescript:
         specifier: 5.2.2
         version: 5.2.2
@@ -29329,7 +29329,7 @@ packages:
       typescript: 5.2.2
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
-    dev: true
+    dev: false
 
   /tsconfck@3.0.0(typescript@5.3.3):
     resolution: {integrity: sha512-w3wnsIrJNi7avf4Zb0VjOoodoO0woEqGgZGQm+LHH9przdUI+XDKsWAXwxHA1DaRTjeuZNcregSzr7RaA8zG9A==}
@@ -29651,7 +29651,6 @@ packages:
     resolution: {integrity: sha512-mI4WrpHsbCIcwT9cF4FZvr80QUeKvsUsUvKDoR+X/7XHQH98xYD8YHZg7ANtz2GtZt/CBq2QJ0thkGJMHfqc1w==}
     engines: {node: '>=14.17'}
     hasBin: true
-    dev: true
 
   /typescript@5.3.3:
     resolution: {integrity: sha512-pXWcraxM0uxAS+tN0AG/BF2TyqmHO014Z070UsJ+pFvYuRSq8KH8DmWpnbXe0pEPDHXZV3FcAbJkijJ5oNEnWw==}
