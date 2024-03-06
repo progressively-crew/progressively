@@ -1,0 +1,15 @@
+name: "Clickhouse setup"
+description: "Create the clickhouse instance"
+runs:
+  using: "composite"
+  steps:
+    - run: docker pull clickhouse/clickhouse-server
+      shell: bash
+
+    - run: |
+        docker run -d -p 8123:8123 -p 19000:9000 --name clickhouse-server --ulimit nofile=262144:262144 clickhouse/clickhouse-server
+      shell: bash
+
+    - run: |
+        until curl -s http://localhost:8123/ping --fail; do printf '.'; sleep 1; done
+      shell: bash
