@@ -5,8 +5,6 @@ import {
   Legend,
   Tooltip,
   XAxis,
-  YAxis,
-  Line,
   CartesianGrid,
   AreaChart,
   Area,
@@ -15,7 +13,7 @@ import { stringToColor } from "~/modules/misc/utils/stringToColor";
 import { Spacer } from "./Spacer";
 
 export interface LineChartProps {
-  data: Array<{ [key: string]: number } & { date: string }>;
+  data: Array<{ count: number; date: string }>;
 }
 
 const CustomizedAxisTick = ({ color, ...props }: any) => {

@@ -304,90 +304,6 @@ export class ProjectsService {
     });
   }
 
-  async getEventsPerDate(
-    projectId: string,
-    startDate: string,
-    endDate: string,
-    pageView: boolean,
-  ) {
-    const eventFilter = pageView
-      ? { name: ReservedEventName.PageView }
-      : { NOT: { name: ReservedEventName.PageView } };
-
-    const distinctEventName = await this.getDistinctEventName(
-      projectId,
-      startDate,
-      endDate,
-      pageView ? ReservedEventName.PageView : undefined,
-    );
-
-    const dictByDates = {};
-
-    for (const dhv of distinctEventName) {
-      const hitsByDate = await this.prisma.event.groupBy({
-        _count: true,
-        by: ['name', 'date'],
-        where: {
-          projectUuid: projectId,
-          name: dhv.name,
-          date: {
-            gte: new Date(startDate),
-            lte: new Date(endDate),
-          },
-          ...eventFilter,
-        },
-        orderBy: {
-          date: 'asc',
-        },
-      });
-
-      hitsByDate.forEach((hbd) => {
-        const isoDate = hbd.date.toISOString();
-
-        if (!dictByDates[isoDate]) {
-          dictByDates[isoDate] = {};
-        }
-
-        dictByDates[isoDate]['date'] = isoDate;
-        dictByDates[isoDate][dhv.name] = hbd._count;
-      });
-    }
-
-    return Object.keys(dictByDates)
-      .sort()
-      .map((k) => dictByDates[k]);
-  }
-
-  getEventsPerDatePerGroup(
-    projectId: string,
-    startDate: string,
-    endDate: string,
-    group: 'os' | 'browser' | 'url' | 'referer',
-  ) {
-    const notConstrains = group === 'referer' ? { NOT: { referer: null } } : {};
-
-    return this.prisma.event.groupBy({
-      by: [group],
-      _count: {
-        uuid: true,
-      },
-      where: {
-        projectUuid: projectId,
-        date: {
-          gte: new Date(startDate),
-          lte: new Date(endDate),
-        },
-        name: ReservedEventName.PageView,
-        ...notConstrains,
-      },
-      orderBy: {
-        _count: {
-          uuid: 'desc',
-        },
-      },
-    });
-  }
-
   getEventsByViewport(projectId: string, startDate: string, endDate: string) {
     return this.prisma.event.groupBy({
       by: ['viewportWidth', 'viewportHeight'],
@@ -427,40 +343,6 @@ export class ProjectsService {
         },
       },
     });
-  }
-
-  async getBounceRate(projectId: string, startDate: string, endDate: string) {
-    const uniquePageViewSession = await this.prisma.$queryRaw`
-      SELECT Count("Session"."uuid")
-      FROM "Session"
-      INNER JOIN "Event" ON "Session"."uuid" = "Event"."sessionUuid"
-      WHERE "Session"."projectUuid" = ${projectId}
-      AND "Event"."date" BETWEEN ${startDate}::timestamp AND ${endDate}::timestamp
-      AND "Event"."name" = ${ReservedEventName.PageView}
-      GROUP BY "Session"."uuid"
-      HAVING COUNT("Event"."uuid") = 1
-    `;
-
-    const allSessionCount = await this.prisma.session.count({
-      where: {
-        projectUuid: projectId,
-        startedAt: {
-          gte: new Date(startDate),
-          lte: new Date(endDate),
-        },
-      },
-    });
-
-    const singlepagesessions = (uniquePageViewSession[0] as any)?.count as
-      | number
-      | undefined;
-
-    let bounceRate = 0;
-    if (singlepagesessions && allSessionCount) {
-      bounceRate = (Number(singlepagesessions) / Number(allSessionCount)) * 100;
-    }
-
-    return bounceRate;
   }
 
   getPageViewEventUrl(projectId: string, startDate: string, endDate: string) {

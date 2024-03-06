@@ -1,7 +1,9 @@
 version: "3.9"
 services:
   progressively-frontend:
-    image: marvinfrachet/progressively-frontend:latest
+    #image: #marvinfrachet/progressively-frontend:latest
+    build:
+      dockerfile: ./Dockerfile.Frontend
     ports:
       - "3000:3000"
     environment:
@@ -9,14 +11,20 @@ services:
     env_file: ./websites/frontend/.env
     depends_on:
       - progressively-backend
+
   progressively-backend:
-    image: marvinfrachet/progressively-backend:latest
+    image: progressively-backend
+    build:
+      dockerfile: ./Dockerfile.Backend
     ports:
       - "4000:4000"
     environment:
       DATABASE_URL: postgresql://admin:admin@db/progressively
       SHADOW_DATABASE_URL: postgresql://admin:admin@db-shadow/progressively
       REDIS_URL: redis://redis-cache
+      CLICKHOUSE_HOST: http://clickhouse:8123
+      CLICKHOUSE_USER: admin
+      CLICKHOUSE_PASSWORD: admin
     env_file: ./websites/backend/.env
     depends_on:
       db:
@@ -24,6 +32,7 @@ services:
       db-shadow:
         condition: service_healthy
     command: [scripts/docker-compose-init.sh]
+
   db:
     image: postgres
     restart: always
@@ -38,6 +47,7 @@ services:
       POSTGRES_PASSWORD: admin
       POSTGRES_USER: admin
       POSTGRES_DB: progressively
+
   db-shadow:
     image: postgres
     restart: always
@@ -52,6 +62,23 @@ services:
       POSTGRES_PASSWORD: admin
       POSTGRES_USER: admin
       POSTGRES_DB: progressively
+
   redis-cache:
     image: redis
     restart: always
+
+  clickhouse:
+    image: clickhouse/clickhouse-server
+    restart: always
+    ports:
+      - "8123:8123"
+      - "19000:9000"
+    ulimits:
+      nofile:
+        soft: "262144"
+        hard: "262144"
+    environment:
+      CLICKHOUSE_DB: default
+      CLICKHOUSE_USER: admin
+      CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: 1
+      CLICKHOUSE_PASSWORD: admin

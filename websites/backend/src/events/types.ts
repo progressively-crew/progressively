@@ -8,3 +8,6 @@ export interface Variant {
 export const ReservedEventName = {
   PageView: 'Page View',
 };
+
+export type Timeframe = 7 | 30 | 90;
+export const Timeframes: Array<string> = ['7', '30', '90'];

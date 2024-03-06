@@ -38,7 +38,8 @@ import {
   FunnelCreationDTO,
 } from '../funnels/funnels.dto';
 import { FunnelsService } from '../funnels/funnels.service';
-import { ReservedEventName } from '../events/types';
+import { Timeframe, Timeframes } from '../events/types';
+import { EventsService } from '../events/events.service';
 
 @ApiBearerAuth()
 @Controller('projects')
@@ -48,6 +49,7 @@ export class ProjectsController {
     private readonly userService: UsersService,
     private readonly mailService: MailService,
     private readonly funnelService: FunnelsService,
+    private readonly eventService: EventsService,
   ) {}
 
   @Get(':id')
@@ -200,32 +202,25 @@ export class ProjectsController {
     }
   }
 
-  @Get(':id/metrics/count')
+  @Get(':id/metrics/global')
   @UseGuards(HasProjectAccessGuard)
   @UseGuards(JwtAuthGuard)
   async getMetricCount(
     @Param('id') id: string,
-    @Query('startDate') startDate: string | undefined,
-    @Query('endDate') endDate: string | undefined,
+    @Query('timeframe') timeframe: string,
   ) {
-    if (!endDate || !startDate) {
-      throw new BadRequestException('startDate and endDate are required.');
+    if (!Timeframes.includes(timeframe)) {
+      throw new BadRequestException('timeframe is required.');
     }
+    const tf = Number(timeframe) as Timeframe;
 
-    const metricCount = await this.projectService.getMetricCount(
-      id,
-      startDate,
-      endDate,
-    );
+    const [pageViews, uniqueVisitors, bounceRate] = await Promise.all([
+      this.eventService.getPageViews(id, tf),
+      this.eventService.getUniqueVisitors(id, tf),
+      this.eventService.getBounceRate(id, tf),
+    ]);
 
-    const pageViewCount = await this.projectService.getMetricCount(
-      id,
-      startDate,
-      endDate,
-      ReservedEventName.PageView,
-    );
-
-    return { metricCount, pageViewCount };
+    return { pageViews, uniqueVisitors, bounceRate };
   }
 
   @Get(':id/funnels')
@@ -249,93 +244,73 @@ export class ProjectsController {
     );
   }
 
-  @Get(':id/events')
+  @Get(':id/events/fields')
   @UseGuards(HasProjectAccessGuard)
   @UseGuards(JwtAuthGuard)
   async getEventsByDate(
     @Param('id') id: string,
-    @Query('startDate') startDate: string | undefined,
-    @Query('endDate') endDate: string | undefined,
+    @Query('timeframe') timeframe: string,
   ) {
-    if (!endDate || !startDate) {
-      throw new BadRequestException('startDate and endDate are required.');
+    if (!Timeframes.includes(timeframe)) {
+      throw new BadRequestException('timeframe is required.');
     }
 
-    const pageViewsPerDate = await this.projectService.getEventsPerDate(
-      id,
-      startDate,
-      endDate,
-      true,
-    );
+    const tf = Number(timeframe) as Timeframe;
 
-    const eventsPerDate = await this.projectService.getEventsPerDate(
-      id,
-      startDate,
-      endDate,
-      false,
-    );
-
-    const eventsPerDatePerOs =
-      await this.projectService.getEventsPerDatePerGroup(
-        id,
-        startDate,
-        endDate,
-        'os',
-      );
-
-    const eventsPerDatePerBrowser =
-      await this.projectService.getEventsPerDatePerGroup(
-        id,
-        startDate,
-        endDate,
-        'browser',
-      );
-
-    const eventsPerDatePerUrl =
-      await this.projectService.getEventsPerDatePerGroup(
-        id,
-        startDate,
-        endDate,
-        'url',
-      );
-
-    const eventsPerDatePerReferer =
-      await this.projectService.getEventsPerDatePerGroup(
-        id,
-        startDate,
-        endDate,
-        'referer',
-      );
-
-    const uniqueVisitors = await this.projectService.getUniqueVisitor(
-      id,
-      startDate,
-      endDate,
-    );
-
-    const bounceRate = await this.projectService.getBounceRate(
-      id,
-      startDate,
-      endDate,
-    );
-
-    const eventsByViewport = await this.projectService.getEventsByViewport(
-      id,
-      startDate,
-      endDate,
-    );
+    const [browser, os, referrer, viewport, url] = await Promise.all([
+      this.eventService.getByField(id, tf, 'browser'),
+      this.eventService.getByField(id, tf, 'os'),
+      this.eventService.getByField(id, tf, 'referer'),
+      this.eventService.getByViewport(id, tf),
+      this.eventService.getByField(id, tf, 'url'),
+    ]);
 
     return {
-      pageViewsPerDate,
-      eventsPerDate,
-      eventsPerDatePerOs,
-      eventsPerDatePerBrowser,
-      eventsPerDatePerUrl,
-      eventsPerDatePerReferer,
-      uniqueVisitorsCount: uniqueVisitors.length,
-      bounceRate,
-      eventsByViewport,
+      browser,
+      os,
+      referrer,
+      viewport,
+      url,
     };
+  }
+
+  @Get(':id/events/page-views')
+  @UseGuards(HasProjectAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  async getPageViewGroupedByDate(
+    @Param('id') id: string,
+    @Query('timeframe') timeframe: string,
+  ) {
+    if (!Timeframes.includes(timeframe)) {
+      throw new BadRequestException('timeframe is required.');
+    }
+
+    const tf = Number(timeframe) as Timeframe;
+
+    return await this.eventService.getPageViewsGroupedByDate(id, tf);
+  }
+
+  @Get(':id/events/count')
+  @UseGuards(HasProjectAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  async getEventsGroupedByDate(
+    @Param('id') id: string,
+    @Query('timeframe') timeframe: string,
+  ) {
+    if (!Timeframes.includes(timeframe)) {
+      throw new BadRequestException('timeframe is required.');
+    }
+
+    const tf = Number(timeframe) as Timeframe;
+
+    const eventsGroupedByDate = await this.eventService.getEventsGroupedByDate(
+      id,
+      tf,
+    );
+
+    console.log('lol', eventsGroupedByDate);
+
+    return eventsGroupedByDate;
   }
 
   @Get(':id/events/distinct')

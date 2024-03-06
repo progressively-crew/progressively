@@ -5,9 +5,16 @@ import { UsersModule } from '../users/users.module';
 import { MailModule } from '../mail/mail.module';
 import { DatabaseModule } from '../database/database.module';
 import { FunnelsModule } from '../funnels/funnels.module';
+import { EventsModule } from '../events/events.module';
 
 @Module({
-  imports: [UsersModule, MailModule, DatabaseModule, FunnelsModule],
+  imports: [
+    UsersModule,
+    MailModule,
+    DatabaseModule,
+    FunnelsModule,
+    EventsModule,
+  ],
   controllers: [ProjectsController],
   providers: [ProjectsService],
   exports: [ProjectsService],
