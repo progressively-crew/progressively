@@ -38,7 +38,7 @@ import {
   FunnelCreationDTO,
 } from '../funnels/funnels.dto';
 import { FunnelsService } from '../funnels/funnels.service';
-import { ReservedEventName, Timeframe, Timeframes } from '../events/types';
+import { Timeframe, Timeframes } from '../events/types';
 import { EventsService } from '../events/events.service';
 
 @ApiBearerAuth()
@@ -287,10 +287,7 @@ export class ProjectsController {
 
     const tf = Number(timeframe) as Timeframe;
 
-    const eventsGroupedByDate =
-      await this.eventService.getPageViewsGroupedByDate(id, tf);
-
-    return eventsGroupedByDate;
+    return await this.eventService.getPageViewsGroupedByDate(id, tf);
   }
 
   @Get(':id/events/count')
