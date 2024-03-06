@@ -15,11 +15,11 @@
     "gen:user": "node ./cli/generate-user.js",
     "db:migrate:diff": "ts-node ./scripts/prisma-migrate-diff.ts",
     "db:migrate": "ts-node ./scripts/prisma-migrate.ts",
-    "db:migrate:init": "prisma format && prisma migrate dev --name init && pnpm run db:clickhouse:tables",
+    "db:migrate:init": "prisma format && prisma migrate dev --name init && pnpm run db:clickhouse",
     "db:generate:schema": "prisma generate",
     "db:seed": "ts-node ./seeds/seed-run.ts",
     "db:cleanup": "ts-node ./seeds/cleanup-run.ts",
-    "db:clickhouse:tables": "ts-node ./scripts/create-clickhouse-table.ts"
+    "db:clickhouse": "ts-node ./scripts/setup-clickhouse-run.ts"
   },
   "dependencies": {
     "@clickhouse/client": "^0.2.10",
