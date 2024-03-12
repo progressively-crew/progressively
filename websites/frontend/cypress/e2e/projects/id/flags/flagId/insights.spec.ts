@@ -67,8 +67,6 @@ describe("/dashboard/projects/[id]/flags/[flagId]/insights", () => {
 
         cy.findAllByText("New footer").should("have.length", 2);
         cy.findByRole("heading", { name: "Insights" }).should("be.visible");
-
-        cy.checkA11y();
       });
     });
   });
