@@ -22,11 +22,9 @@ import { CreateEntityLayout } from "~/layouts/CreateEntityLayout";
 import { CreateEntityTitle } from "~/layouts/CreateEntityTitle";
 import { DialogCloseBtn } from "~/components/Dialog/Dialog";
 import { createFunnel } from "~/modules/projects/services/createFunnel";
-import { getDistinctEventName } from "~/modules/projects/services/getDistinctEventName";
 import { SelectField } from "~/components/Fields/Select/SelectField";
 import { useMemo, useReducer } from "react";
 import { Typography } from "~/components/Typography";
-import { getPageViewEvent } from "~/modules/projects/services/getPageViewEvent";
 import { getProjectFlags } from "~/modules/projects/services/getProjectFlags";
 import {
   funnelCreationReducer,
@@ -119,19 +117,9 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     authCookie
   );
 
-  const eventNames: Array<string> = await getDistinctEventName(
-    projectId,
-    start,
-    end,
-    authCookie
-  );
+  const eventNames: Array<string> = [];
 
-  const pageViewUrls: Array<string> = await getPageViewEvent(
-    projectId,
-    start,
-    end,
-    authCookie
-  );
+  const pageViewUrls: Array<string> = [];
 
   return { eventNames, flags, pageViewUrls };
 };

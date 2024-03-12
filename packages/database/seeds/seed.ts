@@ -3,6 +3,8 @@ import { seedActivity } from "./activity";
 import { seedFlagHits, seedFlagHitsVariants, seedFlags } from "./flags";
 import { seedProjects } from "./projects";
 import { seedPasswordReset, seedUsers } from "./users";
+import { cleanupEvents, setupClickhouse } from "../scripts/setup-clickhouse";
+import { seedEvents } from "./events";
 
 const prismaClient = new PrismaClient();
 
@@ -19,6 +21,9 @@ const guardSeeding = () => {
 
 export const seedDb = async () => {
   guardSeeding();
+  await seedEvents();
+  await seedEvents();
+
   await prismaClient.$connect();
 
   try {
@@ -145,6 +150,8 @@ export const seedDb = async () => {
 
 export const cleanupDb = async () => {
   guardSeeding();
+  await cleanupEvents();
+
   await prismaClient.$connect();
   const tablenames = await prismaClient.$queryRaw<
     Array<{ tablename: string }>

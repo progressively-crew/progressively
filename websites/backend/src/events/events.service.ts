@@ -248,4 +248,10 @@ export class EventsService {
 
     return 0;
   }
+
+  async deleteForProject(projectId: string) {
+    return await this.clickhouse.exec({
+      query: `DELETE FROM events WHERE projectUuid = '${projectId}'`,
+    });
+  }
 }

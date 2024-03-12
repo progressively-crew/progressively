@@ -1,8 +1,8 @@
 import { getClient } from "../clickhouse-client";
 
-export const createDbQuery = `CREATE DATABASE IF NOT EXISTS default;`;
+// export const createDbQuery = `CREATE DATABASE IF NOT EXISTS default;`;
 
-export const tableEventQuery = `
+const tableEventQuery = `
 CREATE TABLE events
 (
     date DateTime,
@@ -26,28 +26,22 @@ export const setupClickhouse = async () => {
   const client = getClient();
 
   await client.query({
-    query: createDbQuery,
-    format: "JSONEachRow",
-  });
-
-  await client.query({
     query: tableEventQuery,
     format: "JSONEachRow",
   });
 
-  console.log("[Clickhouse] Db created");
+  console.log("[Clickhouse] Db seed");
   return client.close();
 };
 
 export const cleanupEvents = async () => {
   const client = getClient();
 
-  await client.query({
-    query: "DROP DATABASE IF EXISTS default",
-    format: "JSONEachRow",
+  await client.exec({
+    query: "DELETE FROM events WHERE 1=1;",
   });
 
-  console.log("[Clickhouse] Db dropped");
+  console.log("[Clickhouse] Tables are empty");
 
   return client.close();
 };
