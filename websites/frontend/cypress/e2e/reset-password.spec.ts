@@ -98,7 +98,9 @@ describe("/reset-password", () => {
 
       // Connect the person with a changed password
       cy.visit("/signin");
+      cy.findByLabelText("Email").clear();
       cy.findByLabelText("Email").type("john.doe@gmail.com");
+      cy.findByLabelText("Password").clear();
       cy.findByLabelText("Password").type("password1");
       cy.findByRole("button", { name: "Sign in" }).click();
 
@@ -106,7 +108,9 @@ describe("/reset-password", () => {
 
       // Connect with a user that has NOT changed their password
       cy.visit("/signin");
+      cy.findByLabelText("Email").clear();
       cy.findByLabelText("Email").type("marvin.frachet@something.com");
+      cy.findByLabelText("Password").clear();
       cy.findByLabelText("Password").type("password");
       cy.findByRole("button", { name: "Sign in" }).click();
       cy.findAllByText("Project from seeding").should("have.length", 2);

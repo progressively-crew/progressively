@@ -2,7 +2,7 @@ import { getClient } from "../clickhouse-client";
 
 // export const createDbQuery = `CREATE DATABASE IF NOT EXISTS default;`;
 
-export const tableEventQuery = `
+const tableEventQuery = `
 CREATE TABLE events
 (
     date DateTime,
