@@ -21,8 +21,7 @@ const guardSeeding = () => {
 
 export const seedDb = async () => {
   guardSeeding();
-
-  await setupClickhouse();
+  await seedEvents();
   await seedEvents();
 
   await prismaClient.$connect();

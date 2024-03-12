@@ -3,7 +3,7 @@ import { getClient } from "../clickhouse-client";
 // export const createDbQuery = `CREATE DATABASE IF NOT EXISTS default;`;
 
 export const tableEventQuery = `
-CREATE TABLE IF NOT EXISTS events
+CREATE TABLE events
 (
     date DateTime,
     name String,
@@ -41,7 +41,7 @@ export const cleanupEvents = async () => {
     query: "DELETE FROM events WHERE 1=1;",
   });
 
-  console.log("[Clickhouse] Db dropped");
+  console.log("[Clickhouse] Tables are empty");
 
   return client.close();
 };
