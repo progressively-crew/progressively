@@ -257,7 +257,7 @@ export class ProjectsController {
 
     const tf = Number(timeframe) as Timeframe;
 
-    const [browser, os, referrer, viewport, url] = await Promise.all([
+    const [browser, os, referer, viewport, url] = await Promise.all([
       this.eventService.getByField(id, tf, 'browser'),
       this.eventService.getByField(id, tf, 'os'),
       this.eventService.getByField(id, tf, 'referer'),
@@ -268,7 +268,7 @@ export class ProjectsController {
     return {
       browser,
       os,
-      referrer,
+      referer,
       viewport,
       url,
     };
@@ -307,8 +307,6 @@ export class ProjectsController {
       id,
       tf,
     );
-
-    console.log('lol', eventsGroupedByDate);
 
     return eventsGroupedByDate;
   }

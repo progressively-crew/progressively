@@ -196,11 +196,11 @@ export default function ProjectInsights() {
               <SectionHeader title="Page views / referer" />
             </CardContent>
             <CountTable
-              data={eventsForFields.referrer}
+              data={eventsForFields.referer}
               caption="Page views / referer"
               cellName={"Referer"}
-              cellKey="referrer"
-              renderLabel={(d) => String(d.referrer)}
+              cellKey="referer"
+              renderLabel={(d) => String(d.referer)}
             />
           </Card>
         </Section>

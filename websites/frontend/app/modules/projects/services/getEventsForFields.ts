@@ -9,7 +9,7 @@ export const getEventsForFields = async (
 ): Promise<{
   browser: Array<Field>;
   os: Array<Field>;
-  referrer: Array<Field>;
+  referer: Array<Field>;
   viewport: Array<Field>;
   url: Array<Field>;
 }> => {
