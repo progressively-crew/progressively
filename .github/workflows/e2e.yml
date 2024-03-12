@@ -16,7 +16,7 @@ jobs:
       PROGRESSIVELY_ENV: valid-sdk-key
       SEED_ROUND_EVENT_HITS: 1
 
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     # Uncomment for parallel
     # strategy:
     #   matrix:
