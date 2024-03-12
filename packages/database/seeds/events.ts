@@ -19,12 +19,12 @@ const createEvent = (
     os,
     browser,
     url,
-    referer: null,
+    referer: "https://referer.com",
     data: null,
     projectUuid: "1",
     sessionUuid: visitorId,
-    viewportHeight: null,
-    viewportWidth: null,
+    viewportHeight: 480,
+    viewportWidth: 640,
   };
 };
 

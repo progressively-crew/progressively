@@ -15,17 +15,15 @@ import { CountTable } from "~/modules/projects/components/CountTable";
 import { ProjectNavBar } from "~/modules/projects/components/ProjectNavBar";
 import { InsightsFilters } from "~/modules/projects/components/InsightsFilters";
 import { getGlobalMetric } from "~/modules/projects/services/getGlobalMetric";
-import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { getPageViewsGroupedByDate } from "~/modules/projects/services/getPageViewsGroupedByDate";
 import { getEventsGroupedByDate } from "~/modules/projects/services/getEventsGroupedByDate";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
-  const flagName = getFlagMetaTitle(matches);
 
   return [
     {
-      title: `Progressively | ${projectName} | ${flagName} | Insights`,
+      title: `Progressively | ${projectName} | Analytics`,
     },
   ];
 };
@@ -100,6 +98,7 @@ export default function ProjectInsights() {
       <PageTitle value="Analytics" action={<InsightsFilters />} />
 
       <Section>
+        <h2 className="sr-only">Global metrics</h2>
         <div className="grid grid-cols-2 md:inline-flex flex-row gap-6">
           <BigStat
             label={"Page views"}
