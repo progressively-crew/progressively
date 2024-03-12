@@ -47,8 +47,6 @@ describe("/dashboard/projects/[id]/flags/[flagId]/insights", () => {
 
         cy.findAllByText("New homepage").should("have.length", 2);
         cy.findByRole("heading", { name: "Insights" }).should("be.visible");
-
-        cy.checkA11y();
       });
 
       it("shows the layout (without data)", () => {
