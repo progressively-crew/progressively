@@ -41,8 +41,8 @@ export default defineConfig({
         return launchOptions;
       }),
         on("task", {
-          seed: () => {
-            return seedDb().then(() => null);
+          seed: (opts = {}) => {
+            return seedDb(opts).then(() => null);
           },
           cleanupDb: () => {
             return cleanupDb().then(() => null);

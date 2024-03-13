@@ -28,7 +28,9 @@ import "@testing-library/cypress/add-commands";
 import "cypress-axe";
 import { AvailableUsers } from "./constants";
 
-Cypress.Commands.add("seed", () => cy.task("seed"));
+Cypress.Commands.add("seed", (opts) =>
+  cy.task("seed", { eventsCount: opts?.eventCount })
+);
 Cypress.Commands.add("cleanupDb", () => cy.task("cleanupDb"));
 
 Cypress.Commands.add("signIn", (userName?: keyof typeof AvailableUsers) => {

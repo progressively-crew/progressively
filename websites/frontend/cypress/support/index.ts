@@ -26,7 +26,7 @@ declare global {
        * Seed the database for testing purpose
        * @example cy.seed()
        */
-      seed(): void;
+      seed(x?: { eventCount?: number }): void;
 
       /**
        * Cleanup the database for testing purpose

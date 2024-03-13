@@ -1,5 +1,5 @@
 describe("/dashboard/projects/[id]/analytics", () => {
-  before(cy.seed);
+  before(() => cy.seed({ eventCount: 90 }));
   after(cy.cleanupDb);
 
   describe("general verifications", () => {
@@ -80,7 +80,7 @@ describe("/dashboard/projects/[id]/analytics", () => {
         .first()
         .within(() => {
           cy.get("dt").should("contain", "Page views");
-          cy.get("dd").should("contain", "924 visits");
+          cy.get("dd").should("contain", "462 visits");
         });
 
       cy.get("dl")
@@ -105,7 +105,7 @@ describe("/dashboard/projects/[id]/analytics", () => {
         .first()
         .within(() => {
           cy.get("dt").should("contain", "Page views");
-          cy.get("dd").should("contain", "3.4K visits.");
+          cy.get("dd").should("contain", "1.7K visits.");
         });
 
       cy.get("dl")
@@ -130,7 +130,7 @@ describe("/dashboard/projects/[id]/analytics", () => {
         .first()
         .within(() => {
           cy.get("dt").should("contain", "Page views");
-          cy.get("dd").should("contain", "6.3K visits.");
+          cy.get("dd").should("contain", "3.1K visits.");
         });
 
       cy.get("dl")

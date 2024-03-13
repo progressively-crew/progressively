@@ -14,6 +14,7 @@ jobs:
       START_MOCK_SERVER: true
       BACKEND_URL: http://localhost:4000
       PROGRESSIVELY_ENV: valid-sdk-key
+      SEED_ROUND_EVENT_HITS: 1
       CLICKHOUSE_HOST: http://localhost:8123
       CLICKHOUSE_USER: default
       CLICKHOUSE_PASSWORD:
