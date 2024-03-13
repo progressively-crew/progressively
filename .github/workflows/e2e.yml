@@ -48,8 +48,8 @@ jobs:
           - 5432:5432
     steps:
       - uses: actions/checkout@v2
-      - uses: ./.github/actions/monorepo-setup
       - uses: ./.github/actions/clickhouse
+      - uses: ./.github/actions/monorepo-setup
 
       - name: Dependencies install
         run: pnpm install --filter=@progressively/backend... --filter=@progressively/frontend...
