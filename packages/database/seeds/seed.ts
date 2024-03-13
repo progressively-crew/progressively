@@ -1,11 +1,11 @@
 import { PrismaClient } from "@prisma/client";
 import { seedActivity } from "./activity";
-import { seedFlagHitsVariants, seedFlags } from "./flags";
+import { seedFlags } from "./flags";
 import { seedProjects } from "./projects";
 import { seedPasswordReset, seedUsers } from "./users";
 import { cleanupEvents } from "../scripts/setup-clickhouse";
 import { seedEvents } from "./events";
-import { seedFlagHits } from "./flaghits";
+import { seedFlagHits, seedFlagHitsVariants } from "./flaghits";
 
 const prismaClient = new PrismaClient();
 
@@ -143,7 +143,10 @@ export const seedDb = async (opts?: { eventsCount?: number }) => {
     await seedFlagHits(multiVariate, new Date(1992, 0, 2, 1), 40);
     await seedFlagHits(multiVariate, new Date(1992, 0, 6, 1), 10);
 
-    await seedFlagHitsVariants(prismaClient, multiVariate);
+    await seedFlagHitsVariants(
+      multiVariate,
+      opts?.eventsCount || SEED_ROUND_EVENT_HITS
+    );
 
     // End of Flag setup
   } catch (e) {

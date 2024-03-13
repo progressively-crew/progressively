@@ -1,8 +1,4 @@
-import { Flag, PrismaClient } from "@prisma/client";
-
-const SEED_ROUND_EVENT_HITS = process.env.SEED_ROUND_EVENT_HITS
-  ? Number(process.env.SEED_ROUND_EVENT_HITS)
-  : 90;
+import { PrismaClient } from "@prisma/client";
 
 export const seedFlags = async (prismaClient: PrismaClient) => {
   const homePageFlag = await prismaClient.flag.create({
@@ -54,45 +50,4 @@ export const seedFlags = async (prismaClient: PrismaClient) => {
   });
 
   return [homePageFlag, footerFlag, asideFlag, multiVariate] as const;
-};
-
-export const seedFlagHitsVariants = async (
-  prismaClient: PrismaClient,
-  flag: Flag
-) => {
-  // Modify this value to see more real logs on N days
-  const dayCount = SEED_ROUND_EVENT_HITS;
-  for (let i = 1; i <= dayCount; i++) {
-    const date = new Date();
-    date.setDate(date.getDate() - dayCount + i);
-
-    date.setHours(2);
-    date.setMinutes(2);
-    date.setSeconds(2);
-    date.setMilliseconds(2);
-
-    const count = i / 2;
-
-    for (let y = 0; y < count; y++) {
-      await prismaClient.flagHit.create({
-        data: {
-          flagUuid: flag.uuid,
-          valueResolved: "Control",
-          date,
-          visitorId: "1",
-        },
-      });
-
-      if (y < count / 2) {
-        await prismaClient.flagHit.create({
-          data: {
-            flagUuid: flag.uuid,
-            valueResolved: "Second",
-            date,
-            visitorId: "1",
-          },
-        });
-      }
-    }
-  }
 };
