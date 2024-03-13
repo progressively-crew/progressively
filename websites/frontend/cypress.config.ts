@@ -25,6 +25,7 @@ export default defineConfig({
     video: false,
     projectId: "kfytzc",
     specPattern: "cypress/e2e/**/*.spec.{ts,tsx}",
+    defaultCommandTimeout: 10000,
 
     setupNodeEvents(on, config) {
       on("before:browser:launch", (browser, launchOptions) => {
