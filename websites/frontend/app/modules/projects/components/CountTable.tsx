@@ -49,7 +49,7 @@ export const CountTable = ({
               <tr key={`${cellName}-${cellKey}-${index}`}>
                 <Td>
                   <div className="relative flex items-center">
-                    <div className="truncate w-[200px] relative z-10">
+                    <div className="truncate w-[200px] relative z-10 text-slate-900">
                       {shouldLink ? (
                         <Tooltip tooltip={d[cellKey]}>
                           <Link

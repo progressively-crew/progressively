@@ -1,9 +1,5 @@
 import { getClient } from "../clickhouse-client";
 
-const SEED_ROUND_EVENT_HITS = process.env.SEED_ROUND_EVENT_HITS
-  ? Number(process.env.SEED_ROUND_EVENT_HITS)
-  : 90;
-
 const createEvent = (
   visitorId: string,
   date: Date,
@@ -19,22 +15,22 @@ const createEvent = (
     os,
     browser,
     url,
-    referer: null,
+    referer: "https://referer.com",
     data: null,
     projectUuid: "1",
     sessionUuid: visitorId,
-    viewportHeight: null,
-    viewportWidth: null,
+    viewportHeight: 480,
+    viewportWidth: 640,
   };
 };
 
-export const seedEvents = async () => {
+export const seedEvents = async (eventCounts: number) => {
   const client = getClient();
 
   const values = [createEvent("2", new Date())];
 
   // Modify this value to see more real logs on N days
-  const dayCount = SEED_ROUND_EVENT_HITS;
+  const dayCount = eventCounts;
   for (let i = 1; i <= dayCount; i++) {
     const date = new Date();
     date.setDate(date.getDate() - dayCount + i);

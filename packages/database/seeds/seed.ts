@@ -19,10 +19,14 @@ const guardSeeding = () => {
   }
 };
 
-export const seedDb = async () => {
+const SEED_ROUND_EVENT_HITS = process.env.SEED_ROUND_EVENT_HITS
+  ? Number(process.env.SEED_ROUND_EVENT_HITS)
+  : 90;
+
+export const seedDb = async (opts?: { eventsCount?: number }) => {
   guardSeeding();
-  await seedEvents();
-  await seedEvents();
+
+  await seedEvents(opts?.eventsCount || SEED_ROUND_EVENT_HITS);
 
   await prismaClient.$connect();
 

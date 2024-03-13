@@ -22,9 +22,10 @@ export default defineConfig({
   viewportHeight: 800,
   e2e: {
     baseUrl: "http://localhost:3000",
-    video: false,
+    video: Boolean(process.env.CI),
     projectId: "kfytzc",
     specPattern: "cypress/e2e/**/*.spec.{ts,tsx}",
+    defaultCommandTimeout: 10000,
 
     setupNodeEvents(on, config) {
       on("before:browser:launch", (browser, launchOptions) => {
@@ -40,8 +41,8 @@ export default defineConfig({
         return launchOptions;
       }),
         on("task", {
-          seed: () => {
-            return seedDb().then(() => null);
+          seed: (opts = {}) => {
+            return seedDb(opts).then(() => null);
           },
           cleanupDb: () => {
             return cleanupDb().then(() => null);

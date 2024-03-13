@@ -24,12 +24,12 @@ export const BigStat = ({
     <Card>
       <CardContent>
         <div className="flex flex-row gap-8">
-          <div>
-            <Typography className="text-xs text-slate-500 uppercase">
+          <dl>
+            <Typography as="dt" className="text-xs text-slate-500 uppercase">
               {label}
             </Typography>
 
-            <Typography as="h2" className="text-3xl">
+            <Typography as="dd" className="text-3xl">
               <strong>
                 <NumberValue value={value} />
               </strong>{" "}
@@ -59,7 +59,7 @@ export const BigStat = ({
                 {detail}
               </Typography>
             )}
-          </div>
+          </dl>
 
           {icon}
         </div>
