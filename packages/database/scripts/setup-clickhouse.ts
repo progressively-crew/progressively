@@ -22,13 +22,31 @@ ENGINE = MergeTree()
 PRIMARY KEY date
 `;
 
+const tableFlagHitQuery = `
+CREATE TABLE flaghits
+(
+    date DateTime,
+    visitorId String,
+    valueResolved String,
+    flagUuid String
+)
+ENGINE = MergeTree()
+PRIMARY KEY date
+`;
+
 export const setupClickhouse = async () => {
   const client = getClient();
 
-  await client.query({
-    query: tableEventQuery,
-    format: "JSONEachRow",
-  });
+  await Promise.all([
+    client.query({
+      query: tableEventQuery,
+      format: "JSONEachRow",
+    }),
+    client.query({
+      query: tableFlagHitQuery,
+      format: "JSONEachRow",
+    }),
+  ]);
 
   console.log("[Clickhouse] Db seed");
   return client.close();
@@ -37,9 +55,14 @@ export const setupClickhouse = async () => {
 export const cleanupEvents = async () => {
   const client = getClient();
 
-  await client.exec({
-    query: "DELETE FROM events WHERE 1=1;",
-  });
+  await Promise.all([
+    client.exec({
+      query: "DELETE FROM events WHERE 1=1;",
+    }),
+    client.exec({
+      query: "DELETE FROM flaghits WHERE 1=1;",
+    }),
+  ]);
 
   console.log("[Clickhouse] Tables are empty");
 
