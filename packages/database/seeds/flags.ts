@@ -56,40 +56,6 @@ export const seedFlags = async (prismaClient: PrismaClient) => {
   return [homePageFlag, footerFlag, asideFlag, multiVariate] as const;
 };
 
-export const seedFlagHits = async (
-  prismaClient: PrismaClient,
-  flag: Flag,
-  date: Date,
-  count = 10
-) => {
-  date.setHours(2);
-  date.setMinutes(2);
-  date.setSeconds(2);
-  date.setMilliseconds(2);
-
-  for (let i = 0; i < count; i++) {
-    await prismaClient.flagHit.create({
-      data: {
-        flagUuid: flag.uuid,
-        valueResolved: "true",
-        date,
-        visitorId: "1",
-      },
-    });
-
-    if (i < count / 2) {
-      await prismaClient.flagHit.create({
-        data: {
-          flagUuid: flag.uuid,
-          valueResolved: "false",
-          date,
-          visitorId: "1",
-        },
-      });
-    }
-  }
-};
-
 export const seedFlagHitsVariants = async (
   prismaClient: PrismaClient,
   flag: Flag
