@@ -249,6 +249,9 @@ export class ProjectsService {
       where: {
         projectUuid: projectId,
       },
+      include: {
+        funnelEntries: true,
+      },
     });
   }
 }

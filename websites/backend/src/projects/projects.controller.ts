@@ -228,12 +228,14 @@ export class ProjectsController {
   @UseGuards(JwtAuthGuard)
   async getFunnels(
     @Param('id') id: string,
-    @Query('startDate') startDate: string | undefined,
-    @Query('endDate') endDate: string | undefined,
+    @Query('timeframe') timeframe: string,
   ) {
-    if (!endDate || !startDate) {
-      throw new BadRequestException('startDate and endDate are required.');
+    if (!Timeframes.includes(timeframe)) {
+      throw new BadRequestException('timeframe is required.');
     }
+    const tf = Number(timeframe) as Timeframe;
+
+    const projectFunnels = await this.projectService.getFunnels(id);
 
     // TODO: Make sure it works
     return [];
