@@ -153,14 +153,15 @@ export class FlagsService {
     });
   }
 
+  async deleteFlagHitsOfFlag(flagUuid: string) {
+    return await this.clickhouse.exec({
+      query: `DELETE FROM flaghits WHERE flagUuid = '${flagUuid}'`,
+    });
+  }
+
   async deleteFlag(flagId: string) {
     const deleteQueries = [
       this.prisma.webhook.deleteMany({
-        where: {
-          flagUuid: flagId,
-        },
-      }),
-      this.prisma.flagHit.deleteMany({
         where: {
           flagUuid: flagId,
         },
@@ -198,6 +199,8 @@ export class FlagsService {
 
     const [, , , , , flagRemoved] =
       await this.prisma.$transaction(deleteQueries);
+
+    await this.deleteFlagHitsOfFlag(flagId);
 
     return flagRemoved;
   }

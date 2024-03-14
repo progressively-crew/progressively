@@ -41,19 +41,19 @@ export class FunnelsService {
       if (funnelEntry.flag) {
         const valueResolved = funnelEntry.flagVariant || 'true';
 
-        const flagHits = shouldSkipRequest
-          ? []
-          : await this.prisma.flagHit.findMany({
-              where: {
-                flagUuid: funnelEntry.flagUuid,
-                valueResolved,
-                date: {
-                  gte: new Date(startDate),
-                  lte: new Date(endDate),
-                },
-                ...visitorIdWhere,
-              },
-            });
+        const flagHits = [];
+        // ? []
+        // : await this.prisma.flagHit.findMany({
+        //     where: {
+        //       flagUuid: funnelEntry.flagUuid,
+        //       valueResolved,
+        //       date: {
+        //         gte: new Date(startDate),
+        //         lte: new Date(endDate),
+        //       },
+        //       ...visitorIdWhere,
+        //     },
+        //   });
 
         previousVisitors = flagHits.map((fh) => fh.visitorId);
 
