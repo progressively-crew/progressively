@@ -81,7 +81,6 @@ model Flag {
   createdAt   DateTime?     @default(now())
   status      String?       @default("NOT_ACTIVATED")
   FunnelEntry FunnelEntry[]
-  flagHits    FlagHit[]
   variants    Variant[]
   webhooks    Webhook[]
   activityLog ActivityLog[]
@@ -128,15 +127,6 @@ model Variant {
   createdAt       DateTime?         @default(now())
   Flag            Flag?             @relation(fields: [flagUuid], references: [uuid])
   flagUuid        String?
-}
-
-model FlagHit {
-  uuid          String   @id @default(uuid())
-  date          DateTime @default(now())
-  visitorId     String
-  valueResolved String? // previously valueResolved on flagHit, true / false
-  Flag          Flag?    @relation(fields: [flagUuid], references: [uuid])
-  flagUuid      String?
 }
 
 model Session {

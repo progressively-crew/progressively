@@ -6,6 +6,7 @@ import { MailModule } from '../mail/mail.module';
 import { DatabaseModule } from '../database/database.module';
 import { FunnelsModule } from '../funnels/funnels.module';
 import { EventsModule } from '../events/events.module';
+import { FlagsModule } from '../flags/flags.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { EventsModule } from '../events/events.module';
     DatabaseModule,
     FunnelsModule,
     EventsModule,
+    FlagsModule,
   ],
   controllers: [ProjectsController],
   providers: [ProjectsService],

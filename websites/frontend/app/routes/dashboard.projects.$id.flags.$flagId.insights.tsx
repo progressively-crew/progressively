@@ -30,25 +30,7 @@ export const meta: MetaFunction = ({ matches }) => {
   ];
 };
 
-type FlagHit = {
-  [key: string]: number;
-} & { date: string };
-
-interface FlagEvaluation {
-  valueResolved: string;
-  _count: number;
-}
-
-interface LoaderData {
-  flagEvaluationsCount: number;
-  hitsPerVariantPerDate: Array<FlagHit>;
-  flagEvaluations: Array<FlagEvaluation>;
-}
-
-export const loader: LoaderFunction = async ({
-  request,
-  params,
-}): Promise<LoaderData> => {
+export const loader: LoaderFunction = async ({ request, params }) => {
   const session = await getSession(request.headers.get("Cookie"));
   const url = new URL(request.url);
   const search = new URLSearchParams(url.search);
@@ -59,25 +41,26 @@ export const loader: LoaderFunction = async ({
     day = 7;
   }
 
-  const start = new Date();
-  start.setDate(start.getDate() - day);
-
-  const end = new Date();
-  end.setDate(end.getDate() + 1);
-
   const authCookie = session.get("auth-cookie");
-  const {
-    hitsPerVariantPerDate,
-    flagEvaluations,
-  }: {
-    hitsPerVariantPerDate: Array<FlagHit>;
-    flagEvaluations: Array<FlagEvaluation>;
-  } = await getFlagHits(params.flagId!, start, end, authCookie);
+  const { hitsPerVariantPerDate: hitsPerVariantPerDateData, flagEvaluations } =
+    await getFlagHits(params.flagId!, day, authCookie);
 
-  const flagEvaluationsCount = flagEvaluations.reduce(
-    (acc, curr) => acc + curr._count,
-    0
-  );
+  const dateDict: Record<any, any> = {};
+  let flagEvaluationsCount: number = 0;
+
+  for (const ev of hitsPerVariantPerDateData) {
+    if (!dateDict[ev.date]) {
+      dateDict[ev.date] = {};
+    }
+
+    flagEvaluationsCount += ev.count;
+    dateDict[ev.date][ev.valueResolved] = ev.count;
+  }
+
+  const hitsPerVariantPerDate = Object.keys(dateDict).map((date) => ({
+    date,
+    ...dateDict[date],
+  }));
 
   return {
     flagEvaluationsCount,
@@ -86,14 +69,7 @@ export const loader: LoaderFunction = async ({
   };
 };
 
-type ActionDataType = null | {
-  errors?: { [key: string]: string | undefined };
-};
-
-export const action: ActionFunction = async ({
-  request,
-  params,
-}): Promise<ActionDataType> => {
+export const action: ActionFunction = async ({ request, params }) => {
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
   const formData = await request.formData();
@@ -108,7 +84,7 @@ export const action: ActionFunction = async ({
 
 export default function FlagInsights() {
   const { hitsPerVariantPerDate, flagEvaluations, flagEvaluationsCount } =
-    useLoaderData<LoaderData>();
+    useLoaderData<typeof loader>();
   const { flag } = useFlag();
   const { project } = useProject();
 
@@ -130,11 +106,11 @@ export default function FlagInsights() {
             <BigStat
               key={flagEval.valueResolved}
               label={flagEval.valueResolved}
-              value={flagEval._count}
+              value={flagEval.count}
               unit={"evals."}
               icon={<VariantDot variant={flagEval.valueResolved} size="L" />}
               detail={`${
-                Math.round((flagEval._count / flagEvaluationsCount) * 10_000) /
+                Math.round((flagEval.count / flagEvaluationsCount) * 10_000) /
                 100
               }%`}
             />

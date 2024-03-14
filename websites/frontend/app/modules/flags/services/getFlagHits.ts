@@ -2,14 +2,12 @@ import { Constants } from "~/constants";
 
 export const getFlagHits = async (
   flagId: string,
-  startDate: Date,
-  endDate: Date,
+  timeframe: number,
   accessToken: string
 ) => {
   const url = new URL(`${Constants.BackendUrl}/flags/${flagId}/hits`);
 
-  url.searchParams.set("startDate", startDate.toISOString());
-  url.searchParams.set("endDate", endDate.toISOString());
+  url.searchParams.set("timeframe", String(timeframe));
 
   return fetch(url, {
     headers: {

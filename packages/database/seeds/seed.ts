@@ -1,10 +1,11 @@
 import { PrismaClient } from "@prisma/client";
 import { seedActivity } from "./activity";
-import { seedFlagHits, seedFlagHitsVariants, seedFlags } from "./flags";
+import { seedFlags } from "./flags";
 import { seedProjects } from "./projects";
 import { seedPasswordReset, seedUsers } from "./users";
-import { cleanupEvents, setupClickhouse } from "../scripts/setup-clickhouse";
+import { cleanupEvents } from "../scripts/setup-clickhouse";
 import { seedEvents } from "./events";
+import { seedFlagHits, seedFlagHitsVariants } from "./flaghits";
 
 const prismaClient = new PrismaClient();
 
@@ -26,7 +27,9 @@ const SEED_ROUND_EVENT_HITS = process.env.SEED_ROUND_EVENT_HITS
 export const seedDb = async (opts?: { eventsCount?: number }) => {
   guardSeeding();
 
-  await seedEvents(opts?.eventsCount || SEED_ROUND_EVENT_HITS);
+  const eventCount = opts?.eventsCount || SEED_ROUND_EVENT_HITS;
+
+  await seedEvents(eventCount);
 
   await prismaClient.$connect();
 
@@ -131,18 +134,9 @@ export const seedDb = async (opts?: { eventsCount?: number }) => {
       },
     });
 
-    await seedFlagHits(prismaClient, homePageFlag, new Date(1992, 0, 1, 1), 10);
-    await seedFlagHits(prismaClient, homePageFlag, new Date(1992, 0, 3, 1), 20);
-    await seedFlagHits(prismaClient, homePageFlag, new Date(1992, 0, 2, 1), 40);
-    await seedFlagHits(prismaClient, homePageFlag, new Date(1992, 0, 6, 1), 10);
+    await seedFlagHits(homePageFlag, eventCount / 2);
 
-    await seedFlagHits(prismaClient, multiVariate, new Date(1992, 0, 1, 1), 10);
-
-    await seedFlagHits(prismaClient, multiVariate, new Date(1992, 0, 3, 1), 20);
-    await seedFlagHits(prismaClient, multiVariate, new Date(1992, 0, 2, 1), 40);
-    await seedFlagHits(prismaClient, multiVariate, new Date(1992, 0, 6, 1), 10);
-
-    await seedFlagHitsVariants(prismaClient, multiVariate);
+    await seedFlagHitsVariants(multiVariate, eventCount);
 
     // End of Flag setup
   } catch (e) {
