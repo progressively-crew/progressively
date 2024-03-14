@@ -27,10 +27,6 @@ const SEED_ROUND_EVENT_HITS = process.env.SEED_ROUND_EVENT_HITS
 export const seedDb = async (opts?: { eventsCount?: number }) => {
   guardSeeding();
 
-  const eventCount = opts?.eventsCount || SEED_ROUND_EVENT_HITS;
-
-  await seedEvents(eventCount);
-
   await prismaClient.$connect();
 
   try {
@@ -43,22 +39,22 @@ export const seedDb = async (opts?: { eventsCount?: number }) => {
     await seedPasswordReset(prismaClient, john); // Necessary to e2e test password reset
 
     //  Contextual seeding
-
-    await prismaClient.userProject.create({
-      data: {
-        projectId: projectFromSeeding.uuid,
-        userId: marvin.uuid,
-        role: "admin",
-      },
-    });
-
-    await prismaClient.userProject.create({
-      data: {
-        projectId: projectFromSeeding.uuid,
-        userId: john.uuid,
-        role: "user",
-      },
-    });
+    await Promise.all([
+      prismaClient.userProject.create({
+        data: {
+          projectId: projectFromSeeding.uuid,
+          userId: marvin.uuid,
+          role: "admin",
+        },
+      }),
+      prismaClient.userProject.create({
+        data: {
+          projectId: projectFromSeeding.uuid,
+          userId: john.uuid,
+          role: "user",
+        },
+      }),
+    ]);
 
     // Flag setup
     const [homePageFlag, footerFlag, asideFlag, multiVariate] = await seedFlags(
@@ -68,75 +64,80 @@ export const seedDb = async (opts?: { eventsCount?: number }) => {
     await seedActivity(homePageFlag, prismaClient);
 
     // Multi variate setup
-    const firstVariant = await prismaClient.variant.create({
-      data: {
-        uuid: "1",
-        isControl: true,
-        value: "Control",
-        flagUuid: multiVariate.uuid,
-      },
-    });
-
-    const secondVariant = await prismaClient.variant.create({
-      data: {
-        uuid: "2",
-        isControl: false,
-        value: "Second",
-        flagUuid: multiVariate.uuid,
-      },
-    });
+    const [firstVariant, secondVariant] = await Promise.all([
+      prismaClient.variant.create({
+        data: {
+          uuid: "1",
+          isControl: true,
+          value: "Control",
+          flagUuid: multiVariate.uuid,
+        },
+      }),
+      prismaClient.variant.create({
+        data: {
+          uuid: "2",
+          isControl: false,
+          value: "Second",
+          flagUuid: multiVariate.uuid,
+        },
+      }),
+    ]);
 
     // End of multi variate setup
-    await prismaClient.strategy.create({
-      data: {
-        uuid: "1",
-        flagUuid: homePageFlag.uuid,
-        valueToServeType: "Boolean",
-      },
-    });
-
-    await prismaClient.strategy.create({
-      data: {
-        uuid: "2",
-        flagUuid: footerFlag.uuid,
-        valueToServe: undefined,
-        valueToServeType: "Boolean",
-        rolloutPercentage: 100,
-        rules: {
-          create: [
-            {
-              fieldName: "id",
-              fieldComparator: "eq",
-              fieldValue: "1::ffff:127.0.0.1",
-            },
-          ],
+    await Promise.all([
+      prismaClient.strategy.create({
+        data: {
+          uuid: "1",
+          flagUuid: homePageFlag.uuid,
+          valueToServeType: "Boolean",
         },
-      },
-    });
-
-    await prismaClient.strategy.create({
-      data: {
-        uuid: "3",
-        flagUuid: multiVariate.uuid,
-        valueToServeType: "Variant",
-        variants: {
-          create: [
-            {
-              variantUuid: firstVariant.uuid,
-              rolloutPercentage: 50,
-            },
-            {
-              variantUuid: secondVariant.uuid,
-              rolloutPercentage: 50,
-            },
-          ],
+      }),
+      prismaClient.strategy.create({
+        data: {
+          uuid: "2",
+          flagUuid: footerFlag.uuid,
+          valueToServe: undefined,
+          valueToServeType: "Boolean",
+          rolloutPercentage: 100,
+          rules: {
+            create: [
+              {
+                fieldName: "id",
+                fieldComparator: "eq",
+                fieldValue: "1::ffff:127.0.0.1",
+              },
+            ],
+          },
         },
-      },
-    });
+      }),
+      prismaClient.strategy.create({
+        data: {
+          uuid: "3",
+          flagUuid: multiVariate.uuid,
+          valueToServeType: "Variant",
+          variants: {
+            create: [
+              {
+                variantUuid: firstVariant.uuid,
+                rolloutPercentage: 50,
+              },
+              {
+                variantUuid: secondVariant.uuid,
+                rolloutPercentage: 50,
+              },
+            ],
+          },
+        },
+      }),
+    ]);
 
-    await seedFlagHits(homePageFlag, eventCount / 2);
+    const eventCount = opts?.eventsCount || SEED_ROUND_EVENT_HITS;
 
-    await seedFlagHitsVariants(multiVariate, eventCount);
+    await Promise.all([
+      seedEvents(eventCount),
+      seedFlagHits(homePageFlag, eventCount / 2),
+      seedFlagHitsVariants(multiVariate, eventCount),
+    ]);
 
     // End of Flag setup
   } catch (e) {

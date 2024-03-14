@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 
 export const seedProjects = async (prismaClient: PrismaClient) => {
-  const projectFromSeeding = await prismaClient.project.create({
+  const projectFromSeeding = prismaClient.project.create({
     data: {
       uuid: "1",
       name: "Project from seeding",
@@ -11,7 +11,7 @@ export const seedProjects = async (prismaClient: PrismaClient) => {
     },
   });
 
-  const otherFromSeeding = await prismaClient.project.create({
+  const otherFromSeeding = prismaClient.project.create({
     data: {
       uuid: "2",
       name: "Other from seeding",
@@ -21,5 +21,5 @@ export const seedProjects = async (prismaClient: PrismaClient) => {
     },
   });
 
-  return [projectFromSeeding, otherFromSeeding] as const;
+  return Promise.all([projectFromSeeding, otherFromSeeding]);
 };
