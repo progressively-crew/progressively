@@ -68,7 +68,7 @@ describe("/dashboard/projects/[id]/analytics", () => {
     });
   });
 
-  describe.only("general verifications", () => {
+  describe("general verifications", () => {
     beforeEach(() => {
       cy.signIn("Marvin");
     });

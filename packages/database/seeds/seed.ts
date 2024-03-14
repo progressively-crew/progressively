@@ -27,7 +27,9 @@ const SEED_ROUND_EVENT_HITS = process.env.SEED_ROUND_EVENT_HITS
 export const seedDb = async (opts?: { eventsCount?: number }) => {
   guardSeeding();
 
-  await seedEvents(opts?.eventsCount || SEED_ROUND_EVENT_HITS);
+  const eventCount = opts?.eventsCount || SEED_ROUND_EVENT_HITS;
+
+  await seedEvents(eventCount);
 
   await prismaClient.$connect();
 
@@ -132,15 +134,9 @@ export const seedDb = async (opts?: { eventsCount?: number }) => {
       },
     });
 
-    await seedFlagHits(
-      homePageFlag,
-      (opts?.eventsCount || SEED_ROUND_EVENT_HITS) / 2
-    );
+    await seedFlagHits(homePageFlag, eventCount / 2);
 
-    await seedFlagHitsVariants(
-      multiVariate,
-      opts?.eventsCount || SEED_ROUND_EVENT_HITS
-    );
+    await seedFlagHitsVariants(multiVariate, eventCount);
 
     // End of Flag setup
   } catch (e) {
