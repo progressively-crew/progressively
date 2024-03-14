@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 
 export const seedFlags = async (prismaClient: PrismaClient) => {
-  const homePageFlag = await prismaClient.flag.create({
+  const homePageFlag = prismaClient.flag.create({
     data: {
       uuid: "1",
       name: "New homepage",
@@ -19,7 +19,7 @@ export const seedFlags = async (prismaClient: PrismaClient) => {
     },
   });
 
-  const footerFlag = await prismaClient.flag.create({
+  const footerFlag = prismaClient.flag.create({
     data: {
       uuid: "2",
       name: "New footer",
@@ -30,7 +30,7 @@ export const seedFlags = async (prismaClient: PrismaClient) => {
     },
   });
 
-  const asideFlag = await prismaClient.flag.create({
+  const asideFlag = prismaClient.flag.create({
     data: {
       uuid: "3",
       name: "New aside",
@@ -39,7 +39,7 @@ export const seedFlags = async (prismaClient: PrismaClient) => {
     },
   });
 
-  const multiVariate = await prismaClient.flag.create({
+  const multiVariate = prismaClient.flag.create({
     data: {
       uuid: "4",
       name: "With multivariate",
@@ -49,5 +49,5 @@ export const seedFlags = async (prismaClient: PrismaClient) => {
     },
   });
 
-  return [homePageFlag, footerFlag, asideFlag, multiVariate] as const;
+  return Promise.all([homePageFlag, footerFlag, asideFlag, multiVariate]);
 };

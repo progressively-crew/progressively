@@ -18,7 +18,7 @@ class CryptoService {
 }
 
 export const seedUsers = async (prismaClient: PrismaClient) => {
-  const marvin = await prismaClient.user.create({
+  const marvinData = prismaClient.user.create({
     data: {
       uuid: "1",
       fullname: "Marvin Frachet",
@@ -29,7 +29,7 @@ export const seedUsers = async (prismaClient: PrismaClient) => {
     },
   });
 
-  const john = await prismaClient.user.create({
+  const johnData = prismaClient.user.create({
     data: {
       uuid: "2",
       fullname: "John Doe",
@@ -40,7 +40,7 @@ export const seedUsers = async (prismaClient: PrismaClient) => {
     },
   });
 
-  const jane = await prismaClient.user.create({
+  const janeData = prismaClient.user.create({
     data: {
       fullname: "Jane Doe",
       email: "jane.doe@gmail.com",
@@ -50,7 +50,7 @@ export const seedUsers = async (prismaClient: PrismaClient) => {
     },
   });
 
-  const joe = await prismaClient.user.create({
+  const joeData = prismaClient.user.create({
     data: {
       fullname: "Joe Doe",
       email: "joe.doe@gmail.com",
@@ -60,7 +60,7 @@ export const seedUsers = async (prismaClient: PrismaClient) => {
     },
   });
 
-  const gina = await prismaClient.user.create({
+  const ginaData = prismaClient.user.create({
     data: {
       uuid: "4",
       fullname: "Gina Doe",
@@ -71,7 +71,7 @@ export const seedUsers = async (prismaClient: PrismaClient) => {
     },
   });
 
-  const withoutFullName = await prismaClient.user.create({
+  const withoutFullNameData = prismaClient.user.create({
     data: {
       uuid: "5",
       fullname: "",
@@ -82,7 +82,7 @@ export const seedUsers = async (prismaClient: PrismaClient) => {
     },
   });
 
-  return [marvin, john, jane, gina, withoutFullName] as const;
+  return Promise.all([marvinData, johnData, janeData, withoutFullNameData]);
 };
 
 export const seedPasswordReset = async (
