@@ -37,6 +37,7 @@ import { post, WebhooksEventsToFlagStatus } from '../webhooks/utils';
 import { ActivityLogService } from '../activity-log/activity-log.service';
 import { UserId } from '../users/users.decorator';
 import { FlagAlreadyExists } from '../projects/errors';
+import { Timeframe, Timeframes } from '../events/types';
 
 @ApiBearerAuth()
 @Controller()
@@ -129,25 +130,17 @@ export class FlagsController {
   @UseGuards(JwtAuthGuard)
   async getFlagHits(
     @Param('flagId') flagId: string,
-    @Query('startDate') startDate: string | undefined,
-    @Query('endDate') endDate: string | undefined,
+    @Query('timeframe') timeframe: string,
   ) {
-    if (!endDate || !startDate) {
-      throw new BadRequestException('startDate and endDate are required.');
+    if (!Timeframes.includes(timeframe)) {
+      throw new BadRequestException('timeframe is required.');
     }
+    const tf = Number(timeframe) as Timeframe;
 
-    const hitsPerVariantPerDate =
-      await this.flagService.flagEvaluationsOverTime(
-        flagId,
-        startDate,
-        endDate,
-      );
-
-    const flagEvaluations = await this.flagService.flagEvaluations(
-      flagId,
-      startDate,
-      endDate,
-    );
+    const [hitsPerVariantPerDate, flagEvaluations] = await Promise.all([
+      this.flagService.getFlagEvaluationsGroupedByDate(flagId, tf),
+      this.flagService.flagEvaluations(flagId, tf),
+    ]);
 
     return {
       hitsPerVariantPerDate,

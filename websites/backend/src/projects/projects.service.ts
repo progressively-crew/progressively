@@ -5,12 +5,14 @@ import { UserRoles } from '../users/roles';
 import { PrismaService } from '../database/prisma.service';
 import { FlagAlreadyExists } from './errors';
 import { EventsService } from '../events/events.service';
+import { FlagsService } from '../flags/flags.service';
 
 @Injectable()
 export class ProjectsService {
   constructor(
     private prisma: PrismaService,
     private eventService: EventsService,
+    private flagService: FlagsService,
   ) {}
 
   flagsByProject(projectId: string) {
@@ -154,13 +156,7 @@ export class ProjectsService {
           },
         },
       }),
-      this.prisma.flagHit.deleteMany({
-        where: {
-          Flag: {
-            projectUuid: projectId,
-          },
-        },
-      }),
+
       this.prisma.rule.deleteMany({
         where: {
           Strategy: {
@@ -216,6 +212,7 @@ export class ProjectsService {
 
     const result = await this.prisma.$transaction(deleteQueries);
     await this.eventService.deleteForProject(projectId);
+    await this.flagService.deleteFlagHitsOfProject(projectId);
     return result[result.length - 1];
   }
 

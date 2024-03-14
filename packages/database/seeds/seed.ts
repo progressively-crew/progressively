@@ -132,16 +132,10 @@ export const seedDb = async (opts?: { eventsCount?: number }) => {
       },
     });
 
-    await seedFlagHits(homePageFlag, new Date(1992, 0, 1, 1), 10);
-    await seedFlagHits(homePageFlag, new Date(1992, 0, 3, 1), 20);
-    await seedFlagHits(homePageFlag, new Date(1992, 0, 2, 1), 40);
-    await seedFlagHits(homePageFlag, new Date(1992, 0, 6, 1), 10);
-
-    await seedFlagHits(multiVariate, new Date(1992, 0, 1, 1), 10);
-
-    await seedFlagHits(multiVariate, new Date(1992, 0, 3, 1), 20);
-    await seedFlagHits(multiVariate, new Date(1992, 0, 2, 1), 40);
-    await seedFlagHits(multiVariate, new Date(1992, 0, 6, 1), 10);
+    await seedFlagHits(
+      homePageFlag,
+      (opts?.eventsCount || SEED_ROUND_EVENT_HITS) / 2
+    );
 
     await seedFlagHitsVariants(
       multiVariate,

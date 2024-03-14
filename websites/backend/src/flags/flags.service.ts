@@ -1,14 +1,19 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
 import { FlagStatus } from './flags.status';
 import { PopulatedFlag, QueuedFlagHit, Variant } from './types';
 import { VariantCreationDTO } from './flags.dto';
 import camelcase from 'camelcase';
 import { FlagAlreadyExists } from '../projects/errors';
+import { ClickHouseClient } from '@progressively/database';
+import { Timeframe } from '../events/types';
 
 @Injectable()
 export class FlagsService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    @Inject('ClickhouseService') private readonly clickhouse: ClickHouseClient,
+  ) {}
 
   getPopulatedFlags(projectId: string) {
     return this.prisma.flag.findMany({
@@ -70,95 +75,81 @@ export class FlagsService {
   }
 
   hitFlag(queuedFlagHit: QueuedFlagHit) {
-    // Make it easier to group by date, 2 is arbitrary
     const date = new Date();
 
-    date.setHours(2);
-    date.setMinutes(2);
-    date.setSeconds(2);
-    date.setMilliseconds(2);
+    const flagHit = {
+      date,
+      visitorId: queuedFlagHit.visitorId,
+      valueResolved: queuedFlagHit.valueResolved,
+      flagUuid: queuedFlagHit.flagId,
+    };
 
-    return this.prisma.flagHit.create({
-      data: {
-        flagUuid: queuedFlagHit.flagId,
-        valueResolved: queuedFlagHit.valueResolved,
-        date,
-        visitorId: queuedFlagHit.visitorId,
+    return this.clickhouse.insert({
+      table: 'flaghits',
+      values: [flagHit],
+      format: 'JSONEachRow',
+      clickhouse_settings: {
+        // Allows to insert serialized JS Dates (such as '2023-12-06T10:54:48.000Z')
+        date_time_input_format: 'best_effort',
       },
     });
   }
 
-  async flagEvaluations(flagId: string, startDate: string, endDate: string) {
-    return this.prisma.flagHit.groupBy({
-      by: ['valueResolved'],
-      _count: true,
-      where: {
-        flagUuid: flagId,
-        date: {
-          gte: new Date(startDate),
-          lte: new Date(endDate),
-        },
-      },
+  async flagEvaluations(flagId: string, timeframe: Timeframe) {
+    const resultSet = await this.clickhouse.query({
+      query: `SELECT
+      valueResolved,
+      COUNT(*) AS count
+  FROM
+      flaghits
+  WHERE
+      flagUuid = '${flagId}' AND
+      date >= now() - INTERVAL ${timeframe} DAY
+  GROUP BY
+      valueResolved`,
+      format: 'JSONEachRow',
     });
+
+    const dataset: Array<{
+      valueResolved: string;
+      count: number;
+    }> = await resultSet.json();
+
+    return dataset;
   }
 
-  async flagEvaluationsOverTime(
-    flagId: string,
-    startDate: string,
-    endDate: string,
-  ) {
-    const distinctFlagHitValues = await this.getDistinctFlagHitValues(
-      flagId,
-      startDate,
-      endDate,
-    );
+  async getFlagEvaluationsGroupedByDate(flagId: string, timeframe: Timeframe) {
+    const resultSet = await this.clickhouse.query({
+      query: `SELECT
+          toDate(date) AS date,
+          valueResolved,
+          CAST(COUNT(*) AS Int32) AS count
+      FROM
+          flaghits
+      WHERE
+          flagUuid = '${flagId}' AND
+          date >= now() - INTERVAL ${timeframe} DAY
+      GROUP BY
+          date,
+          valueResolved
+      ORDER BY
+          valueResolved ASC,
+          date ASC`,
+      format: 'JSONEachRow',
+    });
 
-    const dictByDates = {};
+    const dataset: Array<{
+      valueResolved: string;
+      date: string;
+      count: number;
+    }> = await resultSet.json();
 
-    for (const dhv of distinctFlagHitValues) {
-      const hitsByDate = await this.prisma.flagHit.groupBy({
-        _count: true,
-        by: ['valueResolved', 'date'],
-        where: {
-          valueResolved: dhv.valueResolved,
-          flagUuid: flagId,
-          date: {
-            gte: new Date(startDate),
-            lte: new Date(endDate),
-          },
-        },
-        orderBy: {
-          date: 'asc',
-        },
-      });
-
-      hitsByDate.forEach((hbd) => {
-        const isoDate = hbd.date.toISOString();
-
-        if (!dictByDates[isoDate]) {
-          dictByDates[isoDate] = {};
-        }
-
-        dictByDates[isoDate]['date'] = isoDate;
-        dictByDates[isoDate][dhv.valueResolved] = hbd._count;
-      });
-    }
-
-    return Object.keys(dictByDates)
-      .sort()
-      .map((k) => dictByDates[k]);
+    return dataset;
   }
 
-  getDistinctFlagHitValues(flagId: string, startDate: string, endDate: string) {
-    return this.prisma.flagHit.findMany({
-      distinct: ['valueResolved'],
-      where: {
-        flagUuid: flagId,
-        date: {
-          gte: new Date(startDate),
-          lte: new Date(endDate),
-        },
-      },
+  async deleteFlagHitsOfProject(projectId: string) {
+    return await this.clickhouse.exec({
+      query: `DELETE FROM flaghits WHERE projectUuid = '${projectId}'`,
     });
   }
 

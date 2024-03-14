@@ -15,11 +15,15 @@ const createFlagHit = (
   };
 };
 
-export const seedFlagHitsVariants = async (flag: Flag, count = 1) => {
+export const seedFlagHitsVariants = async (
+  flag: Flag,
+  hitCount: number = 1
+) => {
   const client = getClient();
   const values = [];
-  for (let i = 1; i <= count; i++) {
+  for (let i = 1; i <= hitCount; i++) {
     const date = new Date();
+    date.setDate(date.getDate() - hitCount + i);
 
     const count = i / 2;
 
@@ -47,17 +51,23 @@ export const seedFlagHitsVariants = async (flag: Flag, count = 1) => {
   return client.close();
 };
 
-export const seedFlagHits = async (flag: Flag, date: Date, count = 10) => {
+export const seedFlagHits = async (flag: Flag, hitCount = 1) => {
   const client = getClient();
-
   const values = [];
-  for (let i = 0; i < count; i++) {
-    const flagHit = createFlagHit(date, flag.uuid, "true", "1");
-    values.push(flagHit);
+  for (let i = 1; i <= hitCount; i++) {
+    const date = new Date();
+    date.setDate(date.getDate() - hitCount + i);
 
-    if (i < count / 2) {
-      const flagHit2 = createFlagHit(date, flag.uuid, "false", "1");
-      values.push(flagHit2);
+    const count = i / 2;
+
+    for (let y = 0; y < count; y++) {
+      const flagHit = createFlagHit(date, flag.uuid, "true", "1");
+      values.push(flagHit);
+
+      if (y < count / 2) {
+        const flagHit2 = createFlagHit(date, flag.uuid, "false", "1");
+        values.push(flagHit2);
+      }
     }
   }
 
