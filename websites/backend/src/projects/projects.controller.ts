@@ -235,13 +235,8 @@ export class ProjectsController {
       throw new BadRequestException('startDate and endDate are required.');
     }
 
-    const funnels = await this.projectService.getFunnels(id);
-    return await this.funnelService.buildFunnelCharts(
-      id,
-      funnels,
-      startDate,
-      endDate,
-    );
+    // TODO: Make sure it works
+    return [];
   }
 
   @Get(':id/events/fields')
@@ -303,11 +298,6 @@ export class ProjectsController {
 
     const tf = Number(timeframe) as Timeframe;
 
-    const eventsGroupedByDate = await this.eventService.getEventsGroupedByDate(
-      id,
-      tf,
-    );
-
-    return eventsGroupedByDate;
+    return await this.eventService.getEventsGroupedByDate(id, tf);
   }
 }
