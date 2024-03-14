@@ -149,7 +149,7 @@ export class FlagsService {
 
   async deleteFlagHitsOfProject(projectId: string) {
     return await this.clickhouse.exec({
-      query: `DELETE FROM flaghits WHERE projectUuid = '${projectId}'`,
+      query: `DELETE FROM flaghits WHERE flagUuid = '${projectId}'`,
     });
   }
 
