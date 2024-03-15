@@ -254,4 +254,38 @@ export class EventsService {
       query: `DELETE FROM events WHERE projectUuid = '${projectId}'`,
     });
   }
+
+  async getDistinctEvents(projectId: string, timeframe: Timeframe) {
+    const resultSet = await this.clickhouse.query({
+      query: `
+      SELECT DISTINCT name
+      FROM events
+      WHERE date >= now() - INTERVAL ${timeframe} DAY
+      AND projectUuid = '${projectId}';`,
+      format: 'JSONEachRow',
+    });
+
+    const dataset: Array<{
+      name: string;
+    }> = await resultSet.json();
+
+    return dataset;
+  }
+
+  async getDistinctUrl(projectId: string, timeframe: Timeframe) {
+    const resultSet = await this.clickhouse.query({
+      query: `
+      SELECT DISTINCT url
+      FROM events
+      WHERE date >= now() - INTERVAL ${timeframe} DAY
+      AND projectUuid = '${projectId}';`,
+      format: 'JSONEachRow',
+    });
+
+    const dataset: Array<{
+      url: string;
+    }> = await resultSet.json();
+
+    return dataset;
+  }
 }

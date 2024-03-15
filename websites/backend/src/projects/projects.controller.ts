@@ -237,8 +237,12 @@ export class ProjectsController {
 
     const projectFunnels = await this.projectService.getFunnels(id);
 
+    const promiseOfFunnels = await Promise.all(
+      projectFunnels.map((f) => this.funnelService.resolveFunnels(f)),
+    );
+
     // TODO: Make sure it works
-    return [];
+    return promiseOfFunnels;
   }
 
   @Get(':id/events/fields')
@@ -271,6 +275,22 @@ export class ProjectsController {
     };
   }
 
+  @Get(':id/events')
+  @UseGuards(HasProjectAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  async getDistinctEvents(
+    @Param('id') id: string,
+    @Query('timeframe') timeframe: string,
+  ) {
+    if (!Timeframes.includes(timeframe)) {
+      throw new BadRequestException('timeframe is required.');
+    }
+
+    const tf = Number(timeframe) as Timeframe;
+
+    return await this.eventService.getDistinctEvents(id, tf);
+  }
+
   @Get(':id/events/page-views')
   @UseGuards(HasProjectAccessGuard)
   @UseGuards(JwtAuthGuard)
@@ -301,5 +321,21 @@ export class ProjectsController {
     const tf = Number(timeframe) as Timeframe;
 
     return await this.eventService.getEventsGroupedByDate(id, tf);
+  }
+
+  @Get(':id/events/urls')
+  @UseGuards(HasProjectAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  async getDistinctUrl(
+    @Param('id') id: string,
+    @Query('timeframe') timeframe: string,
+  ) {
+    if (!Timeframes.includes(timeframe)) {
+      throw new BadRequestException('timeframe is required.');
+    }
+
+    const tf = Number(timeframe) as Timeframe;
+
+    return await this.eventService.getDistinctUrl(id, tf);
   }
 }

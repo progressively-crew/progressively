@@ -22,14 +22,17 @@ export const initialState: FunnelCreationState = {
 
 export const getInitialState = (
   flags: Array<FlagWithVariant>,
-  eventNames: Array<string>
+  eventNames: Array<{ name: string }>
 ): FunnelCreationState => ({
   funnelEntries: [],
   flagOptions: flags.map((flag) => ({
     label: flag.name,
     value: flag.uuid,
   })),
-  eventNameOptions: eventNames.map((ev) => ({ label: ev, value: ev })),
+  eventNameOptions: eventNames.map((ev) => ({
+    label: ev.name,
+    value: ev.name,
+  })),
 });
 
 export const funnelCreationReducer = (
