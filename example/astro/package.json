@@ -15,6 +15,7 @@
   "dependencies": {
     "@astrojs/node": "^2.0.2",
     "@progressively/react": "workspace:*",
+    "@progressively/qualitative-analytics": "workspace:*",
     "@progressively/server-side": "workspace:*",
     "astro": "^1.6.0",
     "react": "^18.2.0",
