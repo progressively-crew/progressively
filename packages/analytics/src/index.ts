@@ -1,19 +1,7 @@
-const scriptEl = window.document.currentScript;
+import { setup } from "./setup";
+import { setupNavigationListeners } from "./setup-navigation-listeners";
 
-const endpoint = scriptEl?.getAttribute("data-progressively-endpoint");
-const clientKey = scriptEl?.getAttribute("data-progressively-client-key");
-
-if (!endpoint || !clientKey) {
-  throw new Error(
-    "[Progressively]: [data-progressively-endpoint] and [data-progressively-client-key] attributes should be set on the script tag."
-  );
-}
-
-const fields = {
-  clientKey: clientKey,
-};
-
-const bSixtyFour = btoa(JSON.stringify(fields));
+const { endpoint, bSixtyFour } = setup();
 
 const track = (eventName: string) => {
   const payload = {
@@ -33,24 +21,7 @@ const track = (eventName: string) => {
 
 const trackPageView = () => track("Page View");
 
-// Listen for popstate event (triggered by browser navigation buttons)
-
-window.addEventListener("popstate", trackPageView);
-
-// Intercept history.pushState and history.replaceState to detect SPA navigation changes
-const originalPushState = history.pushState;
-const originalReplaceState = history.replaceState;
-
-history.pushState = function (...args) {
-  originalPushState.apply(this, args);
-  trackPageView();
-};
-
-history.replaceState = function (...args) {
-  originalReplaceState.apply(this, args);
-  trackPageView();
-};
-
+setupNavigationListeners(trackPageView);
 trackPageView();
 
 (window as any).track = track;
