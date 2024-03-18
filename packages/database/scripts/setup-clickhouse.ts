@@ -13,6 +13,8 @@ CREATE TABLE events
     url String,
     referer Nullable(String),
     data Nullable(String),
+    posX Nullable(UInt32),
+    posY Nullable(UInt32),
     projectUuid Nullable(String),
     sessionUuid Nullable(String),
     viewportHeight Nullable(Int32),
