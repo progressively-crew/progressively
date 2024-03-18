@@ -8,19 +8,19 @@ export class FunnelsService {
   constructor(private prisma: PrismaService) {}
 
   resolveFunnels(funnel: Funnel & { funnelEntries: Array<FunnelEntry> }) {
-    let query = ``;
-
     const withClauses = funnel.funnelEntries
       .map((funnelEntry, index) => {
         const table = funnelEntry.flagUuid ? 'flaghits' : 'events';
+        const fields =
+          index === 0 && funnelEntry.flagUuid ? 'flagUuid as name' : 'name';
+
         const actualTable = index === 0 ? table : `step${index - 1}`;
         const whereClause = funnelEntry.flagUuid
-          ? `flagUuid = '${funnelEntry.flagUuid}'`
+          ? `name = '${funnelEntry.flagUuid}'`
           : `name = '${funnelEntry.eventName}'`;
 
-        query +
-          `WITH step${index} AS (
-          SELECT visitorId
+        return `step${index} AS (
+          SELECT visitorId, ${fields}
           FROM ${actualTable}
           WHERE ${whereClause}
         )`;
@@ -33,7 +33,7 @@ export class FunnelsService {
       })
       .join('\nUNION ALL\n');
 
-    const finalQuery = `${withClauses} ${queries}`;
+    const finalQuery = `WITH ${withClauses} ${queries}`;
     console.log(finalQuery);
   }
 

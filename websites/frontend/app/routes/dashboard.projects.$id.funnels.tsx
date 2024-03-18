@@ -58,6 +58,8 @@ export default function FunnelsPage() {
   const { project } = useProject();
   const { funnels } = useLoaderData<LoaderData>();
 
+  console.log("lol", funnels);
+
   return (
     <>
       <DashboardLayout subNav={<ProjectNavBar project={project} />}>
