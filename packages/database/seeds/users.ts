@@ -82,7 +82,14 @@ export const seedUsers = async (prismaClient: PrismaClient) => {
     },
   });
 
-  return Promise.all([marvinData, johnData, janeData, withoutFullNameData]);
+  return Promise.all([
+    marvinData,
+    johnData,
+    janeData,
+    withoutFullNameData,
+    joeData,
+    ginaData,
+  ]);
 };
 
 export const seedPasswordReset = async (

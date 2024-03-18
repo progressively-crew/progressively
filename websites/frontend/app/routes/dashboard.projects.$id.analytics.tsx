@@ -56,9 +56,14 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   ]);
 
   const dateDict: Record<any, any> = {};
+  const eventDict: Record<string, number> = {};
   let metricTotalCount: number = 0;
 
   for (const ev of eventsGroupedByDateData) {
+    // Helps filling the missing values in the linechart. The idea is to make the line drop to 0
+    // when it should. This dictionnary will basically fill 0 for every available events
+    eventDict[ev.name] = 0;
+
     if (!dateDict[ev.date]) {
       dateDict[ev.date] = {};
     }
@@ -69,6 +74,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   const eventsGroupedByDate = Object.keys(dateDict).map((date) => ({
     date,
+    ...eventDict,
     ...dateDict[date],
   }));
 
