@@ -131,6 +131,8 @@ export class SdkController {
       data: body.data,
       viewportHeight: body.viewportHeight,
       viewportWidth: body.viewportWidth,
+      posX: body.posX,
+      posY: body.posY,
     };
 
     await this.queuingService.send(KafkaTopics.AnalyticsHits, queuedEvent);

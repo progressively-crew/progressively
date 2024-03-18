@@ -31,6 +31,8 @@ export class EventsService {
       sessionUuid,
       viewportHeight: ev.viewportHeight,
       viewportWidth: ev.viewportWidth,
+      posX: ev.posX,
+      posY: ev.posY,
     }));
 
     return this.clickhouse.insert({
