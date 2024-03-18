@@ -1,27 +1,24 @@
-const scriptEl = window.document.currentScript;
+import { setup } from "./setup";
+import { setupNavigationListeners } from "./setup-navigation-listeners";
+import { setupQualitativeTracking } from "./setup-qualitative-tracking";
+import { TrackFn } from "./types";
 
-const endpoint = scriptEl?.getAttribute("data-progressively-endpoint");
-const clientKey = scriptEl?.getAttribute("data-progressively-client-key");
+const { endpoint, bSixtyFour, shouldTrackQuantitative } = setup();
 
-if (!endpoint || !clientKey) {
-  throw new Error(
-    "[Progressively]: [data-progressively-endpoint] and [data-progressively-client-key] attributes should be set on the script tag."
-  );
-}
-
-const fields = {
-  clientKey: clientKey,
-};
-
-const bSixtyFour = btoa(JSON.stringify(fields));
-
-const track = (eventName: string) => {
+const track: TrackFn = (eventName, opts = {}) => {
   const payload = {
     name: eventName,
     url: window.location.href,
     referer: window.document.referrer || null,
     viewportWidth: window.innerWidth,
     viewportHeight: window.innerHeight,
+    posX: opts.posX,
+    posY: opts.posY,
+    data: opts.data
+      ? typeof opts.data === "string"
+        ? opts.data
+        : JSON.stringify(opts.data)
+      : undefined,
   };
 
   return fetch(`${endpoint}/sdk/${bSixtyFour}`, {
@@ -33,23 +30,11 @@ const track = (eventName: string) => {
 
 const trackPageView = () => track("Page View");
 
-// Listen for popstate event (triggered by browser navigation buttons)
+setupNavigationListeners(trackPageView);
 
-window.addEventListener("popstate", trackPageView);
-
-// Intercept history.pushState and history.replaceState to detect SPA navigation changes
-const originalPushState = history.pushState;
-const originalReplaceState = history.replaceState;
-
-history.pushState = function (...args) {
-  originalPushState.apply(this, args);
-  trackPageView();
-};
-
-history.replaceState = function (...args) {
-  originalReplaceState.apply(this, args);
-  trackPageView();
-};
+if (shouldTrackQuantitative) {
+  setupQualitativeTracking(track);
+}
 
 trackPageView();
 

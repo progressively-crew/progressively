@@ -25,7 +25,9 @@ const { data } = await sdk.loadFlags();
 <body><Page client:load progressivelyProps={data} /></body>
 
 <script
+  is:inline
   src="/progressively.min.js"
   data-progressively-endpoint="http://localhost:4000"
   data-progressively-client-key="valid-sdk-key"
+  data-progressively-qualitative-tracking="true"
 ></script>
