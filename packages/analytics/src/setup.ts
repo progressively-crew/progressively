@@ -3,7 +3,7 @@ export const setup = () => {
 
   const endpoint = scriptEl?.getAttribute("data-progressively-endpoint");
   const clientKey = scriptEl?.getAttribute("data-progressively-client-key");
-  const shouldTrack = scriptEl?.getAttribute(
+  const shouldTrackQuantitative = scriptEl?.getAttribute(
     "data-progressively-qualitative-tracking"
   );
 
@@ -18,5 +18,5 @@ export const setup = () => {
   };
 
   const bSixtyFour = btoa(JSON.stringify(fields));
-  return { endpoint, bSixtyFour, shouldTrack };
+  return { endpoint, bSixtyFour, shouldTrackQuantitative };
 };
