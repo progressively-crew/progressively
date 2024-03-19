@@ -88,7 +88,7 @@ export class EventsService {
     field: 'browser' | 'os' | 'referer' | 'url',
   ) {
     const resultSet = await this.clickhouse.query({
-      query: `SELECT  ${field}, count() AS pageViews
+      query: `SELECT ${field}, CAST(count() AS Int32) AS pageViews
       FROM events
       WHERE date >= now() - INTERVAL ${timeframe} DAY
       AND projectUuid = '${projectId}'
@@ -110,7 +110,7 @@ export class EventsService {
       query: `SELECT
         viewportWidth,
         viewportHeight,
-        count() AS pageViews
+        CAST(count() AS Int32) AS pageViews
       FROM events
       WHERE date >= now() - INTERVAL ${timeframe} DAY
       AND projectUuid = '${projectId}'
@@ -272,6 +272,23 @@ export class EventsService {
     AND posY IS NOT NULL
     GROUP BY grid_x_percent, grid_y_percent, viewportWidth
     ORDER BY click_count DESC;`,
+      format: 'JSONEachRow',
+    });
+
+    const dataset = await resultSet.json();
+
+    return dataset;
+  }
+
+  async getDistinctViewport(projectId: string, timeframe: Timeframe) {
+    const resultSet = await this.clickhouse.query({
+      query: `SELECT DISTINCT viewportWidth, viewportHeight
+      FROM events
+      WHERE date >= now() - INTERVAL ${timeframe} DAY
+      AND projectUuid = '${projectId}'
+      AND posX IS NOT NULL
+      AND posY IS NOT NULL
+      ORDER BY viewportWidth, viewportHeight;`,
       format: 'JSONEachRow',
     });
 

@@ -28,13 +28,16 @@ export const CountTable = ({
   cellKey,
   renderActions,
 }: CountTableProps) => {
-  const max = data.reduce(
-    (currMax, curr) => (currMax < curr.pageViews ? curr.pageViews : currMax),
-    0
-  );
+  let max = 0;
+
+  for (const d of data) {
+    if (d.pageViews > max) {
+      max = d.pageViews;
+    }
+  }
 
   return (
-    <div className="h-[200px] overflow-y-auto md:overflow-[unset]">
+    <div className="h-[200px] overflow-y-auto">
       <Table noBorder>
         <caption className="sr-only">{caption}</caption>
         <thead>

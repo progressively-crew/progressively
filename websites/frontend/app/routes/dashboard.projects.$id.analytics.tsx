@@ -1,12 +1,6 @@
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { ActionFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
-import { LuInspect } from "react-icons/lu";
-import {
-  Form,
-  useActionData,
-  useLoaderData,
-  useNavigate,
-} from "@remix-run/react";
+import { useActionData, useLoaderData } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { Card, CardContent } from "~/components/Card";
@@ -23,8 +17,8 @@ import { InsightsFilters } from "~/modules/projects/components/InsightsFilters";
 import { getGlobalMetric } from "~/modules/projects/services/getGlobalMetric";
 import { getPageViewsGroupedByDate } from "~/modules/projects/services/getPageViewsGroupedByDate";
 import { getEventsGroupedByDate } from "~/modules/projects/services/getEventsGroupedByDate";
-import { IconButton } from "~/components/Buttons/IconButton";
 import { useEffect } from "react";
+import { PageUrlCountTable } from "~/modules/events/components/PageUrlCountTable";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -249,25 +243,7 @@ export default function ProjectInsights() {
               <SectionHeader title="Page views / URL" />
             </CardContent>
 
-            <CountTable
-              shouldLink
-              data={eventsForFields.url}
-              caption="Page views / URL"
-              cellName={"Page URL"}
-              cellKey="url"
-              renderLabel={(d) => String(d.url)}
-              renderActions={(d) => (
-                <Form method="post">
-                  <IconButton
-                    type="submit"
-                    icon={<LuInspect />}
-                    tooltip={"Open page details"}
-                    value={String(d.url)}
-                    name="url"
-                  />
-                </Form>
-              )}
-            />
+            <PageUrlCountTable data={eventsForFields.url} />
           </Card>
         </Section>
       </div>
