@@ -127,8 +127,10 @@ export default function ProjectInsights() {
     if (!accessToken) return;
     if (!url) return;
 
-    window.open(`${url}#__progressively=${accessToken}`);
-  }, [accessToken, url]);
+    window.open(
+      `${url}?__progressivelyProjectId=${project.uuid}#__progressively=${accessToken}`
+    );
+  }, [accessToken, url, project.uuid]);
 
   return (
     <DashboardLayout subNav={<ProjectNavBar project={project} />}>

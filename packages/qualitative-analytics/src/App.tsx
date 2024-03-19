@@ -1,11 +1,24 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { getClusterPoints } from "./getClusterPoints";
+import { AuthTokenProvider } from "./AuthTokenContext";
+import { GridPoints } from "./GridPoints";
 
 export const App = () => {
-  const [i, setI] = useState(0);
+  const [authToken, setAuthToken] = useState<string>();
+
   useEffect(() => {
-    getClusterPoints("1", 30);
+    const token = window.location.hash.split("#__progressively=")?.[1];
+
+    if (token) {
+      setAuthToken(token);
+    }
   }, []);
-  return <button onClick={() => setI((x) => x + 1)}>{i}</button>;
+
+  if (!authToken) return null;
+
+  return (
+    <AuthTokenProvider token={authToken}>
+      <GridPoints />
+    </AuthTokenProvider>
+  );
 };

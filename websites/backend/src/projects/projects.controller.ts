@@ -302,6 +302,8 @@ export class ProjectsController {
   }
 
   @Get(':id/events/clusters')
+  @UseGuards(HasProjectAccessGuard)
+  @UseGuards(JwtAuthGuard)
   async getClusterPoints(
     @Param('id') id: string,
     @Query('timeframe') timeframe: string,
