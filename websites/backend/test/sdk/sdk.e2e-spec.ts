@@ -201,7 +201,7 @@ describe('SdkController (e2e)', () => {
 
       return request(app.getHttpServer())
         .post(`/sdk/${fields}`)
-        .send({ name: 'hello' })
+        .send({ name: 'hello', url: 'http://localhost:300/' })
         .set('origin', 'hello-world')
         .expect(201);
     });
@@ -211,7 +211,7 @@ describe('SdkController (e2e)', () => {
 
       return request(app.getHttpServer())
         .post(`/sdk/${fields}`)
-        .send({ name: 'A metric' })
+        .send({ name: 'A metric', url: 'http://localhost:300/' })
         .set('origin', 'hello-world')
         .expect(201);
     });
@@ -221,7 +221,7 @@ describe('SdkController (e2e)', () => {
 
       return request(app.getHttpServer())
         .post(`/sdk/${fields}`)
-        .send({ name: 'A metric', data: 1 })
+        .send({ name: 'A metric', data: 1, url: 'http://localhost:300/' })
         .set('origin', 'hello-world')
         .expect(201);
     });
@@ -231,7 +231,7 @@ describe('SdkController (e2e)', () => {
 
       return request(app.getHttpServer())
         .post(`/sdk/${fields}`)
-        .send({ name: 'A metric', data: '1' })
+        .send({ name: 'A metric', data: '1', url: 'http://localhost:300/' })
         .set('origin', 'hello-world')
         .expect(201);
     });
@@ -241,7 +241,11 @@ describe('SdkController (e2e)', () => {
 
       return request(app.getHttpServer())
         .post(`/sdk/${fields}`)
-        .send({ name: 'A metric', data: { hello: 'world' } })
+        .send({
+          name: 'A metric',
+          data: { hello: 'world' },
+          url: 'http://localhost:300/',
+        })
         .set('origin', 'hello-world')
         .expect(201);
     });
@@ -250,7 +254,7 @@ describe('SdkController (e2e)', () => {
       const fields = btoa(JSON.stringify({}));
       const response = await request(app.getHttpServer())
         .post(`/sdk/${fields}`)
-        .send({ name: 'hello' })
+        .send({ name: 'hello', url: 'http://localhost:300/' })
         .set('x-api-key', 'secret-key-23');
 
       expect(response.status).toBe(201);
@@ -260,7 +264,11 @@ describe('SdkController (e2e)', () => {
       const fields = btoa(JSON.stringify({}));
       const response = await request(app.getHttpServer())
         .post(`/sdk/${fields}`)
-        .send({ name: 'A metric', data: { hello: 'world' } });
+        .send({
+          name: 'A metric',
+          data: { hello: 'world' },
+          url: 'http://localhost:300/',
+        });
 
       expect(response.status).toBe(201);
     });
@@ -269,7 +277,7 @@ describe('SdkController (e2e)', () => {
       const fields = btoa(JSON.stringify({}));
       const response = await request(app.getHttpServer())
         .post(`/sdk/${fields}`)
-        .send({ name: 'hello' })
+        .send({ name: 'hello', url: 'http://localhost:300/' })
         .set('x-api-key', 'secret-key');
 
       expect(response.status).toBe(201);
@@ -279,7 +287,7 @@ describe('SdkController (e2e)', () => {
       const fields = btoa(JSON.stringify({ clientKey: 'valid-sdk-key-2' }));
       const response = await request(app.getHttpServer())
         .post(`/sdk/${fields}`)
-        .send({ name: 'hello' })
+        .send({ name: 'hello', url: 'http://localhost:300/' })
         .set('x-api-key', 'secret-key-2');
 
       expect(response.status).toBe(201);
