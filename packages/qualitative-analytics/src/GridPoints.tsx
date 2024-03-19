@@ -6,7 +6,6 @@ const gridCols = 20;
 
 export const GridPoints = () => {
   const clusterPoints = useClusterPoints();
-  const cellHeight = window.innerWidth / gridCols;
 
   const clusterPointCounts = clusterPoints.reduce(
     (acc, curr) => acc + curr.click_count,
@@ -35,27 +34,32 @@ export const GridPoints = () => {
     } as any;
   };
 
-  const getPointStyle = (clusterPoint: ClusterPoint) => {
-    const p = (clusterPoint.click_count / clusterPointCounts) * 100;
-
-    const color =
-      p < 20 ? "green" : p < 33 ? "yellow" : p < 66 ? "orange" : "red";
-
-    return {
-      height: p,
-      width: p,
-      background: color,
-      borderRadius: "50%",
-    } as any;
-  };
-
   return (
     <>
-      {clusterPoints.map((clusterPoint) => (
-        <div style={getWrapperPointStyle(clusterPoint)}>
-          <div style={getPointStyle(clusterPoint)} />
-        </div>
-      ))}
+      {clusterPoints.map((clusterPoint) => {
+        const p = (clusterPoint.click_count / clusterPointCounts) * 100;
+
+        const color =
+          p < 20 ? "green" : p < 33 ? "yellow" : p < 66 ? "orange" : "red";
+
+        const style = {
+          height: p,
+          width: p,
+          background: color,
+          borderRadius: "50%",
+          opacity: 0.5,
+        } as any;
+
+        if (p < 5) {
+          return null;
+        }
+
+        return (
+          <div style={getWrapperPointStyle(clusterPoint)}>
+            <div style={style} />
+          </div>
+        );
+      })}
     </>
   );
 };
