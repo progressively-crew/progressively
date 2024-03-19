@@ -258,12 +258,11 @@ export class EventsService {
   }
 
   async getClusterPoints(projectId: string, timeframe: Timeframe) {
-    const cellCount = 20;
+    const cellCount = 40;
     const resultSet = await this.clickhouse.query({
       query: `SELECT
-      floor((posX / viewportWidth) * ${cellCount}) AS grid_x_percent,
-      floor((posY / viewportHeight) * ${cellCount}) AS grid_y_percent,
-      viewportWidth,
+      floor(posX / (viewportWidth / ${cellCount})) as grid_x_percent, 
+      floor(posY / (viewportWidth / ${cellCount})) as grid_y_percent, 
       CAST(COUNT(*) AS Int32) AS click_count
     FROM events
     WHERE date >= now() - INTERVAL ${timeframe} DAY

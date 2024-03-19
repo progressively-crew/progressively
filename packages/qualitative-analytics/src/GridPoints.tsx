@@ -2,8 +2,7 @@ import React from "react";
 import { useClusterPoints } from "./useClusterPoints";
 import { ClusterPoint } from "./types";
 
-const gridCols = 20;
-
+const cellCount = 40;
 export const GridPoints = () => {
   const clusterPoints = useClusterPoints();
 
@@ -12,20 +11,18 @@ export const GridPoints = () => {
     0
   );
 
-  let maxRow = 0;
-
-  for (const clusterPoint of clusterPoints) {
-    if (clusterPoint.grid_y_percent > maxRow) {
-      maxRow = clusterPoint.grid_y_percent;
-    }
-  }
+  const pageWidth = window.innerWidth;
+  const cellWidth = pageWidth / cellCount;
+  const cellHeight = cellWidth;
 
   const getWrapperPointStyle = (clusterPoint: ClusterPoint) => {
-    const left = `${(clusterPoint.grid_x_percent / gridCols) * 100}%`;
-    const top = `${(clusterPoint.grid_y_percent / gridCols) * 100}%`;
+    const left = `${clusterPoint.grid_x_percent * cellWidth}px`;
+    const top = `${clusterPoint.grid_y_percent * cellHeight}px`;
 
     return {
       position: "absolute",
+      height: cellHeight,
+      width: cellWidth,
       left,
       top,
       display: "flex",
@@ -43,8 +40,8 @@ export const GridPoints = () => {
           p < 20 ? "green" : p < 33 ? "yellow" : p < 66 ? "orange" : "red";
 
         const style = {
-          height: p,
-          width: p,
+          height: cellHeight,
+          width: cellWidth,
           background: color,
           borderRadius: "50%",
           opacity: 0.5,
