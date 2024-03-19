@@ -101,3 +101,29 @@ export const getStringOfTypesWithCustomStrings = (flags: Array<Flag>) => {
 
   return definition;
 };
+
+export const parseUrl = (str: string) => {
+  const url = new URL(str);
+  const params = url.searchParams;
+
+  const utmParameters = [
+    'utm_source',
+    'utm_medium',
+    'utm_campaign',
+    'utm_term',
+    'utm_content',
+  ];
+  const paramsCopy = new URLSearchParams(params);
+
+  // Check and delete non-UTM parameters
+  paramsCopy.forEach((value, key) => {
+    if (!utmParameters.includes(key)) {
+      params.delete(key);
+    }
+  });
+
+  url.hash = '';
+
+  // Return the updated URL string
+  return url;
+};

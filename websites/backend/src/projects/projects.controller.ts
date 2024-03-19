@@ -300,4 +300,38 @@ export class ProjectsController {
 
     return await this.eventService.getEventsGroupedByDate(id, tf);
   }
+
+  @Get(':id/events/clusters')
+  @UseGuards(HasProjectAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  async getClusterPoints(
+    @Param('id') id: string,
+    @Query('timeframe') timeframe: string,
+  ) {
+    if (!Timeframes.includes(timeframe)) {
+      throw new BadRequestException('timeframe is required.');
+    }
+
+    const tf = Number(timeframe) as Timeframe;
+    return await this.eventService.getClusterPoints(id, tf);
+  }
+  @Get(':id/events/viewports')
+  @UseGuards(HasProjectAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  async getViewports(
+    @Param('id') id: string,
+    @Query('timeframe') timeframe: string,
+    @Query('url') url: string,
+  ) {
+    if (!Timeframes.includes(timeframe)) {
+      throw new BadRequestException('timeframe is required.');
+    }
+
+    if (!url) {
+      throw new BadRequestException('url is required.');
+    }
+
+    const tf = Number(timeframe) as Timeframe;
+    return await this.eventService.getDistinctViewport(id, tf, url);
+  }
 }

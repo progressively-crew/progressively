@@ -79,7 +79,7 @@ export const Dialog = ({
 };
 
 export interface DialogCloseBtnProps {
-  to: string;
+  to?: string;
   label: string;
 }
 

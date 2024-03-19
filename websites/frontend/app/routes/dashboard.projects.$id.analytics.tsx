@@ -1,6 +1,6 @@
 import { DashboardLayout } from "~/layouts/DashboardLayout";
 import { LoaderFunction, MetaFunction } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { Link, Outlet, useLoaderData } from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { Card, CardContent } from "~/components/Card";
@@ -17,6 +17,8 @@ import { InsightsFilters } from "~/modules/projects/components/InsightsFilters";
 import { getGlobalMetric } from "~/modules/projects/services/getGlobalMetric";
 import { getPageViewsGroupedByDate } from "~/modules/projects/services/getPageViewsGroupedByDate";
 import { getEventsGroupedByDate } from "~/modules/projects/services/getEventsGroupedByDate";
+import { LuInspect } from "react-icons/lu";
+import { IconButton } from "~/components/Buttons/IconButton";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -95,169 +97,183 @@ export default function ProjectInsights() {
     pagesViewsGroupedByDate,
     eventsGroupedByDate,
   } = useLoaderData<typeof loader>();
+
   const { project } = useProject();
   const pageViewCountEvolution = 0;
   const metricCountViewEvolution = 0;
 
   return (
-    <DashboardLayout subNav={<ProjectNavBar project={project} />}>
-      <PageTitle value="Analytics" action={<InsightsFilters />} />
+    <>
+      <DashboardLayout subNav={<ProjectNavBar project={project} />}>
+        <PageTitle value="Analytics" action={<InsightsFilters />} />
 
-      <Section>
-        <h2 className="sr-only">Global metrics</h2>
-        <div className="grid grid-cols-2 md:inline-flex flex-row gap-6">
-          <BigStat
-            label={"Page views"}
-            value={globalMetrics.pageViews}
-            unit={"visits."}
-            icon={<div />}
-            evolution={pageViewCountEvolution}
-          />
+        <Section>
+          <h2 className="sr-only">Global metrics</h2>
+          <div className="grid grid-cols-2 md:inline-flex flex-row gap-6">
+            <BigStat
+              label={"Page views"}
+              value={globalMetrics.pageViews}
+              unit={"visits."}
+              icon={<div />}
+              evolution={pageViewCountEvolution}
+            />
 
-          <BigStat
-            label={"Unique visitors"}
-            value={globalMetrics.uniqueVisitors}
-            unit={"users."}
-            icon={<div />}
-          />
+            <BigStat
+              label={"Unique visitors"}
+              value={globalMetrics.uniqueVisitors}
+              unit={"users."}
+              icon={<div />}
+            />
 
-          <BigStat
-            label={"Bounce Rate"}
-            value={globalMetrics.bounceRate}
-            unit={"%"}
-            icon={<div />}
-          />
-        </div>
-      </Section>
+            <BigStat
+              label={"Bounce Rate"}
+              value={globalMetrics.bounceRate}
+              unit={"%"}
+              icon={<div />}
+            />
+          </div>
+        </Section>
 
-      <Section id="pageview-hits">
-        <Card>
-          <CardContent>
-            <SectionHeader title={"Page views over time."} />
-          </CardContent>
-
-          {pagesViewsGroupedByDate.length > 0 ? (
-            <LineChart data={pagesViewsGroupedByDate} />
-          ) : (
+        <Section id="pageview-hits">
+          <Card>
             <CardContent>
-              <EmptyState
-                title="No data"
-                description={"There are no events hits for this period."}
+              <SectionHeader title={"Page views over time."} />
+            </CardContent>
+
+            {pagesViewsGroupedByDate.length > 0 ? (
+              <LineChart data={pagesViewsGroupedByDate} />
+            ) : (
+              <CardContent>
+                <EmptyState
+                  title="No data"
+                  description={"There are no events hits for this period."}
+                />
+              </CardContent>
+            )}
+          </Card>
+        </Section>
+
+        <div className="grid md:grid-cols-3 gap-6">
+          <Section>
+            <Card>
+              <CardContent>
+                <SectionHeader title="Page views / browser" />
+              </CardContent>
+              <CountTable
+                data={eventsForFields.browser}
+                caption="Page views / browser"
+                cellName={"Browser"}
+                cellKey="browser"
+                renderLabel={(d) => String(d.browser)}
               />
-            </CardContent>
-          )}
-        </Card>
-      </Section>
+            </Card>
+          </Section>
 
-      <div className="grid md:grid-cols-3 gap-6">
-        <Section>
-          <Card>
-            <CardContent>
-              <SectionHeader title="Page views / browser" />
-            </CardContent>
-            <CountTable
-              data={eventsForFields.browser}
-              caption="Page views / browser"
-              cellName={"Browser"}
-              cellKey="browser"
-              renderLabel={(d) => String(d.browser)}
-            />
-          </Card>
-        </Section>
-
-        <Section>
-          <Card>
-            <CardContent>
-              <SectionHeader title="Page views / Os" />
-            </CardContent>
-            <CountTable
-              data={eventsForFields.os}
-              caption="Page views / Os"
-              cellName={"Os"}
-              cellKey="os"
-              renderLabel={(d) => String(d.os)}
-            />
-          </Card>
-        </Section>
-
-        <Section>
-          <Card>
-            <CardContent>
-              <SectionHeader title="Page views / Viewport (Width x Height)" />
-            </CardContent>
-            <CountTable
-              data={eventsForFields.viewport}
-              caption="Page views / Viewport (Width x Height)"
-              cellName={"Viewport"}
-              cellKey="viewport"
-              renderLabel={(d) => `${d.viewportWidth} / ${d.viewportHeight}`}
-            />
-          </Card>
-        </Section>
-
-        <Section>
-          <Card>
-            <CardContent>
-              <SectionHeader title="Page views / referer" />
-            </CardContent>
-            <CountTable
-              data={eventsForFields.referer}
-              caption="Page views / referer"
-              cellName={"Referer"}
-              cellKey="referer"
-              renderLabel={(d) => String(d.referer)}
-            />
-          </Card>
-        </Section>
-
-        <Section>
-          <Card>
-            <CardContent>
-              <SectionHeader title="Page views / URL" />
-            </CardContent>
-
-            <CountTable
-              shouldLink
-              data={eventsForFields.url}
-              caption="Page views / URL"
-              cellName={"Page URL"}
-              cellKey="url"
-              renderLabel={(d) => String(d.url)}
-            />
-          </Card>
-        </Section>
-      </div>
-
-      <Section>
-        <div className="inline-flex flex-row gap-6">
-          <BigStat
-            label={"Total metric hits"}
-            value={metricTotalCount}
-            unit={"hits."}
-            icon={<div />}
-            evolution={metricCountViewEvolution}
-          />
-        </div>
-      </Section>
-
-      <Section id="other-metric-hits">
-        <Card>
-          <CardContent>
-            <SectionHeader title={"Other metrics over time."} />
-          </CardContent>
-
-          {eventsGroupedByDate.length > 0 ? (
-            <LineChart data={eventsGroupedByDate} />
-          ) : (
-            <CardContent>
-              <EmptyState
-                title="No data"
-                description={"There are no events hits for this period."}
+          <Section>
+            <Card>
+              <CardContent>
+                <SectionHeader title="Page views / Os" />
+              </CardContent>
+              <CountTable
+                data={eventsForFields.os}
+                caption="Page views / Os"
+                cellName={"Os"}
+                cellKey="os"
+                renderLabel={(d) => String(d.os)}
               />
+            </Card>
+          </Section>
+
+          <Section>
+            <Card>
+              <CardContent>
+                <SectionHeader title="Page views / Viewport (Width x Height)" />
+              </CardContent>
+              <CountTable
+                data={eventsForFields.viewport}
+                caption="Page views / Viewport (Width x Height)"
+                cellName={"Viewport"}
+                cellKey="viewport"
+                renderLabel={(d) => `${d.viewportWidth} / ${d.viewportHeight}`}
+              />
+            </Card>
+          </Section>
+
+          <Section>
+            <Card>
+              <CardContent>
+                <SectionHeader title="Page views / referer" />
+              </CardContent>
+              <CountTable
+                data={eventsForFields.referer}
+                caption="Page views / referer"
+                cellName={"Referer"}
+                cellKey="referer"
+                renderLabel={(d) => String(d.referer)}
+              />
+            </Card>
+          </Section>
+
+          <Section>
+            <Card>
+              <CardContent>
+                <SectionHeader title="Page views / URL" />
+              </CardContent>
+
+              <CountTable
+                shouldLink
+                data={eventsForFields.url}
+                caption="Page views / URL"
+                cellName={"Page URL"}
+                cellKey="url"
+                renderLabel={(d) => String(d.url)}
+                renderActions={(d) => (
+                  <IconButton
+                    as={Link}
+                    to={`/dashboard/projects/${
+                      project.uuid
+                    }/analytics/viewports?url=${String(d.url)}`}
+                    icon={<LuInspect />}
+                    tooltip={"Open page details"}
+                  />
+                )}
+              />
+            </Card>
+          </Section>
+        </div>
+
+        <Section>
+          <div className="inline-flex flex-row gap-6">
+            <BigStat
+              label={"Total metric hits"}
+              value={metricTotalCount}
+              unit={"hits."}
+              icon={<div />}
+              evolution={metricCountViewEvolution}
+            />
+          </div>
+        </Section>
+
+        <Section id="other-metric-hits">
+          <Card>
+            <CardContent>
+              <SectionHeader title={"Other metrics over time."} />
             </CardContent>
-          )}
-        </Card>
-      </Section>
-    </DashboardLayout>
+
+            {eventsGroupedByDate.length > 0 ? (
+              <LineChart data={eventsGroupedByDate} />
+            ) : (
+              <CardContent>
+                <EmptyState
+                  title="No data"
+                  description={"There are no events hits for this period."}
+                />
+              </CardContent>
+            )}
+          </Card>
+        </Section>
+      </DashboardLayout>
+      <Outlet />
+    </>
   );
 }

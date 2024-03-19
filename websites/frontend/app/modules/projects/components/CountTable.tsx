@@ -13,6 +13,10 @@ export interface CountTableProps {
     [key: string]: string | number;
     pageViews: number;
   }) => string;
+  renderActions?: (d: {
+    [key: string]: string | number;
+    pageViews: number;
+  }) => React.ReactNode;
 }
 
 export const CountTable = ({
@@ -22,11 +26,15 @@ export const CountTable = ({
   shouldLink,
   renderLabel,
   cellKey,
+  renderActions,
 }: CountTableProps) => {
-  const max = data.reduce(
-    (currMax, curr) => (currMax < curr.pageViews ? curr.pageViews : currMax),
-    0
-  );
+  let max = 0;
+
+  for (const d of data) {
+    if (d.pageViews > max) {
+      max = d.pageViews;
+    }
+  }
 
   return (
     <div className="h-[200px] overflow-y-auto">
@@ -35,6 +43,12 @@ export const CountTable = ({
         <thead>
           <tr>
             <Th>{cellName}</Th>
+
+            {renderActions && (
+              <Th>
+                <div className="sr-only">Actions</div>
+              </Th>
+            )}
 
             <Th>
               <div className="text-right">Count</div>
@@ -70,6 +84,8 @@ export const CountTable = ({
                     />
                   </div>
                 </Td>
+
+                {renderActions && <Td>{renderActions(d)}</Td>}
                 <Td>
                   <div className="text-right font-bold">
                     <NumberValue value={d.pageViews} />

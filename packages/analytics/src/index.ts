@@ -1,6 +1,7 @@
 import { setup } from "./setup";
 import { setupNavigationListeners } from "./setup-navigation-listeners";
 import { setupQualitativeTracking } from "./setup-qualitative-tracking";
+import { showQualitativeAnalytics } from "./show-qualitative-analytics";
 import { TrackFn } from "./types";
 
 const { endpoint, bSixtyFour, shouldTrackQuantitative } = setup();
@@ -11,7 +12,7 @@ const track: TrackFn = (eventName, opts = {}) => {
     url: window.location.href,
     referer: window.document.referrer || null,
     viewportWidth: window.innerWidth,
-    viewportHeight: window.innerHeight,
+    viewportHeight: document.documentElement.scrollHeight,
     posX: opts.posX,
     posY: opts.posY,
     data: opts.data
@@ -34,6 +35,10 @@ setupNavigationListeners(trackPageView);
 
 if (shouldTrackQuantitative) {
   setupQualitativeTracking(track);
+}
+
+if (window.location.href.indexOf("#__progressively") !== -1) {
+  showQualitativeAnalytics(endpoint);
 }
 
 trackPageView();

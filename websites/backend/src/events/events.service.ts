@@ -88,7 +88,7 @@ export class EventsService {
     field: 'browser' | 'os' | 'referer' | 'url',
   ) {
     const resultSet = await this.clickhouse.query({
-      query: `SELECT  ${field}, count() AS pageViews
+      query: `SELECT ${field}, CAST(count() AS Int32) AS pageViews
       FROM events
       WHERE date >= now() - INTERVAL ${timeframe} DAY
       AND projectUuid = '${projectId}'
@@ -110,7 +110,7 @@ export class EventsService {
       query: `SELECT
         viewportWidth,
         viewportHeight,
-        count() AS pageViews
+        CAST(count() AS Int32) AS pageViews
       FROM events
       WHERE date >= now() - INTERVAL ${timeframe} DAY
       AND projectUuid = '${projectId}'
@@ -255,5 +255,50 @@ export class EventsService {
     return await this.clickhouse.exec({
       query: `DELETE FROM events WHERE projectUuid = '${projectId}'`,
     });
+  }
+
+  async getClusterPoints(projectId: string, timeframe: Timeframe) {
+    const cellCount = 20;
+    const resultSet = await this.clickhouse.query({
+      query: `SELECT
+      floor((posX / viewportWidth) * ${cellCount}) AS grid_x_percent,
+      floor((posY / viewportHeight) * ${cellCount}) AS grid_y_percent,
+      viewportWidth,
+      CAST(COUNT(*) AS Int32) AS click_count
+    FROM events
+    WHERE date >= now() - INTERVAL ${timeframe} DAY
+    AND projectUuid = '${projectId}'
+    AND posX IS NOT NULL
+    AND posY IS NOT NULL
+    GROUP BY grid_x_percent, grid_y_percent, viewportWidth
+    ORDER BY click_count DESC;`,
+      format: 'JSONEachRow',
+    });
+
+    const dataset = await resultSet.json();
+
+    return dataset;
+  }
+
+  async getDistinctViewport(
+    projectId: string,
+    timeframe: Timeframe,
+    url: string,
+  ) {
+    const resultSet = await this.clickhouse.query({
+      query: `SELECT DISTINCT viewportWidth
+      FROM events
+      WHERE date >= now() - INTERVAL ${timeframe} DAY
+      AND projectUuid = '${projectId}'
+      AND posX IS NOT NULL
+      AND posY IS NOT NULL
+      AND url = '${url}'
+      ORDER BY viewportWidth;`,
+      format: 'JSONEachRow',
+    });
+
+    const dataset = await resultSet.json();
+
+    return dataset;
   }
 }

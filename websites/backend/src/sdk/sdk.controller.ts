@@ -13,7 +13,7 @@ import {
 } from '@nestjs/common';
 import { Request } from 'express';
 import { SdkService } from './sdk.service';
-import { parseBase64Params, resolveUserId } from './utils';
+import { parseBase64Params, parseUrl, resolveUserId } from './utils';
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
 import { EventHit, QueuedEventHit } from './types';
 import { getDeviceInfo } from '../shared/utils/getDeviceInfo';
@@ -126,7 +126,7 @@ export class SdkController {
       secretKey,
       domain,
       referer: body.referer,
-      url: body.url,
+      url: parseUrl(body.url).toString(),
       visitorId: String(fields?.id || ''),
       data: body.data,
       viewportHeight: body.viewportHeight,

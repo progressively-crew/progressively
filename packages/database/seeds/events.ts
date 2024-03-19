@@ -47,7 +47,7 @@ export const seedEvents = async (eventCounts: number) => {
           date,
           "Windows",
           "Chrome",
-          "/hello",
+          "http://localhost:3000/hello",
           "Client CTA"
         );
 
