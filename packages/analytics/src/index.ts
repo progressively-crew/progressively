@@ -38,7 +38,7 @@ if (shouldTrackQuantitative) {
 }
 
 if (window.location.href.indexOf("#__progressively") !== -1) {
-  showQualitativeAnalytics();
+  showQualitativeAnalytics(endpoint);
 }
 
 trackPageView();

@@ -4,7 +4,9 @@ export const getClusterPoints = (
   accessToken: string
 ) => {
   const url = new URL(
-    `http://localhost:4000/projects/${projectId}/events/clusters`
+    `${
+      (window as any).__progressivelyEndpoint
+    }/projects/${projectId}/events/clusters`
   );
 
   url.searchParams.set("timeframe", String(timeframe));
