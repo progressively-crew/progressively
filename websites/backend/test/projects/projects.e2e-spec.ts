@@ -511,6 +511,7 @@ describe('ProjectsController (e2e)', () => {
         .set('Authorization', `Bearer ${access_token}`);
 
       expect(response.status).toBe(200);
+      expect(response.body.length).toBe(3);
       expect(response.body).toMatchObject([
         {
           uuid: '4',
