@@ -300,4 +300,17 @@ export class ProjectsController {
 
     return await this.eventService.getEventsGroupedByDate(id, tf);
   }
+
+  @Get(':id/events/clusters')
+  async getClusterPoints(
+    @Param('id') id: string,
+    @Query('timeframe') timeframe: string,
+  ) {
+    if (!Timeframes.includes(timeframe)) {
+      throw new BadRequestException('timeframe is required.');
+    }
+
+    const tf = Number(timeframe) as Timeframe;
+    return await this.eventService.getClusterPoints(id, tf);
+  }
 }

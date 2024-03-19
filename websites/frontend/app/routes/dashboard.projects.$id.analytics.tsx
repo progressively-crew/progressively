@@ -1,6 +1,12 @@
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { LoaderFunction, MetaFunction } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { ActionFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
+import { LuInspect } from "react-icons/lu";
+import {
+  Form,
+  useActionData,
+  useLoaderData,
+  useNavigate,
+} from "@remix-run/react";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { Card, CardContent } from "~/components/Card";
@@ -17,6 +23,8 @@ import { InsightsFilters } from "~/modules/projects/components/InsightsFilters";
 import { getGlobalMetric } from "~/modules/projects/services/getGlobalMetric";
 import { getPageViewsGroupedByDate } from "~/modules/projects/services/getPageViewsGroupedByDate";
 import { getEventsGroupedByDate } from "~/modules/projects/services/getEventsGroupedByDate";
+import { IconButton } from "~/components/Buttons/IconButton";
+import { useEffect } from "react";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -26,6 +34,20 @@ export const meta: MetaFunction = ({ matches }) => {
       title: `Progressively | ${projectName} | Analytics`,
     },
   ];
+};
+
+export const action: ActionFunction = async ({ request }) => {
+  const formData = await request.formData();
+  const session = await getSession(request.headers.get("Cookie"));
+  const authCookie = session.get("auth-cookie");
+
+  const url = formData.get("url")?.toString();
+
+  if (!url) {
+    throw new Error("No URL provided.");
+  }
+
+  return { accessToken: authCookie, url };
 };
 
 export const loader: LoaderFunction = async ({ request, params }) => {
@@ -95,9 +117,18 @@ export default function ProjectInsights() {
     pagesViewsGroupedByDate,
     eventsGroupedByDate,
   } = useLoaderData<typeof loader>();
+  const actionData = useActionData<typeof action>();
   const { project } = useProject();
   const pageViewCountEvolution = 0;
   const metricCountViewEvolution = 0;
+  const { accessToken, url } = actionData || {};
+
+  useEffect(() => {
+    if (!accessToken) return;
+    if (!url) return;
+
+    window.open(`${url}#__progressively=${accessToken}`);
+  }, [accessToken, url]);
 
   return (
     <DashboardLayout subNav={<ProjectNavBar project={project} />}>
@@ -223,6 +254,17 @@ export default function ProjectInsights() {
               cellName={"Page URL"}
               cellKey="url"
               renderLabel={(d) => String(d.url)}
+              renderActions={(d) => (
+                <Form method="post">
+                  <IconButton
+                    type="submit"
+                    icon={<LuInspect />}
+                    tooltip={"Open page details"}
+                    value={String(d.url)}
+                    name="url"
+                  />
+                </Form>
+              )}
             />
           </Card>
         </Section>
