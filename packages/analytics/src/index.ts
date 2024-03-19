@@ -12,7 +12,7 @@ const track: TrackFn = (eventName, opts = {}) => {
     url: window.location.href,
     referer: window.document.referrer || null,
     viewportWidth: window.innerWidth,
-    viewportHeight: window.innerHeight,
+    viewportHeight: document.documentElement.scrollHeight,
     posX: opts.posX,
     posY: opts.posY,
     data: opts.data
