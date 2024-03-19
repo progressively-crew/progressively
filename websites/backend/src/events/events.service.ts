@@ -280,15 +280,20 @@ export class EventsService {
     return dataset;
   }
 
-  async getDistinctViewport(projectId: string, timeframe: Timeframe) {
+  async getDistinctViewport(
+    projectId: string,
+    timeframe: Timeframe,
+    url: string,
+  ) {
     const resultSet = await this.clickhouse.query({
-      query: `SELECT DISTINCT viewportWidth, viewportHeight
+      query: `SELECT DISTINCT viewportWidth
       FROM events
       WHERE date >= now() - INTERVAL ${timeframe} DAY
       AND projectUuid = '${projectId}'
       AND posX IS NOT NULL
       AND posY IS NOT NULL
-      ORDER BY viewportWidth, viewportHeight;`,
+      AND url = '${url}'
+      ORDER BY viewportWidth;`,
       format: 'JSONEachRow',
     });
 

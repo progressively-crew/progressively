@@ -2,6 +2,7 @@ import { Constants } from "~/constants";
 
 export const getDistinctViewport = async (
   projectId: string,
+  websiteUrl: string,
   timeframe: number,
   accessToken: string
 ) => {
@@ -10,6 +11,7 @@ export const getDistinctViewport = async (
   );
 
   url.searchParams.set("timeframe", String(timeframe));
+  url.searchParams.set("url", websiteUrl);
 
   return fetch(url, {
     headers: {

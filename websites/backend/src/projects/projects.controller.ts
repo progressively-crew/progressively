@@ -321,12 +321,17 @@ export class ProjectsController {
   async getViewports(
     @Param('id') id: string,
     @Query('timeframe') timeframe: string,
+    @Query('url') url: string,
   ) {
     if (!Timeframes.includes(timeframe)) {
       throw new BadRequestException('timeframe is required.');
     }
 
+    if (!url) {
+      throw new BadRequestException('url is required.');
+    }
+
     const tf = Number(timeframe) as Timeframe;
-    return await this.eventService.getDistinctViewport(id, tf);
+    return await this.eventService.getDistinctViewport(id, tf, url);
   }
 }
