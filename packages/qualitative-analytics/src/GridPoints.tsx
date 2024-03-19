@@ -1,19 +1,27 @@
-import React, { useEffect } from "react";
-import { useAuthToken } from "./AuthTokenContext";
-import { getClusterPoints } from "./getClusterPoints";
+import React from "react";
+import { useClusterPoints } from "./useClusterPoints";
+import { ClusterPoint } from "./types";
 
 export const GridPoints = () => {
-  const token = useAuthToken();
+  const clusterPoints = useClusterPoints();
 
-  useEffect(() => {
-    if (!token) return;
-    const search = new URLSearchParams(window.location.search);
-    const projectId = search.get("__progressivelyProjectId");
+  const getPointStyle = (clusterPoint: ClusterPoint) => {
+    return {
+      position: "absolute",
+      zIndex: 9999,
+      background: "red",
+      left: `${clusterPoint.grid_x_percent}%`,
+      top: `${clusterPoint.grid_y_percent}%`,
+      width: 10,
+      height: 10,
+    } as any;
+  };
 
-    if (projectId) {
-      getClusterPoints(projectId, 30, token);
-    }
-  }, [token]);
-
-  return <div>{token}</div>;
+  return (
+    <>
+      {clusterPoints.map((clusterPoint) => (
+        <div style={getPointStyle(clusterPoint)} />
+      ))}
+    </>
+  );
 };
