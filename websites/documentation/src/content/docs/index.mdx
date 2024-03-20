@@ -1,35 +1,52 @@
 ---
-title: Welcome to Progressively
-description: Get started with self-hosted feature flags & anonymous analytics.
-template: splash
-hero:
-  tagline: Get started with self-hosted feature flags & anonymous analytics.
-
-  actions:
-    - text: Getting started
-      link: /getting-started
-      icon: right-arrow
-      variant: primary
-    - text: Github repository
-      link: https://github.com/progressively-crew/progressively
-      icon: external
+title: Getting started
+description: Get started using Progressively.
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
 
-## Next steps
+
+Imagine your product is a bustling metropolis, with features as its buildings and user interactions as its roads 🏙️.
+
+Now, to understand and enhance the flow of traffic 🚃 – your users' journeys – you're equipped with four essential tools.
+
+**Quantitative analytics** act as your high-tech traffic counters, measuring the volume of cars and their speed, giving you a bird's-eye view of which roads are most traveled.
+
+**Qualitative analytics** are your street interviews, revealing why certain paths are favored and how the journey feels for the travelers.
+
+**Feature flags** serve as your experimental detours 🚧, allowing you to test new routes on a small scale before opening them to the public.
+
+**And event funneling** is your map 🗺️, showing the most common paths taken and highlighting bottlenecks. Together, these tools empower you to make data-driven decisions, optimizing the city's layout for smoother traffic, happier commuters, and a more vibrant metropolis.
+
+---
+
+Want to know more about each of these topics?
 
 <CardGrid>
-	<Card title="Setup your instance" icon="pencil">
-		Prepare your instance of Progressively and create your first admin user.
-	</Card>
-	<Card title="Choose an SDK" icon="add-document">
-		Choose the SDK that matches your needs and integrate it in your application.
-	</Card>
-	<Card title="Start measuring" icon="setting">
-		Start measuring the impact of your feature flags with an anonymous analaytics service.
-	</Card>
-	<Card title="Take decision" icon="open-book">
-		Take decisions based on these numbers and provide meaningful experiences to you audience.
-	</Card>
+
+<LinkCard
+    title="Quantitative analytics"
+    description="Collect details about the page being looked at, and include extra activities to learn more about your audience's actions."
+    href="/concepts/anonymous-analytics"
+  />
+
+  <LinkCard
+    title="Qualitative analytics"
+    description="Collect details about the page being looked at, and include extra activities to learn more about your audience's actions."
+    href="/concepts/qualitative-analytics"
+  />
+
+  <LinkCard
+    title="Feature flags"
+    description="Feature flags let you turn features on or off with just a click."
+    href="/concepts/features-flags"
+  />
+
+  
+
+  <LinkCard
+    title="Funnels"
+    description="Enhance your conversion insights by combining flag evaluations with analytics data, providing you with actionable intelligence to boost your customer conversion rates."
+    href="/concepts/funnels"
+  />
 </CardGrid>

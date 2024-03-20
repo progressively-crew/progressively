@@ -8,8 +8,7 @@ Anonymous, Open Source & Self-hosted</strong></p>
 
 <div align="center">
  <a href="https://progressively.app/" target="_blank" rel="noopener noreferrer">Website</a> | 
- <a href="https://docs.progressively.app/" target="_blank" rel="noopener noreferrer">Documentation</a> |
- <a href="https://docs.progressively.app/getting-started" target="_blank" rel="noopener noreferrer">Get started</a>
+ <a href="https://docs.progressively.app/" target="_blank" rel="noopener noreferrer">Get started</a>
 </div>
 
 ## Overview

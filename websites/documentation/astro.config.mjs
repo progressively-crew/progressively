@@ -12,16 +12,20 @@ export default defineConfig({
       sidebar: [
         {
           label: "Start here",
-          items: [{ label: "Getting started", link: "/getting-started" }],
+          items: [{ label: "Getting started", link: "/" }],
         },
         {
           label: "Core concepts",
           items: [
-            { label: "Feature flags", link: "/concepts/features-flags" },
             {
               label: "Anonymous analytics",
               link: "/concepts/anonymous-analytics",
             },
+            {
+              label: "Quantitative analytics",
+              link: "/concepts/qualitative-analytics",
+            },
+            { label: "Feature flags", link: "/concepts/features-flags" },
             {
               label: "Funnels",
               link: "/concepts/funnels",
