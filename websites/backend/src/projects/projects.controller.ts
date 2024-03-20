@@ -307,13 +307,18 @@ export class ProjectsController {
   async getClusterPoints(
     @Param('id') id: string,
     @Query('timeframe') timeframe: string,
+    @Query('viewportWidth') viewportWidth: string,
   ) {
     if (!Timeframes.includes(timeframe)) {
       throw new BadRequestException('timeframe is required.');
     }
 
+    if (!viewportWidth) {
+      throw new BadRequestException('viewportWidth should be provided');
+    }
+
     const tf = Number(timeframe) as Timeframe;
-    return await this.eventService.getClusterPoints(id, tf);
+    return await this.eventService.getClusterPoints(id, tf, viewportWidth);
   }
   @Get(':id/events/viewports')
   @UseGuards(HasProjectAccessGuard)

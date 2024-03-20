@@ -11,9 +11,12 @@ export const useClusterPoints = () => {
     if (!token) return;
     const search = new URLSearchParams(window.location.search);
     const projectId = search.get("__progressivelyProjectId");
+    const viewportWidth = search.get("viewportWidth");
 
-    if (projectId) {
-      getClusterPoints(projectId, 30, token).then(setClusterPoints);
+    if (projectId && viewportWidth) {
+      getClusterPoints(projectId, 30, viewportWidth, token).then(
+        setClusterPoints
+      );
     }
   }, [token]);
 
