@@ -5,9 +5,14 @@ description: How to deploy Progressively?
 
 import { LinkCard, CardGrid } from '@astrojs/starlight/components';
 
- <LinkCard title="Deploy to Render" href="/guides/deployments/deploy-to-render" description="Deploy Progressively to render.com and get an overview of the possibilities." />
 
+Progressively is a self-hosted service. It means that you need to set it up on your environments. It also means that you are in control of your data.
+
+Make sure to follow one of this guides to get up and running. If you are in trouble or if you don't see a guide for your specific environment, make sure to [open an issue](https://github.com/progressively-crew/progressively/issues).
+
+<LinkCard title="Deploy with Docker" href="/deployments/deploy-docker" description="Deploy the official docker images wherever you want."/>
+ 
 <CardGrid>
-  <LinkCard title="Deploy with Docker Compose" href="/guides/deployments/deploy-docker-compose" description="Ready-to-go setup for a monolithic usage on your own machines." />
-  <LinkCard title="Deploy with Docker" href="/guides/deployments/deploy-docker" description="Deploy the official docker images wherever you want."/>
+  <LinkCard title="Deploy with Docker Compose" href="/deployments/deploy-docker-compose" description="Ready-to-go setup for a monolithic usage on your own machines." />
+  <LinkCard title="Deploy to Render" href="/deployments/deploy-to-render" description="Deploy Progressively to render.com and get an overview of the possibilities." /> 
 </CardGrid>
