@@ -18,12 +18,12 @@ export default defineConfig({
           label: "Core concepts",
           items: [
             {
-              label: "Anonymous analytics",
-              link: "/concepts/anonymous-analytics",
+              label: "Anonymity",
+              link: "/concepts/anonymity",
             },
             {
-              label: "Qualitative analytics",
-              link: "/concepts/qualitative-analytics",
+              label: "Analytics",
+              link: "/concepts/analytics",
             },
             { label: "Feature flags", link: "/concepts/features-flags" },
             {
