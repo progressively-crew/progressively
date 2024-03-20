@@ -36,11 +36,16 @@ return <div>Old dashboard</div>
 
 From this simple concept of showing a feature based on a condition, it's possible to create an interesting toolkit: under which constraints should the flag show the new dashboard? To how many user?
 
-The benefits of such system are multiple, and quite interesting:
 
-- Separate code deployment from feature releases
-- Easy rollbacks when unexpected bugs happen
-- Makes possible testing in production (using targeting criteria)
-- Gradual rollout (a percentage of the audience)
-- Makes A/B testing possible (feature flags can have other values than `true`/`false`)
-- Time based rollout (feature flags can be activated at a given date)
+## Features available in Progressively
+
+- Toggle features in one click
+- Single variant feature flag (e.g: `true` or `false`)
+- Multi variants feature flags (e.g: `Control`, `A`, `B`, you name it)
+- Flag activation based on date & time (`before the`, `after the`, `always`)
+- Progressively rollout (from `0%` to `100%` of the target audience)
+- Attribute based targeting (you provide a couple fields/value and can restrict flag evaluation for these couples)
+- Webhooks triggering on flag toggle
+- Insights on variants evaluated by your audience over time
+- Real time update with websockets (opt-in) in the JS sdk
+- SSR SDK for frameworks like Remix, Nextjs etc...

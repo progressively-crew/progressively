@@ -22,7 +22,7 @@ export default defineConfig({
               link: "/concepts/anonymous-analytics",
             },
             {
-              label: "Quantitative analytics",
+              label: "Qualitative analytics",
               link: "/concepts/qualitative-analytics",
             },
             { label: "Feature flags", link: "/concepts/features-flags" },
