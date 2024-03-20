@@ -1,11 +1,12 @@
 import { ClusterPoint } from "../types";
 
-export const getClusterPointsCount = (clusterPoints: Array<ClusterPoint>) => {
-  let count = 0;
-
+export const getBiggestCount = (clusterPoints: Array<ClusterPoint>) => {
+  let biggestCount = 0;
   for (const clusterPoint of clusterPoints) {
-    count += clusterPoint.click_count;
+    if (biggestCount < clusterPoint.click_count) {
+      biggestCount = clusterPoint.click_count;
+    }
   }
 
-  return count;
+  return biggestCount;
 };

@@ -17,5 +17,6 @@ export const getWrapperPointStyle = (
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    zIndex: 9999,
   } as any;
 };

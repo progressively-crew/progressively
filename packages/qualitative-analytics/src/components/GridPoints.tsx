@@ -2,8 +2,9 @@ import React from "react";
 import { useClusterPoints } from "../hooks/useClusterPoints";
 import { getWrapperPointStyle } from "../utils/getWrapperPointStyle";
 import { getPointColor } from "../utils/getPointColor";
-import { getClusterPointsCount } from "../utils/getClusterPointsCount";
+import { getBiggestCount } from "../utils/getClusterPointsCount";
 import { ClusterPoint } from "../types";
+import { NumberValue } from "./NumberValue";
 
 const cellCount = 40;
 
@@ -11,23 +12,28 @@ interface GridPointProps {
   clusterPoint: ClusterPoint;
   cellHeight: number;
   cellWidth: number;
-  clusterPointsCount: number;
+  biggestCount: number;
 }
 const GridPoint = ({
   clusterPoint,
   cellHeight,
   cellWidth,
-  clusterPointsCount,
+  biggestCount,
 }: GridPointProps) => {
-  const sizeRatio = clusterPoint.click_count / clusterPointsCount;
+  const sizeRatio = clusterPoint.click_count / biggestCount;
   const color = getPointColor(sizeRatio);
 
   const style = {
-    height: cellHeight,
-    width: cellWidth,
+    height: cellHeight * sizeRatio,
+    width: cellWidth * sizeRatio,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     background: color,
     borderRadius: "50%",
     opacity: 0.5,
+    fontSize: "10px",
+    fontWeight: "bold",
   } as any;
 
   if (sizeRatio < 0.05) {
@@ -36,15 +42,16 @@ const GridPoint = ({
 
   return (
     <div style={getWrapperPointStyle(clusterPoint, cellWidth, cellHeight)}>
-      <div style={style} />
+      <div style={style}>
+        <NumberValue value={clusterPoint.click_count} />
+      </div>
     </div>
   );
 };
 
 export const GridPoints = () => {
   const clusterPoints = useClusterPoints();
-  const clusterPointsCount = getClusterPointsCount(clusterPoints);
-
+  const biggestCount = getBiggestCount(clusterPoints);
   const pageWidth = window.innerWidth;
   const cellWidth = pageWidth / cellCount;
   const cellHeight = cellWidth;
@@ -56,7 +63,7 @@ export const GridPoints = () => {
           clusterPoint={clusterPoint}
           cellHeight={cellHeight}
           cellWidth={cellWidth}
-          clusterPointsCount={clusterPointsCount}
+          biggestCount={biggestCount}
         />
       ))}
     </>
