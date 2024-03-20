@@ -89,7 +89,7 @@ export default function ProjectInsights() {
     if (!viewportWidth) return;
 
     window.open(
-      `${websiteUrl}?__progressivelyProjectId=${project.uuid}#__progressively=${accessToken}`,
+      `${websiteUrl}?__progressivelyProjectId=${project.uuid}&viewportWidth=${viewportWidth}#__progressively=${accessToken}`,
       "Quantitive analytics details",
       `width=${viewportWidth},height=600`
     );

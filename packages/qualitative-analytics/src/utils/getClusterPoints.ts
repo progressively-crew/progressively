@@ -1,6 +1,7 @@
 export const getClusterPoints = (
   projectId: string,
   timeframe: number,
+  viewportWidth: number,
   accessToken: string
 ) => {
   const url = new URL(
@@ -10,6 +11,7 @@ export const getClusterPoints = (
   );
 
   url.searchParams.set("timeframe", String(timeframe));
+  url.searchParams.set("viewportWidth", String(viewportWidth));
 
   return fetch(url, {
     headers: {
