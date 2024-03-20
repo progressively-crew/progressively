@@ -96,21 +96,24 @@ export default function ProjectInsights() {
   }, [accessToken, websiteUrl, project.uuid, viewportWidth]);
 
   return (
-    <Form method="post" className="flex flex-col flex-1">
-      <CreateEntityLayout
-        titleSlot={<CreateEntityTitle>Available viewports</CreateEntityTitle>}
-        closeSlot={
-          <DialogCloseBtn
-            to={`/dashboard/projects/${project.uuid}/analytics`}
-            label={`Back to analytics`}
-          />
-        }
-      >
-        <div className="grid grid-cols-4 gap-2">
-          {viewports.map(({ viewportWidth }: any) => (
+    <CreateEntityLayout
+      titleSlot={<CreateEntityTitle>Available viewports</CreateEntityTitle>}
+      closeSlot={
+        <DialogCloseBtn
+          to={`/dashboard/projects/${project.uuid}/analytics`}
+          label={`Back to analytics`}
+        />
+      }
+    >
+      <div className="grid grid-cols-4 gap-2">
+        {viewports.map(({ viewportWidth }: any) => (
+          <Form
+            method="post"
+            className="flex flex-col flex-1"
+            key={viewportWidth}
+          >
             <button
               type="submit"
-              key={viewportWidth}
               className="bg-slate-50 p-4 rounded-lg flex items-center justify-center flex-col gap-2 hover:bg-slate-100 active:bg-slate-100"
             >
               <input type="hidden" name="time" value={Date.now()} />
@@ -121,9 +124,9 @@ export default function ProjectInsights() {
               />
               <Device width={viewportWidth} />
             </button>
-          ))}
-        </div>
-      </CreateEntityLayout>
-    </Form>
+          </Form>
+        ))}
+      </div>
+    </CreateEntityLayout>
   );
 }

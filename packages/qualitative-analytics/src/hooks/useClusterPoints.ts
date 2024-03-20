@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { useAuthToken } from "./AuthTokenContext";
-import { getClusterPoints } from "./getClusterPoints";
-import { ClusterPoint } from "./types";
+import { useAuthToken } from "../context/AuthTokenContext";
+import { getClusterPoints } from "../utils/getClusterPoints";
+import { ClusterPoint } from "../types";
 
 export const useClusterPoints = () => {
   const token = useAuthToken();

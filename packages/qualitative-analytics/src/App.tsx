@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { AuthTokenProvider } from "./AuthTokenContext";
-import { GridPoints } from "./GridPoints";
+import { AuthTokenProvider } from "./context/AuthTokenContext";
+import { GridPoints } from "./components/GridPoints";
 
 export const App = () => {
   const [authToken, setAuthToken] = useState<string>();
