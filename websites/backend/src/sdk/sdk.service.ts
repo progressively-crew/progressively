@@ -205,14 +205,16 @@ export class SdkService {
     });
   }
 
-  async resolveQueuedHit(queuedEvent: QueuedEventHit) {
+  async validateQueuedEvent(queuedEvent: QueuedEventHit) {
     if (!queuedEvent.secretKey && !queuedEvent.clientKey) {
-      return this.logger.error({
+      this.logger.error({
         error: 'Invalid secret key or client key provided',
         level: 'error',
         context: 'Queued hit',
         payload: queuedEvent,
       });
+
+      return null;
     }
 
     const concernedProject = await this.getProjectByKeys(
@@ -221,12 +223,14 @@ export class SdkService {
     );
 
     if (!concernedProject) {
-      return this.logger.error({
+      this.logger.error({
         error: 'The client key does not match any project',
         level: 'error',
         context: 'Queued hit',
         payload: queuedEvent,
       });
+
+      return null;
     }
 
     const domain = queuedEvent.domain;
@@ -238,12 +242,14 @@ export class SdkService {
         (concernedProject.domain !== '**' &&
           !domain.includes(concernedProject.domain)))
     ) {
-      return this.logger.error({
+      this.logger.error({
         error: `The client key does not match the authorized domains. Project: "${concernedProject.domain}", received: "${domain}"`,
         level: 'error',
         context: 'Queued hit',
         payload: queuedEvent,
       });
+
+      return null;
     }
 
     const session = await this.getOrCreateSession(
@@ -251,10 +257,19 @@ export class SdkService {
       concernedProject.uuid,
     );
 
-    return this.eventService.bulkAddEvents(
-      [queuedEvent],
-      concernedProject.uuid,
-      session.uuid,
+    queuedEvent.sessionUuid = session.uuid;
+    queuedEvent.projectUuid = concernedProject.uuid;
+
+    return queuedEvent;
+  }
+
+  async resolveQueuedHits(queuedEvents: Array<QueuedEventHit>) {
+    const promises = queuedEvents.map((queuedEvent) =>
+      this.validateQueuedEvent(queuedEvent),
     );
+
+    const validatedQueuedEvents = (await Promise.all(promises)).filter(Boolean);
+
+    return this.eventService.bulkAddEvents(validatedQueuedEvents);
   }
 }

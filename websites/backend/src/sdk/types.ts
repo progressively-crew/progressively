@@ -16,4 +16,6 @@ export interface QueuedEventHit extends EventHit, DeviceInfo {
   secretKey?: string;
   domain?: string;
   visitorId: string;
+  sessionUuid?: string; // is added later in the process
+  projectUuid?: string; // is added later in the process
 }
