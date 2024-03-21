@@ -10,6 +10,7 @@ import {
   BadRequestException,
   UnauthorizedException,
   Inject,
+  UsePipes,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { SdkService } from './sdk.service';
@@ -20,6 +21,8 @@ import { getDeviceInfo } from '../shared/utils/getDeviceInfo';
 import { FieldRecord } from '../rule/types';
 import { KafkaTopics } from '../queuing/topics';
 import { IQueuingService } from '../queuing/types';
+import { ValidationPipe } from '../shared/pipes/ValidationPipe';
+import { SdkHitAnalyticsSchema } from './sdk.dto';
 
 @Controller('sdk')
 export class SdkController {
@@ -97,6 +100,7 @@ export class SdkController {
   }
 
   @Post('/:params')
+  @UsePipes(new ValidationPipe(SdkHitAnalyticsSchema))
   async hitEvent(
     @Req() request: Request,
     @Param('params') base64Params: string,
