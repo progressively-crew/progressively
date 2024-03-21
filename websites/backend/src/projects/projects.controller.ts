@@ -214,13 +214,30 @@ export class ProjectsController {
     }
     const tf = Number(timeframe) as Timeframe;
 
-    const [pageViews, uniqueVisitors, bounceRate] = await Promise.all([
+    const [
+      pageViews,
+      prevPageViews,
+      uniqueVisitors,
+      prevUniqueVisitors,
+      bounceRate,
+      prevBounceRate,
+    ] = await Promise.all([
       this.eventService.getPageViews(id, tf),
+      this.eventService.getPageViews(id, tf, true),
       this.eventService.getUniqueVisitors(id, tf),
+      this.eventService.getUniqueVisitors(id, tf, true),
       this.eventService.getBounceRate(id, tf),
+      this.eventService.getBounceRate(id, tf, true),
     ]);
 
-    return { pageViews, uniqueVisitors, bounceRate };
+    return {
+      pageViews,
+      prevPageViews,
+      uniqueVisitors,
+      prevUniqueVisitors,
+      bounceRate,
+      prevBounceRate,
+    };
   }
 
   @Get(':id/funnels')

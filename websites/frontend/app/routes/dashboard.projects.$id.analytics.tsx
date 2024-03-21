@@ -19,6 +19,7 @@ import { getPageViewsGroupedByDate } from "~/modules/projects/services/getPageVi
 import { getEventsGroupedByDate } from "~/modules/projects/services/getEventsGroupedByDate";
 import { LuInspect } from "react-icons/lu";
 import { IconButton } from "~/components/Buttons/IconButton";
+import { calculateGrowthRate } from "~/modules/misc/utils/calculateGrowthRate";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -99,8 +100,21 @@ export default function ProjectInsights() {
   } = useLoaderData<typeof loader>();
 
   const { project } = useProject();
-  const pageViewCountEvolution = 0;
-  const metricCountViewEvolution = 0;
+
+  const pageViewCountEvolution = calculateGrowthRate(
+    globalMetrics.prevPageViews,
+    globalMetrics.pageViews
+  );
+
+  const uniqueVisitorEvolution = calculateGrowthRate(
+    globalMetrics.prevUniqueVisitors,
+    globalMetrics.uniqueVisitors
+  );
+
+  const bounceRateEvolution = calculateGrowthRate(
+    globalMetrics.prevBounceRate,
+    globalMetrics.bounceRate
+  );
 
   return (
     <>
@@ -123,6 +137,7 @@ export default function ProjectInsights() {
               value={globalMetrics.uniqueVisitors}
               unit={"users."}
               icon={<div />}
+              evolution={uniqueVisitorEvolution}
             />
 
             <BigStat
@@ -130,6 +145,7 @@ export default function ProjectInsights() {
               value={globalMetrics.bounceRate}
               unit={"%"}
               icon={<div />}
+              evolution={bounceRateEvolution}
             />
           </div>
         </Section>
@@ -249,7 +265,6 @@ export default function ProjectInsights() {
               value={metricTotalCount}
               unit={"hits."}
               icon={<div />}
-              evolution={metricCountViewEvolution}
             />
           </div>
         </Section>

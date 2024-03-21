@@ -42,11 +42,20 @@ export class EventsService {
     });
   }
 
-  async getPageViews(projectId: string, timeframe: Timeframe) {
+  async getPageViews(
+    projectId: string,
+    timeframe: Timeframe,
+    showPrevious?: boolean,
+  ) {
+    const whereClause = showPrevious
+      ? `WHERE date >= now() - INTERVAL ${timeframe * 2} DAY
+        AND date <= now() - INTERVAL ${timeframe} DAY`
+      : `WHERE date >= now() - INTERVAL ${timeframe} DAY`;
+
     const resultSet = await this.clickhouse.query({
       query: `SELECT count() AS pageViews
       FROM events
-      WHERE date >= now() - INTERVAL ${timeframe} DAY
+      ${whereClause}
       AND projectUuid = '${projectId}'`,
       format: 'JSONEachRow',
     });
@@ -60,11 +69,20 @@ export class EventsService {
     return 0;
   }
 
-  async getUniqueVisitors(projectId: string, timeframe: Timeframe) {
+  async getUniqueVisitors(
+    projectId: string,
+    timeframe: Timeframe,
+    showPrevious?: boolean,
+  ) {
+    const whereClause = showPrevious
+      ? `WHERE date >= now() - INTERVAL ${timeframe * 2} DAY
+      AND date <= now() - INTERVAL ${timeframe} DAY`
+      : `WHERE date >= now() - INTERVAL ${timeframe} DAY`;
+
     const resultSet = await this.clickhouse.query({
       query: `SELECT count(DISTINCT visitorId) AS uniqueVisitors
       FROM events
-      WHERE date >= now() - INTERVAL ${timeframe} DAY
+      ${whereClause}
       AND projectUuid = '${projectId}';`,
       format: 'JSONEachRow',
     });
@@ -204,7 +222,16 @@ export class EventsService {
     return dataset;
   }
 
-  async getBounceRate(projectId: string, timeframe: Timeframe) {
+  async getBounceRate(
+    projectId: string,
+    timeframe: Timeframe,
+    showPrevious?: boolean,
+  ) {
+    const whereClause = showPrevious
+      ? `WHERE date >= now() - INTERVAL ${timeframe * 2} DAY
+      AND date <= now() - INTERVAL ${timeframe} DAY`
+      : `WHERE date >= now() - INTERVAL ${timeframe} DAY`;
+
     const resultSet = await this.clickhouse.query({
       query: `WITH
       sessions AS
@@ -214,7 +241,7 @@ export class EventsService {
               COUNTDistinct(url) AS pages_per_session,
               toDate(date) AS session_date
           FROM events
-          WHERE date >= now() - INTERVAL ${timeframe} DAY
+          ${whereClause}
           AND projectUuid = '${projectId}'
           GROUP BY
               sessionUuid,
