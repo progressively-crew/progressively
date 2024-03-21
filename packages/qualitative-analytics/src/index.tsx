@@ -5,12 +5,6 @@ import { App } from "./App";
 const scriptEl = window.document.currentScript;
 const endpoint = scriptEl?.getAttribute("data-progressively-endpoint");
 
-if (!endpoint) {
-  throw new Error(
-    "[Progressively]: [data-progressively-endpoint] attributes should be set on the script tag."
-  );
-}
-
 (window as any).__progressivelyEndpoint = endpoint;
 
 const root = document.createElement("div");
