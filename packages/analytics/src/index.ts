@@ -14,7 +14,7 @@ const flushEvents = () => {
   const payloads = eventsBuffer.map((ev) => ({
     name: ev.name,
     url: window.location.href,
-    referer: window.document.referrer || null,
+    referer: window.document.referrer || undefined,
     viewportWidth: window.innerWidth,
     viewportHeight: document.documentElement.scrollHeight,
     posX: ev.opts?.posX,
