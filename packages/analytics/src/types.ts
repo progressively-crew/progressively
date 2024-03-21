@@ -4,7 +4,9 @@ export interface TrackOpts {
   data?: any;
 }
 
-export type TrackFn = (
-  eventName: string,
-  opts?: TrackOpts
-) => Promise<Response>;
+export type TrackFn = (eventName: string, opts?: TrackOpts) => void;
+
+export interface AnalyticsEvent {
+  name: string;
+  opts?: TrackOpts;
+}
