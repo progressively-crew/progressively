@@ -9,11 +9,7 @@ export class EventsService {
     @Inject('ClickhouseService') private readonly clickhouse: ClickHouseClient,
   ) {}
 
-  bulkAddEvents(
-    events: Array<QueuedEventHit>,
-    projectId: string,
-    sessionUuid: string,
-  ) {
+  bulkAddEvents(events: Array<QueuedEventHit>) {
     const eventsToStore = events.map((ev) => ({
       date: new Date(),
       name: ev.name,
@@ -27,8 +23,8 @@ export class EventsService {
           ? JSON.stringify(ev.data)
           : String(ev.data)
         : null,
-      projectUuid: projectId,
-      sessionUuid,
+      projectUuid: ev.projectUuid,
+      sessionUuid: ev.sessionUuid,
       viewportHeight: ev.viewportHeight,
       viewportWidth: ev.viewportWidth,
       posX: ev.posX,
