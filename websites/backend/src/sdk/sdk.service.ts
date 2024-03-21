@@ -205,7 +205,7 @@ export class SdkService {
     });
   }
 
-  async resolveQueuedHit(queuedEvent: QueuedEventHit) {
+  async resolveQueueHit(queuedEvent: QueuedEventHit) {
     if (!queuedEvent.secretKey && !queuedEvent.clientKey) {
       return this.logger.error({
         error: 'Invalid secret key or client key provided',
@@ -251,6 +251,10 @@ export class SdkService {
       concernedProject.uuid,
     );
 
+    return session;
+  }
+
+  async resolveQueuedHits(queuedEvents: Array<QueuedEventHit>) {
     return this.eventService.bulkAddEvents(
       [queuedEvent],
       concernedProject.uuid,

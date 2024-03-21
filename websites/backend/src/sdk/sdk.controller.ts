@@ -100,9 +100,9 @@ export class SdkController {
   async hitEvent(
     @Req() request: Request,
     @Param('params') base64Params: string,
-    @Body() body: EventHit,
+    @Body() body: Array<EventHit>,
   ) {
-    if (!body.name) {
+    if (body.length === 0) {
       throw new BadRequestException();
     }
 
@@ -118,24 +118,26 @@ export class SdkController {
 
     const deviceInfo = getDeviceInfo(request);
 
-    const queuedEvent: QueuedEventHit = {
-      name: body.name,
-      os: deviceInfo.os,
-      browser: deviceInfo.browser,
-      clientKey: clientKey ? String(clientKey) : undefined,
-      secretKey,
-      domain,
-      referer: body.referer,
-      url: parseUrl(body.url).toString(),
-      visitorId: String(fields?.id || ''),
-      data: body.data,
-      viewportHeight: body.viewportHeight,
-      viewportWidth: body.viewportWidth,
-      posX: body.posX,
-      posY: body.posY,
-    };
+    const queuedEvents: Array<QueuedEventHit> = body
+      .filter((ev) => Boolean(ev.name))
+      .map((ev) => ({
+        name: ev.name,
+        os: deviceInfo.os,
+        browser: deviceInfo.browser,
+        clientKey: clientKey ? String(clientKey) : undefined,
+        secretKey,
+        domain,
+        referer: ev.referer,
+        url: parseUrl(ev.url).toString(),
+        visitorId: String(fields?.id || ''),
+        data: ev.data,
+        viewportHeight: ev.viewportHeight,
+        viewportWidth: ev.viewportWidth,
+        posX: ev.posX,
+        posY: ev.posY,
+      }));
 
-    await this.queuingService.send(KafkaTopics.AnalyticsHits, queuedEvent);
+    await this.queuingService.send(KafkaTopics.AnalyticsHits, queuedEvents);
 
     return {};
   }
