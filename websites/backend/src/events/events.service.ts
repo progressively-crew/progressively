@@ -268,7 +268,7 @@ export class EventsService {
     }> = await resultSet.json();
 
     if (dataset.length === 1) {
-      return dataset[0].bounceRate;
+      return dataset[0].bounceRate || 0;
     }
 
     return 0;
