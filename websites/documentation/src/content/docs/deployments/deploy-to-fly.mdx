@@ -1,0 +1,73 @@
+---
+title: Deploy to Fly.io
+description: How to deploy Progressively to Fly.io?
+---
+
+![Fly.io](/flyio.png)
+
+## Prerequisite
+
+- A connection string to a Postgres database (you can use [Neondb](https://neon.tech/) for example)
+- A connection string to a Postgres shadow database (you can use [Neondb](https://neon.tech/) for example)
+- A connection string to a Redis database (you can use [Upstash](https://upstash.com/) for example)
+- A connection string to a [Clickhouse](https://clickhouse.com/) database (you can use the online service or the [Docker image](https://hub.docker.com/r/clickhouse/clickhouse-server/))
+- An account on [Fly.io](https://fly.io/)
+- The [Fly.io CLI](https://fly.io/docs/hands-on/install-flyctl/) installed on your machine 
+
+
+## Steps
+
+Make sure to have the Postgres & Redis connection strings close to you.
+
+### Prepare the database
+
+```sh
+$ git clone https://github.com/progressively-crew/progressively
+$ cd progressively
+$ cp ./packages/database/.env.example ./packages/database/.env # modify the .env file with the connection string to postgres
+$ pnpm i
+$ pnpm run build
+$ pnpm run db:prepare
+```
+
+_This step might disappear or be reduced in the future. We know it's not optimal._
+
+### Setup the backend (APIs)
+
+Make sure you are inside the local copy of the github repository and running the following commands:
+
+```sh
+$ fly apps create progressively
+$ fly secrets set \
+  DATABASE_URL=YOUR_POSTGRES_URL \
+  SHADOW_DATABASE_URL=YOUR_SHADOW_POSTGRES_URL \
+  REDIS_URL=YOUR_REDIS_URL \
+  CLICKHOUSE_HOST=YOUR_CLICKHOUSE_HOST \
+  CLICKHOUSE_USER=YOUR_CLICKHOUSE_USER \
+  CLICKHOUSE_PASSWORD=YOUR_CLICKHOUSE_PASSWORD \
+  REFRESH_TOKEN_SECRET=YOUR_REFRESH_TOKEN_SECRET \
+  ACCESS_TOKEN_SECRET=YOUR_ACCESS_TOKEN_SECRET \
+  FRONTEND_URL=YOUR_FRONTEND_ENDPOINT \
+  BACKEND_URL=YOUR_BACKEND_ENDPOINT \
+  --config fly.backend.toml
+$ fly deploy --config fly.backend.toml
+```
+
+
+### Setup the frontend
+
+Make sure you are inside the local copy of the github repository and running the following commands:
+
+```sh
+$ fly apps create progressively-dashboard
+$ fly secrets set BACKEND_URL=YOUR_BACKEND_ENDPOINT SESSION_SECRET=YOUR_SESSION_SECRET --config fly.frontend.toml
+$ fly deploy --config fly.frontend.toml
+```
+
+### Next steps
+
+The services are ready. You can now:
+
+- Open the frontend url on `/welcome` to create your admin user
+- Choose a SDK and integrate it in your application 
+
