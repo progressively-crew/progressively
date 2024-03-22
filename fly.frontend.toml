@@ -3,26 +3,19 @@
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'progressively'
+app = 'progressively-dashboard'
 primary_region = 'cdg'
 
 [build]
-dockerfile = 'Dockerfile.Backend'
+dockerfile = 'Dockerfile.Frontend'
 
 [http_service]
-internal_port = 4000
+internal_port = 3000
 force_https = true
 auto_stop_machines = true
 auto_start_machines = true
 min_machines_running = 1
 processes = ['app']
-
-[env]
-ACCESS_TOKEN_EXPIRES = 84600
-REFRESH_TOKEN_EXPIRES = 84600
-SOCKET_TIMEOUT = 10000
-THROTTLING_TTL = 60
-THROTTLING_LIMIT = 10000
 
 [[vm]]
 cpu_kind = 'shared'

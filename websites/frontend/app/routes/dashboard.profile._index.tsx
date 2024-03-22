@@ -97,7 +97,9 @@ export default function ProfilePage() {
           </SuccessBox>
         ) : null
       }
-      backLink={<BackLink to="/dashboard">Back to dashboard</BackLink>}
+      backLink={
+        <BackLink to="/dashboard/projects/all">Back to dashboard</BackLink>
+      }
     >
       <PageTitle value="My profile" />
 

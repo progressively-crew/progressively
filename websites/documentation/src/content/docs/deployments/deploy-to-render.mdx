@@ -3,6 +3,8 @@ title: Deploy to Render
 description: How to deploy Progressively to Render?
 ---
 
+![Render](/render.png)
+
 ## Prerequisite
 
 - A connection string to a Postgres database (you can use [Neondb](https://neon.tech/) for example)
@@ -25,8 +27,6 @@ Make sure to have the Postgres & Redis connection strings close to you.
 $ git clone https://github.com/progressively-crew/progressively
 $ cd progressively
 $ cp ./packages/database/.env.example ./packages/database/.env # modify the .env file with the connection string to postgres
-$ cp ./websites/backend/.env.example ./websites/backend/.env # modify the .env file with the connection string to postgres & Redis
-$ cp ./websites/frontend/.env.example ./websites/frontend/.env
 $ pnpm i
 $ pnpm run build
 $ pnpm run db:prepare
