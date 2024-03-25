@@ -19,7 +19,7 @@ export const InsightsFilters = () => {
 
   return (
     <Card>
-      <div className="inline-flex flex-row gap-1 px-1.5 py-1 items-center">
+      <div className="inline-flex flex-row gap-1 px-1 py-1 items-center">
         <button
           onClick={() => setDays(7)}
           className={`${shareButtonClass} ${days === "7" ? activeClass : ""}`}

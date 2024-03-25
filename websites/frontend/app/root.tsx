@@ -12,7 +12,6 @@ import {
 import UnauthorizedPage from "./routes/401";
 import ForbiddenPage from "./routes/403";
 import NotFoundPage from "./routes/404";
-import { Background } from "./components/Background";
 import { LinksFunction } from "@remix-run/node";
 import { Typography } from "./components/Typography";
 import { Spacer } from "./components/Spacer";
@@ -71,7 +70,7 @@ document.documentElement.classList.remove('dark')
         ></script>
       </head>
       <body className="h-full">
-        <Background>{children}</Background>
+        <div className="flex flex-col min-h-full">{children}</div>
 
         <ScrollRestoration />
         <Scripts />
