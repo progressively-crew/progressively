@@ -14,6 +14,7 @@ import { Outlet, useLoaderData } from "@remix-run/react";
 import { getFunnels } from "~/modules/projects/services/getFunnels";
 import { getSession } from "~/sessions";
 import { FunnelChart } from "~/modules/funnels/types";
+import { EmptyState } from "~/components/EmptyState";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -65,6 +66,8 @@ export default function FunnelsPage() {
   const { project } = useProject();
   const { funnels } = useLoaderData<LoaderData>();
 
+  const hasFunnels = funnels.length > 0;
+
   return (
     <>
       <DashboardLayout subNav={<ProjectNavBar project={project} />}>
@@ -72,11 +75,33 @@ export default function FunnelsPage() {
           value="Funnels"
           action={
             <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
-              <CreateButton to={`./create`}>Create a funnel</CreateButton>
+              {hasFunnels && (
+                <CreateButton to={`./create`}>Create a funnel</CreateButton>
+              )}
               <InsightsFilters />
             </div>
           }
         />
+
+        {!hasFunnels && (
+          <Card>
+            <CardContent>
+              <EmptyState
+                titleAs="h2"
+                title="No funnels found"
+                description={"There are no funnels for this project."}
+                action={
+                  <CreateButton
+                    to={`/dashboard/projects/${project.uuid}/funnels/create`}
+                  >
+                    Create a funnel
+                  </CreateButton>
+                }
+              />
+            </CardContent>
+          </Card>
+        )}
+
         <Section>
           <div className="flex flex-col gap-4">
             {funnels.map((funnelChart) => {
