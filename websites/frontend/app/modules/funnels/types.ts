@@ -6,9 +6,10 @@ export interface Funnel {
 }
 
 export interface FunnelChart {
-  funnel: Funnel;
-  funnelStats: Array<{
-    event: string;
+  uuid: string;
+  name: string;
+  funnelsEntries: Array<{
+    name: string;
     count: number;
   }>;
 }

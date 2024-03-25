@@ -6,8 +6,9 @@ import { EventsService } from '../events/events.service';
 import { Funnel, FunnelEntry } from '@progressively/database';
 
 type FunnelsData = {
+  uuid: string;
   name: string;
-  funnelsEntries: Array<{ name: string; count: number }>;
+  funnelsEntries: Array<{ uuid: string; name: string; count: number }>;
 };
 
 @Injectable()
@@ -22,7 +23,11 @@ export class FunnelsService {
     funnel: Funnel & { funnelEntries: Array<FunnelEntry> },
     timeframe: Timeframe,
   ) {
-    const funnelData: FunnelsData = { name: funnel.name, funnelsEntries: [] };
+    const funnelData: FunnelsData = {
+      uuid: funnel.uuid,
+      name: funnel.name,
+      funnelsEntries: [],
+    };
 
     let visitorIds: Array<{ visitorId: string }> = [];
 
@@ -38,6 +43,7 @@ export class FunnelsService {
       visitorIds = funnelEntryVisitorIds;
 
       funnelData.funnelsEntries.push({
+        uuid: funnelEntry.uuid,
         name: funnelEntry.flagVariant || funnelEntry.eventName,
         count: visitorIds.length,
       });

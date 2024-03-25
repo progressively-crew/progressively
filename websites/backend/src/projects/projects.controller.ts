@@ -356,4 +356,23 @@ export class ProjectsController {
     const tf = Number(timeframe) as Timeframe;
     return await this.eventService.getDistinctViewport(id, tf, url);
   }
+
+  @Get(':id/funnels/fields')
+  @UseGuards(HasProjectAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  async getFunnelsFields(
+    @Param('id') id: string,
+    @Query('timeframe') timeframe: string,
+  ) {
+    if (!Timeframes.includes(timeframe)) {
+      throw new BadRequestException('timeframe is required.');
+    }
+
+    const tf = Number(timeframe) as Timeframe;
+
+    return Promise.all([
+      this.eventService.getDistinctEvents(id, tf),
+      this.eventService.getDistinctUrl(id, tf),
+    ]);
+  }
 }

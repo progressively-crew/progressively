@@ -65,19 +65,21 @@ export class EventsService {
   ) {
     const table = funnelEntry.flagUuid ? 'flaghits' : 'events';
     const whereClause = funnelEntry.flagUuid
-      ? ` AND flagUuid = '${funnelEntry.flagUuid}'`
+      ? `AND flagUuid = '${funnelEntry.flagUuid}'`
       : `AND projectUuid = '${projectId}'`;
 
     const sqlFormattedIds = visitorIds
       .map((v) => `'${v.visitorId}'`)
       .join(', ');
+    const visitorClause =
+      visitorIds.length > 0 ? `AND visitorId IN (${sqlFormattedIds});` : ``;
 
     const resultSet = await this.clickhouse.query({
       query: `SELECT DISTINCT visitorId
       FROM ${table}
       WHERE date >= now() - INTERVAL ${timeframe} DAY
       ${whereClause}
-      AND visitorId IN (${sqlFormattedIds});`,
+      ${visitorClause}`,
       format: 'JSONEachRow',
     });
 
@@ -262,6 +264,34 @@ export class EventsService {
       date: string;
       pagesPerSession: number;
     }> = await resultSet.json();
+
+    return dataset;
+  }
+
+  async getDistinctUrl(projectId: String, timeframe: Timeframe) {
+    const resultSet = await this.clickhouse.query({
+      query: `SELECT DISTINCT(url)
+    FROM events
+    WHERE date >= now() - INTERVAL ${timeframe} DAY
+    AND projectUuid = '${projectId}';`,
+      format: 'JSONEachRow',
+    });
+
+    const dataset = await resultSet.json();
+
+    return dataset;
+  }
+
+  async getDistinctEvents(projectId: String, timeframe: Timeframe) {
+    const resultSet = await this.clickhouse.query({
+      query: `SELECT DISTINCT(name)
+    FROM events
+    WHERE date >= now() - INTERVAL ${timeframe} DAY
+    AND projectUuid = '${projectId}';`,
+      format: 'JSONEachRow',
+    });
+
+    const dataset = await resultSet.json();
 
     return dataset;
   }

@@ -98,26 +98,26 @@ export default function FunnelsPage() {
         <Section>
           <div className="flex flex-col gap-4">
             {funnels.map((funnelChart) => {
-              const firstChart = funnelChart.funnelStats[0];
-              const lastChart = funnelChart.funnelStats.at(-1);
+              const firstChart = funnelChart.funnelsEntries[0];
+              const lastChart = funnelChart.funnelsEntries.at(-1);
               const percentage =
                 firstChart?.count && lastChart?.count
                   ? (lastChart.count / firstChart.count) * 100
                   : 0;
 
               return (
-                <Card key={funnelChart.funnel.uuid}>
+                <Card key={funnelChart.uuid}>
                   <div className="grid md:grid-cols-[2fr_1fr] overflow-x-scroll">
                     <CardContent>
                       <div>
                         <Typography as="h2" className="font-semibold pb-4">
-                          {funnelChart.funnel.name}
+                          {funnelChart.name}
                         </Typography>
 
                         <div className="flex flex-row gap-4 items-center">
                           <BarChart
-                            data={funnelChart.funnelStats.map((stat) => ({
-                              name: stat.event,
+                            data={funnelChart.funnelsEntries.map((stat) => ({
+                              name: stat.name,
                               value: stat.count,
                             }))}
                           />
