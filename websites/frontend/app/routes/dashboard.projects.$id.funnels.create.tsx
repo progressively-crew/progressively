@@ -102,12 +102,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     day = 7;
   }
 
-  const start = new Date();
-  start.setDate(start.getDate() - day);
-
-  const end = new Date();
-  end.setDate(end.getDate() + 1);
-
   const authCookie = session.get("auth-cookie");
 
   const projectId = params.id!;

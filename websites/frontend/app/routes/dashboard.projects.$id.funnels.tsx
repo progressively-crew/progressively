@@ -44,18 +44,11 @@ export const loader: LoaderFunction = async ({
     day = 7;
   }
 
-  const start = new Date();
-  start.setDate(start.getDate() - day);
-
-  const end = new Date();
-  end.setDate(end.getDate() + 1);
-
   const authCookie = session.get("auth-cookie");
 
   const funnels: Array<FunnelChart> = await getFunnels(
     params.id!,
-    start,
-    end,
+    day,
     authCookie
   );
 
