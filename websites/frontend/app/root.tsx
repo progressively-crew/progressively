@@ -71,7 +71,7 @@ document.documentElement.classList.remove('dark')
         ></script>
       </head>
       <body className="h-full">
-        <Background>{children}</Background>
+        <div className="flex flex-col min-h-full">{children}</div>
 
         <ScrollRestoration />
         <Scripts />

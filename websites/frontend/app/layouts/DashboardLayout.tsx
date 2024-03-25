@@ -41,7 +41,7 @@ export const DashboardLayout = ({
   const isNormalLoad =
     navigation.state === "loading" && navigation.formData == null;
 
-  const layoutClassName = "max-w-screen-2xl mx-auto";
+  const layoutClassName = "max-w-screen-xl mx-auto";
 
   const lastCrumb = crumbs.at(-1);
   const hasMoreThanOneCrumb = crumbs.length > 1;
@@ -52,7 +52,7 @@ export const DashboardLayout = ({
     <Inert>
       <SkipNavLink>Skip to content</SkipNavLink>
 
-      <div className="bg-gray-50 h-full flex-1 md:rounded-xl shadow-xl">
+      <div className="bg-gray-50 h-full flex-1">
         {lastCrumb && (
           <div
             className={`bg-white border-b border-slate-200 rounded-t-lg pt-1 ${
