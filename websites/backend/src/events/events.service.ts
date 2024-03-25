@@ -240,7 +240,7 @@ export class EventsService {
     const timeframeToRemove: Timeframe = 90;
 
     return await this.clickhouse.exec({
-      query: `DELETE FROM events WHERE date <= now() - INTERVAL ${
+      query: `DELETE FROM events WHERE date < now() - INTERVAL ${
         timeframeToRemove * 2
       } DAY;`,
     });
