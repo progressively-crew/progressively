@@ -1,13 +1,27 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { ClickHouseClient, Tables } from '@progressively/database';
+import { Cron, CronExpression } from '@nestjs/schedule';
 import { QueuedEventHit } from '../sdk/types';
 import { Timeframe } from './types';
+import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 
 @Injectable()
 export class EventsService {
   constructor(
     @Inject('ClickhouseService') private readonly clickhouse: ClickHouseClient,
+    @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
   ) {}
+
+  @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
+  handleOutdatedEventsRemovalCron() {
+    this.logger.log({
+      level: 'info',
+      context: 'cron',
+      message: 'Cleaning outdated events',
+    });
+
+    return this.deleteOutdatedEvents();
+  }
 
   bulkAddEvents(events: Array<QueuedEventHit>) {
     const eventsToStore = events.map((ev) => ({
@@ -220,6 +234,16 @@ export class EventsService {
     }> = await resultSet.json();
 
     return dataset;
+  }
+
+  async deleteOutdatedEvents() {
+    const timeframeToRemove: Timeframe = 90;
+
+    return await this.clickhouse.exec({
+      query: `DELETE FROM events WHERE date <= now() - INTERVAL ${
+        timeframeToRemove * 2
+      } DAY;`,
+    });
   }
 
   async getBounceRate(
