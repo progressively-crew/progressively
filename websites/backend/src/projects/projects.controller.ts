@@ -245,15 +245,15 @@ export class ProjectsController {
   @UseGuards(JwtAuthGuard)
   async getFunnels(
     @Param('id') id: string,
-    @Query('startDate') startDate: string | undefined,
-    @Query('endDate') endDate: string | undefined,
+    @Query('timeframe') timeframe: string,
   ) {
-    if (!endDate || !startDate) {
-      throw new BadRequestException('startDate and endDate are required.');
+    if (!Timeframes.includes(timeframe)) {
+      throw new BadRequestException('timeframe is required.');
     }
+    const tf = Number(timeframe) as Timeframe;
 
     // TODO: Make sure it works
-    return [];
+    return this.funnelService.resolveFunnels(id, tf);
   }
 
   @Get(':id/events/fields')
@@ -355,5 +355,24 @@ export class ProjectsController {
 
     const tf = Number(timeframe) as Timeframe;
     return await this.eventService.getDistinctViewport(id, tf, url);
+  }
+
+  @Get(':id/funnels/fields')
+  @UseGuards(HasProjectAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  async getFunnelsFields(
+    @Param('id') id: string,
+    @Query('timeframe') timeframe: string,
+  ) {
+    if (!Timeframes.includes(timeframe)) {
+      throw new BadRequestException('timeframe is required.');
+    }
+
+    const tf = Number(timeframe) as Timeframe;
+
+    return Promise.all([
+      this.eventService.getDistinctEvents(id, tf),
+      this.eventService.getDistinctUrl(id, tf),
+    ]);
   }
 }

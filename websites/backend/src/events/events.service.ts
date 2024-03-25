@@ -1,6 +1,7 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { ClickHouseClient, Tables } from '@progressively/database';
 import { Cron, CronExpression } from '@nestjs/schedule';
+import { FunnelEntry } from '@progressively/database';
 import { QueuedEventHit } from '../sdk/types';
 import { Timeframe } from './types';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
@@ -54,6 +55,37 @@ export class EventsService {
         date_time_input_format: 'best_effort',
       },
     });
+  }
+
+  async getFunnelEntryVisitorIds(
+    funnelEntry: FunnelEntry,
+    projectId: string,
+    visitorIds: Array<{ visitorId: string }>,
+    timeframe: Timeframe,
+  ) {
+    const table = funnelEntry.flagUuid ? 'flaghits' : 'events';
+    const whereClause = funnelEntry.flagUuid
+      ? `AND flagUuid = '${funnelEntry.flagUuid}'`
+      : `AND projectUuid = '${projectId}'`;
+
+    const sqlFormattedIds = visitorIds
+      .map((v) => `'${v.visitorId}'`)
+      .join(', ');
+    const visitorClause =
+      visitorIds.length > 0 ? `AND visitorId IN (${sqlFormattedIds});` : ``;
+
+    const resultSet = await this.clickhouse.query({
+      query: `SELECT DISTINCT visitorId
+      FROM ${table}
+      WHERE date >= now() - INTERVAL ${timeframe} DAY
+      ${whereClause}
+      ${visitorClause}`,
+      format: 'JSONEachRow',
+    });
+
+    const dataset: Array<{ visitorId: string }> = await resultSet.json();
+
+    return dataset;
   }
 
   async getPageViews(
@@ -232,6 +264,34 @@ export class EventsService {
       date: string;
       pagesPerSession: number;
     }> = await resultSet.json();
+
+    return dataset;
+  }
+
+  async getDistinctUrl(projectId: String, timeframe: Timeframe) {
+    const resultSet = await this.clickhouse.query({
+      query: `SELECT DISTINCT(url)
+    FROM events
+    WHERE date >= now() - INTERVAL ${timeframe} DAY
+    AND projectUuid = '${projectId}';`,
+      format: 'JSONEachRow',
+    });
+
+    const dataset = await resultSet.json();
+
+    return dataset;
+  }
+
+  async getDistinctEvents(projectId: String, timeframe: Timeframe) {
+    const resultSet = await this.clickhouse.query({
+      query: `SELECT DISTINCT(name)
+    FROM events
+    WHERE date >= now() - INTERVAL ${timeframe} DAY
+    AND projectUuid = '${projectId}';`,
+      format: 'JSONEachRow',
+    });
+
+    const dataset = await resultSet.json();
 
     return dataset;
   }

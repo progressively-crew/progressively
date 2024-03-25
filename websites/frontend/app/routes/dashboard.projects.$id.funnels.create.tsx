@@ -32,6 +32,7 @@ import {
   getInitialState,
 } from "~/modules/projects/reducers/funnelCreationReducer";
 import { ReservedEventName } from "~/modules/events/types";
+import { getFunnelsFields } from "~/modules/projects/services/getFunnelsFields";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -102,24 +103,14 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     day = 7;
   }
 
-  const start = new Date();
-  start.setDate(start.getDate() - day);
-
-  const end = new Date();
-  end.setDate(end.getDate() + 1);
-
   const authCookie = session.get("auth-cookie");
 
   const projectId = params.id!;
 
-  const flags: Array<FlagWithVariant> = await getProjectFlags(
-    projectId,
-    authCookie
-  );
-
-  const eventNames: Array<string> = [];
-
-  const pageViewUrls: Array<string> = [];
+  const [flags, [eventNames, pageViewUrls]] = await Promise.all([
+    getProjectFlags(projectId, authCookie),
+    getFunnelsFields(projectId, day, authCookie),
+  ]);
 
   return { eventNames, flags, pageViewUrls };
 };
@@ -254,7 +245,7 @@ export default function CreateFunnel() {
                   {funnelEntry.eventName === ReservedEventName.PageView && (
                     <SelectField
                       label={"URL"}
-                      options={pageViewUrls.map((url) => ({
+                      options={pageViewUrls.map(({ url }) => ({
                         label: url,
                         value: url,
                       }))}
