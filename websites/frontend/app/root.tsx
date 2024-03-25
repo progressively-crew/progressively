@@ -12,7 +12,6 @@ import {
 import UnauthorizedPage from "./routes/401";
 import ForbiddenPage from "./routes/403";
 import NotFoundPage from "./routes/404";
-import { Background } from "./components/Background";
 import { LinksFunction } from "@remix-run/node";
 import { Typography } from "./components/Typography";
 import { Spacer } from "./components/Spacer";
