@@ -13,7 +13,7 @@ export const Background = ({ children, spacing = "M" }: BackgroundProps) => {
 
   return (
     <div
-      className={`min-h-full flex flex-col bg-gradient-to-r bg-gradient-to-r from-indigo-300 via-red-300 to-yellow-200 ${spacingStyle}`}
+      className={`min-h-full flex-1 flex flex-col bg-gradient-to-r from-gray-700 to-black ${spacingStyle}`}
     >
       {children}
     </div>
