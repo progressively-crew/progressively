@@ -49,12 +49,12 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   let flagEvaluationsCount: number = 0;
 
   for (const ev of hitsPerVariantPerDateData) {
-    if (!dateDict[ev.d]) {
-      dateDict[ev.d] = {};
+    if (!dateDict[ev.date]) {
+      dateDict[ev.date] = {};
     }
 
     flagEvaluationsCount += ev.count;
-    dateDict[ev.d][ev.valueResolved] = ev.count;
+    dateDict[ev.date][ev.valueResolved] = ev.count;
   }
 
   const hitsPerVariantPerDate = Object.keys(dateDict).map((date) => ({
