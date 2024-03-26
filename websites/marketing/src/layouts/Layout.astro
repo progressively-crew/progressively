@@ -109,6 +109,14 @@ const scriptSrc = "/progressively.min.js";
   const banner = document.getElementById("banner");
 
   if (flags.thanksPhBanner) {
+    if (flags.thanksPhBanner === "A") {
+      banner?.classList.add("bg-emerald-100");
+      banner?.classList.remove("bg-orange-100");
+    } else {
+      banner?.classList.add("bg-orange-100");
+      banner?.classList.remove("bg-emerald-100");
+    }
+
     banner?.classList.remove("hidden");
   }
 
