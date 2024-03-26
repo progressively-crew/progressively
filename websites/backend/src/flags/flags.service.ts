@@ -99,7 +99,7 @@ export class FlagsService {
     const resultSet = await this.clickhouse.query({
       query: `SELECT
       valueResolved,
-      COUNT(*) AS count
+      CAST(COUNT(*) AS Int32) AS count
   FROM
       flaghits
   WHERE
@@ -121,7 +121,7 @@ export class FlagsService {
   async getFlagEvaluationsGroupedByDate(flagId: string, timeframe: Timeframe) {
     const resultSet = await this.clickhouse.query({
       query: `SELECT
-          toDate(date) AS date,
+          toDate(date) AS d,
           valueResolved,
           CAST(COUNT(*) AS Int32) AS count
       FROM
@@ -130,11 +130,11 @@ export class FlagsService {
           flagUuid = '${flagId}' AND
           date >= now() - INTERVAL ${timeframe} DAY
       GROUP BY
-          date,
+          d,
           valueResolved
       ORDER BY
           valueResolved ASC,
-          date ASC`,
+          d ASC`,
       format: 'JSONEachRow',
     });
 
