@@ -91,7 +91,27 @@ describe("/dashboard/projects/[id]/flags/[flagId]/settings/edit", () => {
         cy.checkA11y();
       });
 
+      it("edits the same feature flag ", () => {
+        cy.findByLabelText("Flag description").type(" 2");
+        cy.findByRole("button", { name: "Edit the feature flag" }).click();
+
+        cy.get(".success-box")
+          .should("have.focus")
+          .and("contain.text", "The flag has been successfully edited.");
+
+        cy.findByText("New homepage 2").should("be.visible");
+
+        cy.url().should(
+          "include",
+          "/dashboard/projects/1/flags/all?flagEdited"
+        );
+
+        cy.checkA11y();
+      });
+
       it("shows an error when trying to edit a flag  with the same key", () => {
+        cy.findByLabelText("Flag name").clear();
+        cy.findByLabelText("Flag name").type("New footer");
         cy.findByRole("button", { name: "Edit the feature flag" }).click();
 
         cy.get(".error-box")
