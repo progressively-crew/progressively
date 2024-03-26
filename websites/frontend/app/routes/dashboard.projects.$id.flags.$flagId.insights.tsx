@@ -48,8 +48,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const dateDict: Record<any, any> = {};
   let flagEvaluationsCount: number = 0;
 
-  console.log("lol", hitsPerVariantPerDateData);
-
   for (const ev of hitsPerVariantPerDateData) {
     if (!dateDict[ev.d]) {
       dateDict[ev.d] = {};
