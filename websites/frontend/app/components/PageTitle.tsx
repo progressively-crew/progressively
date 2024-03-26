@@ -8,7 +8,7 @@ export interface PageTitleProps {
 
 export const PageTitle = ({ value, action, description }: PageTitleProps) => {
   return (
-    <div className="flex flex-col md:flex-row md:justify-between gap-3 md:items-center">
+    <div className="flex flex-col md:flex-row md:justify-between gap-8 md:items-center">
       <div>
         <HStack spacing={3}>
           <div>

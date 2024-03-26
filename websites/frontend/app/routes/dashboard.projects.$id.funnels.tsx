@@ -74,6 +74,7 @@ export default function FunnelsPage() {
               <InsightsFilters />
             </div>
           }
+          description="Funnels uses individual visitor identifiers and not the events themselves. The number may vary between the number of events and the numbers you are seeing here."
         />
 
         {!hasFunnels && (
