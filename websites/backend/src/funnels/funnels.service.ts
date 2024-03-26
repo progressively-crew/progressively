@@ -92,4 +92,20 @@ export class FunnelsService {
       },
     });
   }
+
+  deleteFunnel(funnelId: string) {
+    return this.prisma.$transaction([
+      this.prisma.funnelEntry.deleteMany({
+        where: {
+          funnelUuid: funnelId,
+        },
+      }),
+
+      this.prisma.funnel.deleteMany({
+        where: {
+          uuid: funnelId,
+        },
+      }),
+    ]);
+  }
 }
