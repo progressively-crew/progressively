@@ -65,7 +65,7 @@ export class EventsService {
   ) {
     const table = funnelEntry.flagUuid ? 'flaghits' : 'events';
     const whereClause = funnelEntry.flagUuid
-      ? `AND flagUuid = '${funnelEntry.flagUuid}'`
+      ? `AND flagUuid = '${funnelEntry.flagUuid}' AND valueResolved = '${funnelEntry.flagVariant}'`
       : `AND projectUuid = '${projectId}'`;
 
     const sqlFormattedIds = visitorIds
