@@ -1,5 +1,5 @@
 import { DashboardLayout } from "~/layouts/DashboardLayout";
-import { LoaderFunction, MetaFunction } from "@remix-run/node";
+import { ActionFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { useProject } from "~/modules/projects/contexts/useProject";
 import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaTitle";
 import { Card, CardContent } from "~/components/Card";
@@ -10,11 +10,15 @@ import { InsightsFilters } from "~/modules/projects/components/InsightsFilters";
 import { BarChart } from "~/components/BarChart";
 import { Typography } from "~/components/Typography";
 import { CreateButton } from "~/components/Buttons/CreateButton";
-import { Outlet, useLoaderData } from "@remix-run/react";
+import { Form, Outlet, useActionData, useLoaderData } from "@remix-run/react";
 import { getFunnels } from "~/modules/projects/services/getFunnels";
 import { getSession } from "~/sessions";
 import { FunnelChart } from "~/modules/funnels/types";
 import { EmptyState } from "~/components/EmptyState";
+import { IconButton } from "~/components/Buttons/IconButton";
+import { IoMdClose } from "react-icons/io";
+import { deleteFunnel } from "~/modules/projects/services/deleteFunnel";
+import { SuccessBox } from "~/components/Boxes/SuccessBox";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -26,14 +30,24 @@ export const meta: MetaFunction = ({ matches }) => {
   ];
 };
 
-export interface LoaderData {
-  funnels: Array<FunnelChart>;
-}
+export const action: ActionFunction = async ({ request, params }) => {
+  const session = await getSession(request.headers.get("Cookie"));
+  const authCookie = session.get("auth-cookie");
+  const formData = await request.formData();
+  const funnelId = formData.get("funnelId")?.toString();
 
-export const loader: LoaderFunction = async ({
-  request,
-  params,
-}): Promise<LoaderData> => {
+  if (!funnelId) {
+    return null;
+  }
+
+  await deleteFunnel(params.id!, funnelId, authCookie);
+
+  return {
+    successfullyDeleted: true,
+  };
+};
+
+export const loader: LoaderFunction = async ({ request, params }) => {
   const session = await getSession(request.headers.get("Cookie"));
   const url = new URL(request.url);
   const search = new URLSearchParams(url.search);
@@ -57,13 +71,23 @@ export const loader: LoaderFunction = async ({
 
 export default function FunnelsPage() {
   const { project } = useProject();
-  const { funnels } = useLoaderData<LoaderData>();
+  const actionData = useActionData<typeof action>();
+  const { funnels } = useLoaderData<typeof loader>();
 
   const hasFunnels = funnels.length > 0;
 
   return (
     <>
-      <DashboardLayout subNav={<ProjectNavBar project={project} />}>
+      <DashboardLayout
+        subNav={<ProjectNavBar project={project} />}
+        status={
+          actionData?.successfullyDeleted ? (
+            <SuccessBox id={"successfullyDeleted"}>
+              Funnel succesfully deleted
+            </SuccessBox>
+          ) : null
+        }
+      >
         <PageTitle
           value="Funnels"
           action={
@@ -108,33 +132,46 @@ export default function FunnelsPage() {
 
               return (
                 <Card key={funnelChart.uuid}>
-                  <div className="grid md:grid-cols-[2fr_1fr] overflow-x-scroll">
-                    <CardContent>
-                      <div>
-                        <Typography as="h2" className="font-semibold pb-4">
-                          {funnelChart.name}
-                        </Typography>
+                  <Form method="post">
+                    <div className="grid md:grid-cols-[2fr_1fr] overflow-x-scroll">
+                      <CardContent>
+                        <div>
+                          <Typography as="h2" className="font-semibold pb-4">
+                            {funnelChart.name}
+                          </Typography>
 
-                        <div className="flex flex-row gap-4 items-center">
-                          <BarChart
-                            data={funnelChart.funnelsEntries.map((stat) => ({
-                              name: stat.name,
-                              value: stat.count,
-                            }))}
+                          <div className="flex flex-row gap-4 items-center">
+                            <BarChart
+                              data={funnelChart.funnelsEntries.map((stat) => ({
+                                name: stat.name,
+                                value: stat.count,
+                              }))}
+                            />
+                          </div>
+                        </div>
+                      </CardContent>
+
+                      <div className="bg-slate-50 md:border-l md:border-slate-200 flex flex-col md:justify-center md:items-center md:text-center px-4 rounded-r py-4 md:py-0 relative">
+                        <div className="absolute right-2 top-2">
+                          <IconButton
+                            type="submit"
+                            icon={
+                              <IoMdClose className="text-xl text-slate-400" />
+                            }
+                            tooltip="Remove funnel"
+                            name="funnelId"
+                            value={funnelChart.uuid}
                           />
                         </div>
+                        <Typography className="text-6xl font-extrabold">
+                          {percentage.toFixed(2)}%
+                        </Typography>
+                        <Typography className="text-xs">
+                          of conversion from the first to the last event.
+                        </Typography>
                       </div>
-                    </CardContent>
-
-                    <div className="bg-slate-50 md:border-l md:border-slate-200 flex flex-col md:justify-center md:items-center md:text-center px-4 rounded-r py-4 md:py-0">
-                      <Typography className="text-6xl font-extrabold">
-                        {percentage.toFixed(2)}%
-                      </Typography>
-                      <Typography className="text-xs">
-                        of conversion from the first to the last event.
-                      </Typography>
                     </div>
-                  </div>
+                  </Form>
                 </Card>
               );
             })}

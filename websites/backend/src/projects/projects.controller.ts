@@ -122,6 +122,14 @@ export class ProjectsController {
     return await this.projectService.removeMember(id, memberId);
   }
 
+  @Delete(':id/funnels/:funnelId')
+  @Roles(UserRoles.Admin)
+  @UseGuards(HasProjectAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  async deleteFunnel(@Param('funnelId') funnelId: string) {
+    return await this.funnelService.deleteFunnel(funnelId);
+  }
+
   @Post(':id/members')
   @Roles(UserRoles.Admin)
   @UseGuards(HasProjectAccessGuard)
