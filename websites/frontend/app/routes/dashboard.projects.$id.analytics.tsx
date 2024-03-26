@@ -7,7 +7,6 @@ import { Card, CardContent } from "~/components/Card";
 import { PageTitle } from "~/components/PageTitle";
 import { Section, SectionHeader } from "~/components/Section";
 import { EmptyState } from "~/components/EmptyState";
-import { LineChart } from "~/components/LineChart";
 import { BigStat } from "~/components/BigStat";
 import { getEventsForFields } from "~/modules/projects/services/getEventsForFields";
 import { getSession } from "~/sessions";
@@ -20,6 +19,7 @@ import { getEventsGroupedByDate } from "~/modules/projects/services/getEventsGro
 import { LuInspect } from "react-icons/lu";
 import { IconButton } from "~/components/Buttons/IconButton";
 import { calculateGrowthRate } from "~/modules/misc/utils/calculateGrowthRate";
+import { BarChart2 } from "~/components/BarChart2";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -157,7 +157,7 @@ export default function ProjectInsights() {
             </CardContent>
 
             {pagesViewsGroupedByDate.length > 0 ? (
-              <LineChart data={pagesViewsGroupedByDate} />
+              <BarChart2 data={pagesViewsGroupedByDate} />
             ) : (
               <CardContent>
                 <EmptyState
@@ -276,7 +276,7 @@ export default function ProjectInsights() {
             </CardContent>
 
             {eventsGroupedByDate.length > 0 ? (
-              <LineChart data={eventsGroupedByDate} />
+              <BarChart2 data={eventsGroupedByDate} />
             ) : (
               <CardContent>
                 <EmptyState
