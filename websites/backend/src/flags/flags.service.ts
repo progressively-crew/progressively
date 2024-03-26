@@ -99,12 +99,12 @@ export class FlagsService {
     const resultSet = await this.clickhouse.query({
       query: `SELECT
       valueResolved,
-      COUNT(*) AS count
+      CAST(COUNT(*) AS Int32) AS count
   FROM
       flaghits
   WHERE
       flagUuid = '${flagId}' AND
-      date >= now() - INTERVAL ${timeframe} DAY
+      toDate(date) >= now() - INTERVAL ${timeframe} DAY
   GROUP BY
       valueResolved`,
       format: 'JSONEachRow',

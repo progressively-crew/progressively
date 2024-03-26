@@ -272,7 +272,7 @@ export class EventsService {
     const resultSet = await this.clickhouse.query({
       query: `SELECT DISTINCT(url)
     FROM events
-    WHERE date >= now() - INTERVAL ${timeframe} DAY
+    WHERE toDate(date) >= now() - INTERVAL ${timeframe} DAY
     AND projectUuid = '${projectId}';`,
       format: 'JSONEachRow',
     });
@@ -286,7 +286,7 @@ export class EventsService {
     const resultSet = await this.clickhouse.query({
       query: `SELECT DISTINCT(name)
     FROM events
-    WHERE date >= now() - INTERVAL ${timeframe} DAY
+    WHERE toDate(date) >= now() - INTERVAL ${timeframe} DAY
     AND projectUuid = '${projectId}';`,
       format: 'JSONEachRow',
     });
@@ -312,9 +312,9 @@ export class EventsService {
     showPrevious?: boolean,
   ) {
     const whereClause = showPrevious
-      ? `WHERE date >= now() - INTERVAL ${timeframe * 2} DAY
+      ? `WHERE session_date >= now() - INTERVAL ${timeframe * 2} DAY
       AND date <= now() - INTERVAL ${timeframe} DAY`
-      : `WHERE date >= now() - INTERVAL ${timeframe} DAY`;
+      : `WHERE session_date >= now() - INTERVAL ${timeframe} DAY`;
 
     const resultSet = await this.clickhouse.query({
       query: `WITH
@@ -376,7 +376,7 @@ export class EventsService {
       floor(posY / (viewportWidth / ${cellCount})) as grid_y_percent, 
       CAST(COUNT(*) AS Int32) AS click_count
     FROM events
-    WHERE date >= now() - INTERVAL ${timeframe} DAY
+    WHERE toDate(date) >= now() - INTERVAL ${timeframe} DAY
     AND projectUuid = '${projectId}'
     AND posX IS NOT NULL
     AND posY IS NOT NULL
@@ -399,7 +399,7 @@ export class EventsService {
     const resultSet = await this.clickhouse.query({
       query: `SELECT DISTINCT viewportWidth
       FROM events
-      WHERE date >= now() - INTERVAL ${timeframe} DAY
+      WHERE toDate(date) >= now() - INTERVAL ${timeframe} DAY
       AND projectUuid = '${projectId}'
       AND posX IS NOT NULL
       AND posY IS NOT NULL
