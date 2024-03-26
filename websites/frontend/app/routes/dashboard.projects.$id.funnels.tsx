@@ -19,6 +19,7 @@ import { IconButton } from "~/components/Buttons/IconButton";
 import { IoMdClose } from "react-icons/io";
 import { deleteFunnel } from "~/modules/projects/services/deleteFunnel";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
+import { UserRoles } from "~/modules/projects/types";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -70,7 +71,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 };
 
 export default function FunnelsPage() {
-  const { project } = useProject();
+  const { project, userRole } = useProject();
   const actionData = useActionData<typeof action>();
   const { funnels } = useLoaderData<typeof loader>();
 
@@ -152,17 +153,19 @@ export default function FunnelsPage() {
                       </CardContent>
 
                       <div className="bg-slate-50 md:border-l md:border-slate-200 flex flex-col md:justify-center md:items-center md:text-center px-4 rounded-r py-4 md:py-0 relative">
-                        <div className="absolute right-2 top-2">
-                          <IconButton
-                            type="submit"
-                            icon={
-                              <IoMdClose className="text-xl text-slate-400" />
-                            }
-                            tooltip="Remove funnel"
-                            name="funnelId"
-                            value={funnelChart.uuid}
-                          />
-                        </div>
+                        {userRole === UserRoles.Admin && (
+                          <div className="absolute right-2 top-2">
+                            <IconButton
+                              type="submit"
+                              icon={
+                                <IoMdClose className="text-xl text-slate-400" />
+                              }
+                              tooltip="Remove funnel"
+                              name="funnelId"
+                              value={funnelChart.uuid}
+                            />
+                          </div>
+                        )}
                         <Typography className="text-6xl font-extrabold">
                           {percentage.toFixed(2)}%
                         </Typography>
