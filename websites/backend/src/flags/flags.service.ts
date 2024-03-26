@@ -327,6 +327,11 @@ export class FlagsService {
       where: {
         projectUuid: projectId,
         key: flagKey,
+        uuid: {
+          not: {
+            equals: flagId,
+          },
+        },
       },
     });
 
