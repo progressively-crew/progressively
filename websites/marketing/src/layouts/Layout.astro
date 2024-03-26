@@ -49,6 +49,7 @@ const scriptSrc = "/progressively.min.js";
         <a
           class="font-bold underline"
           href="https://www.producthunt.com/posts/progressively-2"
+          id="ph-button"
         >
           ProductHunt
         </a>
@@ -118,6 +119,11 @@ const scriptSrc = "/progressively.min.js";
     }
 
     banner?.classList.remove("hidden");
+
+    const btn = document.getElementById("ph-button");
+    btn?.addEventListener("click", () => {
+      (window as any)?.track("ph-button");
+    });
   }
 
   sdk.onFlagUpdate((nextFlags) => {
