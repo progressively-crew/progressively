@@ -11,13 +11,13 @@ import { Card, CardContent } from "~/components/Card";
 import { PageTitle } from "~/components/PageTitle";
 import { Section, SectionHeader } from "~/components/Section";
 import { EmptyState } from "~/components/EmptyState";
-import { LineChart } from "~/components/LineChart";
 import { toggleFlagAction } from "~/modules/flags/form-actions/toggleFlagAction";
 import { BigStat } from "~/components/BigStat";
 import { VariantDot } from "~/modules/variants/components/VariantDot";
 import { InsightsFilters } from "~/modules/projects/components/InsightsFilters";
 import { useFlag } from "~/modules/flags/contexts/useFlag";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
+import { BarChart2 } from "~/components/BarChart2";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -125,7 +125,7 @@ export default function FlagInsights() {
           </CardContent>
 
           {hitsPerVariantPerDate.length > 0 ? (
-            <LineChart data={hitsPerVariantPerDate} />
+            <BarChart2 data={hitsPerVariantPerDate} />
           ) : (
             <CardContent>
               <EmptyState
