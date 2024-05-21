@@ -4192,7 +4192,7 @@ packages:
       '@babel/plugin-transform-unicode-regex': 7.22.5(@babel/core@7.24.3)
       '@babel/plugin-transform-unicode-sets-regex': 7.22.5(@babel/core@7.24.3)
       '@babel/preset-modules': 0.1.6-no-external-plugins(@babel/core@7.24.3)
-      '@babel/types': 7.23.9
+      '@babel/types': 7.24.0
       babel-plugin-polyfill-corejs2: 0.4.5(@babel/core@7.24.3)
       babel-plugin-polyfill-corejs3: 0.8.3(@babel/core@7.24.3)
       babel-plugin-polyfill-regenerator: 0.5.2(@babel/core@7.24.3)
@@ -4325,7 +4325,7 @@ packages:
     dependencies:
       '@babel/core': 7.24.3
       '@babel/helper-plugin-utils': 7.22.5
-      '@babel/types': 7.23.9
+      '@babel/types': 7.24.0
       esutils: 2.0.3
     dev: true
 
@@ -14029,7 +14029,7 @@ packages:
   /core-js-compat@3.35.1:
     resolution: {integrity: sha512-sftHa5qUJY3rs9Zht1WEnmkvXputCyDBczPnr7QDgL8n3qrF3CMXY4VPSYtOLLiOUJcah2WNXREd48iOl6mQIw==}
     dependencies:
-      browserslist: 4.22.3
+      browserslist: 4.23.0
     dev: true
 
   /core-js-pure@3.28.0:
@@ -26921,7 +26921,7 @@ packages:
   /regenerator-transform@0.15.2:
     resolution: {integrity: sha512-hfMp2BoF0qOk3uc5V20ALGDS2ddjQaLrdl7xrGXvAIow7qeWRM2VA2HuCHkUKk9slq3VwEwLNK3DFBqDfPGYtg==}
     dependencies:
-      '@babel/runtime': 7.22.11
+      '@babel/runtime': 7.24.1
     dev: true
 
   /regex-not@1.0.2:
