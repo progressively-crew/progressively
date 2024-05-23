@@ -82,6 +82,8 @@ export class SdkService {
       if (strategy.valueToServeType === ValueToServe.Variant) {
         const bucketId = genBucket(flagKey, fields.id as string);
 
+        if (strategy.variants.length === 0) return false;
+
         return getVariation(bucketId, strategy.variants);
       }
     }

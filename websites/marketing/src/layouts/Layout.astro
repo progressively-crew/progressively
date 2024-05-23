@@ -106,20 +106,28 @@ const scriptSrc = "/progressively.min.js";
     }
   });
 
-  const { flags } = await sdk.loadFlags();
   const banner = document.getElementById("banner");
 
-  if (flags.thanksPhBanner) {
-    if (flags.thanksPhBanner === "A") {
-      banner?.classList.add("bg-emerald-100");
-      banner?.classList.remove("bg-orange-100");
+  const handleUpdate = (thanksPhBanner: string | boolean) => {
+    if (thanksPhBanner) {
+      if (thanksPhBanner === "A") {
+        banner?.classList.add("bg-emerald-100");
+        banner?.classList.remove("bg-orange-100");
+      } else {
+        banner?.classList.add("bg-orange-100");
+        banner?.classList.remove("bg-emerald-100");
+      }
+
+      banner?.classList.remove("hidden");
     } else {
-      banner?.classList.add("bg-orange-100");
-      banner?.classList.remove("bg-emerald-100");
+      banner?.classList.remove("hidden");
     }
+  };
 
-    banner?.classList.remove("hidden");
+  const { flags } = await sdk.loadFlags();
+  handleUpdate(flags.thanksPhBanner);
 
+  if (flags.thanksPhBanner) {
     const btn = document.getElementById("ph-button");
     btn?.addEventListener("click", () => {
       (window as any)?.track("ph-button");
@@ -127,10 +135,6 @@ const scriptSrc = "/progressively.min.js";
   }
 
   sdk.onFlagUpdate((nextFlags) => {
-    if (nextFlags.thanksPhBanner) {
-      banner?.classList.remove("hidden");
-    } else {
-      banner?.classList.add("hidden");
-    }
+    handleUpdate(nextFlags.thanksPhBanner);
   });
 </script>
