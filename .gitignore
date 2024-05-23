@@ -27,4 +27,5 @@ lerna-debug.log*
 
 # tailwind generated styles on build
 .next
+.netlify
 websites/frontend/app/styles/app.css

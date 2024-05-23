@@ -3,7 +3,6 @@ title: Development setup
 description: Install the software and the needed tooling.
 ---
 
-
 If you want to contribute to the project, this is the guide to follow.
 
 ### Prerequisite
@@ -33,6 +32,9 @@ $ docker run --name progressively-db -e POSTGRES_PASSWORD=admin -e POSTGRES_USER
 
 # Run redis for scaling the websocket server
 $ docker run -it --name progressively-redis -p 6379:6379 -d redis
+
+# Run clickhouse locally
+$ docker run -d -p 8123:8123 -p 19000:9000 --name clickhouse-server --ulimit nofile=262144:262144 clickhouse/clickhouse-server
 ```
 
 ### Setup the codebase
