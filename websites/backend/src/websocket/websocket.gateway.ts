@@ -11,6 +11,7 @@ import { LocalWebsocket, Subscriber } from './types';
 import { PopulatedFlag } from '../flags/types';
 import { IPubsubService } from '../pubsub/types';
 import { Inject } from '@nestjs/common';
+import { parseBase64Params, resolveUserId } from '../sdk/utils';
 
 @WebSocketGateway()
 export class WebsocketGateway
@@ -50,7 +51,7 @@ export class WebsocketGateway
     this.rooms.leave(socket);
   }
 
-  handleConnection(socket: LocalWebsocket, req: { url: string }) {
+  handleConnection(socket: LocalWebsocket, req: any) {
     // Heart-beating
     socket.isAlive = true;
 
@@ -62,17 +63,18 @@ export class WebsocketGateway
     const useLessPrefix = `http://localhost`; // just to be able to rely on the URL class
     const searchParams = new URL(`${useLessPrefix}${req.url}`).searchParams;
 
-    const urlParams = JSON.parse(
-      Buffer.from(searchParams.get('opts'), 'base64').toString('ascii'),
-    );
+    const urlParams = parseBase64Params(searchParams.get('opts'));
+    const userAgent = req.headers['user-agent'] || '';
+    const ip = req.socket.remoteAddress;
 
     if (urlParams.clientKey) {
       const { clientKey, ...fields } = urlParams;
+      fields.id = resolveUserId(fields, userAgent, ip);
 
       socket.__FIELDS = fields || {};
       socket.__ROOMS = [];
 
-      this.rooms.join(clientKey, socket);
+      this.rooms.join(String(clientKey), socket);
     }
   }
 
