@@ -17,16 +17,16 @@ const sizeStyles = {
 
 const variantStyles = {
   gradient:
-    "bg-slate-900 border-2 border-pink-500 text-white hover:bg-slate-800 active:bg-slate-700",
+    "bg-gray-900 border-2 border-pink-500 text-white hover:bg-gray-800 active:bg-gray-700",
   primary:
-    "bg-slate-900 hover:bg-slate-800 active:bg-slate-700 text-white border-transparent",
+    "bg-gray-900 hover:bg-gray-800 active:bg-gray-700 text-white border-transparent",
   secondary:
-    "border-slate-900 text-slate-900 hover:border-slate-800 hover:text-slate-800 active:border-slate-700 active:text-slate-700 hover:opacity-70 active:opacity-50",
+    "border-gray-900 text-gray-900 hover:border-gray-800 hover:text-gray-800 active:border-gray-700 active:text-gray-700 hover:opacity-70 active:opacity-50",
   tertiary:
-    "text-slate-900 hover:text-slate-800 active:text-slate-700 border-transparent hover:bg-slate-50 active:bg-slate-100",
+    "text-gray-900 hover:text-gray-800 active:text-gray-700 border-transparent hover:bg-gray-50 active:bg-gray-100",
 };
 
-const sharedStyles = "rounded-lg";
+const sharedStyles = "rounded-full";
 const styles = `${sharedStyles} ${variantStyles[variant || "primary"]} ${
   sizeStyles[size || "L"]
 }`;

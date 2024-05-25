@@ -1,7 +1,7 @@
 ---
 export interface Props {
   tag?: "span" | "p" | "h4";
-  size?: "XL" | "L" | "M";
+  size?: "XXL" | "XL" | "L" | "M";
   theme?: "light" | "dark";
   className?: string;
 }
@@ -10,18 +10,19 @@ const sizeStyle = {
   M: "text-xs md:text-base",
   L: "text-base md:text-xl",
   XL: "text-base md:text-2xl",
+  XXL: "text-lg md:text-3xl",
 };
 
 const themeColor = {
-  light: "text-slate-600",
-  dark: "text-slate-200",
+  light: "text-gray-600",
+  dark: "text-gray-200",
 };
 
 const { size, theme, className, tag } = Astro.props;
 
 const Root = tag || "p";
 
-const sharedStyles = "leading-relaxed font-light";
+const sharedStyles = "!leading-normal font-light";
 const styles = `${sharedStyles} ${sizeStyle[size || "M"]}  ${
   themeColor[theme || "light"]
 } ${className || ""}`;

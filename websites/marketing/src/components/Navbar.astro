@@ -1,15 +1,21 @@
 ---
 const navLinkStyles =
-  "px-2 md:px-6 py-2 text-sm md:text-lg text-slate-500 hover:bg-white active:bg-slate-50 rounded-xl block";
+  "px-2 md:px-6 py-2 text-sm text-gray-200 hover:text-white active:text-gray-300 rounded-xl block transition-all";
 ---
 
-<nav class="pt-4 md:pt-12 bg-slate-50">
+<nav class="pt-4 md:pt-12">
   <div
     class="px-4 max-w-screen-xl w-full mx-auto flex flex-row justify-between items-center overflow-auto"
   >
     <div class="flex flex-row gap-2 items-center shrink-0">
-      <img src="/favicon.svg" alt="Progressively" class="w-8 h-8 block" />
-      <div class="font-bold text-lg hidden md:block">Progressively</div>
+      <img
+        src="/favicon.svg"
+        alt="Progressively"
+        class="w-8 h-8 block rounded-full p-1 bg-gray-900"
+      />
+      <div class="font-bold text-lg hidden md:block text-white">
+        Progressively
+      </div>
     </div>
 
     <ul class="flex flex-row justify-end gap-4 items-center shrink-0">

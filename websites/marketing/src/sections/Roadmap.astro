@@ -60,7 +60,7 @@ const roadmaps = [
   </div>
 
   <ol class="md:hidden relative flex flex-col gap-4 pt-12">
-    <div class="bg-slate-200 h-full w-px absolute left-[23px]"></div>
+    <div class="bg-gray-200 h-full w-px absolute left-[23px]"></div>
     {
       roadmaps.map((road) => (
         <li class="grid grid-cols-[auto_1fr] gap-4 relative items-center">
@@ -74,7 +74,7 @@ const roadmaps = [
                 <Loader />
               </div>
             ) : (
-              <div class="bg-slate-200 rounded-full h-8 w-8" />
+              <div class="bg-gray-200 rounded-full h-8 w-8" />
             )}
           </div>
 
@@ -93,13 +93,13 @@ const roadmaps = [
   <ol class="hidden md:flex md:flex-row justify-center pt-20 max-w-6xl mx-auto">
     {
       roadmaps.map((road) => (
-        <li class="border-r border-slate-200 border-dashed last:border-0">
+        <li class="border-r border-gray-200 border-dashed last:border-0">
           <Text tag="h4" className="font-semibold">
             {road.title}
           </Text>
 
           <div class="relative flex flex-row items-center justify-center px-24 py-4">
-            <div class="bg-slate-200 h-px w-full absolute" />
+            <div class="bg-gray-200 h-px w-full absolute" />
             <div class="flex flex-row items-center justify-center h-12 relative">
               {road.state === "finished" ? (
                 <div class="bg-emerald-400 rounded-full h-12 w-12 flex items-center justify-center text-white">
@@ -110,7 +110,7 @@ const roadmaps = [
                   <Loader />
                 </div>
               ) : (
-                <div class="bg-slate-200 rounded-full h-4 w-4" />
+                <div class="bg-gray-200 rounded-full h-4 w-4" />
               )}
             </div>
           </div>

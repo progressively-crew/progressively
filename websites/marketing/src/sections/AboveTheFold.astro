@@ -1,87 +1,55 @@
 ---
 import Button from "../components/Button.astro";
-import ffSrc from "./assets/abovefold/ff.png";
 import Title from "../components/Title.astro";
-import { Browser } from "../components/Browser";
 import Twitter from "../components/Icons/Twitter.astro";
 import Discord from "../components/Icons/Discord.astro";
 import Github from "../components/Icons/Github.astro";
+import Navbar from "../components/Navbar.astro";
+import Text from "../components/Text.astro";
+import { AnimatedImage } from "../components/AnimatedImage";
+import Banner from "../components/Banner.astro";
 ---
 
 <div
-  class="relative pt-32 flex flex-col justify-center bg-gradient-to-t from-slate-200 to-slate-50"
+  class="relativeflex flex-col justify-center bg-gradient-to-b from-gray-700 to-gray-950"
 >
-  <div class="max-w-screen-xl mx-auto relative z-10 px-4">
-    <div class="grid md:grid-cols-2 gap-12 items-center">
-      <div>
-        <Title tag="h1" size="L">
-          All in one toolbox for <span class="text-pink-500"
-            >feature flags & analytics</span
-          >
-        </Title>
+  <header>
+    <Banner>
+      Thanks for your support on{" "}
+      <a
+        class="font-bold underline"
+        href="https://www.producthunt.com/posts/progressively-2"
+        id="ph-button"
+      >
+        ProductHunt
+      </a>! We've reached <strong>#7 of the day!</strong> 🥰
+    </Banner>
+  </header>
+  <Navbar />
+  <div class="max-w-screen-xl mx-auto relative z-10 px-4 pt-32 pb-20">
+    <div class="flex flex-col gap-3 items-center pb-16">
+      <span>
+        <Button
+          href="https://dashboard.progressively.app"
+          id="demo-cta"
+          size="M"
+          variant="primary"
+          target="_blank"
+        >
+          Demo instance
+        </Button>
+      </span>
+      <Title tag="h1" size="L" theme="dark" className="text-center">
+        The Product Control Tower
+      </Title>
 
-        <div class="pt-2 pb-8">
-          <Title size="M" tag="p" className="font-light !text-slate-500">
-            Anonymous, Open Source & Self-hosted
-          </Title>
-        </div>
-
-        <div class="flex flex-row gap-4">
-          <Button
-            href="https://dashboard.progressively.app"
-            id="demo-cta"
-            size="M"
-            variant="secondary"
-            target="_blank"
-          >
-            Demo instance
-          </Button>
-
-          <Button
-            href="https://docs.progressively.app"
-            id="above-the-fold-cta"
-            size="M"
-            variant="primary"
-          >
-            Get started
-          </Button>
-        </div>
-      </div>
-
-      <Browser>
-        <div class="p-2">
-          <img src={ffSrc.src} alt="Feature flags of progressively.app" />
-        </div>
-      </Browser>
+      <Text tag="span" theme="dark" className="underline">
+        <a href="https://docs.progressively.app" id="above-the-fold-cta">
+          Ready to get started?
+        </a>
+      </Text>
     </div>
-  </div>
 
-  <div class="px-4 flex flex-col items-center py-12 mt-12 bg-slate-200">
-    <Title tag="h2" size="M" className="!font-medium">Join the community</Title>
-    <div class="flex flex-row gap-4 justify-center pt-2">
-      <a
-        href="https://twitter.com/_progressively"
-        target="_blank"
-        class="h-12 w-12 flex items-center justify-center bg-slate-900 rounded-full text-white hover:bg-slate-800 active:bg-slate-700"
-      >
-        <Twitter className="h-6 w-6" />
-      </a>
-
-      <a
-        href="https://discord.gg/BcrsFRSA"
-        target="_blank"
-        class="h-12 w-12 flex items-center justify-center text-white bg-indigo-700 text-slate-900 rounded-full hover:bg-indigo-600 active:bg-indigo-500"
-      >
-        <Discord className="h-8 w-8" />
-      </a>
-
-      <a
-        href="https://github.com/progressively-crew/progressively"
-        target="_blank"
-        class="h-12 w-12 flex items-center justify-center bg-slate-100 text-slate-900 rounded-full"
-      >
-        <Github className="h-12 w-12" />
-      </a>
-    </div>
+    <AnimatedImage client:load />
   </div>
 </div>

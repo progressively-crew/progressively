@@ -1,14 +1,83 @@
 ---
+import { Intersection } from "../components/Intersection";
 import Title from "../components/Title.astro";
-import FeatureTabsWrapper from "./FeatureTabsWrapper.astro";
+import Text from "../components/Text.astro";
+import FeatureFlags from "./value/FeatureFlags.astro";
+import QuantitativeAnalytics from "./value/QuantitativeAnalytics.astro";
+import Funnels from "./value/Funnels.astro";
+import Card from "../components/Card/Card.astro";
+import CardContent from "../components/Card/CardContent.astro";
+import CardTitle from "../components/Card/CardTitle.astro";
+import { BackgroundSwitch } from "../components/BackgroundSwitch";
 ---
 
-<div class="bg-slate-50">
-  <section class="max-w-6xl w-full mx-auto py-16 md:py-24 px-4">
-    <div class="text-center pb-4 md:pb-8">
-      <Title tag="h2" size="L">What can you expect?</Title>
+<BackgroundSwitch client:load>
+  <section class="max-w-screen-2xl w-full mx-auto py-16 px-4 md:px-12">
+    <div class="text-center pt-48 pb-24">
+      <Intersection
+        animation="fade-bottom"
+        threshold={1}
+        rootMargin="0px 0px -15% 0px"
+        client:load
+      >
+        <Title tag="h2" size="XXL">Only the tools that matter</Title>
+      </Intersection>
     </div>
 
-    <FeatureTabsWrapper />
+    <div id="feature-flags-section" class="py-24">
+      <Title tag="h3" size="XL">Feature flags</Title>
+      <Text size="XXL" className="pt-4 pb-12 max-w-4xl">
+        Feature flags let you turn features on or off with just a click. This
+        means you can release new features whenever you're ready. Progressively
+        unlocks even more features
+      </Text>
+
+      <FeatureFlags />
+    </div>
+
+    <div id="quantitative-analytics-section" class="py-24">
+      <Title tag="h3" size="XL">Quantitative analytics</Title>
+      <Text size="XXL" className="pt-4 pb-12 max-w-4xl">
+        Collect details about the page being looked at, and include extra
+        activities to learn more about your audience's actions.
+      </Text>
+
+      <QuantitativeAnalytics />
+    </div>
+
+    <div id="funnels-section" class="py-24">
+      <Title tag="h3" size="XL">Funnels</Title>
+      <Text size="XXL" className="pt-4 pb-12 max-w-4xl">
+        Enhance your conversion insights by combining flag evaluations with
+        analytics data, providing you with actionable intelligence to boost your
+        customer conversion rates.
+      </Text>
+
+      <Funnels />
+    </div>
+
+    <div id="more-to-com-section" class="py-24">
+      <Title tag="h3" className="text-center pt-36 pb-12">
+        And more to come
+      </Title>
+
+      <div class="flex flex-row gap-8 justify-center">
+        <Card>
+          <CardContent>
+            <CardTitle>Qualitative analytics</CardTitle>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent>
+            <CardTitle>Error & execption tracking</CardTitle>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent><CardTitle>Screen recording</CardTitle></CardContent>
+        </Card>
+      </div>
+    </div>
   </section>
-</div>
+</BackgroundSwitch>

@@ -6,12 +6,12 @@ export interface Props {
 const variantStyles = {
   success: "bg-gradient-to-b from-emerald-100 to-emerald-50",
   default: "bg-white",
-  dark: "bg-slate-800",
+  dark: "bg-gray-800",
 };
 
 const { variant } = Astro.props;
 
-const sharedStyles = "rounded-2xl shadow-lg p-4";
+const sharedStyles = "shrink-0 rounded-3xl border border-gray-100 w-96";
 const styles = `${sharedStyles} ${variantStyles[variant || "default"]}`;
 ---
 
