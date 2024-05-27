@@ -5,6 +5,7 @@ export interface BackgroundSwitchProps {
 }
 
 const sectionToClass = {
+  root: "bg-white",
   "feature-flags-section": "bg-indigo-50",
   "quantitative-analytics-section": "bg-pink-50",
   "funnels-section": "bg-emerald-50",
@@ -12,9 +13,7 @@ const sectionToClass = {
 };
 
 export const BackgroundSwitch = ({ children }: BackgroundSwitchProps) => {
-  const [section, setSection] = useState<keyof typeof sectionToClass>(
-    "feature-flags-section"
-  );
+  const [section, setSection] = useState<keyof typeof sectionToClass>("root");
 
   useEffect(() => {
     const observerCallback: IntersectionObserverCallback = (entries) => {
@@ -26,7 +25,7 @@ export const BackgroundSwitch = ({ children }: BackgroundSwitchProps) => {
     };
 
     const observer = new IntersectionObserver(observerCallback, {
-      threshold: 1,
+      threshold: 0.5,
     });
     observer.observe(document.getElementById("feature-flags-section")!);
     observer.observe(

@@ -1,10 +1,21 @@
 ---
 export interface Props {
-  src: string;
-  alt: string;
+  colorScheme: "indigo" | "pink" | "emerald";
 }
 
-const { src, alt } = Astro.props;
+const { colorScheme } = Astro.props;
+
+const classes = {
+  indigo: "bg-gradient-to-br from-indigo-100 to-indigo-200",
+  pink: "bg-gradient-to-br from-pink-100 to-pink-200",
+  emerald: "bg-gradient-to-br from-emerald-100 to-emerald-200",
+};
+
+const className = classes[colorScheme];
 ---
 
-<img src={src} alt={alt} />
+<div class={`px-8 pt-8 rounded-t-3xl ${className}`}>
+  <div class="rounded-t-3xl overflow-hidden p-4 bg-white">
+    <slot />
+  </div>
+</div>

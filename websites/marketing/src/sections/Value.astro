@@ -5,55 +5,77 @@ import Text from "../components/Text.astro";
 import FeatureFlags from "./value/FeatureFlags.astro";
 import QuantitativeAnalytics from "./value/QuantitativeAnalytics.astro";
 import Funnels from "./value/Funnels.astro";
-import Card from "../components/Card/Card.astro";
+import { Card } from "../components/Card/Card";
 import CardContent from "../components/Card/CardContent.astro";
 import CardTitle from "../components/Card/CardTitle.astro";
 import { BackgroundSwitch } from "../components/BackgroundSwitch";
+import { Badge } from "../components/Badge";
+
+const containerClass = "max-w-screen-2xl w-full mx-auto px-4 md:px-12";
+const bigContainerClass = "mx-4 md:mx-12 overflow-auto";
 ---
 
 <BackgroundSwitch client:load>
-  <section class="max-w-screen-2xl w-full mx-auto py-16 px-4 md:px-12">
-    <div class="text-center pt-48 pb-24">
-      <Intersection
-        animation="fade-bottom"
-        threshold={1}
-        rootMargin="0px 0px -15% 0px"
-        client:load
-      >
-        <Title tag="h2" size="XXL">Only the tools that matter</Title>
-      </Intersection>
+  <section>
+    <div class={`${containerClass}`}>
+      <div class="text-center pt-48 pb-24" id="root">
+        <Intersection
+          animation="fade-bottom"
+          threshold={1}
+          rootMargin="0px 0px -15% 0px"
+          client:load
+        >
+          <Title tag="h2" size="XXL">Only the tools that matter</Title>
+        </Intersection>
+      </div>
     </div>
 
     <div id="feature-flags-section" class="py-24">
-      <Title tag="h3" size="XL">Feature flags</Title>
-      <Text size="XXL" className="pt-4 pb-12 max-w-4xl">
-        Feature flags let you turn features on or off with just a click. This
-        means you can release new features whenever you're ready. Progressively
-        unlocks even more features
-      </Text>
+      <div class={containerClass}>
+        <Badge scheme="indigo">Shipped!</Badge>
+        <Title tag="h3" size="XL" className="pt-2">Feature flags</Title>
+        <Text size="XXL" className="pt-4 pb-12 max-w-4xl">
+          Feature flags let you turn features on or off with just a click. This
+          means you can release new features whenever you're ready.
+          Progressively unlocks even more features
+        </Text>
+      </div>
 
-      <FeatureFlags />
+      <div class={bigContainerClass}>
+        <FeatureFlags />
+      </div>
     </div>
 
     <div id="quantitative-analytics-section" class="py-24">
-      <Title tag="h3" size="XL">Quantitative analytics</Title>
-      <Text size="XXL" className="pt-4 pb-12 max-w-4xl">
-        Collect details about the page being looked at, and include extra
-        activities to learn more about your audience's actions.
-      </Text>
-
-      <QuantitativeAnalytics />
+      <div class={containerClass}>
+        <Badge scheme="pink">Shipped!</Badge>
+        <Title tag="h3" size="XL" className="pt-2">
+          Quantitative analytics
+        </Title>
+        <Text size="XXL" className="pt-4 pb-12 max-w-4xl">
+          Collect details about the page being looked at, and include extra
+          activities to learn more about your audience's actions.
+        </Text>
+      </div>
+      <div class={bigContainerClass}>
+        <QuantitativeAnalytics />
+      </div>
     </div>
 
     <div id="funnels-section" class="py-24">
-      <Title tag="h3" size="XL">Funnels</Title>
-      <Text size="XXL" className="pt-4 pb-12 max-w-4xl">
-        Enhance your conversion insights by combining flag evaluations with
-        analytics data, providing you with actionable intelligence to boost your
-        customer conversion rates.
-      </Text>
+      <div class={containerClass}>
+        <Badge scheme="emerald">Partially Shipped</Badge>
+        <Title tag="h3" size="XL" className="pt-2">Funnels</Title>
+        <Text size="XXL" className="pt-4 pb-12 max-w-4xl">
+          Enhance your conversion insights by combining flag evaluations with
+          analytics data, providing you with actionable intelligence to boost
+          your customer conversion rates.
+        </Text>
+      </div>
 
-      <Funnels />
+      <div class={bigContainerClass}>
+        <Funnels />
+      </div>
     </div>
 
     <div id="more-to-com-section" class="py-24">
