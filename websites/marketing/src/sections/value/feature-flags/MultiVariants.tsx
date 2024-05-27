@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { Radio } from "../../../components/Radio";
-import { AVariant, BVariant, BannerBrowser } from "./BannerBrowser";
+import {
+  AVariant,
+  BVariant,
+  BannerBrowser,
+  SingleVariant,
+} from "./BannerBrowser";
 
 export const MultiVariants = () => {
   const [selected, setSelected] = useState<"single" | "multi">("single");
@@ -8,8 +13,12 @@ export const MultiVariants = () => {
   return (
     <div className="flex flex-col gap-4 items-center">
       <div className="grid grid-cols-2 gap-4 w-full">
-        <BannerBrowser banner={<AVariant />} />
-        <BannerBrowser banner={<BVariant />} />
+        <BannerBrowser
+          banner={selected === "single" ? <SingleVariant /> : <AVariant />}
+        />
+        <BannerBrowser
+          banner={selected === "single" ? <SingleVariant /> : <BVariant />}
+        />
       </div>
 
       <div className="flex flex-row gap-4 items-center h-10">
