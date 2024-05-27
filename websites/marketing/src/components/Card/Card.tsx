@@ -12,7 +12,8 @@ export interface CardProps {
 }
 
 export const Card = ({ variant, children }: CardProps) => {
-  const sharedStyles = "shrink-0 rounded-3xl border border-gray-100 w-[460px]";
+  const sharedStyles =
+    "shrink-0 rounded-3xl border border-gray-100 w-[320px] md:w-[460px]";
   const styles = `${sharedStyles} ${variantStyles[variant || "default"]}`;
 
   return <article className={styles}>{children}</article>;

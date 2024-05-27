@@ -58,10 +58,10 @@ const bigContainerClass = "max-w-screen-2xl w-full mx-auto px-4 md:px-12";
       </div>
     </div>
 
-    <div class="grid md:grid-cols-3 pt-12 gap-4">
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 pt-12 gap-4">
       {
         differentators.map((diff) => (
-          <Card>
+          <div class="rounded-3xl border border-gray-100 bg-white">
             <CardContent>
               <div class="pt-2">
                 <Title tag="h3" size="M">
@@ -72,7 +72,7 @@ const bigContainerClass = "max-w-screen-2xl w-full mx-auto px-4 md:px-12";
                 </Text>
               </div>
             </CardContent>
-          </Card>
+          </div>
         ))
       }
     </div>
