@@ -26,7 +26,7 @@ export interface FeatureTabsProps {
 
 const Box = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="h-8 w-8 rounded-lg bg-slate-200 flex flex-row items-center justify-center">
+    <div className="h-8 w-8 rounded-lg bg-gray-200 flex flex-row items-center justify-center">
       {children}
     </div>
   );
@@ -34,7 +34,7 @@ const Box = ({ children }: { children: React.ReactNode }) => {
 
 export const FeatureTabs = ({ codes }: FeatureTabsProps) => {
   const titleClass = "font-bold text-2xl";
-  const textClass = "text-slate-600";
+  const textClass = "text-gray-600";
 
   const liClass = `${textClass} flex flex-row items-center gap-2`;
   const gridClass =

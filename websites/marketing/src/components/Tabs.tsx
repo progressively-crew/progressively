@@ -20,7 +20,7 @@ export const Tabs = ({ children, defaultValue }: TabsProps) => {
 
 export const TabList = ({ children }: TabsProps) => {
   return (
-    <TabR.List className="overflow-x-scroll flex flex-row md:justify-center items-center border-b border-slate-200">
+    <TabR.List className="overflow-x-scroll flex flex-row md:justify-center items-center border-b border-gray-200">
       {children}
     </TabR.List>
   );
@@ -31,7 +31,7 @@ export const Tab = ({ children, value, disabled, icon }: TabProps) => {
     <TabR.Trigger
       disabled={disabled}
       value={value}
-      className="text-xs md:text-base shrink-0 flex flex-row gap-2 items-center py-2 px-6 data-[disabled]:text-slate-400 data-[state=active]:border-b-pink-500 border-b-transparent border-b-2 data-[state=active]:text-pink-500 font-semibold text-slate-600"
+      className="text-xs md:text-base shrink-0 flex flex-row gap-2 items-center py-2 px-6 data-[disabled]:text-gray-400 data-[state=active]:border-b-pink-500 border-b-transparent border-b-2 data-[state=active]:text-pink-500 font-semibold text-gray-600"
     >
       {icon}
       {disabled ? <CgUnavailable /> : null}

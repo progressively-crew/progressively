@@ -43,32 +43,80 @@ const scriptSrc = "/progressively.min.js";
     <title>{title}</title>
   </head>
   <body>
-    <header>
-      <Banner>
-        Thanks for your support on{" "}
-        <a
-          class="font-bold underline"
-          href="https://www.producthunt.com/posts/progressively-2"
-          id="ph-button"
-        >
-          ProductHunt
-        </a>
-        ! We've reached <strong>#7 of the day!</strong> 🥰
-      </Banner>
-
-      <Navbar />
-    </header>
     <slot />
   </body>
 </html>
 
 <style is:global>
+  :root {
+    --primary: #4f46e5;
+    --color-slide-thumb: #fff;
+    --color-slide-thumb-border: #334155;
+    --bg-slide: #efefef;
+  }
+
   html {
     font-family: system-ui, sans-serif;
   }
   code {
     font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
       DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+  }
+
+  /********** Range Input Styles **********/
+  /*Range Reset*/
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  /* Removes default focus */
+  input[type="range"]:focus {
+    outline: none;
+  }
+
+  /***** Chrome, Safari, Opera and Edge Chromium styles *****/
+
+  /* slider thumb */
+  input[type="range"]::-webkit-slider-thumb {
+    content: "''";
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+
+    /*custom styles*/
+    background-color: var(--color-slide-thumb);
+    height: 1.6rem;
+    width: 1.6rem;
+    border: 2px solid var(--color-slide-thumb-border);
+    border-radius: 24px;
+  }
+
+  input[type="range"]:focus::-webkit-slider-thumb {
+    outline: 3px solid var(--bg-slide);
+    outline-offset: 0.125rem;
+  }
+
+  /******** Firefox styles ********/
+
+  /* slider thumb */
+  input[type="range"]::-moz-range-thumb {
+    border: none; /*Removes extra border that FF applies*/
+    border-radius: 0; /*Removes default border-radius that FF applies*/
+
+    /*custom styles*/
+    background-color: var(--color-slide-thumb);
+    height: 1.6rem;
+    width: 1.6rem;
+    border: 2px solid var(--color-slide-thumb-border);
+    border-radius: 24px;
+  }
+
+  input[type="range"]:focus::-moz-range-thumb {
+    outline: 3px solid var(--bg-slide);
+    outline-offset: 0.125rem;
   }
 </style>
 
@@ -96,6 +144,8 @@ const scriptSrc = "/progressively.min.js";
     "above-the-fold-cta",
     "above-the-fold-get-in-touch",
     "demo-cta",
+    "schedule-call",
+    "get-started-interested-to-know",
   ].forEach((id) => {
     const el = document.getElementById(id);
 

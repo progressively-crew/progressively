@@ -1,24 +1,26 @@
 ---
 export interface Props {
   tag?: "h1" | "h2" | "h3" | "h4" | "p";
-  size?: "XL" | "L" | "M" | "S";
+  size?: "XXL" | "XL" | "L" | "M" | "S";
   theme?: "light" | "dark";
   className?: string;
+  id?: string;
 }
 
 const sizeStyles = {
-  XL: "text-4xl md:text-6xl",
-  L: "text-3xl md:text-5xl",
-  M: "text-xl md:text-3xl",
+  XXL: "text-5xl md:text-8xl",
+  XL: "text-4xl md:text-4xl",
+  L: "text-3xl md:text-3xl",
+  M: "text-xl md:text-2xl",
   S: "text-base md:text-xl",
 };
 
 const themeColor = {
-  light: "text-slate-900",
-  dark: "text-slate-50",
+  light: "text-gray-900",
+  dark: "text-gray-50",
 };
 
-const { size, tag: el, theme, className } = Astro.props;
+const { size, tag: el, theme, className, id } = Astro.props;
 
 const sharedStyle = "font-bold font-title";
 const styles = `${sharedStyle} ${themeColor[theme || "light"]} ${
@@ -28,4 +30,4 @@ const styles = `${sharedStyle} ${themeColor[theme || "light"]} ${
 const El = el || "p";
 ---
 
-<El class={styles}><slot /></El>
+<El class={styles} id={id}><slot /></El>
