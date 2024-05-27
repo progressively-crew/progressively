@@ -29,7 +29,7 @@ export const AnimatedImage = () => {
     <div className="origin-top relative" style={{ perspective: 2000 }}>
       <div
         style={{ transform: `rotateX(${rotateX}deg)` }}
-        className="border-8 border-black rounded-3xl"
+        className="p-4 bg-black/[.20] rounded-3xl"
       >
         <Browser>
           <div className="p-2">

@@ -1,6 +1,6 @@
 ---
 export interface Props {
-  colorScheme: "indigo" | "pink" | "emerald";
+  colorScheme: "indigo" | "pink" | "emerald" | "sky";
 }
 
 const { colorScheme } = Astro.props;
@@ -9,6 +9,7 @@ const classes = {
   indigo: "bg-gradient-to-br from-indigo-100 to-indigo-200",
   pink: "bg-gradient-to-br from-pink-100 to-pink-200",
   emerald: "bg-gradient-to-br from-emerald-100 to-emerald-200",
+  sky: "bg-gradient-to-br from-sky-100 to-sky-200",
 };
 
 const className = classes[colorScheme];

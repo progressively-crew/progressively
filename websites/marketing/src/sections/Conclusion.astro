@@ -1,31 +1,47 @@
 ---
-import Quote from "../components/Quote/Quote.astro";
+import Button from "../components/Button.astro";
 import Text from "../components/Text.astro";
+import Title from "../components/Title.astro";
 ---
 
-<section class="bg-gray-100 px-4">
-  <div class="max-w-6xl w-full mx-auto py-20">
-    <h2 class="sr-only">Conclusion</h2>
+<section class="bg-gradient-to-b from-gray-700 to-gray-950 py-24">
+  <div
+    class="max-w-screen-2xl w-full mx-auto px-4 md:px-12 flex flex-col gap-4"
+  >
+    <Title theme="dark" size="XL" tag="h2">
+      You've reached the end of the page!
+    </Title>
 
-    <Quote
-      authorName="Marvin Frachet"
-      authorJob="Frontend Eng @Proton"
-      authorPict="https://avatars.githubusercontent.com/u/3874873?v=4"
-    >
-      <Text size="XL">
-        Thanks a bunch for making it to the end of the page, and here's my final
-        shot at convincing you to click that big button
-      </Text>
+    <Text size="XL" theme="dark" className="max-w-4xl text-gray-200">
+      And you've not clicked anywhere until here! If it is a mistake, here are a
+      few links that you can still follow to get started. Otherwise, please,
+      could you fill <a
+        class="font-semibold border-b border-gray-900"
+        href="https://il6hw4vp4rl.typeform.com/to/Ben1G63r">this form</a
+      >{" "}this form would help us understand why you've not continued? Thanks
+      a lot!
+    </Text>
 
-      <br />
+    <div class="pt-4 flex flex-row gap-4">
+      <Button
+        target="_blank"
+        href="https://app.cal.com/mfrachet/30min"
+        id="schedule-call-conclusiono"
+        size="L"
+        variant="secondary-inverse"
+      >
+        Schedule a call
+      </Button>
 
-      <Text size="XL">
-        If you're not quite as excited about the product yet, I'd love to hear
-        your thoughts! Feel free to share why on <a
-          class="font-semibold border-b border-gray-900"
-          href="https://il6hw4vp4rl.typeform.com/to/Ben1G63r">this form</a
-        >. Cheers!
-      </Text>
-    </Quote>
+      <Button
+        target="_blank"
+        href="https://docs.progressively.app/"
+        size="L"
+        id="get-started-conclusion"
+        variant="tertiary-inverse"
+      >
+        Get started
+      </Button>
+    </div>
   </div>
 </section>

@@ -5,7 +5,8 @@ export interface Props {
     | "secondary"
     | "tertiary"
     | "gradient"
-    | "secondary-inverse";
+    | "secondary-inverse"
+    | "tertiary-inverse";
   size?: "L" | "M" | "S";
   href?: string;
   id?: string;
@@ -29,7 +30,8 @@ const variantStyles = {
     "border-gray-900 text-gray-900 hover:border-gray-800 hover:text-gray-800 active:border-gray-700 active:text-gray-700 hover:opacity-70 active:opacity-50",
   tertiary:
     "text-gray-900 hover:text-gray-800 active:text-gray-700 border-transparent hover:bg-gray-50 active:bg-gray-100",
-
+  "tertiary-inverse":
+    "border-none text-white hover:text-gray-50 active:text-gray-100",
   "secondary-inverse":
     "border-white text-white hover:border-gray-50 hover:text-gray-50 active:border-gray-100 active:text-gray-100 hover:opacity-70 active:opacity-50",
 };
