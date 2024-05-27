@@ -4,11 +4,10 @@ const badgeClass = {
   indigo: "bg-indigo-100 text-indigo-500 text-lg",
   emerald: "bg-emerald-100 text-emerald-500 text-lg",
   pink: "bg-pink-100 text-pink-500 text-lg",
-  yellow: "bg-yellow-100 text-yellow-500 text-lg",
 };
 
 export interface BadgeProps {
-  scheme: "indigo" | "emerald" | "pink" | "yellow";
+  scheme: "indigo" | "emerald" | "pink";
   children: ReactNode;
 }
 

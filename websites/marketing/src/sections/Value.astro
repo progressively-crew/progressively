@@ -4,12 +4,14 @@ import Title from "../components/Title.astro";
 import Text from "../components/Text.astro";
 import FeatureFlags from "./value/FeatureFlags.astro";
 import QuantitativeAnalytics from "./value/QuantitativeAnalytics.astro";
-import Funnels from "./value/Funnels.astro";
 import { Card } from "../components/Card/Card";
 import CardContent from "../components/Card/CardContent.astro";
 import CardTitle from "../components/Card/CardTitle.astro";
 import { BackgroundSwitch } from "../components/BackgroundSwitch";
 import { Badge } from "../components/Badge";
+import CardAsset from "../components/Card/CardAsset.astro";
+import qualitative from "./assets/value/qualitative.png";
+import funnels from "./assets/value/funnels.png";
 
 const containerClass = "max-w-screen-2xl w-full mx-auto px-4 md:px-12";
 const bigContainerClass = "mx-4 md:mx-12 overflow-auto";
@@ -62,43 +64,86 @@ const bigContainerClass = "mx-4 md:mx-12 overflow-auto";
       </div>
     </div>
 
-    <div id="funnels-section" class="py-24">
+    <div id="more-to-com-section" class="py-24">
       <div class={containerClass}>
-        <Badge scheme="emerald">Partially Shipped</Badge>
-        <Title tag="h3" size="XL" className="pt-2">Funnels</Title>
+        <Badge scheme="emerald">Roadmap</Badge>
+        <Title tag="h3" size="XL" className="pt-2">More to come</Title>
         <Text size="XXL" className="pt-4 pb-12 max-w-4xl">
-          Enhance your conversion insights by combining flag evaluations with
-          analytics data, providing you with actionable intelligence to boost
-          your customer conversion rates.
+          We want to provide you the most impactful features that you deserve.
+          And we plan to ship the following in the next iterations.
         </Text>
       </div>
 
       <div class={bigContainerClass}>
-        <Funnels />
-      </div>
-    </div>
+        <div class="flex flex-row gap-4">
+          <Card>
+            <CardAsset colorScheme="emerald">
+              <img
+                src={funnels.src}
+                alt="Qualitative analytics"
+                class="rounded-t-xl h-[180px] overflow-hidden object-cover"
+              />
+            </CardAsset>
+            <CardContent>
+              <CardTitle>Funnels</CardTitle>
 
-    <div id="more-to-com-section" class="py-24">
-      <Title tag="h3" className="text-center pt-36 pb-12">
-        And more to come
-      </Title>
+              <Text size="L">
+                Cross feature flags evaluations with analytics data to
+                understand the audience behaviour.
+              </Text>
+            </CardContent>
+          </Card>
 
-      <div class="flex flex-row gap-8 justify-center">
-        <Card>
-          <CardContent>
-            <CardTitle>Qualitative analytics</CardTitle>
-          </CardContent>
-        </Card>
+          <Card>
+            <CardAsset colorScheme="emerald">
+              <img
+                src={qualitative.src}
+                alt="Qualitative analytics"
+                class="rounded-t-xl h-[180px] overflow-hidden object-cover"
+              />
+            </CardAsset>
+            <CardContent>
+              <CardTitle>Qualitative analytics</CardTitle>
+              <Text size="L">
+                Identifying the user path by emphasizing the most engaged areas
+                of your website.
+              </Text>
+            </CardContent>
+          </Card>
 
-        <Card>
-          <CardContent>
-            <CardTitle>Error & execption tracking</CardTitle>
-          </CardContent>
-        </Card>
+          <Card>
+            <CardAsset colorScheme="emerald">
+              <img
+                src={funnels.src}
+                alt="Qualitative analytics"
+                class="rounded-t-xl h-[180px] overflow-hidden object-cover"
+              />
+            </CardAsset>
+            <CardContent>
+              <CardTitle>Error & execption tracking</CardTitle>
+              <Text size="L">
+                Collect errors & anomalies in a singular dashboard and implement
+                measures to resolve them.
+              </Text>
+            </CardContent>
+          </Card>
 
-        <Card>
-          <CardContent><CardTitle>Screen recording</CardTitle></CardContent>
-        </Card>
+          <Card>
+            <CardAsset colorScheme="emerald">
+              <img
+                src={funnels.src}
+                alt="Qualitative analytics"
+                class="rounded-t-xl h-[180px] overflow-hidden object-cover"
+              />
+            </CardAsset>
+            <CardContent>
+              <CardTitle>Screen recording</CardTitle>
+              <Text size="L">
+                Track user sessions to comprehend what halted their progression.
+              </Text>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   </section>
