@@ -10,64 +10,91 @@ import pvo from "../assets/value/pvo.png";
 import pvv from "../assets/value/pvv.png";
 import pvr from "../assets/value/pvr.png";
 import pvu from "../assets/value/pvu.png";
+
+const imgClass = "h-[210px] overflow-hidden object-cover rounded object-left";
 ---
 
 <div class="flex flex-row gap-4">
   <Card>
-    <CardAsset colorScheme="pink"><img src={pvb.src} alt="" /></CardAsset>
+    <CardAsset colorScheme="pink">
+      <img src={pvb.src} alt="" class={imgClass} />
+    </CardAsset>
     <CardContent>
       <CardTitle>Page views by browser</CardTitle>
-      <Text>Yooooooo</Text>
-    </CardContent>
-  </Card>
-
-  <Card>
-    <CardAsset colorScheme="pink"><img src={pvo.src} alt="" /></CardAsset>
-    <CardContent>
-      <CardTitle>Page views by OS</CardTitle>
-      <Text>Yooooooo</Text>
-    </CardContent>
-  </Card>
-
-  <Card>
-    <CardAsset colorScheme="pink"><img src={pvv.src} alt="" /></CardAsset>
-    <CardContent>
-      <CardTitle>Page views by viewport</CardTitle>
-      <Text>Yooooooo</Text>
-    </CardContent>
-  </Card>
-
-  <Card>
-    <CardAsset colorScheme="pink"><img src={pvr.src} alt="" /></CardAsset>
-    <CardContent>
-      <CardTitle>Page views by referer</CardTitle>
-      <Text>Yooooooo</Text>
-    </CardContent>
-  </Card>
-
-  <Card>
-    <CardAsset colorScheme="pink"><img src={pvu.src} alt="" /></CardAsset>
-    <CardContent>
-      <CardTitle>Page views by URL</CardTitle>
-      <Text>Yooooooo</Text>
+      <Text size="L">
+        "Page views by browser" analytics provide insights into how different
+        browsers are being used by your visitors, helping optimize compatibility
+        and user experience.
+      </Text>
     </CardContent>
   </Card>
 
   <Card>
     <CardAsset colorScheme="pink">
-      <img src={analytics.src} alt="" />
+      <img src={pvo.src} alt="" class={imgClass} />
     </CardAsset>
     <CardContent>
-      <CardTitle>Unique visitors & bounce rate</CardTitle>
-      <Text>Yooooooo</Text>
+      <CardTitle>Page views by OS</CardTitle>
+      <Text size="L">
+        "Page views by OS" analytics offer insights into the operating systems
+        used by visitors, aiding in optimizing performance and compatibility
+        across platforms.
+      </Text>
     </CardContent>
   </Card>
 
   <Card>
-    <CardAsset colorScheme="pink" />
+    <CardAsset colorScheme="pink">
+      <img src={pvv.src} alt="" class={imgClass} />
+    </CardAsset>
     <CardContent>
-      <CardTitle>Anonymous</CardTitle>
-      <Text>Yooooooo</Text>
+      <CardTitle>Page views by viewport</CardTitle>
+      <Text size="L">
+        "Page views by viewport" analytics reveal how different screen sizes and
+        resolutions are used by visitors, helping to optimize layout and design
+        for various devices.
+      </Text>
+    </CardContent>
+  </Card>
+
+  <Card>
+    <CardAsset colorScheme="pink">
+      <img src={pvr.src} alt="" class={imgClass} />
+    </CardAsset>
+    <CardContent>
+      <CardTitle>Page views by referer</CardTitle>
+      <Text size="L">
+        "Page views by referrer" analytics show where your visitors are coming
+        from, providing insights into traffic sources and marketing
+        effectiveness.
+      </Text>
+    </CardContent>
+  </Card>
+
+  <Card>
+    <CardAsset colorScheme="pink">
+      <img src={pvu.src} alt="" class={imgClass} />
+    </CardAsset>
+    <CardContent>
+      <CardTitle>Page views by URL</CardTitle>
+      <Text size="L">
+        "Page views by URL" analytics track the popularity of specific pages,
+        helping to identify which content engages visitors the most.
+      </Text>
+    </CardContent>
+  </Card>
+
+  <Card>
+    <CardAsset colorScheme="pink">
+      <img src={analytics.src} alt="" class={imgClass} />
+    </CardAsset>
+    <CardContent>
+      <CardTitle>Unique visitors & bounce rate</CardTitle>
+      <Text size="L">
+        "Unique visitors & bounce rate" analytics measure the number of distinct
+        users and how often they leave after viewing only one page, indicating
+        engagement levels and content effectiveness.
+      </Text>
     </CardContent>
   </Card>
 </div>

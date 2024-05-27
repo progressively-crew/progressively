@@ -4,30 +4,27 @@ import Text from "../components/Text.astro";
 import Button from "../components/Button.astro";
 ---
 
-<section class="bg-gray-800 pb-24 pt-36">
-  <div class="max-w-4xl mx-auto text-center flex flex-col gap-8 px-4">
-    <Title theme="dark" size="L" className="font-medium">
-      One tool for all your products needs
-    </Title>
+<section class="bg-gradient-to-b from-gray-700 to-gray-950 py-24">
+  <div
+    class="max-w-screen-2xl w-full mx-auto px-4 md:px-12 flex flex-col gap-4"
+  >
+    <Title theme="dark" size="XL" tag="h2">Interested to know more?</Title>
 
-    <Text size="XL" theme="dark" className="!leading-relaxed">
-      At Progressively, we believe in empowering creators with the essentials
-      for crafting exceptional products and websites. Our philosophy is simple:
-      merge simplicity with power, offering you a unified solution that
-      gracefully captures user activity and transforms data into actionable
-      insights. It's not just about monitoring—it's about enlightening your
-      decisions, all in one place.
+    <Text size="XL" theme="dark" className="max-w-4xl text-gray-200">
+      Ready to elevate your project management and optimize user experiences?
+      Schedule a call with us today to explore how Progressively can transform
+      your workflow and bring your vision to life.
     </Text>
 
-    <div>
+    <div class="pt-4">
       <Button
         target="_blank"
         href="https://app.cal.com/mfrachet/30min"
         id="above-the-fold-get-in-touch"
         size="L"
-        variant="gradient"
+        variant="secondary-inverse"
       >
-        Get in touch
+        Schedule a call
       </Button>
     </div>
   </div>
