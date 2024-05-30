@@ -61,7 +61,7 @@ export const Dialog = ({
               animationDelay: "300ms",
             }}
           >
-            <div className="flex justify-between gap-4 border-b border-slate-200 items-center px-4 md:px-12 py-6">
+            <div className="flex justify-between gap-4 border-b border-slate-200 items-center px-4 md:px-12 pt-6 pb-3">
               {title}
               {closeBtn}
             </div>
