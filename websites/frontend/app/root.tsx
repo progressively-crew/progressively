@@ -17,6 +17,7 @@ import { Typography } from "./components/Typography";
 import { Spacer } from "./components/Spacer";
 import { AiOutlineLogin } from "react-icons/ai";
 import { Button } from "./components/Buttons/Button";
+import { ProgressivelyProvider } from "@progressively/react";
 
 import styles from "~/app.css";
 import stylesheet from "~/tailwind.css";
@@ -70,7 +71,13 @@ document.documentElement.classList.remove('dark')
         ></script>
       </head>
       <body className="h-full">
-        <div className="flex flex-col min-h-full">{children}</div>
+        <ProgressivelyProvider
+          apiUrl="https://api.progressively.app"
+          websocketUrl="wss://api.progressively.app"
+          clientKey="5add391e-35ac-44d8-a6ce-545305e07740"
+        >
+          <div className="flex flex-col min-h-full">{children}</div>
+        </ProgressivelyProvider>
 
         <ScrollRestoration />
         <Scripts />
