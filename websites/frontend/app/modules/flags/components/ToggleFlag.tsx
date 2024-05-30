@@ -4,14 +4,9 @@ import { FlagStatus } from "../types";
 export interface ToggleFlag {
   isFlagActivated: boolean;
   flagId: string;
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-export const ToggleFlag = ({
-  flagId,
-  isFlagActivated,
-  onClick,
-}: ToggleFlag) => {
+export const ToggleFlag = ({ flagId, isFlagActivated }: ToggleFlag) => {
   const formId = `form-${flagId}`;
 
   return (
@@ -31,7 +26,7 @@ export const ToggleFlag = ({
         form={formId}
         label="Flag status"
         checked={isFlagActivated}
-        onClick={onClick}
+        onClick={() => (window as any)?.track("toggle-flag")}
       />
     </div>
   );

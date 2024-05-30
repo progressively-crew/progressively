@@ -74,6 +74,11 @@ document.documentElement.classList.remove('dark')
 
         <ScrollRestoration />
         <Scripts />
+        <script
+          src="https://progressively.app/progressively.min.js"
+          data-progressively-endpoint="https://api.progressively.app"
+          data-progressively-client-key="5add391e-35ac-44d8-a6ce-545305e07740"
+        ></script>
         <LiveReload />
       </body>
     </html>
