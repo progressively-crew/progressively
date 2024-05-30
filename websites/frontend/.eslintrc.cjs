@@ -52,6 +52,14 @@ module.exports = {
 
     // Typescript
     {
+      rules: {
+        "@typescript-eslint/ban-ts-comment": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "react/no-unescaped-entities": "off",
+        "@typescript-eslint/no-namespace": "off",
+        "jsx-a11y/no-static-element-interactions": "off",
+        "jsx-a11y/click-events-have-key-events": "off",
+      },
       files: ["**/*.{ts,tsx}"],
       plugins: ["@typescript-eslint", "import"],
       parser: "@typescript-eslint/parser",
