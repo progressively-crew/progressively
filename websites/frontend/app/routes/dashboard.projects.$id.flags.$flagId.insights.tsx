@@ -18,6 +18,7 @@ import { InsightsFilters } from "~/modules/projects/components/InsightsFilters";
 import { useFlag } from "~/modules/flags/contexts/useFlag";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
 import { BarChart2 } from "~/components/BarChart2";
+import { LineChart } from "~/components/LineChart";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -125,7 +126,7 @@ export default function FlagInsights() {
           </CardContent>
 
           {hitsPerVariantPerDate.length > 0 ? (
-            <BarChart2 data={hitsPerVariantPerDate} />
+            <LineChart data={hitsPerVariantPerDate} />
           ) : (
             <CardContent>
               <EmptyState

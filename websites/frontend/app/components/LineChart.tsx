@@ -6,8 +6,8 @@ import {
   Tooltip,
   XAxis,
   CartesianGrid,
-  AreaChart,
-  Area,
+  LineChart as RLineChart,
+  Line,
 } from "recharts";
 import { stringToColor } from "~/modules/misc/utils/stringToColor";
 import { Spacer } from "./Spacer";
@@ -34,7 +34,7 @@ const CustomizedAxisTick = ({ color, ...props }: any) => {
         textAnchor="middle"
         fill={color}
         fontWeight={400}
-        fontSize={"0.8em"}
+        fontSize={"0.6em"}
       >
         {date}
       </text>
@@ -101,16 +101,16 @@ export const LineChart = ({ data }: LineChartProps) => {
   const lineKeys = Object.keys(keysDict);
 
   return (
-    <ResponsiveContainer width="100%" height={300}>
-      <AreaChart
+    <ResponsiveContainer width="100%" aspect={16 / 9} className="pb-2">
+      <RLineChart
         width={500}
         height={300}
         data={data}
-        style={{ marginTop: "-5px" }}
+        margin={{ top: 0, bottom: 0, left: 0, right: 0 }}
       >
         <CartesianGrid vertical={false} stroke={themeValues.stroke} />
 
-        <Legend
+        {/* <Legend
           wrapperStyle={{
             paddingTop: 10,
             paddingBottom: 10,
@@ -122,28 +122,29 @@ export const LineChart = ({ data }: LineChartProps) => {
           formatter={(value, entry, index) => (
             <span className={stringToColor(lineKeys[index], 75)}>{value}</span>
           )}
-        />
+        /> */}
 
         <XAxis
           dataKey="date"
           axisLine={false}
           tick={<CustomizedAxisTick color={themeValues.legendFg} />}
+          tickLine={false}
         />
 
         <Tooltip content={<CustomTooltip />} />
 
         {lineKeys.map((key) => (
-          <Area
+          <Line
             key={key}
             type="monotone"
             dataKey={key}
             stroke={themeValues.areaStroke(key)}
             fill={themeValues.areaFill(key)}
             activeDot={{ r: 8 }}
-            strokeWidth={2}
+            strokeWidth={4}
           />
         ))}
-      </AreaChart>
+      </RLineChart>
     </ResponsiveContainer>
   );
 };
