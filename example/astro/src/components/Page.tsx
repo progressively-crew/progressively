@@ -1,7 +1,7 @@
 import { ProgressivelyProvider, useFlags } from "@progressively/react";
 
 const FlaggedComponent = () => {
-  const { flags, track } = useFlags();
+  const { flags } = useFlags();
 
   return (
     <main>
@@ -10,8 +10,6 @@ const FlaggedComponent = () => {
         <h2>New homepage</h2>
         {flags.newHomepage ? "New variant" : "Old variant"}
       </div>
-
-      <button onClick={() => track("A metric")}>Click me</button>
 
       <footer>{flags.newFooter ? "New footer" : "Old footer"}</footer>
     </main>
