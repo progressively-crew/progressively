@@ -19,7 +19,7 @@ import { getEventsGroupedByDate } from "~/modules/projects/services/getEventsGro
 import { LuInspect } from "react-icons/lu";
 import { IconButton } from "~/components/Buttons/IconButton";
 import { calculateGrowthRate } from "~/modules/misc/utils/calculateGrowthRate";
-import { BarChart2 } from "~/components/BarChart2";
+import { LineChart } from "~/components/LineChart";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -157,7 +157,7 @@ export default function ProjectInsights() {
             </CardContent>
 
             {pagesViewsGroupedByDate.length > 0 ? (
-              <BarChart2 data={pagesViewsGroupedByDate} />
+              <LineChart data={pagesViewsGroupedByDate} />
             ) : (
               <CardContent>
                 <EmptyState
@@ -276,7 +276,7 @@ export default function ProjectInsights() {
             </CardContent>
 
             {eventsGroupedByDate.length > 0 ? (
-              <BarChart2 data={eventsGroupedByDate} />
+              <LineChart data={eventsGroupedByDate} />
             ) : (
               <CardContent>
                 <EmptyState
