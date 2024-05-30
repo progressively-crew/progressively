@@ -27,7 +27,7 @@ export default defineConfig({
     specPattern: "cypress/e2e/**/*.spec.{ts,tsx}",
     defaultCommandTimeout: 10000,
 
-    setupNodeEvents(on, config) {
+    setupNodeEvents(on) {
       on("before:browser:launch", (browser, launchOptions) => {
         const REDUCE = 1;
         if (browser.family === "firefox") {

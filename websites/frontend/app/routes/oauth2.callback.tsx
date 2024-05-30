@@ -56,7 +56,7 @@ export default function OauthCallback() {
     };
 
     handleLogin();
-  }, [okta, navigate]);
+  }, [okta, navigate, fetcher]);
 
   return (
     <main className="p-8">

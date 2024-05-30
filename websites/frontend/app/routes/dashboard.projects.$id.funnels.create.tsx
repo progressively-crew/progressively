@@ -132,6 +132,7 @@ export default function CreateFunnel() {
       acc[curr.uuid] = curr;
       return acc;
     }, {} as Record<string, FlagWithVariant>);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const { funnelEntries, eventNameOptions, flagOptions } = state;
