@@ -8,7 +8,11 @@
     "dev": "remix vite:dev",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
     "start": "remix-serve ./build/server/index.js",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "test:e2e": "cypress open",
+    "test:e2e:dark": "CYPRESS_DARK_THEME=true cypress open",
+    "test:e2e:ci": "cypress run --browser chrome",
+    "test:e2e:ci:parallel": "cypress run --browser chrome --record --parallel"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.18",
