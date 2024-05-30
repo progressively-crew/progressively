@@ -4,7 +4,6 @@ import {
   Fields,
   LoadFlagsReturnType,
   Progressively,
-  ProgressivelySdkType,
 } from "@progressively/sdk-js";
 import {
   ProgressivelyProviderProps,
@@ -26,10 +25,6 @@ export const ProgressivelyProvider = ({
   websocketUrl,
   fields,
 }: ProgressivelyProviderProps) => {
-  const [trackFn, setTrackFn] = useState<
-    ProgressivelySdkType["track"] | undefined
-  >();
-
   const [setFields, setSetFields] = useState<SetFieldsType>(() =>
     Promise.resolve(undefined)
   );
@@ -49,7 +44,6 @@ export const ProgressivelyProvider = ({
       setState({ status: res.error ? "failure" : "success", error: res.error });
     };
 
-    setTrackFn(() => sdk.track);
     setSetFields(
       () => (newFields: Fields) => sdk.setFields(newFields).then(handleLoadFlag)
     );
@@ -73,7 +67,6 @@ export const ProgressivelyProvider = ({
         status: state.status,
         isLoading,
         error: state.error,
-        track: trackFn || (() => Promise.resolve(undefined)),
         setFields,
       }}
     >

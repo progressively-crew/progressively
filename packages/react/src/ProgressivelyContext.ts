@@ -7,7 +7,6 @@ export interface ProgressivelyContextType {
   isLoading: boolean;
   status: StateMachineConstants;
   error?: Error;
-  track: (eventName?: string) => Promise<void>;
   setFields: (newFields: Fields) => void;
 }
 
@@ -16,9 +15,6 @@ export const ProgressivelyContext = createContext<ProgressivelyContextType>({
   isLoading: false,
   status: "idle",
   error: undefined,
-  track: () => {
-    return {} as any;
-  },
   setFields: () => {
     return {};
   },

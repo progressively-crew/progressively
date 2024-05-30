@@ -23,7 +23,6 @@ export interface ProgressivelySdkType {
     callback: (data: FlagDict) => void,
     userId?: string | null
   ) => void;
-  track: (eventName?: string) => Promise<void>;
   setFields: (
     newFields: Fields,
     ctrl?: AbortController

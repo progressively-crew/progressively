@@ -73,19 +73,6 @@ function init(clientKey: string, options: SDKOptions): ProgressivelySdkType {
     });
   }
 
-  function track(eventName: string = "Page View") {
-    return fetch(`${apiRoot}/sdk/${btoa(JSON.stringify(fields))}`, {
-      method: "POST",
-      credentials: "include",
-      body: JSON.stringify({
-        name: eventName,
-        url: window?.location?.href,
-        referer: window.document.referrer || null,
-      }),
-      headers: { "Content-Type": "application/json" },
-    }).then(() => undefined);
-  }
-
   function setFields(newFields: Fields) {
     disconnect();
 
@@ -101,7 +88,7 @@ function init(clientKey: string, options: SDKOptions): ProgressivelySdkType {
     socket?.close();
   }
 
-  return { loadFlags, disconnect, onFlagUpdate, track, setFields, flags };
+  return { loadFlags, disconnect, onFlagUpdate, setFields, flags };
 }
 
 export const Progressively = { init };
