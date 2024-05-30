@@ -64,9 +64,14 @@ export class EventsService {
     timeframe: Timeframe,
   ) {
     const table = funnelEntry.flagUuid ? 'flaghits' : 'events';
-    const whereClause = funnelEntry.flagUuid
-      ? `AND flagUuid = '${funnelEntry.flagUuid}' AND valueResolved = '${funnelEntry.flagVariant}'`
-      : `AND projectUuid = '${projectId}'`;
+    let whereClause =
+      table === 'flaghits'
+        ? `AND flagUuid = '${funnelEntry.flagUuid}' AND valueResolved = '${funnelEntry.flagVariant}'`
+        : `AND projectUuid = '${projectId}' AND name = '${funnelEntry.eventName}'`;
+
+    if (table === 'events' && funnelEntry.eventName === 'Page View') {
+      whereClause += ` AND url = '${funnelEntry.eventValue}'`;
+    }
 
     const sqlFormattedIds = visitorIds
       .map((v) => `'${v.visitorId}'`)
