@@ -101,12 +101,12 @@ export const LineChart = ({ data }: LineChartProps) => {
   const lineKeys = Object.keys(keysDict);
 
   return (
-    <ResponsiveContainer width="100%" height="400px" className="pb-2">
+    <ResponsiveContainer width="100%" aspect={16 / 5} className="pb-2">
       <RLineChart
         width={500}
         height={300}
         data={data}
-        margin={{ top: 0, bottom: 0, left: 0, right: 0 }}
+        margin={{ top: 12, bottom: 0, left: 0, right: 0 }}
       >
         <CartesianGrid vertical={false} stroke={themeValues.stroke} />
 
