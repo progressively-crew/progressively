@@ -19,7 +19,7 @@ import { getEventsGroupedByDate } from "~/modules/projects/services/getEventsGro
 import { LuInspect } from "react-icons/lu";
 import { IconButton } from "~/components/Buttons/IconButton";
 import { calculateGrowthRate } from "~/modules/misc/utils/calculateGrowthRate";
-import { LineChart } from "~/components/LineChart";
+import { LineChart } from "~/components/LineChart/LineChart";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);

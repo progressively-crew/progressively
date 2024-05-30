@@ -17,7 +17,8 @@ import { VariantDot } from "~/modules/variants/components/VariantDot";
 import { InsightsFilters } from "~/modules/projects/components/InsightsFilters";
 import { useFlag } from "~/modules/flags/contexts/useFlag";
 import { getFlagMetaTitle } from "~/modules/flags/services/getFlagMetaTitle";
-import { LineChart } from "~/components/LineChart";
+import { LineChart } from "~/components/LineChart/LineChart";
+import { stringToColor } from "~/modules/misc/utils/stringToColor";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -45,22 +46,27 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const { hitsPerVariantPerDate: hitsPerVariantPerDateData, flagEvaluations } =
     await getFlagHits(params.flagId!, day, authCookie);
 
-  const dateDict: Record<any, any> = {};
+  const entriesDict: Record<any, any> = {};
   let flagEvaluationsCount: number = 0;
 
   for (const ev of hitsPerVariantPerDateData) {
-    if (!dateDict[ev.date]) {
-      dateDict[ev.date] = {};
+    if (!entriesDict[ev.valueResolved]) {
+      entriesDict[ev.valueResolved] = {
+        data: [],
+      };
     }
 
     flagEvaluationsCount += ev.count;
-    dateDict[ev.date][ev.valueResolved] = ev.count;
+    entriesDict[ev.valueResolved].data.push({ x: ev.date, y: ev.count });
   }
 
-  const hitsPerVariantPerDate = Object.keys(dateDict).map((date) => ({
-    date,
-    ...dateDict[date],
-  }));
+  const hitsPerVariantPerDate = Object.keys(entriesDict).map(
+    (valueResolved) => ({
+      id: valueResolved,
+      color: stringToColor(valueResolved),
+      ...entriesDict[valueResolved],
+    })
+  );
 
   return {
     flagEvaluationsCount,
@@ -125,7 +131,9 @@ export default function FlagInsights() {
           </CardContent>
 
           {hitsPerVariantPerDate.length > 0 ? (
-            <LineChart data={hitsPerVariantPerDate} />
+            <div className="h-[400px]">
+              <LineChart data={hitsPerVariantPerDate} />
+            </div>
           ) : (
             <CardContent>
               <EmptyState
