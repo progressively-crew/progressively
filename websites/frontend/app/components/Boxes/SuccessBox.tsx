@@ -32,7 +32,7 @@ export const SuccessBox = ({ children, id, ...props }: SuccessBoxProps) => {
   if (!isVisible) return null;
 
   return (
-    <div className="motion-safe:animate-fade-enter-bottom fixed right-8 bottom-8 z-10 rounded-lg overflow-hidden shadow-xl">
+    <div className="motion-safe:animate-fade-enter-bottom fixed right-8 bottom-8 z-10 rounded-xl overflow-hidden shadow-xl">
       <Background spacing="S">
         <div className="rounded bg-white p-4 flex flex-row gap-4">
           <div>

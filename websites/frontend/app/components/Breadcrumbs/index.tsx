@@ -21,9 +21,9 @@ export const BreadCrumbs = ({ crumbs }: BreadCrumbsProps) => {
       <nav className="md:hidden">
         <Link
           to={lastCrumb.link}
-          className={`text-xs transition-background px-1 h-10 flex flex-row items-center rounded hover:text-black hover:bg-gray-100 active:bg-gray-200 no-underline text-gray-500`}
+          className={`text-xs transition-background px-1 h-10 flex flex-row items-center rounded-xl hover:text-black hover:bg-gray-100 active:bg-gray-200 no-underline text-gray-500`}
         >
-          <div className={"rounded px-2 py-1"}>
+          <div className={"rounded-xl px-2 py-1"}>
             <HStack spacing={2}>
               <HStack spacing={2}>
                 <MdArrowBackIosNew aria-hidden />
@@ -48,11 +48,11 @@ export const BreadCrumbs = ({ crumbs }: BreadCrumbsProps) => {
                 <Link
                   aria-current={currentPage ? "page" : undefined}
                   to={crumb.link}
-                  className={`text-xs transition-background px-1 h-10 flex flex-row items-center rounded hover:text-black hover:bg-gray-100 active:bg-gray-200 no-underline ${
+                  className={`text-xs transition-background px-1 h-10 flex flex-row items-center rounded-xl hover:text-black hover:bg-gray-100 active:bg-gray-200 no-underline ${
                     currentPage ? "text-black" : "text-gray-500"
                   }`}
                 >
-                  <div className={"rounded px-2 py-1"}>
+                  <div className={"rounded-xl px-2 py-1"}>
                     <HStack spacing={2}>
                       {crumb.isRoot ? (
                         <HStack spacing={2}>

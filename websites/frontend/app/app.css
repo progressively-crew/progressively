@@ -15,7 +15,7 @@ body {
 }
 
 *:focus-visible {
-  outline: 3px solid #a5b4fc;
+  outline: 2px solid royalblue;
 }
 
 /* Radio */
