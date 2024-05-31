@@ -131,9 +131,7 @@ export default function FlagInsights() {
           </CardContent>
 
           {hitsPerVariantPerDate.length > 0 ? (
-            <div className="h-[400px]">
-              <LineChart data={hitsPerVariantPerDate} />
-            </div>
+            <LineChart data={hitsPerVariantPerDate} />
           ) : (
             <CardContent>
               <EmptyState

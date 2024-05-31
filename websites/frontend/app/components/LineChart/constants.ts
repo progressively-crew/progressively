@@ -1,6 +1,6 @@
-export const LegendOffset = 100;
+export const LegendOffset = 72;
 export const DarkTextColor = "rgba(255, 255, 255, 0.59)";
-export const LightTextColor = "rgba(0, 0, 0, 0.59)";
+export const LightTextColor = "rgba(0, 0, 0, 0.44)";
 export const DashedGridSize = "2 3";
 export const DarkDashedGridColor = "rgba(255, 255, 255, 0.1)";
 export const LightDashedGridColor = "rgba(0, 0, 0, 0.1)";
