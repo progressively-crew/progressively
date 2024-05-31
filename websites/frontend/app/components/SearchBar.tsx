@@ -23,13 +23,13 @@ export const SearchBar = ({ placeholder, label, count }: SearchBarProps) => {
           name="search"
           id="search"
           placeholder={placeholder}
-          className="h-10 rounded pl-4 pr-12 border border-gray-200 flex-1"
+          className="h-10 rounded-xl pl-4 pr-12 border border-gray-200 flex-1"
         />
 
         <button
           type="submit"
           aria-label="Search"
-          className="right-1 absolute w-8 h-8 rounded bg-gray-100 text-gray-700 hover:bg-gray-50 flex items-center justify-center"
+          className="right-1 absolute w-8 h-8 rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-50 flex items-center justify-center"
         >
           <AiOutlineSearch />
         </button>

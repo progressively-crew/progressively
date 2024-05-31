@@ -12,7 +12,7 @@ export const Table = ({ children, noBorder }: TableProps) => {
       className={
         noBorder
           ? "overflow-hidden w-full"
-          : "border border-slate-200 overflow-hidden"
+          : "border border-slate-200 overflow-hidden rounded-xl"
       }
     >
       <div className="overflow-x-scroll">

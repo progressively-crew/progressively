@@ -48,8 +48,8 @@ export const TextInput = forwardRef(
     }
 
     let inputClasses = isInvalid
-      ? "h-10 rounded px-4 border border-red-500 text-sm"
-      : "h-10 rounded px-4 border border-gray-200 text-sm";
+      ? "h-10 rounded-xl px-4 border border-red-500 text-sm"
+      : "h-10 rounded-xl px-4 border border-gray-200 text-sm";
 
     if (isDisabled) {
       inputClasses += " border-gray-300 text-gray-600 bg-gray-50";

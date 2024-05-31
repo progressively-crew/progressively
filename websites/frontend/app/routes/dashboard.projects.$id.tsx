@@ -26,7 +26,6 @@ export const handle = {
         label: p.project.name,
         icon: <ProjectIcon />,
       })),
-
       menuLabel: `Change project`,
     };
   },
