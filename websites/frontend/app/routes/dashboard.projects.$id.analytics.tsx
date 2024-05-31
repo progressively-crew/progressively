@@ -19,7 +19,8 @@ import { getEventsGroupedByDate } from "~/modules/projects/services/getEventsGro
 import { LuInspect } from "react-icons/lu";
 import { IconButton } from "~/components/Buttons/IconButton";
 import { calculateGrowthRate } from "~/modules/misc/utils/calculateGrowthRate";
-import { LineChart } from "~/components/LineChart";
+import { LineChart } from "~/components/LineChart/LineChart";
+import { stringToColor } from "~/modules/misc/utils/stringToColor";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -49,7 +50,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const [
     globalMetrics,
     eventsForFields,
-    pagesViewsGroupedByDate,
+    pagesViewsGroupedByDateData,
     eventsGroupedByDateData,
   ] = await Promise.all([
     getGlobalMetric(projectId, day, authCookie),
@@ -58,28 +59,34 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     getEventsGroupedByDate(projectId, day, authCookie),
   ]);
 
-  const dateDict: Record<any, any> = {};
-  const eventDict: Record<string, number> = {};
+  const entriesDict: Record<any, any> = {};
   let metricTotalCount: number = 0;
 
   for (const ev of eventsGroupedByDateData) {
-    // Helps filling the missing values in the linechart. The idea is to make the line drop to 0
-    // when it should. This dictionnary will basically fill 0 for every available events
-    eventDict[ev.name] = 0;
-
-    if (!dateDict[ev.date]) {
-      dateDict[ev.date] = {};
+    if (!entriesDict[ev.name]) {
+      entriesDict[ev.name] = { data: [] };
     }
 
     metricTotalCount += ev.count;
-    dateDict[ev.date][ev.name] = ev.count;
+    entriesDict[ev.name].data.push({ x: ev.date, y: ev.count });
   }
 
-  const eventsGroupedByDate = Object.keys(dateDict).map((date) => ({
-    date,
-    ...eventDict,
-    ...dateDict[date],
+  const eventsGroupedByDate = Object.keys(entriesDict).map((valueResolved) => ({
+    id: valueResolved,
+    color: stringToColor(valueResolved),
+    ...entriesDict[valueResolved],
   }));
+
+  const pagesViewsGroupedByDate = [
+    {
+      id: "Page View",
+      color: stringToColor("Page View"),
+      data: pagesViewsGroupedByDateData.map((ev) => ({
+        x: ev.date,
+        y: ev.count,
+      })),
+    },
+  ];
 
   return {
     metricTotalCount,
