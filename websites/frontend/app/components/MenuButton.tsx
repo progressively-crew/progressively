@@ -41,7 +41,7 @@ export const MenuButton = ({
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
         {variant === "switch" ? (
-          <button className={menuButtonClass}>
+          <button className={menuButtonClass} aria-label={label}>
             {icon}
             {children && (
               <span className="hidden md:inline">
