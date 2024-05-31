@@ -64,7 +64,7 @@ export const Button = forwardRef(
     ref: any
   ) => {
     const sharedButtonClass =
-      "relative whitespace-nowrap inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none";
+      "relative whitespace-nowrap inline-flex items-center justify-center rounded-xl text-sm font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none";
 
     const actuelScheme = scheme || "default";
     const actualVariant = variant || "primary";
