@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^2.0.4",
+    "@nivo/funnel": "^0.87.0",
     "@nivo/core": "^0.87.0",
     "@nivo/line": "^0.87.0",
     "@okta/okta-auth-js": "^7.7.0",
