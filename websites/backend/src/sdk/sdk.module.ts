@@ -14,6 +14,7 @@ import { QueuedEventHit } from './types';
 import { QueuingModule } from '../queuing/queuing.module';
 import { StrategyModule } from '../strategy/strategy.module';
 import { EventsModule } from '../events/events.module';
+import { CachingModule } from '../caching/caching.module';
 
 @Module({
   controllers: [SdkController],
@@ -27,6 +28,7 @@ import { EventsModule } from '../events/events.module';
     QueuingModule,
     StrategyModule,
     EventsModule,
+    CachingModule,
   ],
   providers: [SdkService],
   exports: [SdkService],

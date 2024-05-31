@@ -10,6 +10,7 @@ import { IQueuingService } from '../queuing/types';
 import { KafkaTopics } from '../queuing/topics';
 import { QueuedFlagHit } from './types';
 import { QueuingModule } from '../queuing/queuing.module';
+import { CachingModule } from '../caching/caching.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { QueuingModule } from '../queuing/queuing.module';
     WebhooksModule,
     ActivityLogModule,
     QueuingModule,
+    CachingModule,
   ],
   providers: [FlagsService],
   controllers: [FlagsController],

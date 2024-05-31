@@ -24,6 +24,7 @@ import { FunnelsModule } from './funnels/funnels.module';
 import { PubsubModule } from './pubsub/pubsub.module';
 import { EventsModule } from './events/events.module';
 import { PaymentModule } from './payment/payment.module';
+import { CachingModule } from './caching/caching.module';
 import 'winston-daily-rotate-file';
 
 @Module({
@@ -75,6 +76,7 @@ import 'winston-daily-rotate-file';
     PubsubModule,
     EventsModule,
     PaymentModule,
+    CachingModule,
   ],
   providers: [AppService],
 })
