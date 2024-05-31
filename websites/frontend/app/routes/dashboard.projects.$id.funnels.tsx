@@ -13,13 +13,15 @@ import { CreateButton } from "~/components/Buttons/CreateButton";
 import { Form, Outlet, useActionData, useLoaderData } from "@remix-run/react";
 import { getFunnels } from "~/modules/projects/services/getFunnels";
 import { getSession } from "~/sessions";
-import { FunnelChart } from "~/modules/funnels/types";
+import { FunnelChart as FunnelChartType } from "~/modules/funnels/types";
 import { EmptyState } from "~/components/EmptyState";
 import { IconButton } from "~/components/Buttons/IconButton";
 import { IoMdClose } from "react-icons/io";
 import { deleteFunnel } from "~/modules/projects/services/deleteFunnel";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { UserRoles } from "~/modules/projects/types";
+import { FunnelChart } from "~/components/FunnelChart/FunnelChart";
+import { stringToColor } from "~/modules/misc/utils/stringToColor";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -48,6 +50,15 @@ export const action: ActionFunction = async ({ request, params }) => {
   };
 };
 
+type FunnelData = {
+  funnel: FunnelChartType;
+  data: {
+    id: string;
+    value: number;
+    label: string;
+  }[];
+}[];
+
 export const loader: LoaderFunction = async ({ request, params }) => {
   const session = await getSession(request.headers.get("Cookie"));
   const url = new URL(request.url);
@@ -67,15 +78,26 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     authCookie
   );
 
-  return { funnels };
+  const funnelsData = funnels.map((funnel) => {
+    const data = funnel.funnelsEntries.map((entry) => ({
+      id: entry.name,
+      value: entry.count,
+      label: entry.name,
+      color: stringToColor(entry.name, 75),
+    }));
+
+    return { funnel, data };
+  });
+
+  return { funnelsData };
 };
 
 export default function FunnelsPage() {
   const { project, userRole } = useProject();
   const actionData = useActionData<typeof action>();
-  const { funnels } = useLoaderData<typeof loader>();
+  const { funnelsData } = useLoaderData<{ funnelsData: FunnelData }>();
 
-  const hasFunnels = funnels.length > 0;
+  const hasFunnels = funnelsData.length > 0;
 
   return (
     <>
@@ -123,32 +145,25 @@ export default function FunnelsPage() {
 
         <Section>
           <div className="flex flex-col gap-4">
-            {funnels.map((funnelChart) => {
-              const firstChart = funnelChart.funnelsEntries[0];
-              const lastChart = funnelChart.funnelsEntries.at(-1);
+            {funnelsData.map((funnelData) => {
+              const firstChart = funnelData.data[0];
+              const lastChart = funnelData.data.at(-1);
               const percentage =
-                firstChart?.count && lastChart?.count
-                  ? (lastChart.count / firstChart.count) * 100
+                firstChart?.value && lastChart?.value
+                  ? (lastChart.value / firstChart.value) * 100
                   : 0;
 
               return (
-                <Card key={funnelChart.uuid}>
+                <Card key={funnelData.funnel.uuid}>
                   <Form method="post">
                     <div className="grid md:grid-cols-[2fr_1fr] overflow-x-scroll">
                       <CardContent>
                         <div>
                           <Typography as="h2" className="font-semibold pb-4">
-                            {funnelChart.name}
+                            {funnelData.funnel.name}
                           </Typography>
 
-                          <div className="flex flex-row gap-4 items-center">
-                            <BarChart
-                              data={funnelChart.funnelsEntries.map((stat) => ({
-                                name: stat.name,
-                                value: stat.count,
-                              }))}
-                            />
-                          </div>
+                          <FunnelChart data={funnelData.data} />
                         </div>
                       </CardContent>
 
@@ -162,7 +177,7 @@ export default function FunnelsPage() {
                               }
                               tooltip="Remove funnel"
                               name="funnelId"
-                              value={funnelChart.uuid}
+                              value={funnelData.funnel.uuid}
                             />
                           </div>
                         )}

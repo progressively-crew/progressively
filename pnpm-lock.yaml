@@ -827,6 +827,9 @@ importers:
       '@nivo/core':
         specifier: ^0.87.0
         version: 0.87.0(react-dom@18.3.1)(react@18.3.1)
+      '@nivo/funnel':
+        specifier: ^0.87.0
+        version: 0.87.0(react-dom@18.3.1)(react@18.3.1)
       '@nivo/line':
         specifier: ^0.87.0
         version: 0.87.0(react-dom@18.3.1)(react@18.3.1)
@@ -7642,6 +7645,25 @@ packages:
       d3-time-format: 3.0.0
       lodash: 4.17.21
       prop-types: 15.8.1
+      react: 18.3.1
+    transitivePeerDependencies:
+      - react-dom
+    dev: false
+
+  /@nivo/funnel@0.87.0(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-mqc/Yj2IJAcg2A6BVav9Wein/bna+d7cFacycyWVNUGqpZ3oD6PB07wZLhUSXOeU1eChPmgLYPJ6zBQ5mRONPQ==}
+    peerDependencies:
+      react: '>= 16.14.0 < 19.0.0'
+    dependencies:
+      '@nivo/annotations': 0.87.0(react-dom@18.3.1)(react@18.3.1)
+      '@nivo/colors': 0.87.0(react-dom@18.3.1)(react@18.3.1)
+      '@nivo/core': 0.87.0(react-dom@18.3.1)(react@18.3.1)
+      '@nivo/tooltip': 0.87.0(react-dom@18.3.1)(react@18.3.1)
+      '@react-spring/web': 9.7.3(react-dom@18.3.1)(react@18.3.1)
+      '@types/d3-scale': 4.0.8
+      '@types/d3-shape': 3.1.6
+      d3-scale: 4.0.2
+      d3-shape: 3.2.0
       react: 18.3.1
     transitivePeerDependencies:
       - react-dom
