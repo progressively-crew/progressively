@@ -7,7 +7,6 @@ import { PageTitle } from "~/components/PageTitle";
 import { Section } from "~/components/Section";
 import { ProjectNavBar } from "~/modules/projects/components/ProjectNavBar";
 import { InsightsFilters } from "~/modules/projects/components/InsightsFilters";
-import { BarChart } from "~/components/BarChart";
 import { Typography } from "~/components/Typography";
 import { CreateButton } from "~/components/Buttons/CreateButton";
 import { Form, Outlet, useActionData, useLoaderData } from "@remix-run/react";
