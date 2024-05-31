@@ -14,7 +14,7 @@ export const Card = ({ children, footer, onClick, className }: CardProps) => {
 
   return (
     <div
-      className={`overflow-hidden h-full border border-gray-200 rounded-xl bg-white ${clickableClasses} ${
+      className={`overflow-hidden h-full border border-gray-200 rounded-2xl bg-white ${clickableClasses} ${
         className || ""
       }`}
       onClick={onClick}
