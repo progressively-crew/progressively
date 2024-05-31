@@ -16,7 +16,7 @@ export const WarningBox = ({ list, title }: WarningBoxProps) => {
   return (
     <figure
       tabIndex={-1}
-      className="warning-box p-4 bg-orange-100 text-orange-700 rounded border-l-8 border-l-orange-600"
+      className="warning-box p-4 bg-orange-100 text-orange-700 rounded-xl border-l-8 border-l-orange-600"
     >
       <div>
         <HStack spacing={2}>

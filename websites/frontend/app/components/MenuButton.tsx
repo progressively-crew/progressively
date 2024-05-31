@@ -31,7 +31,7 @@ export const MenuButton = ({
   icon,
 }: MenuButtonProps) => {
   let menuButtonClass =
-    "h-10 flex justify-center flex-row items-center hover:bg-gray-50 rounded text-gray-700";
+    "h-10 flex justify-center flex-row items-center hover:bg-gray-50 rounded-xl text-gray-700";
 
   if (children) {
     menuButtonClass += " text-sm gap-2 px-3";
