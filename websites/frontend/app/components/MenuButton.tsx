@@ -51,15 +51,15 @@ export const MenuButton = ({
             <RxCaretSort className="text-xl" />
           </button>
         ) : (
-          <div>
+          <button className={menuButtonClass} aria-label={label}>
             <Tooltip tooltip={<p>{label}</p>}>
-              <button className={menuButtonClass} aria-label={label}>
+              <div>
                 {icon}
                 {children && <Typography as="span">{children}</Typography>}
                 <HiOutlineDotsVertical className="text-xl" />
-              </button>
+              </div>
             </Tooltip>
-          </div>
+          </button>
         )}
       </DropdownMenu.Trigger>
 
