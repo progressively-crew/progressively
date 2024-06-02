@@ -152,8 +152,6 @@ export class SdkService {
     });
   }
 
-  _;
-
   async computeFlags(
     b64: string,
     project: Project,
