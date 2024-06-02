@@ -23,15 +23,12 @@ import { KafkaTopics } from '../queuing/topics';
 import { IQueuingService } from '../queuing/types';
 import { ValidationPipe } from '../shared/pipes/ValidationPipe';
 import { SdkHitAnalyticsSchema } from './sdk.dto';
-import { ICachingService } from '../caching/types';
-import { projectEpochKey, sdkB64EpochToEntryKey } from '../caching/keys';
 
 @Controller('sdk')
 export class SdkController {
   constructor(
     private readonly sdkService: SdkService,
     @Inject('QueueingService') private readonly queuingService: IQueuingService,
-    @Inject('CachingService') private readonly cachingService: ICachingService,
   ) {}
 
   async _guardSdkEndpoint(request: Request, fields: FieldRecord) {
@@ -83,27 +80,11 @@ export class SdkController {
 
     const concernedProject = await this._guardSdkEndpoint(request, fields);
 
-    const projectEpoch = await this.cachingService.get(
-      projectEpochKey(concernedProject.uuid),
-    );
-
-    if (projectEpoch) {
-      const entry = await this.cachingService.get(
-        sdkB64EpochToEntryKey(base64Params, projectEpoch),
-      );
-
-      if (entry) return JSON.parse(entry);
-    }
-
     const flags = await this.sdkService.computeFlags(
+      base64Params,
       concernedProject,
       fields,
       shouldSkipHits,
-    );
-
-    await this.cachingService.set(
-      sdkB64EpochToEntryKey(base64Params, projectEpoch),
-      JSON.stringify(flags),
     );
 
     return flags;
