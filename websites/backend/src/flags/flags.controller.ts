@@ -38,8 +38,6 @@ import { ActivityLogService } from '../activity-log/activity-log.service';
 import { UserId } from '../users/users.decorator';
 import { FlagAlreadyExists } from '../projects/errors';
 import { Timeframe, Timeframes } from '../events/types';
-import { ICachingService } from '../caching/types';
-import { projectEpochKey } from 'src/caching/keys';
 
 @ApiBearerAuth()
 @Controller()
@@ -50,7 +48,6 @@ export class FlagsController {
     private readonly wsGateway: WebsocketGateway,
     private readonly activityLogService: ActivityLogService,
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
-    @Inject('CachingService') private readonly cachingService: ICachingService,
   ) {}
 
   @Put('/flags/:flagId')
@@ -67,7 +64,6 @@ export class FlagsController {
       throw new BadRequestException('Invalid status code');
     }
 
-    await this.cachingService.set(projectEpochKey('1'), Date.now().toString());
     const updatedFlag = await this.flagService.changeFlagStatus(flagId, status);
 
     this.wsGateway.notifyChanges(updatedFlag);
