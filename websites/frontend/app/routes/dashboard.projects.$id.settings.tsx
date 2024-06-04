@@ -20,6 +20,7 @@ import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { Dd, Dl, Dt } from "~/components/Dl";
 import { Spacer } from "~/components/Spacer";
+import { EditButton } from "~/components/Buttons/EditButton";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -98,6 +99,16 @@ export default function SettingsPage() {
             <Section id="general">
               <SectionHeader
                 title="General"
+                action={
+                  userRole === UserRoles.Admin && (
+                    <EditButton
+                      variant="secondary"
+                      to={`/dashboard/projects/${project.uuid}/settings/edit`}
+                    >
+                      Edit
+                    </EditButton>
+                  )
+                }
                 description={
                   "The following is the project keys to use inside your application to get the flag variation"
                 }
