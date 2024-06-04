@@ -40,6 +40,18 @@ export class ProjectsService {
     });
   }
 
+  updateProject(projectId: string, name: string, prodDomain: string) {
+    return this.prisma.project.updateMany({
+      data: {
+        name,
+        domain: prodDomain,
+      },
+      where: {
+        uuid: projectId,
+      },
+    });
+  }
+
   createProject(name: string, userId: string, prodDomain: string) {
     return this.prisma.project.create({
       data: {

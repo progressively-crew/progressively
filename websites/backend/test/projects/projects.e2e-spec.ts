@@ -59,6 +59,93 @@ describe('ProjectsController (e2e)', () => {
     });
   });
 
+  describe('/projects/1 (PUT)', () => {
+    it('gives a 401 when the user is not authenticated', () =>
+      verifyAuthGuard(app, '/projects/1', 'put'));
+
+    it('gives a 403 when the user requests a forbidden project', async () => {
+      const access_token = await authenticate(
+        app,
+        'jane.doe@gmail.com',
+        'password',
+      );
+
+      return request(app.getHttpServer())
+        .put('/projects/1')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send({
+          name: 'hello',
+          domain: 'bro',
+        })
+        .expect(403)
+        .expect({
+          statusCode: 403,
+          message: 'Forbidden resource',
+          error: 'Forbidden',
+        });
+    });
+
+    it("gives a 400 when there's no name field", async () => {
+      const access_token = await authenticate(app);
+
+      return request(app.getHttpServer())
+        .put('/projects/1')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send({
+          domain: 'hello',
+        })
+        .expect(400)
+        .expect({
+          statusCode: 400,
+          message: 'Validation failed',
+          error: 'Bad Request',
+        });
+    });
+
+    it("gives a 400 when there's no domain field", async () => {
+      const access_token = await authenticate(app);
+
+      return request(app.getHttpServer())
+        .put('/projects/1')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send({
+          name: 'hello',
+        })
+        .expect(400)
+        .expect({
+          statusCode: 400,
+          message: 'Validation failed',
+          error: 'Bad Request',
+        });
+    });
+
+    it('creates a project when authenticated and providing a good name', async () => {
+      const access_token = await authenticate(app);
+      await request(app.getHttpServer())
+        .put('/projects/1')
+        .set('Authorization', `Bearer ${access_token}`)
+        .send({
+          name: 'hello',
+          domain: 'bro',
+        })
+        .expect(200);
+
+      const res = await request(app.getHttpServer())
+        .get('/projects/1')
+        .set('Authorization', `Bearer ${access_token}`)
+        .expect(200);
+
+      expect(res.statusCode).toBe(200);
+      expect(res.body).toMatchObject({
+        clientKey: 'valid-sdk-key',
+        domain: 'bro',
+        name: 'hello',
+        secretKey: 'secret-key',
+        uuid: '1',
+      });
+    });
+  });
+
   describe('/projects (GET)', () => {
     it('gives a 401 when the user is not authenticated', () =>
       verifyAuthGuard(app, '/projects', 'get'));

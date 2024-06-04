@@ -13,6 +13,7 @@ import {
   NotFoundException,
   ConflictException,
   BadRequestException,
+  Put,
 } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
@@ -21,6 +22,8 @@ import {
   ProjectCreationDTO,
   ProjectCreationSchema,
   ProjectRetrieveDTO,
+  UpdateProjectDTO,
+  UpdateProjectSchema,
 } from './projects.dto';
 import { ProjectsService } from './projects.service';
 import { UserRetrieveDTO } from '../users/users.dto';
@@ -91,6 +94,24 @@ export class ProjectsController {
       user.uuid,
       projectDto.domain,
     );
+  }
+
+  @Put('/:id')
+  @Roles(UserRoles.Admin)
+  @UseGuards(HasProjectAccessGuard)
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(new ValidationPipe(UpdateProjectSchema))
+  async updateProject(
+    @Param('id') id: string,
+    @Body() projectDto: UpdateProjectDTO,
+  ) {
+    await this.projectService.updateProject(
+      id,
+      projectDto.name,
+      projectDto.domain,
+    );
+
+    return null;
   }
 
   @Post(':id/rotate')
