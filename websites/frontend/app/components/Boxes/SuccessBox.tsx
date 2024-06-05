@@ -35,7 +35,10 @@ export const SuccessBox = ({ children, id, ...props }: SuccessBoxProps) => {
   if (!isVisible || !isHydrated) return null;
 
   return createPortal(
-    <div className="motion-safe:animate-fade-enter-bottom fixed right-8 bottom-8 z-30 rounded-xl shadow-xl">
+    <div
+      className="motion-safe:animate-fade-enter-bottom fixed right-8 bottom-8 z-30 rounded-xl shadow-xl"
+      role="alert"
+    >
       <div className="rounded-xl bg-white p-4 flex flex-row gap-4 border border-gray-300">
         <div>
           <p className="font-bold text-sm">🚀 Operation succeeded!</p>
