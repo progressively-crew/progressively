@@ -16,6 +16,7 @@ export const SuccessBox = ({ children, id, ...props }: SuccessBoxProps) => {
   const location = useLocation();
 
   useEffect(() => {
+    if (!isHydrated) return;
     if (isVisible) {
       const currentFocus = document.activeElement as HTMLElement;
       boxRef?.current?.focus();
@@ -29,7 +30,7 @@ export const SuccessBox = ({ children, id, ...props }: SuccessBoxProps) => {
         currentFocus?.focus();
       };
     }
-  }, [isVisible]);
+  }, [isVisible, isHydrated]);
 
   if (!isVisible || !isHydrated) return null;
 
