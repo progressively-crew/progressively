@@ -1,7 +1,9 @@
 import { Link, useLocation } from "@remix-run/react";
+import { createPortal } from "react-dom";
 import { useEffect, useRef, useState } from "react";
 import { MdClose } from "react-icons/md";
 import { Background } from "../Background";
+import { useHydrated } from "~/modules/misc/hooks/useHydrated";
 
 export interface SuccessBoxProps {
   children: React.ReactNode;
@@ -10,6 +12,7 @@ export interface SuccessBoxProps {
 
 export const SuccessBox = ({ children, id, ...props }: SuccessBoxProps) => {
   const [isVisible, setIsVisible] = useState(true);
+  const isHydrated = useHydrated();
   const boxRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
 
@@ -29,35 +32,34 @@ export const SuccessBox = ({ children, id, ...props }: SuccessBoxProps) => {
     }
   }, [isVisible]);
 
-  if (!isVisible) return null;
+  if (!isVisible || !isHydrated) return null;
 
-  return (
-    <div className="motion-safe:animate-fade-enter-bottom fixed right-8 bottom-8 z-10 rounded-xl overflow-hidden shadow-xl">
-      <Background spacing="S">
-        <div className="rounded bg-white p-4 flex flex-row gap-4">
-          <div>
-            <p className="font-bold text-sm">🚀 Operation succeeded!</p>
+  return createPortal(
+    <div className="motion-safe:animate-fade-enter-bottom fixed right-8 bottom-8 z-30 rounded-xl shadow-xl">
+      <div className="rounded-xl bg-white p-4 flex flex-row gap-4 border border-gray-300">
+        <div>
+          <p className="font-bold text-sm">🚀 Operation succeeded!</p>
 
-            <p
-              ref={boxRef}
-              tabIndex={-1}
-              id={id}
-              {...props}
-              className="success-box text-sm"
-            >
-              {children}
-            </p>
-          </div>
-
-          <Link
-            to={location.pathname}
-            className="text-xl rounded bg-transparent hover:bg-slate-100 active:bg-slate-200 flex items-center justify-center w-6 h-6"
-            preventScrollReset={true}
+          <p
+            ref={boxRef}
+            tabIndex={-1}
+            id={id}
+            {...props}
+            className="success-box text-sm"
           >
-            <MdClose aria-label="Close the banner" />
-          </Link>
+            {children}
+          </p>
         </div>
-      </Background>
-    </div>
+
+        <Link
+          to={location.pathname}
+          className="text-xl rounded bg-transparent hover:bg-slate-100 active:bg-slate-200 flex items-center justify-center w-6 h-6"
+          preventScrollReset={true}
+        >
+          <MdClose aria-label="Close the banner" />
+        </Link>
+      </div>
+    </div>,
+    document.body
   );
 };

@@ -13,6 +13,7 @@ export interface Project {
   userProject?: Array<UserProject>;
   clientKey: string;
   secretKey: string;
+  domain: string;
 }
 
 export interface UserProject {

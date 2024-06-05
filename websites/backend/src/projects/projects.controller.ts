@@ -111,7 +111,7 @@ export class ProjectsController {
       projectDto.domain,
     );
 
-    return null;
+    return { success: true };
   }
 
   @Post(':id/rotate')
