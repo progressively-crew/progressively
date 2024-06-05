@@ -2,7 +2,6 @@ import { Link, useLocation } from "@remix-run/react";
 import { createPortal } from "react-dom";
 import { useEffect, useRef, useState } from "react";
 import { MdClose } from "react-icons/md";
-import { Background } from "../Background";
 import { useHydrated } from "~/modules/misc/hooks/useHydrated";
 
 export interface SuccessBoxProps {
