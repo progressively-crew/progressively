@@ -10,7 +10,13 @@ import { getProjectMetaTitle } from "~/modules/projects/services/getProjectMetaT
 import { PageTitle } from "~/components/PageTitle";
 import { ProjectNavBar } from "~/modules/projects/components/ProjectNavBar";
 import { Typography } from "~/components/Typography";
-import { Outlet, useActionData, useSearchParams } from "@remix-run/react";
+import {
+  Form,
+  Outlet,
+  useActionData,
+  useNavigation,
+  useSearchParams,
+} from "@remix-run/react";
 import { SuccessBox } from "~/components/Boxes/SuccessBox";
 import { DeleteButton } from "~/components/Buttons/DeleteButton";
 import { VisuallyHidden } from "~/components/VisuallyHidden";
@@ -20,6 +26,9 @@ import { ErrorBox } from "~/components/Boxes/ErrorBox";
 import { ButtonCopy } from "~/components/ButtonCopy";
 import { Dd, Dl, Dt } from "~/components/Dl";
 import { Spacer } from "~/components/Spacer";
+import { EditButton } from "~/components/Buttons/EditButton";
+import { IconButton } from "~/components/Buttons/IconButton";
+import { IoRefreshCircleOutline } from "react-icons/io5";
 
 export const meta: MetaFunction = ({ matches }) => {
   const projectName = getProjectMetaTitle(matches);
@@ -37,14 +46,13 @@ interface ActionDataType {
 
 export const action: ActionFunction = async ({
   request,
+  params,
 }): Promise<ActionDataType> => {
   const session = await getSession(request.headers.get("Cookie"));
   const authCookie = session.get("auth-cookie");
-  const formData = await request.formData();
-  const projectId = formData.get("projectId")?.toString();
 
   try {
-    await rotateSecretKey(projectId!, authCookie);
+    await rotateSecretKey(params.id!, authCookie);
     return { success: true };
   } catch {
     return { success: false };
@@ -55,6 +63,7 @@ export default function SettingsPage() {
   const { project, userRole } = useProject();
   const [searchParams] = useSearchParams();
   const actionData = useActionData<ActionDataType>();
+  const navigation = useNavigation();
   const isMemberRemoved = searchParams.get("memberRemoved") || undefined;
 
   const actionResult =
@@ -98,6 +107,16 @@ export default function SettingsPage() {
             <Section id="general">
               <SectionHeader
                 title="General"
+                action={
+                  userRole === UserRoles.Admin && (
+                    <EditButton
+                      variant="secondary"
+                      to={`/dashboard/projects/${project.uuid}/settings/edit`}
+                    >
+                      Edit
+                    </EditButton>
+                  )
+                }
                 description={
                   "The following is the project keys to use inside your application to get the flag variation"
                 }
@@ -114,13 +133,22 @@ export default function SettingsPage() {
 
                 <Dt>Secret key</Dt>
                 <Dd>
-                  <ButtonCopy
-                    size="S"
-                    toCopy={project.secretKey}
-                    toCopyAlternative="**********"
-                  >
-                    **********
-                  </ButtonCopy>
+                  <div className="flex flex-row gap-2 items-center">
+                    <ButtonCopy
+                      size="S"
+                      toCopy={project.secretKey}
+                      toCopyAlternative="**********"
+                    >
+                      **********
+                    </ButtonCopy>
+                    <Form method="post">
+                      <IconButton
+                        icon={<IoRefreshCircleOutline />}
+                        tooltip={"Rotate secret key"}
+                        isLoading={navigation.state !== "idle"}
+                      />
+                    </Form>
+                  </div>
                 </Dd>
               </Dl>
             </Section>

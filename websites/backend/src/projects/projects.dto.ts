@@ -5,6 +5,11 @@ export class ProjectCreationDTO {
   domain: string;
 }
 
+export class UpdateProjectDTO {
+  name: string;
+  domain: string;
+}
+
 export interface ProjectRetrieveDTO {
   uuid: string;
   name: string;
@@ -16,6 +21,11 @@ export class AddMemberProjectDTO {
 }
 
 export const ProjectCreationSchema = Joi.object({
+  name: Joi.string().required(),
+  domain: Joi.string().required(),
+});
+
+export const UpdateProjectSchema = Joi.object({
   name: Joi.string().required(),
   domain: Joi.string().required(),
 });
