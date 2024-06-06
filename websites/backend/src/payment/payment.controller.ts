@@ -32,7 +32,7 @@ export class PaymentController {
     @UserId() userId: string,
     @Body() body: { count?: number },
   ) {
-    if (!body.count) {
+    if (!body.count || body.count < 1) {
       throw new BadRequestException();
     }
 
@@ -62,7 +62,6 @@ export class PaymentController {
       await this.paymentService.fulfillOrder(req.rawBody, sig);
       return null;
     } catch (err) {
-      console.log('lol', err);
       throw new BadRequestException();
     }
   }
